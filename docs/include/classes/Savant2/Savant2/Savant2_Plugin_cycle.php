@@ -9,13 +9,13 @@ require_once 'Savant2/Plugin.php';
 * 
 * Cycles through a series of values.
 * 
-* $Id: Savant2_Plugin_cycle.php,v 1.1 2004/10/04 01:52:23 pmjones Exp $
+* $Id: Savant2_Plugin_cycle.php,v 1.2 2005/08/09 22:19:39 pmjones Exp $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 
 * @package Savant2
 * 
-* @license http://www.gnu.org/copyleft/lesser.html LGPL
+* @license LGPL http://www.gnu.org/copyleft/lesser.html
 * 
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as

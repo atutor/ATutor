@@ -48,15 +48,15 @@ if (! isset($GLOBALS['_SAVANT2']['error'])) {
 * Please see the documentation at {@link http://phpsavant.com/}, and be
 * sure to donate! :-)
 * 
-* $Id: Savant2.php,v 1.22 2005/01/29 15:05:22 pmjones Exp $
+* $Id: Savant2.php,v 1.29 2005/09/11 22:42:24 pmjones Exp $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 
 * @package Savant2
 * 
-* @version 2.3.3 stable
+* @version 2.4.0 stable
 * 
-* @license http://www.gnu.org/copyleft/lesser.html LGPL
+* @license LGPL http://www.gnu.org/copyleft/lesser.html
 * 
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as
@@ -112,6 +112,27 @@ class Savant2 {
 	*/
 	
 	var $_error = null;
+	
+	
+	/**
+	* 
+	* Array of callbacks used to escape output.
+	* 
+	* @access private
+	* 
+	* @var array
+	* 
+	* @see setEscape()
+	* 
+	* @see addEscape()
+	* 
+	* @see escape()
+	* 
+	* @see _()
+	* 
+	*/
+	
+	var $_escape = array('htmlspecialchars');
 	
 	
 	/**
@@ -200,6 +221,19 @@ class Savant2 {
 	
 	/**
 	* 
+	* Whether or not to restrict template includes only to registered paths.
+	* 
+	* @access private
+	* 
+	* @var bool
+	* 
+	*/
+	
+	var $_restrict = false;
+	
+	
+	/**
+	* 
 	* The path to the compiled template script file.
 	* 
 	* By default, the template source and template script are the same file.
@@ -224,8 +258,6 @@ class Savant2 {
 	*/
 	
 	var $_template = null;
-	
-	var $_restrict = false;
 	
 	
 	// -----------------------------------------------------------------
@@ -305,6 +337,14 @@ class Savant2 {
 		if (isset($conf['template'])) {
 			$this->setTemplate($conf['template']);
 		}
+		
+		// set the output escaping callbacks
+		if (isset($config['escape'])) {
+			call_user_func_array(
+				array($this, 'setEscape'),
+				(array) $config['escape']
+			);
+		}	
 	}
 	
 	
@@ -463,6 +503,207 @@ class Savant2 {
 	{
 		$this->_template = $template;
 	}
+	
+	
+	// -----------------------------------------------------------------
+	//
+	// Output escaping and management.
+	//
+	// -----------------------------------------------------------------
+	
+	
+	/**
+	* 
+	* Clears then sets the callbacks to use when calling $this->escape().
+	* 
+	* Each parameter passed to this function is treated as a separate
+	* callback.  For example:
+	* 
+	* <code>
+	* $savant->setEscape(
+	*     'stripslashes',
+	*     'htmlspecialchars',
+	*     array('StaticClass', 'method'),
+	*     array($object, $method)
+	* );
+	* </code>
+	* 
+	* @access public
+	*
+	* @return void
+	*
+	*/
+	
+	function setEscape()
+	{
+		$this->_escape = func_get_args();
+	}
+	
+	
+	/**
+	* 
+	* Adds to the callbacks used when calling $this->escape().
+	* 
+	* Each parameter passed to this function is treated as a separate
+	* callback.  For example:
+	* 
+	* <code>
+	* $savant->addEscape(
+	*     'stripslashes',
+	*     'htmlspecialchars',
+	*     array('StaticClass', 'method'),
+	*     array($object, $method)
+	* );
+	* </code>
+	* 
+	* @access public
+	*
+	* @return void
+	*
+	*/
+	
+	function addEscape()
+	{
+		$args = func_get_args();
+		$this->_escape = array_merge($this->_escape, $args);
+	}
+	
+	
+	/**
+	*
+	* Gets the array of output-escaping callbacks.
+	*
+	* @access public
+	*
+	* @return array The array of output-escaping callbacks.
+	*
+	*/
+	
+	function getEscape()
+	{
+		return $this->_escape;
+	}
+	
+	
+	/**
+	*
+	* Applies escaping to a value.
+	* 
+	* You can override the predefined escaping callbacks by passing
+	* added parameters as replacement callbacks.
+	* 
+	* <code>
+	* // use predefined callbacks
+	* $result = $savant->escape($value);
+	* 
+	* // use replacement callbacks
+	* $result = $savant->escape(
+	*     $value,
+	*     'stripslashes',
+	*     'htmlspecialchars',
+	*     array('StaticClass', 'method'),
+	*     array($object, $method)
+	* );
+	* </code>
+	* 
+	* @access public
+	* 
+	* @param mixed $value The value to be escaped.
+	* 
+	* @return mixed
+	*
+	*/
+	
+	function escape($value)
+	{
+		// were custom callbacks passed?
+		if (func_num_args() == 1) {
+		
+			// no, only a value was passed.
+			// loop through the predefined callbacks.
+			foreach ($this->_escape as $func) {
+				$value = call_user_func($func, $value);
+			}
+			
+		} else {
+		
+			// yes, use the custom callbacks instead.
+			$callbacks = func_get_args();
+			
+			// drop $value
+			array_shift($callbacks);
+			
+			// loop through custom callbacks.
+			foreach ($callbacks as $func) {
+				$value = call_user_func($func, $value);
+			}
+			
+		}
+		
+		return $value;
+	}
+	
+	
+	/**
+	*
+	* Prints a value after escaping it for output.
+	* 
+	* You can override the predefined escaping callbacks by passing
+	* added parameters as replacement callbacks.
+	* 
+	* <code>
+	* // use predefined callbacks
+	* $this->_($value);
+	* 
+	* // use replacement callbacks
+	* $this->_(
+	*     $value,
+	*     'stripslashes',
+	*     'htmlspecialchars',
+	*     array('StaticClass', 'method'),
+	*     array($object, $method)
+	* );
+	* </code>
+	* 
+	* @access public
+	* 
+	* @param mixed $value The value to be escaped and printed.
+	* 
+	* @return void
+	*
+	*/
+	
+	function eprint($value)
+	{
+		$args = func_get_args();
+		echo call_user_func_array(
+			array($this, 'escape'),
+			$args
+		);
+	}
+	
+	
+	/**
+	*
+	* Alias to eprint() and identical in every way.
+	* 
+	* @access public
+	* 
+	* @param mixed $value The value to be escaped and printed.
+	* 
+	* @return void
+	*
+	*/
+	
+	function _($value)
+	{
+		$args = func_get_args();
+		return call_user_func_array(
+			array($this, 'eprint'),
+			$args
+		);
+	}
+	
 	
 	
 	// -----------------------------------------------------------------

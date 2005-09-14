@@ -4,13 +4,13 @@
 * 
 * Provides a simple error class for Savant.
 *
-* $Id: Error.php,v 1.1 2004/10/04 01:52:23 pmjones Exp $
+* $Id: Error.php,v 1.2 2005/08/09 22:19:39 pmjones Exp $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 
 * @package Savant2
 * 
-* @license http://www.gnu.org/copyleft/lesser.html LGPL
+* @license LGPL http://www.gnu.org/copyleft/lesser.html
 * 
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as

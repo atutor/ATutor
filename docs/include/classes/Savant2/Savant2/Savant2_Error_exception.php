@@ -14,13 +14,13 @@ class Savant2_Exception extends Exception { };
 * 
 * Throws PHP5 exceptions for Savant.
 *
-* $Id: Savant2_Error_exception.php,v 1.3 2004/11/05 16:00:38 pmjones Exp $
+* $Id: Savant2_Error_exception.php,v 1.4 2005/08/09 22:19:39 pmjones Exp $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 
 * @package Savant2
 * 
-* @license http://www.gnu.org/copyleft/lesser.html LGPL
+* @license LGPL http://www.gnu.org/copyleft/lesser.html
 * 
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as
