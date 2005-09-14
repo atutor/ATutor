@@ -7,7 +7,7 @@ define('AT_PRIV_FORUMS', $this->getPrivilege());
 $_student_tools = array('forum/list.php');
 
 //side menu file.  key is title variable
-$_module_stacks['posts'] = 'module_side.php';
+$_module_stacks['posts'] = AT_INCLUDE_PATH.'/html/dropdowns/posts.inc.php';
 
 //admin pages
 $_module_pages['admin/forums.php']['title_var'] = 'forums';
