@@ -32,10 +32,7 @@ function forums_delete($course) {
 			$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
 			$result = mysql_query($sql, $db);
 
-		} else if (($row['cnt'] > 1) && (!isset($material['forums']))) {
-			// shared forums only get unlinked if we're deleting an entire course!
-			// shared forums do NOT get deleted when restoring a backup.
-			//
+		} else if ($row['cnt'] > 1) {
 			// this is a shared forum:
 			// debug('unsubscribe all the students who will not be able to access this forum anymore.');
 			$sql     = "SELECT course_id FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id] AND course_id <> $course";
@@ -74,7 +71,6 @@ function forums_delete($course) {
 
 	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 	$result = mysql_query($sql, $db);
-
 }
 
 ?>
