@@ -426,10 +426,11 @@ class Module {
 				$CSVImport->import($table_name, $import_dir, $course_id);
 			}
 		}
-
 		if (isset($dirs)) {
 			foreach ($dirs as $src => $dest) {
 				$dest = str_replace('?', $course_id, $dest);
+				//debug($dest);
+				//debug($import_dir. $src);
 				copys($import_dir.$src, $dest);
 			}
 		}

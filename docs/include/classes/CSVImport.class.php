@@ -119,7 +119,7 @@ class CSVImport {
 				$row[0] = $next_id;
 			}
 
-			$sql = 'INSERT INTO '.TABLE_PREFIX.$tableName.' VALUES (';
+			$sql = 'REPLACE INTO '.TABLE_PREFIX.$tableName.' VALUES (';
 
 			foreach($row as $id => $field) {
 				if (($field_types[$id] != 'int') && ($field_types[$id] != 'real')) {
@@ -131,11 +131,13 @@ class CSVImport {
 			$sql .= ')';
 			$result = mysql_query($sql, $db);
 			if (!$result) {
+				/*
 				debug($table_id_map);
 				debug($sql);
 				debug(mysql_error($db));
 				debug($table_id_map);
 				exit;
+				*/
 			}
 			$i++;
 			$next_id++;
