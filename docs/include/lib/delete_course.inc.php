@@ -25,25 +25,9 @@ function delete_course($course) {
 		$module->delete($course);
 	}
 
-		$path = AT_BACKUP_DIR . $course . '/';
-		clr_dir($path);
-
-		$path = AT_CONTENT_DIR . 'chat/' . $course . '/';
-		if (is_dir($path)) {
-			clr_dir($path);
-		}
-
-		// backups:
-		$sql	= "DELETE FROM ".TABLE_PREFIX."backups WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
-
-		// course_enrollment:
-		$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
-
-		// courses:
-		$sql = "DELETE FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
+	// delete actual course
+	$sql = "DELETE FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+	$result = mysql_query($sql, $db);
 
 }
 ?>
