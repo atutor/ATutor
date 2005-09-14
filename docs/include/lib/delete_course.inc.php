@@ -13,7 +13,7 @@
 // $Id$
 
 
-function delete_course($course, $material, $rel_path) {
+function delete_course($course, $material) {
 	global $db, $moduleFactory;
 
 	//unset s_cid var
@@ -21,7 +21,8 @@ function delete_course($course, $material, $rel_path) {
 		unset($_SESSION['s_cid']);
 	}
 
-	$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE);
+	$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE | AT_MODULE_DISABLED);
+
 	$keys = array_keys($module_list);
 
 	//loop through mods and call delete function
@@ -33,9 +34,10 @@ function delete_course($course, $material, $rel_path) {
 		}
 	}
 
-	// delete actual course
-	$sql = "DELETE FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-
+	if ($material === TRUE) {
+		// delete actual course
+		$sql = "DELETE FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+		$result = mysql_query($sql, $db);
+	}
 }
 ?>
