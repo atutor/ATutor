@@ -355,10 +355,8 @@ class Backup {
 
 		// 5. if override is set then delete the content
 		if ($action == 'overwrite') {
-			debug('deleting content - overwrite - loop through each module->delete(course_id)');
-			exit;
 			require_once(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
-			delete_course($this->course_id, $material, $rel_path = '../../');
+			delete_course($this->course_id, $material);
 			$_SESSION['s_cid'] = 0;
 		} // else: appending content
 
