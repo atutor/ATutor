@@ -15,7 +15,7 @@
 // insert a require statement into a script to call this file into it to display ATalker controls
 // e.g    require(AT_INCLUDE_PATH."../mods/atalker/reader_controls.php");
 	$_GET['atalker_on'] = intval($_GET['atalker_on']);
-
+		global $_base_href;
 
 	if($_GET['atalker_on'] == '1'){ 
 	
@@ -30,12 +30,11 @@
 	}
 
 	echo '<div style="text-align:right;">';
-	global $_rel_url;
+	//global $_rel_url;
 	$_rel_url_new = ltrim($_rel_url, "/");
 
 	if($_rel_url == "/index.php"){
 	
-		global $_base_href;
 		echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="" align="middle"/>';
 	
 	}else{
@@ -49,9 +48,9 @@
 		echo '<small> '._AT('voice').' <strong>'._AT('on1').'</strong> / <a href="'.$_base_href.$_rel_url_new.'?atalker_on=2">'._AT('off').'</a></small> ';
 	
 	}else if(!$_SESSION['atalker_on']){
-	
+
 		echo '<small>( '._AT('voice').' <a href="'.$_base_href.$_rel_url_new.'?atalker_on=1">'._AT('on1').'</a> / <strong>'._AT('off').'</strong></small>';
-	
+
 	}
 	
 	if($_GET['messages_on'] == '1'){ 

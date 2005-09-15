@@ -25,6 +25,7 @@ INSERT INTO `AT_language_text` VALUES ('en','_template','text_reader','Text Read
 INSERT INTO `AT_language_text` VALUES ('en','_template','sable_reader','SABLE/SSML Reader','2005-09-02 12:17:53','');
 INSERT INTO `AT_language_text` VALUES ('en','_template','voice_files','Voice File Manager','2005-09-02 12:17:53','');
 INSERT INTO `AT_language_text` VALUES ('en','_template','atalker','ATalker','2005-09-02 12:17:53','');
+INSERT INTO `AT_language_text` VALUES ('en','_template','priv_atalker','ATalker Course Files','2005-09-02 12:17:53','');
 INSERT INTO `AT_language_text` VALUES ('en','_template','tts_file_names','Enter a file name, or save as the default file name','2005-09-02 12:17:53','');
 INSERT INTO `AT_language_text` VALUES ('en','_template','enter_some_text','Enter some text below:','2005-09-02 12:17:53','');
 INSERT INTO `AT_language_text` VALUES ('en','_template','play','Play','2005-09-02 12:17:53','');
