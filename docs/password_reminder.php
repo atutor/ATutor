@@ -21,6 +21,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: ./login.php');
 	exit;
 } else if (isset($_POST['form_password_reminder'])) {
+	$_POST['form_email'] = $addslashes($_POST['form_email']);
 	$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
 	$result = mysql_query($sql,$db);
 	if ($row = mysql_fetch_assoc($result)) {
