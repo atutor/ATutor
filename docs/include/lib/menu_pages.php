@@ -168,7 +168,7 @@ $_pages['admin/users.php']['children']  = array('admin/create_user.php', 'admin/
 $_pages['admin/courses.php']['title_var'] = 'courses';
 $_pages['admin/courses.php']['parent']    = AT_NAV_ADMIN;
 $_pages['admin/courses.php']['guide']     = 'admin/?p=4.0.courses.php';
-$_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'admin/backup/index.php', 'admin/forums.php', 'admin/course_categories.php');
+$_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'admin/backup/index.php', 'admin/course_categories.php');
 
 //	$_pages['admin/delete_course.php']['title_var'] = 'delete_course';
 //	$_pages['admin/delete_course.php']['parent']    = 'admin/courses.php';
