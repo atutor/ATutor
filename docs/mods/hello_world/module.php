@@ -2,7 +2,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_modules[] = 'mods/hello_world/index.php';
+$_student_tools = array('mods/hello_world/index.php');
 
 // adding this module to the main page as a basic student tool:
 $_module_pages['mods/hello_world/index.php']['title']    = 'Hello World';
