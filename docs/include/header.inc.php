@@ -68,6 +68,13 @@ if ($_SESSION['valid_user'] === true) {
 
 $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
 
+if (!isset($_pages[$current_page])) {
+	global $msg;
+	$msg->addError('PAGE_NOT_FOUND'); // probably the wrong error
+	header('location: '.$_base_href.'index.php');
+	exit;
+}
+
 $_top_level_pages        = get_main_navigation($current_page);
 $_current_top_level_page = get_current_main_page($current_page);
 if (empty($_top_level_pages)) {
@@ -126,6 +133,7 @@ $savant->assign('back_to_page', $back_to_page);
 $savant->assign('page_title', $_page_title);
 $savant->assign('top_level_pages', $_top_level_pages);
 $savant->assign('section_title', $section_title);
+
 if (isset($_pages[$current_page]['guide'])) {
 	$savant->assign('guide', AT_GUIDES_PATH . $_pages[$current_page]['guide']);
 }
