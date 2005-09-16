@@ -10,6 +10,8 @@ $_student_tools = array('forum/list.php');
 $_module_stacks['posts'] = AT_INCLUDE_PATH.'/html/dropdowns/posts.inc.php';
 
 //admin pages
+$_module_pages['admin/courses.php']['children'] = array('admin/forums.php');
+
 $_module_pages['admin/forums.php']['title_var'] = 'forums';
 $_module_pages['admin/forums.php']['parent']    = 'admin/courses.php';
 $_module_pages['admin/forums.php']['guide']     = 'admin/?p=4.3.forums.php';
