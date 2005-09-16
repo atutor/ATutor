@@ -16,18 +16,26 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
-require(AT_INCLUDE_PATH.'lib/modules.inc.php');
-
 $dir_name = str_replace(array('.','..','/'), '', $_GET['mod_dir']);
+
+$args = '';
+if ($_GET['enabled']) {
+	$args .= 'enabled=1';
+}
+if ($_GET['core']) {
+	$args .= SEP.'core=1';
+}
+
+if ($_GET['disabled']) {
+	$args .= SEP.'disabled=1';
+}
 
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
-	//debug($module);
-	// $module->enable();
-	enable($dir_name);
+	$module->enable();
 	$msg->addFeedback('MOD_ENABLED');
-	header('Location: '.$_SERVER['PHP_SELF']);
+
+	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;
 } else if (isset($_GET['mod_dir'], $_GET['disable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
@@ -35,18 +43,20 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		// core modules cannot be disabled!
 		$msg->addError('DISABLE_CORE_MODULE');
 	} else if ($module->isEnabled()) {
-		//$module->disable();
-		disable($dir_name);
+		$module->disable();
+		//disable($dir_name);
 		$msg->addFeedback('MOD_DISABLED');
 	}
-	header('Location: '.$_SERVER['PHP_SELF']);
+	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;
 } else if (isset($_GET['mod_dir'], $_GET['details'])) {
-	header('Location: details.php?mod='.$_GET['mod_dir']);
+	header('Location: details.php?mod='.$_GET['mod_dir'] . SEP . $args);
 	exit;
 
 } else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['details'])) {
 	$msg->addError('NO_ITEM_SELECTED');
+	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -99,6 +109,9 @@ natsort($keys);
 </form>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
+<input type="hidden" name="enabled" value="<?php echo (int) $_GET['enabled']; ?>" />
+<input type="hidden" name="core" value="<?php echo (int) $_GET['core']; ?>" />
+<input type="hidden" name="disabled" value="<?php echo (int) $_GET['disabled']; ?>" />
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>
@@ -125,11 +138,11 @@ natsort($keys);
 		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $dir_name; ?>"><?php echo $module->getName($_SESSION['lang']); ?></label></td>
 		<td valign="top"><?php
 			if ($module->isCore()) {
-				echo _AT('core');
+				echo '<strong>'._AT('core').'</strong>';
 			} else if ($module->isEnabled()) {
 				echo _AT('enabled');
 			} else {
-				echo _AT('disabled'); 
+				echo '<em>'._AT('disabled').'</em>';
 			}
 			?></td>
 		<td valign="top"><code><?php echo $dir_name; ?>/</code></td>

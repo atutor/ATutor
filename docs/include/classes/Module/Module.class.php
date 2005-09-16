@@ -289,15 +289,28 @@ class ModuleProxy {
 	}
 
 	function enable() {
+		if (!isset($this->_moduleObj)) { 
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
+		$this->_moduleObj->enable();
 
+		$this->_status = AT_MOD_ENABLED;
 	}
 
 	function disable() {
+		if (!isset($this->_moduleObj)) {
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
+		$this->_moduleObj->disable();
 
+		$this->_status = AT_MOD_DISABLED;
 	}
 
 	function install() {
-
+		if (!isset($this->_moduleObj)) { 
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
+		$this->_moduleObj->install();
 	}
 
 	function getStudentTools() {
@@ -444,15 +457,31 @@ class Module {
 	}
 
 	function enable() {
+		global $db;
 
+		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MOD_ENABLED.' WHERE dir_name="'.$this->_directoryName.'"';
+		$result = mysql_query($sql, $db);
 	}
 
 	function disable() {
+		global $db;
 
+		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MOD_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
+		$result = mysql_query($sql, $db);
 	}
 
 	function install() {
+		global $db;
 
+		// get the module details from the XML file.
+
+		// if use_privilege then set $priv to the next available privilege on the system
+		$priv = AT_PRIV_ADMIN; //or function: get next avail priv
+		$admin_priv = AT_PRIV_ADMIN;;
+		// 
+
+		$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MOD_DISABLED.', '.$priv.', '.$admin_priv.')';
+		$result = mysql_query($sql, $db);
 	}
 
 }
