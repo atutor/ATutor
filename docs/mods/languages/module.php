@@ -3,7 +3,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_ADMIN_PRIV_LANGUAGES', $this->getAdminPrivilege());
 
-$_module_pages['admin/courses.php']['children']  = array('admin/language.php');
+$_module_pages['admin/index.php']['children']  = array('admin/language.php');
 
 //admin
 $_module_pages['admin/language.php']['title_var'] = 'languages';

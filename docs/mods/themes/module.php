@@ -3,7 +3,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_ADMIN_PRIV_THEMES', $this->getAdminPrivilege());
 
-$_module_pages['admin/courses.php']['children']  = array('admin/themes/index.php');
+$_module_pages['admin/index.php']['children']  = array('admin/themes/index.php');
 
 //admin
 $_module_pages['admin/themes/index.php']['title_var'] = 'themes';
