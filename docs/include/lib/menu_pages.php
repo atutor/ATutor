@@ -768,7 +768,24 @@ if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 } else if ($_SESSION['course_id'] == -1) {
 	/* administrator section: */
 	/* authenticate user for the sections they have access to. */
+
+//add if defined AT_ADMIN_PRIV.. to all.  cycle through mods
+
+
 	if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+
+		$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED);
+		$keys = array_keys($module_list);
+
+		foreach($keys as $dir_name) { 
+			$module =& $module_list[$dir_name];
+			
+			if (admin_authenticate($module->getPriv(), TRUE)) {
+				$_pages[AT_NAV_ADMIN][] = 'admin/users.php';
+				$_pages['admin/users.php']['parent'] = AT_NAV_ADMIN;
+			}
+		}
+
 		$_pages[AT_NAV_ADMIN]  = array('admin/index.php');
 		if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)) {
 			$_pages[AT_NAV_ADMIN][] = 'admin/users.php';
