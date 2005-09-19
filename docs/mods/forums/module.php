@@ -3,6 +3,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_PRIV_FORUMS', $this->getPrivilege());
 
+//define('AT_ADMIN_PRIV_FORUMS', $this->getAdminPrivilege());
+
+
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tools = array('forum/list.php');
 
@@ -12,6 +15,7 @@ $_module_stacks['posts'] = AT_INCLUDE_PATH.'html/dropdowns/posts.inc.php';
 //admin pages
 $_module_pages['admin/courses.php']['children'] = array('admin/forums.php');
 
+$_module_pages['admin/forums.php']['parent'] = AT_NAV_ADMIN;
 $_module_pages['admin/forums.php']['title_var'] = 'forums';
 $_module_pages['admin/forums.php']['parent']    = 'admin/courses.php';
 $_module_pages['admin/forums.php']['guide']     = 'admin/?p=4.3.forums.php';
