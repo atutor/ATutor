@@ -21,8 +21,6 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	debug($_POST);
-	exit;
 
 	/* login validation */
 	if ($_POST['login'] == '') {
@@ -72,12 +70,11 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
+		$priv = 0;
 		if (isset($_POST['priv_admin'])) {
 			// overrides all above.
 			$priv = AT_ADMIN_PRIV_ADMIN;
-		} else {
-			$priv = 0;
-
+		} else if (isset($_POST['privs'])) {
 			foreach ($_POST['privs'] as $value) {
 				$priv += intval($value);
 			}
@@ -88,6 +85,7 @@ if (isset($_POST['cancel'])) {
 		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '$_POST[password]', '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
 		$result = mysql_query($sql, $db);
 
+		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '*****', '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
 		write_to_log(AT_ADMIN_LOG_INSERT, 'admins', mysql_affected_rows($db), $sql);
 
 		$msg->addFeedback('ADMIN_CREATED');

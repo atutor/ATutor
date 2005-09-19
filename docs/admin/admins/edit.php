@@ -49,12 +49,12 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
+		$priv = 0;
+
 		if (isset($_POST['priv_admin'])) {
 			// overrides all above.
 			$priv = AT_ADMIN_PRIV_ADMIN;
-		} else {
-			$priv = 0;
-
+		} else if (isset($_POST['privs'])) {
 			foreach ($_POST['privs'] as $value) {
 				$priv += intval($value);
 			}
@@ -62,6 +62,8 @@ if (isset($_POST['cancel'])) {
 
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
+
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='*****', real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
 
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 
