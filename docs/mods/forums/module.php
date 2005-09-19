@@ -1,9 +1,8 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_PRIV_FORUMS', $this->getPrivilege());
-
-//define('AT_ADMIN_PRIV_FORUMS', $this->getAdminPrivilege());
+define('AT_PRIV_FORUMS',       $this->getPrivilege() );
+define('AT_ADMIN_PRIV_FORUMS', $this->getAdminPrivilege() );
 
 
 // if this module is to be made available to students on the Home or Main Navigation
