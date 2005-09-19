@@ -46,10 +46,10 @@ class ModuleFactory {
 
 		$this->_enabled_modules = array();
 		// initialise enabled modules
-		$sql	= "SELECT dir_name, privilege, status FROM ". TABLE_PREFIX . "modules WHERE status<>".AT_MOD_DISABLED;
+		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status<>".AT_MOD_DISABLED;
 		$result = mysql_query($sql, $this->db);
 		while($row = mysql_fetch_assoc($result)) {
-			$module =& new ModuleProxy($row['dir_name'], $row['status'], $row['privilege']);
+			$module =& new ModuleProxy($row['dir_name'], $row['status'], $row['privilege'], $row['admin_privilege']);
 			if ($row['status'] == AT_MOD_ENABLED) {
 				$this->_enabled_modules[$row['dir_name']] =& $module;
 			} else if ($row['status'] == AT_MOD_CORE) {
@@ -129,10 +129,10 @@ class ModuleFactory {
 			return;
 		}
 		$initialised = TRUE;
-		$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_DISABLED;
+		$sql	= "SELECT dir_name, privilege, admin_privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_DISABLED;
 		$result = mysql_query($sql, $this->db);
 		while($row = mysql_fetch_assoc($result)) {
-			$module =& new ModuleProxy($row['dir_name'], FALSE, $row['privilege']);
+			$module =& new ModuleProxy($row['dir_name'], FALSE, $row['privilege'], $row['admin_privilege']);
 			$this->_disabled_modules[$row['dir_name']] =& $module;
 			$this->_all_modules[$row['dir_name']]      =& $module;
 		}
@@ -161,12 +161,14 @@ class ModuleProxy {
 	var $_directoryName;
 	var $_status; // core|enabled|disabled
 	var $_privilege; // priv bit(s) | 0 (in dec form)
+	var $_admin_privilege; // priv bit(s) | 0 (in dec form)
 	var $_pages;
 
-	function ModuleProxy($dir, $status = AT_MOD_DISABLED, $privilege = 0) {
+	function ModuleProxy($dir, $status = AT_MOD_DISABLED, $privilege = 0, $admin_privilege=0) {
 		$this->_directoryName = $dir;
 		$this->_status        = $status;
 		$this->_privilege     = $privilege;
+		$this->_admin_privilege     = $admin_privilege;
 	}
 
 	function isEnabled() {
@@ -179,6 +181,10 @@ class ModuleProxy {
 
 	function getPrivilege() {
 		return $this->_privilege;
+	}
+
+	function getAdminPrivilege() {
+		return $this->_admin_privilege;
 	}
 
 	function getProperties($properties_list) {

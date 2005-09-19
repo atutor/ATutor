@@ -97,7 +97,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$count =0;
 			$student_row['privileges'] = intval($student_row['privileges']);
 
-			$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED);
+			$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE);
 			$keys = array_keys($module_list);
 			natsort($keys);
 			foreach ($keys as $module_name) {

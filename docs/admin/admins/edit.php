@@ -49,38 +49,15 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$priv = 0;
-		if (isset($_POST['priv_users'])) {
-			$priv += AT_ADMIN_PRIV_USERS;
-		}
-
-		if (isset($_POST['priv_courses'])) {
-			$priv += AT_ADMIN_PRIV_COURSES;
-		}
-
-		if (isset($_POST['priv_backups'])) {
-			$priv += AT_ADMIN_PRIV_BACKUPS;
-		}
-
-		if (isset($_POST['priv_forums'])) {
-			$priv += AT_ADMIN_PRIV_FORUMS;
-		}
-
-		if (isset($_POST['priv_categories'])) {
-			$priv += AT_ADMIN_PRIV_CATEGORIES;
-		}
-
-		if (isset($_POST['priv_languages'])) {
-			$priv += AT_ADMIN_PRIV_LANGUAGES;
-		}
-
-		if (isset($_POST['priv_themes'])) {
-			$priv += AT_ADMIN_PRIV_THEMES;
-		}
-
 		if (isset($_POST['priv_admin'])) {
 			// overrides all above.
 			$priv = AT_ADMIN_PRIV_ADMIN;
+		} else {
+			$priv = 0;
+
+			foreach ($_POST['privs'] as $value) {
+				$priv += intval($value);
+			}
 		}
 
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
@@ -112,28 +89,7 @@ if (!isset($_POST['submit'])) {
 	if (query_bit($row['privileges'], AT_ADMIN_PRIV_ADMIN)) {
 		$_POST['priv_admin'] = 1;
 	}
-	if (query_bit($row['privileges'], AT_ADMIN_PRIV_USERS)) {
-		$_POST['priv_users'] = 1;
-	}
-	if (query_bit($row['privileges'], AT_ADMIN_PRIV_COURSES)) {
-		$_POST['priv_courses'] = 1;
-	}
-	if (query_bit($row['privileges'], AT_ADMIN_PRIV_BACKUPS)) {
-		$_POST['priv_backups'] = 1;
-	}
-	if (query_bit($row['privileges'], AT_ADMIN_PRIV_FORUMS)) {
-		$_POST['priv_forums'] = 1;
-	}
-	if (query_bit($row['privileges'], AT_ADMIN_PRIV_CATEGORIES)) {
-		$_POST['priv_categories'] = 1;
-	}
-	if (query_bit($row['privileges'], AT_ADMIN_PRIV_LANGUAGES)) {
-		$_POST['priv_languages'] = 1;
-	}
-	if (query_bit($row['privileges'], AT_ADMIN_PRIV_THEMES)) {
-		$_POST['priv_themes'] = 1;
-	}
-
+	$_POST['privs'] = intval($row['privileges']);
 }
 
 ?>
@@ -167,6 +123,19 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<?php echo _AT('privileges'); ?><br />
 		<input type="checkbox" name="priv_admin" value="1" id="priv_admin" <?php if ($_POST['priv_admin']) { echo 'checked="checked"'; } ?> /><label for="priv_admin"><?php echo _AT('priv_admin_super'); ?></label><br /><br />
+
+		<?php
+			$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE);
+			$keys = array_keys($module_list);
+			natsort($keys);
+		?>
+
+		<?php foreach ($keys as $module_name): ?>
+			<?php $module =& $module_list[$module_name]; ?>
+			<?php if (!($module->getAdminPrivilege() > 1)) { continue; } ?>
+				<input type="checkbox" name="privs[]" value="<?php echo $module->getAdminPrivilege(); ?>" id="priv_<?php echo $module->getAdminPrivilege(); ?>" <?php if (query_bit($_POST['privs'], $module->getAdminPrivilege())) { echo 'checked="checked"'; }  ?> /><label for="priv_<?php echo $module->getAdminPrivilege(); ?>"><?php echo $module->getName($_SESSION['lang']) ?></label><br />
+		<?php endforeach; ?>
+<hr>
 
 		<input type="checkbox" name="priv_users" value="1" id="priv_users" <?php if ($_POST['priv_users']) { echo 'checked="checked"'; } ?> /><label for="priv_users"><?php echo _AT('priv_admin_users'); ?></label><br />
 

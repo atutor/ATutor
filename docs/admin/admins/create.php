@@ -21,6 +21,9 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	debug($_POST);
+	exit;
+
 	/* login validation */
 	if ($_POST['login'] == '') {
 		$msg->addError('LOGIN_NAME_MISSING');
@@ -69,38 +72,15 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$priv = 0;
-		if (isset($_POST['priv_users'])) {
-			$priv += AT_ADMIN_PRIV_USERS;
-		}
-
-		if (isset($_POST['priv_courses'])) {
-			$priv += AT_ADMIN_PRIV_COURSES;
-		}
-
-		if (isset($_POST['priv_backups'])) {
-			$priv += AT_ADMIN_PRIV_BACKUPS;
-		}
-
-		if (isset($_POST['priv_forums'])) {
-			$priv += AT_ADMIN_PRIV_FORUMS;
-		}
-
-		if (isset($_POST['priv_categories'])) {
-			$priv += AT_ADMIN_PRIV_CATEGORIES;
-		}
-
-		if (isset($_POST['priv_languages'])) {
-			$priv += AT_ADMIN_PRIV_LANGUAGES;
-		}
-
-		if (isset($_POST['priv_themes'])) {
-			$priv += AT_ADMIN_PRIV_THEMES;
-		}
-
 		if (isset($_POST['priv_admin'])) {
 			// overrides all above.
 			$priv = AT_ADMIN_PRIV_ADMIN;
+		} else {
+			$priv = 0;
+
+			foreach ($_POST['privs'] as $value) {
+				$priv += intval($value);
+			}
 		}
 
 		$admin_lang = 'en'; // this is not implemented yet!
@@ -150,13 +130,21 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php echo _AT('privileges'); ?><br />
 		<input type="checkbox" name="priv_admin" value="1" id="priv_admin" <?php if ($_POST['priv_admin']) { echo 'checked="checked"'; } ?> /><label for="priv_admin"><?php echo _AT('priv_admin_super'); ?></label><br /><br />
 
+		<?php
+			$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE);
+			$keys = array_keys($module_list);
+			natsort($keys);
+		?>
+
+		<?php foreach ($keys as $module_name): ?>
+			<?php $module =& $module_list[$module_name]; ?>
+			<?php if (!($module->getAdminPrivilege() > 1)) { continue; } ?>
+				<input type="checkbox" name="privs[]" value="<?php echo $module->getAdminPrivilege(); ?>" id="priv_<?php echo $module->getAdminPrivilege(); ?>" <?php if (query_bit($_POST['privs'], $module->getAdminPrivilege())) { echo 'checked="checked"'; }  ?> /><label for="priv_<?php echo $module->getAdminPrivilege(); ?>"><?php echo $module->getName($_SESSION['lang']) ?></label><br />
+		<?php endforeach; ?>
+<hr>
 		<input type="checkbox" name="priv_users" value="1" id="priv_users" <?php if ($_POST['priv_users']) { echo 'checked="checked"'; } ?> /><label for="priv_users"><?php echo _AT('priv_admin_users'); ?></label><br />
 
 		<input type="checkbox" name="priv_courses" value="1" id="priv_courses" <?php if ($_POST['priv_courses']) { echo 'checked="checked"'; } ?> /><label for="priv_courses"><?php echo _AT('priv_admin_courses'); ?></label><br />
-
-		<input type="checkbox" name="priv_backups" value="1" id="priv_backups" <?php if ($_POST['priv_backups']) { echo 'checked="checked"'; } ?> /><label for="priv_backups"><?php echo _AT('priv_admin_backups'); ?></label><br />
-
-		<input type="checkbox" name="priv_forums" value="1" id="priv_forums" <?php if ($_POST['priv_forums']) { echo 'checked="checked"'; } ?> /><label for="priv_forums"><?php echo _AT('priv_admin_forums'); ?></label><br />
 
 		<input type="checkbox" name="priv_categories" value="1" id="priv_categories" <?php if ($_POST['priv_categories']) { echo 'checked="checked"'; } ?> /><label for="priv_categories"><?php echo _AT('priv_admin_categories'); ?></label><br />
 
