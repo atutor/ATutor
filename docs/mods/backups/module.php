@@ -1,7 +1,11 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+define('AT_ADMIN_PRIV_BACKUPS', $this->getAdminPrivilege());
+
 //admin pages
+$_module_pages['admin/courses.php']['children'] = array('admin/backup/index.php');
+
 $_module_pages['admin/backup/index.php']['title_var'] = 'backups';
 $_module_pages['admin/backup/index.php']['parent']    = 'admin/courses.php';
 $_module_pages['admin/backup/index.php']['guide']     = 'admin/?p=4.2.backups.php';
@@ -25,7 +29,6 @@ $_module_pages['admin/backup/index.php']['children']  = array('admin/backup/crea
 //instructor pages
 $_module_pages['tools/backup/index.php']['title_var'] = 'backups';
 $_module_pages['tools/backup/index.php']['guide']     = 'instructor/?p=2.0.backups.php';
-$_module_pages['tools/backup/index.php']['privilege'] = AT_PRIV_ADMIN;
 $_module_pages['tools/backup/index.php']['parent']    = 'tools/index.php';
 $_module_pages['tools/backup/index.php']['children']  = array('tools/backup/create.php', 'tools/backup/upload.php');
 

@@ -43,6 +43,13 @@ define('AT_STATUS_UNCONFIRMED', 1);
 define('AT_STATUS_STUDENT',     2);
 define('AT_STATUS_INSTRUCTOR',  3);
 
+/* $_pages sections */
+define('AT_NAV_PUBLIC', 1);
+define('AT_NAV_START',  2);
+define('AT_NAV_COURSE', 3);
+define('AT_NAV_HOME',   4);
+define('AT_NAV_ADMIN',  5);
+
 /* user permissions */
 
 /* $_privs[priv number] = array(String name, Boolean pen, Boolean tools) */
@@ -73,6 +80,8 @@ $_privs[16384]	= array('name' => 'AT_PRIV_POLLS');
 /* admin privs: */
 define('AT_ADMIN_PRIV_NONE',        0);
 define('AT_ADMIN_PRIV_ADMIN',       1);
+
+/*
 define('AT_ADMIN_PRIV_USERS',       2);
 define('AT_ADMIN_PRIV_COURSES',     4);
 define('AT_ADMIN_PRIV_BACKUPS',     8);
@@ -80,6 +89,7 @@ define('AT_ADMIN_PRIV_FORUMS',     16);
 define('AT_ADMIN_PRIV_CATEGORIES', 32);
 define('AT_ADMIN_PRIV_LANGUAGES',  64);
 define('AT_ADMIN_PRIV_THEMES',    128);
+*/
 
 /* admin log (type of operations) */
 define('AT_ADMIN_LOG_UPDATE',  1);
