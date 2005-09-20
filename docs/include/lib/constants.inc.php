@@ -44,11 +44,11 @@ define('AT_STATUS_STUDENT',     2);
 define('AT_STATUS_INSTRUCTOR',  3);
 
 /* $_pages sections */
-define('AT_NAV_PUBLIC', 1);
-define('AT_NAV_START',  2);
-define('AT_NAV_COURSE', 3);
-define('AT_NAV_HOME',   4);
-define('AT_NAV_ADMIN',  5);
+define('AT_NAV_PUBLIC', 'AT_NAV_PUBLIC');
+define('AT_NAV_START',  'AT_NAV_START');
+define('AT_NAV_COURSE', 'AT_NAV_COURSE');
+define('AT_NAV_HOME',   'AT_NAV_HOME');
+define('AT_NAV_ADMIN',  'AT_NAV_ADMIN');
 
 /* user permissions */
 

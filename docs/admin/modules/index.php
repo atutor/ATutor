@@ -83,7 +83,6 @@ if ($module_bits == 0) {
 $module_list = $moduleFactory->getModules($module_bits);
 $keys = array_keys($module_list);
 natsort($keys);
-
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">

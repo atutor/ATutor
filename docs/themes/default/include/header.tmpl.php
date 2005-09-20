@@ -259,7 +259,7 @@ function toggleToc(objId) {
 				<a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a>
 			<?php endif; ?>
 			<?php if ($i < $num_pages-1): ?>
-				|
+				| 
 			<?php endif; ?>
 		<?php endfor; ?>
 	</div>

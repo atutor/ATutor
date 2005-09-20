@@ -32,11 +32,11 @@ if (isset($_GET['mod'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 $module_list = $moduleFactory->getModules(AT_MODULE_UNINSTALLED);
 $keys = array_keys($module_list);
 natsort($keys);
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
 <div class="input-form">

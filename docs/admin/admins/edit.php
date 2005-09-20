@@ -137,21 +137,6 @@ if (!isset($_POST['submit'])) {
 			<?php if (!($module->getAdminPrivilege() > 1)) { continue; } ?>
 				<input type="checkbox" name="privs[]" value="<?php echo $module->getAdminPrivilege(); ?>" id="priv_<?php echo $module->getAdminPrivilege(); ?>" <?php if (query_bit($_POST['privs'], $module->getAdminPrivilege())) { echo 'checked="checked"'; }  ?> /><label for="priv_<?php echo $module->getAdminPrivilege(); ?>"><?php echo $module->getName($_SESSION['lang']) ?></label><br />
 		<?php endforeach; ?>
-<hr>
-
-		<input type="checkbox" name="priv_users" value="1" id="priv_users" <?php if ($_POST['priv_users']) { echo 'checked="checked"'; } ?> /><label for="priv_users"><?php echo _AT('priv_admin_users'); ?></label><br />
-
-		<input type="checkbox" name="priv_courses" value="1" id="priv_courses" <?php if ($_POST['priv_courses']) { echo 'checked="checked"'; } ?> /><label for="priv_courses"><?php echo _AT('priv_admin_courses'); ?></label><br />
-
-		<input type="checkbox" name="priv_backups" value="1" id="priv_backups" <?php if ($_POST['priv_backups']) { echo 'checked="checked"'; } ?> /><label for="priv_backups"><?php echo _AT('priv_admin_backups'); ?></label><br />
-
-		<input type="checkbox" name="priv_forums" value="1" id="priv_forums" <?php if ($_POST['priv_forums']) { echo 'checked="checked"'; } ?> /><label for="priv_forums"><?php echo _AT('priv_admin_forums'); ?></label><br />
-
-		<input type="checkbox" name="priv_categories" value="1" id="priv_categories" <?php if ($_POST['priv_categories']) { echo 'checked="checked"'; } ?> /><label for="priv_categories"><?php echo _AT('priv_admin_categories'); ?></label><br />
-
-		<input type="checkbox" name="priv_languages" value="1" id="priv_languages" <?php if ($_POST['priv_languages']) { echo 'checked="checked"'; } ?> /><label for="priv_languages"><?php echo _AT('priv_admin_languages'); ?></label><br />
-
-		<input type="checkbox" name="priv_themes" value="1" id="priv_themes" <?php if ($_POST['priv_themes']) { echo 'checked="checked"'; } ?> /><label for="priv_themes"><?php echo _AT('priv_admin_themes'); ?></label>
 	</div>
 
 	<div class="row buttons">
