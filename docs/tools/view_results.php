@@ -21,6 +21,12 @@ if (isset($_POST['back'])) {
 	exit;
 } 
 
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$content_base_href = 'get.php/';
+} else {
+	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $tid = intval($_GET['tid']);
@@ -31,8 +37,8 @@ $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $test_title	= $row['title'];
 
-$mark_right = '<img src="images/checkmark.gif" alt="'._AT('correct_answer').'" />';
-$mark_wrong = '<img src="images/x.gif" alt="'._AT('wrong_answer').'" />';
+$mark_right = '<img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" />';
+$mark_wrong = '<img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" />';
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db); 

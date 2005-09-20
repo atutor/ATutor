@@ -59,6 +59,12 @@ if ($_POST['cancel']) {
 	exit;
 }
 
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$content_base_href = 'get.php/';
+} else {
+	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 	
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
@@ -75,8 +81,8 @@ $out_of		= $row['out_of'];
 $tid = intval($_GET['tid']);
 $rid = intval($_GET['rid']);
 
-$mark_right = '<img src="images/checkmark.gif" alt="'._AT('correct_answer').'" />';
-$mark_wrong = '<img src="images/x.gif" alt="'._AT('wrong_answer').'" />';
+$mark_right = '<img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" />';
+$mark_wrong = '<img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" />';
 
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 $result	= mysql_query($sql, $db);
