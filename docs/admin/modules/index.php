@@ -32,8 +32,10 @@ if ($_GET['disabled']) {
 
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
-	$module->enable();
-	$msg->addFeedback('MOD_ENABLED');
+	if (!$module->isEnabled() && !$module->isCore()) {
+		$module->enable();
+		$msg->addFeedback('MOD_ENABLED');
+	}
 
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;
@@ -44,7 +46,6 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		$msg->addError('DISABLE_CORE_MODULE');
 	} else if ($module->isEnabled()) {
 		$module->disable();
-		//disable($dir_name);
 		$msg->addFeedback('MOD_DISABLED');
 	}
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
