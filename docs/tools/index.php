@@ -24,8 +24,6 @@ natsort($keys);
 echo '<ol>';
 foreach ($keys as $module_name) {
 	$module =& $module_list[$module_name];
-	debug($module_name);
-	debug($module->getPrivilege);
 	if ($module->getPrivilege() && authenticate($module->getPrivilege(), AT_PRIV_RETURN)) {
 		$parent = $module->getChildPage('tools/index.php');
 		echo '<li><a href="' . $parent . '">' . _AT($_pages[$parent]['title_var']) .'</a></li>';
