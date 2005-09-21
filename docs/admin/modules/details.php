@@ -35,7 +35,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $moduleParser =& new ModuleParser();
 
-$_GET['mod'] = str_replace(array('.','..','/'), '', $_GET['mod']);
+$_GET['mod'] = str_replace(array('.','..'), '', $_GET['mod']);
 
 if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 ?>

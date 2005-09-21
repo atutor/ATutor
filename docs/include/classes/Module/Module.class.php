@@ -14,12 +14,19 @@
 
 // module statuses
 // do not confuse with _MOD_ constants!
-// all is (DIS | EN | UN)
-define('AT_MODULE_DISABLED',	1);
-define('AT_MODULE_ENABLED',	    2);
-define('AT_MODULE_CORE',		4);
-define('AT_MODULE_UNINSTALLED',	8); // not in the db
 
+define('AT_MODULE_STATUS_DISABLED',    1);
+define('AT_MODULE_STATUS_ENABLED',     2);
+define('AT_MODULE_STATUS_UNINSTALLED', 4); // not in the db
+
+define('AT_MODULE_TYPE_CORE',     1);
+define('AT_MODULE_TYPE_STANDARD', 2);
+define('AT_MODULE_TYPE_EXTRA',    4);
+
+define('AT_MODULE_DIR_CORE',     'core');
+define('AT_MODULE_DIR_STANDARD', 'standard');
+
+define('AT_MODULE_PATH', realpath(AT_INCLUDE_PATH.'../mods') . DIRECTORY_SEPARATOR);
 
 /**
 * ModuleFactory
@@ -30,121 +37,87 @@ define('AT_MODULE_UNINSTALLED',	8); // not in the db
 */
 class ModuleFactory {
 	// private
-	var $_enabled_modules     = NULL; // make status the key to the array of modules $_modules[STATUS]
-	var $_core_modules        = NULL;
-	var $_disabled_modules    = NULL;
-	var $_installed_modules   = NULL;
-	var $_uninstalled_modules = NULL;
-	var $_all_modules         = NULL;
-
-	var $_db;
+	var $_modules = NULL; // array of module refs
 
 	function ModuleFactory($auto_load = FALSE) {
 		global $db;
 
-		$this->db =& $db;
+		$this->_modules = array();
 
-		$this->_enabled_modules = array();
-		// initialise enabled modules
-		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status<>".AT_MOD_DISABLED;
-		$result = mysql_query($sql, $this->db);
-		while($row = mysql_fetch_assoc($result)) {
-			$module =& new ModuleProxy($row['dir_name'], $row['status'], $row['privilege'], $row['admin_privilege']);
-			if ($row['status'] == AT_MOD_ENABLED) {
-				$this->_enabled_modules[$row['dir_name']] =& $module;
-			} else if ($row['status'] == AT_MOD_CORE) {
-				$this->_core_modules[$row['dir_name']] =& $module;
-			}
-			$this->_all_modules[$row['dir_name']]     =& $module;
-
-			if ($auto_load == TRUE) {
+		if ($auto_load == TRUE) {
+			// initialise enabled modules
+			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
+			$result = mysql_query($sql, $db);
+			while($row = mysql_fetch_assoc($result)) {
+				$module =& new ModuleProxy($row);
+				$this->_modules[$row['dir_name']] =& $module;
 				$module->load();
 			}
 		}
 	}
 
 	// public
-	// state is a bit wise combination of enabled, disabled, and uninstalled.
-	// more specifically AT_MODULE_DISABLED | AT_MODULE_CORE | AT_MODULE_ENABLED | AT_MODULE_UNINSTALLED
-	function & getModules($state) {
-		$modules = array();
-		if (query_bit($state, AT_MODULE_ENABLED)) {
-			$modules =& $this->_enabled_modules;
+	// state := enabled | disabled | uninstalled
+	// type  := core | standard | extra
+	function & getModules($status, $type =0) {
+		global $db;
+
+		$modules     = array();
+		$all_modules = array();
+
+		if ($type == 0) {
+			$type = AT_MODULE_TYPE_CORE | AT_MODULE_TYPE_STANDARD | AT_MODULE_TYPE_EXTRA;
 		}
 
-		if (query_bit($state, AT_MODULE_DISABLED)) {
-			$this->initDisabledModules();
-			$modules = array_merge($modules, $this->_disabled_modules);
+		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules";
+		$result = mysql_query($sql, $db);
+		while($row = mysql_fetch_assoc($result)) {
+			if (!isset($this->_modules[$row['dir_name']])) {
+				$module =& new ModuleProxy($row);
+			} else {
+				$module =& $this->_modules[$row['dir_name']];
+			}
+			$all_modules[$row['dir_name']] =& $module;
 		}
 
-		if (query_bit($state, AT_MODULE_CORE)) {
-			$modules = array_merge($modules, $this->_core_modules);
+		// small performance addition:
+		if (query_bit($status, AT_MODULE_STATUS_UNINSTALLED)) {
+			$dir = opendir(AT_MODULE_PATH);
+			while (false !== ($dir_name = readdir($dir))) {
+				if (($dir_name == '.') 
+					|| ($dir_name == '..') 
+					|| ($dir_name == '.svn') 
+					|| ($dir_name == AT_MODULE_DIR_CORE) 
+					|| ($dir_name == AT_MODULE_DIR_STANDARD)) {
+					continue;
+				}
+
+				if (is_dir(AT_MODULE_PATH . $dir_name) && !isset($all_modules[$dir_name])) {
+					$module =& new ModuleProxy($dir_name);
+					$all_modules[$dir_name] =& $module;
+				}
+			}
+			closedir($dir);
 		}
 
-		if (query_bit($state, AT_MODULE_UNINSTALLED)) {
-			$this->initDisabledModules();
-			$this->initUninstalledModules();
-			$modules = array_merge($modules, $this->_uninstalled_modules);
+		$keys = array_keys($all_modules);
+		foreach ($keys as $dir_name) {
+			$module =& $all_modules[$dir_name];
+			if ($module->checkStatus($status) && $module->checkType($type)) {
+				$modules[$dir_name] =& $module;
+			}
 		}
+
 		return $modules;
 	}
 
 	// public.
 	function & getModule($module_dir) {
-		if (!isset($this->_all_modules[$module_dir])) {
+		if (!isset($this->_modules[$module_dir])) {
 			$module =& new ModuleProxy($module_dir);
-			if ($module->isEnabled()) {
-				$this->_enabled_modules[$module_dir]   =& $module;
-				$this->_installed_modules[$module_dir] =& $module;
-			}
-			$this->_all_modules[$module_dir] =& $module;
+			$this->_modules[$module_dir] =& $module;
 		}
-		return $this->_all_modules[$module_dir];
-	}
-
-	// private
-	function initUnInstalledModules() {
-		$this->initInstalledModules();
-
-		// has to scan the dir
-		$dir = opendir(AT_INCLUDE_PATH.'../mods/');
-		while (false !== ($dir_name = readdir($dir))) {
-			if (($dir_name == '.') || ($dir_name == '..') || ($dir_name == '.svn')) {
-				continue;
-			}
-
-			if (is_dir(AT_INCLUDE_PATH.'../mods/' . $dir_name) && !isset($this->_installed_modules[$dir_name])) {
-				$module =& new ModuleProxy($dir_name, FALSE);
-				$this->_uninstalled_modules[$dir_name] =& $module;
-				$this->_all_modules[$dir_name]         =& $module;
-			}
-		}
-		closedir($dir);
-	}
-
-	// private
-	function initDisabledModules() {
-		static $initialised;
-		if ($initialised) {
-			return;
-		}
-		$initialised = TRUE;
-		$sql	= "SELECT dir_name, privilege, admin_privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_DISABLED;
-		$result = mysql_query($sql, $this->db);
-		while($row = mysql_fetch_assoc($result)) {
-			$module =& new ModuleProxy($row['dir_name'], FALSE, $row['privilege'], $row['admin_privilege']);
-			$this->_disabled_modules[$row['dir_name']] =& $module;
-			$this->_all_modules[$row['dir_name']]      =& $module;
-		}
-	}
-
-	// private
-	function initInstalledModules() {
-		// installed modules are Enabled (always given) + Disabled
-		if (!isset($this->_installed_modules)) {
-			$this->initDisabledModules();
-			$this->_installed_modules = array_merge($this->_enabled_modules, $this->_core_modules, $this->_disabled_modules);
-		}
+		return $this->_modules[$module_dir];
 	}
 }
 
@@ -163,81 +136,89 @@ class ModuleProxy {
 	var $_privilege; // priv bit(s) | 0 (in dec form)
 	var $_admin_privilege; // priv bit(s) | 0 (in dec form)
 	var $_pages;
+	var $_type; // core, standard, extra
 
-	function ModuleProxy($dir, $status = AT_MOD_DISABLED, $privilege = 0, $admin_privilege=0) {
-		$this->_directoryName = $dir;
-		$this->_status        = $status;
-		$this->_privilege     = $privilege;
-		$this->_admin_privilege     = $admin_privilege;
+	function ModuleProxy($row) {
+		if (is_array($row)) {
+			$this->_directoryName   = $row['dir_name'];
+			$this->_status          = $row['status'];
+			$this->_privilege       = $row['privilege'];
+			$this->_admin_privilege = $row['admin_privilege'];
+
+			if (substr($row['dir_name'], 0, 4) == AT_MODULE_DIR_CORE) {
+				$this->_type = AT_MODULE_TYPE_CORE;
+			} else if (substr($row['dir_name'], 0, 8) == AT_MODULE_DIR_STANDARD) {
+				$this->_type = AT_MODULE_TYPE_STANDARD;
+			} else {
+				$this->_type = AT_MODULE_TYPE_EXTRA;
+			}
+		} else {
+			$this->_directoryName   = $row;
+			$this->_status          = AT_MODULE_STATUS_UNINSTALLED;
+			$this->_privilege       = 0;
+			$this->_admin_privilege = 0;
+			$this->_type            = AT_MODULE_TYPE_EXTRA; // standard/core are installed by default
+		}
 	}
 
-	function isEnabled() {
-		return ($this->_status == AT_MOD_ENABLED) ? true : false;
-	}
+	// statuses
+	function checkStatus($status) { return query_bit($status, $this->_status); }
+	function isUninstalled()  { return ($this->_status == AT_MODULE_STATUS_UNINSTALLED)  ? true : false; }
+	function isEnabled()      { return ($this->_status == AT_MODULE_STATUS_ENABLED)      ? true : false; }
+	function isDisabled()     { return ($this->_status == AT_MODULE_STATUS_DISABLED)     ? true : false; }
 
-	function isCore() {
-		return ($this->_status == AT_MOD_CORE) ? true : false;
-	}
+	// types
+	function checkType($type) { return query_bit($type, $this->_type); }
+	function isCore()     { return ($this->_type == AT_MODULE_TYPE_CORE)     ? true : false; }
+	function isStandard() { return ($this->_type == AT_MODULE_TYPE_STANDARD) ? true : false; }
+	function isExtra()    { return ($this->_type == AT_MODULE_TYPE_EXTRA)    ? true : false; }
 
-	function getPrivilege() {
-		return $this->_privilege;
-	}
+	// privileges
+	function getPrivilege()      { return $this->_privilege;       }
+	function getAdminPrivilege() { return $this->_admin_privilege; }
 
-	function getAdminPrivilege() {
-		return $this->_admin_privilege;
+	// private
+	function initModuleObj() {
+		if (!isset($this->_moduleObj)) {
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
 	}
 
 	function getProperties($properties_list) {
 		// this requires a real module object
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		return $this->_moduleObj->getProperties($properties_list);
 	}
 
 	function getProperty($property) {
-		// this requires a real module object
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		return $this->_moduleObj->getProperty($property);
 	}
 
 	function getVersion() {
-		// this requires a real module object
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		return $this->_moduleObj->getVersion();
 	}
 
-
 	function getName($lang) {
-		// this requires a real module object
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		return $this->_moduleObj->getName($lang);
 	}
 
 	function getDescription($lang) {
-		// this requires a real module object
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		return $this->_moduleObj->getDescription($lang);
 	}
 
 	function load() {
-		if (is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module.php')) {
+		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module.php')) {
 			global $_modules, $_pages, $_stacks;
 
-			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module.php');
+			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
 			if (isset($_module_pages)) {
 				$this->_pages =& $_module_pages;
 
 				$_pages = array_merge_recursive($_pages, $this->_pages);
-				//debug($_pages[AT_NAV_ADMIN], $this->_directoryName);
 			}
 
 			//side menu items
@@ -266,7 +247,7 @@ class ModuleProxy {
 	}
 
 	function isBackupable() {
-		return is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
+		return is_file(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
 	}
 
 	function backup($course_id, &$zipfile) {
@@ -284,8 +265,8 @@ class ModuleProxy {
 	}
 
 	function delete($course_id) {
-		if (is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_delete.php')) {
-			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_delete.php');
+		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php')) {
+			require(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php');
 			if (function_exists($this->_directoryName.'_delete')) {
 				$fnctn = $this->_directoryName.'_delete';
 				$fnctn($course_id);
@@ -347,7 +328,7 @@ class Module {
 		require_once(dirname(__FILE__) . '/ModuleParser.class.php');
 		$moduleParser   =& new ModuleParser();
 		$this->_directoryName = $dir_name;
-		$moduleParser->parse(@file_get_contents(AT_INCLUDE_PATH . '../mods/'.$dir_name.'/module.xml'));
+		$moduleParser->parse(@file_get_contents(AT_MODULE_PATH . $dir_name.'/module.xml'));
 		if ($moduleParser->rows[0]) {
 			$this->_properties = $moduleParser->rows[0];
 		} else {
@@ -400,7 +381,7 @@ class Module {
 	}
 
 	function isBackupable() {
-		return is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
+		return is_file(AT_MODULE_PATH . $this->_directoryName . '/module_backup.php');
 	}
 
 	function backup($course_id, &$zipfile) {
@@ -412,7 +393,7 @@ class Module {
 		$now = time();
 
 		if ($this->isBackupable()) {
-			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
+			require(AT_MODULE_PATH . $this->_directoryName . '/module_backup.php');
 			if (isset($sql)) {
 				foreach ($sql as $file_name => $table_sql) {
 					$content = $CSVExport->export($table_sql, $course_id);
@@ -433,7 +414,7 @@ class Module {
 
 	function restore($course_id, $version, $import_dir) {
 		static $CSVImport;
-		if (!file_exists(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php')) {
+		if (!file_exists(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php')) {
 			return;
 		}
 
@@ -441,7 +422,7 @@ class Module {
 			$CSVImport = new CSVImport();
 		}
 
-		require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
+		require(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
 		if (isset($sql)) {
 			foreach ($sql as $table_name => $table_sql) {
 				$CSVImport->import($table_name, $import_dir, $course_id);
@@ -450,8 +431,6 @@ class Module {
 		if (isset($dirs)) {
 			foreach ($dirs as $src => $dest) {
 				$dest = str_replace('?', $course_id, $dest);
-				//debug($dest);
-				//debug($import_dir. $src);
 				copys($import_dir.$src, $dest);
 			}
 		}
@@ -464,14 +443,14 @@ class Module {
 	function enable() {
 		global $db;
 
-		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MOD_ENABLED.' WHERE dir_name="'.$this->_directoryName.'"';
+		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_ENABLED.' WHERE dir_name="'.$this->_directoryName.'"';
 		$result = mysql_query($sql, $db);
 	}
 
 	function disable() {
 		global $db;
 
-		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MOD_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
+		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
 		$result = mysql_query($sql, $db);
 	}
 
@@ -485,7 +464,7 @@ class Module {
 		$admin_priv = AT_PRIV_ADMIN;;
 		// 
 
-		$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MOD_DISABLED.', '.$priv.', '.$admin_priv.')';
+		$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.')';
 		$result = mysql_query($sql, $db);
 	}
 

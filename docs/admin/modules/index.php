@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-$dir_name = str_replace(array('.','..','/'), '', $_GET['mod_dir']);
+$dir_name = str_replace(array('.','..'), '', $_GET['mod_dir']);
 
 $args = '';
 if ($_GET['enabled']) {
@@ -62,26 +62,26 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$module_bits = 0;
+$module_status_bits = $module_type_bits = 0;
 
-if (isset($_GET['enabled'])) {
-	$module_bits += AT_MODULE_ENABLED;
-}
+if (isset($_GET['enabled']))  { $module_status_bits += AT_MODULE_STATUS_ENABLED;  }
+if (isset($_GET['disabled'])) {	$module_status_bits += AT_MODULE_STATUS_DISABLED; }
 
-if (isset($_GET['disabled'])) {
-	$module_bits += AT_MODULE_DISABLED;
-}
+if (isset($_GET['core']))     {  $module_type_bits += AT_MODULE_TYPE_CORE;     }
+if (isset($_GET['standard'])) {  $module_type_bits += AT_MODULE_TYPE_STANDARD; }
+if (isset($_GET['extra']))    {  $module_type_bits += AT_MODULE_TYPE_EXTRA;    }
 
-if (isset($_GET['core'])) {
-	$module_bits += AT_MODULE_CORE;
-}
-
-if ($module_bits == 0) {
-	$module_bits = AT_MODULE_ENABLED + AT_MODULE_DISABLED;
+if ($module_status_bits == 0) {
+	$module_status_bits = AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED;
 	$_GET['enabled'] = $_GET['disabled'] = 1;
 }
 
-$module_list = $moduleFactory->getModules($module_bits);
+if ($module_type_bits == 0) {
+	$module_type_bits = AT_MODULE_TYPE_EXTRA;
+	$_GET['extra'] = 1;
+}
+
+$module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits);
 $keys = array_keys($module_list);
 natsort($keys);
 ?>
@@ -93,10 +93,18 @@ natsort($keys);
 		</div>
 
 		<div class="row">
+			<?php echo _AT('type'); ?><br />
+			<input type="checkbox" name="core" value="1" id="t0" <?php if (isset($_GET['core'])) { echo 'checked="checked"'; } ?> /><label for="t0"><?php echo _AT('core'); ?></label>
+
+			<input type="checkbox" name="standard" value="1" id="t1" <?php if (isset($_GET['standard'])) { echo 'checked="checked"'; } ?> /><label for="t1"><?php echo _AT('standard'); ?></label> 
+
+			<input type="checkbox" name="extra" value="1" id="t2" <?php if (isset($_GET['extra'])) { echo 'checked="checked"'; } ?> /><label for="t2"><?php echo _AT('extra'); ?></label> 
+		</div>
+
+
+		<div class="row">
 			<?php echo _AT('status'); ?><br />
 			<input type="checkbox" name="enabled" value="1" id="s0" <?php if (isset($_GET['enabled'])) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('enabled'); ?></label> 
-
-			<input type="checkbox" name="core" value="1" id="s2" <?php if (isset($_GET['core'])) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('core'); ?></label>
 
 			<input type="checkbox" name="disabled" value="1" id="s1" <?php if (isset($_GET['disabled'])) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('disabled'); ?></label> 
 		</div>
@@ -117,13 +125,14 @@ natsort($keys);
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('module_name'); ?></th>
+	<th scope="col"><?php echo _AT('type'); ?></th>
 	<th scope="col"><?php echo _AT('status'); ?></th>
 	<th scope="col"><?php echo _AT('directory_name'); ?></th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="4">
+	<td colspan="5">
 		<input type="submit" name="details" value="<?php echo _AT('details'); ?>" />
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
@@ -139,7 +148,14 @@ natsort($keys);
 		<td valign="top"><?php
 			if ($module->isCore()) {
 				echo '<strong>'._AT('core').'</strong>';
-			} else if ($module->isEnabled()) {
+			} else if ($module->isStandard()) {
+				echo _AT('standard');
+			} else {
+				echo _AT('extra');
+			}
+			?></td>
+		<td valign="top"><?php
+			if ($module->isEnabled()) {
 				echo _AT('enabled');
 			} else {
 				echo '<em>'._AT('disabled').'</em>';
@@ -150,7 +166,7 @@ natsort($keys);
 <?php endforeach; ?>
 <?php if (!$keys): ?>
 	<tr>
-		<td colspan="4"><?php echo _AT('none_found'); ?></td>
+		<td colspan="5"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>

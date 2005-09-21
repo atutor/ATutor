@@ -31,7 +31,7 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$_GET['mod'] = str_replace(array('.','..','/'), '', $_GET['mod']);  
+$_GET['mod'] = str_replace(array('.','..'), '', $_GET['mod']);  
 $hidden_vars['mod']   = $_GET['mod'];
 $msg->addConfirm(array('ADD_MODULE', $_GET['mod']), $hidden_vars);
 $msg->printConfirm();

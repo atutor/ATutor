@@ -129,7 +129,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="checkbox" name="priv_admin" value="1" id="priv_admin" <?php if ($_POST['priv_admin']) { echo 'checked="checked"'; } ?> /><label for="priv_admin"><?php echo _AT('priv_admin_super'); ?></label><br /><br />
 
 		<?php
-			$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE);
+			$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
 			$keys = array_keys($module_list);
 			natsort($keys);
 		?>

@@ -21,8 +21,7 @@ function delete_course($course, $material) {
 		unset($_SESSION['s_cid']);
 	}
 
-	$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE | AT_MODULE_DISABLED);
-
+	$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_DISABLED);
 	$keys = array_keys($module_list);
 
 	//loop through mods and call delete function

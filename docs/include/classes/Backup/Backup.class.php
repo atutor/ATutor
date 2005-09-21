@@ -105,7 +105,7 @@ class Backup {
 		$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';
 		$zipfile->add_file($package_identifier, 'atutor_backup_version', $timestamp);
 
-		$modules = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE | AT_MODULE_DISABLED);
+		$modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_DISABLED);
 		$keys = array_keys($modules);
 		foreach($keys as $module_name) {
 			$module =& $modules[$module_name];

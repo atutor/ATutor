@@ -18,13 +18,13 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
 
 if (isset($_GET['mod'])) {
-	$dir_name = str_replace(array('.','..','/'), '', $_GET['mod']);
+	$dir_name = str_replace(array('.','..'), '', $_GET['mod']);
 
 	if (isset($_GET['install'])) {
-		header('Location: '.$_base_href.'admin/modules/confirm.php?mod='.$dir_name);
+		header('Location: '.$_base_href.'admin/modules/confirm.php?mod='.urlencode($dir_name));
 		exit;
 	} elseif ($_GET['details']) {
-		header('Location: '.$_base_href.'admin/modules/details.php?mod='.$dir_name.SEP.'new=1');
+		header('Location: '.$_base_href.'admin/modules/details.php?mod='.urlencode($dir_name).SEP.'new=1');
 		exit;
 	}
 
@@ -33,7 +33,7 @@ if (isset($_GET['mod'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-$module_list = $moduleFactory->getModules(AT_MODULE_UNINSTALLED);
+$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_UNINSTALLED, AT_MODULE_TYPE_EXTRA);
 $keys = array_keys($module_list);
 natsort($keys);
 
@@ -41,7 +41,7 @@ natsort($keys);
 
 <div class="input-form">
 	<div class="row">
-		<?php echo _AT('install_module_text', realpath('./../../mods/')); ?>		
+		<?php echo _AT('install_module_text', realpath('./../../mods')); ?>		
 	</div>
 </div>
 
