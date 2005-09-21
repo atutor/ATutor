@@ -25,7 +25,6 @@ foreach ($keys as $module_name) {
 	$module =& $module_list[$module_name];
 	if ($module->getPrivilege() && authenticate($module->getPrivilege(), AT_PRIV_RETURN)) {
 		$parent = $module->getChildPage('tools/index.php');
-	//	echo '<li><a href="' . $parent . '">' . _AT($_pages[$parent]['title_var']) .' - ' . $_pages[$parent]['title_var'] . '</a></li>';
 		echo '<li><a href="' . $parent . '">' . $module->getName($_SESSION['lang']) . '</a></li>';
 	}
 }
