@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
-    <name lang="en">Course Tools</name> 
+    <name lang="en">Student Tools</name> 
     <description lang="en">Allows instructors to set which course tools will be available to students on the home page and/or coruse navigation.  Instructors can also select which available side menu items will be shown for the course.</description> 
     <maintainers>
         <maintainer> 
