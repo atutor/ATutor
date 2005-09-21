@@ -127,9 +127,8 @@ if (!isset($_POST['submit'])) {
 		<input type="checkbox" name="priv_admin" value="1" id="priv_admin" <?php if ($_POST['priv_admin']) { echo 'checked="checked"'; } ?> /><label for="priv_admin"><?php echo _AT('priv_admin_super'); ?></label><br /><br />
 
 		<?php
-			$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
+			$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
 			$keys = array_keys($module_list);
-			natsort($keys);
 		?>
 
 		<?php foreach ($keys as $module_name): ?>

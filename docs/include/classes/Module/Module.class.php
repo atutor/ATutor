@@ -59,7 +59,8 @@ class ModuleFactory {
 	// public
 	// state := enabled | disabled | uninstalled
 	// type  := core | standard | extra
-	function & getModules($status, $type =0) {
+	// sor   := true | false
+	function & getModules($status, $type = 0, $sort = FALSE) {
 		global $db;
 
 		$modules     = array();
@@ -108,6 +109,9 @@ class ModuleFactory {
 			}
 		}
 
+		if ($sort) {
+			uasort($modules, array($this, 'compare'));
+		}
 		return $modules;
 	}
 
@@ -119,6 +123,14 @@ class ModuleFactory {
 		}
 		return $this->_modules[$module_dir];
 	}
+
+	// private
+	// used for sorting modules
+	function compare($a, $b) {
+		return strnatcmp($a->getName($_SESSION['lang']), $b->getName($_SESSION['lang']));
+	}
+
+
 }
 
 /**
@@ -138,6 +150,7 @@ class ModuleProxy {
 	var $_pages;
 	var $_type; // core, standard, extra
 
+	// constructor
 	function ModuleProxy($row) {
 		if (is_array($row)) {
 			$this->_directoryName   = $row['dir_name'];
@@ -145,9 +158,9 @@ class ModuleProxy {
 			$this->_privilege       = $row['privilege'];
 			$this->_admin_privilege = $row['admin_privilege'];
 
-			if (substr($row['dir_name'], 0, strlen(AT_MODULE_DIR_CORE)) == AT_MODULE_DIR_CORE) {
+			if (strpos($row['dir_name'], AT_MODULE_DIR_CORE) === 0) {
 				$this->_type = AT_MODULE_TYPE_CORE;
-			} else if (substr($row['dir_name'], 0, strlen(AT_MODULE_DIR_STANDARD)) == AT_MODULE_DIR_STANDARD) {
+			} else if (strpos($row['dir_name'], AT_MODULE_DIR_STANDARD) === 0) {
 				$this->_type = AT_MODULE_TYPE_STANDARD;
 			} else {
 				$this->_type = AT_MODULE_TYPE_EXTRA;
@@ -177,7 +190,7 @@ class ModuleProxy {
 	function getPrivilege()      { return $this->_privilege;       }
 	function getAdminPrivilege() { return $this->_admin_privilege; }
 
-	// private
+	// private!
 	function initModuleObj() {
 		if (!isset($this->_moduleObj)) {
 			$this->_moduleObj =& new Module($this->_directoryName);
@@ -251,16 +264,12 @@ class ModuleProxy {
 	}
 
 	function backup($course_id, &$zipfile) {
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		$this->_moduleObj->backup($course_id, $zipfile);
 	}
 
 	function restore($course_id, $version, $import_dir) {
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		$this->_moduleObj->restore($course_id, $version, $import_dir);
 	}
 
@@ -275,27 +284,19 @@ class ModuleProxy {
 	}
 
 	function enable() {
-		if (!isset($this->_moduleObj)) { 
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		$this->_moduleObj->enable();
-
 		$this->_status = AT_MOD_ENABLED;
 	}
 
 	function disable() {
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		$this->_moduleObj->disable();
-
 		$this->_status = AT_MOD_DISABLED;
 	}
 
 	function install() {
-		if (!isset($this->_moduleObj)) { 
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
+		$this->initModuleObj();
 		$this->_moduleObj->install();
 	}
 
@@ -346,8 +347,14 @@ class Module {
 		if (!$this->_properties) {
 			return;
 		}
+		if (false && isset($this->_properties['name'][$lang])) {
+			return $this->_properties['name'][$lang];
+		}
+		return _AT(basename($this->_directoryName));
 
-		return (isset($this->_properties['name'][$lang]) ? $this->_properties['name'][$lang] : current($this->_properties['name']));
+		//return _AT($this->_dir_name);
+
+		//return ( ? $this->_properties['name'][$lang] : current($this->_properties['name']));
 	}
 
 	function getDescription($lang = 'en') {

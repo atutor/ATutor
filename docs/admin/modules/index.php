@@ -77,11 +77,10 @@ if ($module_type_bits == 0) {
 	$_GET['standard'] = $_GET['extra'] = 1;
 }
 
-$module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits);
-$keys = array_keys($module_list);
-//natsort($keys);
-?>
 
+$module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits, $sort = TRUE);
+$keys = array_keys($module_list);
+?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
 		<div class="row">

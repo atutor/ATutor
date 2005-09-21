@@ -96,9 +96,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<?php		
 			$count =0;
 			$student_row['privileges'] = intval($student_row['privileges']);
-			$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
+			$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
 			$keys = array_keys($module_list);
-			natsort($keys);
 			foreach ($keys as $module_name) {
 				$module =& $module_list[$module_name];
 				if (!($module->getPrivilege() > 1)) {
