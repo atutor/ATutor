@@ -23,8 +23,8 @@ define('AT_MODULE_TYPE_CORE',     1);
 define('AT_MODULE_TYPE_STANDARD', 2);
 define('AT_MODULE_TYPE_EXTRA',    4);
 
-define('AT_MODULE_DIR_CORE',     'core');
-define('AT_MODULE_DIR_STANDARD', 'standard');
+define('AT_MODULE_DIR_CORE',     '_core');
+define('AT_MODULE_DIR_STANDARD', '_standard');
 
 define('AT_MODULE_PATH', realpath(AT_INCLUDE_PATH.'../mods') . DIRECTORY_SEPARATOR);
 
@@ -145,9 +145,9 @@ class ModuleProxy {
 			$this->_privilege       = $row['privilege'];
 			$this->_admin_privilege = $row['admin_privilege'];
 
-			if (substr($row['dir_name'], 0, 4) == AT_MODULE_DIR_CORE) {
+			if (substr($row['dir_name'], 0, strlen(AT_MODULE_DIR_CORE)) == AT_MODULE_DIR_CORE) {
 				$this->_type = AT_MODULE_TYPE_CORE;
-			} else if (substr($row['dir_name'], 0, 8) == AT_MODULE_DIR_STANDARD) {
+			} else if (substr($row['dir_name'], 0, strlen(AT_MODULE_DIR_STANDARD)) == AT_MODULE_DIR_STANDARD) {
 				$this->_type = AT_MODULE_TYPE_STANDARD;
 			} else {
 				$this->_type = AT_MODULE_TYPE_EXTRA;
