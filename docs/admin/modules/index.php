@@ -19,16 +19,12 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 $dir_name = str_replace(array('.','..'), '', $_GET['mod_dir']);
 
 $args = '';
-if ($_GET['enabled']) {
-	$args .= 'enabled=1';
-}
-if ($_GET['core']) {
-	$args .= SEP.'core=1';
-}
 
-if ($_GET['disabled']) {
-	$args .= SEP.'disabled=1';
-}
+if (isset($_GET['enabled'])  && $_GET['enabled'])  {  $args .= 'enabled=1';      }
+if (isset($_GET['disabled']) && $_GET['disabled']) {  $args .= SEP.'disabled=1'; }
+if (isset($_GET['core'])     && $_GET['core'])     {  $args .= SEP.'core=1';     }
+if (isset($_GET['standard']) && $_GET['standard']) {  $args .= SEP.'standard=1'; }
+if (isset($_GET['extra'])    && $_GET['extra'])    {  $args .= SEP.'extra=1';    }
 
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
@@ -77,13 +73,13 @@ if ($module_status_bits == 0) {
 }
 
 if ($module_type_bits == 0) {
-	$module_type_bits = AT_MODULE_TYPE_EXTRA;
-	$_GET['extra'] = 1;
+	$module_type_bits = AT_MODULE_TYPE_STANDARD + AT_MODULE_TYPE_EXTRA;
+	$_GET['standard'] = $_GET['extra'] = 1;
 }
 
 $module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits);
 $keys = array_keys($module_list);
-natsort($keys);
+//natsort($keys);
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -117,9 +113,12 @@ natsort($keys);
 </form>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
+
 <input type="hidden" name="enabled" value="<?php echo (int) $_GET['enabled']; ?>" />
-<input type="hidden" name="core" value="<?php echo (int) $_GET['core']; ?>" />
 <input type="hidden" name="disabled" value="<?php echo (int) $_GET['disabled']; ?>" />
+<input type="hidden" name="standard" value="<?php echo (int) $_GET['standard']; ?>" />
+<input type="hidden" name="extra" value="<?php echo (int) $_GET['extra']; ?>" />
+
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>
