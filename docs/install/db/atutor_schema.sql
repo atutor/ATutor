@@ -1,4 +1,4 @@
-#####################################################
+f#####################################################
 # Database setup SQL for a new install of ATutor
 #####################################################
 # $Id$
@@ -371,21 +371,31 @@ CREATE TABLE `modules` (
 PRIMARY KEY ( `dir_name` )  
 );
 
-INSERT INTO `modules` VALUES ('content_pages', 2, 2, 0);
-INSERT INTO `modules` VALUES ('glossary', 2, 4, 0);
-INSERT INTO `modules` VALUES ('tests', 2, 8, 0);
-INSERT INTO `modules` VALUES ('chat', 1, 16, 0);
-INSERT INTO `modules` VALUES ('file_manager', 2, 32, 0);
-INSERT INTO `modules` VALUES ('links', 1, 64, 0);
-INSERT INTO `modules` VALUES ('forums', 1, 128, 16);
-INSERT INTO `modules` VALUES ('course_tools', 1, 256, 0);
-INSERT INTO `modules` VALUES ('enrollment', 1, 512, 0);
-INSERT INTO `modules` VALUES ('course_email', 1, 1024, 0);
-INSERT INTO `modules` VALUES ('announcements', 1, 2048, 0);
-# INSERT INTO `modules` VALUES ('acollab', 1, 8192+4096, 0);
-INSERT INTO `modules` VALUES ('polls', 1, 16384, 0);
-INSERT INTO `modules` VALUES ('statistics', 1, 0, 0);
-INSERT INTO `modules` VALUES ('groups', 1, 0, 0);
+INSERT INTO `modules` VALUES ('core/content_pages', 2, 2, 0);
+INSERT INTO `modules` VALUES ('core/glossary', 2, 4, 0);
+INSERT INTO `modules` VALUES ('core/tests', 2, 8, 0);
+INSERT INTO `modules` VALUES ('standard/chat', 2, 16, 0);
+INSERT INTO `modules` VALUES ('core/file_manager', 2, 32, 0);
+INSERT INTO `modules` VALUES ('standard/links', 2, 64, 0);
+INSERT INTO `modules` VALUES ('standard/forums', 2, 128, 16);
+INSERT INTO `modules` VALUES ('core/student_tools', 2, 256, 0);
+INSERT INTO `modules` VALUES ('core/enrollment', 2, 512, 0);
+INSERT INTO `modules` VALUES ('standard/course_email', 2, 1024, 0);
+INSERT INTO `modules` VALUES ('standard/announcements', 2, 2048, 0);
+# INSERT INTO `modules` VALUES ('acollab', 2, 8192+4096, 0);
+INSERT INTO `modules` VALUES ('standard/polls', 2, 16384, 0);
+INSERT INTO `modules` VALUES ('standard/statistics', 2, 0, 0);
+INSERT INTO `modules` VALUES ('core/groups', 2, 0, 0);
+INSERT INTO `modules` VALUES ('standard/directory', 2, 0, 0);
+INSERT INTO `modules` VALUES ('standard/tile', 2, 0, 0);
+INSERT INTO `modules` VALUES ('standard/sitemap', 2, 0, 0);
+INSERT INTO `modules` VALUES ('core/properties', 2, 0, 0);
+INSERT INTO `modules` VALUES ('core/users', 2, 0, 2);
+INSERT INTO `modules` VALUES ('core/courses_admin', 2, 0, 4);
+INSERT INTO `modules` VALUES ('core/backups', 2, 0, 8);
+INSERT INTO `modules` VALUES ('core/course_categories', 2, 0, 32);
+INSERT INTO `modules` VALUES ('core/languages', 2, 0, 64);
+INSERT INTO `modules` VALUES ('core/themes', 2, 0, 128);
 
 
 # --------------------------------------------------------

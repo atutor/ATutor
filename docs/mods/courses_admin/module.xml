@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
-    <name lang="en">Manage Course</name> 
+    <name lang="en">Courses Admin</name> 
     <description lang="en">Allows administrators to manage the courses on a system. </description> 
     <maintainers>
         <maintainer> 

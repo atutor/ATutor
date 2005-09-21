@@ -1,7 +1,7 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_PRIV_COURSE_TOOLS', $this->getPrivilege());
+define('AT_PRIV_STYLES', $this->getPrivilege());
 
 $_module_pages['tools/modules.php']['title_var'] = 'student_tools';
 $_module_pages['tools/modules.php']['parent']    = 'tools/index.php';
