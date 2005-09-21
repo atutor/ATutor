@@ -15,12 +15,12 @@ PRIMARY KEY ( `dir_name` )
 
 INSERT INTO `modules` VALUES ('core/content_pages', 2, 2, 0);
 INSERT INTO `modules` VALUES ('core/glossary', 2, 4, 0);
-INSERT INTO `modules` VALUES ('core/tests', 2, 8, 0);
+INSERT INTO `modules` VALUES ('standard/tests', 2, 8, 0);
 INSERT INTO `modules` VALUES ('standard/chat', 2, 16, 0);
 INSERT INTO `modules` VALUES ('core/file_manager', 2, 32, 0);
 INSERT INTO `modules` VALUES ('standard/links', 2, 64, 0);
 INSERT INTO `modules` VALUES ('standard/forums', 2, 128, 16);
-INSERT INTO `modules` VALUES ('core/student_tools', 2, 256, 0);
+INSERT INTO `modules` VALUES ('standard/student_tools', 2, 256, 0);
 INSERT INTO `modules` VALUES ('core/enrollment', 2, 512, 0);
 INSERT INTO `modules` VALUES ('standard/course_email', 2, 1024, 0);
 INSERT INTO `modules` VALUES ('standard/announcements', 2, 2048, 0);

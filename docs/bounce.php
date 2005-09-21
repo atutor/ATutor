@@ -13,8 +13,12 @@
 // $Id$
 
 function count_login( ) {
-	global $db;
+	global $db, $moduleFactory;
 
+	$module =& $moduleFactory->getModule('standard/statistics');
+	if (!$module->isEnabled()) {
+		return;
+	}
 	if ($_SESSION['is_guest']) {
 	    $sql   = "INSERT INTO ".TABLE_PREFIX."course_stats VALUES ($_SESSION[course_id], NOW(), 1, 0)";
 	} else {

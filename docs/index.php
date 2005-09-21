@@ -42,10 +42,16 @@ if (!$page) {
 	$page = 1;
 }	
 
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."news WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
+$module =& $moduleFactory->getModule('standard/announcements');
+if (!$module->isEnabled()) {
+	$result = FALSE;
+	$news = array();
+} else {
+	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."news WHERE course_id=$_SESSION[course_id]";
+	$result = mysql_query($sql, $db);
+}
 
-if ($row = mysql_fetch_assoc($result)) {	
+if ($result && ($row = mysql_fetch_assoc($result))) {
 	$num_results = $row['cnt'];
 	$results_per_page = NUM_ANNOUNCEMENTS;
 	$num_pages = ceil($num_results / $results_per_page);
