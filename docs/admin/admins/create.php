@@ -136,7 +136,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php foreach ($keys as $module_name): ?>
 			<?php $module =& $module_list[$module_name]; ?>
 			<?php if (!($module->getAdminPrivilege() > 1)) { continue; } ?>
-				<input type="checkbox" name="privs[]" value="<?php echo $module->getAdminPrivilege(); ?>" id="priv_<?php echo $module->getAdminPrivilege(); ?>" <?php if (query_bit($_POST['privs'], $module->getAdminPrivilege())) { echo 'checked="checked"'; }  ?> /><label for="priv_<?php echo $module->getAdminPrivilege(); ?>"><?php echo $module->getName($_SESSION['lang']) ?></label><br />
+				<input type="checkbox" name="privs[]" value="<?php echo $module->getAdminPrivilege(); ?>" id="priv_<?php echo $module->getAdminPrivilege(); ?>" <?php if (query_bit($_POST['privs'], $module->getAdminPrivilege())) { echo 'checked="checked"'; }  ?> /><label for="priv_<?php echo $module->getAdminPrivilege(); ?>"><?php echo $module->getName() ?></label><br />
 		<?php endforeach; ?>
 	</div>
 

@@ -76,7 +76,7 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 <input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo $module->getName($_SESSION['lang']); ?></h3>
+		<h3><?php echo $module->getName(); ?></h3>
 	</div>
 
 	<div class="row">

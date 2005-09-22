@@ -64,7 +64,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 		<?php foreach($keys as $module_name): ?>
 			<?php $module =& $modules[$module_name]; ?>
 			<?php if ($module->isBackupable()): ?>
-				<input type="checkbox" value="1" name="material[<?php echo $module_name; ?>]" id="m<?php echo $module_name; ?>" /><label for="m<?php echo $module_name; ?>"><?php echo $module->getName($_SESSION['lang']); ?></label><br />
+				<input type="checkbox" value="1" name="material[<?php echo $module_name; ?>]" id="m<?php echo $module_name; ?>" /><label for="m<?php echo $module_name; ?>"><?php echo $module->getName(); ?></label><br />
 			<?php endif; ?>
 		<?php endforeach; ?>
 

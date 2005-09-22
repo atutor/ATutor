@@ -142,7 +142,7 @@ $keys = array_keys($module_list);
 
 	<tr onmousedown="document.form['t_<?php echo $dir_name; ?>'].checked = true;">
 		<td valign="top"><input type="radio" id="t_<?php echo $dir_name; ?>" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $dir_name; ?>"><?php echo $module->getName($_SESSION['lang']); ?></label></td>
+		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $dir_name; ?>"><?php echo $module->getName(); ?></label></td>
 		<td valign="top"><?php
 			if ($module->isCore()) {
 				echo '<strong>'._AT('core').'</strong>';

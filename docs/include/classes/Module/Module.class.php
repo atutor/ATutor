@@ -127,7 +127,7 @@ class ModuleFactory {
 	// private
 	// used for sorting modules
 	function compare($a, $b) {
-		return strnatcmp($a->getName($_SESSION['lang']), $b->getName($_SESSION['lang']));
+		return strnatcmp($a->getName(), $b->getName());
 	}
 
 
@@ -213,9 +213,11 @@ class ModuleProxy {
 		return $this->_moduleObj->getVersion();
 	}
 
-	function getName($lang) {
-		$this->initModuleObj();
-		return $this->_moduleObj->getName($lang);
+	function getName() {
+		if ($this->isUninstalled()) {
+			return current($this->getProperty('name'));
+		}
+		return _AT(basename($this->_directoryName));
 	}
 
 	function getDescription($lang) {
@@ -341,22 +343,6 @@ class Module {
 		return $this->_properties['version'];
 	}
 
-	function getName($lang = 'en') {
-		// this may have to connect to the DB to get the name.
-		// such that, it returns _AT($this->_directory_name) instead.
-		if (!$this->_properties) {
-			return;
-		}
-		if (false && isset($this->_properties['name'][$lang])) {
-			return $this->_properties['name'][$lang];
-		}
-		return _AT(basename($this->_directoryName));
-
-		//return _AT($this->_dir_name);
-
-		//return ( ? $this->_properties['name'][$lang] : current($this->_properties['name']));
-	}
-
 	function getDescription($lang = 'en') {
 		// this may have to connect to the DB to get the name.
 		// such that, it returns _AT($this->_directory_name) instead.
@@ -371,7 +357,6 @@ class Module {
 		if (!$this->_properties) {
 			return;
 		}
-
 		$properties_list = array_flip($properties_list);
 		foreach ($properties_list as $property => $garbage) {
 			$properties_list[$property] = $this->_properties[$property];

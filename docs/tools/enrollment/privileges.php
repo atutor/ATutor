@@ -110,7 +110,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					echo 'checked="checked"';
 				} 
 
-				echo ' />'.$module->getName($_SESSION['lang']).'</label></td>';
+				echo ' />'.$module->getName().'</label></td>';
 
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
