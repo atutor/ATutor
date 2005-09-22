@@ -13,9 +13,12 @@
 	<core>false</core>
 	<release> 
         <version>0.1</version> 
-        <use_privilege>true</use_privilege> 
+		<privileges>
+			<instructor_privilege>existing</instructor_privilege>
+			<admin_privilege></admin_privilege> 
+		</privileges>
         <date>2005-08-22</date> 
         <state>stable</state> 
-        <notes>This is a core module.  Must enable the SCORM 1.2 RTE in the administrator's System Preferences.</notes> 
+        <notes>This is a core module. Must enable the SCORM 1.2 RTE in the administrator's System Preferences.</notes> 
     </release> 
 </module>

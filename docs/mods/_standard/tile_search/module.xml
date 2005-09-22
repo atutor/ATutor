@@ -13,9 +13,12 @@
 	<core>false</core>
 	<release> 
         <version>0.1</version> 
-        <use_privilege>true</use_privilege> 
+		<privileges>
+			<instructor_privilege></instructor_privilege>
+			<admin_privilege></admin_privilege> 
+		</privileges>
         <date>2005-08-29</date> 
         <state>stable</state> 
-        <notes>This is a core module.  See http://barrierfree.ca/tile/ for more information on TILE.</notes> 
+        <notes>This is a standard module.  See http://barrierfree.ca/tile/ for more information on TILE.</notes> 
     </release> 
 </module>

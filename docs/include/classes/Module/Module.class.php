@@ -344,8 +344,6 @@ class Module {
 	}
 
 	function getDescription($lang = 'en') {
-		// this may have to connect to the DB to get the name.
-		// such that, it returns _AT($this->_directory_name) instead.
 		if (!$this->_properties) {
 			return;
 		}
@@ -449,12 +447,26 @@ class Module {
 	function install() {
 		global $db;
 
-		// get the module details from the XML file.
+		$sql = "SELECT MAX(`privilege`) AS `privilege`, MAX(admin_privilege) AS admin_privilege FROM ".TABLE_PREFIX."modules";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
 
-		// if use_privilege then set $priv to the next available privilege on the system
-		$priv = AT_PRIV_ADMIN; //or function: get next avail priv
-		$admin_priv = AT_PRIV_ADMIN;;
-		// 
+		debug($this->_properties);
+		if (strcasecmp($this->_properties['instructor_privilege'], 'create') == 0) {
+			$priv = $row['privilege'] * 2;
+		} else if (strcasecmp($this->_properties['instructor_privilege'], 'existing') == 0) {
+			$priv = AT_PRIV_ADMIN;
+		} else {
+			$priv = 0;
+		}
+
+		if (strcasecmp($this->_properties['admin_privilege'], 'create') == 0) {
+			$admin_priv = $row['admin_privilege'] * 2;
+		} else if (strcasecmp($this->_properties['admin_privilege'], 'existing') == 0) {
+			$admin_priv = AT_ADMIN_PRIV_ADMIN;
+		} else {
+			$admin_priv = 0;
+		}
 
 		$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.')';
 		$result = mysql_query($sql, $db);
