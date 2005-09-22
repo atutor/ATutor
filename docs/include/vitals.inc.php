@@ -706,4 +706,12 @@ require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
 $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
 
+
+/*
+$module =& $moduleFactory->getModule('scorm_packages');
+
+$module->install();
+exit;
+/* */
+
 ?>

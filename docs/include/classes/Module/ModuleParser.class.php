@@ -121,6 +121,8 @@ class ModuleParser {
 			$this->rows[$this->row_num]['instructor_privilege'] = trim($this->character_data);
 		} else if ($this->element_path === array('module', 'release', 'privileges', 'admin_privilege')) {
 			$this->rows[$this->row_num]['admin_privilege'] = trim($this->character_data);
+		} else if ($this->element_path === array('module', 'release', 'directory')) {
+			$this->rows[$this->row_num]['directory'] = trim($this->character_data);
 		}
 		array_pop($this->element_path);
 		$this->character_data = '';

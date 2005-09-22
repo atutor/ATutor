@@ -24,12 +24,34 @@ if (isset($_POST['submit_no'])) {
 	$module =& $moduleFactory->getModule($_POST['mod']);
 	$module->install();
 
-	$msg->addFeedback('MOD_INSTALLED');
-	header('Location: '.$_base_href.'admin/modules/index.php');
+	if ($msg->containsErrors()) {
+		header('Location: '.$_base_href.'admin/modules/confirm.php?mod='.$_POST['mod']);
+	} else {
+		$msg->addFeedback('MOD_INSTALLED');
+		header('Location: '.$_base_href.'admin/modules/index.php');
+	} 
 	exit;
 }  
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
+?>
+
+<div class="input-form">
+	<div class="row"><h3><?php echo _AT('instructions'); ?></h3></div>
+
+	<div class="row"><?php 
+		$module =& $moduleFactory->getModule($_GET['mod']);
+
+		$directory = $module->getProperty('directory');
+		if ($directory) {
+			echo _AT('module_install_directory', AT_MODULE_PATH .  $_GET['mod'] . DIRECTORY_SEPARATOR . $directory);
+		} else {
+			echo _AT('none');
+		}
+		?></div>
+</div>
+
+<?php
 
 $_GET['mod'] = str_replace(array('.','..'), '', $_GET['mod']);  
 $hidden_vars['mod']   = $_GET['mod'];

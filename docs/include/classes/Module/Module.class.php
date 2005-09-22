@@ -451,7 +451,6 @@ class Module {
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 
-		debug($this->_properties);
 		if (strcasecmp($this->_properties['instructor_privilege'], 'create') == 0) {
 			$priv = $row['privilege'] * 2;
 		} else if (strcasecmp($this->_properties['instructor_privilege'], 'existing') == 0) {
@@ -468,8 +467,27 @@ class Module {
 			$admin_priv = 0;
 		}
 
+		// check if the directory is writeable
+		if ($this->_properties['directory']) {
+			$dir = AT_MODULE_PATH . $this->_directoryName . DIRECTORY_SEPARATOR . $this->_properties['directory'];
+			if (!is_dir($dir) && !@mkdir($dir)) {
+				global $msg;
+				$msg->addError(array('DIR_NOT_EXIST', $dir));
+				return;
+			} else if (!is_writable($dir) && @chmod($dir, 0666)) {
+				global $msg;
+				$msg->addError(array('DIR_NOT_WRITEABLE', $dir));
+				return;
+			}
+		}
+
 		$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.')';
 		$result = mysql_query($sql, $db);
+
+		if (mysql_affected_rows($db) == 1) {
+			// check for a .sql file that has to be run
+
+		}
 	}
 
 }
