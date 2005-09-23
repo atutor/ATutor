@@ -92,9 +92,6 @@ class ModuleParser {
 
 		} else if ($this->element_path === array('module', 'license')) {
 			$this->rows[$this->row_num]['license'] = trim($this->character_data);
-		} else if ($this->element_path === array('module', 'core')) {
-			$this->rows[$this->row_num]['core'] = trim($this->character_data);
-
 		} else if ($this->element_path === array('module', 'maintainers', 'maintainer', 'name')) {
 			$this->rows[$this->row_num]['maintainers'][$this->maintainer_num]['name'] = trim($this->character_data);
 

@@ -10,7 +10,6 @@
     </maintainers> 
     <url>http://atutor.ca</url> 
     <license>GPL</license> 
-	<core>true</core>
 	<release> 
         <version>0.1</version> 
 		<privileges>
