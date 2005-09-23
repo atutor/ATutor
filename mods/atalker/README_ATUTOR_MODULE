@@ -25,9 +25,9 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	Festival:
 	http://www.cstr.ed.ac.uk/projects/festival/
 		
-	The ATalker reader will function with just the base Festival system, though it will only produce WAV audio files, which are very large, take a long time to download, and essentially make ATalker not very useful. You will want to install and MP3 or OGG encoder to convert WAV files to a more manageable size. MP3 or OGG files are about  1/10th  the size of  a WAV file. At least one of the following encoders should be installed on the system, and be available in the system's PATH variable (so it can be started from anywhere on the system). To determine if you have an encoder installed, type "lame", "oggenc, or "bladeenc" at the command prompt. If you get something other than "does not exists",  chances are the encoder is installed. ATalker will try to determine which encoders are installed and automatically make those audio formats available.
+	The ATalker reader will function with just the base Festival system, though it will only produce WAV audio files, which are very large, take a long time to download, and essentially make ATalker not very useful. You will want to install an MP3 or OGG encoder to convert WAV files to a more manageable size. MP3 or OGG files are about  1/10th  the size of  a WAV file. At least one of the following encoders should be installed on the system, and be available in the system's PATH variable (so it can be started from anywhere on the system). To determine if you have an encoder installed, type "lame", "oggenc", or "bladeenc" at the command prompt. If you get something other than "does not exists",  chances are the encoder is installed. ATalker will try to determine which encoders are installed and automatically make those audio formats available.
 
-	To create an audio interface for the ATalker theme, one of these encoders must be installed.   WAV files are otherwise too large to be used for interface speech.
+	To create an audio interface for the ATalker theme, one of these encoders must be installed. WAV files are otherwise too large to be used for interface speech.
 	
 	2. MP3 & OGG Audio Encoders (optional but reccommended) 
 		1. LAME MP3 encoder (Unix/Linux  and Windows versions)
@@ -44,7 +44,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
 		http://www.cstr.ed.ac.uk/projects/festival/mbrola.html
 
 *Client*:
-	A user's browser must be setup to read ATalker speech files. On Windows system, default settings are often sufficeint, or when opening a speech file in a browser for the first time, users can choose which allpication to read the file with, and there after all such file will be read with that application. On Linux/Unix based systems it is sometimes necessary to configure browser helper applications to read these files. The mime types to add to the helper applications list are audio/wav, audio/x-ogg, and audio/x-mp3.
+	A user's browser must be setup to read ATalker speech files. On Windows system, default settings are often sufficeint, or when opening a speech file in a browser for the first time, users can choose which application to read the file with, and there after all such files will be read with that application. On Linux/Unix based systems it is sometimes necessary to configure browser helper applications to read these files. The mime types to add to the helper applications list are audio/wav, audio/x-ogg, and audio/x-mp3.
 	
 	The following are potential audio players that might be used to read ATalker audio files:
 
@@ -63,30 +63,30 @@ This version of ATalker (the first version) was developed on a Linux based syste
 
 
 *Limitations and known issues*:
-	Any current browser can be used to generate speech with ATalker, and when  the appropriate helper application or plugin is installed, be used to read the files  outloud.
+	Any current browser can be used to generate speech with ATalker, and when the appropriate helper application or plugin is installed, be used to read the files  outloud.
 
-	Linux mozilla users will require a version 2.6 kernel with  a working version of ALSA (Advanced Linux Sound Architecture) installed, to take advantage of the *audio interface* features.  All other features will function with 2.4 versions of the kernel (an earlier). The audio interface has been working on a Linux 2.6 system with the mplayerplug-in installed for Mozilla 1.7, but only for mp3 voive files.
+	Linux mozilla users will require a version 2.6 kernel with  a working version of ALSA (Advanced Linux Sound Architecture) installed, to take advantage of the *audio interface* features.  All other features will function with 2.4 versions of the kernel (and earlier). The audio interface has been working on a Linux 2.6 system with the mplayerplug-in installed for Mozilla 1.7, but only for mp3 voice files.
 
-	The audio interface  works by default using Internet Explorer on Windows, and works with Netscape, Mozilla, Firefox, and Opera with the appropriate plugin installed.
+	The audio interface works by default using Internet Explorer on Windows, and works with Netscape, Mozilla, Firefox, and Opera with the appropriate plugin installed.
 
 	Javascript is required for the popup ATalker, and for the audio interface reader, and some administrator voice manager functions.
 
-	Though it is poreferable to create ogg files for the audio interface, in general mp3 files will be better supported across systems. 
+	Though it is preferable to create ogg files for the audio interface, in general mp3 files will be better supported across systems.
 
-	Embed vs Object: Though we should be using the HTMLOBJECT element as the preferred method of preloading speech files, EMBED is still more broadly supported, so for now we have choosen to use the  EMBED element. Support for the OBJECT element will come as it becomes more widely supported.
+	Embed vs Object: Though we should be using the HTML OBJECT element as the preferred method of preloading speech files, EMBED is still more broadly supported, so for now we have choosen to use the EMBED element. Support for the OBJECT element will come as it becomes more widely supported.
 
-	Bandwidth: Unless you are on a T1 or higher network, you will likely notice that pages take longer to load when the ATutor theme is enabled. It will also take a little while to generate speech files.  On DSL/Cable the delays are noticable, but not excessive. If you are using a modem,  the ATalker theme, and using ATalker in general, is going to be slow. 
+	Bandwidth: Unless you are on a T1 or higher network, you will likely notice that pages take longer to load when the ATutor theme is enabled. It will also take a little while to generate speech files. On DSL/Cable the delays are noticable, but not excessive. If you are using a modem, the ATalker theme, and using ATalker in general, is going to be slow. 
 
-	Server Power:  The processing power of the server will also have an effect on the time it takes to generate new speech files. The speech generation process is still somewhat time consuming. Where speech files already exist, server processing power will not have much effect. Connection speed will. Creating and serving speech files works best with more cpu power, and with a faster internet connection speed.
+	Server Power: The processing power of the server will also have an effect on the time it takes to generate new speech files. The speech generation process is still somewhat time consuming. Where speech files already exist, server processing power will not have much effect; connection speed will. Creating and serving speech files works best with more cpu power, and with a faster internet connection speed.
 	
-	Where an error or feedback message is new, or contains dynamic information such as a file name of a file being deleted for example, ATalker will generate a new copy of the speech file, otherwise it will try to retrieve a copy of an existing speech file. When new files have to be generated, page loading speeds may not be as fast as usual.
+	Where an error or feedback message is shown, or contains dynamic information such as a file name of a file being deleted for example, ATalker will generate a new copy of the speech file, otherwise it will try to retrieve a copy of an existing speech file. When new files have to be generated, page loading speeds may not be as fast as usual.
 
-	title, alt, input values: It is currently not possible to create interface voice files for language that appears within HTML attributed. In the future a parser will be developed to recognize atribute value, and handle speech file for those values without breaking the surrounding HTML.
+	title, alt, input values: It is currently not possible to create interface voice files for language that appears within HTML attributes. In the future a parser will be developed to recognize attribute values, and handle speech files for those values without breaking the surrounding HTML.
 
-	ATalker controls on content pages:  when a control link (on/off) clicked while on a content page, the users is redirected back to the course index page. This is a problem with the ATutor content.php file, which does not know what to do with multiple URL arguements.
+	ATalker controls on content pages:  when a control link (on/off) is clicked while on a content page, the users is redirected back to the course index page. This is a problem with the ATutor content.php file, which does not know what to do with multiple URL arguements.
 
 **2. Installation and Integration with ATutor 1.5 & 1.5.1**
-	ATutor 1.5 and 1.5.1 ATalker integration is a manual procedure. In future versions (1.5.2 fall/winter 2005) it will be primarily automated with the ATutor Modules Installer.
+	ATutor 1.5 and 1.5.1 ATalker integration is a manual procedure. In future versions (1.5.2 winter 2005) it will be primarily automated with the ATutor Module Installer.
 
 	ATalker Install:
 
@@ -108,7 +108,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
  		$_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab/bounce.php', 'directory.php', 'mods/atalker/index.php');
 
 
-	4. Add the following line to the $_privs array in the include/lib/constants.inc.php file. This will make ATalker available to assign privileges to course members, so they could for instances, manager course voice files as a teaching assistant or co-instructor 
+	4. Add the following line to the $_privs array in the include/lib/constants.inc.php file. This will make ATalker available to assign privileges to course members, so they could for instances, manager course voice files as a teaching assistant or co-instructor.
 	
 		$_privs[32768]= array('name' => 'AT_PRIV_ATALKER');
 	
@@ -138,7 +138,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	$_pages['admin/index.php']['children']  = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php','mods/atalker/admin/admin_index.php');
 
 
-	8 . Optionally you can create an ATalker enabled theme, or download and install the Default ATalker theme with each of these feature already available (see below). 
+	8 . Optionally you can create an ATalker enabled theme, or download and install the Default ATalker theme with each of these features already available (see below). 
 
 		A) Install the ATalker theme (the ATutor default theme with speech enabled), which includes mouseover/onfocus speech, and audio feadback and error messages. See atutor.ca for the most recent version of the ATalker theme.
 		
@@ -161,7 +161,6 @@ This version of ATalker (the first version) was developed on a Linux based syste
 		Or. you can just insert a link somewhere in one of the other theme templates something like 
 	
 			<a href="<?php echo $this->base_path; ?>tools/atalker/index.php?popup=1" target = "newWin1">Open ATalker</a>
-		
 
 		2. Add the following lines to the _AT() function  in include/lib/output.inc.php just before the last line "return $outString". This adds speech output from ATalker to the ATutor language output function, and collects a list of language items to preload when .
 
