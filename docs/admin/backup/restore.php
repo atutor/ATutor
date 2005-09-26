@@ -70,11 +70,12 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 		<?php
 		$modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_DISABLED, 0, TRUE);
 		$keys = array_keys($modules);
+		$i = 0;
 		?>
 		<?php foreach($keys as $module_name): ?>
 			<?php $module =& $modules[$module_name]; ?>
 			<?php if ($module->isBackupable()): ?>
-				<input type="checkbox" value="1" name="material[<?php echo $module_name; ?>]" id="m<?php echo $module_name; ?>" /><label for="m<?php echo $module_name; ?>"><?php echo $module->getName(); ?></label><br />
+				<input type="checkbox" value="1" name="material[<?php echo $module_name; ?>]" id="m<?php echo ++$i; ?>" /><label for="m<?php echo $i; ?>"><?php echo $module->getName(); ?></label><br />
 			<?php endif; ?>
 		<?php endforeach; ?>
 
@@ -103,17 +104,18 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 	</div>
 </div>
 </form>
-
+<?php $i=0; ?>
 <script language="javascript" type="text/javascript">
 	
 	function selectAll() {
 		if (document.form.all.checked == true) {
 			<?php foreach($keys as $module_name): $module =& $modules[$module_name]; if ($module->isBackupable()): ?>
-				document.form.m<?php echo $module_name; ?>.checked = true;
+				document.form.m<?php echo ++$i; ?>.checked = true;
 			<?php endif; endforeach; ?>
 		} else {
+			<?php $i=0;?>
 			<?php foreach($keys as $module_name): $module =& $modules[$module_name]; if ($module->isBackupable()): ?>
-				document.form.m<?php echo $module_name; ?>.checked = false;
+				document.form.m<?php echo ++$i; ?>.checked = false;
 			<?php endif; endforeach; ?>
 
 		}
