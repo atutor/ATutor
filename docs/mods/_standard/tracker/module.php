@@ -4,7 +4,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 define('AT_PRIV_CONTENT', $this->getPrivilege());
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = array('my_stats.php');
+$_student_tools = 'my_stats.php';
 
 $_pages['my_stats.php']['title_var'] = 'my_tracker';
 $_pages['my_stats.php']['img']       = 'images/home-tracker.gif';

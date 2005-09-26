@@ -252,7 +252,7 @@ class ModuleProxy {
 			//student tools
 			if (isset($_student_tools)) {
 				$this->_student_tools =& $_student_tools;
-				$_modules = array_merge_recursive($_modules, $this->_student_tools);
+				$_modules[] = $this->_student_tools;
 			}
 		}					
 	}

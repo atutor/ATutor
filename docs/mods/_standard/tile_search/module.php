@@ -2,7 +2,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = array('tile.php');
+$_student_tools = 'tile.php';
 
 $_module_pages['tools/content/index.php']['children'] = array('tools/tile/index.php');
 

@@ -6,7 +6,7 @@ define('AT_ADMIN_PRIV_FORUMS', $this->getAdminPrivilege() );
 
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = array('forum/list.php');
+$_student_tools = 'forum/list.php';
 
 //side menu file.  key is title variable
 $_module_stacks['posts'] = AT_INCLUDE_PATH.'html/dropdowns/posts.inc.php';

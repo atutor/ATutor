@@ -367,7 +367,7 @@ CREATE TABLE `modules` (
 `status` TINYINT NOT NULL ,  
 `privilege` MEDIUMINT UNSIGNED NOT NULL ,  
 `admin_privilege` MEDIUMINT UNSIGNED NOT NULL ,  
-# `display_default` SET( 'home', 'main', 'side' ) NOT NULL ,
+# `display_defaults` TINYINT NOT NULL ,
 PRIMARY KEY ( `dir_name` )  
 );
 
@@ -397,7 +397,7 @@ INSERT INTO `modules` VALUES ('_core/cats_categories', 2, 0, 32);
 INSERT INTO `modules` VALUES ('_core/languages', 2, 0, 64);
 INSERT INTO `modules` VALUES ('_core/themes', 2, 0, 128);
 INSERT INTO `modules` VALUES ('_standard/tracker', 2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/content_packaging', 2, 0, 0);
+INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0);
 
 
 # --------------------------------------------------------
