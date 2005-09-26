@@ -254,4 +254,3 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 }
 
 ?>
-
