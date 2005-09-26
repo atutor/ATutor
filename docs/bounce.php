@@ -15,7 +15,7 @@
 function count_login( ) {
 	global $db, $moduleFactory;
 
-	$module =& $moduleFactory->getModule('standard/statistics');
+	$module =& $moduleFactory->getModule(AT_MODULE_DIR_STANDARD.'/statistics');
 	if (!$module->isEnabled()) {
 		return;
 	}

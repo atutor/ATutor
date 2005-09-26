@@ -87,7 +87,7 @@ if ($_SESSION['course_id'] > 0) {
 		$_pages['admin/modules/index.php']['title_var'] = 'modules';
 		$_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
 		$_pages['admin/modules/index.php']['guide']     = 'admin/?p=5.modules.php';
-		$_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.php', 'admin/modules/create.php');
+		$_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.php', 'admin/modules/create.php', 'admin/modules/default_mods.php', 'admin/modules/default_side.php');
 
 		$_pages['admin/modules/details.php']['title_var'] = 'details';
 		$_pages['admin/modules/details.php']['parent']    = 'admin/modules/index.php';
@@ -100,10 +100,15 @@ if ($_SESSION['course_id'] > 0) {
 
 		$_pages['admin/modules/create.php']['title_var'] = 'create_module';
 		$_pages['admin/modules/create.php']['parent']    = 'admin/modules/index.php';
+
+		$_pages['admin/modules/default_mods.php']['title_var'] = 'default_modules';
+		$_pages['admin/modules/default_mods.php']['parent']    = 'admin/modules/index.php';
+
+		$_pages['admin/modules/default_side.php']['title_var'] = 'default_side_menu';
+		$_pages['admin/modules/default_side.php']['parent']    = 'admin/modules/index.php';
+
 	}
 }
-
-
 
 
 /* public pages */

@@ -42,7 +42,7 @@ if (!$page) {
 	$page = 1;
 }	
 
-$module =& $moduleFactory->getModule('standard/announcements');
+$module =& $moduleFactory->getModule(AT_MODULE_DIR_STANDARD.'/announcements');
 if (!$module->isEnabled()) {
 	$result = FALSE;
 	$news = array();

@@ -19,6 +19,10 @@ define('AT_MODULE_STATUS_DISABLED',    1);
 define('AT_MODULE_STATUS_ENABLED',     2);
 define('AT_MODULE_STATUS_UNINSTALLED', 4); // not in the db
 
+define('AT_MODULE_HOME',	1);
+define('AT_MODULE_MAIN',	2);
+define('AT_MODULE_SIDE',	4);
+
 define('AT_MODULE_TYPE_CORE',     1);
 define('AT_MODULE_TYPE_STANDARD', 2);
 define('AT_MODULE_TYPE_EXTRA',    4);
@@ -46,7 +50,7 @@ class ModuleFactory {
 
 		if ($auto_load == TRUE) {
 			// initialise enabled modules
-			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
+			$sql	= "SELECT dir_name, privilege, admin_privilege, status, display_defaults FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
 			$result = mysql_query($sql, $db);
 			while($row = mysql_fetch_assoc($result)) {
 				$module =& new ModuleProxy($row);
@@ -70,7 +74,7 @@ class ModuleFactory {
 			$type = AT_MODULE_TYPE_CORE | AT_MODULE_TYPE_STANDARD | AT_MODULE_TYPE_EXTRA;
 		}
 
-		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules";
+		$sql	= "SELECT dir_name, privilege, admin_privilege, status, display_defaults FROM ". TABLE_PREFIX . "modules";
 		$result = mysql_query($sql, $db);
 		while($row = mysql_fetch_assoc($result)) {
 			if (!isset($this->_modules[$row['dir_name']])) {
@@ -147,6 +151,7 @@ class ModuleProxy {
 	var $_status; // core|enabled|disabled
 	var $_privilege; // priv bit(s) | 0 (in dec form)
 	var $_admin_privilege; // priv bit(s) | 0 (in dec form)
+	var $_display_defaults; // bit(s)
 	var $_pages;
 	var $_type; // core, standard, extra
 
@@ -157,6 +162,7 @@ class ModuleProxy {
 			$this->_status          = $row['status'];
 			$this->_privilege       = $row['privilege'];
 			$this->_admin_privilege = $row['admin_privilege'];
+			$this->_display_defaults= $row['display_defaults'];
 
 			if (strpos($row['dir_name'], AT_MODULE_DIR_CORE) === 0) {
 				$this->_type = AT_MODULE_TYPE_CORE;
@@ -170,6 +176,7 @@ class ModuleProxy {
 			$this->_status          = AT_MODULE_STATUS_UNINSTALLED;
 			$this->_privilege       = 0;
 			$this->_admin_privilege = 0;
+			$this->_display_defaults= 0;
 			$this->_type            = AT_MODULE_TYPE_EXTRA; // standard/core are installed by default
 		}
 	}
@@ -308,6 +315,21 @@ class ModuleProxy {
 		} 
 
 		return $this->_student_tools;
+	}
+
+	function getDisplayDefaults() {
+		global $db;
+
+		$defaults = array();
+
+		if (query_bit($this->_display_defaults, AT_MODULE_HOME)) {
+			$defaults['home'] = $this->_student_tools;
+		}
+		if (query_bit($this->_display_defaults, AT_MODULE_MAIN)) {
+			$defaults['main'] = $this->_student_tools;
+		}
+
+		return $defaults;
 	}
 }
 
