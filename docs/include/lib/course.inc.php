@@ -36,7 +36,7 @@ function getDisplay ($course_id = 0) {
 				$main[] = $mod_default['student_tool'];
 			}
 		}
-		$menu_defaults = ', home_links=\'' . implode('|', $home) .'\', ' . 'main_links=\'' . implode('|', $main) .'\'';
+		$menu_defaults = ', home_links=\'' . implode('|', $home) .'\', ' . 'main_links=\'' . implode('|', $main) .'\', side_menu=\'menu_menu|related_topics|users_online|glossary|search|poll|posts\'';
 
 		//$menu_defaults = ',home_links=\'forum/list.php|glossary/index.php|chat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php\', main_links=\'forum/list.php|glossary/index.php\', side_menu=\'menu_menu|related_topics|users_online|glossary|search|poll|posts\'';
 	}
