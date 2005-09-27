@@ -63,7 +63,8 @@ class ModuleFactory {
 	// public
 	// state := enabled | disabled | uninstalled
 	// type  := core | standard | extra
-	// sor   := true | false
+	// sort  := true | false
+	// the results of this method are not cached. call sparingly.
 	function & getModules($status, $type = 0, $sort = FALSE) {
 		global $db;
 
@@ -133,8 +134,6 @@ class ModuleFactory {
 	function compare($a, $b) {
 		return strnatcmp($a->getName(), $b->getName());
 	}
-
-
 }
 
 /**
@@ -215,11 +214,6 @@ class ModuleProxy {
 		return $this->_moduleObj->getProperty($property);
 	}
 
-	function getVersion() {
-		$this->initModuleObj();
-		return $this->_moduleObj->getVersion();
-	}
-
 	function getName() {
 		if ($this->isUninstalled()) {
 			return current($this->getProperty('name'));
@@ -283,13 +277,8 @@ class ModuleProxy {
 	}
 
 	function delete($course_id) {
-		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php')) {
-			require(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php');
-			if (function_exists($this->_directoryName.'_delete')) {
-				$fnctn = $this->_directoryName.'_delete';
-				$fnctn($course_id);
-			}
-		}
+		$this->initModuleObj();
+		$this->_moduleObj->delete($course_id);
 	}
 
 	function enable() {
@@ -345,8 +334,7 @@ class ModuleProxy {
 }
 
 // ----------------- in a diff file. only required when .. required.
-require_once(AT_INCLUDE_PATH . 'classes/CSVExport.class.php');
-require_once(AT_INCLUDE_PATH . 'classes/CSVImport.class.php');
+
 
 /**
 * Module
@@ -372,9 +360,6 @@ class Module {
 		}
 	}
 
-	function getVersion() {
-		return $this->_properties['version'];
-	}
 
 	function getDescription($lang = 'en') {
 		if (!$this->_properties) {
@@ -384,6 +369,13 @@ class Module {
 		return (isset($this->_properties['description'][$lang]) ? $this->_properties['description'][$lang] : current($this->_properties['description']));
 	}
 
+	/**
+	* Get the properties of this module as found in the module.xml file
+	* @access  public
+	* @param   array $properties_list	list of property names
+	* @return  array associative array of property/value pairs
+	* @author  Joel Kronenberg
+	*/
 	function getProperties($properties_list) {
 		if (!$this->_properties) {
 			return;
@@ -395,6 +387,13 @@ class Module {
 		return $properties_list;
 	}
 
+	/**
+	* Get a single property as found in the module.xml file
+	* @access  public
+	* @param   string $property	name of the property to return
+	* @return  string the value of the property 
+	* @author  Joel Kronenberg
+	*/
 	function getProperty($property) {
 		if (!$this->_properties) {
 			return;
@@ -403,14 +402,28 @@ class Module {
 		return $this->_properties[$property];
 	}
 
+	/**
+	* Checks whether or not this module can be backed-up
+	* @access  public
+	* @return  boolean true if this module can be backed-up, false otherwise
+	* @author  Joel Kronenberg
+	*/
 	function isBackupable() {
 		return is_file(AT_MODULE_PATH . $this->_directoryName . '/module_backup.php');
 	}
 
+	/**
+	* Backup this module for a given course
+	* @access  public
+	* @param   int		$course_id	ID of the course to backup
+	* @param   object	$zipfile	a reference to a zipfile object
+	* @author  Joel Kronenberg
+	*/
 	function backup($course_id, &$zipfile) {
 		static $CSVExport;
 
 		if (!isset($CSVExport)) {
+			require_once(AT_INCLUDE_PATH . 'classes/CSVExport.class.php');
 			$CSVExport = new CSVExport();
 		}
 		$now = time();
@@ -434,7 +447,14 @@ class Module {
 		}
 	}
 	
-
+	/**
+	* Restores this module into the given course
+	* @access  public
+	* @param   int		$course_id	ID of the course to restore into
+	* @param   string	$version	version number of the ATutor installation used to make this backup
+	* @param   string	$import_dir	the path to the import directory
+	* @author  Joel Kronenberg
+	*/
 	function restore($course_id, $version, $import_dir) {
 		static $CSVImport;
 		if (!file_exists(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php')) {
@@ -442,6 +462,7 @@ class Module {
 		}
 
 		if (!isset($CSVImport)) {
+			require_once(AT_INCLUDE_PATH . 'classes/CSVImport.class.php');
 			$CSVImport = new CSVImport();
 		}
 
@@ -459,10 +480,27 @@ class Module {
 		}
 	}
 
+	/**
+	* Delete this module's course content
+	* @access  public
+	* @param   int $course_id	ID of the course to delete
+	* @author  Joel Kronenberg
+	*/
 	function delete($course_id) {
-
+		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php')) {
+			require(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php');
+			if (function_exists($this->_directoryName.'_delete')) {
+				$fnctn = $this->_directoryName.'_delete';
+				$fnctn($course_id);
+			}
+		}
 	}
 
+	/**
+	* Enables the installed module
+	* @access  public
+	* @author  Joel Kronenberg
+	*/
 	function enable() {
 		global $db;
 
@@ -470,6 +508,11 @@ class Module {
 		$result = mysql_query($sql, $db);
 	}
 
+	/**
+	* Disables the installed module
+	* @access  public
+	* @author  Joel Kronenberg
+	*/
 	function disable() {
 		global $db;
 
@@ -477,6 +520,11 @@ class Module {
 		$result = mysql_query($sql, $db);
 	}
 
+	/**
+	* Installs the module
+	* @access  public
+	* @author  Joel Kronenberg
+	*/
 	function install() {
 		global $db;
 

@@ -69,7 +69,7 @@ $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml')
 
 $module =& $moduleFactory->getModule($_GET['mod']);
 
-$properties = $module->getProperties(array('maintainers', 'url', 'date', 'license', 'state', 'notes'));
+$properties = $module->getProperties(array('maintainers', 'url', 'date', 'license', 'state', 'notes', 'version'));
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
@@ -100,7 +100,7 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 
 	<div class="row">
 		<?php echo _AT('version'); ?><br />
-		<?php echo $module->getVersion(); ?>
+		<?php echo $properties['version']; ?>
 	</div>
 
 	<div class="row">

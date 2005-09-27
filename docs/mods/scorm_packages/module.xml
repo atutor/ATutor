@@ -19,6 +19,6 @@
 		<directory>sco</directory>
         <date>2005-08-22</date> 
         <state>stable</state> 
-        <notes>This is a core module. Must enable the SCORM 1.2 RTE in the administrator's System Preferences.</notes> 
+        <notes></notes> 
     </release> 
 </module>
