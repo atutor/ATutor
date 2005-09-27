@@ -208,7 +208,6 @@ $_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/co
 	$_pages['help/contact_support.php']['title_var']  = array ('contact_support',SITE_NAME);
 	$_pages['help/contact_support.php']['parent'] = 'help/index.php';
 
-$_pages['search.php']['title_var']      = 'search';
 
 $_pages['contact_instructor.php']['title_var']  = 'contact_instructor';
 
