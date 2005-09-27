@@ -311,7 +311,7 @@ class ModuleProxy {
 
 	function getStudentTools() {
 		if (!isset($this->_student_tools)) {
-			return array();
+			return;
 		} 
 
 		return $this->_student_tools;
@@ -320,13 +320,24 @@ class ModuleProxy {
 	function getDisplayDefaults() {
 		global $db;
 
+		if (empty($this->_student_tools)) {
+			return;
+		}
+
 		$defaults = array();
 
+		$defaults['student_tool'] = $this->_student_tools;
+		$defaults['total'] = $this->_display_defaults;
+
 		if (query_bit($this->_display_defaults, AT_MODULE_HOME)) {
-			$defaults['home'] = $this->_student_tools;
+			$defaults['home'] = TRUE;
+		} else {
+			$defaults['home'] = FALSE;
 		}
 		if (query_bit($this->_display_defaults, AT_MODULE_MAIN)) {
-			$defaults['main'] = $this->_student_tools;
+			$defaults['main'] = TRUE;
+		} else {
+			$defaults['main'] = FALSE;
 		}
 
 		return $defaults;
