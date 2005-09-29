@@ -119,12 +119,6 @@ define('AT_ADMIN_LOG_INSERT',  3);
 define('AT_ADMIN_LOG_REPLACE', 4);
 define('AT_ADMIN_LOG_OTHER',   5); //for non-db operations
 
-
-/* module statuses */
-define('AT_MOD_DISABLED',		0);
-define('AT_MOD_ENABLED',	    1);
-define('AT_MOD_CORE',	        2);
-
 if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 	define('SEP', ';');
 } else {
@@ -133,17 +127,6 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 
 /* the URL to the AChecker server of choice. must include trailing slash. */
 define('AT_ACHECKER_URL', 'http://checker.atrc.utoronto.ca/servlet/');
-
-/* the URL to the WSDL of the TILE repository of choice. */
-define('AT_TILE_WSDL', 'http://tile.atutor.ca/tile/services/search?wsdl');
-
-/* the URL to the content package export servlet of the TILE repository of choice. */
-define('AT_TILE_EXPORT', 'http://tile.atutor.ca/tile/servlet/export');
-
-/* the URL to the content importing servlet of the TILE repository. */
-define('AT_TILE_IMPORT', 'http://tile.atutor.ca/tile/servlet/put');
-
-define('AT_TILE_PREVIEW', 'http://tile.atutor.ca/tile/servlet/view?view=item&');
 
 if (!isset($_SERVER['REQUEST_URI'])) {
 	$REQUEST_URI = $_SERVER['SCRIPT_NAME'];

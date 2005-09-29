@@ -284,13 +284,13 @@ class ModuleProxy {
 	function enable() {
 		$this->initModuleObj();
 		$this->_moduleObj->enable();
-		$this->_status = AT_MOD_ENABLED;
+		$this->_status = AT_MODULE_STATUS_ENABLED;
 	}
 
 	function disable() {
 		$this->initModuleObj();
 		$this->_moduleObj->disable();
-		$this->_status = AT_MOD_DISABLED;
+		$this->_status = AT_MODULE_STATUS_DISABLED;
 	}
 
 	function install() {
