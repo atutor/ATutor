@@ -56,7 +56,7 @@ if ($_POST['submit']) {
 
 				$mail = new ATutorMailer;
 
-				$mail->From     = EMAIL;
+				$mail->From     = $_config['contact_email'];
 				$mail->AddAddress($to_email);
 				$mail->Subject = _AT('course_enrolment');
 				$mail->Body    = $tmp_message;

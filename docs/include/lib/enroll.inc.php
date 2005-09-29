@@ -96,6 +96,7 @@ function checkUserInfo($record) {
 function add_users($user_list, $enroll, $course) {
 	global $db, $_base_href;
 	global $msg;
+	global $_config;
 
 	require_once(AT_INCLUDE_PATH.'classes/phpmailer/atutormailer.class.php');
 
@@ -130,10 +131,10 @@ function add_users($user_list, $enroll, $course) {
 							$code = substr(md5($student['email'] . $now . $m_id), 0, 10);
 							$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 			
-							$subject = SITE_NAME.': '._AT('email_confirmation_subject');
+							$subject = $_config['site_name'].': '._AT('email_confirmation_subject');
 							$body .= _AT(array('new_account_enroll_confirm', $_SESSION['course_title'], $confirmation_link))."\n\n";
 						} else {
-							$subject = SITE_NAME.': '._AT('account_information');
+							$subject = $_config['site_name'].': '._AT('account_information');
 							$body .= _AT(array('new_account_enroll',$_base_href, $_SESSION['course_title']))."\n\n";
 						}
 						
@@ -143,7 +144,7 @@ function add_users($user_list, $enroll, $course) {
 						$body .= _AT('password') .' : '.$student['uname'] . "\n";
 
 						$mail = new ATutorMailer;
-						$mail->From     = EMAIL;
+						$mail->From     = $_config['contact_email'];
 						$mail->AddAddress($student['email']);
 						$mail->Subject = $subject;
 						$mail->Body    = $body;

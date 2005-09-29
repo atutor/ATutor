@@ -39,9 +39,9 @@ if (isset($_POST['cancel'])) {
 
 		$mail = new ATutorMailer;
 
-		$mail->From     = EMAIL;
+		$mail->From     = $_config['contact_email'];
 		$mail->AddAddress($r_email);
-		$mail->Subject = SITE_NAME . ': ' . _AT('password_reminder');
+		$mail->Subject = $_config['site_name'] . ': ' . _AT('password_reminder');
 		$mail->Body    = $tmp_message;
 
 		if(!$mail->Send()) {

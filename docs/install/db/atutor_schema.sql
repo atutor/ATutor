@@ -46,6 +46,17 @@ CREATE TABLE `backups` (
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM;
 
+
+# --------------------------------------------------------
+# Table structure for table `config`
+# since 1.5.2
+
+CREATE TABLE `config` (
+  `name` CHAR( 30 ) NOT NULL ,
+  `value` CHAR( 255 ) NOT NULL ,
+PRIMARY KEY ( `name` )
+);
+
 # --------------------------------------------------------
 # Table structure for table `content`
 

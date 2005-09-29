@@ -128,10 +128,10 @@ if (isset($_POST['submit'])) {
 				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 				$mail = new ATutorMailer();
 
-				$mail->From     = EMAIL;
+				$mail->From     = $_config['contact_email'];
 				$mail->AddAddress($_POST['email']);
 				$mail->Subject = SITE_NAME . ' - ' . _AT('email_confirmation_subject');
-				$mail->Body    = _AT('email_confirmation_message', SITE_NAME, $confirmation_link);
+				$mail->Body    = _AT('email_confirmation_message', $_config['site_name'], $confirmation_link);
 
 				$mail->Send();
 

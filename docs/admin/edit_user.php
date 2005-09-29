@@ -143,9 +143,9 @@ if (isset($_POST['submit'])) {
 			$mail = new ATutorMailer();
 
 			$mail->AddAddress($row['email']);
-			$mail->From    = EMAIL;
-			$mail->Subject = SITE_NAME . ' - ' . _AT('email_confirmation_subject');
-			$mail->Body    = _AT('email_confirmation_message', SITE_NAME, $confirmation_link);
+			$mail->From    = $_config['contact_email'];
+			$mail->Subject = $_config['site_name'] . ' - ' . _AT('email_confirmation_subject');
+			$mail->Body    = _AT('email_confirmation_message', $_config['site_name'], $confirmation_link);
 
 			$mail->Send();
 		}

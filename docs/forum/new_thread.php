@@ -127,8 +127,8 @@ if (isset($_POST['cancel'])) {
 				$body .= "\n----------------------------------------------\n";
 				$body .= _AT('posted_by').": ".$_SESSION[login]."\n";
 				$body .= $_POST['body']."\n";
-				$mail->FromName = SITE_NAME;
-				$mail->From     = EMAIL; //$_SESSION['login'];
+				$mail->FromName = $_config['site_name'];
+				$mail->From     = $_config['contact_email'];
 				$mail->Subject = _AT('thread_notify1');
 				$mail->Body    = $body;
 

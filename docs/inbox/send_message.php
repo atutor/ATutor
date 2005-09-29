@@ -63,8 +63,8 @@ if (isset($_POST['cancel'])) {
 			
 			$mail = new ATutorMailer;
 			$mail->AddAddress($row_notify['email'], $row_notify['first_name'] . ' ' . $row_notify['last_name']);
-			$mail->FromName = SITE_NAME;
-			$mail->From     = EMAIL;
+			$mail->FromName = $_config['site_name'];
+			$mail->From     = $_config['contact_email'];
 			$mail->Subject  = _AT('message_notification');
 			$mail->Body     = $body;
 

@@ -39,7 +39,7 @@ if ($_SESSION['member_id']) {
 	}
 }
 
-if (!defined('EMAIL')) {
+if (!$_config['contact_email']) {
 	$msg->printErrors('CONTACT_INFO_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
 
 		$mail->From     = $_POST['from_email'];
 		$mail->FromName = stripslashes($addslashes($_POST['from']));
-		$mail->AddAddress(EMAIL);
+		$mail->AddAddress($_config['contact_email']);
 		$mail->Subject = stripslashes($addslashes($_POST['subject']));
 		$mail->Body    = stripslashes($addslashes($_POST['body']));
 

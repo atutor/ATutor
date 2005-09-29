@@ -57,7 +57,7 @@ if (isset($_GET['deny']) && isset($_GET['id'])) {
 
 			$mail = new ATutorMailer;
 
-			$mail->From     = EMAIL;
+			$mail->From     = $_config['contact_email'];
 			$mail->AddAddress($to_email);
 			$mail->Subject = _AT('instructor_request');
 			$mail->Body    = $tmp_message;

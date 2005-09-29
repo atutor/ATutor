@@ -55,8 +55,8 @@ if ($_POST['submit']) {
 				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 				$mail = new ATutorMailer;
-				$mail->From     = EMAIL;
-				$mail->FromName = SITE_NAME;
+				$mail->From     = $_config['contact_email'];
+				$mail->FromName = $_config['site_name'];
 				$mail->AddAddress($to_email);
 				$mail->Subject = _AT('enrol_message3');
 				$mail->Body    = $tmp_message;

@@ -140,8 +140,8 @@ function enroll ($list) {
 		$body = SITE_NAME.': '._AT('enrol_message_approved', $_SESSION['course_title'], $login_link)."\n\n";
 
 		$mail = new ATutorMailer;
-		$mail->From     = EMAIL;
-		$mail->FromName = SITE_NAME;
+		$mail->From     = $_config['contact_email'];
+		$mail->FromName = $_config['site_name'];
 		$mail->AddAddress($row_to['email']);
 		$mail->Subject  = $subject;
 		$mail->Body     = $body;

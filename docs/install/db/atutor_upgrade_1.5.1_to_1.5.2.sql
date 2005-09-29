@@ -2,6 +2,14 @@
 # Database upgrade SQL from ATutor 1.5.1 to ATutor 1.5.2
 ###############################################################
 
+# Table structure for table `config`
+
+CREATE TABLE `config` (
+  `name` CHAR( 30 ) NOT NULL ,
+  `value` CHAR( 255 ) NOT NULL ,
+PRIMARY KEY ( `name` )
+);
+
 # modules
 
 CREATE TABLE `modules` (  

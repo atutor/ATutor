@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 
 			$mail = new ATutorMailer;
 
-			$mail->From     = EMAIL;
+			$mail->From     = $_config['contact_email'];
 			$mail->AddAddress($to_email);
 			$mail->Subject = _AT('instructor_request');
 			$mail->Body    = $message;

@@ -89,7 +89,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 		$mail = new ATutorMailer();
 
-		$mail->From     = EMAIL;
+		$mail->From     = $_config['contact_email'];
 		$mail->AddAddress($row['email']);
 		$mail->Subject = SITE_NAME . ': ' . _AT('email_confirmation_subject');
 		$mail->Body    = _AT('email_confirmation_message', $_base_href, $confirmation_link)."\n\n";

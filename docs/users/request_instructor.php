@@ -42,7 +42,7 @@ if (isset($_POST['cancel'])) {
 		$result = mysql_query($sql, $db);
 		/* email notification send to admin upon instructor request */
 
-		if (EMAIL_NOTIFY && (EMAIL != '')) {
+		if (EMAIL_NOTIFY && ($_config['contact_email'] != '')) {
 
 			$sql	= "SELECT login, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 			$result = mysql_query($sql, $db);				
@@ -56,7 +56,7 @@ if (isset($_POST['cancel'])) {
 			$mail = new ATutorMailer;
 
 			$mail->From     = $email;
-			$mail->AddAddress(EMAIL);
+			$mail->AddAddress($_config['contact_email']);
 			$mail->Subject = _AT('req_message9');
 			$mail->Body    = stripslashes($tmp_message);
 
