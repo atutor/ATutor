@@ -19,25 +19,26 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  ******/
 
 /* config variables. if they're not in the db then it uses the installation default values: */
-$_config = array();
-$_config['contact_email']             = '';
-$_config['email_notification']        = 1;
-$_config['allow_instructor_requests'] = 1;
-$_config['auto_approve_instructors']  = 0;
-$_config['max_file_size']             = 1048576;  // 1MB
-$_config['max_course_size']           = 10485760; // 10 MB
-$_config['max_course_float']          = 2097152;  // 2MB
-$_config['illegal_extentions']        = 'exe|asp|php|php3|bat|cgi|pl|com|vbs|reg|pcd|pif|scr|bas|inf|vb|vbe|wsc|wsf|wsh';
-$_config['site_name']                 = '';
-$_config['home_url']                  = '';
-$_config['default_language']          = 'en';
-$_config['cache_dir']                 = '';
-$_config['enable_category_themes']    = 0;
-$_config['course_backups']            = 5;
-$_config['email_confirmation']        = 0;
-$_config['master_list']               = 0;
-$_config['enable_handbook_notes']     = 0;
-$_config['theme_categories']          = 0;
+$_config_defaults = array();
+$_config_defaults['contact_email']             = '';
+$_config_defaults['email_notification']        = 1;
+$_config_defaults['allow_instructor_requests'] = 1;
+$_config_defaults['auto_approve_instructors']  = 0;
+$_config_defaults['max_file_size']             = 1048576;  // 1MB
+$_config_defaults['max_course_size']           = 10485760; // 10 MB
+$_config_defaults['max_course_float']          = 2097152;  // 2MB
+$_config_defaults['illegal_extentions']        = 'exe|asp|php|php3|bat|cgi|pl|com|vbs|reg|pcd|pif|scr|bas|inf|vb|vbe|wsc|wsf|wsh';
+$_config_defaults['site_name']                 = '';
+$_config_defaults['home_url']                  = '';
+$_config_defaults['default_language']          = 'en';
+$_config_defaults['cache_dir']                 = '';
+$_config_defaults['enable_category_themes']    = 0;
+$_config_defaults['course_backups']            = 5;
+$_config_defaults['email_confirmation']        = 0;
+$_config_defaults['master_list']               = 0;
+$_config_defaults['enable_handbook_notes']     = 0;
+$_config_defaults['theme_categories']          = 0;
+$_config = $_config_defaults;
 
 define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:1;s:10:"PREF_THEME";s:7:"default";s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}');
 

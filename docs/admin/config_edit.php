@@ -71,7 +71,8 @@ if (isset($_POST['cancel'])) {
 		$_POST['contact_email'] = $addslashes($_POST['contact_email']);
 
 		foreach ($_config as $name => $value) {
-			if (stripslashes($_POST[$name]) != $value) {
+			// the isset() is needed to avoid overridding settings that don't get set here (ie. modules)
+			if (isset($_POST[$name]) && (stripslashes($_POST[$name]) != $value)) {
 				$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('$name', '$_POST[$name]')";
 				mysql_query($sql, $db);
 				write_to_log(AT_ADMIN_LOG_REPLACE, 'config', mysql_affected_rows($db), $sql);
@@ -129,57 +130,54 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="maxfile"><?php echo _AT('maximum_file_size'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="maxfile"><?php echo _AT('maximum_file_size'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_file_size']; ?>)<br />
 		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $_config['max_file_size']; } ?>"  /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="maxcourse"><?php echo _AT('maximum_course_size'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="maxcourse"><?php echo _AT('maximum_course_size'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_course_size']; ?>)<br />
 		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo stripslashes(htmlspecialchars($_POST['max_course_size'])); } else { echo $_config['max_course_size']; } ?>"  /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="float"><?php echo _AT('maximum_course_float'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="float"><?php echo _AT('maximum_course_float'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_course_float']; ?>)<br />
 		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo stripslashes(htmlspecialchars($_POST['max_course_float'])); } else { echo $_config['max_course_float']; } ?>"  /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('master_list_authentication'); ?><br />
+		<?php echo _AT('master_list_authentication'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['master_list'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="master_list" value="1" id="ml_y" <?php if ($_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_y"><?php echo _AT('enable'); ?></label> 
 
-		<input type="radio" name="master_list" value="1" id="ml_y" <?php if ($_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="master_list" value="0" id="ml_n" <?php if(!$_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_n"><?php echo _AT('disable'); ?></label>
+		<input type="radio" name="master_list" value="0" id="ml_n" <?php if(!$_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_n"><?php echo $disable_on . _AT('disable') . $disable_off; ?></label>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('require_email_confirmation'); ?><br />
-
+		<?php echo _AT('require_email_confirmation'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['require_email_confirmation'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="email_confirmation" value="1" id="ec_y" <?php if ($_config['email_confirmation']) { echo 'checked="checked"'; }?>  /><label for="ec_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="email_confirmation" value="0" id="ec_n" <?php if(!$_config['email_confirmation']) { echo 'checked="checked"'; }?>  /><label for="ec_n"><?php echo _AT('disable'); ?></label>
 	</div>
 		
 	<div class="row">
-		<?php echo _AT('allow_instructor_requests'); ?><br />
-
+		<?php echo _AT('allow_instructor_requests'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_instructor_requests'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="allow_instructor_requests" value="1" id="air_y" <?php if($_config['allow_instructor_requests']) { echo 'checked="checked"'; }?>  /><label for="air_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_instructor_requests" value="0" id="air_n" <?php if(!$_config['allow_instructor_requests']) { echo 'checked="checked"'; }?>  /><label for="air_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('instructor_request_email_notification'); ?><br />
-
+		<?php echo _AT('instructor_request_email_notification'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['email_notification'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="email_notification" value="1" id="en_y" <?php if ($_config['email_notification']) { echo 'checked="checked"'; }?>  /><label for="en_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="email_notification" value="0" id="en_n" <?php if(!$_config['email_notification']) { echo 'checked="checked"'; }?>  /><label for="en_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('auto_approve_instructors'); ?><br />
-		
+		<?php echo _AT('auto_approve_instructors'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['auto_approve_instructors'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="auto_approve_instructors" value="1" id="aai_y" <?php if($_config['auto_approve_instructors']) { echo 'checked="checked"'; }?>  /><label for="aai_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="auto_approve_instructors" value="0" id="aai_n" <?php if(!$_config['auto_approve_instructors']) { echo 'checked="checked"'; }?>  /><label for="aai_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('theme_specific_categories'); ?><br />
+		<?php echo _AT('theme_specific_categories'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['theme_categories'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="theme_categories" value="1" id="tc_y" <?php if($_config['theme_categories']) { echo 'checked="checked"'; }?>  /><label for="tc_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="theme_categories" value="0" id="tc_n" <?php if(!$_config['theme_categories']) { echo 'checked="checked"'; }?>  /><label for="tc_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('user_contributed_notes'); ?><br />
+		<?php echo _AT('user_contributed_notes'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['user_notes'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="user_notes" value="1" id="un_y" <?php if($_config['user_notes']) { echo 'checked="checked"'; }?>  /><label for="un_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="user_notes" value="0" id="un_n" <?php if(!$_config['user_notes']) { echo 'checked="checked"'; }?>  /><label for="un_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
@@ -194,7 +192,7 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<label for="course_backups"><?php echo _AT('course_backups'); ?></label><br />
+		<label for="course_backups"><?php echo _AT('course_backups'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['course_backups']; ?>)<br />
 		<input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $_config['course_backups']; } ?>"  />
 	</div>
 
