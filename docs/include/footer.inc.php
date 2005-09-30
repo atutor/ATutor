@@ -16,6 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $next_prev_links, $langEditor;
 global $_base_path, $_my_uri;
 global $_stacks, $db, $moduleFactory;
+global $system_courses;
 
 $side_menu = array();
 $_stack_files = array();
