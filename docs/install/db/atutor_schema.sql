@@ -409,8 +409,6 @@ INSERT INTO `modules` VALUES ('_core/languages', 2, 0, 64, 0);
 INSERT INTO `modules` VALUES ('_core/themes', 2, 0, 128, 0);
 INSERT INTO `modules` VALUES ('_standard/tracker', 2, 0, 0, 1);
 INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0, 1);
-INSERT INTO `modules` VALUES ('_standard/users_online', 2, 0, 0, 4);
-INSERT INTO `modules` VALUES ('_core/search', 2, 0, 0, 4);
 
 # --------------------------------------------------------
 # Table structure for table `news`
