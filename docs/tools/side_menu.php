@@ -28,7 +28,6 @@ if (isset($_POST['submit'])) {
 	$side_menu = '';
 	$_stack_names = array();
 
-	$_stack_names = array();
 	foreach($_stacks as $name=>$file) {
 		$_stack_names[] = $name;
 	}
@@ -61,13 +60,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row">
 		<?php
 			$num_stack = count($_stacks);
-			$side_menu = array();
-
-			$sql	= "SELECT side_menu FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_array($result)) {
-				$side_menu = explode("|", $row['side_menu']);
-			}
+			$side_menu = explode("|", $system_courses[$_SESSION['course_id']]['side_menu']);			
 
 			for ($i=0; $i<$num_stack; $i++) {				
 				echo '<select name="stack['.$i.']">';

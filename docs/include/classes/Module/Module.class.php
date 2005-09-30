@@ -240,10 +240,6 @@ class ModuleProxy {
 			//side menu items
 			if (isset($_module_stacks)) {
 				$count = 0;
-				foreach($_module_stacks as $mod_stack) {
-					$_module_stacks[$count]['mod_name'] = $this->_directoryName;
-					$count++;
-				}
 				$this->_stacks =& $_module_stacks;
 				$_stacks = array_merge($_stacks, $this->_stacks);
 			}

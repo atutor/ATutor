@@ -15,12 +15,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $next_prev_links, $langEditor;
 global $_base_path, $_my_uri;
-global $_stacks, $db, $moduleFactory;
+global $_stacks, $db;
 global $system_courses;
 
 $side_menu = array();
-$_stack_files = array();
-$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
+$stack_files = array();
 
 if ($_SESSION['course_id'] > 0) {
 	$savant->assign('my_uri', $_my_uri);
@@ -37,13 +36,11 @@ if ($_SESSION['course_id'] > 0) {
 
 	$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
 
-	$_stack_files[] = array();
-	foreach($_stacks as $stack) {		
-		if (in_array($stack['title_var'], $side_menu) && isset($module_list[$stack['mod_name']])) {
-			$_stack_files[] = $stack['file'];
+	foreach ($side_menu as $side) {
+		if (isset($_stacks[$side])) {
+			$stack_files[] = AT_INCLUDE_PATH.'../'.$_stacks[$side];
 		}
 	}
-
 }
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
@@ -52,7 +49,7 @@ $savant->assign('img', $theme_img);
 if (isset($err)) {
 	$err->showErrors(); // print all the errors caught on this page
 }
-$savant->assign('side_menu', $_stack_files);
+$savant->assign('side_menu', $stack_files);
 
 if ($framed || $popup) {
 	$savant->display('include/fm_footer.tmpl.php');
