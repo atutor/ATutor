@@ -32,6 +32,7 @@ if (isset($_POST['submit'])) {
 		$_stack_names[] = $name;
 	}
 
+	$_POST['stack'] = array_unique($_POST['stack']);
 	$_POST['stack'] = array_intersect($_POST['stack'], $_stack_names);
 
 	foreach($_POST['stack'] as $dropdown) {
