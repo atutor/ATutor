@@ -3,6 +3,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_PRIV_CONTENT', $this->getPrivilege());
 
+//side menu dropdowns
+$_module_stacks[] = array('title_var'=>'menu_menu', 'file'=>AT_INCLUDE_PATH.'html/dropdowns/menu_menu.inc.php');
+$_module_stacks[] = array('title_var'=>'related_topics', 'file'=>AT_INCLUDE_PATH.'html/dropdowns/related_topics.inc.php');
+
+
 $_module_pages['tools/content/index.php']['title_var'] = 'content';
 $_module_pages['tools/content/index.php']['parent']    = 'tools/index.php';
 $_module_pages['tools/content/index.php']['guide']     = 'instructor/?p=4.0.content.php';

@@ -38,6 +38,9 @@ $_config_defaults['email_confirmation']        = 0;
 $_config_defaults['master_list']               = 0;
 $_config_defaults['enable_handbook_notes']     = 0;
 $_config_defaults['theme_categories']          = 0;
+$_config_defaults['main_defaults']	           = 'forum/list.php|glossary/index.php';
+$_config_defaults['home_defaults']             = 'forum/list.php|glossary/index.php|chat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php';
+$_config_defaults['side_defaults']             = 'menu_menu|related_topics|users_online|glossary|search|poll|posts';
 $_config = $_config_defaults;
 
 define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:1;s:10:"PREF_THEME";s:7:"default";s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}');
@@ -211,10 +214,6 @@ define('AT_TESTS_QPROP_ALIGN_HORT',	6); // align question options horizontally
 define('AT_ENROLL_NO',			0);
 define('AT_ENROLL_YES',			1);
 define('AT_ENROLL_ALUMNUS',		2);
-
-/* key is title var.  include files for the side menu drop downs */
-$_stacks['menu_menu']		= AT_INCLUDE_PATH.'html/dropdowns/'.'menu_menu.inc.php';
-$_stacks['related_topics']	= AT_INCLUDE_PATH.'html/dropdowns/'.'related_topics.inc.php';
 
 //$_stacks = array('menu_menu', 'related_topics', 'users_online', 'glossary', 'search', 'poll', 'posts');
 

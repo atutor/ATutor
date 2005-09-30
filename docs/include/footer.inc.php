@@ -15,10 +15,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $next_prev_links, $langEditor;
 global $_base_path, $_my_uri;
-global $_stacks, $db;
+global $_stacks, $db, $moduleFactory;
 
 $side_menu = array();
 $_stack_files = array();
+$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
 
 if ($_SESSION['course_id'] > 0) {
 	$savant->assign('my_uri', $_my_uri);
@@ -33,19 +34,15 @@ if ($_SESSION['course_id'] > 0) {
 
 	//copyright can be found in include/html/copyright.inc.php
 
-	//side menu
 	$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
 
-	//---make this little bit a function.  also done on tools/side_menu.php
-	$_stack_names = array();
-	foreach($_stacks as $name=>$file) {
-		$_stack_names[] = $name;
+	$_stack_files[] = array();
+	foreach($_stacks as $stack) {		
+		if (in_array($stack['title_var'], $side_menu) && isset($module_list[$stack['mod_name']])) {
+			$_stack_files[] = $stack['file'];
+		}
 	}
-	$side_menu = array_intersect($side_menu, $_stack_names);
 
-	for ($i=0; $i<count($side_menu); $i++) {
-		$_stack_files[] = $_stacks[$side_menu[$i]];	
-	}
 }
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';

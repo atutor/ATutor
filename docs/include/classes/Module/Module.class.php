@@ -239,6 +239,11 @@ class ModuleProxy {
 
 			//side menu items
 			if (isset($_module_stacks)) {
+				$count = 0;
+				foreach($_module_stacks as $mod_stack) {
+					$_module_stacks[$count]['mod_name'] = $this->_directoryName;
+					$count++;
+				}
 				$this->_stacks =& $_module_stacks;
 				$_stacks = array_merge($_stacks, $this->_stacks);
 			}
@@ -306,7 +311,7 @@ class ModuleProxy {
 		return $this->_student_tools;
 	}
 
-	function getDisplayDefaults() {
+/*	function getDisplayDefaults() {
 		global $db;
 
 		if (empty($this->_student_tools)) {
@@ -331,7 +336,9 @@ class ModuleProxy {
 
 		return $defaults;
 	}
+*/
 }
+
 
 // ----------------- in a diff file. only required when .. required.
 

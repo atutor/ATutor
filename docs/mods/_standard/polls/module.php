@@ -3,8 +3,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_PRIV_POLLS', $this->getPrivilege());
 
-//side menu file.  key is title variable
-$_module_stacks['polls'] = AT_INCLUDE_PATH.'html/dropdowns/poll.inc.php';
+//side dropdown
+$_module_stacks[] = array('title_var'=>'polls', 'file'=>AT_INCLUDE_PATH.'html/dropdowns/poll.inc.php');
 
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tools = 'polls/index.php';
