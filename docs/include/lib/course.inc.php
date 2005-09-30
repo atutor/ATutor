@@ -13,35 +13,6 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-function getDisplay ($course_id = 0) {
-	global $db, $moduleFactory;
-
-	$home = $main = array();
-	$menu_defaults = '';
-
-	if ($course_id) {
-		$menu_defaults =',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
-	} else {
-		$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
-		$keys = array_keys($module_list);
-
-		foreach ($keys as $dir_name) { 
-			$module =& $module_list[$dir_name]; 
-			$mod_default = $module->getDisplayDefaults();
-
-			if ($mod_default['home']) {
-				$home[] = $mod_default['student_tool'];
-			}
-			if ($mod_default['main']) {
-				$main[] = $mod_default['student_tool'];
-			}
-		}
-		$menu_defaults = ', home_links=\'' . implode('|', $home) .'\', ' . 'main_links=\'' . implode('|', $main) .'\', side_menu=\'menu_menu|related_topics|users_online|glossary|search|poll|posts\'';
-	}
-
-	return $menu_defaults;
-}
-
 function add_update_course($_POST, $isadmin = FALSE) {
 	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
@@ -50,6 +21,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	global $system_courses;
 	global $MaxCourseSize;
 	global $msg;
+	global $_config;
 
 	$Backup =& new Backup($db);
 
@@ -140,10 +112,9 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	//display defaults
 	if (!$_POST['course']) {
-		$menu_defaults = getDisplay();
+		$menu_defaults = ',home_links=\''.$_config['home_defaults'].'\', main_links=\''.$_config['main_defaults'].'\', side_menu=\''.$_config['side_defaults'].'\'';
 	} else {
-		global $system_courses;
-		$menu_defaults = getDisplay($_POST['course']);
+		$menu_defaults = ',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
 	}
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]' $menu_defaults";
