@@ -103,6 +103,22 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="allow_instructor_requests" value="'.$_defaults['allow_instructor_requests'].'" />';
 				}
 
+				if (defined('AT_EMAIL_CONFIRMATION')) {
+					echo '<input type="hidden" name="email_confirmation" value="'.(AT_EMAIL_CONFIRMATION ? 'TRUE' : 'FALSE').'" />';
+				} else {
+					echo '<input type="hidden" name="email_confirmation" value="FALSE" />';
+				}
+				
+				if (defined('AT_MASTER_LIST')) {
+					echo '<input type="hidden" name="master_list" value="'.(AT_MASTER_LIST ? 'TRUE' : 'FALSE').'" />';
+				} else {
+					echo '<input type="hidden" name="master_list" value="FALSE" />';
+				}
+				if (defined('AT_ENABLE_HANDBOOK_NOTES')) {
+					echo '<input type="hidden" name="enable_handbook_notes" value="'.(AT_ENABLE_HANDBOOK_NOTES ? 'TRUE' : 'FALSE').'" />';
+				} else {
+					echo '<input type="hidden" name="enable_handbook_notes" value="FALSE" />';
+				}
 				if (defined('AUTO_APPROVE_INSTRUCTORS')) {
 					echo '<input type="hidden" name="auto_approve" value="'.(AUTO_APPROVE_INSTRUCTORS ? 'TRUE' : 'FALSE').'" />';
 				} else {
@@ -156,30 +172,6 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				echo '<input type="hidden" name="new_version" value="'.$new_version.'" />';
 				echo '<input type="hidden" name="old_version" value="'.VERSION.'" />';
 				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';
-
-
-				$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
-				@mysql_select_db(DB_NAME, $db);
-
-				$sql    = "SELECT content_id, content_parent_id, ordering, course_id FROM ".TABLE_PREFIX."content ORDER BY course_id, content_parent_id, ordering";
-				$result = mysql_query($sql, $db);
-				while ($row = mysql_fetch_assoc($result)) {
-					if ($current_course_id != $row['course_id']) {
-						$current_course_id = $row['course_id'];
-						unset($current_parent_id);
-						unset($ordering);
-					}
-					if ($current_parent_id != $row['content_parent_id']) {
-						$current_parent_id = $row['content_parent_id'];
-						$ordering = 1;
-					}
-
-					if ($row['ordering'] != $ordering) {
-						mysql_query("UPDATE ".TABLE_PREFIX."content SET ordering=$ordering WHERE content_id=$row[content_id]", $db);
-					}
-					$ordering++;
-				}
-				return;
 			}
 		} else {
 			$errors[] = 'Directory was found, but the old configuration file cannot be found.';

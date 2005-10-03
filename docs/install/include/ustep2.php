@@ -47,7 +47,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$row = mysql_fetch_assoc($result);
 			$found_lang = false;
 			if ($row['cnt'] > 1) {
-				//$errors[] = 'Old language <strong>'.$row['lang'].'</strong> was found.';
 				$found_lang = true;
 			}
 			if ($found_lang == false) {
