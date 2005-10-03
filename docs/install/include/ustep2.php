@@ -58,7 +58,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			unset($errors);
 
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text";
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text WHERE `variable`<>'_module'";
 			@mysql_query($sql, $db);
 
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'en'";

@@ -62,55 +62,55 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 	if (version_compare($_POST['step1']['old_version'], '1.5.2', '<')) {
 		// update config table
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('contact_email', '".$_POST['admin_email']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('contact_email', '".urldecode($_POST['step1']['contact_email'])."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('email_notification', '".($_POST['email_notification'] ? 1 : 0)."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('email_notification', '".($_POST['step1']['email_notification'] ? 1 : 0)."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('allow_instructor_requests', '".($_POST['allow_instructor_requests'] ? 1 : 0)."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('allow_instructor_requests', '".($_POST['step1']['allow_instructor_requests'] ? 1 : 0)."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('auto_approve_instructors', '".($_POST['auto_approve'] ? 1 : 0)."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('auto_approve_instructors', '".($_POST['step1']['auto_approve'] ? 1 : 0)."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('max_file_size', '".(int) $_POST['max_file_size']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('max_file_size', '".(int) $_POST['step1']['max_file_size']."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('max_course_size', '".(int) $_POST['max_course_size']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('max_course_size', '".(int) $_POST['step1']['max_course_size']."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('max_course_float', '".(int) $_POST['max_course_float']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('max_course_float', '".(int) $_POST['step1']['max_course_float']."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('illegal_extentions', '".$_POST['ill_ext']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('illegal_extentions', '".str_replace(',','|',urldecode($_POST['step1']['ill_ext']))."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('site_name', '".$_POST['site_name']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('site_name', '".urldecode($_POST['step1']['site_name'])."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('home_url', '".$_POST['home_url']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('home_url', '".urldecode($_POST['step1']['home_url'])."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('default_language', 'en')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('default_language', 'en')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('cache_dir', '".$_POST['cache_dir']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('cache_dir', '".urldecode($_POST['step1']['cache_dir'])."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('enable_category_themes', '".($_POST['theme_categories'] ? 1 : 0)."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('enable_category_themes', '".($_POST['step1']['theme_categories'] ? 1 : 0)."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('course_backups', '". (int) $_POST['course_backups']."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('course_backups', '". (int) $_POST['step1']['course_backups']."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('email_confirmation', '".($_POST['email_confirmation'] ? 1 : 0)."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('email_confirmation', '".($_POST['step1']['email_confirmation'] ? 1 : 0)."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('master_list', '".($_POST['master_list'] ? 1 : 0)."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('master_list', '".($_POST['step1']['master_list'] ? 1 : 0)."')";
 		mysql_query($sql, $db);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('enable_handbook_notes', '".($_POST['enable_handbook_notes'] ? 1 : 0)."')";
+		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('enable_handbook_notes', '".($_POST['step1']['enable_handbook_notes'] ? 1 : 0)."')";
 		mysql_query($sql, $db);
 	}
 

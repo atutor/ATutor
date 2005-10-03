@@ -92,6 +92,13 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				} else {
 					echo '<input type="hidden" name="admin_email" value="'.$_defaults['admin_email'].'" />';
 				}
+				if (defined('EMAIL')) {
+					echo '<input type="hidden" name="contact_email" value="'.EMAIL.'" />';
+				} else if (defined('ADMIN_EMAIL')) {
+					echo '<input type="hidden" name="contact_email" value="'.ADMIN_EMAIL.'" />';
+				} else {
+					echo '<input type="hidden" name="contact_email" value="'.$_defaults['admin_email'].'" />';
+				}
 				if (defined('EMAIL_NOTIFY')) {
 					echo '<input type="hidden" name="email_notification" value="'.(EMAIL_NOTIFY ? 'TRUE' : 'FALSE').'" />';
 				} else {
@@ -172,6 +179,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				echo '<input type="hidden" name="new_version" value="'.$new_version.'" />';
 				echo '<input type="hidden" name="old_version" value="'.VERSION.'" />';
 				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';
+				return;
 			}
 		} else {
 			$errors[] = 'Directory was found, but the old configuration file cannot be found.';
