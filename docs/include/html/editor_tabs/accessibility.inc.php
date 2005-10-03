@@ -81,7 +81,7 @@ if ($_POST['desc_submit']) {
 			$pg_url = $_base_href.'get_acheck.php/'.$_POST['cid'] . '.html';
 
 			$checker_url = AT_ACHECKER_URL.'Checkacc?file='.urlencode($pg_url)
-							. '&guide=wcag-1-0-aa&output=chunk&line=5'
+							. '&guide=wcag-2-0-aa&output=chunk&line=5'
 							. '&vurl=' . urlencode($_base_href . 'editor/view_item.php');
 
 			$report = @file_get_contents($checker_url);
