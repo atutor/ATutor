@@ -103,12 +103,20 @@ if (isset($_POST['submit'])) {
 		$home_defaults = '';
 	}
 
-	if ((strlen($main_defaults) < 256) && (strlen($home_defaults) < 256)) {
+	if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) < 256)) {
 		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='$main_defaults' WHERE name='main_defaults'";
-		$result = mysql_query($sql, $db);
-		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='$home_defaults' WHERE name='home_defaults'";
-		$result = mysql_query($sql, $db);
+	} else if ($_config_defaults['main_defaults'] == $main_defaults) {
+		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='' WHERE name='main_defaults'";
 	}
+	$result = mysql_query($sql, $db);
+
+	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) < 256)) {
+		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='$home_defaults' WHERE name='home_defaults'";
+	} else if ($_config_defaults['home_defaults'] == $home_defaults) {
+		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='' WHERE name='home_defaults'";
+	}
+	$result = mysql_query($sql, $db);
+
 	$msg->addFeedback('SECTIONS_SAVED');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
@@ -116,8 +124,17 @@ if (isset($_POST['submit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$home_defaults = explode('|', $_config['home_defaults']);
-$main_defaults = explode('|', $_config['main_defaults']);
+if (!empty($_config['home_defaults'])) {
+	$home_defaults = explode('|', $_config['home_defaults']);
+} else {
+	$home_defaults = explode('|', $_config_defaults['home_defaults']);
+}
+
+if (!empty($_config['main_defaults'])) {
+	$main_defaults = explode('|', $_config['main_defaults']);
+} else {
+	$main_defaults = explode('|', $_config_defaults['main_defaults']);
+}
 
 $module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
 $keys = array_keys($module_list);
@@ -142,7 +159,7 @@ $keys = array_keys($module_list);
 foreach ($keys as $dir_name) {
 	$module =& $module_list[$dir_name]; 
 	$tool = $module->getStudentTools();
-	if (!empty($tool)) {
+	if (!empty($tool) && is_string($tool)) {
 		$student_tools[] = $tool;
 	}
 }
@@ -155,7 +172,7 @@ $num_main    = count($_current_modules);
 $_current_modules = array_merge($_current_modules, array_diff($home_defaults,$main_defaults) );
 $num_modules = count($_current_modules);
 //all other mods
-$_current_modules = array_merge($_current_modules, array_diff($_modules, $_current_modules));
+//$_current_modules = array_merge($_current_modules, array_diff($_modules, $_current_modules));
 
 foreach ($_current_modules as $tool) :
 		$count++; 
