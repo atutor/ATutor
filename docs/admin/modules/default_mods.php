@@ -136,9 +136,6 @@ if (!empty($_config['main_defaults'])) {
 	$main_defaults = explode('|', $_config_defaults['main_defaults']);
 }
 
-$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
-$keys = array_keys($module_list);
-
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data static" rules="rows" summary="" style="width:60%;">
@@ -156,6 +153,9 @@ $keys = array_keys($module_list);
 </tfoot>
 <tbody>
 <?php 
+$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
+$keys = array_keys($module_list);
+
 foreach ($keys as $dir_name) {
 	$module =& $module_list[$dir_name]; 
 	$tool = $module->getStudentTools();
@@ -172,10 +172,15 @@ $num_main    = count($_current_modules);
 $_current_modules = array_merge($_current_modules, array_diff($home_defaults,$main_defaults) );
 $num_modules = count($_current_modules);
 //all other mods
-//$_current_modules = array_merge($_current_modules, array_diff($_modules, $_current_modules));
+$_current_modules = array_merge($_current_modules, array_diff($student_tools, $_current_modules));
 
 foreach ($_current_modules as $tool) :
-		$count++; 
+
+	//make sure disabled mods aren't included
+	if (!in_array($tool, $student_tools)) {
+		continue;
+	}
+	$count++; 
 ?>
 	<tr>
 		<td><?php 
