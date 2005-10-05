@@ -129,12 +129,12 @@ $main_defaults = explode('|', $_config['main_defaults']);
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data static" rules="rows" summary="" style="width:60%;">
+<table class="data static" rules="rows" summary="">
 <thead>
 <tr>
 	<th scope="cols"><?php echo _AT('section'); ?></th>
 	<th><?php echo _AT('location'); ?></th>
-	<th style="width:15px;"><?php echo _AT('order'); ?></th>
+	<th><?php echo _AT('order'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -195,12 +195,12 @@ foreach ($_current_modules as $tool) :
 		</td>
 		<td align="right">
 			<?php if (($count != $num_modules+1) && ($count > 1)): ?>
-				<input type="submit" name="up[<?php echo $tool; ?>]" value="" title="<?php echo _AT('move_up'); ?>" style="color: white; background-color: white; width: 10px; background-image: url('images/move-up.gif'); background-repeat: no-repeat; background-position: 0px 6px; border: 0;" />
+				<input type="submit" name="up[<?php echo $module; ?>]" value="<?php echo _AT('move_up'); ?>" title="<?php echo _AT('move_up'); ?>" style="background-color: white; border: 1px solid; padding: 0px;" />
 			<?php else: ?>
 				<img src="images/clr.gif" alt="" width="12" />
 			<?php endif; ?>
 			<?php if (($count != $num_modules) && ($count < $num_modules)): ?>
-				<input type="submit" name="down[<?php echo $tool; ?>]" value="" title="<?php echo _AT('move_down'); ?>" style="background-color: white; width: 10px; background-image: url('images/move-down.gif'); background-repeat: no-repeat; background-position: -3px 6px; border: 0;"/>
+				<input type="submit" name="down[<?php echo $module; ?>]" value="<?php echo _AT('move_down'); ?>" title="<?php echo _AT('move_down'); ?>" style="background-color: white; border: 1px solid; padding: 0px;"/>
 			<?php else: ?>
 				<img src="images/clr.gif" alt="" width="12" />
 			<?php endif; ?>
