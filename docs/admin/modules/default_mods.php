@@ -104,16 +104,16 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) < 256)) {
-		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='$main_defaults' WHERE name='main_defaults'";
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults')";
 	} else if ($_config_defaults['main_defaults'] == $main_defaults) {
-		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='' WHERE name='main_defaults'";
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '')";
 	}
 	$result = mysql_query($sql, $db);
 
 	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) < 256)) {
-		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='$home_defaults' WHERE name='home_defaults'";
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults')";
 	} else if ($_config_defaults['home_defaults'] == $home_defaults) {
-		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='' WHERE name='home_defaults'";
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '')";
 	}
 	$result = mysql_query($sql, $db);
 
