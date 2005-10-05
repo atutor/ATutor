@@ -83,6 +83,7 @@ if ($_POST['step4']['copy_from'] && ($_POST['step4']['copy_from'] != DIRECTORY_S
 /* if that module does not exist then check the old directory and prompt to have it copied */
 /* or delete it from the modules table. or maybe disable it instead? */
 
+
 echo '<br />';
 if (isset($progress)) {
 	print_feedback($progress);

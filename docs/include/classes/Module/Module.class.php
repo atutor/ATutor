@@ -17,7 +17,8 @@
 
 define('AT_MODULE_STATUS_DISABLED',    1);
 define('AT_MODULE_STATUS_ENABLED',     2);
-define('AT_MODULE_STATUS_UNINSTALLED', 4); // not in the db
+define('AT_MODULE_STATUS_MISSING',     4);
+define('AT_MODULE_STATUS_UNINSTALLED', 8); // not in the db
 
 define('AT_MODULE_HOME',	1);
 define('AT_MODULE_MAIN',	2);
@@ -50,7 +51,7 @@ class ModuleFactory {
 
 		if ($auto_load == TRUE) {
 			// initialise enabled modules
-			$sql	= "SELECT dir_name, privilege, admin_privilege, status, display_defaults FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
+			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
 			$result = mysql_query($sql, $db);
 			while($row = mysql_fetch_assoc($result)) {
 				$module =& new ModuleProxy($row);
@@ -61,7 +62,7 @@ class ModuleFactory {
 	}
 
 	// public
-	// state := enabled | disabled | uninstalled
+	// state := enabled | disabled | uninstalled | missing
 	// type  := core | standard | extra
 	// sort  := true | false
 	// the results of this method are not cached. call sparingly.
@@ -75,7 +76,7 @@ class ModuleFactory {
 			$type = AT_MODULE_TYPE_CORE | AT_MODULE_TYPE_STANDARD | AT_MODULE_TYPE_EXTRA;
 		}
 
-		$sql	= "SELECT dir_name, privilege, admin_privilege, status, display_defaults FROM ". TABLE_PREFIX . "modules";
+		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules";
 		$result = mysql_query($sql, $db);
 		while($row = mysql_fetch_assoc($result)) {
 			if (!isset($this->_modules[$row['dir_name']])) {
@@ -123,7 +124,14 @@ class ModuleFactory {
 	// public.
 	function & getModule($module_dir) {
 		if (!isset($this->_modules[$module_dir])) {
-			$module =& new ModuleProxy($module_dir);
+			global $db;
+			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE dir_name='$module_dir'";
+			$result = mysql_query($sql, $db);
+			if ($row = mysql_fetch_assoc($result)) {
+				$module =& new ModuleProxy($row);
+			} else {
+				$module =& new ModuleProxy($module_dir);
+			}
 			$this->_modules[$module_dir] =& $module;
 		}
 		return $this->_modules[$module_dir];
@@ -182,9 +190,10 @@ class ModuleProxy {
 
 	// statuses
 	function checkStatus($status) { return query_bit($status, $this->_status); }
-	function isUninstalled()  { return ($this->_status == AT_MODULE_STATUS_UNINSTALLED)  ? true : false; }
-	function isEnabled()      { return ($this->_status == AT_MODULE_STATUS_ENABLED)      ? true : false; }
-	function isDisabled()     { return ($this->_status == AT_MODULE_STATUS_DISABLED)     ? true : false; }
+	function isUninstalled()  { return ($this->_status == AT_MODULE_STATUS_UNINSTALLED) ? true : false; }
+	function isEnabled()      { return ($this->_status == AT_MODULE_STATUS_ENABLED)     ? true : false; }
+	function isDisabled()     { return ($this->_status == AT_MODULE_STATUS_DISABLED)    ? true : false; }
+	function isMissing()      { return ($this->_status == AT_MODULE_STATUS_MISSING)     ? true : false; }
 
 	// types
 	function checkType($type) { return query_bit($type, $this->_type); }
@@ -307,32 +316,6 @@ class ModuleProxy {
 		return $this->_student_tools;
 	}
 
-/*	function getDisplayDefaults() {
-		global $db;
-
-		if (empty($this->_student_tools)) {
-			return;
-		}
-
-		$defaults = array();
-
-		$defaults['student_tool'] = $this->_student_tools;
-		$defaults['total'] = $this->_display_defaults;
-
-		if (query_bit($this->_display_defaults, AT_MODULE_HOME)) {
-			$defaults['home'] = TRUE;
-		} else {
-			$defaults['home'] = FALSE;
-		}
-		if (query_bit($this->_display_defaults, AT_MODULE_MAIN)) {
-			$defaults['main'] = TRUE;
-		} else {
-			$defaults['main'] = FALSE;
-		}
-
-		return $defaults;
-	}
-*/
 }
 
 
@@ -362,7 +345,6 @@ class Module {
 			$this->_properties = array();
 		}
 	}
-
 
 	function getDescription($lang = 'en') {
 		if (!$this->_properties) {
