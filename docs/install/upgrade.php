@@ -11,7 +11,7 @@
 /************************************************************************/
 // $Id$
 
-define('AT_INCLUDE_PATH', 'include/');
+define('AT_INCLUDE_PATH', '../include/');
 
 if (isset($_POST['new_version'])) {
 	$new_version = $_POST['new_version'];
@@ -25,49 +25,49 @@ if (!isset($step) || ($step == 0)) {
 	$step = 1;
 }
 
-require(AT_INCLUDE_PATH.'common.inc.php');
+require('include/common.inc.php');
 
 if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
 	header('Location: index.php');
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'upgrade_header.php');
+require('include/upgrade_header.php');
 
 if ($step == 1) {
-	require(AT_INCLUDE_PATH.'ustep1.php');
+	require('include/ustep1.php');
 }
 
 if ($step == 2) {
-	require(AT_INCLUDE_PATH.'ustep2.php');
+	require('include/ustep2.php');
 }
 
 /* write the config.inc.php file with any new options */
 if ($step == 3) {
-	require(AT_INCLUDE_PATH.'ustep3.php');
+	require('include/ustep3.php');
 }
 
 //content dir
 if ($step == 4) {
-	require(AT_INCLUDE_PATH.'step5.php');
+	require('include/step5.php');
 }
 
 if ($step == 5) {
-	require(AT_INCLUDE_PATH.'ustep5.php');
+	require('include/ustep5.php');
 }
 
 if ($step == 6) {
-	require(AT_INCLUDE_PATH.'ustep4.php');
+	require('include/ustep4.php');
 }
 
 /* anonymous data collection */
 if ($step == 7) {	
-	require(AT_INCLUDE_PATH.'step7.php');
+	require('include/step7.php');
 }
 
 if ($step == 8) {
-	require(AT_INCLUDE_PATH.'ustep6.php');
+	require('include/ustep6.php');
 }
 
-require(AT_INCLUDE_PATH.'footer.php');
+require('include/footer.php');
 ?>

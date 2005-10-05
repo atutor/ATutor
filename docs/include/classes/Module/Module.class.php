@@ -62,7 +62,7 @@ class ModuleFactory {
 	}
 
 	// public
-	// state := enabled | disabled | uninstalled | missing
+	// status := enabled | disabled | uninstalled | missing
 	// type  := core | standard | extra
 	// sort  := true | false
 	// the results of this method are not cached. call sparingly.
@@ -297,6 +297,11 @@ class ModuleProxy {
 		$this->_status = AT_MODULE_STATUS_ENABLED;
 	}
 
+	function setIsMissing() {
+		$this->initModuleObj();
+		$this->_moduleObj->setIsMissing();
+		$this->_status = AT_MODULE_STATUS_MISSING;
+	}
 	function disable() {
 		$this->initModuleObj();
 		$this->_moduleObj->disable();
@@ -491,6 +496,20 @@ class Module {
 
 		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_ENABLED.' WHERE dir_name="'.$this->_directoryName.'"';
 		$result = mysql_query($sql, $db);
+	}
+
+	/**
+	* Sets the status to missing if the module dir doesn't exist.
+	* @access  public
+	* @author  Joel Kronenberg
+	*/
+	function setIsMissing() {
+		global $db;
+		// if the directory doesn't exist then set the status to MISSING
+		if (!is_dir(AT_MODULE_PATH . $this->_directoryName)) {
+			$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_MISSING.' WHERE dir_name="'.$this->_directoryName.'"';
+			$result = mysql_query($sql, $db);
+		}
 	}
 
 	/**

@@ -114,6 +114,20 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		mysql_query($sql, $db);
 	}
 
+	/* deal with the extra modules: */
+	/* for each module in the modules table check if that module still exists in the mod directory. */
+	/* if that module does not exist then check the old directory and prompt to have it copied */
+	/* or delete it from the modules table. or maybe disable it instead? */
+	require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
+	$moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
+
+	$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED);
+	$keys = array_keys($module_list);
+	foreach($keys as $dir_name) {
+		$module =& $module_list[$dir_name];
+		$module->setIsMissing();
+	}
+
 	if (!isset($errors)) {
 		unset($errors);
 		unset($_POST['submit']);

@@ -27,7 +27,6 @@ if (isset($_GET['core'])     && $_GET['core'])     {  $args .= SEP.'core=1';    
 if (isset($_GET['standard']) && $_GET['standard']) {  $args .= SEP.'standard=1'; }
 if (isset($_GET['extra'])    && $_GET['extra'])    {  $args .= SEP.'extra=1';    }
 
-
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
 	if (!$module->isEnabled() && !$module->isCore() && !$module->isMissing()) {
@@ -42,7 +41,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		// core modules cannot be disabled!
 		$msg->addError('DISABLE_CORE_MODULE');
 	} else if ($module->isMissing()) {
-
+		$msg->addError('DISABLE_MISSING_MODULE');
 	} else if ($module->isEnabled()) {
 		$module->disable();
 		$msg->addFeedback('MOD_DISABLED');
