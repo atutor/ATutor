@@ -106,14 +106,14 @@ if (isset($_POST['submit'])) {
 	if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) < 256)) {
 		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults')";
 	} else if ($_config_defaults['main_defaults'] == $main_defaults) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '')";
+		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults'";
 	}
 	$result = mysql_query($sql, $db);
 
 	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) < 256)) {
 		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults')";
 	} else if ($_config_defaults['home_defaults'] == $home_defaults) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '')";
+		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults'";
 	}
 	$result = mysql_query($sql, $db);
 
@@ -124,17 +124,8 @@ if (isset($_POST['submit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if (!empty($_config['home_defaults'])) {
-	$home_defaults = explode('|', $_config['home_defaults']);
-} else {
-	$home_defaults = explode('|', $_config_defaults['home_defaults']);
-}
-
-if (!empty($_config['main_defaults'])) {
-	$main_defaults = explode('|', $_config['main_defaults']);
-} else {
-	$main_defaults = explode('|', $_config_defaults['main_defaults']);
-}
+$home_defaults = explode('|', $_config['home_defaults']);
+$main_defaults = explode('|', $_config['main_defaults']);
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
