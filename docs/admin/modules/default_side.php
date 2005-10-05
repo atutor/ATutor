@@ -45,9 +45,9 @@ if (isset($_POST['submit'])) {
 	$side_menu = substr($side_menu, 0, -1);
 
 	if (!($_config_defaults['side_defaults'] == $side_menu) && (strlen($side_menu) < 256)) {
-		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='$side_menu' WHERE name='side_defaults'";
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('side_defaults', '$side_menu')";
 	} else if ($_config_defaults['side_defaults'] == $side_menu) {
-		$sql    = "UPDATE ".TABLE_PREFIX."config SET value='' WHERE name='side_defaults'";
+		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='side_defaults'";
 	}
 
 	$result = mysql_query($sql, $db);
@@ -69,11 +69,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php
 			$num_stack = count($_stacks);	
 
-			if (!empty($_config['side_defaults'])) {
-				$side_menu = explode('|', $_config['side_defaults']);
-			} else {
-				$side_menu = explode('|', $_config_defaults['side_defaults']);
-			}
+			$side_menu = explode('|', $_config['side_defaults']);
 
 			for ($i=0; $i<$num_stack; $i++) {				
 				echo '<select name="stack['.$i.']">';
