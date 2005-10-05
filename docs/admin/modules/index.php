@@ -22,17 +22,18 @@ $args = '';
 
 if (isset($_GET['enabled'])  && $_GET['enabled'])  {  $args .= 'enabled=1';      }
 if (isset($_GET['disabled']) && $_GET['disabled']) {  $args .= SEP.'disabled=1'; }
+if (isset($_GET['missing'])  && $_GET['missing'])  {  $args .= SEP.'missing=1';  }
 if (isset($_GET['core'])     && $_GET['core'])     {  $args .= SEP.'core=1';     }
 if (isset($_GET['standard']) && $_GET['standard']) {  $args .= SEP.'standard=1'; }
 if (isset($_GET['extra'])    && $_GET['extra'])    {  $args .= SEP.'extra=1';    }
 
+
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
-	if (!$module->isEnabled() && !$module->isCore()) {
+	if (!$module->isEnabled() && !$module->isCore() && !$module->isMissing()) {
 		$module->enable();
 		$msg->addFeedback('MOD_ENABLED');
 	}
-
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;
 } else if (isset($_GET['mod_dir'], $_GET['disable'])) {
@@ -40,6 +41,8 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	if ($module->isCore()) {
 		// core modules cannot be disabled!
 		$msg->addError('DISABLE_CORE_MODULE');
+	} else if ($module->isMissing()) {
+
 	} else if ($module->isEnabled()) {
 		$module->disable();
 		$msg->addFeedback('MOD_DISABLED');
@@ -62,14 +65,15 @@ $module_status_bits = $module_type_bits = 0;
 
 if (isset($_GET['enabled']))  { $module_status_bits += AT_MODULE_STATUS_ENABLED;  }
 if (isset($_GET['disabled'])) {	$module_status_bits += AT_MODULE_STATUS_DISABLED; }
+if (isset($_GET['missing']))  {	$module_status_bits += AT_MODULE_STATUS_MISSING;  }
 
 if (isset($_GET['core']))     {  $module_type_bits += AT_MODULE_TYPE_CORE;     }
 if (isset($_GET['standard'])) {  $module_type_bits += AT_MODULE_TYPE_STANDARD; }
 if (isset($_GET['extra']))    {  $module_type_bits += AT_MODULE_TYPE_EXTRA;    }
 
 if ($module_status_bits == 0) {
-	$module_status_bits = AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED;
-	$_GET['enabled'] = $_GET['disabled'] = 1;
+	$module_status_bits = AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_MISSING;
+	$_GET['enabled'] = $_GET['disabled'] = $_GET['missing'] = 1;
 }
 
 if ($module_type_bits == 0) {
@@ -102,6 +106,8 @@ $keys = array_keys($module_list);
 			<input type="checkbox" name="enabled" value="1" id="s0" <?php if (isset($_GET['enabled'])) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('enabled'); ?></label> 
 
 			<input type="checkbox" name="disabled" value="1" id="s1" <?php if (isset($_GET['disabled'])) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('disabled'); ?></label> 
+
+			<input type="checkbox" name="missing" value="1" id="s2" <?php if (isset($_GET['missing'])) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('missing'); ?></label> 
 		</div>
 
 		<div class="row buttons">
@@ -155,6 +161,8 @@ $keys = array_keys($module_list);
 		<td valign="top"><?php
 			if ($module->isEnabled()) {
 				echo _AT('enabled');
+			} else if ($module->isMissing()) {
+				echo '<strong>'._AT('missing').'</strong>';
 			} else {
 				echo '<em>'._AT('disabled').'</em>';
 			}
