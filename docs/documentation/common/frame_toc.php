@@ -84,7 +84,13 @@ function highlight(page) {
 		<li><a href="../admin/2.0.configuration.php" class="tree" id="id2.0.configuration.php">Configuration</a>
 		<ul>
 			<li><a href="../admin/2.1.my_account.php" class="leaf" id="id2.1.my_account.php">My Account</a></li>
-			<li><a href="../admin/2.2.system_preferences.php" class="leaf" id="id2.2.system_preferences.php">System Preferences</a></li>
+			<li><a href="../admin/2.2.system_preferences.php" class="tree" id="id2.2.system_preferences.php">System Preferences</a>
+				<ul>
+					<li><a href="../admin/2.2.1.default_student_tools.php" class="leaf" id="id2.2.1.default_student_tools.php">Default Student Tools</a></li>
+					<li><a href="../admin/2.2.2.default_side_menu.php" class="leaf" id="id2.2.1.default_side_menu.php">Default Side Menu</a></li>				
+					<li><a href="../admin/2.2.3.default_preferences.php" class="leaf" id="id2.2.1.default_preferences.php">Default Preferences</a></li>
+				</ul>
+			</li>
 			<li><a href="../admin/2.3.languages.php" class="tree" id="id2.3.languages.php">Languages</a>
 				<ul>
 					<li><a href="../admin/2.3.1.importing_languages.php" class="leaf" id="id2.3.1.importing_languages.php">Importing Languages</a></li>

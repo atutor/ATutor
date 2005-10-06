@@ -20,6 +20,9 @@
 	$_pages['2.0.configuration.php']                 = 'Configuration';
 	$_pages['2.1.my_account.php']                    = 'My Account';
 	$_pages['2.2.system_preferences.php']            = 'System Preferences';
+	$_pages['2.2.1.default_student_tools.php']       = 'Default Student Tools';
+	$_pages['2.2.2.default_side_menu.php']			 = 'Default Side Menu';
+	$_pages['2.2.3.default_preferences.php']         = 'Default Preferences';
 	$_pages['2.3.languages.php']                     = 'Languages';
 	$_pages['2.3.1.importing_languages.php']         = 'Importing Languages';
 	$_pages['2.3.2.managing_existing_languages.php'] = 'Managing Existing Languages';
