@@ -41,9 +41,10 @@ $_config_defaults['theme_categories']          = 0;
 $_config_defaults['main_defaults']	           = 'forum/list.php|glossary/index.php';
 $_config_defaults['home_defaults']             = 'forum/list.php|glossary/index.php|chat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php';
 $_config_defaults['side_defaults']             = 'menu_menu|related_topics|users_online|glossary|search|poll|posts';
-$_config = $_config_defaults;
+$_config_defaults['pref_defaults']			   = 'a:4:{s:10:"PREF_THEME";s:7:"default";s:14:"PREF_NUMBERING";i:1;s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}';
+$_config_defaults['pref_inbox_notify']		   = 0;
 
-define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:1;s:10:"PREF_THEME";s:7:"default";s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}');
+$_config = $_config_defaults;
 
 $_modules = array('acollab/bounce.php');
 

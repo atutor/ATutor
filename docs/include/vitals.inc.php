@@ -148,7 +148,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 }
 
 /* defaults: */
-if (empty($_SESSION['prefs']) || (count($_SESSION['prefs']) < 2)){
+/*if (empty($_SESSION['prefs']) || (count($_SESSION['prefs']) < 2)){
 	$temp_prefs = unserialize(AT_DEFAULT_PREFS);
 	$tmp_theme  = get_default_theme();
 	$temp_prefs['PREF_THEME'] = $tmp_theme['dir_name'];
@@ -158,7 +158,7 @@ if (empty($_SESSION['prefs']) || (count($_SESSION['prefs']) < 2)){
 	if ($_SESSION['valid_user'] && $_SESSION['member_id']) {
 		save_prefs();
 	}
-} 
+} */
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 
@@ -732,5 +732,6 @@ $MaxFileSize       = $_config['max_file_size'];
 $MaxCourseSize     = $_config['max_course_size'];
 $MaxCourseFloat    = $_config['max_course_float'];
 $IllegalExtentions = explode('|',$_config['illegal_extentions']);
+define('AT_DEFAULT_PREFS',  $_config['prefs_default']);
 
 ?>
