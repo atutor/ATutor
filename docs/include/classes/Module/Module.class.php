@@ -549,7 +549,7 @@ class Module {
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 
-			if ($_course_privilege == 'new') {
+			if ((string) $_course_privilege == 'new') {
 				$priv = $row['privilege'] * 2;
 			} else if ($_course_privilege == AT_PRIV_ADMIN) {
 				$priv = AT_PRIV_ADMIN;
@@ -557,7 +557,7 @@ class Module {
 				$priv = 0;
 			}
 
-			if ($_admin_privilege == 'new') {
+			if ((string) $_admin_privilege == 'new') {
 				$admin_priv = $row['admin_privilege'] * 2;
 			} else if ($_admin_privilege == AT_ADMIN_PRIV_ADMIN) {
 				$admin_priv = AT_ADMIN_PRIV_ADMIN;

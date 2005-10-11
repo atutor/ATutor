@@ -1,8 +1,8 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-$_course_privilege = AT_PRIV_ADMIN;       // 0/false | 1/AT_PRIV_ADMIN | 'new'/TRUE
-$_admin_privilege  = AT_ADMIN_PRIV_ADMIN; // 0/false | 1/AT_ADMIN_PRIV_ADMIN | 'new'/TRUE
+$_course_privilege = 0; // 0/false | 1/AT_PRIV_ADMIN | 'new'/TRUE
+$_admin_privilege  = 0; // 0/false | 1/AT_ADMIN_PRIV_ADMIN | 'new'/TRUE
 
 $directory = realpath(AT_INCLUDE_PATH . '../') . '/sco'; // a top level directory
 
