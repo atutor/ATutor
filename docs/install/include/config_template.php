@@ -15,7 +15,6 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function write_config_file($filename, $comments) {
-
 	global $config_template;
 
 	$tokens = array('{USER}',
@@ -43,8 +42,8 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step1']['header_logo'])),
 					$comments,
 					addslashes(urldecode($_POST['step4']['content_dir'])),
-					$_POST['step3']['smtp'],
-					$_POST['step3']['get_file']
+					$_POST['step1']['smtp'],
+					$_POST['step1']['get_file']
 				);
 	} else {
 		$values = array(urldecode($_POST['step2']['db_login']),

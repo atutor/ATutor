@@ -88,7 +88,7 @@ class ModuleFactory {
 		}
 
 		// small performance addition:
-		if (query_bit($status, AT_MODULE_STATUS_UNINSTALLED)) {
+		if ($status & AT_MODULE_STATUS_UNINSTALLED) {
 			$dir = opendir(AT_MODULE_PATH);
 			while (false !== ($dir_name = readdir($dir))) {
 				if (($dir_name == '.') 
@@ -189,14 +189,14 @@ class ModuleProxy {
 	}
 
 	// statuses
-	function checkStatus($status) { return query_bit($status, $this->_status); }
+	function checkStatus($status) { return (bool) ($status & $this->_status); }
 	function isUninstalled()  { return ($this->_status == AT_MODULE_STATUS_UNINSTALLED) ? true : false; }
 	function isEnabled()      { return ($this->_status == AT_MODULE_STATUS_ENABLED)     ? true : false; }
 	function isDisabled()     { return ($this->_status == AT_MODULE_STATUS_DISABLED)    ? true : false; }
 	function isMissing()      { return ($this->_status == AT_MODULE_STATUS_MISSING)     ? true : false; }
 
 	// types
-	function checkType($type) { return query_bit($type, $this->_type); }
+	function checkType($type) { return (bool) ($type & $this->_type); }
 	function isCore()     { return ($this->_type == AT_MODULE_TYPE_CORE)     ? true : false; }
 	function isStandard() { return ($this->_type == AT_MODULE_TYPE_STANDARD) ? true : false; }
 	function isExtra()    { return ($this->_type == AT_MODULE_TYPE_EXTRA)    ? true : false; }
@@ -339,6 +339,9 @@ class Module {
 	var $_directoryName;
 	var $_properties; // array from xml
 
+	/**
+	* Constructorino
+	*/
 	function Module($dir_name) {
 		require_once(dirname(__FILE__) . '/ModuleParser.class.php');
 		$moduleParser   =& new ModuleParser();
@@ -348,6 +351,7 @@ class Module {
 			$this->_properties = $moduleParser->rows[0];
 		} else {
 			$this->_properties = array();
+			$this->setIsMissing(); // the xml file may not be found -> the dir may be missing.
 		}
 	}
 
@@ -530,51 +534,41 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function install() {
-		global $db;
+		global $msg;
 
-		$sql = "SELECT MAX(`privilege`) AS `privilege`, MAX(admin_privilege) AS admin_privilege FROM ".TABLE_PREFIX."modules";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
+		// should check if this module is already installed...
 
-		if (strcasecmp($this->_properties['instructor_privilege'], 'create') == 0) {
-			$priv = $row['privilege'] * 2;
-		} else if (strcasecmp($this->_properties['instructor_privilege'], 'existing') == 0) {
-			$priv = AT_PRIV_ADMIN;
-		} else {
-			$priv = 0;
+		if (file_exists(AT_MODULE_PATH . $this->_directoryName . '/module_install.php')) {
+			require(AT_MODULE_PATH . $this->_directoryName . '/module_install.php');
 		}
 
-		if (strcasecmp($this->_properties['admin_privilege'], 'create') == 0) {
-			$admin_priv = $row['admin_privilege'] * 2;
-		} else if (strcasecmp($this->_properties['admin_privilege'], 'existing') == 0) {
-			$admin_priv = AT_ADMIN_PRIV_ADMIN;
-		} else {
-			$admin_priv = 0;
-		}
+		if (!$msg->containsErrors()) {
+			global $db;
 
-		// check if the directory is writeable
-		if ($this->_properties['directory']) {
-			$dir = AT_MODULE_PATH . $this->_directoryName . DIRECTORY_SEPARATOR . $this->_properties['directory'];
-			if (!is_dir($dir) && !@mkdir($dir)) {
-				global $msg;
-				$msg->addError(array('DIR_NOT_EXIST', $dir));
-				return;
-			} else if (!is_writable($dir) && @chmod($dir, 0666)) {
-				global $msg;
-				$msg->addError(array('DIR_NOT_WRITEABLE', $dir));
-				return;
+			$sql = "SELECT MAX(`privilege`) AS `privilege`, MAX(admin_privilege) AS admin_privilege FROM ".TABLE_PREFIX."modules";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+
+			if ($_course_privilege == 'new') {
+				$priv = $row['privilege'] * 2;
+			} else if ($_course_privilege == AT_PRIV_ADMIN) {
+				$priv = AT_PRIV_ADMIN;
+			} else {
+				$priv = 0;
 			}
-		}
 
-		$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.')';
-		$result = mysql_query($sql, $db);
+			if ($_admin_privilege == 'new') {
+				$admin_priv = $row['admin_privilege'] * 2;
+			} else if ($_admin_privilege == AT_ADMIN_PRIV_ADMIN) {
+				$admin_priv = AT_ADMIN_PRIV_ADMIN;
+			} else {
+				$admin_priv = 0;
+			}
 
-		if (mysql_affected_rows($db) == 1) {
-			// check for a .sql file that has to be run
-
+			$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.')';
+			$result = mysql_query($sql, $db);
 		}
 	}
-
 }
 
 ?>

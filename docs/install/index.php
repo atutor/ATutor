@@ -72,8 +72,8 @@ $no_good = FALSE;
 						} ?></td>
 		</tr>
 		<tr>
-			<td><kbd>--with-zlib</kbd></td>
-			<td><?php if (defined('FORCE_GZIP')) {
+			<td><kbd>zlib</kbd></td>
+			<td><?php if (extension_loaded('zlib')) {
 						echo 'Enabled</td><td align="center">';
 						echo $good;
 					} else {
@@ -83,8 +83,8 @@ $no_good = FALSE;
 					} ?></td>
 		</tr>
 		<tr>
-			<td><kbd>--with-mysql</kbd></td>
-			<td><?php if (defined('MYSQL_NUM')) {
+			<td><kbd>mysql</kbd></td>
+			<td><?php if (extension_loaded('mysql')) {
 						echo 'Enabled</td><td align="center">';
 						echo $good;
 					} else {
@@ -182,6 +182,17 @@ $no_good = FALSE;
 					// not set?
 				}
 				?></td>
+		</tr>
+		<tr>
+			<td><kbd>sessions</kbd></td>
+			<td><?php if (extension_loaded('session')) {
+						echo 'Enabled</td><td align="center">';
+						echo $good;
+					} else {
+						echo 'Disabled</td><td align="center">';
+						echo $bad;
+						$no_good = TRUE;
+					} ?></td>
 		</tr>
 		<tr>
 			<td><kbd>session.save_path</kbd></td>

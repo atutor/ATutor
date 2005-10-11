@@ -144,7 +144,7 @@ if (isset($_POST['step1']['old_version'])) {
 			$headers[] = '';
 		}
 	} else {
-		$fp   = fsockopen($host, $port, $errno, $errstr, 15);
+		$fp   = @fsockopen($host, $port, $errno, $errstr, 15);
 
 		if($fp) {
 			$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$host."\r\n\r\n";

@@ -79,6 +79,16 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="home_url" value="'.$_defaults['home_url'].'" />';
 				}
 
+				if (defined('MAIL_USE_SMTP')) {
+					echo '<input type="hidden" name="smtp" value="'.MAIL_USE_SMTP.'" />';
+				} else {
+					echo '<input type="hidden" name="smtp" value="FALSE" />';
+				}
+				if (defined('AT_FORCE_GET_FILE')) {
+					echo '<input type="hidden" name="get_file" value="'.AT_FORCE_GET_FILE.'" />';
+				} else {
+					echo '<input type="hidden" name="get_file" value="FALSE" />';
+				}
 				echo '<input type="hidden" name="admin_password" value="'.urlencode(ADMIN_PASSWORD).'" />';
 
 				if (defined('ADMIN_USERNAME')) {
@@ -198,7 +208,15 @@ if (isset($errors)) {
 }
 
 ?>
-<p>Please specify where the old installation of ATutor is and review the notes at the bottom carefully.</p>
+<p>Please specify the location of the old ATutor installation.</p>
+
+<ol>
+	<li>Release Candidate (RC) installations cannot be upgraded.</li>
+	<li>Depending on the size of the existing courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 6).</li>
+	<li>All installed language packs and changes made to the default English language will be deleted.</li>
+	<li>Some installed themes may not be supported by this version of ATutor.</li>
+	<li>All extra modules will have to be reinstalled before they can be enabled again.</li>
+</ol>
 
 <p>If the old ATutor installation directory was renamed to <kbd>ATutor_old</kbd> then enter that name below. The old version must be at the same directory level as the new version.</p>
 
@@ -215,13 +233,6 @@ if (isset($errors)) {
 </table>
 
 <br />
-<p><strong>Note 1:</strong> Release Candidate (RC) installations cannot be upgraded.</p>
-
-<p><strong>Note 2:</strong> Depending on the size of the existing courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 6).</p>
-
-<p><strong>Note 3:</strong> All installed language packs and changes made to the default English language will be deleted.</p>
-
-<p><strong>Note 4:</strong> Some installed themes may not be supported by this version of ATutor.</p>
 
 <br /><p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p>
 

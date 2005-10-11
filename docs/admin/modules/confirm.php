@@ -36,7 +36,7 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
-<div class="input-form">
+<!--div class="input-form">
 	<div class="row"><h3><?php echo _AT('instructions'); ?></h3></div>
 
 	<div class="row"><?php 
@@ -49,7 +49,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo _AT('none');
 		}
 		?></div>
-</div>
+</div-->
 
 <?php
 
