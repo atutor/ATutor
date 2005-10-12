@@ -1,0 +1,12 @@
+INSERT INTO `at_language_text` VALUES ('en', '_module','google_search','Google Search',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','google_search_txt','To search for specific words within a website, enter them below then use the \'Search\' button.',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','google_key','Google License Key',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','google_key_txt', 'To access the google service, you must first create an account and obtain a license key at <a href="http://www.google.com/apis/" target="_new">http://www.google.com/apis/</a>. Once you have done so, submit your key below:',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','GOOGLE_KEY_EMPTY','Key cannot be empty.',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','GOOGLE_KEY_SAVED','Key saved.',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','GOOGLE_QUERY_FAILED','Query failed.',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','google_powered_by','Powered by <a href="http://www.google.com">Google</a>.',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','no_content_avail','No content available',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','no_title','No title',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','top_20','Only the top 20 results have been displayed.',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','no_results','No results were found.',now(),'');
