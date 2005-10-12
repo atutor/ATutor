@@ -34,7 +34,7 @@ $_admin_privilege  = TRUE; // possible values: FALSE | TRUE
 $directory = AT_CONTENT_DIR .'hello_world';
 
 // check if the directory is writeable
-if (true || !is_dir($directory) && !@mkdir($directory)) {
+if (!is_dir($directory) && !@mkdir($directory)) {
 	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' does not exist. Please create it.</li>'));
 } else if (!is_writable($directory) && @chmod($directory, 0666)) {
 	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' is not writeable. On Unix issue the command <kbd>chmod a+rw</kbd>.</li>'));

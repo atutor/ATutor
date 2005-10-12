@@ -6,4 +6,4 @@ CREATE TABLE `hello_world` (
    PRIMARY KEY ( `course_id` )
 );
 
-INSERT INTO `language_text` VALUES ('en', '_modules','hello_world','Hello World',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','hello_world','Hello World',NOW(),'');
