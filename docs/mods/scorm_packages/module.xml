@@ -12,11 +12,6 @@
     <license>GPL</license> 
 	<release> 
         <version>0.1</version> 
-		<privileges>
-			<instructor_privilege>existing</instructor_privilege>
-			<admin_privilege></admin_privilege> 
-		</privileges>
-		<directory>sco</directory>
         <date>2005-08-22</date> 
         <state>stable</state> 
         <notes></notes> 

@@ -18,14 +18,22 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
 
-if (isset($_GET['new'], $_GET['submit']) && $_GET['new']) {
-	header('Location: add_new.php');
-	exit;
 
-} else if (isset($_GET['new'], $_GET['install']) && $_GET['new']) {
-	header('Location: confirm.php?mod='.$_GET['mod']);
+if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.$_base_href.'admin/modules/add_new.php');
 	exit;
+} else if (isset($_POST['mod']) && isset($_POST['submit_yes'])) {
+	$module =& $moduleFactory->getModule($_POST['mod']);
+	$module->install();
 
+	if ($msg->containsErrors()) {
+		header('Location: '.$_base_href.'admin/modules/details.php?mod='.$_POST['mod'].SEP.'new=1');
+	} else {
+		$msg->addFeedback('MOD_INSTALLED');
+		header('Location: '.$_base_href.'admin/modules/index.php');
+	}
+	exit;
 } else if (isset($_GET['submit'])) {
 	header('Location: index.php');
 	exit;
@@ -35,7 +43,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $moduleParser =& new ModuleParser();
 
-$_GET['mod'] = str_replace(array('.','..'), '', $_GET['mod']);
+$_REQUEST['mod'] = str_replace(array('.','..'), '', $_REQUEST['mod']);
 
 if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 ?>
@@ -122,14 +130,20 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 		<?php echo _AT('notes'); ?><br />
 		<?php echo $properties['notes']; ?>
 	</div>
-
+<?php if (!isset($_REQUEST['new'])): ?>
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
-		<?php if (isset($_GET['new']) && $_GET['new']): ?>
-			<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
-		<?php endif; ?>
 	</div>
+<?php endif; ?>
 </div>
 </form>
+<?php if (isset($_REQUEST['new'])): ?>
+	<?php
+		$hidden_vars['mod'] = $_REQUEST['mod'];
+		$hidden_vars['new'] = '1';
+		$msg->addConfirm(array('ADD_MODULE', $_REQUEST['mod']), $hidden_vars);
+		$msg->printConfirm();
+	?>
+<?php endif; ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

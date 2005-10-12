@@ -112,16 +112,7 @@ class ModuleParser {
 
 		} else if ($this->element_path === array('module', 'release', 'notes')) {
 			$this->rows[$this->row_num]['notes'] = trim($this->character_data);
-		
-		} else if ($this->element_path === array('module', 'release', 'privileges', 'instructor_privilege')) {
-			$this->rows[$this->row_num]['instructor_privilege'] = trim($this->character_data);
-		
-		} else if ($this->element_path === array('module', 'release', 'privileges', 'admin_privilege')) {
-			$this->rows[$this->row_num]['admin_privilege'] = trim($this->character_data);
-		
-		} else if ($this->element_path === array('module', 'release', 'directory')) {
-			$this->rows[$this->row_num]['directory'] = trim($this->character_data);
-		
+
 		} else if ($this->element_path === array('module')) {
 			$this->row_num++;
 		}

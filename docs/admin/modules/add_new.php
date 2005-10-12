@@ -21,14 +21,11 @@ if (isset($_GET['mod'])) {
 	$dir_name = str_replace(array('.','..'), '', $_GET['mod']);
 
 	if (isset($_GET['install'])) {
-		header('Location: '.$_base_href.'admin/modules/confirm.php?mod='.urlencode($dir_name));
-		exit;
-	} elseif ($_GET['details']) {
 		header('Location: '.$_base_href.'admin/modules/details.php?mod='.urlencode($dir_name).SEP.'new=1');
 		exit;
 	}
 
-} else if (isset($_GET['details']) || isset($_GET['install'])) {
+} else if (isset($_GET['install'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -58,7 +55,6 @@ natsort($keys);
 <tfoot>
 <tr>
 	<td colspan="4">
-		<input type="submit" name="details"  value="<?php echo _AT('details'); ?>" />
 		<input type="submit" name="install"  value="<?php echo _AT('install'); ?>" />
 	</td>
 </tr>

@@ -137,7 +137,7 @@ class SqlUtility
 	}
 
 	function queryFromFile($sql_file_path, $table_prefix){
-		global $lang_db, $progress, $errors;
+		global $db, $progress, $errors;
 		
 		$tables = array();
 
@@ -173,11 +173,11 @@ class SqlUtility
                     }
                 }
                 elseif($prefixed_query[1] == 'INSERT INTO'){
-					mysql_query($prefixed_query[0],$lang_db);
+					mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'ALTER TABLE'){
-                    mysql_query($prefixed_query[0],$lang_db);
+                    mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'DROP TABLE'){
-                    mysql_query($prefixed_query[1] . ' ' .$table,$lang_db);
+                    mysql_query($prefixed_query[1] . ' ' .$table,$db);
                 }
             }
 		}
