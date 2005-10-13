@@ -5,6 +5,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tools = 'mods/google_search/g_search.php';
 
+//side menu
+$_module_stacks['google_search'] = 'mods/google_search/side_menu.inc.php';
+
 $_module_pages['mods/google_search/g_search.php']['title_var'] = 'google_search';
 $_module_pages['mods/google_search/g_search.php']['img']       = 'mods/google_search/google.gif';
 
