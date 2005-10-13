@@ -61,7 +61,9 @@ if ($_SESSION['course_id'] > 0) {
 		$_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
 		$_pages['admin/config_edit.php']['parent']    = 'admin/index.php';
 		$_pages['admin/config_edit.php']['guide']     = 'admin/?p=2.2.system_preferences.php';
-		$_pages['admin/config_edit.php']['children']  = array('admin/modules/default_mods.php', 'admin/modules/default_side.php', 'admin/default_preferences.php');
+		$_pages['admin/config_edit.php']['children'][]  = 'admin/modules/default_mods.php';
+		$_pages['admin/config_edit.php']['children'][]  = 'admin/modules/default_side.php';
+		$_pages['admin/config_edit.php']['children'][]  = 'admin/default_preferences.php';
 
 			$_pages['admin/modules/default_mods.php']['title_var'] = 'default_modules';
 			$_pages['admin/modules/default_mods.php']['parent']    = 'admin/config_edit.php';
