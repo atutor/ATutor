@@ -4,16 +4,11 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-$sql = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='gsearch'";
-$result = mysql_query($sql, $db);
-
-$row = mysql_fetch_assoc($result);
-$key = stripslashes($row['value']);
-
+$key = $_config['gsearch'];
 
 if (isset($_GET['submit'])) {
 	if (!empty($_GET['key'])) {
-		$key = addslashes($_GET['key']);
+		$key = $addslashes($_GET['key']);
 		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES('gsearch','$key')";
 		$result = mysql_query($sql, $db);
 

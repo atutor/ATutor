@@ -1,4 +1,4 @@
-INSERT INTO `at_language_text` VALUES ('en', '_module','google_search','Google Search',now(),'');
+INSERT INTO `at_language_text` VALUES ('en', '_module','google_search','Web Search',now(),'');
 INSERT INTO `at_language_text` VALUES ('en', '_module','google_search_txt','To search for specific words within a website, enter them below then use the \'Search\' button.  If you wish to search course content, use the <a href=\"search.php\">ATutor search</a>.',now(),'');
 INSERT INTO `at_language_text` VALUES ('en', '_module','google_key','Google License Key',now(),'');
 INSERT INTO `at_language_text` VALUES ('en', '_module','google_key_txt', 'To access the google service, you must first create an account and obtain a license key at <a href="http://www.google.com/apis/" target="_new">http://www.google.com/apis/</a>. Once you have done so, submit your key below:',now(),'');

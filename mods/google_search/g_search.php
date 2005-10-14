@@ -4,11 +4,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require('SOAP_Google.php');
 
-$sql = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='gsearch'";
-$result = mysql_query($sql, $db);
-
-$row = mysql_fetch_assoc($result);
-$search_key = stripslashes($row['value']);
+$search_key = $_config['gsearch'];
 
 if (empty($search_key)) {
 	//header('Location: get_key.php');
