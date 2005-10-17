@@ -28,7 +28,6 @@ class CSVExport {
 
 		$result = mysql_query($sql, $db);
 
-
 		$field_types = $this->detectFieldTypes($result);
 		$num_fields = count($field_types);
 

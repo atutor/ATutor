@@ -144,6 +144,7 @@ unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 
 $_SESSION['session_test'] = true;
+$_SESSION['prefs']['PREF_FORM_FOCUS'] = 1;
 
 /*****************************/
 /* template starts down here */
