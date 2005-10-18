@@ -56,6 +56,16 @@ if (!($row = mysql_fetch_assoc($result))) {
 	exit;
 }
 
+
+$sql	= "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";
+$result = mysql_query($sql, $db);
+$num_topics = mysql_num_rows($result);
+if (!$num_topics) {
+	$msg->printErrorS('NO_FAQ_TOPICS');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
