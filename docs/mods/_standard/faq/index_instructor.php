@@ -64,7 +64,7 @@ div#faq ul#topics ol li {
 							$entry_result = mysql_query($entry_sql, $db);
 						?>
 						<?php while ($entry_row = mysql_fetch_assoc($entry_result)): ?>
-							<li><a href="mods/faq/edit_question.php?id=<?php echo $entry_row['entry_id']; ?>"><?php echo _AT('edit'); ?></a> <a href="mods/faq/delete_question.php?id=<?php echo $entry_row['entry_id']; ?>"><?php echo _AT('delete'); ?></a> <?php echo $entry_row['question']; ?></li>
+							<li><a href="mods/_standard/faq/edit_question.php?id=<?php echo $entry_row['entry_id']; ?>"><?php echo _AT('edit'); ?></a> <a href="mods/_standard/faq/delete_question.php?id=<?php echo $entry_row['entry_id']; ?>"><?php echo _AT('delete'); ?></a> <?php echo $entry_row['question']; ?></li>
 							<?php $counter++; ?>
 						<?php endwhile; ?>
 					</ol>
