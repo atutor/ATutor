@@ -22,9 +22,13 @@ if (isset($_POST['cancel'])) {
 		$_POST['answer']   = $addslashes($_POST['answer']);
 		$_POST['topic_id'] = intval($_POST['topic_id']);
 
-
-		$sql	= "INSERT INTO ".TABLE_PREFIX."faq_entries VALUES (0, $_POST[topic_id], NOW(), 1, '$_POST[question]', '$_POST[answer]')";
-		$result = mysql_query($sql,$db);
+		// check that this topic_id belongs to this course:
+		$sql    = "SELECT topic_id FROM ".TABLE_PREFIX."faq_topics WHERE topic_id=$_POST[topic_id] AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $db);
+		if ($row = mysql_fetch_assoc($result)) {
+			$sql	= "INSERT INTO ".TABLE_PREFIX."faq_entries VALUES (0, $_POST[topic_id], NOW(), 1, '$_POST[question]', '$_POST[answer]')";
+			$result = mysql_query($sql,$db);
+		}
 		
 		$msg->addFeedback('QUESTION_ADDED');
 		header('Location: index_instructor.php');
@@ -52,7 +56,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="topic"><?php  echo _AT('topic'); ?></label><br />
 		<select name="topic_id" id="topic">
 			<?php while ($row = mysql_fetch_assoc($result)): ?>
-				<option value="<?php echo $row['topic_id']; ?>"><?php echo htmlspecialchars($row['name']); ?></option>
+				<option value="<?php echo $row['topic_id']; ?>"<?php if (isset($_POST['topic_id']) && ($row['topic_id'] == $_POST['topic_id'])) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['name']); ?></option>
 			<?php endwhile; ?>
 		</select>
 	</div>

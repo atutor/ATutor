@@ -10,9 +10,15 @@ if (isset($_POST['submit_no'])) {
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['id'] = intval($_POST['id']);
+	$_POST['topic_id'] = intval($_POST['topic_id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."faq_entries WHERE entry_id=$_POST[id]";
+	// check that this topic_id belongs to this course:
+	$sql    = "SELECT topic_id FROM ".TABLE_PREFIX."faq_topics WHERE topic_id=$_POST[topic_id] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."faq_entries WHERE entry_id=$_POST[id] AND topic_id=$_POST[topic_id]";
+		$result = mysql_query($sql, $db);
+	}
 
 	$msg->addFeedback('QUESTION_DELETED');
 	header('Location: index_instructor.php');
@@ -24,20 +30,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $_GET['id'] = intval($_GET['id']); 
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE entry_id=$_GET[id]";
+$sql = "SELECT question, topic_id FROM ".TABLE_PREFIX."faq_entries WHERE entry_id=$_GET[id]";
 
 $result = mysql_query($sql,$db);
-if (mysql_num_rows($result) == 0) {
-	$msg->addError('QUESTION_NOT_FOUND');
-} else {
-	$row = mysql_fetch_assoc($result);
-
+if ($row = mysql_fetch_assoc($result)) {
+	$hidden_vars['topic_id'] = $row['topic_id'];
 	$hidden_vars['id'] = $_GET['id'];
 
 	$confirm = array('DELETE_FAQ_QUESTION', $row['question']);
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
-
+} else {
+	$msg->addError('QUESTION_NOT_FOUND');
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

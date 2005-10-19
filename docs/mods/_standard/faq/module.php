@@ -18,10 +18,10 @@ $_module_pages['mods/_standard/faq/index_instructor.php']['children']  = array('
 	$_module_pages['mods/_standard/faq/add_question.php']['title_var'] = 'add_question';
 	$_module_pages['mods/_standard/faq/add_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
-	$_module_pages['mods/_standard/faq/delete_question.php']['title_var'] = 'delete_question';
+	$_module_pages['mods/_standard/faq/delete_question.php']['title_var'] = 'delete';
 	$_module_pages['mods/_standard/faq/delete_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
-	$_module_pages['mods/_standard/faq/edit_question.php']['title_var'] = 'edit_question';
+	$_module_pages['mods/_standard/faq/edit_question.php']['title_var'] = 'edit';
 	$_module_pages['mods/_standard/faq/edit_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
 // student page:
