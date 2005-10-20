@@ -8,28 +8,12 @@ $sql	= "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_
 $result = mysql_query($sql, $db);
 ?>
 
-<style>
-div#faq ul#topics {
-	list-style: none;
-}
-div#faq ul#topics>li {
-	font-weight: bold;
-	margin-bottom: 10px;
-}
-div#faq ul#topics ol {
-
-}
-div#faq ul#topics ol li {
-	font-weight: normal;
-}
-</style>
-
 <div id="faq">
 	<?php $counter = 1; ?>
 	<?php if ($row = mysql_fetch_assoc($result)) : ?>
-		<ul id="topics">
+		<ul style="list-style: none;">
 			<?php do { ?>
-				<li>
+				<li style="font-weight: bold; margin-bottom: 10px;">
 					<?php echo $row['name']; ?>
 					<ol start="<?php echo $counter; ?>">
 						<?php 
@@ -37,7 +21,7 @@ div#faq ul#topics ol li {
 							$entry_result = mysql_query($entry_sql, $db);
 						?>
 						<?php while ($entry_row = mysql_fetch_assoc($entry_result)): ?>
-							<li><h3><?php echo $entry_row['question']; ?></h3>
+							<li style="font-weight: normal"><h3><?php echo $entry_row['question']; ?></h3>
 								<p><?php echo $entry_row['answer'];?></p>
 							</li>
 							<?php $counter++; ?>
