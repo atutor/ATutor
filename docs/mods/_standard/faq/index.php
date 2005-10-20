@@ -34,4 +34,6 @@ $result  = mysql_query($sql, $db);
 	<?php echo _AT('none_found'); ?>
 <?php endif; ?>
 
+<?php include('module_backup.php?moo=1'); ?>
+
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

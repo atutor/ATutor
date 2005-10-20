@@ -25,5 +25,6 @@ function faq_entries_convert($row, $course_id, $table_id_map) {
 
 	return $new_row;
 }
+debug($_GET);
 
 ?>
