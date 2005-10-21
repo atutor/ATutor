@@ -50,19 +50,30 @@ switch ($row['type']) {
 	
 	case AT_TESTS_MC:
 		/* multiple choice question */
-		for ($i=0; $i < 10; $i++) {
-			if ($row['choice_'.$i] != '') {
-				if ($i > 0) {
-					echo $spacer;
+		if (array_sum(array_slice($row, 16, -2)) > 1) {
+			// more than one correct answer:
+			for ($i=0; $i < 10; $i++) {
+				if ($row['choice_'.$i] != '') {
+					if ($i > 0) {
+						echo $spacer;
+					}
+					echo '<input type="checkbox" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_questions.choice_'.$i).'</label>';
 				}
-					 
-				echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_questions.choice_'.$i).'</label>';
 			}
+		} else {
+			for ($i=0; $i < 10; $i++) {
+				if ($row['choice_'.$i] != '') {
+					if ($i > 0) {
+						echo $spacer;
+					}
+					echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_questions.choice_'.$i).'</label>';
+				}
+			}
+
+			echo $spacer;
+			echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
 		}
 
-		echo $spacer;
-		echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
-		echo '</p>';
 		break;
 				
 	case AT_TESTS_TF:

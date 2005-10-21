@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 	$set_final_score = TRUE; // whether or not to save the final score in the results table.
 
 	$sql	= "SELECT TQA.weight, TQA.question_id, TQ.type, TQ.answer_0, TQ.answer_1, TQ.answer_2, TQ.answer_3, TQ.answer_4, TQ.answer_5, TQ.answer_6, TQ.answer_7, TQ.answer_8, TQ.answer_9 FROM ".TABLE_PREFIX."tests_questions_assoc TQA INNER JOIN ".TABLE_PREFIX."tests_questions TQ USING (question_id) WHERE TQA.test_id=$tid ORDER BY TQA.ordering, TQ.question_id";
-	$result	= mysql_query($sql, $db);	
+	$result	= mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		if (isset($_POST['answers'][$row['question_id']])) {
 			$score = 0;
@@ -70,20 +70,40 @@ if (isset($_POST['submit'])) {
 			switch ($row['type']) {
 				case AT_TESTS_MC:
 					// multiple choice
-					$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
-
-					if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
-						$score = $row['weight'];
-					} else if ($_POST['answers'][$row['question_id']] == -1) {
-						$has_answer = 0;
-						for($i=0; $i<10; $i++) {
-							$has_answer += $row['answer_'.$i];
+					$num_correct = array_sum(array_slice($row, 3));
+					if ($num_correct > 1) {
+						// multi correct
+						if (is_array($_POST['answers'][$row['question_id']])) {
+							$num_answer_correct = 0;
+							foreach ($_POST['answers'][$row['question_id']] as $answer) {
+								if ($row['answer_' . $answer]) {
+									$num_answer_correct++;
+								}
+							}
+							$score = number_format($num_answer_correct / $num_correct * $row['weight'], 2);
+						} else {
+							// no answer given
+							$_POST['answers'][$row['question_id']] = '-1'; // left blank
+							$score = 0;
 						}
-						if (!$has_answer && $row['weight']) {
-							// If MC has no answer and user answered "leave blank"
+						$_POST['answers'][$row['question_id']] = implode('|', $_POST['answers'][$row['question_id']]);
+					} else {
+						// single correct answer
+						$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
+						if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
 							$score = $row['weight'];
+						} else if ($_POST['answers'][$row['question_id']] == -1) {
+							$has_answer = 0;
+							for($i=0; $i<10; $i++) {
+								$has_answer += $row['answer_'.$i];
+							}
+							if (!$has_answer && $row['weight']) {
+								// If MC has no answer and user answered "leave blank"
+								$score = $row['weight'];
+							}
 						}
 					}
+
 					break;
 
 				case AT_TESTS_TF:
@@ -211,22 +231,35 @@ if ($result && $questions) {
 
 		switch ($row['type']) {
 			case AT_TESTS_MC:
+
 				if ($row['weight']) {
 					echo '('.$row['weight'].' '._AT('marks').')';
 				}
 				echo '<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
-				for ($i=0; $i < 10; $i++) {
-					if ($row['choice_'.$i] != '') {
-						if ($i > 0) {
-							echo $spacer;
+				if (array_sum(array_slice($row, 16, -6)) > 1) {
+					for ($i=0; $i < 10; $i++) {
+						if ($row['choice_'.$i] != '') {
+							if ($i > 0) {
+								echo $spacer;
+							}
+
+							echo '<input type="checkbox" name="answers['.$row['question_id'].'][]" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_questions.choice_'.$i).'</label>';
 						}
-
-						echo '<input type="radio" name="answers['.$row['question_id'].']" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_questions.choice_'.$i).'</label>';
 					}
-				}
+				} else {
+					for ($i=0; $i < 10; $i++) {
+						if ($row['choice_'.$i] != '') {
+							if ($i > 0) {
+								echo $spacer;
+							}
 
-				echo $spacer;
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
+							echo '<input type="radio" name="answers['.$row['question_id'].']" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_questions.choice_'.$i).'</label>';
+						}
+					}
+
+					echo $spacer;
+					echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><em>'._AT('leave_blank').'</em></label>';
+				}
 				break;
 
 			case AT_TESTS_TF:
@@ -242,7 +275,7 @@ if ($result && $questions) {
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="2" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('false').'</label>';
 
 				echo $spacer;
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
+				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><em>'._AT('leave_blank').'</em></label>';
 				break;
 
 			case AT_TESTS_LONG:
@@ -289,7 +322,7 @@ if ($result && $questions) {
 				}
 
 				echo $spacer;
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
+				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><em>'._AT('leave_blank').'</em></label>';
 				break;					
 		}
 		echo '</p>';
