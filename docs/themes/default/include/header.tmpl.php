@@ -37,7 +37,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  */
 
 // will have to be moved to the header.inc.php
-global $system_courses;
+global $system_courses, $_custom_css;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="<?php echo $this->lang_code; ?>">
@@ -54,6 +54,9 @@ global $system_courses;
 	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_path; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_path; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
+	<?php endif; ?>
+	<?php if (isset($_custom_css)): ?>
+		<link rel="stylesheet" href="<?php echo $_custom_css; ?>" type="text/css" />
 	<?php endif; ?>
 </head>
 <body onload="setstates(); <?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
