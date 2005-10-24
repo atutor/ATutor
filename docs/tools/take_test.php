@@ -54,6 +54,7 @@ if ( (($test_row['start_date'] > time()) || ($test_row['end_date'] < time())) ||
 
 if (isset($_POST['submit'])) {
 	// insert
+
 	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (0, $tid, $_SESSION[member_id], NOW(), '')";
 	$result	= mysql_query($sql, $db);
 	$result_id = mysql_insert_id($db);
@@ -77,10 +78,18 @@ if (isset($_POST['submit'])) {
 							$num_answer_correct = 0;
 							foreach ($_POST['answers'][$row['question_id']] as $answer) {
 								if ($row['answer_' . $answer]) {
+									// correct answer
 									$num_answer_correct++;
+								} else {
+									// wrong answer
+									$num_answer_correct--;
 								}
 							}
-							$score = number_format($num_answer_correct / $num_correct * $row['weight'], 2);
+							if ($num_answer_correct == $num_correct) {
+								$score = $row['weight'];
+							} else {
+								$score = 0;
+							}
 						} else {
 							// no answer given
 							$_POST['answers'][$row['question_id']] = '-1'; // left blank

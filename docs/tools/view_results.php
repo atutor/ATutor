@@ -37,8 +37,8 @@ $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $test_title	= $row['title'];
 
-$mark_right = '<img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" />';
-$mark_wrong = '<img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" />';
+$mark_right = ' <img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" title="'._AT('correct_answer').'" />';
+$mark_wrong = ' <img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" title="'._AT('wrong_answer').'" />';
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db); 
@@ -74,10 +74,13 @@ while ($row['question_id'] != '') {
 	$random_id_string = $random_id_string.','.$row['question_id'];
 	$row = mysql_fetch_array($result);
 }
+if (!$random_id_string) {
+	$random_id_string = 0;
+}
 
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQA.test_id=$tid AND TQ.question_id IN ($random_id_string) ORDER BY TQA.ordering, TQ.question_id";	
 $result	= mysql_query($sql, $db); 
-		
+
 $count = 1;
 echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 
@@ -105,20 +108,35 @@ if ($row = mysql_fetch_assoc($result)){
 
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
+				if (array_sum(array_slice($row, 16, -6)) > 1) {
+					$answer_row['answer'] = explode('|', $answer_row['answer']);
+				}
+
 				/* for each non-empty choice: */
 				for ($i=0; ($i < 10) && ($row['choice_'.$i] != ''); $i++) {
 					if ($i > 0) {
 						echo '<br />';
 					}
-					print_result($row['choice_'.$i], $row['answer_'.$i], $i, AT_print($answer_row['answer'], 'tests_answers.answer'), $row['answer_'.$answer_row['answer']]);
-
-					if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
-						echo ' ('.$mark_right.')';
+					if (is_array($answer_row['answer'])) {
+						print_result($row['choice_'.$i], $row['answer_'.$i], $i, (int) in_array($i, $answer_row['answer']), $row['answer_'.$answer_row['answer']]);
+		
+						if (is_array($answer_row['answer']) && ($row['answer_'.$i] == 1) && in_array($i, $answer_row['answer'])) {
+							echo $mark_right;
+						} else if (is_array($answer_row['answer']) && ($row['answer_'.$i] != 1) && in_array($i, $answer_row['answer'])) {
+							echo $mark_wrong;
+						}
+					} else {
+						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
+						if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
+							echo $mark_right;
+						}
 					}
 				}
 				echo '<br />';
+				if (!is_array($answer_row['answer'])) {
+					print_result('<em>'._AT('left_blank').'</em>', -1, -1, (int) (-1 == $answer_row['answer']), false);
+				}
 
-				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
 				echo '</p>';
 				$my_score=($my_score+$answer_row['score']);
 				$this_total += $row['weight'];
@@ -138,12 +156,13 @@ if ($row = mysql_fetch_assoc($result)){
 				} else {
 					$correct='';
 				}
-				print_result(_AT('true'), $row['answer_0'], 1, AT_print($answer_row['answer'], 'tests_answers.answer'), $correct);
 
-				print_result(_AT('false'), $row['answer_1'], 2, AT_print($answer_row['answer'], 'tests_answers.answer'), $correct);
+				print_result(_AT('true'), $row['answer_0'], 1, (int) ($answer_row['answer'] == 1), $correct);
+
+				print_result(_AT('false'), $row['answer_1'], 2, (int) ($answer_row['answer'] == 2), $correct);
 
 				echo '<br />';
-				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
+				print_result('<em>'._AT('left_blank').'</em>', -1, -1, (int) ($answer_row['answer'] == -1), false);
 				$my_score=($my_score+$answer_row['score']);
 				$this_total += $row['weight'];
 				echo '</p>';
@@ -194,7 +213,7 @@ if ($row = mysql_fetch_assoc($result)){
 			echo nl2br($row['feedback']).'</p>';
 		}
 		echo '</div>';
-	} while ($row = mysql_fetch_array($result));
+	} while ($row = mysql_fetch_assoc($result));
 
 	if ($this_total) {
 		echo '<div class="row"><strong>'.$my_score.'/'.$this_total.'</strong></div>';

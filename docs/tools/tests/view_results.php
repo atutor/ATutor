@@ -120,19 +120,36 @@ if ($row = mysql_fetch_assoc($result)){
 					}
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
+					if (array_sum(array_slice($row, 16, -6)) > 1) {
+						$answer_row['answer'] = explode('|', $answer_row['answer']);
+					}
+
 					/* for each non-empty choice: */
 					for ($i=0; ($i < 10) && ($row['choice_'.$i] != ''); $i++) {
 						if ($i > 0) {
 							echo $spacer;
 						}
-						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
-						if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
-							echo ' ('.$mark_right.')';
+
+						if (is_array($answer_row['answer'])) {
+							print_result($row['choice_'.$i], $row['answer_'.$i], $i, (int) in_array($i, $answer_row['answer']), $row['answer_'.$answer_row['answer']]);
+			
+							if (is_array($answer_row['answer']) && ($row['answer_'.$i] == 1) && in_array($i, $answer_row['answer'])) {
+								echo $mark_right;
+							} else if (is_array($answer_row['answer']) && ($row['answer_'.$i] != 1) && in_array($i, $answer_row['answer'])) {
+								echo $mark_wrong;
+							}
+						} else {
+							print_result($row['choice_'.$i], $row['answer_'.$i], $i, (int) ($i == $answer_row['answer']), $row['answer_'.$answer_row['answer']]);
+							if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
+								echo $mark_right;
+							}
 						}
 					}
-					echo $spacer;
+					if (!is_array($answer_row['answer'])) {
+						echo $spacer;
+						print_result('<em>'._AT('left_blank').'</em>', -1, -1, (int) (-1 == $answer_row['answer']), false);
+					}
 
-					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
 					echo '</p>';
 					break;
 
@@ -150,11 +167,21 @@ if ($row = mysql_fetch_assoc($result)){
 
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
-					print_result(_AT('true'), $row['answer_0'], 1, $answer_row['answer'], $correct);
+					print_result(_AT('true'), $row['answer_0'], 1, (int) ($answer_row['answer'] == 1), $correct);
+					if (($row['answer_0'] == 1) && (1 == $answer_row['answer'])) {
+						echo $mark_right;
+					} else if (($row['answer_0'] != 1) && (1 == $answer_row['answer'])) {
+						echo $mark_wrong;
+					}
 					echo $spacer;
-					print_result(_AT('false'), $row['answer_0'], 2, $answer_row['answer'], $correct);
+					print_result(_AT('false'), $row['answer_0'], 2, (int) ($answer_row['answer'] == 2), $correct);
+					if (($row['answer_0'] == 2) && (2 == $answer_row['answer'])) {
+						echo $mark_right;
+					} else if (($row['answer_0'] != 2) && (2 == $answer_row['answer'])) {
+						echo $mark_wrong;
+					}
 					echo $spacer;
-					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
+					print_result('<em>'._AT('left_blank').'</em>', -1, -1, (int) ($answer_row['answer'] == -1), false);
 
 					echo '</p>';
 					break;

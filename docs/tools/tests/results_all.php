@@ -153,7 +153,6 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 	echo '</tr>';
 
-
 	echo '<tr>';
 	echo '<td colspan="2">&nbsp;</td>';
 	echo '<td align="center"><strong>';
@@ -177,14 +176,12 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 	echo '</tr>';
 	echo '</tfoot>';
-
 } else {
 	echo '<em>'._AT('no_results_available').'</em>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-
-echo '</table>';
 ?>
+</table>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

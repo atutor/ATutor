@@ -47,23 +47,11 @@ function authenticate_test($tid) {
 }
 
 function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
-	global $mark_right, $mark_wrong;
-
-	if ($a_num == '') {
-		$a_num = -1;
-	}
-
-	if ($a_num == $q_num) {
-		echo '<input type="radio" checked="checked" />';
-		if ($correct && ($correct != 'none')) {
-			echo $mark_right;
-		} else if ($correct != 'none') {
-			echo $mark_wrong;
-		}
+	if ($a_num == 1) {
+		echo '<input type="checkbox" checked="checked" disabled="disabled" />';
 		echo $q_text;
-
 	} else {
-		echo '<input type="radio" disabled="disabled" />';
+		echo '<input type="checkbox" disabled="disabled" />';
 		echo $q_text;
 	}
 }

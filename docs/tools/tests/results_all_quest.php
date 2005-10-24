@@ -130,7 +130,7 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 			$q['choice_'.($i-1)] = substr($q['choice_'.($i-1)], 0, 15).'...';
 		}
 		if ($q['answer_'.($i-1)]) {		
-			echo '<th scope="col">'.htmlspecialchars($q['choice_'.($i-1)]).'<img src="images/checkmark.gif" alt="Correct checkmark" /></th>';
+			echo '<th scope="col">'.htmlspecialchars($q['choice_'.($i-1)]).'<img src="images/checkmark.gif" alt="" /></th>';
 		} else {
 			echo '<th scope="col">'.htmlspecialchars($q['choice_'.($i-1)]).'</th>';
 		}
@@ -151,6 +151,14 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 
 	$num_results -= $num_blanks;
+	foreach ($answers as $key => $value) {
+		$values = explode('|', $key);
+		if (count($values) > 1) {
+			for ($i=0; $i<count($values); $i++) {
+				$answers[$values[$i]]['count']++;
+			}
+		}
+	}
 
 	for ($j=0; $j<=$num; $j++) {
 		$percentage = $num_results ? round($answers[$j]['count']/$num_results*100) : 0;
@@ -268,13 +276,13 @@ foreach ($questions as $q_id => $q) {
 						break;
 					}
 				}
-				if ($random) {		
+				if ($random) {
 					$num_results = 0;		
 					foreach ($ans[$q_id] as $answer) {
 						$num_results += $answer['count'];
 					}
 				}
-
+				
 				print_multiple_choice($q, $ans[$q_id], $i, $num_results);
 				break;
 
