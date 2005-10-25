@@ -57,6 +57,8 @@ $imported_glossary = array();
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
+		} else if (($name == 'item') && ($attrs['identifier'])) {
+			$path[] = $attrs['identifier'];
 		} else if (($name == 'resource') && is_array($items[$attrs['identifier']]))  {
 			$current_identifier = $attrs['identifier'];
 
@@ -354,6 +356,7 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 
 
 xml_parser_free($xml_parser);
+//debug($items);
 
 /* check if the glossary terms exist */
 if (file_exists($import_path . 'glossary.xml')){
@@ -416,15 +419,22 @@ $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 	
 	foreach ($items as $item_id => $content_info) {
-		$file_info = @stat(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
-		if ($file_info === false) {
-			continue;
-		}
+		if (!isset($content_info['href'])) {
+			// this item doesn't have an identifierref. so create an empty page.
+			$content = '';
+			$ext = '';
+			$last_modified = date('Y-m-d H:i:s');
+		} else {
+			$file_info = @stat(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			if ($file_info === false) {
+				continue;
+			}
 		
-		$path_parts = pathinfo(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
-		$ext = strtolower($path_parts['extension']);
+			$path_parts = pathinfo(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			$ext = strtolower($path_parts['extension']);
 
-		$last_modified = date('Y-m-d H:i:s', $file_info['mtime']);
+			$last_modified = date('Y-m-d H:i:s', $file_info['mtime']);
+		}
 		if (in_array($ext, array('gif', 'jpg', 'bmp', 'png', 'jpeg'))) {
 			/* this is an image */
 			$content = '<img src="'.$content_info['href'].'" alt="'.$content_info['title'].'" />';
@@ -464,7 +474,7 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 			if ( strpos($content_info['href'], '..') === false) {
 				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			}
-		} else {
+		} else if ($ext) {
 			/* non text file, and can't embed (example: PDF files) */
 			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
 		}
