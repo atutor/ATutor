@@ -728,6 +728,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 
 	if (!$html) {
 		$input = str_replace('<', '&lt;', $input);
+		$input = str_replace('&lt;?php', '<?php', $input); // for bug #2087
 	}
 
 	/* do the glossary search and replace: */
