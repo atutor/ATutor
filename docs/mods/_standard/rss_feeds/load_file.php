@@ -5,15 +5,15 @@ global $savant;
 
 $feed_id = intval(basename(__FILE__));
 $cache_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.cache';
-$timedif = @(time() - filemtime($cache_file));
 
 ob_start(); 
 
 //if file doesn't exist or is more than 6 hours old (1 hour = 3600) 
-if (!file_exists($cache_file) || ($timedif > 21600) ) {
+if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
 	make_cache_file($feed_id);
 }
-echo file_get_contents($cache_file);
+
+readfile($cache_file);
 
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();

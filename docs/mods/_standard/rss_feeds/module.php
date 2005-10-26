@@ -4,8 +4,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_ADMIN_PRIV_RSS', $this->getAdminPrivilege());
 
-require(AT_INCLUDE_PATH.'classes/lastRSS.php');
-
 //admin pages
 if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$_module_pages['mods/_standard/rss_feeds/admin/index_admin.php']['title_var'] = 'rss_feeds';
@@ -37,18 +35,21 @@ while (false !== ($file = readdir($dh))) {
 //creates or updates the cache file
 function make_cache_file($feed_id) {
 	global $db;
+	static $rss;
 
-	$rss = new lastRSS; 
+	if (!isset($rss)) {  
+		require_once(AT_INCLUDE_PATH.'classes/lastRSS.php');
+		$rss =& new lastRSS; 
+		$rss->cache_dir = AT_CONTENT_DIR.'feeds/'; 
+		$rss->num_results = 5;
+		$rss->description = FALSE;
+	} 
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".intval($feed_id);
 	$result = mysql_query($sql, $db);
 
 	$count = 0;
 	if ($row = mysql_fetch_assoc($result)) {
-		$rss->cache_dir = AT_CONTENT_DIR.'feeds/'; 
-		$rss->num_results = 5;
-		$rss->description = FALSE;
-
 		$rss->get($row['url'], $row['feed_id']);
 	}
 }
