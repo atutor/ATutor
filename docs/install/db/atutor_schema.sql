@@ -425,6 +425,7 @@ INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8);
 INSERT INTO `modules` VALUES ('_core/cats_categories',   2, 0,         32);
 INSERT INTO `modules` VALUES ('_core/languages',         2, 0,         64);
 INSERT INTO `modules` VALUES ('_core/themes',            2, 0,         128);
+INSERT INTO `modules` VALUES ('_standard/rss_feeds',	 2, 0,	       256);
 INSERT INTO `modules` VALUES ('_core/groups',            2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/directory',     2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/tile_search',   2, 0, 0);
@@ -728,3 +729,10 @@ CREATE TABLE `cmi` (
        PRIMARY KEY (cmi_id),
       UNIQUE KEY (item_id, member_id,lvalue)
 )TYPE=MyISAM;
+
+
+CREATE TABLE `feeds` (
+	`feed_id` MEDIUMINT UNSIGNED NOT NULL ,
+	`url` VARCHAR( 255 ) NOT NULL ,
+	PRIMARY KEY ( `feed_id` )
+);

@@ -25,6 +25,14 @@ CREATE TABLE `faq_entries` (
   PRIMARY KEY  (`entry_id`)
 ) ;
 
+# --------------------------------------------------------
+# Table structure for table `feeds`
+CREATE TABLE `feeds` (
+	`feed_id` MEDIUMINT UNSIGNED NOT NULL ,
+	`url` VARCHAR( 255 ) NOT NULL ,
+	PRIMARY KEY ( `feed_id` )
+);
+
 
 # Table structure for table `config`
 

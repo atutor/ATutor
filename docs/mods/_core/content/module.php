@@ -4,9 +4,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 define('AT_PRIV_CONTENT', $this->getPrivilege());
 
 //side menu dropdowns
-$_module_stacks['menu_menu'] = 'include/html/dropdowns/menu_menu.inc.php';
-$_module_stacks['related_topics'] = 'include/html/dropdowns/related_topics.inc.php';
-$_module_stacks['search'] = 'include/html/dropdowns/search.inc.php';
+$_module_stacks['menu_menu'] = AT_INCLUDE_PATH.'html/dropdowns/menu_menu.inc.php';
+$_module_stacks['related_topics'] = AT_INCLUDE_PATH.'html/dropdowns/related_topics.inc.php';
+$_module_stacks['search'] = AT_INCLUDE_PATH.'html/dropdowns/search.inc.php';
 
 
 $_module_pages['search.php']['title_var']      = 'search';
