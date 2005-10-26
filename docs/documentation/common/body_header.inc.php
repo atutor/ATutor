@@ -50,6 +50,8 @@ if(strstr($parts['dirname'], "admin")){
 	$section = 'instructor';
 }elseif(strstr($parts['dirname'], "general")){
 	$section = 'general';
+} else {
+	$section = 'general';
 }
 require('../'.$section.'/pages.inc.php');
 

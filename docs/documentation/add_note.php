@@ -66,6 +66,10 @@ if (isset($_POST['submit'])) {
 	}
 }
 
+if (!isset($_GET['p']) {
+	$_GET['p'] = '';
+}
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en">
 <head>
@@ -83,8 +87,7 @@ div.input-form div.row {
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="section" value="<?php echo key($_GET); ?>" />
-<input type="hidden" name="page" value="<?php echo $_GET['p']; ?>" />
-
+<input type="hidden" name="page" value="<?php echo preg_replace('/[^a-zA-Z0-9_.]*/i', '', $_GET['p']); ?>" />
 
 <div class="input-form">
 	<div class="row">

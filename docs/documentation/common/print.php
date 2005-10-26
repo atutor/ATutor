@@ -29,6 +29,8 @@ if (isset($_GET['admin'])) {
 	$section = 'instructor';
 } elseif (isset($_GET['general'])){
 	$section = 'general';
+} else {
+	$section = 'general';
 }
 
 require('../'.$section.'/pages.inc.php');

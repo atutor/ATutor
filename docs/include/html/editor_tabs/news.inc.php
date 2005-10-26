@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // Javascript codes for the visual editor
 	$visuallang["zh"] = "b5";
