@@ -28,10 +28,11 @@ CREATE TABLE `faq_entries` (
 # --------------------------------------------------------
 # Table structure for table `feeds`
 CREATE TABLE `feeds` (
-	`feed_id` MEDIUMINT UNSIGNED NOT NULL ,
-	`url` VARCHAR( 255 ) NOT NULL ,
-	PRIMARY KEY ( `feed_id` )
-);
+  `feed_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `url` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`feed_id`)
+) ;
+
 
 
 # Table structure for table `config`

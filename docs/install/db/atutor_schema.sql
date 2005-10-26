@@ -172,6 +172,14 @@ CREATE TABLE `faq_entries` (
 ) ;
 
 # --------------------------------------------------------
+# Table structure for table `feeds`
+CREATE TABLE `feeds` (
+  `feed_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `url` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`feed_id`)
+) ;
+
+# --------------------------------------------------------
 # Table structure for table `forums`
 
 CREATE TABLE `forums` (
@@ -729,10 +737,3 @@ CREATE TABLE `cmi` (
        PRIMARY KEY (cmi_id),
       UNIQUE KEY (item_id, member_id,lvalue)
 )TYPE=MyISAM;
-
-
-CREATE TABLE `feeds` (
-	`feed_id` MEDIUMINT UNSIGNED NOT NULL ,
-	`url` VARCHAR( 255 ) NOT NULL ,
-	PRIMARY KEY ( `feed_id` )
-);
