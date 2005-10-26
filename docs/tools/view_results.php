@@ -127,14 +127,20 @@ if ($row = mysql_fetch_assoc($result)){
 						}
 					} else {
 						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
-						if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
+						//if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
+						if (($row['answer_'.$i] == 1) && ($answer_row['answer'] == $i)) {
 							echo $mark_right;
+						} else if ($row['answer_'.$i] == 1) {
+							echo $mark_wrong;
 						}
 					}
 				}
 				echo '<br />';
 				if (!is_array($answer_row['answer'])) {
 					print_result('<em>'._AT('left_blank').'</em>', -1, -1, (int) (-1 == $answer_row['answer']), false);
+					if ($answer_row['answer'] == -1) {
+						echo $mark_wrong;
+					}
 				}
 
 				echo '</p>';
@@ -158,11 +164,24 @@ if ($row = mysql_fetch_assoc($result)){
 				}
 
 				print_result(_AT('true'), $row['answer_0'], 1, (int) ($answer_row['answer'] == 1), $correct);
+				if (($answer_row['answer'] == 1) && ($row['answer_0'] == 1)){
+					echo $mark_right;
+				} else if ($row['answer_0'] == 1) {
+					echo $mark_wrong;
+				}
+				echo '<br />';
 
-				print_result(_AT('false'), $row['answer_1'], 2, (int) ($answer_row['answer'] == 2), $correct);
-
+				print_result(_AT('false'), $row['answer_0'], 2, (int) ($answer_row['answer'] == 2), $correct);
+				if (($answer_row['answer'] == 2) && ($row['answer_0'] == 2)){
+					echo $mark_right;
+				} else if ($row['answer_0'] == 2) {
+					echo $mark_wrong;
+				}
 				echo '<br />';
 				print_result('<em>'._AT('left_blank').'</em>', -1, -1, (int) ($answer_row['answer'] == -1), false);
+				if ($answer_row['answer'] == -1) {
+					echo $mark_wrong;
+				}
 				$my_score=($my_score+$answer_row['score']);
 				$this_total += $row['weight'];
 				echo '</p>';
