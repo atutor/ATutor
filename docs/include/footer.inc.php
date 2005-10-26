@@ -38,7 +38,7 @@ if ($_SESSION['course_id'] > 0) {
 
 	foreach ($side_menu as $side) {
 		if (isset($_stacks[$side])) {
-			$stack_files[] = AT_INCLUDE_PATH.'../'.$_stacks[$side];
+			$stack_files[] = $_stacks[$side];
 		}
 	}
 }
