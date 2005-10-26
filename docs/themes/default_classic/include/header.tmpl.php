@@ -217,7 +217,7 @@ function toggleToc(objId) {
 <?php if ($this->sub_level_pages): ?>
 	<div id="sub-navigation">
 		<?php if (isset($this->back_to_page)): ?>
-			<a href="<?php echo $this->back_to_page['url']; ?>" id="back-to">Back to <?php echo $this->back_to_page['title']; ?></a> | 
+			<a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo _AT('back_to'); ?> <?php echo $this->back_to_page['title']; ?></a> | 
 		<?php endif; ?>
 
 		<?php $num_pages = count($this->sub_level_pages); ?>
