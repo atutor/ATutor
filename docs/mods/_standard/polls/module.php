@@ -4,7 +4,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 define('AT_PRIV_POLLS', $this->getPrivilege());
 
 //side dropdown
-$_module_stacks['poll'] = 'include/html/dropdowns/poll.inc.php';
+$_module_stacks['poll'] = AT_INCLUDE_PATH.'html/dropdowns/poll.inc.php';
 
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tools = 'polls/index.php';
