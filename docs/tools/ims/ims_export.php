@@ -217,6 +217,7 @@ if (count($used_glossary_terms)) {
 	$terms_xml = '';
 	foreach ($used_glossary_terms as $term) {
 		$term_key = urlencode($term);
+		$glossary[$term_key] = str_replace('&', '&amp;', $glossary[$term_key]);
 		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
 									array($term, $glossary[$term_key]),
 									$glossary_term_xml);
