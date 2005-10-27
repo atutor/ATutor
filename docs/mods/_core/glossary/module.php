@@ -4,7 +4,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 define('AT_PRIV_GLOSSARY', $this->getPrivilege());
 
 //side menu
-$_module_stacks['glossary'] = 'include/html/dropdowns/glossary.inc.php';
+$_module_stacks['glossary'] = array('title_var'=>'glossary', 'file'=>'include/html/dropdowns/glossary.inc.php');
 
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tools = 'glossary/index.php';

@@ -6,7 +6,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 $_student_tools = 'mods/_standard/google_search/index.php';
 
 //side menu
-$_module_stacks['google_search'] = dirname(__FILE__).'\side_menu.inc.php';
+$_module_stacks['google_search'] = array('title_var'=>'google_search', 'file'=>dirname(__FILE__).'\side_menu.inc.php');
 
 $_module_pages['mods/_standard/google_search/index.php']['title_var'] = 'google_search';
 $_module_pages['mods/_standard/google_search/index.php']['img']       = 'mods/_standard/google_search/google.gif';

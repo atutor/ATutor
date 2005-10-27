@@ -5,6 +5,7 @@ global $savant;
 
 $feed_id = intval(basename(__FILE__));
 $cache_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.cache';
+$title_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache';
 
 ob_start(); 
 
@@ -18,7 +19,7 @@ readfile($cache_file);
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
 
-$savant->assign('title', _AT($feed_id.'_rss_title'));
+$savant->assign('title', file_get_contents($title_file));
 $savant->display('include/box.tmpl.php');
 
 ?>

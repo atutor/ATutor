@@ -28,7 +28,8 @@ $count = 0;
 while (false !== ($file = readdir($dh))) {
 	if (strpos($file, '_rss.inc.php')) {
 		$feed_id = intval($file);
-		$_module_stacks[$feed_id.'_rss_title'] = AT_CONTENT_DIR.'feeds/'.$file;
+		$title = file_get_contents(AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache');
+		$_module_stacks[$feed_id.'_rss_title'] = array('title'=>$title, 'file'=>AT_CONTENT_DIR.'feeds/'.$file);
 	}
 }
 

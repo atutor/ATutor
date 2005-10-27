@@ -1,4 +1,5 @@
 <?php
+global $savant;
 ob_start(); 
 ?>
 

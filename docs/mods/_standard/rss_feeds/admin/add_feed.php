@@ -38,8 +38,14 @@ if (isset($_GET['submit'])) {
 		
 
 		//add language
-		$sql	= "INSERT INTO ".TABLE_PREFIX."language_text VALUES('en', '_template', '".$feed_id."_rss_title', '".$_GET['title']."', NOW(), '')";
+		/*$sql	= "INSERT INTO ".TABLE_PREFIX."language_text VALUES('en', '_template', '".$feed_id."_rss_title', '".$_GET['title']."', NOW(), '')";
 		$result = mysql_query($sql, $db);
+		*/
+		$title_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache';
+		if ($f = @fopen($title_file, 'w')) {
+			fwrite ($f, $_GET['title'], strlen($_GET['title']));
+			fclose($f);
+		}
 
 		$msg->addFeedback('FEED_SAVED');
 		header("Location:index_admin.php");

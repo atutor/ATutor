@@ -9,7 +9,7 @@ define('AT_ADMIN_PRIV_FORUMS', $this->getAdminPrivilege() );
 $_student_tools = 'forum/list.php';
 
 //side dropdown
-$_module_stacks['posts'] = AT_INCLUDE_PATH.'html/dropdowns/posts.inc.php';
+$_module_stacks['posts'] = array('title_var'=>'posts','file'=>AT_INCLUDE_PATH.'html/dropdowns/posts.inc.php');
 
 //instructor pages
 $_module_pages['tools/forums/index.php']['title_var'] = 'forums';

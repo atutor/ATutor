@@ -3,7 +3,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_PRIV_ENROLLMENT', $this->getPrivilege());
 
-$_module_stacks['users_online'] = AT_INCLUDE_PATH.'html/dropdowns/users_online.inc.php';
+$_module_stacks['users_online'] = array('title_var'=>'users_online', 'file'=>AT_INCLUDE_PATH.'html/dropdowns/users_online.inc.php');
 
 $_module_pages['tools/enrollment/index.php']['title_var'] = 'enrolment';
 $_module_pages['tools/enrollment/index.php']['parent']    = 'tools/index.php';

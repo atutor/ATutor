@@ -17,6 +17,9 @@ require(AT_INCLUDE_PATH . 'vitals.inc.php');
 
 admin_authenticate(AT_ADMIN_PRIV_RSS);
 
+$feed_id = intval($_GET['fid']);
+$title_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache';
+
 if (isset($_GET['submit'])) {
 
 	//check both fields are not empty
@@ -28,14 +31,21 @@ if (isset($_GET['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$feed_id = intval($_GET['fid']);
+		//$_GET['title'] = $addslashes($_GET['title']);
 		
 		$sql	= "REPLACE INTO ".TABLE_PREFIX."feeds VALUES(".$feed_id.", '".$_GET['url']."')";
 		$result = mysql_query($sql, $db);
 
 		//update language
-		$sql	= "REPLACE INTO ".TABLE_PREFIX."language_text VALUES('en', '_template', '".$feed_id."_rss_title', 'RSS: ".$_GET['title']."', NOW(), '')";
-		$result = mysql_query($sql, $db);
+		/*$sql	= "REPLACE INTO ".TABLE_PREFIX."language_text VALUES('en', '_template', '".$feed_id."_rss_title', '".$_GET['title']."', NOW(), '')";
+		$result = mysql_query($sql, $db);*/
+		if ($f = @fopen($title_file, 'w')) {
+			fwrite ($f, $_GET['title'], strlen($_GET['title']));
+			fclose($f);
+		}
+
+		//delete old cache file
+		@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.cache');
 
 		$msg->addFeedback('FEED_SAVED');
 		header("Location:index_admin.php");
@@ -48,13 +58,15 @@ if (isset($_GET['submit'])) {
 	exit;
 }
 
-if (isset($_GET['fid']) && $_GET['fid'] != '') {
+if ($feed_id != '') {
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".intval($_GET['fid']);
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
-
-	$_GET['title'] = $row['title'];
+	
+	if (file_exists($title_file)) {
+		$_GET['title'] = file_get_contents($title_file);
+	}
 	$_GET['url'] = $row['url'];
 } 
 

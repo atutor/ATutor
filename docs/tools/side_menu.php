@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
 	$side_menu = '';
 	$_stack_names = array();
 
-	foreach($_stacks as $name=>$file) {
+	foreach($_stacks as $name=>$info) {
 		$_stack_names[] = $name;
 	}
 
@@ -66,12 +66,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			for ($i=0; $i<$num_stack; $i++) {				
 				echo '<select name="stack['.$i.']">';
 				echo '<option value=""></option>';
-				foreach ($_stacks as $name=>$file) {
+				foreach ($_stacks as $name=>$info) {
+					if (isset($info['title'])) {
+						$title = $info['title'];
+					} else {
+						$title = _AT($info['title_var']);
+					}
 					echo '<option value="'.$name.'"';
 					if (isset($side_menu[$i]) && ($name == $side_menu[$i])) {
 						echo ' selected="selected"';
 					}
-					echo '>'._AT($name).'</option>';
+					echo '>'.$title.'</option>';
 				}
 				echo '</select>';
 				echo '<br />'; 
