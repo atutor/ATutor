@@ -34,6 +34,7 @@ if (isset($_POST['submit_no'])) {
 
 	//delete files
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.cache');
+	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss_title.inc.php');
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.inc.php');
 
 	$msg->addFeedback('FEED_DELETED');
