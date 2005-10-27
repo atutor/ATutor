@@ -146,10 +146,11 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '</td>';
 		echo '<td class="row1">';
 		if (strlen($row['question']) > 45) {
-			echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
+			echo htmlspecialchars(AT_print(substr($row['question'], 0, 43), 'tests_questions.question')) . '...';
 		} else {
 			echo AT_print(htmlspecialchars($row['question']), 'tests_questions.question');
 		}
+
 		echo '</td>';
 		echo '<td nowrap="nowrap">';
 		$link = '';
