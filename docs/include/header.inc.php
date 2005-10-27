@@ -77,6 +77,7 @@ if (!isset($_pages[$current_page])) {
 
 $_top_level_pages        = get_main_navigation($current_page);
 $_current_top_level_page = get_current_main_page($current_page);
+
 if (empty($_top_level_pages)) {
 	if (!$_SESSION['valid_user']) {
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_PUBLIC][0]);
@@ -123,7 +124,6 @@ if ($_SESSION['course_id'] > 0) {
 } else if (!$_SESSION['course_id']) {
 	$section_title = _AT('my_start_page');
 }
-
 $savant->assign('current_top_level_page', $_current_top_level_page);
 $savant->assign('sub_level_pages', $_sub_level_pages);
 $savant->assign('current_sub_level_page', $_current_sub_level_page);

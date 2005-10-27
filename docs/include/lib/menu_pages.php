@@ -30,8 +30,11 @@ if ($_SESSION['course_id'] > 0) {
 	$main_links = $home_links = $side_menu = array();
 
 	if ($system_courses[$_SESSION['course_id']]['main_links']) {
-			$main_links = explode('|', $system_courses[$_SESSION['course_id']]['main_links']);
-			$_pages[AT_NAV_COURSE] = array_merge($_pages[AT_NAV_COURSE], $main_links);
+		$main_links = explode('|', $system_courses[$_SESSION['course_id']]['main_links']);
+		foreach ($main_links as $link) {
+			$_pages[$link]['parent'] = AT_NAV_COURSE;
+		}
+		$_pages[AT_NAV_COURSE] = array_merge($_pages[AT_NAV_COURSE], $main_links);
 	}
 
 	if ($system_courses[$_SESSION['course_id']]['home_links']) {
