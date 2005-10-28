@@ -37,8 +37,6 @@ if (isset($_GET['submit'])) {
 		$result = mysql_query($sql, $db);
 
 		//update language
-		/*$sql	= "REPLACE INTO ".TABLE_PREFIX."language_text VALUES('en', '_template', '".$feed_id."_rss_title', '".$_GET['title']."', NOW(), '')";
-		$result = mysql_query($sql, $db);*/
 		if ($f = @fopen($title_file, 'w')) {
 			fwrite ($f, $_GET['title'], strlen($_GET['title']));
 			fclose($f);

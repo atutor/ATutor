@@ -32,15 +32,16 @@ if (isset($_GET['submit'])) {
 		$result = mysql_query($sql, $db);
 
 		$feed_id = mysql_insert_id($db);
-
-		//copy load file
-		copy('../load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
 		
+		if (function_exists('symlink')) {
+			//make symlink (unix)
+			symlink(AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php', '../load_file.php');
+		} else {
+			//copy load file (windows)
+			copy('../load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
+		}
 
 		//add language
-		/*$sql	= "INSERT INTO ".TABLE_PREFIX."language_text VALUES('en', '_template', '".$feed_id."_rss_title', '".$_GET['title']."', NOW(), '')";
-		$result = mysql_query($sql, $db);
-		*/
 		$title_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache';
 		if ($f = @fopen($title_file, 'w')) {
 			fwrite ($f, $_GET['title'], strlen($_GET['title']));
