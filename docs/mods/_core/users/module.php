@@ -20,6 +20,10 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 		$_module_pages['admin/create_user.php']['title_var'] = 'create_user';
 		$_module_pages['admin/create_user.php']['parent']    = 'admin/users.php';
 
+		$_module_pages['admin/password_user.php']['title_var'] = 'password';
+		$_module_pages['admin/password_user.php']['parent']    = 'admin/users.php';
+
+
 		$_module_pages['admin/instructor_requests.php']['title_var'] = 'instructor_requests';
 		$_module_pages['admin/instructor_requests.php']['parent']    = 'admin/users.php';
 		$_module_pages['admin/instructor_requests.php']['guide']     = 'admin/?p=3.1.instructor_requests.php';

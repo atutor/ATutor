@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 		$msg->addError('EMAIL_EXISTS');
 	}
 
-	/* password check:	*/
+	/* password check:
 	if ($_POST['password'] == '') { 
 		$msg->addError('PASSWORD_MISSING');
 	} else {
@@ -47,6 +47,7 @@ if (isset($_POST['submit'])) {
 			$msg->addError('PASSWORD_MISMATCH');
 		}
 	}
+	*/
 	
 	//check date of birth
 	$mo = intval($_POST['month']);
@@ -78,7 +79,7 @@ if (isset($_POST['submit'])) {
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
 
-		$_POST['password']   = $addslashes($_POST['password']);
+		//$_POST['password']   = $addslashes($_POST['password']);
 		$_POST['website']    = $addslashes($_POST['website']);
 		$_POST['first_name'] = $addslashes($_POST['first_name']);
 		$_POST['last_name']  = $addslashes($_POST['last_name']);
@@ -92,8 +93,7 @@ if (isset($_POST['submit'])) {
 		$_POST['old_status']     = intval($_POST['old_status']);
 
 		/* insert into the db. (the last 0 for status) */
-		$sql = "UPDATE ".TABLE_PREFIX."members SET	password   = '$_POST[password]',
-													email      = '$_POST[email]',
+		$sql = "UPDATE ".TABLE_PREFIX."members SET	email      = '$_POST[email]',
 													website    = '$_POST[website]',
 													first_name = '$_POST[first_name]',
 													last_name  = '$_POST[last_name]', 
@@ -171,7 +171,7 @@ if (empty($_POST)) {
 	
 	$_POST  = $row;
 	list($_POST['year'],$_POST['month'],$_POST['day']) = explode('-', $row['dob']);
-	$_POST['password2']  = $_POST['password'];
+	//$_POST['password2']  = $_POST['password'];
 	$_POST['old_status'] = $_POST['status'];
 
 	if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST) {

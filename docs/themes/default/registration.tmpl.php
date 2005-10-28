@@ -37,17 +37,19 @@
 		<?php endif; ?>
 	</div>
 
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
-		<input id="password" name="password" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password'])); ?>" /><br />
-		<small>&middot; <?php echo _AT('combination'); ?><br />
-		       &middot; <?php echo _AT('15_max_chars'); ?></small>
-	</div>
+	<?php if (!admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>
+		<div class="row">
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
+			<input id="password" name="password" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password'])); ?>" /><br />
+			<small>&middot; <?php echo _AT('combination'); ?><br />
+				   &middot; <?php echo _AT('15_max_chars'); ?></small>
+		</div>
 
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('password_again'); ?></label><br />
-		<input id="password2" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password2'])); ?>" />
-	</div>
+		<div class="row">
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('password_again'); ?></label><br />
+			<input id="password2" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password2'])); ?>" />
+		</div>
+	<?php endif; ?>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />

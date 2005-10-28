@@ -24,13 +24,16 @@ if (isset($_GET['delete'], $_GET['id'])) {
 } else if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location: edit_user.php?id='.$_GET['id']);
 	exit;
+} else if (isset($_GET['password'], $_GET['id'])) {
+	header('Location: password_user.php?id='.$_GET['id']);
+	exit;
 } else if (isset($_GET['confirm'], $_GET['id'])) {
 	$id  = intval($_GET['id']);
 	$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT." WHERE status=".AT_STATUS_UNCONFIRMED." AND member_id=$id";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACCOUNT_CONFIRMED');
-} else if (isset($_GET['confirm']) || isset($_GET['edit']) || isset($_GET['delete'])) {
+} else if (isset($_GET['confirm']) || isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['password'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -175,7 +178,10 @@ $result = mysql_query($sql, $db);
 <?php if ($num_results > 0): ?>
 	<tfoot>
 	<tr>
-		<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+		<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
+						<input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> 
+						<input type="submit" name="password" value="<?php echo _AT('password'); ?>" />
+						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 	</tr>
 	</tfoot>
 	<tbody>
