@@ -1178,7 +1178,7 @@ div[class] .insidecol {
    height: auto;
 }
 
-ul.horizontal{
+ul.horizontal {
 	padding: 0px;
 	margin: 0px;
 }
@@ -1187,4 +1187,12 @@ ul.horizontal li {
 	display: inline;
 	margin: 0px;
 	padding-right: 10px;
+}
+
+ul.rss_feed {
+	padding-left:7px; 
+	margin-left:7px; 
+	padding-top: 0px; 
+	margin-top:0px; 
+	margin-bottom:0px;'
 }

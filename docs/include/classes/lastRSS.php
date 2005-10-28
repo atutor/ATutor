@@ -66,22 +66,22 @@ class lastRSS {
 
 		$result = $this->Parse($rss_url);
 		if ($result) {
-			$output = "<ul style='padding-left:7px; margin-left:7px; padding-top: 0px; margin-top:0px; margin-bottom:0px;'>";
+			$output = "<ul class='rss_feed'>";
 		   for ($i=0; $i<$this->num_results; $i++) {
-				$output .= "<li><a href=".$result['items'][$i][link].">".$result['items'][$i]['title']."</a>";
+				$output .= "<li><a href='".$result['items'][$i][link]."' target='_new'>".$result['items'][$i]['title']."</a>";
 				if ($this->description) { $output .= "<br />".$result['items'][$i]['description']."</li>\n"; }
 			}
 			$output .= "</ul>\n"; 
-		} else {
-			$ouput .= ('RSS file not found...');
-		}
 
-		if ($f = @fopen($cache_file, 'w')) {
-			fwrite ($f, $output, strlen($output));
-			fclose($f);
-		}
-		if ($result) $result['cached'] = 0;
+			if ($f = @fopen($cache_file, 'w')) {
+				fwrite ($f, $output, strlen($output));
+				fclose($f);
+			}
 
+			$result['cached'] = 0;
+		} elseif (file_exists($cache_file)) {
+			touch($cache_file);
+		}
 
 		return $result;
 	}

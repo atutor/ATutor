@@ -12,13 +12,15 @@ if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_P
 
 	$_module_pages['admin/config_edit.php']['children'] = array('mods/_standard/rss_feeds/admin/index_admin.php');
 
-		$_module_pages['mods/_standard/rss_feeds/admin/add_feed.php']['title_var'] = 'add_feed';
+		$_module_pages['mods/_standard/rss_feeds/admin/add_feed.php']['title_var'] = 'add';
 		$_module_pages['mods/_standard/rss_feeds/admin/add_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
 
-		$_module_pages['mods/_standard/rss_feeds/admin/edit_feed.php']['title_var'] = 'edit_feed';
+		$_module_pages['mods/_standard/rss_feeds/admin/edit_feed.php']['title_var'] = 'edit';
 		$_module_pages['mods/_standard/rss_feeds/admin/edit_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
 
-		$_module_pages['mods/_standard/rss_feeds/admin/delete_feed.php']['title_var'] = 'delete_feed';
+		$_module_pages['mods/_standard/rss_feeds/admin/delete_feed.php']['title_var'] = 'delete';
+
+		$_module_pages['mods/_standard/rss_feeds/admin/preview.php']['title_var'] = 'preview';
 }
 
 //make the rss files side menu stacks

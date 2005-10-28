@@ -13,8 +13,10 @@ ob_start();
 if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
 	make_cache_file($feed_id);
 }
-
-readfile($cache_file);
+if (file_exists($cache_file)) {
+	readfile($cache_file);
+	echo _AT('new_window');
+}
 
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();

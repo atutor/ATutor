@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH . 'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_RSS);
 
 
-if ((isset($_GET['enable']) || isset($_GET['disable']) || isset($_GET['edit']) || isset($_GET['delete'])) && !isset($_GET['fid'])) {
+if ((isset($_GET['preview']) || isset($_GET['edit']) || isset($_GET['delete'])) && !isset($_GET['fid'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_GET['edit'])) {
 	header("Location:edit_feed.php?fid=".intval($_GET['fid']));
