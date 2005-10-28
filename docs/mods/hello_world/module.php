@@ -13,7 +13,7 @@ define('AT_ADMIN_PRIV_HELLO_WORLD', $this->getAdminPrivilege());
 /*******
  * create a side menu box/stack.
  */
-$_module_stacks['hello_world'] = 'mods/hello_world/side_menu.inc.php';
+$_module_stacks['hello_world'] = array('title_var'=>'hello_world', 'file'=>'mods/hello_world/side_menu.inc.php');
 
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.

@@ -15,7 +15,7 @@ if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
 }
 if (file_exists($cache_file)) {
 	readfile($cache_file);
-	echo _AT('new_window');
+	echo '<br /><small>'._AT('new_window').'</small>';
 }
 
 $savant->assign('dropdown_contents', ob_get_contents());
