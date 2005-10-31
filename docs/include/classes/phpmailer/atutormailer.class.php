@@ -43,6 +43,10 @@ class ATutorMailer extends PHPMailer {
 
 		$this->SMTPAuth = false;  // turn on SMTP authentication
 		$this->IsHTML(false);
+
+		// send the email in the current encoding:
+		global $myLang;
+		$this->CharSet = $myLang->getCharacterSet();
 	}
 
 	/**
