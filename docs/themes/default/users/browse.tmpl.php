@@ -34,7 +34,7 @@
 					<?php else: ?>
 						<div class="browse-unselected">
 					<?php endif; ?>
-						<a href="browse.php?cat=0<?php echo SEP;?>show_course=0#info"><?php echo _AT('all_courses'); ?></a>
+						<a href="<?php echo $_SERVER['PHP_SELF']; ?>?cat=0<?php echo SEP;?>show_course=0#info"><?php echo _AT('all_courses'); ?></a>
 					</div>			
 					</li>
 					
