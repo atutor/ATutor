@@ -35,7 +35,7 @@ if (isset($_GET['submit'])) {
 		
 		if (function_exists('symlink')) {
 			//make symlink (unix)
-			if (!symlink(realpath('../load_file.php'), AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php')) {
+			if (!link(realpath('../load_file.php'), AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php')) {
 				//copy - prob. wrong permissions
 				copy('../load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
 			}
