@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 4.5.scorm_packages.php 5063 2005-07-04 20:56:07Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
  require('../common/body_header.inc.php'); ?>
 
