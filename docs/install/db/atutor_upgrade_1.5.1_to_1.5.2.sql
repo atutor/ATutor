@@ -76,6 +76,7 @@ INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8);
 INSERT INTO `modules` VALUES ('_core/cats_categories',   2, 0,         32);
 INSERT INTO `modules` VALUES ('_core/languages',         2, 0,         64);
 INSERT INTO `modules` VALUES ('_core/themes',            2, 0,         128);
+INSERT INTO `modules` VALUES ('_standard/rss_feeds',	 2, 0,	       256);
 INSERT INTO `modules` VALUES ('_core/groups',            2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/directory',     2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/tile_search',   2, 0, 0);
