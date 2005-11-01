@@ -33,16 +33,8 @@ if (isset($_GET['submit'])) {
 
 		$feed_id = mysql_insert_id($db);
 		
-		if (function_exists('symlink')) {
-			//make symlink (unix)
-			if (!link(realpath('../load_file.php'), AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php')) {
-				//copy - prob. wrong permissions
-				copy('../load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
-			}
-		} else {
-			//copy load file (windows)
-			copy('../load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
-		}
+		//copy load file
+		copy('../load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
 
 		//add language
 		$title_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache';
