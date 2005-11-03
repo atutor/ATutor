@@ -32,14 +32,20 @@ if ($_SESSION['course_id'] > 0) {
 	if ($system_courses[$_SESSION['course_id']]['main_links']) {
 		$main_links = explode('|', $system_courses[$_SESSION['course_id']]['main_links']);
 		foreach ($main_links as $link) {
-			$_pages[$link]['parent'] = AT_NAV_COURSE;
+			if (isset($_pages[$link])) {
+				$_pages[$link]['parent'] = AT_NAV_COURSE;
+			}
 		}
 		$_pages[AT_NAV_COURSE] = array_merge($_pages[AT_NAV_COURSE], $main_links);
 	}
 
 	if ($system_courses[$_SESSION['course_id']]['home_links']) {
 		$home_links = explode('|', $system_courses[$_SESSION['course_id']]['home_links']);
-		$_pages[AT_NAV_HOME] = array_merge($_pages[AT_NAV_HOME], $home_links);
+		foreach ($home_links as $link) {
+			if (isset($_pages[$link])) {
+				$_pages[AT_NAV_HOME][] = $link;
+			}
+		}
 	}
 
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) || $_SESSION['privileges']) {
