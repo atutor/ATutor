@@ -103,8 +103,10 @@ if (isset($errors)) {
 			@mkdir($cdir.'/1');
 			@mkdir($cdir.'/chat/1');
 			@mkdir($cdir.'/backups/1');
+			@mkdir($cdir.'/feeds/1');
 			@copy('../images/index.html', $cdir . '/index.html');
 			@copy('../images/index.html', $cdir . '/backups/1/index.html');
+			@copy('../images/index.html', $cdir . '/feeds/1/index.html');
 			@copy('../images/index.html', $cdir . '/chat/1/index.html');
 			@copy('../images/index.html', $cdir . '/1/index.html');
 		}

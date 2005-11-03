@@ -52,11 +52,19 @@ if(isset($_POST['submit'])) {
 		} else if (!is_writable($_POST['content_dir'].'/backups')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/backups</strong> directory is not writable.';
 		}
+		if (!is_dir($_POST['content_dir'].'/feeds')) {
+			if (!@mkdir($_POST['content_dir'].'/feeds')) {
+				$errors[] = '<strong>'.$_POST['content_dir'].'/feeds</strong> directory does not exist and cannot be created.';  
+			}
+		} else if (!is_writable($_POST['content_dir'].'/feeds')){
+			$errors[] = '<strong>'.$_POST['content_dir'].'/feeds</strong> directory is not writable.';
+		}
 
 		// save blank index.html pages to those directories
 		@copy('../images/index.html', $_POST['content_dir'] . '/import/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/chat/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/backups/index.html');
+		@copy('../images/index.html', $_POST['content_dir'] . '/feeds/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/index.html');
 	}
 
