@@ -53,7 +53,6 @@ CREATE TABLE `modules` (
 PRIMARY KEY ( `dir_name` )  
 );
 
-
 INSERT INTO `modules` VALUES ('_core/properties',        2, 1,         0);
 INSERT INTO `modules` VALUES ('_standard/statistics',    2, 1,         0);
 INSERT INTO `modules` VALUES ('_core/content',           2, 2,         0);
