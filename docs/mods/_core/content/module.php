@@ -14,7 +14,7 @@ $_module_pages['search.php']['title_var']      = 'search';
 $_module_pages['tools/content/index.php']['title_var'] = 'content';
 $_module_pages['tools/content/index.php']['parent']    = 'tools/index.php';
 $_module_pages['tools/content/index.php']['guide']     = 'instructor/?p=4.0.content.php';
-$_module_pages['tools/content/index.php']['children'] = array('editor/add_content.php', 'tools/ims/index.php', 'tools/tracker/index.php');
+$_module_pages['tools/content/index.php']['children']  = array('editor/add_content.php', 'tools/ims/index.php');
 
 	$_module_pages['editor/add_content.php']['title_var']    = 'add_content';
 	$_module_pages['editor/add_content.php']['parent']   = 'tools/content/index.php';
