@@ -145,7 +145,7 @@ $keys = array_keys($module_list);
 <tbody>
 <?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; ?>
 
-	<tr onmousedown="document.form['t_<?php echo $dir_name; ?>'].checked = true;">
+	<tr onmousedown="document.form['t_<?php echo $dir_name; ?>'].checked = true; rowselect(this);" id="r_<?php echo $dir_name; ?>">
 		<td valign="top"><input type="radio" id="t_<?php echo $dir_name; ?>" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
 		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $dir_name; ?>"><?php echo $module->getName(); ?></label></td>
 		<td valign="top"><?php

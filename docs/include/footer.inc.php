@@ -51,6 +51,19 @@ if (isset($err)) {
 }
 $savant->assign('side_menu', $stack_files);
 
+// this js is indep of the theme used:
+?>
+<script language="javascript" type="text/javascript">
+var selected;
+function rowselect(obj) {
+	obj.className = 'selected';
+	if (selected)
+		document.getElementById(selected).className = '';
+	selected = obj.id;
+}
+</script>
+<?php
+
 if ($framed || $popup) {
 	$savant->display('include/fm_footer.tmpl.php');
 } else {

@@ -79,7 +79,7 @@ $list = $Backup->getAvailableList();
 	<?php
 	} else {
 		foreach ($list as $row) {
-			echo '<tr onmousedown="document.form[\'b'.$row['backup_id'].'\'].checked = true;">';
+			echo '<tr onmousedown="document.form[\'b'.$row['backup_id'].'\'].checked = true; rowselect(this);" id="r_'.$row['backup_id'].'">';
 			echo '<td class="row1"><label><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="b'.$row['backup_id'].'" />';
 			echo $row['file_name'].'</label></td>';
 			echo '<td>'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';

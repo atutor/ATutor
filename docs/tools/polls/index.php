@@ -83,7 +83,7 @@ $result = mysql_query($sql, $db);
 <tbody>
 <?php if ($row = mysql_fetch_assoc($result)) : ?>
 	<?php do { ?>
-		<tr onmousedown="document.form['p_<?php echo $row['poll_id']; ?>'].checked = true;">
+		<tr onmousedown="document.form['p_<?php echo $row['poll_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['poll_id']; ?>">
 			<td><input type="radio" id="p_<?php echo $row['poll_id']; ?>" name="poll" value="<?php echo $row['poll_id']; ?>" /></td>
 			<td><label for="p_<?php echo $row['poll_id']; ?>"><?php echo AT_print($row['question'], 'polls.question'); ?></label></td>
 			<td><?php echo $row['created_date']; ?></td>

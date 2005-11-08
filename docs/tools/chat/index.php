@@ -119,7 +119,7 @@ if (count($tran_files) == 0) {
 
 	<tbody>
 	<?php foreach ($tran_files as $file => $date) { ?>
-		<tr onmousedown="document.form['<?php echo $file; ?>'].checked = true;">
+		<tr onmousedown="document.form['<?php echo $file; ?>'].checked = true; rowselect(this);" id="r_<?php echo $file; ?>">
 			<td><input type="radio" name="file" value="<?php echo $file; ?>" id="<?php echo $file; ?>" /></td>
 
 			<td><label for="<?php echo $file; ?>"><?php echo $file; ?></label></td>

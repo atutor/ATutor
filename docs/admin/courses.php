@@ -122,7 +122,7 @@ $num_rows = mysql_num_rows($result);
 <tbody>
 <?php if ($num_rows): ?>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
-		<tr onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true;">
+		<tr onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['course_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
 			<td><label for="m<?php echo $row['course_id']; ?>"><?php echo AT_print($row['title'], 'courses.title'); ?></label></td>
 			<td><?php echo AT_print($row['login'],'members.login'); ?></td>

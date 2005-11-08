@@ -67,7 +67,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 			$parent_cat_name = $row_cat['cat_name'];
 		} 
 	?>
-		<tr onmousedown="document.form['m<?php echo $row['cat_id']; ?>'].checked = true;">
+		<tr onmousedown="document.form['m<?php echo $row['cat_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['cat_id']; ?>">
 			<td width="10"><input type="radio" name="cat_id" value="<?php echo $row['cat_id']; ?>" id="m<?php echo $row['cat_id']; ?>" /></td>
 			<td><label for="m<?php echo $row['cat_id']; ?>"><?php echo AT_print($row['cat_name'], 'course_cats.cat_name'); ?></label></td>
 			<td><?php echo AT_print($parent_cat_name, 'course_cats.cat_name'); ?></td>

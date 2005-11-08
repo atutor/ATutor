@@ -128,7 +128,7 @@ function print_select($pid, $depth) {
 <tbody>
 	<?php if (!empty($content)): ?>
 		<?php foreach ($content as $row): ?>
-			<tr onmousedown="document.form['c<?php echo $row['content_id']; ?>'].checked = true;">
+			<tr onmousedown="document.form['c<?php echo $row['content_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['content_id']; ?>">
 				<td><input type="radio" name="id" value="<?php echo $row['content_id']; ?>" id="c<?php echo $row['content_id']; ?>"></td>
 				<td><?php echo $row['ordering']; ?></td>
 				<td><label for="c<?php echo $row['content_id']; ?>"><?php echo AT_print($row['title'], 'content.title'); ?></label></td>
