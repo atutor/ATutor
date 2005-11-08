@@ -28,7 +28,9 @@ if (isset($_GET['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."feeds VALUES('', '".$_GET['url']."')";
+		$_GET['url'] = $addslashes($_GET['url']);
+
+		$sql	= "INSERT INTO ".TABLE_PREFIX."feeds VALUES(0, '".$_GET['url']."')";
 		$result = mysql_query($sql, $db);
 
 		$feed_id = mysql_insert_id($db);
@@ -78,4 +80,4 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 </form>
 
 
-<? require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

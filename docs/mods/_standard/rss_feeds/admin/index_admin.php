@@ -79,5 +79,4 @@ if (!($row = mysql_fetch_assoc($result))) {
 </table>
 </form>
 
-
-<? require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

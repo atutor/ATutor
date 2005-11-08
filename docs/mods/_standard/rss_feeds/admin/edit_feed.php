@@ -31,14 +31,14 @@ if (isset($_GET['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		//$_GET['title'] = $addslashes($_GET['title']);
+		$_GET['url'] = $addslashes($_GET['url']);
 		
 		$sql	= "REPLACE INTO ".TABLE_PREFIX."feeds VALUES(".$feed_id.", '".$_GET['url']."')";
 		$result = mysql_query($sql, $db);
 
 		//update language
 		if ($f = @fopen($title_file, 'w')) {
-			fwrite ($f, $_GET['title'], strlen($_GET['title']));
+			fwrite($f, $_GET['title'], strlen($_GET['title']));
 			fclose($f);
 		}
 
@@ -58,7 +58,7 @@ if (isset($_GET['submit'])) {
 
 if ($feed_id != '') {
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".intval($_GET['fid']);
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".$feed_id;
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 	
@@ -72,7 +72,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
-	<input type="hidden" name="fid" value="<?php echo $_GET['fid']; ?>" />
+	<input type="hidden" name="fid" value="<?php echo $feed_id; ?>" />
 	<div class="input-form" style="max-width: 525px">
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
@@ -85,11 +85,10 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value=" <?php echo _AT('submit'); ?> " accesskey="s" />
+			<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" />
 			<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 		</div>
 	</div>
 </form>
 
-
-<? require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

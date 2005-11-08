@@ -18,13 +18,13 @@ require(AT_INCLUDE_PATH . 'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_RSS);
 
 if (isset($_GET['back'])) {
-	header("Location:index_admin.php");
+	header('Location: index_admin.php');
 	exit;
 }
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-$feed_id = intval($_GET['fid']);
+$feed_id    = intval($_GET['fid']);
 $cache_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.cache';
 $title_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache';
 
@@ -55,5 +55,4 @@ if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
 </div>
 </form>
 
-
-<? require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

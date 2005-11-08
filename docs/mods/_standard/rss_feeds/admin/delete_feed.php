@@ -49,7 +49,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
-	if (!is_array($row)) {
+	if (!$row) {
 		$msg->addError('FEED_NOT_FOUND');
 		$msg->printErrors();
 	} else {
@@ -60,5 +60,4 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
-
 ?>
