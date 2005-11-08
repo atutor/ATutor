@@ -15,6 +15,12 @@ $_module_pages['mods/_standard/faq/index_instructor.php']['children']  = array('
 	$_module_pages['mods/_standard/faq/add_topic.php']['title_var'] = 'add_topic';
 	$_module_pages['mods/_standard/faq/add_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
+	$_module_pages['mods/_standard/faq/delete_topic.php']['title_var'] = 'delete';
+	$_module_pages['mods/_standard/faq/delete_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
+
+	$_module_pages['mods/_standard/faq/edit_topic.php']['title_var'] = 'edit';
+	$_module_pages['mods/_standard/faq/edit_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
+
 	$_module_pages['mods/_standard/faq/add_question.php']['title_var'] = 'add_question';
 	$_module_pages['mods/_standard/faq/add_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 

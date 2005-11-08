@@ -40,7 +40,7 @@ $result  = mysql_query($sql, $db);
 	<ul style="list-style: none;">
 		<?php do { ?>
 			<li style="font-weight: bold; margin-bottom: 10px;">
-				<?php echo $row['name']; ?>
+				<a href="mods/_standard/faq/edit_topic.php?id=<?php echo $row['topic_id']; ?>"><?php echo _AT('edit'); ?></a> <a href="mods/_standard/faq/delete_topic.php?id=<?php echo $row['topic_id']; ?>"><?php echo _AT('delete'); ?></a> <?php echo $row['name']; ?>
 				<ol start="<?php echo $counter; ?>">
 					<?php 
 						$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
