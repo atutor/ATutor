@@ -562,12 +562,12 @@ table.data col.sort {
 	background-color: #fafafa;
 }
 
-table.data tbody tr:hover {
+table.data tbody tr:hover, table.data tbody tr:hover th {
 	background-color: #f5f5ff;
 	cursor: pointer;
 }
 
-table.data tbody tr.selected {
+table.data tbody tr.selected, table.data tbody tr.selected th {
 	background-color: #f5f5ff;
 	cursor: auto;
 }

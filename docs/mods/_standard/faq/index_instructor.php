@@ -4,14 +4,24 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_FAQ);
 
+if (isset($_GET['edit'], $_GET['item'])) {
+	$item = intval($_GET['item']);
+	if (substr($_GET['item'], -1) == 'q') {
+		header('Location: edit_question.php?id=' . $item);
+	} else {
+		header('Location: edit_topic.php?id=' . $item);
+	}
+	exit;
+} else if (isset($_GET['delete'], $_GET['item'])) {
+	$item = intval($_GET['item']);
 
-if (isset($_POST['edit'], $_POST['poll'])) {
-	header('Location: edit.php?poll_id=' . $_POST['poll']);
+	if (substr($_GET['item'], -1) == 'q') {
+		header('Location: delete_question.php?id=' . $item);
+	} else {
+		header('Location: delete_topic.php?id=' . $item);
+	}
 	exit;
-} else if (isset($_POST['delete'], $_POST['poll'])) { 
-	header('Location: delete.php?pid=' . $_POST['poll'] );
-	exit;
-} else if (!empty($_POST)) {
+} else if (!empty($_GET)) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -36,26 +46,49 @@ $sql	 = "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$
 $result  = mysql_query($sql, $db);
 ?>
 
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<table class="data" style="width: 60%;">
+<thead>
+<tr>
+	<th>&nbsp;</th>
+	<th><?php echo _AT('name'); ?></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+	<td colspan="2"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
+				    <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+</tr>
+</tfoot>
 <?php if ($row = mysql_fetch_assoc($result)) : ?>
-	<ul style="list-style: none;">
+<tbody>
 		<?php do { ?>
-			<li style="font-weight: bold; margin-bottom: 10px;">
-				<a href="mods/_standard/faq/edit_topic.php?id=<?php echo $row['topic_id']; ?>"><?php echo _AT('edit'); ?></a> <a href="mods/_standard/faq/delete_topic.php?id=<?php echo $row['topic_id']; ?>"><?php echo _AT('delete'); ?></a> <?php echo $row['name']; ?>
-				<ol start="<?php echo $counter; ?>">
-					<?php 
-						$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
-						$entry_result = mysql_query($entry_sql, $db);
-					?>
-					<?php while ($entry_row = mysql_fetch_assoc($entry_result)): ?>
-						<li style="font-weight: normal"><a href="mods/_standard/faq/edit_question.php?id=<?php echo $entry_row['entry_id']; ?>"><?php echo _AT('edit'); ?></a> <a href="mods/_standard/faq/delete_question.php?id=<?php echo $entry_row['entry_id']; ?>"><?php echo _AT('delete'); ?></a> <?php echo $entry_row['question']; ?></li>
-						<?php $counter++; ?>
-					<?php endwhile; ?>
-				</ol>
-			</li>
+			<tr onmousedown="document.form['t<?php echo $row['topic_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['topic_id']; ?>_0">
+				<th><input type="radio" name="item" id="t<?php echo $row['topic_id']; ?>" value="<?php echo $row['topic_id']; ?>" /></th>
+				<th><?php echo $row['name']; ?></th>
+			</tr>
+			<?php 
+				$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
+				$entry_result = mysql_query($entry_sql, $db);
+			?>
+
+			<?php if ($entry_row = mysql_fetch_assoc($entry_result)) : do { ?>
+				<tr onmousedown="document.form['q<?php echo $entry_row['entry_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['topic_id']; ?>_<?php echo $entry_row['entry_id']; ?>">
+					<td><input type="radio" name="item" id="q<?php echo $entry_row['entry_id']; ?>" value="<?php echo $entry_row['entry_id']; ?>q" /></td>
+					<td><?php echo $entry_row['question']; ?></td>
+				</tr>
+			<?php } while ($entry_row = mysql_fetch_assoc($entry_result)); else: ?>
+				<tr>
+					<td>&nbsp;</td>
+					<td><?php echo _AT('none_found'); ?></td>
+				</tr>
+			<?php endif; ?>
 		<?php } while($row = mysql_fetch_assoc($result)); ?>
-	</ul>
+</tbody>
 <?php else: ?>
 	<?php echo _AT('none_found'); ?>
 <?php endif; ?>
+</table>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php');  ?>
