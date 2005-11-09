@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -244,7 +244,7 @@ $result = mysql_query($sql, $db);
 </tfoot>
 <tbody>
 	<?php while($row = mysql_fetch_assoc($result)): ?>
-		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;">
+		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['public_field']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['public_field']; ?>" id="m<?php echo $row['public_field']; ?>" /></td>
 			<td><label for="m<?php echo $row['public_field']; ?>"><?php echo $row['public_field']; ?></label></td>
 			<td><?php 

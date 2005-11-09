@@ -157,7 +157,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			foreach ($log_profiles_bug_count as $day => $profile) :
 				 foreach ($profile as $stamp => $total) :
 			?>
-					<tr onmousedown="document.form['<?php echo $stamp.$day; ?>'].checked = true;">
+					<tr onmousedown="document.form['<?php echo $stamp.$day; ?>'].checked = true;rowselect(this);" id="r_<?php echo $stamp.$day; ?>">
 						<td><input type="radio" id="<?php echo $stamp.$day; ?>" value="<?php echo $stamp.':'.$day; ?>" name="data" /><label for="<?php echo $stamp.$day; ?>"><?php echo $count_; ?></label></td>
 						<td><?php echo $day; ?></td>
 						<td><?php echo $total; ?></td>

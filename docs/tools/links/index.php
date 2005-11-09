@@ -122,7 +122,7 @@ if (!isset($_GET['cat_parent_id'])) {
 			$cat_name = $row_cat['CatName'];
 			 
 	?>
-			<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
+			<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['LinkID'];?>">
 				<td width="10"><input type="radio" name="link_id" value="<?php echo $row['LinkID']; ?>" id="m<?php echo $row['LinkID']; ?>" /></td>
 				<td><label for="m<?php echo $row['LinkID']; ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></label></td>
 				<td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>

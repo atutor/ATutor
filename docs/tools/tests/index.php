@@ -90,7 +90,7 @@ $cols=6;
 	<tbody>
 
 	<?php while ($row = mysql_fetch_assoc($result)) : ?>
-		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
+		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['test_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
 			<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
 			<td><?php

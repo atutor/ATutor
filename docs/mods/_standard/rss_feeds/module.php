@@ -30,8 +30,10 @@ $count = 0;
 while (false !== ($file = readdir($dh))) {
 	if (strpos($file, '_rss.inc.php')) {
 		$feed_id = intval($file);
-		$title = file_get_contents(AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache');
-		$_module_stacks[$feed_id.'_rss_title'] = array('title'=>$title, 'file'=>AT_CONTENT_DIR.'feeds/'.$file);
+		if (file_exists(AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache')) {
+			$title = @file_get_contents(AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache');
+			$_module_stacks[$feed_id.'_rss_title'] = array('title'=>$title, 'file'=>AT_CONTENT_DIR.'feeds/'.$file);
+		}
 	}
 }
 
@@ -48,7 +50,7 @@ function make_cache_file($feed_id) {
 		$rss->description = FALSE;
 	} 
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".intval($feed_id);
+	$sql	= "SELECT url, feed_id FROM ".TABLE_PREFIX."feeds WHERE feed_id=".intval($feed_id);
 	$result = mysql_query($sql, $db);
 
 	$count = 0;
@@ -66,7 +68,7 @@ function print_rss_feed($file) {
 
 	ob_start(); 
 
-	//if file doesn't exist or is more than 6 hours old (1 hour = 3600) 
+	//if file doesn't exist or is more than 6 hours (21600 sec) old
 	if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
 		make_cache_file($feed_id);
 	}
@@ -80,7 +82,7 @@ function print_rss_feed($file) {
 	$savant->assign('dropdown_contents', ob_get_contents());
 	ob_end_clean();
 
-	$savant->assign('title', file_get_contents($title_file));
+	$savant->assign('title', @file_get_contents($title_file));
 	$savant->display('include/box.tmpl.php');
 }
 

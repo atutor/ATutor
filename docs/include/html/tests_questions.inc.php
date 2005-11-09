@@ -86,7 +86,7 @@ foreach ($cats as $cat) {
 				echo '<td>';
 				echo '<input type="checkbox" value="'.$row['question_id'].'" name="add_questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
 			} else {
-				echo '<tr onmousedown="document.form[\'q'.$row['question_id'].'\'].checked = true;">';
+				echo '<tr onmousedown="document.form[\'q'.$row['question_id'].'\'].checked = true;rowselect(this);" id="r_'.$row['question_id'].'">';
 				echo '<td><input type="radio" name="id" value="'.$row['question_id'].'|'.$row['type'].'" id="q'.$row['question_id'].'" /></td>';
 			}
 			echo '<td>';

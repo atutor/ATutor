@@ -72,7 +72,7 @@ if ($row = mysql_fetch_assoc($result)) { ?>
 			$parent_cat_name = $row_cat['CatName'];
 		} 
 	?>
-		<tr onmousedown="document.form['m<?php echo $row['CatID']; ?>'].checked = true;">
+		<tr onmousedown="document.form['m<?php echo $row['CatID']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['CatID']; ?>">
 			<td width="10"><input type="radio" name="cat_id" value="<?php echo $row['CatID']; ?>" id="m<?php echo $row['CatID']; ?>" /></td>
 			<td><label for="m<?php echo $row['CatID']; ?>"><?php echo AT_print($row['CatName'], 'members.first_name'); ?></label></td>
 			<td><?php echo AT_print($parent_cat_name, 'members.last_name'); ?></td>
