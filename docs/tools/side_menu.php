@@ -18,7 +18,7 @@ authenticate(AT_PRIV_COURSE_TOOLS);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
+	header('Location:modules.php');
 	exit;
 	
 }
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 	$sql    = "UPDATE ".TABLE_PREFIX."courses SET side_menu='$side_menu' WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	$msg->addFeedback('COURSE_PREFS_SAVED');
-	header('Location: index.php');
+	header('Location:'.$_SERVER['PHP_SELF']);
 	exit;
 }
 
