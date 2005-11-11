@@ -6,11 +6,17 @@ define('AT_ADMIN_PRIV_RSS', $this->getAdminPrivilege());
 
 //admin pages
 if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-	$_module_pages['mods/_standard/rss_feeds/admin/index_admin.php']['title_var'] = 'rss_feeds';
-	$_module_pages['mods/_standard/rss_feeds/admin/index_admin.php']['parent'] = AT_NAV_ADMIN;
-	$_module_pages['mods/_standard/rss_feeds/admin/index_admin.php']['children'] = array('mods/_standard/rss_feeds/admin/add_feed.php');
 
-	$_module_pages['admin/index.php']['children'] = array('mods/_standard/rss_feeds/admin/index_admin.php');
+	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+		$_module_pages['admin/index.php']['children']      = array('mods/_standard/rss_feeds/admin/index_admin.php');
+		$_module_pages['mods/_standard/rss_feeds/admin/index_admin.php']['parent'] = 'admin/index.php';
+	} else {
+		$_module_pages[AT_NAV_ADMIN] = array('admin/themes/index.php');
+		$_module_pages['admin/themes/index.php']['parent'] = AT_NAV_ADMIN;
+	}
+
+	$_module_pages['mods/_standard/rss_feeds/admin/index_admin.php']['title_var'] = 'rss_feeds';
+	$_module_pages['mods/_standard/rss_feeds/admin/index_admin.php']['children'] = array('mods/_standard/rss_feeds/admin/add_feed.php');
 
 		$_module_pages['mods/_standard/rss_feeds/admin/add_feed.php']['title_var'] = 'add';
 		$_module_pages['mods/_standard/rss_feeds/admin/add_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
