@@ -4,6 +4,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_ADMIN_PRIV_RSS', $this->getAdminPrivilege());
 
+define('AT_FEED_TIMEOUT', 21600);  //feed is cached for this long.  21600 = 6 hours
+define('AT_FEED_NUM_RESULTS', 5);
+define('AT_FEED_SHOW_DESCRIPTION', FALSE);
+
 //admin pages
 if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 
@@ -52,8 +56,8 @@ function make_cache_file($feed_id) {
 		require_once(AT_INCLUDE_PATH.'classes/lastRSS.php');
 		$rss =& new lastRSS; 
 		$rss->cache_dir = AT_CONTENT_DIR.'feeds/'; 
-		$rss->num_results = 5;
-		$rss->description = FALSE;
+		$rss->num_results = AT_FEED_NUM_RESULTS;
+		$rss->description = AT_FEED_SHOW_DESCRIPTION;
 	} 
 
 	$sql	= "SELECT url, feed_id FROM ".TABLE_PREFIX."feeds WHERE feed_id=".intval($feed_id);
@@ -74,8 +78,8 @@ function print_rss_feed($file) {
 
 	ob_start(); 
 
-	//if file doesn't exist or is more than 6 hours (21600 sec) old
-	if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
+	//if file doesn't exist or is more than AT_FEED_TIMEOUT old
+	if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > AT_FEED_TIMEOUT) ) {
 		make_cache_file($feed_id);
 	}
 	if (file_exists($cache_file)) {
