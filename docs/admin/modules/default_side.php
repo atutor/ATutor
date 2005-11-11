@@ -87,8 +87,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 	</div>
 </div>
 </form>
