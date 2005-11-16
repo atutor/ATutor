@@ -194,13 +194,13 @@ foreach ($_current_modules as $tool) :
 			<?php endif; ?>
 		</td>
 		<td align="right">
-			<?php if (!in_array($tool, $home_defaults) && !in_array($tool, $main_defaults)): ?>
+			<?php if (in_array($tool, $home_defaults) && in_array($tool, $main_defaults)): ?>
 
 			<?php else: ?>
 			<?php if (($count != $num_modules+1) && ($count > 1)): ?>
 				<input type="submit" name="up[<?php echo $tool; ?>]" value="<?php echo _AT('move_up'); ?>" title="<?php echo _AT('move_up'); ?>" style="background-color: white; border: 1px solid; padding: 0px;" />
 			<?php else: ?>
-				<img src="images/clr.gif" alt="" width="12" />
+				<img src="images/clr.gif" alt="" width="12" />yoooooooo
 			<?php endif; ?>
 			<?php if (($count != $num_modules) && ($count < $num_modules)): ?>
 				<input type="submit" name="down[<?php echo $tool; ?>]" value="<?php echo _AT('move_down'); ?>" title="<?php echo _AT('move_down'); ?>" style="background-color: white; border: 1px solid; padding: 0px;"/>

@@ -29,8 +29,10 @@ if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_P
 		$_module_pages['mods/_standard/rss_feeds/admin/edit_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
 
 		$_module_pages['mods/_standard/rss_feeds/admin/delete_feed.php']['title_var'] = 'delete';
+		$_module_pages['mods/_standard/rss_feeds/admin/delete_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
 
 		$_module_pages['mods/_standard/rss_feeds/admin/preview.php']['title_var'] = 'preview';
+		$_module_pages['mods/_standard/rss_feeds/admin/preview.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
 }
 
 //make the rss files side menu stacks
@@ -63,9 +65,18 @@ function make_cache_file($feed_id) {
 	$sql	= "SELECT url, feed_id FROM ".TABLE_PREFIX."feeds WHERE feed_id=".intval($feed_id);
 	$result = mysql_query($sql, $db);
 
-	$count = 0;
 	if ($row = mysql_fetch_assoc($result)) {
-		$rss->get($row['url'], $row['feed_id']);
+		$output = $rss->get($row['url'], $row['feed_id']);
+
+		$cache_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.cache';
+		if ($f = @fopen($cache_file, 'w')) {
+			fwrite ($f, $output, strlen($output));
+			fclose($f);
+		}
+		return 0;
+	} else {
+		$output = $rss->get($_POST['url'], 0);
+		return $output;
 	}
 }
 

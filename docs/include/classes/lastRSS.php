@@ -55,8 +55,9 @@ class lastRSS {
 	// Get() function modified by Heidi Hazelton
 	// -------------------------------------------------------------------
 	function Get ($rss_url, $rss_feed_id) {
-		$cache_file = $this->cache_dir . $rss_feed_id.'_rss.cache';
 		
+		$output = '';
+
 		if(!isset($this->num_results)) {
 			$this->num_results = 5;
 		}
@@ -67,23 +68,22 @@ class lastRSS {
 		$result = $this->Parse($rss_url);
 		if ($result) {
 			$output = "<ul class='rss_feed'>";
-		   for ($i=0; $i<$this->num_results; $i++) {
+			for ($i=0; $i<$this->num_results; $i++) {
 				$output .= "<li><a href='".$result['items'][$i][link]."' target='_new'>".$result['items'][$i]['title']."</a>";
 				if ($this->description) { $output .= "<br />".$result['items'][$i]['description']."</li>\n"; }
 			}
 			$output .= "</ul>\n"; 
 
-			if ($f = @fopen($cache_file, 'w')) {
-				fwrite ($f, $output, strlen($output));
-				fclose($f);
-			}
-
-			$result['cached'] = 0;
 		} elseif (file_exists($cache_file)) {
 			touch($cache_file);
+		} else {
+			//create an empty file
+			if ($f = @fopen($cache_file, 'w')) {
+				fclose($f);
+			}
 		}
 
-		return $result;
+		return $output;
 	}
 	
 	// -------------------------------------------------------------------

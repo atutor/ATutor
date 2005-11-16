@@ -44,8 +44,8 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-	$_GET['fid'] = intval($_GET['fid']);
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".$_GET['fid'];
+	$feed_id = intval($_GET['fid']);
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".$feed_id;
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
@@ -54,8 +54,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors();
 	} else {
 		$hidden_vars['delete_feed'] = TRUE;
-		$hidden_vars['fid'] = $_GET['fid'];
-		$msg->addConfirm(array('DELETE_FEED', AT_print($row['title'], 'forums.title')), $hidden_vars);
+		$hidden_vars['fid'] = $feed_id;
+
+		$title = file_get_contents(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss_title.cache');
+		$msg->addConfirm(array('DELETE_FEED', $title), $hidden_vars);
 		$msg->printConfirm();
 	}
 

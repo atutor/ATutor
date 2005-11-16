@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH . 'vitals.inc.php');
 
 admin_authenticate(AT_ADMIN_PRIV_RSS);
 
-if (isset($_GET['back'])) {
+if (isset($_POST['back'])) {
 	header('Location: index_admin.php');
 	exit;
 }
@@ -33,7 +33,7 @@ if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
 }
 ?>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
 <div class="input-form">
 	<div class="row">
@@ -41,7 +41,7 @@ if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
 	</div>
 
 	<div class="row">
-		<?php if (file_exists($cache_file)) { 
+		<?php if (file_exists($cache_file) && filesize($cache_file) > 0) { 
 			readfile($cache_file); 
 			echo '<p><br /><small>'._AT('new_window').'</small></p>';
 		} else {
