@@ -68,10 +68,12 @@ if ($feed_id != '') {
 	$_GET['url'] = $row['url'];
 } 
 
+$onload = 'document.form.title.focus();';
+
 require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 	<input type="hidden" name="fid" value="<?php echo $feed_id; ?>" />
 	<div class="input-form" style="max-width: 525px">
 		<div class="row">

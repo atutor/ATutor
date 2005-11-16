@@ -66,11 +66,13 @@ if (isset($_POST['cancel'])) {
 	exit;
 } 
 
+$onload = 'document.form.title.focus();';
+
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 if (!isset($_POST['confirm'])) {
 ?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="confirm" value="1" />
 
 		<div class="input-form" style="max-width: 525px">
