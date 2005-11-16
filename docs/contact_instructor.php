@@ -65,6 +65,13 @@ if (isset($_POST['submit'])) {
 
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
+		if (empty($_POST['from_email'])) {
+			$_POST['from_email'] = $instructor_email;
+		}
+		if (empty($_POST['from'])) {
+			$_POST['from'] = '';
+		}
+
 		$mail = new ATutorMailer;
 
 		$mail->From     = $_POST['from_email'];
@@ -75,6 +82,8 @@ if (isset($_POST['submit'])) {
 
 		if(!$mail->Send()) {
 		   $msg->addError('SENDING_ERROR');
+	   	   header('Location: ' . $to);
+		   exit;
 		}
 		unset($mail);
 		
