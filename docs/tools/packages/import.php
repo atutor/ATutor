@@ -31,14 +31,6 @@ if (isset ($_POST['type'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-
-if (!defined('AT_ENABLE_SCO') || !AT_ENABLE_SCO) {
-	$msg->printErrors('SCO_DISABLED');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
 ?>
 
 <div class="input-form">

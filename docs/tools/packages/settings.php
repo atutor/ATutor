@@ -24,13 +24,6 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (!defined('AT_ENABLE_SCO') || !AT_ENABLE_SCO) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('SCO_DISABLED');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
 $ptypes = explode (',', AT_PACKAGE_TYPES);
 $plug = Array();
 foreach ($ptypes as $type) {
