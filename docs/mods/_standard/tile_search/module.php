@@ -13,7 +13,7 @@ define('AT_TILE_IMPORT', 'http://tile.atutor.ca/tile/servlet/put');
 define('AT_TILE_PREVIEW', 'http://tile.atutor.ca/tile/servlet/view?view=item&');
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = 'tile.php';
+$_student_tool = 'tile.php';
 
 $_module_pages['tools/content/index.php']['children'] = array('tools/tile/index.php');
 

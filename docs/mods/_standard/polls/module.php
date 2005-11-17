@@ -7,7 +7,7 @@ define('AT_PRIV_POLLS', $this->getPrivilege());
 $_module_stacks['poll'] = array('title_var'=>'poll','file'=>AT_INCLUDE_PATH.'html/dropdowns/poll.inc.php');
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = 'polls/index.php';
+$_student_tool = 'polls/index.php';
 
 $_module_pages['polls/index.php']['title_var'] = 'polls';
 $_module_pages['polls/index.php']['img']       = 'images/home-polls.gif';

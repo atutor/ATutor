@@ -4,7 +4,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 define('AT_PRIV_TESTS', $this->getPrivilege());
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = 'tools/my_tests.php';
+$_student_tool = 'tools/my_tests.php';
 
 $_module_pages['tools/tests/index.php']['title_var'] = 'tests';
 $_module_pages['tools/tests/index.php']['parent']    = 'tools/index.php';

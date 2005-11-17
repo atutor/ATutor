@@ -4,7 +4,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 define('AT_PRIV_FAQ', $this->getPrivilege());
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = 'mods/_standard/faq/index.php';
+$_student_tool = 'mods/_standard/faq/index.php';
 
 
 // instructor Manage section:

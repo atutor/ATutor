@@ -3,7 +3,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = 'mods/_standard/google_search/index.php';
+$_student_tool = 'mods/_standard/google_search/index.php';
 
 //side menu
 $_module_stacks['google_search'] = array('title_var'=>'google_search', 'file'=>dirname(__FILE__).'\side_menu.inc.php');

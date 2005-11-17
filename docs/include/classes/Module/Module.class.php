@@ -254,9 +254,9 @@ class ModuleProxy {
 			}
 
 			//student tools
-			if (isset($_student_tools)) {
-				$this->_student_tools =& $_student_tools;
-				$_modules[] = $this->_student_tools;
+			if (isset($_student_tool)) {
+				$this->_student_tool =& $_student_tool;
+				$_modules[] = $this->_student_tool;
 			}
 		}					
 	}
@@ -314,11 +314,11 @@ class ModuleProxy {
 	}
 
 	function getStudentTools() {
-		if (!isset($this->_student_tools)) {
+		if (!isset($this->_student_tool)) {
 			return;
 		} 
 
-		return $this->_student_tools;
+		return $this->_student_tool;
 	}
 
 }

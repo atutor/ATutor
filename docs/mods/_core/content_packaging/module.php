@@ -2,7 +2,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tools = 'export.php';
+$_student_tool = 'export.php';
 
 //instructors
 $_module_pages['tools/ims/index.php']['title_var'] = 'content_packaging';

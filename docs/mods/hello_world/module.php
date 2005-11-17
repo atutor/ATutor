@@ -18,7 +18,7 @@ $_module_stacks['hello_world'] = array('title_var'=>'hello_world', 'file'=>'mods
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_student_tools = 'mods/hello_world/index.php';
+$_student_tool = 'mods/hello_world/index.php';
 
 /*******
  * add the admin pages when needed.
