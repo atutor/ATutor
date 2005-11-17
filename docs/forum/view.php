@@ -52,14 +52,17 @@ function print_entry($row) {
 
 		print_editor($editors , $large = false);
 	}
-	echo ' <a href="forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
 
-	if ($row['parent_id'] == 0) {
-		echo $row['post_id'];
-	} else {
-		echo $row['parent_id'];
+	if ($_SESSION['valid_user']) {
+		echo ' <a href="forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
+
+		if ($row['parent_id'] == 0) {
+			echo $row['post_id'];
+		} else {
+			echo $row['parent_id'];
+		}
+		echo SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >'._AT('reply').'</a>';
 	}
-	echo SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >'._AT('reply').'</a>';
 	echo '<br />';
 
 	$date = AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME);
