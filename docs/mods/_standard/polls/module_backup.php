@@ -9,7 +9,7 @@ $sql['polls'] = 'SELECT question, created_date, choice1, choice2, choice3, choic
 /* a {table_name}Table class must exist that extends AbstractTable */
 	$restore_tables = array('polls');
 
-function polls_convert($row, $course_id, $table_id_map) {
+function polls_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
 	$new_row[0]  = 0;
 	$new_row[1]  = $course_id;

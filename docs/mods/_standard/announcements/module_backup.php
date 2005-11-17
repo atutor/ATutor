@@ -8,7 +8,7 @@ $sql['news'] = 'SELECT date, formatting, title, body FROM '.TABLE_PREFIX.'news W
 // not sure what to call this.
 // it takes a CSV row and returns a valid SQL row (ie. all the correct fields).
 
-function news_convert($row, $course_id, $table_id_map) {
+function news_convert($row, $course_id, $table_id_map, $version) {
 	static $member_id;
 
 	if (!isset($member_id)) {

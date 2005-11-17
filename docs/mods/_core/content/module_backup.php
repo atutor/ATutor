@@ -6,7 +6,7 @@ $sql['content'] = 'SELECT content_id, content_parent_id, ordering, last_modified
 
 $sql['related_content'] = 'SELECT R.content_id, R.related_content_id FROM '.TABLE_PREFIX.'related_content R, '.TABLE_PREFIX.'content C WHERE C.course_id=? AND R.content_id=C.content_id ORDER BY R.content_id ASC';
 
-function related_content_convert($row, $course_id, $table_id_map) {
+function related_content_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
 	$new_row[0] = $table_id_map['content'][$row[0]];
 	$new_row[1] = $table_id_map['content'][$row[1]];
@@ -14,7 +14,7 @@ function related_content_convert($row, $course_id, $table_id_map) {
 	return $new_row;
 }
 
-function content_convert($row, $course_id, $table_id_map) {
+function content_convert($row, $course_id, $table_id_map, $version) {
 	static $order;
 
 	if (!isset($order)) {

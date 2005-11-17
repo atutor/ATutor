@@ -72,7 +72,7 @@ class CSVImport {
 	}
 
 	// public
-	function import($tableName, $path, $course_id) {
+	function import($tableName, $path, $course_id, $version) {
 		global $db;
 		static $table_id_map;
 
@@ -108,7 +108,7 @@ class CSVImport {
 			}
 
 			if (function_exists($fn_name)) {
-				$row = $fn_name($row, $course_id, $table_id_map);
+				$row = $fn_name($row, $course_id, $table_id_map, $version);
 			}
 			if ($row[0] == 0) {
 				$row[0] = $i;
@@ -124,21 +124,14 @@ class CSVImport {
 			foreach($row as $id => $field) {
 				if (($field_types[$id] != 'int') && ($field_types[$id] != 'real')) {
 					$field = $this->translateWhitespace($field);
+				} else if ($field_types[$id] == 'int') {
+					$field = intval($field);
 				}
 				$sql .= '"' . $field.'",';
 			}
 			$sql = substr($sql, 0, -1);
 			$sql .= ')';
 			$result = mysql_query($sql, $db);
-			if (!$result) {
-				/*
-				debug($table_id_map);
-				debug($sql);
-				debug(mysql_error($db));
-				debug($table_id_map);
-				exit;
-				*/
-			}
 			$i++;
 			$next_id++;
 		}

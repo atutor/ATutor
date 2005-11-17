@@ -10,7 +10,7 @@ $sql['tests_questions'] = 'SELECT question_id, category_id, type, feedback, ques
 
 $sql['tests_questions_assoc'] = 'SELECT TQ.test_id, question_id, weight, ordering, required FROM '.TABLE_PREFIX.'tests_questions_assoc TQ, '.TABLE_PREFIX.'tests T WHERE T.course_id=? AND T.test_id=TQ.test_id ORDER BY TQ.test_id';
 
-function tests_convert($row, $course_id, $table_id_map) {
+function tests_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
 	$new_row[0]  = $row[0];
 	$new_row[1]  = $course_id;
@@ -32,7 +32,7 @@ function tests_convert($row, $course_id, $table_id_map) {
 	return $new_row;
 }
 
-function tests_questions_categories_convert($row, $course_id, $table_id_map) {
+function tests_questions_categories_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
 	$new_row[0] = $row[0];
 	$new_row[1] = $course_id;
@@ -41,7 +41,7 @@ function tests_questions_categories_convert($row, $course_id, $table_id_map) {
 	return $new_row;
 }
 
-function tests_questions_convert($row, $course_id, $table_id_map) {
+function tests_questions_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
 	$new_row[0]  = $row[0];
 	$new_row[1]  = $table_id_map['tests_questions_categories'][$row[1]];
@@ -75,7 +75,7 @@ function tests_questions_convert($row, $course_id, $table_id_map) {
 	return $new_row;
 }
 
-function tests_questions_assoc_convert($row, $course_id, $table_id_map) {
+function tests_questions_assoc_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
 	$new_row[0] = $table_id_map['tests'][$row[0]];
 	$new_row[1] = $table_id_map['tests_questions'][$row[1]];
