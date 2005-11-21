@@ -229,8 +229,6 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RESTORE_MATERIAL','Y
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RESTORE_TOO_BIG','The course is too small to restore this backup into.','2004-10-15 16:42:23','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RESULTS_NOT_RELEASED','You are not permitted to view these test results at this time.','2004-12-15 10:13:06','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RESULT_NOT_FOUND','Result not found.','2003-05-16 13:42:17','error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCORM_ITEM_HREF_MISSING','The file you tried to import is not a scorm-1.2 package. The required href attribute is missing for some resource(s).','2005-05-17 12:04:27','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCORM_ITEM_SCORMTYPE_MISSING','The file you tried to import is not a scorm-1.2 package. The required adlcp:scormtype is missing for some resource(s).','2005-05-17 12:02:47','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DIR_NOT_EXIST','The SCORM RTE directory does not exist. Please create a directory called <em>sco</em> in your installations top directory (example: <code>server.com/ATutor/sco</code>).','2005-05-10 10:58:58','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DIR_NOT_WRITEABLE','The SCORM RTE directory is not writeable. Please execute the command <code>chmod a+rwx sco</code> while in ATutor\'s top directory.','2005-05-10 11:00:08','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DISABLED','The SCORM 1.2 RTE has not been enabled by the Administrator.','2005-05-10 11:06:09','');
@@ -404,7 +402,6 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REG_THANKS_CONFIR
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RENAMED','File or directory has been successfully renamed.','2004-08-11 13:59:32','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RESULTS_UPDATED','Result was successfully updated.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RESULT_DELETED','Result was successfully deleted.','2003-05-16 13:47:01','feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_SCORM_SETTINGS_SAVED','The package settings have been saved.','2005-05-17 12:04:05','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_SECTIONS_SAVED','The section preferences for this course have been saved successfully.','2005-03-04 15:02:00','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_STICKY_UPDATED','Thread stickyness was updated.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_STUDENT_ADDED_GROUP','Students added to group.','2004-12-02 11:43:48','');
@@ -487,7 +484,6 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_QUESTION_WEIGHT','
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_RAM_SIZE','Depending how much RAM your computer has, and the size of the course you wish to print, selecting the entire content of a large course may cause your computer to lock up.','2003-05-16 13:46:16','warning msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_SAVE_TEMPLATE','Your template is not yet saved. Saving it will erase any existing header. Use \"Cancel\" to revert to your previously saved header.','2003-05-16 13:46:16','warning msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_SAVE_YOUR_WORK','Save your work before opening or closing the File Manager.','2003-05-16 13:46:16','warning msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_SCORM_ITEM_CLUSTER_HAS_OBJECT','Some node(s) has content attached to it. The next version of the SCORM specification does not allow nodes to have attached content.','2005-05-17 12:04:39','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_SHA1_NONE','JavaScript is disabled or non-supported on your system. Sensitive information from this page will travel unencrypted to the server. It is normally encrypted using <b>SHA-1</b> 160bit cipher before transmission.','2004-12-08 12:05:17','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_SURE_DELETE_COURSE1','Are you sure you want to <b>Delete</b> the course <strong><em>%s</em></strong>?','2004-10-15 11:45:07','warning msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_SURE_DELETE_COURSE2','Are you <b>really really</b> sure you want to <b>Delete</b> the course <strong><em>%s</em></strong>? Deleted courses can not be recovered.','2004-10-15 11:45:19','warning msg');
@@ -1588,7 +1584,6 @@ INSERT INTO `language_text` VALUES ('en', '_template','packages_auto_advance_inf
 INSERT INTO `language_text` VALUES ('en', '_template','packages_show_rte_communication','Show RTE Communication','2005-05-17 12:10:54','');
 INSERT INTO `language_text` VALUES ('en', '_template','packages_show_rte_communication_info','You can monitor the communication between Learning Objects and the RTE. You may want to switch on this option for a while just for informational purposes.','2005-05-17 12:10:41','');
 INSERT INTO `language_text` VALUES ('en', '_template','package_preferences','Preferences','2005-05-17 12:09:57','');
-INSERT INTO `language_text` VALUES ('en', '_template','package_scorm_1_2_rte_loading','Loading SCORM-1.2 RTE<br />Please be patient ...','2005-05-17 12:09:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','package_settings','Package Settings','2005-05-17 12:06:33','');
 INSERT INTO `language_text` VALUES ('en', '_template','package_type','Package Type','2005-05-17 12:09:36','');
 INSERT INTO `language_text` VALUES ('en', '_template','package_type_info','Please select the type of package you wish to upload.','2005-05-17 12:07:10','');
@@ -1780,11 +1775,6 @@ INSERT INTO `language_text` VALUES ('en', '_template','save_changes_unsaved','Un
 INSERT INTO `language_text` VALUES ('en', '_template','save_content','Save Content [Alt-s]','2003-05-21 19:06:19','add/edit content submit button text');
 INSERT INTO `language_text` VALUES ('en', '_template','save_default_prefs','Save current settings as course default preferences','2003-05-21 19:06:59','instructor course preferences');
 INSERT INTO `language_text` VALUES ('en', '_template','save_styles','Save Course Styles.','2003-05-21 19:07:58','stylesheet editor submit button text');
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_credit_mode','Credit Mode:','2005-05-17 12:05:46','');
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_credit_mode_info','This is the answer given to the learning objects when they ask whether the learner is taking this particular package for credit.','2005-05-17 12:05:34','');
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_lesson_mode','Lesson Mode:','2005-05-17 12:05:08','');
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_lesson_mode_info','This is the answer given to the learning objects when they ask whether the learner is just browsing or not.','2005-05-17 12:05:58','');
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_sco_is_running','Running','2005-05-17 12:04:55','');
 INSERT INTO `language_text` VALUES ('en', '_template','search','Search','2003-05-21 19:19:30','links database');
 INSERT INTO `language_text` VALUES ('en', '_template','search_all_words','All words','2003-08-11 11:22:04','');
 INSERT INTO `language_text` VALUES ('en', '_template','search_any_word','Any word','2003-08-11 11:22:14','');
