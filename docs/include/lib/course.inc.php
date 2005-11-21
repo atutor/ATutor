@@ -113,25 +113,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	//display defaults
 	if (!$_POST['course']) {
-
-		if (!empty($_config['home_defaults'])) {
-			$menu_defaults = ',home_links=\''.$_config['home_defaults'];
-		} else {
-			$menu_defaults = ',home_links=\''.$_config_defaults['home_defaults'];
-		}
-
-		if (!empty($_config['main_defaults'])) {
-			$menu_defaults .= '\', main_links=\''.$_config['main_defaults'];
-		} else {
-			$menu_defaults .= '\', main_links=\''.$_config_defaults['main_defaults'];
-		}
-
-		if (!empty($_config['side_defaults'])) {
-			$menu_defaults .= '\', side_menu=\''.$_config['side_defaults'].'\'';
-		} else {
-			$menu_defaults .= '\', side_menu=\''.$_config_defaults['side_defaults'].'\'';
-		}
-
+		$menu_defaults = ",home_links='$_config[home_defaults]', main_links='$_config[main_defaults]', side_menu='$_config[side_defaults]'";
 	} else {
 		$menu_defaults = ',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
 	}
