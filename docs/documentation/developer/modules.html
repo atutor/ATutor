@@ -74,14 +74,14 @@ acronym {
 
 	<p>The framework defines methods for assignable privileges; backing-up and restoring content; deleting course specific content; and side menu, student tool, instructor management, and administrator components. Additional methods of interaction have already been planned and will be added in future versions.</p>
 
-	<p>The intent is to allow for the development and distribution of modules independently to the ongoing development and release of ATutor. The module structure should also allow for the creation of third party modules that cannot be distributed under the <acronym title="GNU Not Unix">GNU</acronym> General Public License, but that should be distributed separately under its own license.</p>
+	<p>The intent is to allow for the development and distribution of modules independently to the ongoing development and release of ATutor. The module structure should also allow for the creation of third party modules that cannot be distributed under the <acronym title="GNU Not Unix">GNU</acronym> General Public License, but that should be distributed separately under their own license.</p>
 
-	<p>A Hello World module is included with ATutor to aid developers who want to play around with this new feature. The module is found in the <kbd>mods/hello_world</kbd> directory.</p>
+	<p>A <em>Hello World</em> module is included with ATutor to aid developers who want to play around with this new feature. The module is found in the <kbd>mods/hello_world</kbd> directory.</p>
 
 <h2>Structure</h2>
-	<p>Modules are stored under the <kbd>mods</kbd> directory. <em>Core</em> modules are stored in the <kbd>mods/_core</kbd> subdirectory and are made available with every release of ATutor, but cannot be disabled by the administrator; they are vital to the functionality of ATutor. <em>Standard</em> modules are stored in the <kbd>mods/_standard</kbd> subdirectory and are also made available with every release of ATutor, but can be disabled by the administrator. <em>Extra</em> modules are stored in the <kbd>mods</kbd> directory and are installed and distributed independently to ATutor. Although the process of developing modules is the same for each type of module, only <em>extra</em> modules can be distributed separately, while <em>core</em> and <em>standard</em> modules require their addition to the ATutor code repository (i.e.. <acronym title="Subversion">SVN</acronym> trunk).</p>
+	<p>Modules are stored under ATutor's <kbd>mods</kbd> directory. <em>Core</em> modules are stored in the <kbd>mods/_core</kbd> subdirectory and are made available with every release of ATutor, but cannot be disabled by the administrator; they are vital to ATutor's functionality. <em>Standard</em> modules are stored in the <kbd>mods/_standard</kbd> subdirectory and are also made available with every release of ATutor, but can be disabled by the administrator. <em>Extra</em> modules are stored in the <kbd>mods</kbd> directory and are installed and distributed independently to ATutor. Although the process of developing modules is the same for each type of module, only <em>extra</em> modules can be distributed separately, while <em>core</em> and <em>standard</em> modules require their addition to the ATutor code repository (i.e. <acronym title="Subversion">SVN</acronym> trunk).</p>
 
-	<p>Whenever a form of the module name is needed within code then it should appear in all lowercase with spaces converted to underscores.</p>
+	<p>Whenever a module identifier is needed within code then it should appear in all lowercase with spaces converted to underscores.</p>
 
 	<p>The module name, and hence the directory and function names (see below for additional details), must be unique across all possible modules. A module should not be made available if an existing module is already being distributed under that same name. It is up to the module developer to ensure that their module name is unique.</p>
 
@@ -142,7 +142,7 @@ acronym {
 	<p>Theoretically, the install script's execution is wide-open and does not have to adhere to the process outlined below or make use of any special privileges, provided it generates errors as appropriate.</p>
 
 <pre># pseudo-code for installing a module:
-while (there are no errors)
+while (there are errors)
     print the error message
 
     # inside module_install.php:
@@ -186,9 +186,7 @@ add the module to the system using the defined privileges
 		<p>Note that creating a privilege is not in itself enough to make the module appear in the Manage section! The hierarchy and navigation path to the management page must be set correctly. See the Navigation &amp; Hierarchy section for additional details.</p>
 
 	<h3>Creating a Data Directory</h3>
-		<p>Creating a data directory trial and error until it is successful.</p>
-
-		<p>It is best to keep the directory within the <kbd>AT_CONTENT_DIR</kbd> as it should already allow the creation of files and directories by the web server. It is then up to the module to create individual course directories as needed.</p>
+		<p>It is best to keep the directory within the <kbd>AT_CONTENT_DIR</kbd> directory as it should already allow the creation of files and directories by the web server. It is then up to the module to create individual course directories as needed.</p>
 <pre>
 $directory = AT_CONTENT_DIR .'example_maker';
 
@@ -221,7 +219,7 @@ if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
 		<p>To check if any errors have been generated use <kbd>$msg->containsErrors()</kbd>, which evaluates to <kbd>TRUE</kbd> if a previous error has been generated.</p>
 
 <h2>Authentication &amp; Privileges</h2>
-	<p>See the Installation: Specifying Privileges section on creating privileges during the installation process.</p>
+	<p>See the <em>Installation: Specifying Privileges</em> section on creating privileges during the installation process.</p>
 
 	<p>Authentication uses constants for the privilege levels. The privileges should be declared in the <kbd>module.php</kbd> file using the <kbd>$this->getPrivilege()</kbd> and <kbd>$this->getAdminPrivilege()</kbd> methods, respectively.</p>
 
@@ -240,7 +238,7 @@ admin_authenticate(AT_ADMIN_PRIV_FORUMS);
 </pre>
 
 <h2>Localisation</h2>
-	<p>Although a module can be created with all hard-coded language, it is recommended to use ATutor's localisation functionality. All of ATutor's language is stored in the database. Language is retrieved from the database using the <kbd>_AT()</kbd> function for simple terms and the <kbd>$msg</kbd> object for feedback and error messages.</p>
+	<p>Although a module can be created with all hard-coded language, it is recommended to use ATutor's localisation functions. All of ATutor's language is stored in the database, which is then retrieved using the <kbd>_AT()</kbd> function for simple terms and the <kbd>$msg</kbd> object for feedback and error messages.</p>
 
 	<p>Additional details on localising ATutor can be found on the <a href="http://atutor.ca/atutor/docs/translate.php">Thing You Should Know Before Translating</a> and <a href="http://atutor.ca/development/documentation/guidelines.html#fn-at">ATutor Developer Documentation</a> pages.</p>
 
