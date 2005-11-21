@@ -83,9 +83,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
       <?php echo _AT(scorm_credit_mode);?> <br />
       <select name="credit">
       <option value="credit" 
-      	<?php if ($cr == 'credit') echo 'selected'; ?>>credit</option>
+      	<?php if ($cr == 'credit') echo 'selected'; ?>><?php echo _AT('scorm_credit'); ?></option>
       <option value="no-credit"
-      	<?php if ($cr != 'credit') echo 'selected'; ?>>no-credit</option>
+      	<?php if ($cr != 'credit') echo 'selected'; ?>><?php echo _AT('scorm_no_credit'); ?></option>
       </select>
 </p>
 
@@ -93,8 +93,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <p>
       <?php echo _AT(scorm_lesson_mode);?> <br />
       <select name="lesson_mode">
-      <option value="browse" <?php if ($lm == 'browse') echo 'selected'; ?>>browse</option>
-      <option value="normal" <?php if ($lm != 'browse') echo 'selected'; ?>>normal</option>
+      <option value="browse" <?php if ($lm == 'browse') echo 'selected'; ?>><?php echo _AT('scorm_browse'); ?></option>
+      <option value="normal" <?php if ($lm != 'browse') echo 'selected'; ?>><?php echo _AT('scorm_normal'); ?></option>
       </select>
 </p>
 
