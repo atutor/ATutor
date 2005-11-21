@@ -207,6 +207,20 @@ $no_good = FALSE;
 				}
 			?></td>
 		</tr>
+		<tr>
+			<td><kbd>.</kbd> in <kbd>include_path</kbd></td>
+			<td><?php
+				$include_path = explode(PATH_SEPARATOR, ini_get('include_path'));
+				if (in_array('.', $include_path)) {
+					echo 'Enabled</td><td align="center">';
+					echo $good;
+				} else {
+					echo 'Disabled</td><td align="center">';
+					echo $bad;
+					$no_good = TRUE;					
+				}
+			?></td>
+		</tr>
 		</tbody>
 		<tbody>
 		<tr>
