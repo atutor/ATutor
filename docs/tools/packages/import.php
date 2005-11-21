@@ -22,7 +22,7 @@
  */
 
 define('AT_INCLUDE_PATH', '../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 
 define ('PACKAGE_TYPES', 'scorm-1.2');
 
@@ -31,11 +31,12 @@ if (isset ($_POST['type'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
 ?>
 
 <div class="input-form">
 <form name="form1" method="post"
-      action="tools/packages/import.php" enctype="multipart/form-data"
+      action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data"
       onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
 
 	<?php echo _AT('package_type_info')?>

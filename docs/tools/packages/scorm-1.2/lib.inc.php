@@ -203,7 +203,7 @@ class package_handler_scorm_1_2 {
 			$sql = "DELETE	FROM ".TABLE_PREFIX."cmi
 				WHERE	item_id in (" . implode (',', $items) . ")";
 
-			$result = mysql_query ($sql);
+			$result = mysql_query ($sql, $db);
 
 	
 			/*
@@ -213,7 +213,7 @@ class package_handler_scorm_1_2 {
 			$sql = "DELETE	FROM ".TABLE_PREFIX."scorm_1_2_item
 				WHERE	org_id = $id";
 
-			$result = mysql_query ($sql);
+			$result = mysql_query ($sql, $db);
 
 			/*
 			 * Delete the organization entry itself
@@ -222,7 +222,7 @@ class package_handler_scorm_1_2 {
 			$sql = "DELETE	FROM ".TABLE_PREFIX."scorm_1_2_org
 				WHERE	org_id = $id";
 
-			$result = mysql_query ($sql);
+			$result = mysql_query ($sql, $db);
 
 			if (sizeOf ($orgs) == 1) {
 
@@ -233,10 +233,9 @@ class package_handler_scorm_1_2 {
 				 * which came with the package
 				 */
 
-				$sql = "DELETE	FROM ".TABLE_PREFIX."packages
-					WHERE 	package_id = $pkg";
+				$sql = "DELETE	FROM ".TABLE_PREFIX."packages WHERE package_id = $pkg";
 
-				$result = mysql_query ($sql);
+				$result = mysql_query ($sql, $db);
 
 				$pdir = AT_INCLUDE_PATH
 				. '../sco/'
