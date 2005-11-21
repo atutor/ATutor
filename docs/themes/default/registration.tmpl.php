@@ -37,7 +37,7 @@
 		<?php endif; ?>
 	</div>
 
-	<?php if (!admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>
+	<?php if (!admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || !$_POST['member_id']): ?>
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
 			<input id="password" name="password" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password'])); ?>" /><br />
