@@ -73,6 +73,9 @@ require('../common/body_header.inc.php'); ?>
 
 			<dt>Course Backups</dt>
 			<dd>The maximum number of backups that can be stored per course. The stored backups do not count towards the course's <em>Max Course Size</em>.</dd>
+
+			<dt>Check for ATutor Updates Automatically</dt>
+			<dd>If enabled ATutor will check the atutor.ca web site for updates whenever the administrator logs in.</dd>
 		</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>

@@ -20,7 +20,15 @@ if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) {
 	$msg->addWarning('TRANSLATE_ON');	
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+if ($_config['check_version']) {
+	$request = @file('http://atutor.ca/check_atutor_version.php?return');
+	if ($request && version_compare(VERSION, $request[0], '<')) {
+		$msg->printFeedbacks('ATUTOR_UPDATE_AVAILABLE');
+	}
+}
+
 
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."instructor_approvals";
 $result = mysql_query($sql, $db);

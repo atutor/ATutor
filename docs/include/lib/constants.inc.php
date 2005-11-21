@@ -43,6 +43,7 @@ $_config_defaults['home_defaults']             = 'forum/list.php|glossary/index.
 $_config_defaults['side_defaults']             = 'menu_menu|related_topics|users_online|glossary|search|poll|posts';
 $_config_defaults['pref_defaults']			   = 'a:4:{s:10:"PREF_THEME";s:7:"default";s:14:"PREF_NUMBERING";i:1;s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}';
 $_config_defaults['pref_inbox_notify']		   = 0;
+$_config_defaults['check_version']	           = 0;
 
 $_config = $_config_defaults;
 

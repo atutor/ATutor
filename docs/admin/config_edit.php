@@ -43,6 +43,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['cache_dir']                 = trim($_POST['cache_dir']);
 	$_POST['course_backups']            = intval($_POST['course_backups']);
 	$_POST['course_backups']            = max(0, $_POST['course_backups']);
+	$_POST['check_version']             = $_POST['check_version'] ? 1 : 0;
 
 	//check that all values have been set	
 	if (!$_POST['site_name']) {
@@ -198,6 +199,11 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<label for="course_backups"><?php echo _AT('course_backups'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['course_backups']; ?>)<br />
 		<input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $_config['course_backups']; } ?>"  />
+	</div>
+
+	<div class="row">
+		<?php echo _AT('auto_check_new_version'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['check_version'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="check_version" value="1" id="cv_y" <?php if($_config['check_version']) { echo 'checked="checked"'; }?>  /><label for="cv_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="check_version" value="0" id="cv_n" <?php if(!$_config['check_version']) { echo 'checked="checked"'; }?>  /><label for="cv_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row buttons">
