@@ -22,12 +22,15 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	/* email check */
+	$chk_email = $addslashes($_POST['email']);
+	$chk_login = $addslashes($_POST['login']);
+
 	if ($_POST['email'] == '') {
 		$msg->addError('EMAIL_MISSING');
 	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
-	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
+	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$chk_email'",$db);
 	if (mysql_num_rows($result) != 0) {
 		$msg->addError('EMAIL_EXISTS');
 	}
@@ -40,11 +43,11 @@ if (isset($_POST['cancel'])) {
 		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['login']))) {
 			$msg->addError('LOGIN_CHARS');
 		} else {
-			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]'",$db);
+			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$chk_login'",$db);
 			if (mysql_num_rows($result) != 0) {
 				$msg->addError('LOGIN_EXISTS');
 			} else {
-				$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_POST[login]'",$db);
+				$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$chk_login'",$db);
 				if (mysql_num_rows($result) != 0) {
 					$msg->addError('LOGIN_EXISTS');
 				}
@@ -111,6 +114,8 @@ if (isset($_POST['cancel'])) {
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
 
+		$_POST['email']      = $addslashes($_POST['email']);
+		$_POST['login']      = $addslashes($_POST['login']);
 		$_POST['password']   = $addslashes($_POST['password']);
 		$_POST['website']    = $addslashes($_POST['website']);
 		$_POST['first_name'] = $addslashes($_POST['first_name']);
