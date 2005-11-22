@@ -72,16 +72,16 @@ acronym {
 <h2>Introduction</h2>
 	<p>ATutor 1.5.2 introduced the concept of modules, providing developers with a framework to implement additional functionality in a coherent and loosely coupled way.</p>
 
-	<p>The framework defines methods for assignable privileges; backing-up and restoring content; deleting course specific content; and side menu, student tool, instructor management, and administrator components. Additional methods of interaction have already been planned and will be added in future versions.</p>
+	<p>The framework defines methods for assignable privileges, backing-up and restoring content, deleting course specific content, and side menu, student tool, instructor management, and administrator components. Additional methods of interaction have already been planned and will be added in future versions.</p>
 
 	<p>The intent is to allow for the development and distribution of modules independently to the ongoing development and release of ATutor. The module structure should also allow for the creation of third party modules that cannot be distributed under the <acronym title="GNU Not Unix">GNU</acronym> General Public License, but that should be distributed separately under their own license.</p>
 
-	<p>A <em>Hello World</em> module is included with ATutor to aid developers who want to play around with this new feature. The module is found in the <kbd>mods/hello_world</kbd> directory.</p>
+	<p>A <em>Hello World</em> example module is included with ATutor for developers who want to investigate this new feature. The module is found in the <kbd>mods/hello_world</kbd> directory.</p>
 
 <h2>Structure</h2>
-	<p>Modules are stored under ATutor's <kbd>mods</kbd> directory. <em>Core</em> modules are stored in the <kbd>mods/_core</kbd> subdirectory and are made available with every release of ATutor, but cannot be disabled by the administrator; they are vital to ATutor's functionality. <em>Standard</em> modules are stored in the <kbd>mods/_standard</kbd> subdirectory and are also made available with every release of ATutor, but can be disabled by the administrator. <em>Extra</em> modules are stored in the <kbd>mods</kbd> directory and are installed and distributed independently to ATutor. Although the process of developing modules is the same for each type of module, only <em>extra</em> modules can be distributed separately, while <em>core</em> and <em>standard</em> modules require their addition to the ATutor code repository (i.e. <acronym title="Subversion">SVN</acronym> trunk).</p>
+	<p>Modules are stored under ATutor's <kbd>mods</kbd> directory. <em>Core</em> modules are stored in the <kbd>mods/_core</kbd> subdirectory and are made available with every release of ATutor. These modules cannot be disabled by the administrator as they are vital to ATutor's functionality. <em>Standard</em> modules are stored in the <kbd>mods/_standard</kbd> subdirectory and are also made available with every release of ATutor. Standard modules can be disabled by the administrator. <em>Extra</em> modules are stored in the <kbd>mods</kbd> directory and are installed and distributed independently of ATutor. Although the process of developing modules is the same for each type of module, only <em>extra</em> modules can be distributed separately, while <em>core</em> and <em>standard</em> modules are added to the ATutor code repository (i.e. <acronym title="Subversion">SVN</acronym> trunk).</p>
 
-	<p>Whenever a module identifier is needed within code then it should appear in all lowercase with spaces converted to underscores.</p>
+	<p>Whenever a module identifier is needed within code, it should appear in lowercase with spaces converted to underscores.</p>
 
 	<p>The module name, and hence the directory and function names (see below for additional details), must be unique across all possible modules. A module should not be made available if an existing module is already being distributed under that same name. It is up to the module developer to ensure that their module name is unique.</p>
 
@@ -137,7 +137,7 @@ acronym {
 </pre>
 
 <h2>Installation</h2>
-	<p>The <kbd>module_install.php</kbd> script gets executed during the installation process. If its execution results in <kbd>$msg->containsErrors()</kbd> evaluating to <kbd>TRUE</kbd> then the errors are displayed and the user is prompted to correct them. The process is then repeated until no more errors are generated and the module is installed successfully. Eventually, it is up to the module to determine the logical steps involved in its installation. For example, it might be better to create the data directories before trying to create any database tables since creating the directory may require several attempts. Typically the flow we describe here should be suitable in most cases.</p>
+	<p>The <kbd>module_install.php</kbd> script gets executed during the installation process. If its execution results in <kbd>$msg->containsErrors()</kbd> evaluating to <kbd>TRUE</kbd>, then the errors are displayed and the user is prompted to correct them. The process is then repeated until errors are no longer being generated and the module is installed successfully. Eventually, it is up to the module to determine the logical steps involved in its installation. For example, it might be better to create the data directories before trying to create any database tables since creating the directory may require several attempts. Typically the flow we describe here should be suitable in most cases.</p>
 
 	<p>Theoretically, the install script's execution is wide-open and does not have to adhere to the process outlined below or make use of any special privileges, provided it generates errors as appropriate.</p>
 
@@ -168,7 +168,7 @@ add the module to the system using the defined privileges
 			<dt><kbd>$_course_privilege</kbd></dt>
 			<dd><p>This variable controls access to a course's management section and can take one of the following values:</p>
 				<ul>
-					<li><kbd>TRUE</kbd>: To use a custom assignable privilege level. If a custom privilege is created then the module will appear as an option when assigning privileges to enrolled students.</li>
+					<li><kbd>TRUE</kbd>: To use a custom assignable privilege level. If a custom privilege is created, the module will appear as an option when assigning privileges to enrolled students.</li>
 					<li><kbd>AT_PRIV_ADMIN</kbd>: To use the instructor privilege. Only the instructor will be given access to the module's management section.</li>
 					<li><kbd>FALSE</kbd>: To disable the privilege if there is no management section for the module.</li>
 				</ul>
@@ -214,9 +214,9 @@ if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
 </pre>
 
 	<h3>Generating Errors</h3>
-		<p>It is up to the module to generate and check for any errors that occur during the installation. An error message can be generated using <kbd>$msg->addError(array('MODULE_INSTALL', '&lt;li>your error msg goes here&lt;/li>'));</kbd>. Note that the text supplied to the error message is not translated. If the language should be localised then a custom solution should be implemented to correctly supply the appropriate language.</p>
+		<p>It is up to the module to generate and check for any errors that occur during the installation. An error message can be generated using <kbd>$msg->addError(array('MODULE_INSTALL', '&lt;li>your error msg goes here&lt;/li>'));</kbd>. Note that the text supplied to the error message is not translated. If the language should be localised, then a custom solution should be implemented to correctly supply the appropriate language.</p>
 
-		<p>To check if any errors have been generated use <kbd>$msg->containsErrors()</kbd>, which evaluates to <kbd>TRUE</kbd> if a previous error has been generated.</p>
+		<p>To check if any errors have been generated, use <kbd>$msg->containsErrors()</kbd> which evaluates to <kbd>TRUE</kbd> if a previous error has been generated.</p>
 
 <h2>Authentication &amp; Privileges</h2>
 	<p>See the <em>Installation: Specifying Privileges</em> section on creating privileges during the installation process.</p>
@@ -242,14 +242,14 @@ admin_authenticate(AT_ADMIN_PRIV_FORUMS);
 
 	<p>Additional details on localising ATutor can be found on the <a href="http://atutor.ca/atutor/docs/translate.php">Thing You Should Know Before Translating</a> and <a href="http://atutor.ca/development/documentation/guidelines.html#fn-at">ATutor Developer Documentation</a> pages.</p>
 
-	<p>Module specific language should be inserted into the <kbd>language_text</kbd> table during the installation process. The fields are as follows:</p>
+	<p>Module-specific language should be inserted into the <kbd>language_text</kbd> table during the installation process. The fields are as follows:</p>
     	     	     	     	     	  
 	<dl>
 		<dt><kbd>language_code</kbd></dt>
 		<dd>The ISO-639-1 language code plus locale.</dd>
 
 		<dt><kbd>variable</kbd></dt>
-		<dd>For modules should always be set to <kbd>_module</kbd>.</dd>
+		<dd>Set to <kbd>_module</kbd> for modules.</dd>
 
 		<dt><kbd>term</kbd></dt>
 		<dd>The variable used for retrieving the language.</dd>
@@ -258,7 +258,7 @@ admin_authenticate(AT_ADMIN_PRIV_FORUMS);
 		<dd>The language text.</dd>
 
 		<dt><kbd>revised_date</kbd></dt>
-		<dd>For modules should always be set to <kbd>NOW()</kbd>.</dd>
+		<dd>Set to <kbd>NOW()</kbd> for modules.</dd>
 
 		<dt><kbd>context</kbd></dt>
 		<dd>Short description of the language text.</dd>
@@ -277,7 +277,7 @@ INSERT INTO `language_text` VALUES ('en',
 
 
 <h2>Custom Style Sheets</h2>
-	<p>A custom style sheet can be linked into pages by setting <kbd>$_custom_css</kbd> to absolute path to the style sheet. That variable must be set on every page that requires that style sheet.</p>
+	<p>A custom style sheet can be linked into pages by setting <kbd>$_custom_css</kbd> to be the absolute path to the style sheet. This variable must be set on every page that requires that style sheet.</p>
 
 <pre>
 define('AT_INCLUDE_PATH', '../../include/');
@@ -288,9 +288,9 @@ $_custom_css = $_base_path . 'mods/example_maker/module.css';
 
 
 <h2>Side Menu Boxes</h2>
-	<p>Side menu boxes appear as a column when viewing a course. A module may implement one or more side boxes.</p>
+	<p>Side menu boxes generally appear in a column at the side of a course (though this layout can be altered by a theme). A module may implement one or more side menu boxes.</p>
 
-	<p>Side menus are specified using the <kbd>$_module_stacks</kbd> array in <kbd>module.php</kbd>. <kbd>$_module_stacks</kbd> has a <kbd>title_var</kbd> and <kbd>file</kbd> attributes. The <kbd>title_var</kbd> value is the language key used for that box; the title will be generated by executing <kbd>_AT($title_var)</kbd>. The <kbd>file</kbd> attribute specifies the absolute path to the side menu include file.</p>
+	<p>Side menus are specified using the <kbd>$_module_stacks</kbd> array in <kbd>module.php</kbd>. <kbd>$_module_stacks</kbd> have the attributes <kbd>title_var</kbd> (or <kbd>title</kbd>) and <kbd>file</kbd>. The <kbd>title_var</kbd> value is the language key used for that box; the title will be generated by executing <kbd>_AT($title_var)</kbd>. If <kbd>title</kbd> is set instead, a hard-coded title will be used. The <kbd>file</kbd> attribute specifies the absolute path to the side menu's include file.</p>
 
 	<p>The key to the <kbd>$_module_stacks</kbd> should be the name of the module.</p>
 
@@ -329,10 +329,10 @@ $savant->display('include/box.tmpl.php');
 		<dd>The language variable to be used with <kbd>_AT()</kbd>.</dd>
 
 		<dt><kbd>title</kbd></dt>
-		<dd>The hard-coded version of the language title. If set overrides the usage of <kbd>_AT(title_var)</kbd>. This version is not language independent.</dd>
+		<dd>The hard-coded version of the language title. If set, overrides the usage of <kbd>_AT(title_var)</kbd>. This version is not language independent.</dd>
 
 		<dt><kbd>parent</kbd></dt>
-		<dd>The parent relative ATutor path to the parent page. Omit for Student Tools.</dd>
+		<dd>The relative ATutor path to the parent page. Omit for Student Tools.</dd>
 
 		<dt><kbd>img</kbd></dt>
 		<dd>The relative ATutor path to the icon to use. Only for Student Tools.</dd>
@@ -344,7 +344,7 @@ $savant->display('include/box.tmpl.php');
 		<dd>The the page in the handbook that the page should link to. Not used for modules at this time.</dd>
 	</dl>
 
-	<p>For pages to appear instructor Manager section their <kbd>parent</kbd> field must be set to <kbd>tools/index.php</kbd>.</p>
+	<p>For pages to appear in the instructor Manage section, their <kbd>parent</kbd> field must be set to <kbd>tools/index.php</kbd>.</p>
 
 <pre>
 $path = 'mods/example_maker/';
@@ -366,7 +366,7 @@ $_module_pages[$path . 'inst_index.php']['parent']    = 'tools/index.php';
 </pre>
 
 <h2>Course Deletion</h2>
-	<p>Whenever a course is deleted, or when a back-up is being restored by overriding (i.e.. deleting) existing content, a module has to ensure that the content for that course is also deleted. If the module maintains course data directories then those directories have to either be emptied or deleted. If the module uses database tables for course content then it has to delete the appropriate entries for that course.</p>
+	<p>When a course is being deleted, or when a back-up is being restored by overriding (i.e. deleting) existing content, a module has to ensure that the content for that course is also deleted. If the module maintains course data directories, then those directories have to either be emptied or deleted. If the module uses database tables for course content, then it has to delete the appropriate entries for that course.</p>
 
 	<p>The function used to delete the course content for that module must be stored in the <kbd>module_delete.php</kbd> file and named <kbd><em>module_name</em>_delete()</kbd>. The delete function takes a single argument which is the ID of the course to delete.</p>
 
@@ -392,9 +392,9 @@ function example_maker_delete($course) {
 	<p>It is possible for a module to include its content when a course backup is being created or restored. Backups support database tables with foreign-key constraints as well as course specific directories.</p>
 
 	<h3>Directories</h3>
-		<p>A module can backup as many directories as it requires all specified using the <kbd>$dirs</kbd> array variable.</p>
+		<p>A module can backup as many directories as it requires, all specified using the <kbd>$dirs</kbd> array variable.</p>
 
-		<p>The example below uses the special <kbd>?</kbd> token as the place holder for the course ID. When the course is backed-up the question-mark will be replaced with the correct course ID. The key to the array is the unique name of the directory to be used inside the backup archive file. The same information to create the backup is also used to restore it, so no additional details are required.</p>
+		<p>The example below uses the special <kbd>?</kbd> token as the place holder for the course ID. When the course is backed-up, the question mark will be replaced with the correct course ID. The key to the array is the unique name of the directory to be used inside the backup archive file. The same information to create the backup is also used to restore it, so no additional details are required.</p>
 <pre>
 $dirs = array();
 $dirs['example_maker/'] = AT_CONTENT_DIR . 'example_maker/?/';
