@@ -24,7 +24,7 @@ $result = mysql_query($sql, $db);
 
 $msg->addFeedback('STICKY_UPDATED');
 
-header('Location: '.$_base_href.'forum/index.php?fid='.$_GET['fid']);
+header('Location: '.$_base_href.'forum/index.php?fid='.intval($_GET['fid']));
 exit;
 
 ?>

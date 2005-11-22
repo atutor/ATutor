@@ -30,7 +30,7 @@ if (isset($_POST['cancel'])) {
 		if ($_REQUEST['show_courses'] != '') {
 			$msg->addFeedback('COURSE_PROPERTIES');
 
-			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat']);
+			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.intval($_REQUEST['course']).SEP.'this_course='.intval($_REQUEST['course']).SEP.'show_courses='.intval($_REQUEST['show_courses']).SEP.'current_cat='.intval($_REQUEST['current_cat']));
 			exit;
 		} else {
 			$msg->addFeedback('COURSE_PROPERTIES');

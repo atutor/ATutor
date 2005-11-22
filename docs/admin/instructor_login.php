@@ -17,6 +17,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_COURSES);
 
 if (isset($_POST['submit_yes'])) {
+	$_POST['course'] = intval($_POST['course']);
+
 	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {

@@ -28,7 +28,7 @@ if (isset($_POST['submit_no'])) {
 	$module->install();
 
 	if ($msg->containsErrors()) {
-		header('Location: '.$_base_href.'admin/modules/details.php?mod='.$_POST['mod'].SEP.'new=1');
+		header('Location: '.$_base_href.'admin/modules/details.php?mod='.$addslashes($_POST['mod']).SEP.'new=1');
 	} else {
 		$msg->addFeedback('MOD_INSTALLED');
 		header('Location: '.$_base_href.'admin/modules/index.php');
