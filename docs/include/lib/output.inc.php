@@ -566,7 +566,7 @@ function smile_javascript () {
 	}
 }
 
-function myCodes($text) {
+function myCodes($text, $html = false) {
 	global $_base_path;
 	global $HTTP_USER_AGENT;
 
@@ -627,14 +627,14 @@ function myCodes($text) {
 	$text = str_replace('[cid]',$_base_path.'content.php?cid='.$_SESSION['s_cid'],$text);
 
 	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
-	$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'))", $text);
+	$html = !$html ? 0 : 1;
+	$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'), $html)", $text);
 
 	return $text;
 }
 
 /* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
-function highlight_code($code)
-{
+function highlight_code($code, $html) {
 	// XHTMLize PHP highlight_string output until it gets fixed in PHP
 	static $search = array(
 		'<br>',
@@ -647,6 +647,10 @@ function highlight_code($code)
 		'<span',
 		'</span>',
 		'style="color:');
+	if (!$html) {
+		$code = str_replace('&lt;', '<', $code);
+		$code = str_replace("\r", '', $code);
+	}
 
 	return str_replace($search, $replace, highlight_string($code, true));
 }
@@ -689,9 +693,9 @@ function format_final_output($text, $nl2br = true) {
 	$text = str_replace('CONTENT_DIR/', '', $text);
 
 	if ($nl2br) {
-		return nl2br(image_replace(make_clickable(myCodes(' '.$text))));
+		return nl2br(image_replace(make_clickable(myCodes(' '.$text, false))));
 	}
-	return image_replace(make_clickable(myCodes(' '.$text)));
+	return image_replace(make_clickable(myCodes(' '.$text, true)));
 }
 
 /****************************************************************************************/
@@ -770,14 +774,14 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 	$input = str_replace('CONTENT_DIR', '', $input);
 
 	if ($html) {
-		return format_final_output($input, false);
+		$x = format_final_output($input, false);
+		return $x;
 	}
+
 
 	$output = format_final_output($input);
 
-	if (!$html) {
-		$output = '<p>'.$output.'</p>';
-	}
+	$output = '<p>'.$output.'</p>';
 
 	return $output;
 }
