@@ -171,7 +171,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			add_user_online();
 
 			if ($_GET['f']) {
-				header('Location: ./'.$page.'?f='.$_GET['f']);
+				header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 				exit;
 			} /* else */
 			header('Location: ./'.$page);
@@ -181,7 +181,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		case 'protected':
 			if (!$_SESSION['valid_user']) {
-				header('Location: ./login.php?course='.$course);
+				header('Location: ./login.php?course='.intval($course));
 				exit;
 
 			} else {
@@ -214,10 +214,10 @@ if ($row = mysql_fetch_assoc($result)) {
 				add_user_online();
 
 				if ($_GET['f']) {
-					header('Location: ./'.$page.'?f='.$_GET['f']);
+					header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 					exit;
 				} /* else */
-				header('Location: ./'.$page);
+				header('Location: ./'.$addslashes($page));
 				exit;
 			}
 
@@ -226,7 +226,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		case 'private':
 			if (!$_SESSION['valid_user']) {
 				/* user not logged in: */
-				Header('Location: ./login.php?course='.$course);
+				Header('Location: ./login.php?course='.intval($course));
 				exit;
 			} else {
 
@@ -242,10 +242,10 @@ if ($row = mysql_fetch_assoc($result)) {
 					add_user_online();
 
 					if ($_GET['f']) {
-						header('Location: ./'.$page.'?f='.$_GET['f']);
+						header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 						exit;
 					} /* else */
-					header('Location: ./'.$page.'');
+					header('Location: ./'.$addslashes($page));
 					exit;
 				}
 
@@ -280,24 +280,24 @@ if ($row = mysql_fetch_assoc($result)) {
 						count_login();
 
 						if($_GET['f']){
-							header('Location: '.$page.'?f='.$_GET['f']);
+							header('Location: '.$page.'?f='.$addslashes($_GET['f']));
 							exit;
 						} /* else */
-						header('Location: '.$page);
+						header('Location: '.$addslashes($page));
 						exit;
 
 					} else {
 						/* we have not been approved to enroll in this course */
 
 						$_SESSION['course_id'] = 0;
-						header('Location: users/private_enroll.php?course='.$course);
+						header('Location: users/private_enroll.php?course='.intval($course));
 						exit;
 					}
 
 				} else {
 					/* we have not requested enrollment in this course */
 					$_SESSION['course_id'] = 0;
-					header('Location: users/private_enroll.php?course='.$course);
+					header('Location: users/private_enroll.php?course='.intval($course));
 					exit;
 				}
 			}

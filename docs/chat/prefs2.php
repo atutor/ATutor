@@ -21,9 +21,9 @@ require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 		getAndWriteFormPrefs($myPrefs);
 
 		if ($_POST['submit_p']) {
-			$location = './prefs.php?firstLoginFlag='.$_POST['firstLoginFlag'];
+			$location = './prefs.php?firstLoginFlag='.$addslashes($_POST['firstLoginFlag']);
 		} else if ($_POST['submit_r']) {
-			$location = './chat.php?firstLoginFlag='.$_POST['firstLoginFlag'];
+			$location = './chat.php?firstLoginFlag='.$addslashes($_POST['firstLoginFlag']);
 		}
 
 		Header('Location: '.$location);

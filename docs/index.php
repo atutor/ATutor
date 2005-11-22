@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 
 if (isset($_GET['cid'])) {
-	header('Location: '.$_base_href.'content.php?cid='.$_GET['cid']);
+	header('Location: '.$_base_href.'content.php?cid='.intval($_GET['cid']));
 	exit;
 }
 

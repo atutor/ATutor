@@ -21,7 +21,7 @@ authenticate(AT_PRIV_TESTS);
 if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['preview']) || isset($_GET['add'])) && !isset($_GET['id'])){
 	$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_GET['submit_create'])) {
-	header('Location: '.$_base_href.'tools/tests/create_question_'.$_GET['question_type'].'.php');
+	header('Location: '.$_base_href.'tools/tests/create_question_'.$addslashes($_GET['question_type']).'.php');
 	exit;
 } else if (isset($_GET['edit'])) {
 	$ids = explode('|', $_GET['id'], 2);
@@ -48,15 +48,15 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['preview']) 
 		break;
 	}
 
-	header('Location: '.$_base_href.'tools/tests/edit_question_'.$name.'.php?qid='.$ids[0]);
+	header('Location: '.$_base_href.'tools/tests/edit_question_'.$addslashes($name).'.php?qid='.intval($ids[0]));
 	exit;
 } else if (isset($_GET['delete'])) {
 	$ids = explode('|', $_GET['id'], 2);
-	header('Location: '.$_base_href.'tools/tests/delete_question.php?qid='.$ids[0]);
+	header('Location: '.$_base_href.'tools/tests/delete_question.php?qid='.intval($ids[0]));
 	exit;
 } else if (isset($_GET['preview'])) {
 	$ids = explode('|', $_GET['id'], 2);
-	header('Location: '.$_base_href.'tools/tests/preview_question.php?qid='.$ids[0]);
+	header('Location: '.$_base_href.'tools/tests/preview_question.php?qid='.intval($ids[0]));
 	exit;
 } else if (isset($_GET['add'])) {
 	$ids = explode('|', $_GET['id'], 2);

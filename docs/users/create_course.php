@@ -78,7 +78,7 @@ if (isset($_POST['cancel'])) {
 	
 	if ($errors !== FALSE) {
 		$msg->addFeedback('COURSE_CREATED');
-		header('Location: '.$_base_href.'bounce.php?course='.$errors.SEP.'p='.urlencode('index.php'));
+		header('Location: '.$_base_href.'bounce.php?course='.$addslashes($errors).SEP.'p='.urlencode('index.php'));
 		exit;
 	}
 

@@ -534,14 +534,14 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 
 if ($_POST['s_cid']){
 	$msg->addFeedback('IMS_IMPORT_SUCCESS');
-	header('Location: ../../editor/edit_content.php?cid='.$_POST['cid']);
+	header('Location: ../../editor/edit_content.php?cid='.intval($_POST['cid']));
 	exit;
 } else {
 	$msg->addFeedback('IMS_IMPORT_SUCCESS');
 	if ($_GET['tile']) {
 		header('Location: '.$_base_href.'tools/tile/index.php');
 	} else {
-		header('Location: ./index.php?cid='.$_POST['cid']);
+		header('Location: ./index.php?cid='.intval($_POST['cid']));
 	}
 	exit;
 }

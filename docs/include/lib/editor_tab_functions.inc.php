@@ -158,7 +158,7 @@ function save_changes($redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 
 		$msg->addFeedback('CONTENT_UPDATED');
-		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$cid.SEP.'close='.$_POST['save_n_close'].SEP.'tab='.$_POST['current_tab'].SEP.'setvisual='.$_POST['setvisual']);
+		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$cid.SEP.'close='.$addslashes($_POST['save_n_close']).SEP.'tab='.$addslashes($_POST['current_tab']).SEP.'setvisual='.$addslashes($_POST['setvisual']));
 		exit;
 	} else {
 		return;

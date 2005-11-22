@@ -20,7 +20,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	header('Location: '.$_base_href.'tools/ims/ims_export.php?cid=' . $_POST['cid']);
+	header('Location: '.$_base_href.'tools/ims/ims_export.php?cid=' . intval($_POST['cid']));
 	exit;
 }
 

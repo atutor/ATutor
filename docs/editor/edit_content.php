@@ -38,10 +38,10 @@ if ($_POST['close'] || $_GET['close']) {
 	}
 	
 	if ($_REQUEST['cid'] == 0) {
-		header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['new_pid']);
+		header('Location: '.$_base_path.'content.php?cid='.intval($_REQUEST['new_pid']));
 		exit;
 	}
-	header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['cid']);
+	header('Location: '.$_base_path.'content.php?cid='.intval($_REQUEST['cid']));
 	exit;
 }
 	

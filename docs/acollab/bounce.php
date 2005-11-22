@@ -43,6 +43,6 @@ session_write_close();
 
 $page = AC_PATH;
 
-header('Location: '. $page);
+header('Location: '. $addslashes($page));
 exit;
 ?>
