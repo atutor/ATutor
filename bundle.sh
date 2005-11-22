@@ -72,6 +72,15 @@ echo "\nRemoving $atutor_dir/ATutor/themes/open_book"
 rm -r $atutor_dir/ATutor/themes/open_book
 sleep 1
 
+echo "\nRemoving $atutor_dir/ATutor/install/db/atutor_upgrade sql < 1.4"
+rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.0_to_1.1.sql
+rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.1_to_1.2.sql
+rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.2_to_1.3.sql
+rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.3_to_1.3.2.sql
+rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.3.2_to_1.4.sql
+sleep 1
+
+
 echo "\nDisabling AT_DEVEL if enabled."
 sed "s/define('AT_DEVEL', 1);/define('AT_DEVEL', 0);/" $atutor_dir/ATutor/include/vitals.inc.php > $atutor_dir/vitals.inc.php
 rm $atutor_dir/ATutor/include/vitals.inc.php
