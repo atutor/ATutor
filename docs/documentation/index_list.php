@@ -116,6 +116,7 @@ if (key($_GET) == 'login') {
 		<li><a href="admin/">Administrator Documentation</a></li>
 		<li><a href="instructor/">Instructor Documentation</a></li>
 		<li><a href="developer/guidelines.html">Developer Guidelines &amp; Documentation</a></li>
+		<li><a href="developer/modules.html">Module Development Documentation</a></li>
 	</ol>
 
 	<ol>
