@@ -32,6 +32,6 @@ $_module_pages['mods/_standard/faq/index_instructor.php']['children']  = array('
 
 // student page:
 $_module_pages['mods/_standard/faq/index.php']['title_var'] = 'faq';
-$_module_pages['mods/_standard/faq/index.php']['img']       = 'images/home-glossary.gif';
+$_module_pages['mods/_standard/faq/index.php']['img']       = 'mods/_standard/faq/icon.gif';
 
 ?>
