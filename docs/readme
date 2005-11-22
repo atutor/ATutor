@@ -1,29 +1,16 @@
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-
-
 ATutor readme:
 
-For installation and configuration documentation see: 
-http://www.atutor.ca
+To install ATutor simply point your browser to your installation and follow the provided instructions.
 
-In particular: 
+For additional installation details see:
 http://www.atutor.ca/atutor/docs/installation.php
-and
-http://www.atutor.ca/atutor/docs/configuration.php
-    
-Also see the ATutor HowTo course for more about using and
-administering an ATutor system
-http://www.atutor.ca/atutor/docs/howto.php
 
-The ATutor HowTo course can be downloaded from:
-http://www.atutor.ca/atutor/docs/howto.php
+Or, the official ATutor Handbook:
+http://help.atutor.ca
+
+
+
+Enjoy!
+
+The ATutor Development Team
+http://www.atutor.ca
