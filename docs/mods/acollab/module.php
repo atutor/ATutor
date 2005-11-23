@@ -1,6 +1,8 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+define('AT_PRIV_ACOLLAB', $this->getPrivilege());
+
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tool = 'acollab/index.php';
 

@@ -20,10 +20,10 @@ $_SESSION['lang']		  = $_SESSION['lang'];
 $_SESSION['courtyard_id'] = $_SESSION['course_id'];
 $_SESSION['house_id']     = 0;
 
-if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) || authenticate(AT_PRIV_ACOLLAB, AT_PRIV_RETURN)) {
 	$_SESSION['courtyard_priv'] = 5;
 	$_SESSION['status'] = 1;
-} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN) && authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
+} /*else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN) && authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
 	$_SESSION['courtyard_priv'] = 5;
 	$_SESSION['status'] = 1;
 } else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN)) {
@@ -32,7 +32,7 @@ if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 } else if (authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
 	$_SESSION['courtyard_priv'] = 3;
 	$_SESSION['status'] = 1;
-} else {
+}*/ else {
 	$_SESSION['courtyard_priv'] = 1;
 	$_SESSION['status'] = 1;
 }
