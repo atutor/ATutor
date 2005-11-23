@@ -55,7 +55,7 @@ function make_cache_file($feed_id) {
 	static $rss;
 
 	if (!isset($rss)) {  
-		require_once(AT_INCLUDE_PATH.'classes/lastRSS.php');
+		require(AT_INCLUDE_PATH.'classes/lastRSS.php');
 		$rss =& new lastRSS; 
 		$rss->cache_dir = AT_CONTENT_DIR.'feeds/'; 
 		$rss->num_results = AT_FEED_NUM_RESULTS;

@@ -19,9 +19,9 @@ admin_authenticate(AT_ADMIN_PRIV_RSS);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header("Location:index_admin.php");
+	header("Location: index_admin.php");
 	exit;
-} else if ($_POST['submit']) {
+} else if (isset($_POST['submit'])) {
 	//check both fields are not empty
 	if (trim($_POST['title']) == '') {
 		$msg->addError('TITLE_EMPTY');
@@ -43,6 +43,7 @@ if (isset($_POST['cancel'])) {
 
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
+
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['url'] = $addslashes($_POST['url']);
 
