@@ -10,23 +10,17 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-	$page = 'tools';
-	define('AT_INCLUDE_PATH', '../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	if(!$_SESSION['valid_user']){
-		header('Location: ../logout.php');
-		exit;
-	}
-	$_section[0][0] = _AT('tools');
-	require(AT_INCLUDE_PATH.'header.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-
-if (!defined('AC_PATH')) {
-	$msg->printInfos('NO_ACOLLAB');
-}else{
+if(!$_SESSION['valid_user']){
+	header('Location: ../logout.php');
+	exit;
+}
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<p><a href="<?php echo AC_PATH; ?>index.php"><?php echo  _AT('acollab_own_window'); ?></a></p>
+<p><a href="<?php echo $_config['ac_path']; ?>index.php"><?php echo  _AT('acollab_own_window'); ?></a></p>
 
 <script language="javascript">
 function check_location(){
@@ -48,11 +42,10 @@ if($_GET['p'] != ''){
 } else {
 	$page = 'index.php';
 }
-	echo AC_PATH . $page; ?>" style="border:1px solid #788CB3; margin: 4px;" height="640" width="98%" id="acollab_frame" title="<?php echo _AT('acollab_frame'); ?>" name="acollab_frame">
+	echo $_config['ac_path'] . $page; ?>" style="border:1px solid #788CB3; margin: 4px;" height="640" width="98%" id="acollab_frame" title="<?php echo _AT('acollab_frame'); ?>" name="acollab_frame">
 </iframe>
 </div>
 
 <?php
-}
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

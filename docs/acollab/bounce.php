@@ -15,8 +15,8 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-//$_SESSION['member_id']	  = $_SESSION['member_id'];
-//$_SESSION['lang']		  = $_SESSION['lang'];
+$_SESSION['member_id']	  = $_SESSION['member_id'];
+$_SESSION['lang']		  = $_SESSION['lang'];
 $_SESSION['courtyard_id'] = $_SESSION['course_id'];
 $_SESSION['house_id']     = 0;
 
@@ -41,8 +41,8 @@ session_write_close();
 
 //$page = 'index.php?p='.$_GET['p'];
 
-$page = AC_PATH;
+$page = $_config['ac_path'];
 
-header('Location: '. $addslashes($page));
+header('Location: '. $page);
 exit;
 ?>

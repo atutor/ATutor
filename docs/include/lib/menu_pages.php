@@ -176,11 +176,6 @@ $_pages['inbox/index.php']['children']  = array('inbox/send_message.php');
 	$_pages['inbox/send_message.php']['title_var'] = 'send_message';
 	$_pages['inbox/send_message.php']['parent']    = 'inbox/index.php';
 
-$_pages['acollab/bounce.php']['title_var'] = 'acollab';
-$_pages['acollab/bounce.php']['img']       = 'images/home-acollab.gif';
-
-	//$_pages['acollab/index.php']['title_var'] = 'acollab';
-	//$_pages['acollab/index.php']['img'] = 'images/home-acollab.gif';
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent']    = 'index.php';
 

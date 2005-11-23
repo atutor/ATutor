@@ -47,8 +47,6 @@ $_config_defaults['check_version']	           = 0;
 
 $_config = $_config_defaults;
 
-$_modules = array('acollab/bounce.php');
-
 /* how many related topics can be listed */
 define('NUM_RELATED_TOPICS', 5);
 
