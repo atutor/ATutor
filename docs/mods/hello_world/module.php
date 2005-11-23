@@ -4,6 +4,11 @@
  */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+/******
+ * this file must only be included within a ModuleProxy obj
+ */
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'moduleproxy'))) { exit(__FILE__ . ' is not a ModuleProxy'); }
+
 /*******
  * assign the instructor and admin privileges to the constants.
  */

@@ -1,5 +1,6 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'moduleproxy'))) { exit(__FILE__ . ' is not a ModuleProxy'); }
 
 /* the URL to the WSDL of the TILE repository of choice. */
 define('AT_TILE_WSDL', 'http://tile.atutor.ca/tile/services/search?wsdl');

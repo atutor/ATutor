@@ -66,11 +66,12 @@ class lastRSS {
 		}
 
 		$result = $this->Parse($rss_url);
+
 		if ($result && ($result['items_count'] == 0)) {
 			return null;
 		} else if ($result) {
 			$output = "<ul class='rss_feed'>";
-			for ($i=0; $i<$this->num_results; $i++) {
+			for ($i=0; $i < $this->num_results; $i++) {
 				$output .= "<li><a href='".$result['items'][$i]['link']."' target='_new'>".$result['items'][$i]['title']."</a>";
 				if ($this->description) { $output .= "<br />".$result['items'][$i]['description']."</li>\n"; }
 			}

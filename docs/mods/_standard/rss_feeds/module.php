@@ -1,6 +1,7 @@
 <?php
-
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'moduleproxy'))) { exit(__FILE__ . ' is not a ModuleProxy'); }
 
 define('AT_ADMIN_PRIV_RSS', $this->getAdminPrivilege());
 

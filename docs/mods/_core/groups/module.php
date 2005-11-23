@@ -1,5 +1,6 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'moduleproxy'))) { exit(__FILE__ . ' is not a ModuleProxy'); }
 
 $_module_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/groups.php');
 
