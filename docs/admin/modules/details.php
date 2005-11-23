@@ -25,6 +25,7 @@ if (isset($_POST['submit_no'])) {
 	exit;
 } else if (isset($_POST['mod']) && isset($_POST['submit_yes'])) {
 	$module =& $moduleFactory->getModule($_POST['mod']);
+	$module->load();
 	$module->install();
 
 	if ($msg->containsErrors()) {
