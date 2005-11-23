@@ -70,7 +70,5 @@ if ($framed || $popup) {
 	$savant->display('include/footer.tmpl.php');
 }
 
-debug($home_links);
 debug($_SESSION);
-
 ?>
