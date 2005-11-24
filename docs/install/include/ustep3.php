@@ -114,6 +114,15 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		mysql_query($sql, $db);
 	}
 
+	if (version_compare($_POST['step1']['old_version'], '1.5.2', '<')) {
+		// check for bits 8192 and 4096 and remove them if they're set.
+		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."course_enrollment SET `privileges` = `privileges` - 8192 WHERE `privileges` & 8192";
+		mysql_query($sql, $db);
+
+		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."course_enrollment SET `privileges` = `privileges` - 4096 WHERE `privileges` & 4096";
+		mysql_query($sql, $db);
+	}
+
 	/* deal with the extra modules: */
 	/* for each module in the modules table check if that module still exists in the mod directory. */
 	/* if that module does not exist then check the old directory and prompt to have it copied */
