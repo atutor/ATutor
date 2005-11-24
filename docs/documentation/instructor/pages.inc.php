@@ -70,4 +70,7 @@
 	$_pages['15.6.add_questions.php']				 = 'Test Questions';
 	$_pages['15.7.student_submissions.php']			 = 'Test Submissions';
     $_pages['15.8.statistics.php']					 = 'Test Statistics';
+    $_pages['16.0.faq.php']							 = 'Frequently Asked Questions';
+    $_pages['17.0.feeds.php']						 = 'Syndicated Feeds';
+    $_pages['18.0.web_search.php']					 = 'Web Search';
 ?>

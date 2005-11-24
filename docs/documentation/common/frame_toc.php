@@ -260,6 +260,11 @@ function highlight(page) {
 			<li><a href="../instructor/15.8.statistics.php" class="leaf" id="id15.8.statistics.php">Test Statistics</a></li>
 		</ul>
 	</li>
+
+	<li><a href="../instructor/16.0.faq.php" class="leaf" id="id16.0.faq.php">Frequently Asked Questions</a>
+	<li><a href="../instructor/17.0.feeds.php" class="leaf" id="id17.0.feeds.php">Syndicated Feeds</a>
+	<li><a href="../instructor/18.0.web_search.php" class="leaf" id="id18.0.web_search.php">Web Search</a>
+
 </ul>
 
 <?php else: ?>

@@ -12,6 +12,8 @@ $_student_tool = 'mods/_standard/faq/index.php';
 $_module_pages['mods/_standard/faq/index_instructor.php']['title_var'] = 'faq';
 $_module_pages['mods/_standard/faq/index_instructor.php']['parent']    = 'tools/index.php';
 $_module_pages['mods/_standard/faq/index_instructor.php']['children']  = array('mods/_standard/faq/add_topic.php', 'mods/_standard/faq/add_question.php');
+$_module_pages['mods/_standard/faq/index_instructor.php']['guide']     = 'instructor/?p=16.0.faq.php';
+
 
 	$_module_pages['mods/_standard/faq/add_topic.php']['title_var'] = 'add_topic';
 	$_module_pages['mods/_standard/faq/add_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
