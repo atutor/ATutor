@@ -14,20 +14,24 @@ $result  = mysql_query($sql, $db);
 		<?php do { ?>
 			<li style="font-weight: bold; margin-bottom: 10px;">
 				<?php echo $row['name']; ?>
+				<?php 
+					$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
+					$entry_result = mysql_query($entry_sql, $db);
+				if ($entry_row = mysql_fetch_assoc($entry_result)) {?>
 				<ol start="<?php echo $counter; ?>">
-					<?php 
-						$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
-						$entry_result = mysql_query($entry_sql, $db);
-					?>
-					<?php while ($entry_row = mysql_fetch_assoc($entry_result)): ?>
+
+					<?php do { ?>
 						<li style="font-weight: normal">
 							<h3><?php echo $entry_row['question']; ?></h3>
 							<p><?php echo $entry_row['answer'];?></p>
 						</li>
 						<?php $counter++; ?>
-					<?php endwhile; ?>
+					<?php } while ($entry_row = mysql_fetch_assoc($entry_result)) ?>
 				</ol>
-				</li>
+				<?php } else { ?>
+					<p style="padding-left: 20px; padding-top:3px; font-weight:normal;"><?php echo _AT('no_questions');  ?></p>
+				<?php } ?>
+			</li>
 		<?php } while($row = mysql_fetch_assoc($result)); ?>
 	</ul>
 <?php else: ?>
