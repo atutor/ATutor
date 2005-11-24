@@ -18,6 +18,6 @@ $_module_pages['acollab/index.php']['img']       = 'images/home-acollab.gif';
 
 
 //enter values for these entries 
-define('AC_PATH',			'http://142.150.154.185/acollab/');
-define('AC_TABLE_PREFIX',	'AC_');
+//define('AC_PATH',			'');
+//define('AC_TABLE_PREFIX',	'');
 ?>
