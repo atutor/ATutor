@@ -323,10 +323,6 @@ class ModuleProxy {
 
 }
 
-
-// ----------------- in a diff file. only required when .. required.
-
-
 /**
 * Module
 * 

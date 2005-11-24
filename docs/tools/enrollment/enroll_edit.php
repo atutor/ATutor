@@ -95,6 +95,8 @@ function unenroll ($list) {
 
 		$sql    = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE member_id IN ($members)";
 		$result = mysql_query($sql, $db);
+		// $groupModule->unenroll(course_id, user_id);
+		// $forumModule->unenroll(course_id, user_id);
 	}
 }
 
