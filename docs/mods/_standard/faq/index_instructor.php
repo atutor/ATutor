@@ -51,7 +51,7 @@ $result  = mysql_query($sql, $db);
 <thead>
 <tr>
 	<th>&nbsp;</th>
-	<th><?php echo _AT('name'); ?></th>
+	<th style="width: 100%;"><?php echo _AT('name'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -64,8 +64,8 @@ $result  = mysql_query($sql, $db);
 <tbody>
 		<?php do { ?>
 			<tr onmousedown="document.form['t<?php echo $row['topic_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['topic_id']; ?>_0">
-				<th><input type="radio" name="item" id="t<?php echo $row['topic_id']; ?>" value="<?php echo $row['topic_id']; ?>" /></th>
-				<th><?php echo $row['name']; ?></th>
+				<th style="border-top:1pt solid #e0e0e0;"><input type="radio" name="item" id="t<?php echo $row['topic_id']; ?>" value="<?php echo $row['topic_id']; ?>" /></th>
+				<th style="border-top:1pt solid #e0e0e0;"><?php echo $row['name']; ?></th>
 			</tr>
 			<?php 
 				$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
@@ -80,7 +80,7 @@ $result  = mysql_query($sql, $db);
 			<?php } while ($entry_row = mysql_fetch_assoc($entry_result)); else: ?>
 				<tr>
 					<td>&nbsp;</td>
-					<td><?php echo _AT('none_found'); ?></td>
+					<td><?php echo _AT('no_questions'); ?></td>
 				</tr>
 			<?php endif; ?>
 		<?php } while($row = mysql_fetch_assoc($result)); ?>
