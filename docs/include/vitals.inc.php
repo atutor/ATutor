@@ -702,10 +702,6 @@ function write_to_log($operation_type, $table_name, $num_affected, $details) {
 	}
 }
 
-require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
-
-$moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
-
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
 
 $sql    = "SELECT * FROM ".TABLE_PREFIX."config";
@@ -733,5 +729,10 @@ $MaxCourseSize     = $_config['max_course_size'];
 $MaxCourseFloat    = $_config['max_course_float'];
 $IllegalExtentions = explode('|',$_config['illegal_extentions']);
 define('AT_DEFAULT_PREFS',  $_config['prefs_default']);
+
+
+require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
+
+$moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
 
 ?>
