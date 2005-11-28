@@ -73,7 +73,8 @@ class lastRSS {
 			$output = "<ul class='rss_feed'>";
 			for ($i=0; $i < $this->num_results; $i++) {
 				$output .= "<li><a href='".$result['items'][$i]['link']."' target='_new'>".$result['items'][$i]['title']."</a>";
-				if ($this->description) { $output .= "<br />".$result['items'][$i]['description']."</li>\n"; }
+				if ($this->description) { $output .= "<br />".$result['items'][$i]['description']; }
+				$output .= "</li>\n";
 			}
 			$output .= "</ul>\n"; 
 
