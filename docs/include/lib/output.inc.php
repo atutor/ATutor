@@ -279,7 +279,6 @@ function print_editor( $links, $large ) {
 		$args = func_get_args();
 		
 		if (!is_array($args[0])) {
-			
 				/**
 				 * Added functionality for translating language code String (AT_ERROR|AT_INFOS|AT_WARNING|AT_FEEDBACK|AT_HELP).*
 				 * to its text and returning the result. No caching needed.
@@ -326,8 +325,7 @@ function print_editor( $links, $large ) {
 
 				/* get $_template from the DB */
 			
-				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L, '.TABLE_PREFIX_LANG.'language_pages'.TABLE_SUFFIX_LANG.' P WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable="_template" AND L.term=P.term AND P.page="'.$_rel_url.'"';
-
+				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L, '.TABLE_PREFIX_LANG.'language_pages'.TABLE_SUFFIX_LANG.' P WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable<>"_msgs" AND L.term=P.term AND P.page="'.$_rel_url.'"';
 				$result	= mysql_query($sql, $lang_db);
 				while ($row = mysql_fetch_assoc($result)) {
 					// saves us from doing an ORDER BY
@@ -364,7 +362,7 @@ function print_editor( $links, $large ) {
 
 		if (empty($outString)) {
 			global $lang_db;
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable="_template" AND L.term="'.$format.'"';
+			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable<>"_msgs" AND L.term="'.$format.'"';
 			$result	= mysql_query($sql, $lang_db);
 			$row = mysql_fetch_assoc($result);
 
