@@ -3,7 +3,7 @@ global $savant;
 ob_start(); 
 ?>
 
-<form action="<?php echo $_base_path; ?>mods/google_search/g_search.php" method="get" name="gsearchform">
+<form action="<?php echo $_base_path; ?>mods/_standard/google_search/index.php" method="get" name="gsearchform">
 <input type="hidden" name="search" value="1" />
 
 <input type="text" name="search_query" class="formfield" size="20" value="<?php echo stripslashes(htmlspecialchars($_GET['search_query'])); ?>" /><br /><br />
