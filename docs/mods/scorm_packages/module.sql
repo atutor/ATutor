@@ -1,22 +1,25 @@
 
-# SCORM language
+# SCORM language : some of it is still in svn and should be moved in here.
 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_browse','Browse','2005-11-21 11:51:04',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_credit','Credit','2005-11-21 11:50:16',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_credit_mode','Credit Mode:','2005-11-21 11:45:49',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_credit_mode_info','This is the answer given to the learning objects when they ask whether the learner is taking this particular package for credit.','2005-11-21 11:45:20',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_lesson_mode','Lesson Mode:','2005-11-21 11:46:32',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_lesson_mode_info','This is the answer given to the learning objects when they ask whether the learner is just browsing or not.','2005-11-21 11:46:16',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_normal','Normal','2005-11-21 11:51:12',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_no_credit','No Credit','2005-11-21 11:50:32',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_packages','SCORM Packages','2005-09-22 11:39:12',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','scorm_sco_is_running','Running','2005-05-17 12:04:55',''); 
-INSERT INTO `language_text` VALUES ('en', '_template','package_scorm_1_2_rte_loading','Loading SCORM-1.2 RTE<br />Please be patient ...','2005-05-17 12:09:47','');
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_browse','Browse',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_credit','Credit',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_credit_mode','Credit Mode:',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_credit_mode_info','This is the answer given to the learning objects when they ask whether the learner is taking this particular package for credit.',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_lesson_mode','Lesson Mode:',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_lesson_mode_info','This is the answer given to the learning objects when they ask whether the learner is just browsing or not.',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_normal','Normal',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_no_credit','No Credit',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_packages','SCORM Packages',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','scorm_sco_is_running','Running',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','package_scorm_1_2_rte_loading','Loading SCORM-1.2 RTE<br />Please be patient ...',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','packages_auto_advance_info','The first time a Learning Object signalizes that you have completed it, the RTE can start the next Learning Object. You might find this convenient if you want to complete all Learning Objects in a package in a sequential manner.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','packages_show_rte_communication','Show RTE Communication',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','packages_show_rte_communication_info','You can monitor the communication between Learning Objects and the RTE. You may want to switch on this option for a while just for informational purposes.',NOW(),'');
 
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCORM_ITEM_HREF_MISSING','The file you tried to import is not a scorm-1.2 package. The required href attribute is missing for some resource(s).','2005-05-17 12:04:27',''); 
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCORM_ITEM_SCORMTYPE_MISSING','The file you tried to import is not a scorm-1.2 package. The required adlcp:scormtype is missing for some resource(s).','2005-05-17 12:02:47',''); 
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_SCORM_SETTINGS_SAVED','The package settings have been saved.','2005-05-17 12:04:05','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_WARNING_SCORM_ITEM_CLUSTER_HAS_OBJECT','Some node(s) has content attached to it. The next version of the SCORM specification does not allow nodes to have attached content.','2005-05-17 12:04:39','');
+INSERT INTO `language_text` VALUES ('en', '_module','AT_ERROR_SCORM_ITEM_HREF_MISSING','The file you tried to import is not a scorm-1.2 package. The required href attribute is missing for some resource(s).',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','AT_ERROR_SCORM_ITEM_SCORMTYPE_MISSING','The file you tried to import is not a scorm-1.2 package. The required adlcp:scormtype is missing for some resource(s).',NOW(),''); 
+INSERT INTO `language_text` VALUES ('en', '_module','AT_FEEDBACK_SCORM_SETTINGS_SAVED','The package settings have been saved.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','AT_WARNING_SCORM_ITEM_CLUSTER_HAS_OBJECT','Some node(s) has content attached to it. The next version of the SCORM specification does not allow nodes to have attached content.',NOW(),'');
 
 
 # ----------------

@@ -26,10 +26,6 @@ if (!isset ($_POST['type'])) {
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 } 
 
-debug($_FILES);
-exit;
-
-
 @set_time_limit(0);
 $_SESSION['done'] = 1;
 

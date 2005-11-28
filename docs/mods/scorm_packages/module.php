@@ -4,6 +4,12 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'modulepr
 
 define('AT_PRIV_CONTENT', $this->getPrivilege());
 
+global $_base_href;
+
+define('AT_PACKAGE_TYPES', 'scorm-1.2');
+define('AT_PACKAGE_URL_BASE', $_base_href . 'sco/'); 
+
+
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tool = 'packages/index.php';
 
