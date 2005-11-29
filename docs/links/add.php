@@ -33,6 +33,11 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 
+debug($_POST);
+
+	if ($_POST['cat'] == 0 || $_POST['cat'] == '') {		
+		$msg->addError('CAT_EMPTY');
+	}
 	if ($_POST['title'] == '') {		
 		$msg->addError('TITLE_EMPTY');
 	}
