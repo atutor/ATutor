@@ -34,7 +34,7 @@ if (isset($_POST['edit_link']) && isset($_POST['submit'])) {
 	if ($_POST['cat'] == 0) {		
 		$msg->addError('CAT_EMPTY');
 	}
-	if ($_POST['url'] == '') {		
+	if (($_POST['url'] == '') || ($_POST['url'] == 'http://')) {
 		$msg->addError('URL_EMPTY');
 	}
 	if ($_POST['description'] == '') {		
@@ -58,6 +58,20 @@ if (isset($_POST['edit_link']) && isset($_POST['submit'])) {
 
 		header('Location: '.$_base_href.'tools/links/index.php');
 		exit;
+	} else {
+		$_POST['title']  = stripslashes($_POST['title']);
+		$_POST['url'] == stripslashes($_POST['url']);
+		$_POST['description']  = stripslashes($_POST['description']);
+	}
+} else {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links WHERE LinkID=".$link_id;
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		$_POST['title']			= $row['LinkName'];
+		$_POST['cat']			= $row['CatID'];
+		$_POST['url']			= $row['Url'];
+		$_POST['description']	= $row['Description'];
+		$_POST['approved']		= $row['Approved'];
 	}
 }
 
@@ -65,16 +79,6 @@ $onload = 'document.form.title.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $categories = get_link_categories();
-
-$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links WHERE LinkID=".$link_id;
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)) {
-	$_POST['title']			= $row['LinkName'];
-	$_POST['cat']			= $row['CatID'];
-	$_POST['url']			= $row['Url'];
-	$_POST['description']	= $row['Description'];
-	$_POST['approved']		= $row['Approved'];
-}
 
 $msg->printErrors();
 

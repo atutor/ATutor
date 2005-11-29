@@ -41,7 +41,6 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 	}
 
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
-
 		$_POST['cat'] = intval($_POST['cat']);
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['url'] == $addslashes($_POST['url']);
@@ -59,6 +58,10 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 
 		header('Location: '.$_base_href.'tools/links/index.php');
 		exit;
+	} else {
+		$_POST['title']  = stripslashes($_POST['title']);
+		$_POST['url'] == stripslashes($_POST['url']);
+		$_POST['description']  = stripslashes($_POST['description']);
 	}
 }
 
