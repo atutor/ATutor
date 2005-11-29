@@ -62,6 +62,10 @@ if (isset($_POST['cancel'])) {
 
 		header('Location: '.$_base_href.'links/index.php');
 		exit;
+	} else {
+		$_POST['title']  = stripslashes($_POST['title']);
+		$_POST['url'] == stripslashes($_POST['url']);
+		$_POST['description']  = stripslashes($_POST['description']);
 	}
 }
 $onload = 'document.form.title.focus();';
