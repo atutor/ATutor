@@ -16,6 +16,12 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
+if (isset($_GET['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: users.php');
+	exit;
+}
+
 if (isset($_GET['submit'])) {
 	
 	$_GET['mnot'] = intval($_GET['mnot']);
@@ -120,8 +126,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />
-		<input type="reset" name="reset" value="<?php echo _AT('reset'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
 	</div>
 </div>
 </form>

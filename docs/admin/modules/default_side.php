@@ -20,9 +20,8 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
+	header('Location: ../courses.php');
 	exit;
-	
 }
 
 if (isset($_POST['submit'])) {
@@ -93,6 +92,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
 	</div>
 </div>
 </form>

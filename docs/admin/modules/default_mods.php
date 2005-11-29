@@ -16,6 +16,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: ../courses.php');
+	exit;
+}
+
 if (isset($_POST['up'])) {
 	$up = key($_POST['up']);
 	$_new_modules  = array();
@@ -139,7 +145,10 @@ $main_defaults = explode('|', $_config['main_defaults']);
 </thead>
 <tfoot>
 <tr>
-	<td colspan="3"><input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /></td>
+	<td colspan="3" style="text-align:right;">		
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s"  />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />	
+	</td>
 </tr>
 </tfoot>
 <tbody>
