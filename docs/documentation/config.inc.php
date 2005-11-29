@@ -1,6 +1,6 @@
 <?php
 /* this is an optional configuration file. */
-/* it is use only when the ATutor configuration cannot be found, or if it */
+/* it is used only when the ATutor configuration cannot be found, or if it */
 /* can be found but AT_ENABLE_HANDBOOK_NOTES is set to false. */
 /* */
 /* use the settings found here to enable/disable user notes. */
