@@ -15,7 +15,8 @@ define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	//authenticate(USER_CLIENT, USER_ADMIN);
 require(AT_INCLUDE_PATH.'lib/chat.inc.php');
-	$myPrefs = getPrefs($_SESSION['username']);
+	//not getting session username
+	$myPrefs = getPrefs($_SESSION['login']);
 
 	if ($_POST['submit'] || $_POST['submit_r'] || $_POST['submit_p']) {
 		getAndWriteFormPrefs($myPrefs);
