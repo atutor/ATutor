@@ -303,7 +303,7 @@ class Backup {
 
 	// public
 	function getVersion() {
-		if ($version = file($this->import_dir.'atutor_backup_version')) {
+		if ((file_exists($this->import_dir.'atutor_backup_version')) && ($version = file($this->import_dir.'atutor_backup_version'))) {
 			return trim($version[0]);
 		} else {
 			return false;
@@ -312,7 +312,7 @@ class Backup {
 
 	// public
 	function restore($material, $action, $backup_id, $from_course_id = 0) {
-		global $moduleFactory;;
+		global $moduleFactory;
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
@@ -341,7 +341,11 @@ class Backup {
 		$this->version = $this->getVersion();
 		if (!$this->version) {
 			clr_dir($this->import_dir);
-			exit('version not found. backups < 1.3 are not supported.');
+			global $msg;
+			$msg->addError('BACKUP_RESTORE');
+			header('Location: '.$_SERVER['PHP_SELF']);
+			exit;
+			//exit('version not found. backups < 1.3 are not supported.');
 		}
 
 		if (version_compare($this->version, VERSION, '>') == 1) {
