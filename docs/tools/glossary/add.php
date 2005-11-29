@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	if ($errors == '') {
+	if (!$msg->containsErrors()) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES $terms_sql";
 		$result = mysql_query($sql, $db);
 
