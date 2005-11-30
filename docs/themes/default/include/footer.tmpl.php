@@ -11,7 +11,7 @@
 
 	</td>
 	<?php if (($_SESSION['course_id'] > 0) && $this->side_menu): ?>
-		<td valign="top">
+		<td valign="top" style="width: 25%">
 		<script type="text/javascript">
 		//<![CDATA[
 		var state = getcookie("side-menu");
