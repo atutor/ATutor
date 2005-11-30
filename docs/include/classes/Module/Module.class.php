@@ -240,9 +240,9 @@ class ModuleProxy {
 			global $_modules, $_pages, $_stacks;
 
 			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
+
 			if (isset($_module_pages)) {
 				$this->_pages =& $_module_pages;
-
 				$_pages = array_merge_recursive($_pages, $this->_pages);
 			}
 

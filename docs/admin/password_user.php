@@ -38,6 +38,34 @@ if (isset($_POST['cancel'])) {
 		$sql = "UPDATE ".TABLE_PREFIX."members SET password= '$_POST[password]' WHERE member_id=$_POST[id]";
 		$result = mysql_query($sql, $db);
 
+		$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[id]";
+		$result = mysql_query($sql,$db);
+		if ($row = mysql_fetch_assoc($result)) {
+			$r_login = $row['login'];	
+			$r_passwd= $row['password'];
+			$r_email = $row['email'];
+
+			$tmp_message  = _AT('password_change_msg')."\n\n";
+			$tmp_message .= _AT('web_site').' : '.$_base_href."\n";
+			$tmp_message .= _AT('login_name').' : '.$r_login."\n";
+			$tmp_message .= _AT('password').' : '.$r_passwd."\n";
+
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+			$mail = new ATutorMailer;
+
+			$mail->From     = $_config['contact_email'];
+			$mail->AddAddress($r_email);
+			$mail->Subject = $_config['site_name'] . ': ' . _AT('password_changed');
+			$mail->Body    = $tmp_message;
+
+			if(!$mail->Send()) {
+			   $msg->printErrors('SENDING_ERROR');
+			   exit;
+			}
+
+		}
+
 		$msg->addFeedback('PROFILE_UPDATED_ADMIN');
 		header('Location: '.$_base_href.'admin/users.php');
 		exit;
