@@ -178,7 +178,9 @@ class LanguageEditor extends Language {
 		mysql_query($sql, $this->db);
 
 		$sql = "UPDATE ".TABLE_PREFIX."members SET language='".DEFAULT_LANGUAGE."' WHERE language='$this->code'";
+		mysql_query($sql, $this->db);
 
+		$sql = "UPDATE ".TABLE_PREFIX."courses SET primary_language='".DEFAULT_LANGUAGE."' WHERE primary_language='$this->code'";
 		mysql_query($sql, $this->db);
 
 		cache_purge('system_langs', 'system_langs');
