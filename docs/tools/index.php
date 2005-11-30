@@ -20,7 +20,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
 $keys = array_keys($module_list);
 
-echo '<ol>';
+echo '<ol id="tools">';
 foreach ($keys as $module_name) {
 	$module =& $module_list[$module_name];
 	if ($module->getPrivilege() && authenticate($module->getPrivilege(), AT_PRIV_RETURN)) {

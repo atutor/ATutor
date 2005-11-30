@@ -1,12 +1,22 @@
 <?php
-global $savant;
+global $savant, $_config;
 ob_start(); 
 ?>
 
-<form action="<?php echo $_base_path; ?>mods/_standard/google_search/index.php" method="get" name="gsearchform">
+<?php if ($_config['gsearch']): ?>
+	<form action="<?php echo $_base_path; ?>mods/_standard/google_search/index.php" method="get" name="gsearchform">
+<?php else: ?>
+	<form action="http://www.google.com/search" method="get" target="_new">
+	<input type="hidden" name="l" value="<?php echo $_SESSION['lang']; ?>" />
+<?php endif; ?>
+
+<?php if (!$_config['gsearch']): ?>
+	<?php echo _AT('google_new_window'); ?>
+<?php endif; ?>
+
 <input type="hidden" name="search" value="1" />
 
-<input type="text" name="search_query" class="formfield" size="20" value="<?php echo stripslashes(htmlspecialchars($_GET['search_query'])); ?>" /><br /><br />
+<input type="text" name="q" class="formfield" size="20" value="<?php echo stripslashes(htmlspecialchars($_GET['search_query'])); ?>" /><br /><br />
 <input type="submit" name="submit" value="<?php echo _AT('search'); ?>" class="button" />
 </form>
 

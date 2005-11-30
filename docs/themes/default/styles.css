@@ -1199,6 +1199,6 @@ ul.rss_feed {
 
 /* the tools page */
 ol#tools { }
-ol#tools li { line-height: 200%; }
-ol#tools li a { background-color: #fafafa; display: block; width: 50%; margin: 5px 5px 5px 0px; padding-left: 10px;}
+ol#tools li { line-height: 200%;}
+ol#tools li a { background-color: #fafafa; display: block; width: 50%; margin: 5px 5px 5px 0px; padding-left: 10px; -moz-border-radius: 4px;}
 ol#tools li a:hover, ol#tools li a:focus {background-color: #dfdfdf; }

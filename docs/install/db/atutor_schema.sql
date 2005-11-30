@@ -440,7 +440,7 @@ INSERT INTO `modules` VALUES ('_standard/tile_search',   2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/sitemap',       2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/tracker',       2, 0, 0);
 INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/google_search', 1, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0);
 
 
 # --------------------------------------------------------

@@ -5,25 +5,27 @@ require('SOAP_Google.php');
 
 $search_key = $_config['gsearch'];
 
-if (empty($search_key)) {
-	$msg->addError('GOOGLE_KEY_EMPTY');
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+<?php if ($_config['gsearch']): ?>
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+<?php else: ?>
+	<form action="http://www.google.com/search" method="get" target="_new">
+	<input type="hidden" name="l" value="<?php echo $_SESSION['lang']; ?>" />
+<?php endif; ?>
 	<div class="input-form" style="max-width: 525px">
 		<div class="row">
 			<?php echo _AT('google_search_txt'); ?>
+			<?php if (!$_config['gsearch']): ?>
+				<br /><br />
+				<p><?php echo _AT('google_new_window'); ?></p>
+			<?php endif; ?>
 		</div>
 
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="keywords"><?php echo _AT('search_words'); ?></label><br />
-			<input type="text" name="search_query" size="30" id="keywords" value="<?php echo htmlspecialchars(stripslashes($_GET['search_query'])); ?>" />
+			<input type="text" name="q" size="30" id="keywords" value="<?php echo htmlspecialchars(stripslashes($_GET['q'])); ?>" />
 		</div>
 
 		<div class="row buttons">
@@ -46,7 +48,7 @@ if (isset($_GET['submit'])) {
 	$google = new SOAP_Google($search_key);
 	$search_array = array();
 	$search_array['filter'] = true;	
-	$search_array['query'] = stripslashes($_GET['search_query']);
+	$search_array['query'] = stripslashes($_GET['q']);
 	$search_array['maxResults'] = 10;
 	$search_array['lr'] = "lang_en";
 	if ($_GET['site_search']) {
