@@ -73,6 +73,11 @@ $languageParser->parse($language_xml);
 $languageEditor =& $languageParser->getLanguageEditor(0);
 
 if ($languageManager->exists($languageEditor->getCode(), $languageEditor->getLocale())) {
+	@unlink($import_path . 'language.xml');
+	@unlink($import_path . 'language_text.sql');
+	@unlink($import_path . 'readme.txt');
+	@unlink($_FILES['file']['tmp_name']);
+
 	$msg->addError('LANG_EXISTS');
 	header('Location: language.php');
 	exit;
