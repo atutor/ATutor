@@ -55,7 +55,9 @@ if (isset($_GET['submit'])) {
 
 	$result = $google->search($search_array);
 
-	if (false !== $result) {
+	if (isset($result['faultstring'])) {
+		$msg->printErrorS('GOOGLE_QUERY_FAILED');
+	} else if ($result) {
 		echo '<h3>Search Results</h3>';
 
 		if (is_array($result['resultElements'])) {
@@ -89,8 +91,6 @@ if (isset($_GET['submit'])) {
 		} else {
 			echo '<p>'._AT('none_found').'</p>';
 		}
-	} else {
-		$msg->printErrorS('GOOGLE_QUERY_FAILED');
 	} 
 }
 

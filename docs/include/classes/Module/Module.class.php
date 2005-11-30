@@ -522,6 +522,11 @@ class Module {
 
 		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
 		$result = mysql_query($sql, $db);
+
+		if (function_exists(basename($this->_directoryName).'_disable')) {
+			$fn_name = basename($this->_directoryName).'_disable';
+			$fn_name();
+		}
 	}
 
 	/**
