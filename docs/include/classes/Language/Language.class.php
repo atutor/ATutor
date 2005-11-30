@@ -32,6 +32,7 @@ class Language {
 	var $nativeName;
 	var $englishName;
 	var $status;
+	var $atutor_version;
 
 	var $db;
 
@@ -49,6 +50,7 @@ class Language {
 			$this->nativeName        = $language_row['native_name'];
 			$this->englishName       = $language_row['english_name'];
 			$this->status            = $language_row['status'];
+			$this->atutor_version    = $language_row['version'];
 
 		} else if (is_object($language_row)) {
 			$this->cloneThis($language_row);
@@ -89,6 +91,10 @@ class Language {
 
 	function getRegularExpression() {
 		return $this->regularExpression;
+	}
+
+	function getAtutorVersion() {
+		return $this->atutor_version;
 	}
 
 	function getTranslatedName() {

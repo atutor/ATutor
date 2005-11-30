@@ -36,7 +36,6 @@ if (isset($_POST['submit_import'])) {
 } else if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$_FILES['file']['size']) {
 	$_SESSION['done'] = 1;
 	$msg->addError('LANG_IMPORT_FAILED');
-	@unlink($import_path . 'language.csv');
 	header('Location: language.php');
 	exit;
 }
@@ -72,18 +71,28 @@ $languageParser =& new LanguageParser();
 $languageParser->parse($language_xml);
 $languageEditor =& $languageParser->getLanguageEditor(0);
 
+if (($languageEditor->getAtutorVersion() != VERSION) 
+	&& (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE)) 
+	{
+		$msg->addError('LANG_WRONG_VERSION');
+}
+
+if (($languageEditor->getStatus() != AT_LANG_STATUS_PUBLISHED) 
+	&& ($languageEditor->getStatus() != AT_LANG_STATUS_COMPLETE) 
+	&& (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE)) 
+	{
+		$msg->addError('LANG_NOT_COMPLETE');
+}
+
 if ($languageManager->exists($languageEditor->getCode(), $languageEditor->getLocale())) {
-	@unlink($import_path . 'language.xml');
-	@unlink($import_path . 'language_text.sql');
-	@unlink($import_path . 'readme.txt');
-	@unlink($_FILES['file']['tmp_name']);
-
 	$msg->addError('LANG_EXISTS');
-	header('Location: language.php');
-	exit;
-} // else:
+}
 
-$languageEditor->import($import_path . 'language_text.sql');
+if (!$msg->containsErrors()) {
+	$languageEditor->import($import_path . 'language_text.sql');
+	$msg->addFeedback('IMPORT_LANG_SUCCESS');
+}
+
 
 // remove the files:
 @unlink($import_path . 'language.xml');
@@ -91,7 +100,6 @@ $languageEditor->import($import_path . 'language_text.sql');
 @unlink($import_path . 'readme.txt');
 @unlink($_FILES['file']['tmp_name']);
 
-$msg->addFeedback('IMPORT_LANG_SUCCESS');
 header('Location: language.php');
 exit;
 
