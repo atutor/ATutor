@@ -4,14 +4,31 @@ define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
+require('../SOAP_Google.php');
+
 $key = $_config['gsearch'];
 
 if (isset($_GET['submit'])) {
-	$key = $addslashes($_GET['key']);
-	$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES('gsearch','$key')";
-	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('GOOGLE_KEY_SAVED');
+	//test key
+	$google = new SOAP_Google($_GET['key']);
+	$search_array = array();
+	$search_array['filter'] = true;	
+	$search_array['query'] = stripslashes('testing');
+	$search_array['maxResults'] = 1;
+	$search_array['lr'] = "lang_en";
+
+	$result = $google->search($search_array);
+
+	if (isset($result['faultstring'])) {
+		$msg->addError('GOOGLE_KEY_INVALID');
+	} else {
+		$key = $addslashes($_GET['key']);
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES('gsearch','$key')";
+		$result = mysql_query($sql, $db);
+
+		$msg->addFeedback('GOOGLE_KEY_SAVED');
+	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
