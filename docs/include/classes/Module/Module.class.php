@@ -479,8 +479,8 @@ class Module {
 	function delete($course_id) {
 		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php')) {
 			require(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php');
-			if (function_exists($this->_directoryName.'_delete')) {
-				$fnctn = $this->_directoryName.'_delete';
+			if (function_exists(basename($this->_directoryName).'_delete')) {
+				$fnctn = basename($this->_directoryName).'_delete';
 				$fnctn($course_id);
 			}
 		}
