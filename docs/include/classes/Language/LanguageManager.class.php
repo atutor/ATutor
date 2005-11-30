@@ -227,17 +227,20 @@ class LanguageManager {
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
 
-			if ($delim){
-				echo ' | ';
-			}
+			if ($language->getStatus() == AT_LANG_STATUS_PUBLISHED) {
 
-			if ($language->getCode() == $current_language) {
-				echo '<strong>'.$language->getNativeName().'</strong>';
-			} else {
-				echo '<a href="'.$url.'lang='.$language->getCode().'">'.$language->getNativeName().'</a> ';
-			}
+				if ($delim){
+					echo ' | ';
+				}
 
-			$delim = true;
+				if ($language->getCode() == $current_language) {
+					echo '<strong>'.$language->getNativeName().'</strong>';
+				} else {
+					echo '<a href="'.$url.'lang='.$language->getCode().'">'.$language->getNativeName().'</a> ';
+				}
+
+				$delim = true;
+			}
 		}
 	}
 
