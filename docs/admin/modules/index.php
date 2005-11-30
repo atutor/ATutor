@@ -33,6 +33,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		$module->enable();
 		$msg->addFeedback('MOD_ENABLED');
 	}
+
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;
 } else if (isset($_GET['mod_dir'], $_GET['disable'])) {
@@ -120,6 +121,7 @@ $keys = array_keys($module_list);
 
 <input type="hidden" name="enabled" value="<?php echo (int) $_GET['enabled']; ?>" />
 <input type="hidden" name="disabled" value="<?php echo (int) $_GET['disabled']; ?>" />
+<input type="hidden" name="core" value="<?php echo (int) $_GET['core']; ?>" />
 <input type="hidden" name="standard" value="<?php echo (int) $_GET['standard']; ?>" />
 <input type="hidden" name="extra" value="<?php echo (int) $_GET['extra']; ?>" />
 
