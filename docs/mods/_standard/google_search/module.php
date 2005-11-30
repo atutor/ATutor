@@ -18,9 +18,11 @@ if (isset($_config['gsearch']) && $_config['gsearch'] != '') {
 
 	$_module_pages['mods/_standard/google_search/index.php']['title_var'] = 'google_search';
 	$_module_pages['mods/_standard/google_search/index.php']['img']       = 'mods/_standard/google_search/google.gif';
-} else if ( ($_SERVER['PHP_SELF'] == $_base_path.'admin/modules/index.php') && $this->isEnabled()) {
+} else if ($_SERVER['PHP_SELF'] == $_base_path.'admin/modules/index.php') {
 	$msg->addError('GOOGLE_KEY_MISSING');
-} 
+} else {
+	$msg->deleteError('GOOGLE_KEY_MISSING');
+}
 
 
 function google_search_disable() {
