@@ -28,24 +28,25 @@ if ($_config['check_version']) {
 		$msg->printFeedbacks('ATUTOR_UPDATE_AVAILABLE');
 	}
 }
-
-
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."instructor_approvals";
-$result = mysql_query($sql, $db);
-$row    = mysql_fetch_assoc($result);
+if ($_config['allow_instructor_requests']): ?>
+<?php
+	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."instructor_approvals";
+	$result = mysql_query($sql, $db);
+	$row    = mysql_fetch_assoc($result);
 ?>
-<form method="get" action="admin/instructor_requests.php">
-	<div class="input-form">
-		<div class="row">
-			<h3><?php echo _AT('instructor_requests'); ?></h3>
-			<p><?php echo _AT('instructor_requests_text', $row['cnt']); ?></strong></p>
-		</div>
+	<form method="get" action="admin/instructor_requests.php">
+		<div class="input-form">
+			<div class="row">
+				<h3><?php echo _AT('instructor_requests'); ?></h3>
+				<p><?php echo _AT('instructor_requests_text', $row['cnt']); ?></strong></p>
+			</div>
 
-		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('view'); ?>" />
+			<div class="row buttons">
+				<input type="submit" name="submit" value="<?php echo _AT('view'); ?>" />
+			</div>
 		</div>
-	</div>
-</form>
+	</form>
+<?php endif; ?>
 
 <form method="get" action="http://atutor.ca/check_atutor_version.php" target="_blank">
 	<input type="hidden" name="v" value="<?php echo urlencode(VERSION); ?>" />
