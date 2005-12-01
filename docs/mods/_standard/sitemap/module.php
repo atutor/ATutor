@@ -5,8 +5,8 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tool = 'sitemap.php';
 
-$_module_pages['sitemap.php']['title_var'] = 'sitemap';
-$_module_pages['sitemap.php']['parent']    = 'index.php';
-$_module_pages['sitemap.php']['img']       = 'images/home-site_map.gif';
+$this->_pages['sitemap.php']['title_var'] = 'sitemap';
+$this->_pages['sitemap.php']['parent']    = 'index.php';
+$this->_pages['sitemap.php']['img']       = 'images/home-site_map.gif';
 
 ?>

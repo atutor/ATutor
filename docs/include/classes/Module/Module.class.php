@@ -40,6 +40,14 @@ class ModuleFactory {
 	function ModuleFactory($auto_load = FALSE) {
 		global $db;
 
+		/* snippit to use when extending Module classes:
+		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+		require(AT_MODULE_PATH . $row['dir_name'].'/module.php');
+		$module =& new PropertiesModule($row);
+		***/
+
 		$this->_modules = array();
 
 		if ($auto_load == TRUE) {
@@ -57,7 +65,7 @@ class ModuleFactory {
 	// public
 	// status := enabled | disabled | uninstalled | missing
 	// type  := core | standard | extra
-	// sort  := true | false
+	// sort  := true | false (by name only)
 	// the results of this method are not cached. call sparingly.
 	function & getModules($status, $type = 0, $sort = FALSE) {
 		global $db;
@@ -199,6 +207,30 @@ class Module {
 	function getPrivilege()      { return $this->_privilege;       }
 	function getAdminPrivilege() { return $this->_admin_privilege; }
 
+	function load() {
+		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module.php')) {
+			global $_modules, $_pages, $_stacks;
+
+			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
+
+			if (isset($this->_pages)) {
+				$_pages = array_merge_recursive($_pages, $this->_pages);
+			}
+
+			//side menu items
+			if (isset($this->_stacks)) {
+				$count = 0;
+				$_stacks = array_merge($_stacks, $this->_stacks);
+			}
+
+			//student tools
+			if (isset($_student_tool)) {
+				$this->_student_tool =& $_student_tool;
+				$_modules[] = $this->_student_tool;
+			}
+		}					
+	}
+
 	// private
 	function _initModuleProperties() {
 		if (!isset($this->_properties)) {
@@ -267,31 +299,7 @@ class Module {
 		return (isset($this->_properties['description'][$lang]) ? $this->_properties['description'][$lang] : current($this->_properties['description']));
 	}
 
-	function load() {
-		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module.php')) {
-			global $_modules, $_pages, $_stacks;
 
-			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
-
-			if (isset($_module_pages)) {
-				$this->_pages =& $_module_pages;
-				$_pages = array_merge_recursive($_pages, $this->_pages);
-			}
-
-			//side menu items
-			if (isset($_module_stacks)) {
-				$count = 0;
-				$this->_stacks =& $_module_stacks;
-				$_stacks = array_merge($_stacks, $this->_stacks);
-			}
-
-			//student tools
-			if (isset($_student_tool)) {
-				$this->_student_tool =& $_student_tool;
-				$_modules[] = $this->_student_tool;
-			}
-		}					
-	}
 
 	function getChildPage($page) {
 		if (!is_array($this->_pages)) {

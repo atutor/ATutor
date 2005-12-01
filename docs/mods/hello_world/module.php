@@ -18,7 +18,7 @@ define('AT_ADMIN_PRIV_HELLO_WORLD', $this->getAdminPrivilege());
 /*******
  * create a side menu box/stack.
  */
-$_module_stacks['hello_world'] = array('title_var'=>'hello_world', 'file'=>'mods/hello_world/side_menu.inc.php');
+$this->_stacks['hello_world'] = array('title_var'=>'hello_world', 'file'=>'mods/hello_world/side_menu.inc.php');
 // ** possible alternative: **
 // $this->addStack('hello_world', array('title_var' => 'hello_world', 'file' => './side_menu.inc.php');
 
@@ -33,16 +33,16 @@ $_student_tool = 'mods/hello_world/index.php';
  * add the admin pages when needed.
  */
 if (admin_authenticate(AT_ADMIN_PRIV_HELLO_WORLD, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-	$_module_pages[AT_NAV_ADMIN] = array('mods/hello_world/index_admin.php');
-	$_module_pages['mods/hello_world/index_admin.php']['parent']    = AT_NAV_ADMIN;
-	$_module_pages['mods/hello_world/index_admin.php']['title_var'] = 'hello_world';
+	$this->_pages[AT_NAV_ADMIN] = array('mods/hello_world/index_admin.php');
+	$this->_pages['mods/hello_world/index_admin.php']['parent']    = AT_NAV_ADMIN;
+	$this->_pages['mods/hello_world/index_admin.php']['title_var'] = 'hello_world';
 }
 
 /*******
  * instructor Manage section:
  */
-$_module_pages['mods/hello_world/index_instructor.php']['title_var'] = 'hello_world';
-$_module_pages['mods/hello_world/index_instructor.php']['parent']   = 'tools/index.php';
+$this->_pages['mods/hello_world/index_instructor.php']['title_var'] = 'hello_world';
+$this->_pages['mods/hello_world/index_instructor.php']['parent']   = 'tools/index.php';
 // ** possible alternative: **
 // $this->pages['./index_instructor.php']['title_var'] = 'hello_world';
 // $this->pages['./index_instructor.php']['parent']    = 'tools/index.php';
@@ -50,7 +50,7 @@ $_module_pages['mods/hello_world/index_instructor.php']['parent']   = 'tools/ind
 /*******
  * student page.
  */
-$_module_pages['mods/hello_world/index.php']['title_var'] = 'hello_world';
-$_module_pages['mods/hello_world/index.php']['img']       = 'mods/hello_world/hello_world.jpg';
+$this->_pages['mods/hello_world/index.php']['title_var'] = 'hello_world';
+$this->_pages['mods/hello_world/index.php']['img']       = 'mods/hello_world/hello_world.jpg';
 
 ?>

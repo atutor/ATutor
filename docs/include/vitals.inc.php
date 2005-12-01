@@ -733,6 +733,6 @@ define('AT_DEFAULT_PREFS',  $_config['prefs_default']);
 
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
-$moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
+$moduleFactory =& new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
 
 ?>

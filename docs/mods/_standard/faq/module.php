@@ -9,32 +9,32 @@ $_student_tool = 'mods/_standard/faq/index.php';
 
 
 // instructor Manage section:
-$_module_pages['mods/_standard/faq/index_instructor.php']['title_var'] = 'faq';
-$_module_pages['mods/_standard/faq/index_instructor.php']['parent']    = 'tools/index.php';
-$_module_pages['mods/_standard/faq/index_instructor.php']['children']  = array('mods/_standard/faq/add_topic.php', 'mods/_standard/faq/add_question.php');
-$_module_pages['mods/_standard/faq/index_instructor.php']['guide']     = 'instructor/?p=16.0.faq.php';
+$this->_pages['mods/_standard/faq/index_instructor.php']['title_var'] = 'faq';
+$this->_pages['mods/_standard/faq/index_instructor.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_standard/faq/index_instructor.php']['children']  = array('mods/_standard/faq/add_topic.php', 'mods/_standard/faq/add_question.php');
+$this->_pages['mods/_standard/faq/index_instructor.php']['guide']     = 'instructor/?p=16.0.faq.php';
 
 
-	$_module_pages['mods/_standard/faq/add_topic.php']['title_var'] = 'add_topic';
-	$_module_pages['mods/_standard/faq/add_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
+	$this->_pages['mods/_standard/faq/add_topic.php']['title_var'] = 'add_topic';
+	$this->_pages['mods/_standard/faq/add_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
-	$_module_pages['mods/_standard/faq/delete_topic.php']['title_var'] = 'delete';
-	$_module_pages['mods/_standard/faq/delete_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
+	$this->_pages['mods/_standard/faq/delete_topic.php']['title_var'] = 'delete';
+	$this->_pages['mods/_standard/faq/delete_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
-	$_module_pages['mods/_standard/faq/edit_topic.php']['title_var'] = 'edit';
-	$_module_pages['mods/_standard/faq/edit_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
+	$this->_pages['mods/_standard/faq/edit_topic.php']['title_var'] = 'edit';
+	$this->_pages['mods/_standard/faq/edit_topic.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
-	$_module_pages['mods/_standard/faq/add_question.php']['title_var'] = 'add_question';
-	$_module_pages['mods/_standard/faq/add_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
+	$this->_pages['mods/_standard/faq/add_question.php']['title_var'] = 'add_question';
+	$this->_pages['mods/_standard/faq/add_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
-	$_module_pages['mods/_standard/faq/delete_question.php']['title_var'] = 'delete';
-	$_module_pages['mods/_standard/faq/delete_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
+	$this->_pages['mods/_standard/faq/delete_question.php']['title_var'] = 'delete';
+	$this->_pages['mods/_standard/faq/delete_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
-	$_module_pages['mods/_standard/faq/edit_question.php']['title_var'] = 'edit';
-	$_module_pages['mods/_standard/faq/edit_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
+	$this->_pages['mods/_standard/faq/edit_question.php']['title_var'] = 'edit';
+	$this->_pages['mods/_standard/faq/edit_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 
 // student page:
-$_module_pages['mods/_standard/faq/index.php']['title_var'] = 'faq';
-$_module_pages['mods/_standard/faq/index.php']['img']       = 'mods/_standard/faq/icon.gif';
+$this->_pages['mods/_standard/faq/index.php']['title_var'] = 'faq';
+$this->_pages['mods/_standard/faq/index.php']['img']       = 'mods/_standard/faq/icon.gif';
 
 ?>
