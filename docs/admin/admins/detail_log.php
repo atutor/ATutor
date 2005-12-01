@@ -73,7 +73,7 @@ $operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 	<div class="row">
 		<?php echo _AT('details'); ?><br />
 		<kbd>
-			<?php echo htmlspecialchars($row['details']); ?>
+			<?php echo htmlspecialchars(wordwrap($row['details'], 80, "\n", TRUE)); ?>
 		</kbd>
 	</div>
 

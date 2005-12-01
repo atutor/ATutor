@@ -34,7 +34,7 @@ if (isset($_GET['login']) && $_GET['login']) {
 $sql	= "SELECT COUNT(login) FROM ".TABLE_PREFIX."admin_log $login_where";
 $result = mysql_query($sql, $db);
 
-if (($row = mysql_fetch_array($result))==0) {
+if (($row = mysql_fetch_assoc($result))==0) {
 	echo '<tr><td colspan="7" class="row1">'._AT('no_log_found_').'</td></tr>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
