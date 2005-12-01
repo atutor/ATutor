@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
@@ -47,9 +47,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <tfoot>
 <tr>
 	<td colspan="3">
+		<input type="submit" name="preview" value="<?php echo _AT('preview'); ?>" />
 		<input type="submit" name="edit"    value="<?php echo _AT('edit'); ?>" />
 		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
-		<input type="submit" name="preview" value="<?php echo _AT('preview'); ?>" />
 	</td>
 </tr>
 </tfoot>
