@@ -141,7 +141,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" accesskey="s" onClick="return checkAdmin();" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" onClick="return checkAdmin();" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
