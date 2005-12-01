@@ -112,7 +112,7 @@ if ($top_num != (int) $top_num) {
 	$top_num = substr($top_num, 0, strpos($top_num, '.'));
 }
 
-/* TOC: */
+/* TOC: 
 ob_start();
 $contentManager->printTOCMenu($first_page['content_id'], $top_num);
 $content_stuff = ob_get_contents();
@@ -121,6 +121,7 @@ ob_end_clean();
 if ($content_stuff != '') {
 	$savant->assign('table_of_contents', $content_stuff);
 }
+*/
 
 $shortcuts = array();
 if ((	($content_row['r_date'] <= $content_row['n_date'])
