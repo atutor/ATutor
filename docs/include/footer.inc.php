@@ -57,7 +57,7 @@ $savant->assign('side_menu', $stack_files);
 var selected;
 function rowselect(obj) {
 	obj.className = 'selected';
-	if (selected)
+	if (selected && selected != obj.id)
 		document.getElementById(selected).className = '';
 	selected = obj.id;
 }
