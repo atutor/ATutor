@@ -63,8 +63,9 @@ $msg->printAll();
 
 	<div class="row">
 		<label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label><br />
-		<select name="cat_parent_id" id="category_parent"><?php
-
+		<?php if ($categories): ?>
+			<select name="cat_parent_id" id="category_parent">
+			<?php
 				if ($pcat_id) {
 					$current_cat_id = $pcat_id;
 					$exclude = false; /* don't exclude the children */
@@ -76,8 +77,12 @@ $msg->printAll();
 				echo '<option value="0"></option>';
 
 				/* @See: include/lib/admin_categories */
-				select_link_categories($categories, 0, $current_cat_id, $exclude);
-			?></select>
+				select_link_categories($categories, 0, $current_cat_id, $exclude); 
+			?>
+			</select>
+		<?php else: 
+			echo _AT('cats_no_categories');
+		endif; ?>
 	</div>
 
 	<div class="row buttons">
