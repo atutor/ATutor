@@ -1,6 +1,6 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'moduleproxy'))) { exit(__FILE__ . ' is not a ModuleProxy'); }
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
 $_module_pages['tools/course_stats.php']['title_var'] = 'statistics';
 $_module_pages['tools/course_stats.php']['parent']    = 'tools/index.php';

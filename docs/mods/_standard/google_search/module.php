@@ -1,6 +1,6 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'moduleproxy'))) { exit(__FILE__ . ' is not a ModuleProxy'); }
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
 $_module_pages['admin/index.php']['children'] = array('mods/_standard/google_search/admin/module_prefs.php');
 

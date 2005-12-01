@@ -5,9 +5,9 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /******
- * this file must only be included within a ModuleProxy obj
+ * this file must only be included within a Module obj
  */
-if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'moduleproxy'))) { exit(__FILE__ . ' is not a ModuleProxy'); }
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
 /*******
  * assign the instructor and admin privileges to the constants.

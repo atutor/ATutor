@@ -12,17 +12,10 @@
 /************************************************************************/
 // $Id$
 
-// module statuses
-// do not confuse with _MOD_ constants!
-
 define('AT_MODULE_STATUS_DISABLED',    1);
 define('AT_MODULE_STATUS_ENABLED',     2);
 define('AT_MODULE_STATUS_MISSING',     4);
 define('AT_MODULE_STATUS_UNINSTALLED', 8); // not in the db
-
-define('AT_MODULE_HOME',	1);
-define('AT_MODULE_MAIN',	2);
-define('AT_MODULE_SIDE',	4);
 
 define('AT_MODULE_TYPE_CORE',     1);
 define('AT_MODULE_TYPE_STANDARD', 2);
@@ -54,7 +47,7 @@ class ModuleFactory {
 			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
 			$result = mysql_query($sql, $db);
 			while($row = mysql_fetch_assoc($result)) {
-				$module =& new ModuleProxy($row);
+				$module =& new Module($row);
 				$this->_modules[$row['dir_name']] =& $module;
 				$module->load();
 			}
@@ -80,7 +73,7 @@ class ModuleFactory {
 		$result = mysql_query($sql, $db);
 		while($row = mysql_fetch_assoc($result)) {
 			if (!isset($this->_modules[$row['dir_name']])) {
-				$module =& new ModuleProxy($row);
+				$module =& new Module($row);
 			} else {
 				$module =& $this->_modules[$row['dir_name']];
 			}
@@ -100,7 +93,7 @@ class ModuleFactory {
 				}
 
 				if (is_dir(AT_MODULE_PATH . $dir_name) && !isset($all_modules[$dir_name])) {
-					$module =& new ModuleProxy($dir_name);
+					$module =& new Module($dir_name);
 					$all_modules[$dir_name] =& $module;
 				}
 			}
@@ -128,9 +121,9 @@ class ModuleFactory {
 			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE dir_name='$module_dir'";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				$module =& new ModuleProxy($row);
+				$module =& new Module($row);
 			} else {
-				$module =& new ModuleProxy($module_dir);
+				$module =& new Module($module_dir);
 			}
 			$this->_modules[$module_dir] =& $module;
 		}
@@ -145,13 +138,13 @@ class ModuleFactory {
 }
 
 /**
-* ModuleProxy
+* Module
 * 
 * @access	public
 * @author	Joel Kronenberg
 * @package	Module
 */
-class ModuleProxy {
+class Module {
 	// private
 	var $_moduleObj;
 	var $_directoryName;
@@ -161,9 +154,10 @@ class ModuleProxy {
 	var $_display_defaults; // bit(s)
 	var $_pages;
 	var $_type; // core, standard, extra
+	var $_properties; // array from xml
 
 	// constructor
-	function ModuleProxy($row) {
+	function Module($row) {
 		if (is_array($row)) {
 			$this->_directoryName   = $row['dir_name'];
 			$this->_status          = $row['status'];
@@ -205,22 +199,55 @@ class ModuleProxy {
 	function getPrivilege()      { return $this->_privilege;       }
 	function getAdminPrivilege() { return $this->_admin_privilege; }
 
-	// private!
-	function initModuleObj() {
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
+	// private
+	function _initModuleProperties() {
+		if (!isset($this->_properties)) {
+			require_once(dirname(__FILE__) . '/ModuleParser.class.php');
+			$moduleParser   =& new ModuleParser();
+			$moduleParser->parse(@file_get_contents(AT_MODULE_PATH . $this->_directoryName.'/module.xml'));
+			if ($moduleParser->rows[0]) {
+				$this->_properties = $moduleParser->rows[0];
+			} else {
+				$this->_properties = array();
+				$this->setIsMissing(); // the xml file may not be found -> the dir may be missing.
+			}
 		}
 	}
 
+	/**
+	* Get the properties of this module as found in the module.xml file
+	* @access  public
+	* @param   array $properties_list	list of property names
+	* @return  array associative array of property/value pairs
+	* @author  Joel Kronenberg
+	*/
 	function getProperties($properties_list) {
-		// this requires a real module object
-		$this->initModuleObj();
-		return $this->_moduleObj->getProperties($properties_list);
-	}
+		$this->_initModuleProperties();
 
+		if (!$this->_properties) {
+			return;
+		}
+		$properties_list = array_flip($properties_list);
+		foreach ($properties_list as $property => $garbage) {
+			$properties_list[$property] = $this->_properties[$property];
+		}
+		return $properties_list;
+	}
+	/**
+	* Get a single property as found in the module.xml file
+	* @access  public
+	* @param   string $property	name of the property to return
+	* @return  string the value of the property 
+	* @author  Joel Kronenberg
+	*/
 	function getProperty($property) {
-		$this->initModuleObj();
-		return $this->_moduleObj->getProperty($property);
+		$this->_initModuleProperties();
+
+		if (!$this->_properties) {
+			return;
+		}
+
+		return $this->_properties[$property];
 	}
 
 	function getName() {
@@ -230,9 +257,14 @@ class ModuleProxy {
 		return _AT(basename($this->_directoryName));
 	}
 
-	function getDescription($lang) {
-		$this->initModuleObj();
-		return $this->_moduleObj->getDescription($lang);
+	function getDescription($lang = 'en') {
+		$this->_initModuleProperties();
+
+		if (!$this->_properties) {
+			return;
+		}
+
+		return (isset($this->_properties['description'][$lang]) ? $this->_properties['description'][$lang] : current($this->_properties['description']));
 	}
 
 	function load() {
@@ -272,126 +304,6 @@ class ModuleProxy {
 		}
 	}
 
-	function isBackupable() {
-		return is_file(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
-	}
-
-	function backup($course_id, &$zipfile) {
-		$this->initModuleObj();
-		$this->_moduleObj->backup($course_id, $zipfile);
-	}
-
-	function restore($course_id, $version, $import_dir) {
-		$this->initModuleObj();
-		$this->_moduleObj->restore($course_id, $version, $import_dir);
-	}
-
-	function delete($course_id) {
-		$this->initModuleObj();
-		$this->_moduleObj->delete($course_id);
-	}
-
-	function enable() {
-		$this->initModuleObj();
-		$this->_moduleObj->enable();
-		$this->_status = AT_MODULE_STATUS_ENABLED;
-	}
-
-	function setIsMissing() {
-		$this->initModuleObj();
-		$this->_moduleObj->setIsMissing();
-		$this->_status = AT_MODULE_STATUS_MISSING;
-	}
-	function disable() {
-		$this->initModuleObj();
-		$this->_moduleObj->disable();
-		$this->_status = AT_MODULE_STATUS_DISABLED;
-	}
-
-	function install() {
-		$this->initModuleObj();
-		$this->_moduleObj->install();
-	}
-
-	function getStudentTools() {
-		if (!isset($this->_student_tool)) {
-			return;
-		} 
-
-		return $this->_student_tool;
-	}
-
-}
-
-/**
-* Module
-* 
-* @access	protected
-* @author	Joel Kronenberg
-* @package	Module
-*/
-class Module {
-	// all private
-	var $_directoryName;
-	var $_properties; // array from xml
-
-	/**
-	* Constructorino
-	*/
-	function Module($dir_name) {
-		require_once(dirname(__FILE__) . '/ModuleParser.class.php');
-		$moduleParser   =& new ModuleParser();
-		$this->_directoryName = $dir_name;
-		$moduleParser->parse(@file_get_contents(AT_MODULE_PATH . $dir_name.'/module.xml'));
-		if ($moduleParser->rows[0]) {
-			$this->_properties = $moduleParser->rows[0];
-		} else {
-			$this->_properties = array();
-			$this->setIsMissing(); // the xml file may not be found -> the dir may be missing.
-		}
-	}
-
-	function getDescription($lang = 'en') {
-		if (!$this->_properties) {
-			return;
-		}
-
-		return (isset($this->_properties['description'][$lang]) ? $this->_properties['description'][$lang] : current($this->_properties['description']));
-	}
-
-	/**
-	* Get the properties of this module as found in the module.xml file
-	* @access  public
-	* @param   array $properties_list	list of property names
-	* @return  array associative array of property/value pairs
-	* @author  Joel Kronenberg
-	*/
-	function getProperties($properties_list) {
-		if (!$this->_properties) {
-			return;
-		}
-		$properties_list = array_flip($properties_list);
-		foreach ($properties_list as $property => $garbage) {
-			$properties_list[$property] = $this->_properties[$property];
-		}
-		return $properties_list;
-	}
-
-	/**
-	* Get a single property as found in the module.xml file
-	* @access  public
-	* @param   string $property	name of the property to return
-	* @return  string the value of the property 
-	* @author  Joel Kronenberg
-	*/
-	function getProperty($property) {
-		if (!$this->_properties) {
-			return;
-		}
-
-		return $this->_properties[$property];
-	}
-
 	/**
 	* Checks whether or not this module can be backed-up
 	* @access  public
@@ -399,7 +311,7 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function isBackupable() {
-		return is_file(AT_MODULE_PATH . $this->_directoryName . '/module_backup.php');
+		return is_file(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
 	}
 
 	/**
@@ -436,7 +348,7 @@ class Module {
 			}
 		}
 	}
-	
+
 	/**
 	* Restores this module into the given course
 	* @access  public
@@ -568,6 +480,15 @@ class Module {
 			$result = mysql_query($sql, $db);
 		}
 	}
+
+	function getStudentTools() {
+		if (!isset($this->_student_tool)) {
+			return;
+		} 
+
+		return $this->_student_tool;
+	}
+
 }
 
 ?>
