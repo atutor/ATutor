@@ -13,9 +13,9 @@ CREATE TABLE `admin_log` (
   `operation` varchar(20) NOT NULL default '',
   `table` varchar(30) NOT NULL default '',
   `num_affected` tinyint(3) NOT NULL default '0',
-  `details` varchar(255) NOT NULL default '',
+  `details` TEXT NOT NULL default '',
   KEY `login` (`login`)
-) TYPE=MyISAM;
+);
 
 
 CREATE TABLE `admins` (

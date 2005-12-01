@@ -83,3 +83,6 @@ INSERT INTO `modules` VALUES ('_standard/sitemap',       2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/tracker',       2, 0, 0);
 INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0);
+
+
+ALTER TABLE `admin_log` CHANGE `details` `details` TEXT NOT NULL;
