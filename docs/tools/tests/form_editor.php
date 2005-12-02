@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 // $Id$
 
 $page = 'form_editor';
@@ -42,43 +42,6 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$_tmp_base_href = 'content/' . $_SESSION['course_id'] . '/';
 }
 
-	$visuallang["zh"] = "b5";
-	$visuallang["cs"] = "cz";
-	$visuallang["da"] = "da";
-	$visuallang["de"] = "de";
-//	$visuallang[""] = "ee";     //no clue what this language is
-	$visuallang["el"] = "el";
-	$visuallang["en"] = "en";
-	$visuallang["es"] = "es";
-	$visuallang["fi"] = "fi";
-	$visuallang["fr"] = "fr";
-	$visuallang["gb"] = "gb";
-	$visuallang["he"] = "he";
-	$visuallang["hu"] = "hu";
-	$visuallang["it"] = "it";
-	$visuallang["ja"] = "ja-euc";
-//	$visuallang[""] = "ja-jis";    //language not provided by ATutor
-//	$visuallang[""] = "ji-sjis";   //language not provided by ATutor
-//	$visuallang[""] = "ja-utf8";   //language not provided by ATutor
-	$visuallang["lt"] = "lt";
-	$visuallang["lv"] = "lv";
-	$visuallang[""] = "nb";
-	$visuallang["nl"] = "nl";
-	$visuallang["nos"] = "no";
-	$visuallang["pl"] = "pl";
-	$visuallang["ptb"] = "pt_br";
-	$visuallang["ro"] = "ro";
-	$visuallang["ru"] = "ru";
-	$visuallang["sv"] = "se";
-//	$visuallang[""] = "si";     //no clue what this language is
-	$visuallang["vi"] = "vn";
-
-	if ($visuallang[$_SESSION['lang']] != "") {
-		$uselang = $visuallang[$_SESSION['lang']];
-	} else {
-		$uselang = "en";
-	}
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -95,46 +58,14 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 <body <?php echo $onload; ?> >
 
 <script type="text/javascript"><!--
-  _editor_url = "<?php echo $_base_path; ?>jscripts/htmlarea/";
-  _editor_lang = "<?php echo $uselang; ?>";
-
 function init() {
 	document.form.body_text.value = window.opener.document.getElementById("<?php echo $area; ?>").value;
-	initEditor();
 }
-
 //--></script>
 
-<script type="text/javascript" src="<?php echo $_base_path; ?>jscripts/htmlarea/htmlarea.js"></script>
+<?php load_editor(); ?>
 
-<script type="text/javascript" defer="defer"><!--
-	var editor = null;
 
-	function initEditor() {
-		editor = new HTMLArea("body_text");
-		var config = editor.config; // this is the default configuration
-
-		// to keep relative links relative:
-		config.relativeURL = true;
-
-		// to change the base href of the editor:
-		config.baseURL = "<?php echo $_tmp_base_href; ?>";
-
-		// Choose buttons/functionality [refer to htmlarea.js for instructions]
-		config.toolbar = [
-			['formatblock', 'space', "bold", "italic", "underline", "separator", "strikethrough", "subscript", "superscript", "separator", "copy", "cut", "paste", "separator", "lefttoright", "righttoleft", "separator", "justifyleft", "justifycenter", "justifyright", "justifyfull"],
-			["insertorderedlist", "insertunorderedlist", "outdent", "indent", "separator", "inserthorizontalrule", "createlink", "insertimage", "inserttable", "htmlmode", "separator", "undo", "redo", "separator", "popupeditor", "separator", "about", "space", "space", "separator", "space", "space"]
-			];
-
-		editor.generate();	
-	}
-
-	function mycode(editor, id) {
-		editor.surroundHTML('[code]', '[/code]');
-	}
-
-//-->
-</script>
 <div align="right"><a href="javascript:window.close()"><?php echo _AT('close_window'); ?></a></div>
 <form name="form">
 	<table cellspacing="1" cellpadding="0" width="99%" border="0" class="bodyline" align="center" summary="">
@@ -175,13 +106,9 @@ function init() {
 <script type="text/javascript">
 <!--
 function insertTo(field) {
-	if (editor) {
-
-		var content = editor.getInnerHTML();
 		if (window.opener.document.getElementById(field)) {
-			window.opener.document.getElementById(field).value = content;
+			window.opener.document.getElementById(field).value = tinyMCE.getContent('body_text');
 		}
-	}
 }
 -->
 </script>
