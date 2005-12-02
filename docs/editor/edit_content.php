@@ -25,7 +25,9 @@ if ($_POST) {
 }
 
 require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
+
 	
+
 if ($_POST['close'] || $_GET['close']) {
 	if ($_GET['close']) {
 		$msg->addFeedback('CONTENT_UPDATED');
@@ -79,15 +81,6 @@ if ($cid) {
 	$_section[0][0] = _AT('add_content');
 }
 
-if ($current_tab == 0) {
-	//used for visual editor
-	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-		$onload = 'initEditor();';
-	} else {
-		$onload = ' document.form.ctitle.focus();';
-	}
-}
-
 if ($cid) {
 	$result = $contentManager->getContentPage($cid);
 
@@ -124,7 +117,20 @@ if ($current_tab == 4) {
 	$content_base_href = '';
 }
 
+if ($current_tab == 0) {
+	if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
+		$onload = ' document.form.ctitle.focus();';
+	}
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+if ($current_tab == 0) {
+	//used for visual editor
+	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+		load_editor();
+	}
+}
 
 $cid = intval($_REQUEST['cid']);
 $pid = intval($_REQUEST['pid']);
