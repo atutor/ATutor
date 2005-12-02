@@ -31,17 +31,21 @@ if ($result && ($row = mysql_fetch_array($result))) {
 	if (count($word) > 0) {
 		$count = 0;
 
+		$glossary_key_lower = array_change_key_case($glossary);
+
 		foreach ($word as $k => $v) {
 			$original_v = $v;
-			$v = urlencode($v);
-			if ($glossary[$v] != '') {
+			$v = urlencode(strtolower($v));
+
+			if ($glossary_key_lower[$v] != '') {
+
 				if (strlen($original_v) > 26 ) {
 					$v_formatted = substr($original_v, 0, 26-4).'...';
 				}else{
 					$v_formatted = $original_v;
 				}
 				
-				$def = AT_print($glossary[$v], 'glossary.definition');
+				$def = AT_print($glossary_key_lower[$v], 'glossary.definition');
 
 				$count++;
 				//echo '&#176; <a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
@@ -53,7 +57,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 
 		if ($count == 0) {
 			/* there are defn's, but they're not defined in the glossary */
-			echo '<em>'._AT('none_found').'</em>';
+			echo '<em>'._AT('no_terms_found').'</em>';
 		}
 	} else {
 		/* there are no glossary terms on this page */
