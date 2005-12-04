@@ -167,7 +167,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 			<th colspan="2">Super Administrator Account</th>
 		<tr>
 		<tr>
-			<td colspan="2" class="row1">The Super Administrator account is used for managing ATutor. The Super Administrator can also create additional Administrators each with their own privileges and roles. Administrator accounts cannot enroll or create courses.</td>
+			<td colspan="2" class="row1">The Super Administrator account is used for managing ATutor. The Super Administrator can also create additional Administrators each with their own privileges and roles. Administrator accounts cannot enroll in courses.</td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="username">Administrator Username:</label></b><br />
