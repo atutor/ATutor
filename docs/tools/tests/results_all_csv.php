@@ -39,6 +39,7 @@ if (!($row = mysql_fetch_array($result))){
 	exit;
 }
 $test_title = str_replace(array('"', '<', '>'), '', $row['title']);
+$test_title = str_replace (' ', '_', $test_title);
 $random = $row['randomize_order'];
 
 //get test questions
