@@ -48,11 +48,11 @@ $this->_pages['tools/tests/preview_question.php']['parent']    = 'tools/tests/qu
 $this->_pages['tools/tests/results.php']['title_var'] = 'submissions';
 $this->_pages['tools/tests/results.php']['parent']    = 'tools/tests/index.php';
 
-$this->_pages['tools/tests/results_all.php']['guide'] = 'instructor/?p=15.5.student_submissions.php';
+$this->_pages['tools/tests/results_all.php']['guide'] = 'instructor/?p=15.7.student_submissions.php';
 
 //$this->_pages['tools/tests/results_all_quest.php']['title_var']  =  _AT('question')." "._AT('statistics');
 //$this->_pages['tools/tests/results_all_quest.php']['parent'] = 'tools/tests/index.php';
-$this->_pages['tools/tests/results_all_quest.php']['guide']     = 'instructor/?p=15.6.test_statistics.php';
+$this->_pages['tools/tests/results_all_quest.php']['guide']     = 'instructor/?p=15.8.statistics.php';
 
 $this->_pages['tools/tests/delete_test.php']['title_var'] = 'delete_test';
 $this->_pages['tools/tests/delete_test.php']['parent']    = 'tools/tests/index.php';
