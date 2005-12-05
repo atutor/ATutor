@@ -97,13 +97,16 @@ if (isset($_POST['up'])) {
 if (isset($_POST['submit'])) {
 	if (isset($_POST['main'])) {
 		$_POST['main'] = array_unique($_POST['main']);
+		$_POST['main'] = array_filter($_POST['main']); // remove empties
 		$main_defaults = implode('|', $_POST['main']);
+
 	} else {
 		$main_defaults = '';
 	}
 
 	if (isset($_POST['home'])) {
 		$_POST['home'] = array_unique($_POST['home']);
+		$_POST['home'] = array_filter($_POST['home']); // remove empties
 		$home_defaults = implode('|', $_POST['home']);
 	} else {
 		$home_defaults = '';
@@ -111,15 +114,40 @@ if (isset($_POST['submit'])) {
 
 	if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) < 256)) {
 		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults')";
+		$result = mysql_query($sql, $db);
+
+		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults_2'";
+	} else if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) > 255)) {
+		// we don't have to worry about chopping in the middle since they'll be combined anyway
+		$main_defaults_1 = substr($main_defaults, 0, 255);
+		$main_defaults_2 = substr($main_defaults, 255);
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults_1')";
+		$result = mysql_query($sql, $db);
+
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults_2', '$main_defaults_2')";
 	} else if ($_config_defaults['main_defaults'] == $main_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults'";
+		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults' OR name='name_defaults_2'";
 	}
 	$result = mysql_query($sql, $db);
 
+
 	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) < 256)) {
 		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults')";
+		$result = mysql_query($sql, $db);
+
+		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults_2'";
+
+	} else 	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) > 255)) {
+		// we don't have to worry about chopping in the middle since they'll be combined anyway
+		$home_defaults_1 = substr($home_defaults, 0, 255);
+		$home_defaults_2 = substr($home_defaults, 255);
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults_1')";
+		$result = mysql_query($sql, $db);
+
+		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults_2', '$home_defaults_2')";
+
 	} else if ($_config_defaults['home_defaults'] == $home_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults'";
+		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults' OR name='home_defaults_2'";
 	}
 	$result = mysql_query($sql, $db);
 
@@ -128,10 +156,14 @@ if (isset($_POST['submit'])) {
 	exit;
 }
 
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$home_defaults = explode('|', $_config['home_defaults']);
 $main_defaults = explode('|', $_config['main_defaults']);
+$home_defaults = explode('|', $_config['home_defaults']);
+
+$main_defaults = array_filter($main_defaults); // remove empties
+$home_defaults = array_filter($home_defaults); // remove empties
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -158,28 +190,25 @@ $keys = array_keys($module_list);
 
 foreach ($keys as $dir_name) {
 	$module =& $module_list[$dir_name]; 
-	$tool = $module->getStudentTools();
-	if (!empty($tool) && is_string($tool)) {
-		$student_tools[] = $tool;
+
+	if ($module->getStudentTools()) {
+		$student_tools[] = $module->getStudentTools();
 	}
 }
+
 $count = 0;
 
 //main mods
-$_current_modules = $main_defaults; 
+$_current_modules = $main_defaults;
 $num_main    = count($_current_modules);
 //main and home merged
-$_current_modules = array_merge($_current_modules, array_diff($home_defaults,$main_defaults) );
+$_current_modules = array_merge($_current_modules, array_diff($home_defaults, $main_defaults));
 $num_modules = count($_current_modules);
 //all other mods
 $_current_modules = array_merge($_current_modules, array_diff($student_tools, $_current_modules));
 
-foreach ($_current_modules as $tool) :
 
-	//make sure disabled mods aren't included
-	if (!in_array($tool, $student_tools)) {
-		continue;
-	}
+foreach ($_current_modules as $tool) :
 	$count++; 
 ?>
 	<tr>
@@ -203,19 +232,19 @@ foreach ($_current_modules as $tool) :
 			<?php endif; ?>
 		</td>
 		<td align="right">
-			<?php if (in_array($tool, $home_defaults) && in_array($tool, $main_defaults)): ?>
-
+			<?php if (!in_array($tool, $home_defaults) && !in_array($tool, $main_defaults)): ?>
+				&nbsp;
 			<?php else: ?>
-			<?php if (($count != $num_modules+1) && ($count > 1)): ?>
-				<input type="submit" name="up[<?php echo $tool; ?>]" value="<?php echo _AT('move_up'); ?>" title="<?php echo _AT('move_up'); ?>" style="background-color: white; border: 1px solid; padding: 0px;" />
-			<?php else: ?>
-				<img src="images/clr.gif" alt="" width="12" />
-			<?php endif; ?>
-			<?php if (($count != $num_modules) && ($count < $num_modules)): ?>
-				<input type="submit" name="down[<?php echo $tool; ?>]" value="<?php echo _AT('move_down'); ?>" title="<?php echo _AT('move_down'); ?>" style="background-color: white; border: 1px solid; padding: 0px;"/>
-			<?php else: ?>
-				<img src="images/clr.gif" alt="" width="12" />
-			<?php endif; ?>
+				<?php if (($count != $num_main+1) && ($count > 1)): ?>
+					<input type="submit" name="up[<?php echo $tool; ?>]" value="<?php echo _AT('move_up'); ?>" title="<?php echo _AT('move_up'); ?>" style="background-color: white; border: 1px solid; padding: 0px;" />
+				<?php else: ?>
+					<img src="images/clr.gif" alt="" width="12" />
+				<?php endif; ?>
+				<?php if (($count != $num_main) && ($count < $num_modules)): ?>
+					<input type="submit" name="down[<?php echo $tool; ?>]" value="<?php echo _AT('move_down'); ?>" title="<?php echo _AT('move_down'); ?>" style="background-color: white; border: 1px solid; padding: 0px;"/>
+				<?php else: ?>
+					<img src="images/clr.gif" alt="" width="12" />
+				<?php endif; ?>
 			<?php endif; ?>
 		</td>
 	</tr>
