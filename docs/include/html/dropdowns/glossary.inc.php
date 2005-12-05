@@ -25,33 +25,39 @@ $result = $contentManager->getContentPage($_GET['cid']);
 if ($result && ($row = mysql_fetch_array($result))) {
 	$matches = find_terms($row['text']);
 	$matches = $matches[0];
-	$word = str_replace(array('[?]', '[/?]'), '', $matches);
-	$word = str_replace("\n", ' ', $word);
-	$word = array_unique($word);
+	$words = str_replace(array('[?]', '[/?]'), '', $matches);
+	$words = str_replace("\n", ' ', $words);
 
-	if (count($word) > 0) {
+	//case-insensitive, unique array of words
+	function to_lower (&$str, $key) {
+		$str = strtolower($str);
+	}
+	array_walk(&$words, 'to_lower');
+	$words = array_unique($words);
+
+	if (count($words) > 0) {
 		$count = 0;
 
 		$glossary_key_lower = array_change_key_case($glossary);
 
-		foreach ($word as $k => $v) {
+		foreach ($words as $k => $v) {
 			$original_v = $v;
-			$v = urlencode(strtolower($v));
+			$v = urlencode($v);
 
 			if ($glossary_key_lower[$v] != '') {
 
-				if (strlen($original_v) > 26 ) {
-					$v_formatted = substr($original_v, 0, 26-4).'...';
-				}else{
-					$v_formatted = $original_v;
-				}
-				
+				$v_formatted = urldecode(array_search($glossary_key_lower[$v], $glossary));
+
 				$def = AT_print($glossary_key_lower[$v], 'glossary.definition');
 
 				$count++;
 				//echo '&#176; <a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
 
-				echo '<a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_v).'#term" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.addslashes($original_v).'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.addslashes($original_v).'\', AUTOSTATUS);" onblur="return nd();">'.AT_print($v_formatted, 'glossary.word').'</a>';
+				echo '<a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_v).'#term" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.addslashes($v_formatted).'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.addslashes($v_formatted).'\', AUTOSTATUS);" onblur="return nd();">';
+				if (strlen($original_v) > 26 ) {
+					$v_formatted = substr($v_formatted, 0, 26-4).'...';
+				}
+				echo AT_print($v_formatted, 'glossary.word').'</a>';
 				echo '<br />';
 			}
 		}
