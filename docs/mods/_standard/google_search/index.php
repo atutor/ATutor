@@ -32,11 +32,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<input type="submit" name="submit" value="<?php echo _AT('search'); ?>" accesskey="s" />
 		</div>
 
-		<?php if (defined('HOME_URL') && HOME_URL): ?>
-			<div class="row">
-				<input type="checkbox" name="site_search" <?php if ($_GET['site_search']) { echo 'checked="checked"'; } ?> /><?php echo _AT('search_site', HOME_URL); ?>
-			</div>
-		<?php endif; ?>
 		<div class="row">
 			<small><?php echo _AT('powered_by_google'); ?></small>
 		</div>
@@ -51,9 +46,6 @@ if (isset($_GET['submit'])) {
 	$search_array['query'] = stripslashes($_GET['q']);
 	$search_array['maxResults'] = 10;
 	$search_array['lr'] = "lang_en";
-	if ($_GET['site_search']) {
-		$search_array['query'] .= ' site:'.HOME_URL;
-	}
 
 	$result = $google->search($search_array);
 
