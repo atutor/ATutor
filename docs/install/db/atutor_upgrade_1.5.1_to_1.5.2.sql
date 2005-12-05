@@ -86,3 +86,6 @@ INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0);
 
 
 ALTER TABLE `admin_log` CHANGE `details` `details` TEXT NOT NULL;
+
+
+ALTER TABLE `courses` CHANGE `home_links` `home_links` TEXT NOT NULL ,CHANGE `main_links` `main_links` TEXT NOT NULL;

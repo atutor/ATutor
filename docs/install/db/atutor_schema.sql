@@ -142,8 +142,8 @@ CREATE TABLE `courses` (
   `primary_language` varchar(5) NOT NULL default '',
   `rss` tinyint NOT NULL default 0,
   `icon` varchar(20) NOT NULL default '',
-  `home_links` VARCHAR( 255 ) NOT NULL ,
-  `main_links` VARCHAR( 255 ) NOT NULL ,
+  `home_links` text NOT NULL ,
+  `main_links` text NOT NULL ,
   `side_menu` VARCHAR( 255 ) NOT NULL ,
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;
