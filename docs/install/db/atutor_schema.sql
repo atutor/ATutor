@@ -404,43 +404,44 @@ CREATE TABLE `messages` (
 # Table structure for table `modules` (since 1.5.2)
 
 CREATE TABLE `modules` (  
-`dir_name` VARCHAR( 50 ) NOT NULL ,  
+`dir_name` VARCHAR( 50 ) NOT NULL , 
+`type` TINYINT NOT NULL,
 `status` TINYINT NOT NULL ,  
 `privilege` MEDIUMINT UNSIGNED NOT NULL ,  
 `admin_privilege` MEDIUMINT UNSIGNED NOT NULL ,  
 PRIMARY KEY ( `dir_name` )  
 );
 
-INSERT INTO `modules` VALUES ('_core/properties',        2, 1,         0);
-INSERT INTO `modules` VALUES ('_standard/statistics',    2, 1,         0);
-INSERT INTO `modules` VALUES ('_core/content',           2, 2,         0);
-INSERT INTO `modules` VALUES ('_core/glossary',          2, 4,         0);
-INSERT INTO `modules` VALUES ('_standard/tests',         2, 8,         0);
-INSERT INTO `modules` VALUES ('_standard/chat',          2, 16,        0);
-INSERT INTO `modules` VALUES ('_core/file_manager',      2, 32,        0);
-INSERT INTO `modules` VALUES ('_standard/links',         2, 64,        0);
-INSERT INTO `modules` VALUES ('_standard/forums',        2, 128,       16);
-INSERT INTO `modules` VALUES ('_standard/student_tools', 2, 256,       0);
-INSERT INTO `modules` VALUES ('_core/enrolment',         2, 512,       0);
-INSERT INTO `modules` VALUES ('_standard/course_email',  2, 1024,      0);
-INSERT INTO `modules` VALUES ('_standard/announcements', 2, 2048,      0);
-# INSERT INTO `modules` VALUES ('acollab',               2, 8192+4096, 0);
-INSERT INTO `modules` VALUES ('_standard/polls',         2, 16384,     0);
-INSERT INTO `modules` VALUES ('_standard/faq',           2, 32768,     0);
-INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2);
-INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4);
-INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8);
-INSERT INTO `modules` VALUES ('_core/cats_categories',   2, 0,         32);
-INSERT INTO `modules` VALUES ('_core/languages',         2, 0,         64);
-INSERT INTO `modules` VALUES ('_core/themes',            2, 0,         128);
-INSERT INTO `modules` VALUES ('_standard/rss_feeds',	 2, 0,	       256);
-INSERT INTO `modules` VALUES ('_core/groups',            2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/directory',     2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/tile_search',   2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/sitemap',       2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/tracker',       2, 0, 0);
-INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0);
+INSERT INTO `modules` VALUES ('mods/_core/properties',        1, 2, 1,         0);
+INSERT INTO `modules` VALUES ('mods/_standard/statistics',    2, 2, 1,         0);
+INSERT INTO `modules` VALUES ('mods/_core/content',           1, 2, 2,         0);
+INSERT INTO `modules` VALUES ('mods/_core/glossary',          1, 2, 4,         0);
+INSERT INTO `modules` VALUES ('mods/_standard/tests',         2, 2, 8,         0);
+INSERT INTO `modules` VALUES ('mods/_standard/chat',          2, 2, 16,        0);
+INSERT INTO `modules` VALUES ('mods/_core/file_manager',      1, 2, 32,        0);
+INSERT INTO `modules` VALUES ('mods/_standard/links',         2, 2, 64,        0);
+INSERT INTO `modules` VALUES ('mods/_standard/forums',        2, 2, 128,       16);
+INSERT INTO `modules` VALUES ('mods/_standard/student_tools', 2, 2, 256,       0);
+INSERT INTO `modules` VALUES ('mods/_core/enrolment',         1, 2, 512,       0);
+INSERT INTO `modules` VALUES ('mods/_standard/course_email',  2, 2, 1024,      0);
+INSERT INTO `modules` VALUES ('tools/announcements',          2, 2, 2048,      0);
+# INSERT INTO `modules` VALUES ('mods/acollab',               2, 8192+4096,    0);
+INSERT INTO `modules` VALUES ('tools/polls',                  2, 2, 16384,     0);
+INSERT INTO `modules` VALUES ('mods/_standard/faq',           2, 2, 32768,     0);
+INSERT INTO `modules` VALUES ('mods/_core/users',             1, 2, 0,         2);
+INSERT INTO `modules` VALUES ('mods/_core/courses',           1, 2, 0,         4);
+INSERT INTO `modules` VALUES ('mods/_core/backups',           1, 2, 1,         8);
+INSERT INTO `modules` VALUES ('mods/_core/cats_categories',   1, 2, 0,         32);
+INSERT INTO `modules` VALUES ('mods/_core/languages',         1, 2, 0,         64);
+INSERT INTO `modules` VALUES ('mods/_core/themes',            1, 2, 0,         128);
+INSERT INTO `modules` VALUES ('mods/_standard/rss_feeds',     2, 2, 0,         256);
+INSERT INTO `modules` VALUES ('mods/_core/groups',            1, 2, 0, 0);
+INSERT INTO `modules` VALUES ('mods/_standard/directory',     2, 2, 0, 0);
+INSERT INTO `modules` VALUES ('mods/_standard/tile_search',   2, 2, 0, 0);
+INSERT INTO `modules` VALUES ('mods/_standard/sitemap',       2, 2, 0, 0);
+INSERT INTO `modules` VALUES ('mods/_standard/tracker',       2, 2, 0, 0);
+INSERT INTO `modules` VALUES ('mods/_core/content_packaging', 1, 2, 0, 0);
+INSERT INTO `modules` VALUES ('mods/_standard/google_search', 2, 2, 0, 0);
 
 
 # --------------------------------------------------------

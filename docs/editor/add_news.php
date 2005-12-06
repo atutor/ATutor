@@ -24,7 +24,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'tools/news/index.php');
+	header('Location: '.$_base_href.'tools/announcements/index.php');
 	exit;
 } 
 
@@ -57,7 +57,7 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 			@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml');
 		}
 
-		header('Location: '.$_base_href.'tools/news/index.php');
+		header('Location: '.$_base_href.'tools/announcements/index.php');
 		exit;
 	}
 }

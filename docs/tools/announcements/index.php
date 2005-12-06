@@ -62,8 +62,8 @@ $result = mysql_query($sql, $db);
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><a href="tools/news/index.php?<?php echo $orders[$order]; ?>=title"><?php echo _AT('title'); ?></a></th>
-	<th scope="col"><a href="tools/news/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th>
+	<th scope="col"><a href="tools/announcements/index.php?<?php echo $orders[$order]; ?>=title"><?php echo _AT('title'); ?></a></th>
+	<th scope="col"><a href="tools/announcements/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th>
 </tr>
 </thead>
 <tfoot>

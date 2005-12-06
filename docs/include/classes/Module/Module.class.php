@@ -21,9 +21,6 @@ define('AT_MODULE_TYPE_CORE',     1);
 define('AT_MODULE_TYPE_STANDARD', 2);
 define('AT_MODULE_TYPE_EXTRA',    4);
 
-define('AT_MODULE_DIR_CORE',     '_core');
-define('AT_MODULE_DIR_STANDARD', '_standard');
-
 define('AT_MODULE_PATH', realpath(AT_INCLUDE_PATH.'../mods') . DIRECTORY_SEPARATOR);
 
 /**
@@ -44,7 +41,7 @@ class ModuleFactory {
 		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
-		require(AT_MODULE_PATH . $row['dir_name'].'/module.php');
+		require(AT_INCLUDE_PATH .'../'. $row['dir_name'].'/module.php');
 		$module =& new PropertiesModule($row);
 		***/
 
@@ -52,7 +49,7 @@ class ModuleFactory {
 
 		if ($auto_load == TRUE) {
 			// initialise enabled modules
-			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
+			$sql	= "SELECT dir_name, type, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
 			$result = mysql_query($sql, $db);
 			while($row = mysql_fetch_assoc($result)) {
 				$module =& new Module($row);
@@ -77,7 +74,7 @@ class ModuleFactory {
 			$type = AT_MODULE_TYPE_CORE | AT_MODULE_TYPE_STANDARD | AT_MODULE_TYPE_EXTRA;
 		}
 
-		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules";
+		$sql	= "SELECT dir_name, type, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules";
 		$result = mysql_query($sql, $db);
 		while($row = mysql_fetch_assoc($result)) {
 			if (!isset($this->_modules[$row['dir_name']])) {
@@ -94,13 +91,11 @@ class ModuleFactory {
 			while (false !== ($dir_name = readdir($dir))) {
 				if (($dir_name == '.') 
 					|| ($dir_name == '..') 
-					|| ($dir_name == '.svn') 
-					|| ($dir_name == AT_MODULE_DIR_CORE) 
-					|| ($dir_name == AT_MODULE_DIR_STANDARD)) {
+					|| ($dir_name == '.svn')) {
 					continue;
 				}
 
-				if (is_dir(AT_MODULE_PATH . $dir_name) && !isset($all_modules[$dir_name])) {
+				if (is_dir(AT_INCLUDE_PATH .'../'. $dir_name) && !isset($all_modules[$dir_name])) {
 					$module =& new Module($dir_name);
 					$all_modules[$dir_name] =& $module;
 				}
@@ -126,7 +121,7 @@ class ModuleFactory {
 	function & getModule($module_dir) {
 		if (!isset($this->_modules[$module_dir])) {
 			global $db;
-			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE dir_name='$module_dir'";
+			$sql	= "SELECT dir_name, type, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE dir_name='$module_dir'";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
 				$module =& new Module($row);
@@ -168,18 +163,11 @@ class Module {
 	function Module($row) {
 		if (is_array($row)) {
 			$this->_directoryName   = $row['dir_name'];
+			$this->_type            = $row['type'];
 			$this->_status          = $row['status'];
 			$this->_privilege       = $row['privilege'];
 			$this->_admin_privilege = $row['admin_privilege'];
 			$this->_display_defaults= $row['display_defaults'];
-
-			if (strpos($row['dir_name'], AT_MODULE_DIR_CORE) === 0) {
-				$this->_type = AT_MODULE_TYPE_CORE;
-			} else if (strpos($row['dir_name'], AT_MODULE_DIR_STANDARD) === 0) {
-				$this->_type = AT_MODULE_TYPE_STANDARD;
-			} else {
-				$this->_type = AT_MODULE_TYPE_EXTRA;
-			}
 		} else {
 			$this->_directoryName   = $row;
 			$this->_status          = AT_MODULE_STATUS_UNINSTALLED;
@@ -208,10 +196,10 @@ class Module {
 	function getAdminPrivilege() { return $this->_admin_privilege; }
 
 	function load() {
-		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module.php')) {
+		if (is_file(AT_INCLUDE_PATH .'../'. $this->_directoryName.'/module.php')) {
 			global $_modules, $_pages, $_stacks;
 
-			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
+			require(AT_INCLUDE_PATH .'../'. $this->_directoryName.'/module.php');
 
 			if (isset($this->_pages)) {
 				$_pages = array_merge_recursive($_pages, $this->_pages);
@@ -228,7 +216,7 @@ class Module {
 				$this->_student_tool =& $_student_tool;
 				$_modules[] = $this->_student_tool;
 			}
-		}					
+		}
 	}
 
 	// private
@@ -236,7 +224,7 @@ class Module {
 		if (!isset($this->_properties)) {
 			require_once(dirname(__FILE__) . '/ModuleParser.class.php');
 			$moduleParser   =& new ModuleParser();
-			$moduleParser->parse(@file_get_contents(AT_MODULE_PATH . $this->_directoryName.'/module.xml'));
+			$moduleParser->parse(@file_get_contents(AT_INCLUDE_PATH .'../'.$this->_directoryName.'/module.xml'));
 			if ($moduleParser->rows[0]) {
 				$this->_properties = $moduleParser->rows[0];
 			} else {
@@ -319,7 +307,7 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function isBackupable() {
-		return is_file(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
+		return is_file(AT_INCLUDE_PATH .'../'. $this->_directoryName.'/module_backup.php');
 	}
 
 	/**
@@ -339,7 +327,7 @@ class Module {
 		$now = time();
 
 		if ($this->isBackupable()) {
-			require(AT_MODULE_PATH . $this->_directoryName . '/module_backup.php');
+			require(AT_INCLUDE_PATH .'../'. $this->_directoryName . '/module_backup.php');
 			if (isset($sql)) {
 				foreach ($sql as $file_name => $table_sql) {
 					$content = $CSVExport->export($table_sql, $course_id);
@@ -367,7 +355,7 @@ class Module {
 	*/
 	function restore($course_id, $version, $import_dir) {
 		static $CSVImport;
-		if (!file_exists(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php')) {
+		if (!file_exists(AT_INCLUDE_PATH .'../'. $this->_directoryName.'/module_backup.php')) {
 			return;
 		}
 
@@ -376,7 +364,7 @@ class Module {
 			$CSVImport = new CSVImport();
 		}
 
-		require(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
+		require(AT_INCLUDE_PATH .'../'. $this->_directoryName.'/module_backup.php');
 		if (isset($sql)) {
 			foreach ($sql as $table_name => $table_sql) {
 				$CSVImport->import($table_name, $import_dir, $course_id, $version);
@@ -397,8 +385,8 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function delete($course_id) {
-		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php')) {
-			require(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php');
+		if (is_file(AT_INCLUDE_PATH .'../'. $this->_directoryName.'/module_delete.php')) {
+			require(AT_INCLUDE_PATH .'../'. $this->_directoryName.'/module_delete.php');
 			if (function_exists(basename($this->_directoryName).'_delete')) {
 				$fnctn = basename($this->_directoryName).'_delete';
 				$fnctn($course_id);
@@ -459,8 +447,8 @@ class Module {
 
 		// should check if this module is already installed...
 
-		if (file_exists(AT_MODULE_PATH . $this->_directoryName . '/module_install.php')) {
-			require(AT_MODULE_PATH . $this->_directoryName . '/module_install.php');
+		if (file_exists(AT_INCLUDE_PATH .'../'. $this->_directoryName . '/module_install.php')) {
+			require(AT_INCLUDE_PATH .'../'. $this->_directoryName . '/module_install.php');
 		}
 
 		if (!$msg->containsErrors()) {
@@ -484,7 +472,7 @@ class Module {
 				$admin_priv = AT_ADMIN_PRIV_ADMIN;
 			}
 
-			$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.')';
+			$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_TYPE_EXTRA.', '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.')';
 			$result = mysql_query($sql, $db);
 		}
 	}

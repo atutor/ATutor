@@ -18,7 +18,7 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'tools/news/index.php');
+	header('Location: '.$_base_href.'tools/announcements/index.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['form_news_id'] = intval($_POST['form_news_id']);
@@ -35,7 +35,7 @@ if (isset($_POST['submit_no'])) {
 	}
 
 	$msg->addFeedback('NEWS_DELETED');
-	header('Location: '.$_base_href.'tools/news/index.php');
+	header('Location: '.$_base_href.'tools/announcements/index.php');
 	exit;
 }
 

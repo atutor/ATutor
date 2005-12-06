@@ -27,5 +27,4 @@ $this->_pages['tools/polls/index.php']['guide']     = 'instructor/?p=11.0.polls.
 	$this->_pages['tools/polls/delete.php']['title_var'] = 'delete_poll';
 	$this->_pages['tools/polls/delete.php']['parent']    = 'tools/polls/index.php';
 
-
 ?>
