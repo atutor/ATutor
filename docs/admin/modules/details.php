@@ -16,8 +16,6 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
-
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
@@ -42,11 +40,9 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$moduleParser =& new ModuleParser();
-
 $_REQUEST['mod'] = str_replace(array('.','..'), '', $_REQUEST['mod']);
 
-if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
+if (!file_exists(AT_INCLUDE_PATH . '../'.$_GET['mod'].'/module.xml')) {
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
@@ -74,7 +70,7 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 	exit;
 }
 
-$moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
+//$moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
 
 $module =& $moduleFactory->getModule($_GET['mod']);
 

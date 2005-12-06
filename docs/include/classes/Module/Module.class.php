@@ -91,13 +91,15 @@ class ModuleFactory {
 			while (false !== ($dir_name = readdir($dir))) {
 				if (($dir_name == '.') 
 					|| ($dir_name == '..') 
-					|| ($dir_name == '.svn')) {
+					|| ($dir_name == '.svn')
+					|| ($dir_name == '_standard')
+					|| ($dir_name == '_core')) {
 					continue;
 				}
 
-				if (is_dir(AT_INCLUDE_PATH .'../'. $dir_name) && !isset($all_modules[$dir_name])) {
-					$module =& new Module($dir_name);
-					$all_modules[$dir_name] =& $module;
+				if (is_dir(AT_MODULE_PATH . $dir_name) && !isset($all_modules['mods/' . $dir_name])) {
+					$module =& new Module('mods/' . $dir_name);
+					$all_modules['mods/' .$dir_name] =& $module;
 				}
 			}
 			closedir($dir);
