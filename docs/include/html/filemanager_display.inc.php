@@ -310,107 +310,29 @@ echo '</table></form>';
 
 <script type="text/javascript">
 <!--
+
 function insertFile(fileName, pathTo, ext) { 
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
 		var info = "<?php echo _AT('alternate_text'); ?>";
-		var imageString = '<img src="'+ pathTo+fileName + '" alt="'+ info +'" />';
 
-		if (window.parent.editor) {
-			if (window.parent.editor._editMode == "textmode") {
-				insertAtCursor2(window.parent.document.form.body_text, imageString);
-			}
-			else {
-				window.parent.editor.focusEditor();
-				window.parent.editor.insertHTML(imageString);
-				window.parent.editor.focusEditor();
-			}
+		if (window.parent.tinyMCE) {
+			window.parent.tinyMCE.insertImage(pathTo+fileName, info, '', '', '', '', '', '', info, '', '');
+		} else if (window.opener.tinyMCE) {
+			window.opener.tinyMCE.insertImage(pathTo+fileName, info, '', '', '', '', '', '', info, '', '');
 		}
-		else if (window.opener.editor) {
-			if (window.opener.editor._editMode != "textmode") {
-				window.opener.editor.focusEditor();
-				window.opener.editor.insertHTML(imageString);
-				window.opener.editor.focusEditor();
-			}
-			else {
-				insertAtCursor(window.opener.document.form.body_text, imageString);
-			}
-		}
-		else {
-			insertAtCursor(window.opener.document.form.body_text, imageString);
-		}
-	}
-	
-	else {
+
+	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
-		var fileString  = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 
-		if (window.parent.editor) {
-			if (window.parent.editor._editMode == "textmode") {
-				insertAtCursor2(window.parent.document.form.body_text, fileString);
-			}
-			else {
-				window.parent.editor.focusEditor();
-				window.parent.editor.insertHTML(fileString);
-				window.parent.editor.focusEditor();
-			}
-		}
-		else if (window.opener.editor) {
-			if (window.opener.editor._editMode != "textmode") {
-				window.opener.editor.focusEditor();
-				window.opener.editor.insertHTML(fileString);
-				window.opener.editor.focusEditor();
-			}
-			else {
-				insertAtCursor(window.opener.document.form.body_text, fileString);
-			}
-		}
-		else {
-			insertAtCursor(window.opener.document.form.body_text, fileString);
+		if (window.parent.tinyMCE) {
+			window.parent.tinyMCE.execCommand("mceInsertContent", false, '<a href="' + pathTo+fileName + '">' + info + '</a>');
+			
+		} else if (window.opener.tinyMCE) {
+			window.opener.tinyMCE.insertLink(pathTo+fileName, '', inno, '', '');
 		}
 	}
 }
 
-function insertAtCursor(myField, myValue) {
-	//IE support
-	if (window.opener.document.selection) {
-		myField.focus();
-		sel = window.opener.document.selection.createRange();
-		sel.text = myValue;
-	}
-	//MOZILLA/NETSCAPE support
-	else if (myField.selectionStart || myField.selectionStart == '0') {
-		var startPos = myField.selectionStart;
-		var endPos = myField.selectionEnd;
-		myField.value = myField.value.substring(0, startPos)
-		+ myValue
-		+ myField.value.substring(endPos, myField.value.length);
-		myField.focus();
-	} else {
-		myField.value += myValue;
-		myField.focus();
-	}
-}
-
-function insertAtCursor2(myField, myValue) {
-	//IE support
-	if (window.parent.document.selection) {
-		myField.focus();
-		sel = window.parent.document.selection.createRange();
-		sel.text = myValue;
-	}
-	//MOZILLA/NETSCAPE support
-	else if (myField.selectionStart || myField.selectionStart == '0') {
-		var startPos = myField.selectionStart;
-		var endPos = myField.selectionEnd;
-		myField.value = myField.value.substring(0, startPos)
-		+ myValue
-		+ myField.value.substring(endPos, myField.value.length);
-		myField.focus();
-	} else {
-		myField.value += myValue;
-		myField.focus();
-	}
-}
 -->
 </script>
