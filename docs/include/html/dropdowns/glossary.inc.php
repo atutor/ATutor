@@ -29,10 +29,9 @@ if ($result && ($row = mysql_fetch_array($result))) {
 	$words = str_replace("\n", ' ', $words);
 
 	//case-insensitive, unique array of words
-	function to_lower (&$str, $key) {
-		$str = strtolower($str);
+	for($i=0;$i<count($words);$i++) {
+		$words[$i] = strtolower($words[$i]);
 	}
-	array_walk(&$words, 'to_lower');
 	$words = array_unique($words);
 
 	if (count($words) > 0) {
