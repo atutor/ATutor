@@ -748,7 +748,7 @@ function load_editor() {
 	theme_advanced_buttons2_add : "separator,insertdate,inserttime,preview,zoom,separator,forecolor,backcolor",
 	theme_advanced_buttons2_add_before: "cut,copy,paste,separator,search,replace,separator",
 	theme_advanced_buttons3_add_before : "tablecontrols,separator",
-	theme_advanced_buttons3_add : "emotions,iespell,flash,advhr,separator,print",
+	theme_advanced_buttons3_add : "emotions,iespell,flash,advhr,separator,print,acheck",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_path_location : "bottom",
