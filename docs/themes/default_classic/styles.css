@@ -1166,7 +1166,7 @@ ol#tools>li:hover {
 
 /* ol#tools>li>a */ li.top-tool a {  font-weight: bold; }
 
-li.child-tool a { font-size: normal; font-weight: normal; }
+li.child-tool a { font-size: x-small; font-weight: normal; }
 
 /* ol#tools>li>ul, */ ul.child-top-tool {
 	margin-top: -5px;
