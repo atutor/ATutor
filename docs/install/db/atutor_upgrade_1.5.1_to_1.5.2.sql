@@ -58,7 +58,7 @@ INSERT INTO `modules` VALUES ('mods/_core/properties',        1, 2, 1,         0
 INSERT INTO `modules` VALUES ('mods/_standard/statistics',    2, 2, 1,         0);
 INSERT INTO `modules` VALUES ('mods/_core/content',           1, 2, 2,         0);
 INSERT INTO `modules` VALUES ('mods/_core/glossary',          1, 2, 4,         0);
-INSERT INTO `modules` VALUES ('mods/_standard/tests',         2, 2, 8,         0);
+INSERT INTO `modules` VALUES ('tools/tests',                  2, 2, 8,         0);
 INSERT INTO `modules` VALUES ('mods/_standard/chat',          2, 2, 16,        0);
 INSERT INTO `modules` VALUES ('mods/_core/file_manager',      1, 2, 32,        0);
 INSERT INTO `modules` VALUES ('mods/_standard/links',         2, 2, 64,        0);
