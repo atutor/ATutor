@@ -1156,7 +1156,30 @@ ul.rss_feed {
 }
 
 /* the tools page */
-ol#tools { }
-ol#tools li { line-height: 200%; }
-ol#tools li a { background-color: #fdfdfd; display: block; width: 50%; margin: 5px 5px 5px 0px; padding-left: 10px; -moz-border-radius: 4px;}
-ol#tools li a:hover, ol#tools li a:focus {background-color: #f5f5ff; }
+ol#tools { width: 90%; }
+/* ol#tools>li */ li.top-tool { padding: 2px 2px 2px 15px; margin-bottom: 5px; line-height: 200%; background-color: #fdfdfd; border-bottom: 1px solid #efefef; -moz-border-radius: 4px; list-style-position: inside;  border: 1px solid #eeeeff;}
+
+ol#tools>li:hover {
+	border: 1px solid #e0e0e0;
+	background-color: #f5f5ff;
+}
+
+/* ol#tools>li>a */ li.top-tool a {  font-weight: bold; }
+
+li.child-tool a { font-size: normal; font-weight: normal; }
+
+/* ol#tools>li>ul, */ ul.child-top-tool {
+	margin-top: -5px;
+	padding-left: 0px;
+	margin-left: 0px;
+	display: inline;
+}
+ul.child-top-tool:before {
+	content: " : ";
+}
+
+/* ol#tools>li>ul>li, */ li.child-tool {
+	display: inline;
+	margin-right: 5px;
+	font-size: x-small;
+}
