@@ -3,6 +3,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	
 global $db;
 
+$_course_privilege = TRUE; // possible values: FALSE | AT_PRIV_ADMIN | TRUE
+
 // check if both constants defined
 if (!defined('AC_PATH') || !defined('AC_TABLE_PREFIX')) {	
 	$msg->addError(array('MODULE_INSTALL', '<li>You must uncomment and define the AC_PATH and AC_TABLE_PREFIX variables at the bottom of the ./mod/acollab/module.php file.</li>'));
