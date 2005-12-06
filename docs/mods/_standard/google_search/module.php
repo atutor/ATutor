@@ -10,7 +10,8 @@ $this->_pages['admin/index.php']['children'] = array('mods/_standard/google_sear
 $_student_tool = 'mods/_standard/google_search/index.php';
 
 //side menu
-$this->_stacks['google_search'] = array('title_var'=>'google_search', 'file'=>dirname(__FILE__).'\side_menu.inc.php');
+$this->_stacks['google_search'] = array('title_var'=>'google_search', 'file'=>dirname(__FILE__).'/side_menu.inc.php');
+
 
 $this->_pages['mods/_standard/google_search/index.php']['title_var'] = 'google_search';
 $this->_pages['mods/_standard/google_search/index.php']['img']       = 'mods/_standard/google_search/google.gif';
