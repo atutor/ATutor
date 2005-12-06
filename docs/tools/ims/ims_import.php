@@ -464,11 +464,9 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 				continue;
 			}
 			$content = get_html_body($content);
-
 			if ($contains_glossary_terms) {
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
-				$content = preg_replace('/<a href="(.)*" target="body" class="at-term">([\w ]*)<\/a>/i', '[?]\\2[/?]', $content);
-
+				$content = preg_replace('/<a href="([.\w\d\s]+[^"]+)" target="body" class="at-term">([.\w\d\s"]+)<\/a>/i', '[?]\\2[/?]', $content);
 			}
 			/* potential security risk? */
 			if ( strpos($content_info['href'], '..') === false) {
