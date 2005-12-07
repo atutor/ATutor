@@ -36,16 +36,8 @@ function check_location(){
 </script>
 
 <div align="center">
-<iframe onload="check_location();" src ="<?php
-if($_GET['p'] != ''){
-	$page = urldecode($_GET['p']);
-} else {
-	$page = 'index.php';
-}
-	echo AC_PATH . $page; ?>" style="border:1px solid #788CB3; margin: 4px;" height="640" width="98%" id="acollab_frame" title="<?php echo _AT('acollab_frame'); ?>" name="acollab_frame">
+<iframe src ="acollab/bounce.php" style="border:1px solid #788CB3; margin: 4px;" height="640" width="98%" id="acollab_frame" title="<?php echo _AT('acollab_frame'); ?>" name="acollab_frame">
 </iframe>
 </div>
 
-<?php
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

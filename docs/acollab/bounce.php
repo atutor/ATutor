@@ -30,10 +30,6 @@ if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) || authenticate(AT_PRIV_ACOLLAB,
 
 session_write_close();
 
-//$page = 'index.php?p='.$_GET['p'];
-
-$page = $_config['ac_path'];
-
-header('Location: '. $page);
+header('Location: '. AC_PATH . 'index.php');
 exit;
 ?>

@@ -61,7 +61,7 @@ natsort($keys);
 <tbody>
 <?php if (!empty($keys)): ?>
 	<?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; ?>
-		<tr onmousedown="document.installform['m_<?php echo $dir_name; ?>'].checked = true;">
+		<tr onmousedown="document.installform['m_<?php echo $dir_name; ?>'].checked = true; rowselect(this);" id="r_<?php echo $dir_name; ?>">
 			<td valign="top"><input type="radio" id="m_<?php echo $dir_name; ?>" name="mod" value="<?php echo $dir_name; ?>" /></td>
 			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><?php echo $module->getName(); ?></label></td>
 			<td valign="top"><code><?php echo $dir_name; ?>/</code></td>

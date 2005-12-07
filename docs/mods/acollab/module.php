@@ -8,7 +8,7 @@ define('AT_PRIV_ACOLLAB', $this->getPrivilege());
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tool = 'acollab/index.php';
 
-$this->_pages['acollab/index.php']['parent']    = 'tools/index.php';
+//$this->_pages['acollab/index.php']['parent']    = 'tools/index.php';
 $this->_pages['acollab/index.php']['title_var'] = 'acollab';
 $this->_pages['acollab/index.php']['img']       = 'images/home-acollab.gif';
 
@@ -18,6 +18,6 @@ $this->_pages['acollab/index.php']['img']       = 'images/home-acollab.gif';
 
 
 //enter values for these entries 
-define('AC_PATH',			'http://localhost/atutorsvn/ACollab/');
+define('AC_PATH',			'http://joel.atutor.ca/svn/atutor/trunk/ACollab/');
 define('AC_TABLE_PREFIX',	'AC_');
 ?>
