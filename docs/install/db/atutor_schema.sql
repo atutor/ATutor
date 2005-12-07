@@ -417,12 +417,12 @@ INSERT INTO `modules` VALUES ('mods/_standard/statistics',    2, 2, 1,         0
 INSERT INTO `modules` VALUES ('tools/content',                1, 2, 2,         0);
 INSERT INTO `modules` VALUES ('tools/glossary',               1, 2, 4,         0);
 INSERT INTO `modules` VALUES ('tools/tests',                  2, 2, 8,         0);
-INSERT INTO `modules` VALUES ('mods/_standard/chat',          2, 2, 16,        0);
+INSERT INTO `modules` VALUES ('tools/chat',                   2, 2, 16,        0);
 INSERT INTO `modules` VALUES ('mods/_core/file_manager',      1, 2, 32,        0);
 INSERT INTO `modules` VALUES ('tools/links',                  2, 2, 64,        0);
-INSERT INTO `modules` VALUES ('mods/_standard/forums',        2, 2, 128,       16);
+INSERT INTO `modules` VALUES ('tools/forums',                 2, 2, 128,       16);
 INSERT INTO `modules` VALUES ('mods/_standard/student_tools', 2, 2, 256,       0);
-INSERT INTO `modules` VALUES ('tools/enrollment',              1, 2, 512,       0);
+INSERT INTO `modules` VALUES ('tools/enrollment',             1, 2, 512,       0);
 INSERT INTO `modules` VALUES ('mods/_standard/course_email',  2, 2, 1024,      0);
 INSERT INTO `modules` VALUES ('tools/announcements',          2, 2, 2048,      0);
 # INSERT INTO `modules` VALUES ('mods/acollab',               2, 8192+4096,    0);
