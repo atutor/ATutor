@@ -315,22 +315,48 @@ function insertFile(fileName, pathTo, ext) {
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
 		var info = "<?php echo _AT('alternate_text'); ?>";
+		var imageString = '<img src="'+ pathTo+fileName + '" alt="'+ info +'" />';
 
 		if (window.parent.tinyMCE) {
 			window.parent.tinyMCE.insertImage(pathTo+fileName, info, '', '', '', '', '', '', info, '', '');
 		} else if (window.opener.tinyMCE) {
 			window.opener.tinyMCE.insertImage(pathTo+fileName, info, '', '', '', '', '', '', info, '', '');
+		} else {
+			insertAtCursor(window.opener.document.form.body_text, imageString);
 		}
 
 	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
+		var fileString  = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 
 		if (window.parent.tinyMCE) {
 			window.parent.tinyMCE.execCommand("mceInsertContent", false, '<a href="' + pathTo+fileName + '">' + info + '</a>');
-			
 		} else if (window.opener.tinyMCE) {
-			window.opener.tinyMCE.insertLink(pathTo+fileName, '', inno, '', '');
+			window.opener.tinyMCE.execCommand("mceInsertContent", false, '<a href="' + pathTo+fileName + '">' + info + '</a>');
+		} else {
+			insertAtCursor(window.opener.document.form.body_text, fileString);
 		}
+	}
+}
+
+function insertAtCursor(myField, myValue) {
+	//IE support
+	if (window.opener.document.selection) {
+		myField.focus();
+		sel = window.opener.document.selection.createRange();
+		sel.text = myValue;
+	}
+	//MOZILLA/NETSCAPE support
+	else if (myField.selectionStart || myField.selectionStart == '0') {
+		var startPos = myField.selectionStart;
+		var endPos = myField.selectionEnd;
+		myField.value = myField.value.substring(0, startPos)
+		+ myValue
+		+ myField.value.substring(endPos, myField.value.length);
+		myField.focus();
+	} else {
+		myField.value += myValue;
+		myField.focus();
 	}
 }
 
