@@ -27,6 +27,11 @@ if (isset($_GET['core'])     && $_GET['core'])     {  $args .= SEP.'core=1';    
 if (isset($_GET['standard']) && $_GET['standard']) {  $args .= SEP.'standard=1'; }
 if (isset($_GET['extra'])    && $_GET['extra'])    {  $args .= SEP.'extra=1';    }
 
+if (isset($_GET['reset_filter'])) {
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
+}
+
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
 	if (!$module->isEnabled() && !$module->isCore() && !$module->isMissing()) {
