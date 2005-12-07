@@ -75,7 +75,7 @@ INSERT INTO `modules` VALUES ('mods/_core/courses',           1, 2, 0,         4
 INSERT INTO `modules` VALUES ('mods/_core/backups',           1, 2, 1,         8);
 INSERT INTO `modules` VALUES ('mods/_core/cats_categories',   1, 2, 0,         32);
 INSERT INTO `modules` VALUES ('mods/_core/languages',         1, 2, 0,         64);
-INSERT INTO `modules` VALUES ('mods/_core/themes',            1, 2, 0,         128);
+INSERT INTO `modules` VALUES ('admin/themes',                 1, 2, 0,         128);
 INSERT INTO `modules` VALUES ('mods/_standard/rss_feeds',     2, 2, 0,         256);
 INSERT INTO `modules` VALUES ('mods/_core/groups',            1, 2, 0, 0);
 INSERT INTO `modules` VALUES ('mods/_standard/directory',     2, 2, 0, 0);
