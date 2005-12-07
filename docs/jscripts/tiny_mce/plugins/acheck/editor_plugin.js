@@ -75,3 +75,38 @@ function TinyMCE_acheck_handleNodeChange(editor_id, node, undo_index, undo_level
 	return true;
 }
 
+function fileBrowserCallBack(field_name, url, type, win) {
+	// This is where you insert your custom filebrowser logic
+	alert("Filebrowser callback: field_name: " + field_name + ", url: " + url + ", type: " + type);
+
+	// Insert new URL, this would normaly be done in a popup
+	win.document.forms[0].elements[field_name].value = "someurl.htm";
+}
+
+// This function is required by accessibility checker.
+// Note: you must set the "name" attribute of the editor form to "editorform".
+// You must also set the "name" attribute of the textarea control in the form to "edittext".
+var accessWin = null;
+function newWindowWithCode() {
+    if (accessWin) {
+        accessWin.close();
+    }
+    var nodeList = document.getElementsByTagName("textarea");
+    var elm = nodeList.item(0);
+    if (elm != null) {
+        theVal = elm.value;
+    }
+//    var theVal = document.editorform.edittext.value;
+    var theCode = '<html><body onLoad="document.accessform.submit();"> \n';
+    theCode += '<h1>Submitting Code for Accessibility Checking.....</h1>\n';
+    theCode += '<form action="http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/Checkacc" name="accessform" method="post"> \n';
+    theCode += '<input type="hidden" name="guide" value="wcag-2-0-aaa.xml" /> \n';
+    theCode += '<input type="hidden" name="type" value="form" /> \n';
+    theCode += '<textarea name="edittext">' + theVal + '</textarea>\n';
+    theCode += '<input type="submit" /></form> \n';  
+    theCode += '</body></html> \n';
+    accessWin = window.open('', 'accessWin',  '');
+    accessWin.document.writeln(theCode);
+    accessWin.document.close();
+}
+
