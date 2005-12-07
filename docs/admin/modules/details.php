@@ -125,7 +125,7 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 
 	<div class="row">
 		<?php echo _AT('notes'); ?><br />
-		<?php echo $properties['notes']; ?>
+		<?php echo nl2br($properties['notes']); ?>
 	</div>
 <?php if (!isset($_REQUEST['new'])): ?>
 	<div class="row buttons">
