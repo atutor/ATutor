@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: forum_delete.php 3804 2005-03-10 19:48:15Z heidi $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -37,7 +37,7 @@ if (isset($_POST['submit_no'])) {
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss_title.cache');
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.inc.php');
 
-	$msg->addFeedback('DELETED');
+	$msg->addFeedback('FEED_DELETED');
 	header('Location: index_admin.php');
 	exit;
 }

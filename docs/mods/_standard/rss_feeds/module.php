@@ -16,12 +16,14 @@ if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_P
 		$this->_pages['admin/index.php']['children']      = array('mods/_standard/rss_feeds/admin/index_admin.php');
 		$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['parent'] = 'admin/index.php';
 	} else {
-		$this->_pages[AT_NAV_ADMIN] = array('admin/themes/index.php');
-		$this->_pages['admin/themes/index.php']['parent'] = AT_NAV_ADMIN;
+		$this->_pages[AT_NAV_ADMIN] = array('mods/_standard/rss_feeds/admin/index_admin.php');
+		$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['parent'] = AT_NAV_ADMIN;
 	}
 
 	$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['title_var'] = 'rss_feeds';
 	$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['children'] = array('mods/_standard/rss_feeds/admin/add_feed.php');
+	$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['guide']     = 'admin/?p=2.6.feeds.php';
+
 
 		$this->_pages['mods/_standard/rss_feeds/admin/add_feed.php']['title_var'] = 'add';
 		$this->_pages['mods/_standard/rss_feeds/admin/add_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
@@ -56,7 +58,7 @@ function make_cache_file($feed_id) {
 	static $rss;
 
 	if (!isset($rss)) {  
-		require(AT_INCLUDE_PATH.'classes/lastRSS.php');
+		require_once(AT_INCLUDE_PATH.'classes/lastRSS.php');
 		$rss =& new lastRSS; 
 		$rss->cache_dir = AT_CONTENT_DIR.'feeds/'; 
 		$rss->num_results = AT_FEED_NUM_RESULTS;
