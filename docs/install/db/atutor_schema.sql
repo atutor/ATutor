@@ -427,7 +427,7 @@ INSERT INTO `modules` VALUES ('mods/_standard/course_email',  2, 2, 1024,      0
 INSERT INTO `modules` VALUES ('tools/announcements',          2, 2, 2048,      0);
 # INSERT INTO `modules` VALUES ('mods/acollab',               2, 8192+4096,    0);
 INSERT INTO `modules` VALUES ('tools/polls',                  2, 2, 16384,     0);
-INSERT INTO `modules` VALUES ('mods/_standard/faq',           2, 2, 32768,     0);
+INSERT INTO `modules` VALUES ('tools/faq',                    2, 2, 32768,     0);
 INSERT INTO `modules` VALUES ('mods/_core/users',             1, 2, 0,         2);
 INSERT INTO `modules` VALUES ('mods/_core/courses',           1, 2, 0,         4);
 INSERT INTO `modules` VALUES ('mods/_core/backups',           1, 2, 1,         8);
