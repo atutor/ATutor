@@ -18,6 +18,6 @@ $this->_pages['acollab/index.php']['img']       = 'images/home-acollab.gif';
 
 
 //enter values for these entries 
-define('AC_PATH',			'http://joel.atutor.ca/svn/atutor/trunk/ACollab/');
+define('AC_PATH',			'http://localhost/ACollab/');
 define('AC_TABLE_PREFIX',	'AC_');
 ?>
