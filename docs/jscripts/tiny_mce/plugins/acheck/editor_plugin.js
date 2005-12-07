@@ -13,13 +13,6 @@ tinyMCE.importPluginLanguagePack('acheck', 'en'); // <- Add a comma separated li
  *
  ****/
 
-
-/*
-define the location of the AChecker server
-*/
-
-var TinyMCE_acheck_location = "http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/Checkacc";
-
 /**
  * Gets executed when a editor needs to generate a button.
  */
@@ -52,7 +45,7 @@ function TinyMCE_acheck_execCommand(editor_id, element, command, user_interface,
 				}
 
 				// calls the JavaScript function
-				TinyMCE_acheck_newWindowWithCode();
+				newWindowWithCode();
 
 				// alternate method but user must include our form in body of document
 //				document.accessibilityform.edittext.value = document.editorform.edittext.value;
@@ -82,24 +75,3 @@ function TinyMCE_acheck_handleNodeChange(editor_id, node, undo_index, undo_level
 	return true;
 }
 
-// This function is required by accessibility checker.
-// Note: you must set the "name" attribute of the editor form to "editorform".
-// You must also set the "name" attribute of the textarea control in the form to "edittext".
-var TinyMCE_acheck_accessWin = null;
-function TinyMCE_acheck_newWindowWithCode() {
-    if (TinyMCE_acheck_accessWin) {
-       TinyMCE_acheck_accessWin.close();
-	}
-    var theVal = document.editorform.edittext.value;
-    var theCode = '<html><body onLoad="document.accessform.submit();"> \n';
-    theCode += '<h1>Submitting Code for Accessibility Checking.....</h1>\n';
-    theCode += '<form action="'+ TinyMCE_acheck_location +'" name="accessform" method="post"> \n';
-    theCode += '<input type="hidden" name="guide" value="wcag-2-0-aaa.xml" /> \n';
-    theCode += '<input type="hidden" name="type" value="form" /> \n';
-    theCode += '<textarea name="edittext">' + theVal + '</textarea>\n';
-    theCode += '<input type="submit" /></form> \n';  
-    theCode += '</body></html> \n';
-    TinyMCE_acheck_accessWin = window.open('', 'TinyMCE_acheck_accessWin',  '');
-    TinyMCE_acheck_accessWin.document.writeln(theCode);
-    TinyMCE_acheck_accessWin.document.close();
-}
