@@ -14,13 +14,13 @@
         <version>0.1</version> 
         <date>2005-08-22</date> 
         <state>stable</state> 
-        <notes>Additional Installation Steps: Before ACollab will function properly as an add-on module, the ATutor and ACollab config.inc.php files need to be modified by adding the following lines, adjusting the values accordingly. Include the trailing slash.
+        <notes>Additional Installation Steps: Before ACollab will function properly as a module, the ATutor module.php and ACollab config.inc.php files need to be modified by adding the following lines, adjusting the values accordingly. Include the trailing slash.
 		
-		Add to ACollab's conif,inc.php file:
+		Add to ACollab's include/config.inc.php file:
 		define('AT_PATH','http://www.mydomain.com/ATutor/');
 		define('AT_PREFIX','AT_');
 		
-		Add to ATutor's config.inc.pgp
+		Add to ATutor's mods/acollab/module.php
 		define('AC_PATH','http://www.mydomain.com/ACollab/');
 		define('AC_PREFIX','AC_');
 	</notes> 
