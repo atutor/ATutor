@@ -18,11 +18,11 @@
 		
 		Add to ACollab's include/config.inc.php file:
 		define('AT_PATH','http://www.mydomain.com/ATutor/');
-		define('AT_PREFIX','AT_');
+		define('AT_TABLE_PREFIX','AT_');
 		
 		Add to ATutor's mods/acollab/module.php
 		define('AC_PATH','http://www.mydomain.com/ACollab/');
-		define('AC_PREFIX','AC_');
+		define('AC_TABLE_PREFIX','AC_');
 	</notes> 
     </release> 
 </module>
