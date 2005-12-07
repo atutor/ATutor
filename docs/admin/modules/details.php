@@ -34,7 +34,16 @@ if (isset($_POST['submit_no'])) {
 	}
 	exit;
 } else if (isset($_GET['submit'])) {
-	header('Location: index.php');
+	$args = '';
+
+	if (isset($_GET['enabled'])  && $_GET['enabled'])  {  $args .= 'enabled=1';      }
+	if (isset($_GET['disabled']) && $_GET['disabled']) {  $args .= SEP.'disabled=1'; }
+	if (isset($_GET['missing'])  && $_GET['missing'])  {  $args .= SEP.'missing=1';  }
+	if (isset($_GET['core'])     && $_GET['core'])     {  $args .= SEP.'core=1';     }
+	if (isset($_GET['standard']) && $_GET['standard']) {  $args .= SEP.'standard=1'; }
+	if (isset($_GET['extra'])    && $_GET['extra'])    {  $args .= SEP.'extra=1';    }
+
+	header('Location: index.php?'. $args);
 	exit;
 }
 
@@ -79,6 +88,14 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
 <input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
+
+<input type="hidden" name="enabled" value="<?php echo (int) isset($_GET['enabled']); ?>" />
+<input type="hidden" name="disabled" value="<?php echo (int) isset($_GET['disabled']); ?>" />
+<input type="hidden" name="core" value="<?php echo (int) isset($_GET['core']); ?>" />
+<input type="hidden" name="standard" value="<?php echo (int) isset($_GET['standard']); ?>" />
+<input type="hidden" name="extra" value="<?php echo (int) isset($_GET['extra']); ?>" />
+<input type="hidden" name="missing" value="<?php echo (int) isset($_GET['missing']); ?>" />
+
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $module->getName(); ?></h3>
