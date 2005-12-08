@@ -1,7 +1,7 @@
 <?php
-define('AT_INCLUDE_PATH', '../../../include/');
+define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require('SOAP_Google.php');
+require('../mods/_standard/google_search/SOAP_Google.php');
 
 $search_key = $_config['gsearch'];
 
