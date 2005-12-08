@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
-<module version="0.1"> 
+<module version="0.2"> 
     <name lang="en">ATalker for ATutor</name> 
     <description lang="en">ATalker is based on the Festival Text-to-Speech system, which must be installed and functioning on the system prior to installing the ATalker module. See the README_ATUTOR_MODULE file in the ATalker top directory for complete installation instructions.</description> 
     <maintainers>
@@ -14,6 +14,6 @@
         <version>0.2</version> 
         <date>2005-12-07</date> 
         <state>experimental</state> 
-        <notes></notes> 
+	<notes>You will like want to install an audio encoder or two, otherwise speech will be generated as WAV files, which are very large and take a long time to download. See the README_ATUTOR_MODULE file in the ATalaker mods directory for information about mp3 and ogg audio encoders. </notes> 
     </release> 
 </module>

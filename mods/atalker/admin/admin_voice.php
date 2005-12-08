@@ -118,7 +118,7 @@
 				}			
 
 				if(copy($file_recieve, $voice_file)){
-					$feedback =  TTS_VOICE_SAVED;
+					$feedback =  TTS_FILE_SAVED;
 					$msg->addFeedback($feedback);
 				}else{
 					$error =  TTS_FILE_SAVE_FAILED;
@@ -194,7 +194,7 @@
 				}
 
 				if(copy($file_recieve, $voice_file)){
-					$feedback =  TTS_VOICE_SAVED;
+					$feedback =  TTS_FILE_SAVED;
 					$msg->addFeedback($feedback);
 				}else{
 					$error =  TTS_FILE_SAVE_FAILED;
