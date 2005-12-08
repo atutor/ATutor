@@ -48,6 +48,8 @@ if (isset($_POST['cancel'])) {
 	}
 }
 
+$onload = 'document.form.topic.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$sql	= "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";

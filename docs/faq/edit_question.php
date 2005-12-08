@@ -51,6 +51,7 @@ if (isset($_POST['submit'])) {
 		exit;
 	}
 }
+$onload = 'document.form.topic.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
