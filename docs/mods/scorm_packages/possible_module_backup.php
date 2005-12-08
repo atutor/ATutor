@@ -3,10 +3,12 @@
 /****
 This is what the backup file MIGHT look like.
 
-Problem: the org directories within the course directory are determined by the org id. to work correctly the restore would have to rename each org directory to the new org id. that process of renaming a directory after it has been restored is not possible.
+*** Problem ***
+the org directories within the course directory are determined by the org id. to work correctly the restore would have to rename each org directory to the new org id. that process of renaming a directory after it has been restored is not possible.
 
 we would need custom code to execute somewhere that would do the conversion by using the $table_id_map data to translate the org ids.
 
+instead of just copying the directories blindly this module would have to override the directory restoring functionality to rename the org directories as they are copied.
 **/
 
 exit;
