@@ -84,7 +84,7 @@ function init() {
 				<table cellspacing="0" cellpadding="0" width="98%" border="0" summary="">
 				<tr>
 					<td class="row1" align="left">	
-						<textarea name="body_text" id="body_text" rows="8" class="formfield" style="width: 99%;"></textarea>
+						<textarea name="body_text" id="body_text" rows="15" class="formfield" style="width: 99%;"></textarea>
 					</td>
 				</tr>
 				</table>
