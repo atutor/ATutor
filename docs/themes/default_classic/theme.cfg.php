@@ -17,10 +17,10 @@
 	$_theme['name'] = 'ATutor Classic';
 
 /* The theme's version number. */
-	$_theme['version'] = '0.1';
+	$_theme['version'] = '0.2';
 
 /* Which version of ATutor is this theme intended for. */
-	$_theme['atutor-version'] = '1.5';
+	$_theme['atutor-version'] = '1.5.2';
 
 /* author information */
 	$_theme['author_name']  = 'ATutor';
