@@ -11,8 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-	define('AT_INCLUDE_PATH', '../include/');
-	require (AT_INCLUDE_PATH.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 

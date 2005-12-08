@@ -735,41 +735,4 @@ $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['mai
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
 $moduleFactory =& new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
-
-function load_editor() {
-	global $_base_path, $_base_href;
-
-	 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) { 
-		$course_base_href = 'get.php/'; 
-	} else {  
-		$course_base_href = 'content/' . $_SESSION['course_id'] . '/'; 
-	}
-
-	echo '<script language="javascript" type="text/javascript" src="'.$_base_path.'jscripts/tiny_mce/tiny_mce.js"></script>';
-	echo '<script language="javascript" type="text/javascript">';
-	echo '	tinyMCE.init({
-	mode : "textareas",
-	theme : "advanced",
-	plugins : "table,acheck,advhr,advimage,advlink,emotions,iespell,preview,zoom,flash,print,contextmenu",
-	theme_advanced_buttons1_add : "fontselect,fontsizeselect",
-	theme_advanced_buttons2_add : "separator,preview,zoom,separator,forecolor,backcolor",
-	theme_advanced_buttons2_add_before: "cut",
-	theme_advanced_buttons3_add_before : "tablecontrols,separator",
-	theme_advanced_buttons3_add : "emotions,iespell,flash,advhr,separator,print,acheck",
-	theme_advanced_toolbar_location : "top",
-	theme_advanced_toolbar_align : "left",
-	theme_advanced_path_location : "bottom",
-	plugin_insertdate_dateFormat : "%Y-%m-%d",
-	plugin_insertdate_timeFormat : "%H:%M:%S",
-	extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
-	external_link_list_url : "example_data/example_link_list.js",
-	external_image_list_url : "example_data/example_image_list.js",
-	flash_external_list_url : "example_data/example_flash_list.js",
-	document_base_url: "'.$_base_href.$course_base_href.'",
-	relative_urls : true,
-	convert_urls : false
-	});';
-	echo '</script>';
-}
-
 ?>

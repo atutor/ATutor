@@ -16,6 +16,8 @@ define('AT_INCLUDE_PATH', '../include/');
 
 $get_related_glossary = true;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
+
 $cid = intval($_REQUEST['cid']);
 
 if ($_POST) {
