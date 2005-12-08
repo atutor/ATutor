@@ -24,7 +24,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'tools/announcements/index.php');
+	header('Location: '.$_base_href.'tools/news/index.php');
 	exit;
 } else if ($_POST['edit_news']) {
 	$_POST['title'] = trim($_POST['title']);
@@ -52,7 +52,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('NEWS_UPDATED');
-		header('Location: '.$_base_href.'tools/announcements/index.php');
+		header('Location: '.$_base_href.'tools/news/index.php');
 		exit;
 	}
 }
