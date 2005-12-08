@@ -6,8 +6,8 @@ define('AT_ADMIN_PRIV_LANGUAGES', $this->getAdminPrivilege());
 
 if (admin_authenticate(AT_ADMIN_PRIV_LANGUAGES, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-		$this->_pages['admin/index.php']['children']  = array('admin/language.php');
-		$this->_pages['admin/language.php']['parent'] = 'admin/index.php';
+		$this->_pages['admin/config_edit.php']['children']  = array('admin/language.php');
+		$this->_pages['admin/language.php']['parent'] = 'admin/config_edit.php';
 	} else {
 		$this->_pages[AT_NAV_ADMIN] = array('admin/language.php');
 		$this->_pages['admin/language.php']['parent'] = AT_NAV_ADMIN;

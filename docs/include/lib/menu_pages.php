@@ -54,28 +54,27 @@ if ($_SESSION['course_id'] > 0) {
 } else if ($_SESSION['course_id'] == -1) {
 	/* admin pages */
 
-		$_pages['admin/index.php']['title_var'] = 'configuration';
-		$_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
-		$_pages['admin/index.php']['guide']     = 'admin/?p=2.0.configuration.php';
-		if (isset($_pages['admin/index.php']['children'])) {
-			array_unshift($_pages['admin/index.php']['children'], 'admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/error_logging.php');
-		} else {
-			$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/error_logging.php');
-		}
+	$_pages['admin/index.php']['title_var'] = 'home';
+	$_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
+	$_pages['admin/index.php']['guide']     = 'admin/?p=2.0.configuration.php';
+	$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php');
 
-		$_pages['admin/admins/my_edit.php']['title_var'] = 'my_account';
-		$_pages['admin/admins/my_edit.php']['parent']    = 'admin/index.php';
-		$_pages['admin/admins/my_edit.php']['guide']     = 'admin/?p=2.1.my_account.php';
+	$_pages['admin/admins/my_edit.php']['title_var'] = 'my_account';
+	$_pages['admin/admins/my_edit.php']['parent']    = 'admin/index.php';
+	$_pages['admin/admins/my_edit.php']['guide']     = 'admin/?p=2.1.my_account.php';
+
+	if (admin_authenticate(AT_ADMIN_PRIV_USERS, AT_PRIV_RETURN)) {
+		$_pages[AT_NAV_ADMIN][] = 'admin/config_edit.php';
 
 		$_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
-		$_pages['admin/config_edit.php']['parent']    = 'admin/index.php';
+		$_pages['admin/config_edit.php']['parent']    = AT_NAV_ADMIN;
 		$_pages['admin/config_edit.php']['guide']     = 'admin/?p=2.2.system_preferences.php';
-
+	}
 		$_pages['admin/fix_content.php']['title_var'] = 'fix_content_ordering';
 		$_pages['admin/fix_content.php']['parent']    = 'admin/index.php';
 
 		$_pages['admin/error_logging.php']['title_var'] = 'error_logging';
-		$_pages['admin/error_logging.php']['parent']    = 'admin/index.php';
+		$_pages['admin/error_logging.php']['parent']    = 'admin/config_edit.php';
 		$_pages['admin/error_logging.php']['guide']     = 'admin/?p=2.5.error_logging.php';
 		$_pages['admin/error_logging.php']['children']  = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
 
@@ -179,18 +178,6 @@ $_pages['inbox/index.php']['children']  = array('inbox/send_message.php');
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent']    = 'index.php';
 
-
-/*
-if (($_SESSION['course_id'] > 0) && isset($_modules)) {
-	foreach ($_modules as $module) {
-		if (in_array($module, $_pages[AT_NAV_COURSE])) {
-			$_pages[$module]['parent'] = AT_NAV_COURSE;
-		} else {
-			$_pages[$module]['parent'] = 'index.php';
-		}
-	}
-}
-*/
 
 /* global pages */
 $_pages['about.php']['title_var']  = 'about_atutor';

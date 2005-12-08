@@ -13,8 +13,8 @@ define('AT_FEED_SHOW_DESCRIPTION', FALSE);
 if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-		$this->_pages['admin/index.php']['children']      = array('admin/rss_feeds/index.php');
-		$this->_pages['admin/rss_feeds/index.php']['parent'] = 'admin/index.php';
+		$this->_pages['admin/config_edit.php']['children']      = array('admin/rss_feeds/index.php');
+		$this->_pages['admin/rss_feeds/index.php']['parent'] = 'admin/config_edit.php';
 	} else {
 		$this->_pages[AT_NAV_ADMIN] = array('admin/rss_feeds/index.php');
 		$this->_pages['admin/rss_feeds/index.php']['parent'] = AT_NAV_ADMIN;
