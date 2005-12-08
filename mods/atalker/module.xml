@@ -1,21 +1,19 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-
+<?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
-	<name>ATalker: ATutor Text-to-Speech Addon</name> 
-	<description>ATalker is a Web-based text-to-speech utility. This version can be installed as an addon for ATutor, reading text,  or text formatted with SABLE or SSML text-to-speech markup languages. Play, download, save course speech files, and generate voices for ATutor.  </description> 
-	<maintainers> 
-		<maintainer> 
-			<name>Greg Gay</name> 
-			<email>info@atutor.ca</email> 
-		</maintainer> 
-	</maintainers> 
-	<url>http://atutor.ca</url>
+    <name lang="en">ATalker for ATutor</name> 
+    <description lang="en">ATalker is based on the Festival Text-to-Speech system, which must be installed and functioning on the system prior to installing the ATalker module. See the README_ATUTOR_MODULE file in the ATalker top directory for complete installation instructions.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Greg Gay</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca/atalker</url> 
+    <license>GPL</license> 
 	<release> 
-		<version>0.1</version> 
-		<use_privilege>true</use_privilege>
-		<date>2005-08-16</date> 
-		<license>GPL</license> 
-		<state>Experimental</state> 
-		<notes>This module is available in English and Spanish, with the potential to support additional pronunciation schemes for those interested in developing new voices for Festival or Mbrola.</notes> 
-	</release> 
+        <version>0.2</version> 
+        <date>2005-12-07</date> 
+        <state>experimental</state> 
+        <notes></notes> 
+    </release> 
 </module>

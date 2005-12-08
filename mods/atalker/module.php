@@ -1,24 +1,55 @@
 <?php
+/*******
+ * doesn't allow this file to be loaded with a browser.
+ */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_PRIV_FORUMS', $this->getPrivilege());
+/******
+ * this file must only be included within a Module obj
+ */
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
-// adding this module to the main page as a basic student tool:
-$_module_pages['mods/atalker/index.php']['title']    = 'ATalker';
-$_module_pages['mods/atalker/index.php']['img']      = 'mods/atalker/images/atalker.gif';
-$_module_pages['mods/atalker/index.php']['guide']     = 'atalker_doc/?p=1.1.atalker.php';
+/*******
+ * assign the instructor and admin privileges to the constants.
+ */
+define('AT_PRIV_ATALKER',       $this->getPrivilege());
+define('AT_ADMIN_PRIV_ATALKER', $this->getAdminPrivilege());
 
-	$_module_pages['mods/atalker/admin/admin_index.php']['title']     = 'ATalker Administrator';
-	$_module_pages['mods/atalker/admin/admin_index.php']['parent']    = 'admin/index.php';
-	$_module_pages['mods/atalker/admin/admin/index.php']['privilege'] = AT_PRIV_ADMIN;
-	$_module_pages['mods/atalker/admin/admin_index.php']['guide']     = 'atalker_doc/index.php?p=1.0.voices.php';
+/*******
+ * create a side menu box/stack.
+ */
+//$this->_stacks['hello_world'] = array('title_var'=>'hello_world', 'file'=>'mods/hello_world/side_menu.inc.php');
+// ** possible alternative: **
+// $this->addStack('hello_world', array('title_var' => 'hello_world', 'file' => './side_menu.inc.php');
 
-/*
+/*******
+ * if this module is to be made available to students on the Home or Main Navigation.
+ */
+$_student_tool = 'mods/atalker/index.php';
+// ** possible alternative: **
+// $this->addTool('./index.php');
 
-// Add a link to the admin's Configuration submenu by including this line in include/lib/menu_page.php after the 
-// initial admin/index.php array is created.
+/*******
+ * add the admin pages when needed.
+ */
+if (admin_authenticate(AT_ADMIN_PRIV_HELLO_WORLD, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+	$this->_pages[AT_NAV_ADMIN] = array('mods/atalker/admin/admin_index.php');
+	$this->_pages['mods/atalker/admin/admin_index.php']['parent']    = AT_NAV_ADMIN;
+	$this->_pages['mods/atalker/admin/admin_index.php']['title_var'] = 'atalker';
+}
 
-array_push($_pages['admin/index.php']['children'], 'mods/atalker/admin/admin_index.php');
+/*******
+ * instructor Manage section:
+ */
+//$this->_pages['mods/atalker/index_instructor.php']['title_var'] = 'atalker';
+//$this->_pages['mods/atalker/index_instructor.php']['parent']   = 'tools/index.php';
+// ** possible alternative: **
+// $this->pages['./index_instructor.php']['title_var'] = 'hello_world';
+// $this->pages['./index_instructor.php']['parent']    = 'tools/index.php';
 
-*/
+/*******
+ * student page.
+ */
+$this->_pages['mods/atalker/index.php']['title_var'] = 'atalker';
+$this->_pages['mods/atalker/index.php']['img']       = 'mods/atalker/images/atalker.gif';
 ?>
