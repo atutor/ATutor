@@ -164,7 +164,6 @@ $home_defaults = explode('|', $_config['home_defaults']);
 
 $main_defaults = array_filter($main_defaults); // remove empties
 $home_defaults = array_filter($home_defaults); // remove empties
-
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data static" rules="rows" summary="">
