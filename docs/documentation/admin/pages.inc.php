@@ -32,6 +32,7 @@
 	$_pages['2.4.2.managing_existing_themes.php']    = 'Managing Existing Themes';
 	$_pages['2.4.3.creating_themes.php']             = 'Creating Themes';
 	$_pages['2.5.error_logging.php']                 = 'Error Logging';
+	$_pages['2.6.feeds.php']						 = 'Syndicated Feeds';
 	$_pages['3.0.users.php']                         = 'Users';
 	$_pages['3.1.instructor_requests.php']           = 'Instructor Requests';
 	$_pages['3.2.master_student_list.php']           = 'Master Student List';

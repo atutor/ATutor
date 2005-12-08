@@ -106,6 +106,7 @@ function highlight(page) {
 				</ul>
 			</li>
 			<li><a href="../admin/2.5.error_logging.php" class="leaf" id="id2.5.error_logging.php">Error Logging</a></li>
+			<li><a href="../admin/2.6.feeds.php" class="leaf" id="id2.6.feeds.php">Syndicated Feeds</a></li>
 		</ul>
 	</li>
 
