@@ -13,29 +13,28 @@ define('AT_FEED_SHOW_DESCRIPTION', FALSE);
 if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-		$this->_pages['admin/index.php']['children']      = array('mods/_standard/rss_feeds/admin/index_admin.php');
-		$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['parent'] = 'admin/index.php';
+		$this->_pages['admin/index.php']['children']      = array('admin/rss_feeds/index.php');
+		$this->_pages['admin/rss_feeds/index.php']['parent'] = 'admin/index.php';
 	} else {
-		$this->_pages[AT_NAV_ADMIN] = array('mods/_standard/rss_feeds/admin/index_admin.php');
-		$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['parent'] = AT_NAV_ADMIN;
+		$this->_pages[AT_NAV_ADMIN] = array('admin/rss_feeds/index.php');
+		$this->_pages['admin/rss_feeds/index.php']['parent'] = AT_NAV_ADMIN;
 	}
 
-	$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['title_var'] = 'rss_feeds';
-	$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['children'] = array('mods/_standard/rss_feeds/admin/add_feed.php');
-	$this->_pages['mods/_standard/rss_feeds/admin/index_admin.php']['guide']     = 'admin/?p=2.6.feeds.php';
+	$this->_pages['admin/rss_feeds/index.php']['title_var'] = 'rss_feeds';
+	$this->_pages['admin/rss_feeds/index.php']['children']  = array('admin/rss_feeds/add_feed.php');
+	$this->_pages['admin/rss_feeds/index.php']['guide']     = 'admin/?p=2.6.feeds.php';
 
+		$this->_pages['admin/rss_feeds/add_feed.php']['title_var'] = 'add';
+		$this->_pages['admin/rss_feeds/add_feed.php']['parent'] = 'admin/rss_feeds/index.php';
 
-		$this->_pages['mods/_standard/rss_feeds/admin/add_feed.php']['title_var'] = 'add';
-		$this->_pages['mods/_standard/rss_feeds/admin/add_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
+		$this->_pages['admin/rss_feeds/edit_feed.php']['title_var'] = 'edit';
+		$this->_pages['admin/rss_feeds/edit_feed.php']['parent'] = 'admin/rss_feeds/index.php';
 
-		$this->_pages['mods/_standard/rss_feeds/admin/edit_feed.php']['title_var'] = 'edit';
-		$this->_pages['mods/_standard/rss_feeds/admin/edit_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
+		$this->_pages['admin/rss_feeds/delete_feed.php']['title_var'] = 'delete';
+		$this->_pages['admin/rss_feeds/delete_feed.php']['parent'] = 'admin/rss_feeds/index.php';
 
-		$this->_pages['mods/_standard/rss_feeds/admin/delete_feed.php']['title_var'] = 'delete';
-		$this->_pages['mods/_standard/rss_feeds/admin/delete_feed.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
-
-		$this->_pages['mods/_standard/rss_feeds/admin/preview.php']['title_var'] = 'preview';
-		$this->_pages['mods/_standard/rss_feeds/admin/preview.php']['parent'] = 'mods/_standard/rss_feeds/admin/index_admin.php';
+		$this->_pages['admin/rss_feeds/preview.php']['title_var'] = 'preview';
+		$this->_pages['admin/rss_feeds/preview.php']['parent'] = 'admin/rss_feeds/index.php';
 }
 
 //make the rss files side menu stacks

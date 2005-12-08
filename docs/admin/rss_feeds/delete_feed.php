@@ -19,7 +19,7 @@ admin_authenticate(AT_ADMIN_PRIV_RSS);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index_admin.php');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$feed_id = intval($_POST['fid']);
@@ -38,7 +38,7 @@ if (isset($_POST['submit_no'])) {
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.inc.php');
 
 	$msg->addFeedback('FEED_DELETED');
-	header('Location: index_admin.php');
+	header('Location: index.php');
 	exit;
 }
 

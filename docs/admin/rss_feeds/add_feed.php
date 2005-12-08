@@ -53,7 +53,7 @@ if (isset($_POST['cancel'])) {
 	$feed_id = mysql_insert_id($db);
 	
 	//copy load file
-	copy('../load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
+	copy('../../mods/_standard/rss_feeds/load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
 
 	//add language
 	$title_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache';
@@ -63,7 +63,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	$msg->addFeedback('FEED_SAVED');
-	header("Location:index_admin.php");
+	header('Location: index.php');
 	exit;
 } 
 

@@ -46,13 +46,13 @@ if (isset($_GET['submit'])) {
 		@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.cache');
 
 		$msg->addFeedback('FEED_SAVED');
-		header('Location: index_admin.php');
+		header('Location: index.php');
 		exit;
 	} 
 
 } else if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header("Location:index_admin.php");
+	header("Location:index.php");
 	exit;
 }
 

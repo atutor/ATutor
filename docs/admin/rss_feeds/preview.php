@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH . 'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_RSS);
 
 if (isset($_POST['back'])) {
-	header('Location: index_admin.php');
+	header('Location: index.php');
 	exit;
 }
 
