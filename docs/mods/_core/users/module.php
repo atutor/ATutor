@@ -12,7 +12,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 	$this->_pages['admin/users.php']['title_var'] = 'users';
 	$this->_pages['admin/users.php']['parent']    = AT_NAV_ADMIN;
 	$this->_pages['admin/users.php']['guide']     = 'admin/?p=3.0.users.php';
-	$this->_pages['admin/users.php']['children']  = array('admin/create_user.php', 'admin/default_preferences.php', 'admin/instructor_requests.php', 'admin/master_list.php', 'admin/admin_email.php');
+	$this->_pages['admin/users.php']['children']  = array('admin/create_user.php', 'admin/instructor_requests.php', 'admin/master_list.php', 'admin/admin_email.php');
 
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 		$this->_pages['admin/users.php']['children'][]  = 'admin/admins/index.php';
@@ -49,9 +49,10 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 		$this->_pages['admin/create_user.php']['title_var'] = 'create_user';
 		$this->_pages['admin/create_user.php']['parent']    = 'admin/users.php';
 
-		$_pages['admin/default_preferences.php']['title_var'] = 'default_preferences';
-		$_pages['admin/default_preferences.php']['parent']    = 'admin/users.php';
-		$_pages['admin/default_preferences.php']['guide']     = 'admin/?p=2.2.3.default_preferences.php';
+		$this->_pages['admin/default_preferences.php']['title_var'] = 'default_preferences';
+		$this->_pages['admin/default_preferences.php']['parent']    = 'admin/config_edit.php';
+		$this->_pages['admin/default_preferences.php']['guide']     = 'admin/?p=2.2.3.default_preferences.php';
+		$this->_pages['admin/config_edit.php']['children'] = array('admin/default_preferences.php');
 
 		$this->_pages['admin/password_user.php']['title_var'] = 'password';
 		$this->_pages['admin/password_user.php']['parent']    = 'admin/users.php';
