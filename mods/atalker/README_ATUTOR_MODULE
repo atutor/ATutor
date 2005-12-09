@@ -104,10 +104,10 @@ This version of ATalker (the second version) was developed on a Linux based syst
 
 	3. Enabled the ATalker module after it has been installed.
 
-	ATalker should now be available as a TTS reader for students and instructors, as a speech generation tool for Instructors ans administrators. Read on if you want to add/create a speech enabled theme.
+	ATalker should now be available as a TTS reader for students and instructors, and as a speech generation tool for Instructors and administrators. Read on if you want to add/create a speech enabled theme.
 
-
-Creating an ATalker Theme
+	
+**3.Creating an ATalker Theme**
 	Optionally you can create an ATalker enabled theme, or download and install the Default ATalker theme with each of the following features already available (see below). 
 
 		A) Install the ATalker theme (the ATutor default theme with speech enabled), which includes mouseover/onfocus speech, and audio feadback and error messages. See atutor.ca for the most recent version of the ATalker theme.
@@ -118,19 +118,19 @@ Creating an ATalker Theme
 
 		AND/OR
 
-		B) Create your own ATalaker enabled theme. .
+		B) Create your own ATalker enabled theme. .
 
 		1. To create your  own ATalker enabled theme, copy the following  Javascript into the theme/theme_name/include/header.tmpl.php file near the Jump Menu to allow users to open ATalker into a new window and have it available while navigating through ATutor. 
 		
 			<script type="text/javascript" language="javascript">
 				<!--
-					document.write(" <a onclick=\"window.open('<?php echo $this->base_path; ?>tools/atalker/index.php?popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=400')\" style=\"cursor: pointer; text-decoration:underline;\" >Open ATalker</a> |");
+					document.write(" <a onclick=\"window.open('<?php echo $this->base_path; ?>mods/atalker/index.php?popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=400')\" style=\"cursor: pointer; text-decoration:underline;\" >Open ATalker</a> |");
 				//-->
 			</script>
 	
 		Or. you can just insert a link somewhere in one of the other theme templates something like 
 	
-			<a href="<?php echo $this->base_path; ?>tools/atalker/index.php?popup=1" target = "newWin1">Open ATalker</a>
+			<a href="<?php echo $this->base_path; ?>mods/atalker/index.php?popup=1" target = "newWin1">Open ATalker</a>
 		
 
 
@@ -171,7 +171,7 @@ Creating an ATalker Theme
 		You can create voice files using ATalker Administrator so ATutor interface feature will read outloud.  You may want to manually create a list of language to generate speech for, then use the ATalker Administrator to create a voice for ATutor. See the administrator section in Using ATalker below. 
 
 	
-**3. Using ATalker**
+**4. Using ATalker**
 	The ATalker addon provides speech output utilities for ATutor, for Students, Instructors, and Administrators:
 	
 *Students* (and instructors and administrators):

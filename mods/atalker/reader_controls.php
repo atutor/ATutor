@@ -15,7 +15,7 @@
 // insert a require statement into a script to call this file into it to display ATalker controls
 // e.g    require(AT_INCLUDE_PATH."../mods/atalker/reader_controls.php");
 	$_GET['atalker_on'] = intval($_GET['atalker_on']);
-		global $_base_href;
+		global $_base_href, $_rel_url;
 
 	if($_GET['atalker_on'] == '1'){ 
 	
@@ -32,6 +32,10 @@
 	echo '<div style="text-align:right;">';
 	//global $_rel_url;
 	$_rel_url_new = ltrim($_rel_url, "/");
+	if($_REQUEST['cid']){
+
+
+	}
 
 	if($_rel_url == "/index.php"){
 	

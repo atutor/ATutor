@@ -240,7 +240,7 @@
 
 if($_GET['delete']){
 	if(unlink(AT_SPEECH_TEMPLATE_DIR.$_GET['delete'])){
-		$feedback = VOICE_FILE_DELETED;
+		$feedback = FILE_DELETED;
 		$msg->addFeedback($feedback);
 	}else{
 		$error = TTS_FILE_DELETE_FAILED;
