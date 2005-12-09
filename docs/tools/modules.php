@@ -143,7 +143,7 @@ $count = 0;
 </thead>
 <tfoot>
 <tr>
-	<td colspan="3"><input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /></td>
+	<td colspan="3" style="text-align:right;"><input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /></td>
 </tr>
 </tfoot>
 <tbody>
