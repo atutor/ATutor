@@ -80,7 +80,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				}
 
 				if (defined('MAIL_USE_SMTP')) {
-					echo '<input type="hidden" name="smtp" value="'.MAIL_USE_SMTP.'" />';
+					echo '<input type="hidden" name="smtp" value="'.(MAIL_USE_SMTP ? 'TRUE' : 'FALSE').'" />';
 				} else {
 					echo '<input type="hidden" name="smtp" value="FALSE" />';
 				}
