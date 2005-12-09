@@ -14,6 +14,6 @@
 require('../common/body_header.inc.php'); ?>
 
 	<a name="6"></a><h2>2.6 Syndicated Feeds</h2>
-		<p>Instructors may display syndicated feeds in the side menu of their courses. The choice of feeds available to them is controlled by an administrator. Feeds may be managed by going to the <em>Syndicated Feeds</em> link on the Configuration tab.</p>
+		<p>Instructors may display syndicated feeds in the side menu of their courses. The choice of feeds available to them is controlled by an administrator. Feeds may be managed by going to the <em>Syndicated Feeds</em> link under the System Preferences tab.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
