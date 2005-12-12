@@ -148,6 +148,24 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 		<?php echo _AT('notes'); ?><br />
 		<?php echo nl2br($properties['notes']); ?>
 	</div>
+
+	<?php if (is_array($module->_pages)): ?>
+		<div class="row">
+			<?php if (!isset($_GET['files'])): ?>
+				<a href="<?php echo $_SERVER['REQUEST_URI'].SEP; ?>files#files"><?php echo _AT('files'); ?> (<?php echo count($module->_pages); ?>)</a><br />
+			<?php else: ?>
+				<?php $module_pages = array_keys($module->_pages); ?>
+				<?php natsort($module_pages); ?>
+				<a name="files"></a><?php echo _AT('files'); ?> (<?php echo count($module->_pages); ?>)<br />
+				<ul style="margin-top: 0px;">
+					<?php foreach ($module_pages as $key): ?>
+						<li><kbd><?php echo $key; ?></kbd></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
+
 <?php if (!isset($_REQUEST['new'])): ?>
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
