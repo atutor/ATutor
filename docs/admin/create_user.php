@@ -29,6 +29,7 @@ if (isset($_POST['submit'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
 
+	$_POST['email'] = $addslashes($_POST['email']);
 	$result = mysql_query("SELECT member_id FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
 	if (mysql_num_rows($result) != 0) {
 		$msg->addError('EMAIL_EXISTS');
