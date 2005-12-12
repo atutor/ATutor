@@ -34,7 +34,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		?><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 		<tr>
-			<td align="right" class="row1"><b><?php 
+			<td align="right" class="row1"><strong><?php 
 				$key = in_array_cin($word[$i], $glossary_ids);
 
 				if ($key === false) {
@@ -50,21 +50,25 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					}
 				}
 
-				echo _AT('glossary_term'); ?>:</b></td>
+				echo _AT('glossary_term'); ?>:</strong></td>
 			<td class="row1"><?php echo AT_print(urldecode($current_word), 'glossary.word'); ?></td>
 		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<?php if (strlen(urldecode($current_word)) > 60): ?>
 		<tr>
-			<td valign="top" align="right" class="row1"><b><label for="body<?php echo $i; ?>"><?php echo _AT('glossary_definition');  ?>:</label></b></td>
+			<td>&nbsp;</td>
+			<td><em><?php echo _AT('glossary_term_limit'); ?></em></td>
+		</tr>
+		<?php else: ?>
+		<tr>
+			<td valign="top" align="right" class="row1"><label for="body<?php echo $i; ?>"><strong><?php echo _AT('glossary_definition');  ?>:</strong></label></td>
 			<td class="row1">
 				<textarea name="glossary_defs[<?php echo $word[$i]; ?>]" class="formfield" cols="55" rows="4" id="body<?php echo $i; ?>"><?php 
 					echo ContentManager::cleanOutput($current_defn); 
 		
 		?></textarea></td>
 		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
-			<td valign="top" align="right" class="row1"><label for="r<?php echo $i; ?>"><b><?php echo _AT('glossary_related');  ?>:</b></label></td>
+			<td valign="top" align="right" class="row1"><label for="r<?php echo $i; ?>"><strong><?php echo _AT('glossary_related');  ?>:</strong></label></td>
 			<td class="row1"><?php
 
 				if ($num_glossary > 1) {
@@ -86,7 +90,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				}
 
 				?></td>
-		</tr></table><br />
+		</tr>
+		<?php endif; ?>
+		</table><br />
 	<?php } ?>
 		
 	</div>
