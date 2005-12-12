@@ -15,7 +15,7 @@ INSERT INTO `forums_courses` VALUES (1, 1);
 
 
 # add a single thread
-INSERT INTO `forums_threads` VALUES (1, 0, 1, 1, 'instructor', NOW(), 0, 'Welcome', 'Welcome to the General Discussion forum.', NOW(), 0, 0);
+INSERT INTO `forums_threads` VALUES (1, 0, 1, 1, 'instructor', NOW(), 1, 'Welcome', 'Welcome to the General Discussion forum.', NOW(), 0, 0);
 
 # create news for Welcome Course
 INSERT INTO `news` VALUES (1, 1, 1, NOW(), 1, 'Welcome To ATutor', 'This is a welcome announcement. You can access additional help by using the Help link available throughout ATutor.');
