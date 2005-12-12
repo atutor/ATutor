@@ -98,7 +98,9 @@ $result  = mysql_query($sql, $db);
 		<?php } while($row = mysql_fetch_assoc($result)); ?>
 </tbody>
 <?php else: ?>
-	<?php echo _AT('none_found'); ?>
+	<tr>
+		<td colspan="2"><em><?php echo _AT('none_found'); ?></em></td>
+	</tr>
 <?php endif; ?>
 </table>
 </form>
