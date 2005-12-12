@@ -17,7 +17,7 @@
 	$_pages['1.1.requirements_recommendations.php']  = 'Requirements &amp; Recommendations';
 	$_pages['1.2.new_installation.php']              = 'New Installation';
 	$_pages['1.3.upgrading.php']                     = 'Upgrading an Installation';
-	$_pages['2.0.configuration.php']                 = 'Configuration';
+	$_pages['2.0.configuration.php']                 = 'Administrator Home';
 	$_pages['2.1.my_account.php']                    = 'My Account';
 	$_pages['2.2.system_preferences.php']            = 'System Preferences';
 	$_pages['2.2.1.default_student_tools.php']       = 'Default Student Tools';

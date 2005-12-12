@@ -81,7 +81,7 @@ function highlight(page) {
 			<li><a href="../admin/1.3.upgrading.php" class="leaf" id="id1.3.upgrading.php">Upgrading an Installation</a></li>
 		</ul>
 	</li>
-		<li><a href="../admin/2.0.configuration.php" class="tree" id="id2.0.configuration.php">Configuration</a>
+		<li><a href="../admin/2.0.configuration.php" class="tree" id="id2.0.configuration.php">Administrator Home</a>
 		<ul>
 			<li><a href="../admin/2.1.my_account.php" class="leaf" id="id2.1.my_account.php">My Account</a></li>
 			<li><a href="../admin/2.2.system_preferences.php" class="tree" id="id2.2.system_preferences.php">System Preferences</a>
