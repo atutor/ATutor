@@ -76,7 +76,7 @@ $result = mysql_query($sql, $db);
 	</div>
 	
 	<div class="row buttons">
-	<input type= "submit" name="import" value="<?php echo _AT('import_theme'); ?>" />
+	<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
 	</div>
 </div>
 </form>
