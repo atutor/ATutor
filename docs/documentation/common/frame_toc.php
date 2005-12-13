@@ -84,6 +84,7 @@ function highlight(page) {
 		<li><a href="../admin/2.0.configuration.php" class="tree" id="id2.0.configuration.php">Administrator Home</a>
 		<ul>
 			<li><a href="../admin/2.1.my_account.php" class="leaf" id="id2.1.my_account.php">My Account</a></li>
+		</ul>
 			<li><a href="../admin/2.2.system_preferences.php" class="tree" id="id2.2.system_preferences.php">System Preferences</a>
 				<ul>
 					<li><a href="../admin/2.2.1.default_student_tools.php" class="leaf" id="id2.2.1.default_student_tools.php">Default Student Tools</a></li>
@@ -107,7 +108,7 @@ function highlight(page) {
 			</li>
 			<li><a href="../admin/2.5.error_logging.php" class="leaf" id="id2.5.error_logging.php">Error Logging</a></li>
 			<li><a href="../admin/2.6.feeds.php" class="leaf" id="id2.6.feeds.php">Syndicated Feeds</a></li>
-		</ul>
+
 	</li>
 
 	<li><a href="../admin/3.0.users.php" class="tree" id="id3.0.users.php">Users</a>

@@ -56,9 +56,6 @@ require('../common/body_header.inc.php'); ?>
 			<dt>Auto Approve Instructor Requests</dt>
 			<dd>If <em>Allow Instructor Requests</em> is enabled, then existing students requesting instructor accounts will be upgraded automatically, bypassing the approval process. Additionally, any newly created accounts will be created as instructors rather than as students.</dd>
 
-			<dt>Enable the SCORM 1.2 RTE</dt>
-			<dd>Enabling this feature will turn on the Packages tool in ATutor, allowing Instructors to import and run SCORM compliant Sharable Content Objects (SCOs). Note that the RTE requires the Java JRE 1.5 to function properly, as well as LiveConnect, which is enabled by default in the JRE 1.5. Since ATutor 1.5.2 this option is controlled by enabling the SCORM module.</dd>
-
 			<dt>Theme Specific Categories</dt>
 			<dd>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="../admin/4.3.categories.php">Categories</a> section to create and manage course categories, and the <a href="../admin/2.4.themes.php">Themes</a> section to install and manage themes.</dd>
 
