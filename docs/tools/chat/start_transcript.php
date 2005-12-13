@@ -88,7 +88,7 @@ if ($admin === 0) {
 	$admin = defaultAdminSettings();
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 	$admin['adminPass']				= $_POST['newAdminPass'];
 	$adminPass						= $_POST['newAdminPass'];
 	$admin['chatName']				= $_POST['chatName'];
@@ -99,27 +99,25 @@ if ($_POST['submit']) {
 	$admin['chatIDLifeSpan']		= $_POST['chatIDLifeSpan'];
 	writeAdminSettings($admin);
 
-} else if ($_POST['submit2']) {
+} else if (isset($_POST['submit2'])) {
+	@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'] . '/tran');
 	if(file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_POST['tranFile'].'.html')){
-
 		$warnings = array('CHAT_TRAN_EXISTS', $_POST['tranFile']); //'file already exists';
 		$msg->addWarning($warnings);
 	} else if ($_POST['function'] == 'startTran') {
 		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['tranFile']))){
-
 			$msg->addError('CHAT_TRAN_REJECTED');
 		} else {
 			$admin['produceTran'] = 1;
 			$admin['tranFile'] = $_POST['tranFile'] . '.html';
 			writeAdminSettings($admin);
-
 			$tran = '<p>'._AC('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
 			$tran .= '<table border="0" cellpadding="3" summary="" class="chat-transcript">';
 				
-			$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
+			$fp = fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
 
-			@flock($fp, LOCK_EX);
-			if (!@fwrite($fp, $tran)) {
+			flock($fp, LOCK_EX);
+			if (!fwrite($fp, $tran)) {
 				return 0;
 			}
 			flock($fp, LOCK_UN);
