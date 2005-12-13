@@ -15,7 +15,7 @@ $_student_tool = 'packages/index.php';
 
 $this->_pages['tools/packages/index.php']['title_var'] = 'packages';
 $this->_pages['tools/packages/index.php']['parent']    = 'tools/index.php';
-$this->_pages['tools/packages/index.php']['children']  = array('tools/packages/import.php', 'tools/packages/delete.php', 'tools/packages/settings.php');
+$this->_pages['tools/packages/index.php']['children']  = array('tools/packages/import.php', 'tools/packages/delete.php');
 $this->_pages['tools/packages/index.php']['guide']     = 'instructor/?p=4.5.scorm_packages.php';
 	
 	$this->_pages['tools/packages/import.php']['title_var'] = 'import_package';
@@ -24,8 +24,8 @@ $this->_pages['tools/packages/index.php']['guide']     = 'instructor/?p=4.5.scor
 	$this->_pages['tools/packages/delete.php']['title_var'] = 'delete_package';
 	$this->_pages['tools/packages/delete.php']['parent']    = 'tools/packages/index.php';
 	
-	$this->_pages['tools/packages/settings.php']['title_var'] = 'package_settings';
-	$this->_pages['tools/packages/settings.php']['parent']    = 'tools/packages/index.php';
+	//$this->_pages['tools/packages/settings.php']['title_var'] = 'package_settings';
+	//$this->_pages['tools/packages/settings.php']['parent']    = 'tools/packages/index.php';
 
 	$this->_pages['tools/packages/scorm-1.2/view.php']['parent']    = 'tools/packages/index.php';
 
