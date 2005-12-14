@@ -205,9 +205,9 @@ if ($_SESSION['course_id'] > -1) {
 // if filemanager is a inside a popup or a frame
 // i don't like this code. i don't know were these two variables are coming from
 // anyone can add ?framed=1 to a URL to alter the behaviour.
-if ($framed || $popup) {
-	$savant->assign('framed', $framed);
-	$savant->assign('popup', $popup);
+if ($_REQUEST['framed'] || $_REQUEST['popup']) {
+	$savant->assign('framed', 1);
+	$savant->assign('popup', 1);
 	$savant->display('include/fm_header.tmpl.php');
 } else {
 	$savant->display('include/header.tmpl.php');

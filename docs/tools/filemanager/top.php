@@ -191,5 +191,4 @@ if (isset($_POST['cancel'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-	
 ?>

@@ -116,7 +116,7 @@ function insertTo(field) {
 </script>
 
 
-<iframe src="<?php echo $_base_path; ?>tools/filemanager/index.php?framed=1" name="filemanager" width="98%" height="480">
+<iframe src="<?php echo $_base_path; ?>tools/filemanager/index.php?framed=1<?php echo SEP; ?>popup=1" name="filemanager" width="98%" height="480">
 </iframe>
 
 </body>

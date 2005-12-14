@@ -17,6 +17,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 // get the course total in Bytes 
 $course_total = dirsize($current_path);
 
+$framed = intval($_GET['framed']);
+$popup = intval($_GET['popup']);
+
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$get_file = 'get.php/';
 } else {
@@ -309,8 +312,7 @@ echo '</table></form>';
 ?>
 
 <script type="text/javascript">
-<!--
-
+//<!--
 function insertFile(fileName, pathTo, ext) { 
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
@@ -359,6 +361,5 @@ function insertAtCursor(myField, myValue) {
 		myField.focus();
 	}
 }
-
--->
+//-->
 </script>

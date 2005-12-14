@@ -14,11 +14,11 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 
-if ((isset($_REQUEST['popup']))  && ($_REQUEST['popup'] == TRUE) && 
-	(!isset($_REQUEST['framed']) || $_REQUEST['framed'] == FALSE)) {
+if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) && 
+	(!isset($_REQUEST['framed']) || !$_REQUEST['framed'])) {
 	$popup = TRUE;
 	$framed = FALSE;
-} else if ((isset($_REQUEST['framed'])) && ($_REQUEST['framed'] == TRUE)) {
+} else if (isset($_REQUEST['framed']) && $_REQUEST['framed'] && isset($_REQUEST['popup']) && $_REQUEST['popup']) {
 	$popup = TRUE;
 	$framed = TRUE;
 } else {
