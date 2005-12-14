@@ -340,7 +340,6 @@ function insertFile(fileName, pathTo, ext) {
 		}
 	}
 }
-
 function insertAtCursor(myField, myValue) {
 	//IE support
 	if (window.opener.document.selection) {
