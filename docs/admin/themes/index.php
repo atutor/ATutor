@@ -59,29 +59,37 @@ $sql    = "SELECT * FROM " . TABLE_PREFIX . "themes ORDER BY title ASC";
 $result = mysql_query($sql, $db);
 ?>
 
-<form name="importForm" method="post" action="admin/themes/import.php" enctype="multipart/form-data">
-<div class="input-form" style="width:50%;">
-	<div class="row">
-		<h3><?php echo _AT('import_theme'); ?></h3>
+<?php if (!is_writeable(realpath('./../../themes'))): ?>
+	<div class="input-form">
+		<div class="row">
+			<?php echo _AT('install_themes_text', realpath('./../../themes')); ?>		
+		</div>
 	</div>
+<?php else: ?>
+	<form name="importForm" method="post" action="admin/themes/import.php" enctype="multipart/form-data">
+	<div class="input-form" style="width:50%;">
+		<div class="row">
+			<h3><?php echo _AT('import_theme'); ?></h3>
+		</div>
 
-	<div class="row">
-		<label for="file"><?php echo _AT('upload_theme_package'); ?></label><br />
-		<input type="file" name="file" size="40" id="file" />
-	</div>
+		<div class="row">
+			<label for="file"><?php echo _AT('upload_theme_package'); ?></label><br />
+			<input type="file" name="file" size="40" id="file" />
+		</div>
 
-	<div class="row">
-		<label for="url"><?php echo _AT('specify_url_to_theme_package'); ?></label><br />
-		<input type="text" name="url" value="http://" size="40" id="url" />
+		<div class="row">
+			<label for="url"><?php echo _AT('specify_url_to_theme_package'); ?></label><br />
+			<input type="text" name="url" value="http://" size="40" id="url" />
+		</div>
+			
+		<div class="row buttons">
+			<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
+		</div>
 	</div>
-	
-	<div class="row buttons">
-	<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
-	</div>
-</div>
-</form>
+	</form>
 
-<br /><br />
+	<br /><br />
+<?php endif; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 <table class="data" summary="" rules="cols">
