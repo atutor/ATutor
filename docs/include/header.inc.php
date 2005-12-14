@@ -85,10 +85,11 @@ if (!isset($_pages[$current_page])) {
 }
 
 $_top_level_pages        = get_main_navigation($current_page);
+
 $_current_top_level_page = get_current_main_page($current_page);
 
 if (empty($_top_level_pages)) {
-	if (!$_SESSION['valid_user']) {
+	if (!$_SESSION['member_id'] && !$_SESSION['course_id']) {
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_PUBLIC][0]);
 	} else if ($_SESSION['course_id'] < 0) {
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_ADMIN][0]);
