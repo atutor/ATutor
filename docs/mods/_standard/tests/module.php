@@ -85,6 +85,9 @@ $this->_pages['tools/view_results.php']['parent']    = 'tools/my_tests.php';
 	$this->_pages['tools/tests/edit_question_likert.php']['title_var'] = 'edit_question';
 	$this->_pages['tools/tests/edit_question_likert.php']['parent']    = 'tools/tests/question_db.php';
 
+	$this->_pages['tools/tests/delete_question.php']['title_var'] = 'delete';
+	$this->_pages['tools/tests/delete_question.php']['parent'] = 'tools/tests/question_db.php';
+
 $this->_pages['tools/take_test.php']['title_var'] = 'take_test';
 $this->_pages['tools/take_test.php']['parent']    = 'tools/my_tests.php';
 
