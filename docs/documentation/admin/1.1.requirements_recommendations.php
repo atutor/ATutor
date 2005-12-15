@@ -23,10 +23,8 @@ require('../common/body_header.inc.php'); ?>
 	<h3>PHP</h3>
 		<p><acronym title="Recursive acronym for PHP: Hypertext Preprocessor, the language ATutor is written in">PHP</acronym> 4.2.0 or higher with Zlib, MySQL, and session support enabled is required. PHP version 4.3.0 or higher is highly recommended as it provides greater performance than previous versions. PHP version 5.0.2 or higher is also supported, but ATutor does not make use of its added functionality. Additionally, the following <kbd>php.ini</kbd> configuration setting is required:</p>
 
-		<pre>safe_mode               = Off</pre>
-
-		<p>The following are recommended settings:</p>
-<pre>display_errors          = Off
+<pre>safe_mode               = Off
+display_errors          = Off
 arg_separator.input     = ";&amp;"
 register_globals        = Off
 magic_quotes_gpc        = Off
@@ -38,6 +36,7 @@ post_max_size           = 8M ; or greater
 file_uploads            = On
 upload_max_filesize     = 2M ; or greater
 session.use_trans_sid   = 0
+include_path            = ".:/usr/local/lib/php" ; must include . (dot)
 </pre>
 
 	<h3>MySQL</h3>
@@ -46,6 +45,6 @@ session.use_trans_sid   = 0
 		<p>A database user account with database creation privileges is required if your database does not already exist. That same user will then need table creation privileges for the chosen database.. See the MySQL chapter <a href="http://dev.mysql.com/doc/mysql/en/privileges.html" target="_new">How the Privilege System Works</a> for additional information.</p>
 
 	<h3>Web Browser</h3>
-		<p>ATutor makes use of many new HTML features that are only supported in recent web browsers. Though ATutor is designed to function effectively in older browsers we strongly recommend using the latest version of your favorite browser. We recommend <a href="http://getfirefox.com" target="_new">FireFox</a> for either Windows, Unix or Mac OS X.</p>
+		<p>ATutor makes use of many new HTML features that are only supported in recent web browsers. Though ATutor is designed to function effectively in older browsers we strongly recommend using the latest version of your favorite browser. We recommend <a href="http://getfirefox.com" target="_new">FireFox</a> for either Windows, *nix or Mac OS X.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
