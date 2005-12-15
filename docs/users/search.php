@@ -3,7 +3,7 @@ exit('no longer used');
 /************************************************************************/
 /* ATutor														        */
 /************************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
+/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
 /* Adaptive Technology Resource Centre / University of Toronto          */
 /* http://atutor.ca												        */
 /*                                                                      */
