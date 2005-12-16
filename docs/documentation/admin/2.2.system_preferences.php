@@ -15,10 +15,6 @@
 require('../common/body_header.inc.php'); ?>
 
 	<h2>2.2 System Preferences</h2>
-		<p>All system preferences are stored in <kbd>./include/config.inc.php</kbd>, a file accessed by the web server. This file must be made writeable by the web server if you want to make changes using this page.</p>
-
-		<p>For non-Windows users: To make the preferences file writeable execute <kbd>chmod a+rwx config.inc.php</kbd> while inside the <kbd>./include/</kbd> directory of your ATutor installation.</p>
-
 		<dl>
 			<dt>Site Name</dt>
 			<dd>The name of the course server's website. This name will appear at the top of all the public pages, in the web browser's title bar, and as the <em>From</em> name when sending non-personal emails.</dd>
