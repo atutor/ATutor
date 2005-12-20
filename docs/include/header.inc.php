@@ -77,8 +77,6 @@ $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
 
 if (!isset($_pages[$current_page])) {
 	global $msg;
-	debug($_pages[$current_page]);
-	exit;
 	$msg->addError('PAGE_NOT_FOUND'); // probably the wrong error
 	header('location: '.$_base_href.'index.php');
 	exit;

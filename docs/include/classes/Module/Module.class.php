@@ -214,13 +214,13 @@ class Module {
 			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
 
 			if (isset($this->_pages)) {
-				$_pages = array_merge_recursive($_pages, $this->_pages);
+				$_pages = array_merge_recursive((array)$_pages, $this->_pages);
 			}
 
 			//side menu items
 			if (isset($this->_stacks)) {
 				$count = 0;
-				$_stacks = array_merge($_stacks, $this->_stacks);
+				$_stacks = array_merge((array)$_stacks, $this->_stacks);
 			}
 
 			//student tools

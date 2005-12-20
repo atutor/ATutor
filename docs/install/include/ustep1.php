@@ -59,7 +59,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="tb_prefix" value="" />';
 				}
 				if (defined('SITE_NAME')) {
-					echo '<input type="hidden" name="site_name" value="'.SITE_NAME.'" />';
+					echo '<input type="hidden" name="site_name" value="'.urlencode(SITE_NAME).'" />';
 				} else {
 					echo '<input type="hidden" name="site_name" value="'.$_defaults['site_name'].'" />';
 				}
@@ -85,7 +85,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="smtp" value="FALSE" />';
 				}
 				if (defined('AT_FORCE_GET_FILE')) {
-					echo '<input type="hidden" name="get_file" value="'.AT_FORCE_GET_FILE.'" />';
+					echo '<input type="hidden" name="get_file" value="'.(AT_FORCE_GET_FILE ? 'TRUE' : 'FALSE').'" />';
 				} else {
 					echo '<input type="hidden" name="get_file" value="FALSE" />';
 				}
