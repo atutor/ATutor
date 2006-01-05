@@ -53,13 +53,13 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <form action="<?php  $_SERVER['PHP_SELF']; ?>" method="post">
 	<div class="input-form">
 		<div class="row">
-			<p><?php echo _AT('phpmyadmin_location'); ?></p>
+			<p><label for="uri"><?php echo _AT('phpmyadmin_location'); ?></label></p>
 	
-			<input type="text" name="uri" value="<?php echo $_config['phpmyadmin']; ?>" size="80" style="min-width: 95%;" />
+			<input type="text" name="uri" value="<?php echo $_config['phpmyadmin']; ?>" id="uri" size="80" style="min-width: 95%;" />
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('edit'); ?>"  />
+			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>"  />
 		</div>
 	</div>
 </form>
