@@ -29,8 +29,6 @@ if (isset($_POST['submit'])) {
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-unset($_config['phpmyadmin']);
-
 ?>
 
 <?php if ($_config['phpmyadmin']): ?>
