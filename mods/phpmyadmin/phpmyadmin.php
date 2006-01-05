@@ -30,7 +30,7 @@ if($_REQUEST['edited_phpmyadmin_url'] == 1){
 	}else{
 		$phpmyadmin_url = addslashes(stripslashes($_REQUEST['phpmyadmin_url']));
 		$sql = "UPDATE ".TABLE_PREFIX."config SET  value='".$phpmyadmin_url."' WHERE name = 'phpmyadmin'";
-		if(!$result = mysql_query($sql)){
+		if(!$result = mysql_query($sql, $db)){
 			$msg->addError('PHPMYADMINURL_ADD_FAILED');
 		}else{
 			$msg->addFeedback('PHPMYADMINURL_ADD_SAVED');
@@ -48,11 +48,11 @@ while($row = mysql_fetch_array($result)){
 }
 
 require (AT_INCLUDE_PATH.'header.inc.php');
-
-if($phpmyadmin_url_db == '' || $_POST['edit_phpmyadmin_url']){ 
-
 ?>
-		<div class="input-form">
+
+<?php if($phpmyadmin_url_db == '' || $_POST['edit_phpmyadmin_url']): ?>
+
+	<div class="input-form">
 		<div class="row">
 			<p><?php echo _AT('phpmyadmin_add_url'); ?>
 		</p>
@@ -73,11 +73,10 @@ if($phpmyadmin_url_db == '' || $_POST['edit_phpmyadmin_url']){
 			</form>
 			</div>
 		</div>
-		</div>
+	</div>
 
-<?php }else{?>
-
-		<div class="input-form">
+<?php else: ?>
+	<div class="input-form">
 		<div class="row">
 			<p><?php echo _AT('phpmyadmin_text');  ?>
 		</p>
@@ -100,6 +99,6 @@ if($phpmyadmin_url_db == '' || $_POST['edit_phpmyadmin_url']){
 			</div>
 		</div>
 		</div>
-<?php } ?>
+<?php endif; ?>
 
 <?php  require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
