@@ -81,39 +81,10 @@ define('AT_PRIV_RETURN',		true);
 define('AT_PRIV_NONE',			0);
 
 define('AT_PRIV_ADMIN',			1);
-/*
-// $_prive[1]   = AT_PRIV_ADMIN defined above.
-$_privs[2]		= array('name' => 'AT_PRIV_CONTENT');
-$_privs[4]		= array('name' => 'AT_PRIV_GLOSSARY');
-$_privs[8]		= array('name' => 'AT_PRIV_TEST_CREATE');
-$_privs[16]		= array('name' => 'AT_PRIV_TEST_MARK');
-$_privs[32]		= array('name' => 'AT_PRIV_FILES');
-$_privs[64]		= array('name' => 'AT_PRIV_LINKS');
-$_privs[128]	= array('name' => 'AT_PRIV_FORUMS');
-$_privs[256]	= array('name' => 'AT_PRIV_STYLES');
-$_privs[512]	= array('name' => 'AT_PRIV_ENROLLMENT');
-$_privs[1024]	= array('name' => 'AT_PRIV_COURSE_EMAIL');
-$_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS');
-if (defined('AC_PATH') && AC_PATH) {
-	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE');
-	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL');
-}
-$_privs[16384]	= array('name' => 'AT_PRIV_POLLS');
-*/
 
 /* admin privs: */
 define('AT_ADMIN_PRIV_NONE',        0);
 define('AT_ADMIN_PRIV_ADMIN',       1);
-
-/*
-define('AT_ADMIN_PRIV_USERS',       2);
-define('AT_ADMIN_PRIV_COURSES',     4);
-define('AT_ADMIN_PRIV_BACKUPS',     8);
-define('AT_ADMIN_PRIV_FORUMS',     16);
-define('AT_ADMIN_PRIV_CATEGORIES', 32);
-define('AT_ADMIN_PRIV_LANGUAGES',  64);
-define('AT_ADMIN_PRIV_THEMES',    128);
-*/
 
 /* admin log (type of operations) */
 define('AT_ADMIN_LOG_UPDATE',  1);
