@@ -10,7 +10,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <?php if (!$_config['ccnet']): ?>
-	<?php $msg->addInfo('CCNET_URL_ADD_REQUIRED'); ?>
+	<?php $msg->printInfos('CCNET_URL_ADD_REQUIRED'); ?>
 <?php else: ?>
 	<div class="input-form">
 		<div class="row">
