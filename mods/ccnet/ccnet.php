@@ -8,91 +8,60 @@ it includes the launcher, which opens CCNet in a new window
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-if($_REQUEST['saved_ccnet_url'] == 1){
-	if($_REQUEST['ccnet_url'] == ''){
-			$msg->addError('CCNETURL_ADD_EMPTY');
-	}else{
-		$ccnet_url = addslashes(stripslashes($_REQUEST['ccnet_url']));
-		$sql = "INSERT INTO ".TABLE_PREFIX."config VALUES('ccnet', '".$ccnet_url."')";
-		if(!$result = mysql_query($sql, $db)){
-			$msg->addError('CCNETURL_ADD_FAILED');
-		}else{
-			$msg->addFeedback('CCNETURL_ADD_SAVED');
-		}
-	}
-}
 
-if($_REQUEST['edited_ccnet_url'] == 1){
-	if($_REQUEST['ccnet_url'] == ''){
-			$msg->addError('CCNETURL_ADD_EMPTY');
-			//	$_POST['edit_ccnet_url'] = 1;
+if (isset($_POST['submit'])) {
+	$_POST['uri'] = trim($_POST['uri']);
+
+	if (!$_POST['uri']){
+		$msg->addError('CCNETURL_ADD_EMPTY');
+	}
 			
-	}else{
-		$ccnet_url = addslashes(stripslashes($_REQUEST['ccnet_url']));
-		$sql = "UPDATE ".TABLE_PREFIX."config SET  value='".$ccnet_url."' WHERE name = 'ccnet'";
-		if(!$result = mysql_query($sql, $db)){
-			$msg->addError('CCNETURL_ADD_FAILED');
-		}else{
-			$msg->addFeedback('CCNETURL_ADD_SAVED');
-		}
+	if (!$msg->containsErrors()) {
+		$_POST['uri'] = $addslashes($_POST['uri']);
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ccnet', '$_POST[uri]')";
+		mysql_query($sql, $db);
+		$msg->addFeedback('CCNETURL_ADD_SAVED');
+
+		header('Location: '.$_SERVER['PHP_SELF']);
+		exit;
 	}
 }
-
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-if (!$_config['ccnet'] || $_POST['edit_ccnet_url']){ 
-
 ?>
-		<div class="input-form">
-		<div class="row">
-			<p><?php echo _AT('ccnet_add_url'); ?>
-		</p>
-			<div class="row buttons">
-			<form action="<?php $_SERVER['PHP_SELF']?>" method="post">
-			<?php if($_POST['edit_ccnet_url']){ ?>
-				<input type="hidden" name="edited_ccnet_url" value="1">
-			<?php }else{ ?>
-				<input type="hidden" name="saved_ccnet_url" value="1">
-			<?php } ?>
-			<?php if($_POST['edit_ccnet_url']){ ?>
-				<input type="text" name="ccnet_url" value="<?php echo $ccnet_url_db; ?>" size="80" length="150" />
-				<?php }else{ ?>
-				<input type="text" name="ccnet_url" value="<?php echo $ccnet_url; ?>" size="80" length="150" />
-			
-			<?php } ?>	
-			<input type="submit" value="<?php echo _AT('ccnet_save'); ?>" style="botton">
-			</form>
-			</div>
-		</div>
-		</div>
 
-<?php }else{?>
-
-		<div class="input-form">
+<?php if ($_config['ccnet']): ?>
+	<div class="input-form">
 		<div class="row">
-			<p><?php echo _AT('ccnet_text');  ?>
-		</p>
-			<div class="row buttons">
-			<form>
-			<input type="submit" value="<?php echo _AT('ccnet_open'); ?>" onclick="window.open('<?php echo $ccnet_url_db; ?>','mywindow','width=800,height=600,scrollbars=yes, resizable=yes' ); return false;" style="botton">
-			</form>
-			</div>
+			<p><?php echo _AT('ccnet_text');  ?></p>
 		</div>
-		</div>
-		<div class="input-form">
-		<div class="row">
-			<p><?php echo _AT('ccnet_location'); ?></p>
-			<p><strong><?php echo $ccnet_url_db; ?> </strong></p>
-		</div>
-
 		<div class="row buttons">
-			<form action="<?php  $_SERVER['PHP_SELF']; ?>" method="post">
-			<input type="hidden" name="edit_ccnet_url" value="1">
-			<input type="submit" value="<?php echo _AT('ccnet_edit'); ?>" style="botton">
+			<form action="" method="get">
+				<input type="submit" value="<?php echo _AT('ccnet_open'); ?>" onclick="window.open('<?php echo $_config['ccnet']; ?>','mywindow','width=800,height=600,scrollbars=yes, resizable=yes', 'false'); return false;" />
 			</form>
 		</div>
 	</div>
-<?php } ?>
+<?php else: ?>
+	<div class="input-form">
+		<div class="row">
+			<p><?php echo _AT('ccnet_missing_url');  ?></p>
+		</div>
+	</div>
+<?php endif; ?>
+
+<form action="<?php  $_SERVER['PHP_SELF']; ?>" method="post">
+	<div class="input-form">
+		<div class="row">
+			<p><label for="uri"><?php echo _AT('ccnet_location'); ?></label></p>
+	
+			<input type="text" name="uri" value="<?php echo $_config['ccnet']; ?>" id="uri" size="80" style="min-width: 95%;" />
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>"  />
+		</div>
+	</div>
+</form>
 
 <?php  require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

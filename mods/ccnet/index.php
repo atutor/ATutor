@@ -11,16 +11,15 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 <?php if (!$_config['ccnet']): ?>
 	<?php $msg->addInfo('CCNET_URL_ADD_REQUIRED'); ?>
-
 <?php else: ?>
 	<div class="input-form">
 		<div class="row">
-			<p><?php echo _AT('ccnet_text');  ?></p>
+			<p><?php echo _AT('ccnet_text'); ?></p>
 		</div>
 
 		<div class="row buttons">
 			<form action="" method="get">
-				<input type="submit" name="submit" value="<?php echo _AT('ccnet_open'); ?>" onclick="window.open('<?php echo $_config['ccnet']; ?>','mywindow','width=800,height=600,scrollbars=yes, resizable=yes'); return false" />
+				<input type="submit" name="submit" value="<?php echo _AT('ccnet_open'); ?>" onclick="window.open('<?php echo $_config['ccnet']; ?>','mywindow','width=800,height=600,scrollbars=yes, resizable=yes'); return false;" />
 			</form>
 		</div>
 	</div>
