@@ -34,11 +34,15 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <?php if ($_config['phpmyadmin']): ?>
 	<div class="input-form">
 		<div class="row">
-			<p><?php echo _AT('phpmyadmin_text');  ?></p>
+			<p><?php echo _AT('phpmyadmin_text'); ?></p>
+		</div>
+
+		<div class="row">
+			<p><?php echo _AT('phpmyadmin_atutor_db', DB_NAME); ?></p>
 		</div>
 		<div class="row buttons">
 			<form action="" method="get">
-				<input type="submit" value="<?php echo _AT('phpmyadmin_open'); ?>" onclick="window.open('<?php echo $_config['phpmyadmin']; ?>','mywindow','width=800,height=600,scrollbars=yes, resizable=yes', 'false'); return false;" />
+				<input type="submit" value="<?php echo _AT('phpmyadmin_open'); ?>" onclick="window.open('<?php echo $_config['phpmyadmin']; ?>','mywindow','width=800,height=600,scrollbars=yes, resizable=yes', 'false');true;" />
 			</form>
 		</div>
 	</div>
