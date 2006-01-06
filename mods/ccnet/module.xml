@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">CCNet</name> 
+    <description lang="en">This module links CCNet into ATutor.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2005-08-28</date> 
+        <state>stable</state> 
+        <notes>This is a simple module that creates student, instructor, and administrator links to open a CCnet url in a new window.</notes> 
+    </release> 
+</module>
