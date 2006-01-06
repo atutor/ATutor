@@ -38,7 +38,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 		<div class="row buttons">
 			<form action="" method="get">
-				<input type="submit" value="<?php echo _AT('phpmyadmin_open'); ?>" onclick="window.open('<?php echo $_config['phpmyadmin']; ?>','mywindow','width=800,height=600,scrollbars=yes, resizable=yes', 'false');true;" />
+				<input type="submit" value="<?php echo _AT('phpmyadmin_open'); ?>" onclick="window.open('<?php echo $_config['phpmyadmin']; ?>','mywindow','width=800,height=600,scrollbars=yes, resizable=yes', 'false'); return false;" />
 			</form>
 		</div>
 	</div>
