@@ -14,7 +14,7 @@ if($_REQUEST['saved_ccnet_url'] == 1){
 	}else{
 		$ccnet_url = addslashes(stripslashes($_REQUEST['ccnet_url']));
 		$sql = "INSERT INTO ".TABLE_PREFIX."config VALUES('ccnet', '".$ccnet_url."')";
-		if(!$result = mysql_query($sql)){
+		if(!$result = mysql_query($sql, $db)){
 			$msg->addError('CCNETURL_ADD_FAILED');
 		}else{
 			$msg->addFeedback('CCNETURL_ADD_SAVED');
@@ -30,7 +30,7 @@ if($_REQUEST['edited_ccnet_url'] == 1){
 	}else{
 		$ccnet_url = addslashes(stripslashes($_REQUEST['ccnet_url']));
 		$sql = "UPDATE ".TABLE_PREFIX."config SET  value='".$ccnet_url."' WHERE name = 'ccnet'";
-		if(!$result = mysql_query($sql)){
+		if(!$result = mysql_query($sql, $db)){
 			$msg->addError('CCNETURL_ADD_FAILED');
 		}else{
 			$msg->addFeedback('CCNETURL_ADD_SAVED');
@@ -38,19 +38,10 @@ if($_REQUEST['edited_ccnet_url'] == 1){
 	}
 }
 
-//////////
-//Check to see if the url to CCNet exists in the db. if not
-//then request it, otherwise display the launch page
-$sql = 'SELECT * from '.TABLE_PREFIX.'config WHERE name="ccnet"';
-$result = mysql_query($sql, $db);
-
-while($row = mysql_fetch_array($result)){
-	$ccnet_url_db = $row[1];
-}
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-if($ccnet_url_db == '' || $_POST['edit_ccnet_url']){ 
+if (!$_config['ccnet'] || $_POST['edit_ccnet_url']){ 
 
 ?>
 		<div class="input-form">
@@ -92,15 +83,16 @@ if($ccnet_url_db == '' || $_POST['edit_ccnet_url']){
 		<div class="input-form">
 		<div class="row">
 			<p><?php echo _AT('ccnet_location'); ?></p>
-			<p>	<strong><?php echo $ccnet_url_db; ?> </strong>									</p>
-			<div class="row buttons">
+			<p><strong><?php echo $ccnet_url_db; ?> </strong></p>
+		</div>
+
+		<div class="row buttons">
 			<form action="<?php  $_SERVER['PHP_SELF']; ?>" method="post">
 			<input type="hidden" name="edit_ccnet_url" value="1">
 			<input type="submit" value="<?php echo _AT('ccnet_edit'); ?>" style="botton">
 			</form>
-			</div>
 		</div>
-		</div>
+	</div>
 <?php } ?>
 
 <?php  require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
