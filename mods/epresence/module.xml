@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">ePresence</name> 
+    <description lang="en">This module links ePresence into ATutor student, instructor, and administrator tools. ePresence Interactive Media software is a content capturing, archiving, and webcasting system that delivers video and presentation media over the internet using multiple streaming formats for multiple platforms. ePresence also supports text and voice interaction among event participants.   </description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2005-08-22</date> 
+        <state>stable</state> 
+	<notes>After installating the module, provide the URL to your ePresence server. See the ePresence Web site for further details, downloads, installation instructions, and other documentation. ( http://epresence.tv/ )</notes> 
+    </release> 
+</module>

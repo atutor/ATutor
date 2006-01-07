@@ -1,0 +1,89 @@
+/*  WebCalendar module for ATutor README  */
+
+**WebCalendar**
+http://www.k5n.us/webcalendar.php
+
+The WebCalendar module for ATutor provides a full range of calendaring functionality. It includes individual, group, course, and system wide calendars, with features such as a custom look for each users, repeating entries, email notice prior to an event date, emailing when new items are posted, layering calendars to merge a system wide and a course calendar into an individual's calendar,  as well as day, week, month, and year views. A side menu block also provides quick access to the next 10 calendar entries.
+
+**Documentation**
+See the WebCalendar documentation for full details, and the WebCalendar System Admistrator docs in particular for  detailed installation instructions:
+
+WebCalendar Documentation
+http://www.k5n.us/webcalendar.php?topic=Documentation
+
+**Install WebCalendar First**
+Download and install WebCalendar before installing the ATutor module. WebCalendar can be installed anywhere on the same server as ATutor. The WebCalendar tables must however be install in the *same database as your ATutor installation*. See the *change made to the WebCalendar default settings* listed below. These changes are required to allow both private and course level calendars  
+
+WebCalendar Download
+http://sourceforge.net/project/showfiles.php?group_id=3870
+
+**Install ATutor WebCalendar Module Second**
+After installing and confirming that WebCalendar in functioning properly, unpack the WebCalendar ATutor module into the mods/ directory of your ATutor installation. This should create a new directroy called calendar/.  Then logged into ATutor as the adminsitrator use the Intall Modules link in the Administrator Modules section to integrate WebCalendar into ATutor.
+
+**Administrative Functions**
+When installed and functioning properly as an ATutor module, it is necessary to regularly synchronize the ATutor and WebCalendar database tables. When new courses are created or new users are enrolled in courses, the WebCalendar user tables need to be update so those users and courses have access to the calendar. To synchroinized the database tables press the Manage Calendar link under the WebCalendar tab in the administrator section of ATutor. Instructors can also synchorize the databases when they add a new course, or new students enroll in their courses. (This will be automated in a future version of ATutor)
+
+**Admistrator Layers**
+Posting system wide calendar entries is possible by assigning all Groups as participants when posting new calendar items as the system administrator.
+
+**Instructor Layers**
+As a course instructor *create a course calendar* by assigning access to calendar entries using Layers. Select a course group as the layer under the Particpants tab while editing a calendar entry by pressing the Select button to see a list of users and groups from each of your courses. Choose a course title from the right to select all the enrolled students in that course as participants (i.e. so all students in the course can see the items added to the course group calendar).
+
+**WebCalendar Changes to Default Settings**
+
+The following changes were made to the default settings. 
+
+- Install Webcalendar in Multi User mode (instead of single user mode) (see the settings.php file and WebCalendar documentation)
+
+Admin System Settings
+Settings
+- Allow viewing other user's calendars: No (so student calendars are private)
+- Remember last login: No (so users can have multiple calendars for different courses)
+
+Public Access
+- Public Access: No 
+
+Groups
+- Groups Enabled: Yes
+- User sees only his groups: Yes
+
+NonUser Calendars
+- Nonuser Calendars Enabled: No
+
+Email
+- Email enabled: Yes (if you want email notifications)
+
+**Other Quick HowTos**
+These are just a few of examples of how to use WebCalendar in ATutor courses. These and other examples are explained in more detail in the WebCalendar documentation:
+
+WebCalendar Documentation
+http://www.k5n.us/webcalendar.php?topic=Documentation
+
+1. All users can *add entries to "other's calendars"* by choosing those users under the Participants tab while editing a calendar entry.
+
+2a. All users can *add entries the "course calendar"* by choosing all users under the Participants tab while editing a calendar entry. Instructors are required to approve entries added to the course calendar by students.
+
+OR
+
+2b. When a *student adds a public calendar item*, the instructor of the course must approve the item (unless approvals or public entries are disabled in WebCalendar). If email notifications is enabled in WebCalendar, the instructor will recieve notice when new calendar items are posted.
+
+3. Enable autologin via cookies on the WebCalendar login screen so you do not need to login to the calendar each time you access ATutor. You will probably only want to enable autologin if you have a single calendar on the system.
+
+4. It is possible to login to different calendars you own on the same ATutor system (e.g. if you have different  student, instructor, and administrator accounts) by logging out while viewing the calendar, then logging back into the calendar as a different user. If you have multiple calendars on a system, *do not enable "Save login via cookies...*" on the login screen. 
+
+
+
+**Limitation:**
+There are no backups taken of the calendar when backing up a course. Individuals can create their own backups using the calendar's Export tool, and administrator can export the contents of an entire calendar databases.
+
+**Things left to do**
+replace manual sync of ATutor/WebCal databases with auto sync
+- create course adds course to the webcal_groups table, and assigned the instructor as the owner
+- delete course removes the course from the webcal_groups table, and removes the enrolled students from the welcal_group_user table
+- enrol student adds the user to the welcal_group_user table
+- unenroll student removes the user from the  welcal_group_user table
+- register new account adds the user to the webcal_user table
+- admin delete users removes the user from the webcal_user table
+
+determine if course calendar backups is feasible (probably not)
+

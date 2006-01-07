@@ -1,0 +1,188 @@
+/*
+This stylesheet is not being included because pLog is in an iframe.  It is here for future reference
+*/
+/* MAIN TABS */
+div#topnavlistcontainer {
+	border-bottom: 1px solid #70A1CA;
+}
+ul#topnavlist {
+	padding: 0px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 3px;
+	margin-top: 0px;
+	white-space: nowrap;
+}
+
+ul#topnavlist li {
+	list-style: none;
+	display: inline;
+	margin: 0px;
+}
+
+ul#topnavlist li a {
+	padding: 3px 9px;
+	border: 1px solid #70A1CA;
+	background: #F4F9FE;
+	text-decoration: none;
+	margin-left: 1px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-topleft: 4px;
+	white-space: nowrap;
+	font-weight: bold;
+}
+ul#topnavlist li:first-child a {
+	margin-left: 10px;
+}
+
+ul#topnavlist li a:hover, ul#topnavlist li a.active, ul#topnavlist li a:focus {
+	color: #000;
+	background: white;
+	border-bottom: 1px solid white;
+}
+
+/*
+<style type="text/css"> 
+*/
+
+table.standard{
+	width:95%;
+  	border: 1px solid #eeeeee;
+	background-color:#ffffff;
+}
+th{
+  	border: 1px solid #afafaf;
+	background-color:#efefef;
+}
+div#tabscontent{
+     width:95%;
+  	border: 1px solid #afafaf;
+}
+div#tabscontent_settings{
+
+     width:100%;
+  	border: 1px solid #afafaf;
+}
+.tabbak{
+	margin-top: 10px;
+	font-family: Helevetica, Arial, sans-serif;
+ 	background: #efefef;
+  	border: 1px solid #afafaf;
+   	color: black;
+	white-space:nowrap;
+   	padding: 0em 1em 0em 1em;
+   	display: inline;
+	font-size: small;
+	font-weight:normal;
+	margin-left: 0px;
+}
+.tabfor{
+	margin-top: 10px;
+	font-family: Helevetica, Arial, sans-serif;
+ 	background: #ffffff;
+  	border: 1px solid #afafaf;
+   	color: black;
+	white-space:nowrap;
+   	padding: 0em 1em 0em 1em;
+   	display: inline;
+	font-size: small;
+	font-weight:normal;
+	margin-left: 0px;
+}
+input[type=submit]:hover {
+	border: 1px solid #999;
+	border-bottom:2px solid #999;
+	border-right:2px solid #999;
+	background-color: #eeeeee;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 50px;
+	margin-left: 5px;	
+}
+input[type=submit] {
+	border: 1px solid #999;
+	border-bottom:2px solid #999;
+	border-right:2px solid #999;
+	background-color: white;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 50px;
+	margin-left: 5px;	
+}
+input[type=submit]:active {
+	border: 1px solid #999;
+	border-top:2px solid #999;
+	border-left:2px solid #999;
+	background-color: white;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 50px;
+	margin-left: 5px;	
+}
+input[type=text] {
+	border: 1px solid #999;
+	background-color: white;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 100px;
+	margin-left: 5px;	
+}
+select {
+	border: 1px solid #999;
+	background-color: white;
+	padding: 2px;
+	min-width: 100px;
+	margin-left: 5px;	
+}
+
+input[type=button]:hover {
+	border: 1px solid #999;
+	border-bottom:2px solid #999;
+	border-right:2px solid #999;
+	background-color: #eeeeee;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 50px;
+	margin-left: 5px;	
+}
+input[type=button] {
+	border: 1px solid #999;
+	border-bottom:2px solid #999;
+	border-right:2px solid #999;
+	background-color: white;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 50px;
+	margin-left: 5px;	
+}
+input[type=button]:active {
+	border: 1px solid #999;
+	border-top:2px solid #999;
+	border-left:2px solid #999;
+	background-color: white;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 50px;
+	margin-left: 5px;	
+}
+
+table.main{
+	border: 1px solid #999;
+	background-color: white;
+}
+table.admin{
+	border: 1px solid #999;
+	background-color: #eeeeee;
+	font-weight: 600;
+}
+
+/*
+</style>
+*/
