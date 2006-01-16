@@ -21,7 +21,7 @@ require('../common/body_header.inc.php'); ?>
 		<p>The web server can be configured with <acronym title="Secure Sockets Layer">SSL</acronym> for added security or to use a non-standard port and ATutor will function without modification.</p>
 
 	<h3>PHP</h3>
-		<p><acronym title="Recursive acronym for PHP: Hypertext Preprocessor, the language ATutor is written in">PHP</acronym> 4.2.0 or higher with Zlib, MySQL, and session support enabled is required. PHP version 4.3.0 or higher is highly recommended as it provides greater performance than previous versions. PHP version 5.0.2 or higher is also supported, but ATutor does not make use of its added functionality. Additionally, the following <kbd>php.ini</kbd> configuration setting is required:</p>
+		<p><acronym title="Recursive acronym for PHP: Hypertext Preprocessor, the language ATutor is written in">PHP</acronym> 4.3.0 or higher with Zlib, MySQL, and session support enabled is required. PHP version 5.0.2 or higher is also supported, but ATutor does not make use of its added functionality. Additionally, the following <kbd>php.ini</kbd> configuration setting is required:</p>
 
 <pre>safe_mode               = Off
 display_errors          = Off
