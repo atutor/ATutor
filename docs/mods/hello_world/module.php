@@ -34,8 +34,8 @@ $_student_tool = 'mods/hello_world/index.php';
  */
 if (admin_authenticate(AT_ADMIN_PRIV_HELLO_WORLD, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages[AT_NAV_ADMIN] = array('mods/hello_world/index_admin.php');
-	$this->_pages['mods/hello_world/index_admin.php']['parent']    = AT_NAV_ADMIN;
 	$this->_pages['mods/hello_world/index_admin.php']['title_var'] = 'hello_world';
+	$this->_pages['mods/hello_world/index_admin.php']['parent']    = AT_NAV_ADMIN;
 }
 
 /*******
