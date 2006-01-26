@@ -719,7 +719,7 @@ define('SITE_NAME',                 $_config['site_name']);
 define('HOME_URL',                  $_config['home_url']);
 define('DEFAULT_LANGUAGE',          $_config['default_language']);
 define('CACHE_DIR',                 $_config['cache_dir']);
-define('AT_ENABLE_CATEGORY_THEMES', $_config['enable_category_themes']);
+define('AT_ENABLE_CATEGORY_THEMES', $_config['theme_categories']);
 define('AT_COURSE_BACKUPS',         $_config['course_backups']);
 define('AT_EMAIL_CONFIRMATION',     $_config['email_confirmation']);
 define('AT_MASTER_LIST',            $_config['master_list']);
