@@ -12,7 +12,7 @@ IMPORTANT: The first course ID and the first user ID in ATutor need to be reserv
 
 IMPORTANT: All blog entries are displayed in the Public Blog.(summary.php). It can be removed by editing the links in the index.php file within the plog module source code.
 
-ALSO IMPORTANT: Disable registration in the template/summary/header.template otherwise blogs created by users will end up conflicting with course blogs, which are based on ATutor course IDs.
+ALSO IMPORTANT: Disable the registration link in the template/summary/header.template otherwise blogs created by users will end up conflicting with course blogs, which are based on ATutor course IDs.
 
 **Installing the ATutor Module**
 Install pLog itself prior to installing the pLog module.  pLog can be installed anywhere next to, or with your ATutor installation directory. You must pLog using the existing  ATutor database as the database for the pLog installation. 
