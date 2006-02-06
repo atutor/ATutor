@@ -7,19 +7,22 @@ if($_REQUEST['plog_sync'] == 1){
 	$result = mysql_query($sql,$db);
 
 	// But first check to see if the user already exists
-	$sqlu = "SELECT user FROM ".PLOG_PREFIX."users";
+	$sqlu = "SELECT user, password FROM ".PLOG_PREFIX."users";
 	$resultu = mysql_query($sqlu,$db);
 	$i = '';
 
 	while($rowu = mysql_fetch_array($resultu)){
 		$i++;
 		$existing_users[$i]= $rowu[0];
+		$existing_pwd[$i]=$rowu[1];
 	}
 
+	
+
 	while ($row = mysql_fetch_array($result)){
-		if(!in_array($row[1],$existing_users) ){
+		if(!in_array($row[1],$existing_users) || (in_array($row[1],$existing_users) && !in_array(md5($row[2]),$existing_pwd))){
 			$sql2  = "REPLACE INTO ".PLOG_PREFIX."users VALUES ('$row[0]','$row[1]','".md5($row[2])."','$row[3]','$row[5]  $row[6]','','a:0:{}','1','0')";
-			if(!$result1 = mysql_query($sql2)){	
+			if(!$result5 = mysql_query($sql2)){	
 				$msg->addError('PLOG_UPDATE_MEMBERS_FAILED');
 
 			}else{	
@@ -27,9 +30,12 @@ if($_REQUEST['plog_sync'] == 1){
 				$message = 1;
 			}
 		}
+//debug(md5($row[2]));
  	}
 
 
+
+//exit;
 // The  synchronizing of admin accounts is a problem because they are not admin members
 // and don't have a user ID. or a course they are associated to. The following code  was a first attempt
 // at merging the admins into the plog_users table. 

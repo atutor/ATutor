@@ -74,7 +74,7 @@ $this->_pages['mods/plog/index.php']['img']       = 'mods/plog/plog_logo.gif';
 
 // If pLog was installed with something other than the default database table prefix "plog_"
 // adjust this setting below
-define('PLOG_PREFIX', "plog_");
+define('PLOG_PREFIX', "lt_");
 
 
 

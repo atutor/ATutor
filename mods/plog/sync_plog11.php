@@ -11,17 +11,18 @@ if($_REQUEST['plog_sync'] == 1){
 	$result = mysql_query($sql,$db);
 
 	// But first check to see if the user already exists
-	$sqlu = "SELECT user FROM ".PLOG_PREFIX."users";
+	$sqlu = "SELECT user, password FROM ".PLOG_PREFIX."users";
 	$resultu = mysql_query($sqlu,$db);
 	$i = '';
 
 	while($rowu = mysql_fetch_array($resultu)){
 		$i++;
 		$existing_users[$i]= $rowu[0];
+		$existing_pwd[$i]= $rowu[1];
 	}
 
 	while ($row = mysql_fetch_array($result)){
-		if(!in_array($row[1],$existing_users) ){
+		if(!in_array($row[1],$existing_users) || (in_array($row[1],$existing_users) && !in_array(md5($row[2]),$existing_pwd))){
 			$sql2  = "REPLACE INTO ".PLOG_PREFIX."users SET
 			id= '$row[0]',
 			user = '$row[1]',
