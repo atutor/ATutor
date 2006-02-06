@@ -134,7 +134,7 @@ if($_REQUEST['plog_sync'] == 1){
 		$i++;
 		$existing_permissions[$i]= $rowk[1].','.$rowk[2];
 	}
-
+        $existing_permissions = array();
 	while ($row = mysql_fetch_array($result6)){
 		$this_permission = $row[1].','.$row[0];
 		if(!in_array($this_permission, $existing_permissions)) {
