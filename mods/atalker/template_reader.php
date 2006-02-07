@@ -47,22 +47,36 @@
 			
 			// Mozilla browsers
 				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.ogg')){
-	
-					$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
-	
+					/* Modified by Eura Ercolani: mimetype support - BEGIN */
+					
+					//$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
+					$outString ='<span onMouseOver="evalSound(\''.$format.'\');" onMouseOut="stopSound(\''.$format.'\');"> '.$outString.'</span>';
+					/* Modified by Eura Ercolani: mimetype support - END */
+
 					if(!$embed[$format]){
 	
-						$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.ogg" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
+						/* Modified by Eura Ercolani: mimetype support - BEGIN */
+						//$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.ogg" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
+
+						$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.ogg" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true" type="'.$_SESSION['mp3HiddenMimeType'].'"></embed>'."\n";
+						/* Modified by Eura Ercolani: mimetype support - BEGIN */
+
 						$outString .= $embed[$format];
 					}
 	
 				}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.mp3')){
 	
-					$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
+	
+					/* Modified by Eura Ercolani: mimetype support - BEGIN */
+					//$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
+					$outString ='<span onMouseOver="evalSound(\''.$format.'\');" onMouseOut="stopSound(\''.$format.'\')"> '.$outString.'</span>';
+					/* Modified by Eura Ercolani: mimetype support - END */
 	
 					if(!$embed[$format]){
-						
-						$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.mp3" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
+						/* Modified by Eura Ercolani: mimetype support - BEGIN */
+						//$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.mp3" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
+						$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.mp3" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true" type="'.$_SESSION['mp3HiddenMimeType'].'"></embed>'."\n";
+						/* Modified by Eura Ercolani: mimetype support - END */
 						$outString .= $embed[$format];
 					}
 				}

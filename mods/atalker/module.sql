@@ -78,3 +78,34 @@ INSERT INTO `language_text` VALUES ('en','_module','variable','Variable','2005-0
 INSERT INTO `language_text` VALUES ('en','_module','select_unselect','Select/Unselect','2005-09-02 12:17:53','');
 INSERT INTO `language_text` VALUES ('en','_module','characters_total','Characters Total:','2005-09-02 12:17:53','');
 
+
+## 
+
+SET FOREIGN_KEY_CHECKS=0;
+#----------------------------
+# Table structure for voices
+#----------------------------
+CREATE TABLE `voices` (
+  `voice_id` varchar(4) NOT NULL default '',
+  `voice_name` varchar(255) NOT NULL default '',
+  `voice_volumn` char(2) default NULL,
+  `voice_speed` char(3) default NULL,
+  PRIMARY KEY  (`voice_id`)
+) TYPE=MyISAM;
+#----------------------------
+# Records for table voices
+#----------------------------
+
+
+insert  into voices values 
+('it01', 'voice_lp_mbrola', '1', '1.0'), 
+('en01', 'voice_kal_diphone', '1', '1.0'), 
+('it02', 'voice_pc_mbrola', '1', '1.0');
+
+
+ALTER TABLE languages ADD
+	voice_id varchar(4) NULL;
+	
+insert  into languages values 
+('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3, 'en01'), 
+('it', 'iso-8859-1', 'ltr', 'it|italian', 'Italian', 'Italian', 3, 'it01');

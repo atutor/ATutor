@@ -34,4 +34,20 @@ if (admin_authenticate(AT_ADMIN_PRIV_HELLO_WORLD, TRUE) || admin_authenticate(AT
  */
 $this->_pages['mods/atalker/index.php']['title_var'] = 'atalker';
 $this->_pages['mods/atalker/index.php']['img']       = 'mods/atalker/images/atalker.gif';
+
+
+/* Modified by Eura Ercolani: mimetype support - BEGIN */
+
+if(isset($_POST['mp3HiddenMimeType']))
+{
+	$_SESSION['mp3HiddenMimeType']=$_POST['mp3HiddenMimeType'];
+}
+/* Modified by Eura Ercolani: mimetype support - END */
+/* Modified by Eura Ercolani: introducing global variabiles - BEGIN */
+//ATutor root web folder
+$_ATutor_home_path = '/home/eura/public_html/ATutor/';
+
+
+/* Modified by Eura Ercolani: introducing global variables - END */
+
 ?>

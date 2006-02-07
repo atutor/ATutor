@@ -77,6 +77,12 @@ $select = ' selected="selected"';
 		<option value="voice_us2_mbrola" <?php if($_POST['voice'] == 'voice_us2_mbrola'){ echo $select; } ?>>US English  (us2)</option>
 		<option value="voice_us3_mbrola" <?php if($_POST['voice'] == 'voice_ked_diphone'){ echo $select; } ?>>US English  (us3)</option>
 		<option value="voice_el_diphone" <?php if($_POST['voice'] == 'voice_el_diphone'){ echo $select; } ?>>Spanish</option>
+		<!-- modified by Eura Ercolani - 2005-11-28 - Aggiunta voci in italiano - BEGIN -->
+		<option value="voice_lp_diphone" <?php if($_POST['voice'] == 'voice_lp_diphone'){ echo $select; } ?>>Italiano (femminile - festival)</option>
+		<option value="voice_pc_diphone" <?php if($_POST['voice'] == 'voice_pc_diphone'){ echo $select; } ?>>Italiano (maschile - festival)</option>
+		<option value="voice_lp_mbrola" <?php if($_POST['voice'] == 'voice_lp_mbrola'){ echo $select; } ?>>Italiano (femminile - mbrola)</option>
+		<option value="voice_pc_mbrola" <?php if($_POST['voice'] == 'voice_pc_mbrola'){ echo $select; } ?>>Italiano (maschile - mbrola)</option>
+		<!-- modified by Eura Ercolani - 2005-11-28 - END -->
 		</select>
 		<label for="volumn"><?php echo _AT('volumn'); ?></label><select name="volumn" id="volumn">
 		<option value="1" <?php if($_POST['volumn'] == '1'){ echo $select; } ?>>1</option>
