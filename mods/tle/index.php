@@ -15,14 +15,9 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-function microtime_float() {
-   list($usec, $sec) = explode(" ", microtime());
-   return ((float)$usec + (float)$sec);
-}
-
 function createToken ($token, $sharedSecret) {
 	//String time = Long.toString(System.currentTimeMillis());
-	$time = round(microtime_float() * 1000);
+	$time = mktime() . '000';
 
 	//String toMd5 = token+time+sharedSecret;
 	$toMd5 = $token . $time . $sharedSecret;
