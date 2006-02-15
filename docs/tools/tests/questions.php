@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 		}
 		*/
 
-		//update the weights
+		//update the weights & order
 		$total_weight = 0;
 		foreach ($_POST['weight'] as $qid => $weight) {
 			$weight = $addslashes($weight);
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
 				$required = 0;
 			}
 			
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required WHERE question_id=$qid AND test_id=".$tid;
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=".$_POST['ordering'][$qid]." WHERE question_id=$qid AND test_id=".$tid;
 			$result	= mysql_query($sql, $db);
 			$total_weight += $weight;
 		}
@@ -100,7 +100,7 @@ if ($row['cnt']) {
 
 $msg->printAll();
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid";
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid ORDER BY TQ.ordering";
 $result	= mysql_query($sql, $db);
 
 ?>
@@ -111,6 +111,7 @@ $result	= mysql_query($sql, $db);
 <tr>
 	<th scope="col"><?php echo _AT('num');      ?></th>
 	<th scope="col"><?php echo _AT('weight');   ?></th>
+	<th scope="col"><?php echo _AT('order'); ?></th>
 	<th scope="col"><?php echo _AT('question'); ?></th>
 	<th scope="col"><?php echo _AT('type');     ?></th>
 	<th scope="col"><?php echo _AT('category'); ?></th>
@@ -134,7 +135,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		$total_weight += $row['weight'];
 		$count++;
 		echo '<tr>';
-		echo '<td class="row1" align="center"><b>'.$count.'</b></td>';
+		echo '<td class="row1" align="center"><strong>'.$count.'</strong></td>';
 		echo '<td class="row1" align="center">';
 		
 		if ($row['type'] == AT_TESTS_LIKERT) {
@@ -144,6 +145,9 @@ if ($row = mysql_fetch_assoc($result)) {
 			echo '<input type="text" value="'.$row['weight'].'" name="weight['.$row['question_id'].']" size="2" />';
 		}
 		echo '</td>';
+
+		echo '<td class="row1" align="center"><input type="text" name="ordering['.$row['question_id'].']" value="'.$row['ordering'].'" size="2" /></td>';
+
 		echo '<td class="row1">';
 		if (strlen($row['question']) > 45) {
 			echo htmlspecialchars(AT_print(substr($row['question'], 0, 43), 'tests_questions.question')) . '...';
