@@ -21,12 +21,10 @@ if($languageManager->getNumLanguages() < 2){
 <div align="center" id="language" style="clear: left"><br /><?php
 
 	if ($languageManager->getNumLanguages() > 5) {
-		echo '<form method="get" action="'.$_my_uri.'">';
-		echo '<small><label for="lang">'._AT('translate_to').'</label> ';
-		
+		echo '<form method="get" action="'.$_my_uri.'">';		
 		$languageManager->printDropdown($_SESSION['lang'], 'lang', 'lang');
 
-		echo ' <input type="submit" name="submit_language" class="button" value="'._AT('submit').'" /></small>';
+		echo ' <input type="submit" name="submit_language" class="button" value="'._AT('translate').'" /></small>';
 		echo '</form>';
 	} else {
 		echo '<small>'._AT('translate_to').' </small>';
