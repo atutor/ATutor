@@ -1,7 +1,7 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<?php global $languageManager; ?>
+<?php global $languageManager, $_config; ?>
 <div class="input-form">
 
 	<?php if (!$_POST['member_id'] && defined('AT_MASTER_LIST') && AT_MASTER_LIST && !admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>
@@ -56,10 +56,24 @@
 		<input id="email" name="email" type="text" size="30" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
 	</div>
 
-	<div class="row">
+	<!-- div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="langs"><?php echo _AT('language'); ?></label><br />
-		<?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'langs'); ?>
-	</div>
+		<?php 
+		if (!empty($_SESSION['member_id'])) {
+			$sql = "SELECT language FROM ".TABLE_PREFIX."members WHERE member_id=".$_SESSION['member_id'];
+			$result = mysql_query($sql,$db);
+			if ($row = mysql_fetch_assoc($result)) {
+				$user_lang = $row['language'];
+			} else {
+				$user_lang = $_config['default_language'];
+			}
+	} else {
+			$user_lang = $_config['default_language'];
+		}
+		
+		$languageManager->printDropdown($user_lang, 'lang', 'langs'); ?>
+	</div -->
+
 
 	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): 
 			if ($_POST['status'] == AT_STATUS_INSTRUCTOR) {

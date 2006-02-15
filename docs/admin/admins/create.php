@@ -80,7 +80,7 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 
-		$admin_lang = 'en'; // this is not implemented yet!
+		$admin_lang = $_config['default_language']; 
 
 		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '$_POST[password]', '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
 		$result = mysql_query($sql, $db);

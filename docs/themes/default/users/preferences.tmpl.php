@@ -93,13 +93,25 @@
 			<input type="radio" name ="form_focus" id="focus_off" value="0" <?php echo $num2; ?> /><label for="focus_off"><?php echo _AT('disable');  ?></label>
 	</div>
 
-	<div class="row">
+	<!-- div class="row">
 		<?php
 			global $languageManager;
 				echo '<label for="lang">'._AT('default_language').'</label><br />';
 				$languageManager->printDropdown($_SESSION['lang'], 'lang', 'lang');
 		?>
-	</div>
+	</div -->
+
+	<!-- div class="row">
+		<?php echo _AT('course_primary_lang');  ?><br /><?php
+			$num = '';  $num2 = '';
+			if ($_SESSION['prefs']['PREF_COURSE_LANG'] == 1) {
+				$num = ' checked="checked"';
+			} else {
+				$num2 = ' checked="checked"';
+			}
+			?><input type="radio" name ="use_jump_redirect" id="jump_en" value="1" <?php echo $num; ?> /><label for="jump_en"><?php echo _AT('enable');  ?></label> 
+			<input type="radio" name ="use_jump_redirect" id="jump_dis" value="0" <?php echo $num2; ?> /><label for="jump_dis"><?php echo _AT('disable');  ?></label>
+	</div -->
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />

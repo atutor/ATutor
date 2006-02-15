@@ -56,10 +56,11 @@ if (isset($_GET['submit'])) {
 		setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
 	}
 
-	/* save language */
+	/* save language
 	$_GET['lang']=$addslashes($_GET['lang']);
 	$sql = "UPDATE ".TABLE_PREFIX."members SET language = '$_GET[lang]' WHERE member_id = $_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
+ */
 
 	/* also update message notification pref */
 	$_GET['mnot'] = intval($_GET['mnot']);

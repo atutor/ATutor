@@ -114,7 +114,9 @@ function add_users($user_list, $enroll, $course) {
 				$student = sql_quote($student);
 				$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
-				$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, creation_date, status) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '$now', $status)";
+				//$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, creation_date, status) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '$now', $status)";
+				
+				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','$student[lname]', '', '', '','','','','', '', $status, '$_config[pref_defaults]', '$now','$_config[default_language]', $_config[pref_inbox_notify])";
 
 				if ($result = mysql_query($sql, $db)) {
 					$student['exists'] = _AT('import_err_email_exists');
