@@ -735,4 +735,14 @@ $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['mai
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
 $moduleFactory =& new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
+
+if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
+	if ($_SESSION['course_id'] == -1) {
+		$sql = "UPDATE ".TABLE_PREFIX."admins SET language = '$_SESSION[lang]' WHERE login = '$_SESSION[login]'";
+		$result = mysql_query($sql, $db);
+	} else {
+		$sql = "UPDATE ".TABLE_PREFIX."members SET language = '$_SESSION[lang]' WHERE member_id = $_SESSION[member_id]";
+		$result = mysql_query($sql, $db);
+	}
+}
 ?>

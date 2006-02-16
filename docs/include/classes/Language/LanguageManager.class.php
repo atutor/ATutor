@@ -125,14 +125,6 @@ class LanguageManager {
 		if (isset($_GET) && !empty($_GET['lang']) && isset($this->availableLanguages[$_GET['lang']])) {
 			$language = $this->getLanguage($_GET['lang']);
 
-			if ($_SESSION['valid_user'] && admin_authenticate(AT_ADMIN_PRIV_ADMIN) ) {
-				$sql = "UPDATE ".TABLE_PREFIX."admins SET language = '$language->code' WHERE login = '$_SESSION[login]'";
-				$result = mysql_query($sql, $db);
-			} else if ($_SESSION['valid_user']) {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET language = '$language->code' WHERE member_id = $_SESSION[member_id]";
-				$result = mysql_query($sql, $db);
-			}
-
 			if ($language) {
 				return $language;
 			}
