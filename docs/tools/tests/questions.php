@@ -69,7 +69,11 @@ if (isset($_POST['submit'])) {
 				$required = 0;
 			}
 			
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=".$_POST['ordering'][$qid]." WHERE question_id=$qid AND test_id=".$tid;
+			$orders = $_POST['ordering'];
+			$orders = array_keys($orders);
+			$orders = array_flip($orders);
+
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=".($orders[$qid]+1)." WHERE question_id=$qid AND test_id=".$tid;
 			$result	= mysql_query($sql, $db);
 			$total_weight += $weight;
 		}

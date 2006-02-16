@@ -84,7 +84,7 @@ $rid = intval($_GET['rid']);
 $mark_right = '<img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" />';
 $mark_wrong = '<img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" />';
 
-$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
+$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering";
 $result	= mysql_query($sql, $db);
 
 $count = 1;
