@@ -38,10 +38,28 @@ function count_login( ) {
 	}
 }
 
+function get_groups($course_id) {
+	global $db;
+
+	$groups = array();
+
+	if ($_SESSION['privileges'] || $_SESSION['is_admin']) {
+		$sql = "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$course_id";
+	} else {
+		$sql = "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T, ".TABLE_PREFIX."groups_members M ON (G.type_id=T.type_id AND  G.group_id=M.group_id) WHERE T.course_id=$course_id AND M.member_id=$_SESSION[member_id]";
+	}
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$groups[$row['group_id']] = $row['group_id'];
+	}
+
+	return $groups;
+}
+
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-//exit;
+
 if($_REQUEST['p']) {
 	$page = urldecode($_REQUEST['p']);
 	if (substr($page, 0, 1) == '/') {
@@ -64,12 +82,13 @@ if ($_SESSION['course_id'] == -1) {
 	unset($_SESSION['course_id']);
 }
 
-if ($_GET['course'] != '') {
-	$course	= intval($_GET['course']);
+if (isset($_GET['course'])) {
+	$course	= abs($_GET['course']);
+} else if (isset($_POST['course'])) {
+	$course	= abs($_POST['course']);
 } else {
-	$course	= intval($_POST['course']);
+	$course = 0;
 }
-
 
 if (($course === 0) && $_SESSION['valid_user']) {
 	$_SESSION['course_id']    = 0;
@@ -106,216 +125,209 @@ if (($course === 0) && $_SESSION['valid_user']) {
 
 $sql	= "SELECT member_id, content_packaging, cat_id, access, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
-if ($row = mysql_fetch_assoc($result)) {
-	$owner_id = $row['member_id'];
-	$_SESSION['packaging'] = $row['content_packaging'];
+if (!$row = mysql_fetch_assoc($result)) {
+	$msg->addError('NO_SUCH_COURSE');
+	header('Location: login.php');
+	exit;
+}
 
-	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
-		if ($row['cat_id']) {
-			// apply the theme for this category:
-			$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$row[cat_id]";
-			$result = mysql_query($sql, $db);
-			if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
-				$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
-			} else {			
-				$th = get_default_theme();
-				$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
-			}
+$owner_id = $row['member_id'];
+$_SESSION['packaging'] = $row['content_packaging'];
+
+if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
+	if ($row['cat_id']) {
+		// apply the theme for this category:
+		$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$row[cat_id]";
+		$result = mysql_query($sql, $db);
+		if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
+			$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
 		} else {			
 			$th = get_default_theme();
 			$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
 		}
+	} else {			
+		$th = get_default_theme();
+		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
 	}
+}
 
-	switch ($row['access']){
-		case 'public':
+$_SESSION['groups'] = array();
 
-			$_SESSION['course_id']	  = $course;
+switch ($row['access']){
+	case 'public':
 
-			if (!$_SESSION['valid_user']) {
-				/* guest login */
-				$_SESSION['login']		= 'guest';
-				$_SESSION['valid_user']	= false;
-				$_SESSION['member_id']	= 0;
-				$_SESSION['is_admin']	= false;
-				$_SESSION['is_guest']	= true;
+		$_SESSION['course_id']	  = $course;
+
+		if (!$_SESSION['valid_user']) {
+			/* guest login */
+			$_SESSION['login']		= 'guest';
+			$_SESSION['valid_user']	= false;
+			$_SESSION['member_id']	= 0;
+			$_SESSION['is_admin']	= false;
+			$_SESSION['is_guest']	= true;
 	
-				/* add guest login to counter: */
-				count_login();
+			/* add guest login to counter: */
+			count_login();
+		} else {
+			/* check if we're an admin here */
+			if ($owner_id == $_SESSION['member_id']) {
+				$_SESSION['is_admin'] = true;
+				$_SESSION['enroll']	  = AT_ENROLL_YES;
 			} else {
-				/* check if we're an admin here */
-				if ($owner_id == $_SESSION['member_id']) {
-					$_SESSION['is_admin'] = true;
-					$_SESSION['enroll']	  = AT_ENROLL_YES;
-				} else {
-					$_SESSION['is_admin'] = false;
+				$_SESSION['is_admin'] = false;
 
-					/* add member login to counter: */
-					count_login();
-				}
+				/* add member login to counter: */
+				count_login();
 			}
+		}
 
-			/* title wont be needed. comes from the cache. */
+		/* title wont be needed. comes from the cache. */
+		$_SESSION['course_title'] = $row['title'];
+
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
+		$result = mysql_query($sql, $db);
+		if ($row2 = mysql_fetch_assoc($result)) {
+			/* we have requested or are enrolled in this course */
+			$_SESSION['enroll'] = AT_ENROLL_YES;
+			$_SESSION['s_cid']  = $row2['last_cid'];
+			$_SESSION['privileges'] = $row2['privileges'];
+		}
+
+		/* update users_online	*/
+		add_user_online();
+
+		$_SESSION['groups'] = get_groups($course);
+
+		if ($_GET['f']) {
+			header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
+			exit;
+		} /* else */
+		header('Location: ./'.$page);
+		exit;
+
+		break;
+
+	case 'protected':
+		if (!$_SESSION['valid_user']) {
+			header('Location: ./login.php?course='.intval($course));
+			exit;
+		} /* else */
+		/* we're already logged in */
+		$_SESSION['course_id'] = $course;
+
+		/* check if we're an admin here */
+		if ($owner_id == $_SESSION['member_id']) {
+			$_SESSION['is_admin'] = true;
+			$_SESSION['enroll']	  = AT_ENROLL_YES;
+		} else {
+			$_SESSION['is_admin'] = false;
+			/* add member login to counter: */
+			count_login();
+		}
+
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
+		$result = mysql_query($sql, $db);
+		if ($row2 = mysql_fetch_assoc($result)) {
+			/* we have requested or are enrolled in this course */
+			$_SESSION['enroll'] = AT_ENROLL_YES;
+			$_SESSION['s_cid']  = $row2['last_cid'];
+			$_SESSION['privileges'] = $row2['privileges'];
+		}
+
+		$_SESSION['course_title'] = $row['title'];
+
+		/* update users_online	*/
+		add_user_online();
+
+		$_SESSION['groups'] = get_groups($course);
+
+		if ($_GET['f']) {
+			header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
+			exit;
+		} /* else */
+		header('Location: ./'.$addslashes($page));
+		exit;
+
+		break;
+
+	case 'private':
+		if (!$_SESSION['valid_user']) {
+			/* user not logged in: */
+			header('Location: ./login.php?course='.intval($course));
+			exit;
+		} /* else */
+
+		if ($owner_id == $_SESSION['member_id']) {
+			/* we own this course. so we dont have to enroll or get the groups */
+
+			$_SESSION['is_admin']  = true;
+			$_SESSION['course_id'] = $course;
 			$_SESSION['course_title'] = $row['title'];
+			$_SESSION['enroll']	  = AT_ENROLL_YES;
 
-			$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-			$result = mysql_query($sql, $db);
-			if ($row2 = mysql_fetch_assoc($result)) {
-				/* we have requested or are enrolled in this course */
-				$_SESSION['enroll'] = AT_ENROLL_YES;
-				$_SESSION['s_cid']  = $row2['last_cid'];
-				$_SESSION['privileges'] = $row2['privileges'];
-			}
-
-			/* update users_online	*/
+			/* update users_online */
 			add_user_online();
+
+			$_SESSION['groups'] = get_groups($course);
 
 			if ($_GET['f']) {
 				header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 				exit;
 			} /* else */
-			header('Location: ./'.$page);
+			header('Location: ./'.$addslashes($page));
 			exit;
+		}
 
-			break;
+		/* check if we're enrolled */
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
+		$result = mysql_query($sql, $db);
 
-		case 'protected':
-			if (!$_SESSION['valid_user']) {
-				header('Location: ./login.php?course='.intval($course));
-				exit;
+		if (!$row2 = mysql_fetch_assoc($result)) {
+			/* we have not requested enrollment in this course */
+			$_SESSION['course_id'] = 0;
+			header('Location: users/private_enroll.php?course='.intval($course));
+			exit;
+		} /* else */
 
-			} else {
-				/* we're already logged in */
-				$_SESSION['course_id'] = $course;
+		/* we have requested or are enrolled in this course */
 
-				/* check if we're an admin here */
-				if ($owner_id == $_SESSION['member_id']) {
-					$_SESSION['is_admin'] = true;
-					$_SESSION['enroll']	  = AT_ENROLL_YES;
+		$_SESSION['enroll'] = AT_ENROLL_YES;
+		$_SESSION['s_cid']  = $row2['last_cid'];
 
-				} else {
-					$_SESSION['is_admin'] = false;
-					/* add member login to counter: */
-					count_login();
-				}
+		if ($row2['approved'] == 'n') {
+			/* we have not been approved to enroll in this course */
+			$_SESSION['course_id'] = 0;
+			header('Location: users/private_enroll.php?course='.$course);
+			exit;
+		} /* else */
 
-				$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-				$result = mysql_query($sql, $db);
-				if ($row2 = mysql_fetch_assoc($result)) {
-					/* we have requested or are enrolled in this course */
-					$_SESSION['enroll'] = AT_ENROLL_YES;
-					$_SESSION['s_cid']  = $row2['last_cid'];
-					$_SESSION['privileges'] = $row2['privileges'];
-				}
+		/* enrollment has been approved or student is alumni */
+		if ($row2['approved'] == 'a') {
+			$_SESSION['enroll'] = AT_ENROLL_ALUMNUS;
+		}
+		/* we're already logged in */
+		$_SESSION['course_id'] = $course;
 
-				$_SESSION['course_title'] = $row['title'];
+		/* check if we're an admin here */
+		$_SESSION['privileges'] = $row2['privileges'];
+		$_SESSION['course_title'] = $row['title'];
 
-				/* update users_online	*/
-				add_user_online();
+		/* update users_online			*/
+		add_user_online();
 
-				if ($_GET['f']) {
-					header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
-					exit;
-				} /* else */
-				header('Location: ./'.$addslashes($page));
-				exit;
-			}
+		$_SESSION['groups'] = get_groups($course);
 
-			break;
+		/* add member login to counter: */
+		count_login();
 
-		case 'private':
-			if (!$_SESSION['valid_user']) {
-				/* user not logged in: */
-				Header('Location: ./login.php?course='.intval($course));
-				exit;
-			} else {
-
-				if ($owner_id == $_SESSION['member_id']) {
-					/* we own this course. so we dont have to enroll */
-
-					$_SESSION['is_admin']  = true;
-					$_SESSION['course_id'] = $course;
-					$_SESSION['course_title'] = $row['title'];
-					$_SESSION['enroll']	  = AT_ENROLL_YES;
-
-					/* update users_online */
-					add_user_online();
-
-					if ($_GET['f']) {
-						header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
-						exit;
-					} /* else */
-					header('Location: ./'.$addslashes($page));
-					exit;
-				}
-
-				/* check if we're enrolled */
-				$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-				$result = mysql_query($sql, $db);
-
-				if ($row2 = mysql_fetch_assoc($result)) {
-					/* we have requested or are enrolled in this course */
-
-					$_SESSION['enroll'] = AT_ENROLL_YES;
-					$_SESSION['s_cid']  = $row2['last_cid'];
-
-					if ($row2['approved'] == 'y' || $row2['approved'] == 'a') {
-						/* enrollment has been approved or student is alumni */
-
-						if ($row2['approved'] == 'a') {
-							$_SESSION['enroll'] = AT_ENROLL_ALUMNUS;
-						}
-
-						/* we're already logged in */
-						$_SESSION['course_id'] = $course;
-
-						/* check if we're an admin here */
-						$_SESSION['privileges'] = $row2['privileges'];
-						$_SESSION['course_title'] = $row['title'];
-
-						/* update users_online			*/
-						add_user_online();
-
-						/* add member login to counter: */
-						count_login();
-
-						if($_GET['f']){
-							header('Location: '.$page.'?f='.$addslashes($_GET['f']));
-							exit;
-						} /* else */
-						header('Location: '.$addslashes($page));
-						exit;
-
-					} else {
-						/* we have not been approved to enroll in this course */
-
-						$_SESSION['course_id'] = 0;
-						header('Location: users/private_enroll.php?course='.intval($course));
-						exit;
-					}
-
-				} else {
-					/* we have not requested enrollment in this course */
-					$_SESSION['course_id'] = 0;
-					header('Location: users/private_enroll.php?course='.intval($course));
-					exit;
-				}
-			}
-		break;
-	}
-} 
-
-unset($_SESSION);
-$_SESSION['language'] = DEFAULT_LANGUAGE;
-
-if (!isset($_SESSION['course_id'])) {
-	header('Location: login.php');
-	exit;
-}
-
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-$msg->printErrors('NO_SUCH_COURSE');
-require(AT_INCLUDE_PATH.'footer.inc.php');
+		if($_GET['f']){
+			header('Location: '.$page.'?f='.$addslashes($_GET['f']));
+			exit;
+		} /* else */
+		header('Location: '.$addslashes($page));
+		exit;
+	break;
+} // end switch
+ 
 
 ?>
