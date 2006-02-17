@@ -33,3 +33,7 @@ CREATE TABLE `forums_groups` (
   PRIMARY KEY ( `forum_id` , `group_id` ) ,
   KEY `group_id` ( `group_id` )
 ) TYPE = MYISAM ;
+
+
+# release date for courses
+ALTER TABLE `courses` ADD `release_date` datetime NOT NULL default '0000-00-00 00:00:00';

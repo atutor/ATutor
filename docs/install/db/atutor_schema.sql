@@ -145,6 +145,7 @@ CREATE TABLE `courses` (
   `home_links` text NOT NULL ,
   `main_links` text NOT NULL ,
   `side_menu` VARCHAR( 255 ) NOT NULL ,
+  `release_date` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;
 
