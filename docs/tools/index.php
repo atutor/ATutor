@@ -25,11 +25,11 @@ foreach ($keys as $module_name) {
 	$module =& $module_list[$module_name];
 	if ($module->getPrivilege() && authenticate($module->getPrivilege(), AT_PRIV_RETURN)) {
 		if ($parent = $module->getChildPage('tools/index.php')) {
-			echo '<li class="top-tool"><a href="' . $parent . '">' . $module->getName() . '</a>';
+			echo '<li class="top-tool">  <a href="' . $parent . '">' . $module->getName() . '</a>  ';
 			if ($_pages[$parent]['children']) {
 				echo '<ul class="child-top-tool">';
 				foreach ($_pages[$parent]['children'] as $child) {
-					echo '<li class="child-tool"><a href="'.$child.'">'._AT($_pages[$child]['title_var']).'</li>';
+					echo '<li class="child-tool"><a href="'.$child.'">'._AT($_pages[$child]['title_var']).'</a></li>';
 				}
 				echo '</ul>';
 			}
