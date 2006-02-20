@@ -43,7 +43,7 @@ if ($_config['check_version']) {
 		<form method="get" action="admin/instructor_requests.php">
 			<div class="row">
 				<h3><?php echo _AT('instructor_requests'); ?></h3>
-				<p><?php echo _AT('instructor_requests_text', $row['cnt']); ?></strong></p>
+				<p><?php echo _AT('instructor_requests_text', $row['cnt']); ?></p>
 			</div>
 
 			<div class="row buttons">
@@ -59,7 +59,7 @@ if ($_config['check_version']) {
 		<input type="hidden" name="v" value="<?php echo urlencode(VERSION); ?>" />
 			<div class="row">
 				<h3><?php echo _AT('atutor_version'); ?></h3>
-				<p><?php echo _AT('atutor_version_text', VERSION); ?></strong></p>
+				<p><?php echo _AT('atutor_version_text', VERSION); ?></p>
 			</div>
 
 			<div class="row buttons">
@@ -84,20 +84,20 @@ if ($_config['check_version']) {
 	<?php endif; ?>
 </div>
 
-<div style="width: 60%;">
+<div style="width: 55%;">
 	<?php
 	$path_length = strlen($_base_path);
 
 	echo '<ol id="tools" style="margin-right: 0px;">';
 	foreach ($_top_level_pages as $page_info) {
-		echo '<li class="top-tool"><a href="' . $page_info['url'] . '">' . $page_info['title'] . '</a>';
+		echo '<li class="top-tool"><a href="' . $page_info['url'] . '">' . $page_info['title'] . '</a>  ';
 
 		$page_info['url'] = substr($page_info['url'], $path_length);
 
 		if ($_pages[$page_info['url']]['children']) {
 			echo '<ul class="child-top-tool">';
 			foreach ($_pages[$page_info['url']]['children'] as $child) {
-				echo '<li class="child-tool"><a href="'.$child.'">'._AT($_pages[$child]['title_var']).'</li>';
+				echo ' <li class="child-tool"><a href="'.$child.'">'._AT($_pages[$child]['title_var']).'</a></li>';
 			}
 			echo '</ul>';
 		}
