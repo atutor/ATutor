@@ -34,6 +34,39 @@ CREATE TABLE `forums_groups` (
   KEY `group_id` ( `group_id` )
 ) TYPE = MYISAM ;
 
-
 # release date for courses
 ALTER TABLE `courses` ADD `release_date` datetime NOT NULL default '0000-00-00 00:00:00';
+
+# --------------------------------------------------------
+# Since 1.5.3
+# Table structure for table `reading_list`
+
+CREATE TABLE `reading_list` (
+	`reading_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT DEFAULT 0,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
+	`resource_id` MEDIUMINT UNSIGNED NOT NULL,
+	`required` enum('required','optional') NOT NULL DEFAULT 'required',
+	`date_start` DATE NOT NULL DEFAULT '0000-00-00',
+	`date_end` DATE NOT NULL DEFAULT '0000-00-00',
+	`comment` text NOT NULL,
+	PRIMARY KEY  (`reading_id`),
+	INDEX (`course_id`)
+) TYPE = MYISAM;
+
+# Since 1.5.3
+# Table structure for table `external_resources`
+
+CREATE TABLE `external_resources` (
+	`resource_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT DEFAULT 0,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
+	`type` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+	`title` varchar(255) NOT NULL DEFAULT '',
+	`author` varchar(150) NOT NULL DEFAULT '',
+	`publisher` varchar(150) NOT NULL DEFAULT '',
+	`date` varchar(20) NOT NULL DEFAULT '',
+	`comments` varchar(255) NOT NULL DEFAULT '',
+	`id` varchar(50) NOT NULL DEFAULT '',
+	`url` varchar(255) NOT NULL DEFAULT '',
+	PRIMARY KEY (`resource_id`),
+	INDEX (`course_id`)
+) TYPE = MYISAM;
