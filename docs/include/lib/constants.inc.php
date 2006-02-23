@@ -254,4 +254,19 @@ if (isset($_GET['cid'])) {
 } else if (isset($_POST['cid'])) {
 	$cid = intval($_POST['cid']);
 }
+
+// constants for reading list module
+define ('RL_TYPE_BOOK', 1);
+define ('RL_TYPE_URL',  2);
+define ('RL_TYPE_HANDOUT', 3);
+define ('RL_TYPE_AV', 4);
+define ('RL_TYPE_FILE', 5);
+
+$_rl_types = array ();
+$_rl_types[RL_TYPE_BOOK]	= 'rl_book';
+$_rl_types[RL_TYPE_URL]		= 'rl_url';
+$_rl_types[RL_TYPE_HANDOUT]	= 'rl_handout';
+$_rl_types[RL_TYPE_AV]		= 'rl_av';
+$_rl_types[RL_TYPE_FILE]	= 'rl_file';
+
 ?>
