@@ -15,7 +15,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
-
 $existing = -1;
 
 if (isset($_POST['cancel'])) {
@@ -180,14 +179,10 @@ if ($num_handouts != '0') {?>
 <?php
 }
 else { // there are no handouts entered as resources ?>
-
-<h3>Add Handout To Resources</h3>
-
 <?php
-	header('Location: add_resource_handout.php');
+	header('Location: add_resource_handout.php?page_return=new_reading_handout.php');
 	exit;
 ?>
 <?php } ?>
-
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

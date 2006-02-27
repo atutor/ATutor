@@ -15,7 +15,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
-
 // initial values for form
 $id = "0";
 $title = "";

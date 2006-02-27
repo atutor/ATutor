@@ -15,7 +15,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
-
 $existing = -1;
 
 if (isset($_POST['cancel'])) {
@@ -180,11 +179,8 @@ if ($num_files != '0') {?>
 <?php
 }
 else { // there are no files entered as resources ?>
-
-<h3>Add File To Resources</h3>
-
 <?php
-	header('Location: add_resource_file.php');
+	header('Location: add_resource_file.php?page_return=new_reading_file.php');
 	exit;
 ?>
 <?php } ?>

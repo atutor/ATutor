@@ -15,7 +15,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
-
 $existing = -1;
 
 if (isset($_POST['cancel'])) {
@@ -180,14 +179,10 @@ if ($num_urls != '0') {?>
 <?php
 }
 else { // there are no URLs entered as resources ?>
-
-<h3>Add URL To Resources</h3>
-
 <?php
-	header('Location: add_resource_url.php');
+	header('Location: add_resource_url.php?page_return=new_reading_url.php');
 	exit;
 ?>
 <?php } ?>
-
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

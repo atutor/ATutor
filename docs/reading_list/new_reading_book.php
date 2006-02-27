@@ -15,7 +15,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
-
 $existingbook = -1;
 
 if (isset($_POST['cancel'])) {
@@ -180,11 +179,8 @@ if ($num_books != '0') {?>
 <?php
 }
 else { // there are no books entered as resources ?>
-
-<h3><?php echo _AT('RL_ADD_BOOK_TO_RESOURCES'); ?></h3>
-
 <?php
-	header('Location: add_resource_book.php');
+	header('Location: add_resource_book.php?page_return=new_reading_book.php');
 	exit;
 ?>
 <?php } ?>

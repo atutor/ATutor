@@ -15,7 +15,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
-
 $existing = -1;
 
 if (isset($_POST['cancel'])) {
@@ -180,11 +179,8 @@ if ($num_avs != '0') {?>
 <?php
 }
 else { // there are no AV materials entered as resources ?>
-
-<h3><?php  echo _AT('rl_add_av_material_to_resources'); ?></h3>
-
 <?php
-	header('Location: add_resource_av.php');
+	header('Location: add_resource_av.php?page_return=new_reading_av.php');
 	exit;
 ?>
 <?php } ?>
