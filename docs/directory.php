@@ -39,7 +39,10 @@ if (isset($_GET['online_status']) && ($_GET['online_status'] != '')) {
 	$all = 'checked="checked"';
 }
 
+$group = abs($_GET['group']);
+
 require(AT_INCLUDE_PATH.'header.inc.php');
+
 ?>
 
 <form name="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
@@ -50,6 +53,24 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="radio" name="online_status" id="s0" value="0" <?php echo $off; ?> /><label for="s0"><?php echo _AT('user_offline'); ?></label>
 		<input type="radio" name="online_status" id="s2" value="2" <?php echo $all; ?> /><label for="s2"><?php echo _AT('all');          ?></label>
 	</div>
+
+	<?php if ($_SESSION['is_admin'] || $_SESSION['privileges']): ?>
+
+	<?php else: ?>
+		<div class="row">
+			<?php echo _AT('groups'); ?><br />
+			<input type="radio" name="group" value="0" id="g0" checked="checked" /><label for="g0">Entire course</label>
+
+			<?php
+			$sql_groups = implode(',', $_SESSION['groups']);
+			$sql = "SELECT G.title, G.group_id, T.title AS type_title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$_SESSION[course_id] AND G.group_id IN ($sql_groups) ORDER BY T.title";
+			$result = mysql_query($sql, $db);
+			?>
+			<?php while ($row = mysql_fetch_assoc($result)): ?>
+				<input type="radio" name="group" value="<?php echo $row['group_id']; ?>" id="g<?php echo $row['group_id']; ?>" <?php if ($group == $row['group_id']) { echo 'checked="checked"'; } ?> /><label for="g<?php echo $row['group_id']; ?>"><?php echo $row['type_title'] . ': ' . $row['title']; ?></label>
+			<?php endwhile; ?>
+		</div>
+	<?php endif; ?>
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('filter'); ?>" />
@@ -66,9 +87,19 @@ if ($_GET['order'] == 'asc') {
 	$order = 'asc';
 }
 
+$group_members = '';
+if ($group) {
+	$group_members = array();
+	$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=$group";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$group_members[] = $row['member_id'];
+	}
+	$group_members = ' AND C.member_id IN (' . implode(',', $group_members) . ')';
+}
 
 /* look through enrolled students list */
-$sql_members = "SELECT C.member_id, C.approved, C.privileges, M.login FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M	WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND (C.approved='y' OR C.approved='a')	ORDER BY M.login $order";
+$sql_members = "SELECT C.member_id, C.approved, C.privileges, M.login FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M	WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND (C.approved='y' OR C.approved='a')	$group_members ORDER BY M.login $order";
 
 $result_members = mysql_query($sql_members, $db);
 

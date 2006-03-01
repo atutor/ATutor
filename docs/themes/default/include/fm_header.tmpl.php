@@ -41,7 +41,5 @@ global $system_courses;
 		echo '<div align="right"><a href="javascript:window.close()">'._AT('close_file_manager') .'</a></div>';
 	} 
 ?>
-<h2 class="page-title"><?php echo $this->page_title; ?></h2>
-
 <a name="content"></a>
 <?php global $msg; $msg->printAll(); ?>

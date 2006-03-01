@@ -34,17 +34,22 @@ $all_forums = get_forums($_SESSION['course_id']);
 //output course forums
 $num_shared    = count($all_forums['shared']);
 $num_nonshared = count($all_forums['nonshared']);
+$num_groups = count($all_forums['group']);
 
-if ($num_shared || $num_nonshared) {
+if ($num_shared || $num_nonshared || $num_groups) {
 	foreach ($all_forums as $shared => $forums) {
-		if ($num_shared && $num_nonshared) {
-			if ($shared == 'nonshared') {
+		if (($num_shared && $num_nonshared) || ($num_nonshared && $num_groups)) {
+			if ($num_nonshared && ($shared == 'nonshared')) {
 				echo '<tbody><tr>';
 				echo '<th colspan="4">' . _AT('course_forums') . '</th>';
 				echo '</tr>';
-			} else {
+			} else if ($num_shared && ($shared == 'shared')) {
 				echo '</tbody><tbody><tr>';
 				echo '<th colspan="4">' . _AT('shared_forums') . '</th>';
+				echo '</tr>';
+			} else if ($num_groups && ($shared == 'group')) {
+				echo '</tbody><tbody><tr>';
+				echo '<th colspan="4">' . _AT('group_forums') . '</th>';
 				echo '</tr>';
 			}
 		}

@@ -61,6 +61,15 @@ function rowselect(obj) {
 		document.getElementById(selected).className = '';
 	selected = obj.id;
 }
+function rowselectbox(obj, checked, handler) {
+	var functionDemo = new Function(handler + ";");
+	functionDemo();
+
+	if (checked)
+		obj.className = 'selected';
+	else
+		obj.className = '';
+}
 </script>
 <?php
 

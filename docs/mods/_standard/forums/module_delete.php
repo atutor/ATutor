@@ -11,8 +11,6 @@ function forums_delete($course) {
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		if ($row['cnt'] == 1) {
-			//debug('deleting non-shared forums');
-
 			$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {

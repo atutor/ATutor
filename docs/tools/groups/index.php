@@ -12,10 +12,9 @@
 /************************************************************************/
 // $Id$
 
-$page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_ENROLLMENT);
+authenticate(AT_PRIV_GROUPS);
 
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
@@ -28,75 +27,89 @@ if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	exit;
 }
 
-if (isset($_POST['edit'])) {
-	if ($_POST['group']) {
-		header('Location: groups_manage.php?gid='.$_POST['group']);
+if (isset($_GET['edit'], $_GET['id'])) {
+	$parts = explode('_', $_GET['id'], 2);
+	if (isset($parts[1]) && $parts[1]) {
+		header('Location: edit_group.php?id='.$parts[1]);
 		exit;
-	} else {
-		$msg->addError('GROUP_NOT_FOUND');
+	} else if ($parts[0]) {
+		header('Location: edit_type.php?id='.$parts[0]);
+		exit;
 	}
-
-} else if (isset($_POST['delete'])) {
-	if (isset($_POST['group'])) {
-		//confirm
-		header('Location: groups_delete.php?gid='.$_POST['group']);
+} else if (isset($_GET['delete'], $_GET['id'])) {
+	$parts = explode('_', $_GET['id'], 2);
+	if (isset($parts[1]) && $parts[1]) {
+		header('Location: delete_group.php?id='.$parts[1]);
 		exit;
-
-	} else {
-		$msg->addError('GROUP_NOT_FOUND');
-	}	
-} else if (isset ($_POST['members'])) {
-	if (isset($_POST['group'])) {
-		header('Location: groups_members.php?gid='.$_POST['group']);
+	} else if ($parts[0]) {
+		header('Location: delete_type.php?id='.$parts[0]);
 		exit;
-	} else {
-		$msg->addError('GROUP_NOT_FOUND');
+	}
+} else if (isset($_GET['members'])) {
+	$parts = explode('_', $_GET['id'], 2);
+	if (isset($parts[1]) && $parts[1]) {
+		header('Location: members.php?id='.$parts[0]);
+		exit;
+	} else if ($parts[0]) {
+		header('Location: members.php?id='.$parts[0]);
+		exit;
 	}	
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
+$result = mysql_query($sql, $db);
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<table class="data" summary="" rules="cols">
-<thead>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
+<table class="data" summary="" rules="cols" style="width: 50%">
+<tfoot>
 <tr>
-	<th scope="col"><?php echo _AT('groups');         ?></th>
+	<td>
+		<input type="submit" name="edit"    value="<?php echo _AT('edit'); ?>" />
+		<input type="submit" name="members" value="<?php echo _AT('members'); ?>" />
+		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
+	</td>
 </tr>
-</thead>
-
-<tbody>
-<?php
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
-	$result	= mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		do {
-?>
-			<tr onmousedown="document.form['g_<?php echo $row['group_id']; ?>'].checked = true;">
-				<td>
-					<input type="radio" id="g_<?php echo $row['group_id']; ?>" name="group" value="<?php echo $row['group_id']; ?>" />
-					<label for="g_<?php echo $row['group_id']; ?>"><?php echo $row['title']; ?></label>
-				</td>
+</tfoot>
+<?php if ($row = mysql_fetch_assoc($result)): ?>
+	<?php do { ?>
+	<tbody>
+		<?php 
+			$sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
+			$group_result = mysql_query($sql, $db);
+			$num_groups = mysql_num_rows($group_result);
+		?>
+		<tr onmousedown="document.form['g<?php echo $row['type_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['type_id']; ?>">
+			<th>
+				<input type="radio" id="g<?php echo $row['type_id']; ?>" name="id" value="<?php echo $row['type_id']; ?>" />
+				<label for="g<?php echo $row['type_id']; ?>"><?php echo $row['title']; ?></label> (<?php echo $num_groups; ?> groups)</td>
+			</th>
+		</tr>
+		<?php if ($num_groups) : ?>
+			<?php while ($group_row = mysql_fetch_assoc($group_result)): ?>
+				<?php
+					$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."groups_members WHERE group_id=$group_row[group_id]";
+					$group_cnt_result = mysql_query($sql, $db);
+					$group_cnt = mysql_fetch_assoc($group_cnt_result);
+				?>
+				<tr onmousedown="document.form['g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>">
+					<td class="indent"><input type="radio" id="g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>" name="id" value="<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>" /> <label for="g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>"><?php echo $group_row['title']; ?></label> (<?php echo $group_cnt['cnt']; ?> members)</td>
+				</tr>
+			<?php endwhile; ?>
+		<?php else: ?>
+			<tr>
+				<td class="indent"><em><?php echo _AT('none_found'); ?></em></td>
 			</tr>
-<?php	} while ($row = mysql_fetch_assoc($result)); ?>
-
-		<tfoot>
-		<tr>
-			<td colspan="6">
-				<input type="submit" name="members" value="<?php echo _AT('members'); ?>" />
-				<input type="submit" name="edit"   value="<?php echo _AT('edit'); ?>" />
-				<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
-			</td>
-		</tr>
-		</tfoot>
-
-<?php	
-	} else {?>
-		<tr>
-			<td><?php echo _AT('none_found'); ?></td>
-		</tr>
-<?php } ?>
+		<?php endif; ?>
+	</tbody>
+	<?php } while ($row = mysql_fetch_assoc($result)); ?>
+<?php else: ?>
+	<tr>
+		<td><em><?php echo _AT('none_found'); ?></em></td>
+	</tr>
+<?php endif; ?>
 </tbody>
 </table>
 </form>

@@ -35,7 +35,8 @@ function get_forums($course) {
 
 	// 'nonshared' forums are always listed first:
 	$forums['nonshared'] = array();
-	$forums['shared'] = array();
+	$forums['shared']    = array();
+	$forums['group']     = array();
 
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
@@ -47,7 +48,22 @@ function get_forums($course) {
 			$forums['nonshared'][] = $row;
 		}
 	}
-	
+		
+	// retrieve the group forums:
+
+	if (!$_SESSION['groups']) {
+		return $forums;
+	}
+
+	$groups =  implode(',',$_SESSION['groups']);
+
+	$sql = "SELECT F.*, G.group_id FROM ".TABLE_PREFIX."forums_groups G INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) WHERE G.group_id IN ($groups) ORDER BY F.title";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$row['title'] = get_group_title($row['group_id']);
+		$forums['group'][] = $row;
+	}
+
 	return $forums;	
 }
 
@@ -117,6 +133,14 @@ function valid_forum_user($forum_id) {
 	$row = mysql_fetch_assoc($result);
 
 	if (empty($row)) {
+		// not a course forum, let's check group:
+		$groups = implode(',', $_SESSION['groups']);
+		$sql	= "SELECT forum_id FROM ".TABLE_PREFIX."forums_groups WHERE group_id IN ($groups) AND forum_id=$forum_id";
+		$result = mysql_query($sql, $db);
+		if ($row = mysql_fetch_assoc($result)) {
+			return TRUE;
+		}
+
 		return FALSE;
 	}
 

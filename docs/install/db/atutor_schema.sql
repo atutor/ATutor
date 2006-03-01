@@ -216,6 +216,15 @@ CREATE TABLE `forums_courses` (
 ) TYPE=MyISAM;
 
 
+# --------------------------------------------------------
+# Table structure for table `forums_groups`
+
+CREATE TABLE `forums_groups` (
+`forum_id` mediumint( 8 ) unsigned NOT NULL default '0',
+`group_id` mediumint( 8 ) unsigned NOT NULL default '0',
+PRIMARY KEY ( `forum_id` , `group_id` ) ,
+KEY `group_id` ( `group_id` )
+) TYPE = MYISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `forums_subscriptions`
@@ -264,12 +273,14 @@ CREATE TABLE `glossary` (
 # Table structure for table `groups`
 
 CREATE TABLE `groups` (
-`group_id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
-`course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
-`title` varchar(20) NOT NULL default '',
-PRIMARY KEY ( `group_id` ),
-KEY `course_id` (`course_id`)
-) TYPE=MyISAM;
+  `group_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `type_id` mediumint(8) unsigned NOT NULL default '0',
+  `title` varchar(20) NOT NULL default '',
+  `description` text NOT NULL,
+  `modules` varchar(100) NOT NULL default '',
+  PRIMARY KEY  (`group_id`)
+);
+
 
 # --------------------------------------------------------
 # Table structure for table `groups_members`
@@ -278,6 +289,17 @@ CREATE TABLE `groups_members` (
 `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
 `member_id` MEDIUMINT UNSIGNED NOT NULL default '0',
  PRIMARY KEY  (`group_id`,`member_id`)
+);
+
+# --------------------------------------------------------
+# Table structure for table `groups_types` (since 1.5.3)
+
+CREATE TABLE `groups_types` (
+  `type_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `title` varchar(80) NOT NULL default '',
+  PRIMARY KEY  (`type_id`),
+  KEY `course_id` (`course_id`)
 );
 
 # --------------------------------------------------------
@@ -428,6 +450,10 @@ INSERT INTO `modules` VALUES ('_standard/announcements', 2, 2048,      0);
 # INSERT INTO `modules` VALUES ('acollab',               2, 8192+4096, 0);
 INSERT INTO `modules` VALUES ('_standard/polls',         2, 16384,     0);
 INSERT INTO `modules` VALUES ('_standard/faq',           2, 32768,     0);
+INSERT INTO `modules` VALUES ('_core/groups',            2, 65536,     0);
+INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0);
+INSERT INTO `modules` VALUES ('_standard/drafting_room', 2, 262144,    0);
+INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
 INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2);
 INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4);
 INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8);
@@ -435,7 +461,6 @@ INSERT INTO `modules` VALUES ('_core/cats_categories',   2, 0,         32);
 INSERT INTO `modules` VALUES ('_core/languages',         2, 0,         64);
 INSERT INTO `modules` VALUES ('_core/themes',            2, 0,         128);
 INSERT INTO `modules` VALUES ('_standard/rss_feeds',	 2, 0,	       256);
-INSERT INTO `modules` VALUES ('_core/groups',            2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/directory',     2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/tile_search',   2, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/sitemap',       2, 0, 0);

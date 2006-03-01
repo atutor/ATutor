@@ -47,6 +47,14 @@ $_config_defaults['check_version']	           = 0;
 
 $_config = $_config_defaults;
 
+/* drafting room constants */
+define('WORKSPACE_COURSE',     1);
+define('WORKSPACE_PERSONAL',   2);
+define('WORKSPACE_ASSIGNMENT', 3);
+define('WORKSPACE_GROUP',      4);
+define('WORKSPACE_PATH_DEPTH', 1); // how deep the directories should be
+define('WORKSPACE_FILE_PATH',  'D:\\workspace_files\\');
+
 /* how many related topics can be listed */
 define('NUM_RELATED_TOPICS', 5);
 

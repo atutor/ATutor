@@ -2,15 +2,38 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
-$this->_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/groups.php');
+define('AT_PRIV_GROUPS', $this->getPrivilege());
 
-$this->_pages['tools/enrollment/groups.php']['title_var'] = 'groups';
-$this->_pages['tools/enrollment/groups.php']['parent']    = 'tools/enrollment/index.php';
-$this->_pages['tools/enrollment/groups.php']['children']  = array('tools/enrollment/groups_manage.php');
+//$this->_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/groups.php');
 
-	$this->_pages['tools/enrollment/groups_manage.php']['title_var'] = 'create_group';
-	$this->_pages['tools/enrollment/groups_manage.php']['parent']    = 'tools/enrollment/groups.php';
+$this->_pages['tools/groups/index.php']['title_var'] = 'groups';
+$this->_pages['tools/groups/index.php']['parent']    = 'tools/index.php';
+$this->_pages['tools/groups/index.php']['children']  = array('tools/groups/create.php');
 
-	$this->_pages['tools/enrollment/groups_members.php']['title_var'] = 'group_members';
-	$this->_pages['tools/enrollment/groups_members.php']['parent']    = 'tools/enrollment/groups.php';
+	$this->_pages['tools/groups/edit_group.php']['title_var'] = 'edit';
+	$this->_pages['tools/groups/edit_group.php']['parent']    = 'tools/groups/index.php';
+
+	$this->_pages['tools/groups/delete_group.php']['title_var'] = 'edit';
+	$this->_pages['tools/groups/delete_group.php']['parent']    = 'tools/groups/index.php';
+
+	$this->_pages['tools/groups/edit_type.php']['title_var'] = 'edit';
+	$this->_pages['tools/groups/edit_type.php']['parent']    = 'tools/groups/index.php';
+
+	$this->_pages['tools/groups/delete_type.php']['title_var'] = 'edit';
+	$this->_pages['tools/groups/delete_type.php']['parent']    = 'tools/groups/index.php';
+
+	$this->_pages['tools/groups/create.php']['title_var'] = 'create_groups';
+	$this->_pages['tools/groups/create.php']['parent']    = 'tools/groups/index.php';
+
+		$this->_pages['tools/groups/create_manual.php']['title_var'] = 'create_manual';
+		$this->_pages['tools/groups/create_manual.php']['parent']    = 'tools/groups/create.php';
+
+		$this->_pages['tools/groups/create_automatic.php']['title_var'] = 'create_automatic';
+		$this->_pages['tools/groups/create_automatic.php']['parent']    = 'tools/groups/create.php';
+
+			$this->_pages['tools/groups/create_automatic_confirm.php']['title_var'] = 'create_automatic_confirm';
+			$this->_pages['tools/groups/create_automatic_confirm.php']['parent'] = 'tools/groups/create_automatic.php';
+
+	$this->_pages['tools/groups/members.php']['title_var'] = 'group_members';
+	$this->_pages['tools/groups/members.php']['parent']    = 'tools/groups/index.php';
 ?>

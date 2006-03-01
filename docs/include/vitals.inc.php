@@ -136,7 +136,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 	}
 
 	/* development uses a common language db */
-	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
+	if (FALSE && file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
 		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
 	} else {
 		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
@@ -400,9 +400,17 @@ function get_forum_name($fid){
 
 	$sql	= 'SELECT title FROM '.TABLE_PREFIX.'forums WHERE forum_id='.$fid;
 	$result	= mysql_query($sql, $db);
-	$row	= mysql_fetch_assoc($result);
+	if ($row = mysql_fetch_assoc($result) && $row['title']) {
+		return $row['title'];		
+	}
 
-	return $row['title'];
+	$sql = "SELECT group_id FROM ".TABLE_PREFIX."forums_groups WHERE forum_id=$fid";
+	$result	= mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		return get_group_title($row['group_id']);
+	}
+
+	return FALSE;
 }
 
 /* takes the array of valid prefs and assigns them to the current session */
@@ -700,6 +708,16 @@ function write_to_log($operation_type, $table_name, $num_affected, $details) {
 		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', '$now', $operation_type, '$table_name', $num_affected, '$details')";
 		$result = mysql_query($sql, $db);
 	}
+}
+
+function get_group_title($group_id) {
+	global $db;
+	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=$group_id";
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		return $row['title'];
+	}
+	return FALSE;
 }
 
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */

@@ -228,6 +228,11 @@ class Module {
 				$this->_student_tool =& $_student_tool;
 				$_modules[] = $this->_student_tool;
 			}
+
+			//group tools
+			if (isset($_group_tool)) {
+				$this->_group_tool =& $_group_tool;
+			}
 		}					
 	}
 
@@ -320,6 +325,34 @@ class Module {
 	*/
 	function isBackupable() {
 		return is_file(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
+	}
+
+	function createGroup($group_id) {
+		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php')) {
+			require_once(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php');
+			$fn_name = basename($this->_directoryName) .'_create_group';
+			$fn_name($group_id);
+		}
+	}
+
+	function deleteGroup($group_id) {
+		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php')) {
+			require_once(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php');
+			$fn_name = basename($this->_directoryName) .'_delete_group';
+			$fn_name($group_id);
+		}
+	}
+
+	function getGroupTool() {
+		if (!isset($this->_group_tool)) {
+			return;
+		} 
+
+		return $this->_group_tool;
+	}
+
+	function isGroupable() {
+		return is_file(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php');
 	}
 
 	/**
@@ -491,7 +524,7 @@ class Module {
 
 	function getStudentTools() {
 		if (!isset($this->_student_tool)) {
-			return;
+			return FALSE;
 		} 
 
 		return $this->_student_tool;

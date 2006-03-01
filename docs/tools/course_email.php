@@ -27,9 +27,9 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['to_enrolled'] = trim($_POST['to_enrolled']);
+	$_POST['to_enrolled']   = trim($_POST['to_enrolled']);
 	$_POST['to_unenrolled'] = trim($_POST['to_unenrolled']);
-	$_POST['to_alumni'] = trim($_POST['to_alumni']);
+	$_POST['to_alumni']     = trim($_POST['to_alumni']);
 	$_POST['to_assistants'] = trim($_POST['to_assistants']);
 
 	$_POST['subject'] = trim($_POST['subject']);
@@ -38,8 +38,9 @@ if (isset($_POST['cancel'])) {
 	if ( ($_POST['to_enrolled']   == '') &&
 		 ($_POST['to_unenrolled'] == '') &&
 		 ($_POST['to_alumni']     == '') &&
-		 ($_POST['to_assistants'] == '') )
-	{
+		 ($_POST['to_assistants'] == '') &&
+		 ($_POST['groups']        == '')
+		) {
 		$msg->addError('MSG_TO_EMPTY');
 	}
 
@@ -52,29 +53,43 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$sql	= "SELECT email FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND ";
+		$email_sql	= "SELECT email FROM ".TABLE_PREFIX."course_enrollment C INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE C.course_id=$course AND (";
 		
-		if ($_POST['to_enrolled']) {
-			// choose all enrolled. excluding the instructor.
-			$sql 	.= "(C.approved='y' AND C.role<>'Instructor') OR ";
-		}
-
 		if ($_POST['to_unenrolled']) {
 			// choose all unenrolled
-			$sql .= "C.approved='n' OR ";
+			$email_sql .= "C.approved='n' OR ";
 		}
 		
 		if ($_POST['to_alumni']) {
 			// choose all alumni
-			$sql 	.= "C.approved='a' OR ";
+			$email_sql 	.= "C.approved='a' OR ";
 		}
 
 		if ($_POST['to_assistants']){
 			// choose all assistants
-			$sql	.= "C.privileges<>0 OR ";
-		} 
-		$sql = substr_replace ($sql, '', -4);
-		$result = mysql_query($sql,$db);
+			$email_sql	.= "C.privileges<>0 OR ";
+		}
+
+		if ($_POST['groups']) {
+			// specific groups
+			$groups = implode(',', $_POST['groups']);
+
+			$group_members = array();
+			$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($groups)";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				$group_members[] = $row['member_id'];
+			}
+			$group_members = implode(',', $group_members);
+
+			$email_sql .= "M.member_id IN ($group_members) OR ";
+		} else if ($_POST['to_enrolled']) {
+			// includes instructor
+			$email_sql 	.= "C.approved='y' OR ";
+		}
+
+		$email_sql = substr_replace($email_sql, '', -4). ')'; // strip off the last ' OR '
+		$result = mysql_query($email_sql,$db);
 
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
@@ -149,11 +164,33 @@ if ($row['cnt'] == 0) {
 		<input type="checkbox" name="to_enrolled" value="1" id="enrolled" <?php if ($_POST['to_enrolled']=='1') { echo 'checked="checked"'; } else { echo 'checked="checked"'; } ?> /><label for="enrolled"><?php echo  _AT('enrolled'); ?></label>
 		<input type="checkbox" name="to_unenrolled" value="1" id="unenrolled" <?php if ($_POST['to_unenrolled']=='1') { echo 'checked="checked"'; } ?> /><label for="unenrolled"><?php echo  _AT('unenrolled'); ?></label>
 		<input type="checkbox" name="to_alumni" value="1" id="alumni" <?php if ($_POST['to_alumni']=='1') { echo 'checked="checked"'; } ?> /><label for="alumni"><?php echo  _AT('alumni'); ?></label>
+
+		<?php
+		$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
+		$result = mysql_query($sql, $db);
+		?>
+		<?php if ($row = mysql_fetch_assoc($result)): ?>
+			<br /><br />
+			Or, Groups:<br />
+			<select name="groups[]" multiple="multiple" size="10" style="padding-right: 5px">
+				<?php do { ?>
+					<optgroup label="<?php echo $row['title']; ?>">
+						<?php 
+							$sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
+							$group_result = mysql_query($sql, $db);
+						?>
+						<?php while ($group_row = mysql_fetch_assoc($group_result)): ?>
+							<option value="<?php echo $group_row['group_id']; ?>"><?php echo $group_row['title']; ?></option>
+						<?php endwhile; ?>
+					</optgroup>
+				<?php } while ($row = mysql_fetch_assoc($result)); ?>
+			</select>
+		<?php endif; ?>
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
-		<input type="text" name="subject" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" />
+		<input type="text" name="subject" size="60" id="subject" value="<?php echo $_POST['subject']; ?>" />
 	</div>
 
 	<div class="row">

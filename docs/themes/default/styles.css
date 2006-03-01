@@ -552,10 +552,15 @@ table.data tbody th {
 	text-align: left;
 	background-color: #fdfdfd;
 	cursor: auto;
+	border-bottom: 0px;
+	border-top: 1px solid #e0e0e0;
 }
 
 table.data td {
 	padding: 3px;
+}
+table.data td.indent {
+	padding-left: 12px;
 }
 
 table.data col.sort {
@@ -566,10 +571,14 @@ table.data tbody tr:hover, table.data tbody tr:hover th {
 	background-color: #f5f5ff;
 	cursor: pointer;
 }
+table.data.static tbody tr:hover th {
+	background-color: #fdfdfd;
+	cursor: auto;
+}
+
 
 table.data tbody tr.selected, table.data tbody tr.selected th {
 	background-color: #f5f5ff;
-	cursor: auto;
 }
 
 table.data tfoot {
