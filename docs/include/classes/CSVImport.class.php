@@ -110,6 +110,9 @@ class CSVImport {
 			if (function_exists($fn_name)) {
 				$row = $fn_name($row, $course_id, $table_id_map, $version);
 			}
+			if (!$row) {
+				continue;
+			}
 			if ($row[0] == 0) {
 				$row[0] = $i;
 			}

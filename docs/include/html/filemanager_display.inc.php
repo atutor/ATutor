@@ -14,6 +14,26 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+function get_file_extension($file_name) {
+	$ext = pathinfo($file_name);
+	return $ext['extension'];
+}
+
+function get_file_type_icon($file_name) {
+	static $mime;
+
+	$ext = get_file_extension($file_name);
+
+	if (!isset($mime)) {
+		require(AT_INCLUDE_PATH .'lib/mime.inc.php');
+	}
+
+	if (isset($mime[$ext]) && $mime[$ext][1]) {
+		return $mime[$ext][1];
+	}
+	return 'generic';
+}
+
 // get the course total in Bytes 
 $course_total = dirsize($current_path);
 
@@ -226,7 +246,7 @@ while (false !== ($file = readdir($dir)) ) {
 	} else {
 		$totalBytes += $filedata[7];
 		$filename = $file;
-		$fileicon = '&nbsp;<img src="images/file.gif" alt="'._AT('file').':'.$file.'" height="16" width="16" class="img-size-fm2" />&nbsp;';
+		$fileicon = '&nbsp;<img src="images/file_types/'.get_file_type_icon($filename).'.gif" height="16" width="16" alt="" title="" class="img-size-fm2" />&nbsp;';
 	} 
 	$file1 = strtolower($file);
 	// create listing for dirctor or file
