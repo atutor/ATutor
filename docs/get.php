@@ -80,7 +80,7 @@ $ext = $ext['extension'];
 if ($ext == '') {
 	$ext = 'application/octet-stream';
 } else {
-	$ext = $mime[$ext];
+	$ext = $mime[$ext][0];
 }
 
 //check that this file is within the content directory & exists

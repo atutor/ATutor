@@ -158,7 +158,7 @@ define('AT_COURSESIZE_UNLIMITED',	   -1);
 define('AT_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
 define('AT_FILESIZE_DEFAULT',		   -3);  /* this too */
 define('AT_FILESIZE_SYSTEM_MAX',	   -4);
-$editable_file_types = array('txt', 'html', 'htm', 'xml', 'css', 'asc', 'csv');
+$editable_file_types = array('txt', 'html', 'htm', 'xml', 'css', 'asc', 'csv', 'sql');
 
 /* how many poll choices are available: */
 define('AT_NUM_POLL_CHOICES',   7);
