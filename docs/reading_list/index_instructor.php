@@ -94,7 +94,7 @@ $result = mysql_query($sql, $db);
 				    <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
-<?php if ($row = mysql_fetch_assoc($result)) : ?>
+<?php if (($result != 0) && ($row = mysql_fetch_assoc($result))) : ?>
 <tbody>
 		<?php do { ?>
 
