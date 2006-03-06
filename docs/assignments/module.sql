@@ -21,3 +21,13 @@ REPLACE INTO `language_text` VALUES ('en', '_module','assignments','Assignments'
 REPLACE INTO `language_text` VALUES ('en', '_module','add_assignment','Add Assignment',NOW(),'');
 REPLACE INTO `language_text` VALUES ('en', '_module','edit_assignment','Edit Assignment',NOW(),'');
 REPLACE INTO `language_text` VALUES ('en', '_module','delete_assignment','Delete Assignment',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','due_date','Due Date',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','accept_late_submissions','Accept Late Submissions',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','allow_re_submissions','Allow Re-Submissions',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','assign_to','Assign To',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','time','Time',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','always','Always',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','until','Until',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','all_students','All Students',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','options','Options',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','specific_groups','Specific Groups',NOW(),'');
