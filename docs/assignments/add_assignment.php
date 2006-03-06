@@ -286,7 +286,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php } ?>
 		</select>
 
-		<label for="duehour">&nbsp;<?php  echo _AT('time'); ?>:</label>
+		<label for="duehour" title="<?php echo _AT('due_date'). ' '. _AT('time'); ?>">&nbsp;<?php  echo _AT('time'); ?>:</label>
 
 		<select name="duehour">
 		<?php for ($i = 1; $i <= 24; $i++){ ?>
@@ -330,7 +330,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php } ?>
 		</select>	
 
-		<label for="cutoffhour">&nbsp;<?php  echo _AT('time'); ?>:</label>
+		<label for="cutoffhour"  title="<?php echo _AT('accept_late_submissions'). ' '. _AT('time'); ?>">&nbsp;<?php  echo _AT('time'); ?>:</label>
 
 		<select name="cutoffhour">
 		<?php for ($i = 1; $i <= 24; $i++){ ?>
