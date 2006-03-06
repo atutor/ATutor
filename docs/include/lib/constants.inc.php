@@ -277,4 +277,8 @@ $_rl_types[RL_TYPE_HANDOUT]	= 'rl_handout';
 $_rl_types[RL_TYPE_AV]		= 'rl_av';
 $_rl_types[RL_TYPE_FILE]	= 'rl_file';
 
+// constants for the 'assignments' module
+define ('AM_TIME_0', '0000-00-00 00:00:00');
+define ('AM_TIME_1', '1111-11-11 11:11:11');
+
 ?>
