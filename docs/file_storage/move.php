@@ -44,7 +44,7 @@ if (isset($_POST['cancel'])) {
 			$sql = "SELECT file_id FROM ".TABLE_PREFIX."files WHERE folder_id={$_POST['new_folder']} AND file_id<>$file AND file_name='{$row['file_name']}' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				delete_file($row['file_id']);
+				fs_delete_file($row['file_id']);
 			}
 
 			$sql = "UPDATE ".TABLE_PREFIX."files SET folder_id={$_POST['new_folder']} WHERE file_id=$file";
@@ -68,7 +68,6 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $folder_id = abs($_GET['folder']);
-//debug($_GET);
 
 if ($_SESSION['workspace'] == WORKSPACE_COURSE) {
 	$owner_id = $_SESSION['course_id'];
@@ -85,7 +84,6 @@ while ($row = mysql_fetch_assoc($result)) {
 	$folders[$row['parent_folder_id']][$row['folder_id']] = $row;
 }
 
-//debug($_GET);
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -115,7 +113,7 @@ while ($row = mysql_fetch_assoc($result)) {
 					echo ' '._AT('current_location');
 				}
 			?>
-			<?php print_folders($folder_id, 0, $folders); ?>
+			<?php fs_print_folders($folder_id, 0, $folders); ?>
 			</li>
 		</ul>
 	</div>

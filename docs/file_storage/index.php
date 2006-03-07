@@ -15,7 +15,6 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); // for get_human_size()
-require(AT_INCLUDE_PATH.'lib/mime.inc.php'); // mime types
 require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 if (isset($_GET['submit_workspace'])) {
 	unset($_GET['folder']);
@@ -82,14 +81,13 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
-			$ext = get_file_extension($row['file_name']);
+			$ext = fs_get_file_extension($row['file_name']);
 
 			if (isset($mime[$ext]) && $mime[$ext][0]) {
 				$file_mime = $mime[$ext][0];
 			} else {
 				$file_mime = 'application/octet-stream';
 			}
-			
 			
 			header('Content-Type: ' . $file_mime);
 			header('Content-transfer-encoding: binary'); 
@@ -98,7 +96,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
 			header('Content-Length: '.$row['file_size']);
-			@readfile(get_file_path($file_id) . $file_id);
+			@readfile(fs_get_file_path($file_id) . $file_id);
 			exit;
 		}
 	} else {
@@ -108,7 +106,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 
 		if (is_array($_GET['files'])) {
 			foreach ($_GET['files'] as $file_id) {
-				$file_path = get_file_path($file_id) . $file_id;
+				$file_path = fs_get_file_path($file_id) . $file_id;
 
 				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE file_id=$file_id";
 				$result = mysql_query($sql, $db);
@@ -119,7 +117,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		}
 		if (is_array($_GET['folders'])) {
 			foreach($_GET['folders'] as $folder_id) {
-				download_folder($folder_id, $zipfile);
+				fs_download_folder($folder_id, $zipfile);
 				$zipfile->create_dir($row['title']);
 			}
 		}
@@ -167,11 +165,11 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 	$folders = explode(',', $_POST['folders']);
 
 	foreach ($files as $file) {
-		delete_file($file);
+		fs_delete_file($file);
 	}
 
 	foreach ($folders as $folder) {
-		delete_folder($folder);
+		fs_delete_folder($folder);
 	}
 
 	if ($files) {
@@ -248,7 +246,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$result = mysql_query($sql, $db);
 
 		if ($result && $file_id = mysql_insert_id($db)) {
-			$path = get_file_path($file_id);
+			$path = fs_get_file_path($file_id);
 			move_uploaded_file($_FILES['file']['tmp_name'], $path . $file_id);
 
 			// check if this file name already exists
@@ -281,7 +279,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 // --> authentication should probably happen before we call this //
 
-$folder_path = get_folder_path($folder_id, $_SESSION['workspace'], $owner_id);
+$folder_path = fs_get_folder_path($folder_id, $_SESSION['workspace'], $owner_id);
 
 $folders = array();
 $sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$folder_id AND owner_type=$_SESSION[workspace] AND owner_id=$owner_id ORDER BY title";
@@ -297,7 +295,6 @@ $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	$files[] = $row;
 }
-
 
 ?>
 
@@ -407,7 +404,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		<tr onmousedown="document.form['r<?php echo $file_info['file_id']; ?>'].checked = !document.form['r<?php echo $file_info['file_id']; ?>'].checked; rowselectbox(this, document.form['r<?php echo $file_info['file_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $file_info['file_id']; ?>_0">
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td valign="top">
-				<img src="images/file_types/<?php echo get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?>
+				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?>
 				<?php if ($file_info['comments']): ?>
 					<p><?php echo nl2br($file_info['comments']); ?></p>
 				<?php endif; ?>

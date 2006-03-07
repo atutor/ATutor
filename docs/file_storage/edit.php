@@ -27,12 +27,11 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('MISSING_FILENAME');
 	}
 
-
 	if (!$msg->containsErrors()) {
 		$_POST['name'] = $addslashes($_POST['name']);
 		$_POST['comment'] = $addslashes(trim($_POST['comment']));
 		$_POST['body'] = stripslashes($addslashes($_POST['body']));
-		$original_file = get_file_path($_POST['id']);
+		$original_file = fs_get_file_path($_POST['id']);
 		$folder = abs($_POST['folder']);
 
 		if (!$_POST['edit'] || (file_get_contents($original_file . $_POST['id']) == $_POST['body'])) {
@@ -66,7 +65,7 @@ if (isset($_POST['cancel'])) {
 
 			$file_id = mysql_insert_id($db);
 
-			$file_path = get_file_path($file_id);
+			$file_path = fs_get_file_path($file_id);
 			if ($fp = fopen($file_path . $file_id, 'wb')) {
 				ftruncate($fp, 0);
 				fwrite($fp, $_POST['body'], $size);
@@ -100,8 +99,8 @@ if (!$row = mysql_fetch_assoc($result)) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-$ext = get_file_extension($row['file_name']);
-$file_path = get_file_path($id);
+$ext = fs_get_file_extension($row['file_name']);
+$file_path = fs_get_file_path($id);
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -159,6 +158,5 @@ $file_path = get_file_path($id);
 	</div>
 </div>
 </form>
-
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

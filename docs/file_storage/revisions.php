@@ -37,7 +37,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
 
-$files = get_revisions($id);
+$files = fs_get_revisions($id);
 $current_file = current($files);
 ?>
 

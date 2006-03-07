@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 $id = abs($_REQUEST['id']);
 
 if (isset($_POST['submit_no'])) {
-	$path = get_revisions($id);
+	$path = fs_get_revisions($id);
 	reset($path);
 	$first = current($path);
 
@@ -27,7 +27,7 @@ if (isset($_POST['submit_no'])) {
 	header('Location: revisions.php?id='.$first['file_id']);
 	exit;
 } else if (isset($_POST['submit_yes'])) {
-	$path = get_revisions($id);
+	$path = fs_get_revisions($id);
 
 	// set the new parent //
 	$sql = "SELECT parent_file_id, owner_type, owner_id, folder_id FROM ".TABLE_PREFIX."files WHERE file_id=$id";
@@ -48,7 +48,7 @@ if (isset($_POST['submit_no'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$id";
 	mysql_query($sql, $db);
 
-	$file = get_file_path($id);
+	$file = fs_get_file_path($id);
 	if (file_exists($file . $id)) {
 		@unlink($file . $id);
 	}
