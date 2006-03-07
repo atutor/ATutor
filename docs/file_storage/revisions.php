@@ -17,18 +17,23 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); // for get_human_size()
 require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 
+$owner_type = abs($_REQUEST['ot']);
+$owner_id   = abs($_REQUEST['oid']);
+$owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
+if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
+
 
 if (isset($_GET['download'], $_GET['revision'])) {
-	header('Location: index.php?download=1'.SEP.'files'.urlencode('[]').'='.$_GET['revision']);
+	header('Location: index.php'.$owner_arg_prefix.'download=1'.SEP.'files'.urlencode('[]').'='.$_GET['revision']);
 	exit;
 } else if (isset($_GET['delete'], $_GET['revision'])) {
-	header('Location: delete_revision.php?id='.$_GET['revision']);
+	header('Location: delete_revision.php'.$owner_arg_prefix.'id='.$_GET['revision']);
 	exit;
 } else if (isset($_GET['cancel'])) {
-	header('Location: index.php?folder='.$_GET['folder']);
+	header('Location: index.php'.$owner_arg_prefix.'folder='.$_GET['folder']);
 	exit;
 } else if (isset($_GET['comments'])) {
-	header('Location: comments.php?id='.$_GET['revision']);
+	header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['revision']);
 	exit;
 }
 
@@ -37,7 +42,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
 
-$files = fs_get_revisions($id);
+$files = fs_get_revisions($id, $owner_type, $owner_id);
 $current_file = current($files);
 ?>
 
@@ -68,6 +73,8 @@ $current_file = current($files);
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="folder" value="<?php echo $current_file['folder_id']; ?>" />
+<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
+<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <table class="data">
 <thead>
 <tr>

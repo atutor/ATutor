@@ -16,9 +16,14 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 
+$owner_type = abs($_REQUEST['ot']);
+$owner_id   = abs($_REQUEST['oid']);
+$owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
+if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?folder='.abs($_POST['folder']));
+	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['id'] = abs($_POST['id']);
@@ -43,7 +48,7 @@ if (isset($_POST['cancel'])) {
 				mysql_query($sql, $db);
 			}
 
-			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]' WHERE file_id=$_POST[id]";
+			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]' WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
 			mysql_query($sql, $db);
 		} else {
 			// this file is editable, and has changed
@@ -56,7 +61,7 @@ if (isset($_POST['cancel'])) {
 			} else {
 				$num_comments = 0;
 			}
-			$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE file_id=$_POST[id]";
+			$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 
@@ -71,7 +76,7 @@ if (isset($_POST['cancel'])) {
 				fwrite($fp, $_POST['body'], $size);
 				fclose($fp);
 
-				$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$_POST[id]";
+				$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
 				$result = mysql_query($sql, $db);
 
 				if ($_POST['comment']){
@@ -81,7 +86,7 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 		$msg->addFeedback('FILE_EDITED_SUCCESSFULLY');
-		header('Location: index.php?folder='.$folder);
+		header('Location: index.php'.$owner_arg_prefix.'folder='.$folder);
 		exit;
 	}
 
@@ -92,7 +97,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
 
-$sql = "SELECT file_name, folder_id FROM ".TABLE_PREFIX."files WHERE file_id=$id";
+$sql = "SELECT file_name, folder_id FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 $result = mysql_query($sql, $db);
 if (!$row = mysql_fetch_assoc($result)) {
 	$msg->printErrors('FILE_NOT_EXIST');
@@ -106,6 +111,8 @@ $file_path = fs_get_file_path($id);
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <input type="hidden" name="folder" value="<?php echo $row['folder_id']; ?>" />
+<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
+<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('file_name'); ?></label><br />

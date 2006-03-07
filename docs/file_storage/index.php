@@ -16,23 +16,31 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); // for get_human_size()
 require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
+
 if (isset($_GET['submit_workspace'])) {
 	unset($_GET['folder']);
-}
 
-if (!isset($_SESSION['workspace'])) {
+	$owner_type = abs($_GET['ot']);
+
+	if ($owner_type == WORKSPACE_GROUP) {
+
+		$parts = explode('_', $_GET['ot'], 2);
+		if (isset($parts[1]) && $parts[1] && isset($_SESSION['groups'][$parts[1]])) {
+			$owner_id = $parts[1];
+		} else {
+			$owner_type = WORKSPACE_COURSE;
+			unset($owner_id);
+		}
+	} else {
+		unset($owner_id);
+	}
+} else if (isset($_REQUEST['ot'], $_REQUEST['oid'])) {
+	$owner_type = abs($_REQUEST['ot']);
+	$owner_id   = abs($_REQUEST['oid']);
+} else {
+	$owner_type = WORKSPACE_COURSE;
+	$owner_id   = $_SESSION['course_id'];
 	$_SESSION['workspace'] = WORKSPACE_COURSE;
-} else if (isset($_GET['ws'], $_GET['submit_workspace'])) {
-	$_SESSION['workspace'] = abs($_GET['ws']);
-
-	if ($_SESSION['workspace'] > WORKSPACE_GROUP) {
-		$_SESSION['workspace'] = WORKSPACE_GROUP;
-	}
-
-	$parts = explode('_', $_GET['ws'], 2);
-	if ($_SESSION['workspace'] == WORKSPACE_GROUP && isset($parts[1]) && $parts[1] && isset($_SESSION['groups'][$parts[1]])) {
-		$group_id = $parts[1];
-	}
 }
 
 if (isset($_GET['folder'])) {
@@ -41,44 +49,56 @@ if (isset($_GET['folder'])) {
 	$folder_id = 0;
 }
 
-if ($_SESSION['workspace'] == WORKSPACE_COURSE) {
-	$owner_id = $_SESSION['course_id'];
-} else if ($_SESSION['workspace'] == WORKSPACE_PERSONAL) {
-	$owner_id = $_SESSION['member_id'];
-} else if ($_SESSION['workspace'] == WORKSPACE_GROUP) {
-	$owner_id = $group_id;
+// init the owner_id if not currently set
+
+if (!isset($owner_id)) {
+	if ($owner_type == WORKSPACE_COURSE) {
+		$owner_id = $_SESSION['course_id'];
+	} else if ($owner_type == WORKSPACE_PERSONAL) {
+		$owner_id = $_SESSION['member_id'];
+	} else if ($owner_type == WORKSPACE_GROUP) {
+		$owner_id = $group_id;
+	}
+}
+
+//debug($owner_type, 'owner_type');
+//debug($owner_id, 'owner_id');
+$owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
+
+if (!fs_authenticate($owner_type, $owner_id)) {
+	exit('not authenticated');
 }
 
 if (isset($_GET['revisions'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = intval(current($_GET['files']));
-		header('Location: revisions.php?id='.$file_id);
+		header('Location: revisions.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	}
 } else if (isset($_GET['comments'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = intval(current($_GET['files']));
-		header('Location: comments.php?id='.$file_id);
+		header('Location: comments.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	}
 } else if (isset($_GET['edit']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = abs(current($_GET['files']));
-		header('Location: edit.php?id='.$file_id);
+		header('Location: edit.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	} else if (is_array($_GET['folders']) && (count($_GET['folders']) == 1) && empty($_GET['files'])) {
 		$folder_id = abs(current($_GET['folders']));
-		header('Location: edit_folder.php?id='.$folder_id);
+		header('Location: edit_folder.php'.$owner_arg_prefix.'id='.$folder_id);
 		exit;
 	}
 
 } else if (isset($_GET['move']) && (isset($_GET['folders']) || isset($_GET['files']))) {
-	header('Location: move.php?'.$_SERVER['QUERY_STRING']);
+	header('Location: move.php'.$owner_arg_prefix.$_SERVER['QUERY_STRING']);
 	exit;
 } else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = intval(current($_GET['files']));
-		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id";
+		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
 			$ext = fs_get_file_extension($row['file_name']);
@@ -109,7 +129,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 			foreach ($_GET['files'] as $file_id) {
 				$file_path = fs_get_file_path($file_id) . $file_id;
 
-				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE file_id=$file_id";
+				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 				$result = mysql_query($sql, $db);
 				$row = mysql_fetch_assoc($result);
 
@@ -118,12 +138,13 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		}
 		if (is_array($_GET['folders'])) {
 			foreach($_GET['folders'] as $folder_id) {
-				fs_download_folder($folder_id, $zipfile);
+				fs_download_folder($folder_id, $zipfile, $owner_type, $owner_id);
 				$zipfile->create_dir($row['title']);
 			}
 
 			if (count($_GET['folders']) == 1) {
-				$sql = "SELECT title FROM ".TABLE_PREFIX."folders WHERE folder_id={$_GET['folders'][0]}";
+				// zip just one folder, use that folder's title as the zip file name
+				$sql = "SELECT title FROM ".TABLE_PREFIX."folders WHERE folder_id={$_GET['folders'][0]} AND owner_type=$owner_type AND owner_id=$owner_id";
 				$result = mysql_query($sql, $db);
 				$row = mysql_fetch_assoc($result);
 				$zip_file_name = $row['title'];
@@ -133,8 +154,8 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$zipfile->send_file($zip_file_name);
 	}
 	exit;
-} else if (isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 
+} else if (isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	$hidden_vars = array();
 	$hidden_vars['folder'] = $folder_id;
 	$hidden_vars['ws']     = $_SESSION['workspace'];
@@ -142,7 +163,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$file_list_to_print = '';
 		$files = implode(',', $_GET['files']);
 		$hidden_vars['files'] = $files;
-		$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id IN ($files) ORDER BY file_name";
+		$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id IN ($files) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_name";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
 			$file_list_to_print .= '<li>'.$row['file_name'].'</li>';
@@ -154,7 +175,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$dir_list_to_print = '';
 		$folders = implode(',', $_GET['folders']);
 		$hidden_vars['folders'] = $folders;
-		$sql = "SELECT title, folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id IN ($folders) ORDER BY title";
+		$sql = "SELECT title, folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id IN ($folders) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
 			$dir_list_to_print .= '<li>'.$row['title'].'</li>';
@@ -163,21 +184,21 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 	}
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
-
 	$msg->printConfirm();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
+
 } else if (isset($_POST['submit_yes'])) {
 	// handle the delete
 	$files = explode(',', $_POST['files']);
 	$folders = explode(',', $_POST['folders']);
 
 	foreach ($files as $file) {
-		fs_delete_file($file);
+		fs_delete_file($file, $owner_type, $owner_id);
 	}
 
 	foreach ($folders as $folder) {
-		fs_delete_folder($folder);
+		fs_delete_folder($folder, $owner_type, $owner_id);
 	}
 
 	if ($files) {
@@ -187,7 +208,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$msg->addFeedback('DIR_DELETED');
 	}
 
-	header('Location: index.php?ws='.$_POST['ws']);
+	header('Location: index.php'.$owner_arg_prefix);
 	exit;
 } else if (isset($_POST['create_folder'])) {
 	// create a new folder
@@ -209,10 +230,10 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 			$owner_id = $group_id;
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (0, $parent_folder_id, $_SESSION[workspace], $owner_id, '$_POST[new_folder_name]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (0, $parent_folder_id, $owner_type, $owner_id, '$_POST[new_folder_name]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('FOLDER_CREATED');
-		header('Location: index.php?folder='.$parent_folder_id);
+		header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
 		exit;
 	}
 } else if (isset($_POST['upload'])) {
@@ -250,7 +271,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 			$num_comments = 0;
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $_SESSION[workspace], $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']}, '')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']}, '')";
 		$result = mysql_query($sql, $db);
 
 		if ($result && $file_id = mysql_insert_id($db)) {
@@ -258,7 +279,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 			move_uploaded_file($_FILES['file']['tmp_name'], $path . $file_id);
 
 			// check if this file name already exists
-			$sql = "SELECT file_id, num_revisions FROM ".TABLE_PREFIX."files WHERE owner_type=$_SESSION[workspace] AND owner_id=$owner_id AND folder_id=$parent_folder_id AND file_id<>$file_id AND file_name='{$_FILES['file']['name']}' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
+			$sql = "SELECT file_id, num_revisions FROM ".TABLE_PREFIX."files WHERE owner_type=$owner_type AND owner_id=$owner_id AND folder_id=$parent_folder_id AND file_id<>$file_id AND file_name='{$_FILES['file']['name']}' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
 				$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$row[file_id]";
@@ -278,26 +299,23 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 			$msg->addError('FILE_NOT_SAVED');
 		}
 	}
-	header('Location: index.php?folder='.$parent_folder_id);
+	header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-
-// --> authentication should probably happen before we call this //
-
-$folder_path = fs_get_folder_path($folder_id, $_SESSION['workspace'], $owner_id);
+$folder_path = fs_get_folder_path($folder_id, $owner_type, $owner_id);
 
 $folders = array();
-$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$folder_id AND owner_type=$_SESSION[workspace] AND owner_id=$owner_id ORDER BY title";
+$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	$folders[] = $row;
 }
 
 $files = array();
-$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$_SESSION[workspace] AND owner_id=$owner_id AND parent_file_id=0 ORDER BY file_name";
+$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id AND parent_file_id=0 ORDER BY file_name";
 $result = mysql_query($sql, $db);
 
 while ($row = mysql_fetch_assoc($result)) {
@@ -306,7 +324,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>" enctype="multipart/form-data">
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 <div style="margin: 0px auto; width: 70%">
 	<div class="input-form" style="width: 48%; float: right">
@@ -348,23 +366,18 @@ while ($row = mysql_fetch_assoc($result)) {
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
+<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <table class="data">
 <thead>
 <tr>
 	<td colspan="7">
-		<!--a href="<?php echo $_SERVER['PHP_SELF']; ?>?ws=<?php echo $workspace; ?>"><?php
-			if ($workspace == WORKSPACE_COURSE) { echo 'Course Files'; }
-			if ($workspace == WORKSPACE_PERSONAL) { echo 'My Files'; }
-			if ($workspace == WORKSPACE_ASSIGNMENT) { echo 'Assignment Submissions'; }
-			if ($workspace == WORKSPACE_GROUP) { echo 'Group Files: Group 1'; }
-		?></a -->
 		<input type="submit" name="submit_workspace" value="Work Space" />
-		<select name="ws" id="ws">
-			<option value="1" <?php if ($_SESSION['workspace'] == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>>Course Files</option>
-			<option value="2" <?php if ($_SESSION['workspace'] == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>>My Files</option>
-			<!--option value="3" <?php if ($_SESSION['workspace'] == WORKSPACE_ASSIGNMENT) { echo 'selected="selected"'; } ?>>Assignment Submissions</option-->
+		<select name="ot" id="ot">
+			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>>Course Files</option>
+			<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>>My Files</option>
+			<!--option value="3" <?php if ($owner_type == WORKSPACE_ASSIGNMENT) { echo 'selected="selected"'; } ?>>Assignment Submissions</option-->
 			<optgroup label="Group Files">
-				<option value="4_1" <?php if ($_SESSION['workspace'] == WORKSPACE_GROUP && $group_id == 1) { echo 'selected="selected"'; } ?>>Group 1</option>
+				<option value="4_1" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == 1) { echo 'selected="selected"'; } ?>>Group 1</option>
 			</optgroup>
 		</select>
 
@@ -373,7 +386,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				» <?php echo $folder_info['title']; ?>
 				<?php $parent_folder_id = $folder_info['parent_folder_id']; ?>
 			<?php else: ?>
-				» <a href="<?php echo $_SERVER['PHP_SELF']; ?>?folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a>
+				» <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a>
 			<?php endif; ?>
 		<?php endforeach; ?>
 	</td>
@@ -405,7 +418,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	<?php foreach ($folders as $folder_info): ?>
 		<tr onmousedown="document.form['f<?php echo $folder_info['folder_id']; ?>'].checked = !document.form['f<?php echo $folder_info['folder_id']; ?>'].checked; rowselectbox(this, document.form['f<?php echo $folder_info['folder_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $folder_info['folder_id']; ?>_1">
 			<td width="10"><input type="checkbox" name="folders[]" value="<?php echo $folder_info['folder_id']; ?>" id="f<?php echo $folder_info['folder_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
-			<td colspan="6" width="100%"><img src="images/folder.gif" /> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a></td>
+			<td colspan="6" width="100%"><img src="images/folder.gif" /> <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a></td>
 		</tr>
 	<?php endforeach; ?>
 	<?php foreach ($files as $file_info): ?>

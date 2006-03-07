@@ -16,33 +16,36 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 
+$owner_type = abs($_REQUEST['ot']);
+$owner_id   = abs($_REQUEST['oid']);
+$owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
+if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
+
 $id = abs($_REQUEST['id']);
 
 if (isset($_POST['submit_no'])) {
-	$path = fs_get_revisions($id);
+	$path = fs_get_revisions($id, $owner_type, $owner_id);
 	reset($path);
 	$first = current($path);
 
 	$msg->addFeedback('CANCELLED');
-	header('Location: revisions.php?id='.$first['file_id']);
+	header('Location: revisions.php'.$owner_arg_prefix.'id='.$first['file_id']);
 	exit;
 } else if (isset($_POST['submit_yes'])) {
-	$path = fs_get_revisions($id);
+	$path = fs_get_revisions($id, $owner_type, $owner_id);
 
 	// set the new parent //
-	$sql = "SELECT parent_file_id, owner_type, owner_id, folder_id FROM ".TABLE_PREFIX."files WHERE file_id=$id";
+	$sql = "SELECT parent_file_id, owner_type, owner_id, folder_id FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
-	// authenticate this owner_type and owner_id
-
-	$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$row[parent_file_id] WHERE parent_file_id=$id";
+	$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$row[parent_file_id] WHERE parent_file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 	mysql_query($sql, $db);
 
 	$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=num_revisions-1 WHERE file_id>$id AND owner_type=$row[owner_type] AND owner_id=$row[owner_id] AND folder_id=$row[folder_id]";
 	mysql_query($sql, $db);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."files WHERE file_id=$id";
+	$sql = "DELETE FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 	mysql_query($sql, $db);
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$id";
@@ -63,21 +66,21 @@ if (isset($_POST['submit_no'])) {
 
 	$msg->addFeedback('FILE_DELETED');
 	if ($back_id) {
-		header('Location: revisions.php?id='.$back_id);
+		header('Location: revisions.php'.$owner_arg_prefix.'id='.$back_id);
 	} else {
-		header('Location: index.php');
+		header('Location: index.php'.$owner_arg_prefix);
 	}
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT file_id, file_name, owner_type, owner_id, date, comments, member_id FROM ".TABLE_PREFIX."files WHERE file_id=$id";
+$sql = "SELECT file_id, file_name, owner_type, owner_id, date, comments, member_id FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 $result = mysql_query($sql, $db);
 if (!$row = mysql_fetch_assoc($result)) {
 	$msg->printErrors('FILE_NOT_EXIST');
 } else {
-	$hidden_vars = array('id' => $id);
+	$hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id);
 	$msg->addConfirm(array('FILE_DELETE', '<li>'.$row['date'].' - '. $row['file_name'].' - '.get_login($row['member_id']).' - '.$row['comments'].'</li>'), $hidden_vars);
 	$msg->printConfirm();
 

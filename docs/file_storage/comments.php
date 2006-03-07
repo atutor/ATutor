@@ -16,9 +16,14 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 
+$owner_type = abs($_REQUEST['ot']);
+$owner_id   = abs($_REQUEST['oid']);
+$owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
+if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?folder='.$_POST['folder']);
+	header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['folder']);
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['comment'] = trim($_POST['comment']);
@@ -38,7 +43,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('COMMENT_ADDED_SUCCESSFULLY');
-		header('Location: comments.php?id='.$_POST['id']);
+		header('Location: comments.php'.$owner_arg_prefix.'id='.$_POST['id']);
 		exit;
 	}
 	$_GET['id'] = $_POST['id'];
@@ -48,10 +53,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
 
-$files = fs_get_revisions($id);
+$files = fs_get_revisions($id, $owner_type, $owner_id);
+if (!$files) {
+	$msg->printErrors('FILE_NOT_FOUND');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
+<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <div class="input-form" style="width: 50%">
 	<div class="row">
 		<select name="id" size="<?php echo min(count($files), 5);?>">

@@ -16,20 +16,22 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 
+$owner_type = abs($_REQUEST['ot']);
+$owner_id   = abs($_REQUEST['oid']);
+$owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
+if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?folder='.abs($_POST['folder']));
+	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['new_folder'] = abs($_POST['new_folder']);
 
-	// authenticate new_folder with owner_type and owner_id //
-	
-
 	if ($_POST['folder'] == $_POST['new_folder']) {
 		// src = dest
 		$msg->addFeedback('CANCELLED');
-		header('Location: index.php?folder='.$_POST['new_folder']);
+		header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['new_folder']);
 		exit;
 	}
 
@@ -41,13 +43,13 @@ if (isset($_POST['cancel'])) {
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 
-			$sql = "SELECT file_id FROM ".TABLE_PREFIX."files WHERE folder_id={$_POST['new_folder']} AND file_id<>$file AND file_name='{$row['file_name']}' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
+			$sql = "SELECT file_id FROM ".TABLE_PREFIX."files WHERE folder_id={$_POST['new_folder']} AND file_id<>$file AND file_name='{$row['file_name']}' AND parent_file_id=0 AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_id DESC LIMIT 1";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
 				fs_delete_file($row['file_id']);
 			}
 
-			$sql = "UPDATE ".TABLE_PREFIX."files SET folder_id={$_POST['new_folder']} WHERE file_id=$file";
+			$sql = "UPDATE ".TABLE_PREFIX."files SET folder_id={$_POST['new_folder']} WHERE file_id=$file AND owner_type=$owner_type AND owner_id=$owner_id";
 			mysql_query($sql, $db);
 		}
 		$msg->addFeedback('FILES_MOVED');
@@ -56,12 +58,12 @@ if (isset($_POST['cancel'])) {
 	if (isset($_POST['folders'])) {
 		foreach ($_POST['folders'] as $folder) {
 			$file = abs($file);
-			$sql = "UPDATE ".TABLE_PREFIX."folders SET parent_folder_id={$_POST['new_folder']} WHERE folder_id=$folder";
+			$sql = "UPDATE ".TABLE_PREFIX."folders SET parent_folder_id={$_POST['new_folder']} WHERE folder_id=$folder AND owner_type=$owner_type AND owner_id=$owner_id";
 			mysql_query($sql, $db);
 		}
 		$msg->addFeedback('DIRS_MOVED');
 	}
-	header('Location: index.php?folder='.$_POST['new_folder']);
+	header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['new_folder']);
 	exit;
 }
 
@@ -69,16 +71,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $folder_id = abs($_GET['folder']);
 
-if ($_SESSION['workspace'] == WORKSPACE_COURSE) {
-	$owner_id = $_SESSION['course_id'];
-} else if ($_SESSION['workspace'] == WORKSPACE_PERSONAL) {
-	$owner_id = $_SESSION['member_id'];
-} else if ($_SESSION['workspace'] == WORKSPACE_GROUP) {
-	$owner_id = $group_id;
-}
-
 $folders = array();
-$sql = "SELECT folder_id, parent_folder_id, title FROM ".TABLE_PREFIX."folders WHERE owner_type=$_SESSION[workspace] AND owner_id=$owner_id ORDER BY parent_folder_id, title";
+$sql = "SELECT folder_id, parent_folder_id, title FROM ".TABLE_PREFIX."folders WHERE owner_type=$owner_type AND owner_id=$owner_id ORDER BY parent_folder_id, title";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	$folders[$row['parent_folder_id']][$row['folder_id']] = $row;
@@ -96,6 +90,8 @@ while ($row = mysql_fetch_assoc($result)) {
 <?php endforeach; endif; ?>
 
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
+<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
+<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <div class="input-form">
 	<div class="row">
 		<p><?php echo _AT('select_directory'); ?></p>
