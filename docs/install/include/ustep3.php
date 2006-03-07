@@ -123,6 +123,17 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		mysql_query($sql, $db);
 	}
 
+	if (version_compare($_POST['step1']['old_version'], '1.5.3', '<')) {
+		$sql = "DELETE FROM ".$_POST['step1']['tb_prefix']."groups";
+		mysql_query($sql, $db);
+
+		$sql = "DELETE FROM ".$_POST['step1']['tb_prefix']."groups_members";
+		mysql_query($sql, $db);
+
+		$sql = "DELETE FROM ".$_POST['step1']['tb_prefix']."tests_groups";
+		mysql_query($sql, $db);
+	}
+
 	/* deal with the extra modules: */
 	/* for each module in the modules table check if that module still exists in the mod directory. */
 	/* if that module does not exist then check the old directory and prompt to have it copied */
@@ -199,6 +210,8 @@ if (isset($errors)) {
 			<td class="row1"><input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['admin_email'])); } else { echo urldecode($_POST['step1']['admin_email']); } ?>" class="formfield" /></td>
 		</tr>
 		</table>
+<?php if (version_compare($_POST['step1']['old_version'], '1.5.3', '<')): ?>
+	<p>Groups made prior to 1.5.3 are not backwards compatible and will be removed.</p>
 <?php else: ?>
 	<p>There are no new configuration options for this version.</p>
 <?php endif; ?>
