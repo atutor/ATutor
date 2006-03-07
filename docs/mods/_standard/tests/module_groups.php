@@ -1,7 +1,7 @@
 <?php
 
 // create group
-function forums_create_group($group_id) { }
+function tests_create_group($group_id) { }
 
 
 // delete group
