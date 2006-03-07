@@ -16,8 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); // for get_human_size()
 require(AT_INCLUDE_PATH.'lib/mime.inc.php'); // mime types
-require(AT_INCLUDE_PATH.'lib/file_storage.inc.php'); // mime types
-
+require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 if (isset($_GET['submit_workspace'])) {
 	unset($_GET['folder']);
 }

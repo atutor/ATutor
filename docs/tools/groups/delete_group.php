@@ -22,8 +22,7 @@ if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
-} 
-else if (isset($_POST['submit_yes'])) {
+} else if (isset($_POST['submit_yes'])) {
 	$_POST['id'] = intval($_POST['id']);
 	$_POST['type_id'] = intval($_POST['type_id']);
 
@@ -33,12 +32,10 @@ else if (isset($_POST['submit_yes'])) {
 	$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups_types WHERE type_id=$type_id AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
-		$sql = "SELECT modules FROM ".TABLE_PREFIX."groups WHERE group_id=$id AND type_id=$type_id";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		$row['modules'] = explode('|', $row['modules']);
-		foreach ($row['modules'] as $mod) {
-			$module =& $moduleFactory->getModule($mod);
+		$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_DISABLED);
+		$keys = array_keys($module_list);
+		foreach ($keys as $module_name) {	
+			$module =& $module_list[$module_name];
 			$module->deleteGroup($id);
 		}
 

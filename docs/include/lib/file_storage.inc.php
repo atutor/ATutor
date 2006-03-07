@@ -105,7 +105,6 @@ function get_file_path($file_id) {
 
 function delete_file($file_id) {
 	global $db;
-	// should this function deal with authentication?
 	$revisions = get_revisions($file_id);
 	foreach ($revisions as $file) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."files WHERE file_id=$file[file_id]";
