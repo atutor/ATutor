@@ -103,6 +103,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		// zip multiple files and folders
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile =& new zipfile();
+		$zip_file_name = _AT('file_storage');
 
 		if (is_array($_GET['files'])) {
 			foreach ($_GET['files'] as $file_id) {
@@ -120,9 +121,16 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 				fs_download_folder($folder_id, $zipfile);
 				$zipfile->create_dir($row['title']);
 			}
+
+			if (count($_GET['folders']) == 1) {
+				$sql = "SELECT title FROM ".TABLE_PREFIX."folders WHERE folder_id={$_GET['folders'][0]}";
+				$result = mysql_query($sql, $db);
+				$row = mysql_fetch_assoc($result);
+				$zip_file_name = $row['title'];
+			}
 		}
 		$zipfile->close();
-		$zipfile->send_file(_AT('drafting_room'));
+		$zipfile->send_file($zip_file_name);
 	}
 	exit;
 } else if (isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
