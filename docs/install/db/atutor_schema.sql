@@ -181,6 +181,59 @@ CREATE TABLE `feeds` (
 ) ;
 
 # --------------------------------------------------------
+
+#
+# Table structure for table `files`
+# added 1.5.3
+
+CREATE TABLE `files` (
+  `file_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `owner_type` tinyint(3) unsigned NOT NULL default '0',
+  `owner_id` mediumint(8) unsigned NOT NULL default '0',
+  `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `folder_id` mediumint(8) unsigned NOT NULL default '0',
+  `parent_file_id` mediumint(8) unsigned NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `num_comments` tinyint(3) unsigned NOT NULL default '0',
+  `num_revisions` tinyint(3) unsigned NOT NULL default '0',
+  `file_name` varchar(80) NOT NULL default '',
+  `file_size` int(11) NOT NULL default '0',
+  `comments` text NOT NULL,
+  PRIMARY KEY  (`file_id`)
+) TYPE=MyISAM;
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `files_comments`
+# added 1.5.3
+
+CREATE TABLE `files_comments` (
+  `comment_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `file_id` mediumint(8) unsigned NOT NULL default '0',
+  `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `comment` text NOT NULL,
+  PRIMARY KEY  (`comment_id`)
+) TYPE=MyISAM;
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `folders`
+# added 1.5.3
+
+CREATE TABLE `folders` (
+  `folder_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `parent_folder_id` mediumint(8) unsigned NOT NULL default '0',
+  `owner_type` tinyint(3) unsigned NOT NULL default '0',
+  `owner_id` mediumint(8) unsigned NOT NULL default '0',
+  `title` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`folder_id`)
+) TYPE=MyISAM;
+
+
+# --------------------------------------------------------
 # Table structure for table `forums`
 
 CREATE TABLE `forums` (
