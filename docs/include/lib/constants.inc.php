@@ -53,7 +53,7 @@ define('WORKSPACE_PERSONAL',   2);
 define('WORKSPACE_ASSIGNMENT', 3);
 define('WORKSPACE_GROUP',      4);
 define('WORKSPACE_PATH_DEPTH', 1); // how deep the directories should be
-define('WORKSPACE_FILE_PATH',  'D:\\workspace_files\\');
+define('WORKSPACE_FILE_PATH',  AT_CONTENT_DIR . 'file_storage/');
 
 /* how many related topics can be listed */
 define('NUM_RELATED_TOPICS', 5);
