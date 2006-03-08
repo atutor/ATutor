@@ -505,7 +505,7 @@ INSERT INTO `modules` VALUES ('_standard/polls',         2, 16384,     0);
 INSERT INTO `modules` VALUES ('_standard/faq',           2, 32768,     0);
 INSERT INTO `modules` VALUES ('_core/groups',            2, 65536,     0);
 INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0);
-INSERT INTO `modules` VALUES ('_standard/drafting_room', 2, 262144,    0);
+INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0);
 INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
 INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2);
 INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4);

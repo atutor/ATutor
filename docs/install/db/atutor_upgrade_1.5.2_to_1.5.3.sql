@@ -15,7 +15,7 @@ ALTER TABLE `groups` ADD `description` TEXT NOT NULL , ADD `modules` VARCHAR(100
 
 UPDATE `modules` SET `privilege`=65536 WHERE `dir_name`='_core/groups';
 INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0);
-INSERT INTO `modules` VALUES ('_standard/drafting_room', 2, 262144,    0);
+INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0);
 INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
 
 # assignments table
