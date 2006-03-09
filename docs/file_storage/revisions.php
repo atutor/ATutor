@@ -20,13 +20,13 @@ require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 $owner_type = abs($_REQUEST['ot']);
 $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
-if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
+if (!($owner_status = fs_authenticate($owner_type, $owner_id))) { exit('NOT AUTHENTICATED'); }
 
 
 if (isset($_GET['download'], $_GET['revision'])) {
 	header('Location: index.php'.$owner_arg_prefix.'download=1'.SEP.'files'.urlencode('[]').'='.$_GET['revision']);
 	exit;
-} else if (isset($_GET['delete'], $_GET['revision'])) {
+} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete'], $_GET['revision'])) {
 	header('Location: delete_revision.php'.$owner_arg_prefix.'id='.$_GET['revision']);
 	exit;
 } else if (isset($_GET['cancel'])) {
@@ -46,30 +46,32 @@ $files = fs_get_revisions($id, $owner_type, $owner_id);
 $current_file = current($files);
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
-<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
-<div style="margin: 0px auto; width: 70%">
-	<div class="input-form" style="float: left; width: 48%">
-		<div class="row">
-			<h3><a onclick="javascript:document.getElementById('upload').style.display='';">Upload File</a></h3>
-		</div>
-		<div style="display: none;" name="upload" id="upload">
+<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
+	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+	<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
+	<div style="margin: 0px auto; width: 70%">
+		<div class="input-form" style="float: left; width: 48%">
 			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('file'); ?></label><br />
-				<input type="file" name="file" id="file" />
+				<h3><a onclick="javascript:document.getElementById('upload').style.display='';">Upload File</a></h3>
 			</div>
-			<div class="row">
-				<label for="comments"><?php echo _AT('notes'); ?></label><br />
-				<textarea name="comments" id="comments" rows="1" cols="20"></textarea>
-			</div>
-			<div class="row buttons">
-				<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" />
+			<div style="display: none;" name="upload" id="upload">
+				<div class="row">
+					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('file'); ?></label><br />
+					<input type="file" name="file" id="file" />
+				</div>
+				<div class="row">
+					<label for="comments"><?php echo _AT('notes'); ?></label><br />
+					<textarea name="comments" id="comments" rows="1" cols="20"></textarea>
+				</div>
+				<div class="row buttons">
+					<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" />
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-</form>
-<div style="clear: both;"></div>
+	</form>
+	<div style="clear: both;"></div>
+<?php endif; ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="folder" value="<?php echo $current_file['folder_id']; ?>" />
@@ -92,7 +94,9 @@ $current_file = current($files);
 	<td colspan="7">
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
 		<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
-		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
+			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+		<?php endif; ?>
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</td>
 </tr>

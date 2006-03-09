@@ -19,7 +19,9 @@ require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 $owner_type = abs($_REQUEST['ot']);
 $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
-if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
+if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
+	exit('NOT AUTHENTICATED');
+}
 
 $id = abs($_REQUEST['id']);
 

@@ -277,9 +277,9 @@ function fs_download_folder($folder_id, &$zipfile, $owner_type, $owner_id, $path
 	global $db;
 	$sql = "SELECT title FROM ".TABLE_PREFIX."folders WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
 	$result = mysql_query($sql, $db);
-	$parent_row = mysql_fetch_assoc($result);
-
-	$zipfile->create_dir($path . $parent_row['title']);
+	if ($parent_row = mysql_fetch_assoc($result)) {
+		$zipfile->create_dir($path . $parent_row['title']);
+	}
 
 	$sql = "SELECT file_id, file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND parent_file_id=0 AND owner_type=$owner_type AND owner_id=$owner_id";
 	$result = mysql_query($sql, $db);

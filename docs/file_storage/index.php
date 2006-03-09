@@ -50,7 +50,6 @@ if (isset($_GET['folder'])) {
 }
 
 // init the owner_id if not currently set
-
 if (!isset($owner_id)) {
 	if ($owner_type == WORKSPACE_COURSE) {
 		$owner_id = $_SESSION['course_id'];
@@ -65,8 +64,13 @@ if (!isset($owner_id)) {
 //debug($owner_id, 'owner_id');
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 
-if (!fs_authenticate($owner_type, $owner_id)) {
+if (!$owner_status = fs_authenticate($owner_type, $owner_id)) {
 	exit('not authenticated');
+}
+
+if (isset($_GET['submit_workspace'])) {
+	header('Location: index.php'.$owner_arg_prefix);
+	exit;
 }
 
 if (isset($_GET['revisions'], $_GET['files'])) {
@@ -81,7 +85,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		header('Location: comments.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	}
-} else if (isset($_GET['edit']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['edit']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = abs(current($_GET['files']));
 		header('Location: edit.php'.$owner_arg_prefix.'id='.$file_id);
@@ -92,7 +96,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		exit;
 	}
 
-} else if (isset($_GET['move']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['move']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	header('Location: move.php'.$owner_arg_prefix.$_SERVER['QUERY_STRING']);
 	exit;
 } else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['files']))) {
@@ -131,9 +135,9 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 
 				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 				$result = mysql_query($sql, $db);
-				$row = mysql_fetch_assoc($result);
-
-				$zipfile->add_file(file_get_contents($file_path), $row['file_name'], $row['date']);
+				if ($row = mysql_fetch_assoc($result)) {
+					$zipfile->add_file(file_get_contents($file_path), $row['file_name'], $row['date']);
+				}
 			}
 		}
 		if (is_array($_GET['folders'])) {
@@ -146,8 +150,9 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 				// zip just one folder, use that folder's title as the zip file name
 				$sql = "SELECT title FROM ".TABLE_PREFIX."folders WHERE folder_id={$_GET['folders'][0]} AND owner_type=$owner_type AND owner_id=$owner_id";
 				$result = mysql_query($sql, $db);
-				$row = mysql_fetch_assoc($result);
-				$zip_file_name = $row['title'];
+				if ($row = mysql_fetch_assoc($result)) {
+					$zip_file_name = $row['title'];
+				}
 			}
 		}
 		$zipfile->close();
@@ -155,7 +160,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 	}
 	exit;
 
-} else if (isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	$hidden_vars = array();
 	$hidden_vars['folder'] = $folder_id;
 	$hidden_vars['ws']     = $_SESSION['workspace'];
@@ -188,7 +193,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 
-} else if (isset($_POST['submit_yes'])) {
+} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_yes'])) {
 	// handle the delete
 	$files = explode(',', $_POST['files']);
 	$folders = explode(',', $_POST['folders']);
@@ -210,7 +215,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 
 	header('Location: index.php'.$owner_arg_prefix);
 	exit;
-} else if (isset($_POST['create_folder'])) {
+} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['create_folder'])) {
 	// create a new folder
 	$_POST['new_folder_name'] = trim($_POST['new_folder_name']);
 
@@ -229,7 +234,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
 		exit;
 	}
-} else if (isset($_POST['upload'])) {
+} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'])) {
 	// handle the file upload
 	$_POST['comments'] = trim($_POST['comments']);
 
@@ -317,45 +322,47 @@ while ($row = mysql_fetch_assoc($result)) {
 
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>" enctype="multipart/form-data">
-<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
-<div style="margin: 0px auto; width: 70%">
-	<div class="input-form" style="width: 48%; float: right">
-		<div class="row">
-			<h3><a onclick="javascript:document.getElementById('folder').style.display='';">Create Folder</a></h3>
-		</div>
-		<div style="display: none;" name="folder" id="folder">
+<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
+	<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>" enctype="multipart/form-data">
+	<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
+	<div style="margin: 0px auto; width: 70%">
+		<div class="input-form" style="width: 48%; float: right">
 			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="fname"><?php echo _AT('name'); ?></label><br />
-				<input type="text" id="fname" name="new_folder_name" size="20" />
+				<h3><a onclick="javascript:document.getElementById('folder').style.display='';">Create Folder</a></h3>
 			</div>
-			<div class="row buttons">
-				<input type="submit" name="create_folder" value="<?php echo _AT('create'); ?>" />
+			<div style="display: none;" name="folder" id="folder">
+				<div class="row">
+					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="fname"><?php echo _AT('name'); ?></label><br />
+					<input type="text" id="fname" name="new_folder_name" size="20" />
+				</div>
+				<div class="row buttons">
+					<input type="submit" name="create_folder" value="<?php echo _AT('create'); ?>" />
+				</div>
+			</div>
+		</div>
+		<div class="input-form" style="float: left; width: 48%">
+			<div class="row">
+				<h3><a onclick="javascript:document.getElementById('upload').style.display='';">Upload File</a></h3>
+			</div>
+			<div style="display: none;" name="upload" id="upload">
+				<div class="row">
+					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('file'); ?></label><br />
+					<input type="file" name="file" id="file" />
+				</div>
+				<div class="row">
+					<label for="comments"><?php echo _AT('revision_comment'); ?></label><br />
+					<textarea name="comments" id="comments" rows="1" cols="20"></textarea>
+				</div>
+				<div class="row buttons">
+					<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" />
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="input-form" style="float: left; width: 48%">
-		<div class="row">
-			<h3><a onclick="javascript:document.getElementById('upload').style.display='';">Upload File</a></h3>
-		</div>
-		<div style="display: none;" name="upload" id="upload">
-			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('file'); ?></label><br />
-				<input type="file" name="file" id="file" />
-			</div>
-			<div class="row">
-				<label for="comments"><?php echo _AT('revision_comment'); ?></label><br />
-				<textarea name="comments" id="comments" rows="1" cols="20"></textarea>
-			</div>
-			<div class="row buttons">
-				<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" />
-			</div>
-		</div>
-	</div>
-</div>
-</form>
+	</form>
 
-<div style="clear: both;"></div>
+	<div style="clear: both;"></div>
+<?php endif; ?>
 
 <?php
 	$file_storage_groups = array();
@@ -414,9 +421,11 @@ while ($row = mysql_fetch_assoc($result)) {
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
 		<input type="submit" name="revisions" value="<?php echo _AT('revisions'); ?>" />
 		<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
-		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
-		<input type="submit" name="move" value="<?php echo _AT('move'); ?>" />
-		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
+			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
+			<input type="submit" name="move" value="<?php echo _AT('move'); ?>" />
+			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+		<?php endif; ?>
 	</td>
 </tr>
 </tfoot>
@@ -470,11 +479,13 @@ function checkbuttons(state) {
 	if (num_files_checked + num_folders_checked > 1) {
 		document.form.revisions.disabled = true;
 		document.form.comments.disabled = true;
-		document.form.edit.disabled = true;
+		if (document.form.edit)
+			document.form.edit.disabled = true;
 	} else {
 		document.form.revisions.disabled = false;
 		document.form.comments.disabled = false;
-		document.form.edit.disabled = false;
+		if (document.form.edit)
+			document.form.edit.disabled = false;
 	}
 }
 function CheckAll() {

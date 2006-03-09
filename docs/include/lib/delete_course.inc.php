@@ -25,12 +25,20 @@ function delete_course($course, $material) {
 	$keys = array_keys($module_list);
 
 	//loop through mods and call delete function
-	foreach ($keys as $module_name) {	
+	foreach ($keys as $module_name) {
+		if ($module_name == '_core/groups') {
+			continue;
+		}
 		$module =& $module_list[$module_name];
 
 		if (($material === TRUE) || isset($material[$module_name])) {
 			$module->delete($course);
 		}
+	}
+
+	if (($material === TRUE) || isset($material[$module_name])) {
+		$module =& moduleFactory->getModule('_core/groups');
+		$module->delete($course);
 	}
 
 	if ($material === TRUE) {
