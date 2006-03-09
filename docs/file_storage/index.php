@@ -443,7 +443,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			<td valign="top"><img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?></td>
 			<td align="right" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
 			<td align="right" valign="top"><?php echo $file_info['num_revisions']; ?></td>
-			<td align="right" valign="top"><?php echo $file_info['num_comments']; ?> <span title="Total for all revisions">(20)</span></td>
+			<td align="right" valign="top"><?php echo $file_info['num_comments']; ?></td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
 			<td align="right" valign="top"><?php echo $file_info['date']; ?></td>
 		</tr>
