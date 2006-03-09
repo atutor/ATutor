@@ -222,13 +222,6 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$_POST['new_folder_name'] = $addslashes($_POST['new_folder_name']);
 
 		$parent_folder_id = abs($_POST['folder']);
-		if ($_SESSION['workspace'] == WORKSPACE_COURSE) {
-			$owner_id = $_SESSION['course_id'];
-		} else if ($_SESSION['workspace'] == WORKSPACE_PERSONAL) {
-			$owner_id = $_SESSION['member_id'];
-		} else if ($_SESSION['workspace'] == WORKSPACE_GROUP) {
-			$owner_id = $group_id;
-		}
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (0, $parent_folder_id, $owner_type, $owner_id, '$_POST[new_folder_name]')";
 		$result = mysql_query($sql, $db);
@@ -252,18 +245,18 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$msg->addError('FILE_NOT_SAVED');
 	}
 
+	// check that we own this folder
+	if ($parent_folder_id) {
+		$sql = "SELECT folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
+		$result = mysql_query($sql, $db);
+		if (!$row = mysql_fetch_assoc($result)) {
+			exit('not authenticated');
+		}
+	}
+
 	if (!$msg->containsErrors()) {
 		$_POST['comments'] = $addslashes($_POST['comments']);
 		$_FILES['file']['name'] = addslashes($_FILES['file']['name']);
-
-		$parent_folder_id = abs($_POST['folder']);
-		if ($_SESSION['workspace'] == WORKSPACE_COURSE) {
-			$owner_id = $_SESSION['course_id'];
-		} else if ($_SESSION['workspace'] == WORKSPACE_PERSONAL) {
-			$owner_id = $_SESSION['member_id'];
-		} else if ($_SESSION['workspace'] == WORKSPACE_GROUP) {
-			$owner_id = $group_id;
-		}
 
 		if ($_POST['comments']) {
 			$num_comments = 1;
@@ -364,6 +357,16 @@ while ($row = mysql_fetch_assoc($result)) {
 
 <div style="clear: both;"></div>
 
+<?php
+	$file_storage_groups = array();
+	$groups_list = implode(',',$_SESSION['groups']);
+	$sql = "SELECT G.type_id, G.title, G.group_id FROM ".TABLE_PREFIX."file_storage_groups FS INNER JOIN ".TABLE_PREFIX."groups G USING (group_id) WHERE FS.group_id IN ($groups_list) ORDER BY G.type_id, G.title";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$file_storage_groups[] = $row;
+	}
+?>
+
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 <input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
@@ -376,9 +379,13 @@ while ($row = mysql_fetch_assoc($result)) {
 			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>>Course Files</option>
 			<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>>My Files</option>
 			<!--option value="3" <?php if ($owner_type == WORKSPACE_ASSIGNMENT) { echo 'selected="selected"'; } ?>>Assignment Submissions</option-->
+			<?php if ($file_storage_groups): ?>
 			<optgroup label="Group Files">
-				<option value="4_1" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == 1) { echo 'selected="selected"'; } ?>>Group 1</option>
+				<?php foreach ($file_storage_groups as $group): ?>
+					<option value="<?php echo WORKSPACE_GROUP; ?>_<?php echo $group['group_id']; ?>" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == $group['group_id']) { echo 'selected="selected"'; } ?>><?php echo $group['title']; ?></option>
+				<?php endforeach; ?>
 			</optgroup>
+			<?php endif; ?>
 		</select>
 
 		<?php foreach ($folder_path as $folder_info): ?>

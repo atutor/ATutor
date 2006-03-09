@@ -1,12 +1,20 @@
 <?php
 
 // create group
-function file_storage_create_group($group_id) { }
+function file_storage_create_group($group_id) {
+	global $db;
+
+	$sql = "REPLACE INTO ".TABLE_PREFIX."file_storage_groups VALUES ($group_id)";
+	mysql_query($sql, $db);
+}
 
 
 // delete group
 function file_storage_delete_group($group_id) {
 	global $db;
+
+	$sql = "DELETE FROM ".TABLE_PREFIX."file_storage_groups WHERE group_id=$group_id";
+	$result = mysql_query($sql, $db);
 
 	require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 
@@ -15,7 +23,6 @@ function file_storage_delete_group($group_id) {
 	while ($row = mysql_fetch_assoc($result)) {
 		fs_delete_folder($row['folder_id'], $row['owner_type'], $row['owner_id']);
 	}
-
 
 	$sql = "SELECT file_id, owner_type, owner_id FROM ".TABLE_PREFIX."files WHERE owner_type=".WORKSPACE_GROUP." AND owner_id=$group_id";
 	$result = mysql_query($sql, $db);

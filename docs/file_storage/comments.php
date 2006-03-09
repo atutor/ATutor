@@ -114,7 +114,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 	</div>
 <?php endif; ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $id; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>id=<?php echo $id; ?>">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <input type="hidden" name="folder" value="<?php echo $current_file['folder_id']; ?>" />
 <div class="input-form">

@@ -14,6 +14,12 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
+
+$owner_type = abs($_REQUEST['ot']);
+$owner_id   = abs($_REQUEST['oid']);
+$owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
+if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -31,11 +37,11 @@ if (isset($_POST['cancel'])) {
 		$folder = abs($_POST['folder']);
 		$parent_folder = abs($_POST['parent_folder']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."folders SET title='$_POST[name]' WHERE folder_id=$_POST[id] AND parent_folder_id=$parent_folder";
+		$sql = "UPDATE ".TABLE_PREFIX."folders SET title='$_POST[name]' WHERE owner_type=$owner_type AND owner_id=$owner_id AND folder_id=$_POST[id] AND parent_folder_id=$parent_folder";
 		mysql_query($sql, $db);
 
 		$msg->addFeedback('FOLDER_EDITED_SUCCESSFULLY');
-		header('Location: index.php?folder='.$parent_folder);
+		header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder);
 		exit;
 	}
 
@@ -55,7 +61,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 }
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <input type="hidden" name="parent_folder" value="<?php echo $row['parent_folder_id']; ?>" />
 <div class="input-form">

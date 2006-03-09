@@ -183,6 +183,15 @@ CREATE TABLE `feeds` (
 # --------------------------------------------------------
 
 #
+# Table structure for table `file_storage_groups`
+# added 1.5.3
+
+CREATE TABLE `file_storage_groups` (
+  `group_id` MEDIUMINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `group_id` )
+);
+
+#
 # Table structure for table `files`
 # added 1.5.3
 

@@ -35,7 +35,14 @@ function fs_authenticate($owner_type, $owner_id) {
 	}
 	if ($owner_type == WORKSPACE_GROUP) {
 		if (isset($_SESSION['groups'][$owner_id])) {
-			return WORKSPACE_AUTH_RW;
+			global $db;
+			$sql = "SELECT * FROM ".TABLE_PREFIX."file_storage_groups WHERE group_id=$owner_id";
+			$result = mysql_query($sql, $db);
+			if (mysql_fetch_assoc($result)) {
+				return WORKSPACE_AUTH_RW;
+			} else {
+				return WORKSPACE_AUTH_NONE;
+			}
 		}
 		return WORKSPACE_AUTH_NONE;
 	}
@@ -196,7 +203,7 @@ function fs_delete_file($file_id, $owner_type, $owner_id) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$file[file_id]";
 		mysql_query($sql, $db);
 
-		$path = get_file_path($file['file_id']);
+		$path = fs_get_file_path($file['file_id']);
 		if (file_exists($path . $file['file_id'])) {
 			@unlink($path . $file['file_id']);
 		}

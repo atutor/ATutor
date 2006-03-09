@@ -72,6 +72,12 @@ CREATE TABLE `external_resources` (
 # for the file storage
 # --------------------------------------------------------
 
+CREATE TABLE `file_storage_groups` (
+  `group_id` MEDIUMINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `group_id` )
+);
+
+
 CREATE TABLE `files` (
   `file_id` mediumint(8) unsigned NOT NULL auto_increment,
   `owner_type` tinyint(3) unsigned NOT NULL default '0',
