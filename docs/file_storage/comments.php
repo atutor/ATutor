@@ -82,30 +82,33 @@ if (!$files) {
 }
 ?>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
-<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
-<div class="input-form" style="width: 50%">
-	<div class="row">
-		<select name="id" size="<?php echo min(count($files), 5);?>">
-			<?php foreach ($files as $file): ?>
-				<?php
-					$selected = '';
-					if ($file['file_id'] == $id) {
-						$current_file = $file;
-						$selected = ' selected="selected"';
-					}
-				?>
-				<option value="<?php echo $file['file_id'];?>" <?php echo $selected; ?>>Revision <?php echo $file['num_revisions']; ?>. <?php echo $file['file_name']; ?> - <?php echo $file['num_comments']; ?> Comments</option>
-			<?php endforeach; ?>
-		</select>
+<?php if ($_config['fs_versioning']): ?>
+	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
+	<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
+	<div class="input-form" style="width: 50%">
+		<div class="row">
+			<select name="id" size="<?php echo min(count($files), 5);?>">
+				<?php foreach ($files as $file): ?>
+					<?php
+						$selected = '';
+						if ($file['file_id'] == $id) {
+							$current_file = $file;
+							$selected = ' selected="selected"';
+						}
+					?>
+					<option value="<?php echo $file['file_id'];?>" <?php echo $selected; ?>>Revision <?php echo $file['num_revisions']; ?>. <?php echo $file['file_name']; ?> - <?php echo $file['num_comments']; ?> Comments</option>
+				<?php endforeach; ?>
+			</select>
+		</div>
+		<div class="row buttons">
+			<input type="submit" name="comments" value="Comments" />
+		</div>
 	</div>
-	<div class="row buttons">
-		<input type="submit" name="comments" value="Comments" />
-	</div>
-</div>
-</form>
-
+	</form>
+<?php else: ?>
+	<?php $current_file = current($files); ?>
+<?php endif; ?>
 
 <div class="input-form">
 	<div class="row">

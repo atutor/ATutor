@@ -280,11 +280,15 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 			$sql = "SELECT file_id, num_revisions FROM ".TABLE_PREFIX."files WHERE owner_type=$owner_type AND owner_id=$owner_id AND folder_id=$parent_folder_id AND file_id<>$file_id AND file_name='{$_FILES['file']['name']}' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$row[file_id]";
-				$result = mysql_query($sql, $db);
+				if ($_config['fs_versioning']) {
+					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$row[file_id]";
+					$result = mysql_query($sql, $db);
 
-				$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=$row[num_revisions]+1 WHERE file_id=$file_id";
-				$result = mysql_query($sql, $db);
+					$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=$row[num_revisions]+1 WHERE file_id=$file_id";
+					$result = mysql_query($sql, $db);
+				} else {
+					fs_delete_file($row['file_id'], $owner_type, $owner_id);
+				}
 			}
 
 			if ($_POST['comments']){
@@ -409,7 +413,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	<th align="left" width="10"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
 	<th scope="col"><?php echo _AT('file');      ?></th>
 	<th scope="col"><?php echo _AT('author');    ?></th>
-	<th scope="col"><?php echo _AT('revisions'); ?></th>
+	<th scope="col"><?php if ($_config['fs_versioning']): ?><?php echo _AT('revisions'); ?><?php endif; ?></th>
 	<th scope="col"><?php echo _AT('comments');  ?></th>
 	<th scope="col"><?php echo _AT('size');      ?></th>
 	<th scope="col"><?php echo _AT('date');      ?></th>
@@ -419,7 +423,9 @@ while ($row = mysql_fetch_assoc($result)) {
 <tr>
 	<td colspan="7">
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<input type="submit" name="revisions" value="<?php echo _AT('revisions'); ?>" />
+		<?php if ($_config['fs_versioning']): ?>
+			<input type="submit" name="revisions" value="<?php echo _AT('revisions'); ?>" />
+		<?php endif; ?>
 		<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
 		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
@@ -442,7 +448,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td valign="top"><img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?></td>
 			<td align="right" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
-			<td align="right" valign="top"><?php echo $file_info['num_revisions']; ?></td>
+			<td align="right" valign="top"><?php if ($_config['fs_versioning']): ?><?php echo $file_info['num_revisions']; ?><?php endif; ?></td>
 			<td align="right" valign="top"><?php echo $file_info['num_comments']; ?></td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
 			<td align="right" valign="top"><?php echo $file_info['date']; ?></td>

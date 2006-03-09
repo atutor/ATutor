@@ -1,7 +1,7 @@
 # SQL for the Welcome Course
 
 # create the Welcome Course
-INSERT INTO `courses` VALUES (1, 1, 0, 'top', 'public', NOW(), 'Welcome Course', '', 0, '-2', '-3', 0, '', '', '', '', '', '', 'en', 0, 'books.jpg', 'forum/list.php|glossary/index.php|chat/index.php|tile.php|faq/index.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php','forum/list.php|glossary/index.php','menu_menu|related_topics|users_online|glossary|search|poll|posts');
+INSERT INTO `courses` VALUES (1, 1, 0, 'top', 'public', NOW(), 'Welcome Course', '', 0, '-2', '-3', 0, '', '', '', '', '', '', 'en', 0, 'books.jpg', 'forum/list.php|glossary/index.php|file_storage/index.php|chat/index.php|tile.php|faq/index.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php','forum/list.php|glossary/index.php|file_storage/index.php','menu_menu|related_topics|users_online|glossary|search|poll|posts');
 
 # create content for the Welcome Course
 INSERT INTO `content` VALUES (1, 1, 0, 1, NOW(), 0, 1, NOW(), '', '', 'Welcome To ATutor', 'This is just a blank content page. Use the Edit Content link to edit this page. You can manage this course by accessing the Manage section.',0);

@@ -57,7 +57,6 @@ if (isset($_POST['cancel'])) {
 
 			$size = strlen($_POST['body']);
 
-
 			if ($_POST['comment']) {
 				$num_comments = 1;
 			} else {
@@ -67,23 +66,32 @@ if (isset($_POST['cancel'])) {
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 
-			$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size)";
-			$result = mysql_query($sql, $db);
-
-			$file_id = mysql_insert_id($db);
-
-			$file_path = fs_get_file_path($file_id);
-			if ($fp = fopen($file_path . $file_id, 'wb')) {
-				ftruncate($fp, 0);
-				fwrite($fp, $_POST['body'], $size);
-				fclose($fp);
-
-				$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
+			if ($_config['fs_versioning']) {
+				$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size)";
 				$result = mysql_query($sql, $db);
 
-				if ($_POST['comment']){
-					$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
-					mysql_query($sql, $db);
+				$file_id = mysql_insert_id($db);
+
+				$file_path = fs_get_file_path($file_id);
+				if ($fp = fopen($file_path . $file_id, 'wb')) {
+					ftruncate($fp, 0);
+					fwrite($fp, $_POST['body'], $size);
+					fclose($fp);
+
+					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
+					$result = mysql_query($sql, $db);
+
+					if ($_POST['comment']){
+						$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
+						mysql_query($sql, $db);
+					}
+				}
+			} else {
+				$file_path = fs_get_file_path($_POST['id']);
+				if ($fp = fopen($file_path . $_POST['id'], 'wb')) {
+					ftruncate($fp, 0);
+					fwrite($fp, $_POST['body'], $size);
+					fclose($fp);
 				}
 			}
 		}

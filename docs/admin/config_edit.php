@@ -44,6 +44,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['course_backups']            = intval($_POST['course_backups']);
 	$_POST['course_backups']            = max(0, $_POST['course_backups']);
 	$_POST['check_version']             = $_POST['check_version'] ? 1 : 0;
+	$_POST['fs_versioning']             = $_POST['fs_versioning'] ? 1 : 0;
 
 	//check that all values have been set	
 	if (!$_POST['site_name']) {
@@ -204,6 +205,11 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<?php echo _AT('auto_check_new_version'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['check_version'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="check_version" value="1" id="cv_y" <?php if($_config['check_version']) { echo 'checked="checked"'; }?>  /><label for="cv_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="check_version" value="0" id="cv_n" <?php if(!$_config['check_version']) { echo 'checked="checked"'; }?>  /><label for="cv_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('file_storage_version_control'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['fs_versioning'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="fs_versioning" value="1" id="cf_y" <?php if($_config['fs_versioning']) { echo 'checked="checked"'; }?>  /><label for="cf_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="fs_versioning" value="0" id="cf_n" <?php if(!$_config['fs_versioning']) { echo 'checked="checked"'; }?>  /><label for="cf_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row buttons">

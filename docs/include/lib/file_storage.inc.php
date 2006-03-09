@@ -197,15 +197,17 @@ function fs_delete_file($file_id, $owner_type, $owner_id) {
 	global $db;
 	$revisions = fs_get_revisions($file_id, $owner_type, $owner_id);
 	foreach ($revisions as $file) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."files WHERE file_id=$file[file_id]";
+		$sql = "DELETE FROM ".TABLE_PREFIX."files WHERE file_id=$file[file_id] AND owner_type=$owner_type AND owner_id=$owner_id";
 		mysql_query($sql, $db);
 
-		$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$file[file_id]";
-		mysql_query($sql, $db);
+		if (mysql_affected_rows($db) == 1) {
+			$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$file[file_id]";
+			mysql_query($sql, $db);
 
-		$path = fs_get_file_path($file['file_id']);
-		if (file_exists($path . $file['file_id'])) {
-			@unlink($path . $file['file_id']);
+			$path = fs_get_file_path($file['file_id']);
+			if (file_exists($path . $file['file_id'])) {
+				@unlink($path . $file['file_id']);
+			}
 		}
 	}
 }
