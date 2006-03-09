@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: edit.php 5923 2006-03-02 17:10:44Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -67,7 +67,7 @@ if (isset($_POST['cancel'])) {
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 
-			$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size, '')";
+			$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size)";
 			$result = mysql_query($sql, $db);
 
 			$file_id = mysql_insert_id($db);

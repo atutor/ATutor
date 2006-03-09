@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 5923 2006-03-02 17:10:44Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -269,7 +269,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 			$num_comments = 0;
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']}, '')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']})";
 		$result = mysql_query($sql, $db);
 
 		if ($result && $file_id = mysql_insert_id($db)) {
@@ -383,11 +383,11 @@ while ($row = mysql_fetch_assoc($result)) {
 	<td colspan="7">
 		<input type="submit" name="submit_workspace" value="Work Space" />
 		<select name="ot" id="ot">
-			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>>Course Files</option>
-			<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>>My Files</option>
+			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>><?php echo _AT('course_files'); ?></option>
+			<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>><?php echo _AT('my_files'); ?></option>
 			<!--option value="3" <?php if ($owner_type == WORKSPACE_ASSIGNMENT) { echo 'selected="selected"'; } ?>>Assignment Submissions</option-->
 			<?php if ($file_storage_groups): ?>
-			<optgroup label="Group Files">
+			<optgroup label="<?php echo _AT('groups'); ?>">
 				<?php foreach ($file_storage_groups as $group): ?>
 					<option value="<?php echo WORKSPACE_GROUP; ?>_<?php echo $group['group_id']; ?>" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == $group['group_id']) { echo 'selected="selected"'; } ?>><?php echo $group['title']; ?></option>
 				<?php endforeach; ?>
@@ -407,12 +407,12 @@ while ($row = mysql_fetch_assoc($result)) {
 </tr>
 <tr>
 	<th align="left" width="10"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
-	<th scope="col">File</th>
-	<th scope="col">Author</th>
-	<th scope="col">Revisions</th>
-	<th scope="col">Comments</th>
-	<th scope="col">Size</th>
-	<th scope="col">Date</th>
+	<th scope="col"><?php echo _AT('file');      ?></th>
+	<th scope="col"><?php echo _AT('author');    ?></th>
+	<th scope="col"><?php echo _AT('revisions'); ?></th>
+	<th scope="col"><?php echo _AT('comments');  ?></th>
+	<th scope="col"><?php echo _AT('size');      ?></th>
+	<th scope="col"><?php echo _AT('date');      ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -440,12 +440,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	<?php foreach ($files as $file_info): ?>
 		<tr onmousedown="document.form['r<?php echo $file_info['file_id']; ?>'].checked = !document.form['r<?php echo $file_info['file_id']; ?>'].checked; rowselectbox(this, document.form['r<?php echo $file_info['file_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $file_info['file_id']; ?>_0">
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
-			<td valign="top">
-				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?>
-				<?php if ($file_info['comments']): ?>
-					<p><?php echo nl2br($file_info['comments']); ?></p>
-				<?php endif; ?>
-			</td>
+			<td valign="top"><img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?></td>
 			<td align="right" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
 			<td align="right" valign="top"><?php echo $file_info['num_revisions']; ?></td>
 			<td align="right" valign="top"><?php echo $file_info['num_comments']; ?> <span title="Total for all revisions">(20)</span></td>

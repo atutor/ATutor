@@ -29,6 +29,9 @@ function delete_course($course, $material) {
 		if ($module_name == '_core/groups') {
 			continue;
 		}
+		if ($module_name == '_core/enrolment') {
+			continue;
+		}
 		$module =& $module_list[$module_name];
 
 		if (($material === TRUE) || isset($material[$module_name])) {
@@ -36,8 +39,12 @@ function delete_course($course, $material) {
 		}
 	}
 
-	if (($material === TRUE) || isset($material[$module_name])) {
+	if (($material === TRUE) || isset($material['_core/groups'])) {
 		$module =& moduleFactory->getModule('_core/groups');
+		$module->delete($course);
+	}
+	if (($material === TRUE) || isset($material['_core/enrolment'])) {
+		$module =& moduleFactory->getModule('_core/enrolment');
 		$module->delete($course);
 	}
 
