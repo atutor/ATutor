@@ -18,11 +18,22 @@ INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0);
 INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0);
 INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
 
+# --------------------------------------------------------
+
 # assignments table
+CREATE TABLE `assignments` (
+	`assignment_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT DEFAULT 0,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
+	`title` VARCHAR(60) NOT NULL,
+	`assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
+	`date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`date_cutoff` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`multi_submit` TINYINT DEFAULT '0',
+	PRIMARY KEY  (`assignment_id`),
+	INDEX (`course_id`)
+) TYPE = MYISAM;
 
-
-# insert assignments into `modules` table
-
+# --------------------------------------------------------
 
 # forum groups table
 CREATE TABLE `forums_groups` (
@@ -36,7 +47,6 @@ CREATE TABLE `forums_groups` (
 ALTER TABLE `courses` ADD `release_date` datetime NOT NULL default '0000-00-00 00:00:00';
 
 # --------------------------------------------------------
-# Since 1.5.3
 # Table structure for table `reading_list`
 
 CREATE TABLE `reading_list` (
@@ -51,7 +61,6 @@ CREATE TABLE `reading_list` (
 	INDEX (`course_id`)
 ) TYPE = MYISAM;
 
-# Since 1.5.3
 # Table structure for table `external_resources`
 
 CREATE TABLE `external_resources` (

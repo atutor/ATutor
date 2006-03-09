@@ -30,6 +30,22 @@ CREATE TABLE `admins` (
 );
 
 # --------------------------------------------------------
+# Table structure for table `assignments`
+# since 1.5.3
+
+CREATE TABLE `assignments` (
+	`assignment_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT DEFAULT 0,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
+	`title` VARCHAR(60) NOT NULL,
+	`assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
+	`date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`date_cutoff` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`multi_submit` TINYINT DEFAULT '0',
+	PRIMARY KEY  (`assignment_id`),
+	INDEX (`course_id`)
+) TYPE = MYISAM;
+
+# --------------------------------------------------------
 # Table structure for table `backups`
 # since 1.4.3
 
