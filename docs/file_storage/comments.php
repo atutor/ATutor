@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: comments.php 5923 2006-03-02 17:10:44Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -21,7 +21,28 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
 
-if (isset($_POST['cancel'])) {
+if (isset($_POST['edit_cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['id']);
+	exit;
+} else if (isset($_POST['edit_submit'])) {
+	$_POST['comment'] = trim($_POST['comment']);
+	$_POST['comment_id'] = abs($_POST['comment_id']);
+
+	if (!$_POST['comment']) {
+		$msg->addError('MISSING_COMMENT');
+	}
+
+	if (!$msg->containsErrors()) {
+		$_POST['comment'] = $addslashes($_POST['comment']);
+
+		$sql = "UPDATE ".TABLE_PREFIX."files_comments SET comment='$_POST[comment]' WHERE member_id=$_SESSION[member_id] AND comment_id=$_POST[comment_id]";
+		mysql_query($sql, $db);
+		$msg->addFeedback('COMMENT_EDITED_SUCCESSFULLY');
+		header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['id']);
+		exit;
+	}
+} else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['folder']);
 	exit;
@@ -100,10 +121,30 @@ if (!$files) {
 if ($row = mysql_fetch_assoc($result)): ?>
 	<?php do { ?>
 		<div class="input-form">
-			<div class="row">
-				<h4><?php echo get_login($row['member_id']); ?> - <?php echo $row['date']; ?></h4>
+			<?php if (($row['member_id'] == $_SESSION['member_id']) && ($row['comment_id'] == $_GET['comment_id'])): ?>
+				<form method="post" action="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id;?>">
+				<input type="hidden" name="comment_id" value="<?php echo $row['comment_id']; ?>" />
+				<div class="row">
+					<a name="c<?php echo $row['comment_id']; ?>"></a><h4><?php echo get_login($row['member_id']); ?> - <?php echo $row['date']; ?></h4>
+					<textarea rows="4" cols="40" name="comment"><?php echo htmlspecialchars($row['comment']); ?></textarea>
+				</div>
+				<div class="row buttons">
+					<input type="submit" name="edit_submit" value="<?php echo _AT('save'); ?>" />
+					<input type="submit" name="edit_cancel" value="<?php echo _AT('cancel'); ?>" />
+				</div>
+				</form>
+						
+			<?php else: ?>
+				<div class="row">
+					<h4><?php echo get_login($row['member_id']); ?> - <?php echo $row['date']; ?></h4>
 					<p><?php echo nl2br($row['comment']); ?></p>
-			</div>
+						<?php if ($row['member_id'] == $_SESSION['member_id']): ?>
+							<div style="text-align:right; font-size: smaller">
+								<a href="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id.SEP.'comment_id='.$row['comment_id']; ?>#c<?php echo $row['comment_id']; ?>">Edit</a> | <a href="file_storage/delete_comment.php<?php echo $owner_arg_prefix . 'file_id='.$id.SEP; ?>id=<?php echo $row['comment_id']; ?>">Delete</a>
+							</div>
+						<?php endif; ?>
+				</div>
+			<?php endif; ?>
 		</div>
 	<?php } while ($row = mysql_fetch_assoc($result)); ?>
 <?php elseif(0): ?>

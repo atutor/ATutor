@@ -30,4 +30,7 @@ $this->_pages['file_storage/move.php']['parent'] = 'file_storage/index.php';
 
 $this->_pages['file_storage/delete_revision.php']['title_var'] = 'delete';
 $this->_pages['file_storage/delete_revision.php']['parent'] = 'file_storage/index.php';
+
+$this->_pages['file_storage/delete_comment.php']['title_var'] = 'delete';
+//$this->_pages['file_storage/delete_comment.php']['parent'] = 'file_storage/comments.php';
 ?>
