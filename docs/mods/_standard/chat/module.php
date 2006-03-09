@@ -5,7 +5,7 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 define('AT_PRIV_CHAT', $this->getPrivilege());
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_group_tool = $_student_tool = 'chat/index.php';
+$_student_tool = 'chat/index.php';
 
 $this->_pages['tools/chat/index.php']['title_var'] = 'chat';
 $this->_pages['tools/chat/index.php']['parent']    = 'tools/index.php';
