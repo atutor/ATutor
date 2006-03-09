@@ -327,4 +327,22 @@ function fs_get_folder_path_recursive($folder_id, $owner_type, $owner_id) {
 	return array_merge(array($row), fs_get_folder_path_recursive($row['parent_folder_id'], $owner_type, $owner_id));
 }
 
+/**
+ * deletes all the files, folders, comments, revisions, etc.. in the specified workspace.
+ */
+function fs_delete_workspace($owner_type, $owner_id) {
+	global $db;
+
+	$sql = "SELECT folder_id, owner_type, owner_id FROM ".TABLE_PREFIX."folders WHERE owner_type=$owner_type AND owner_id=$owner_id AND parent_folder_id=0";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		fs_delete_folder($row['folder_id'], $row['owner_type'], $row['owner_id']);
+	}
+
+	$sql = "SELECT file_id, owner_type, owner_id FROM ".TABLE_PREFIX."files WHERE owner_type=$owner_type AND owner_id=$owner_id";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		fs_delete_file($row['file_id'], $row['owner_type'], $row['owner_id']);
+	}
+}
 ?>
