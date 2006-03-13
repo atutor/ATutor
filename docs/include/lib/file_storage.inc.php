@@ -19,34 +19,33 @@ define('WORKSPACE_AUTH_READ',  1);
 define('WORKSPACE_AUTH_WRITE', 2); 
 define('WORKSPACE_AUTH_RW',    3); // to save time
 
-// given an owner_type and owner_id
-// returns false if user cannot read or write to this workspace
-// returns WORKSPACE_AUTH_READ if the user can read
-// returns WORKSPACE_AUTH_WRITE if the user can write
+/**
+ * given an owner_type and owner_id
+ * returns false if user cannot read or write to this workspace
+ * returns WORKSPACE_AUTH_READ if the user can read
+ * returns WORKSPACE_AUTH_WRITE if the user can write
+ */
 function fs_authenticate($owner_type, $owner_id) {
-	if ($owner_type == WORKSPACE_PERSONAL) {
-		if ($owner_id == $_SESSION['member_id']) {
-			return WORKSPACE_AUTH_RW;
-		}
-		return WORKSPACE_AUTH_NONE;
-	}
-	if ($owner_type == WORKSPACE_ASSIGNMENT) {
+	if (($owner_type == WORKSPACE_PERSONAL) && ($owner_id == $_SESSION['member_id'])) {
 
-	}
-	if ($owner_type == WORKSPACE_GROUP) {
+		return WORKSPACE_AUTH_RW;
+
+	} else if ($owner_type == WORKSPACE_ASSIGNMENT && authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
+		// instructors have read only access to assignments
+
+		return WORKSPACE_AUTH_READ;
+	
+	} else if ($owner_type == WORKSPACE_GROUP) {
 		if (isset($_SESSION['groups'][$owner_id])) {
 			global $db;
 			$sql = "SELECT * FROM ".TABLE_PREFIX."file_storage_groups WHERE group_id=$owner_id";
 			$result = mysql_query($sql, $db);
 			if (mysql_fetch_assoc($result)) {
 				return WORKSPACE_AUTH_RW;
-			} else {
-				return WORKSPACE_AUTH_NONE;
 			}
 		}
-		return WORKSPACE_AUTH_NONE;
-	}
-	if ($owner_type == WORKSPACE_COURSE) {
+
+	} else if ($owner_type == WORKSPACE_COURSE) {
 		if (authenticate(AT_PRIV_FILE_STORAGE, AT_PRIV_RETURN)) {
 			return WORKSPACE_AUTH_RW;
 		}
@@ -54,6 +53,93 @@ function fs_authenticate($owner_type, $owner_id) {
 	}
 
 	return WORKSPACE_AUTH_NONE;
+}
+
+/**
+ * retrieve folder(s) specified by $folder_id
+ * $folder_id the ID of the single folder, or array of IDs
+ * if $folder_id is an array then returns an array of folder rows
+ * if $folder_id is an int then returns the single row array
+ *
+ * Note: This function checks if the $owner_type is an Assignment.
+ *
+ */
+function fs_get_folder_by_id($folder_id, $owner_type, $owner_id) {
+	global $db;
+
+	$rows = array();
+
+	if ($owner_type == WORKSPACE_ASSIGNMENT) {
+		// get the folder row from the assignments table
+
+		$sql = "SELECT assign_to FROM ".TABLE_PREFIX."assignments WHERE assignment_id=$owner_id AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $db);
+		$row  = mysql_fetch_assoc($result);
+		if ($row['assign_to']) {
+			$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=$folder_id";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+
+			$rows = array('title' => $row['title'], 'folder_id' => $folder_id);
+		} else {
+			$rows = array('title' => get_login($folder_id), 'folder_id' => $folder_id);
+		}
+	} else {
+		if (is_array($folder_id)) {
+			$folder_id_list = implode(',', $folder_id);
+
+			$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE folder_id IN ($folder_id_list) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				$rows[] = $row;
+			}
+
+		} else {
+			$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
+			$result = mysql_query($sql, $db);
+			$rows = mysql_fetch_assoc($result);
+		}
+	}
+	return $rows;
+}
+
+/**
+ * retrieve folder(s) specified by $parent_folder_id
+ *
+ * Note: This function checks if the $owner_type is an Assignment.
+ *
+ */
+function fs_get_folder_by_pid($parent_folder_id, $owner_type, $owner_id) {
+	global $db;
+
+	$rows = array();
+	if ($owner_type == WORKSPACE_ASSIGNMENT) {
+		// get the folder row from the assignments table
+		// does not currently support sub-folders for assignments
+		if ($parent_folder_id == 0) {
+			$sql = "SELECT assign_to FROM ".TABLE_PREFIX."assignments WHERE assignment_id=$owner_id AND course_id=$_SESSION[course_id]";
+			$result = mysql_query($sql, $db);
+			$row  = mysql_fetch_assoc($result);
+			if ($row['assign_to']) {
+				$sql = "SELECT group_id AS folder_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[assign_to] ORDER BY title";
+			} else {
+				global $system_courses;
+
+				$sql = "SELECT E.member_id AS folder_id, M.login AS title FROM ".TABLE_PREFIX."course_enrollment E INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.approved='y' AND E.privileges=0 AND E.member_id<>{$system_courses[$_SESSION[course_id]][member_id]} ORDER BY M.login";
+			}
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				$rows[] = $row;
+			}
+		}
+	} else {
+		$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
+		$result = mysql_query($sql, $db);
+		while ($row = mysql_fetch_assoc($result)) {
+			$rows[] = $row;	
+		}
+	}
+	return $rows;
 }
 
 /**
@@ -250,9 +336,8 @@ function fs_delete_folder($folder_id, $owner_type, $owner_id) {
 
 	global $db;
 
-	$sql = "SELECT folder_id FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	$rows = fs_get_folder_by_pid($folder_id, $owner_type, $owner_id);
+	foreach ($rows as $row) {
 		fs_delete_folder($row['folder_id'], $owner_type, $owner_id);
 	}
 
@@ -277,9 +362,11 @@ function fs_delete_folder($folder_id, $owner_type, $owner_id) {
  */
 function fs_download_folder($folder_id, &$zipfile, $owner_type, $owner_id, $path = '') {
 	global $db;
-	$sql = "SELECT title FROM ".TABLE_PREFIX."folders WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
-	$result = mysql_query($sql, $db);
-	if ($parent_row = mysql_fetch_assoc($result)) {
+
+	$parent_row = fs_get_folder_by_id($folder_id, $owner_type, $owner_id);
+	//$sql = "SELECT title FROM ".TABLE_PREFIX."folders WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
+	//$result = mysql_query($sql, $db);
+	if ($parent_row) {
 		$zipfile->create_dir($path . $parent_row['title']);
 	}
 
@@ -291,9 +378,8 @@ function fs_download_folder($folder_id, &$zipfile, $owner_type, $owner_id, $path
 		$zipfile->add_file(file_get_contents($file_path), $path . $parent_row['title'] .'/' . $row['file_name'], $row['date']);
 	}
 
-	$sql = "SELECT folder_id FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	$rows = fs_get_folder_by_pid($folder_id, $owner_type, $owner_id);
+	foreach ($rows as $row) {
 		fs_download_folder($row['folder_id'], $zipfile, $owner_type, $owner_id, $path . $parent_row['title'] . '/');
 	}
 }
@@ -322,9 +408,7 @@ function fs_get_folder_path_recursive($folder_id, $owner_type, $owner_id) {
 		return array();
 	}
 
-	$sql = "SELECT folder_id, title, parent_folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$row = fs_get_folder_by_id($folder_id, $owner_type, $owner_id);
 
 	return array_merge(array($row), fs_get_folder_path_recursive($row['parent_folder_id'], $owner_type, $owner_id));
 }

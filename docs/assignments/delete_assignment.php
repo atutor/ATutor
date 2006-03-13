@@ -12,7 +12,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 define('AT_INCLUDE_PATH', '../include/');
-require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ASSIGNMENTS);
 
 if (isset($_POST['submit_no'])) {
@@ -26,6 +26,10 @@ else if (isset($_POST['submit_yes'])) {
 	// delete the assignment from the table
 	$sql = "DELETE FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] AND assignment_id=$_POST[assignment_id]";
 	$result = mysql_query($sql, $db);
+
+	// delete all the files for this assignment
+	require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
+	fs_delete_workspace(WORKSPACE_ASSIGNMENT, $_POST['assignment_id']);
 
 	$msg->addFeedback('ASSIGNMENT_DELETED');
 	header('Location: index_instructor.php');

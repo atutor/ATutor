@@ -31,6 +31,14 @@ if (isset($_GET['submit_workspace'])) {
 			$owner_type = WORKSPACE_COURSE;
 			unset($owner_id);
 		}
+	} else if ($owner_type == WORKSPACE_ASSIGNMENT) {
+		$parts = explode('_', $_GET['ot'], 2);
+		if (isset($parts[1]) && $parts[1]) {
+			$owner_id = $parts[1];
+		} else {
+			$owner_type = WORKSPACE_ASSIGNMENT;
+			unset($owner_id);
+		}
 	} else {
 		unset($owner_id);
 	}
@@ -39,8 +47,6 @@ if (isset($_GET['submit_workspace'])) {
 	$owner_id   = abs($_REQUEST['oid']);
 } else {
 	$owner_type = WORKSPACE_COURSE;
-	$owner_id   = $_SESSION['course_id'];
-	$_SESSION['workspace'] = WORKSPACE_COURSE;
 }
 
 if (isset($_GET['folder'])) {
@@ -60,11 +66,8 @@ if (!isset($owner_id)) {
 	}
 }
 
-//debug($owner_type, 'owner_type');
-//debug($owner_id, 'owner_id');
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
-
-if (!$owner_status = fs_authenticate($owner_type, $owner_id)) {
+if (!($owner_status = fs_authenticate($owner_type, $owner_id))) {
 	exit('not authenticated');
 }
 
@@ -73,7 +76,10 @@ if (isset($_GET['submit_workspace'])) {
 	exit;
 }
 
-if (isset($_GET['revisions'], $_GET['files'])) {
+if (isset($_GET['assignment'], $_GET['files'])) {
+	header('Location: assignment.php?'.$_SERVER['QUERY_STRING']);
+	exit;
+} else if (isset($_GET['revisions'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = intval(current($_GET['files']));
 		header('Location: revisions.php'.$owner_arg_prefix.'id='.$file_id);
@@ -135,7 +141,7 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 
 				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 				$result = mysql_query($sql, $db);
-				if ($row = mysql_fetch_assoc($result)) {
+				if ($row = mysql_fetch_assoc($result) && file_exists($file_path)) {
 					$zipfile->add_file(file_get_contents($file_path), $row['file_name'], $row['date']);
 				}
 			}
@@ -148,9 +154,8 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 
 			if (count($_GET['folders']) == 1) {
 				// zip just one folder, use that folder's title as the zip file name
-				$sql = "SELECT title FROM ".TABLE_PREFIX."folders WHERE folder_id={$_GET['folders'][0]} AND owner_type=$owner_type AND owner_id=$owner_id";
-				$result = mysql_query($sql, $db);
-				if ($row = mysql_fetch_assoc($result)) {
+				$row = fs_get_folder_by_id($_GET['folders'][0], $owner_type, $owner_id);
+				if ($row) {
 					$zip_file_name = $row['title'];
 				}
 			}
@@ -180,9 +185,8 @@ if (isset($_GET['revisions'], $_GET['files'])) {
 		$dir_list_to_print = '';
 		$folders = implode(',', $_GET['folders']);
 		$hidden_vars['folders'] = $folders;
-		$sql = "SELECT title, folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id IN ($folders) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+		$rows = fs_get_folder_by_id($_GET['folders'], $owner_type, $owner_id);
+		foreach ($rows as $row) {
 			$dir_list_to_print .= '<li>'.$row['title'].'</li>';
 		}
 		$msg->addConfirm(array('DIR_DELETE', $dir_list_to_print), $hidden_vars);
@@ -309,12 +313,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $folder_path = fs_get_folder_path($folder_id, $owner_type, $owner_id);
 
-$folders = array();
-$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
-	$folders[] = $row;
-}
+$folders = fs_get_folder_by_pid($folder_id, $owner_type, $owner_id);
 
 $files = array();
 $sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id AND parent_file_id=0 ORDER BY file_name";
@@ -376,6 +375,15 @@ while ($row = mysql_fetch_assoc($result)) {
 	while ($row = mysql_fetch_assoc($result)) {
 		$file_storage_groups[] = $row;
 	}
+
+	if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
+		$file_storage_assignments = array();
+		$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] ORDER BY title";
+		$result = mysql_query($sql, $db);
+		while ($row = mysql_fetch_assoc($result)) {
+			$file_storage_assignments[] = $row;
+		}
+	}
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -389,13 +397,19 @@ while ($row = mysql_fetch_assoc($result)) {
 		<select name="ot" id="ot">
 			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>><?php echo _AT('course_files'); ?></option>
 			<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>><?php echo _AT('my_files'); ?></option>
-			<!--option value="3" <?php if ($owner_type == WORKSPACE_ASSIGNMENT) { echo 'selected="selected"'; } ?>>Assignment Submissions</option-->
 			<?php if ($file_storage_groups): ?>
-			<optgroup label="<?php echo _AT('groups'); ?>">
-				<?php foreach ($file_storage_groups as $group): ?>
-					<option value="<?php echo WORKSPACE_GROUP; ?>_<?php echo $group['group_id']; ?>" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == $group['group_id']) { echo 'selected="selected"'; } ?>><?php echo $group['title']; ?></option>
-				<?php endforeach; ?>
-			</optgroup>
+				<optgroup label="<?php echo _AT('groups'); ?>">
+					<?php foreach ($file_storage_groups as $group): ?>
+						<option value="<?php echo WORKSPACE_GROUP; ?>_<?php echo $group['group_id']; ?>" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == $group['group_id']) { echo 'selected="selected"'; } ?>><?php echo $group['title']; ?></option>
+					<?php endforeach; ?>
+				</optgroup>
+			<?php endif; ?>
+			<?php if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)): ?>
+				<optgroup label="<?php echo _AT('assignments'); ?>">
+					<?php foreach ($file_storage_assignments as $assignment): ?>
+						<option value="<?php echo WORKSPACE_ASSIGNMENT; ?>_<?php echo $assignment['assignment_id']; ?>" <?php if ($owner_type == WORKSPACE_ASSIGNMENT && $owner_id == $assignment['assignment_id']) { echo 'selected="selected"'; } ?>><?php echo $assignment['title']; ?></option>
+					<?php endforeach; ?>
+				</optgroup>
 			<?php endif; ?>
 		</select>
 
@@ -430,6 +444,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
 			<input type="submit" name="move" value="<?php echo _AT('move'); ?>" />
+			<input type="submit" name="assignment" value="<?php echo _AT('assignment'); ?>" />
 			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 		<?php endif; ?>
 	</td>
@@ -456,7 +471,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	<?php endforeach; ?>
 <?php else: ?>
 	<tr>
-		<td colspan="5"><?php echo _AT('none_found'); ?></td>
+		<td colspan="7"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>

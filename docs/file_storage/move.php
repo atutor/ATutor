@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: move.php 5923 2006-03-02 17:10:44Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -73,6 +73,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $folder_id = abs($_GET['folder']);
 
+// can't use fs_get_folders() because we want all folders, not just at one level
 $folders = array();
 $sql = "SELECT folder_id, parent_folder_id, title FROM ".TABLE_PREFIX."folders WHERE owner_type=$owner_type AND owner_id=$owner_id ORDER BY parent_folder_id, title";
 $result = mysql_query($sql, $db);
