@@ -48,8 +48,8 @@ if (isset ($_GET['id'])){
 	$dueyear		= $array_date_due[0];
 	$duemonth		= $array_date_due[1];
 	$dueday			= $array_date_due[2];
-	$duehour		= $array_time_due[0];
-	$dueminute		= $array_time_due[1];
+	$duehour		= '12';
+	$dueminute		= '0';
 
 	if ($dueyear == '0000'){
 		$has_due_date = 'false';
@@ -74,8 +74,8 @@ if (isset ($_GET['id'])){
 	$cutoffyear		= $array_date_cutoff[0];
 	$cutoffmonth	= $array_date_cutoff[1];
 	$cutoffday		= $array_date_cutoff[2];
-	$cutoffhour		= $array_time_cutoff[0];
-	$cutoffminute	= $array_time_cutoff[1];
+	$cutoffhour		= '12';
+	$cutoffminute	= '0';
 
 	if ($cutoffyear == '0000'){
 		$late_submit	= '0'; // allow late submissions always
@@ -89,7 +89,7 @@ if (isset ($_GET['id'])){
 		$cutoffminute = round($cutoffminute / '5' ) * '5' + '5';
 		if ($cutoffminute > '55'){ $cutoffminute = '55'; }
 	}
-	else if ($cutoffyear == '1111'){
+	else if ($row['date_cutoff'] == $row['date_due']){
 		$late_submit	= '1'; // allow late submissions never
 		// use today's date as default
 		$cutoffday		= $today['mday'];
@@ -168,15 +168,15 @@ else if (isset($_POST['submit'])) {
 
 	if (!$msg->containsErrors()) {
 		// create the date strings
-		$date_due = AM_TIME_0;
-		$date_cutoff = AM_TIME_0;
+		$date_due = '0';
+		$date_cutoff = '0';
 
 		// note: if due date is NOT set then ignore the late submission date
 		if ($has_due_date == 'true'){
 			$date_due = $dueyear. '-' .str_pad ($duemonth, 2, "0", STR_PAD_LEFT). '-' .str_pad ($dueday, 2, "0", STR_PAD_LEFT). ' '.str_pad ($duehour, 2, "0", STR_PAD_LEFT). ':' .str_pad ($dueminute, 2, "0", STR_PAD_LEFT) . ':00';
 			
 			if ($late_submit == '1'){ // never accept late submissions
-				$date_cutoff = AM_TIME_1; // cutoff date will be all 1s
+				$date_cutoff = $date_due; // cutoff date will be same as due date
 			}
 			else if ($late_submit == '2'){ // accept late submissions until date
 				$date_cutoff = $cutoffyear. '-' .str_pad ($cutoffmonth, 2, "0", STR_PAD_LEFT). '-' .str_pad ($cutoffday, 2, "0", STR_PAD_LEFT). ' '.str_pad ($cutoffhour, 2, "0", STR_PAD_LEFT). ':' .str_pad ($cutoffminute, 2, "0", STR_PAD_LEFT) . ':00';
@@ -218,20 +218,14 @@ else { // creating a new assignment
 	$dueday		= $today['mday'];
 	$duemonth	= $today['mon'];
 	$dueyear	= $today['year'];
-	$duehour	= $today['hours'];
-	$dueminute	= $today['minutes'];
-	// round the minute to the next highest multiple of 5 
-	$dueminute = round($dueminute / '5' ) * '5' + '5';
-	if ($dueminute > '55'){ $dueminute = '55'; }
+	$duehour	= '12';
+	$dueminute	= '0';
 
 	$cutoffday		= $today['mday'];
 	$cutoffmonth	= $today['mon'];
 	$cutoffyear		= $today['year'];
-	$cutoffhour		= $today['hours'];
-	$cutoffminute	= $today['minutes'];
-	// round the minute to the next highest multiple of 5 
-	$cutoffminute = round($cutoffminute / '5' ) * '5' + '5';
-	if ($cutoffminute > '55'){ $cutoffminute = '55'; }
+	$cutoffhour		= '12';
+	$cutoffminute	= '0';
 }
 
 $onload = 'document.form.name.focus();';
@@ -244,29 +238,42 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 
 	<div class="row">
-		<div class="required" title="Required Field">*</div><label for="title"><?php  echo _AT('title'); ?>:</label><br/>
+		<div class="required" title="Required Field">*</div><label for="title"><?php  echo _AT('title'); ?></label><br/>
 		<input type="text" name="title" size="50" id="title" value="<?php echo $title ?>" />
 	</div>
 
 	<div class="row">
-		<label for="assignto"><?php  echo _AT('assign_to'); ?>:</label><br/>
-		<select name="assign_to" size="5" id="assignto">
-			<option value="0" <?php if ($assign_to == '0'){ echo 'selected="selected"'; } ?> label="<?php  echo _AT('all_students'); ?>"><?php  echo _AT('all_students'); ?></option>
-			<optgroup label="<?php  echo _AT('specific_groups'); ?>">
-				<option value="1" <?php if ($assign_to == '1'){ echo 'selected="selected"'; } ?> label="Example Group Name">Example Group Name</option>
-				<option value="2" <?php if ($assign_to == '2'){ echo 'selected="selected"'; } ?> label="Tutorials">Tutorials</option>
-				<option value="3" <?php if ($assign_to == '3'){ echo 'selected="selected"'; } ?> label="Project 1">Project 1</option>
-			</optgroup>
-		</select>
+		<label for="assignto"><?php  echo _AT('assign_to'); ?></label><br/>
+
+		<?php // Are we editing an assignment?
+			if ($id != '0'){
+				// editing an existing assignment 
+				if ($assign_to == '0'){ echo _AT('all_students'); }
+				else { // name of group goes here
+				}
+				?>
+
+			<?php }
+			else { // creating a new assignment
+			?>
+				<select name="assign_to" size="5" id="assignto">
+					<option value="0" <?php if ($assign_to == '0'){ echo 'selected="selected"'; } ?> label="<?php  echo _AT('all_students'); ?>"><?php  echo _AT('all_students'); ?></option>
+					<optgroup label="<?php  echo _AT('specific_groups'); ?>">
+						<option value="1" <?php if ($assign_to == '1'){ echo 'selected="selected"'; } ?> label="Example Group Name">Example Group Name</option>
+						<option value="2" <?php if ($assign_to == '2'){ echo 'selected="selected"'; } ?> label="Tutorials">Tutorials</option>
+						<option value="3" <?php if ($assign_to == '3'){ echo 'selected="selected"'; } ?> label="Project 1">Project 1</option>
+					</optgroup>
+				</select>
+			<?php }	?>
 	</div>	
 
 	<div class="row">
-		<?php  echo _AT('due_date'); ?>:<br />
+		<?php  echo _AT('due_date'); ?><br />
 		<input type="radio" name="has_due_date" value="false" id="noduedate" <?php if ($has_due_date == 'false'){echo 'checked="checked"';} ?>>
 		<label for="noduedate" title="<?php echo _AT('due_date'). ': '. _AT('none');  ?>"><?php  echo _AT('none'); ?></label><br />
 
 		<input type="radio" name="has_due_date" value="true" id="hasduedate" <?php if ($has_due_date == 'true'){echo 'checked="checked"';} ?>>
-		<label for="hasduedate"  title="<?php echo _AT('due_date') ?>"><?php  echo _AT('date'); ?>:</label>
+		<label for="hasduedate"  title="<?php echo _AT('due_date') ?>"><?php  echo _AT('date'); ?></label>
 
 		<select name="dueday" id="date_due">
 		<?php for ($i = 1; $i <= 31; $i++){ ?>
@@ -286,14 +293,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php } ?>
 		</select>
 
-		<label for="duehour" title="<?php echo _AT('due_date'). ' '. _AT('time'); ?>">&nbsp;<?php  echo _AT('time'); ?>:</label>
+		<label for="duehour" title="<?php echo _AT('due_date'). ' '. _AT('time'); ?>">&nbsp;<?php  echo _AT('time'); ?></label>
 
 		<select name="duehour">
-		<?php for ($i = 1; $i <= 24; $i++){ ?>
+		<?php for ($i = 0; $i <= 23; $i++){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $duehour) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
-	
+		:
 		<select name="dueminute">
 		<?php for ($i = 0; $i < 60; $i+='5'){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $dueminute) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
@@ -302,7 +309,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<label for="date_cutoff"><?php  echo _AT('accept_late_submissions'); ?>:</label><br />
+		<label for="date_cutoff"><?php  echo _AT('accept_late_submissions'); ?></label><br />
 		<input type="radio" name="late_submit" value="0" id="always"  <?php if ($late_submit == '0'){echo 'checked="checked"';} ?>>
 		<label for="always" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('always');  ?>"><?php echo _AT('always'); ?></label><br />
 
@@ -310,7 +317,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<label for="never" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('never');  ?>"><?php  echo _AT('never'); ?></label><br />
 
 		<input type="radio" name="late_submit" value="2" id="until"  <?php if ($late_submit == '2'){echo 'checked="checked"';} ?>>
-		<label for="until" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('until');  ?>"><?php  echo _AT('until'); ?>:</label>
+		<label for="until" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('until');  ?>"><?php  echo _AT('until'); ?></label>
 
 		<select name="cutoffday" id="date_cutoff">
 		<?php for ($i = 1; $i <= 31; $i++){ ?>
@@ -330,14 +337,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php } ?>
 		</select>	
 
-		<label for="cutoffhour"  title="<?php echo _AT('accept_late_submissions'). ' '. _AT('time'); ?>">&nbsp;<?php  echo _AT('time'); ?>:</label>
+		<label for="cutoffhour"  title="<?php echo _AT('accept_late_submissions'). ' '. _AT('time'); ?>">&nbsp;<?php  echo _AT('time'); ?></label>
 
 		<select name="cutoffhour">
-		<?php for ($i = 1; $i <= 24; $i++){ ?>
+		<?php for ($i = 0; $i <= 23; $i++){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $cutoffhour) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
-	
+		:	
 		<select name="cutoffminute">
 		<?php for ($i = 0; $i < 60; $i+='5'){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $cutoffminute) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
@@ -346,7 +353,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 	
 	<div class="row">
-		<?php  echo _AT('options'); ?>:<br/>
+		<?php  echo _AT('options'); ?><br/>
 		<input type="checkbox" name="multi_submit" id="multisubmit" <?php if ($multi_submit == '1'){ echo 'checked="checked"'; } ?> />
 		<label for="multisubmit"><?php  echo _AT('allow_re_submissions'); ?></label>
 	</div>	
