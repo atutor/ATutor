@@ -391,6 +391,7 @@ while ($row = mysql_fetch_assoc($result)) {
 <?php endif; ?>
 
 <?php
+if ($_SESSION['groups']) {
 	$file_storage_groups = array();
 	$groups_list = implode(',',$_SESSION['groups']);
 	$sql = "SELECT G.type_id, G.title, G.group_id FROM ".TABLE_PREFIX."file_storage_groups FS INNER JOIN ".TABLE_PREFIX."groups G USING (group_id) WHERE FS.group_id IN ($groups_list) ORDER BY G.type_id, G.title";
@@ -398,6 +399,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	while ($row = mysql_fetch_assoc($result)) {
 		$file_storage_groups[] = $row;
 	}
+}
 
 	if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 		$file_storage_assignments = array();
@@ -419,7 +421,9 @@ while ($row = mysql_fetch_assoc($result)) {
 		<input type="submit" name="submit_workspace" value="<?php echo _AT('workspace'); ?>" class="button" />
 		<select name="ot" id="ot">
 			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>><?php echo _AT('course_files'); ?></option>
-			<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>><?php echo _AT('my_files'); ?></option>
+			<?php if ($_SESSION['member_id']): ?>
+				<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>><?php echo _AT('my_files'); ?></option>
+			<?php endif; ?>
 			<?php if ($file_storage_groups): ?>
 				<optgroup label="<?php echo _AT('groups'); ?>">
 					<?php foreach ($file_storage_groups as $group): ?>

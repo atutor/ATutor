@@ -26,7 +26,7 @@ define('WORKSPACE_AUTH_RW',    3); // to save time
  * returns WORKSPACE_AUTH_WRITE if the user can write
  */
 function fs_authenticate($owner_type, $owner_id) {
-	if (($owner_type == WORKSPACE_PERSONAL) && ($owner_id == $_SESSION['member_id'])) {
+	if (($owner_type == WORKSPACE_PERSONAL) && $_SESSION['member_id'] && ($owner_id == $_SESSION['member_id'])) {
 
 		return WORKSPACE_AUTH_RW;
 

@@ -45,8 +45,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-// get all the assignments assigned to $owner_id (which is either a student ID or a group ID)
-
+// get all the assignments assigned to $owner_id (which is either a student ID or a group type ID)
 if ($owner_type == WORKSPACE_GROUP) {
 	// get all the assignments assigned to this group type
 
@@ -57,7 +56,7 @@ if ($owner_type == WORKSPACE_GROUP) {
 	$sql = "SELECT assignment_id, title, date_due, date_cutoff FROM ".TABLE_PREFIX."assignments WHERE assign_to=$row[type_id] AND course_id=$_SESSION[course_id] AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
 
 } else if ($owner_type == WORKSPACE_PERSONAL) {
-	// get all the assignments assigned to this person
+	// get all the assignments assigned to students
 
 	$sql = "SELECT assignment_id, title, date_due FROM ".TABLE_PREFIX."assignments WHERE assign_to=0 AND course_id=$_SESSION[course_id] AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
 } else {
