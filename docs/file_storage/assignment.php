@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: move.php 5954 2006-03-09 17:43:07Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -45,10 +45,6 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-debug($_GET);
-
 // get all the assignments assigned to $owner_id (which is either a student ID or a group ID)
 
 if ($owner_type == WORKSPACE_GROUP) {
@@ -58,12 +54,12 @@ if ($owner_type == WORKSPACE_GROUP) {
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
-	$sql = "SELECT assignment_id, title FROM ".TABLE_PREFIX."assignments WHERE assign_to=$row[type_id] AND course_id=$_SESSION[course_id] ORDER BY title";
+	$sql = "SELECT assignment_id, title, date_due, date_cutoff FROM ".TABLE_PREFIX."assignments WHERE assign_to=$row[type_id] AND course_id=$_SESSION[course_id] AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
 
 } else if ($owner_type == WORKSPACE_PERSONAL) {
 	// get all the assignments assigned to this person
 
-	$sql = "SELECT assignment_id, title FROM ".TABLE_PREFIX."assignments WHERE assign_to=0 AND course_id=$_SESSION[course_id] ORDER BY title";
+	$sql = "SELECT assignment_id, title, date_due FROM ".TABLE_PREFIX."assignments WHERE assign_to=0 AND course_id=$_SESSION[course_id] AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
 } else {
 	exit('wrong workspace');
 }
@@ -75,24 +71,44 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 
 if (!$assignments) {
-	exit('no assignments found');
+	$msg->addError('NO_ASSIGNMENTS_FOUND');
+	header('Location: index.php'.$owner_arg_prefix.'folder='.$_GET['folder']);
+	exit;
 }
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>">
 <input type="hidden" name="folder" value="<?php echo abs($_GET['folder']); ?>" />
-<?php foreach ($_GET['files'] as $file): ?>
-	<input type="hidden" name="files[]" value="<?php echo abs($file); ?>" />
+<?php foreach ($_GET['files'] as $key => $file): ?>
+	<?php $_GET['files'][$key] = $file = abs($file); ?>
+	<input type="hidden" name="files[]" value="<?php echo $file; ?>" />
 <?php endforeach; ?>
 <div class="input-form">
 	
 	<div class="row">
-		<select name="assignment">
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('assignment'); ?></label<br />
+		<select name="assignment" size="<?php echo min(5, count($assignments)); ?>">
 			<?php foreach ($assignments as $assignment): ?>
-				<option value="<?php echo $assignment['assignment_id']; ?>"><?php echo $assignment['title']; ?></option>
+				<option value="<?php echo $assignment['assignment_id']; ?>"><?php echo $assignment['title']; ?> - <?php echo _AT('due') . ': ' .$assignment['date_due']; ?></option>
 			<?php endforeach; ?>
 		</select>
 	</div>
 
+	<div class="row">
+		<?php echo _AT('files'); ?>
+		<ul style="list-style: none; margin: 0px; padding: 0px 10px;">
+			<?php
+				$file_list = implode(',', $_GET['files']);
+				$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id IN ($file_list) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_name";
+				$result = mysql_query($sql, $db);
+			?>
+		<?php while ($row = mysql_fetch_assoc($result)): ?>
+			<li><img src="images/file_types/<?php echo fs_get_file_type_icon($row['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $row['file_name']; ?></li>
+		<?php endwhile; ?>
+		</ul>
+	</div>
 
 	<div class="buttons row">
 		<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" />

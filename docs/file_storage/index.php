@@ -117,7 +117,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['move']) 
 // action - Download Files/Folders
 else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
-		$file_id = intval(current($_GET['files']));
+		$file_id = abs(current($_GET['files']));
 		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
@@ -143,7 +143,8 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 		// zip multiple files and folders
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile =& new zipfile();
-		$zip_file_name = _AT('file_storage');
+
+		$zip_file_name = _AT('file_storage'); // want the name of the workspace
 
 		if (is_array($_GET['files'])) {
 			foreach ($_GET['files'] as $file_id) {
@@ -151,7 +152,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 
 				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 				$result = mysql_query($sql, $db);
-				if ($row = mysql_fetch_assoc($result) && file_exists($file_path)) {
+				if (($row = mysql_fetch_assoc($result)) && file_exists($file_path)) {
 					$zipfile->add_file(file_get_contents($file_path), $row['file_name'], $row['date']);
 				}
 			}
@@ -322,6 +323,8 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 	}
 	header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
 	exit;
+} else if ((isset($_GET['delete']) || isset($_GET['download']) || isset($_GET['move']) || isset($_GET['edit']) || isset($_GET['assignment'])) && !isset($_POST['files']) && !isset($_POST['folders'])) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)) {
@@ -457,16 +460,12 @@ while ($row = mysql_fetch_assoc($result)) {
 <tr>
 	<td colspan="7">
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<?php if (FALSE && $_config['fs_versioning']): ?>
-			<input type="submit" name="revisions" value="<?php echo _AT('revisions'); ?>" />
-			<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
-		<?php endif; ?>
 		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
+			<?php if ($owner_type != WORKSPACE_COURSE): ?>
+				<input type="submit" name="assignment" value="<?php echo _AT('hand_in'); ?>" />
+			<?php endif; ?>
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
 			<input type="submit" name="move" value="<?php echo _AT('move'); ?>" />
-			<?php if ($owner_type != WORKSPACE_COURSE): ?>
-				<input type="submit" name="assignment" value="<?php echo _AT('assignment'); ?>" />
-			<?php endif; ?>
 			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 		<?php endif; ?>
 	</td>
