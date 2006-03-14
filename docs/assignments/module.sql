@@ -28,6 +28,6 @@ REPLACE INTO `language_text` VALUES ('en', '_module','assign_to','Assign To',NOW
 REPLACE INTO `language_text` VALUES ('en', '_module','time','Time',NOW(),'');
 REPLACE INTO `language_text` VALUES ('en', '_module','always','Always',NOW(),'');
 REPLACE INTO `language_text` VALUES ('en', '_module','until','Until',NOW(),'');
-REPLACE INTO `language_text` VALUES ('en', '_module','all_students','All Students',NOW(),'');
+REPLACE INTO `language_text` VALUES ('en', '_module','all_students','Everyone',NOW(),'');
 REPLACE INTO `language_text` VALUES ('en', '_module','options','Options',NOW(),'');
 REPLACE INTO `language_text` VALUES ('en', '_module','specific_groups','Specific Groups',NOW(),'');
