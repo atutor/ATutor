@@ -212,26 +212,25 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 }
 // action - Confirm Delete Files/Folders
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_yes'])) {
+
 	// handle the delete
 	$files = explode(',', $_POST['files']);
 	$folders = explode(',', $_POST['folders']);
 
-	foreach ($files as $file) {
-		fs_delete_file($file, $owner_type, $owner_id);
-	}
-
-	foreach ($folders as $folder) {
-		fs_delete_folder($folder, $owner_type, $owner_id);
-	}
-
-	if ($files) {
+	if (!empty($files)) {
+		foreach ($files as $file) {
+			fs_delete_file($file, $owner_type, $owner_id);
+		}
 		$msg->addFeedback('FILE_DELETED');
 	}
-	if ($folders) {
+	if (!empty($folders)) {
+		foreach ($folders as $folder) {
+			fs_delete_folder($folder, $owner_type, $owner_id);
+		}
 		$msg->addFeedback('DIR_DELETED');
 	}
 
-	header('Location: index.php'.$owner_arg_prefix);
+	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
 	exit;
 } else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['create_folder'])) {
 	// create a new folder
@@ -325,6 +324,10 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 	exit;
 }
 
+if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)) {
+	$onload = 'hideform(\'upload\'); hideform(\'folder\');';
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $folder_path = fs_get_folder_path($folder_id, $owner_type, $owner_id);
@@ -342,14 +345,14 @@ while ($row = mysql_fetch_assoc($result)) {
 ?>
 
 <?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
-	<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>" enctype="multipart/form-data">
+	<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>" enctype="multipart/form-data" name="form0">
 	<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 	<div style="margin: 0px auto; width: 70%">
 		<div class="input-form" style="width: 48%; float: right">
 			<div class="row">
-				<h3><a onclick="javascript:document.getElementById('folder').style.display='';">Create Folder</a></h3>
+				<h3><a onclick="javascript:document.getElementById('folder').style.display='';document.form0.new_folder_name.focus();" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
 			</div>
-			<div style="display: none;" name="folder" id="folder">
+			<div name="folder" id="folder">
 				<div class="row">
 					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="fname"><?php echo _AT('name'); ?></label><br />
 					<input type="text" id="fname" name="new_folder_name" size="20" />
@@ -361,12 +364,13 @@ while ($row = mysql_fetch_assoc($result)) {
 		</div>
 		<div class="input-form" style="float: left; width: 48%">
 			<div class="row">
-				<h3><a onclick="javascript:document.getElementById('upload').style.display='';">Upload File</a></h3>
+				<h3><a onclick="javascript:document.getElementById('upload').style.display='';document.form0.file.focus();" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
 			</div>
-			<div style="display: none;" name="upload" id="upload">
+			<div name="upload" id="upload">
 				<div class="row">
-					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('file'); ?></label><br />
+					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('upload_file'); ?></label><br />
 					<input type="file" name="file" id="file" />
+					<br /><?php echo _AT('or'); ?> <a href="file_storage/new.php<?php echo $owner_arg_prefix; ?>folder=<?php echo $folder_id; ?>"><?php echo _AT('file_manager_new'); ?></a>
 				</div>
 				<div class="row">
 					<label for="comments"><?php echo _AT('revision_comment'); ?></label><br />
@@ -409,7 +413,7 @@ while ($row = mysql_fetch_assoc($result)) {
 <thead>
 <tr>
 	<td colspan="7">
-		<input type="submit" name="submit_workspace" value="Work Space" />
+		<input type="submit" name="submit_workspace" value="<?php echo _AT('workspace'); ?>" class="button" />
 		<select name="ot" id="ot">
 			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>><?php echo _AT('course_files'); ?></option>
 			<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>><?php echo _AT('my_files'); ?></option>
@@ -490,13 +494,7 @@ while ($row = mysql_fetch_assoc($result)) {
 					<?php endif; ?>
 				<?php endif; ?>
 			</td>
-			<td align="right" valign="top">
-				<?php if ($file_info['num_comments']): ?>
-					<a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_comments']; ?></a>
-				<?php else: ?>
-					-
-				<?php endif; ?>
-			</td>
+			<td align="right" valign="top"><a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_comments']; ?></a></td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
 			<td align="right" valign="top"><?php echo $file_info['date']; ?></td>
 		</tr>
@@ -548,6 +546,10 @@ function CheckAll() {
 			rowselectbox(document.getElementById('r_' + e.value + '_0'), state, 'checkbuttons(' + state + ')');
 		}
 	}
+}
+
+function hideform(id) {
+	document.getElementById(id).style.display='none';
 }
 </script>
 

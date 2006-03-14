@@ -170,7 +170,7 @@ $file_path = fs_get_file_path($id);
 		<input type="hidden" name="edit" value="0" />
 	<?php endif; ?>
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>

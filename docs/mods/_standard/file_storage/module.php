@@ -31,6 +31,9 @@ $this->_pages['file_storage/move.php']['parent'] = 'file_storage/index.php';
 $this->_pages['file_storage/assignment.php']['title_var'] = 'assignment';
 $this->_pages['file_storage/assignment.php']['parent'] = 'file_storage/index.php';
 
+$this->_pages['file_storage/new.php']['title_var'] = 'new_file';
+$this->_pages['file_storage/new.php']['parent'] = 'file_storage/index.php';
+
 $this->_pages['file_storage/delete_revision.php']['title_var'] = 'delete';
 $this->_pages['file_storage/delete_revision.php']['parent'] = 'file_storage/index.php';
 
