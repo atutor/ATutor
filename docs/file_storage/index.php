@@ -481,8 +481,22 @@ while ($row = mysql_fetch_assoc($result)) {
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td valign="top"><img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?></td>
 			<td align="right" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
-			<td align="right" valign="top"><?php if ($_config['fs_versioning']): ?><a href="<?php echo 'file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_revisions']; ?></a><?php endif; ?></td>
-			<td align="right" valign="top"><a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_comments']; ?></a></td>
+			<td align="right" valign="top">
+				<?php if ($_config['fs_versioning']): ?>
+					<?php if ($file_info['num_revisions']): ?>
+						<a href="<?php echo 'file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_revisions']; ?></a>
+					<?php else: ?>
+						-
+					<?php endif; ?>
+				<?php endif; ?>
+			</td>
+			<td align="right" valign="top">
+				<?php if ($file_info['num_comments']): ?>
+					<a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_comments']; ?></a>
+				<?php else: ?>
+					-
+				<?php endif; ?>
+			</td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
 			<td align="right" valign="top"><?php echo $file_info['date']; ?></td>
 		</tr>

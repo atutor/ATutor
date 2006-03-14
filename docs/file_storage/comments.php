@@ -23,7 +23,7 @@ if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
 
 if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php'.$owner_arg_prefix);
+	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder']));
 	exit;
 } else if (isset($_POST['edit_cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -110,6 +110,7 @@ if (!$files) {
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	</div>
+	<input type="hidden" name="folder" value="<?php echo $current_file['folder_id']; ?>" />
 	</form>
 <?php else: ?>
 	<?php $current_file = current($files); ?>
