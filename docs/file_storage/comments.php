@@ -21,7 +21,11 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
 
-if (isset($_POST['edit_cancel'])) {
+if (isset($_GET['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php'.$owner_arg_prefix);
+	exit;
+} else if (isset($_POST['edit_cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['id']);
 	exit;
@@ -97,12 +101,13 @@ if (!$files) {
 							$selected = ' selected="selected"';
 						}
 					?>
-					<option value="<?php echo $file['file_id'];?>" <?php echo $selected; ?>>Revision <?php echo $file['num_revisions']; ?>. <?php echo $file['file_name']; ?> - <?php echo $file['num_comments']; ?> Comments</option>
+					<option value="<?php echo $file['file_id'];?>" <?php echo $selected; ?>>Revision <?php echo $file['num_revisions']; ?>. <?php echo $file['file_name']; ?> - <?php echo $file['num_comments']; ?> <?php echo _AT('comments'); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
 		<div class="row buttons">
-			<input type="submit" name="comments" value="Comments" />
+			<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
+			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	</div>
 	</form>

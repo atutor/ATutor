@@ -121,7 +121,7 @@ function fs_get_folder_by_pid($parent_folder_id, $owner_type, $owner_id) {
 			$result = mysql_query($sql, $db);
 			$row  = mysql_fetch_assoc($result);
 			if ($row['assign_to']) {
-				$sql = "SELECT group_id AS folder_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[assign_to] ORDER BY title";
+				$sql = "SELECT G.group_id AS folder_id, G.title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."file_storage_groups FS USING (group_id) WHERE G.type_id=$row[assign_to] ORDER BY G.title";
 			} else {
 				global $system_courses;
 

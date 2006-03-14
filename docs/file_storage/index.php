@@ -76,22 +76,29 @@ if (isset($_GET['submit_workspace'])) {
 	exit;
 }
 
+// action - Submit Assignment
 if (isset($_GET['assignment'], $_GET['files'])) {
 	header('Location: assignment.php?'.$_SERVER['QUERY_STRING']);
 	exit;
-} else if (isset($_GET['revisions'], $_GET['files'])) {
+}
+// action - View Revisions
+else if (isset($_GET['revisions'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = intval(current($_GET['files']));
 		header('Location: revisions.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	}
-} else if (isset($_GET['comments'], $_GET['files'])) {
+}
+// action - View Comments
+else if (isset($_GET['comments'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = intval(current($_GET['files']));
 		header('Location: comments.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	}
-} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['edit']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+}
+// action - Edit File/Folder
+else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['edit']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = abs(current($_GET['files']));
 		header('Location: edit.php'.$owner_arg_prefix.'id='.$file_id);
@@ -101,11 +108,14 @@ if (isset($_GET['assignment'], $_GET['files'])) {
 		header('Location: edit_folder.php'.$owner_arg_prefix.'id='.$folder_id);
 		exit;
 	}
-
-} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['move']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+}
+// action - Move Files/Folders
+else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['move']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	header('Location: move.php'.$owner_arg_prefix.$_SERVER['QUERY_STRING']);
 	exit;
-} else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+}
+// action - Download Files/Folders
+else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = intval(current($_GET['files']));
 		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
@@ -165,7 +175,9 @@ if (isset($_GET['assignment'], $_GET['files'])) {
 	}
 	exit;
 
-} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+}
+// action - Delete Files/Folders (pre-confirmation)
+else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	$hidden_vars = array();
 	$hidden_vars['folder'] = $folder_id;
 	$hidden_vars['ws']     = $_SESSION['workspace'];
@@ -197,7 +209,9 @@ if (isset($_GET['assignment'], $_GET['files'])) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 
-} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_yes'])) {
+}
+// action - Confirm Delete Files/Folders
+else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_yes'])) {
 	// handle the delete
 	$files = explode(',', $_POST['files']);
 	$folders = explode(',', $_POST['folders']);
@@ -238,7 +252,9 @@ if (isset($_GET['assignment'], $_GET['files'])) {
 		header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
 		exit;
 	}
-} else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'])) {
+}
+// action - Upload
+else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'])) {
 	// handle the file upload
 	$_POST['comments'] = trim($_POST['comments']);
 
@@ -437,14 +453,16 @@ while ($row = mysql_fetch_assoc($result)) {
 <tr>
 	<td colspan="7">
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<?php if ($_config['fs_versioning']): ?>
+		<?php if (FALSE && $_config['fs_versioning']): ?>
 			<input type="submit" name="revisions" value="<?php echo _AT('revisions'); ?>" />
+			<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
 		<?php endif; ?>
-		<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
 		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
 			<input type="submit" name="move" value="<?php echo _AT('move'); ?>" />
-			<input type="submit" name="assignment" value="<?php echo _AT('assignment'); ?>" />
+			<?php if ($owner_type != WORKSPACE_COURSE): ?>
+				<input type="submit" name="assignment" value="<?php echo _AT('assignment'); ?>" />
+			<?php endif; ?>
 			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 		<?php endif; ?>
 	</td>
@@ -463,8 +481,8 @@ while ($row = mysql_fetch_assoc($result)) {
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td valign="top"><img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?></td>
 			<td align="right" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
-			<td align="right" valign="top"><?php if ($_config['fs_versioning']): ?><?php echo $file_info['num_revisions']; ?><?php endif; ?></td>
-			<td align="right" valign="top"><?php echo $file_info['num_comments']; ?></td>
+			<td align="right" valign="top"><?php if ($_config['fs_versioning']): ?><a href="<?php echo 'file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_revisions']; ?></a><?php endif; ?></td>
+			<td align="right" valign="top"><a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_comments']; ?></a></td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
 			<td align="right" valign="top"><?php echo $file_info['date']; ?></td>
 		</tr>
@@ -493,13 +511,13 @@ function checkbuttons(state) {
 		}
 	}
 	if (num_files_checked + num_folders_checked > 1) {
-		document.form.revisions.disabled = true;
-		document.form.comments.disabled = true;
+	//	document.form.revisions.disabled = true;
+		//document.form.comments.disabled = true;
 		if (document.form.edit)
 			document.form.edit.disabled = true;
 	} else {
-		document.form.revisions.disabled = false;
-		document.form.comments.disabled = false;
+	//	document.form.revisions.disabled = false;
+//		document.form.comments.disabled = false;
 		if (document.form.edit)
 			document.form.edit.disabled = false;
 	}

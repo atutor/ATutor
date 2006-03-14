@@ -66,7 +66,6 @@ $current_file = current($files);
 <tr>
 	<td colspan="7">
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
 		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
 			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 		<?php endif; ?>
@@ -87,7 +86,7 @@ $current_file = current($files);
 		</td>
 		<td valign="top"><?php echo $file['date']; ?></td>
 		<td valign="top"><?php echo get_login($file['member_id']); ?></td>
-		<td valign="top"><?php echo $file['num_comments']; ?></td>
+		<td valign="top"><a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file['file_id']; ?>"><?php echo $file['num_comments']; ?></a></td>
 		<td valign="top"><?php echo get_human_size($file['file_size']); ?></td>
 	</tr>
 <?php endforeach; ?>
