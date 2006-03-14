@@ -45,12 +45,16 @@ if (isset($_POST['cancel'])) {
 			// file is not editable ,or it is editable but no changes made.
 			// only add the comment (if any) and the file name
 
+			$num_comments = 0;
+			
 			if ($_POST['comment']){
 				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $_POST[id], $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
 				mysql_query($sql, $db);
+
+				$num_comments = 1;
 			}
 
-			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]' WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
+			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]', num_comments=num_comments+$num_comments WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
 			mysql_query($sql, $db);
 		} else {
 			// this file is editable, and has changed

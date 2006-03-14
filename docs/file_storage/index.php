@@ -189,7 +189,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 		$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id IN ($files) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_name";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
-			$file_list_to_print .= '<li>'.$row['file_name'].'</li>';
+			$file_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/file_types/'.fs_get_file_type_icon($row['file_name']).'.gif" height="16" width="16" alt="" title="" /> '.$row['file_name'].'</li>';
 		}
 		$msg->addConfirm(array('FILE_DELETE', $file_list_to_print), $hidden_vars);
 	}
@@ -200,7 +200,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 		$hidden_vars['folders'] = $folders;
 		$rows = fs_get_folder_by_id($_GET['folders'], $owner_type, $owner_id);
 		foreach ($rows as $row) {
-			$dir_list_to_print .= '<li>'.$row['title'].'</li>';
+			$dir_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/folder.gif" height="18" width="20" alt="" title="" /> '.$row['title'].'</li>';
 		}
 		$msg->addConfirm(array('DIR_DELETE', $dir_list_to_print), $hidden_vars);
 	}
