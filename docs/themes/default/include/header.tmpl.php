@@ -118,7 +118,7 @@ function setstates() {
 	if (document.getElementById(objId) && state && (state == 'none')) {
 		toggleToc(objId);
 	}
-
+	return true;
 }
 
 function showTocToggle(objId, show, hide, key, selected) {
