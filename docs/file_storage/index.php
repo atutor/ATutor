@@ -333,12 +333,26 @@ if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$orders = array('asc' => 'desc', 'desc' => 'asc');
+
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'asc';
+	$col   = 'file_name';
+}
+
 $folder_path = fs_get_folder_path($folder_id, $owner_type, $owner_id);
 
 $folders = fs_get_folder_by_pid($folder_id, $owner_type, $owner_id);
 
 $files = array();
-$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id AND parent_file_id=0 ORDER BY file_name";
+$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id AND parent_file_id=0 ORDER BY $col $order";
 $result = mysql_query($sql, $db);
 
 while ($row = mysql_fetch_assoc($result)) {
@@ -452,13 +466,27 @@ if ($_SESSION['groups']) {
 </tr>
 <tr>
 	<th align="left" width="10"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
-	<th scope="col"><?php echo _AT('file');      ?></th>
+	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=file_name"><?php echo _AT('file');      ?></a></th>
 	<th scope="col"><?php echo _AT('author');    ?></th>
 	<th scope="col"><?php if ($_config['fs_versioning']): ?><?php echo _AT('revisions'); ?><?php endif; ?></th>
 	<th scope="col"><?php echo _AT('comments');  ?></th>
-	<th scope="col"><?php echo _AT('size');      ?></th>
-	<th scope="col"><?php echo _AT('date');      ?></th>
+	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=file_size"><?php echo _AT('size'); ?></a></th>
+	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th>
 </tr>
+<colgroup>
+	<?php if ($col == 'file_name'): ?>
+		<col />
+		<col class="sort" />
+		<col span="5" />
+	<?php elseif($col == 'file_size'): ?>
+		<col span="5" />
+		<col class="sort" />
+		<col />
+	<?php elseif($col == 'date'): ?>
+		<col span="6" />
+		<col class="sort" />
+	<?php endif; ?>
+</colgroup>
 </thead>
 <tfoot>
 <tr>
@@ -480,14 +508,19 @@ if ($_SESSION['groups']) {
 	<?php foreach ($folders as $folder_info): ?>
 		<tr onmousedown="document.form['f<?php echo $folder_info['folder_id']; ?>'].checked = !document.form['f<?php echo $folder_info['folder_id']; ?>'].checked; rowselectbox(this, document.form['f<?php echo $folder_info['folder_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $folder_info['folder_id']; ?>_1">
 			<td width="10"><input type="checkbox" name="folders[]" value="<?php echo $folder_info['folder_id']; ?>" id="f<?php echo $folder_info['folder_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
-			<td colspan="6" width="100%"><img src="images/folder.gif" /> <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a></td>
+			<td><img src="images/folder.gif" /> <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
 		</tr>
 	<?php endforeach; ?>
 	<?php foreach ($files as $file_info): ?>
 		<tr onmousedown="document.form['r<?php echo $file_info['file_id']; ?>'].checked = !document.form['r<?php echo $file_info['file_id']; ?>'].checked; rowselectbox(this, document.form['r<?php echo $file_info['file_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $file_info['file_id']; ?>_0">
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td valign="top"><img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?></td>
-			<td align="right" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
+			<td align="center" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
 			<td align="right" valign="top">
 				<?php if ($_config['fs_versioning']): ?>
 					<?php if ($file_info['num_revisions']): ?>
