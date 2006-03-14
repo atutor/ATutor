@@ -17,7 +17,7 @@ authenticate(AT_PRIV_ASSIGNMENTS);
 
 if (isset($_GET['edit'])) {
 	$_GET['assignment'] = intval($_GET['assignment']);
-	header('Location: add_assignment.php?id='. $_GET['assignment']);
+	header('Location: edit_assignment.php?id='. $_GET['assignment']);
 	exit;
 }
 else if (isset($_GET['delete'])) {
@@ -31,23 +31,45 @@ else if (isset($_GET['create'])){
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-?>
 
-<?php
-$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] ORDER BY date_due";
+// sort order of table
+$orders = array('ASC' => 'DESC', 'DESC' => 'ASC');
+$sort = 'date_due';
+$sort_order = 'ASC';
+if (isset ($_GET['sort'])){
+	$sort = $_GET['sort'];
+}
+if (isset ($_GET['sort_order'])){
+	$sort_order = $_GET['sort_order'];
+}
+$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] ORDER BY '$sort' $sort_order";
 $result = mysql_query($sql, $db);
+
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <table class="data" style="width: 90%;">
+<colgroup>
+	<?php if ($sort == 'title'): ?>
+		<col />
+		<col class="sort" />
+		<col span="5" />
+	<?php elseif($sort == 'assign_to'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col span="4" />
+	<?php elseif($sort == 'date_due'): ?>
+		<col span="3" />
+		<col class="sort" />
+		<col span="3" />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
 	<th>&nbsp;</th>
-	<th><?php echo _AT('title'); ?></th>
-	<th><?php echo _AT('assigned_to'); ?></th>
-	<th><?php echo _AT('due_date'); ?></th>
-	<th><?php echo _AT('accept_late_submissions'); ?></th>
-	<th><?php echo _AT('allow_re_submissions'); ?></th>
+	<th scope="col"><a href="assignments/index_instructor.php?sort=title&sort_order=<?php echo $orders[$sort_order]; ?>"><?php echo _AT('title'); ?></a></th>
+	<th scope="col"><a href="assignments/index_instructor.php?sort=assign_to&sort_order=<?php echo $orders[$sort_order]; ?>"><?php echo _AT('assigned_to'); ?></a></th>
+	<th scope="col"><a href="assignments/index_instructor.php?sort=date_due&sort_order=<?php echo $orders[$sort_order]; ?>"><?php echo _AT('due_date'); ?></a></th>
 </tr>
 </thead>
 <?php if (($result != 0) && ($row = mysql_fetch_assoc($result))) : ?>
@@ -79,22 +101,11 @@ $result = mysql_query($sql, $db);
 
 		<td><?php if($row['assign_to'] == '0'){echo _AT('all_students'); } else {echo _AT('group_name_here');} ?></td>
 
-		<td><?php  if ($row['date_due'] == AM_TIME_0){
+		<td><?php  if ($row['date_due'] == '0000-00-00 00:00:00'){
 			echo _AT ('none');
 		}else {
 			echo AT_Date(_AT('forum_date_format'), $row['date_due'], AT_DATE_MYSQL_DATETIME);
 		}?></td>
-
-		<td><?php  if ($row['date_cutoff'] == AM_TIME_0){
-			echo _AT ('always');
-		}
-		else if ($row['date_cutoff'] == AM_TIME_1){
-			echo _AT ('never');
-		}
-		else {
-			echo AT_Date(_AT('forum_date_format'), $row['date_cutoff'], AT_DATE_MYSQL_DATETIME);
-		}?></td>
-		<td><?php if($row['multi_submit'] == '0'){echo _AT('no'); } else {echo _AT('yes');} ?></td>
 		</tr>
 	<?php } while($row = mysql_fetch_assoc($result)); ?>
 </tbody>
