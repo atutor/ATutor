@@ -46,10 +46,11 @@ function fs_authenticate($owner_type, $owner_id) {
 		}
 
 	} else if ($owner_type == WORKSPACE_COURSE) {
-		if (authenticate(AT_PRIV_FILE_STORAGE, AT_PRIV_RETURN)) {
+		if (($owner_id == $_SESSION['course_id']) && authenticate(AT_PRIV_FILE_STORAGE, AT_PRIV_RETURN)) {
 			return WORKSPACE_AUTH_RW;
+		} else if ($owner_id == $_SESSION['course_id']) {
+			return WORKSPACE_AUTH_READ;
 		}
-		return WORKSPACE_AUTH_READ;
 	}
 
 	return WORKSPACE_AUTH_NONE;

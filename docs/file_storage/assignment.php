@@ -23,34 +23,6 @@ if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($ow
 	exit('NOT AUTHENTICATED');
 }
 
-/***
-function fs_print_files_list($folder_id, $owner_type, $owner_id) {
-	global $db;
-
-	$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id AND parent_file_id=0 ORDER BY file_name";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
-		echo '<li><img src="images/file_types/'.fs_get_file_type_icon($row['file_name']).'.gif" height="16" width="16" alt="" title="" /> '.$row['file_name'].'</li>';
-	}
-}
-
-function fs_print_folders_list($folder_id, $owner_type, $owner_id) {
-	$folder = fs_get_folder_by_id($folder_id, $owner_type, $owner_id);
-
-	echo '<li><img src="images/folder.gif" height="18" width="20" alt="" /> '.$folder['title'] .$folder_id;
-
-	$folders = fs_get_folder_by_pid($folder_id, $owner_type, $owner_id);
-	echo '<ul style="list-style: none">';
-	if ($folders) {
-		foreach ($folders as $folder) {
-			fs_print_folders_list($folder['folder_id'], $owner_type, $owner_id);
-		}
-	}
-	fs_print_files_list($folder_id, $owner_type, $owner_id);
-	echo '</ul>';
-	echo '</li>';
-}
-***/
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -65,12 +37,8 @@ if (isset($_POST['cancel'])) {
 		$file = abs($file);
 		fs_copy_file($file, $owner_type, $owner_id, WORKSPACE_ASSIGNMENT, $_POST['assignment'], $owner_id);
 	}
-	/*
-	foreach ($_POST['folders'] as $folder) {
-		$folder = abs($folder);
-		fs_copy_folder($folder, $owner_type, $owner_id, WORKSPACE_ASSIGNMENT, $_POST['assignment'], $owner_id);
-	}
-	*/
+
+	$msg->addFeedback('ASSIGNMENT_HANDED_IN');
 	header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['folder']);
 	exit;
 }
