@@ -129,24 +129,16 @@ $cols=6;
 			</td>
 			<td><?php
 				//get assigned groups
-				$sql_sub = "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=".$row['test_id'];
-				$result_sub	= mysql_query($sql_sub, $db);	
-				if (mysql_num_rows($result_sub) == 0) {					
+				$sql_sub = "SELECT G.title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."tests_groups T USING (group_id) WHERE T.test_id=".$row['test_id'];
+				$result_sub	= mysql_query($sql_sub, $db);
+				if (mysql_num_rows($result_sub) == 0) {
 					echo _AT('everyone');
 				} else {
-					$groups = array();
-					$sql_group = "SELECT title, group_id FROM ".TABLE_PREFIX."groups WHERE course_id=".$_SESSION['course_id'];
-					$result_group	= mysql_query($sql_group, $db);
-					while ($row_group = mysql_fetch_assoc($result_group)) {
-						$groups[$row_group['group_id']] = $row_group['title'];
-					}
-
-					$groups_str = "";
-					while($row_sub = mysql_fetch_assoc($result_sub)) {						
-						$groups_str .=  $groups[$row_sub['group_id']].', ';
-					}
-					$groups_str = substr($groups_str, 0 , -2);
-					echo $groups_str;
+					$row_sub = mysql_fetch_assoc($result_sub);
+					echo $row_sub['title'];
+					do {
+						echo ', '.$row_sub['title'];
+					} while ($row_sub = mysql_fetch_assoc($result_sub));
 				}				
 				?>
 			</td>
