@@ -107,6 +107,8 @@ if (isset($_POST['cancel'])) {
 	$_GET['id'] = $_POST['id'];
 }
 
+$onload = 'document.form.name.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
@@ -122,7 +124,7 @@ $ext = fs_get_file_extension($row['file_name']);
 $file_path = fs_get_file_path($id);
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <input type="hidden" name="folder" value="<?php echo $row['folder_id']; ?>" />
 <input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />

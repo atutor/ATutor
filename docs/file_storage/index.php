@@ -221,16 +221,20 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_yes'])) {
 
 	// handle the delete
-	$files = explode(',', $_POST['files']);
-	$folders = explode(',', $_POST['folders']);
-
-	if (!empty($files)) {
+	if (isset($_POST['files'])) {
+		$files = explode(',', $_POST['files']);
+	}
+	if (isset($_POST['folders'])) {
+		$folders = explode(',', $_POST['folders']);
+	}
+	if (isset($files)) {
 		foreach ($files as $file) {
 			fs_delete_file($file, $owner_type, $owner_id);
 		}
 		$msg->addFeedback('FILE_DELETED');
 	}
-	if (!empty($folders)) {
+
+	if (isset($folders)) {
 		foreach ($folders as $folder) {
 			fs_delete_folder($folder, $owner_type, $owner_id);
 		}

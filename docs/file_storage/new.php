@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: new.php 5866 2005-12-15 16:16:03Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -91,6 +91,8 @@ if (isset($_POST['cancel'])) {
 		}
 	}
 }
+
+$onload = 'document.form.name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: edit.php 5923 2006-03-02 17:10:44Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -50,6 +50,8 @@ if (isset($_POST['cancel'])) {
 	$_GET['id'] = $_POST['id'];
 }
 
+$onload = 'document.form.name.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
@@ -63,7 +65,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 }
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>" name="form">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <input type="hidden" name="parent_folder" value="<?php echo $row['parent_folder_id']; ?>" />
 <div class="input-form">

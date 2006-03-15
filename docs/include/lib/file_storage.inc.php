@@ -199,7 +199,7 @@ function fs_print_folders($current_folder_id, $parent_folder_id, &$folders, $dis
 function fs_get_revisions($file_id, $owner_type, $owner_id) {
 	global $db;
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE file_id=$file_id";
+	$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		return array_merge(array_reverse(fs_get_revisions_down_recursive($row['parent_file_id'])), array($row), fs_get_revisions_recursive($file_id));

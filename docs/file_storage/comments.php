@@ -38,9 +38,9 @@ if (isset($_GET['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['comment'] = $addslashes($_POST['comment']);
+		$_POST['edit_comment'] = $addslashes($_POST['edit_comment']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."files_comments SET comment='$_POST[comment]' WHERE member_id=$_SESSION[member_id] AND comment_id=$_POST[comment_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."files_comments SET comment='$_POST[edit_comment]' WHERE member_id=$_SESSION[member_id] AND comment_id=$_POST[comment_id]";
 		mysql_query($sql, $db);
 		$msg->addFeedback('COMMENT_EDITED_SUCCESSFULLY');
 		header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['id']);
@@ -72,6 +72,10 @@ if (isset($_GET['cancel'])) {
 		exit;
 	}
 	$_GET['id'] = $_POST['id'];
+}
+
+if (isset($_GET['comment_id'])) {
+	$onload = 'document.form.edit_comment.focus();';
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -131,11 +135,11 @@ if ($row = mysql_fetch_assoc($result)): ?>
 	<?php do { ?>
 		<div class="input-form">
 			<?php if (($row['member_id'] == $_SESSION['member_id']) && ($row['comment_id'] == $_GET['comment_id'])): ?>
-				<form method="post" action="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id;?>">
+				<form method="post" action="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id;?>" name="form">
 				<input type="hidden" name="comment_id" value="<?php echo $row['comment_id']; ?>" />
 				<div class="row">
 					<a name="c<?php echo $row['comment_id']; ?>"></a><h4><?php echo get_login($row['member_id']); ?> - <?php echo $row['date']; ?></h4>
-					<textarea rows="4" cols="40" name="comment"><?php echo htmlspecialchars($row['comment']); ?></textarea>
+					<textarea rows="4" cols="40" name="edit_comment"><?php echo htmlspecialchars($row['comment']); ?></textarea>
 				</div>
 				<div class="row buttons">
 					<input type="submit" name="edit_submit" value="<?php echo _AT('save'); ?>" />
