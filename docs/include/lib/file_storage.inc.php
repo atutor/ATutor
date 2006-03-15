@@ -131,7 +131,13 @@ function fs_get_folder_by_pid($parent_folder_id, $owner_type, $owner_id) {
 			while ($row = mysql_fetch_assoc($result)) {
 				$rows[] = $row;
 			}
-		}
+		}/* else {
+			$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				$rows[] = $row;	
+			}
+		} */
 	} else {
 		$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
 		$result = mysql_query($sql, $db);
@@ -431,4 +437,56 @@ function fs_delete_workspace($owner_type, $owner_id) {
 		fs_delete_file($row['file_id'], $row['owner_type'], $row['owner_id']);
 	}
 }
+
+/**
+ * copies a file to another workspace.
+ * currently only used for submitting assignments.
+ **/
+function fs_copy_file($file_id, $src_owner_type, $src_owner_id, $dest_owner_type, $dest_owner_id, $dest_folder_id) {
+	global $db;
+
+	$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$src_owner_type AND owner_id=$src_owner_id";
+	$result = mysql_query($sql, $db);
+	if (!$row = mysql_fetch_assoc($result)) {
+		return false;
+	}
+	$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $dest_owner_type, $dest_owner_id, $_SESSION[member_id], $dest_folder_id, 0, NOW(), 0, 0, '$row[file_name]', '$row[file_size]')";
+	$result = mysql_query($sql, $db);
+
+	$id = mysql_insert_id($db);
+
+	$src_file  = fs_get_file_path($file_id) . $file_id;
+	$dest_file = fs_get_file_path($id) . $id;
+	copy($src_file, $dest_file);
+}
+
+/**
+ * copies a directory to another workspace.
+ * not currently used anywhere.
+ */
+/***
+function fs_copy_folder($folder_id, $src_owner_type, $src_owner_id, $dest_owner_type, $dest_owner_id, $dest_parent_folder_id) {
+	global $db;
+
+	$folder = fs_get_folder_by_id($folder_id, $src_owner_type, $src_owner_id);
+	if (!$folder) {
+		return false;
+	}
+
+	$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (0, $dest_parent_folder_id, $dest_owner_type, $dest_owner_id, '$folder[title]')";
+	$result = mysql_query($sql, $db);
+	$id = mysql_insert_id($db);
+
+	$sql = "SELECT file_id FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$src_owner_type AND owner_id=$src_owner_id";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		fs_copy_file($row['file_id'], $src_owner_type, $src_owner_id, $dest_owner_type, $dest_owner_id, $id);
+	}
+
+	$folders = fs_get_folder_by_pid($folder_id, $src_owner_type, $src_owner_id);
+	foreach ($folders as $folder) {
+		fs_copy_folder($folder['folder_id'], $src_owner_type, $src_owner_id, $dest_owner_type, $dest_owner_id, $id);
+	}
+}
+*/
 ?>

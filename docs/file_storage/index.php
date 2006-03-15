@@ -77,9 +77,15 @@ if (isset($_GET['submit_workspace'])) {
 }
 
 // action - Submit Assignment
-if (isset($_GET['assignment'], $_GET['files'])) {
-	header('Location: assignment.php?'.$_SERVER['QUERY_STRING']);
-	exit;
+if (isset($_GET['assignment']) && (isset($_GET['files']) || isset($_GET['folders']))) {
+	if (isset($_GET['folders'])) {
+		$msg->addError('HAND_IN_FOLDER');
+	} else if (!isset($_GET['files'])) {
+		$msg->addError('NO_ITEM_SELECTED');
+	} else {
+		header('Location: assignment.php?'.$_SERVER['QUERY_STRING']);
+		exit;
+	}
 }
 // action - View Revisions
 else if (isset($_GET['revisions'], $_GET['files'])) {
@@ -323,7 +329,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 	}
 	header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
 	exit;
-} else if ((isset($_GET['delete']) || isset($_GET['download']) || isset($_GET['move']) || isset($_GET['edit']) || isset($_GET['assignment'])) && !isset($_POST['files']) && !isset($_POST['folders'])) {
+} else if ((isset($_GET['delete']) || isset($_GET['download']) || isset($_GET['move']) || isset($_GET['edit']) || isset($_GET['assignment'])) && !isset($_GET['files']) && !isset($_GET['folders'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -508,7 +514,7 @@ if ($_SESSION['groups']) {
 	<?php foreach ($folders as $folder_info): ?>
 		<tr onmousedown="document.form['f<?php echo $folder_info['folder_id']; ?>'].checked = !document.form['f<?php echo $folder_info['folder_id']; ?>'].checked; rowselectbox(this, document.form['f<?php echo $folder_info['folder_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $folder_info['folder_id']; ?>_1">
 			<td width="10"><input type="checkbox" name="folders[]" value="<?php echo $folder_info['folder_id']; ?>" id="f<?php echo $folder_info['folder_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
-			<td><img src="images/folder.gif" /> <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a></td>
+			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
