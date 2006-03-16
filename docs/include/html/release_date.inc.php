@@ -14,7 +14,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $month_names = $month_name_con['en'];
 
-		echo '<select name="day'.$name.'">';
+		echo '<select name="day'.$name.'"'.' '.$disabled.'  >';
 		for ($i = 1; $i <= 31; $i++) {
 			echo '<option value="'.$i.'"';
 			if ($i == $today_day) {
@@ -25,7 +25,7 @@ $month_names = $month_name_con['en'];
 		}
 		echo '</select>';
 
-		echo '<select name="month'.$name.'">';
+		echo '<select name="month'.$name.'"'.' '.$disabled.'  >';
 		for ($i = 1; $i <= 12; $i++) {
 			echo '<option value="'.$i.'"';
 			if ($i == $today_mon) {
@@ -37,7 +37,7 @@ $month_names = $month_name_con['en'];
 		}
 		echo '</select>';
 
-		echo '<select name="year'.$name.'">';
+		echo '<select name="year'.$name.'"'.' '.$disabled.'  >';
 		for ($i = $today_year-1; $i <= $today_year+1; $i++) {
 			echo '<option value="'.$i.'"';
 			if ($i == $today_year) {
@@ -48,7 +48,7 @@ $month_names = $month_name_con['en'];
 		}
 		echo '</select> ';
 
-		echo _AT('at').'  <select name="hour'.$name.'">';
+		echo _AT('at').'  <select name="hour'.$name.'"'.' '.$disabled.'  >';
 		for ($i = 0; $i <= 23; $i++) {
 			echo '<option value="'.$i.'"';
 			if ($i == $today_hour) {
@@ -59,7 +59,7 @@ $month_names = $month_name_con['en'];
 		}
 		echo '</select>:';
 	
-		echo '<select name="min'.$name.'">';
+		echo '<select name="min'.$name.'"'.' '.$disabled.'  >';
 		for ($i = 0; $i <= 59; $i+=5) {
 			echo '<option value="'.$i.'"';
 			if ($i == $today_min) {
