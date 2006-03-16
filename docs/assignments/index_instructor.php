@@ -34,13 +34,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 // sort order of table
 $orders = array('ASC' => 'DESC', 'DESC' => 'ASC');
-$sort = 'date_due';
+$sort = 'title';
 $sort_order = 'ASC';
 if (isset ($_GET['sort'])){
-	$sort = $_GET['sort'];
+	$sort = $addslashes ($_GET['sort']);
+	if (($sort != 'title') && ($sort != 'due_date')){
+		$sort = 'title';
+	}
 }
 if (isset ($_GET['sort_order'])){
-	$sort_order = $_GET['sort_order'];
+	$sort_order = $addslashes ($_GET['sort_order']);
+	if (($sort_order != 'ASC') && ($sort_order != 'DESC')){
+		$sort_order = 'ASC';
+	}
 }
 $sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] ORDER BY '$sort' $sort_order";
 $result = mysql_query($sql, $db);
@@ -48,7 +54,7 @@ $result = mysql_query($sql, $db);
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<table class="data" style="width: 90%;">
+<table class="data" style="width: 90%;" rules="cols">
 <colgroup>
 	<?php if ($sort == 'title'): ?>
 		<col />
@@ -68,7 +74,7 @@ $result = mysql_query($sql, $db);
 <tr>
 	<th>&nbsp;</th>
 	<th scope="col"><a href="assignments/index_instructor.php?sort=title&sort_order=<?php echo $orders[$sort_order]; ?>"><?php echo _AT('title'); ?></a></th>
-	<th scope="col"><a href="assignments/index_instructor.php?sort=assign_to&sort_order=<?php echo $orders[$sort_order]; ?>"><?php echo _AT('assigned_to'); ?></a></th>
+	<th scope="col"><?php echo _AT('assigned_to'); ?></th>
 	<th scope="col"><a href="assignments/index_instructor.php?sort=date_due&sort_order=<?php echo $orders[$sort_order]; ?>"><?php echo _AT('due_date'); ?></a></th>
 </tr>
 </thead>
