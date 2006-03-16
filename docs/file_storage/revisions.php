@@ -37,13 +37,30 @@ if (isset($_GET['download'], $_GET['revision'])) {
 	exit;
 }
 
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
 
-$files = fs_get_revisions($id, $owner_type, $owner_id);
+$orders = array('asc' => 'desc', 'desc' => 'asc');
+
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'desc';
+	$col   = 'num_revisions';
+}
+
+$files = fs_get_revisions($id, $owner_type, $owner_id, $col, $order);
 $current_file = current($files);
+
+
+usort($files, 'fs_revisions_sort_compare');
+
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -54,13 +71,35 @@ $current_file = current($files);
 <thead>
 <tr>
 	<th>&nbsp;</th>
-	<th><?php echo _AT('revision');  ?></th>
-	<th><?php echo _AT('file_name'); ?></th>
-	<th><?php echo _AT('date');      ?></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=num_revisions"><?php echo _AT('revision');  ?></a></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=file_name"><?php echo _AT('file_name'); ?></a></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=date"><?php echo _AT('date');      ?></a></th>
 	<th><?php echo _AT('author');    ?></th>
-	<th><?php echo _AT('comments');  ?></th>
-	<th><?php echo _AT('size');      ?></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=num_comments"><?php echo _AT('comments');  ?></a></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=file_size"><?php echo _AT('size');      ?></a></th>
 </tr>
+<colgroup>
+	<?php if ($col == 'num_revisions'): ?>
+		<col />
+		<col class="sort" />
+		<col span="5" />
+	<?php elseif($col == 'file_name'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col span="4" />
+	<?php elseif($col == 'date'): ?>
+		<col span="3" />
+		<col class="sort" />
+		<col span="3" />
+	<?php elseif($col == 'num_comments'): ?>
+		<col span="4" />
+		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'file_size'): ?>
+		<col span="6" />
+		<col class="sort" />
+	<?php endif; ?>
+</colgroup>
 </thead>
 <tfoot>
 <tr>

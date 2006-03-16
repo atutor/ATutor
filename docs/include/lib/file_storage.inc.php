@@ -462,6 +462,20 @@ function fs_copy_file($file_id, $src_owner_type, $src_owner_id, $dest_owner_type
 }
 
 /**
+ * used with usort() to sort the revisions array returned from fs_get_revisions()
+ * $col is a valid array key to sort by
+ * $order is either 'asc' or 'desc'
+ */
+function fs_revisions_sort_compare($a, $b) {
+	global $col, $order;
+
+	if ($order == 'asc') {
+		return strcasecmp($a[$col], $b[$col]);
+	}
+	return strcasecmp($b[$col], $a[$col]);
+}
+
+/**
  * copies a directory to another workspace.
  * not currently used anywhere.
  */
