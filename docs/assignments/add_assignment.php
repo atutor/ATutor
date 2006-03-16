@@ -11,6 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ASSIGNMENTS);
@@ -18,8 +19,6 @@ authenticate(AT_PRIV_ASSIGNMENTS);
 // initial values for controls
 $id = 0;
 $today = getdate();
-$start_year = $today['year'];
-$end_year = $start_year + '3';
 
 // Are we editing an existing assignment or creating a new assignment?
 if (isset ($_GET['id'])){
@@ -48,8 +47,8 @@ if (isset ($_GET['id'])){
 	$dueyear		= $array_date_due[0];
 	$duemonth		= $array_date_due[1];
 	$dueday			= $array_date_due[2];
-	$duehour		= '12';
-	$dueminute		= '0';
+	$duehour		= $array_time_due[0];
+	$dueminute		= $array_time_due[1];
 
 	if ($dueyear == '0000'){
 		$has_due_date = 'false';
@@ -74,8 +73,8 @@ if (isset ($_GET['id'])){
 	$cutoffyear		= $array_date_cutoff[0];
 	$cutoffmonth	= $array_date_cutoff[1];
 	$cutoffday		= $array_date_cutoff[2];
-	$cutoffhour		= '12';
-	$cutoffminute	= '0';
+	$cutoffhour		= $array_time_cutoff[0];
+	$cutoffminute	= $array_time_cutoff[1];
 
 	if ($cutoffyear == '0000'){
 		$late_submit	= '0'; // allow late submissions always
@@ -113,6 +112,8 @@ else if (isset($_POST['cancel'])) {
 }
 else if (isset($_POST['submit'])) {
 	// user has submitted form to update database
+	$id = intval ($_POST['id']);
+
 	if ($_POST['multi_submit'] == 'on'){
 		$multi_submit = '1';
 	}
@@ -122,16 +123,18 @@ else if (isset($_POST['submit'])) {
 	$assign_to		= intval($_POST['assign_to']);
 	$has_due_date	= $addslashes($_POST['has_due_date']);
 	$late_submit	= intval($_POST['late_submit']);
-	$dueday			= intval($_POST['dueday']);
-	$duemonth		= intval($_POST['duemonth']);
-	$dueyear		= intval($_POST['dueyear']);
-	$duehour		= intval($_POST['duehour']);
-	$dueminute		= intval($_POST['dueminute']);
-	$cutoffday		= intval($_POST['cutoffday']);
-	$cutoffmonth	= intval($_POST['cutoffmonth']);
-	$cutoffyear		= intval($_POST['cutoffyear']);
-	$cutoffhour		= intval($_POST['cutoffhour']);
-	$cutoffminute	= intval($_POST['cutoffminute']);
+
+	$dueday			= intval($_POST['day_due']);
+	$duemonth		= intval($_POST['month_due']);
+	$dueyear		= intval($_POST['year_due']);
+	$duehour		= intval($_POST['hour_due']);
+	$dueminute		= intval($_POST['min_due']);
+
+	$cutoffday		= intval($_POST['day_cutoff']);
+	$cutoffmonth	= intval($_POST['month_cutoff']);
+	$cutoffyear		= intval($_POST['year_cutoff']);
+	$cutoffhour		= intval($_POST['hour_cutoff']);
+	$cutoffminute	= intval($_POST['min_cutoff']);
 
 	// ensure title is not empty
 	if (trim($title) == '') {
@@ -184,7 +187,6 @@ else if (isset($_POST['submit'])) {
 		}
 
 		// Are we creating a new assignment or updating an existing assignment?
-		$id = intval ($_POST['id']);
 		if ($id == '0'){
 			// creating a new assignment
 			$sql = "INSERT INTO ".TABLE_PREFIX."assignments VALUES (0, $_SESSION[course_id],
@@ -250,9 +252,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				// editing an existing assignment 
 				if ($assign_to == '0'){ echo _AT('all_students'); }
 				else { // name of group goes here
+					echo 'group: '.$assign_to;
+					echo '<input type="hidden" name="assign_to" value="'.$assign_to.'" />';
 				}
 				?>
-
 			<?php }
 			else { // creating a new assignment
 			?>
@@ -269,87 +272,79 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<?php  echo _AT('due_date'); ?><br />
-		<input type="radio" name="has_due_date" value="false" id="noduedate" <?php if ($has_due_date == 'false'){echo 'checked="checked"';} ?>>
+		<input type="radio" name="has_due_date" value="false" id="noduedate" <?php if ($has_due_date == 'false'){echo 'checked="checked"'; } ?> 
+		onfocus="document.form.day_due.disabled=true; 
+		document.form.month_due.disabled=true;
+		document.form.year_due.disabled=true;
+		document.form.hour_due.disabled=true;
+		document.form.min_due.disabled=true;" />
 		<label for="noduedate" title="<?php echo _AT('due_date'). ': '. _AT('none');  ?>"><?php  echo _AT('none'); ?></label><br />
 
-		<input type="radio" name="has_due_date" value="true" id="hasduedate" <?php if ($has_due_date == 'true'){echo 'checked="checked"';} ?>>
+		<input type="radio" name="has_due_date" value="true" id="hasduedate" <?php if ($has_due_date == 'true'){echo 'checked="checked"'; } ?> 
+		onfocus="document.form.day_due.disabled=false; 
+		document.form.month_due.disabled=false;
+		document.form.year_due.disabled=false;
+		document.form.hour_due.disabled=false;
+		document.form.min_due.disabled=false;" />
 		<label for="hasduedate"  title="<?php echo _AT('due_date') ?>"><?php  echo _AT('date'); ?></label>
 
-		<select name="dueday" id="date_due">
-		<?php for ($i = 1; $i <= 31; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $dueday) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
-		<?php } ?>
-		</select>
-		
-		<select name="duemonth">
-		<?php for ($i = 1; $i <= 12; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $duemonth) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', $i, AT_DATE_INDEX_VALUE) ?></option>
-		<?php } ?>
-		</select>
+		<?php
+			$today_day  = $dueday;
+			$today_mon  = $duemonth;
+			$today_year = $dueyear;
+			$today_hour = $duehour;
+			$today_min  = $dueminute;
 
-		<select name="dueyear">
-		<?php for ($i = $start_year; $i <= $end_year; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $dueyear) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
-		<?php } ?>
-		</select>
-
-		<label for="duehour" title="<?php echo _AT('due_date'). ' '. _AT('time'); ?>">&nbsp;<?php  echo _AT('time'); ?></label>
-
-		<select name="duehour">
-		<?php for ($i = 0; $i <= 23; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $duehour) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
-		<?php } ?>
-		</select>
-		:
-		<select name="dueminute">
-		<?php for ($i = 0; $i < 60; $i+='5'){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $dueminute) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
-		<?php } ?>
-		</select>
+			if ($has_due_date == 'false'){ $disabled = 'disabled="disabled"'; }
+			else {$disabled = '';}
+			
+			$name = '_due';
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+		?>
 	</div>
 
 	<div class="row">
 		<label for="date_cutoff"><?php  echo _AT('accept_late_submissions'); ?></label><br />
-		<input type="radio" name="late_submit" value="0" id="always"  <?php if ($late_submit == '0'){echo 'checked="checked"';} ?>>
+		<input type="radio" name="late_submit" value="0" id="always"  <?php if ($late_submit == '0'){echo 'checked="checked"';} ?> 
+		onfocus="document.form.day_cutoff.disabled=true; 
+		document.form.month_cutoff.disabled=true;
+		document.form.year_cutoff.disabled=true;
+		document.form.hour_cutoff.disabled=true;
+		document.form.min_cutoff.disabled=true;" />
+
 		<label for="always" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('always');  ?>"><?php echo _AT('always'); ?></label><br />
 
-		<input type="radio" name="late_submit" value="1" id="never"  <?php if ($late_submit == '1'){echo 'checked="checked"';} ?>>
+		<input type="radio" name="late_submit" value="1" id="never"  <?php if ($late_submit == '1'){echo 'checked="checked"';} ?>
+		onfocus="document.form.day_cutoff.disabled=true; 
+		document.form.month_cutoff.disabled=true;
+		document.form.year_cutoff.disabled=true;
+		document.form.hour_cutoff.disabled=true;
+		document.form.min_cutoff.disabled=true;" />
+
 		<label for="never" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('never');  ?>"><?php  echo _AT('never'); ?></label><br />
 
-		<input type="radio" name="late_submit" value="2" id="until"  <?php if ($late_submit == '2'){echo 'checked="checked"';} ?>>
+		<input type="radio" name="late_submit" value="2" id="until"  <?php if ($late_submit == '2'){echo 'checked="checked"';} ?>
+		onfocus="document.form.day_cutoff.disabled=false; 
+		document.form.month_cutoff.disabled=false;
+		document.form.year_cutoff.disabled=false;
+		document.form.hour_cutoff.disabled=false;
+		document.form.min_cutoff.disabled=false;" />
+
 		<label for="until" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('until');  ?>"><?php  echo _AT('until'); ?></label>
 
-		<select name="cutoffday" id="date_cutoff">
-		<?php for ($i = 1; $i <= 31; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $cutoffday) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
-		<?php } ?>
-		</select>
-	
-		<select name="cutoffmonth">
-		<?php for ($i = 1; $i <= 12; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $cutoffmonth) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', $i, AT_DATE_INDEX_VALUE) ?></option>
-		<?php } ?>
-		</select>
-	
-		<select name="cutoffyear">
-		<?php for ($i = $start_year; $i <= $end_year; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $cutoffyear) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
-		<?php } ?>
-		</select>	
+		<?php
+			$today_day  = $cutoffday;
+			$today_mon  = $cutoffmonth;
+			$today_year = $cutoffyear;
+			$today_hour = $cutoffhour;
+			$today_min  = $cutoffminute;
+			
+			if ($late_submit != '2'){ $disabled = 'disabled="disabled"'; }
+			else {$disabled = '';}
 
-		<label for="cutoffhour"  title="<?php echo _AT('accept_late_submissions'). ' '. _AT('time'); ?>">&nbsp;<?php  echo _AT('time'); ?></label>
-
-		<select name="cutoffhour">
-		<?php for ($i = 0; $i <= 23; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $cutoffhour) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
-		<?php } ?>
-		</select>
-		:	
-		<select name="cutoffminute">
-		<?php for ($i = 0; $i < 60; $i+='5'){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $cutoffminute) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
-		<?php } ?>
-		</select>
+			$name = '_cutoff';
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+		?>
 	</div>
 	
 	<div class="row">
