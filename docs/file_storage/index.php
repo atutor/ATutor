@@ -542,7 +542,7 @@ if ($_SESSION['groups']) {
 			</td>
 			<td align="right" valign="top"><a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_comments']; ?></a></td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
-			<td align="right" valign="top"><?php echo $file_info['date']; ?></td>
+			<td align="right" valign="top"><?php echo AT_date(_AT('filemanager_date_format'), $file_info['date'], AT_DATE_MYSQL_DATETIME); ?></td>
 		</tr>
 	<?php endforeach; ?>
 <?php else: ?>

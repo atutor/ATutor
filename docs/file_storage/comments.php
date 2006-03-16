@@ -123,7 +123,7 @@ if (!$files) {
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $current_file['file_name']; ?> <small> - Revision <?php echo $current_file['num_revisions']; ?></small></h3>
-		<span style="font-size: small"><?php echo get_login($current_file['member_id']); ?> - <?php echo $current_file['date']; ?></span>
+		<span style="font-size: small"><?php echo get_login($current_file['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $current_file['date'], AT_DATE_MYSQL_DATETIME); ?></span>
 		<p><?php echo nl2br($current_file['comments']); ?></p>
 	</div>
 </div>
@@ -149,11 +149,11 @@ if ($row = mysql_fetch_assoc($result)): ?>
 						
 			<?php else: ?>
 				<div class="row">
-					<h4><?php echo get_login($row['member_id']); ?> - <?php echo $row['date']; ?></h4>
+					<h4><?php echo get_login($row['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h4>
 					<p><?php echo nl2br($row['comment']); ?></p>
 						<?php if ($row['member_id'] == $_SESSION['member_id']): ?>
 							<div style="text-align:right; font-size: smaller">
-								<a href="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id.SEP.'comment_id='.$row['comment_id']; ?>#c<?php echo $row['comment_id']; ?>">Edit</a> | <a href="file_storage/delete_comment.php<?php echo $owner_arg_prefix . 'file_id='.$id.SEP; ?>id=<?php echo $row['comment_id']; ?>">Delete</a>
+								<a href="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id.SEP.'comment_id='.$row['comment_id']; ?>#c<?php echo $row['comment_id']; ?>"><?php echo _AT('edit'); ?></a> | <a href="file_storage/delete_comment.php<?php echo $owner_arg_prefix . 'file_id='.$id.SEP; ?>id=<?php echo $row['comment_id']; ?>"><?php echo _AT('delete'); ?></a>
 							</div>
 						<?php endif; ?>
 				</div>
