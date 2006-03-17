@@ -57,6 +57,7 @@ $this->_pages['assignments/index_instructor.php']['children'] = array('assignmen
 /*******
  * student page.
  */
+ /*
 $this->_pages['assignments/index.php']['title_var'] = 'assignments';
 $this->_pages['assignments/index.php']['img']       = 'assignments/assignments.gif';
 
@@ -64,4 +65,5 @@ $this->_pages['assignments/index.php']['children'] = array('assignments/assignme
 
 	$this->_pages['assignments/assignment_details.php']['title_var'] = 'am_display_assignments';
 	$this->_pages['assignments/assignment_details.php']['parent']    = 'assignments/index.php';
+*/
 ?>
