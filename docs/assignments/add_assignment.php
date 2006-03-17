@@ -52,15 +52,6 @@ if (isset ($_GET['id'])){
 
 	if ($dueyear == '0000'){
 		$has_due_date = 'false';
-		// use today's date as default
-		$dueday		= $today['mday'];
-		$duemonth	= $today['mon'];
-		$dueyear	= $today['year'];
-		$duehour	= $today['hours'];
-		$dueminute	= $today['minutes'];
-		// round the minute to the next highest multiple of 5 
-		$dueminute = round($dueminute / '5' ) * '5' + '5';
-		if ($dueminute > '55'){ $dueminute = '55'; }
 	}
 	else {
 		$has_due_date = 'true';
@@ -78,15 +69,6 @@ if (isset ($_GET['id'])){
 
 	if ($cutoffyear == '0000'){
 		$late_submit	= '0'; // allow late submissions always
-		// use today's date as default
-		$cutoffday		= $today['mday'];
-		$cutoffmonth	= $today['mon'];
-		$cutoffyear		= $today['year'];
-		$cutoffhour		= $today['hours'];
-		$cutoffminute	= $today['minutes'];
-		// round the minute to the next highest multiple of 5 
-		$cutoffminute = round($cutoffminute / '5' ) * '5' + '5';
-		if ($cutoffminute > '55'){ $cutoffminute = '55'; }
 	}
 	else if ($row['date_cutoff'] == $row['date_due']){
 		$late_submit	= '1'; // allow late submissions never
@@ -230,6 +212,30 @@ else { // creating a new assignment
 	$cutoffminute	= '0';
 }
 
+// ensure the dates are valid
+if ($dueyear == '0'){
+	// use today's date as default
+	$dueday		= $today['mday'];
+	$duemonth	= $today['mon'];
+	$dueyear	= $today['year'];
+	$duehour	= $today['hours'];
+	$dueminute	= $today['minutes'];
+	// round the minute to the next highest multiple of 5 
+	$dueminute = round($dueminute / '5' ) * '5' + '5';
+	if ($dueminute > '55'){ $dueminute = '55'; }
+}
+if ($cutoffyear == '0'){
+	// use today's date as default
+	$cutoffday		= $today['mday'];
+	$cutoffmonth	= $today['mon'];
+	$cutoffyear		= $today['year'];
+	$cutoffhour		= $today['hours'];
+	$cutoffminute	= $today['minutes'];
+	// round the minute to the next highest multiple of 5 
+	$cutoffminute = round($cutoffminute / '5' ) * '5' + '5';
+	if ($cutoffminute > '55'){ $cutoffminute = '55'; }
+}
+
 $onload = 'document.form.title.focus();';
 
 // enable/disable date controls
@@ -346,20 +352,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <script language="javascript" type="text/javascript">
 function disable_dates (state, name)
 {
-	if (name == '_due'){
-		document.form.day_due.disabled=state;
-		document.form.month_due.disabled=state;
-		document.form.year_due.disabled=state;
-		document.form.hour_due.disabled=state;
-		document.form.min_due.disabled=state;
-	}
-	else if (name == '_cutoff'){
-		document.form.day_cutoff.disabled=state;
-		document.form.month_cutoff.disabled=state;
-		document.form.year_cutoff.disabled=state;
-		document.form.hour_cutoff.disabled=state;
-		document.form.min_cutoff.disabled=state;
-	}
+	document.form['day' + name].disabled=state;
+	document.form['month' + name].disabled=state;
+	document.form['year' + name].disabled=state;
+	document.form['hour' + name].disabled=state;
+	document.form['min' + name].disabled=state;
 }
 </script>
 
