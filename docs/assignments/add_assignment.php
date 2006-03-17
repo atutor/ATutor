@@ -230,7 +230,16 @@ else { // creating a new assignment
 	$cutoffminute	= '0';
 }
 
-$onload = 'document.form.name.focus();';
+$onload = 'document.form.title.focus();';
+
+// enable/disable date controls
+if ($has_due_date == 'false'){ 
+	$onload = $onload.' disable_dates (true, \'_due\');';
+}
+
+if ($late_submit != '2'){
+	$onload = $onload.' disable_dates (true, \'_cutoff\');';
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
@@ -273,19 +282,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row">
 		<?php  echo _AT('due_date'); ?><br />
 		<input type="radio" name="has_due_date" value="false" id="noduedate" <?php if ($has_due_date == 'false'){echo 'checked="checked"'; } ?> 
-		onfocus="document.form.day_due.disabled=true; 
-		document.form.month_due.disabled=true;
-		document.form.year_due.disabled=true;
-		document.form.hour_due.disabled=true;
-		document.form.min_due.disabled=true;" />
+		onfocus="disable_dates (true, '_due');" />
 		<label for="noduedate" title="<?php echo _AT('due_date'). ': '. _AT('none');  ?>"><?php  echo _AT('none'); ?></label><br />
 
 		<input type="radio" name="has_due_date" value="true" id="hasduedate" <?php if ($has_due_date == 'true'){echo 'checked="checked"'; } ?> 
-		onfocus="document.form.day_due.disabled=false; 
-		document.form.month_due.disabled=false;
-		document.form.year_due.disabled=false;
-		document.form.hour_due.disabled=false;
-		document.form.min_due.disabled=false;" />
+		onfocus="disable_dates (false, '_due');" />
 		<label for="hasduedate"  title="<?php echo _AT('due_date') ?>"><?php  echo _AT('date'); ?></label>
 
 		<?php
@@ -294,9 +295,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$today_year = $dueyear;
 			$today_hour = $duehour;
 			$today_min  = $dueminute;
-
-			if ($has_due_date == 'false'){ $disabled = 'disabled="disabled"'; }
-			else {$disabled = '';}
 			
 			$name = '_due';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
@@ -304,31 +302,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<label for="date_cutoff"><?php  echo _AT('accept_late_submissions'); ?></label><br />
+		<?php  echo _AT('accept_late_submissions'); ?><br />
 		<input type="radio" name="late_submit" value="0" id="always"  <?php if ($late_submit == '0'){echo 'checked="checked"';} ?> 
-		onfocus="document.form.day_cutoff.disabled=true; 
-		document.form.month_cutoff.disabled=true;
-		document.form.year_cutoff.disabled=true;
-		document.form.hour_cutoff.disabled=true;
-		document.form.min_cutoff.disabled=true;" />
+		onfocus="disable_dates (true, '_cutoff');" />
 
 		<label for="always" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('always');  ?>"><?php echo _AT('always'); ?></label><br />
 
 		<input type="radio" name="late_submit" value="1" id="never"  <?php if ($late_submit == '1'){echo 'checked="checked"';} ?>
-		onfocus="document.form.day_cutoff.disabled=true; 
-		document.form.month_cutoff.disabled=true;
-		document.form.year_cutoff.disabled=true;
-		document.form.hour_cutoff.disabled=true;
-		document.form.min_cutoff.disabled=true;" />
+		onfocus="disable_dates (true, '_cutoff');" />
 
 		<label for="never" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('never');  ?>"><?php  echo _AT('never'); ?></label><br />
 
 		<input type="radio" name="late_submit" value="2" id="until"  <?php if ($late_submit == '2'){echo 'checked="checked"';} ?>
-		onfocus="document.form.day_cutoff.disabled=false; 
-		document.form.month_cutoff.disabled=false;
-		document.form.year_cutoff.disabled=false;
-		document.form.hour_cutoff.disabled=false;
-		document.form.min_cutoff.disabled=false;" />
+		onfocus="disable_dates (false, '_cutoff');" />
 
 		<label for="until" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('until');  ?>"><?php  echo _AT('until'); ?></label>
 
@@ -339,9 +325,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$today_hour = $cutoffhour;
 			$today_min  = $cutoffminute;
 			
-			if ($late_submit != '2'){ $disabled = 'disabled="disabled"'; }
-			else {$disabled = '';}
-
 			$name = '_cutoff';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 		?>
@@ -359,5 +342,25 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 </div>
 </form>
+
+<script language="javascript" type="text/javascript">
+function disable_dates (state, name)
+{
+	if (name == '_due'){
+		document.form.day_due.disabled=state;
+		document.form.month_due.disabled=state;
+		document.form.year_due.disabled=state;
+		document.form.hour_due.disabled=state;
+		document.form.min_due.disabled=state;
+	}
+	else if (name == '_cutoff'){
+		document.form.day_cutoff.disabled=state;
+		document.form.month_cutoff.disabled=state;
+		document.form.year_cutoff.disabled=state;
+		document.form.hour_cutoff.disabled=state;
+		document.form.min_cutoff.disabled=state;
+	}
+}
+</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
