@@ -72,17 +72,20 @@ if (isset($_POST['cancel'])) {
 	$total_assigned = array_sum($groups_counts);
 	//debug($total_assigned, 'assigned');
 
-	foreach ($_POST['groups'] as $mid => $gid) {
-		if ($gid) {
-			unset($_POST['groups'][$mid]);
+	if (is_array($_POST['groups'])) {
+		foreach ($_POST['groups'] as $mid => $gid) {
+			if ($gid) {
+				unset($_POST['groups'][$mid]);
+			}
 		}
-	}
-	$students = array_keys($_POST['groups']);
+		$students = array_keys($_POST['groups']);
 
-	$total_unassigned = count($students);
-	//debug($total_unassigned, 'unassigned');
-	shuffle($students);
-	reset($students);
+		$total_unassigned = count($students);
+		//debug($total_unassigned, 'unassigned');
+		shuffle($students);
+		reset($students);
+	}
+
 
 	$total_students = $total_unassigned + $total_assigned;
 
