@@ -90,7 +90,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 }
 if (!$count) {
-	echo '<tr><td colspan="7"><i>'._AT('no_tests').'</i></td></tr>';
+	echo '<tr><td colspan="7">'._AT('none_found').'</td></tr>';
 }
 ?>
 	</tbody>

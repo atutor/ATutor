@@ -19,7 +19,11 @@ require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 $owner_type = abs($_REQUEST['ot']);
 $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
-if (!fs_authenticate($owner_type, $owner_id)) { exit('NOT AUTHENTICATED'); }
+if (!fs_authenticate($owner_type, $owner_id)) { 
+	$msg->addError('ACCESS_DENIED');
+	header('Location: index.php');
+	exit;
+}
 
 if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');

@@ -20,7 +20,9 @@ $owner_type = abs($_REQUEST['ot']);
 $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
-	exit('NOT AUTHENTICATED');
+	$msg->addError('ACCESS_DENIED');
+	header('Location: index.php');
+	exit;
 }
 
 if (isset($_POST['cancel'])) {
