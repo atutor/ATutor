@@ -246,6 +246,14 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 
 	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
 	exit;
+}
+// action - Cancel Delete
+else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
+	exit;
+
+// action - Create Folder
 } else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['create_folder'])) {
 	// create a new folder
 	$_POST['new_folder_name'] = trim($_POST['new_folder_name']);
