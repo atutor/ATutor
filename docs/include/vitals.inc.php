@@ -136,7 +136,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 	}
 
 	/* development uses a common language db */
-	if (FALSE && file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
+	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
 		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
 	} else {
 		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
