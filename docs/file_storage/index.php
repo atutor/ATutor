@@ -45,12 +45,17 @@ if (isset($_GET['submit_workspace'])) {
 } else if (isset($_REQUEST['ot'], $_REQUEST['oid'])) {
 	$owner_type = abs($_REQUEST['ot']);
 	$owner_id   = abs($_REQUEST['oid']);
+} else if (isset($_SESSION['fs_owner_type'], $_SESSION['fs_owner_id'], $_SESSION['fs_folder_id'])) {
+	$owner_type = abs($_SESSION['fs_owner_type']);
+	$owner_id   = abs($_SESSION['fs_owner_id']);
 } else {
 	$owner_type = WORKSPACE_COURSE;
 }
 
 if (isset($_GET['folder'])) {
 	$folder_id = abs($_GET['folder']);
+} else if (isset($_SESSION['fs_folder_id'])) {
+	$folder_id = abs($_SESSION['fs_folder_id']);
 } else {
 	$folder_id = 0;
 }
@@ -72,6 +77,9 @@ if (!($owner_status = fs_authenticate($owner_type, $owner_id))) {
 	header('Location: index.php');
 	exit;
 }
+$_SESSION['fs_owner_type'] = $owner_type;
+$_SESSION['fs_owner_id']   = $owner_id;
+$_SESSION['fs_folder_id']  = $folder_id;
 
 if (isset($_GET['submit_workspace'])) {
 	header('Location: index.php'.$owner_arg_prefix);
