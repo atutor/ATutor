@@ -26,7 +26,9 @@ if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($ow
 }
 
 if (isset($_POST['cancel'])) {
-
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
+	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['comments'] = trim($_POST['comments']);
 	$_POST['name'] = trim($_POST['name']);

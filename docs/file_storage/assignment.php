@@ -39,10 +39,8 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 
-	if ($assignment_row['assign_to']) {
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id] AND approved='y'";
-		$result = mysql_query($sql, $db);
-		if (!$row = mysql_fetch_assoc($result)) {
+	if (!$assignment_row['assign_to']) {
+		if (!$_SESSION['enroll']) {
 			$msg->addError('ACCESS_DENIED');
 			header('Location: index.php');
 			exit;

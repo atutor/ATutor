@@ -37,7 +37,7 @@ if (isset($_GET['cancel'])) {
 	$_POST['comment'] = trim($_POST['comment']);
 	$_POST['comment_id'] = abs($_POST['comment_id']);
 
-	if (!$_POST['comment']) {
+	if (!$_POST['edit_comment']) {
 		$msg->addError('MISSING_COMMENT');
 	}
 
