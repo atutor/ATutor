@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: delete_revision.php 5923 2006-03-02 17:10:44Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -77,15 +77,14 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT file_id, file_name, owner_type, owner_id, date, comments, member_id FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
+$sql = "SELECT file_id, file_name, owner_type, owner_id, date, member_id FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 $result = mysql_query($sql, $db);
 if (!$row = mysql_fetch_assoc($result)) {
 	$msg->printErrors('FILE_NOT_EXIST');
 } else {
 	$hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id);
-	$msg->addConfirm(array('FILE_DELETE', '<li>'.$row['date'].' - '. $row['file_name'].' - '.get_login($row['member_id']).' - '.$row['comments'].'</li>'), $hidden_vars);
+	$msg->addConfirm(array('FILE_DELETE', '<li>'.$row['date'].' - '. $row['file_name'].' - '.get_login($row['member_id']).'</li>'), $hidden_vars);
 	$msg->printConfirm();
-
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

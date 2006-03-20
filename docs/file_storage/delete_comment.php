@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: delete_revision.php 5954 2006-03-09 17:43:07Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -20,13 +20,14 @@ $owner_type = abs($_REQUEST['ot']);
 $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
-	exit('NOT AUTHENTICATED');
+	$msg->addError('ACCESS_DENIED');
+	header('Location: index.php');
+	exit;
 }
 
 $_pages['file_storage/delete_comment.php']['parent'] = 'file_storage/comments.php' . $owner_arg_prefix.'id='.$_GET['file_id'];
 $_pages['file_storage/comments.php' . $owner_arg_prefix.'id='.$_GET['file_id']]['title_var'] = 'comments';
 $_pages['file_storage/comments.php' . $owner_arg_prefix.'id='.$_GET['file_id']]['parent']    = 'file_storage/index.php';
-
 
 $id = abs($_REQUEST['id']);
 

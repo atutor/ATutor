@@ -109,7 +109,7 @@ if (!$files) {
 							$selected = ' selected="selected"';
 						}
 					?>
-					<option value="<?php echo $file['file_id'];?>" <?php echo $selected; ?>>Revision <?php echo $file['num_revisions']; ?>. <?php echo $file['file_name']; ?> - <?php echo $file['num_comments']; ?> <?php echo _AT('comments'); ?></option>
+					<option value="<?php echo $file['file_id'];?>" <?php echo $selected; ?>><?php echo _AT('revision'); ?> <?php echo $file['num_revisions']; ?>. <?php echo $file['file_name']; ?> - <?php echo $file['num_comments']; ?> <?php echo _AT('comments'); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
@@ -126,7 +126,7 @@ if (!$files) {
 
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo $current_file['file_name']; ?> <small> - Revision <?php echo $current_file['num_revisions']; ?></small></h3>
+		<h3><?php echo $current_file['file_name']; ?> <small> - <?php echo _AT('revision'); ?> <?php echo $current_file['num_revisions']; ?></small></h3>
 		<span style="font-size: small"><?php echo get_login($current_file['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $current_file['date'], AT_DATE_MYSQL_DATETIME); ?></span>
 		<p><?php echo nl2br($current_file['comments']); ?></p>
 	</div>
