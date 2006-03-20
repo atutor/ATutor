@@ -24,7 +24,7 @@ define('AT_PRIV_ASSIGNMENTS', $this->getPrivilege());
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_student_tool = 'assignments/index.php';
+//$_student_tool = 'assignments/index.php';
 // ** possible alternative: **
 // $this->addTool('./index.php');
 
@@ -51,8 +51,7 @@ $this->_pages['assignments/index_instructor.php']['children'] = array('assignmen
 	$this->_pages['assignments/edit_assignment.php']['title_var'] = 'edit_assignment';
 	$this->_pages['assignments/edit_assignment.php']['parent']    = 'assignments/index_instructor.php';
 
-	$this->_pages['assignments/delete_assignment.php']['title_var'] = 'delete_assignment';
-	$this->_pages['assignments/delete_assignment.php']['parent']    = 'assignments/index_instructor.php';
+	$this->_pages['assignments/delete_assignment.php']['title_var'] = 'delete_assignment'; $this->_pages['assignments/delete_assignment.php']['parent']    = 'assignments/index_instructor.php';
 
 /*******
  * student page.
