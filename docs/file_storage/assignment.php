@@ -25,16 +25,45 @@ if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($ow
 	exit;
 }
 
-
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
 	exit;
 } else if (isset($_POST['submit'])) {
-	// fs_authenticate(WORKSPACE_ASSIGNMENT, $_POST['assignment'])
-	// authenticate the assignment ID
-
 	$_POST['assignment'] = abs($_POST['assignment']);
+	$assignment_row    = fs_get_assignment($_POST['assignment']);
+
+	if (!$assignment_row) {
+		$msg->addError('ACCESS_DENIED');
+		header('Location: index.php');
+		exit;
+	}
+
+	if ($assignment_row['assign_to']) {
+		$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id] AND approved='y'";
+		$result = mysql_query($sql, $db);
+		if (!$row = mysql_fetch_assoc($result)) {
+			$msg->addError('ACCESS_DENIED');
+			header('Location: index.php');
+			exit;
+		}
+
+	} else {
+		$sql = "SELECT group_id FROM ".TABLE_PREFIX."groups WHERE group_id=$owner_id AND type_id=$assignment_row[assign_to]";
+		$result = mysql_query($sql, $db);
+		if (!$row = mysql_fetch_assoc($result)) {
+			$msg->addError('ACCESS_DENIED');
+			header('Location: index.php');
+			exit;
+		}
+	}
+
+	if ($assignment_row['u_date_cutoff'] < time()) {
+		$msg->addError('ASSIGNMENT_CUTOFF');
+		header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['folder']);
+		exit;
+	}
+
 	foreach ($_POST['files'] as $file) {
 		$file = abs($file);
 		fs_copy_file($file, $owner_type, $owner_id, WORKSPACE_ASSIGNMENT, $_POST['assignment'], $owner_id);

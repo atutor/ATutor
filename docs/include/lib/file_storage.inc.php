@@ -57,10 +57,47 @@ function fs_authenticate($owner_type, $owner_id) {
 }
 
 /**
+ * returns the localised name of the specified workspace
+ */
+function fs_get_workspace($owner_type, $owner_id) {
+	if ($owner_type == WORKSPACE_PERSONAL) {
+		return _AT('my_files');
+
+	} else if ($owner_type == WORKSPACE_COURSE) {
+		return _AT('course_files');
+
+	} else if ($owner_type == WORKSPACE_GROUP) {
+		global $db;
+		$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=$owner_id";
+		$result = mysql_query($sql, $db);
+		$row    = mysql_fetch_assoc($result);
+		return $row['title'];
+
+	} else if ($owner_type == WORKSPACE_ASSIGNMENT) {
+		$row    = fs_get_assignment($owner_id);
+		return ($row ? $row['title'] : false);
+	}
+}
+
+/**
+ * returns the assignment row specified by $assignment_id
+ * false if not found.
+ */
+function fs_get_assignment($assignment_id) {
+	global $db;
+	$sql = "SELECT assignment_id, title, assign_to, date_due, date_cutoff, UNIX_TIMESTAMP(date_cutoff) AS u_date_cutoff, multi_submit FROM ".TABLE_PREFIX."assignments WHERE assignment_id=$assignment_id AND course_id=$_SESSION[course_id]";
+	$result = mysql_query($sql, $db);
+	$row    = mysql_fetch_assoc($result);
+	return $row;
+}
+
+/**
  * retrieve folder(s) specified by $folder_id
  * $folder_id the ID of the single folder, or array of IDs
  * if $folder_id is an array then returns an array of folder rows
  * if $folder_id is an int then returns the single row array
+ *
+ * This function does not authenticate the $folder_id for the assignment.
  *
  * Note: This function checks if the $owner_type is an Assignment.
  *
@@ -132,13 +169,7 @@ function fs_get_folder_by_pid($parent_folder_id, $owner_type, $owner_id) {
 			while ($row = mysql_fetch_assoc($result)) {
 				$rows[] = $row;
 			}
-		}/* else {
-			$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
-				$rows[] = $row;	
-			}
-		} */
+		}
 	} else {
 		$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE parent_folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
 		$result = mysql_query($sql, $db);

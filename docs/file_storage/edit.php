@@ -158,19 +158,19 @@ $file_path = fs_get_file_path($id);
 			<?php echo _AT('not_editable'); ?>
 			<br />
 			<?php if (in_array($ext, array('gif', 'jpg','jpeg'))): ?>
-				<img src="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" alt="" title="" />
+				<img src="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" alt="" title="" />
 
 			<?php elseif ($ext == 'swf'): ?>
-				<object type="application/x-shockwave-flash" data="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" width="550" height="400"><param name="movie" value="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" /></object>
+				<object type="application/x-shockwave-flash" data="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" width="550" height="400"><param name="movie" value="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" /></object>
 
 			<?php elseif ($ext == 'mov'): ?>
-				<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="550" height="400" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" /><param name="autoplay" value="true" /><param name="controller" value="true" /><embed src="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" width="550" height="400" controller="true" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>
+				<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="550" height="400" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" /><param name="autoplay" value="true" /><param name="controller" value="true" /><embed src="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" width="550" height="400" controller="true" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>
 
 			<?php elseif ($ext == 'mp3'): ?>
-				<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="200" height="15" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" /><param name="autoplay" value="false" /><embed src="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" width="200" height="15" autoplay="false" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>
+				<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="200" height="15" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" /><param name="autoplay" value="false" /><embed src="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" width="200" height="15" autoplay="false" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>
 
 			<?php elseif (in_array($ext, array('wav', 'au'))): ?>
-				<embed SRC="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" autostart="false" width="145" height="60"><noembed><bgsound src="file_storage/index.php?download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>"></noembed></embed>
+				<embed SRC="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" autostart="false" width="145" height="60"><noembed><bgsound src="file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>"></noembed></embed>
 
 			<?php endif; ?>
 		</div>
