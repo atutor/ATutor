@@ -189,7 +189,8 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	$hidden_vars = array();
 	$hidden_vars['folder'] = $folder_id;
-	$hidden_vars['ws']     = $_SESSION['workspace'];
+	$hidden_vars['ot']     = $owner_type;
+	$hidden_vars['oid']     = $owner_id;
 	if (isset($_GET['files'])) {
 		$file_list_to_print = '';
 		$files = implode(',', $_GET['files']);
@@ -250,7 +251,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 	$_POST['new_folder_name'] = trim($_POST['new_folder_name']);
 
 	if (!$_POST['new_folder_name']) {
-		$msg->addError('MUST_SUPPLY_FOLDER_NAME');
+		$msg->addError('MISSING_FOLDER_NAME');
 	}
 
 	if (!$msg->containsErrors()) {
@@ -287,7 +288,9 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 		$sql = "SELECT folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
 		$result = mysql_query($sql, $db);
 		if (!$row = mysql_fetch_assoc($result)) {
-			exit('not authenticated');
+			$msg->addError('ACCESS_DENIED');
+			header('Location: index.php');
+			exit;
 		}
 	}
 
@@ -304,7 +307,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']})";
 		$result = mysql_query($sql, $db);
 
-		if ($result && $file_id = mysql_insert_id($db)) {
+		if ($result && ($file_id = mysql_insert_id($db))) {
 			$path = fs_get_file_path($file_id);
 			move_uploaded_file($_FILES['file']['tmp_name'], $path . $file_id);
 
@@ -427,14 +430,14 @@ if ($_SESSION['groups']) {
 	}
 }
 
-	if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
-		$file_storage_assignments = array();
-		$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] ORDER BY title";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
-			$file_storage_assignments[] = $row;
-		}
+if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
+	$file_storage_assignments = array();
+	$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] ORDER BY title";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$file_storage_assignments[] = $row;
 	}
+}
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -571,13 +574,9 @@ function checkbuttons(state) {
 		}
 	}
 	if (num_files_checked + num_folders_checked > 1) {
-	//	document.form.revisions.disabled = true;
-		//document.form.comments.disabled = true;
 		if (document.form.edit)
 			document.form.edit.disabled = true;
 	} else {
-	//	document.form.revisions.disabled = false;
-//		document.form.comments.disabled = false;
 		if (document.form.edit)
 			document.form.edit.disabled = false;
 	}

@@ -118,7 +118,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('assignment'); ?></label<br />
 		<select name="assignment" size="<?php echo min(5, count($assignments)); ?>">
 			<?php foreach ($assignments as $assignment): ?>
-				<option value="<?php echo $assignment['assignment_id']; ?>"><?php echo $assignment['title']; ?> - <?php echo _AT('due') . ': ' .$assignment['date_due']; ?></option>
+				<option value="<?php echo $assignment['assignment_id']; ?>"><?php echo $assignment['title']; ?> - <?php echo _AT('due') . ': ' . AT_date(_AT('filemanager_date_format'), $assignment['date_due'], AT_DATE_MYSQL_DATETIME); ?></option>
 			<?php endforeach; ?>
 		</select>
 	</div>
