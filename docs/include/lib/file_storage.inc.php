@@ -126,14 +126,14 @@ function fs_get_folder_by_id($folder_id, $owner_type, $owner_id) {
 		if (is_array($folder_id)) {
 			$folder_id_list = implode(',', $folder_id);
 
-			$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE folder_id IN ($folder_id_list) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
+			$sql = "SELECT folder_id, title, parent_folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id IN ($folder_id_list) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY title";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
 				$rows[] = $row;
 			}
 
 		} else {
-			$sql = "SELECT folder_id, title FROM ".TABLE_PREFIX."folders WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
+			$sql = "SELECT folder_id, title, parent_folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
 			$result = mysql_query($sql, $db);
 			$rows = mysql_fetch_assoc($result);
 		}

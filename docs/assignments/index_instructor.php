@@ -11,8 +11,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
-require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ASSIGNMENTS);
 
 if (isset($_GET['edit'])) {
@@ -105,7 +106,11 @@ $result = mysql_query($sql, $db);
 
 		<td><label for="a<?php echo $row['assignment_id']; ?>"><?php echo $row['title']; ?></label></td>
 
-		<td><?php if($row['assign_to'] == '0'){echo _AT('all_students'); } else {echo _AT('group_name_here');} ?></td>
+		<td><?php if($row['assign_to'] == '0'){echo _AT('all_students'); } else {
+					$sql = "SELECT title FROM ".TABLE_PREFIX."groups_types WHERE type_id=$row[assign_to] AND course_id=$_SESSION[course_id]";
+					$result = mysql_query($sql, $db);
+					$type_row = mysql_fetch_assoc($result);
+					echo $type_row['title']; } ?></td>
 
 		<td><?php  if ($row['date_due'] == '0000-00-00 00:00:00'){
 			echo _AT ('none');

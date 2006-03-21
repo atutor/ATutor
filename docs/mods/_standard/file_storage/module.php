@@ -28,7 +28,7 @@ $this->_pages['file_storage/edit_folder.php']['parent'] = 'file_storage/index.ph
 $this->_pages['file_storage/move.php']['title_var'] = 'move';
 $this->_pages['file_storage/move.php']['parent'] = 'file_storage/index.php';
 
-$this->_pages['file_storage/assignment.php']['title_var'] = 'assignment';
+$this->_pages['file_storage/assignment.php']['title_var'] = 'hand_in';
 $this->_pages['file_storage/assignment.php']['parent'] = 'file_storage/index.php';
 
 $this->_pages['file_storage/new.php']['title_var'] = 'new_file';

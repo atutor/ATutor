@@ -42,6 +42,7 @@ if (isset($_GET['submit_workspace'])) {
 	} else {
 		unset($owner_id);
 	}
+	$_REQUEST['folder'] = 0;
 } else if (isset($_REQUEST['ot'], $_REQUEST['oid'])) {
 	$owner_type = abs($_REQUEST['ot']);
 	$owner_id   = abs($_REQUEST['oid']);
@@ -52,8 +53,8 @@ if (isset($_GET['submit_workspace'])) {
 	$owner_type = WORKSPACE_COURSE;
 }
 
-if (isset($_GET['folder'])) {
-	$folder_id = abs($_GET['folder']);
+if (isset($_REQUEST['folder'])) {
+	$folder_id = abs($_REQUEST['folder']);
 } else if (isset($_SESSION['fs_folder_id'])) {
 	$folder_id = abs($_SESSION['fs_folder_id']);
 } else {

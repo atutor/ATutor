@@ -11,7 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ASSIGNMENTS);
@@ -28,10 +28,9 @@ if (isset ($_GET['id'])){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] AND assignment_id=$id";
 
 	$result = mysql_query($sql,$db);
-	$row = mysql_fetch_assoc($result);
-
-	if ($row == '0'){ // should not happen
-		$msg->addFeedback ('ASSIGNMENT_NOT_FOUND');
+	if (!($row = mysql_fetch_assoc($result))) {
+		// should not happen
+		$msg->addFeedback('ASSIGNMENT_NOT_FOUND');
 		header('Location: index_instructor.php');
 		exit;
 	}
@@ -52,8 +51,7 @@ if (isset ($_GET['id'])){
 
 	if ($dueyear == '0000'){
 		$has_due_date = 'false';
-	}
-	else {
+	} else {
 		$has_due_date = 'true';
 	}
 
@@ -81,8 +79,7 @@ if (isset ($_GET['id'])){
 		// round the minute to the next highest multiple of 5 
 		$cutoffminute = round($cutoffminute / '5' ) * '5' + '5';
 		if ($cutoffminute > '55'){ $cutoffminute = '55'; }
-	}
-	else {
+	} else {
 		$late_submit	= '2'; // allow late submissions until (date)
 	}
 }
@@ -128,20 +125,16 @@ else if (isset($_POST['submit'])) {
 	if (($has_due_date == 'true') && ($late_submit == '2')){
 		if ($cutoffyear < $dueyear){
 			$msg->addError('CUTOFF_DATE_WRONG');
-		}
-		else if ($cutoffyear == $dueyear){
+		} else if ($cutoffyear == $dueyear){
 			if ($cutoffmonth < $duemonth){
 				$msg->addError('CUTOFF_DATE_WRONG');
-			}
-			else if ($cutoffmonth == $duemonth){
+			} else if ($cutoffmonth == $duemonth){
 				if ($cutoffday < $dueday){
 					$msg->addError('CUTOFF_DATE_WRONG');
-				}
-				else if ($cutoffday == $dueday){
+				} else if ($cutoffday == $dueday){
 					if ($cutoffhour < $duehour){
 						$msg->addError('CUTOFF_DATE_WRONG');
-					}
-					else if ($cutoffhour == $duehour){
+					} else if ($cutoffhour == $duehour) {
 						if ($cutoffminute < $dueminute){
 							$msg->addError('CUTOFF_DATE_WRONG');
 						}
@@ -181,9 +174,10 @@ else if (isset($_POST['submit'])) {
 
 			$result = mysql_query($sql,$db);
 			$msg->addFeedback('ASSIGNMENT_ADDED');
-		}
-		else { // updating an existing assignment
-			$sql = "UPDATE ".TABLE_PREFIX."assignments SET title='$title', assign_to='$assign_to', multi_submit='$multi_submit', date_due='$date_due', date_cutoff='$date_cutoff' WHERE assignment_id='$id' AND course_id=$_SESSION[course_id]";
+		} else { // updating an existing assignment
+			$assign_to = 'assign_to';
+
+			$sql = "UPDATE ".TABLE_PREFIX."assignments SET title='$title', assign_to=$assign_to, multi_submit='$multi_submit', date_due='$date_due', date_cutoff='$date_cutoff' WHERE assignment_id='$id' AND course_id=$_SESSION[course_id]";
 
 			$result = mysql_query($sql,$db);
 			$msg->addFeedback('ASSIGNMENT_UPDATED');
@@ -191,8 +185,7 @@ else if (isset($_POST['submit'])) {
 		header('Location: index_instructor.php');
 		exit;
 	}
-}
-else { // creating a new assignment
+} else { // creating a new assignment
 	$title			= '';
 	$assign_to		= '0';
 	$multi_submit	= '1';
@@ -265,21 +258,31 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php // Are we editing an assignment?
 			if ($id != '0'){
 				// editing an existing assignment 
-				if ($assign_to == '0'){ echo _AT('all_students'); }
-				else { // name of group goes here
-					echo 'group: '.$assign_to;
-					echo '<input type="hidden" name="assign_to" value="'.$assign_to.'" />';
+				if ($assign_to == '0'){ 
+					echo _AT('all_students'); 
+				} else { // name of group goes here
+					$sql = "SELECT title FROM ".TABLE_PREFIX."groups_types WHERE type_id=$assign_to AND course_id=$_SESSION[course_id]";
+					$result = mysql_query($sql, $db);
+					$type_row = mysql_fetch_assoc($result);
+					echo $type_row['title'];
 				}
 				?>
-			<?php }
-			else { // creating a new assignment
+			<?php } else { // creating a new assignment
 			?>
 				<select name="assign_to" size="5" id="assignto">
 					<option value="0" <?php if ($assign_to == '0'){ echo 'selected="selected"'; } ?> label="<?php  echo _AT('all_students'); ?>"><?php  echo _AT('all_students'); ?></option>
 					<optgroup label="<?php  echo _AT('specific_groups'); ?>">
-						<option value="1" <?php if ($assign_to == '1'){ echo 'selected="selected"'; } ?> label="Example Group Name">Example Group Name</option>
-						<option value="2" <?php if ($assign_to == '2'){ echo 'selected="selected"'; } ?> label="Tutorials">Tutorials</option>
-						<option value="3" <?php if ($assign_to == '3'){ echo 'selected="selected"'; } ?> label="Project 1">Project 1</option>
+						<?php
+							$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id={$_SESSION['course_id']} ORDER BY title";
+							$result = mysql_query($sql, $db);
+							while ($type_row = mysql_fetch_assoc($result)) {
+								echo '<option value="'.$type_row['type_id'].'" ';
+								if ($assign_to == $type_row['type_id']) {
+									echo 'selected="selected"';
+								}
+								echo '>'.$type_row['title'].'</option>';
+							}
+						?>
 					</optgroup>
 				</select>
 			<?php }	?>

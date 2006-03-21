@@ -152,6 +152,9 @@ if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
 }
 
 $_SESSION['groups'] = array();
+unset($_SESSION['fs_owner_type']);
+unset($_SESSION['fs_owner_id']);
+unset($_SESSION['fs_folder_id']);
 
 switch ($row['access']){
 	case 'public':

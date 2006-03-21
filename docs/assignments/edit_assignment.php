@@ -11,4 +11,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-require ('add_assignment.php');
+// $Id$
+require('add_assignment.php');
+?>
