@@ -29,11 +29,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		<input type="radio" name="create" value="automatic" id="automatic" checked="checked" /><label for="automatic">create multiple groups - Automatically creates <em>n</em> groups.</label>
-		<p>(create groups to which you can add members later or create groups in which students are randomly distributed).</p>
+		<input type="radio" name="create" value="automatic" id="automatic" checked="checked" /><label for="automatic"><?php echo _AT('groups_create_automatic'); ?></label>
+	</div>
 
-		<input type="radio" name="create" value="manual" id="manual" /><label for="manual">create custom group - MANUAL. creates a SINGLE group to an existing Type.</label>
-		<p>(create a single group and choose the members you want to add to it.)</p>
+	<div class="row">
+		<input type="radio" name="create" value="manual" id="manual" /><label for="manual"><?php echo _AT('groups_create_manual'); ?></label>
 	</div>
 
 	<div class="row buttons">

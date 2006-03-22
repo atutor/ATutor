@@ -28,7 +28,7 @@ $this->_pages['tools/groups/index.php']['children']  = array('tools/groups/creat
 		$this->_pages['tools/groups/create_manual.php']['title_var'] = 'create_manual';
 		$this->_pages['tools/groups/create_manual.php']['parent']    = 'tools/groups/create.php';
 
-		$this->_pages['tools/groups/create_automatic.php']['title_var'] = 'create_automatic';
+		$this->_pages['tools/groups/create_automatic.php']['title_var'] = 'groups_create_automatic';
 		$this->_pages['tools/groups/create_automatic.php']['parent']    = 'tools/groups/create.php';
 
 			$this->_pages['tools/groups/create_automatic_confirm.php']['title_var'] = 'create_automatic_confirm';

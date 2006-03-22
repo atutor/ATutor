@@ -551,7 +551,15 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 	<?php foreach ($files as $file_info): ?>
 		<tr onmousedown="document.form['r<?php echo $file_info['file_id']; ?>'].checked = !document.form['r<?php echo $file_info['file_id']; ?>'].checked; rowselectbox(this, document.form['r<?php echo $file_info['file_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $file_info['file_id']; ?>_0">
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
-			<td valign="top"><img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?></td>
+			<td valign="top">
+				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?>
+				<?php
+					$sql = "SELECT comment FROM ".TABLE_PREFIX."files_comments WHERE file_id={$file_info['file_id']} ORDER BY comment_id ASC LIMIT 1";
+					$result = mysql_query($sql, $db);
+					if ($row = mysql_fetch_assoc($result)): ?>
+						<p><small><?php echo $row['comment']; ?></small></p>
+					<?php endif; ?>
+			</td>
 			<td align="center" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
 			<td align="right" valign="top">
 				<?php if ($_config['fs_versioning']): ?>

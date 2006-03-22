@@ -138,6 +138,9 @@ if (isset($_POST['cancel'])) {
 
 		header('Location: index.php');
 		exit;
+	} else {
+		$_POST['type_title'] = stripslashes($addslashes($_POST['type_title']));
+		$_POST['prefix']     = stripslashes($addslashes($_POST['prefix']));
 	}
 }
 
@@ -147,33 +150,37 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 	<div class="input-form">
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="type">Type of Groups (Project 1, Tutorials)</label><br />
-			<input type="text" name="type_title" id="type" value="" size="30" maxlength="60" />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="type"><?php echo _AT('groups_type'); ?></label><br />
+			<input type="text" name="type_title" id="type" value="<?php echo htmlspecialchars($_POST['type_title']); ?>" size="30" maxlength="60" />
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="prefix">Group Prefix. Word or phrase all group names start with: (Group, Team..)</label><br />
-			<input type="text" name="prefix" id="prefix" value="" size="20" maxlength="40" />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="prefix"><?php echo _AT('group_prefix'); ?></label><br />
+			<input type="text" name="prefix" id="prefix" value="<?php echo htmlspecialchars($_POST['prefix']); ?>" size="20" maxlength="40" />
 		</div>
 
 		<div class="row">
-			<label for="description">Default description:</label><br />
+			<label for="description"><?php echo _AT('default_description'); ?></label><br />
 			<textarea name="description" cols="10" rows="2"></textarea>
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>Number of Groups<br />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('number_of_groups'); ?><br />
+			<?php
+				$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`=0";
+				$result = mysql_query($sql, $db);
+				$row = mysql_fetch_assoc($result);
+			?>
+			<p><?php echo _AT('num_students_currently_enrolled', $row['cnt']-1); ?></p>
 
-			<p>There are <em>43</em> students currently enrolled in this course.</p>
-
-			<input type="radio" name="num_g" value="1" id="num1" checked="checked" onclick="javascript:changer('num_groups', 'num_students');" /><label for="num1">number of students per group:</label> <input type="text" name="num_students" size="3" style="text-align: right" maxlength="4" />
+			<input type="radio" name="num_g" value="1" id="num1" checked="checked" onclick="javascript:changer('num_groups', 'num_students');" /><label for="num1"><?php echo _AT('number_of_students_per_group'); ?></label> <input type="text" name="num_students" size="3" style="text-align: right" maxlength="4" />
 			<br />
-			<input type="radio" name="num_g" value="2" id="num2" onclick="javascript:changer('num_students', 'num_groups');" /><label for="num2">number of groups:</label> <input type="text" name="num_groups" size="3" style="text-align: right" maxlength="4" value="-" />
+			<input type="radio" name="num_g" value="2" id="num2" onclick="javascript:changer('num_students', 'num_groups');" /><label for="num2"><?php echo _AT('number_of_groups'); ?></label> <input type="text" name="num_groups" size="3" style="text-align: right" maxlength="4" value="-" />
 		</div>
 
 		<div class="row">
-			<?php echo _AT('fill_groups'); ?>:<br />
-			<input type="checkbox" name="fill" value="1" id="fill_r" checked="checked" /><label for="fill_r">Fill groups randomly upon creation.</label>
+			<?php echo _AT('fill_groups'); ?><br />
+			<input type="checkbox" name="fill" value="1" id="fill_r" checked="checked" /><label for="fill_r"><?php echo _AT('fill_groups_randomly'); ?></label>
 		</div>
 
 		<div class="row">
@@ -192,7 +199,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" />
+			<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" accesskey="s" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	</div>

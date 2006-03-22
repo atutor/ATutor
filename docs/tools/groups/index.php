@@ -53,7 +53,11 @@ if (isset($_GET['edit'], $_GET['id'])) {
 	} else if ($parts[0]) {
 		header('Location: members.php?id='.$parts[0]);
 		exit;
-	}	
+	} else {
+		$msg->addError('NO_ITEM_SELECTED');
+	}
+} else {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
