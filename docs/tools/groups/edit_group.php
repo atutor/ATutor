@@ -26,11 +26,10 @@ if (isset($_POST['cancel'])) {
 		$modules = implode('|', $_POST['modules']);
 	}
 
-
 	$_POST['title']   = trim($_POST['title']);
 
 	if (!$_POST['title']) {
-		$msg->addError('GROUP_TITLE_MISSING');
+		$msg->addError('NO_TITLE');
 	}
 
 	if (!$msg->containsErrors()) {
@@ -131,7 +130,7 @@ $row['modules'] = explode('|', $row['modules']);
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>

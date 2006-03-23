@@ -48,10 +48,11 @@ $this->_pages['assignments/index_instructor.php']['children'] = array('assignmen
 	$this->_pages['assignments/add_assignment.php']['title_var'] = 'add_assignment';
 	$this->_pages['assignments/add_assignment.php']['parent']    = 'assignments/index_instructor.php';
 
-	$this->_pages['assignments/edit_assignment.php']['title_var'] = 'edit_assignment';
+	$this->_pages['assignments/edit_assignment.php']['title_var'] = 'edit';
 	$this->_pages['assignments/edit_assignment.php']['parent']    = 'assignments/index_instructor.php';
 
-	$this->_pages['assignments/delete_assignment.php']['title_var'] = 'delete_assignment'; $this->_pages['assignments/delete_assignment.php']['parent']    = 'assignments/index_instructor.php';
+	$this->_pages['assignments/delete_assignment.php']['title_var'] = 'delete';
+	$this->_pages['assignments/delete_assignment.php']['parent']    = 'assignments/index_instructor.php';
 
 /*******
  * student page.

@@ -13,26 +13,23 @@ $this->_pages['tools/groups/index.php']['children']  = array('tools/groups/creat
 	$this->_pages['tools/groups/edit_group.php']['title_var'] = 'edit';
 	$this->_pages['tools/groups/edit_group.php']['parent']    = 'tools/groups/index.php';
 
-	$this->_pages['tools/groups/delete_group.php']['title_var'] = 'edit';
+	$this->_pages['tools/groups/delete_group.php']['title_var'] = 'delete';
 	$this->_pages['tools/groups/delete_group.php']['parent']    = 'tools/groups/index.php';
 
 	$this->_pages['tools/groups/edit_type.php']['title_var'] = 'edit';
 	$this->_pages['tools/groups/edit_type.php']['parent']    = 'tools/groups/index.php';
 
-	$this->_pages['tools/groups/delete_type.php']['title_var'] = 'edit';
+	$this->_pages['tools/groups/delete_type.php']['title_var'] = 'delete';
 	$this->_pages['tools/groups/delete_type.php']['parent']    = 'tools/groups/index.php';
 
 	$this->_pages['tools/groups/create.php']['title_var'] = 'create_groups';
 	$this->_pages['tools/groups/create.php']['parent']    = 'tools/groups/index.php';
 
-		$this->_pages['tools/groups/create_manual.php']['title_var'] = 'create_manual';
+		$this->_pages['tools/groups/create_manual.php']['title_var'] = 'groups_create_manual';
 		$this->_pages['tools/groups/create_manual.php']['parent']    = 'tools/groups/create.php';
 
 		$this->_pages['tools/groups/create_automatic.php']['title_var'] = 'groups_create_automatic';
 		$this->_pages['tools/groups/create_automatic.php']['parent']    = 'tools/groups/create.php';
-
-			$this->_pages['tools/groups/create_automatic_confirm.php']['title_var'] = 'create_automatic_confirm';
-			$this->_pages['tools/groups/create_automatic_confirm.php']['parent'] = 'tools/groups/create_automatic.php';
 
 	$this->_pages['tools/groups/members.php']['title_var'] = 'group_members';
 	$this->_pages['tools/groups/members.php']['parent']    = 'tools/groups/index.php';

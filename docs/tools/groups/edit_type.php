@@ -24,7 +24,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['title']   = trim($_POST['title']);
 
 	if (!$_POST['title']) {
-		$msg->addError('GROUP_TYPE_TITLE_MISSING');
+		$msg->addError('NO_TITLE');
 	}
 
 	if (!$msg->containsErrors()) {
@@ -64,9 +64,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="text" name="title" id="title" value="<?php echo $row['title']; ?>" size="30" maxlength="40" />
 	</div>
 
-
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>

@@ -139,8 +139,9 @@ if (isset($_POST['cancel'])) {
 		header('Location: index.php');
 		exit;
 	} else {
-		$_POST['type_title'] = stripslashes($addslashes($_POST['type_title']));
-		$_POST['prefix']     = stripslashes($addslashes($_POST['prefix']));
+		$_POST['type_title']  = stripslashes($addslashes($_POST['type_title']));
+		$_POST['prefix']      = stripslashes($addslashes($_POST['prefix']));
+		$_POST['description'] = stripslashes($addslashes($_POST['description']));
 	}
 }
 
@@ -161,7 +162,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<div class="row">
 			<label for="description"><?php echo _AT('default_description'); ?></label><br />
-			<textarea name="description" cols="10" rows="2"></textarea>
+			<textarea name="description" cols="10" rows="2"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
 		</div>
 
 		<div class="row">

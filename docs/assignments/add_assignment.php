@@ -67,8 +67,7 @@ if (isset ($_GET['id'])){
 
 	if ($cutoffyear == '0000'){
 		$late_submit	= '0'; // allow late submissions always
-	}
-	else if ($row['date_cutoff'] == $row['date_due']){
+	} else if ($row['date_cutoff'] == $row['date_due']){
 		$late_submit	= '1'; // allow late submissions never
 		// use today's date as default
 		$cutoffday		= $today['mday'];
@@ -145,6 +144,8 @@ else if (isset($_POST['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
+		$multi_submit = 0;
+
 		// create the date strings
 		$date_due = '0';
 		$date_cutoff = '0';
@@ -177,7 +178,7 @@ else if (isset($_POST['submit'])) {
 		} else { // updating an existing assignment
 			$assign_to = 'assign_to';
 
-			$sql = "UPDATE ".TABLE_PREFIX."assignments SET title='$title', assign_to=$assign_to, multi_submit='$multi_submit', date_due='$date_due', date_cutoff='$date_cutoff' WHERE assignment_id='$id' AND course_id=$_SESSION[course_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."assignments SET title='$title', assign_to=$assign_to, date_due='$date_due', date_cutoff='$date_cutoff' WHERE assignment_id='$id' AND course_id=$_SESSION[course_id]";
 
 			$result = mysql_query($sql,$db);
 			$msg->addFeedback('ASSIGNMENT_UPDATED');
@@ -338,12 +339,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 		?>
 	</div>
-	
+	<?php
+	/****
+	 * not included in the initial release.
+	 *
 	<div class="row">
-		<?php  echo _AT('options'); ?><br/>
-		<input type="checkbox" name="multi_submit" id="multisubmit" <?php if ($multi_submit == '1'){ echo 'checked="checked"'; } ?> />
-		<label for="multisubmit"><?php  echo _AT('allow_re_submissions'); ?></label>
-	</div>	
+		<?php  echo _AT('options'); <br/>
+		<input type="checkbox" name="multi_submit" id="multisubmit" <?php if ($multi_submit == '1'){ echo 'checked="checked"'; }  />
+		<label for="multisubmit"><?php  echo _AT('allow_re_submissions'); </label>
+	</div>
+	***/
+	?>
 	
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
@@ -353,8 +359,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </form>
 
 <script language="javascript" type="text/javascript">
-function disable_dates (state, name)
-{
+function disable_dates (state, name) {
 	document.form['day' + name].disabled=state;
 	document.form['month' + name].disabled=state;
 	document.form['year' + name].disabled=state;

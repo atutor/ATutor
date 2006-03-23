@@ -35,7 +35,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$_POST['prefix']) {
-		$msg->addError('GROUP_PREFIX_MISSING');
+		$msg->addError('NO_TITLE');
 	}
 
 	if (!$msg->containsErrors()) {
@@ -76,6 +76,10 @@ if (isset($_POST['cancel'])) {
 
 		header('Location: index.php');
 		exit;
+	} else {
+		$_POST['new_type']    = stripslashes($addslashes($_POST['new_type']));
+		$_POST['prefix']      = stripslashes($addslashes($_POST['prefix']));
+		$_POST['description'] = stripslashes($addslashes($_POST['description']));
 	}
 }
 
@@ -93,27 +97,27 @@ while ($row = mysql_fetch_assoc($result)) {
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 	<div class="input-form">
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="type">Type of Groups (Project 1, Tutorials)</label><br />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="type"><?php echo _AT('groups_type'); ?></label><br />
 			<?php if ($types): ?>
-				Existing Type:
+				<?php echo _AT('existing_type'); ?>
 				<select name="type" id="type">
 				<?php foreach ($types as $type_id => $type_title): ?>
 					<option value="<?php echo $type_id; ?>"><?php echo $type_title; ?></option>
 				<?php endforeach; ?>
 				</select>
-				<em>Or</em>
+				<em><?php echo _AT('or'); ?></em>
 			<?php endif; ?>
-			<label for="new">New Type:</label> <input type="text" name="new_type" id="new" size="30" maxlength="40" />
+			<label for="new"><?php echo _AT('new_type'); ?></label> <input type="text" name="new_type" value="<?php echo htmlspecialchars($_POST['new_type']); ?>" id="new" size="30" maxlength="40" />
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="prefix">Group Title</label><br />
-			<input type="text" name="prefix" id="prefix" value="" size="20" maxlength="40" />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="prefix"><?php echo _AT('title'); ?></label><br />
+			<input type="text" name="prefix" id="prefix" value="<?php echo htmlspecialchars($_POST['prefix']); ?>" size="20" maxlength="40" />
 		</div>
 
 		<div class="row">
-			<label for="description">Description:</label><br />
-			<textarea name="description" cols="10" rows="2"></textarea>
+			<label for="description"><?php echo _AT('description'); ?></label><br />
+			<textarea name="description" cols="10" rows="2"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
 		</div>
 
 		<div class="row">
@@ -132,7 +136,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" />
+			<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" accesskey="s" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	</div>

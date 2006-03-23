@@ -56,7 +56,7 @@ if (isset($_GET['edit'], $_GET['id'])) {
 	} else {
 		$msg->addError('NO_ITEM_SELECTED');
 	}
-} else {
+} else if (isset($_GET['members']) || isset($_GET['delete']) || isset($_GET['edit'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
