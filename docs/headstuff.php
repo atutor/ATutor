@@ -14,9 +14,14 @@
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 
+// hack for eXe content, remove now
+header ('content-type: text/css');
+echo('@import url(exestyles.css);');
+exit;
+
+
 if (isset ($_GET['cid'])){
 	$cid = intval ($_GET['cid']);
-
 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."head WHERE course_id=$_SESSION[course_id] AND content_id=$cid";
 	$result = mysql_query($sql, $db);
