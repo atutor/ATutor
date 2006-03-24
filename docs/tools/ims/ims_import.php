@@ -183,9 +183,7 @@ if (!isset($_POST['submit']) && !isset($_POST['cancel'])) {
 	exit;
 }
 
-
 $cid = intval($_POST['cid']);
-
 
 if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 	if ($content = @file_get_contents($_POST['url'])) {
@@ -342,6 +340,25 @@ if ($ims_manifest_xml === false) {
 }
 
 
+
+// check if this is an eXe package
+// NOTE: THIS NEEDS WORK! WHAT IS THE BEST WAY TO DETERMINE IF PACKAGE IS eXe?
+// PERHAPS USE PARSER BELOW TO CHECK FOR ORGANIZATION?
+$isExeContent = false;
+$ims_organization_pos = strpos ($ims_manifest_xml, '<organization');
+if ($ims_organization_pos !== false){
+	$ims_organization_pos = strpos ($ims_manifest_xml, 'identifier', $ims_organization_pos);
+	if ($ims_organization_pos !== false){
+		$exe_pos = strpos ($ims_manifest_xml, 'eXenew', $ims_organization_pos);
+		if ($exe_pos < ($ims_organization_pos + '50')){
+			$isExeContent = true;
+		}
+	}
+}
+
+
+
+
 $xml_parser = xml_parser_create();
 
 xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
@@ -463,6 +480,9 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 				/* so we'll never get here. */
 				continue;
 			}
+
+			// get the contents of the 'head' element
+			$head = get_html_head ($content);
 			$content = get_html_body($content);
 			if ($contains_glossary_terms) {
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
@@ -499,6 +519,11 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 		$content_info['title'] = addslashes($content_info['title']);
 		$content = addslashes($content);
 
+		// add a 'div' around eXe content
+		if ($isExeContent == true){
+			$content = '<div class=\"execontent\">\n'.$content.'\n</div>';
+		}
+
 		$sql= 'INSERT INTO '.TABLE_PREFIX.'content VALUES 
 				(0,	'
 				.$_SESSION['course_id'].','															
@@ -510,6 +535,18 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 				.'"'.$content.'", 0)';
 
 		$result = mysql_query($sql, $db);
+
+		// store the contents of the 'head' section
+		if ($result){
+			// get content ID
+			$id = mysql_insert_id($db);
+			$head = addslashes($head);
+
+			$sql = 'INSERT INTO '.TABLE_PREFIX.'head VALUES (0, '.$_SESSION['course_id'].','
+				.$id.','
+				.'"'.$head.'")';
+			$resultHead = mysql_query($sql, $db);
+		}
 
 		/* get the content id and update $items */
 		$items[$item_id]['real_content_id'] = mysql_insert_id($db);
