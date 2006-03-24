@@ -333,6 +333,28 @@ function get_html_body($text) {
 	return $text;
 }
 
+function get_html_head ($text) {
+	/* make all text lower case */
+	$text = strtolower($text);
+
+	/* strip everything before <head> */
+	$start_pos	= strpos($text, '<head');
+	if ($start_pos !== false) {
+		$start_pos	+= strlen('<head');
+		$end_pos	= strpos($text, '>', $start_pos);
+		$end_pos	+= strlen('>');
+
+		$text = substr($text, $end_pos);
+	}
+
+	/* strip everything after </head> */
+	$end_pos	= strpos($text, '</head');
+	if ($end_pos !== false) {
+		$text = trim(substr($text, 0, $end_pos));
+	}
+	return $text;
+}
+
 if (version_compare(phpversion(), '4.3.0') < 0) {
 	function file_get_contents($filename) {
 		$fd = @fopen($filename, 'rb');
