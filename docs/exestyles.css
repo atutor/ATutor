@@ -1,0 +1,197 @@
+/*
+===========================================================================
+eXe
+Copyright 2004-2005, University of Auckland
+style sheet for default theme
+===========================================================================
+*/
+
+.execontent {
+   margin: 10px 20px 10px 20px;
+   padding: 0px 0px 0px 0px;
+   font-family: arial, verdana, helvetica, sans-serif;
+   color:#4d4d4d;
+   font-size: 13px;
+   background: #E0DFD8;
+}
+
+a.execontent { color: #FF6600;
+    text-decoration: none;
+}
+
+a:hover.execontent { text-decoration: underline;
+color: #B34700;
+}
+
+img.execontent {
+    border: 0;
+}
+
+p#nodeTitle { 
+   color: #4d4d4d;
+   font-size: 32px;
+   font-weight: bold;
+   letter-spacing: -1px;
+   display: inline;
+   text-align:left;
+   padding-right: 30px;
+}
+
+div#nodeDecoration {
+   padding: 2px;
+   border-bottom:0px;
+   text-align:right;
+}
+
+
+/* --- iDevice Styles -- */
+
+
+.emphasis0 {
+    padding-left: 0px;
+    padding-bottom: 20px;
+    margin: 0px;
+}
+
+
+.emphasis1 {
+   background-color: #FFF;
+   border-bottom: 1px solid #9d9d9d;
+   background-image:url(top_left_corner.gif);
+   background-position:top left;
+   background-repeat:no-repeat;
+   margin-bottom: 30px;
+   text-align:left;
+}
+
+.emphasis2 {
+   background-color: #E0DFD8;
+   border-bottom: 3px solid #9d9d9d;
+   background-image:url(body_top_bg.gif);
+   background-position:top left;
+   background-repeat:no-repeat;
+   margin-bottom: 10px;
+   text-align:left;
+}
+
+* html .iDevice_inner {
+   background-image:none;
+   background-position:top left;
+   background-repeat:no-repeat;
+}
+
+.iDevice p {
+   padding-left: 0px;
+   line-height: 16px;
+   text-align:left;
+}
+
+.iDeviceTitle {
+   color: #568D14;
+   font-size: 24px;
+   font-family: Arial, Helvetica, sans-serif;
+   font-weight:bold;
+   letter-spacing:-1px;
+   vertical-align: top;
+   background: #FFF; 
+   padding-bottom: 4px;
+   padding-right: 10px;
+   margin-bottom: 0px;
+   background-image:url(top_right_corner.gif);
+   background-position:top right;
+   background-repeat:no-repeat;
+} 
+
+.emphasis0 .iDeviceTitle {
+   color: #568D14;
+   font-size: 24px;
+   font-family: Arial, Helvetica, sans-serif;
+   font-weight:bold;
+   letter-spacing:-1px;
+   vertical-align: top;
+   background: transparent; 
+   padding-bottom: 4px;
+   padding-right: 10px;
+   margin-bottom: 0px;
+   background-image:none;
+   background-position:top right;
+   background-repeat:no-repeat;
+ }
+
+.iDevice_icon {
+   margin-top: -10px;
+   margin-left: 10px;
+   padding-right: 10px;
+}
+
+execontent.input.feedbackbutton {
+margin-top: 10px;
+margin-bottom: 10px;
+background: #DBE992;
+}
+
+p.reading_reference {
+   font-style: italic;        
+}
+
+p.reading_feedback {
+   border: 1px dashed #ADADAD;
+   margin: 20px;
+   padding: 8px;
+   background-color: #FFF;
+}
+
+.iDevice_inner {
+   color:#4d4d4d;
+   background-color:#f2f2ef;
+   padding: 10px;
+   margin: 10px;
+   margin-top: 12px;
+   padding-top: 10px;
+   background-image:none;
+}
+
+.emphasis0 .iDevice_inner {
+   color:#4d4d4d;
+   background-color:transparent;
+   padding: 10px;
+   margin: 10px;
+   margin-top: 12px;
+   padding-top: 10px;
+}
+
+
+/* styles for image with text iDevice */
+
+.image_text { 
+	border: 1px solid #9D9D9D;
+	background: transparent;
+	padding: 4px;
+	margin: 4px;
+}
+
+/* styles for 'tips for completion' and 'pedagogical help' */
+
+.popupDiv {
+   background-color: #EDEFF0;
+   border: 2px solid #607489;
+   padding: 0px 4px 4px 4px;
+   margin-left: 15px;
+   text-align:left;
+   z-index:99;
+   -moz-border-radius: 3px;
+}
+
+.popupDivLabel {
+ text-align: center;
+ font: message-box;
+ font-weight: bold;
+ color: #fff;
+ cursor:move;
+ margin: 0px -4px 0px -4px;
+ background-image:url(popup_bg.gif);
+}
+
+
+
+
