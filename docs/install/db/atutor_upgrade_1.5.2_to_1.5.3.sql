@@ -132,3 +132,6 @@ CREATE TABLE `assignments` (
   PRIMARY KEY  (`assignment_id`),
   INDEX (`course_id`)
 ) TYPE = MYISAM;
+
+# make the privs field bigger
+ALTER TABLE `course_enrollment` CHANGE `privileges` `privileges` INT UNSIGNED DEFAULT '0' NOT NULL;
