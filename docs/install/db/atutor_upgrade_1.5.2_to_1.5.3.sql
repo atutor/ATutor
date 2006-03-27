@@ -135,3 +135,4 @@ CREATE TABLE `assignments` (
 
 # make the privs field bigger
 ALTER TABLE `course_enrollment` CHANGE `privileges` `privileges` INT UNSIGNED DEFAULT '0' NOT NULL;
+ALTER TABLE `modules` CHANGE `privilege` `privilege` INT UNSIGNED DEFAULT '0' NOT NULL;

@@ -506,7 +506,7 @@ CREATE TABLE `messages` (
 CREATE TABLE `modules` (  
 `dir_name` VARCHAR( 50 ) NOT NULL ,  
 `status` TINYINT NOT NULL ,  
-`privilege` MEDIUMINT UNSIGNED NOT NULL ,  
+`privilege` INT UNSIGNED NOT NULL ,  
 `admin_privilege` MEDIUMINT UNSIGNED NOT NULL ,  
 PRIMARY KEY ( `dir_name` )  
 );
