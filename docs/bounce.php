@@ -59,6 +59,29 @@ function get_groups($course_id) {
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
+	$sql = "SELECT login, `privileges`, language FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[is_super_admin]' AND `privileges`>0";
+	$result = mysql_query($sql, $db);
+
+	if ($row = mysql_fetch_assoc($result)) {
+		$sql = "UPDATE ".TABLE_PREFIX."admins SET last_login=NOW() WHERE login='$_SESSION[is_super_admin]'";
+		mysql_query($sql, $db);
+
+		$_SESSION['login']		= $row['login'];
+		$_SESSION['valid_user'] = true;
+		$_SESSION['course_id']  = -1;
+		$_SESSION['privileges'] = intval($row['privileges']);
+		$_SESSION['lang'] = $row['language'];
+		unset($_SESSION['is_super_admin']);
+
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
+
+		$msg->addFeedback('LOGIN_SUCCESS');
+
+		header('Location: admin/index.php');
+		exit;
+	}
+}
 
 if($_REQUEST['p']) {
 	$page = urldecode($_REQUEST['p']);

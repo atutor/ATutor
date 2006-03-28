@@ -138,6 +138,7 @@ unset($_SESSION['valid_user']);
 unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
+unset($_SESSION['is_super_admin']);
 
 $_SESSION['session_test'] = true;
 $_SESSION['prefs']['PREF_FORM_FOCUS'] = 1;
