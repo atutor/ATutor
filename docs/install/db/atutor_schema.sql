@@ -451,6 +451,7 @@ CREATE TABLE `members` (
   `email` varchar(50) NOT NULL default '',
   `website` varchar(200) NOT NULL default '',
   `first_name` varchar(100) NOT NULL default '',
+  `second_name` varchar(30) NOT NULL default '',
   `last_name` varchar(100) NOT NULL default '',
   `dob` date NOT NULL default '0000-00-00',
   `gender` enum('m','f') NOT NULL default 'm',
@@ -465,6 +466,7 @@ CREATE TABLE `members` (
   `creation_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `language` varchar(5) NOT NULL default '',
   `inbox_notify` tinyint(3) unsigned NOT NULL default '0',
+  `private_email` TINYINT DEFAULT '1' NOT NULL,
   PRIMARY KEY  (`member_id`),
   UNIQUE KEY `login` (`login`)
 ) TYPE=MyISAM;

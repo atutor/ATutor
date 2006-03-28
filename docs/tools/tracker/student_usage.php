@@ -18,7 +18,7 @@ authenticate(AT_PRIV_CONTENT);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT M.member_id, M.login
+$sql	= "SELECT M.member_id, M.login, CONCAT(M.first_name, ' ', M.second_name, ' ', M.last_name) AS full_name
 			FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment C 
 			WHERE M.member_id=C.member_id AND C.course_id=$_SESSION[course_id]";
 $result = mysql_query($sql, $db);
@@ -37,7 +37,7 @@ $_GET['id'] = intval($_GET['id']);
 					if ($row['member_id'] == $_GET['id']) {
 						echo ' selected="selected"';
 					}
-					echo '>'.$row['login'].'</option>';
+					echo '>'.$row['login'].' - '.$row['full_name'].'</option>';
 				}
 			?>
 		</select>

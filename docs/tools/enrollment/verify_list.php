@@ -78,9 +78,6 @@ if (isset($_POST['addmore'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-/*$msg->addHelp('CREATE_LIST1');
-$msg->printHelps();
-*/
 
 if ($_POST['verify']) {
 	for ($i=0; $i<$_POST['count']; $i++) {							
@@ -130,7 +127,7 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 		<th scope="col"><?php echo _AT('first_name'); ?></th>
 		<th scope="col"><?php echo _AT('last_name');  ?></th>
 		<th scope="col"><?php echo _AT('email');      ?></th>
-		<th scope="col"><?php echo _AT('login_name');   ?></th>
+		<th scope="col"><?php echo _AT('login_name'); ?></th>
 		<th scope="col"><?php echo _AT('remove');     ?></th>
 	</tr>
 	</thead><?php
@@ -206,7 +203,6 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 	<tr>
 		<td colspan="6">
 			<input type="submit" name="resubmit" value="<?php echo _AT('resubmit'); ?>" />
-			<!--input type="submit" name="submit_unenr" value="<?php echo _AT('list_add_unenrolled_list'); ?>" <?php echo $dsbld; ?> /--> 
 			<input type="submit" name="submit_enr" value="<?php echo _AT('list_add_enrolled_list'); ?>" <?php echo $dsbld; ?> />
 		</td>
 	</tr>

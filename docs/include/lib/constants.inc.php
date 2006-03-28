@@ -45,6 +45,7 @@ $_config_defaults['pref_defaults']			   = 'a:4:{s:10:"PREF_THEME";s:7:"default";
 $_config_defaults['pref_inbox_notify']		   = 0;
 $_config_defaults['check_version']	           = 0;
 $_config_defaults['fs_versioning']             = 1;
+$_config_defaults['display_full_name']         = 1; // not currently a config option
 
 $_config = $_config_defaults;
 

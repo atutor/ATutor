@@ -136,3 +136,7 @@ CREATE TABLE `assignments` (
 # make the privs field bigger
 ALTER TABLE `course_enrollment` CHANGE `privileges` `privileges` INT UNSIGNED DEFAULT '0' NOT NULL;
 ALTER TABLE `modules` CHANGE `privilege` `privilege` INT UNSIGNED DEFAULT '0' NOT NULL;
+
+# second name field
+ALTER TABLE `members` ADD `second_name` CHAR( 30 ) NOT NULL AFTER `first_name` ;
+ALTER TABLE `members` ADD `private_email` TINYINT DEFAULT '1' NOT NULL ;

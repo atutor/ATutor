@@ -54,8 +54,24 @@
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />
 		<input id="email" name="email" type="text" size="30" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
+		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email']) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
 	</div>
 
+	<div class="row">
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="first_name"><?php echo _AT('first_name'); ?></label><br />
+		<input id="first_name" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['first_name'])); ?>" />
+	</div>
+
+	<div class="row">
+		<label for="second_name"><?php echo _AT('second_name'); ?></label><br />
+		<input id="second_name" name="second_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['second_name'])); ?>" />
+	</div>
+
+	<div class="row">
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="last_name"><?php echo _AT('last_name'); ?></label><br />
+		<input id="last_name" name="last_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['last_name'])); ?>" />
+	</div>
+	
 	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): 
 			if ($_POST['status'] == AT_STATUS_INSTRUCTOR) {
 				$inst = ' checked="checked"';
@@ -94,16 +110,6 @@
 		</div>
 	<?php endif; ?>
 
-	<div class="row">
-		<label for="first_name"><?php echo _AT('first_name'); ?></label><br />
-		<input id="first_name" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['first_name'])); ?>" />
-	</div>
-
-	<div class="row">
-		<label for="last_name"><?php echo _AT('last_name'); ?></label><br />
-		<input id="last_name" name="last_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['last_name'])); ?>" />
-	</div>
-	
 	<div class="row">
 		<?php echo _AT('date_of_birth'); ?><br />
 		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $_POST['year']; ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $_POST['month']; ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo $_POST['day']; ?>" />

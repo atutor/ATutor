@@ -37,17 +37,27 @@ if (isset($_POST['submit'])) {
 		$msg->addError('EMAIL_EXISTS');
 	}
 
-	/* password check:
-	if ($_POST['password'] == '') { 
-		$msg->addError('PASSWORD_MISSING');
-	} else {
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['password2']){
-			$valid= 'no';
-			$msg->addError('PASSWORD_MISMATCH');
+	if (!$_POST['first_name']) { 
+		$msg->addError('FIRST_NAME_MISSING');
+	}
+
+	if (!$_POST['last_name']) { 
+		$msg->addError('LAST_NAME_MISSING');
+	}
+
+	// check if first+last is unique
+	if ($_POST['first_name'] && $_POST['last_name']) {
+		$first_name_sql  = $addslashes($_POST['first_name']);
+		$last_name_sql   = $addslashes($_POST['last_name']);
+		$second_name_sql = $addslashes($_POST['second_name']);
+
+		$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE first_name='$first_name_sql' AND second_name='$second_name_sql' AND last_name='$last_name_sql' AND member_id<>$id LIMIT 1";
+		$result = mysql_query($sql, $db);
+		if (mysql_fetch_assoc($result)) {
+			$msg->addError('FIRST_LAST_NAME_UNIQUE');
 		}
 	}
-	*/
+
 	
 	//check date of birth
 	$mo = intval($_POST['month']);
@@ -79,9 +89,16 @@ if (isset($_POST['submit'])) {
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
 
+		if (isset($_POST['private_email'])) {
+			$_POST['private_email'] = 1;
+		} else {
+			$_POST['private_email'] = 0;
+		}
+
 		//$_POST['password']   = $addslashes($_POST['password']);
 		$_POST['website']    = $addslashes($_POST['website']);
 		$_POST['first_name'] = $addslashes($_POST['first_name']);
+		$_POST['second_name'] = $addslashes($_POST['second_name']);
 		$_POST['last_name']  = $addslashes($_POST['last_name']);
 		$_POST['address']    = $addslashes($_POST['address']);
 		$_POST['postal']     = $addslashes($_POST['postal']);
@@ -96,6 +113,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE ".TABLE_PREFIX."members SET	email      = '$_POST[email]',
 													website    = '$_POST[website]',
 													first_name = '$_POST[first_name]',
+													second_name= '$_POST[second_name]',
 													last_name  = '$_POST[last_name]', 
 													dob      = '$dob',
 													gender   = '$_POST[gender]', 
@@ -106,7 +124,8 @@ if (isset($_POST['submit'])) {
 													country  = '$_POST[country]', 
 													phone    = '$_POST[phone]',
 													status   = $_POST[status],
-													language = '$_SESSION[lang]'
+													language = '$_SESSION[lang]', 
+													private_email = $_POST[private_email]
 				WHERE member_id = $id";
 		$result = mysql_query($sql, $db);
 		if (!$result) {

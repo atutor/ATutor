@@ -99,7 +99,7 @@ if ($group) {
 }
 
 /* look through enrolled students list */
-$sql_members = "SELECT C.member_id, C.approved, C.privileges, M.login FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M	WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND (C.approved='y' OR C.approved='a')	$group_members ORDER BY M.login $order";
+$sql_members = "SELECT C.member_id, C.approved, C.privileges, M.login, M.first_name, M.second_name, M.last_name FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M	WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND (C.approved='y' OR C.approved='a')	$group_members ORDER BY M.login $order";
 
 $result_members = mysql_query($sql_members, $db);
 
@@ -135,6 +135,7 @@ if ($all) {
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
+	<th scope="col"><?php echo _AT('full_name'); ?></th>
 	<th scope="col"><?php echo _AT('status'); ?></th>
 	<th scope="col"><?php echo _AT('online_status'); ?></th>
 </tr>
@@ -145,6 +146,8 @@ if ($final) {
 	foreach ($final as $user_id=>$attrs) {
 		echo '<tr onmousedown="document.location=\''.$_base_href.'profile.php?id='.$user_id.'\'">';
 		echo '<td><a href="profile.php?id='.$user_id.'">'.AT_print($attrs['login'], 'members.login') . '</a></td>';
+
+		echo '<td>'.AT_print($attrs['first_name'] .' '. $attrs['second_name'] .' '. $attrs['last_name'],'members.first_name').'</td>';
 		
 		
 		if ($attrs['privileges'] != 0) {

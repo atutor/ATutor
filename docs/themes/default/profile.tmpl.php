@@ -27,7 +27,7 @@
 	<div class="row">
 		<?php echo _AT('name'); ?><br />
 		<?php if($this->row['first_name'] || $this->row['last_name']) {
-			echo AT_print($this->row['first_name'],'members.first_name').' '. AT_print($this->row['last_name'],'members.last_name');
+			echo AT_print($this->row['first_name'] .' '. $this->row['second_name'] .' '. $this->row['last_name'], 'members.first_name');
 		} else {
 			echo "--";
 		}
@@ -35,9 +35,28 @@
 	</div>
 
 	<div class="row">
+		<?php echo _AT('email'); ?><br />
+		<?php if($this->row['private_email']): ?>
+			<?php echo _AT('private'); ?>
+		<?php else: ?>
+			<a href="mailto:<?php echo $this->row['email']; ?>"><?php echo $this->row['email']; ?></a>
+		<?php endif; ?>
+	</div>
+
+	<div class="row">
 		<?php echo _AT('web_site'); ?><br />
 		<?php if ($this->row['website']) { 
 			echo '<a href="'.$this->row['website'].'">'.AT_print($this->row['website'], 'members.website').'</a>'; 
+		} else {
+			echo "--";
+		}
+		?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('phone'); ?><br />
+		<?php if ($this->row['phone']) { 
+			echo $this->row['phone'];
 		} else {
 			echo "--";
 		}

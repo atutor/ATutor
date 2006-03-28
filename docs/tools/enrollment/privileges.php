@@ -24,13 +24,9 @@ if (!authenticate(AT_PRIV_ADMIN, true)) {
 $num_cols = 2;
 
 /* make sure we own this course that we're approving for! */
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
-$result	= mysql_query($sql, $db);
-
-if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
+if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) || !$_SESSION['is_admin']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('NOT_OWNER');
-	
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
@@ -53,7 +49,7 @@ if (isset($_POST['cancel'])) {
 		change_privs(intval($mid[$i]), $privs[$i]);
 		$i++;
 	}
-	
+
 	$msg->addFeedback('PRIVS_CHANGED');
 	header('Location: index.php?tab=1');
 	exit;
@@ -74,13 +70,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 
 	//loop through all the students
-	for ($k = 0; $k < $j; $k++) {
-?>
-<?php
+for ($k = 0; $k < $j; $k++) {
 	$mem_id = $_GET['mid'.$k];
 
 	//NO!!! extra check to ensure that user doesnt send in instructor for change privs
-	$sql = "SELECT cm.privileges, m.login FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id WHERE m.member_id=($mem_id) AND cm.course_id = $_SESSION[course_id]";
+	$sql = "SELECT CE.privileges, M.login FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE M.member_id=$mem_id AND CE.course_id=$_SESSION[course_id] AND CE.approved='y'";
 
 	$result = mysql_query($sql, $db);
 	$student_row = mysql_fetch_assoc($result);
@@ -110,7 +104,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					echo 'checked="checked"';
 				} 
 
-				echo ' />'.$module->getName().'</label></td>';
+				echo ' />'.$module->getName().' - ' .$module->getPrivilege().'</label></td>';
 
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
@@ -154,8 +148,8 @@ function change_privs ($member, $privs) {
 			$privilege += intval($priv);
 		}	
 	}
-	
 	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=$privilege WHERE member_id=$member AND course_id=$_SESSION[course_id] AND `approved`='y'";
+
 	$result = mysql_query($sql,$db);
 
 	//print error or confirm change

@@ -77,6 +77,12 @@ function checkUserInfo($record) {
 		}
 	}	
 
+	$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE first_name='$record[fname]' AND last_name='$record[lname]' LIMIT 1";
+	$result = mysql_query($sql,$db);
+	if ((mysql_num_rows($result) != 0) && !$record['exists']) {
+		$record['err_uname'] = _AT('import_err_full_name_exists');
+	}
+
 	/* removed record? */
 	if ($record['remove']) {
 		//unset errors 
@@ -114,9 +120,8 @@ function add_users($user_list, $enroll, $course) {
 				$student = sql_quote($student);
 				$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
-				//$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, creation_date, status) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '$now', $status)";
-				
-				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','$student[lname]', '', '', '','','','','', '', $status, '$_config[pref_defaults]', '$now','$_config[default_language]', $_config[pref_inbox_notify])";
+		
+				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '', '', '','','','','', '', $status, '$_config[pref_defaults]', '$now','$_config[default_language]', $_config[pref_inbox_notify], 1)";
 
 				if ($result = mysql_query($sql, $db)) {
 					$student['exists'] = _AT('import_err_email_exists');

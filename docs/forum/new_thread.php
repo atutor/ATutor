@@ -73,7 +73,7 @@ if (isset($_POST['cancel'])) {
 		$sql_subject = $addslashes($_POST['subject']);
 		$sql_body    = $addslashes($_POST['body']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES(0, $_POST[parent_id], $_SESSION[member_id], $_POST[fid], '$_SESSION[login]', '$now', 0, '$sql_subject', '$sql_body', '$now', 0, 0)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES(0, $_POST[parent_id], $_SESSION[member_id], $_POST[fid], '".addslashes(get_login($_SESSION['member_id']))."', '$now', 0, '$sql_subject', '$sql_body', '$now', 0, 0)";
 		$result = mysql_query($sql, $db);
 		$this_id = mysql_insert_id($db);
 
@@ -101,10 +101,10 @@ if (isset($_POST['cancel'])) {
 		$subscriber_list = substr($subscriber_list, 0, -1);
 
 		if ($subscriber_list != '') {
-			$sql = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list) AND member_id <> $_SESSION[member_id]";
+			$sql = "SELECT first_name, second_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list) AND member_id <> $_SESSION[member_id]";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
-				$subscriber_email_list[] = array('email'=> $row['email'], 'full_name' => $row['first_name'] . ' '. $row['last_name']);
+				$subscriber_email_list[] = array('email'=> $row['email'], 'full_name' => $row['first_name'] . ' '. $row['second_name'] . ' ' . $row['last_name']);
 			}
 		}
 

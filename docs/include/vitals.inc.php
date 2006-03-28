@@ -404,13 +404,17 @@ function add_user_online() {
  * @author  Joel Kronenberg
  */
 function get_login($id){
-	global $db;
+	global $db, $_config_defaults;
 
 	$id		= intval($id);
 
-	$sql	= 'SELECT login FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
+	$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
 	$result	= mysql_query($sql, $db);
 	$row	= mysql_fetch_assoc($result);
+
+	if ($_config_defaults['display_full_name'] && $row['first_name'] && $row['last_name']) {
+		return $row['first_name'] . ' ' . $row['second_name'] . ' ' . $row['last_name'];
+	}
 
 	return $row['login'];
 }
@@ -422,7 +426,7 @@ function get_forum_name($fid){
 
 	$sql	= 'SELECT title FROM '.TABLE_PREFIX.'forums WHERE forum_id='.$fid;
 	$result	= mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result) && $row['title']) {
+	if (($row = mysql_fetch_assoc($result)) && $row['title']) {
 		return $row['title'];		
 	}
 
