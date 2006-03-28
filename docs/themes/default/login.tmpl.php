@@ -16,11 +16,11 @@
 					</div>
 				<?php endif;?>
 
-				<label for="login"><?php echo _AT('login_name'); ?></label><br />
-				<input type="text" name="form_login" id="login" /><br />
+				<label for="login"><?php echo _AT('login_name_or_email'); ?></label><br />
+				<input type="text" name="form_login" size="50" style="max-width: 100%; width: 100%;" id="login" /><br />
 
 				<label for="pass"><?php echo _AT('password'); ?></label><br />
-				<input type="password" class="formfield" name="form_password" id="pass" />
+				<input type="password" class="formfield" name="form_password" style="max-width: 100%; width: 100%;" id="pass" />
 			</div>
 		</div>
 		<div style="background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0; ">
