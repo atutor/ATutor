@@ -58,7 +58,10 @@ if (isset($_POST['cancel'])) {
 			$msg->addError('PASSWORD_MISMATCH');
 		} else if (strlen($_POST['password']) < 8) {
 			$msg->addError('PASSWORD_LENGTH');
+		} else if ((preg_match('/[a-z]+/i', $_POST['password']) + preg_match('/[0-9]+/i', $_POST['password']) + preg_match('/[_\-\/+!@#%^$*&)(|.]+/i', $_POST['password'])) < 2) {
+			$msg->addError('PASSWORD_CHARS');
 		}
+
 	}
 
 	if ($_POST['email'] == '') {
