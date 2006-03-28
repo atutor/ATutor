@@ -45,6 +45,7 @@ CREATE TABLE `forums_groups` (
 
 # release date for courses
 ALTER TABLE `courses` ADD `release_date` datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE `courses` ADD `banner` TEXT NOT NULL;
 
 # --------------------------------------------------------
 # Table structure for table `reading_list`

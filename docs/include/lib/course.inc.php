@@ -41,6 +41,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$_POST['created_date']= $addslashes($_POST['created_date']);
 	$_POST['copyright']	  = $addslashes($_POST['copyright']);
 	$_POST['icon']		  = $addslashes($_POST['icon']);
+	$_POST['banner']      = $addslashes($_POST['banner']);
 
 	$_POST['course']	= intval($_POST['course']);
 	$_POST['notify']	= intval($_POST['notify']);
@@ -118,7 +119,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$menu_defaults = ',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]' $menu_defaults";
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]' $menu_defaults";
 
 	$result = mysql_query($sql, $db);
 	if (!$result) {

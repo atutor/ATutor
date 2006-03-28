@@ -12,6 +12,8 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 
+<?php if ($this->banner): ?><?php echo $this->banner; ?><?php endif; ?>
+
 <div style="width: 100%; margin-top: -5px;">
 	<ul id="home-links">
 	<?php foreach ($this->home_links as $link): ?>

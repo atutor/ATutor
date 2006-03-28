@@ -42,6 +42,7 @@ if (isset($_POST['form_course'])) {
 
 	$row['copyright']			= $_POST['copyright'];
 	$row['icon']				= $_POST['icon'];
+	$row['banner']              = $_POST['banner'];
 
 } else if ($course) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
@@ -123,11 +124,11 @@ if (isset($_POST['form_course'])) {
 		<label for="pri_lang"><?php  echo _AT('primary_language'); ?></label><br />
 		<?php $languageManager->printDropdown($row['primary_language'], 'pri_lang', 'pri_lang'); ?>
 	</div>
+
 	<div class="row">
 		<label for="description"><?php echo _AT('description'); ?></label><br />
 		<textarea id="description" cols="45" rows="2" name="description"><?php echo $row['description']; ?></textarea>
 	</div>
-
 
 	<?php $categories = get_categories(); ?>
 	<?php if (is_array($categories)): ?>
@@ -219,6 +220,11 @@ if (isset($_POST['form_course'])) {
 		echo $hide; ?> /><label for="hide"><?php echo  _AT('hide_course'); ?></label>.
 	</div>
 
+	<div class="row">
+		<label for="banner"><?php echo _AT('banner'); ?></label><br />
+		<textarea id="banner" cols="45" rows="2" name="banner"><?php echo $row['banner']; ?></textarea>
+	</div>
+
 <?php if (!$course) : ?>
 	<div class="row">
 		<label for="initial_content"><?php echo _AT('initial_content'); ?></label><br />
@@ -285,7 +291,6 @@ if (isset($_POST['form_course'])) {
 		<input type="radio" id="c_unlim" name="quota" value="<?php echo AT_COURSESIZE_UNLIMITED; ?>" onclick="disableOther();" <?php echo $c_unlim;?>/><label for="c_unlim"> <?php echo _AT('unlimited'); ?></label> <br />
 		<input type="radio" id="c_other" name="quota" value="2" onclick="enableOther();" <?php echo $c_oth;?>/><label for="c_other"> <?php echo _AT('other'); ?> </label> - 
 		<input type="text" id="quota_entered" name="quota_entered" <?php echo $c_oth2?> value="<?php if ($row['max_quota']!=AT_COURSESIZE_UNLIMITED && $row['max_quota']!=AT_COURSESIZE_DEFAULT) { echo bytes_to_megabytes($row['max_quota']); } ?>" size="4" /> MB
-
 	</div>
 
 	<div class="row">
