@@ -56,6 +56,8 @@ if (isset($_POST['cancel'])) {
 		// check for valid passwords
 		if ($_POST['password'] != $_POST['password2']){
 			$msg->addError('PASSWORD_MISMATCH');
+		} else if (strlen($_POST['password']) < 8) {
+			$msg->addError('PASSWORD_LENGTH');
 		}
 	}
 

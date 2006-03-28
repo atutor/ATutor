@@ -72,7 +72,7 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)='$this_password'";
 
 	} else {
-		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)=PASSWORD('$this_password')";
+		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND PASSWORD(password)=PASSWORD('$this_password')";
 	}
 
 	$result = mysql_query($sql, $db);
