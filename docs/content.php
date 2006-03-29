@@ -162,7 +162,16 @@ if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_R
 		}
 
 		/* @See: include/lib/output.inc.php */
-		$savant->assign('body', format_content($content_row['text'], $content_row['formatting'], $glossary));
+		$content_row['text'] = format_content($content_row['text'], $content_row['formatting'], $glossary);
+
+		if (isset($sequence_links['previous']) && $sequence_links['previous']['url']) {
+			$content_row['text'] = str_replace('[pid]', $sequence_links['previous']['url'], $content_row['text']);
+		}
+		if (isset($sequence_links['next']) && $sequence_links['next']['url']) {
+			$content_row['text'] = str_replace('[nid]', $sequence_links['next']['url'], $content_row['text']);
+		}
+
+		$savant->assign('body', $content_row['text']);
 	}
 } else {
 	$infos = array('NOT_RELEASED', '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
