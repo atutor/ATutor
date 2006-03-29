@@ -56,7 +56,7 @@ if (isset($_POST['cancel'])) {
 		}
 	}
 
-	if ($assignment_row['u_date_cutoff'] < time()) {
+	if ($assignment_row['u_date_cutoff'] && ($assignment_row['u_date_cutoff'] < time())) {
 		$msg->addError('ASSIGNMENT_CUTOFF');
 		header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['folder']);
 		exit;
