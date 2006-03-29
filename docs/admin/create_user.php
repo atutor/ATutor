@@ -156,11 +156,15 @@ if (isset($_POST['submit'])) {
 		}
 
 		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-			
 			$student_id  = $addslashes($_POST['student_id']);
+			$student_pin = $addslashes($_POST['student_pin']);
 			if ($student_id) {
-				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=LAST_INSERT_ID() WHERE public_field='$student_id'";
+				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=$m_id WHERE public_field='$student_id'";
 				mysql_query($sql, $db);
+				if (mysql_affected_rows($db) == 0) {
+					$sql = "REPLACE INTO ".TABLE_PREFIX."master_list VALUES ('$student_id', '$student_pin', $m_id)";
+					mysql_query($sql, $db);
+				}
 			}
 		}
 
