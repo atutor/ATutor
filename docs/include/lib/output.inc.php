@@ -624,6 +624,14 @@ function myCodes($text, $html = false) {
 
 	$text = str_replace('[cid]',$_base_path.'content.php?cid='.$_SESSION['s_cid'],$text);
 
+	global $sequence_links;
+	if (isset($sequence_links['previous']) && $sequence_links['previous']['url']) {
+		$text = str_replace('[pid]', $sequence_links['previous']['url'], $text);
+	}
+	if (isset($sequence_links['next']) && $sequence_links['next']['url']) {
+		$text = str_replace('[nid]', $sequence_links['next']['url'], $text);
+	}
+
 	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
 	$html = !$html ? 0 : 1;
 	$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'), $html)", $text);
