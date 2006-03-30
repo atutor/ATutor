@@ -9,7 +9,7 @@ $mail = new ATutorMailer;
 
 $subject = _AT('fha_ref_automatic_email_reminder');
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."fha_refresher";
+$sql = "SELECT * FROM ".TABLE_PREFIX."fha_refresher WHERE enabled=1";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	$refresh_period_seconds = time() - ($row['refresh_period'] * 24 * 60 * 60);
