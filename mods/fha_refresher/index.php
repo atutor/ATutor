@@ -42,7 +42,10 @@ if (isset($_POST['cancel'])) {
 		header('Location: index.php');
 		exit;
 	}
-} else {
+}
+
+require (AT_INCLUDE_PATH.'header.inc.php');
+if (!isset($_POST['submit'])) {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."fha_refresher WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
@@ -61,8 +64,6 @@ if (isset($_POST['cancel'])) {
 		$_POST['max_refresh_period'] = 365;
 	}
 }
-
-require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
