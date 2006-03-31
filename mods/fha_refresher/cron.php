@@ -1,11 +1,14 @@
 <?php
 define('AT_INCLUDE_PATH', '../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 $mail = new ATutorMailer;
 
 // simple cron script to run daily (doesn't check to see if it is run more often)
+
+// this script is vulnerable to being run (maliciously) more often. certain secret
+// _GET arguments should be passed to authenticate its execution.
 
 $subject = _AT('fha_ref_automatic_email_reminder');
 
@@ -34,7 +37,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				$mail->From     = $_config['contact_email'];
 				$mail->AddAddress($member_row['email']);
 				$mail->Subject = $subject;
-				$mail->Body    = _AT('fha_ref_automatic_email_body', $system_courses[$row['course_id']]['title']);
+				$mail->Body    = _AT('fha_ref_automatic_email_body',$_SESSION['course_title']);
 
 				$mail->Send();
 			}
