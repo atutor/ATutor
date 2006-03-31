@@ -104,7 +104,7 @@ for ($k = 0; $k < $j; $k++) {
 					echo 'checked="checked"';
 				} 
 
-				echo ' />'.$module->getName().' - ' .$module->getPrivilege().'</label></td>';
+				echo ' />'.$module->getName().'</label></td>';
 
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
