@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
     <name lang="en">FHA Refresher</name> 
-    <description lang="en">Enables an automatic email to alumni about taking a course refresher test..</description> 
+    <description lang="en">Enables an automatic email to alumni about taking a course refresher test.</description> 
     <maintainers>
         <maintainer> 
             <name>ATutor Team</name> 
