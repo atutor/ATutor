@@ -138,12 +138,22 @@ if (isset($_POST['submit'])) {
 
 		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 			$_POST['student_id'] = $addslashes($_POST['student_id']);
+			$student_pin = $addslashes($_POST['student_pin']);
+
 			$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=0 WHERE member_id=$id";
 			$result = mysql_query($sql, $db);
 
 			if ($_POST['student_id']) {
 				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=$id WHERE public_field='$_POST[student_id]'";
 				$result = mysql_query($sql, $db);
+				if (mysql_affected_rows($db) == 0) {
+					$sql = "SELECT member_id FROM ".TABLE_PREFIX."master_list WHERE member_id=$id AND public_field='$_POST[student_id]'";
+					$result = mysql_query($sql, $db);
+					if (!$row = mysql_fetch_assoc($result)) {
+						$sql = "REPLACE INTO ".TABLE_PREFIX."master_list VALUES ('$_POST[student_id]', '$student_pin', $id)";
+						mysql_query($sql, $db);
+					}
+				}
 			}
 		}
 
