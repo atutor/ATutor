@@ -26,7 +26,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				$sql = "SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$test_row[member_id]";
 				$member_result = mysql_query($sql, $db);
 				$member_row = mysql_fetch_assoc($member_result);
-				$body = _AT('fha_ref_automatic_email_body', {$system_courses[$row['course_id']]['title']});
+				$body = _AT('fha_ref_automatic_email_body', $system_courses[$row['course_id']]['title']);
 				
 				$mail->From     = $_config['contact_email'];
 				$mail->AddAddress($member_row['email']);
