@@ -15,6 +15,10 @@ while ($row = mysql_fetch_assoc($result)) {
 	$refresh_period_seconds = time() - ($row['refresh_period'] * 24 * 60 * 60);
 	$max_refresh_period     = $row['max_refresh_period'] * 24 * 60 * 60;
 
+	// these are used in the mail footer
+	$_SESSION['course_id']    = $row['course_id'];
+	$_SESSION['course_title'] = $system_courses[$row['course_id']]['title'];
+
 	$sql = "SELECT member_id, MAX(UNIX_TIMESTAMP(date_taken)) AS date_taken FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score >= $row[pass_score] GROUP BY member_id";
 	$test_result = mysql_query($sql, $db);
 
@@ -26,12 +30,11 @@ while ($row = mysql_fetch_assoc($result)) {
 				$sql = "SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$test_row[member_id]";
 				$member_result = mysql_query($sql, $db);
 				$member_row = mysql_fetch_assoc($member_result);
-				$body = _AT('fha_ref_automatic_email_body', $system_courses[$row['course_id']]['title']);
 				
 				$mail->From     = $_config['contact_email'];
 				$mail->AddAddress($member_row['email']);
 				$mail->Subject = $subject;
-				$mail->Body    = $body;
+				$mail->Body    = _AT('fha_ref_automatic_email_body', $system_courses[$row['course_id']]['title']);
 
 				$mail->Send();
 			}
