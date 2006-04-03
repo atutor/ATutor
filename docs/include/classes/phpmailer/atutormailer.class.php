@@ -51,14 +51,18 @@ class ATutorMailer extends PHPMailer {
 
 	/**
 	* Appends a custom ATutor footer to all outgoing email then sends the email.
+	* If mail_queue is enabled then instead of sending the mail out right away, it 
+	* places it in the database and waits for the cron to send it using SendQueue().
+	* The mail queue does not support reply-to, or attachments, and converts all BCCs
+	* to regular To emails.
 	* @access  public
-	* @return  boolean	whether or not the mail was sent correctly.
+	* @return  boolean	whether or not the mail was sent (or queued) successfully.
 	* @see     parent::send()
 	* @since   ATutor 1.4.1
 	* @author  Joel Kronenberg
 	*/
 	function Send() {
-		global $_base_href;
+		global $_base_href, $_config;
 
 		// attach the ATutor footer to the body first:
 		$this->Body .= 	"\n\n".'----------------------------------------------'."\n";
@@ -69,7 +73,70 @@ class ATutorMailer extends PHPMailer {
 
 		$this->Body .= "\n"._AT('atutor_home').': http://atutor.ca';
 
-		return parent::Send();
+		// if this email has been queued then don't send it. instead insert it in the db
+		// for each bcc or to or cc
+		if ($_config['enable_mail_queue'] && !$this->attachment) {
+			global $db;
+			for ($i = 0; $i < count($this->to); $i++) {
+				$this->QueueMail(addslashes($this->to[$i][0]), addslashes($this->to[$i][1]), addslashes($this->From), addslashes($this->FromName), addslashes($this->Subject), addslashes($this->Body));
+			}
+			for($i = 0; $i < count($this->cc); $i++) {
+				$this->QueueMail(addslashes($this->cc[$i][0]), addslashes($this->cc[$i][1]), addslashes($this->From), addslashes($this->FromName), addslashes($this->Subject), addslashes($this->Body));
+			}
+			for($i = 0; $i < count($this->bcc); $i++) {
+				$this->QueueMail(addslashes($this->bcc[$i][0]), addslashes($this->bcc[$i][1]), addslashes($this->From), addslashes($this->FromName), addslashes($this->Subject), addslashes($this->Body));
+			}
+			return true;
+		} else {
+			return parent::Send();
+		}
+	}
+
+	/**
+	* Adds the mail to the queue.
+	* @access private
+	* @return boolean whether the mail was queued successfully.
+	* @since  ATutor 1.5.3
+	* @author Joel Kronenberg
+	*/
+	function QueueMail($to_email, $to_name, $from_email, $from_name, $subject, $body) {
+		global $db;
+		$sql = "INSERT INTO ".TABLE_PREFIX."mail_queue VALUES (0, '$to_email', '$to_name', '$from_email', '$from_name', '".addslashes($this->CharSet)."', '$subject', '$body')";
+		return mysql_query($sql, $db);
+	}
+
+	/**
+	* Sends all the queued mail. Called by ./admin/cron.php.
+	* @access public
+	* @return void
+	* @since ATutor 1.5.3
+	* @author Joel Kronenberg
+	*/
+	function SendQueue() {
+		global $db;
+
+		$mail_ids = '';
+		$sql = "SELECT * FROM ".TABLE_PREFIX."mail_queue";
+		$result = mysql_query($sql, $db);
+		while ($row = mysql_fetch_assoc($result)) {
+			$this->ClearAllRecipients();
+
+			$this->AddAddress($row['to_email'], $row['to_name']);
+			$this->From     = $row['from_email'];
+			$this->FromName = $row['from_name'];
+			$this->CharSet  = $row['char_set'];
+			$this->Subject  = $row['subject'];
+			$this->Body     = $row['body'];
+
+			parent::Send();
+
+			$mail_ids .= $row['mail_id'].',';
+		}
+		if ($mail_ids) {
+			$mail_ids = substr($mail_ids, 0, -1); // remove the last comma
+			$sql = "DELETE FROM ".TABLE_PREFIX."mail_queue WHERE mail_id IN ($mail_ids)";
+			mysql_query($sql, $db);
+		}
 	}
 
 }

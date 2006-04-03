@@ -46,6 +46,8 @@ $_config_defaults['pref_inbox_notify']		   = 0;
 $_config_defaults['check_version']	           = 0;
 $_config_defaults['fs_versioning']             = 1;
 $_config_defaults['display_full_name']         = 1; // not currently a config option
+$_config_defaults['last_cron']                 = 0; // cron has to be enabled manually
+$_config_defaults['enable_mail_queue']         = 0; // mail queue can only be enabled if cron is running
 
 $_config = $_config_defaults;
 

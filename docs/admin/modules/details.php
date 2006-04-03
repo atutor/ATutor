@@ -152,13 +152,14 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 	<?php if (is_array($module->_pages)): ?>
 		<div class="row">
 			<?php if (!isset($_GET['files'])): ?>
-				<a href="<?php echo $_SERVER['REQUEST_URI'].SEP; ?>files#files"><?php echo _AT('files'); ?> (<?php echo count($module->_pages); ?>)</a><br />
+				<a href="<?php echo $_SERVER['REQUEST_URI'].SEP; ?>files#files"><?php echo _AT('files'); ?></a><br />
 			<?php else: ?>
 				<?php $module_pages = array_keys($module->_pages); ?>
 				<?php natsort($module_pages); ?>
-				<a name="files"></a><?php echo _AT('files'); ?> (<?php echo count($module->_pages); ?>)<br />
+				<a name="files"></a><?php echo _AT('files'); ?><br />
 				<ul style="margin-top: 0px;">
 					<?php foreach ($module_pages as $key): ?>
+						<?php if (defined($key)) : continue; endif; ?>
 						<li><kbd><?php echo $key; ?></kbd></li>
 					<?php endforeach; ?>
 				</ul>

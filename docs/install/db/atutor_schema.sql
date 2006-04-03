@@ -507,46 +507,48 @@ CREATE TABLE `messages` (
 # Table structure for table `modules` (since 1.5.2)
 
 CREATE TABLE `modules` (  
-`dir_name` VARCHAR( 50 ) NOT NULL ,  
-`status` TINYINT NOT NULL ,  
-`privilege` INT UNSIGNED NOT NULL ,  
-`admin_privilege` MEDIUMINT UNSIGNED NOT NULL ,  
-PRIMARY KEY ( `dir_name` )  
+  `dir_name` VARCHAR( 50 ) NOT NULL ,  
+  `status` TINYINT NOT NULL ,  
+  `privilege` INT UNSIGNED NOT NULL ,  
+  `admin_privilege` MEDIUMINT UNSIGNED NOT NULL , 
+  `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL ,
+  `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL,
+  PRIMARY KEY ( `dir_name` )
 );
 
-INSERT INTO `modules` VALUES ('_core/properties',        2, 1,         0);
-INSERT INTO `modules` VALUES ('_standard/statistics',    2, 1,         0);
-INSERT INTO `modules` VALUES ('_core/content',           2, 2,         0);
-INSERT INTO `modules` VALUES ('_core/glossary',          2, 4,         0);
-INSERT INTO `modules` VALUES ('_standard/tests',         2, 8,         0);
-INSERT INTO `modules` VALUES ('_standard/chat',          2, 16,        0);
-INSERT INTO `modules` VALUES ('_core/file_manager',      2, 32,        0);
-INSERT INTO `modules` VALUES ('_standard/links',         2, 64,        0);
-INSERT INTO `modules` VALUES ('_standard/forums',        2, 128,       16);
-INSERT INTO `modules` VALUES ('_standard/student_tools', 2, 256,       0);
-INSERT INTO `modules` VALUES ('_core/enrolment',         2, 512,       0);
-INSERT INTO `modules` VALUES ('_standard/course_email',  2, 1024,      0);
-INSERT INTO `modules` VALUES ('_standard/announcements', 2, 2048,      0);
-# INSERT INTO `modules` VALUES ('acollab',               2, 8192+4096, 0);
-INSERT INTO `modules` VALUES ('_standard/polls',         2, 16384,     0);
-INSERT INTO `modules` VALUES ('_standard/faq',           2, 32768,     0);
-INSERT INTO `modules` VALUES ('_core/groups',            2, 65536,     0);
-INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0);
-INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0);
-INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
-INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2);
-INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4);
-INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8);
-INSERT INTO `modules` VALUES ('_core/cats_categories',   2, 0,         32);
-INSERT INTO `modules` VALUES ('_core/languages',         2, 0,         64);
-INSERT INTO `modules` VALUES ('_core/themes',            2, 0,         128);
-INSERT INTO `modules` VALUES ('_standard/rss_feeds',	 2, 0,	       256);
-INSERT INTO `modules` VALUES ('_standard/directory',     2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/tile_search',   2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/sitemap',       2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/tracker',       2, 0, 0);
-INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0);
+INSERT INTO `modules` VALUES ('_core/properties',        2, 1,         0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/statistics',    2, 1,         0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/content',           2, 2,         0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/glossary',          2, 4,         0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/tests',         2, 8,         0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/chat',          2, 16,        0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/file_manager',      2, 32,        0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/links',         2, 64,        0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/forums',        2, 128,       16, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/student_tools', 2, 256,       0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/enrolment',         2, 512,       0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/course_email',  2, 1024,      0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/announcements', 2, 2048,      0, 0, 0);
+# INSERT INTO `modules` VALUES ('acollab',               2, 8192+4096, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/polls',         2, 16384,     0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/faq',           2, 32768,     0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/groups',            2, 65536,     0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2, 0, 0);
+INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4, 0, 0);
+INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8, 0, 0);
+INSERT INTO `modules` VALUES ('_core/cats_categories',   2, 0,         32, 0, 0);
+INSERT INTO `modules` VALUES ('_core/languages',         2, 0,         64, 0, 0);
+INSERT INTO `modules` VALUES ('_core/themes',            2, 0,         128, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/rss_feeds',	 2, 0,	       256, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/directory',     2, 0, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/tile_search',   2, 0, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/sitemap',       2, 0, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/tracker',       2, 0, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0, 0, 0);
 
 
 # --------------------------------------------------------
@@ -589,6 +591,22 @@ CREATE TABLE `polls` (
   PRIMARY KEY ( `poll_id` ) ,
   INDEX ( `course_id` )
 ) TYPE=MyISAM;
+
+# --------------------------------------------------------
+# Table structure for table `mail_queue`
+# since 1.5.3
+
+CREATE TABLE `mail_queue` (
+  `mail_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `to_email` VARCHAR( 50 ) NOT NULL ,
+  `to_name` VARCHAR( 50 ) NOT NULL ,
+  `from_email` VARCHAR( 50 ) NOT NULL ,
+  `from_name` VARCHAR( 50 ) NOT NULL ,
+  `char_set` VARCHAR( 20 ) NOT NULL ,
+  `subject` VARCHAR( 200 ) NOT NULL ,
+  `body` TEXT NOT NULL ,
+  PRIMARY KEY ( `mail_id` )
+);
 
 # --------------------------------------------------------
 

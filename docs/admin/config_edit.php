@@ -86,6 +86,14 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('SYSTEM_PREFS_SAVED');
+
+		// special case: disabling the mail queue should flush all queued mail:
+		if (!$_POST['enable_mail_queue'] && $_POST['old_enable_mail_queue']) {
+			require_once(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			$mail = new ATutorMailer;
+			$mail->SendQueue();
+		}
+
 		header('Location: '.$_SERVER['PHP_SELF']);
 		exit;
 	}
@@ -210,6 +218,17 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<?php echo _AT('file_storage_version_control'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['fs_versioning'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="fs_versioning" value="1" id="cf_y" <?php if($_config['fs_versioning']) { echo 'checked="checked"'; }?>  /><label for="cf_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="fs_versioning" value="0" id="cf_n" <?php if(!$_config['fs_versioning']) { echo 'checked="checked"'; }?>  /><label for="cf_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<input type="hidden" name="old_enable_mail_queue" value="<?php echo $_config['enable_mail_queue']; ?>" />
+		<?php echo _AT('enable_mail_queue'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['enable_mail_queue'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<?php echo _AT('mail_queue_cron'); ?><br />
+		<?php if (!$_config['last_cron'] || (time() - (int) $_config['last_cron'] > 2 * 60 * 60)): ?>
+			<input type="radio" name="enable_mail_queue" value="1" disabled="disabled" /><?php echo _AT('enable'); ?> <input type="radio" name="enable_mail_queue" value="0" id="mq_n" checked="checked" /><label for="mq_n"><?php echo _AT('disable'); ?></label>
+		<?php else: ?>
+			<input type="radio" name="enable_mail_queue" value="1" id="mq_y" <?php if($_config['enable_mail_queue']) { echo 'checked="checked"'; }?>  /><label for="mq_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="enable_mail_queue" value="0" id="mq_n" <?php if(!$_config['enable_mail_queue']) { echo 'checked="checked"'; }?>  /><label for="mq_n"><?php echo _AT('disable'); ?></label>
+		<?php endif; ?>
 	</div>
 
 	<div class="row buttons">

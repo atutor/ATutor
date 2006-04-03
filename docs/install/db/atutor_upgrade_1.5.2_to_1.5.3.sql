@@ -18,6 +18,10 @@ INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0);
 INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0);
 INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
 
+# cron support for modules
+ALTER TABLE `modules` ADD `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL , ADD `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL, ;
+
+
 # --------------------------------------------------------
 
 # assignments table
@@ -141,3 +145,18 @@ ALTER TABLE `modules` CHANGE `privilege` `privilege` INT UNSIGNED DEFAULT '0' NO
 # second name field
 ALTER TABLE `members` ADD `second_name` CHAR( 30 ) NOT NULL AFTER `first_name` ;
 ALTER TABLE `members` ADD `private_email` TINYINT DEFAULT '1' NOT NULL ;
+
+
+# Table structure for table `mail_queue`
+# since 1.5.3
+CREATE TABLE `mail_queue` (
+  `mail_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `to_email` VARCHAR( 50 ) NOT NULL ,
+  `to_name` VARCHAR( 50 ) NOT NULL ,
+  `from_email` VARCHAR( 50 ) NOT NULL ,
+  `from_name` VARCHAR( 50 ) NOT NULL ,
+  `char_set` VARCHAR( 20 ) NOT NULL ,
+  `subject` VARCHAR( 200 ) NOT NULL ,
+  `body` TEXT NOT NULL ,
+  PRIMARY KEY ( `mail_id` )
+);

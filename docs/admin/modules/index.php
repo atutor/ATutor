@@ -135,19 +135,20 @@ $keys = array_keys($module_list);
 <colgroup>
 		<col />
 		<col class="sort" />
-		<col span="3" />
+		<col span="4" />
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('module_name'); ?></th>
 	<th scope="col"><?php echo _AT('type'); ?></th>
 	<th scope="col"><?php echo _AT('status'); ?></th>
+	<th scope="col"><?php echo _AT('cron'); ?></th>
 	<th scope="col"><?php echo _AT('directory_name'); ?></th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="5">
+	<td colspan="6">
 		<input type="submit" name="details" value="<?php echo _AT('details'); ?>" />
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
@@ -178,12 +179,19 @@ $keys = array_keys($module_list);
 				echo '<em>'._AT('disabled').'</em>';
 			}
 			?></td>
+		<td valign="top" align="center">
+			<?php if ($module->getCronInterval()): ?>
+				<?php echo _AT('minutes', $module->getCronInterval()); ?>
+			<?php else: ?>
+				-
+			<?php endif; ?>
+		</td>
 		<td valign="top"><code><?php echo $dir_name; ?>/</code></td>
 	</tr>
 <?php endforeach; ?>
 <?php if (!$keys): ?>
 	<tr>
-		<td colspan="5"><?php echo _AT('none_found'); ?></td>
+		<td colspan="6"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>

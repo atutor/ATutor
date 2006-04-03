@@ -22,9 +22,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  *    set to FALSE | AT_ADMIN_PRIV_ADMIN   to use the super administrator only privilege.
  *    set to TRUE | 'new'                  to create a privilege specifically for this module:
  *                                         will make this module available as an administrator privilege.
+ *
+ *
+ * $_cron_interval
+ *    if non-zero specifies in minutes how often the module's cron job should be run.
+ *    set to 0 or not set to disable.
  */
 $_course_privilege = TRUE; // possible values: FALSE | AT_PRIV_ADMIN | TRUE
 $_admin_privilege  = TRUE; // possible values: FALSE | TRUE
+$_cron_interval    = 35; // run every 30 minutes
 
 
 /********

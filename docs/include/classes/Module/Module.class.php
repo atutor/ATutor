@@ -52,7 +52,7 @@ class ModuleFactory {
 
 		if ($auto_load == TRUE) {
 			// initialise enabled modules
-			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
+			$sql	= "SELECT dir_name, privilege, admin_privilege, status, cron_interval, cron_last_run FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
 			$result = mysql_query($sql, $db);
 			while($row = mysql_fetch_assoc($result)) {
 				$module =& new Module($row);
@@ -163,6 +163,8 @@ class Module {
 	var $_pages;
 	var $_type; // core, standard, extra
 	var $_properties; // array from xml
+	var $_cron_interval; // cron interval
+	var $_cron_last_run; // cron last run date stamp
 
 	// constructor
 	function Module($row) {
@@ -172,6 +174,8 @@ class Module {
 			$this->_privilege       = $row['privilege'];
 			$this->_admin_privilege = $row['admin_privilege'];
 			$this->_display_defaults= $row['display_defaults'];
+			$this->_cron_interval   = $row['cron_interval'];
+			$this->_cron_last_run   = $row['cron_last_run'];
 
 			if (strpos($row['dir_name'], AT_MODULE_DIR_CORE) === 0) {
 				$this->_type = AT_MODULE_TYPE_CORE;
@@ -287,6 +291,10 @@ class Module {
 		return $this->_properties[$property];
 	}
 
+	function getCronInterval() {
+		return $this->_cron_interval;
+
+	}
 	function getName() {
 		if ($this->isUninstalled()) {
 			return current($this->getProperty('name'));
@@ -303,8 +311,6 @@ class Module {
 
 		return (isset($this->_properties['description'][$lang]) ? $this->_properties['description'][$lang] : current($this->_properties['description']));
 	}
-
-
 
 	function getChildPage($page) {
 		if (!is_array($this->_pages)) {
@@ -517,7 +523,13 @@ class Module {
 				$admin_priv = AT_ADMIN_PRIV_ADMIN;
 			}
 
-			$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.')';
+			if (isset($_cron_interval)) {
+				$_cron_interval = abs($_cron_interval);
+			} else {
+				$_cron_interval = 0;
+			}
+
+			$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.', '.$_cron_interval.', 0)';
 			$result = mysql_query($sql, $db);
 		}
 	}
@@ -530,6 +542,28 @@ class Module {
 		return $this->_student_tool;
 	}
 
+
+	function runCron() {
+		if ( ($this->_cron_last_run + ($this->_cron_interval * 60)) < time()) {
+			if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_cron.php')) {
+				require(AT_MODULE_PATH . $this->_directoryName.'/module_cron.php');
+				if (function_exists(basename($this->_directoryName).'_cron')) {
+					$fnctn = basename($this->_directoryName).'_cron';
+					$fnctn();
+				}
+			}
+			$this->updateCronLastRun();
+		}
+	}
+
+	// i'm private! update the last time the cron was run
+	function updateCronLastRun() {
+		global $db;
+
+		$sql = "UPDATE ".TABLE_PREFIX."modules SET cron_last_run=".time()." WHERE dir_name='$this->_directoryName'";
+		mysql_query($sql, $db);
+
+	}
 }
 
 ?>

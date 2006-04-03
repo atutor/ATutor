@@ -71,25 +71,25 @@ if ($_SESSION['course_id'] > 0) {
 		$_pages['admin/config_edit.php']['guide']     = 'admin/?p=2.2.system_preferences.php';
 		$_pages['admin/config_edit.php']['children']  = array_merge($_pages['admin/config_edit.php']['children'], array('admin/error_logging.php'));
 	}
-		$_pages['admin/fix_content.php']['title_var'] = 'fix_content_ordering';
-		$_pages['admin/fix_content.php']['parent']    = 'admin/index.php';
+	$_pages['admin/fix_content.php']['title_var'] = 'fix_content_ordering';
+	$_pages['admin/fix_content.php']['parent']    = 'admin/index.php';
 
-		$_pages['admin/error_logging.php']['title_var'] = 'error_logging';
-		$_pages['admin/error_logging.php']['parent']    = 'admin/config_edit.php';
-		$_pages['admin/error_logging.php']['guide']     = 'admin/?p=2.5.error_logging.php';
-		$_pages['admin/error_logging.php']['children']  = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
+	$_pages['admin/error_logging.php']['title_var'] = 'error_logging';
+	$_pages['admin/error_logging.php']['parent']    = 'admin/config_edit.php';
+	$_pages['admin/error_logging.php']['guide']     = 'admin/?p=2.5.error_logging.php';
+	$_pages['admin/error_logging.php']['children']  = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
 
-		$_pages['admin/error_logging_reset.php']['title_var'] = 'reset_log';
-		$_pages['admin/error_logging_reset.php']['parent']    = 'admin/error_logging.php';
+	$_pages['admin/error_logging_reset.php']['title_var'] = 'reset_log';
+	$_pages['admin/error_logging_reset.php']['parent']    = 'admin/error_logging.php';
 
-		$_pages['admin/error_logging_bundle.php']['title_var'] = 'report_errors';
-		$_pages['admin/error_logging_bundle.php']['parent']    = 'admin/error_logging.php';
+	$_pages['admin/error_logging_bundle.php']['title_var'] = 'report_errors';
+	$_pages['admin/error_logging_bundle.php']['parent']    = 'admin/error_logging.php';
 
-		$_pages['admin/error_logging_details.php']['title_var'] = 'viewing_profile_bugs';
-		$_pages['admin/error_logging_details.php']['parent']    = 'admin/error_logging.php';
+	$_pages['admin/error_logging_details.php']['title_var'] = 'viewing_profile_bugs';
+	$_pages['admin/error_logging_details.php']['parent']    = 'admin/error_logging.php';
 
-		$_pages['admin/error_logging_view.php']['title_var'] = 'viewing_errors';
-		$_pages['admin/error_logging_view.php']['parent']    = 'admin/error_logging_details.php';
+	$_pages['admin/error_logging_view.php']['title_var'] = 'viewing_errors';
+	$_pages['admin/error_logging_view.php']['parent']    = 'admin/error_logging_details.php';
 
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 		// hide modules from non-super admins
@@ -110,6 +110,9 @@ if ($_SESSION['course_id'] > 0) {
 		//$_pages['admin/modules/create.php']['title_var'] = 'create_module';
 		//$_pages['admin/modules/create.php']['parent']    = 'admin/modules/index.php';
 
+		$_pages['admin/cron_config.php']['title_var'] = 'cron_config';
+		$_pages['admin/cron_config.php']['parent']    = 'admin/config_edit.php';
+		$_pages['admin/config_edit.php']['children'] = array_merge($_pages['admin/config_edit.php']['children'], array('admin/cron_config.php'));
 	}
 }
 
