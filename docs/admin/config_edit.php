@@ -39,12 +39,13 @@ if (isset($_POST['cancel'])) {
 	$_POST['auto_approve_instructors']  = intval($_POST['auto_approve_instructors']);
 	$_POST['theme_categories']          = intval($_POST['theme_categories']);
 	$_POST['user_notes']                = intval($_POST['user_notes']);
-	$_POST['illegal_extentions']                   = str_replace(array('  ', ' '), array(' ','|'), $_POST['illegal_extentions']);
+	$_POST['illegal_extentions']        = str_replace(array('  ', ' '), array(' ','|'), $_POST['illegal_extentions']);
 	$_POST['cache_dir']                 = trim($_POST['cache_dir']);
 	$_POST['course_backups']            = intval($_POST['course_backups']);
 	$_POST['course_backups']            = max(0, $_POST['course_backups']);
 	$_POST['check_version']             = $_POST['check_version'] ? 1 : 0;
 	$_POST['fs_versioning']             = $_POST['fs_versioning'] ? 1 : 0;
+	$_POST['enable_mail_queue']         = $_POST['enable_mail_queue'] ? 1 : 0;
 
 	//check that all values have been set	
 	if (!$_POST['site_name']) {
