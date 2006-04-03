@@ -14,7 +14,13 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-//authenticate(AT_PRIV_CONTENT);
+
+if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+	require (AT_INCLUDE_PATH.'html/frameset/header.inc.php'); 
+	$msg->printErrors('TLE_ACCESS_DENIED');
+	require (AT_INCLUDE_PATH.'html/frameset/footer.inc.php'); 
+	exit;
+}
 
 if (isset($_POST['submit'])) {
 	$cid = intval($_POST['cid']);
