@@ -1,4 +1,5 @@
 INSERT INTO `language_text` VALUES ('en', '_module', 'tle', 'TLE', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'tle_assembler', 'TLE Assembler', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_module', 'tle_server', 'Full TLE Server URL (Example: http://tleserve.org/signon.do)', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_module', 'tle_shared_secret', 'Shared Secret', NOW(), '');
 

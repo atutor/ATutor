@@ -52,6 +52,5 @@ if (!isset($_config['tle_server']) || !$_config['tle_server']) {
 
 	echo '<iframe src="'. $url . '" width="620" height="600" frameborder="0" /></iframe>';
 }
-
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
