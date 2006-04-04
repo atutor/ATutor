@@ -25,7 +25,10 @@ if (!fs_authenticate($owner_type, $owner_id)) {
 	exit;
 }
 
-if (isset($_GET['cancel'])) {
+if (isset($_GET['done'])) {
+	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder']));
+	exit;
+} else if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder']));
 	exit;
@@ -115,7 +118,7 @@ if (!$files) {
 		</div>
 		<div class="row buttons">
 			<input type="submit" name="comments" value="<?php echo _AT('comments'); ?>" />
-			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+			<input type="submit" name="done" value="<?php echo _AT('done'); ?>" />
 		</div>
 	</div>
 	<input type="hidden" name="folder" value="<?php echo $current_file['folder_id']; ?>" />
