@@ -48,8 +48,27 @@ if ($_SESSION['course_id'] > 0) {
 		}
 	}
 
-	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) || $_SESSION['privileges']) {
-		$_pages[AT_NAV_COURSE][] = 'tools/index.php';
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+		$_pages[AT_NAV_COURSE][] = 'tools/index.php';		
+	} else if ($_SESSION['privileges']) {
+		
+		/**
+		 * the loop and all this module priv checking is done to hide the Manage tab
+		 * when this student has privileges, but no items linked from the Manage tab.
+		 * Example: the File Storage privilege does not have a Manage tab item.
+		 * In the best case it stops after the first found link.
+		 * In the worst case it goes through all the modules and doesn't find a link.
+		 */
+		$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
+		$keys = array_keys($module_list);
+
+		foreach ($keys as $module_name) {
+			$module =& $module_list[$module_name];
+			if ($module->getPrivilege() && authenticate($module->getPrivilege(), AT_PRIV_RETURN) && ($module->getChildPage('tools/index.php'))) {
+				$_pages[AT_NAV_COURSE][] = 'tools/index.php';
+				break;
+			}
+		}
 	}
 } else if ($_SESSION['course_id'] == -1) {
 	/* admin pages */
