@@ -82,7 +82,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<label for="title"><?php  echo _AT('rl_select_av'); ?>:</label>
 		<select name="existing" id="title">
 
-			<?php while ($row = mysql_fetch_assoc($result)): ?>
+			<?php while ($row = mysql_fetch_assoc($av_result)): ?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $existing) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['title']); ?></option>
 			<?php endwhile; ?>
 		
