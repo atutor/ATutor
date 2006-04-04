@@ -60,17 +60,19 @@ if (isset($_GET['existing'])){
 	$existing = intval ($_GET['existing']);
 }
 
+$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_AV." ORDER BY title";
+$av_result = mysql_query($sql, $db);
+
+if (!mysql_num_rows($av_result)) {
+	header('Location: add_resource_av.php?page_return=new_reading_av.php');
+	exit;
+}
+
 $onload = 'document.form.name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_AV." ORDER BY title";
-$result = mysql_query($sql, $db);
-
-$num_avs = mysql_num_rows($result);
-
-if ($num_avs != '0') {?>
-
+?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">	
 
@@ -175,14 +177,5 @@ if ($num_avs != '0') {?>
 	</div>
 </div>
 </form>
-
-<?php
-}
-else { // there are no AV materials entered as resources ?>
-<?php
-	header('Location: add_resource_av.php?page_return=new_reading_av.php');
-	exit;
-?>
-<?php } ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

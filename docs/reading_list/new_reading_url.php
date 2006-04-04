@@ -60,17 +60,19 @@ if (isset($_GET['existing'])){
 	$existing = intval ($_GET['existing']);
 }
 
+$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_URL." ORDER BY title";
+$url_result = mysql_query($sql, $db);
+
+if (!mysql_num_rows($url_result)) {
+	header('Location: add_resource_url.php?page_return=new_reading_url.php');
+	exit;
+}
+
 $onload = 'document.form.name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_URL." ORDER BY title";
-$result = mysql_query($sql, $db);
-
-$num_urls = mysql_num_rows($result);
-
-if ($num_urls != '0') {?>
-
+?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">	
 
@@ -80,7 +82,7 @@ if ($num_urls != '0') {?>
 		<label for="urltitle"><?php  echo _AT('rl_select_url'); ?>:</label>
 		<select name="existing" id="urltitle">
 
-			<?php while ($row = mysql_fetch_assoc($result)): ?>
+			<?php while ($row = mysql_fetch_assoc($url_result)): ?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $existing) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['title']); ?></option>
 			<?php endwhile; ?>
 		
@@ -175,14 +177,5 @@ if ($num_urls != '0') {?>
 	</div>
 </div>
 </form>
-
-<?php
-}
-else { // there are no URLs entered as resources ?>
-<?php
-	header('Location: add_resource_url.php?page_return=new_reading_url.php');
-	exit;
-?>
-<?php } ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

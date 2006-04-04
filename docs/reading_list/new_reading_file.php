@@ -60,17 +60,18 @@ if (isset($_GET['existing'])){
 	$existing = intval ($_GET['existing']);
 }
 
+$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_FILE." ORDER BY title";
+$files_result = mysql_query($sql, $db);
+
+if (!mysql_num_rows($files_result)) {
+	header('Location: add_resource_file.php?page_return=new_reading_file.php');
+	exit;
+}
+
 $onload = 'document.form.name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_FILE." ORDER BY title";
-$result = mysql_query($sql, $db);
-
-$num_files = mysql_num_rows($result);
-
-if ($num_files != '0') {?>
-
+?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">	
 
@@ -80,7 +81,7 @@ if ($num_files != '0') {?>
 		<label for="title"><?php  echo _AT('rl_select_file'); ?>:</label>
 		<select name="existing" id="title">
 
-			<?php while ($row = mysql_fetch_assoc($result)): ?>
+			<?php while ($row = mysql_fetch_assoc($files_result)): ?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $existing) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['title']); ?></option>
 			<?php endwhile; ?>
 		
@@ -176,12 +177,4 @@ if ($num_files != '0') {?>
 </div>
 </form>
 
-<?php
-}
-else { // there are no files entered as resources ?>
-<?php
-	header('Location: add_resource_file.php?page_return=new_reading_file.php');
-	exit;
-?>
-<?php } ?>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

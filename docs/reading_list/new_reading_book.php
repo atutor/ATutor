@@ -60,17 +60,20 @@ if (isset($_GET['existingbook'])){
 	$existingbook = intval ($_GET['existingbook']);
 }
 
+$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_BOOK." ORDER BY title";
+$books_result = mysql_query($sql, $db);
+
+if (!mysql_num_rows($books_result)) {
+	header('Location: add_resource_book.php?page_return=new_reading_book.php');
+	exit;
+}
+
 $onload = 'document.form.name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_BOOK." ORDER BY title";
-$result = mysql_query($sql, $db);
 
-$num_books = mysql_num_rows($result);
-
-if ($num_books != '0') {?>
-
+?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">	
 
@@ -79,11 +82,9 @@ if ($num_books != '0') {?>
 	<div class="row">
 		<label for="booktitle"><?php  echo _AT('rl_select_book'); ?>:</label>
 		<select name="existingbook" id="booktitle">
-
-			<?php while ($row = mysql_fetch_assoc($result)): ?>
+			<?php while ($row = mysql_fetch_assoc($books_result)): ?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $existingbook) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['title']); ?></option>
 			<?php endwhile; ?>
-		
 		</select>
 
 		<?php  echo _AT('rl_or'); ?> <a href="reading_list/add_resource_book.php?page_return=new_reading_book.php"><?php  echo _AT('rl_create_new_book'); ?></a>
@@ -175,14 +176,5 @@ if ($num_books != '0') {?>
 	</div>
 </div>
 </form>
-
-<?php
-}
-else { // there are no books entered as resources ?>
-<?php
-	header('Location: add_resource_book.php?page_return=new_reading_book.php');
-	exit;
-?>
-<?php } ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
