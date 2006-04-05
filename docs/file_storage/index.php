@@ -486,6 +486,9 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 			<?php endif; ?>
 		</select>
 
+		<br />
+		<?php echo _AT('current_path'); ?>
+			<a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=0"><?php echo _AT('home'); ?></a>
 		<?php foreach ($folder_path as $folder_info): ?>
 			<?php if ($folder_info['folder_id'] == $folder_id): ?>
 				» <?php echo $folder_info['title']; ?>
@@ -536,6 +539,11 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 </tr>
 </tfoot>
 <tbody>
+<?php if ($folder_id): ?>
+	<tr>
+		<td colspan="7"><a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix.SEP.'folder='.$folder_path[0]['folder_id']; ?>"><img src="images/arrowicon.gif" border="0" height="" width="" alt="" /> <?php echo _AT('back'); ?></a></td>
+	</tr>
+<?php endif; ?>
 <?php if ($folders || $files): ?>
 	<?php foreach ($folders as $folder_info): ?>
 		<tr onmousedown="document.form['f<?php echo $folder_info['folder_id']; ?>'].checked = !document.form['f<?php echo $folder_info['folder_id']; ?>'].checked; rowselectbox(this, document.form['f<?php echo $folder_info['folder_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $folder_info['folder_id']; ?>_1">
