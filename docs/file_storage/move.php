@@ -20,7 +20,9 @@ $owner_type = abs($_REQUEST['ot']);
 $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
-	exit('NOT AUTHENTICATED');
+	$msg->addError('ACCESS_DENIED');
+	header('Location: index.php');
+	exit;
 }
 
 if (isset($_POST['cancel'])) {
@@ -48,7 +50,7 @@ if (isset($_POST['cancel'])) {
 			$sql = "SELECT file_id FROM ".TABLE_PREFIX."files WHERE folder_id={$_POST['new_folder']} AND file_id<>$file AND file_name='{$row['file_name']}' AND parent_file_id=0 AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_id DESC LIMIT 1";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				fs_delete_file($row['file_id']);
+				fs_delete_file($row['file_id'], $owner_type, $owner_id);
 			}
 
 			$sql = "UPDATE ".TABLE_PREFIX."files SET folder_id={$_POST['new_folder']} WHERE file_id=$file AND owner_type=$owner_type AND owner_id=$owner_id";
