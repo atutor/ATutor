@@ -49,21 +49,22 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['comments'] = $addslashes($_POST['comments']);
+		$_POST['description'] = $addslashes(trim($_POST['description']));
+		$_POST['comment'] = $addslashes(trim($_POST['comment']));
 		$_POST['name'] = $addslashes($_POST['name']);
 		$_POST['body'] = stripslashes($addslashes($_POST['body']));
 
-		if ($_POST['comments']) {
+		if ($_POST['comment']) {
 			$num_comments = 1;
 		} else {
 			$num_comments = 0;
 		}
 
 		$size = strlen($_POST['body']);
-		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '$_POST[name]',$size)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '$_POST[name]',$size, '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 
-		if ($result && $file_id = mysql_insert_id($db)) {
+		if ($result && ($file_id = mysql_insert_id($db))) {
 			$file_path = fs_get_file_path($file_id) . $file_id;
 			$fp = fopen($file_path, 'wb');
 			fwrite($fp, $_POST['body'], $size);
@@ -84,8 +85,8 @@ if (isset($_POST['cancel'])) {
 				}
 			}
 
-			if ($_POST['comments']){
-				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comments']}')";
+			if ($_POST['comment']){
+				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
 				mysql_query($sql, $db);
 			}
 
@@ -107,6 +108,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('file_name'); ?></label><br />
 		<input type="text" name="name" id="name" value="<?php echo htmlspecialchars($_POST['name']); ?>" size="40" maxlength="70" />
+	</div>
+
+	<div class="row">
+		<label for="description"><?php echo _AT('description'); ?></label><br />
+		<textarea name="description" id="description" cols="30" rows="2"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
 	</div>
 
 	<div class="row">

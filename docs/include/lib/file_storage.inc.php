@@ -477,12 +477,12 @@ function fs_delete_workspace($owner_type, $owner_id) {
 function fs_copy_file($file_id, $src_owner_type, $src_owner_id, $dest_owner_type, $dest_owner_id, $dest_folder_id) {
 	global $db;
 
-	$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$src_owner_type AND owner_id=$src_owner_id";
+	$sql = "SELECT file_name, file_size, description FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$src_owner_type AND owner_id=$src_owner_id";
 	$result = mysql_query($sql, $db);
 	if (!$row = mysql_fetch_assoc($result)) {
 		return false;
 	}
-	$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $dest_owner_type, $dest_owner_id, $_SESSION[member_id], $dest_folder_id, 0, NOW(), 0, 0, '$row[file_name]', '$row[file_size]')";
+	$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $dest_owner_type, $dest_owner_id, $_SESSION[member_id], $dest_folder_id, 0, NOW(), 0, 0, '$row[file_name]', '$row[file_size]', '$row[description]')";
 	$result = mysql_query($sql, $db);
 
 	$id = mysql_insert_id($db);

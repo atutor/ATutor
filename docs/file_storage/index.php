@@ -312,7 +312,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['comments'] = $addslashes($_POST['comments']);
+		$_POST['description'] = $addslashes(trim($_POST['description']));
 		$_FILES['file']['name'] = addslashes($_FILES['file']['name']);
 
 		if ($_POST['comments']) {
@@ -321,7 +321,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 			$num_comments = 0;
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']})";
+		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']}, '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 
 		if ($result && ($file_id = mysql_insert_id($db))) {
@@ -341,11 +341,6 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 				} else {
 					fs_delete_file($row['file_id'], $owner_type, $owner_id);
 				}
-			}
-
-			if ($_POST['comments']){
-				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comments']}')";
-				mysql_query($sql, $db);
 			}
 
 			$msg->addFeedback('FILE_UPLOADED');
@@ -422,8 +417,8 @@ while ($row = mysql_fetch_assoc($result)) {
 					<br /><?php echo _AT('or'); ?> <a href="file_storage/new.php<?php echo $owner_arg_prefix; ?>folder=<?php echo $folder_id; ?>"><?php echo _AT('file_manager_new'); ?></a>
 				</div>
 				<div class="row">
-					<label for="comments"><?php echo _AT('revision_comment'); ?></label><br />
-					<textarea name="comments" id="comments" rows="1" cols="20"></textarea>
+					<label for="description"><?php echo _AT('description'); ?></label><br />
+					<textarea name="description" id="description" rows="1" cols="20"></textarea>
 				</div>
 				<div class="row buttons">
 					<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" />
@@ -561,12 +556,9 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td valign="top">
 				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?>
-				<?php
-					$sql = "SELECT comment FROM ".TABLE_PREFIX."files_comments WHERE file_id={$file_info['file_id']} ORDER BY comment_id ASC LIMIT 1";
-					$result = mysql_query($sql, $db);
-					if ($row = mysql_fetch_assoc($result)): ?>
-						<p><small><?php echo $row['comment']; ?></small></p>
-					<?php endif; ?>
+				<?php if ($file_info['description']): ?>
+					<p><small><?php echo $file_info['description']; ?></small></p>
+				<?php endif; ?>
 			</td>
 			<td align="center" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
 			<td align="right" valign="top">

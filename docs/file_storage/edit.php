@@ -39,6 +39,7 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['name'] = $addslashes($_POST['name']);
 		$_POST['comment'] = $addslashes(trim($_POST['comment']));
+		$_POST['description'] = $addslashes(trim($_POST['description']));
 		$_POST['body'] = stripslashes($addslashes($_POST['body']));
 		$original_file = fs_get_file_path($_POST['id']);
 		$folder = abs($_POST['folder']);
@@ -56,7 +57,7 @@ if (isset($_POST['cancel'])) {
 				$num_comments = 1;
 			}
 
-			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]', num_comments=num_comments+$num_comments WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
+			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]', description='$_POST[description]', num_comments=num_comments+$num_comments WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
 			mysql_query($sql, $db);
 		} else {
 			// this file is editable, and has changed
@@ -73,7 +74,7 @@ if (isset($_POST['cancel'])) {
 			$row = mysql_fetch_assoc($result);
 
 			if ($_config['fs_versioning']) {
-				$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size)";
+				$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size, '$_POST[description]')";
 				$result = mysql_query($sql, $db);
 
 				$file_id = mysql_insert_id($db);
@@ -115,7 +116,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
 
-$sql = "SELECT file_name, folder_id FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
+$sql = "SELECT file_name, folder_id, description FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 $result = mysql_query($sql, $db);
 if (!$row = mysql_fetch_assoc($result)) {
 	$msg->printErrors('FILE_NOT_EXIST');
@@ -135,6 +136,11 @@ $file_path = fs_get_file_path($id);
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('file_name'); ?></label><br />
 		<input type="text" name="name" id="name" value="<?php echo $row['file_name']; ?>" size="40" maxlength="70" />
+	</div>
+
+	<div class="row">
+		<label for="description"><?php echo _AT('description'); ?></label><br />
+		<textarea name="description" id="description" cols="30" rows="2"><?php echo htmlspecialchars($row['description']); ?></textarea>
 	</div>
 
 	<?php if (in_array($ext, $editable_file_types)): ?>

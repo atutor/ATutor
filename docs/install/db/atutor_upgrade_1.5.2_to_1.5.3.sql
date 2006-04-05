@@ -104,6 +104,7 @@ CREATE TABLE `files` (
   `num_revisions` tinyint(3) unsigned NOT NULL default '0',
   `file_name` varchar(80) NOT NULL default '',
   `file_size` int(11) NOT NULL default '0',
+  `description` text NOT NULL,
   PRIMARY KEY  (`file_id`)
 ) TYPE=MyISAM;
 
