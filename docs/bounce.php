@@ -150,7 +150,11 @@ $sql	= "SELECT member_id, content_packaging, cat_id, access, title FROM ".TABLE_
 $result = mysql_query($sql,$db);
 if (!$row = mysql_fetch_assoc($result)) {
 	$msg->addError('NO_SUCH_COURSE');
-	header('Location: login.php');
+	if ($_SESSION['member_id']) {
+		header('Location: '.$_base_href.'users/index.php');
+	} else {
+		header('Location: login.php');
+	}
 	exit;
 }
 
