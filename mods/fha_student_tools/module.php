@@ -19,6 +19,7 @@ $this->_pages['mods/fha_student_tools/instructor_index.php']['title_var'] = 'fha
 $this->_pages['mods/fha_student_tools/instructor_index.php']['parent']    = 'tools/index.php';
 
 $this->_pages['mods/fha_student_tools/index.php']['title_var'] = 'fha_student_tools';
+$this->_pages['mods/fha_student_tools/index.php']['img']       = 'mods/fha_student_tools/icon.gif';
 //$this->_pages['mods/fha_student_tools/index.php']['parent']    = 'tools/index.php';
 
 
