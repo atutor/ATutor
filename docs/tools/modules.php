@@ -109,16 +109,17 @@ if (isset($_POST['submit'])) {
 		$home_links = '';
 	}
 
-	if ((strlen($main_sections) < 256) && (strlen($home_sections) < 256)) {
-		$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$home_links', main_links='$main_links' WHERE course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-	}
+	$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$home_links', main_links='$main_links' WHERE course_id=$_SESSION[course_id]";
+	$result = mysql_query($sql, $db);
+
 	$msg->addFeedback('SECTIONS_SAVED');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
 
+
 require(AT_INCLUDE_PATH.'header.inc.php');
+
 
 //being displayed
 $_current_modules = array_slice($_pages[AT_NAV_COURSE], 1, -1); // removes index.php and tools/index.php
