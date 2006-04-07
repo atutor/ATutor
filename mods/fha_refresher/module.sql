@@ -1,4 +1,3 @@
-# sql file for hello world module
 
 CREATE TABLE `fha_refresher` (
    `course_id` mediumint(8) unsigned NOT NULL,
