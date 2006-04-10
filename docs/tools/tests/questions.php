@@ -70,6 +70,7 @@ if (isset($_POST['submit'])) {
 			}
 			
 			$orders = $_POST['ordering'];
+			asort($orders);
 			$orders = array_keys($orders);
 			$orders = array_flip($orders);
 
