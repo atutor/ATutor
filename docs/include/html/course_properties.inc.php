@@ -44,6 +44,30 @@ if (isset($_POST['form_course'])) {
 	$row['icon']				= $_POST['icon'];
 	$row['banner']              = $_POST['banner'];
 
+	if (intval($_POST['release_date'])) {
+		$day_release	= intval($_POST['day_release']);
+		$month_release	= intval($_POST['month_release']);
+		$year_release	= intval($_POST['year_release']);
+		$hour_release	= intval($_POST['hour_release']);
+		$min_release	= intval($_POST['min_release']);
+
+		if (strlen($month_release) == 1){
+			$month_release = "0$month_release";
+		}
+		if (strlen($day_release) == 1){
+			$day_release = "0$day_release";
+		}
+		if (strlen($hour_release) == 1){
+			$hour_release = "0$hour_release";
+		}
+		if (strlen($min_release) == 1){
+			$min_release = "0$min_release";
+		}
+		$row['release_date'] = "$year_release-$month_release-$day_release $hour_release:$min_release:00";
+	} else {
+		$row['release_date'] = 0;
+	}
+
 } else if ($course) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 	$result = mysql_query($sql, $db);
@@ -65,6 +89,7 @@ if (isset($_POST['form_course'])) {
 	$row['primary_language']	= $_SESSION['lang'];
 	$row['created_date']		= date('Y-m-d');
 	$row['rss']                 = 0; // default to off
+	$row['release_date']		= '0';
 }
 
 ?>
@@ -80,7 +105,7 @@ if (isset($_POST['form_course'])) {
 <?php if ($isadmin && $course) : ?>
 
 <?php
-	$sql_instructor	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$row['member_id'];
+	$sql_instructor	= "SELECT *, UNIX_TIME(release_date) AS u_rd FROM ".TABLE_PREFIX."members WHERE member_id=".$row['member_id'];
 	$result_instructor= mysql_query($sql_instructor, $db);
 	if (!($row_instructor = mysql_fetch_array($result_instructor))) {
 		echo _AT('no_user_found');
@@ -218,6 +243,37 @@ if (isset($_POST['form_course'])) {
 		<input type="checkbox" name="hide" id="hide" value="1" <?php
 		echo $disable;
 		echo $hide; ?> /><label for="hide"><?php echo  _AT('hide_course'); ?></label>.
+	</div>
+
+	<div class="row">
+		<?php echo _AT('release_date'); ?><br />
+		<?php
+			$rel_no = $rel_yes = '';
+
+			if (intval($row['release_date'])) {
+				$rel_yes = ' checked="checked"';
+
+				$today_day   = substr($row['release_date'], 8, 2);
+				$today_mon   = substr($row['release_date'], 5, 2);
+				$today_year  = substr($row['release_date'], 0, 4);
+
+				$today_hour  = substr($row['release_date'], 11, 2);
+				$today_min   = substr($row['release_date'], 14, 2);
+			} else {
+				$rel_no = ' checked="checked"'; 
+				$today_year  = date('Y');
+			}
+
+		?>
+
+		<input type="radio" name="release_date" value="0" id="release_now" <?php echo $rel_no; ?> /> <label for="release_now"><?php echo _AT('available_immediately'); ?></label><br />
+
+
+		<input type="radio" name="release_date" value="1" id="release_later" <?php echo $rel_yes; ?> /> <label for="release_later"><?php echo _AT('release_on'); ?></label> 
+		<?php
+			$name = '_release';
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+		?>
 	</div>
 
 	<div class="row">
@@ -385,6 +441,21 @@ function enableOther()		{ document.course_form.quota_entered.disabled = false; }
 function disableOther()		{ document.course_form.quota_entered.disabled = true; }
 function enableOther2()		{ document.course_form.filesize_entered.disabled = false; }
 function disableOther2()	{ document.course_form.filesize_entered.disabled = true; }
+
+function enableRelease() { 
+	document.course_form.day_release.disabled = false; 
+	document.course_form.month_release.disabled = false; 
+	document.course_form.year_release.disabled = false; 
+	document.course_form.hour_release.disabled = false; 
+	document.course_form.min_release.disabled = false; 
+}
+function disableRelease() { 
+	document.course_form.day_release.disabled = true; 
+	document.course_form.month_release.disabled = true; 
+	document.course_form.year_release.disabled = true; 
+	document.course_form.hour_release.disabled = true; 
+	document.course_form.min_release.disabled = true; 
+}
 
 function SelectImg() {
 	if (document.course_form.icon.options[document.course_form.icon.selectedIndex].value == "") {
