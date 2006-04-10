@@ -256,7 +256,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';
 		$dirs[$file1] .= '<td  align="center"><label for="'.$file.'" >'.$fileicon.'</label></td>';
 		$dirs[$file1] .= '<td >&nbsp;';
-		$dirs[$file1] .= /*'<a href="tools/filemanager/index.fsdfsdfphp?pathext='.urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed='. $framed .'">'.*/$filename/*.'sdfsdfsdfsdfsdfsd</a>&nbsp;*/.'</td>';
+		$dirs[$file1] .= $filename.'</td>';
 
 		if ($popup == TRUE) {
 			$dirs[$file1] .= '<td  align="center">';
