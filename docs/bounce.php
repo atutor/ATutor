@@ -146,7 +146,7 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	exit; 
 }
 
-$sql	= "SELECT member_id, content_packaging, cat_id, access, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+$sql	= "SELECT member_id, content_packaging, cat_id, access, title, UNIX_TIMESTAMP(release_date) AS u_release_date FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
 if (!$row = mysql_fetch_assoc($result)) {
 	$msg->addError('NO_SUCH_COURSE');
@@ -186,9 +186,9 @@ unset($_SESSION['fs_folder_id']);
 switch ($row['access']){
 	case 'public':
 
-		$_SESSION['course_id']	  = $course;
 
-		if (!$_SESSION['valid_user']) {
+		if (!$_SESSION['valid_user'] && ($row['u_release_date'] < time())) {
+			$_SESSION['course_id']	  = $course;
 			/* guest login */
 			$_SESSION['login']		= 'guest';
 			$_SESSION['valid_user']	= false;
@@ -198,16 +198,19 @@ switch ($row['access']){
 	
 			/* add guest login to counter: */
 			count_login();
+		} else if (!$_SESSION['valid_user']) {
+			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('filemanager_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			header('Location: '.$_base_href.'browse.php');
+			exit;
+
 		} else {
+			$_SESSION['course_id']	  = $course;
 			/* check if we're an admin here */
 			if ($owner_id == $_SESSION['member_id']) {
 				$_SESSION['is_admin'] = true;
 				$_SESSION['enroll']	  = AT_ENROLL_YES;
 			} else {
 				$_SESSION['is_admin'] = false;
-
-				/* add member login to counter: */
-				count_login();
 			}
 		}
 
@@ -221,6 +224,17 @@ switch ($row['access']){
 			$_SESSION['enroll'] = AT_ENROLL_YES;
 			$_SESSION['s_cid']  = $row2['last_cid'];
 			$_SESSION['privileges'] = $row2['privileges'];
+		}
+
+		if (($row['u_release_date'] > time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
+			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('filemanager_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			header('Location: '.$_base_href.'bounce.php?course=0');
+			exit;
+		}
+
+		/* add member login to counter: */
+		if (!$_SESSION['is_admin']) {
+			count_login();
 		}
 
 		/* update users_online	*/
@@ -264,6 +278,11 @@ switch ($row['access']){
 			$_SESSION['privileges'] = $row2['privileges'];
 		}
 
+		if (($row['u_release_date'] > time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
+			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('filemanager_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			header('Location: '.$_base_href.'bounce.php?course=0');
+			exit;
+		}
 		$_SESSION['course_title'] = $row['title'];
 
 		/* update users_online	*/
@@ -319,6 +338,11 @@ switch ($row['access']){
 			exit;
 		} /* else */
 
+		if (($row['u_release_date'] > time()) && !$row2['privileges']) {
+			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('filemanager_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			header('Location: '.$_base_href.'bounce.php?course=0');
+			exit;
+		}
 		/* we have requested or are enrolled in this course */
 
 		$_SESSION['enroll'] = AT_ENROLL_YES;

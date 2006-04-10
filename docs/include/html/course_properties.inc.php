@@ -102,17 +102,6 @@ if (isset($_POST['form_course'])) {
 	<input type="hidden" name="show_courses" value="<?php echo $_GET['show_courses']; ?>" />
 	<input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
 
-<?php if ($isadmin && $course) : ?>
-
-<?php
-	$sql_instructor	= "SELECT *, UNIX_TIME(release_date) AS u_rd FROM ".TABLE_PREFIX."members WHERE member_id=".$row['member_id'];
-	$result_instructor= mysql_query($sql_instructor, $db);
-	if (!($row_instructor = mysql_fetch_array($result_instructor))) {
-		echo _AT('no_user_found');
-	}
-?>
-<?php endif; ?>
-
 <div class="input-form">
 
 <?php if ($isadmin): ?>
