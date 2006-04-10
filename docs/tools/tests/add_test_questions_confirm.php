@@ -35,10 +35,17 @@ if (isset($_POST['cancel'])) {
 	header('Location: questions.php?tid='.$tid);
 	exit;
 } else if (isset($_POST['submit_yes'])) {
+	//get order
+	$sql = "SELECT MAX(ordering) FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=".$tid;
+	$result = mysql_query($sql, $db);
+	$order	= mysql_fetch_assoc($result);
+	$order = $order['MAX(ordering)'];
+
 	$sql = "REPLACE INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
 	foreach ($_POST['questions'] as $question) {
+		$order++;
 		$question = intval($question);
-		$sql .= '('.$tid.', '.$question.', 0, 0, 0),';
+		$sql .= '('.$tid.', '.$question.', 0, '.$order.', 0),';
 	}
 	$sql = substr($sql, 0, -1);
 	$result = mysql_query($sql, $db);
