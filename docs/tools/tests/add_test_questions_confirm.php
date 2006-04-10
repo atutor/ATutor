@@ -36,10 +36,10 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	//get order
-	$sql = "SELECT MAX(ordering) FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=".$tid;
+	$sql = "SELECT MAX(ordering) AS max_ordering FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=".$tid;
 	$result = mysql_query($sql, $db);
 	$order	= mysql_fetch_assoc($result);
-	$order = $order['MAX(ordering)'];
+	$order = $order['max_ordering'];
 
 	$sql = "REPLACE INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
 	foreach ($_POST['questions'] as $question) {
