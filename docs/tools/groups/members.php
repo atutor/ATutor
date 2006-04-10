@@ -82,10 +82,11 @@ if (isset($_POST['cancel'])) {
 
 		$total_unassigned = count($students);
 		//debug($total_unassigned, 'unassigned');
+
 		shuffle($students);
 		reset($students);
 	}
-
+	//debug($students);
 
 	$total_students = $total_unassigned + $total_assigned;
 
@@ -101,28 +102,29 @@ if (isset($_POST['cancel'])) {
 			$num_students_per_group = $total_students / $num_groups;
 		}
 
-	//	debug($num_students_per_group, 'num per group');
+		//debug($num_students_per_group, 'num per group');
 		//debug($remainder, 'remainder');
 
 		$sql = '';
 		foreach($tmp_groups as $group_id => $garbage) {
+
 			if (!isset($groups_counts[$group_id])) {
 				$groups_counts[$group_id] = 0;
 			}
-			while (($groups_counts[$group_id] < $num_students_per_group) && $mid = current($students)) {
+			while (($groups_counts[$group_id] < $num_students_per_group) && ($mid = current($students))) {
 				$sql .= "($group_id, $mid),";
-				mysql_query($sql, $db);
 				$groups_counts[$group_id]++;
 				next($students);
 			}
 
 			if ($remainder) {
 				$mid = current($students);
-				$sql .= "($group_id, $mid),";
-				mysql_query($sql, $db);
-				$remainder--;
-				next($students);
-				$groups_counts[$group_id]++;
+				if ($mid) {
+					$sql .= "($group_id, $mid),";
+					$remainder--;
+					next($students);
+					$groups_counts[$group_id]++;
+				}
 			}
 		}
 		if ($sql) {
@@ -131,7 +133,6 @@ if (isset($_POST['cancel'])) {
 			mysql_query($sql, $db);
 		}
 	}
-
 	header('Location: index.php');
 	exit;
 }
