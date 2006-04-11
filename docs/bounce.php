@@ -199,7 +199,7 @@ switch ($row['access']){
 			/* add guest login to counter: */
 			count_login();
 		} else if (!$_SESSION['valid_user']) {
-			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('filemanager_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
 			header('Location: '.$_base_href.'browse.php');
 			exit;
 
@@ -227,9 +227,11 @@ switch ($row['access']){
 		}
 
 		if (($row['u_release_date'] > time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
-			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('filemanager_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
 			header('Location: '.$_base_href.'bounce.php?course=0');
 			exit;
+		} else if ($row['u_release_date'] > time()) {
+			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
 		}
 
 		/* add member login to counter: */
@@ -279,9 +281,11 @@ switch ($row['access']){
 		}
 
 		if (($row['u_release_date'] > time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
-			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('filemanager_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
 			header('Location: '.$_base_href.'bounce.php?course=0');
 			exit;
+		} else if ($row['u_release_date'] > time()) {
+			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
 		}
 		$_SESSION['course_title'] = $row['title'];
 
@@ -323,6 +327,9 @@ switch ($row['access']){
 				header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 				exit;
 			} /* else */
+			if ($row['u_release_date'] > time()) {
+				$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			}
 			header('Location: ./'.$addslashes($page));
 			exit;
 		}
@@ -339,9 +346,11 @@ switch ($row['access']){
 		} /* else */
 
 		if (($row['u_release_date'] > time()) && !$row2['privileges']) {
-			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('filemanager_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
 			header('Location: '.$_base_href.'bounce.php?course=0');
 			exit;
+		} else if ($row['u_release_date'] > time()) {
+			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
 		}
 		/* we have requested or are enrolled in this course */
 
