@@ -210,6 +210,7 @@ if (isset($errors)) {
 			<td class="row1"><input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['admin_email'])); } else { echo urldecode($_POST['step1']['admin_email']); } ?>" class="formfield" /></td>
 		</tr>
 		</table>
+<?php endif; ?>
 <?php if (version_compare($_POST['step1']['old_version'], '1.5.3', '<')): ?>
 	<p>Groups made prior to 1.5.3 are not backwards compatible and will be removed.</p>
 <?php else: ?>
