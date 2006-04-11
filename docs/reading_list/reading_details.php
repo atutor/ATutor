@@ -22,7 +22,7 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[cou
 $resultReadings = mysql_query($sql, $db);
 ?>
 
-<?php if ($rowReadings = mysql_fetch_assoc($resultReadings)) : ?>
+<?php if (($resultReadings != 0) && ($rowReadings = mysql_fetch_assoc($resultReadings))) : ?>
 
 		<?php do { ?>
 			<?php $id = $rowReadings['resource_id']; 
