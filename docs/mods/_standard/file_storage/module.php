@@ -39,4 +39,8 @@ $this->_pages['file_storage/delete_revision.php']['parent'] = 'file_storage/inde
 
 $this->_pages['file_storage/delete_comment.php']['title_var'] = 'delete';
 //$this->_pages['file_storage/delete_comment.php']['parent'] = 'file_storage/comments.php';
+
+function file_storage_get_group_url($group_id) {
+	return 'file_storage/index.php?ot='.WORKSPACE_GROUP.SEP.'oid='.$group_id;
+}
 ?>

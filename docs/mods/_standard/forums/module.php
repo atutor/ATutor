@@ -54,4 +54,13 @@ if (admin_authenticate(AT_ADMIN_PRIV_FORUMS, TRUE) || admin_authenticate(AT_ADMI
 		$this->_pages['admin/forum_delete.php']['title_var'] = 'delete_forum';
 		$this->_pages['admin/forum_delete.php']['parent']    = 'admin/forums.php';
 }
+
+function forums_get_group_url($group_id) {
+	global $db;
+	$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_groups WHERE group_id=$group_id";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	return 'forum/index.php?fid='.$row['forum_id'];
+}
 ?>
