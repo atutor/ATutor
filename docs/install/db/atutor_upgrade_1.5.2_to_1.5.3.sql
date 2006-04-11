@@ -19,7 +19,7 @@ INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0);
 INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
 
 # cron support for modules
-ALTER TABLE `modules` ADD `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL , ADD `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL, ;
+ALTER TABLE `modules` ADD `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL , ADD `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL ;
 
 
 # --------------------------------------------------------
