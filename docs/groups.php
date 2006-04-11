@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!$_SESSION['groups']) {
-	$msg->printError('NOT_IN_ANY_GROUPS');
+	$msg->printErrors('NOT_IN_ANY_GROUPS');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
