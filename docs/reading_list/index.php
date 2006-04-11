@@ -32,7 +32,7 @@ $result = mysql_query($sql, $db);
 </tr>
 </thead>
 <tbody>
-<?php if ($row = mysql_fetch_assoc($result)) : ?>
+<?php if (($result != 0) && ($row = mysql_fetch_assoc($result))) : ?>
 
 		<?php do { ?>
 	<tr>
