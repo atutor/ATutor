@@ -60,6 +60,8 @@ if (isset($_GET['existing'])){
 	$existing = intval ($_GET['existing']);
 }
 
+$today = getdate();
+
 $sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_FILE." ORDER BY title";
 $files_result = mysql_query($sql, $db);
 
@@ -132,19 +134,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<select name="startday" id="startdate">
 		<?php for ($i = 1; $i <= 31; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_start[2]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
+			<option value="<?php echo $i ?>" <?php if ($i == $today['mday']) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
 		
 		<select name="startmonth">
 		<?php for ($i = 1; $i <= 12; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_start[1]) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', $i, AT_DATE_INDEX_VALUE) ?></option>
+			<option value="<?php echo $i ?>" <?php if ($i == $today['mon']) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', $i, AT_DATE_INDEX_VALUE) ?></option>
 		<?php } ?>
 		</select>
 
 		<select name="startyear">
-		<?php for ($i = 2006; $i <= 2011; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_start[0]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
+		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
+			<option value="<?php echo $i ?>" <?php if ($i == $today['year']) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
 	
@@ -153,19 +155,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<select name="endday" id="enddate">
 		<?php for ($i = 1; $i <= 31; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_end[2]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
+			<option value="<?php echo $i ?>" <?php if ($i == $today['mday']) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
 	
 		<select name="endmonth">
 		<?php for ($i = 1; $i <= 12; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_end[1]) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', $i, AT_DATE_INDEX_VALUE) ?></option>
+			<option value="<?php echo $i ?>" <?php if ($i == $today['mon']) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', $i, AT_DATE_INDEX_VALUE) ?></option>
 		<?php } ?>
 		</select>
 	
 		<select name="endyear">
-		<?php for ($i = 2006; $i <= 2011; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_end[0]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
+		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
+			<option value="<?php echo $i ?>" <?php if ($i == $today['year']) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>	
 	</div>
