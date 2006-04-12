@@ -20,13 +20,11 @@ if (isset($_GET['edit'])) {
 	$_GET['assignment'] = intval($_GET['assignment']);
 	header('Location: edit_assignment.php?id='. $_GET['assignment']);
 	exit;
-}
-else if (isset($_GET['delete'])) {
+} else if (isset($_GET['delete'])) {
 	$_GET['assignment'] = intval($_GET['assignment']);
 	header('Location: delete_assignment.php?id='. $_GET['assignment']);
 	exit;
-}
-else if (isset($_GET['create'])){
+} else if (isset($_GET['create'])){
 	header('Location: add_assignment.php');
 	exit;
 }
@@ -38,7 +36,7 @@ $orders = array('ASC' => 'DESC', 'DESC' => 'ASC');
 $sort = 'title';
 $sort_order = 'ASC';
 if (isset ($_GET['sort'])){
-	$sort = $addslashes ($_GET['sort']);
+	$sort = $addslashes($_GET['sort']);
 	if (($sort != 'title') && ($sort != 'due_date')){
 		$sort = 'title';
 	}
@@ -113,7 +111,7 @@ $result = mysql_query($sql, $db);
 					echo $type_row['title']; } ?></td>
 
 		<td><?php  if ($row['date_due'] == '0000-00-00 00:00:00'){
-			echo _AT ('none');
+			echo _AT('none');
 		}else {
 			echo AT_Date(_AT('forum_date_format'), $row['date_due'], AT_DATE_MYSQL_DATETIME);
 		}?></td>

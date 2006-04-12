@@ -234,11 +234,11 @@ $onload = 'document.form.title.focus();';
 
 // enable/disable date controls
 if ($has_due_date == 'false'){ 
-	$onload = $onload.' disable_dates (true, \'_due\');';
+	$onload .= ' disable_dates (true, \'_due\');';
 }
 
 if ($late_submit != '2'){
-	$onload = $onload.' disable_dates (true, \'_cutoff\');';
+	$onload .= ' disable_dates (true, \'_cutoff\');';
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -249,8 +249,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 
 	<div class="row">
-		<div class="required" title="Required Field">*</div><label for="title"><?php  echo _AT('title'); ?></label><br/>
-		<input type="text" name="title" size="50" id="title" value="<?php echo $title ?>" />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php  echo _AT('title'); ?></label><br/>
+		<input type="text" name="title" size="50" id="title" value="<?php echo htmlspecialchars($title); ?>" />
 	</div>
 
 	<div class="row">
@@ -291,9 +291,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<?php  echo _AT('due_date'); ?><br />
-		<input type="radio" name="has_due_date" value="false" id="noduedate" <?php if ($has_due_date == 'false'){echo 'checked="checked"'; } ?> 
+		<input type="radio" name="has_due_date" value="false" id="noduedate" <?php if ($has_due_date == 'false') { echo 'checked="checked"'; } ?> 
 		onfocus="disable_dates (true, '_due');" />
-		<label for="noduedate" title="<?php echo _AT('due_date'). ': '. _AT('none');  ?>"><?php  echo _AT('none'); ?></label><br />
+		<label for="noduedate" title="<?php echo _AT('due_date'). ': '. _AT('none');  ?>"><?php echo _AT('none'); ?></label><br />
 
 		<input type="radio" name="has_due_date" value="true" id="hasduedate" <?php if ($has_due_date == 'true'){echo 'checked="checked"'; } ?> 
 		onfocus="disable_dates (false, '_due');" />
