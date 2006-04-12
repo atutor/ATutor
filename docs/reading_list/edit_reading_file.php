@@ -54,6 +54,8 @@ $onload = 'document.form.name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$today = getdate();
+
 $_GET['id'] = intval($_GET['id']);
 $reading_id = $_GET['id'];
 $resource_id = 0;
@@ -139,7 +141,7 @@ if ($num_files != '0') {?>
 		</select>
 
 		<select name="startyear">
-		<?php for ($i = 2006; $i <= 2011; $i++){ ?>
+		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $array_date_start[0]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
@@ -160,7 +162,7 @@ if ($num_files != '0') {?>
 		</select>
 	
 		<select name="endyear">
-		<?php for ($i = 2006; $i <= 2011; $i++){ ?>
+		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $array_date_end[0]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
