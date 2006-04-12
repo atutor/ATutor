@@ -60,14 +60,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row buttons">
+		<?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> 
 		<?php if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE): ?>
-			<?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> 
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />  
 			<input type="submit" name="export" value="<?php echo _AT('export'); ?>"  /> 
 			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
 			<?php echo _AT('or'); ?> <a href="admin/language_add.php"><?php echo _AT('add_a_new_language'); ?></a>
 		<?php else: ?>
-			<?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?>
 			<input type="submit" name="export" value="<?php echo _AT('export'); ?>" /> 
 			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 		<?php endif; ?>
