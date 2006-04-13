@@ -536,7 +536,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 <tbody>
 <?php if ($folder_id): ?>
 	<tr>
-		<td colspan="7"><a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix.SEP.'folder='.$folder_path[0]['folder_id']; ?>"><img src="images/arrowicon.gif" border="0" height="" width="" alt="" /> <?php echo _AT('back'); ?></a></td>
+		<td colspan="7"><a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.intval($folder_path[count($folder_path)-1]['parent_folder_id']); ?>"><img src="images/arrowicon.gif" border="0" height="" width="" alt="" /> <?php echo _AT('back'); ?></a></td>
 	</tr>
 <?php endif; ?>
 <?php if ($folders || $files): ?>
