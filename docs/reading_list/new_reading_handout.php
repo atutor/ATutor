@@ -11,6 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
@@ -78,7 +79,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">	
 
-<h3>Handout To Read</h3>
+<h3><?php echo _AT('handout_to_read');?></h3>
 
 	<div class="row">
 		<label for="title"><?php  echo _AT('rl_select_handout'); ?>:</label>
@@ -112,7 +113,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php if (isset($_POST['comment'])) echo stripslashes($_POST['comment']);  ?>" />
 	</div>
 
-<h3>Read By Date</h3>
+<h3><?php echo _AT('rl_read_by_date'); ?></h3>
 
 	<div class="row">
 		<input type="radio" id="nodate" name="hasdate" value="false" <?php

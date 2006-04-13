@@ -11,10 +11,10 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
-
 
 // initial values for form
 $id = "0";
@@ -32,8 +32,7 @@ if (isset($_POST['cancel'])) {
 
 	if (trim($_POST['page_return']) != ''){
 		header('Location: '. $_POST['page_return']);
-	}
-	else {
+	} else {
 		header('Location: index_instructor.php');
 	}
 	exit;
@@ -46,12 +45,12 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title'] = $addslashes($_POST['title']);
-		$_POST['author'] = $addslashes($_POST['author']);
+		$_POST['title']     = $addslashes($_POST['title']);
+		$_POST['author']    = $addslashes($_POST['author']);
 		$_POST['publisher'] = $addslashes($_POST['publisher']);
-		$_POST['date'] = $addslashes($_POST['date']);
-		$_POST['comments'] = $addslashes($_POST['comments']);
-		$_POST['isbn'] = $addslashes($_POST['isbn']);
+		$_POST['date']      = $addslashes($_POST['date']);
+		$_POST['comments']  = $addslashes($_POST['comments']);
+		$_POST['isbn']      = $addslashes($_POST['isbn']);
 		
 		$id = intval ($_POST['id']);
 
@@ -71,8 +70,7 @@ if (isset($_POST['cancel'])) {
 			$id_new = mysql_insert_id($db);
 
 			$msg->addFeedback('RL_FILE_ADDED');
-		}
-		else { // modifying an existing file resource
+		} else { // modifying an existing file resource
 
 			$sql = "UPDATE ".TABLE_PREFIX."external_resources SET title='$_POST[title]', author='$_POST[author]', publisher='$_POST[publisher]', date='$_POST[date]', comments='$_POST[comments]', id='$_POST[isbn]' WHERE resource_id='$id' AND course_id=$_SESSION[course_id]";
 
@@ -86,20 +84,18 @@ if (isset($_POST['cancel'])) {
 
 		if (trim($_POST['page_return']) != ''){
 			header('Location: '. $_POST['page_return']. '?existingbook='. $id_new);
-		}
-		else {
+		} else {
 			header('Location: index_instructor.php');
 		}
 		exit;
-	}
-	else { // submission contained an error, update form values for redisplay
-		$title = $_POST['title'];
-		$author = $_POST['author'];
-		$publisher = $_POST['publisher']; 
-		$date = $_POST['date']; 
-		$comments = $_POST['comments'];
-		$isbn = $_POST['id'];
-		$page_return = $_POST['page_return'];
+	} else { // submission contained an error, update form values for redisplay
+		$title       = stripslashes($addslashes($_POST['title']));
+		$author      = stripslashes($addslashes($_POST['author']));
+		$publisher   = stripslashes($addslashes($_POST['publisher'])); 
+		$date        = stripslashes($addslashes($_POST['date']));
+		$comments    = stripslashes($addslashes($_POST['comments']));
+		$isbn        = stripslashes($addslashes($_POST['id']));
+		$page_return = stripslashes($addslashes($_POST['page_return']));
 	}
 }
 
@@ -111,15 +107,15 @@ if (isset($_GET['id'])){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)){
-		$title = $row['title'];
-		$author = $row['author'];
+		$title     = $row['title'];
+		$author    = $row['author'];
 		$publisher = $row['publisher']; 
-		$date = $row['date']; 
-		$comments = $row['comments'];
-		$isbn = $row['id'];
+		$date      = $row['date']; 
+		$comments  = $row['comments'];
+		$isbn      = $row['id'];
 	}
 	// change title of page to 'edit file resource' (default is 'add file resource')
-	$_pages['reading_list/add_resource_file.php'][title_var] = 'rl_edit_resource_file';
+	$_pages['reading_list/add_resource_file.php']['title_var'] = 'rl_edit_resource_file';
 }
 
 $onload = 'document.form.name.focus();';
@@ -134,32 +130,32 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php  echo _AT('title'); ?></label><br />
-		<input type="text" name="title" size="35" id="title" value="<?php echo $title ?>" /><br />
+		<input type="text" name="title" size="35" id="title" value="<?php echo htmlspecialchars($title); ?>" /><br />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="author"><?php  echo _AT('rl_author'); ?></label><br />
-		<input type="text" name="author" size="25" id="author" value="<?php echo $author ?>" /><br />
+		<input type="text" name="author" size="25" id="author" value="<?php echo htmlspecialchars($author); ?>" /><br />
 	</div>
 
 	<div class="row">
 		<label for="date"><?php  echo _AT('rl_year_written'); ?></label><br />
-		<input type="text" name="date" size="6" id="date" value="<?php echo $date ?>" /><br />
+		<input type="text" name="date" size="6" id="date" value="<?php echo htmlspecialchars($date); ?>" /><br />
 	</div>
 
 	<div class="row">
 		<label for="publisher"><?php  echo _AT('rl_publisher'); ?></label><br />
-		<input type="text" name="publisher" size="20" id="publisher" value="<?php echo $publisher ?>" /><br />
+		<input type="text" name="publisher" size="20" id="publisher" value="<?php echo htmlspecialchars($publisher); ?>" /><br />
 	</div>
 
 	<div class="row">
 		<label for="isbn"><?php  echo _AT('rl_isbn_number'); ?></label><br />
-		<input type="text" name="isbn" size="15" id="isbn" value="<?php echo $isbn ?>" /><br />
+		<input type="text" name="isbn" size="15" id="isbn" value="<?php echo htmlspecialchars($isbn); ?>" /><br />
 	</div>
 
 	<div class="row">
 		<label for="comments"><?php  echo _AT('rl_comment'); ?></label><br />
-		<input type="text" name="comments" size="75" id="comments" value="<?php echo $comments ?>" /><br />
+		<input type="text" name="comments" size="75" id="comments" value="<?php echo htmlspecialchars($comments); ?>" /><br />
 	</div>
 
 	<div class="row buttons">

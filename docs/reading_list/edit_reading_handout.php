@@ -11,28 +11,27 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
-
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index_instructor.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-
-	$_POST['id'] = intval($_POST['id']);
-	$_POST['existing'] = intval($_POST['existing']);
-	$_POST['hasdate'] = $addslashes($_POST['hasdate']);
+	$_POST['id']         = intval($_POST['id']);
+	$_POST['existing']   = intval($_POST['existing']);
+	$_POST['hasdate']    = $addslashes($_POST['hasdate']);
 	$_POST['readstatus'] = $addslashes($_POST['readstatus']);
-	$_POST['comment'] = $addslashes($_POST['comment']);
-	$_POST['startday'] = intval($_POST['startday']);
+	$_POST['comment']    = $addslashes($_POST['comment']);
+	$_POST['startday']   = intval($_POST['startday']);
 	$_POST['startmonth'] = intval($_POST['startmonth']);
-	$_POST['startyear'] = intval($_POST['startyear']);
-	$_POST['endday'] = intval($_POST['endday']);
-	$_POST['endmonth'] = intval($_POST['endmonth']);
-	$_POST['endyear'] = intval($_POST['endyear']);
+	$_POST['startyear']  = intval($_POST['startyear']);
+	$_POST['endday']     = intval($_POST['endday']);
+	$_POST['endmonth']   = intval($_POST['endmonth']);
+	$_POST['endyear']    = intval($_POST['endyear']);
 
 	$date_start = '0000-00-00';
 	$date_end = '0000-00-00';
@@ -52,7 +51,6 @@ if (isset($_POST['cancel'])) {
 
 $onload = 'document.form.name.focus();';
 
-require(AT_INCLUDE_PATH.'header.inc.php');
 
 $today = getdate();
 
@@ -69,25 +67,29 @@ if ($rowreading = mysql_fetch_assoc($result)) {
 
 // fill the select control using all the handout resources
 $sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_HANDOUT." ORDER BY title";
-$result = mysql_query($sql, $db);
+$handout_result = mysql_query($sql, $db);
 
-$num_handouts = mysql_num_rows($result);
+$num_handouts = mysql_num_rows($handout_result);
 
-if ($num_handouts != '0') {?>
+if ($num_handouts == 0) {
+	header('Location: add_resource_handout.php');
+	exit;
+}
+require(AT_INCLUDE_PATH.'header.inc.php');
+	
+?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="id" value="<?php echo $reading_id ?>" />
 <div class="input-form">	
 
-<h3>Handout To Read</h3>
+<h3><?php echo _AT('handout_to_read');?></h3>
 	<div class="row">
 		<label for="title"><?php  echo _AT('rl_select_handout'); ?>:</label>
 		<select name="existing" id="title">
-
-			<?php while ($row = mysql_fetch_assoc($result)): ?>
+			<?php while ($row = mysql_fetch_assoc($handout_result)): ?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['title']); ?></option>
 			<?php endwhile; ?>
-		
 		</select>
 	</div>
 
@@ -105,11 +107,10 @@ if ($num_handouts != '0') {?>
 	</div>	
 	
 	<div class="row">
-	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo ($rowreading['comment']);  ?>" />
+	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo htmlspecialchars($rowreading['comment']);  ?>" />
 	</div>
 
-<h3>Read By Date</h3>
-
+<h3><?php echo _AT('rl_read_by_date'); ?></h3>
 	<div class="row">
 		<input type="radio" id="nodate" name="hasdate" value="false" <?php
 		if ($rowreading['date_start'] == '0000-00-00'){
@@ -175,18 +176,5 @@ if ($num_handouts != '0') {?>
 	</div>
 </div>
 </form>
-
-<?php
-}
-else { // there are no handouts entered as resources ?>
-
-<h3>Add Handout To Resources</h3>
-
-<?php
-	header('Location: add_resource_handout.php');
-	exit;
-?>
-
-<?php } ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

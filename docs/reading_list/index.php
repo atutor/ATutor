@@ -11,6 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
@@ -24,15 +25,15 @@ $result = mysql_query($sql, $db);
 <table class="data" style="width: 90%;">
 <thead>
 <tr>
-	<th><?php echo _AT('rl_start'); ?></th>
-	<th><?php echo _AT('rl_end'); ?></th>
-	<th><?php echo _AT('title'); ?></th>
+	<th><?php echo _AT('rl_start');    ?></th>
+	<th><?php echo _AT('rl_end');      ?></th>
+	<th><?php echo _AT('title');       ?></th>
 	<th><?php echo _AT('rl_required'); ?></th>
-	<th><?php echo _AT('rl_comment'); ?></th>
+	<th><?php echo _AT('rl_comment');  ?></th>
 </tr>
 </thead>
 <tbody>
-<?php if (($result != 0) && ($row = mysql_fetch_assoc($result))) : ?>
+<?php if ($row = mysql_fetch_assoc($result)): ?>
 
 		<?php do { ?>
 	<tr>

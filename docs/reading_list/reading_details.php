@@ -11,10 +11,10 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
-
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -31,7 +31,7 @@ $resultReadings = mysql_query($sql, $db);
 $sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)){ 
-	if ($row['type'] == RL_TYPE_BOOK){ ?>
+	if ($row['type'] == RL_TYPE_BOOK): ?>
 	<div class="input-form">
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
@@ -42,7 +42,7 @@ if ($row = mysql_fetch_assoc($result)){
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
-<?php } else if ($row['type'] == RL_TYPE_URL){ ?>
+<?php elseif ($row['type'] == RL_TYPE_URL): ?>
 	<div class="input-form">	
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
@@ -51,8 +51,7 @@ if ($row = mysql_fetch_assoc($result)){
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
 			</p>
 	</div>
-<?php }
-else if ($row['type'] == RL_TYPE_HANDOUT){ ?>
+<?php elseif ($row['type'] == RL_TYPE_HANDOUT): ?>
 	<div class="input-form">	
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
@@ -61,8 +60,7 @@ else if ($row['type'] == RL_TYPE_HANDOUT){ ?>
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
-<?php }
-else if ($row['type'] == RL_TYPE_AV){ ?>
+<?php elseif ($row['type'] == RL_TYPE_AV): ?>
 	<div class="input-form">	
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>" ; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
@@ -71,8 +69,7 @@ else if ($row['type'] == RL_TYPE_AV){ ?>
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
-<?php }
-else if ($row['type'] == RL_TYPE_FILE){ ?>
+<?php elseif ($row['type'] == RL_TYPE_FILE): ?>
 	<div class="input-form">	
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
@@ -83,21 +80,15 @@ else if ($row['type'] == RL_TYPE_FILE){ ?>
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
-<?php }
+<?php endif;
 }
 else {  // can't get resource from database
 }
 ?>
 
-
-
-
-
-
-		<?php } while($rowReadings = mysql_fetch_assoc($resultReadings)); ?>
+	<?php } while($rowReadings = mysql_fetch_assoc($resultReadings)); ?>
 <?php else: ?>
 		<em><?php echo _AT('none_found'); ?></em>
 <?php endif; ?>
-
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

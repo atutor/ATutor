@@ -11,6 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
@@ -19,8 +20,7 @@ if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	Header('Location: display_resources.php');
 	exit;
-}
-else if (isset($_POST['submit_yes'])) {
+} else if (isset($_POST['submit_yes'])) {
 	$_POST['id'] = intval($_POST['id']);
 	$resource_id = $_POST['id'];
 

@@ -11,10 +11,10 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
-
 
 // initial values for form
 $id = "0";
@@ -67,8 +67,7 @@ if (isset($_POST['cancel'])) {
 			$id_new = mysql_insert_id($db);
 
 			$msg->addFeedback('RL_URL_ADDED');
-		}
-		else { // modifying an existing URL resource
+		} else { // modifying an existing URL resource
 
 			$sql = "UPDATE ".TABLE_PREFIX."external_resources SET title='$_POST[title]', author='$_POST[author]', url='$_POST[url]', comments='$_POST[comments]', id='$_POST[isbn]' WHERE resource_id='$id' AND course_id=$_SESSION[course_id]";
 
@@ -82,20 +81,18 @@ if (isset($_POST['cancel'])) {
 
 		if (trim($_POST['page_return']) != ''){
 			header('Location: '. $_POST['page_return']. '?existingbook='. $id_new);
-		}
-		else {
+		} else {
 			header('Location: index_instructor.php');
 		}
 		exit;
-	}
-	else { // submission contained an error, update form values for redisplay
-		$title = $_POST['title'];
-		$author = $_POST['author'];
-		$publisher = $_POST['publisher']; 
-		$date = $_POST['date']; 
-		$comments = $_POST['comments'];
-		$isbn = $_POST['id'];
-		$page_return = $_POST['page_return'];
+	} else { // submission contained an error, update form values for redisplay
+		$title       = stripslashes($addslashes($_POST['title']));
+		$author      = stripslashes($addslashes($_POST['author']));
+		$publisher   = stripslashes($addslashes($_POST['publisher'])); 
+		$date        = stripslashes($addslashes($_POST['date']));
+		$comments    = stripslashes($addslashes($_POST['comments']));
+		$isbn        = stripslashes($addslashes($_POST['id']));
+		$page_return = stripslashes($addslashes($_POST['page_return']));
 	}
 }
 
@@ -107,13 +104,13 @@ if (isset($_GET['id'])){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)){
-		$title = $row['title'];
-		$author = $row['author'];
+		$title    = $row['title'];
+		$author   = $row['author'];
 		$comments = $row['comments'];
-		$url = $row['url'];
+		$url      = $row['url'];
 	}
 	// change title of page to 'edit URL resource' (default is 'add URL resource')
-	$_pages['reading_list/add_resource_url.php'][title_var] = 'rl_edit_resource_url';
+	$_pages['reading_list/add_resource_url.php']['title_var'] = 'rl_edit_resource_url';
 }
 
 $onload = 'document.form.name.focus();';
@@ -128,22 +125,22 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php  echo _AT('title'); ?></label><br />
-		<input type="text" name="title" size="35" id="title" value="<?php echo $title ?>" /><br />
+		<input type="text" name="title" size="35" id="title" value="<?php echo htmlspecialchars($title); ?>" /><br />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="url"><?php  echo _AT('rl_url'); ?></label><br />
-		<input type="text" name="url" size="50" id="url" value="<?php echo $url ?>" /><br />
+		<input type="text" name="url" size="50" id="url" value="<?php echo htmlspecialchars($url); ?>" /><br />
 	</div>
 
 	<div class="row">
 		<label for="author"><?php  echo _AT('rl_author'); ?></label><br />
-		<input type="text" name="author" size="25" id="author" value="<?php echo $author ?>" /><br />
+		<input type="text" name="author" size="25" id="author" value="<?php echo htmlspecialchars($author); ?>" /><br />
 	</div>
 
 	<div class="row">
 		<label for="comments"><?php  echo _AT('rl_comment'); ?></label><br />
-		<input type="text" name="comments" size="75" id="comments" value="<?php echo $comments ?>" /><br />
+		<input type="text" name="comments" size="75" id="comments" value="<?php echo htmlspecialchars($comments); ?>" /><br />
 	</div>
 
 	<div class="row buttons">

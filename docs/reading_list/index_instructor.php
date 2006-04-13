@@ -34,13 +34,11 @@ if (isset($_GET['edit'])) {
 		}
 	}
 	$msg->addFeedback ('RL_READING_NOT_FOUND');
-}
-else if (isset($_GET['delete'])) {
+} else if (isset($_GET['delete'])) {
 	$_GET['reading'] = intval($_GET['reading']);
 	header('Location: delete_reading.php?id='. $_GET['reading']);
 	exit;
-}
-else if (isset($_GET['create'])){
+} else if (isset($_GET['create'])){
 	$_GET['new_reading'] = intval($_GET['new_reading']);
 
 	if (isset($_rl_types[$_GET['new_reading']])){
@@ -90,11 +88,13 @@ $result = mysql_query($sql, $db);
 </thead>
 <tfoot>
 <tr>
-	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
-				    <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="6">
+		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
+		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+	</td>
 </tr>
 </tfoot>
-<?php if (($result != 0) && ($row = mysql_fetch_assoc($result))) : ?>
+<?php if ($row = mysql_fetch_assoc($result)): ?>
 <tbody>
 		<?php do { ?>
 
@@ -113,12 +113,11 @@ $result = mysql_query($sql, $db);
 					if ($_GET['reading'] == $row['reading_id']){ 
 						echo ' checked="checked"'; 
 					} 
-				}
-				else {
+				} else {
 					echo ' checked="checked"';
 					$_GET['reading'] = $row['reading_id'];
 				}
-				?>/></td>
+				?> /></td>
 				<td><?php  if ($row['date_start'] == '0000-00-00'){
 					echo _AT ('none');
 				}else {

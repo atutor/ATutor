@@ -11,6 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
@@ -51,8 +52,6 @@ if (isset($_POST['cancel'])) {
 
 $onload = 'document.form.name.focus();';
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
 $today = getdate();
 
 $_GET['id'] = intval($_GET['id']);
@@ -68,22 +67,29 @@ if ($rowreading = mysql_fetch_assoc($result)) {
 
 // fill the select control using all the book resources
 $sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_BOOK." ORDER BY title";
-$result = mysql_query($sql, $db);
+$book_result = mysql_query($sql, $db);
 
-$num_books = mysql_num_rows($result);
+$num_books = mysql_num_rows($book_result);
 
-if ($num_books != '0') {?>
+if ($num_books == 0) {
+	header('Location: add_resource_book.php');
+	exit;
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="id" value="<?php echo $reading_id ?>" />
 <div class="input-form">	
 
-<h3>Book To Read</h3>
+<h3><?php echo _AT('rl_book_to_read'); ?></h3>
 	<div class="row">
 		<label for="booktitle"><?php  echo _AT('rl_select_book'); ?>:</label>
 		<select name="existingbook" id="booktitle">
 
-			<?php while ($rowbook = mysql_fetch_assoc($result)): ?>
+			<?php while ($rowbook = mysql_fetch_assoc($book_result)): ?>
 				<option value="<?php echo $rowbook['resource_id']; ?>"<?php if ($rowbook['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($rowbook['title']); ?></option>
 			<?php endwhile; ?>
 		
@@ -104,10 +110,10 @@ if ($num_books != '0') {?>
 	</div>	
 	
 	<div class="row">
-	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo ($rowreading['comment']);  ?>" />
+	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo htmlspecialchars($rowreading['comment']);  ?>" />
 	</div>
 
-<h3>Read By Date</h3>
+<h3><?php echo _AT('rl_read_by_date'); ?></h3>
 
 	<div class="row">
 		<input type="radio" id="nodate" name="hasdate" value="false" <?php
@@ -174,18 +180,5 @@ if ($num_books != '0') {?>
 	</div>
 </div>
 </form>
-
-<?php
-}
-else { // there are no books entered as resources ?>
-
-<h3>Add Book To Resources</h3>
-
-<?php
-	header('Location: add_resource_book.php');
-	exit;
-?>
-
-<?php } ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

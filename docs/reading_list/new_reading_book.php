@@ -11,6 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
@@ -24,16 +25,16 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 
 	$_POST['existingbook'] = intval($_POST['existingbook']);
-	$existingbook = $_POST['existingbook'];
-	$_POST['hasdate'] = $addslashes($_POST['hasdate']);
-	$_POST['readstatus'] = $addslashes($_POST['readstatus']);
-	$_POST['comment'] = $addslashes($_POST['comment']);
-	$_POST['startday'] = intval($_POST['startday']);
-	$_POST['startmonth'] = intval($_POST['startmonth']);
-	$_POST['startyear'] = intval($_POST['startyear']);
-	$_POST['endday'] = intval($_POST['endday']);
-	$_POST['endmonth'] = intval($_POST['endmonth']);
-	$_POST['endyear'] = intval($_POST['endyear']);
+	$existingbook          = $_POST['existingbook'];
+	$_POST['hasdate']      = $addslashes($_POST['hasdate']);
+	$_POST['readstatus']   = $addslashes($_POST['readstatus']);
+	$_POST['comment']      = $addslashes($_POST['comment']);
+	$_POST['startday']     = intval($_POST['startday']);
+	$_POST['startmonth']   = intval($_POST['startmonth']);
+	$_POST['startyear']    = intval($_POST['startyear']);
+	$_POST['endday']       = intval($_POST['endday']);
+	$_POST['endmonth']     = intval($_POST['endmonth']);
+	$_POST['endyear']      = intval($_POST['endyear']);
 
 	$date_start = '0000-00-00';
 	$date_end = '0000-00-00';
@@ -96,8 +97,7 @@ $today = getdate();
 			if ($_POST['readstatus'] == 'required'){
 				echo 'checked="checked"';
 			}
-		}
-		else {
+		} else {
 			echo 'checked="checked"';
 		}?>/>
 		<label for="required"><?php  echo _AT('rl_required'); ?></label>
