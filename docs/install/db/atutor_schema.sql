@@ -34,7 +34,7 @@ CREATE TABLE `admins` (
 # since 1.5.3
 
 CREATE TABLE `assignments` (
-	`assignment_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT DEFAULT '0',
+	`assignment_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
 	`title` VARCHAR(60) NOT NULL,
 	`assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
@@ -633,7 +633,7 @@ CREATE TABLE `related_content` (
 # Table structure for table `reading_list`
 
 CREATE TABLE `reading_list` (
-	`reading_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT DEFAULT '0',
+	`reading_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
 	`resource_id` MEDIUMINT UNSIGNED NOT NULL,
 	`required` enum('required','optional') NOT NULL DEFAULT 'required',
