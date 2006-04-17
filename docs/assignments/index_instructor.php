@@ -24,8 +24,9 @@ if (isset($_GET['edit'])) {
 	$_GET['assignment'] = intval($_GET['assignment']);
 	header('Location: delete_assignment.php?id='. $_GET['assignment']);
 	exit;
-} else if (isset($_GET['create'])){
-	header('Location: add_assignment.php');
+} else if (isset($_GET['submissions'])){
+	$_GET['assignment'] = intval($_GET['assignment']);
+	header('Location: '.$_base_href.'file_storage/index.php?ot='.WORKSPACE_ASSIGNMENT.SEP.'oid='.$_GET['assignment']);
 	exit;
 }
 
@@ -79,8 +80,12 @@ $result = mysql_query($sql, $db);
 <?php if (($result != 0) && ($row = mysql_fetch_assoc($result))) : ?>
 <tfoot>
 <tr>
-	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
-				    <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="4">
+		<input type="submit" name="submissions" value="<?php echo _AT('submissions'); ?>" /> 
+		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
+		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+					
+	</td>
 </tr>
 </tfoot>
 <tbody>
@@ -119,7 +124,7 @@ $result = mysql_query($sql, $db);
 </tbody>
 <?php else: ?>
 	<tr>
-		<td colspan="6"><em><?php echo _AT('none_found'); ?></em></td>
+		<td colspan="4"><em><?php echo _AT('none_found'); ?></em></td>
 	</tr>
 <?php endif; ?>
 </table>
