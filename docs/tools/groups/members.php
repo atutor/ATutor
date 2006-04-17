@@ -59,6 +59,8 @@ if (isset($_POST['cancel'])) {
 		mysql_query($sql, $db);
 	}
 
+	$msg->addFeedback('GROUP_MEMBERS_SAVED');
+
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['assign'])) {
@@ -133,6 +135,8 @@ if (isset($_POST['cancel'])) {
 			mysql_query($sql, $db);
 		}
 	}
+
+	$msg->addFeedback('GROUP_MEMBERS_SAVED');
 	header('Location: index.php');
 	exit;
 }
