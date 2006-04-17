@@ -148,9 +148,22 @@ function change_privs ($member, $privs) {
 			$privilege += intval($priv);
 		}	
 	}
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=$privilege WHERE member_id=$member AND course_id=$_SESSION[course_id] AND `approved`='y'";
 
+	/*
+	* if we're making a student a TA then we have to remove them
+	* from all the groups they may belong to. TAs cannot belong to groups.
+	*/
+	if ($privilege > 0) {
+		$group_list = implode(',', $_SESSION['groups']);
+		if ($group_list) {
+			$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($group_list) AND member_id=$member";
+			$result = mysql_query($sql,$db);
+		}
+	}
+
+	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=$privilege WHERE member_id=$member AND course_id=$_SESSION[course_id] AND `approved`='y'";
 	$result = mysql_query($sql,$db);
+
 
 	//print error or confirm change
 	if (!$result) {
