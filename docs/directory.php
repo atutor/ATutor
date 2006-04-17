@@ -54,9 +54,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="radio" name="online_status" id="s2" value="2" <?php echo $all; ?> /><label for="s2"><?php echo _AT('all');          ?></label>
 	</div>
 
-	<?php if ($_SESSION['is_admin'] || $_SESSION['privileges']): ?>
-
-	<?php else: ?>
 		<div class="row">
 			<?php echo _AT('groups'); ?><br />
 			<input type="radio" name="group" value="0" id="g0" checked="checked" /><label for="g0">Entire course</label>
@@ -70,7 +67,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<input type="radio" name="group" value="<?php echo $row['group_id']; ?>" id="g<?php echo $row['group_id']; ?>" <?php if ($group == $row['group_id']) { echo 'checked="checked"'; } ?> /><label for="g<?php echo $row['group_id']; ?>"><?php echo $row['type_title'] . ': ' . $row['title']; ?></label>
 			<?php endwhile; ?>
 		</div>
-	<?php endif; ?>
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('filter'); ?>" />
