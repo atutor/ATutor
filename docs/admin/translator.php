@@ -11,24 +11,20 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-if ( !isset($db)					|| 
-	 !isset($_INCLUDE_PATH)			|| 
-	 !isset($_SESSION['language'])	) {
-		 
-		 exit;
-}
+if ( !isset($db) || !isset($_INCLUDE_PATH) || !isset($_SESSION['language'])	) { exit; }
 
 if ($_POST['function'] == 'edit_term') {
 	if ($_POST['submit2']) {
 		delete_term($_POST['v'], $_POST['k']);
-	} 
-	else {
+	} else {
 		$success_error = update_term($_POST['text'], $_POST['context'], $_POST['v'], $_POST['k']);
 	}
-}
-else if ($_POST['function'] == 'add_term') {
+} else if ($_POST['function'] == 'add_term') {
 	$success_error = add_term($_POST['text'], $_POST['context'], $_POST['v'], $_POST['k']);
 	$_REQUEST['page'] = 'none';
+
+} else if ($_POST['function'] == 'search_term') {
+	header('Location: "'.$_SERVER['PHP_SELF'].'?search='.urlencode($_POST['search_term']));
 }
 
 if ($_REQUEST['n']) {
@@ -47,31 +43,37 @@ if ($_SESSION['language'] != 'en') {
 		<input type="hidden" name="f" value="'.$_REQUEST['f'].'" /><input type="checkbox" name="n" id="n" value="1" '.$n.' /><label for="n">New Language</label>, <input type="checkbox" name="u" id="u" value="1" '.$u.'/><label for="u">Updated Language</label> <input type="submit" name="filter" value="Apply" class="submit" /></form></td></tr></table><br />';
 	echo '</li>';
 }
-
-
-//<!--//display messages and templates, with option to add new language terms/messages//-->
-echo '<li>Choose Template or Msgs to display a list of language variables. Click on a variable name to display its associated language.';
-echo '<ul>';
-	foreach ($variables as $row) {
-		echo '<li>';
-		echo '<strong>';
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$row.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'">';
-		echo ucwords(str_replace('_', '', $row));
-		echo '</a>';
-		if ($_SESSION['status'] == $_USER_ADMIN && ($_SESSION['language'] == 'en')) {
-			echo ' | <a href="'.$_SERVER['PHP_SELF'].'?v='.$row.SEP.'new=1">new</a>';
-		}
-		echo '</strong>';
-		echo '</li>';
-	}
-	echo '</ul><br /></li>';
-	echo '<li> <strong><em>'.$atutor_test.'Open ATutor</a></em></strong> in another window to view the translation as it occurs. You will need to Register, login, then update your account to <strong>instructor</strong> through your Profile screen. </li></ol>';
-
-	echo '<hr />';
-
-
-	if (($_REQUEST['new'] == 1) && $_SESSION['status'] == $_USER_ADMIN) {
 ?>
+
+	<!--//display messages and templates, with option to add new language terms/messages//-->
+	<li>Choose Template or Msgs to display a list of language variables. Click on a variable name to display its associated language.
+		<ul>
+		<?php foreach ($variables as $row) { ?>
+			<li><strong>
+			<?php echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$row.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'">';
+			echo ucwords(str_replace('_', '', $row));
+			echo '</a>';
+			if ($_SESSION['status'] == $_USER_ADMIN && ($_SESSION['language'] == 'en')) {
+				echo ' | <a href="'.$_SERVER['PHP_SELF'].'?v='.$row.SEP.'new=1">new</a>';
+			}
+			?>
+			</strong></li>
+		<?php } ?>
+		</ul>
+		<br />
+	</li>
+
+	<li>
+		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"> 
+			<input type="hidden" name="function" value="search_term" />
+
+			<input type="text" name="search_term" /> <input type="submit" value="Search" /> 
+		</form>
+	</li>
+</ol>
+<hr />
+
+<?php if (($_REQUEST['new'] == 1) && $_SESSION['status'] == $_USER_ADMIN) { ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="v" value="<?php echo $_REQUEST['v']; ?>" />
@@ -532,4 +534,72 @@ function display_unused_terms ($variable, $term1, $lang_code, $new, $updated) {
 	echo '</ul>';
 }
 
+
+function display_search_terms ($variable, $term1, $lang_code, $new, $updated) {
+	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+
+	if ($_SESSION['language'] != 'en') {
+		$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND `language_code`='$_SESSION[language]' ORDER BY `term`";
+		$result = mysql_query($sql, $db);
+
+		$t_keys = array();
+		while ($row = mysql_fetch_assoc($result)) {
+			$t_keys[$row['term']] = $row['r_date'];
+		}
+	}
+
+	if ($lang_code == 'en') {
+		$sql	= "SELECT *, revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND language_code='en' ORDER BY term";
+	} else {
+		$sql	= "SELECT * FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND language_code='$lang_code' ORDER BY term";
+	}
+	$result	= mysql_query($sql, $db);
+
+	echo '<ul>';
+	while ($row = mysql_fetch_assoc($result)) {
+		if ($_SESSION['language'] != 'en') {
+			if ($new && $updated) {
+				if ((!($t_keys[$row['term']] == '')) && (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']]))) {
+					continue;
+				}
+			} else if ($new) {
+				if (!($t_keys[$row['term']] == '')) {	
+					continue;
+				}
+			} else if ($updated) {
+				if (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']])) {
+					continue;
+				}
+			}
+		}
+
+
+		if ($row['term'] == $term1) {
+			trans_form('all');
+			echo '<li class="selected">';
+
+		} else {
+			echo '<li>';
+		}
+		echo '<small>';
+		if ($_SESSION['language'] != 'en') {
+			if ($t_keys[$row['term']] == '') {
+				echo '<b>*New*</b> ';
+			} else if ($t_keys[$row['term']] < $row['r_date']) {
+				echo '<b>*Updated*</b> ';
+			}
+		}
+
+		if ($row['term'] != $term1) {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.$row['term'].SEP.'page=all'.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
+			echo $row['term'];
+			echo '</a>';
+		} else {
+			echo $row['term'];
+		}
+		echo '</small>';
+		echo '</li>';
+	}
+	echo '</ul>';
+}
 ?>
