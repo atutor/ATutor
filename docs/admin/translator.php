@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 
 if ( !isset($db) || !isset($_INCLUDE_PATH) || !isset($_SESSION['language'])	) { exit; }
 
@@ -22,9 +23,6 @@ if ($_POST['function'] == 'edit_term') {
 } else if ($_POST['function'] == 'add_term') {
 	$success_error = add_term($_POST['text'], $_POST['context'], $_POST['v'], $_POST['k']);
 	$_REQUEST['page'] = 'none';
-
-} else if ($_POST['function'] == 'search_term') {
-	header('Location: "'.$_SERVER['PHP_SELF'].'?search='.urlencode($_POST['search_term']));
 }
 
 if ($_REQUEST['n']) {
@@ -65,9 +63,7 @@ if ($_SESSION['language'] != 'en') {
 
 	<li>
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"> 
-			<input type="hidden" name="function" value="search_term" />
-
-			<input type="text" name="search_term" /> <input type="submit" value="Search" /> 
+			<input type="text" name="search_term" value="<?php echo htmlspecialchars(stripslashes($addslashes($_REQUEST['search_term']))); ?>" /> <input type="submit" name="search" value="Search Phrase" class="submit" /> 
 		</form>
 	</li>
 </ol>
@@ -76,6 +72,7 @@ if ($_SESSION['language'] != 'en') {
 <?php if (($_REQUEST['new'] == 1) && $_SESSION['status'] == $_USER_ADMIN) { ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<input type="hidden" name="search_term" value="<?php echo htmlspecialchars(stripslashes($addslashes($_REQUEST['search_term']))); ?>" />
 	<input type="hidden" name="v" value="<?php echo $_REQUEST['v']; ?>" />
 	<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
 	<input type="hidden" name="function" value="add_term" />
@@ -136,6 +133,7 @@ function trans_form($page) {
 	global $_TABLE_SUFFIX;
 	global $_TABLE_PREFIX;
 	global $_USER_ADMIN;
+	global $addslashes;
 ?>
 <br />
 <a name="anchor"></a>
@@ -143,6 +141,7 @@ function trans_form($page) {
 	<input type="hidden" name="v" value="<?php echo $row['variable']; ?>" />
 	<input type="hidden" name="k" value="<?php echo $row['term']; ?>" />
 	<input type="hidden" name="f" value="<?php echo $_REQUEST['f']; ?>" />
+	<input type="hidden" name="search_term" value="<?php echo htmlspecialchars(stripslashes($addslashes($_REQUEST['search_term']))); ?>" />
 	<input type="hidden" name="page" value="<?php echo $page; ?>" />
 	<input type="hidden" name="function" value="edit_term" />
 
@@ -184,7 +183,7 @@ function trans_form($page) {
 	</tr>
 	<tr>
 		<td valign="top" align="right" nowrap="nowrap"><b><tt><?php echo $langs[$_REQUEST['f']]['name'];?></tt> text:</b></td>
-		<td><?php echo str_replace('<', '&lt;', $row['text']); ?></td>
+		<td><?php echo nl2br(htmlspecialchars($row['text'])); ?></td>
 	</tr>
 	<tr>
 		<td valign="top" align="right" nowrap="nowrap"><b><tt><?php echo $langs[$_SESSION['language']]['name'];?></tt> text:</b></td>
@@ -192,13 +191,10 @@ function trans_form($page) {
 	</tr>
 	<tr>
 		<td colspan="2" align="center"><input type="submit" name="submit" value="Save ALT-S" class="submit" accesskey="s" />
-<?php
-		if ($_SESSION['language'] == 'en' && $_SESSION['status'] == $_USER_ADMIN) {
-?>
-			&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit2" value="Delete" onClick="return confirm('Do you really want to delete?');" class="submit" /></td>
-<?php
-		}
-?>
+		<?php if ($_SESSION['language'] == 'en' && $_SESSION['status'] == $_USER_ADMIN): ?>
+					&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit2" value="Delete" onClick="return confirm('Do you really want to delete?');" class="submit" /><
+		<?php endif; ?>
+		/td>
 	</tr>
 	</table>
 	</form>
@@ -208,7 +204,7 @@ function trans_form($page) {
 	}
 }
 	//displaying templates
-	if ($_REQUEST['v'] == $variables[0]) {
+	if (!$_REQUEST['search_term'] && ($_REQUEST['v'] == $variables[0])) {
 		echo '<ul>';
 		
 		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=all'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">View All Terms</a>';
@@ -240,10 +236,11 @@ function trans_form($page) {
 			}
 		}
 		echo '</ul>';
-	}	
-	else if ($_REQUEST['v'] == $variables[1]){
+	} else if (!$_REQUEST['search_term'] && ($_REQUEST['v'] == $variables[1])){
 		//displaying messages
 		display_all_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
+	} else if ($_REQUEST['search_term']) {
+		display_search_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
 	}
 
 
@@ -536,70 +533,70 @@ function display_unused_terms ($variable, $term1, $lang_code, $new, $updated) {
 
 
 function display_search_terms ($variable, $term1, $lang_code, $new, $updated) {
-	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX, $addslashes;
 
-	if ($_SESSION['language'] != 'en') {
-		$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND `language_code`='$_SESSION[language]' ORDER BY `term`";
-		$result = mysql_query($sql, $db);
+	$_REQUEST['search_term'] = $addslashes($_REQUEST['search_term']);
 
-		$t_keys = array();
-		while ($row = mysql_fetch_assoc($result)) {
-			$t_keys[$row['term']] = $row['r_date'];
-		}
+	$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE (variable LIKE '%$_REQUEST[search_term]%' OR text LIKE '%$_REQUEST[search_term]%') AND (`language_code`='$_SESSION[language]' OR `language_code`='en') GROUP BY `term` ORDER BY `term`";
+	$result = mysql_query($sql, $db);
+
+	$t_keys = array();
+	while ($row = mysql_fetch_assoc($result)) {
+		$t_keys[$row['term']] = $row['r_date'];
 	}
 
-	if ($lang_code == 'en') {
-		$sql	= "SELECT *, revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND language_code='en' ORDER BY term";
-	} else {
-		$sql	= "SELECT * FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND language_code='$lang_code' ORDER BY term";
-	}
+	$sql	= "SELECT *, revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE (variable LIKE '%$_REQUEST[search_term]%' OR text LIKE '%$_REQUEST[search_term]%') AND (language_code='en' OR language_code='$_SESSION[language]') GROUP BY `term` ORDER BY term";
 	$result	= mysql_query($sql, $db);
 
-	echo '<ul>';
-	while ($row = mysql_fetch_assoc($result)) {
-		if ($_SESSION['language'] != 'en') {
-			if ($new && $updated) {
-				if ((!($t_keys[$row['term']] == '')) && (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']]))) {
-					continue;
-				}
-			} else if ($new) {
-				if (!($t_keys[$row['term']] == '')) {	
-					continue;
-				}
-			} else if ($updated) {
-				if (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']])) {
-					continue;
+	if (mysql_num_rows($result) == 0) {
+		echo '<ul><li>No results found.</li></ul>';
+	} else {
+		echo '<ul>';
+		while ($row = mysql_fetch_assoc($result)) {
+			if ($_SESSION['language'] != 'en') {
+				if ($new && $updated) {
+					if ((!($t_keys[$row['term']] == '')) && (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']]))) {
+						continue;
+					}
+				} else if ($new) {
+					if (!($t_keys[$row['term']] == '')) {	
+						continue;
+					}
+				} else if ($updated) {
+					if (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']])) {
+						continue;
+					}
 				}
 			}
-		}
 
 
-		if ($row['term'] == $term1) {
-			trans_form('all');
-			echo '<li class="selected">';
+			if ($row['term'] == $term1) {
+				trans_form('search');
+				echo '<li class="selected">';
 
-		} else {
-			echo '<li>';
-		}
-		echo '<small>';
-		if ($_SESSION['language'] != 'en') {
-			if ($t_keys[$row['term']] == '') {
-				echo '<b>*New*</b> ';
-			} else if ($t_keys[$row['term']] < $row['r_date']) {
-				echo '<b>*Updated*</b> ';
+			} else {
+				echo '<li>';
 			}
-		}
+			echo '<small>';
+			if ($_SESSION['language'] != 'en') {
+				if ($t_keys[$row['term']] == '') {
+					echo '<b>*New*</b> ';
+				} else if ($t_keys[$row['term']] < $row['r_date']) {
+					echo '<b>*Updated*</b> ';
+				}
+			}
 
-		if ($row['term'] != $term1) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.$row['term'].SEP.'page=all'.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
-			echo $row['term'];
-			echo '</a>';
-		} else {
-			echo $row['term'];
+			if ($row['term'] != $term1) {
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$row['variable'].SEP.'search=1'.SEP.'search_term='.urlencode(stripslashes($_REQUEST['search_term'])).SEP.'k='.$row['term'].SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
+				echo $row['term'];
+				echo '</a>';
+			} else {
+				echo $row['term'];
+			}
+			echo '</small>';
+			echo '</li>';
 		}
-		echo '</small>';
-		echo '</li>';
+		echo '</ul>';
 	}
-	echo '</ul>';
 }
 ?>
