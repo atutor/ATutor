@@ -52,6 +52,8 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[cour
 $result = mysql_query($sql, $db);
 ?>
 
+<?php $msg->printInfos('ASSIGNMENT_FS_SUBMISSIONS'); ?>
+
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <table class="data" style="width: 90%;" rules="cols">
 <colgroup>
