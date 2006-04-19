@@ -72,7 +72,6 @@ if (isset($_POST['cancel'])) {
 		$groups_counts[$row['group_id']] = $row['cnt'];
 	}
 	$total_assigned = array_sum($groups_counts);
-	//debug($total_assigned, 'assigned');
 
 	if (is_array($_POST['groups'])) {
 		foreach ($_POST['groups'] as $mid => $gid) {
@@ -83,12 +82,10 @@ if (isset($_POST['cancel'])) {
 		$students = array_keys($_POST['groups']);
 
 		$total_unassigned = count($students);
-		//debug($total_unassigned, 'unassigned');
 
 		shuffle($students);
 		reset($students);
 	}
-	//debug($students);
 
 	$total_students = $total_unassigned + $total_assigned;
 
@@ -103,9 +100,6 @@ if (isset($_POST['cancel'])) {
 		} else {
 			$num_students_per_group = $total_students / $num_groups;
 		}
-
-		//debug($num_students_per_group, 'num per group');
-		//debug($remainder, 'remainder');
 
 		$sql = '';
 		foreach($tmp_groups as $group_id => $garbage) {
@@ -184,7 +178,7 @@ $result = mysql_query($sql, $db);
 </tfoot>
 <body>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
-		<tr>
+		<tr <?php if (isset($_GET['gid']) && ($_GET['gid'] == $groups_members[$row['member_id']])) { echo 'style="background-color: #efe"';} ?>>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['first_name']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['last_name']; ?></label></td>

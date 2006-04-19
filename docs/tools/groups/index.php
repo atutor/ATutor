@@ -48,7 +48,7 @@ if (isset($_GET['edit'], $_GET['id'])) {
 } else if (isset($_GET['members'])) {
 	$parts = explode('_', $_GET['id'], 2);
 	if (isset($parts[1]) && $parts[1]) {
-		header('Location: members.php?id='.$parts[0]);
+		header('Location: members.php?id='.$parts[0].SEP.'gid='.$parts[1]);
 		exit;
 	} else if ($parts[0]) {
 		header('Location: members.php?id='.$parts[0]);
