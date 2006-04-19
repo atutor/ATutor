@@ -37,5 +37,6 @@ $this->_pages['tools/groups/index.php']['children']  = array('tools/groups/creat
 
 // student stuff
 $this->_pages['groups.php']['title_var'] = 'groups';
-$this->_pages['groups.php']['img']       = 'groups.gif';
+$this->_pages['groups.php']['img']       = 'images/home-acollab.gif';
+
 ?>
