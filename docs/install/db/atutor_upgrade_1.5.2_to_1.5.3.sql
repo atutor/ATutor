@@ -161,3 +161,7 @@ CREATE TABLE `mail_queue` (
   `body` TEXT NOT NULL ,
   PRIMARY KEY ( `mail_id` )
 );
+
+#install new themes
+
+INSERT INTO `themes` VALUES ('Blumin', '1.5.3', 'blumin', NOW(), 'This is the plone look-alike theme.', 1);
