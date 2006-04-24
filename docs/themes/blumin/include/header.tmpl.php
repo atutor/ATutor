@@ -309,13 +309,6 @@ function toggleToc(objId) {
 	</div>
 
 <!-- the page title -->
-
-<div style="float:right;">
-	<?php if ($this->guide): ?>
-		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
-	<?php endif; ?>
-</div>
-
 <h2 class="page-title"><?php echo $this->page_title; ?></h2>
 
 <a name="content"></a>
