@@ -892,7 +892,7 @@ div.tabs {
     /* Navigational Plone Tabs(tm), implemented by customizing the a tag - they are surprisingly elegant. The power of CSS runs strong in these :) */
     background: transparent;
     border-collapse: collapse;
-    border-bottom: 1pt solid #8CACBB;
+    border-bottom: 1px solid #8CACBB;
     padding: 0.5em 0em 0em 2em;
     white-space: nowrap;
 	font-size:0.85em;
@@ -914,7 +914,7 @@ div.tabs a {
 div.tabs a.selected {
     /* The selected tab. There's only one of this */
     background: #DEE7EC;
-    border-bottom: #DEE7EC 1pt solid;
+    border-bottom: #DEE7EC 1px solid;
     color: #436976;
     font-weight: normal;
 }
@@ -949,7 +949,7 @@ div.box {
 
 h5.box { 
     background: #DEE7EC;
-    border: 1pt solid #8CACBB;
+    border: 1px solid #8CACBB;
     border-style: solid solid none solid;
     color: Black;
     padding: 0em 1em 0em 1em;
