@@ -116,7 +116,7 @@ if ($section == 'admin'){
 
 	hb_print_toc($pages, 'admin');
 
-} else if ($section = 'instructor'){
+} else if ($section == 'instructor'){
 	$pages = array(
 			'0.0.introduction.php' => array('0.1.creating_courses.php'),
 			'1.0.announcements.php',
