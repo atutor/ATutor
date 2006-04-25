@@ -7,7 +7,7 @@
 
 	$enable_user_notes = false;
 
-	$config_location = '../../include/config.inc.php';
+	$config_location = dirname(__FILE__) . '/../../include/config.inc.php';
 	if (is_file($config_location) && is_readable($config_location)) {
 		require($config_location);
 		if (defined('AT_ENABLE_HANDBOOK_NOTES') && AT_ENABLE_HANDBOOK_NOTES) {
@@ -28,7 +28,7 @@
 	} 
 	if (!defined('AT_HANDBOOK_ENABLE')) {
 		// use local config file
-		require('../config.inc.php');
+		require(dirname(__FILE__) . '/../config.inc.php');
 	}
 
 	if (defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
@@ -66,12 +66,17 @@
 
 <div class="seq">
 	<?php if (isset($previous_page)): ?>
-		Previous Chapter: <a href="<?php echo $previous_page; ?>" title="<?php echo $_pages[$previous_page]; ?> Alt+,"><?php echo $_pages[$previous_page]; ?></a><br /> 
+		<?php get_text('previous_chapter'); ?>: <a href="<?php echo $rel_path; ?><?php echo $section; ?>/<?php echo $previous_page; ?>?<?php echo $req_lang; ?>" title="<?php echo $_pages[$previous_page]; ?> Alt+,"><?php echo $_pages[$previous_page]; ?></a><br /> 
 	<?php endif; ?>
 
 	<?php if (isset($next_page)): ?>
-		Next Chapter: <a href="<?php echo $next_page; ?>" title="<?php echo $_pages[$next_page]; ?> Alt+."><?php echo $_pages[$next_page]; ?></a>
+		<?php get_text('next_chapter'); ?>: <a href="<?php echo $rel_path; ?><?php echo $section; ?>/<?php echo $next_page; ?>?<?php echo $req_lang; ?>" title="<?php echo $_pages[$next_page]; ?> Alt+."><?php echo $_pages[$next_page]; ?></a>
 	<?php endif; ?>
+</div>
+
+<div class="tag">
+	This page was last modified <?php echo date("r.", getlastmod()); ?><br />
+	All text is available under the terms of the GNU Free Documentation License. 
 </div>
 </body>
 </html>

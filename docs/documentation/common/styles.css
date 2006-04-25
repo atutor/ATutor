@@ -138,6 +138,13 @@ div.seq {
 	border: 1px dashed #cfcfcf;
 }
 
+div.tag {
+	margin: 10px;
+	font-size: smaller;
+	padding: 5px;
+}
+
+
 div.add-note {
 	background-color: #f0f0f0;
 	padding: 5px;
