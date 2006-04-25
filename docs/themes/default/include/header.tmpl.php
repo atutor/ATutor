@@ -250,7 +250,7 @@ function toggleToc(objId) {
 </div>
 
 <!-- the sub navigation -->
-<div style="float: right; padding-top: 5px; padding-right: 5px;"><small><?php echo $this->current_date; ?></small></div>
+<div style="text-align: right; padding-top: 5px; padding-right: 5px;"><small><?php echo $this->current_date; ?></small></div>
 <?php if ($this->sub_level_pages): ?>
 	<div id="sub-navigation">
 		<?php if (isset($this->back_to_page)): ?>
