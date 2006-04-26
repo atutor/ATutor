@@ -459,7 +459,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 <thead>
 <tr>
 	<td colspan="7">
-		<input type="submit" name="submit_workspace" value="<?php echo _AT('workspace'); ?>" class="button" />
+		<?php echo _AT('workspace'); ?> 
 		<select name="ot" id="ot">
 			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>><?php echo _AT('course_files'); ?></option>
 			<?php if ($_SESSION['member_id']): ?>
@@ -480,6 +480,8 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 				</optgroup>
 			<?php endif; ?>
 		</select>
+
+		<input type="submit" name="submit_workspace" value="<?php echo _AT('go'); ?>" class="button" />
 
 		<br />
 		<?php echo _AT('current_path'); ?>
