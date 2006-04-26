@@ -585,6 +585,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 </form>
 
 <script type="text/javascript">
+// <!--
 function checkbuttons(state) {
 	document.form.selectall.checked = state;
 
@@ -623,6 +624,7 @@ function CheckAll() {
 function hideform(id) {
 	document.getElementById(id).style.display='none';
 }
+// -->
 </script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
