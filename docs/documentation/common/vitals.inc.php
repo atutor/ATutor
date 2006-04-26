@@ -144,7 +144,7 @@ if (isset($_available_sections[$second_last_dir_name])) {
 				break;
 			}
 		}
-		if (!$lang && isset($_SESSION['lang']) && isset($available_languages[$_SESSION['lang']])) {
+		if ((!isset($lang) || !$lang) && isset($_SESSION['lang']) && isset($available_languages[$_SESSION['lang']])) {
 			$lang = $req_lang = $_SESSION['lang'];
 		} else if (!$lang) {
 			$lang = $req_lang = 'en';
