@@ -73,7 +73,6 @@ unregister_GLOBALS();
 		trigger_error('VITAL#<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).' . '</strong></code><br /><hr /><br />', E_USER_ERROR);
 	}
 
-	@set_magic_quotes_runtime(0);
 	@set_time_limit(0);
 	@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 	@session_cache_limiter('private, must-revalidate');

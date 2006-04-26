@@ -15,23 +15,19 @@
 require(dirname(__FILE__) . '/vitals.inc.php');
 
 $missing_lang = FALSE;
-if (!empty($_GET) && ($req_lang != 'en')) {
+if ($req_lang != 'en') {
 	$file_name = basename($_SERVER['PHP_SELF']);
 
 	$lang_file = $req_lang . '/' . $file_name;
 
-
 	if (file_exists($lang_file)) {
-		header('Location: '.$lang_file);
+		header('Location: '.$lang_file.'?r');
 		exit;
-	} else {
+	} else if (!isset($_GET['r'])) {
 		$missing_lang = TRUE;
 		$lang = 'en';
 	}
 }
-
-define('AT_HANDBOOK', true);
-session_start();
 
 if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 	define('SEP', ';');

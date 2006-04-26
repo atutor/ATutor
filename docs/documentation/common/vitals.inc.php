@@ -1,4 +1,21 @@
 <?php
+// Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
+function unregister_GLOBALS() {
+   if (!ini_get('register_globals')) { return; }
+
+   // Might want to change this perhaps to a nicer error
+   if (isset($_REQUEST['GLOBALS'])) { die('GLOBALS overwrite attempt detected'); }
+
+   // Variables that shouldn't be unset
+   $noUnset = array('GLOBALS','_GET','_POST','_COOKIE','_REQUEST','_SERVER','_ENV', '_FILES');
+   $input = array_merge($_GET,$_POST,$_COOKIE,$_SERVER,$_ENV,$_FILES,isset($_SESSION) && is_array($_SESSION) ? $_SESSION : array());
+  
+   foreach ($input as $k => $v) {
+       if (!in_array($k, $noUnset) && isset($GLOBALS[$k])) { unset($GLOBALS[$k]); }
+   }
+}
+
+unregister_GLOBALS();
 
 function debug($var, $title='') {
 
@@ -73,6 +90,10 @@ function get_available_languages($section) {
 	}
 }
 
+define('AT_HANDBOOK', true);
+session_name('ATutorID');
+session_start();
+session_write_close();
 // $lang is the language we've found to display
 // $req_lang is the language we're requesting
 
@@ -93,7 +114,6 @@ if (isset($_available_sections[$second_last_dir_name])) {
 	$rel_path = '../../';
 	get_available_languages($section);
 } else if (isset($_available_sections[$last_dir_name])) {
-	$lang = $req_lang = 'en';
 	$section = $last_dir_name;
 	$rel_path = '../';
 	get_available_languages($section);
@@ -102,6 +122,11 @@ if (isset($_available_sections[$second_last_dir_name])) {
 			$lang = $req_lang = $lang_name;
 			break;
 		}
+	}
+	if (isset($_SESSION['lang']) && isset($available_languages[$_SESSION['lang']])) {
+		$lang = $req_lang = $_SESSION['lang'];
+	} else {
+		$lang = $req_lang = 'en';
 	}
 } else {
 	foreach ($_available_sections as $section_name) {
@@ -119,7 +144,9 @@ if (isset($_available_sections[$second_last_dir_name])) {
 				break;
 			}
 		}
-		if (!$lang) {
+		if (!$lang && isset($_SESSION['lang']) && isset($available_languages[$_SESSION['lang']])) {
+			$lang = $req_lang = $_SESSION['lang'];
+		} else if (!$lang) {
 			$lang = $req_lang = 'en';
 		}
 		$rel_path = '../';
@@ -130,7 +157,6 @@ if (isset($_available_sections[$second_last_dir_name])) {
 		get_available_languages($section);
 	}
 }
-
 
 $lang = htmlspecialchars($lang);
 $req_lang = htmlspecialchars($req_lang);

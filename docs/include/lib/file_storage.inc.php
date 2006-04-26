@@ -12,6 +12,19 @@
 /************************************************************************/
 // $Id$
 
+/**
+ * Additional constants are found in /include/lib/constants.inc.php (for the work spaces)
+ *
+ * The File Storage was designed to allow for unlimited workspace, although only four right now.
+ *
+ * All the functions are namespaced with fs_ (for File Storage not File System).
+ *
+ * These two variables are used throughout.
+ * $owner_type is used to define the workspace type. Also appears as $ot in _GET.
+ * $owner_id is the ID of the particular workspace type. Also appears as $oid in _GET.
+ * 
+ **/
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('WORKSPACE_AUTH_NONE',  0);
