@@ -147,6 +147,8 @@ ALTER TABLE `modules` CHANGE `privilege` `privilege` INT UNSIGNED DEFAULT '0' NO
 ALTER TABLE `members` ADD `second_name` CHAR( 30 ) NOT NULL AFTER `first_name` ;
 ALTER TABLE `members` ADD `private_email` TINYINT DEFAULT '1' NOT NULL ;
 
+# increase length of users_online `login` field to support a full display name. or close to it.
+ALTER TABLE `users_online` CHANGE `login` `login` varchar(255) NOT NULL default '';
 
 # Table structure for table `mail_queue`
 # since 1.5.3

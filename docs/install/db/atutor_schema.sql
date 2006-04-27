@@ -841,7 +841,7 @@ INSERT INTO `themes` VALUES ('Blumin', '1.5.3', 'blumin', NOW(), 'This is the pl
 CREATE TABLE `users_online` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `course_id` mediumint(8) unsigned NOT NULL default '0',
-  `login` varchar(20) NOT NULL default '',
+  `login` varchar(255) NOT NULL default '',
   `expiry` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`)
 ) TYPE=HEAP MAX_ROWS=500;
