@@ -380,7 +380,7 @@ function add_user_online() {
 	global $db;
 
     $expiry = time() + 900; // 15min
-    $sql    = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.$_SESSION['login'].'", '.$expiry.')';
+    $sql    = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.get_login($_SESSION['member_id']).'", '.$expiry.')';
     $result = mysql_query($sql, $db);
 
 	/* garbage collect and optimize the table every so often */
@@ -388,9 +388,6 @@ function add_user_online() {
 	$rand = mt_rand(1, 20);
 	if ($rand == 1) {
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'users_online WHERE expiry<'.time();
-		$result = @mysql_query($sql, $db);
-
-		$sql = 'OPTIMIZE TABLE '.TABLE_PREFIX.'users_online';
 		$result = @mysql_query($sql, $db);
 	}
 }
