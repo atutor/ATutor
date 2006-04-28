@@ -86,7 +86,7 @@ function hide() {
 if (isset($_GET['p'])) {
 	$body = $_GET['p'];
 } else {
-	$body = '0.0.introduction.php';
+	$body = 'introduction.php';
 } 
 ?>
 </head>
