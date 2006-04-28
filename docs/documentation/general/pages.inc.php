@@ -12,20 +12,20 @@
 /************************************************************************/
 // $Id$
 
-    $_pages['0.0.introduction.php']				= 'Introduction';
-    $_pages['1.0.login.php']					= 'Login';
-    $_pages['2.0.register.php']					= 'Register';
-    $_pages['3.0.browse_courses.php']			= 'Browse Courses';
-    $_pages['4.0.password_reminder.php']		= 'Password Reminder';
-    $_pages['5.0.my_start_page.php']			= 'My Start Page';
-    $_pages['5.1.my_courses.php']				= 'My Courses';
-    $_pages['5.1.1.create_course.php']			= 'Create Courses';
-    $_pages['5.2.profile.php']					= 'Profile';
-    $_pages['5.3.preferences.php']				= 'Preferences';
-    $_pages['5.4.inbox.php']					= 'Inbox';
-	$_pages['6.0.inside_course.php']			= 'Inside a Course';
-	$_pages['6.1.export_content.php']			= 'Export Content';
-	$_pages['6.2.packages.php']					= 'Packages';
-	$_pages['6.3.tile.php']						= 'TILE Repository Search';
+    $_pages['introduction.php']				= 'Introduction';
+    $_pages['login.php']					= 'Login';
+    $_pages['register.php']					= 'Register';
+    $_pages['browse_courses.php']			= 'Browse Courses';
+    $_pages['password_reminder.php']		= 'Password Reminder';
+    $_pages['my_start_page.php']			= 'My Start Page';
+    $_pages['my_courses.php']				= 'My Courses';
+    $_pages['create_course.php']			= 'Create Courses';
+    $_pages['profile.php']					= 'Profile';
+    $_pages['preferences.php']				= 'Preferences';
+    $_pages['inbox.php']					= 'Inbox';
+	$_pages['inside_course.php']			= 'Inside a Course';
+	$_pages['export_content.php']			= 'Export Content';
+	$_pages['packages.php']					= 'Packages';
+	$_pages['tile.php']						= 'TILE Repository Search';
 
 ?>
