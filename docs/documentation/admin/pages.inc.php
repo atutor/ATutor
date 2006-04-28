@@ -7,15 +7,15 @@
 	$_pages['configuration.php']                 = 'Administrator Home';
 	$_pages['my_account.php']                    = 'My Account';
 	$_pages['system_preferences.php']            = 'System Preferences';
-	$_pages['default_preferences.php']         = 'Default Preferences';
+	$_pages['default_preferences.php']			 = 'Default Preferences';
 	$_pages['languages.php']                     = 'Languages';
-	$_pages['importing_languages.php']         = 'Importing Languages';
-	$_pages['managing_existing_languages.php'] = 'Managing Existing Languages';
-	$_pages['translating_atutor.php']          = 'Translating ATutor';
+	$_pages['importing_languages.php']			 = 'Importing Languages';
+	$_pages['managing_existing_languages.php']	 = 'Managing Existing Languages';
+	$_pages['translating_atutor.php']			 = 'Translating ATutor';
 	$_pages['themes.php']                        = 'Themes';
-	$_pages['importing_themes.php']            = 'Importing/Exporting Themes';
-	$_pages['managing_existing_themes.php']    = 'Managing Existing Themes';
-	$_pages['creating_themes.php']             = 'Creating Themes';
+	$_pages['importing_themes.php']              = 'Importing/Exporting Themes';
+	$_pages['managing_existing_themes.php']		 = 'Managing Existing Themes';
+	$_pages['creating_themes.php']               = 'Creating Themes';
 	$_pages['error_logging.php']                 = 'Error Logging';
 	$_pages['feeds.php']						 = 'Syndicated Feeds';
 	$_pages['google_key.php']					 = 'Google Key';
@@ -32,6 +32,6 @@
 	$_pages['backups.php']                       = 'Backups';
 	$_pages['forums.php']                        = 'Forums';
 	$_pages['categories.php']                    = 'Course Categories';
-	$_pages['modules.php']                         = 'Modules';
-	$_pages['troubleshooting.php']                 = 'Troubleshooting';
+	$_pages['modules.php']                       = 'Modules';
+	$_pages['troubleshooting.php']               = 'Troubleshooting';
 ?>
