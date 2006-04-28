@@ -27,5 +27,6 @@
 	$_pages['export_content.php']			= 'Export Content';
 	$_pages['packages.php']					= 'Packages';
 	$_pages['tile.php']						= 'TILE Repository Search';
+	$_pages['file_storage.php']				= 'File Storage';
 
 ?>
