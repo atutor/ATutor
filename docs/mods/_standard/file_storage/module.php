@@ -15,9 +15,11 @@ $this->_pages['file_storage/index.php']['img']        = 'images/home-file_storag
 
 $this->_pages['file_storage/revisions.php']['title_var'] = 'revisions';
 $this->_pages['file_storage/revisions.php']['parent'] = 'file_storage/index.php';
+$this->_pages['file_storage/revisions.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
 $this->_pages['file_storage/comments.php']['title_var'] = 'comments';
 $this->_pages['file_storage/comments.php']['parent'] = 'file_storage/index.php';
+$this->_pages['file_storage/comments.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
 $this->_pages['file_storage/edit.php']['title_var'] = 'edit';
 $this->_pages['file_storage/edit.php']['parent'] = 'file_storage/index.php';

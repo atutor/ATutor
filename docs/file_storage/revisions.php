@@ -26,7 +26,6 @@ if (!($owner_status = fs_authenticate($owner_type, $owner_id))) {
 	exit;
 }
 
-
 if (isset($_GET['download'], $_GET['revision'])) {
 	header('Location: index.php'.$owner_arg_prefix.'download=1'.SEP.'files'.urlencode('[]').'='.$_GET['revision']);
 	exit;
