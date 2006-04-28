@@ -72,46 +72,43 @@ if (($req_lang != 'en') && (file_exists(dirname(__FILE__).'/../'.$section.'/'.$r
 }
 if ($section == 'admin'){
 	$pages = array(
-				'0.0.introduction.php',
-				'1.0.installation.php' => array(
-											'1.1.requirements_recommendations.php',
-											'1.2.new_installation.php',
-											'1.3.upgrading.php'
+				'introduction.php',
+				'installation.php' => array(
+											'requirements_recommendations.php',
+											'new_installation.php',
+											'upgrading.php'
 											),
-				'2.0.configuration.php' => array('2.1.my_account.php'),
-				'2.2.system_preferences.php' => array(
-													'2.2.1.default_student_tools.php',
-													'2.2.2.default_side_menu.php',
-													'2.2.3.default_preferences.php'
+				'configuration.php' => array('my_account.php'),
+				'system_preferences.php' => array(
+													'default_preferences.php',
+													'languages.php',
+													'themes.php' => array(
+																			'importing_themes.php',
+																			'managing_existing_themes.php',
+																			'creating_themes.php'
+																			),
+													'error_logging.php',
+													'feeds.php',
+													'google_key.php',
+													'cron_setup.php'
 													),
-				'2.3.languages.php' => array(
-											'2.3.1.importing_languages.php',
-											'2.3.2.managing_existing_languages.php',
-											'2.3.3.translating_atutor.php'
-											),
-				'2.4.themes.php' => array(
-										'2.4.1.importing_themes.php',
-										'2.4.2.managing_existing_themes.php',
-										'2.4.3.creating_themes.php'
+
+				'users.php' => array(
+										'instructor_requests.php',
+										'master_student_list.php',
+										'email_users.php',
+										'administrators.php'
 										),
-				'2.5.error_logging.php',
-				'2.6.feeds.php',
-				'3.0.users.php' => array(
-										'3.1.instructor_requests.php',
-										'3.2.master_student_list.php' => array('3.2.1.importing_student_ids.php'),
-										'3.3.email_users.php',
-										'3.4.administrators.php' => array('3.4.1.administrator_activity_log.php')															),
-				'4.0.courses.php' => array(
-										'4.1.creating_courses.php',
-										'4.2.backups.php' => array(
-																'4.2.1.creating_backups.php',
-																'4.2.2.restoring_backups.php'
-																),
-										'4.3.forums.php',
-										'4.4.categories.php'
+				'courses.php' => array(
+										'forums.php',
+										'creating_courses.php',
+										'default_student_tools.php',
+										'default_side_menu.php',
+										'backups.php',
+										'categories.php'
 										),
-				'5.modules.php',
-				'6.troubleshooting.php',
+				'modules.php',
+				'troubleshooting.php',
 			);
 
 	hb_print_toc($pages, 'admin');

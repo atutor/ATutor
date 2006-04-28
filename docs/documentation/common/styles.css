@@ -1,14 +1,15 @@
 pre {
-	font-family: trebuchet ms, Arial, sans-serif;
+	font-family: Verdana, Arial, sans-serif;
 }
 
 body{
 	background-color: #fafafa;
-    font-family: Arial,sans-serif;
+    font-family: Verdana, Arial,sans-serif;
 	font-size: small;
+	line-height:150%;
 }
 h1,h2,h3,p, table, ul {
-    font-family: "Trebuchet MS",Verdana,Arial,sans-serif;
+    font-family: Verdana,Arial,sans-serif;
 }
 h1 {
 	border-bottom: 1px dashed #cfcfcf;
@@ -25,7 +26,12 @@ h2{
 	margin-right: -5px;
 	padding-right: 15px;
 }
-p{padding-bottom:1em}
+
+h3 {
+	text-decoration:underline;
+	font-weight:normal;
+	font-size:normal;
+}
 
 a {
 	text-decoration: none;
@@ -48,7 +54,7 @@ kbd {
 }
 
 code {
-    font-family: "Trebuchet MS",Verdana,Arial,sans-serif;
+    font-family: Verdana,Arial,sans-serif;
 	background-color: #efefef;
 	padding: 0px 4px 0px 4px;
 	border-width: 1px 1px 1px 1px;
