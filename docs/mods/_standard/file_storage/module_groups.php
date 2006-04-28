@@ -20,4 +20,5 @@ function file_storage_delete_group($group_id) {
 	fs_delete_workspace(WORKSPACE_GROUP, $group_id);
 }
 
+
 ?>

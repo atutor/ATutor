@@ -27,7 +27,6 @@ $force_download = false;
 
 //get path to file
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-
 	if (!empty($_SERVER['PATH_INFO'])) {
         $current_file = $_SERVER['PATH_INFO'];
 	} else if (!empty($_SERVER['REQUEST_URI'])) {
@@ -59,7 +58,6 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 		$force_download = true;
 		$current_file = substr($current_file, 2);
 	}
-
 } else {
 	$current_file = $_GET['f'];
 
@@ -87,7 +85,6 @@ if ($ext == '') {
 
 // NOTE!! for some reason realpath() is not returning FALSE when the file doesn't exist! NOTE!!
 $real = realpath($file);
-
 
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
 	if ($force_download) {
