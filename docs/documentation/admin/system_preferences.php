@@ -9,7 +9,7 @@
 			<dd>This will be the web address for the 'Home' link in the public area. Leave empty to remove this link.</dd>
 
 			<dt>Default Language</dt>
-			<dd>The default language to use if the client's browser settings cannot be detected. Must be one of the languages already installed. See the <a href="../admin/2.3.languages.php">Languages</a> section on installing and managing existing languages.</dd>
+			<dd>The default language to use if the client's browser settings cannot be detected. Must be one of the languages already installed. See the <a href="languages.php">Languages</a> section on installing and managing existing languages.</dd>
 
 			<dt>Contact Email</dt>
 			<dd>The reply address used for emails sent for instructor requests and other system emails.</dd>
@@ -24,13 +24,13 @@
 			<dd>How much a course can be over its <em>Maximum Course Size</em> limit while still allowing a file to upload or import. Makes the course limit actually be <em>Max Course Size</em> + <em>Max Course Float</em>. When <em>Max Course Float</em> is reached, no more uploads will be allowed for that course until files are deleted and the course's space usage falls under the Maximum Course Size.</dd>
 
 			<dt>Authenticate Against A Master Student List</dt>
-			<dd>Whether or not to enable Master Student List authentication. If enabled, only new accounts that validate against the master list will be created. See the <a href="../admin/3.2.master_student_list.php">Master Student List</a> section for additional details on using this feature.</dd>
+			<dd>Whether or not to enable Master Student List authentication. If enabled, only new accounts that validate against the master list will be created. See the <a href="master_student_list.php">Master Student List</a> section for additional details on using this feature.</dd>
 
 			<dt>Require Email Confirmation Upon Registration</dt>
 			<dd>If enabled, email confirmation is required in order to login to the system directly following registration. As new accounts are created, an email is sent with instructions on how to confirm their account. The user will not be allowed to login until after they confirm their account.</dd>
 
 			<dt>Allow Instructor Requests</dt>
-			<dd>If enabled, students will be allowed to request that their account be upgraded to an instructor account. Instructor account requests must be approved by administrators using the <a href="../admin/3.1.instructor_requests.php">Instructor Requests</a> section.</dd>
+			<dd>If enabled, students will be allowed to request that their account be upgraded to an instructor account. Instructor account requests must be approved by administrators using the <a href="instructor_requests.php">Instructor Requests</a> section.</dd>
 
 			<dt>Instructor Request Email Notification</dt>
 			<dd>If enabled, and if <em>Allow Instructor Requests</em> is enabled, then an email notification message will be sent to the <em>Contact Email</em> each time a new instructor account request is made. This does not affect whether or not instructor requests can be made, only whether or not a notification message is sent out each time.</dd>
@@ -39,7 +39,7 @@
 			<dd>If <em>Allow Instructor Requests</em> is enabled, then existing students requesting instructor accounts will be upgraded automatically, bypassing the approval process. Additionally, any newly created accounts will be created as instructors rather than as students.</dd>
 
 			<dt>Theme Specific Categories</dt>
-			<dd>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="../admin/4.3.categories.php">Categories</a> section to create and manage course categories, and the <a href="../admin/2.4.themes.php">Themes</a> section to install and manage themes.</dd>
+			<dd>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="categories.php">Categories</a> section to create and manage course categories, and the <a href="themes.php">Themes</a> section to install and manage themes.</dd>
 
 			<dt>User Contributed Handbook Notes</dt>
 			<dd>If enabled will allow anyone viewing the Handbook to contribute notes. User contributed notes must then be approved by an administrator by logging in on the main Handbook page. This option is available in ATutor 1.5.1+.</dd>
@@ -60,7 +60,7 @@
 			<dd>If enabled, every file revision in the File Storage area will be saved. If space is a concern, the administrator may wish to disable this feature.</dd>
 
 			<dt>Enable Mail Queue</dt>
-			<dd>The administrator may wish to set up a <a href="2.8.cron_setup.php">cron job</a> (automated event scheduler) for email. If enabled, and if cron has been set up, system email will be sent out at a certain time instead of immediately.</dd>
+			<dd>The administrator may wish to set up a <a href="cron_setup.php">cron job</a> (automated event scheduler) for email. If enabled, and if cron has been set up, system email will be sent out at a certain time instead of immediately.</dd>
 		</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>

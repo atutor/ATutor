@@ -1,7 +1,7 @@
 <?php require('../common/body_header.inc.php'); ?>
 
 <h2>New Installation</h2>
-	<p>Please review the <a href="../admin/1.1.requirements_recommendations.php">requirements</a> section <em>before</em> attempting to install ATutor. The latest version of ATutor can always be found on the <a href="http://atutor.ca/atutor/download.php" target="_new">atutor.ca downloads</a> page.</p>
+	<p>Please review the <a href="requirements_recommendations.php">requirements</a> section <em>before</em> attempting to install ATutor. The latest version of ATutor can always be found on the <a href="http://atutor.ca/atutor/download.php" target="_new">atutor.ca downloads</a> page.</p>
 
 	<h3>Windows Considerations</h3>
 		<p>To extract the ATutor <kbd>.tar.gz</kbd> archive you will need an application like <a href="http://winzip.com" target="_new">WinZip</a> or <a href="http://rarlabs.com" target="_new">WinRar</a>.</p>

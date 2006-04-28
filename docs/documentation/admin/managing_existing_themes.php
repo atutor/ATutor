@@ -21,7 +21,8 @@
 	</dl>
 
 	<h3>Category Themes</h3>
-	<p>If there are <a href="../admin/4.3.categories.php">Course Categories</a> defined and the <a href="../admin/2.2.system_preferences.php">System Preferences</a> <em>Theme Specific Categories</em>  has been enabled, themes can be assigned to categories so all courses under a particular category are displayed with the same look and feel. When defining <a href="../admin/4.3.categories.php">Course Categories</a> while the Category Themes system preference is enabled, a list of themes will be available to select from and assign to each category.</p>
+	<p>If there are <a href="categories.php">Course Categories</a> defined and the <a href="system_preferences.php">System Preferences</a> <em>Theme Specific Categories</em>  has been enabled, themes can be assigned to categories so all courses under a particular category are displayed with the same look and feel. When defining course categories while the Category Themes system preference is enabled, a list of themes will be available to select from and assign to each category.</p>
+
 	<p>Note that when Category Themes has been enabled, users will no longer be able to select themes from their personal preference settings.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

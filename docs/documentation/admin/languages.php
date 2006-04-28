@@ -19,7 +19,7 @@
 	</ul>
 	</p>
 
-	<p>Note that the default language (as specified in the <a href="2.2.system_preferences.php">System Preferences</a> <em>Default Language</em>) cannot be deleted.</p>
+	<p>Note that the default language (as specified in the <a href="system_preferences.php">System Preferences</a> <em>Default Language</em>) cannot be deleted.</p>
 
 
 <h3>Importing Languages</h3>

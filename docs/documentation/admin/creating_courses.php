@@ -2,7 +2,7 @@
 
 <h2>Creating Courses</h2>
 
-<p>See <a href="../instructor/0.1.creating_courses.php">Creating Courses</a> documentation for Instructors.</p>
+<p>See <a href="../instructor/creating_courses.php">Creating Courses</a> documentation for Instructors.</p>
 
 <p>In addition, administrators have access to the following properties:</p>
 

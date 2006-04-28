@@ -1,20 +1,6 @@
-<?php
-/************************************************************************/
-/* ATutor																*/
-/************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg 		*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
-/************************************************************************/
-// $Id: 6.troubleshooting.php 5866 2005-12-15 16:16:03Z joel $
+<?php require('../common/body_header.inc.php'); ?>
 
-require('../common/body_header.inc.php'); ?>
-
-<h2>6. Troubleshooting</h2>
+<h2>Troubleshooting</h2>
 	<p>A variety of strategies are available for troubleshooting an ATutor installation that may not be functioning properly.</p>
 	<dl>
 		<dt><kbd>AT_DEVEL</kbd></dt>
@@ -31,7 +17,7 @@ debug($_REQUEST); // print all GET, POST, and COOKIE variables
 		<dd>View the error log through the Configuration section. There may be information in the error reports that can help you identify where or how an error occured. The output from the error log can be sent to the ATutor team to aid them in finding a solution to your problem.</dd>
 
 		<dt><kbd>phpinfo()</kbd></dt>
-		<dd>Often, system problems can be fixed by reviewing the phpinfo page. This will show all of the configuration options for your system. Review the <a href="../admin/1.1.requirements_recommendations.php">Requirement &amp; Recommendations</a> for different values that should be set and displayed in the phpinfo output. Below is the contents of a phpinfo file. Viewing this page in a browser will show the system variables.<br /><br />
+		<dd>Often, system problems can be fixed by reviewing the phpinfo page. This will show all of the configuration options for your system. Review the <a href="requirements_recommendations.php">Requirement &amp; Recommendations</a> for different values that should be set and displayed in the phpinfo output. Below is the contents of a phpinfo file. Viewing this page in a browser will show the system variables.<br /><br />
 <pre>
 &lt;?php
 phpinfo();
