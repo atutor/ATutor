@@ -80,19 +80,18 @@ if ($section == 'admin'){
 											),
 				'configuration.php' => array('my_account.php'),
 				'system_preferences.php' => array(
-													'default_preferences.php',
-													'languages.php',
-													'themes.php' => array(
-																			'importing_themes.php',
-																			'managing_existing_themes.php',
-																			'creating_themes.php'
-																			),
-													'error_logging.php',
-													'feeds.php',
-													'google_key.php',
-													'cron_setup.php'
-													),
-
+												'default_preferences.php',
+												'languages.php',
+												'themes.php' => array(
+																		'importing_themes.php',
+																		'managing_existing_themes.php',
+																		'creating_themes.php'
+																		),
+												'error_logging.php',
+												'feeds.php',
+												'google_key.php',
+												'cron_setup.php'
+												),
 				'users.php' => array(
 										'instructor_requests.php',
 										'master_student_list.php',
@@ -182,21 +181,21 @@ if ($section == 'admin'){
 } else { 
 
 	$pages = array(
-				'0.0.introduction.php',
-				'1.0.login.php',
-				'2.0.register.php',
-				'3.0.browse_courses.php',
-				'4.0.password_reminder.php',
-				'5.0.my_start_page.php' => array(
-												'5.1.my_courses.php' => array('5.1.1.create_course.php'),
-												'5.2.profile.php',
-												'5.3.preferences.php',
-												'5.4.inbox.php'
+				'introduction.php',
+				'login.php',
+				'register.php',
+				'browse_courses.php',
+				'password_reminder.php',
+				'my_start_page.php' => array(
+												'my_courses.php' => array('create_course.php'),
+												'profile.php',
+												'preferences.php',
+												'inbox.php'
 												),
-				'6.0.inside_course.php' => array(
-												'6.1.export_content.php',
-												'6.2.packages.php',
-												'6.3.tile.php'
+				'inside_course.php' => array(
+												'export_content.php',
+												'packages.php',
+												'tile.php'
 												)
 			);
 	hb_print_toc($pages, 'general');
