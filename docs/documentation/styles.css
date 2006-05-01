@@ -1,10 +1,10 @@
 pre {
-	font-family: trebuchet ms, Arial, sans-serif;
+	font-family: Arial, sans-serif;
 }
 
 body{
 	background-color: #FFF;
-    font-family: "Trebuchet MS",Verdana,Arial,sans-serif;
+    font-family: Verdana,Arial,sans-serif;
 }
 h1,h2,h3,p, table, ul {
 	margin: 0 10px
@@ -60,7 +60,7 @@ kbd {
 }
 
 code {
-    font-family: "Trebuchet MS",Verdana,Arial,sans-serif;
+    font-family: Verdana,Arial,sans-serif;
 	background-color: #efefef;
 	padding: 0px 4px 0px 4px;
 	border-width: 1px 1px 1px 1px;

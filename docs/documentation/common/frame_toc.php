@@ -114,68 +114,60 @@ if ($section == 'admin'){
 
 } else if ($section == 'instructor'){
 	$pages = array(
-			'0.0.introduction.php' => array('0.1.creating_courses.php'),
-			'1.0.announcements.php',
-			'2.0.backups.php' => array(
-									'2.1.creating_restoring.php',
-									'2.2.downloading_uploading.php',
-									'2.3.editing_deleting.php'
+			'introduction.php' => array('creating_courses.php'),
+			'announcements.php',
+			'backups.php' => array(
+									'creating_restoring.php',
+									'downloading_uploading.php',
+									'editing_deleting.php'
 									),
-			'3.0.chat.php',
-			'4.0.content.php' => array(
-									'4.1.creating_editing_content.php' => array(
-																				'4.1.1.content.php',
-																				'4.1.2.content_properties.php',
-																				'4.1.3.glossary_terms.php',
-																				'4.1.4.preview.php',
-																				'4.1.5.accessibility.php'
-																				),
-									'4.2.content_packages.php',
-									'4.3.content_usage.php',
-									'4.4.tile_repository.php',
-									'4.5.scorm_packages.php'
+			'chat.php',
+			'content.php' => array(
+									'creating_editing_content.php' => array(
+																			'content_edit.php',
+																			'content_properties.php',
+																			'glossary_terms.php',
+																			'content_preview.php',
+																			'accessibility.php'
+																			),
+									'content_packages.php',
+									'content_usage.php',
+									'tile_repository.php',
+									'scorm_packages.php'
 									),
-			'5.0.course_email.php',
-			'6.0.enrollment.php' => array(
-										'6.1.privileges.php',
-										'6.2.alumni.php',
-										'6.3.groups.php',
-										'6.4.course_list.php'
+			'course_email.php',
+			'enrollment.php' => array(
+									'enrollment_privileges.php',
+									'enrollment_alumni.php',
+									'enrollment_groups.php',
+									'enrollment_course_list.php'
 										),
-			'7.0.file_manager.php' => array(
-											'7.1.creating_folders.php',
-											'7.2.uploading_files.php',
-											'7.3.creating_new_files.php',
-											'7.4.editing_files.php',
-											'7.5.previewing_files.php',
-											'7.6.managing_files_folders.php',
-											'7.7.extracting_zip_archives.php'
-											),
-			'8.0.forums.php' => array(
-									'8.1.creating_forums.php',
-									'8.2.editing_forums.php',
-									'8.3.shared_forums.php',
-									'8.4.managing_threads.php' => array('8.4.1.managing_posts.php')
+			'file_manager.php' => array(
+									'managing_files_folders.php',
+									'extracting_zip_archives.php'
 									),
-			'9.0.glossary.php',
-			'10.0.links.php' => array('10.1.link_categories.php'),
-			'11.0.polls.php',
-			'12.0.properties.php' => array('12.1.delete_course.php'),
-			'13.0.statistics.php',
-			'14.0.student_tools.php' => array('14.1.side_menu.php'),
-			'15.0.tests_surveys.php' => array(
-											'15.1.creating_tests_surveys.php',
-											'15.2.question_database.php' => array('15.2.1.creating_questions.php'),
-											'15.3.question_categories.php',
-											'15.4.edit_delete_tests.php',
-											'15.5.preview.php',
-											'15.6.add_questions.php',
-											'15.7.student_submissions.php',
-											'15.8.statistics.php'
+			'forums.php' => array(
+									'managing_threads.php' => array('managing_posts.php')
+									),
+			'glossary.php',
+			'links.php',
+			'polls.php',
+			'properties.php' => array('delete_course.php'),
+			'statistics.php',
+			'student_tools.php' => array('side_menu.php'),
+			'tests_surveys.php' => array(
+											'creating_tests_surveys.php',
+											'question_database.php' => array('creating_questions.php'),
+											'question_categories.php',
+											'edit_delete_tests.php',
+											'preview.php',
+											'add_questions.php',
+											'student_submissions.php',
+											'test_statistics.php'
 											),
-			'16.0.faq.php',
-			'17.0.feeds.php',
-			'18.0.web_search.php',
+			'faq.php',
+			'feeds.php',
+			'web_search.php',
 			);
 	hb_print_toc($pages, 'instructor');
 } else { 
@@ -195,7 +187,8 @@ if ($section == 'admin'){
 				'inside_course.php' => array(
 												'export_content.php',
 												'packages.php',
-												'tile.php'
+												'tile.php',
+												'file_storage.php'
 												)
 			);
 	hb_print_toc($pages, 'general');
