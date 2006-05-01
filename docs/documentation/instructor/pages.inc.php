@@ -15,6 +15,7 @@
     $_pages['introduction.php']                  = 'Introduction';
     $_pages['creating_courses.php']				 = 'Creating Courses';
     $_pages['announcements.php']                 = 'Announcements';
+	$_pages['assignments.php']					 = 'Assignments';
     $_pages['backups.php']                       = 'Backups';
     $_pages['creating_restoring.php']            = 'Creating &amp; Restoring Backups';
     $_pages['downloading_uploading.php']         = 'Downloading &amp; Uploading Backups';
@@ -45,10 +46,12 @@
     $_pages['managing_threads.php']              = 'Managing Forum Threads';
     $_pages['managing_posts.php']				 = 'Managing Forum Posts';
     $_pages['glossary.php']                      = 'Glossary';
+	$_pages['groups.php']						 = 'Groups';
     $_pages['links.php']                         = 'Links';
     $_pages['polls.php']                         = 'Polls';
     $_pages['properties.php']                    = 'Course Propertiess';
     $_pages['delete_course.php']                 = 'Delete Course';
+    $_pages['reading_list.php']					 = 'Reading List';
     $_pages['statistics.php']                    = 'Statistics';
     $_pages['student_tools.php']                 = 'Student Tools';
     $_pages['side_menu.php']                     = 'Side Menu';

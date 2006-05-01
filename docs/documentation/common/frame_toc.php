@@ -116,6 +116,7 @@ if ($section == 'admin'){
 	$pages = array(
 			'introduction.php' => array('creating_courses.php'),
 			'announcements.php',
+			'assignments.php',
 			'backups.php' => array(
 									'creating_restoring.php',
 									'downloading_uploading.php',
@@ -149,10 +150,13 @@ if ($section == 'admin'){
 			'forums.php' => array(
 									'managing_threads.php' => array('managing_posts.php')
 									),
+			'faq.php',
 			'glossary.php',
+			'groups.php',
 			'links.php',
 			'polls.php',
 			'properties.php' => array('delete_course.php'),
+			'reading_list.php',
 			'statistics.php',
 			'student_tools.php' => array('side_menu.php'),
 			'tests_surveys.php' => array(
@@ -165,7 +169,6 @@ if ($section == 'admin'){
 											'student_submissions.php',
 											'test_statistics.php'
 											),
-			'faq.php',
 			'feeds.php',
 			'web_search.php',
 			);
