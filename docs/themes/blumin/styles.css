@@ -1182,4 +1182,39 @@ ul#home-links li a img {
 	border: 0px;
 	display: block;
 	padding-left:25px;
+	_padding-left:0px;
+}
+
+/* enrollment tabs */
+#navlist {
+	padding: 0px;
+	margin-left: 0;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 4px;
+	margin-top:15px;
+	white-space: nowrap;
+}
+
+#navlist li {
+	list-style: none;
+	display: inline;
+	margin: 0px;
+}
+
+#navlist li a {
+	padding: 3px 9px;
+	border: 1px solid #e0e0e0;
+	border-bottom: none;
+	background: #fafafa;
+	text-decoration: none;
+	margin-left: 4px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-topleft: 4px;
+	white-space: nowrap;
+}
+
+#navlist li a:hover, #navlist li a.active {
+	color: #000;
+	background: #fff;
 }
