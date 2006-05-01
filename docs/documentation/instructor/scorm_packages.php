@@ -1,20 +1,6 @@
-<?php
-/************************************************************************/
-/* ATutor																*/
-/************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
-/************************************************************************/
-// $Id$
+<?php require('../common/body_header.inc.php'); ?>
 
-require('../common/body_header.inc.php'); ?>
-
-<h2>4.5 SCORM Packages</h2>
+<h2>SCORM Packages</h2>
 	<p>The Packages tool, when enabled, allows instructors to include SCORM 1.2 Sharable Content Objects (SCOs) as part of their courses. SCOs remain separated from the course content as complete learning units. SCOs should not be confused with content packages which are loaded into ATutor using the Import/Export tool in the Content Manager.</p>
 	<p><strong>Note:</strong> The ATutor SCORM Run-Time Environment (RTE) that plays SCOs requires users to have Java 1.5 (i.e. JRE 1.5) installed on their computer.</p>
 

@@ -1,20 +1,6 @@
-<?php
-/************************************************************************/
-/* ATutor																*/
-/************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
-/************************************************************************/
-// $Id$
+<?php require('../common/body_header.inc.php'); ?>
 
-require('../common/body_header.inc.php'); ?>
-
-<h2>4.1.1 Entering Content</h2>
+<h2>Entering Content</h2>
 	<p>Content can be created in either 'plain text' or 'HTML' mode. Plain text mode is useful for quickly writing up text content. HTML mode allows for extra features like text formatting and layout, but is a little more complex to use.</p>
 
 	<dl>
@@ -28,7 +14,7 @@ require('../common/body_header.inc.php'); ?>
 		<dd>
 			<p>The File Manager is a tool that allows you to upload files from your local system to be used in your course. The popup File Manager can be open alongside the Content Editor by selecting <kbd>Open File Manager</kbd>.</p>
 			
-			<p>See the <a href="../instructor/7.0.file_manager.php">File Manager</a> section for details.</p>
+			<p>See the <a href="file_manager.php">File Manager</a> section for details.</p>
 		</dd>
 
 		<dt>Terms</dt>

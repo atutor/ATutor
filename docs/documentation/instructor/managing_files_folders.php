@@ -1,20 +1,6 @@
-<?php
-/************************************************************************/
-/* ATutor																*/
-/************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
-/************************************************************************/
-// $Id: 7.6.deleting_files_folders.php 5080 2005-07-06 15:06:11Z heidi $
+<?php require('../common/body_header.inc.php'); ?>
 
-require('../common/body_header.inc.php'); ?>
-
-<h2>7.6 Managing Files &amp; Folders</h2>
+<h2>Managing Files &amp; Folders</h2>
 
 	<p>It is possible to <em>Rename</em>, <em>Delete</em>, and <em>Move</em> files and folders within the File Manager. Choose a file (or files if mass-deleting or moving to one location) from the File Manager list, then use the appropriate button for the action.</p>
 

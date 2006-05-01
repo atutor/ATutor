@@ -1,21 +1,6 @@
-<?php
-/************************************************************************/
-/* ATutor																*/
-/************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
-/************************************************************************/
-// $Id$
+<?php require('../common/body_header.inc.php'); ?>
 
-
-require('../common/body_header.inc.php'); ?>
-
-<h2>14. Student Tools</h2>
+<h2>Student Tools</h2>
 	<p>Student Tools is a collection of course features that may be useful for various types of learning activities. Tools include: Forums, Glossary, Site-map, Links, Polls, TILE Repository Search, Tests &amp; Surveys, My Tracker, Export Content, Chat, Directory, Inbox, and Packages. Instructors can decide where these tools will be accessed from - the <em>Main Navigation</em>, and/or <em>Course Home</em>.</p>
 
 	<dl>
