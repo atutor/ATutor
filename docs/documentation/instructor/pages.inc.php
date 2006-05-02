@@ -36,7 +36,6 @@
     $_pages['enrollment.php']                    = 'Enrollment';
     $_pages['enrollment_privileges.php']		 = 'Privileges';
     $_pages['enrollment_alumni.php']             = 'Alumni';
-    $_pages['enrollment_groups.php']             = 'Groups';
     $_pages['enrollment_course_list.php']        = 'Course Lists';
     $_pages['file_manager.php']                  = 'File Manager';
     $_pages['creating_new_files.php']            = 'Creating New Files';

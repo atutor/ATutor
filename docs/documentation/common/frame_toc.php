@@ -140,7 +140,6 @@ if ($section == 'admin'){
 			'enrollment.php' => array(
 									'enrollment_privileges.php',
 									'enrollment_alumni.php',
-									'enrollment_groups.php',
 									'enrollment_course_list.php'
 										),
 			'file_manager.php' => array(

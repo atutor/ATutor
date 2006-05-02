@@ -8,7 +8,7 @@
 	<h3>Create multiple groups automatically</h3>
 		<p>Creating groups automatically allows an instructor to specify the number of groups to create, or the number of students per group, and populate groups accordingly. </p>
 		
-		<p>Enter the group type, group prefix (such as "Tutorial" - the groups will then be named "Tutorial 1", "Tutorial 2",...), and a default description that will be applied to each group. To determine the number of groups that will be created, enter the number of students per group, or the number of groups. Groups will automatically be created accordingly. Check the box beside "Fill groups randomly upon creation" if you'd like the groups evenly populated at random. Uncheck this box if you wish to create the groups, but populate them manually at a later time. Finally, choose which tools be made avialable to this groups (File Storage, Forums) and use the <code>Create</code> button.</p>
+		<p>Enter the group type, group prefix (such as "Tutorial" - the groups will then be named "Tutorial 1", "Tutorial 2",...), and a default description that will be applied to each group. To determine the number of groups that will be created, enter the number of students per group, or the number of groups. Groups will automatically be created accordingly. Check the box beside "Fill groups randomly upon creation" to populate groups evenly at random. Uncheck this box to create the groups, but populate them manually at a later time. Finally, choose which tools be made avialable to this groups (File Storage, Forums) and use the <code>Create</code> button.</p>
 
 
 	<h3>Create a single group manually</h3>
