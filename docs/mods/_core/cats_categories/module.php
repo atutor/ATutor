@@ -14,7 +14,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_CATEGORIES, TRUE) || admin_authenticate(AT_
 	}
 
 $this->_pages['admin/course_categories.php']['title_var'] = 'cats_categories';
-$this->_pages['admin/course_categories.php']['guide']     = 'admin/?p=4.4.categories.php';
+$this->_pages['admin/course_categories.php']['guide']     = 'admin/?p=categories.php';
 $this->_pages['admin/course_categories.php']['children']  = array('admin/create_category.php');
 
 	$this->_pages['admin/create_category.php']['title_var'] = 'create_category';

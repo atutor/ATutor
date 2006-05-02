@@ -15,7 +15,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_LANGUAGES, TRUE) || admin_authenticate(AT_A
 
 	//admin
 	$this->_pages['admin/language.php']['title_var'] = 'languages';
-	$this->_pages['admin/language.php']['guide']     = 'admin/?p=2.3.languages.php';
+	$this->_pages['admin/language.php']['guide']     = 'admin/?p=languages.php';
 
 		$this->_pages['admin/language_add.php']['title_var'] = 'add_language';
 		$this->_pages['admin/language_add.php']['parent']    = 'admin/language.php';

@@ -22,7 +22,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_P
 
 	$this->_pages['admin/rss_feeds/index.php']['title_var'] = 'rss_feeds';
 	$this->_pages['admin/rss_feeds/index.php']['children']  = array('admin/rss_feeds/add_feed.php');
-	$this->_pages['admin/rss_feeds/index.php']['guide']     = 'admin/?p=2.6.feeds.php';
+	$this->_pages['admin/rss_feeds/index.php']['guide']     = 'admin/?p=feeds.php';
 
 		$this->_pages['admin/rss_feeds/add_feed.php']['title_var'] = 'add';
 		$this->_pages['admin/rss_feeds/add_feed.php']['parent'] = 'admin/rss_feeds/index.php';

@@ -10,6 +10,7 @@ $_student_tool = 'links/index.php';
 $this->_pages['tools/links/index.php']['title_var'] = 'links';
 $this->_pages['tools/links/index.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/links/index.php']['children'] = array('tools/links/add.php', 'tools/links/categories.php', 'tools/links/categories_create.php');
+$this->_pages['tools/links/index.php']['guide'] = 'instructor/?p=links.php';
 
 	$this->_pages['tools/links/add.php']['title_var']  = 'add_link';
 	$this->_pages['tools/links/add.php']['parent'] = 'tools/links/index.php';

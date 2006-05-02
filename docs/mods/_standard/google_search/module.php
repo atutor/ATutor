@@ -9,6 +9,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 
 	$this->_pages['google_search/admin/module_prefs.php']['title_var'] = 'google_key';
 	$this->_pages['google_search/admin/module_prefs.php']['parent']    = 'admin/config_edit.php';
+	$this->_pages['google_search/admin/module_prefs.php']['guide']     = 'admin/?p=google_key.php';
+
 }
 
 

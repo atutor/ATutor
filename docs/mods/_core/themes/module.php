@@ -16,7 +16,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_THEMES, TRUE) || admin_authenticate(AT_ADMI
 
 	//admin
 	$this->_pages['admin/themes/index.php']['title_var'] = 'themes';
-	$this->_pages['admin/themes/index.php']['guide']     = 'admin/?p=2.4.themes.php';
+	$this->_pages['admin/themes/index.php']['guide']     = 'admin/?p=themes.php';
 
 	$this->_pages['admin/themes/delete.php']['title_var'] = 'delete';
 	$this->_pages['admin/themes/delete.php']['parent']    = 'admin/themes/index.php';

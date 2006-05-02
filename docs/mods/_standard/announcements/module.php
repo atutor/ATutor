@@ -5,7 +5,7 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 define('AT_PRIV_ANNOUNCEMENTS', $this->getPrivilege());
 
 $this->_pages['tools/news/index.php']['title_var'] = 'announcements';
-$this->_pages['tools/news/index.php']['guide']     = 'instructor/?p=1.0.announcements.php';
+$this->_pages['tools/news/index.php']['guide']     = 'instructor/?p=announcements.php';
 $this->_pages['tools/news/index.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/news/index.php']['children']  = array('editor/add_news.php');
 

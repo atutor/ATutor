@@ -44,6 +44,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_HELLO_WORLD, TRUE) || admin_authenticate(AT
 $this->_pages['assignments/index_instructor.php']['title_var'] = 'assignments';
 $this->_pages['assignments/index_instructor.php']['parent']   = 'tools/index.php';
 $this->_pages['assignments/index_instructor.php']['children'] = array('assignments/add_assignment.php');
+$this->_pages['assignments/index_instructor.php']['guide']     = 'instructor/?p=assignments.php';
 
 	$this->_pages['assignments/add_assignment.php']['title_var'] = 'add_assignment';
 	$this->_pages['assignments/add_assignment.php']['parent']    = 'assignments/index_instructor.php';

@@ -10,6 +10,7 @@ $_student_tool = 'groups.php';
 $this->_pages['tools/groups/index.php']['title_var'] = 'groups';
 $this->_pages['tools/groups/index.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/groups/index.php']['children']  = array('tools/groups/create.php');
+$this->_pages['tools/groups/index.php']['guide']  = 'instructor/?p=groups.php';
 
 	$this->_pages['tools/groups/edit_group.php']['title_var'] = 'edit';
 	$this->_pages['tools/groups/edit_group.php']['parent']    = 'tools/groups/index.php';

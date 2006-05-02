@@ -15,7 +15,7 @@ $this->_stacks['posts'] = array('title_var'=>'posts','file'=>AT_INCLUDE_PATH.'ht
 //instructor pages
 $this->_pages['tools/forums/index.php']['title_var'] = 'forums';
 $this->_pages['tools/forums/index.php']['parent']    = 'tools/index.php';
-$this->_pages['tools/forums/index.php']['guide']     = 'instructor/?p=3.0.forums.php';
+$this->_pages['tools/forums/index.php']['guide']     = 'instructor/?p=forums.php';
 $this->_pages['tools/forums/index.php']['children']  = array('editor/add_forum.php');
 
 	$this->_pages['editor/add_forum.php']['title_var']  = 'create_forum';
@@ -42,7 +42,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_FORUMS, TRUE) || admin_authenticate(AT_ADMI
 	}
 
 	$this->_pages['admin/forums.php']['title_var'] = 'forums';
-	$this->_pages['admin/forums.php']['guide']     = 'admin/?p=4.3.forums.php';
+	$this->_pages['admin/forums.php']['guide']     = 'admin/?p=forums.php';
 	$this->_pages['admin/forums.php']['children']  = array('admin/forum_add.php');
 
 		$this->_pages['admin/forum_add.php']['title_var'] = 'create_forum';

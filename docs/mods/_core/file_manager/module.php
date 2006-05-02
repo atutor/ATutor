@@ -6,7 +6,7 @@ define('AT_PRIV_FILES', $this->getPrivilege());
 
 $this->_pages['tools/filemanager/index.php']['title_var'] = 'file_manager';
 $this->_pages['tools/filemanager/index.php']['parent']    = 'tools/index.php';
-$this->_pages['tools/filemanager/index.php']['guide']     = 'instructor/?p=7.0.file_manager.php';
+$this->_pages['tools/filemanager/index.php']['guide']     = 'instructor/?p=file_manager.php';
 $this->_pages['tools/filemanager/index.php']['children']  = array('tools/filemanager/new.php');
 
 	$this->_pages['tools/filemanager/new.php']['title_var'] = 'create_new_file';

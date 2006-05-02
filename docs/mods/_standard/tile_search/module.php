@@ -21,7 +21,7 @@ $this->_pages['tools/content/index.php']['children'] = array('tools/tile/index.p
 //instructor pages
 $this->_pages['tools/tile/index.php']['title_var']  = 'tile_search';
 $this->_pages['tools/tile/index.php']['parent'] = 'tools/content/index.php';
-$this->_pages['tools/tile/index.php']['guide'] = 'instructor/?p=4.4.tile_repository.php';
+$this->_pages['tools/tile/index.php']['guide'] = 'instructor/?p=tile_repository.php';
 
 	$this->_pages['tools/tile/import.php']['title_var']    = 'import_content_package';
 	$this->_pages['tools/tile/import.php']['parent']   = 'tools/tile/index.php';

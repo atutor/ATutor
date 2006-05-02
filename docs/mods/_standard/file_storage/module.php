@@ -12,6 +12,7 @@ $_group_tool = $_student_tool = 'file_storage/index.php';
 //student pages
 $this->_pages['file_storage/index.php']['title_var']  = 'file_storage';
 $this->_pages['file_storage/index.php']['img']        = 'images/home-file_storage.gif';
+$this->_pages['file_storage/index.php']['guide']     = 'general/?p=file_storage.php';
 
 $this->_pages['file_storage/revisions.php']['title_var'] = 'revisions';
 $this->_pages['file_storage/revisions.php']['parent'] = 'file_storage/index.php';

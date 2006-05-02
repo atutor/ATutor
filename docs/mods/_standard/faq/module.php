@@ -12,7 +12,7 @@ $_student_tool = 'faq/index.php';
 $this->_pages['faq/index_instructor.php']['title_var'] = 'faq';
 $this->_pages['faq/index_instructor.php']['parent']    = 'tools/index.php';
 $this->_pages['faq/index_instructor.php']['children']  = array('faq/add_topic.php', 'faq/add_question.php');
-$this->_pages['faq/index_instructor.php']['guide']     = 'instructor/?p=16.0.faq.php';
+$this->_pages['faq/index_instructor.php']['guide']     = 'instructor/?p=faq.php';
 
 
 	$this->_pages['faq/add_topic.php']['title_var'] = 'add_topic';

@@ -25,7 +25,7 @@ $this->_pages['tools/enrollment/index.php']['children'] = array('tools/enrollmen
 
 	$this->_pages['tools/enrollment/privileges.php']['title_var']  = 'privileges';
 	$this->_pages['tools/enrollment/privileges.php']['parent'] = 'tools/enrollment/index.php';
-	$this->_pages['tools/enrollment/privileges.php']['guide']     = 'instructor/?p=6.1.privileges.php';
+	$this->_pages['tools/enrollment/privileges.php']['guide']     = 'instructor/?p=enrollment_privileges.php';
 	
 	$this->_pages['tools/enrollment/enroll_edit.php']['title_var']    = 'edit';
 	$this->_pages['tools/enrollment/enroll_edit.php']['parent']   = 'tools/enrollment/index.php';

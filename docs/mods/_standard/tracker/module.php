@@ -13,7 +13,7 @@ $_pages['tools/content/index.php']['children'][]  = 'tools/tracker/index.php';
 $_pages['tools/tracker/index.php']['title_var'] = 'content_usage';
 $_pages['tools/tracker/index.php']['parent']    = 'tools/content/index.php';
 $_pages['tools/tracker/index.php']['children']  = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');
-$_pages['tools/tracker/index.php']['guide']     = 'instructor/?p=4.3.content_usage.php';		
+$_pages['tools/tracker/index.php']['guide']     = 'instructor/?p=content_usage.php';		
 
 	$_pages['tools/tracker/student_usage.php']['title_var']  = 'member_stats';
 	$_pages['tools/tracker/student_usage.php']['parent'] = 'tools/tracker/index.php';

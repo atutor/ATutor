@@ -75,19 +75,19 @@ if ($_SESSION['course_id'] > 0) {
 
 	$_pages['admin/index.php']['title_var'] = 'home';
 	$_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
-	$_pages['admin/index.php']['guide']     = 'admin/?p=2.0.configuration.php';
+	$_pages['admin/index.php']['guide']     = 'admin/?p=configuration.php';
 	$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php');
 
 	$_pages['admin/admins/my_edit.php']['title_var'] = 'my_account';
 	$_pages['admin/admins/my_edit.php']['parent']    = 'admin/index.php';
-	$_pages['admin/admins/my_edit.php']['guide']     = 'admin/?p=2.1.my_account.php';
+	$_pages['admin/admins/my_edit.php']['guide']     = 'admin/?p=my_account.php';
 
 	if (admin_authenticate(AT_ADMIN_PRIV_USERS, AT_PRIV_RETURN)) {
 		$_pages[AT_NAV_ADMIN][] = 'admin/config_edit.php';
 
 		$_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
 		$_pages['admin/config_edit.php']['parent']    = AT_NAV_ADMIN;
-		$_pages['admin/config_edit.php']['guide']     = 'admin/?p=2.2.system_preferences.php';
+		$_pages['admin/config_edit.php']['guide']     = 'admin/?p=system_preferences.php';
 		$_pages['admin/config_edit.php']['children']  = array_merge($_pages['admin/config_edit.php']['children'], array('admin/error_logging.php'));
 	}
 	$_pages['admin/fix_content.php']['title_var'] = 'fix_content_ordering';
@@ -95,7 +95,7 @@ if ($_SESSION['course_id'] > 0) {
 
 	$_pages['admin/error_logging.php']['title_var'] = 'error_logging';
 	$_pages['admin/error_logging.php']['parent']    = 'admin/config_edit.php';
-	$_pages['admin/error_logging.php']['guide']     = 'admin/?p=2.5.error_logging.php';
+	$_pages['admin/error_logging.php']['guide']     = 'admin/?p=error_logging.php';
 	$_pages['admin/error_logging.php']['children']  = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
 
 	$_pages['admin/error_logging_reset.php']['title_var'] = 'reset_log';
@@ -114,7 +114,7 @@ if ($_SESSION['course_id'] > 0) {
 		// hide modules from non-super admins
 		$_pages['admin/modules/index.php']['title_var'] = 'modules';
 		$_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
-		$_pages['admin/modules/index.php']['guide']     = 'admin/?p=5.modules.php';
+		$_pages['admin/modules/index.php']['guide']     = 'admin/?p=modules.php';
 		$_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.php');
 
 		$_pages['admin/modules/details.php']['title_var'] = 'details';
@@ -165,7 +165,7 @@ $_pages['users/index.php']['children']  = array('users/browse.php', 'users/creat
 	
 	$_pages['users/create_course.php']['title_var'] = 'create_course';
 	$_pages['users/create_course.php']['parent']    = 'users/index.php';
-	$_pages['users/create_course.php']['guide']    = 'instructor/?p=0.1.creating_courses.php';
+	$_pages['users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
 
 	$_pages['users/private_enroll.php']['title_var'] = 'enroll';
 	$_pages['users/private_enroll.php']['parent']    = 'users/index.php';
@@ -178,7 +178,7 @@ $_pages['users/profile.php']['parent']   = AT_NAV_START;
 	
 $_pages['users/preferences.php']['title_var']  = 'preferences';
 $_pages['users/preferences.php']['parent'] = AT_NAV_START;
-$_pages['users/preferences.php']['guide']  = 'general/?p=5.3.preferences.php';
+$_pages['users/preferences.php']['guide']  = 'general/?p=preferences.php';
 
 
 /* course pages */

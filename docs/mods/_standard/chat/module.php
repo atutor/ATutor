@@ -10,7 +10,7 @@ $_student_tool = 'chat/index.php';
 $this->_pages['tools/chat/index.php']['title_var'] = 'chat';
 $this->_pages['tools/chat/index.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/chat/index.php']['children']  = array('tools/chat/start_transcript.php');
-$this->_pages['tools/chat/index.php']['guide']     = 'instructor/?p=3.0.chat.php';
+$this->_pages['tools/chat/index.php']['guide']     = 'instructor/?p=chat.php';
 
 	$this->_pages['tools/chat/start_transcript.php']['title_var']  = 'chat_start_transcript';
 	$this->_pages['tools/chat/start_transcript.php']['parent'] = 'tools/chat/index.php';
