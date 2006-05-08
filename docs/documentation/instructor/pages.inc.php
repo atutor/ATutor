@@ -48,7 +48,7 @@
 	$_pages['groups.php']						 = 'Groups';
     $_pages['links.php']                         = 'Links';
     $_pages['polls.php']                         = 'Polls';
-    $_pages['properties.php']                    = 'Course Propertiess';
+    $_pages['properties.php']                    = 'Course Properties';
     $_pages['delete_course.php']                 = 'Delete Course';
     $_pages['reading_list.php']					 = 'Reading List';
     $_pages['statistics.php']                    = 'Statistics';

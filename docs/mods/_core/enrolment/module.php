@@ -8,7 +8,7 @@ $this->_stacks['users_online'] = array('title_var'=>'users_online', 'file'=>AT_I
 
 $this->_pages['tools/enrollment/index.php']['title_var'] = 'enrolment';
 $this->_pages['tools/enrollment/index.php']['parent']    = 'tools/index.php';
-$this->_pages['tools/enrollment/index.php']['guide']     = 'instructor/?p=6.0.enrollment.php';
+$this->_pages['tools/enrollment/index.php']['guide']     = 'instructor/?p=enrollment.php';
 $this->_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php');
 
 	$this->_pages['tools/enrollment/export_course_list.php']['title_var'] = 'list_export_course_list';
