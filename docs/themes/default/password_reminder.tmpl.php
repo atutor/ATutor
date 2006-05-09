@@ -1,11 +1,5 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<?php
-global $msg;
-	
-$msg->printAll();
-?>
-
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_password_reminder" value="true" />
 

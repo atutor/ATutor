@@ -21,7 +21,7 @@ if (isset($_pages[AT_NAV_ADMIN])) {
 	array_unshift($_pages[AT_NAV_ADMIN], 'admin/index.php', 'admin/modules/index.php');
 }
 
-$_pages[AT_NAV_PUBLIC] = array('login.php', 'registration.php', 'browse.php', 'password_reminder.php');
+$_pages[AT_NAV_PUBLIC] = array('login.php', 'registration.php', 'browse.php');
 $_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php');
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();

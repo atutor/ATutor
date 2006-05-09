@@ -51,7 +51,7 @@
 		<div class="insidecol"><p><?php echo _AT('password_reminder_text'); ?></p></div>
 
 		<div style="position: relative; margin-bottom: 0px; background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0;">
-			<input type="submit" name="forgot" value="<?php echo _AT('email_reminder'); ?>" class="button" />
+			<input type="submit" name="forgot" value="<?php echo _AT('password_forgot'); ?>" class="button" />
 		</div>
 		</form>
 	</div>
