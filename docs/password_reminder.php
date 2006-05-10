@@ -49,19 +49,15 @@ if (isset($_POST['cancel'])) {
 		$mail->Body    = $tmp_message;
 
 		if(!$mail->Send()) {
-		   $msg->printErrors('SENDING_ERROR');
+		   $msg->addError('SENDING_ERROR');
+		   $savant->display('password_reminder_feedback.tmpl.php'); 
 		   exit;
 		}
 
 		$msg->addFeedback('CONFIRM_EMAIL2');
 		unset($mail);
 
-		if ($errors) {
-			$onload = 'document.form.form_email.focus();';
-			$savant->display('password_reminder.tmpl.php');
-		} else {
-			$savant->display('password_reminder_feedback.tmpl.php'); 
-		}
+		$savant->display('password_reminder_feedback.tmpl.php'); 
 
 	} else {
 		$msg->addError('EMAIL_NOT_FOUND');
@@ -76,35 +72,32 @@ if (isset($_POST['cancel'])) {
 	$expiry_date =  $_REQUEST['gen'] + 2 ; //2 days after creation
 
 	if ($current > $expiry_date) {
-		$msg->addError('INVALID_LINK'); //expired
+		$msg->addError('INVALID_LINK'); 
+		$savant->display('password_reminder_feedback.tmpl.php'); 
+		exit;
 	}
 
 	/* check if already visited (possibley add a "last login" field to members table)... if password was changed, won't work anyway. do later. */
 
 	//check for valid hash
-	if (!$msg->containsErrors()) {
-		$sql	= "SELECT password, email FROM ".TABLE_PREFIX."members WHERE member_id=".intval($_REQUEST['id']);
-		$result = mysql_query($sql,$db);
-		if ($row = mysql_fetch_assoc($result)) {
-			$email = $row['email'];
+	$sql	= "SELECT password, email FROM ".TABLE_PREFIX."members WHERE member_id=".intval($_REQUEST['id']);
+	$result = mysql_query($sql,$db);
+	if ($row = mysql_fetch_assoc($result)) {
+		$email = $row['email'];
 
-			$hash = sha1($_REQUEST['id'] + $_REQUEST['gen'] + $row['password']);
-			$hash_bit = substr($hash, 5, 15);
+		$hash = sha1($_REQUEST['id'] + $_REQUEST['gen'] + $row['password']);
+		$hash_bit = substr($hash, 5, 15);
 
-			if ($_REQUEST['h'] != $hash_bit) {
-				$msg->addError('INVALID_LINK');
-			} else if (($_REQUEST['h'] == $hash_bit) && !isset($_POST['form_change'])) {
-				$savant->assign('id', $_REQUEST['id']);
-				$savant->assign('gen', $_REQUEST['gen']);
-				$savant->assign('h', $_REQUEST['h']);
-				$savant->display('password_change.tmpl.php');
-			}
-		} else {
+		if ($_REQUEST['h'] != $hash_bit) {
 			$msg->addError('INVALID_LINK');
-			$savant->display('password_reminder_feedback.tmpl.php'); 
-			exit;
+		} else if (($_REQUEST['h'] == $hash_bit) && !isset($_POST['form_change'])) {
+			$savant->assign('id', $_REQUEST['id']);
+			$savant->assign('gen', $_REQUEST['gen']);
+			$savant->assign('h', $_REQUEST['h']);
+			$savant->display('password_change.tmpl.php');
 		}
 	} else {
+		$msg->addError('INVALID_LINK');
 		$savant->display('password_reminder_feedback.tmpl.php'); 
 		exit;
 	}
