@@ -21,8 +21,9 @@ if (isset($_POST['cancel'])) {
 	header('Location: ./login.php');
 	exit;
 
-//get database info to create & email change password link
 } else if (isset($_POST['form_password_reminder'])) {
+
+	//get database info to create & email change-password-link
 	$_POST['form_email'] = $addslashes($_POST['form_email']);
 	$sql	= "SELECT member_id, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
 	$result = mysql_query($sql,$db);
@@ -39,6 +40,7 @@ if (isset($_POST['cancel'])) {
 		$tmp_message  = _AT(array('password_request2',$_base_href))."\n\n";
 		$tmp_message .= $change_link."\n\n";
 
+		//send email
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 		$mail = new ATutorMailer;
 		$mail->From     = $_config['contact_email'];
@@ -63,10 +65,11 @@ if (isset($_POST['cancel'])) {
 
 	} else {
 		$msg->addError('EMAIL_NOT_FOUND');
+		$savant->display('password_reminder.tmpl.php'); 
 	}
 
-//coming from an email link - check if already visited or expired
 } else if (isset($_REQUEST['id']) && isset($_REQUEST['gen']) && isset($_REQUEST['h'])) {
+//coming from an email link
 
 	//check if expired
 	$current = intval(((time()/60)/60)/24);
@@ -76,7 +79,7 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('INVALID_LINK'); //expired
 	}
 
-	/*check if already visited (possibley add a "last login" field to members)... if password was changed, won't work anyway. no biggie so waiting.*/
+	/* check if already visited (possibley add a "last login" field to members table)... if password was changed, won't work anyway. do later. */
 
 	//check for valid hash
 	if (!$msg->containsErrors()) {
@@ -98,10 +101,11 @@ if (isset($_POST['cancel'])) {
 			}
 		} else {
 			$msg->addError('INVALID_LINK');
+			$savant->display('password_reminder_feedback.tmpl.php'); 
+			exit;
 		}
 	} else {
-		$onload = 'document.form.form_email.focus();';
-		$savant->display('password_reminder.tmpl.php');
+		$savant->display('password_reminder_feedback.tmpl.php'); 
 		exit;
 	}
 
@@ -128,7 +132,7 @@ if (isset($_POST['cancel'])) {
 			//save data
 			$_POST['password']   = $addslashes($_POST['password']);
 
-			$sql	= "UPDATE ".TABLE_PREFIX."members SET password='".$_POST['password']."' WHERE member_id=".intval($_GET['id']);
+			$sql	= "UPDATE ".TABLE_PREFIX."members SET password='".$_POST['password']."' WHERE member_id=".intval($_REQUEST['id']);
 			$result = mysql_query($sql,$db);
 
 			//send confirmation email
