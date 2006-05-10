@@ -317,6 +317,26 @@ class zipfile {
 		return $this->zip_file;
     }
 
+	/**
+	* Writes the file to disk.
+	* Similar to get_file(), but instead of returning the file, it saves it to disk.
+	* @access  public
+	* @author  Joel Kronenberg
+	* @param  $file The full path and file name of the destination file.
+	*/
+	function write_file($file) {
+		if (!$this->is_closed) {
+			$this->close();
+		}
+		if (function_exists('file_put_contents')) {
+			file_put_contents($file, $this->zip_file);
+		} else {
+			$fp = fopen($file, 'wb+');
+			fwrite($fp, $this->zip_file);
+			fclose($fp);
+		}
+	}
+
 
     /**
 	* Outputs the file - sends headers to browser to force download

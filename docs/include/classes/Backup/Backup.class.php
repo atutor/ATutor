@@ -123,8 +123,7 @@ class Backup {
 			@mkdir(AT_BACKUP_DIR . $this->course_id);
 		}
 
-		$fp = fopen(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $system_file_name . '.zip', 'wb+');
-		fwrite($fp, $zipfile->get_file($backup_course_title));
+		$zipfile->write_file(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $system_file_name . '.zip');
 
 		$row['description']      = $addslashes($description);
 		$row['contents']         = addslashes(serialize($table_counters));

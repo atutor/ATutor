@@ -12,13 +12,13 @@
 /****************************************************************/
 // $Id$
 
-$page	 = 'password_reminder';
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['cancel'])) {
-	header('Location: ./login.php');
+	$msg->addFeedback('CANCELLED');
+	header('Location: login.php');
 	exit;
 
 } else if (isset($_POST['form_password_reminder'])) {
@@ -35,10 +35,9 @@ if (isset($_POST['cancel'])) {
 		$hash = sha1($row['member_id'] + $gen + $row['password']);
 		$hash_bit = substr($hash, 5, 15);
 		
-		$change_link = $_base_href.'password_reminder.php?id='.$row['member_id'].'&gen='.$gen.'&h='.$hash_bit;
+		$change_link = $_base_href.'password_reminder.php?id='.$row['member_id'].'&g='.$gen.'&h='.$hash_bit;
 
-		$tmp_message  = _AT(array('password_request2',$_base_href))."\n\n";
-		$tmp_message .= $change_link."\n\n";
+		$tmp_message  = _AT(array('password_request2',$_base_href, AT_PASSWORD_REMINDER_EXPIRY, $change_link));
 
 		//send email
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -64,12 +63,12 @@ if (isset($_POST['cancel'])) {
 		$savant->display('password_reminder.tmpl.php'); 
 	}
 
-} else if (isset($_REQUEST['id']) && isset($_REQUEST['gen']) && isset($_REQUEST['h'])) {
+} else if (isset($_REQUEST['id']) && isset($_REQUEST['g']) && isset($_REQUEST['h'])) {
 //coming from an email link
 
 	//check if expired
 	$current = intval(((time()/60)/60)/24);
-	$expiry_date =  $_REQUEST['gen'] + 2 ; //2 days after creation
+	$expiry_date =  $_REQUEST['g'] + AT_PASSWORD_REMINDER_EXPIRY; //2 days after creation
 
 	if ($current > $expiry_date) {
 		$msg->addError('INVALID_LINK'); 
@@ -85,14 +84,15 @@ if (isset($_POST['cancel'])) {
 	if ($row = mysql_fetch_assoc($result)) {
 		$email = $row['email'];
 
-		$hash = sha1($_REQUEST['id'] + $_REQUEST['gen'] + $row['password']);
+		$hash = sha1($_REQUEST['id'] + $_REQUEST['g'] + $row['password']);
 		$hash_bit = substr($hash, 5, 15);
 
 		if ($_REQUEST['h'] != $hash_bit) {
 			$msg->addError('INVALID_LINK');
+			$savant->display('password_reminder_feedback.tmpl.php'); 
 		} else if (($_REQUEST['h'] == $hash_bit) && !isset($_POST['form_change'])) {
 			$savant->assign('id', $_REQUEST['id']);
-			$savant->assign('gen', $_REQUEST['gen']);
+			$savant->assign('g', $_REQUEST['g']);
 			$savant->assign('h', $_REQUEST['h']);
 			$savant->display('password_change.tmpl.php');
 		}
@@ -152,7 +152,7 @@ if (isset($_POST['cancel'])) {
 		} else {
 			$onload = 'document.form.form_email.focus();';
 			$savant->assign('id', $_REQUEST['id']);
-			$savant->assign('gen', $_REQUEST['gen']);
+			$savant->assign('g', $_REQUEST['g']);
 			$savant->assign('h', $_REQUEST['h']);
 			$savant->display('password_change.tmpl.php');
 		} 

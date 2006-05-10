@@ -44,17 +44,6 @@
 		</div>
 		</form>
 	</div>
-		
-	<div class="column">
-		<form action="password_reminder.php" method="get">
-		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('password_reminder'); ?></h3>
-		<div class="insidecol"><p><?php echo _AT('password_reminder_text'); ?></p></div>
-
-		<div style="position: relative; margin-bottom: 0px; background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0;">
-			<input type="submit" name="forgot" value="<?php echo _AT('password_forgot'); ?>" class="button" />
-		</div>
-		</form>
-	</div>
 </div>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

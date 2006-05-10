@@ -3,7 +3,7 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_change" value="true" />
 	<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
-	<input type="hidden" name="gen" value="<?php echo $this->gen; ?>" />
+	<input type="hidden" name="g" value="<?php echo $this->g; ?>" />
 	<input type="hidden" name="h" value="<?php echo $this->h; ?>" />
 
 	<div class="input-form" style="max-width: 400px;">

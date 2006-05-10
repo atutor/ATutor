@@ -62,6 +62,9 @@ define('WORKSPACE_FILE_PATH',  AT_CONTENT_DIR . 'file_storage/');
 /* how many related topics can be listed */
 define('NUM_RELATED_TOPICS', 5);
 
+/* how many days until the password reminder link expires */
+define('AT_PASSWORD_REMINDER_EXPIRY', 2);
+
 /* taking a test an unlimited # of times */
 define('AT_TESTS_TAKE_UNLIMITED', 0);
 
