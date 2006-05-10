@@ -39,22 +39,31 @@ if (!$msg->containsFeedbacks()) {
 	}
 }
 
+if (!isset($_SESSION['token']) || !$_SESSION['token']) {
+	$_SESSION['token'] = md5(mt_rand());
+}
+
 if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	/* auto login */
 	$this_login		= $cookie_login;
 	$this_password	= $cookie_pass;
 	$auto_login		= 1;
 	$used_cookie	= true;
-	$_SESSION['session_test'] = true;
 } else if (isset($_POST['submit'])) {
 	/* form post login */
+
+	if (strlen($_POST['form_password_hidden']) < 40) { // <noscript> on client end
+		$this_password = sha1($_POST['form_password'] . $_SESSION['token']);
+	} else { // sha1 ok
+		$this_password = $_POST['form_password_hidden'];
+	}
+
 	$this_login		= $_POST['form_login'];
-	$this_password  = $_POST['form_password'];
 	$auto_login		= intval($_POST['auto']);
 	$used_cookie	= false;
 }
 
-if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
+if (isset($this_login, $this_password) && !isset($_SESSION['token'])) {
 	$msg->addError('SESSION_COOKIES');
 } else if (isset($this_login, $this_password)) {
 	unset($_SESSION['session_test']);
@@ -72,10 +81,10 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)='$this_password'";
 
 	} else {
-		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND PASSWORD(password)=PASSWORD('$this_password')";
+		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
 	}
-
 	$result = mysql_query($sql, $db);
+
 	if (($row = mysql_fetch_assoc($result)) && ($row['status'] == AT_STATUS_UNCONFIRMED)) {
 		$msg->addError('NOT_CONFIRMED');
 	} else if ($row && $row['status'] == AT_STATUS_DISABLED) {
@@ -102,7 +111,7 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 		exit;
 	} else {
 		// check if it's an admin login.
-		$sql = "SELECT login, `privileges`, language FROM ".TABLE_PREFIX."admins WHERE login='$this_login' AND PASSWORD(password)=PASSWORD('$this_password') AND `privileges`>0";
+		$sql = "SELECT login, `privileges`, language FROM ".TABLE_PREFIX."admins WHERE login='$this_login' AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password' AND `privileges`>0";
 		$result = mysql_query($sql, $db);
 
 		if ($row = mysql_fetch_assoc($result)) {
