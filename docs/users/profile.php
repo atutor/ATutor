@@ -12,12 +12,10 @@
 /************************************************************************/
 // $Id$
 
-$page = 'profile';
 $_user_location	= 'users';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 
 if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -36,8 +34,6 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
-	$error = '';
-
 	// password check
 	if ($_POST['password'] == '') { 
 		$msg->addError('PASSWORD_MISSING');

@@ -11,9 +11,6 @@
   }
  //-->
 </script>
-<noscript>
-<?php global $msg; $msg->printWarnings('SHA1_NONE'); ?>
-</noscript>
 
 <div id="container">
 	<div class="column">
