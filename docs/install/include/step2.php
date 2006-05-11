@@ -23,7 +23,15 @@ if(isset($_POST['submit'])) {
 	if (!$db) {
 		$errors[] = 'Unable to connect to database server.';
 	} else {
-		if (!mysql_select_db($_POST['db_name'], $db)) {
+		// check mysql version number
+		$sql = "SELECT VERSION() AS version";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+		if (version_compare($row['version'], '4.0.2', '>=') === FALSE) {
+			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.0.2 or later.';
+		}
+
+		if (!isset($errors) && !mysql_select_db($_POST['db_name'], $db)) {
 			$sql = "CREATE DATABASE $_POST[db_name]";
 			$result = mysql_query($sql, $db);
 			if (!$result) {
