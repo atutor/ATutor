@@ -130,6 +130,8 @@ if (!isset($_POST['submit'])) {
 
 /* template starts here */
 
+$onload = 'document.form.password.focus();';
+
 $savant->assign('row', $row);
 $onload = 'document.form.password.focus();';
 $savant->display('users/email_change.tmpl.php');

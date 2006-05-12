@@ -1,7 +1,6 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <script language="JavaScript" src="sha-1factory.js"></script>
-
 <script language="JavaScript" type="text/javascript">
 //<!--
   function crypt_sha1() {
@@ -11,9 +10,6 @@
   }
  //-->
 </script>
-<noscript>
-<?php global $msg; $msg->printWarnings('SHA1_NONE'); ?>
-</noscript>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="password_hidden" value="" />
