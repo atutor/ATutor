@@ -117,7 +117,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 		<div class="row">
 			<label for="description"><?php echo _AT('description'); ?></label><br />
-			<textarea name="description" cols="10" rows="2"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
+			<textarea name="description" id="description" cols="10" rows="2"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
 		</div>
 
 		<div class="row">
