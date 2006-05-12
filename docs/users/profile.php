@@ -127,8 +127,6 @@ if (!isset($_POST['submit'])) {
 
 $savant->assign('row', $row);
 
-$onload = 'document.form.password.focus();';
-
 //$savant->display('registration.tmpl.php');
 $savant->display('users/profile.tmpl.php');
 ?>
