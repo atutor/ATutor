@@ -34,32 +34,6 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
-	// password check
-	if ($_POST['password'] == '') { 
-		$msg->addError('PASSWORD_MISSING');
-	} else {
-		if ($_POST['password'] != $_POST['password2']) {
-			$msg->addError('PASSWORD_MISMATCH');
-		} else if (strlen($_POST['password']) < 8) {
-			$msg->addError('PASSWORD_LENGTH');
-		} else if ((preg_match('/[a-z]+/i', $_POST['password']) + preg_match('/[0-9]+/i', $_POST['password']) + preg_match('/[_\-\/+!@#%^$*&)(|.]+/i', $_POST['password'])) < 2) {
-			$msg->addError('PASSWORD_CHARS');
-		}
-	}
-		
-	// email check
-	if ($_POST['email'] == '') {
-		$msg->addError('EMAIL_MISSING');
-	} else {
-		if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
-			$msg->addError('EMAIL_INVALID');
-		}
-		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND member_id<>$_SESSION[member_id]",$db);
-		if(mysql_num_rows($result) != 0) {
-			$msg->addError('EMAIL_EXISTS');
-		}
-	}
-
 	if (!$_POST['first_name']) { 
 		$msg->addError('FIRST_NAME_MISSING');
 	}
@@ -114,7 +88,6 @@ if (isset($_POST['submit'])) {
 		}
 
 		// insert into the db.
-		$_POST['password']   = $addslashes($_POST['password']);
 		$_POST['website']    = $addslashes($_POST['website']);
 		$_POST['first_name'] = $addslashes($_POST['first_name']);
 		$_POST['last_name']  = $addslashes($_POST['last_name']);
@@ -125,13 +98,8 @@ if (isset($_POST['submit'])) {
 		$_POST['country']    = $addslashes($_POST['country']);
 		$_POST['phone']      = $addslashes($_POST['phone']);
 
-		if (!defined('AT_EMAIL_CONFIRMATION') || !AT_EMAIL_CONFIRMATION) {
-			$email = "email='$_POST[email]', ";
-		} else {
-			$email = '';
-		}
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', $email website='$_POST[website]', first_name='$_POST[first_name]', second_name='$_POST[second_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]', private_email=$_POST[private_email] WHERE member_id=$_SESSION[member_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."members SET website='$_POST[website]', first_name='$_POST[first_name]', second_name='$_POST[second_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]', private_email=$_POST[private_email] WHERE member_id=$_SESSION[member_id]";
 
 		$result = mysql_query($sql,$db);
 		if (!$result) {
@@ -140,30 +108,6 @@ if (isset($_POST['submit'])) {
 		}
 
 		$msg->addFeedback('PROFILE_UPDATED');
-
-		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
-			$sql	= "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-			$result = mysql_query($sql, $db);
-			$row    = mysql_fetch_assoc($result);
-
-			if ($row['email'] != $_POST['email']) {
-				$code = substr(md5($_POST['email'] . $row['creation_date'] . $_SESSION['member_id']), 0, 10);
-				$confirmation_link = $_base_href . 'confirm.php?id='.$_SESSION['member_id'].SEP .'e='.urlencode($_POST['email']).SEP.'m='.$code;
-
-				/* send the email confirmation message: */
-				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-				$mail = new ATutorMailer();
-
-				$mail->From     = $_config['contact_email'];
-				$mail->AddAddress($_POST['email']);
-				$mail->Subject = SITE_NAME . ' - ' . _AT('email_confirmation_subject');
-				$mail->Body    = _AT('email_confirmation_message', $_config['site_name'], $confirmation_link);
-
-				$mail->Send();
-
-				$msg->addFeedback('CONFIRM_EMAIL');
-			}
-		}
 
 		header('Location: ./profile.php');
 		exit;
@@ -177,7 +121,6 @@ $row = mysql_fetch_assoc($result);
 if (!isset($_POST['submit'])) {
 	$_POST = $row;
 	list($_POST['year'],$_POST['month'],$_POST['day']) = explode('-', $row['dob']);
-	$_POST['password2'] = $_POST['password'];
 }
 
 /* template starts here */
