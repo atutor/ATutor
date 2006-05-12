@@ -39,7 +39,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 
 			$msg->addFeedback('CONFIRM_GOOD');
 
-			header('Location: '.$_base_href.'login.php');
+			header('Location: '.$_base_href.'users/index.php');
 			exit;
 		} else {
 			$msg->addError('CONFIRM_BAD');

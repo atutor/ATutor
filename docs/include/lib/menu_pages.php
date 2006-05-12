@@ -177,7 +177,15 @@ $_pages['users/index.php']['children']  = array('users/browse.php', 'users/creat
 
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
-	
+$_pages['users/profile.php']['children']  = array('users/password_change.php', 'users/email_change.php');
+
+	$_pages['users/password_change.php']['title_var'] = 'change_password';
+	$_pages['users/password_change.php']['parent']    = 'users/profile.php';
+	//$_pages['users/password_change.php']['guide']    = 'instructor/?p=creating_courses.php';
+
+	$_pages['users/email_change.php']['title_var'] = 'change_email';
+	$_pages['users/email_change.php']['parent']    = 'users/profile.php';
+
 $_pages['users/preferences.php']['title_var']  = 'preferences';
 $_pages['users/preferences.php']['parent'] = AT_NAV_START;
 $_pages['users/preferences.php']['guide']  = 'general/?p=preferences.php';
