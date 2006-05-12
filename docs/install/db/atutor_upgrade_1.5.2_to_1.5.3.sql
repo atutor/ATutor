@@ -167,3 +167,19 @@ CREATE TABLE `mail_queue` (
 #install new themes
 
 INSERT INTO `themes` VALUES ('Blumin', '1.5.3', 'blumin', NOW(), 'This is the plone look-alike theme.', 1);
+
+# --------------------------------------------------------
+## Table for `blog_posts`
+
+CREATE TABLE `blog_posts` (
+  `post_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `owner_type` tinyint(3) unsigned NOT NULL default '0',
+  `owner_id` mediumint(8) unsigned NOT NULL default '0',
+  `private` tinyint(3) unsigned NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `num_comments` tinyint(3) unsigned NOT NULL default '0',
+  `title` varchar(100) NOT NULL default '',
+  `body` text NOT NULL,
+  PRIMARY KEY  (`post_id`)
+) TYPE=MyISAM;

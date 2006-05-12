@@ -64,6 +64,23 @@ CREATE TABLE `backups` (
 
 
 # --------------------------------------------------------
+## Table for `blog_posts`
+
+CREATE TABLE `blog_posts` (
+  `post_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `owner_type` tinyint(3) unsigned NOT NULL default '0',
+  `owner_id` mediumint(8) unsigned NOT NULL default '0',
+  `private` tinyint(3) unsigned NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `num_comments` tinyint(3) unsigned NOT NULL default '0',
+  `title` varchar(100) NOT NULL default '',
+  `body` text NOT NULL,
+  PRIMARY KEY  (`post_id`)
+) TYPE=MyISAM;
+    
+
+# --------------------------------------------------------
 # Table structure for table `config`
 # since 1.5.2
 
@@ -550,6 +567,7 @@ INSERT INTO `modules` VALUES ('_standard/sitemap',       2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/tracker',       2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/blogs',         2, 0, 0, 0, 0);
 
 
 # --------------------------------------------------------
