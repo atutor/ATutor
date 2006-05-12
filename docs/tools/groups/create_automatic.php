@@ -162,7 +162,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<div class="row">
 			<label for="description"><?php echo _AT('default_description'); ?></label><br />
-			<textarea name="description" cols="10" rows="2"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
+			<textarea name="description" id="description" cols="10" rows="2"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
 		</div>
 
 		<div class="row">
@@ -206,6 +206,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 </form>
 <script type="text/javascript">
+// <!--
 document.form.num_groups.disabled = true;
 function changer(name1, name2) {
 	document.form[name1].value= '-';
@@ -215,5 +216,6 @@ function changer(name1, name2) {
 	document.form[name2].value= '';
 	document.form[name2].focus();
 }
+// -->
 </script>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
