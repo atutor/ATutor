@@ -91,9 +91,9 @@ foreach ($cats as $cat) {
 			}
 			echo '<td>';
 			if (strlen($row['question']) > 45) {
-				echo AT_print(substr(htmlentities($row['question'], ENT_QUOTES, $myLang->getCharacterSet()), 0, 43), 'tests_questions.question') . '...';
+				echo substr(htmlspecialchars($row['question']), 0, 43), 'tests_questions.question') . '...';
 			} else {
-				echo AT_print(htmlentities($row['question'], ENT_QUOTES, $myLang->getCharacterSet()), 'tests_questions.question');
+				echo htmlspecialchars($row['question']), 'tests_questions.question');
 			}
 
 			echo '</td>';
