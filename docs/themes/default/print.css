@@ -7,6 +7,7 @@ body {
 	border: 0px;
 }
 
-div#side-menu, div#breadcrumbs, div#jump-area, table.tabbed-table, div#sub-navigation, div#sequence-links, div#language, div#toc, fieldset#shortcuts {
+div#side-menu, div#topnavlistcontainer, a#guide, div#breadcrumbs, div#jump-area, table.tabbed-table, div#sub-navigation, div#sequence-links, div#language, div#toc, fieldset#shortcuts {
 	display: none;
 }
+
