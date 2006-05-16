@@ -139,10 +139,10 @@ function add_users($user_list, $enroll, $course) {
 							$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 			
 							$subject = $_config['site_name'].': '._AT('email_confirmation_subject');
-							$body .= _AT(array('new_account_enroll_confirm', $_SESSION['course_title'], $confirmation_link))."\n\n";
+							$body = _AT(array('new_account_enroll_confirm', $_SESSION['course_title'], $confirmation_link))."\n\n";
 						} else {
 							$subject = $_config['site_name'].': '._AT('account_information');
-							$body .= _AT(array('new_account_enroll',$_base_href, $_SESSION['course_title']))."\n\n";
+							$body = _AT(array('new_account_enroll',$_base_href, $_SESSION['course_title']))."\n\n";
 						}
 						
 						//$body .= SITE_NAME.': '._AT('account_information')."\n";
