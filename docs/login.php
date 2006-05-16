@@ -78,10 +78,10 @@ if (isset($this_login, $this_password) && !isset($_SESSION['token'])) {
 
 	if ($used_cookie) {
 		// check if that cookie is valid
-		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)='$this_password'";
+		$sql = "SELECT member_id, login, preferences, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
 
 	} else {
-		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
+		$sql = "SELECT member_id, login, preferences, language, status, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
 	}
 	$result = mysql_query($sql, $db);
 
