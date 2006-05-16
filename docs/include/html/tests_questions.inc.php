@@ -91,9 +91,9 @@ foreach ($cats as $cat) {
 			}
 			echo '<td>';
 			if (strlen($row['question']) > 45) {
-				echo substr(htmlspecialchars($row['question']), 0, 43), 'tests_questions.question') . '...';
+				echo substr(htmlspecialchars($row['question']), 0, 43) . '...';
 			} else {
-				echo htmlspecialchars($row['question']), 'tests_questions.question');
+				echo htmlspecialchars($row['question']);
 			}
 
 			echo '</td>';
