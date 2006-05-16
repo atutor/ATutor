@@ -66,7 +66,10 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 if (isset($this_login, $this_password) && !isset($_SESSION['token'])) {
 	$msg->addError('SESSION_COOKIES');
 } else if (isset($this_login, $this_password)) {
-	unset($_SESSION['session_test']);
+	if (version_compare(PHP_VERSION, '5.1.0', '>=')) {
+		session_regenerate_id(TRUE);
+	}
+
 
 	if ($_GET['course']) {
 		$_POST['form_course_id'] = intval($_GET['course']);
@@ -149,7 +152,6 @@ unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['is_super_admin']);
 
-$_SESSION['session_test'] = true;
 $_SESSION['prefs']['PREF_FORM_FOCUS'] = 1;
 
 /*****************************/
