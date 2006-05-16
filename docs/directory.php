@@ -141,7 +141,11 @@ if ($all) {
 if ($final) {
 	foreach ($final as $user_id=>$attrs) {
 		echo '<tr onmousedown="document.location=\''.$_base_href.'profile.php?id='.$user_id.'\'">';
-		echo '<td><a href="profile.php?id='.$user_id.'">'.AT_print($attrs['login'], 'members.login') . '</a></td>';
+		$type = 'class="user"';
+		if ($system_courses[$_SESSION['course_id']]['member_id'] == $user_id) {
+			$type = 'class="user instructor" title="'._AT('instructor').'"';
+		}
+		echo '<td><a href="profile.php?id='.$user_id.'" '.$type.'>'.AT_print($attrs['login'], 'members.login') . '</a></td>';
 
 		echo '<td>'.AT_print($attrs['first_name'] .' '. $attrs['second_name'] .' '. $attrs['last_name'],'members.first_name').'</td>';
 		

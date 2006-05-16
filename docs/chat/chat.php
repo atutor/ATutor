@@ -10,15 +10,13 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-//authenticate(USER_CLIENT, USER_ADMIN);
 
 require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 
 $myPrefs = getPrefs($_SESSION['login']);
-
 writePrefs($myPrefs, $_SESSION['login']);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"

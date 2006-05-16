@@ -17,15 +17,22 @@ global $db;
 global $_my_uri;
 global $_base_path;
 global $savant;
+global $system_courses;
 
 ob_start(); 
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."users_online WHERE course_id=$_SESSION[course_id] AND expiry>".time()." ORDER BY login";
 $result	= mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
+	echo '<ul style="padding: 0px; list-style: none;">';
 	do {
-		echo '&#176; <a href="'.$_base_path.'profile.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a><br />';
+		$type = 'class="user"';
+		if ($system_courses[$_SESSION['course_id']]['member_id'] == $row['member_id']) {
+			$type = 'class="user instructor" title="'._AT('instructor').'"';
+		}
+		echo '<li style="padding: 3px 0px;"><a href="'.$_base_path.'profile.php?id='.$row['member_id'].'" '.$type.'>'.AT_print($row['login'], 'members.login').'</a></li>';
 	} while ($row = mysql_fetch_assoc($result));
+	echo '</ul>';
 } else {
 	echo '<em>'._AT('none_found').'</em><br />';
 }

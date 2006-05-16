@@ -1236,3 +1236,14 @@ ul.child-top-tool:before {
 	margin-right: 5px;
 	font-size: x-small;
 }
+
+a.user {
+	background: url('images/user.gif') no-repeat;
+	background-position: left center;
+	padding-left: 20px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+a.user.instructor {
+	background-image: url('images/instructor.gif');
+}
