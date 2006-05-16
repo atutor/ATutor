@@ -91,9 +91,9 @@ foreach ($cats as $cat) {
 			}
 			echo '<td>';
 			if (strlen($row['question']) > 45) {
-				echo AT_print(substr(htmlentities($row['question']), 0, 43), 'tests_questions.question') . '...';
+				echo AT_print(substr(htmlentities($row['question'], ENT_QUOTES, $myLang->getCharacterSet()), 0, 43), 'tests_questions.question') . '...';
 			} else {
-				echo AT_print(htmlentities($row['question']), 'tests_questions.question');
+				echo AT_print(htmlentities($row['question'], ENT_QUOTES, $myLang->getCharacterSet()), 'tests_questions.question');
 			}
 
 			echo '</td>';
@@ -130,8 +130,8 @@ if (!$question_flag) {
 </table>
 </form>
 
-<script language="javascript">
-	
+<script language="javascript" type="text/javascript">
+// <!--
 	function selectCat(catID, cat) {
 		for (var i=0;i<document.form.elements.length;i++) {
 			var e = document.form.elements[i];
@@ -139,4 +139,5 @@ if (!$question_flag) {
 				e.checked = cat.checked;
 		}
 	}
+// -->
 </script>
