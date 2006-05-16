@@ -136,6 +136,11 @@ function writePrefs($myPrefs, $chatID) {
 	if (empty($myPrefs)) {
 		return 0;
 	}
+
+	if (!is_dir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users')) {
+		mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users');
+	}
+
 	if (file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs')) {
 		chmod(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs', 0755);
 	}
