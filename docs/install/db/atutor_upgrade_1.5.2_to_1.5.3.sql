@@ -4,14 +4,14 @@
 
 CREATE TABLE `groups_types` (
 	`type_id` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL AUTO_INCREMENT ,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
-	`title` VARCHAR( 80 ) NOT NULL ,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+	`title` VARCHAR( 80 ) NOT NULL default '',
 	PRIMARY KEY ( `type_id` ) ,
 	INDEX ( `course_id` )
 );
 
 ALTER TABLE `groups` CHANGE `course_id` `type_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
-ALTER TABLE `groups` ADD `description` TEXT NOT NULL , ADD `modules` VARCHAR(100) NOT NULL;
+ALTER TABLE `groups` ADD `description` TEXT NOT NULL default '' , ADD `modules` VARCHAR(100) NOT NULL default '';
 
 UPDATE `modules` SET `privilege`=65536 WHERE `dir_name`='_core/groups';
 INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0);
@@ -27,8 +27,8 @@ ALTER TABLE `modules` ADD `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL
 # assignments table
 CREATE TABLE `assignments` (
 	`assignment_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
-	`title` VARCHAR(60) NOT NULL,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL default '',
+	`title` VARCHAR(60) NOT NULL default '',
 	`assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
 	`date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
 	`date_cutoff` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -49,19 +49,19 @@ CREATE TABLE `forums_groups` (
 
 # release date for courses
 ALTER TABLE `courses` ADD `release_date` datetime NOT NULL default '0000-00-00 00:00:00';
-ALTER TABLE `courses` ADD `banner` TEXT NOT NULL;
+ALTER TABLE `courses` ADD `banner` TEXT NOT NULL default '';
 
 # --------------------------------------------------------
 # Table structure for table `reading_list`
 
 CREATE TABLE `reading_list` (
 	`reading_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
-	`resource_id` MEDIUMINT UNSIGNED NOT NULL,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+	`resource_id` MEDIUMINT UNSIGNED NOT NULL default '0',
 	`required` enum('required','optional') NOT NULL DEFAULT 'required',
 	`date_start` DATE NOT NULL DEFAULT '0000-00-00',
 	`date_end` DATE NOT NULL DEFAULT '0000-00-00',
-	`comment` text NOT NULL,
+	`comment` text NOT NULL default '',
 	PRIMARY KEY  (`reading_id`),
 	INDEX (`course_id`)
 ) TYPE = MYISAM;
@@ -70,7 +70,7 @@ CREATE TABLE `reading_list` (
 
 CREATE TABLE `external_resources` (
 	`resource_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL default '',
 	`type` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 	`title` varchar(255) NOT NULL DEFAULT '',
 	`author` varchar(150) NOT NULL DEFAULT '',
@@ -87,7 +87,7 @@ CREATE TABLE `external_resources` (
 # --------------------------------------------------------
 
 CREATE TABLE `file_storage_groups` (
-  `group_id` MEDIUMINT UNSIGNED NOT NULL ,
+  `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
   PRIMARY KEY ( `group_id` )
 );
 
@@ -104,7 +104,7 @@ CREATE TABLE `files` (
   `num_revisions` tinyint(3) unsigned NOT NULL default '0',
   `file_name` varchar(80) NOT NULL default '',
   `file_size` int(11) NOT NULL default '0',
-  `description` text NOT NULL,
+  `description` text NOT NULL default '',
   PRIMARY KEY  (`file_id`)
 ) TYPE=MyISAM;
 
@@ -113,7 +113,7 @@ CREATE TABLE `files_comments` (
   `file_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `comment` text NOT NULL,
+  `comment` text NOT NULL default '',
   PRIMARY KEY  (`comment_id`)
 ) TYPE=MyISAM;
 
@@ -129,8 +129,8 @@ CREATE TABLE `folders` (
 ## assignment manager
 CREATE TABLE `assignments` (
   `assignment_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `course_id` MEDIUMINT UNSIGNED NOT NULL ,
-  `title` VARCHAR(60) NOT NULL,
+  `course_id` MEDIUMINT UNSIGNED NOT NULL default '',
+  `title` VARCHAR(60) NOT NULL default '',
   `assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
   `date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_cutoff` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -144,7 +144,7 @@ ALTER TABLE `course_enrollment` CHANGE `privileges` `privileges` INT UNSIGNED DE
 ALTER TABLE `modules` CHANGE `privilege` `privilege` INT UNSIGNED DEFAULT '0' NOT NULL;
 
 # second name field
-ALTER TABLE `members` ADD `second_name` CHAR( 30 ) NOT NULL AFTER `first_name` ;
+ALTER TABLE `members` ADD `second_name` CHAR( 30 ) NOT NULL default '' AFTER `first_name` ;
 ALTER TABLE `members` ADD `private_email` TINYINT DEFAULT '1' NOT NULL ;
 
 # increase length of users_online `login` field to support a full display name. or close to it.
@@ -154,13 +154,13 @@ ALTER TABLE `users_online` CHANGE `login` `login` varchar(255) NOT NULL default 
 # since 1.5.3
 CREATE TABLE `mail_queue` (
   `mail_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `to_email` VARCHAR( 50 ) NOT NULL ,
-  `to_name` VARCHAR( 50 ) NOT NULL ,
-  `from_email` VARCHAR( 50 ) NOT NULL ,
-  `from_name` VARCHAR( 50 ) NOT NULL ,
-  `char_set` VARCHAR( 20 ) NOT NULL ,
-  `subject` VARCHAR( 200 ) NOT NULL ,
-  `body` TEXT NOT NULL ,
+  `to_email` VARCHAR( 50 ) NOT NULL default '',
+  `to_name` VARCHAR( 50 ) NOT NULL default '',
+  `from_email` VARCHAR( 50 ) NOT NULL default '',
+  `from_name` VARCHAR( 50 ) NOT NULL default '',
+  `char_set` VARCHAR( 20 ) NOT NULL default '',
+  `subject` VARCHAR( 200 ) NOT NULL default '',
+  `body` TEXT NOT NULL default '',
   PRIMARY KEY ( `mail_id` )
 );
 
@@ -180,6 +180,9 @@ CREATE TABLE `blog_posts` (
   `date` datetime NOT NULL default '0000-00-00 00:00:00',
   `num_comments` tinyint(3) unsigned NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
-  `body` text NOT NULL,
+  `body` text NOT NULL default '',
   PRIMARY KEY  (`post_id`)
 ) TYPE=MyISAM;
+
+
+ALTER TABLE `members` CHANGE `gender` `gender` ENUM( 'm', 'f', 'n' ) DEFAULT 'n' NOT NULL;

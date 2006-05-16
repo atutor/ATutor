@@ -108,6 +108,7 @@ if (isset($_POST['submit'])) {
 		$_POST['phone']      = $addslashes($_POST['phone']);
 		$_POST['status']     = intval($_POST['status']);
 		$_POST['old_status']     = intval($_POST['old_status']);
+		$_POST['gender']     = $addslashes($_POST['gender']);
 
 		/* insert into the db. (the last 0 for status) */
 		$sql = "UPDATE ".TABLE_PREFIX."members SET	email      = '$_POST[email]',

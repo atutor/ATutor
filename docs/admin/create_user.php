@@ -138,6 +138,7 @@ if (isset($_POST['submit'])) {
 		$_POST['country']    = $addslashes($_POST['country']);
 		$_POST['phone']      = $addslashes($_POST['phone']);
 		$_POST['status']     = intval($_POST['status']);
+		$_POST['gender']     = $addslashes($_POST['gender']);
 
 		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
