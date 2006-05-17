@@ -55,17 +55,17 @@ class ContentManager
 
 		/* number of content sections */
 		$num_sections = 0;
-		
+
 		$max_depth = array();
 
 		while ($row = mysql_fetch_assoc($result)) {
 			$num_sections++;
 			$_menu[$row['content_parent_id']][] = array('content_id'=> $row['content_id'],
 														'ordering'	=> $row['ordering'], 
-														'title'		=> $row['title']);
+														'title'		=> htmlspecialchars($row['title']));
 
 			$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
-													'title'				=> $row['title'],
+													'title'				=> htmlspecialchars($row['title']),
 													'ordering'			=> $row['ordering'],
 													'u_release_date'      => $row['u_release_date']);
 
@@ -75,7 +75,7 @@ class ContentManager
 				$max_depth[$row['content_id']] = $max_depth[$row['content_parent_id']]+1;
 			}
 		}
-		
+
 		$this->_menu = $_menu;
 
 		$this->_menu_info =  $_menu_info;
@@ -602,8 +602,8 @@ class ContentManager
 
 					$link .= $content['title'].'">';
 
-					if ($truncate && (strlen($content['title']) > (26-$depth*4)) ) {
-						$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)).'...';
+					if ($truncate && (strlen($content['title']) > (28-$depth*4)) ) {
+						$content['title'] = rtrim(substr($content['title'], 0, (28-$depth*4)-4)).'...';
 					}
 					$link .= $content['title'];
 					$link .= '</a>';
