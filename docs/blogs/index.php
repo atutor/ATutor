@@ -22,7 +22,16 @@ echo '<ol id="tools">';
 
 while ($row = mysql_fetch_assoc($result)) {
 	if (strpos($row['modules'], '_standard/blogs') !== FALSE) {
-		echo '<li class="top-tool"><a href="blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id'].'">'.$row['title'].'</a></li>';
+		// retrieve the last posted date/time from this blog
+		$sql = "SELECT MAX(date) AS date FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id={$row['group_id']}";
+		$date_result = mysql_query($sql, $db);
+		if (($date_row = mysql_fetch_assoc($date_result)) && $date_row['date']) {
+			$last_updated = ' - ' . _AT('last_updated', AT_date(_AT('forum_date_format'), $date_row['date'], AT_DATE_MYSQL_DATETIME));
+		} else {
+			$last_updated = '';
+		}
+
+		echo '<li class="top-tool"><a href="blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id'].'">'.$row['title'].$last_updated.'</a></li>';
 	}
 }
 echo '</ol>';
