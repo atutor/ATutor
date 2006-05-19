@@ -10,18 +10,15 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 5824 2005-12-08 16:43:32Z joel $
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-$group_list = implode(',', $_SESSION['groups']);
-$sql = "SELECT group_id, title, modules FROM ".TABLE_PREFIX."groups WHERE group_id IN ($group_list) ORDER BY title";
+$sql = "SELECT G.group_id, G.title, G.modules FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$_SESSION[course_id] ORDER BY G.title";
 $result = mysql_query($sql, $db);
 
 echo '<ol id="tools">';
-
-$blog_module =& $moduleFactory->getModule('_standard/blogs');
 
 while ($row = mysql_fetch_assoc($result)) {
 	if (strpos($row['modules'], '_standard/blogs') !== FALSE) {
