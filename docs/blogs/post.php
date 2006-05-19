@@ -28,7 +28,7 @@ $auth = '';
 if (!query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 	$auth = 'private=0 AND ';
 }
-$sql = "SELECT private, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id ORDER BY date DESC";
+$sql = "SELECT member_id, private, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id ORDER BY date DESC";
 $result = mysql_query($sql, $db);
 
 if (!$post_row = mysql_fetch_assoc($result)) {
@@ -58,7 +58,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 	<div class="entry">
-		<h3 class="date"><?php echo AT_date(_AT('forum_date_format'), $post_row['date'], AT_DATE_MYSQL_DATETIME); ?></h3>
+		<h3 class="date"><?php echo get_login($post_row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $post_row['date'], AT_DATE_MYSQL_DATETIME); ?></h3>
 
 		<p><?php echo nl2br($post_row['body']); ?></p>
 	</div>
