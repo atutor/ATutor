@@ -137,7 +137,7 @@ if($_REQUEST['plog_sync'] == 1){
 	while ($row = mysql_fetch_array($result6)){
 		$this_permission = $row[1].','.$row[0];
 		if(!in_array($this_permission, $existing_permissions)) {
-			$sqlx  = "REPLACE INTO ".PLOG_PREFIX."users_permissions VALUES ('','$row[0]','$row[1]','2')";
+			$sqlx  = "REPLACE INTO ".PLOG_PREFIX."users_permissions VALUES ('','$row[1]','$row[0]','2')";
 			if(!$resultx = mysql_query($sqlx,$db)){
 				$msg->addError('PLOG_UPDATE_PERMISSIONS_FAILED');
 
