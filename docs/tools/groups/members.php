@@ -141,6 +141,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2>'.$type_row['title'].'</h2>';
 
 
+if (isset($_GET['gid'])) {
+	$_GET['gid'] = abs($_GET['gid']);
+} else {
+	$_GET['gid'] = 0;
+}
+
 $groups_members = array();
 $sql = "SELECT member_id, group_id FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($groups_keys) ORDER BY member_id";
 $result = mysql_query($sql, $db);
@@ -155,6 +161,7 @@ $owner = $system_courses[$_SESSION['course_id']]['member_id'];
 $sql = "SELECT M.member_id, M.login, M.first_name, M.last_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."course_enrollment E USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.privileges=0 AND E.approved='y' AND E.member_id<>$owner ORDER BY M.login";
 $result = mysql_query($sql, $db);
 
+$count = 0;
 ?>
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
@@ -178,12 +185,12 @@ $result = mysql_query($sql, $db);
 </tfoot>
 <body>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
-		<tr <?php if (isset($_GET['gid']) && ($_GET['gid'] == $groups_members[$row['member_id']])) { echo 'style="background-color: #efe"';} ?>>
+		<tr <?php if ($_GET['gid'] && $_GET['gid'] == $groups_members[$row['member_id']]) { echo 'style="background-color: #dfd; font-weight: bold;"';} ?> id="r<?php echo ++$count; ?>">
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['first_name']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['last_name']; ?></label></td>
 			<td>
-				<select name="groups[<?php echo $row['member_id']; ?>]" id="m<?php echo $row['member_id']; ?>">
+				<select name="groups[<?php echo $row['member_id']; ?>]" id="m<?php echo $row['member_id']; ?>" onchange="javascript:hirow(this, <?php echo $count; ?>);">
 					<option value="0"></option>
 					<?php foreach ($tmp_groups as $group => $title): ?>
 						<option value="<?php echo $group; ?>" <?php if ($groups_members[$row['member_id']] == $group) { echo 'selected="selected"'; } ?>><?php echo $title; ?></option>
@@ -195,5 +202,21 @@ $result = mysql_query($sql, $db);
 </body>
 </table>
 </form>
+
+<script type="text/javascript" language="javascript">
+// <!--
+function hirow(obj, row) {
+	if (obj.value && obj.value == <?php echo $_GET['gid']; ?>) {
+		e = document.getElementById("r" + row);
+		e.style.backgroundColor = "#dfd";
+		e.style.fontWeight = "bold";
+	} else {
+		e = document.getElementById("r" + row);
+		e.style.backgroundColor = "";
+		e.style.fontWeight = "";
+	}
+}
+// -->
+</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
