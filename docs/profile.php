@@ -38,7 +38,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	if ($system_courses[$_SESSION['course_id']]['member_id'] == $_GET['id']) {
 		$status = _AT('instructor');
 	} else if ( ($row_en['approved'] == 'y') && $row_en['privileges'] ) {
-		$status = _AT('enrolled_w_privs');
+		$status = _AT('assistant');
 	} else if ($row_en['approved'] == 'y') {
 		$status = _AT('enrolled');
 	}
