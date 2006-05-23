@@ -131,7 +131,7 @@ if (isset($_GET['asc'])) {
 $view_select = intval($_POST['view_select']);
 
 // the possible tabs. order matters.
-$tabs = array('enrolled', 'enrolled_privileges', 'alumni', 'pending_enrollment', 'not_enrolled');
+$tabs = array('enrolled', 'assistants', 'alumni', 'pending_enrollment', 'not_enrolled');
 
 $num_tabs = count($tabs);
 if (isset($_REQUEST['tab'])) {
