@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 5824 2005-12-08 16:43:32Z joel $
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -77,6 +77,12 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label><br />
 		<textarea name="body" id="body" cols="40" rows="10"></textarea>
+	</div>
+
+	<div class="row">	
+		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?>
+
+		<a name="jumpcodes"></a>
 	</div>
 
 	<div class="row">

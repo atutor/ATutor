@@ -194,7 +194,19 @@ define('AT_ENROLL_NO',			0);
 define('AT_ENROLL_YES',			1);
 define('AT_ENROLL_ALUMNUS',		2);
 
-//$_stacks = array('menu_menu', 'related_topics', 'users_online', 'glossary', 'search', 'poll', 'posts');
+// constants for reading list module
+define ('RL_TYPE_BOOK', 1);
+define ('RL_TYPE_URL',  2);
+define ('RL_TYPE_HANDOUT', 3);
+define ('RL_TYPE_AV', 4);
+define ('RL_TYPE_FILE', 5);
+
+$_rl_types = array ();
+$_rl_types[RL_TYPE_BOOK]	= 'rl_book';
+$_rl_types[RL_TYPE_URL]		= 'rl_url';
+$_rl_types[RL_TYPE_HANDOUT]	= 'rl_handout';
+$_rl_types[RL_TYPE_AV]		= 'rl_av';
+$_rl_types[RL_TYPE_FILE]	= 'rl_file';
 
 /* control how user inputs get formatted on output: */
 /* note: v131 not all formatting options are available on each section. */
@@ -264,24 +276,14 @@ $_field_formatting['tests_questions_categories.title']	= AT_FORMAT_NONE;
 
 $_field_formatting['polls.*']            = AT_FORMAT_ALL;
 
+$_field_formatting['blog_posts.body']	     = AT_FORMAT_ALL & ~AT_FORMAT_HTML;
+$_field_formatting['blog_posts.title']	     = AT_FORMAT_NONE;
+
 if (isset($_GET['cid'])) {
 	$cid = intval($_GET['cid']);
 } else if (isset($_POST['cid'])) {
 	$cid = intval($_POST['cid']);
 }
 
-// constants for reading list module
-define ('RL_TYPE_BOOK', 1);
-define ('RL_TYPE_URL',  2);
-define ('RL_TYPE_HANDOUT', 3);
-define ('RL_TYPE_AV', 4);
-define ('RL_TYPE_FILE', 5);
-
-$_rl_types = array ();
-$_rl_types[RL_TYPE_BOOK]	= 'rl_book';
-$_rl_types[RL_TYPE_URL]		= 'rl_url';
-$_rl_types[RL_TYPE_HANDOUT]	= 'rl_handout';
-$_rl_types[RL_TYPE_AV]		= 'rl_av';
-$_rl_types[RL_TYPE_FILE]	= 'rl_file';
 
 ?>

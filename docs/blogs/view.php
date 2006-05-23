@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 5824 2005-12-08 16:43:32Z joel $
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -58,13 +58,13 @@ $result = mysql_query($sql, $db);
 <?php if (mysql_num_rows($result)): ?>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<div class="entry">
-			<h2><a href="blogs/post.php?ot=<?php echo BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']; ?>"><?php echo $row['title']; ?></a>
+			<h2><a href="blogs/post.php?ot=<?php echo BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']; ?>"><?php echo AT_PRINT($row['title'], 'blog_posts.title'); ?></a>
 			<?php if ($row['private']): ?>
 				- <?php echo _AT('private'); ?>
 			<?php endif; ?></h2>
 			<h3 class="date"><?php echo get_login($row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h3>
 
-			<p><?php echo nl2br($row['body']); ?></p>
+			<p><?php echo AT_PRINT($row['body'], 'blog_posts.body'); ?></p>
 			<hr />
 		</div>
 	<?php endwhile; ?>
