@@ -1247,3 +1247,7 @@ a.user {
 a.user.instructor {
 	background-image: url('images/instructor.gif');
 }
+
+p.fm-desc {
+	font-size: small;
+}

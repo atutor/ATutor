@@ -559,10 +559,10 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 			<td valign="top">
 				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?>
 				<?php if ($file_info['description']): ?>
-					<p><small><?php echo $file_info['description']; ?></small></p>
+					<p class="fm-desc"><?php echo $file_info['description']; ?></p>
 				<?php endif; ?>
 			</td>
-			<td align="center" valign="top"><?php echo get_login($file_info['member_id']); ?></td>
+			<td valign="top"><?php echo get_login($file_info['member_id']); ?></td>
 			<td align="right" valign="top">
 				<?php if ($_config['fs_versioning']): ?>
 					<?php if ($file_info['num_revisions']): ?>
