@@ -151,7 +151,7 @@ if ($final) {
 		
 		
 		if ($attrs['privileges'] != 0) {
-			echo '<td>'._AT('assistants').'</td>';
+			echo '<td>'._AT('assistant').'</td>';
 		} else if ($attrs['approved'] == 'a') {
 			/* if alumni display alumni */
 			echo '<td>'._AT('alumni').'</td>';
@@ -166,7 +166,7 @@ if ($final) {
 		}
 		
 		if ($attrs['online'] == TRUE) {
-			echo '<td>'._AT('user_online').'</td>';
+			echo '<td><strong>'._AT('user_online').'</strong></td>';
 		} else {
 			echo '<td>'._AT('user_offline').'</td>';
 		}
