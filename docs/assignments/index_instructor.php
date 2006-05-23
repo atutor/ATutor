@@ -112,8 +112,8 @@ $result = mysql_query($sql, $db);
 
 		<td><?php if($row['assign_to'] == '0'){echo _AT('all_students'); } else {
 					$sql = "SELECT title FROM ".TABLE_PREFIX."groups_types WHERE type_id=$row[assign_to] AND course_id=$_SESSION[course_id]";
-					$result = mysql_query($sql, $db);
-					$type_row = mysql_fetch_assoc($result);
+					$type_result = mysql_query($sql, $db);
+					$type_row = mysql_fetch_assoc($type_result);
 					echo $type_row['title']; } ?></td>
 
 		<td><?php  if ($row['date_due'] == '0000-00-00 00:00:00'){
