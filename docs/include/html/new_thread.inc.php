@@ -72,7 +72,6 @@ if ($_POST['submit']) {
 		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?>
 
 		<a name="jumpcodes"></a>
-
 	</div>
 
 	<?php if (!$subscribed): ?>
