@@ -44,9 +44,10 @@ function blogs_authenticate($owner_type, $owner_id) {
 		global $db;
 		$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups WHERE group_id=$owner_id";
 		$result = mysql_query($sql, $db);
-		if (!$row = mysql_query($sql, $db)) {
+		if (!$row = mysql_fetch_assoc($result)) {
 			return BLOGS_AUTH_NONE;
 		}
+
 		$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups_types WHERE type_id=$row[type_id] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 		if (!$row = mysql_fetch_assoc($result)) {
