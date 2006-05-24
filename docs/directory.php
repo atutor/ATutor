@@ -56,13 +56,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<div class="row">
 
-			<?php echo _AT('groups'); ?><br />
+			<label for="groups"><?php echo _AT('groups'); ?></label><br />
 			<?php
 			$sql_groups = implode(',', $_SESSION['groups']);
 			$sql = "SELECT G.title, G.group_id, T.title AS type_title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$_SESSION[course_id] AND G.group_id IN ($sql_groups) ORDER BY T.title";
 			$result = mysql_query($sql, $db);
 			?>
-			<select name="group">
+			<select name="group" id="groups">
 				<option value="0" id="g0" ><?php echo _AT('entire_course'); ?></option>
 			<?php while ($row = mysql_fetch_assoc($result)): ?>
 				<option value="<?php echo $row['group_id']; ?>" id="g<?php echo $row['group_id']; ?>" <?php if ($group == $row['group_id']) { echo 'selected="selected"'; } ?> ><?php echo $row['type_title'] . ': ' . $row['title']; ?></option>
