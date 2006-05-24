@@ -55,17 +55,20 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 		<div class="row">
-			<?php echo _AT('groups'); ?><br />
-			<input type="radio" name="group" value="0" id="g0" checked="checked" /><label for="g0">Entire course</label>
 
+			<?php echo _AT('groups'); ?><br />
 			<?php
 			$sql_groups = implode(',', $_SESSION['groups']);
 			$sql = "SELECT G.title, G.group_id, T.title AS type_title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$_SESSION[course_id] AND G.group_id IN ($sql_groups) ORDER BY T.title";
 			$result = mysql_query($sql, $db);
 			?>
+			<select name="group">
+				<option value="0" id="g0" ><?php echo _AT('entire_course'); ?></option>
 			<?php while ($row = mysql_fetch_assoc($result)): ?>
-				<input type="radio" name="group" value="<?php echo $row['group_id']; ?>" id="g<?php echo $row['group_id']; ?>" <?php if ($group == $row['group_id']) { echo 'checked="checked"'; } ?> /><label for="g<?php echo $row['group_id']; ?>"><?php echo $row['type_title'] . ': ' . $row['title']; ?></label>
+				<option value="<?php echo $row['group_id']; ?>" id="g<?php echo $row['group_id']; ?>" <?php if ($group == $row['group_id']) { echo 'selected="selected"'; } ?> ><?php echo $row['type_title'] . ': ' . $row['title']; ?></option>
 			<?php endwhile; ?>
+			</select>
+
 		</div>
 
 	<div class="row buttons">
@@ -76,7 +79,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </form>
 
 <?php
-
 if ($_GET['order'] == 'asc') {
 	$order = 'desc';
 } else {
