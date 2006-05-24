@@ -92,7 +92,7 @@ $this->_pages['reading_list/index_instructor.php']['guide'] = 'instructor/?p=rea
  * student page.
  */
 $this->_pages['reading_list/index.php']['title_var'] = 'rl_reading_list';
-$this->_pages['reading_list/index.php']['img']       = 'reading_list/readinglist.gif';
+$this->_pages['reading_list/index.php']['img']       = 'images/home-reading_list.gif';
 
 $this->_pages['reading_list/index.php']['children'] = array('reading_list/reading_details.php');
 
