@@ -396,7 +396,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			<div class="row">
 				<h3><a onclick="javascript:document.getElementById('folder').style.display='';document.form0.new_folder_name.focus();" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
 			</div>
-			<div name="folder" id="folder">
+			<div  id="folder">
 				<div class="row">
 					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="fname"><?php echo _AT('name'); ?></label><br />
 					<input type="text" id="fname" name="new_folder_name" size="20" />
@@ -410,7 +410,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			<div class="row">
 				<h3><a onclick="javascript:document.getElementById('upload').style.display='';document.form0.file.focus();" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
 			</div>
-			<div name="upload" id="upload">
+			<div id="upload">
 				<div class="row">
 					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('upload_file'); ?></label><br />
 					<input type="file" name="file" id="file" />
@@ -456,6 +456,20 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 <input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <table class="data">
+<colgroup>
+	<?php if ($col == 'file_name'): ?>
+		<col />
+		<col class="sort" />
+		<col span="5" />
+	<?php elseif($col == 'file_size'): ?>
+		<col span="5" />
+		<col class="sort" />
+		<col />
+	<?php elseif($col == 'date'): ?>
+		<col span="6" />
+		<col class="sort" />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
 	<td colspan="7">
@@ -472,7 +486,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 					<?php endforeach; ?>
 				</optgroup>
 			<?php endif; ?>
-			<?php if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)): ?>
+			<?php if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN) && count($file_storage_assignments) != 0) : ?>
 				<optgroup label="<?php echo _AT('assignments'); ?>">
 					<?php foreach ($file_storage_assignments as $assignment): ?>
 						<option value="<?php echo WORKSPACE_ASSIGNMENT; ?>_<?php echo $assignment['assignment_id']; ?>" <?php if ($owner_type == WORKSPACE_ASSIGNMENT && $owner_id == $assignment['assignment_id']) { echo 'selected="selected"'; } ?>><?php echo $assignment['title']; ?></option>
@@ -480,7 +494,6 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 				</optgroup>
 			<?php endif; ?>
 		</select>
-
 		<input type="submit" name="submit_workspace" value="<?php echo _AT('go'); ?>" class="button" />
 
 		<br />
@@ -497,6 +510,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 	</td>
 </tr>
 <tr>
+
 	<th align="left" width="10"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
 	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=file_name"><?php echo _AT('file');      ?></a></th>
 	<th scope="col"><?php echo _AT('author');    ?></th>
@@ -505,20 +519,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=file_size"><?php echo _AT('size'); ?></a></th>
 	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th>
 </tr>
-<colgroup>
-	<?php if ($col == 'file_name'): ?>
-		<col />
-		<col class="sort" />
-		<col span="5" />
-	<?php elseif($col == 'file_size'): ?>
-		<col span="5" />
-		<col class="sort" />
-		<col />
-	<?php elseif($col == 'date'): ?>
-		<col span="6" />
-		<col class="sort" />
-	<?php endif; ?>
-</colgroup>
+
 </thead>
 <tfoot>
 <tr>
