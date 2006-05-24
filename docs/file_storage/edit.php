@@ -32,6 +32,7 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['id'] = abs($_POST['id']);
 
+
 	if (!$_POST['name']) {
 		$msg->addError('MISSING_FILENAME');
 	}
@@ -114,7 +115,13 @@ $onload = 'document.form.name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$id = abs($_GET['id']);
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
+
+	load_editor('body');
+}
+
+$id = abs($_REQUEST['id']);
 
 $sql = "SELECT file_name, folder_id, description FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 $result = mysql_query($sql, $db);
@@ -123,15 +130,19 @@ if (!$row = mysql_fetch_assoc($result)) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
+if (isset($_POST['description'])) {
+	$row['description'] = stripslashes($addslashes($_POST['description']));
+	$row['file_name']   = stripslashes($addslashes($_POST['name']));
+	$row['comment']     = stripslashes($addslashes($_POST['comment']));
+	$_POST['body']      = stripslashes($addslashes($_POST['body']));
+}
 $ext = fs_get_file_extension($row['file_name']);
 $file_path = fs_get_file_path($id);
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix; ?>" name="form">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <input type="hidden" name="folder" value="<?php echo $row['folder_id']; ?>" />
-<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
-<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('file_name'); ?></label><br />
@@ -147,12 +158,29 @@ $file_path = fs_get_file_path($id);
 		<input type="hidden" name="edit" value="1" />
 		<div class="row">
 			<label for="comment"><?php echo _AT('revision_comment'); ?></label><br />
-			<textarea name="comment" id="comment" cols="30" rows="2"></textarea>
+			<textarea name="comment" id="comment" cols="30" rows="2"><?php echo htmlspecialchars($row['comment']); ?></textarea>
+		</div>
+
+		<div class="row">
+			<?php
+				if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+					echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+					echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
+				} else {
+					echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" />';
+				}
+			?>
 		</div>
 
 		<div class="row">
 			<label for="body"><?php echo _AT('contents'); ?></label><br />
-			<textarea name="body" id="body" cols="30" rows="20"><?php echo htmlspecialchars(file_get_contents($file_path . $id)); ?></textarea>
+			<textarea name="body" id="body" cols="30" rows="20"><?php
+				if (isset($_POST['body'])) {
+					echo $_POST['body'];
+				} else {
+					echo htmlspecialchars(file_get_contents($file_path . $id));
+				}
+				?></textarea>
 		</div>
 	<?php else: ?>
 		<div class="row">

@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-function load_editor() {
+function load_editor($name = FALSE) {
 	global $_base_path, $_base_href, $content_base_href;
 
 	 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) { 
@@ -24,9 +24,14 @@ function load_editor() {
 
 	echo '<script language="javascript" type="text/javascript" src="'.$_base_path.'jscripts/tiny_mce/tiny_mce.js"></script>';
 	echo '<script language="javascript" type="text/javascript">';
-	echo '	tinyMCE.init({
-	mode : "textareas",
-	theme : "advanced",
+	echo '	tinyMCE.init({ ';
+	if ($name) {
+		echo '  mode : "exact",';
+		echo '  elements : "'.$name.'",';
+	} else {
+		echo '	mode : "textareas",';
+	}
+	echo 'theme : "advanced",
 	plugins : "table,acheck,advhr,advimage,advlink,emotions,iespell,preview,zoom,flash,print,contextmenu",
 	theme_advanced_buttons1_add : "fontselect,fontsizeselect",
 	theme_advanced_buttons2_add : "separator,preview,zoom,separator,forecolor,backcolor",

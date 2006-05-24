@@ -101,6 +101,17 @@ $onload = 'document.form.name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
+
+	load_editor('body');
+}
+if (isset($_POST['description'])) {
+	$_POST['description'] = stripslashes($addslashes($_POST['description']));
+	$_POST['name']   = stripslashes($addslashes($_POST['name']));
+	$_POST['comment']     = stripslashes($addslashes($_POST['comment']));
+	$_POST['body']      = stripslashes($addslashes($_POST['body']));
+}
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix; ?>" method="post" name="form">
 <input type="hidden" name="folder" value="<?php echo abs($_REQUEST['folder']); ?>" />
@@ -117,7 +128,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<label for="comment"><?php echo _AT('revision_comment'); ?></label><br />
-		<textarea name="comment" id="comment" cols="30" rows="2"></textarea>
+		<textarea name="comment" id="comment" cols="30" rows="2"><?php echo htmlspecialchars($_POST['comment']); ?></textarea>
+	</div>
+
+	<div class="row">
+		<?php
+			if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+				echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+				echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
+			} else {
+				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" />';
+			}
+		?>
 	</div>
 
 	<div class="row">
