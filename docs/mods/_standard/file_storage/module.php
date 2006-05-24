@@ -24,18 +24,23 @@ $this->_pages['file_storage/comments.php']['children'] = array(); // empty array
 
 $this->_pages['file_storage/edit.php']['title_var'] = 'edit';
 $this->_pages['file_storage/edit.php']['parent'] = 'file_storage/index.php';
+$this->_pages['file_storage/edit.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
 $this->_pages['file_storage/edit_folder.php']['title_var'] = 'edit';
 $this->_pages['file_storage/edit_folder.php']['parent'] = 'file_storage/index.php';
+$this->_pages['file_storage/edit_folder.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
 $this->_pages['file_storage/move.php']['title_var'] = 'move';
 $this->_pages['file_storage/move.php']['parent'] = 'file_storage/index.php';
+$this->_pages['file_storage/move.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
 $this->_pages['file_storage/assignment.php']['title_var'] = 'hand_in';
 $this->_pages['file_storage/assignment.php']['parent'] = 'file_storage/index.php';
+$this->_pages['file_storage/assignment.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
 $this->_pages['file_storage/new.php']['title_var'] = 'new_file';
 $this->_pages['file_storage/new.php']['parent'] = 'file_storage/index.php';
+$this->_pages['file_storage/new.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
 $this->_pages['file_storage/delete_revision.php']['title_var'] = 'delete';
 $this->_pages['file_storage/delete_revision.php']['parent'] = 'file_storage/index.php';
