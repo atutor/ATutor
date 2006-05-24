@@ -166,12 +166,12 @@ $count = 0;
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <table class="data static" style="width: 60%" rules="rows">
-<head>
+<thead>
 	<tr>
-		<th><?php echo _AT('login');      ?></th>
-		<th><?php echo _AT('first_name'); ?></th>
-		<th><?php echo _AT('last_name');  ?></th>
-		<th><?php echo _AT('groups');     ?></th>
+		<th style="text-align:left;"><?php echo _AT('login');      ?></th>
+		<th style="text-align:left;"><?php echo _AT('first_name'); ?></th>
+		<th style="text-align:left;"><?php echo _AT('last_name');  ?></th>
+		<th style="text-align:left;"><?php echo _AT('groups');     ?></th>
 	</tr>
 </thead>
 <tfoot>
@@ -183,9 +183,11 @@ $count = 0;
 		</td>
 	</tr>
 </tfoot>
-<body>
+<tbody>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<tr <?php if ($_GET['gid'] && $_GET['gid'] == $groups_members[$row['member_id']]) { echo 'style="background-color: #dfd; font-weight: bold;"';} ?> id="r<?php echo ++$count; ?>">
+			<!-- Using mutliple labels is acceptable, but JAWS only reads the last one 
+				see: http://www.access-matters.com/2005/09/10/speaking-form-labels-summary/#mult -->
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['first_name']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['last_name']; ?></label></td>
@@ -199,7 +201,7 @@ $count = 0;
 			</td>
 		</tr>
 	<?php endwhile; ?>
-</body>
+</tbody>
 </table>
 </form>
 

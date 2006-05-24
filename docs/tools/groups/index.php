@@ -77,9 +77,10 @@ $result = mysql_query($sql, $db);
 	</td>
 </tr>
 </tfoot>
+<tbody>
 <?php if ($row = mysql_fetch_assoc($result)): ?>
 	<?php do { ?>
-	<tbody>
+
 		<?php 
 			$sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
 			$group_result = mysql_query($sql, $db);
@@ -88,7 +89,7 @@ $result = mysql_query($sql, $db);
 		<tr onmousedown="document.form['g<?php echo $row['type_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['type_id']; ?>">
 			<th>
 				<input type="radio" id="g<?php echo $row['type_id']; ?>" name="id" value="<?php echo $row['type_id']; ?>" />
-				<label for="g<?php echo $row['type_id']; ?>"><?php echo $row['title']; ?></label> (<?php echo $num_groups; ?> groups)</td>
+				<label for="g<?php echo $row['type_id']; ?>"><?php echo $row['title']; ?></label> (<?php echo $num_groups; ?> groups)
 			</th>
 		</tr>
 		<?php if ($num_groups) : ?>
@@ -107,7 +108,7 @@ $result = mysql_query($sql, $db);
 				<td class="indent"><em><?php echo _AT('none_found'); ?></em></td>
 			</tr>
 		<?php endif; ?>
-	</tbody>
+
 	<?php } while ($row = mysql_fetch_assoc($result)); ?>
 <?php else: ?>
 	<tr>
