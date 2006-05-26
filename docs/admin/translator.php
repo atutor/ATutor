@@ -70,8 +70,8 @@ if ($_SESSION['language'] != 'en') {
 <hr />
 
 <?php if (($_REQUEST['new'] == 1) && $_SESSION['status'] == $_USER_ADMIN) { ?>
-
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<a name="anchor"></a>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>#anchor">
 	<input type="hidden" name="search_term" value="<?php echo htmlspecialchars(stripslashes($addslashes($_REQUEST['search_term']))); ?>" />
 	<input type="hidden" name="v" value="<?php echo $_REQUEST['v']; ?>" />
 	<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
