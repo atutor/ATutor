@@ -44,7 +44,7 @@ if ($_SESSION['language'] != 'en') {
 ?>
 
 	<!--//display messages and templates, with option to add new language terms/messages//-->
-	<li>Choose Template or Msgs to display a list of language variables. Click on a variable name to display its associated language.
+	<li>Choose Template,  Msgs, or Modules to display a list of language variables. Click on a variable name to display its associated language.
 		<ul>
 		<?php foreach ($variables as $row) { ?>
 			<li><strong>
