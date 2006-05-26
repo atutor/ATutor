@@ -31,5 +31,5 @@ global $system_courses;
 	*/
 ?>
 	<small><?php echo _AT('copyright').'. '; echo '<a href="'.$_base_path.'about.php">'._AT('about_atutor').'</a>.'; ?><br />
-	<span id="howto"><?php echo _AT('general_help', AT_GUIDES_PATH); ?></span></small>
+	<span id="howto"><?php echo _AT('general_help', AT_GUIDES_PATH.'index_list.php?lang='.$_SESSION['lang']); ?></span></small>
 </div>
