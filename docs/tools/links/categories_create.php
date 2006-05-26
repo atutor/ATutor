@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			$owner_type = LINK_CAT_COURSE;
 			$owner_id = $_SESSION['course_id'];
+			$parent_id = 0;
 		}
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (0, $owner_type, $owner_id, '$cat_name', $parent_id)";
