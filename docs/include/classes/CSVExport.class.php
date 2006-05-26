@@ -29,6 +29,9 @@ class CSVExport {
 		$result = mysql_query($sql, $db);
 
 		$field_types = $this->detectFieldTypes($result);
+		if (!$field_types) {
+			return FALSE;
+		}
 		$num_fields = count($field_types);
 
 		while ($row = mysql_fetch_row($result)) {
@@ -53,7 +56,11 @@ class CSVExport {
 	// possible field types are int, string, datetime, or blob...
 	function detectFieldTypes(&$result) {
 		$field_types = array();
-		$num_fields = mysql_num_fields($result);
+		$num_fields = @mysql_num_fields($result);
+
+		if (!$num_fields) {
+			return array();
+		}
 
 		for ($i=0; $i< $num_fields; $i++) {
 			$field_types[] = mysql_field_type($result, $i);

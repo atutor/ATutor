@@ -382,7 +382,9 @@ class Module {
 			if (isset($sql)) {
 				foreach ($sql as $file_name => $table_sql) {
 					$content = $CSVExport->export($table_sql, $course_id);
-					$zipfile->add_file($content, $file_name . '.csv', $now);
+					if ($content) {
+						$zipfile->add_file($content, $file_name . '.csv', $now);
+					}
 				}
 			}
 

@@ -53,8 +53,10 @@ class CSVImport {
 		$field_types = array();
 
 		$sql = "SELECT * FROM ".TABLE_PREFIX.$table_name .' WHERE 0';
-		$result = mysql_query($sql, $db);
-
+		$result = @mysql_query($sql, $db);
+		if (!$result) {
+			return array();
+		}
 		$num_fields = mysql_num_fields($result);
 
 		for ($i=0; $i< $num_fields; $i++) {
@@ -84,6 +86,9 @@ class CSVImport {
 
 		// get the field types
 		$field_types = $this->detectFieldTypes($tableName);
+		if (!$field_types) {
+			return FALSE;
+		}
 
 		// get the name of the primary field
 		$primary_key_field_name = $this->getPrimaryFieldName($tableName);
