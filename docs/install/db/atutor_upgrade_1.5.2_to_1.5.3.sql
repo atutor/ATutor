@@ -215,6 +215,6 @@ ALTER TABLE `links`
 	CHANGE `LinkID` `link_id` mediumint(8) unsigned NOT NULL auto_increment , 
 	CHANGE `CatID` `cat_id` mediumint(8) unsigned NOT NULL default '0' ;
 
-UPDATE `links_categories` SET owner_id=1 WHERE owner_id=0 ;
+UPDATE `links_categories` SET owner_type=1 WHERE owner_type=0 ;
 
 ALTER TABLE `members` CHANGE `gender` `gender` ENUM( 'm', 'f', 'n' ) DEFAULT 'n' NOT NULL;
