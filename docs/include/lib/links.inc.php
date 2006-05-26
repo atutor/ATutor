@@ -59,7 +59,7 @@ function manage_links() {
 //if manage, then it's getting categories for only those that should see them
 //if list, then filter out the uneditable group cats from the manage list (otherwise it's a dropdown of cats)
 function get_link_categories($manage=false, $list=false) {
-	global $db;
+	global $db, $_base_path;
 	$categories = array();
 
 	/* get all the categories: */
@@ -67,7 +67,10 @@ function get_link_categories($manage=false, $list=false) {
 
 	$groups = implode(',', $_SESSION['groups']);
 
-	if ($manage) {
+	//if suggest a link page
+	if ($_SERVER['PHP_SELF'] == $_base_path.'links/add.php') {
+		$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") ORDER BY parent_id, name";
+	} else if ($manage) {
 		if ( $_SESSION['is_admin'] || $_SESSION['privileges']>0 ) { //everything but group-named cats
 			if ($list) {
 				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'') ORDER BY parent_id, name";
