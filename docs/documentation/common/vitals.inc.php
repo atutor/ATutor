@@ -45,7 +45,6 @@ function get_text($var, $return = FALSE) {
 	global $req_lang, $lang, $section;
 
 	static $req_lang_text, $lang_text;
-
 	if (!isset($req_lang_text) && ($req_lang != 'en')) {
 		$text = array();
 		if (file_exists(dirname(__FILE__) . '/'.$req_lang.'/text.php')) {
@@ -101,7 +100,7 @@ session_write_close();
 
 
 $_available_sections = array('admin' => 'admin', 'instructor' => 'instructor', 'general' => 'general');
-$available_languages = array('en' => 'en');
+$available_languages = array('en' => 'en', 'fr'=>'fr');
 
 $parts = pathinfo($_SERVER['PHP_SELF']);
 $this_page = $parts['basename'];

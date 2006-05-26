@@ -1,7 +1,19 @@
 <?php
 session_start();
-$enable_user_notes = false;
+$enable_user_notes = true;
 
+
+require(dirname(__FILE__) .'/common/vitals.inc.php');
+
+if($_GET['lang']){
+	$req_lang = stripslashes($_GET['lang']);
+	session_start();
+	$_SESSION['lang'] = $req_lang;
+	$lang = $req_lang;
+	$_available_sections = array('none' => '');
+}else if($_SESSION['lang']){
+	$req_lang = $_SESSION['lang'];
+}
 // using 401 authentication
 if (key($_GET) == 'login') {
 	if (!isset($_SERVER['PHP_AUTH_USER'])) {
@@ -34,7 +46,7 @@ if (key($_GET) == 'login') {
 
 			define('AT_HANDBOOK_DB_TABLE_PREFIX', TABLE_PREFIX);
 
-			define('AT_HANDBOOK_ENABLE', true);
+			define('AT_HANDBOOK_ENABLE', false);
 
 			if (isset($_POST['submit'])) {
 				// try to validate $_POST
@@ -100,23 +112,27 @@ if (key($_GET) == 'login') {
 	}
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en">
+<html lang="<?php if ($req_lang) { echo $req_lang; } else { echo 'dp'; } ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>ATutor 1.5 Documentation</title>
+	<title><?php echo get_text('doc_title'); ?></title>
 	<link rel="stylesheet" href="common/styles.css" type="text/css" />
 </head>
 <body>
-
-<h1>ATutor Handbook</h1>
-<p>Welcome to the official ATutor Handbook!</p>
+<?php if ($missing_lang): ?>
+	<div style="margin: 20px auto; border: 1px solid #aaf; padding: 4px; text-align: center; background-color: #eef;">
+		<?php get_text('page_not_translated'); ?>
+	</div>
+<?php endif; ?>
+<h1><?php echo get_text('doc_title'); ?></h1>
+<p><?php echo get_text('doc_welcome'); ?></p>
 
 	<ol>
-		<li><a href="general/">General User Documentation</a></li>
-		<li><a href="admin/">Administrator Documentation</a></li>
-		<li><a href="instructor/">Instructor Documentation</a></li>
-		<li><a href="developer/guidelines.html">Developer Guidelines &amp; Documentation</a></li>
-		<li><a href="developer/modules.html">Module Development Documentation</a></li>
+		<li><a href="general/"><?php echo get_text('doc_user'); ?></a></li>
+		<li><a href="admin/"><?php echo get_text('doc_admin'); ?></a></li>
+		<li><a href="instructor/"><?php echo get_text('doc_instructor'); ?></a></li>
+		<li><a href="developer/guidelines.html"><?php echo get_text('doc_dev'); ?></a></li>
+		<li><a href="developer/modules.html"><?php echo get_text('doc_mods'); ?></a></li>
 	</ol>
 
 	<ol>
@@ -127,10 +143,12 @@ if (key($_GET) == 'login') {
 
 <?php if ($enable_user_notes && (!isset($_SESSION['handbook_admin']) || (isset($_SESSION['handbook_admin']) && !$_SESSION['handbook_admin']))): ?>
 	<div style="text-align: right;">
-		<p>User contributed notes is <em>enabled</em>. <a href="<?php echo $_SERVER['PHP_SELF']; ?>?login">Administrator Login</a>.</p>
+		<p><?php echo get_text('doc_notes_enabled');  ?></p>
 	</div>
 <?php elseif ($enable_user_notes): ?>
-	Logged in as notes moderator. <a href="<?php echo $_SERVER['PHP_SELF'];?>?logout">Log-out</a>
+
+<?php echo get_text('doc_logged_in'); ?>
+	
 
 	<?php 
 		$sql = "SELECT note_id, date, section, page, email, note FROM ".AT_HANDBOOK_DB_TABLE_PREFIX."handbook_notes WHERE approved=0 ORDER BY date DESC";
@@ -138,22 +156,22 @@ if (key($_GET) == 'login') {
 
 	?>
 	<div class="add-note">
-		<h3>Un-Approved User Contributed Notes</h3>
+		<h3><?php echo get_text('doc_unapproved_notes'); ?></h3>
 	</div>
 
 	<?php if ($result && (mysql_num_rows($result) > 0)): ?>
 		<?php while ($row = mysql_fetch_assoc($result)): ?>
 			<div class="note">
 				<h5><?php echo $row['date']; ?>
-					<a href="approve_note.php?id=<?php echo $row['note_id']; ?>" onclick="return confirm('Are you sure you want to approve this note?');">Approve</a> | 
-					<a href="delete_note.php?id=<?php echo $row['note_id']; ?>" onclick="return confirm('Are you sure you want to delete this note?');">Delete</a>
+					<a href="approve_note.php?id=<?php echo $row['note_id']; ?>" onclick="return confirm('<?php echo get_text('doc_approved_confirm'); ?>');"><?php echo get_text('doc_approve'); ?></a> | 
+					<a href="delete_note.php?id=<?php echo $row['note_id']; ?>" onclick="return confirm('<?php echo get_text('doc_delete_confirm'); ?>');"><?php echo get_text('doc_delete'); ?></a>
 				</h5>
 				<h4><?php echo $row['email'];?></h4>
 				<p><?php echo nl2br($row['note']); ?></p>
 			</div>
 		<?php endwhile; ?>
 	<?php else: ?>
-		<div class="note">There are no un-approved user contributed notes.</div>
+		<div class="note"><?php echo get_text('doc_no_notes'); ?></div>
 	<?php endif; ?>
 
 <?php endif; ?>

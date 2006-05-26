@@ -24,7 +24,7 @@ define('AT_HANDBOOK_DB_TABLE_PREFIX', 'AT_');
 define('AT_HANDBOOK_ADMIN_USERNAME', '');
 define('AT_HANDBOOK_ADMIN_PASSWORD', '');
 
-define('AT_HANDBOOK_ENABLE', false);
+define('AT_HANDBOOK_ENABLE', true);
 
 /*
 # Note: you will have to add the table prefix!!
