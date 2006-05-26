@@ -89,7 +89,7 @@ $result = mysql_query($sql, $db);
 		<tr onmousedown="document.form['g<?php echo $row['type_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['type_id']; ?>">
 			<th>
 				<input type="radio" id="g<?php echo $row['type_id']; ?>" name="id" value="<?php echo $row['type_id']; ?>" />
-				<label for="g<?php echo $row['type_id']; ?>"><?php echo $row['title']; ?></label> (<?php echo $num_groups; ?> groups)
+				<label for="g<?php echo $row['type_id']; ?>"><?php echo $row['title']; ?></label> (<?php echo $num_groups.' '._AT('groups'); ?>)</td>
 			</th>
 		</tr>
 		<?php if ($num_groups) : ?>
@@ -100,7 +100,7 @@ $result = mysql_query($sql, $db);
 					$group_cnt = mysql_fetch_assoc($group_cnt_result);
 				?>
 				<tr onmousedown="document.form['g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>">
-					<td class="indent"><input type="radio" id="g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>" name="id" value="<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>" /> <label for="g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>"><?php echo $group_row['title']; ?></label> (<?php echo $group_cnt['cnt']; ?> members)</td>
+					<td class="indent"><input type="radio" id="g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>" name="id" value="<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>" /> <label for="g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>"><?php echo $group_row['title']; ?></label> (<?php echo $group_cnt['cnt'].' '._AT('members'); ?>)</td>
 				</tr>
 			<?php endwhile; ?>
 		<?php else: ?>
