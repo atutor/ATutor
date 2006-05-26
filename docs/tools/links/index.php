@@ -136,10 +136,9 @@ if (!isset($_GET['cat_parent_id'])) {
 	</tfoot>
 	<tbody>
 <?php do {
-
-		if (empty($row['name'])) {
-			$row['name'] = get_group_name($row['cat_id']);
-		}		 
+		if ($row['owner_type'] == LINK_CAT_GROUP) {
+			$row['name'] = get_group_name($row['owner_id']);
+		}
 ?>
 		<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['link_id'];?>">
 			<td width="10"><input type="radio" name="link_id" value="<?php echo $row['link_id'].'-'.$row['owner_type'].'-'.$row['owner_id']; ?>" id="m<?php echo $row['link_id']; ?>" /></td>

@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
+require(AT_INCLUDE_PATH.'lib/links.inc.php');
 
 $cat_id = intval($_REQUEST['cat_id']);
 
@@ -71,10 +71,7 @@ $categories = get_link_categories(true);
 $onload = 'document.form.category_name.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-$msg->printAll();
-
 ?>
-
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>" />
 <input type="hidden" name="form_submit" value="1" />
