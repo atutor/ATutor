@@ -93,8 +93,8 @@ $msg->printAll();
 				
 				$auth = manage_links();
 				if ($auth == LINK_CAT_AUTH_ALL) {
-					echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
-					echo '<option value="0"></option>';
+					echo '<option value="0-'.LINK_CAT_COURSE.'-'.$_SESSION['course_id'].'">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
+					echo '<option value="0-'.LINK_CAT_COURSE.'-'.$_SESSION['course_id'].'"></option>';
 				}
 
 				select_link_categories($categories, 0, $current_cat_id, $exclude, 0, TRUE);
