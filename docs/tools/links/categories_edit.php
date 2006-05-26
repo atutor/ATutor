@@ -14,31 +14,59 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_LINKS);
 
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 $cat_id = intval($_REQUEST['cat_id']);
 
 if (isset($_POST['submit'])) {
-	$cat_name = $addslashes($_POST['cat_name']);
-	$cat_parent_id = intval($_POST['cat_parent_id']);
 
-	$sql = "UPDATE ".TABLE_PREFIX."resource_categories SET CatParent=$cat_parent_id, CatName='$cat_name' WHERE course_id=$_SESSION[course_id] AND CatID=$cat_id";
-	$result = mysql_query($sql, $db);
-	$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
+	//check if cat name is empty
+	if ($_POST['cat_name'] == '') {
+		$msg->addError('TITLE_EMPTY');
+	}
 
-	header('Location: categories.php');
-	exit;
+	if (!$msg->containsErrors()) {
+		//authorized cat parent?
+		$lid = explode('-', $_POST['cat_parent_id']);
+		$parent_id = intval($lid[0]);
+		$owner_type = intval($lid[1]);
+		$owner_id = intval($lid[2]);
+
+		if (!links_authenticate($owner_type, $owner_id)) {
+			$msg->addError('ACCESS_DENIED');
+			header('Location: '.$_base_href.'tools/links/categories.php');
+			exit;
+		}
+
+		$cat_name = $addslashes($_POST['cat_name']);
+
+		$sql = "UPDATE ".TABLE_PREFIX."links_categories SET parent_id=$parent_id, name='$cat_name', owner_type=$owner_type, owner_id=$owner_id WHERE cat_id=".$cat_id;
+
+		$result = mysql_query($sql, $db);
+		$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
+
+		header('Location: categories.php');
+		exit;
+	}
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: categories.php');
 	exit;
+} else {
+	$row = get_cat_info($cat_id);
+
+	//authorized to edit this cat?
+	if (!links_authenticate($row['owner_type'], $row['owner_id'])) {
+		$msg->addError('ACCESS_DENIED');
+		header('Location: '.$_base_href.'tools/links/categories.php');
+		exit;
+	}
 }
 
 /* get all the categories: */
 /* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
-$categories = get_link_categories();
+$categories = get_link_categories(true);
 
 $onload = 'document.form.category_name.focus();';
 
@@ -60,13 +88,16 @@ $msg->printAll();
 	<div class="row">
 		<label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label><br />
 		<select name="cat_parent_id" id="category_parent"><?php
-				$current_cat_id = $cat_id;
+				$current_cat_id = $categories[$cat_id]['cat_parent'];
 				$exclude = true; /* exclude the children */
-				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
-				echo '<option value="0"></option>';
+				
+				$auth = manage_links();
+				if ($auth == LINK_CAT_AUTH_ALL) {
+					echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
+					echo '<option value="0"></option>';
+				}
 
-				/* @See: include/lib/admin_categories */
-				select_link_categories($categories, 0, $current_cat_id, $exclude);
+				select_link_categories($categories, 0, $current_cat_id, $exclude, 0, TRUE);
 			?></select>
 	</div>
 

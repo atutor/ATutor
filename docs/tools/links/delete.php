@@ -14,17 +14,26 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
-authenticate(AT_PRIV_LINKS);
+$lid = explode('-', $_REQUEST['lid']);
+$link_id = intval($lid[0]);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.$_base_href.'tools/links/index.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
-	$_POST['form_link_id'] = intval($_POST['form_link_id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."resource_links WHERE LinkID=$_POST[form_link_id]";
+	$row = get_cat_info(intval($_POST['cat_id']));
+
+	if (!links_authenticate($row['owner_type'], $row['owner_id'])) {
+		$msg->addError('ACCESS_DENIED');
+		header('Location: '.$_base_href.'tools/links/index.php');
+		exit;
+	}
+
+	$sql = "DELETE FROM ".TABLE_PREFIX."links WHERE link_id=$link_id";
 	$result = mysql_query($sql, $db);
 	
 	$msg->addFeedback('LINK_DELETED');
@@ -36,9 +45,7 @@ $_section[0][0] = _AT('delete_link');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$_GET['lid'] = intval($_GET['lid']); 
-
-	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links WHERE LinkID=$_GET[lid]";
+	$sql = "SELECT LinkName, cat_id FROM ".TABLE_PREFIX."links WHERE link_id=$link_id";
 
 	$result = mysql_query($sql,$db);
 	if (mysql_num_rows($result) == 0) {
@@ -47,7 +54,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$row = mysql_fetch_assoc($result);
 
 		$hidden_vars['delete_link']  = TRUE;
-		$hidden_vars['form_link_id'] = $row['LinkID'];
+		$hidden_vars['link_id'] = $link_id;
+		$hidden_vars['cat_id'] = $row['cat_id'];
 		
 		$confirm = array('DELETE_LINK', AT_print($row['LinkName'], 'resource_links.LinkName'));
 		$msg->addConfirm($confirm, $hidden_vars);

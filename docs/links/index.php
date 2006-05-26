@@ -15,18 +15,23 @@
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
+
+if (!manage_links()) {
+	$_pages['links/index.php']['children']  = array('links/add.php');
+}
 
 if (isset($_GET['view'])) {
 	$_GET['view'] = intval($_GET['view']);
 	//add to the num hits
-	$sql = "SELECT Url, hits FROM ".TABLE_PREFIX."resource_links WHERE LinkID=$_GET[view]";
+	$sql = "SELECT Url, hits FROM ".TABLE_PREFIX."links WHERE link_id=$_GET[view]";
 	$results = mysql_query($sql,$db);
 
 	if ($row = mysql_fetch_assoc($results)) { 
 		if (!authenticate(AT_PRIV_LINKS, AT_PRIV_RETURN)) {
 
 			$row['hits']++;
-			$sql = "UPDATE ".TABLE_PREFIX."resource_links SET hits=$row[hits] WHERE LinkID=$_GET[view]";
+			$sql = "UPDATE ".TABLE_PREFIX."links SET hits=$row[hits] WHERE link_id=$_GET[view]";
 			mysql_query($sql,$db);
 		}
 
@@ -36,7 +41,6 @@ if (isset($_GET['view'])) {
 	}
 }
 
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 if ($_GET['reset_filter']) {
@@ -44,7 +48,11 @@ if ($_GET['reset_filter']) {
 }
 
 $_GET['cat_parent_id'] = intval($_GET['cat_parent_id']);
+
+//get appropriate categories
 $categories = get_link_categories();
+
+//ascending decscending columns...
 $page_string = '';
 $orders = array('asc' => 'desc', 'desc' => 'asc');
 
@@ -60,6 +68,7 @@ if (isset($_GET['asc'])) {
 	$col   = 'LinkName';
 }
 
+//search
 if ($_GET['search']) {
 	$page_string .= SEP.'search='.urlencode($_GET['search']);
 	$search = $addslashes($_GET['search']);
@@ -70,17 +79,24 @@ if ($_GET['search']) {
 	$search = '1';
 }
 
+//view links of a child category
 if ($_GET['cat_parent_id']) {
     $children = get_child_categories ($_GET['cat_parent_id'], $categories);
-    $cat_sql = "C.CatID IN ($children $_GET[cat_parent_id])";
+    $cat_sql = "C.cat_id IN ($children $_GET[cat_parent_id])";
 	$parent_id = intval($_GET['cat_parent_id']);
 } else {
     $cat_sql = '1';   
     $parent_id = 0;	
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L INNER JOIN ".TABLE_PREFIX."resource_categories C USING (CatID) WHERE C.course_id=$_SESSION[course_id] AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
+//get links
+$groups = implode(',', $_SESSION['groups']);
 
+if (!empty($groups)) {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.")) AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
+} else {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
+}
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
@@ -150,10 +166,15 @@ $num_results = mysql_num_rows($result);
 		<?php
 		do {
 			?>
-			<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
-				<td><a href="links/index.php?view=<?php echo $row['LinkID']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></a></td>
-				<td><?php echo AT_print($row['CatName'], 'resource_links.CatName'); ?></td>
-				<td><?php echo AT_print($row['Description'], 'resource_links.Description'); ?></td>
+			<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;">
+				<td><a href="links/index.php?view=<?php echo $row['link_id']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'links.LinkName'); ?></a></td>
+				<td><?php 
+					if (empty($row['name'])) {
+						$row['name'] = get_group_name($row['owner_id']);
+					}
+					echo AT_print($row['name'], 'links.CatName'); 
+				?></td>
+				<td><?php echo AT_print($row['Description'], 'links.Description'); ?></td>
 			</tr>
 		<?php 
 			} while ($row = mysql_fetch_assoc($result)); ?>

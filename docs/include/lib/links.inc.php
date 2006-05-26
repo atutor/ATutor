@@ -11,36 +11,129 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 
-function get_link_categories() {
+
+/**
+ * given an owner_type and owner_id
+ * returns false if user cannot manage link of owner_type
+ * returns true if they can
+ */
+function links_authenticate($owner_type, $owner_id) {
 	global $db;
+
+	if (empty($owner_type) || empty($owner_id)) {
+		return false;
+	}
+
+	//if admin or TA w/ right privs, can manage all links
+	if ($_SESSION['is_admin'] || $_SESSION['privileges'] > 0) {
+		return true;
+	}
+
+	if ($owner_type == LINK_CAT_GROUP) {
+		//check if member of group
+		if ($_SESSION['valid_user'] && isset($_SESSION['groups'])) {			
+			$sql="SELECT * FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$owner_id." AND member_id=".$_SESSION['member_id'];
+			$result = mysql_query($sql, $db);
+			if ($row = mysql_fetch_assoc($result)) {
+				return true;
+			}
+		} 
+	} 
+
+	return false;
+}
+
+/* return true if user is able to manage group or course links */
+function manage_links() {
+
+	if ($_SESSION['is_admin'] || $_SESSION['privileges'] > 0 ) {
+		return LINK_CAT_AUTH_ALL;
+	} else if (!empty($_SESSION['groups'])) {
+		return LINK_CAT_AUTH_GROUP;
+	}
+
+	return LINK_CAT_AUTH_NONE;
+}
+
+
+//if manage, then it's getting categories for only those that should see them
+//if list, then filter out the uneditable group cats from the manage list (otherwise it's a dropdown of cats)
+function get_link_categories($manage=false, $list=false) {
+	global $db;
+	$categories = array();
 
 	/* get all the categories: */
 	/* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
-	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] ORDER BY CatParent, CatName";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
-		$categories[$row['CatID']]['cat_name']    = $row['CatName'];
-		$categories[$row['CatID']]['cat_parent']  = $row['CatParent'];
 
-		if ($row['CatParent'] >0) {
-			$categories[$row['CatParent']]['children'][] = $row['CatID'];
+	$groups = implode(',', $_SESSION['groups']);
+
+	if ($manage) {
+		if ( $_SESSION['is_admin'] || $_SESSION['privileges']>0 ) { //everything but group-named cats
+			if ($list) {
+				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'') ORDER BY parent_id, name";
+			} else {
+				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.") ORDER BY parent_id, name";
+			}
+			
+		} else if (!empty($groups)) { 
+
+			if ($list) { //only group subcats
+				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'') ORDER BY parent_id, name";
+			} else { //only group cats and subcats 
+				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.") ORDER BY parent_id, name";
+			}
+		}	
+
+	} else {
+		if (!empty($groups)) {
+			$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.") ORDER BY parent_id, name";
 		} else {
-			$categories[0][] = $row['CatID'];
+			$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") ORDER BY parent_id, name";
 		}
 	}
+	$result = mysql_query($sql, $db);
+
+	while ($row = mysql_fetch_assoc($result)) {
+
+		//if group, get name
+		if (empty($row['name'])) {
+			$row['name'] = get_group_name($row['owner_id']);
+			$categories[$row['cat_id']]['group'] = 1;
+		}
+
+		$categories[$row['cat_id']]['cat_name']    = $row['name'];
+		$categories[$row['cat_id']]['cat_parent']  = $row['parent_id'];
+
+		if ($row['parent_id'] > 0) {
+			$categories[$row['parent_id']]['children'][] = $row['cat_id'];
+		} else {
+			$categories[0][] = $row['cat_id'];
+		}
+	}
+
 	return $categories;
 }
 
-function select_link_categories($categories, $cat_id, $current_cat_id, $exclude, $depth=0) {
+function select_link_categories($categories, $cat_id, $current_cat_id, $exclude, $depth=0, $owner=FALSE) {
 	if ($cat_id == 0 && is_array($categories[0])) {
 		foreach($categories[0] as $child_cat_id) {
-			select_link_categories($categories, $child_cat_id, $current_cat_id, $exclude);
+			select_link_categories($categories, $child_cat_id, $current_cat_id, $depth, 0, $owner);
 		}
 	} else {
 		if ($exclude && ($cat_id == $current_cat_id)) {
 			return;
 		}
-		echo '<option value="'.$cat_id.'"';
+		if ($owner) {
+			global $db; 
+			$sql = "SELECT owner_type, owner_id FROM ".TABLE_PREFIX."links_categories WHERE cat_id=$cat_id";
+			$result = mysql_query($sql, $db);
+
+			$row = mysql_fetch_assoc($result);
+
+			echo '<option value="'.$cat_id.'-'.$row['owner_type'].'-'.$row['owner_id'].'"';
+		} else  {
+			echo '<option value="'.$cat_id.'"';
+		}
 
 		if ($exclude && is_array($categories[$cat_id]['children']) && in_array($current_cat_id, $categories[$cat_id]['children'])) {
 			echo ' selected="selected"';
@@ -53,7 +146,7 @@ function select_link_categories($categories, $cat_id, $current_cat_id, $exclude,
 
 		if (is_array($categories[$cat_id]['children'])) {
 			foreach($categories[$cat_id]['children'] as $child_cat_id) {
-				select_link_categories($categories, $child_cat_id, $current_cat_id, $exclude, $depth+1);
+				select_link_categories($categories, $child_cat_id, $current_cat_id, $exclude, $depth+1, $owner);
 			}
 		}
 	}
@@ -76,6 +169,25 @@ function get_child_categories ($cat_id, $categories) {
         }
     }
     return $children_string;
+}
+
+function get_group_name($owner_id) {
+	global $db;
+
+	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$owner_id;
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	return $row['title'];
+}
+
+function get_cat_info($cat_id) {
+	global $db;
+
+	$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE cat_id=".$cat_id;
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	return $row;
 }
 
 ?>

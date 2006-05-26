@@ -2,21 +2,21 @@
 
 $sql = array();
 
-$sql['resource_categories'] = 'SELECT CatID, CatName, CatParent FROM '.TABLE_PREFIX.'resource_categories WHERE course_id=? ORDER BY CatID ASC';
+$sql['resource_categories'] = 'SELECT cat_id, name, parent_id FROM '.TABLE_PREFIX.'links_categories WHERE owner_id=? AND owner_type='.LINK_CAT_COURSE.' ORDER BY cat_id ASC';
 
-$sql['resource_links'] = 'SELECT L.CatID, Url, LinkName, Description, Approved, SubmitName, SubmitEmail, SubmitDate, hits FROM '.TABLE_PREFIX.'resource_links L, '.TABLE_PREFIX.'resource_categories C  WHERE C.course_id=? AND L.CatID=C.CatID ORDER BY LinkID ASC';
+$sql['resource_links'] = 'SELECT L.cat_id, Url, LinkName, Description, Approved, SubmitName, SubmitEmail, SubmitDate, hits FROM '.TABLE_PREFIX.'links L INNER JOIN '.TABLE_PREFIX.'links_categories C  USING (cat_id) WHERE C.owner_id=? AND C.owner_type='.LINK_CAT_COURSE.' ORDER BY link_id ASC';
 
 
 
 function resource_categories_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
 	$new_row[0] = $row[0];
-	$new_row[1] = $course_id;
-	$new_row[2] = $row[1];
-	$new_row[3] = $row[2];
+	$new_row[1] = LINK_CAT_COURSE;
+	$new_row[2] = $course_id;
+	$new_row[3] = $row[1];
+	$new_row[4] = $row[2];
 
 	return $new_row;
-
 }
 
 function resource_links_convert($row, $course_id, $table_id_map, $version) {
@@ -36,4 +36,5 @@ function resource_links_convert($row, $course_id, $table_id_map, $version) {
 
 	return $new_row;
 }
+
 ?>

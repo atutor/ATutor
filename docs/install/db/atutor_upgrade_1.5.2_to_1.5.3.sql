@@ -184,5 +184,22 @@ CREATE TABLE `blog_posts` (
   PRIMARY KEY  (`post_id`)
 ) TYPE=MyISAM;
 
+# --------------------------------------------------------
+## link table updates
+
+ALTER TABLE `resource_categories` RENAME `links_categories` ;
+ALTER TABLE `links_categories` 
+	CHANGE `CatID` `cat_id` mediumint(8) unsigned NOT NULL auto_increment , 
+	CHANGE `course_id` `owner_id` mediumint(8) unsigned NOT NULL default '0' , 
+	CHANGE `CatName` `name` varchar(100) NOT NULL default '' , 
+	CHANGE `CatParent` `parent_id` mediumint(8) unsigned default NULL , 
+	ADD `owner_type` tinyint(4) NOT NULL default '0' AFTER `cat_id` ;
+
+ALTER TABLE `resource_links` RENAME `links` ;
+ALTER TABLE `links` 
+	CHANGE `LinkID` `link_id` mediumint(8) unsigned NOT NULL auto_increment , 
+	CHANGE `CatID` `cat_id` mediumint(8) unsigned NOT NULL default '0' ;
+
+
 
 ALTER TABLE `members` CHANGE `gender` `gender` ENUM( 'm', 'f', 'n' ) DEFAULT 'n' NOT NULL;

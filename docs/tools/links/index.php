@@ -14,7 +14,14 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_LINKS);
+
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
+
+if (!manage_links()) {
+	$msg->addError('ACCESS_DENIED');
+	header('Location: links/index.php');
+	exit;
+}
 
 if (isset($_POST['edit']) && isset($_POST['link_id'])) {
 	header('Location: edit.php?lid='.$_POST['link_id']);
@@ -28,8 +35,7 @@ if (isset($_POST['edit']) && isset($_POST['link_id'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
-$categories = get_link_categories();
+$categories = get_link_categories(true);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -98,16 +104,31 @@ if (!isset($_GET['cat_parent_id'])) {
 </thead>
 
 <?php
-	if ($parent_id) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_links L, ".TABLE_PREFIX."resource_categories C WHERE L.CatID=C.CatID AND C.course_id=$_SESSION[course_id] AND L.CatID=$parent_id";
+	//$links = get_links($owner_type, $owner_id);
+
+	$groups = implode(',', $_SESSION['groups']);
+	$auth = manage_links();
+
+	if ($auth == LINK_CAT_AUTH_ALL) {
+		$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP."))";
+	} else if ($auth == LINK_CAT_AUTH_GROUP) {
+		$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP;
+	} 
+
+	/*if ($parent_id) {
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."links L, ".TABLE_PREFIX."links_categories C WHERE L.cat_id=C.cat_id AND C.owner_id=$_SESSION[course_id] AND L.cat_id=$parent_id";
 	} else {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_links L, ".TABLE_PREFIX."resource_categories C WHERE L.CatID=C.CatID AND C.course_id=$_SESSION[course_id]";  
-	}
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."links L, ".TABLE_PREFIX."links_categories C WHERE L.cat_id=C.cat_id AND C.owner_id=$_SESSION[course_id]";  
+	}*/
+
+	if ($parent_id) {
+		$sql .= " AND L.cat_id=$parent_id";
+	} 
 	$sql .= " ORDER BY $col $order";
 
 	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {  ?>
 
+	if ($row = mysql_fetch_assoc($result)) {  ?>
 	<tfoot>
 	<tr>
 		<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> <input type="submit" name="view" value="<?php echo _AT('view'); ?>" /></td>
@@ -115,29 +136,27 @@ if (!isset($_GET['cat_parent_id'])) {
 	</tfoot>
 	<tbody>
 <?php do {
-			$cat_name = '';			
-			$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE CatID=".$row['CatID'];
-			$result_cat = mysql_query($sql_cat, $db);
-			$row_cat = mysql_fetch_assoc($result_cat);
-			$cat_name = $row_cat['CatName'];
-			 
-	?>
-			<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['LinkID'];?>">
-				<td width="10"><input type="radio" name="link_id" value="<?php echo $row['LinkID']; ?>" id="m<?php echo $row['LinkID']; ?>" /></td>
-				<td><label for="m<?php echo $row['LinkID']; ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></label></td>
-				<td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>
-				<td><?php echo AT_print($row['SubmitName'], 'resource_links.SubmitName'); ?></td>
 
-				<td align="center"><?php 
-						if($row['Approved']) { 
-							echo _AT('yes1'); 
-						} else { 
-							echo _AT('no1'); 
-						} ?></td>
-				<td align="center"><?php echo $row['hits']; ?></td>
-			</tr>
+		if (empty($row['name'])) {
+			$row['name'] = get_group_name($row['cat_id']);
+		}		 
+?>
+		<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['link_id'];?>">
+			<td width="10"><input type="radio" name="link_id" value="<?php echo $row['link_id'].'-'.$row['owner_type'].'-'.$row['owner_id']; ?>" id="m<?php echo $row['link_id']; ?>" /></td>
+			<td><label for="m<?php echo $row['link_id']; ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></label></td>
+			<td><?php echo AT_print($row['name'], 'resource_links.CatName'); ?></td>
+			<td><?php echo AT_print($row['SubmitName'], 'resource_links.SubmitName'); ?></td>
+
+			<td align="center"><?php 
+					if($row['Approved']) { 
+						echo _AT('yes1'); 
+					} else { 
+						echo _AT('no1'); 
+					} ?></td>
+			<td align="center"><?php echo $row['hits']; ?></td>
+		</tr>
 <?php 
-		} while ($row = mysql_fetch_assoc($result));					
+	} while ($row = mysql_fetch_assoc($result));					
 } else {
 ?>
 	<tbody>

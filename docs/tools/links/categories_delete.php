@@ -14,7 +14,15 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_LINKS);
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
+
+if (!manage_links()) {
+	$msg->addError('ACCESS_DENIED');
+	header('Location: links/index.php');
+	exit;
+}
+
+$cat_id = intval($_REQUEST['cat_id']);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
@@ -22,34 +30,44 @@ if (isset($_POST['submit_no'])) {
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	/* delete has been confirmed, delete this category */
-	$cat_id	= intval($_POST['cat_id']);
+	$owner_type	= intval($_POST['owner_type']);
+	$owner_id	= intval($_POST['owner_id']);
+	//OR get_cat_info() again incase data has ben tampered?
 
-	if (!is_array($categories[$cat_id]['children'])) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] AND CatID=$cat_id";
-		$result = mysql_query($sql, $db);
-
-		$msg->addFeedback('CAT_DELETED');
-		header('Location: categories.php');
+	if (!links_authenticate($owner_type, $owner_id)) {
+		$msg->addError('ACCESS_DENIED');
+		header('Location: '.$_base_href.'tools/links/categories.php');
 		exit;
 	}
+
+	//check if there are sub cats within this cat, or links
+	$sql = "SELECT C.cat_id, L.link_id FROM ".TABLE_PREFIX."links_categories C, ".TABLE_PREFIX."links L WHERE C.parent_id=$cat_id OR L.cat_id=$cat_id";
+	$result = mysql_query($sql, $db);
+	if (mysql_num_rows($result) == 0) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."links_categories WHERE owner_id=$owner_id AND owner_type=$owner_type AND cat_id=$cat_id";
+		$result = mysql_query($sql, $db);
+		$msg->addFeedback('CAT_DELETED');
+	} else {
+		$msg->addError('LINK_CAT_NOT_EMPTY');
+	}
+
+	header('Location: categories.php');
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$_GET['cat_id'] = intval($_GET['cat_id']); 
+	$row = get_cat_info($cat_id);
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] AND CatID=$_GET[cat_id]";
-	$result = mysql_query($sql,$db);
-
-	if (mysql_num_rows($result) == 0) {
+	if (empty($row)) {
 		$msg->printErrors('CAT_NOT_FOUND');
 	} else {
-		$row = mysql_fetch_assoc($result);
-		
-		$hidden_vars['cat_name']= $row['CatName'];
-		$hidden_vars['cat_id']	= $row['CatID'];
+		$hidden_vars['cat_name']= $row['name'];
+		$hidden_vars['cat_id']	= $row['cat_id'];
+		$hidden_vars['owner_type']	= $row['owner_type'];
+		$hidden_vars['owner_id']	= $row['owner_id'];
 
-		$confirm = array('DELETE_CATEGORY', AT_print($row['CatName'], 'resource_categories.cat_name'));
+		$confirm = array('DELETE_CATEGORY', AT_print($row['name'], 'links_categories.name'));
 		$msg->addConfirm($confirm, $hidden_vars);
 		
 		$msg->printConfirm();

@@ -14,7 +14,8 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_LINKS);
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
+
 
 if (isset($_POST['submit'])) {
 	$cat_parent_id  = intval($_POST['cat_parent_id']);
@@ -27,7 +28,23 @@ if (isset($_POST['submit'])) {
 
 	if (!$msg->containsErrors()) {
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."resource_categories VALUES (0, $_SESSION[course_id], '$cat_name', $cat_parent_id)";
+		if (!empty($cat_parent_id)) {
+			$cat_parent_id = explode('-', $_POST['cat_parent_id']);
+			$parent_id = intval($cat_parent_id[0]);
+			$owner_type = intval($cat_parent_id[1]);
+			$owner_id = intval($cat_parent_id[2]);
+
+			if (!links_authenticate($owner_type, $owner_id)) {
+				$msg->addError('ACCESS_DENIED');
+				header('Location: '.$_base_href.'links/index.php');
+				exit;
+			}
+		} else {
+			$owner_type = LINK_CAT_COURSE;
+			$owner_id = $_SESSION['course_id'];
+		}
+
+		$sql = "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (0, $owner_type, $owner_id, '$cat_name', $parent_id)";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('CAT_ADDED');
@@ -41,10 +58,9 @@ if (isset($_POST['submit'])) {
 	exit;
 }
 
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 /* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
-$categories = get_link_categories();
+$categories = get_link_categories(true);
 
 $onload = 'document.form.category_name.focus();';
 
@@ -73,11 +89,13 @@ $msg->printAll();
 					$current_cat_id = $cat_id;
 					$exclude = true; /* exclude the children */
 				}
+				
+				$auth = manage_links();
+				if ($auth == LINK_CAT_AUTH_ALL) {
+					echo '<option value="0"></option>';
+				}
 
-				echo '<option value="0"></option>';
-
-				/* @See: include/lib/admin_categories */
-				select_link_categories($categories, 0, $current_cat_id, $exclude); 
+				select_link_categories($categories, 0, $current_cat_id, $exclude, 0, TRUE); 
 			?>
 			</select>
 		<?php else: 

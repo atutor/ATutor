@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_LINKS);
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (!isset($_POST['approved'])) {
 	$_POST['approved'] = 1;
@@ -26,9 +26,19 @@ if (isset($_POST['cancel'])) {
 	exit;
 } 
 
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
-
 if (isset($_POST['add_link']) && isset($_POST['submit'])) {
+
+	//check category_id and see if user is allowed..
+	$cat = explode('-', $_POST['cat']);
+	$cat_id = intval($cat[0]);
+	$owner_type = intval($cat[1]);
+	$owner_id = intval($cat[2]);
+
+	if (!links_authenticate($owner_type, $owner_id)) {
+		$msg->addError('ACCESS_DENIED');
+		header('Location: '.$_base_href.'links/index.php');
+		exit;
+	}
 
 	if ($_POST['title'] == '') {		
 		$msg->addError('TITLE_EMPTY');
@@ -41,7 +51,6 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 	}
 
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
-		$_POST['cat'] = intval($_POST['cat']);
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['url'] == $addslashes($_POST['url']);
 		$_POST['description']  = $addslashes($_POST['description']);
@@ -51,7 +60,7 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 
 		$approved = intval($_POST['approved']);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."resource_links VALUES (0, $_POST[cat], '$_POST[url]', '$_POST[title]', '$_POST[description]', $approved, '$name', '$email', NOW(), 0)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."links VALUES (0, $cat_id, '$_POST[url]', '$_POST[title]', '$_POST[description]', $approved, '$name', '$email', NOW(), 0)";
 		mysql_query($sql, $db);
 	
 		$msg->addFeedback('LINK_ADDED');
@@ -69,7 +78,7 @@ if (!isset($_POST['url'])) {
 	$_POST['url'] = 'http://';
 }
 
-$categories = get_link_categories();
+$categories = get_link_categories(true);
 
 if (empty($categories)) {
 	$msg->addError('LINK_CAT_EMPTY');
@@ -103,7 +112,7 @@ $msg->printErrors();
 				$current_cat_id = $cat_id;
 				$exclude = true; /* exclude the children */
 			}
-			select_link_categories($categories, 0, $_POST['cat'], FALSE);
+			select_link_categories($categories, 0, $_POST['cat'], FALSE, '', TRUE);
 			?>
 		</select>
 	</div>

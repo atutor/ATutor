@@ -51,6 +51,16 @@ $_config_defaults['enable_mail_queue']         = 0; // mail queue can only be en
 
 $_config = $_config_defaults;
 
+/* links */
+define('LINK_CAT_COURSE',	1);
+define('LINK_CAT_GROUP',	2);
+define('LINK_CAT_SELF',		3);
+
+define('LINK_CAT_AUTH_NONE',	0);
+define('LINK_CAT_AUTH_ALL',		1);
+define('LINK_CAT_AUTH_COURSE',  2);
+define('LINK_CAT_AUTH_GROUP',	3);
+
 /* drafting room constants */
 define('WORKSPACE_COURSE',     1);
 define('WORKSPACE_PERSONAL',   2);

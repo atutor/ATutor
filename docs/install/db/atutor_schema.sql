@@ -441,6 +441,36 @@ CREATE TABLE `languages` (
 INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
     
 
+# Table structure for table `links_categories`
+
+CREATE TABLE `links_categories` (
+  `cat_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `owner_type` tinyint(4) NOT NULL default '0',
+  `owner_id` mediumint(8) unsigned NOT NULL default '0',
+  `name` varchar(100) NOT NULL default '',
+  `parent_id` mediumint(8) unsigned default NULL,
+  PRIMARY KEY  (`cat_id`),
+  KEY `owner_id` (`owner_id`)
+) TYPE=MyISAM ;
+
+
+# --------------------------------------------------------
+# Table structure for table `links`
+
+CREATE TABLE `links` (
+  `link_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `cat_id` mediumint(8) unsigned NOT NULL default '0',
+  `Url` varchar(255) NOT NULL default '',
+  `LinkName` varchar(64) NOT NULL default '',
+  `Description` varchar(255) NOT NULL default '',
+  `Approved` tinyint(8) default '0',
+  `SubmitName` varchar(64) NOT NULL default '',
+  `SubmitEmail` varchar(64) NOT NULL default '',
+  `SubmitDate` date NOT NULL default '0000-00-00',
+  `hits` int(11) default '0',
+  PRIMARY KEY  (`link_id`)
+) TYPE=MyISAM ;
+
 # --------------------------------------------------------
 # Table structure for table `language_pages`
 
@@ -679,35 +709,6 @@ CREATE TABLE `external_resources` (
 	PRIMARY KEY (`resource_id`),
 	INDEX (`course_id`)
 ) TYPE = MYISAM;
-
-# Table structure for table `resource_categories`
-
-CREATE TABLE `resource_categories` (
-  `CatID` mediumint(8) unsigned NOT NULL auto_increment,
-  `course_id` mediumint(8) unsigned NOT NULL default '0',
-  `CatName` varchar(100) NOT NULL default '',
-  `CatParent` mediumint(8) unsigned default NULL,
-  PRIMARY KEY  (`CatID`),
-  KEY `course_id` (`course_id`)
-) TYPE=MyISAM;
-
-
-# --------------------------------------------------------
-# Table structure for table `resource_links`
-
-CREATE TABLE `resource_links` (
-  `LinkID` mediumint(8) unsigned NOT NULL auto_increment,
-  `CatID` mediumint(8) unsigned NOT NULL default '0',
-  `Url` varchar(255) NOT NULL default '',
-  `LinkName` varchar(64) NOT NULL default '',
-  `Description` varchar(255) NOT NULL default '',
-  `Approved` tinyint(8) default '0',
-  `SubmitName` varchar(64) NOT NULL default '',
-  `SubmitEmail` varchar(64) NOT NULL default '',
-  `SubmitDate` date NOT NULL default '0000-00-00',
-  `hits` int(11) default '0',
-  PRIMARY KEY  (`LinkID`)
-) TYPE=MyISAM ;
 
 
 # --------------------------------------------------------
