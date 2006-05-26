@@ -192,9 +192,9 @@ function trans_form($page) {
 	<tr>
 		<td colspan="2" align="center"><input type="submit" name="submit" value="Save ALT-S" class="submit" accesskey="s" />
 		<?php if ($_SESSION['language'] == 'en' && $_SESSION['status'] == $_USER_ADMIN): ?>
-					&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit2" value="Delete" onClick="return confirm('Do you really want to delete?');" class="submit" /><
+					&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit2" value="Delete" onClick="return confirm('Do you really want to delete?');" class="submit" />
 		<?php endif; ?>
-		/td>
+		</td>
 	</tr>
 	</table>
 	</form>
@@ -238,6 +238,8 @@ function trans_form($page) {
 		echo '</ul>';
 	} else if (!$_REQUEST['search_term'] && ($_REQUEST['v'] == $variables[1])){
 		//displaying messages
+		display_all_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
+	} else if (!$_REQUEST['search_term'] && ($_REQUEST['v'] == $variables[2])){
 		display_all_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
 	} else if ($_REQUEST['search_term']) {
 		display_search_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);

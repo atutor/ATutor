@@ -55,7 +55,7 @@ global $addslashes;
 echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_window') . '</a></div>';
 echo '<h3>ATutor Translator Site</h3>';
 
-$variables = array('_template','_msgs');
+$variables = array('_template','_msgs','_module');
 
 $atutor_test = '<a href="'.$_base_path.'" title="Open ATutor in a new window" target="new">';
 
