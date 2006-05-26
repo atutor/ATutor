@@ -12,14 +12,12 @@ function links_delete($course) {
 		mysql_query($sql, $db);
 	}
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$course AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.")";
+	$sql	= "SELECT cat_id FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$course AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.")";
 	$result = mysql_query($sql, $db);
-	$total_links = 0;
 
-	while ($row = mysql_fetch_array($result)) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."links WHERE cat_id=$row[0]";
+	while ($row = mysql_fetch_assoc($result)) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."links WHERE cat_id=$row[cat_id]";
 		$result2 = mysql_query($sql, $db);
-		$total_links += mysql_affected_rows($db);
 	}
 	$sql	= "DELETE FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$course AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.")";
 	$result = mysql_query($sql, $db);
