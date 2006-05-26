@@ -16,9 +16,9 @@
 		//<![CDATA[
 		var state = getcookie("side-menu");
 		if (state && (state == 'none')) {
-			document.writeln('<div style="display:none;" id="side-menu">');
+			document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu">');
 		} else {
-			document.writeln('<div style="" id="side-menu">');
+			document.writeln('<a name="menu"></a><div style="" id="side-menu">');
 		}
 		//]]>
 		</script>
