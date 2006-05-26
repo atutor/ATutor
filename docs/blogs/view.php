@@ -52,7 +52,7 @@ if (!query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 }
 
 
-$sql = "SELECT post_id, member_id, private, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] ORDER BY date DESC";
+$sql = "SELECT post_id, member_id, private, num_comments, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] ORDER BY date DESC";
 $result = mysql_query($sql, $db);
 ?>
 <?php if (mysql_num_rows($result)): ?>
@@ -65,6 +65,8 @@ $result = mysql_query($sql, $db);
 			<h3 class="date"><?php echo get_login($row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h3>
 
 			<p><?php echo AT_PRINT($row['body'], 'blog_posts.body'); ?></p>
+
+			<p><a href="blogs/post.php?ot=<?php echo BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']; ?>#comments"><?php echo _AT('comments_num', $row['num_comments']); ?></a></p>
 			<hr />
 		</div>
 	<?php endwhile; ?>

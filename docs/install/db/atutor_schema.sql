@@ -78,7 +78,21 @@ CREATE TABLE `blog_posts` (
   `body` text NOT NULL,
   PRIMARY KEY  (`post_id`)
 ) TYPE=MyISAM;
-    
+
+ 
+# --------------------------------------------------------
+## Table for `blog_posts_comments`
+
+CREATE TABLE `blog_posts_comments` (
+   `comment_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+   `post_id` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
+   `member_id` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
+   `date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+   `private` TINYINT UNSIGNED DEFAULT '0' NOT NULL ,
+   `comment` TEXT NOT NULL default '',
+   PRIMARY KEY ( `comment_id` ) ,
+   INDEX ( `post_id` )
+);
 
 # --------------------------------------------------------
 # Table structure for table `config`

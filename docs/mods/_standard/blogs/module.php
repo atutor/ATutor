@@ -24,6 +24,9 @@ $_pages['blogs/edit_post.php']['parent']      = 'blogs/post.php?ot='.BLOGS_GROUP
 $_pages['blogs/delete_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']]['title_var'] = 'delete';
 $_pages['blogs/delete_post.php']['title_var'] = 'delete';
 
+$_pages['blogs/delete_comment.php']['title_var'] = 'delete_comment';
+
+
 function blogs_get_group_url($group_id) {
 	return 'blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$group_id;
 }
