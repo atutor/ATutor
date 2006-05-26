@@ -82,5 +82,3 @@ while (current($_pages) !== FALSE) {
 		<?php get_text('page_not_translated'); ?>
 	</div>
 <?php endif; ?>
-
-<?php debug($_SESSION); ?>
