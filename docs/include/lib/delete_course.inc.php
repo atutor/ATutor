@@ -42,11 +42,11 @@ function delete_course($course, $material) {
 	// groups and enrollment must be deleted last because that info is used by other modules
 
 	if (($material === TRUE) || isset($material['_core/groups'])) {
-		$module =& moduleFactory->getModule('_core/groups');
+		$module =& $moduleFactory->getModule('_core/groups');
 		$module->delete($course);
 	}
 	if (($material === TRUE) || isset($material['_core/enrolment'])) {
-		$module =& moduleFactory->getModule('_core/enrolment');
+		$module =& $moduleFactory->getModule('_core/enrolment');
 		$module->delete($course);
 	}
 
