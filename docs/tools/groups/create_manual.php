@@ -129,7 +129,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				?>
 				<?php foreach($keys as $module_name): ?>
 					<?php $module =& $modules[$module_name]; ?>
-					<?php if ($module->getGroupTool()): ?>
+					<?php if ($module->getGroupTool() && (in_array($module->getGroupTool(),$_pages[AT_NAV_HOME]) || in_array($module->getGroupTool(),$_pages[AT_NAV_COURSE])) ): ?>
 						<input type="checkbox" value="<?php echo $module_name; ?>" name="modules[]" id="m<?php echo ++$i; ?>" /><label for="m<?php echo $i; ?>"><?php echo $module->getName(); ?></label><br />
 					<?php endif; ?>
 				<?php endforeach; ?>
