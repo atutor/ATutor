@@ -418,6 +418,7 @@ class Module {
 		}
 
 		require(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
+
 		if (isset($sql)) {
 			foreach ($sql as $table_name => $table_sql) {
 				$CSVImport->import($table_name, $import_dir, $course_id, $version);

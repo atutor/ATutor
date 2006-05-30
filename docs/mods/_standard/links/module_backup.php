@@ -2,9 +2,6 @@
 
 $sql = array();
 
-$sql['resource_categories'] = ''; // for backwards compatability with backups < 1.5.3
-$sql['resource_links'] = ''; // for backwards compatability with backups < 1.5.3
-
 $sql['links_categories'] = 'SELECT cat_id, name, parent_id FROM '.TABLE_PREFIX.'links_categories WHERE owner_id=? AND owner_type='.LINK_CAT_COURSE.' ORDER BY cat_id ASC';
 
 $sql['links'] = 'SELECT L.cat_id, Url, LinkName, Description, Approved, SubmitName, SubmitEmail, SubmitDate, hits FROM '.TABLE_PREFIX.'links L INNER JOIN '.TABLE_PREFIX.'links_categories C  USING (cat_id) WHERE C.owner_id=? AND C.owner_type='.LINK_CAT_COURSE.' ORDER BY link_id ASC';

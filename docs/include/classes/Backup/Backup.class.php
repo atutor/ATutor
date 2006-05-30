@@ -355,6 +355,14 @@ class Backup {
 			header('Location: '.$_SERVER['PHP_SELF']);
 			exit;
 		}
+		if (version_compare($this_version, '1.5.3', '<')) {
+			if (file_exists($this->import_dir . 'resource_categories.csv')) {
+				@rename($this->import_dir . 'resource_categories.csv', $this->import_dir. 'links_categories.csv');
+			}
+			if (file_exists($this->import_dir . 'resource_links.csv')) {
+				@rename($this->import_dir . 'resource_links.csv', $this->import_dir. 'links.csv');
+			}
+		}
 
 		// 5. if override is set then delete the content
 		if ($action == 'overwrite') {
