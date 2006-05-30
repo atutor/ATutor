@@ -1,6 +1,6 @@
 <?php
 
-function content_pages_delete($course) {
+function content_delete($course) {
 	global $db;
 
 	// related_content + content:
