@@ -12,8 +12,6 @@ function faq_delete($course) {
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$course";
 	mysql_query($sql, $db);
-
-	clr_dir($path);
 }
 
 ?>
