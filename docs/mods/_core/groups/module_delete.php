@@ -13,7 +13,7 @@ function groups_delete($course) {
 		$result2 = mysql_query($sql, $db);
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."groups WHERE group_id=$row[group_id]";
-		$result = mysql_query($sql, $db);
+		$result2 = mysql_query($sql, $db);
 	}
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."groups_types WHERE course_id=$course";
