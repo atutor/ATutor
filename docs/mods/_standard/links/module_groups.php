@@ -13,7 +13,7 @@ function links_create_group($group_id) {
 function links_delete_group($group_id) {
 	global $db;
 
-	$sql	= "SELECT cat_id FROM ".TABLE_PREFIX."links_categories WHERE AND owner_type=".LINK_CAT_GROUP." owner_id=$group_id";
+	$sql	= "SELECT cat_id FROM ".TABLE_PREFIX."links_categories WHERE owner_type=".LINK_CAT_GROUP." AND owner_id=$group_id";
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)) {

@@ -14,8 +14,9 @@ function blogs_delete_group($group_id) {
 	// deleting a group involves deleting all the blog entries and comments for that group
 
 	// for each entry, delete the comments
-	$sql = "SELECT post_id FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOG_GROUP." AND owner_id=$group_id";
+	$sql = "SELECT post_id FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id=$group_id";
 	$result = mysql_query($sql, $db);
+
 	while ($row = mysql_fetch_assoc($result)) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."blog_posts_comments WHERE post_id=$row[post_id]";
 		mysql_query($sql, $db);
