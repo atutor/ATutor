@@ -118,24 +118,30 @@ function get_link_categories($manage=false, $list=false) {
 }
 
 function select_link_categories($categories, $cat_id, $current_cat_id, $exclude, $depth=0, $owner=FALSE) {
+	global $db; 
+
 	if ($cat_id == 0 && is_array($categories[0])) {
 		foreach($categories[0] as $child_cat_id) {
 			select_link_categories($categories, $child_cat_id, $current_cat_id, $depth, 0, $owner);
 		}
 	} else {
+		$sql = "SELECT name, owner_type, owner_id FROM ".TABLE_PREFIX."links_categories WHERE cat_id=$cat_id";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+
 		if ($exclude && ($cat_id == $current_cat_id)) {
 			return;
 		}
-		if ($owner) {
-			global $db; 
-			$sql = "SELECT owner_type, owner_id FROM ".TABLE_PREFIX."links_categories WHERE cat_id=$cat_id";
-			$result = mysql_query($sql, $db);
 
-			$row = mysql_fetch_assoc($result);
+		if ($row['owner_id'] == LINK_CAT_GROUP && empty($row['name'])) {
+			echo '<optgroup label="'.$categories[$cat_id]['cat_name'].'">';
+		} else {
 
-			echo '<option value="'.$cat_id.'-'.$row['owner_type'].'-'.$row['owner_id'].'"';
-		} else  {
-			echo '<option value="'.$cat_id.'"';
+			if ($owner) {
+				echo '<option value="'.$cat_id.'-'.$row['owner_type'].'-'.$row['owner_id'].'"';
+			} else  {
+				echo '<option value="'.$cat_id.'"';
+			}
 		}
 
 		if ($exclude && is_array($categories[$cat_id]['children']) && in_array($current_cat_id, $categories[$cat_id]['children'])) {
@@ -151,6 +157,7 @@ function select_link_categories($categories, $cat_id, $current_cat_id, $exclude,
 			foreach($categories[$cat_id]['children'] as $child_cat_id) {
 				select_link_categories($categories, $child_cat_id, $current_cat_id, $exclude, $depth+1, $owner);
 			}
+			echo '</optgroup>';
 		}
 	}
 }
