@@ -14,15 +14,6 @@ function file_storage_delete($course) {
 	while ($student_row = mysql_fetch_assoc($result)) {
 		fs_delete_workspace(WORKSPACE_PERSONAL, $student_row['member_id']);
 	}
-
-	// delete group files
-	$sql	= "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$course";
-	$result = mysql_query($sql, $db);
-	while ($group_row = mysql_fetch_assoc($result)) {
-		fs_delete_workspace(WORKSPACE_GROUP, $group_row['group_id']);
-		$sql = "DELETE FROM ".TABLE_PREFIX."file_storage_groups WHERE group_id=$group_row[group_id]";
-		mysql_query($sql, $db);
-	}
 }
 
 ?>

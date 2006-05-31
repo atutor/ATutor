@@ -17,9 +17,6 @@ function tests_delete($course) {
 		}
 		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id]";
 		$result2 = mysql_query($sql, $db);
-
-		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$row[test_id]";
-		$result2 = mysql_query($sql, $db);
 	}
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$course";

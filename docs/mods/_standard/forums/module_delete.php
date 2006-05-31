@@ -67,26 +67,6 @@ function forums_delete($course) {
 		}
 	}
 
-
-	// delete the groups
-	require_once(AT_INCLUDE_PATH . 'lib/forums.inc.php');
-
-
-	$sql = "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$course";
-	$group_result = mysql_query($sql, $db);
-	while ($group_row = mysql_fetch_assoc($group_result)) {
-		$group_id = $group_row['group_id'];
-
-		$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_groups WHERE group_id=$group_id";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
-			delete_forum($row['forum_id']);
-		}
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_groups WHERE group_id=$group_id";
-		$result = mysql_query($sql, $db);
-	}
-
 	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 	$result = mysql_query($sql, $db);
 }

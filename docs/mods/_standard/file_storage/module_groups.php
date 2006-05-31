@@ -16,7 +16,7 @@ function file_storage_delete_group($group_id) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."file_storage_groups WHERE group_id=$group_id";
 	$result = mysql_query($sql, $db);
 
-	require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
+	require_once(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 	fs_delete_workspace(WORKSPACE_GROUP, $group_id);
 }
 
