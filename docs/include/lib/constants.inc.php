@@ -36,6 +36,7 @@ $_config_defaults['enable_category_themes']    = 0;
 $_config_defaults['course_backups']            = 5;
 $_config_defaults['email_confirmation']        = 0;
 $_config_defaults['master_list']               = 0;
+$_config_defaults['user_notes']               = 0;
 $_config_defaults['enable_handbook_notes']     = 0;
 $_config_defaults['theme_categories']          = 0;
 $_config_defaults['main_defaults']	           = 'forum/list.php|glossary/index.php|file_storage/index.php';
