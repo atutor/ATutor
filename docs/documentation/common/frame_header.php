@@ -70,11 +70,7 @@ if (top.name == 'popup') {
 				toggleToc();
 			}
 			//-->
-			</script>
-			| <?php get_text('language'); ?>: 
-				<?php foreach ($available_languages as $lang_name): ?>
-					<a href="../<?php echo $section; ?>/index.php?<?php echo $lang_name; ?>" target="_top"><?php echo $lang_name; ?></a>
-				<?php endforeach; ?>
+			</script>			
 </form>
 </body>
 </html>
