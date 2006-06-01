@@ -174,7 +174,7 @@ function toggleToc(objId) {
 //-->
 </script>
 <!-- section title -->
-<div><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a><h1 id="section-title"><?php echo $this->section_title; ?></h1>
+<div><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a><h1 id="section-title"><?php echo $this->section_title; ?></h1>
 </div>
 
 <!-- top help/search/login links -->
@@ -216,13 +216,17 @@ function toggleToc(objId) {
 <!-- the main navigation. in our case, tabs -->
 <div class="top">
 	<div class="tabs">
-		<?php foreach ($this->top_level_pages as $page): ?>
-			<?php if (($page['url'] == $this->current_top_level_page) ): ?>
-				<a href="<?php echo $page['url']; ?>" class="selected"><?php echo $page['title']; ?></a>
-			<?php else: ?>
-				<a href="<?php echo $page['url']; ?>" class="plain"><?php echo $page['title']; ?></a>
-			<?php endif; ?>
-		<?php endforeach; ?>     
+			<?php foreach ($this->top_level_pages as $page): ?>
+				<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+				<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+				<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+				<?php if ($page['url'] == $this->current_top_level_page): ?>
+					<a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a>
+				<?php else: ?>
+					<a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a>
+				<?php endif; ?>
+				<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+			<?php endforeach; ?>
 	</div>
 </div>
 
