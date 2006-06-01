@@ -434,7 +434,8 @@ div#breadcrumbs a:hover {
 
 div#breadcrumbs a:focus {
 	text-decoration:none;
-	color: #AFAFAF;
+	font-weight: bold;
+	color: #FFFF00;
 }
 
 h2.page-title {
