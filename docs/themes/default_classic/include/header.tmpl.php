@@ -151,7 +151,9 @@ function toggleToc(objId) {
 				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
 			<!-- /end the jump menu -->
 		<?php endif; ?>
-
+			<?php if ($_SESSION['is_super_admin']): ?>
+				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
+			<?php endif; ?>
 		<?php if ($_SESSION['valid_user']): ?>
 			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  | 
 			<?php if ($_SESSION['course_id'] > -1): ?>
