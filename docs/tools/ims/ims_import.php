@@ -350,7 +350,8 @@ if ($ims_organization_pos !== false){
 	$ims_organization_pos = strpos ($ims_manifest_xml, 'identifier', $ims_organization_pos);
 	if ($ims_organization_pos !== false){
 		$exe_pos = strpos ($ims_manifest_xml, 'eXenew', $ims_organization_pos);
-		if ($exe_pos < ($ims_organization_pos + '50')){
+		//if ($exe_pos < ($ims_organization_pos + '50')){
+		if ($exe_pos !== false){
 			$isExeContent = true;
 		}
 	}
