@@ -67,10 +67,11 @@ if (top.name == 'popup') {
 			document.writeln(' | ');
 			showTocToggle('<?php get_text('show_contents'); ?>' ,'<?php get_text('hide_contents'); ?>');
 			if (top.name == 'popup') {
-				toggleToc();
+				toggleToc(true);
 			}
 			//-->
-			</script>			
+			</script>
+
 </form>
 </body>
 </html>

@@ -52,12 +52,12 @@ function show2() {
 	if (i < 28) {
 		window.setTimeout('show2()', 1);
 	}
-	return false;
+	return true;
 }
 function show() {
 	i = 0;
 	window.setTimeout('show2()', 1);
-	return false;
+	return true;
 }
 
 function hide2() {
