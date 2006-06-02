@@ -145,7 +145,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 			} else {
 				$file_mime = 'application/octet-stream';
 			}
-			
+
 			header('Content-Type: ' . $file_mime);
 			header('Content-transfer-encoding: binary'); 
 			header('Content-Disposition: attachment; filename="'.htmlspecialchars($row['file_name']).'"');
@@ -162,10 +162,12 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 		$zipfile =& new zipfile();
 
 		$zip_file_name = fs_get_workspace($owner_type, $owner_id); // want the name of the workspace
+		$zip_file_name = str_replace(" ","_",$zip_file_name );
 
 		if (is_array($_GET['files'])) {
 			foreach ($_GET['files'] as $file_id) {
 				$file_path = fs_get_file_path($file_id) . $file_id;
+				
 
 				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 				$result = mysql_query($sql, $db);
@@ -177,6 +179,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 		if (is_array($_GET['folders'])) {
 			foreach($_GET['folders'] as $folder_id) {
 				fs_download_folder($folder_id, $zipfile, $owner_type, $owner_id);
+				$row['title'] = str_replace(" ","_",$row['title']  );
 				$zipfile->create_dir($row['title']);
 			}
 
@@ -185,6 +188,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 				$row = fs_get_folder_by_id($_GET['folders'][0], $owner_type, $owner_id);
 				if ($row) {
 					$zip_file_name = $row['title'];
+					$zip_file_name = str_replace(" ","_",$zip_file_name );
 				}
 			}
 		}
