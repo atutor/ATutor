@@ -48,10 +48,13 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 
 if ($num == 0) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->addInfo (NO_PACKAGES);
-	$msg->printAll();
-	require (AT_INCLUDE_PATH.'footer.inc.php');
+//	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->addFeedback(PACKAGE_DELETED);
+	header('Location: index.php' );
+	exit;
+//	$msg->addInfo (NO_PACKAGES);
+//	$msg->printAll();
+//	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 } 
 
