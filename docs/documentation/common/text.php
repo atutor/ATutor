@@ -17,7 +17,7 @@ $text['no_results_found'] = 'No results found.';
 $text['search_term_longer_3_chars'] = 'Search term must be longer than 3 characters.';
 $text['doc_user'] = 'User Documentation';
 $text['doc_admin'] = 'Administrator Documentation';
-$text['doc_dev'] = 'Developering Documentation';
+$text['doc_dev'] = 'Developer Documentation';
 $text['doc_instructor'] = 'Instructor Documentation';
 $text['doc_mods'] = 'Module Development Documentation';
 $text['doc_notes_enabled'] = 'User contributed notes is <em>enabled</em>. <a href="index_list.php?login">Administrator Login</a>.';
