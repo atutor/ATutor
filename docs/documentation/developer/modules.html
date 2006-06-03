@@ -432,7 +432,7 @@ if (!is_dir($directory) && !@mkdir($directory)) {
                          .' is not writable.&lt;/li>'));
 } // else: it was created successfully.
 </pre>
-<a name="executing"></a>
+<a name="execute"></a>
 	<h3>Executing an <acronym title="Structured Query Language">SQL</acronym> File</h3>
 		<p>If the module requires its own database tables or custom language, then it will have to create them itself. The <acronym title="Structured Query Language">SQL</acronym> can either be executed inline using <acronym title="PHP Hypertext Processor">PHP</acronym> database execution directly, or using the <kbd>SQLUtility</kbd> class to execute an external <acronym title="Structured Query Language">SQL</acronym> file. Also see <a href="#module.sql">module.sql</a> for more about creating an SQL file.</p>
 <pre>
