@@ -173,7 +173,11 @@ function toggleToc(objId) {
 		<?php endif; ?>
 	</div>
 
-	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;"><?php echo $this->section_title; ?>:
+	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;">
+	<?php if($_SESSION['course_id'] && $_SESSION['valid_user'] ){ ?>
+ 		<a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT('my_start_page'); ?>: </a> '
+	<?php }?>
+	<?php echo $this->section_title; ?>:
 	<?php if ($this->sequence_links['resume']): ?>
 			<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="." title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo $this->sequence_links['resume']['title']; ?></a> - 
 	<?php endif; ?>
