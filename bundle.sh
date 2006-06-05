@@ -89,7 +89,7 @@ sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $atut
 sleep 1
 
 echo -n "<?php "'$svn_data = '"'" >> $atutor_dir/ATutor/svn.php
-svn log  -q -r HEAD http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk/  >> $atutor_dir/ATutor/svn.php
+/usr/local/bin/svn log  -q -r HEAD http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk/  >> $atutor_dir/ATutor/svn.php
 echo -n "';?>" >> $atutor_dir/ATutor/svn.php
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
