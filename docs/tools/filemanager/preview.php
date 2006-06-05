@@ -16,9 +16,9 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-	$get_file = 'get.php/';
+	$get_file = $_base_path . 'get.php/';
 } else {
-	$get_file = 'content/' . $_SESSION['course_id'] . '/';
+	$get_file = $_base_path . 'content/' . $_SESSION['course_id'] . '/';
 }
 
 ?>
@@ -29,11 +29,10 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	<meta http-equiv="Content-Type" content="text/html; <?php echo $myLang->getCharacterSet(); ?>" />
 </head>
 
-
 <frameset rows="50,*">
 
-<frame src="preview_top.php?file=<?php echo urlencode($_GET['file']).SEP; ?>pathext=<?php echo urlencode($_GET['pathext']) . SEP . 'popup=' . $_GET['popup']; ?>" scrolling=no marginwidth="0" marginheight="0" />
-<frame src="../../<?php echo $get_file; ?><?php echo urlencode($_GET['file']); ?>" />
+<frame src="preview_top.php?file=<?php echo 'b64:'.base64_encode($_GET['file']).SEP.'pathext='. $_GET['pathext'] . SEP . 'popup=' . $_GET['popup']; ?>" scrolling="no" marginwidth="0" marginheight="0" />
+<frame src="<?php echo $get_file; ?><?php echo 'b64:'.base64_encode($_GET['file']); ?>" />
 
 <noframes>
   <p><?php echo _AT('frame_contains'); ?><br />

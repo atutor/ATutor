@@ -279,7 +279,7 @@ while (false !== ($file = readdir($dir)) ) {
 		if ($framed) {
 			$files[$file1] .= '<a href="'.$get_file.$pathext.urlencode($filename).'">'.$filename.'</a>';
 		} else {
-			$files[$file1] .= '<a href="tools/filemanager/preview.php?file='.$pathext.urlencode($filename).SEP.'pathext='.urlencode($pathext).SEP.'popup='.$popup.'">'.$filename.'</a>';
+			$files[$file1] .= '<a href="tools/filemanager/preview.php?file='.$pathext.$filename.SEP.'pathext='.urlencode($pathext).SEP.'popup='.$popup.'">'.$filename.'</a>';
 		}
 
 		if ($ext == 'zip') {

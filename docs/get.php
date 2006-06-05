@@ -70,11 +70,18 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 $file_name = pathinfo($current_file);
 $file_name = $file_name['basename'];
 
+if (substr($file_name, 0, 4) == 'b64:') {
+	$base64_file_name = substr($file_name, 4);
+	$file_name = base64_decode($base64_file_name);
+	$current_file = '/'.$file_name;
+}
+
+
 $file = AT_CONTENT_DIR . $_SESSION['course_id'] . $current_file;
 
 //send header mime type
-$ext = pathinfo($file);
-$ext = $ext['extension'];
+$pathinfo = pathinfo($file);
+$ext = $pathinfo['extension'];
 if ($ext == '') {
 	$ext = 'application/octet-stream';
 } else {
@@ -90,7 +97,9 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 	if ($force_download) {
 		header('Content-Type: application/force-download');
 		header('Content-transfer-encoding: binary'); 
-		header('Content-Disposition: attachment; filename="'.$file_name.'"');
+		header('Content-Disposition: attachment; filename="'.$pathinfo['basename'].'"');
+	} else {
+		header('Content-Disposition: filename="'.$pathinfo['basename'].'"');
 	}
 
 	header('Content-Type: '.$ext);
