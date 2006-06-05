@@ -130,32 +130,32 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php  echo _AT('title'); ?></label><br />
-		<input type="text" name="title" size="35" id="title" value="<?php echo htmlspecialchars($title); ?>" /><br />
+		<input type="text" name="title" size="35" id="title" value="<?php echo htmlspecialchars($title); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="author"><?php  echo _AT('rl_author'); ?></label><br />
-		<input type="text" name="author" size="25" id="author" value="<?php echo htmlspecialchars($author); ?>" /><br />
+		<input type="text" name="author" size="25" id="author" value="<?php echo htmlspecialchars($author); ?>" />
 	</div>
 
 	<div class="row">
 		<label for="date"><?php  echo _AT('rl_year_written'); ?></label><br />
-		<input type="text" name="date" size="6" id="date" value="<?php echo htmlspecialchars($date); ?>" /><br />
+		<input type="text" name="date" size="6" id="date" value="<?php echo htmlspecialchars($date); ?>" />
 	</div>
 
 	<div class="row">
 		<label for="publisher"><?php  echo _AT('rl_publisher'); ?></label><br />
-		<input type="text" name="publisher" size="20" id="publisher" value="<?php echo htmlspecialchars($publisher); ?>" /><br />
+		<input type="text" name="publisher" size="20" id="publisher" value="<?php echo htmlspecialchars($publisher); ?>" />
 	</div>
 
 	<div class="row">
 		<label for="isbn"><?php  echo _AT('rl_isbn_number'); ?></label><br />
-		<input type="text" name="isbn" size="15" id="isbn" value="<?php echo htmlspecialchars($isbn); ?>" /><br />
+		<input type="text" name="isbn" size="15" id="isbn" value="<?php echo htmlspecialchars($isbn); ?>" />
 	</div>
 
 	<div class="row">
 		<label for="comments"><?php  echo _AT('rl_comment'); ?></label><br />
-		<input type="text" name="comments" size="75" id="comments" value="<?php echo htmlspecialchars($comments); ?>" /><br />
+		<textarea name="comments" cols="30" rows="2" id="comments"><?php echo htmlspecialchars($comments); ?></textarea>
 	</div>
 
 	<div class="row buttons">
