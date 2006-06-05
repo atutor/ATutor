@@ -14,7 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 1);
-define('AT_DEVEL_TRANSLATE', 1);
+define('AT_DEVEL_TRANSLATE', 0);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -588,13 +588,13 @@ function get_instructor_status() {
 	$_my_uri = $_SERVER['PHP_SELF'].$_my_uri;
 
 function my_add_null_slashes( $string ) {
-    return ( $string );
+    return mysql_real_escape_string(stripslashes($string));
 }
 
 if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes = 'my_add_null_slashes';
 } else {
-	$addslashes = 'addslashes';
+	$addslashes = 'mysql_real_escape_string';
 }
 
 /**
