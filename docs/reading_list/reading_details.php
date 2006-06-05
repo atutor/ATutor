@@ -82,10 +82,7 @@ if ($row = mysql_fetch_assoc($result)){
 	</div>
 <?php endif;
 }
-else {  // can't get resource from database
-}
 ?>
-
 	<?php } while($rowReadings = mysql_fetch_assoc($resultReadings)); ?>
 <?php else: ?>
 		<em><?php echo _AT('none_found'); ?></em>

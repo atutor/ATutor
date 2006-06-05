@@ -23,16 +23,21 @@ if (isset($_GET['submit'])) { // was the 'back' button pressed?
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$id = intval ($_GET['id']); ?>
+$id = intval ($_GET['id']);
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
-	<div class="input-form">	
-
-<?php 
 $sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 $result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)){ 
-	if ($row['type'] == RL_TYPE_BOOK){ ?>
+if (!$row = mysql_fetch_assoc($result)) {
+	// can't get resource from database
+	$msg->addError('RL_RESOURCE_NOT_FOUND');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+?>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
+<div class="input-form">
+
+	<?php if ($row['type'] == RL_TYPE_BOOK): ?>
 		<div class="row">
 			<?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?> 
 		</div>
@@ -54,7 +59,8 @@ if ($row = mysql_fetch_assoc($result)){
 		<div class="row">
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
 		</div>
-<?php } else if ($row['type'] == RL_TYPE_URL){ ?>
+
+	<?php elseif ($row['type'] == RL_TYPE_URL): ?>
 		<div class="row">
 			<?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?> 
 		</div>
@@ -70,8 +76,8 @@ if ($row = mysql_fetch_assoc($result)){
 		<div class="row">
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
 		</div>
-<?php }
-else if ($row['type'] == RL_TYPE_HANDOUT){ ?>
+
+	<?php elseif ($row['type'] == RL_TYPE_HANDOUT): ?>
 		<div class="row">
 			<?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?> 
 		</div>
@@ -87,8 +93,8 @@ else if ($row['type'] == RL_TYPE_HANDOUT){ ?>
 		<div class="row">
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
 		</div>
-<?php }
-else if ($row['type'] == RL_TYPE_AV){ ?>
+
+	<?php elseif ($row['type'] == RL_TYPE_AV): ?>
 		<div class="row">
 			<?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>" ; ?> 
 		</div>
@@ -104,8 +110,8 @@ else if ($row['type'] == RL_TYPE_AV){ ?>
 		<div class="row">
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
 		</div>
-<?php }
-else if ($row['type'] == RL_TYPE_FILE){ ?>
+
+	<?php elseif ($row['type'] == RL_TYPE_FILE): ?>
 		<div class="row">
 			<?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?> 
 		</div>
@@ -127,17 +133,12 @@ else if ($row['type'] == RL_TYPE_FILE){ ?>
 		<div class="row">
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
 		</div>
-<?php }
-}
-else {  // can't get resource from database
-	$msg->addError('RL_RESOURCE_NOT_FOUND');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-?>
+	<?php endif; ?>
+
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
 	</div>
+</div>
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

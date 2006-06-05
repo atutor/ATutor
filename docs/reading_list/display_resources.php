@@ -25,13 +25,11 @@ if (isset($_GET['edit'])) {
 	if ($row = mysql_fetch_assoc($result)){
 		header('Location: add_resource_'.substr($_rl_types[$row['type']], 3).'.php?id='. $_GET['resource_id']. SEP. 'page_return=display_resources.php');
 	}
-}
-else if (isset($_GET['delete'])) {
+} else if (isset($_GET['delete'])) {
 	$_GET['resource_id'] = intval($_GET['resource_id']);
 	header('Location: delete_resource.php?id='. $_GET['resource_id']);
 	exit;
-}
-else if (isset($_GET['create'])){
+} else if (isset($_GET['create'])){
 	$_GET['new_resource'] = intval($_GET['new_resource']);
 	if (isset($_rl_types[$_GET['new_resource']])){
 		// Note: the '3' substring is used here to strip out the 'rl_' from the name

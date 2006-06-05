@@ -47,7 +47,7 @@ $result = mysql_query($sql, $db);
 				<td>
 				<?php  if ($row['date_start'] == '0000-00-00'){
 					echo _AT ('none');
-				}else {
+				} else {
 					echo AT_Date(_AT('rl_date_format'), $row['date_start'], AT_DATE_MYSQL_DATETIME);
 				}?>
 				</td>
@@ -55,7 +55,7 @@ $result = mysql_query($sql, $db);
 				<td>
 				<?php  if ($row['date_end'] == '0000-00-00'){
 					echo _AT ('none');
-				}else {
+				} else {
 					echo AT_Date(_AT('rl_date_format'), $row['date_end'], AT_DATE_MYSQL_DATETIME);
 				}?>
 				</td>
