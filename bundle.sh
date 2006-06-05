@@ -64,13 +64,13 @@ echo "\nRemoving $atutor_dir/ATutor/include/cvs_development.inc.php"
 rm $atutor_dir/ATutor/include/cvs_development.inc.php
 sleep 1
 
-echo "\nRemoving $atutor_dir/ATutor/themes/clean_blue"
-rm -r $atutor_dir/ATutor/themes/clean_blue
-sleep 1
+#echo "\nRemoving $atutor_dir/ATutor/themes/clean_blue"
+#rm -r $atutor_dir/ATutor/themes/clean_blue
+#sleep 1
 
-echo "\nRemoving $atutor_dir/ATutor/themes/open_book"
-rm -r $atutor_dir/ATutor/themes/open_book
-sleep 1
+#echo "\nRemoving $atutor_dir/ATutor/themes/open_book"
+#rm -r $atutor_dir/ATutor/themes/open_book
+#sleep 1
 
 echo "\nRemoving $atutor_dir/ATutor/install/db/atutor_upgrade sql < 1.4"
 rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.0_to_1.1.sql
