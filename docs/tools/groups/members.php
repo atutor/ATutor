@@ -158,7 +158,7 @@ $groups_members_keys = implode($groups_members_keys, ',');
 
 $owner = $system_courses[$_SESSION['course_id']]['member_id'];
 
-$sql = "SELECT M.member_id, M.login, M.first_name, M.last_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."course_enrollment E USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.privileges=0 AND E.approved='y' AND E.member_id<>$owner ORDER BY M.login";
+$sql = "SELECT M.member_id, M.login, M.first_name, M.last_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."course_enrollment E USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.privileges&".AT_PRIV_GROUPS."=0 AND E.approved='y' AND E.member_id<>$owner ORDER BY M.login";
 $result = mysql_query($sql, $db);
 
 $count = 0;

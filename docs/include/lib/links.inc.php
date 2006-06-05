@@ -25,7 +25,8 @@ function links_authenticate($owner_type, $owner_id) {
 	}
 
 	//if admin or TA w/ right privs, can manage all links
-	if ($_SESSION['is_admin'] || $_SESSION['privileges'] > 0) {
+	//if ($_SESSION['is_admin'] || $_SESSION['privileges'] > 0) {
+	if (authenticate(AT_PRIV_GROUPS, true)) {
 		return true;
 	}
 
@@ -46,7 +47,7 @@ function links_authenticate($owner_type, $owner_id) {
 /* return true if user is able to manage group or course links */
 function manage_links() {
 
-	if ($_SESSION['is_admin'] || $_SESSION['privileges'] > 0 ) {
+	if (authenticate(AT_PRIV_GROUPS, true)) {
 		return LINK_CAT_AUTH_ALL;
 	} else if (!empty($_SESSION['groups'])) {
 		return LINK_CAT_AUTH_GROUP;
@@ -71,7 +72,7 @@ function get_link_categories($manage=false, $list=false) {
 	if ($_SERVER['PHP_SELF'] == $_base_path.'links/add.php') {
 		$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") ORDER BY parent_id, name";
 	} else if ($manage) {
-		if ( $_SESSION['is_admin'] || $_SESSION['privileges']>0 ) { //everything but group-named cats
+		if ( authenticate(AT_PRIV_GROUPS, true) ) { //everything but group-named cats
 			if ($list) {
 				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'') ORDER BY parent_id, name";
 			} else {
@@ -81,9 +82,9 @@ function get_link_categories($manage=false, $list=false) {
 		} else if (!empty($groups)) { 
 
 			if ($list) { //only group subcats
-				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'') ORDER BY parent_id, name";
+				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'' ORDER BY parent_id, name";
 			} else { //only group cats and subcats 
-				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.") ORDER BY parent_id, name";
+				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." ORDER BY parent_id, name";
 			}
 		}	
 

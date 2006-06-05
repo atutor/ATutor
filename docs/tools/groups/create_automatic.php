@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 
 	$course_owner = $system_courses[$_SESSION['course_id']]['member_id'];
 	if (isset($_POST['fill'])) {
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`=0 AND member_id<>$course_owner";
+		$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`&".AT_PRIV_GROUPS."=0 AND member_id<>$course_owner";
 		$result = mysql_query($sql, $db);
 		$total_students = mysql_num_rows($result);
 		$students = array();
@@ -50,7 +50,7 @@ if (isset($_POST['cancel'])) {
 		}
 		shuffle($students);
 	} else {
-		$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`=0 AND member_id<>$course_owner";
+		$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`&".AT_PRIV_GROUPS."=0 AND member_id<>$course_owner";
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 
@@ -168,7 +168,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('number_of_groups'); ?><br />
 			<?php
-				$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`=0";
+				$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`&".AT_PRIV_GROUPS."=0";
 				$result = mysql_query($sql, $db);
 				$row = mysql_fetch_assoc($result);
 			?>

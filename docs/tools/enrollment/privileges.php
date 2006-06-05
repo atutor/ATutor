@@ -150,10 +150,10 @@ function change_privs ($member, $privs) {
 	}
 
 	/*
-	* if we're making a student a TA then we have to remove them
-	* from all the groups they may belong to. TAs cannot belong to groups.
+	* if we're making a student a GROUP TA then we have to remove them
+	* from all the groups they may belong to. 
 	*/
-	if ($privilege > 0) {
+	if (query_bit($privilege, AT_PRIV_GROUPS)) {
 		$group_list = implode(',', $_SESSION['groups']);
 		if ($group_list) {
 			$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($group_list) AND member_id=$member";

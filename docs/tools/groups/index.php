@@ -16,17 +16,6 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GROUPS);
 
-/* make sure we own this course that we're approving for! */
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
-$result	= mysql_query($sql, $db);
-
-if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('NOT_OWNER');
-	require (AT_INCLUDE_PATH.'footer.inc.php'); 
-	exit;
-}
-
 if (isset($_GET['edit'], $_GET['id'])) {
 	$parts = explode('_', $_GET['id'], 2);
 	if (isset($parts[1]) && $parts[1]) {

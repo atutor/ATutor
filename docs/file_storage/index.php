@@ -530,7 +530,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 	<td colspan="7">
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
 		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
-			<?php if (($owner_type != WORKSPACE_COURSE) && !(($owner_type == WORKSPACE_PERSONAL) && ($_SESSION['is_admin'] || $_SESSION['privileges']))): ?>
+			<?php if (($owner_type != WORKSPACE_COURSE) && !(($owner_type == WORKSPACE_PERSONAL) && ($_SESSION['is_admin'] || authenticate(AT_PRIV_GROUPS,true))) ): ?>
 				<input type="submit" name="assignment" value="<?php echo _AT('hand_in'); ?>" />
 			<?php endif; ?>
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />

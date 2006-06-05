@@ -99,7 +99,7 @@ function newWindowWithCode() {
 //    var theVal = document.editorform.edittext.value;
     var theCode = '<html><body onLoad="document.accessform.submit();"> \n';
     theCode += '<h1>Submitting Code for Accessibility Checking.....</h1>\n';
-    theCode += '<form action="http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/Checkacc" name="accessform" method="post"> \n';
+    theCode += '<form action="http://checker.atrc.utoronto.ca/servlet/Checkacc" name="accessform" method="post"> \n';
     theCode += '<input type="hidden" name="guide" value="wcag-2-0-aaa.xml" /> \n';
     theCode += '<input type="hidden" name="type" value="form" /> \n';
     theCode += '<textarea name="edittext">' + theVal + '</textarea>\n';
