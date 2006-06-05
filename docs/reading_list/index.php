@@ -35,8 +35,7 @@ $result = mysql_query($sql, $db);
 <tbody>
 <?php if ($row = mysql_fetch_assoc($result)): ?>
 
-		<?php do { ?>
-	<tr>
+	<?php do { ?>
 			<?php // get the external resource using the resource ID from the reading
 			$id = $row['resource_id'];
 			$sql = "SELECT title, type, url FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
@@ -67,8 +66,7 @@ $result = mysql_query($sql, $db);
 				</tr>
 
 			<?php } ?>
-	</tr>
-		<?php } while($row = mysql_fetch_assoc($result)); ?>
+	<?php } while($row = mysql_fetch_assoc($result)); ?>
 <?php else: ?>
 	<tr>
 		<td colspan="3"><em><?php echo _AT('none_found'); ?></em></td>
