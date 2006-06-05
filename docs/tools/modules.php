@@ -125,10 +125,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $_current_modules = array_slice($_pages[AT_NAV_COURSE], 1, -1); // removes index.php and tools/index.php
 $num_main    = count($_current_modules);
 //main and home merged
-$_current_modules = array_merge($_current_modules, array_diff($_pages[AT_NAV_HOME],$_pages[AT_NAV_COURSE]) );
+$_current_modules = array_merge( (array) $_current_modules, array_diff($_pages[AT_NAV_HOME],$_pages[AT_NAV_COURSE]) );
 $num_modules = count($_current_modules);
 //all other mods
-$_current_modules = array_merge($_current_modules, array_diff($_modules, $_current_modules));
+$_current_modules = array_merge( (array) $_current_modules, array_diff($_modules, $_current_modules));
 
 $count = 0;
 

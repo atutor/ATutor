@@ -211,7 +211,7 @@ class Message {
 			// PHP 5
 			//try {
 				$new = array($first => $payload);
-				$final = array_merge($_SESSION['message'][$sync], $new);
+				$final = array_merge((array) $_SESSION['message'][$sync], (array) $new);
 
 				unset($_SESSION['message'][$sync]);
 				$_SESSION['message'][$sync] = $final;

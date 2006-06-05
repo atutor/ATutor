@@ -21,8 +21,8 @@ if (isset($_pages[AT_NAV_ADMIN])) {
 	array_unshift($_pages[AT_NAV_ADMIN], 'admin/index.php', 'admin/modules/index.php');
 }
 
-$_pages[AT_NAV_PUBLIC] = array_merge(array('login.php', 'registration.php', 'browse.php'), $_pages[AT_NAV_PUBLIC]);
-$_pages[AT_NAV_START]  = array_merge(array('users/index.php',  'users/profile.php', 'users/preferences.php'), $_pages[AT_NAV_START]);
+$_pages[AT_NAV_PUBLIC] = array_merge(array('login.php', 'registration.php', 'browse.php'), (array) $_pages[AT_NAV_PUBLIC]);
+$_pages[AT_NAV_START]  = array_merge(array('users/index.php',  'users/profile.php', 'users/preferences.php'), (array) $_pages[AT_NAV_START]);
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();
 
@@ -88,7 +88,7 @@ if ($_SESSION['course_id'] > 0) {
 		$_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
 		$_pages['admin/config_edit.php']['parent']    = AT_NAV_ADMIN;
 		$_pages['admin/config_edit.php']['guide']     = 'admin/?p=system_preferences.php';
-		$_pages['admin/config_edit.php']['children']  = array_merge($_pages['admin/config_edit.php']['children'], array('admin/error_logging.php'));
+		$_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/error_logging.php'));
 	}
 	$_pages['admin/fix_content.php']['title_var'] = 'fix_content_ordering';
 	$_pages['admin/fix_content.php']['parent']    = 'admin/index.php';
@@ -131,7 +131,7 @@ if ($_SESSION['course_id'] > 0) {
 
 		$_pages['admin/cron_config.php']['title_var'] = 'cron_config';
 		$_pages['admin/cron_config.php']['parent']    = 'admin/config_edit.php';
-		$_pages['admin/config_edit.php']['children'] = array_merge($_pages['admin/config_edit.php']['children'], array('admin/cron_config.php'));
+		$_pages['admin/config_edit.php']['children'] = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/cron_config.php'));
 	}
 }
 
@@ -147,7 +147,7 @@ $_pages['browse.php']['children']  = $_pages['browse.php']['children'];
 
 $_pages['login.php']['title_var'] = 'login';
 $_pages['login.php']['parent']    = AT_NAV_PUBLIC;
-$_pages['login.php']['children']  = array_merge(array('password_reminder.php'), $_pages['login.php']['children']);
+$_pages['login.php']['children']  = array_merge(array('password_reminder.php'), (array) $_pages['login.php']['children']);
 
 $_pages['confirm.php']['title_var'] = 'confirm';
 $_pages['confirm.php']['parent']    = AT_NAV_PUBLIC;
@@ -162,7 +162,7 @@ $_pages['logout.php']['parent']    = AT_NAV_PUBLIC;
 /* my start page pages */
 $_pages['users/index.php']['title_var'] = 'my_courses';
 $_pages['users/index.php']['parent']    = AT_NAV_START;
-$_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), $_pages['users/index.php']['children']);
+$_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), (array) $_pages['users/index.php']['children']);
 	
 	$_pages['users/browse.php']['title_var'] = 'browse_courses';
 	$_pages['users/browse.php']['parent']    = 'users/index.php';
@@ -347,7 +347,7 @@ function get_path($current_page) {
 		return $path;
 	} else if (isset($parent_page)) {
 		$path[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
-		$path = array_merge($path, get_path($parent_page));
+		$path = array_merge((array) $path, get_path($parent_page));
 	} else {
 		$path[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
 	}

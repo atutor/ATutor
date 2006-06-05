@@ -82,7 +82,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		$tests['tests'][] = $row3;
 	}
 
-	$courses[] = array_merge($row, $tests);
+	$courses[] = array_merge($row, (array) $tests);
 }
 
 function get_category_name($cat_id) {

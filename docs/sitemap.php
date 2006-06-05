@@ -22,7 +22,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<p><a href="index.php">'._AT('home').'</a>';
 
 $_current_modules = array_slice($_pages[AT_NAV_COURSE], 1);
-$_current_modules = array_merge($_current_modules, array_diff($_pages[AT_NAV_HOME],$_pages[AT_NAV_COURSE]));
+$_current_modules = array_merge((array) $_current_modules, array_diff($_pages[AT_NAV_HOME],$_pages[AT_NAV_COURSE]));
 
 foreach ($_current_modules as $module) {
 	echo '<br />';

@@ -218,7 +218,7 @@ class Module {
 			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
 
 			if (isset($this->_pages)) {
-				$_pages = array_merge_recursive((array)$_pages, $this->_pages);
+				$_pages = array_merge_recursive((array) $_pages, $this->_pages);
 			}
 
 			//side menu items
