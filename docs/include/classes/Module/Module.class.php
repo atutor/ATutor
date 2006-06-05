@@ -295,12 +295,22 @@ class Module {
 		return $this->_cron_interval;
 
 	}
+/*
 	function getName() {
 		if ($this->isUninstalled()) {
 			return current($this->getProperty('name'));
 		}
 		return _AT(basename($this->_directoryName));
-	}
+	}*/
+
+//Fix for PHP 5
+	function getName() {
+		if ($this->isUninstalled()) {
+			$_nameFix = $this->getProperty('name');
+			return current($_nameFix);
+		}
+		return _AT(basename($this->_directoryName));
+	}	
 
 	function getDescription($lang = 'en') {
 		$this->_initModuleProperties();
