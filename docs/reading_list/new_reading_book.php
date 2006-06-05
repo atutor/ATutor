@@ -143,7 +143,7 @@ $today = getdate();
 		</select>
 
 		<select name="startyear">
-		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
+		<?php for ($i = ($today['year'] - 1); $i <= ($today['year'] + 4); $i++){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $today['year']) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
@@ -163,7 +163,7 @@ $today = getdate();
 		</select>
 	
 		<select name="endyear">
-		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
+		<?php for ($i = ($today['year'] - 1); $i <= ($today['year'] + 4); $i++){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $today['year']) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>	

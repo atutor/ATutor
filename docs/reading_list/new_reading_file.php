@@ -146,7 +146,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</select>
 
 		<select name="startyear">
-		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
+		<?php for ($i = ($today['year'] - 1); $i <= ($today['year'] + 4); $i++){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $today['year']) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>
@@ -167,7 +167,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</select>
 	
 		<select name="endyear">
-		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
+		<?php for ($i = ($today['year'] - 1); $i <= ($today['year'] + 4); $i++){ ?>
 			<option value="<?php echo $i ?>" <?php if ($i == $today['year']) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
 		<?php } ?>
 		</select>	
