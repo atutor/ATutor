@@ -80,6 +80,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	$initial_content_info = explode('_', $_POST['initial_content'], 2);
 	//admin
+	$course_quotas = '';
 	if ($isadmin) {
 		$instructor		= $_POST['instructor'];
 		$quota			= intval($_POST['quota']);
@@ -108,14 +109,12 @@ function add_update_course($_POST, $isadmin = FALSE) {
 			}
 		}
 
-		$_POST['max_quota']	= $quota;
-		$_POST['max_file_size']	= $filesize;
+		$course_quotas  =  "max_quota='$quota', max_file_size='$filesize',";
 
 	} else {
 		$instructor = $_SESSION['member_id'];
 		if (!$_POST['course'])	{
-			$quota    = AT_COURSESIZE_DEFAULT;
-			$filesize = AT_FILESIZE_DEFAULT;
+			$course_quotas    =  "max_quota=".AT_COURSESIZE_DEFAULT.", max_file_size=".AT_FILESIZE_DEFAULT.",";
 			$row = $Backup->getRow($initial_content_info[0], $initial_content_info[1]);
 
 			if ((count($initial_content_info) == 2) 
@@ -129,11 +128,9 @@ function add_update_course($_POST, $isadmin = FALSE) {
 			}
 
 		} else {
-			$quota = "max_quota";
-			$filesize = "max_file_size";
 			unset($initial_content_info);
+			$course_quotas  =  "max_quota='{$system_courses[$_POST[course]][max_quota]}', max_file_size='{$system_courses[$_POST[course]][max_file_size]}',";
 		}
-
 	}
 
 	if ($msg->containsErrors()) {
@@ -147,11 +144,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$menu_defaults = ',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date' $menu_defaults";
-
-/*
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]' $menu_defaults";
-*/
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], $course_quotas primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date' $menu_defaults";
 
 	$result = mysql_query($sql, $db);
 	if (!$result) {
