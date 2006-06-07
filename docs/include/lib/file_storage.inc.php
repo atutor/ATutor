@@ -176,9 +176,10 @@ function fs_get_folder_by_pid($parent_folder_id, $owner_type, $owner_id) {
 			} else {
 				global $system_courses;
 
-				$sql = "SELECT E.member_id AS folder_id, M.login AS title FROM ".TABLE_PREFIX."course_enrollment E INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.approved='y' AND AND E.privileges&".AT_PRIV_GROUPS."=0 AND E.member_id<>{$system_courses[$_SESSION[course_id]][member_id]} ORDER BY M.login";
+				$sql = "SELECT E.member_id AS folder_id, M.login AS title FROM ".TABLE_PREFIX."course_enrollment E INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.approved='y' AND E.privileges & ".AT_PRIV_GROUPS." = 0 AND E.member_id<>{$system_courses[$_SESSION[course_id]][member_id]} ORDER BY M.login";
 			}
 			$result = mysql_query($sql, $db);
+
 			while ($row = mysql_fetch_assoc($result)) {
 				$rows[] = $row;
 			}
