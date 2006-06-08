@@ -34,6 +34,18 @@ function get_file_type_icon($file_name) {
 	return 'generic';
 }
 
+function get_relative_path($src, $dest) {
+	if ($src == '') {
+		$path = $dest;
+	} else if (substr($dest, 0, strlen($src)) == $src) {
+		$path = substr($dest, strlen($src));
+	} else {
+		$path = '../' . $dest;
+	}
+
+	return $path;
+}
+
 // get the course total in Bytes 
 $course_total = dirsize($current_path);
 
@@ -203,7 +215,7 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 </tfoot>
 <?php if($pathext) : ?>
 	<tr>
-		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
+		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'cp='.$_GET['cp']; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
 	</tr>
 <?php endif; ?>
 <?php
@@ -228,7 +240,7 @@ while (false !== ($file = readdir($dir)) ) {
 	if(is_dir($current_path.$pathext.$file)) {
 		$size = dirsize($current_path.$pathext.$file.'/');
 		$totalBytes += $size;
-		$filename = '<a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/'). SEP . 'popup=' . $popup . SEP . 'framed='. $framed .'">'.$file.'</a>';
+		$filename = '<a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/'). SEP . 'popup=' . $popup . SEP . 'framed='. $framed . SEP.'cp='.$_GET['cp'].'">'.$file.'</a>';
 		$fileicon = '&nbsp;';
 		$fileicon .= '<img src="images/folder.gif" alt="'._AT('folder').':'.$file.'" height="18" width="20" class="img-size-fm1" />';
 		$fileicon .= '&nbsp;';
@@ -298,7 +310,7 @@ while (false !== ($file = readdir($dir)) ) {
 
 		if ($popup == TRUE) {
 			$files[$file1] .= '<td  align="center">';
-			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . $pathext . '\', \'' . $ext . '\');" /></td>';
+			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\');" /></td>';
 		}
 
 
@@ -334,6 +346,8 @@ echo '</table></form>';
 <script type="text/javascript">
 //<!--
 function insertFile(fileName, pathTo, ext) { 
+
+	// pathTo + fileName should be relative to current path (specified by the Content Package Path)
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
 		var info = "<?php echo _AT('alternate_text'); ?>";

@@ -17,7 +17,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('title');  ?></label><br />
-		<input type="text" name="title" size="40" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" />
+		<input type="text" name="title" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" />
 	</div>
 	
 	<?php
@@ -42,7 +42,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<?php endif; ?>
 		<script type="text/javascript" language="javascript">
 		// <!--
-			document.write(" <a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/index.php?framed=1<?php echo SEP; ?>popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')\" style=\"cursor: pointer; text-decoration:underline;\" ><?php echo _AT('open_file_manager'); ?> </a>");
+			document.write(" <a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $content_row['content_path']; ?>','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')\" style=\"cursor: pointer; text-decoration:underline;\" ><?php echo _AT('open_file_manager'); ?> </a>");
 		//-->
 		</script>
 		<noscript>
