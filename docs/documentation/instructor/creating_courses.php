@@ -17,13 +17,19 @@
 		<dd>Enable this setting if you wish to make an RSS feed of the course announcements available for display on another website.</dd>
 
 		<dt>Access</dt>
-		<dd>determines who can have access to the course content - any user, only logged in users, or logged in and enrolled users.</dd>
+		<dd>Determines who can have access to the course content - any user, only logged in users, or logged in and enrolled users.</dd>
+
+		<dt>Release Date</dt>
+		<dd>The date when the course can be accessed by students. Or, available immediately</dd>
+
+		<dt>Banner</dt>
+		<dd>HTML that form a custom banner or splash page for the coruse home page. Apears above course announcements if there are any.</dd>
 
 		<dt>Initial Content</dt>
-		<dd>initialise the course content to be either empty, basic place-holder content, or a restored backup from other courses you teach.</dd>
+		<dd>Initialise the course content to be either empty, basic place-holder content, or a restored backup from other courses you teach.</dd>
 	</dl>
 
-<p>Enter the necessary information and use the <code>Save</code> button to proceed into the newly created course.</p>
+<p>Enter the necessary information and use the <code>Save</code> button to proceed into the newly created course. Properties set here can be modified through Manage > <a href="properties.php">Properties</a></p>
 
 
 <?php require('../common/body_footer.inc.php'); ?>

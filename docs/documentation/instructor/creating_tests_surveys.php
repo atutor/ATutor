@@ -19,7 +19,7 @@
 		<dd>Define the window of time in which the test will be available for taking.  It is possible to define the start date to be in the future, meaning the test will not be available until that date.</dd>
 	
 		<dt>Assign to Groups</dt>
-		<dd>Specifies the groups (as defined in the <a href="enrollment.php">Enrollment Manager</a>) permitted to take this test. By default, tests are available to Everyone in the course.</dd>
+		<dd>Specifies the groups (created using the <a href="groups.php">Group Manager</a>) permitted to take this test. By default, tests are available to Everyone in the course.</dd>
 	</dl>
 	
 	<p><strong>Surveys</strong> are the same as regular tests, with the exception that no marks be assigned to questions (and no results be released), and in some cases it might be preferable to treat submissions as <em>Anonymous</em>.  This can be done by choosing Yes from the <em>Anonymous</em> property setting.</p>

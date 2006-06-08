@@ -1,7 +1,7 @@
 <?php require('../common/body_header.inc.php'); ?>
 
 <h2>File Manager</h2>
-	<p>ATutor has a file system used for storing course resource files, and it is managed with the <em>File Manager</em>. The File Manager allows instructors to include files associated with course content into content pages. The File Manager also allows you to create, edit, move, and delete files.</p>
+	<p>ATutor has a file system used for storing course content resource files, and it is managed with the <em>File Manager</em>. The File Manager allows instructors to include files associated with course content into content pages. The File Manager also allows you to create, edit, move, and delete files. The File Manager should not be confuse with the <a href="..//general/file_storage.php">File Storage</a> area.</p>
 
 	<p>The File Manager can be found in the <em>Manage</em> area, linked from the Content Editor so it can be opened while authoring content pages, or linked throughout the Test Question authoring screens so files can be managed while assembling tests.</p>
 
@@ -10,7 +10,7 @@
 	<p>Using the <code>Create Folder</code> button creates a folder for better organizing uploaded files. It is possible to create folders and move files into folders at any time.</p>
 
 <h3>Uploading Files</h3>
-	<p>Uploading files using the <em>File Manager</em> is one way of adding content to your course. After uploading a file, it can be added to a course by using the <a href="content.php">Content Manger</a> tool and providing a link to the file within a content page.</p>
+	<p>Uploading files using the <em>File Manager</em> is one way of adding content to your course. After uploading a file, it can be added to a course by using the popup File Manager linked form the <a href="content.php">Content Editor</a> and the <code>Insert</code> button that appears next to each file. This will either create a link to a file, or insert an image into a content page.</p>
 	
 	<p><code>Browse...</code> opens a local file browser window in which to choose the file for upload.</p>
 

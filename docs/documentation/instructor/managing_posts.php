@@ -15,7 +15,7 @@
 require('../common/body_header.inc.php'); ?>
 
 <h3>8.4.1 Managing Posts</h3>
-<p>The course instructor and students with forum privileges can edit and delete posts. Access to these tools are available when viewing a thread message.</p>
+<p>The course instructor and assistants with forum privileges can edit and delete posts. Access to these tools are available when viewing a thread message.</p>
 
 <dl>
 	<dt>Edit</dt>

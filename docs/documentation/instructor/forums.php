@@ -6,7 +6,7 @@
 	<p>Course instructors and students with forum privileges can manage and mediate the forums by deleting, locking, and sticking threads and messages.</p>
 
 <h3>Creating Forums</h3>
-	<p>To create a new forum, use the <em>Create Forum</em> link in the Forums section of the Manage area and enter a title and optional description. New forums will be accessible to all course students, instructors, and alumni.</p>
+	<p>To create a new forum, use the <em>Create Forum</em> link in the Forums section of the Manage area and enter a title and optional description. New forums will be accessible to all course students, instructors, and alumni. Forums can also be created for access by <a href="groups.php">Groups</a> only.</p>
 
 <h3>Editing &amp; Deleting Forums</h3>
 	<p>To edit an existing forum, select the forum in the Forums manager and use the <em>Edit</em> button.  Make the necessary changes and then use <em>Save</em> to return to the Forum Manager, or <em>Cancel</em> to return to the Forum Manager without saving any changes.</p>

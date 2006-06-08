@@ -19,6 +19,6 @@
 	
 	<p>Select the content package to upload by choosing the file from your local file system, either by typing the path into the <em>Upload a Content Package</em> text field, or by using the <kbd>Browse</kbd> button. You can also import a content package over the Web by entering the URL of the package.</p>
 
-	<p>Using <kbd>Import</kbd> will upload the content into the course at the specified location.</p>
+	<p>Using <kbd>Import</kbd> will upload the content into the course at the specified location on the Internet.</p>
 	
 <?php require('../common/body_footer.inc.php'); ?>

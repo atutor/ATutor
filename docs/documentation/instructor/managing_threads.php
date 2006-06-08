@@ -16,12 +16,12 @@ require('../common/body_header.inc.php'); ?>
 
 <h2>8.4 Managing Threads</h2>
 
-<p>As an instructor, it is wise to become familiar with the forum management tools. To access these tools, browse a forum while logged in as an instructor or as a student with forum management privileges.</p>
+<p>As an instructor, it is wise to become familiar with the forum management tools. To access these tools, browse a forum while logged in as an instructor or as an assistant with forum management privileges.</p>
 
 <p>For each thread in a forum, the following actions are available:</p>
 <dl>
 	<dt>Stick Thread</dt>
-	<dd><p>Use the exclamation point icon next to a thread to stick it.  This keeps the specified thread at the very top of the forum's thread list and is useful for keeping important information visible to forum users. </p>
+	<dd><p>Use the exclamation point icon next to a thread to stick it.  This keeps the specified thread at the top of the forum's thread list and is useful for keeping important information visible to forum users. </p>
 
 	<p>To unstick a thread, just use the <em>Sticky Thread</em> icon again.</p>
 
@@ -29,7 +29,7 @@ require('../common/body_header.inc.php'); ?>
 	</dd>
 
 	<dt>Lock Thread</dt>
-	<dd><p>Use the <em>Lock</em> icon next to the thread title to lock a thread. There are two options for locking a thread - lock posting and reading, and lock posting only. Lock posting and reading closes the thread so that no one can read the contents or post replies. But note that the title of the thread will remain listed in the forum. Lock posting only will let users read the entire thread but not post any replies to it. </p>
+	<dd><p>Use the <em>Lock</em> icon next to the thread title to lock a thread. There are two options for locking a thread - lock posting and reading, and lock posting only. Lock <em>posting and reading</em> closes the thread so that no one can read the contents or post replies. But note that the title of the thread will remain listed in the forum. Lock <em>posting only</em> will let users read the entire thread but not post any replies to it. </p>
 
 	<p>To change the lock preferences or unlock a thread, use the <em>Unlock Thread</em> icon.</p>
 	</dd>
