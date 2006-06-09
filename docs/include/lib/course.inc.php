@@ -189,7 +189,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	/* insert some default content: */
 
-	if (!$_POST['course_id'] && ($_POST['initial_content'] == 1)) {
+	if (!$_POST['course_id'] && ($_POST['initial_content'] == '1')) {
 		$contentManager = new ContentManager($db, $new_course_id);
 		$contentManager->initContent( );
 
