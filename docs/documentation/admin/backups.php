@@ -12,7 +12,7 @@
 
 	<p>Restoring a backup as an administrator is similar to restoring a backup as an instructor, with the added option of being able to select which course the backup should be restored into.</p>
 
-	<p>For details on restoring a backup into a course, see the Backup Manager's Restoring Backups section in the <a href="../instructor/creating_restoring.php" target="_new">Instructor Documentation</a>.</p>
+	<p>For details on restoring a backup into a course, see the Backup Manager's <a href="../instructor/creating_restoring.php">Restoring Backups</a> section in the Instructor Documentation.</p>
 
 <h3>Managing Backups</h3>
 	<p>Backups can be downloaded to the administrator's hard-drive for safe-keeping by using the <code>Download</code> button. Backups can also be edited or deleted.</p>

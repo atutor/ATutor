@@ -14,7 +14,7 @@ debug($_REQUEST); // print all GET, POST, and COOKIE variables
 
 		</dd>
 		<dt>Error Logging</dt>
-		<dd>View the error log through the Configuration section. There may be information in the error reports that can help you identify where or how an error occured. The output from the error log can be sent to the ATutor team to aid them in finding a solution to your problem.</dd>
+		<dd>View the error log through the <a href="system_preferences.php">System Preferences</a> section. There may be information in the error reports that can help you identify where or how an error occured. The output from the error log can be sent to the ATutor team to aid them in finding a solution to your problem.</dd>
 
 		<dt><kbd>phpinfo()</kbd></dt>
 		<dd>Often, system problems can be fixed by reviewing the phpinfo page. This will show all of the configuration options for your system. Review the <a href="requirements_recommendations.php">Requirement &amp; Recommendations</a> for different values that should be set and displayed in the phpinfo output. Below is the contents of a phpinfo file. Viewing this page in a browser will show the system variables.<br /><br />
@@ -23,7 +23,8 @@ debug($_REQUEST); // print all GET, POST, and COOKIE variables
 phpinfo();
 ?&gt;
 </pre>
-
+</dd>
+<p>Also see the <a href="../developer/guidelines.html">Developer Documentation</a> for details about modifying the source code.</p>
 		</dd>
 	</dl>
 <?php require('../common/body_footer.inc.php');?>

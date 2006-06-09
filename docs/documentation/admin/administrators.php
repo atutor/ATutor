@@ -1,7 +1,7 @@
 <?php require('../common/body_header.inc.php'); ?>
 
 <h2>Administrators</h2>
-	<p>An ATutor installation can be maintained by multiple administrators, each with their own privilege access level. The three kinds of administrator accounts are described below.</p>
+	<p>An ATutor installation can be maintained by multiple administrators, each with their own privileges. The three kinds of administrator accounts are described below.</p>
 
 	<dl>
 		<dt>Super Administrator</dt>
