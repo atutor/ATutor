@@ -17,7 +17,7 @@ To move between workspaces, select them from the dropdown menu and use the <code
 <p>To organizing files, folders can be created using the <em>Create Folder</em> feature at the top right of the file area. To upload a new file, with an optional description of its contents, use the <em>New File</em> feature at the top left. The file will be uploaded to the currently opened directory.</p>
 
 <h3>Managing Files</h3>
-<p>It is also possible to <code>Download</code> files to your hard drive, <code>Hand In</code> a file for an assignment, <code>Edit</code> file details and rename folder,  <code>Move</code> files around within a workspace, as well as <code>Delete</code> files and folders. Depending on the type of workspace, the buttons that appear will vary.</p>
+<p>It is also possible to <code>Download</code> files to your hard drive, <code>Hand In</code> a file for an assignment, <code>Edit</code> file details and rename folders,  <code>Move</code> files around within a workspace, as well as <code>Delete</code> files and folders. Depending on the type of workspace, the buttons that appear will vary.</p>
 
 <h3>File Revisions</h3>
 
