@@ -49,7 +49,9 @@ function load_editor($name = FALSE) {
 	flash_external_list_url : "example_data/example_flash_list.js",
 	document_base_url: "'.$_base_href.$course_base_href.$content_base_href.'",
 	relative_urls : true,
-	convert_urls : false
+	convert_urls : false,
+	accessibility_warnings : true,
+	accessibility_focus : true
 	});';
 	echo '</script>';
 }
