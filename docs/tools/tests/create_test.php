@@ -256,7 +256,7 @@ $msg->printErrors();
 	</div>
 
 	<div class="row">
-		<label for="inst"><?php echo _AT('limit_to_group'); ?></label><br />
+		<?php echo _AT('limit_to_group'); ?><br />
 		<?php
 			//show groups
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
