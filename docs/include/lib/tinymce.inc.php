@@ -32,6 +32,10 @@ function load_editor($name = FALSE) {
 		echo '	mode : "textareas",';
 	}
 	echo 'theme : "advanced",
+	relative_urls : true,
+	convert_urls : true,
+	accessibility_warnings : true,
+	accessibility_focus : true,
 	plugins : "table,acheck,advhr,advimage,advlink,emotions,iespell,preview,zoom,flash,print,contextmenu",
 	theme_advanced_buttons1_add : "fontselect,fontsizeselect",
 	theme_advanced_buttons2_add : "separator,preview,zoom,separator,forecolor,backcolor",
@@ -47,11 +51,7 @@ function load_editor($name = FALSE) {
 	external_link_list_url : "example_data/example_link_list.js",
 	external_image_list_url : "example_data/example_image_list.js",
 	flash_external_list_url : "example_data/example_flash_list.js",
-	document_base_url: "'.$_base_href.$course_base_href.$content_base_href.'",
-	relative_urls : true,
-	convert_urls : false,
-	accessibility_warnings : true,
-	accessibility_focus : true
+	document_base_url: "'.$_base_href.$course_base_href.$content_base_href.'"
 	});';
 	echo '</script>';
 }
