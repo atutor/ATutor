@@ -171,6 +171,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	}
 }
 
+
 if ($cid) {
 	/* filter out the top level sections that we don't want */
 	$top_level = $content[$top_content_parent_id];
@@ -199,8 +200,6 @@ $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '
 $first = $content[$top_content_parent_id][0];
 
 /* generate the resources and save the HTML files */
-$old_pref = $_SESSION['prefs'][PREF_CONTENT_ICONS];
-$_SESSION['prefs'][PREF_CONTENT_ICONS] = 2;
 
 $used_glossary_terms = array();
 ob_start();
@@ -239,9 +238,6 @@ if (count($used_glossary_terms)) {
 	unset($glossary_xml);
 }
 
-/* restore old pref */
-$_SESSION['prefs'][PREF_CONTENT_ICONS] = $old_pref;
-
 $toc_html = str_replace(array('{TOC}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
 					    array($toc_html, $course_language_charset, $course_language_code),
 						$html_toc);
@@ -279,7 +275,6 @@ if ($row = mysql_fetch_assoc($result)) {
 } else {
 	$imsmanifest_xml = str_replace('{VCARD}', '', $imsmanifest_xml);
 }
-
 
 /* save the imsmanifest.xml file */
 
