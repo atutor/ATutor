@@ -15,4 +15,6 @@
 
 	<p>Using the arrows in the <em>Order</em> column will change the ordering of the student tool as it appears in the <em>Main Navigation</em> and on the <em>Course Home</em> page.</p>
 
+	<p>It is also possible to install the <a href="http://www.atutor.ca/atutor/modules.php">Student Tools Module</a>, and use it as a place to locate links to the various ATutor tools, leaving the course home page as a splash screen, or as a place to display course announcments. </p>
+
 <?php require('../common/body_footer.inc.php'); ?>
