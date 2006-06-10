@@ -6,8 +6,8 @@
 	<ul>
 		<li><em>Course Files</em> - The default workspace. Managed by the instructor, or assistants with file storage privileges, course resource files are made available for download by course members.</li>
 		<li><em>My Files</em> - Private files only the user can access and manage.</li>
-		<li><em>Groups</em> - Shared files managed by group members, and accessible instructors and assistants with group privileges.</li>
-		<li><em>Assignments</em> - Student can submit assignments to these workspaces, and instructors or assistants with assignment privileges, can manage submissions.</li>
+		<li><em>Groups</em> - Shared files managed by group members, and accessible to instructors and assistants with group privileges.</li>
+		<li><em>Assignments</em> - Students can submit assignments to these workspaces, and instructors or assistants with assignment privileges can manage submissions.</li>
 
 	</ul>
 
