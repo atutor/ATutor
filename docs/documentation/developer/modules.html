@@ -497,7 +497,7 @@ admin_authenticate(AT_ADMIN_PRIV_FORUMS);
 		<dd>Short description of the language text.</dd>
 	</dl>
 
-<p>Each language should have a corresponding INSERT line in the module.sql file, that gets inserted into the <kbd>language_text</kbd> table during installation. Do not include a prefix on the <kbd>language_text</kbd> table name. The installer will detect the right prefix, and automatically prepend it to tables names. Also see the section <a href="#module.sql">module.sql</a> for information about creating a file to install the module's language.</p>
+<p>Each language item should have a corresponding SQL INSERT line in the module.sql file, that gets inserted into the ATutor <kbd>language_text</kbd> table during installation. Do not include a prefix (e.g. "AT_") on the <kbd>language_text</kbd> table name. The installer will detect the right prefix, and automatically prepend it to tables names. Also see the section <a href="#module.sql">module.sql</a> for information about creating a file to install the module's language.</p>
 <pre>
 # Insert module specific language:
 INSERT INTO `language_text` VALUES ('en',
