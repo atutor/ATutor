@@ -30,10 +30,11 @@ function load_editor($name = FALSE) {
 		echo '  elements : "'.$name.'",';
 	} else {
 		echo '	mode : "textareas",';
-	}
+	}	
 	echo 'theme : "advanced",
 	relative_urls : true,
 	convert_urls : true,
+	convert_fonts_to_spans : true,
 	accessibility_warnings : true,
 	accessibility_focus : true,
 	plugins : "table,acheck,advhr,advimage,advlink,emotions,iespell,preview,zoom,flash,print,contextmenu",
