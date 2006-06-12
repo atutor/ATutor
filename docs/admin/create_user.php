@@ -22,6 +22,15 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
+
+	//check if student id (public field) is already being used
+	if (!$_POST['overwrite'] && !empty($_POST['student_id'])) {
+		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."master_list WHERE public_field='$_POST[student_id]' && member_id<>0",$db);
+		if (mysql_num_rows($result) != 0) {
+			$msg->addError('CREATE_MASTER_USED');
+		}
+	}
+
 	/* login name check */
 	if ($_POST['login'] == '') {
 		$msg->addError('LOGIN_NAME_MISSING');
