@@ -154,7 +154,7 @@ $_pages['confirm.php']['parent']    = AT_NAV_PUBLIC;
 
 $_pages['password_reminder.php']['title_var'] = 'password_reminder';
 $_pages['password_reminder.php']['parent']    = 'login.php';
-$_pages['password_reminder.php']['guide']     = 'general/?p=password_forgot.php';
+$_pages['password_reminder.php']['guide']     = 'general/?p=password_reminder.php';
 
 $_pages['logout.php']['title_var'] = 'logout';
 $_pages['logout.php']['parent']    = AT_NAV_PUBLIC;
