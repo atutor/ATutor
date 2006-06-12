@@ -38,7 +38,7 @@ function get_relative_path($src, $dest) {
 	if ($src == '') {
 		$path = $dest;
 	} else if (substr($dest, 0, strlen($src)) == $src) {
-		$path = substr($dest, strlen($src));
+		$path = substr($dest, strlen($src) + 1);
 	} else {
 		$path = '../' . $dest;
 	}
@@ -338,26 +338,26 @@ function insertFile(fileName, pathTo, ext) {
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
 		var info = "<?php echo _AT('alternate_text'); ?>";
-		var imageString = '<img src="'+ pathTo+fileName + '" alt="'+ info +'" />';
+		var html = '<img src="' + pathTo+fileName + '" border="0" alt="' + info + '" />';
 
 		if (window.parent.tinyMCE) {
-			window.parent.tinyMCE.insertImage(pathTo+fileName, info, '', '', '', '', '', '', info, '', '');
+			window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 		} else if (window.opener.tinyMCE) {
-			window.opener.tinyMCE.insertImage(pathTo+fileName, info, '', '', '', '', '', '', info, '', '');
+			window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 		} else {
-			insertAtCursor(window.opener.document.form.body_text, imageString);
+			insertAtCursor(window.opener.document.form.body_text, html);
 		}
 
 	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
-		var fileString  = '<a href="' + pathTo+fileName + '">' + info + '</a>';
+		var html = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 
 		if (window.parent.tinyMCE) {
-			window.parent.tinyMCE.execCommand("mceInsertContent", false, '<a href="' + pathTo+fileName + '">' + info + '</a>');
+			window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 		} else if (window.opener.tinyMCE) {
-			window.opener.tinyMCE.execCommand("mceInsertContent", false, '<a href="' + pathTo+fileName + '">' + info + '</a>');
+			window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 		} else {
-			insertAtCursor(window.opener.document.form.body_text, fileString);
+			insertAtCursor(window.opener.document.form.body_text, html);
 		}
 	}
 }
