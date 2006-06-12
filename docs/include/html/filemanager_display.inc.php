@@ -170,39 +170,32 @@ if ($framed != TRUE) {
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP.'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 ?>
-<table class="data static" summary="" rules="groups" style="width: 90%">
+<table class="data static" summary="" border="0" rules="groups" style="width: 90%">
 <thead>
 <tr>
 	<th scope="col"><input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" title="<?php echo _AT('select_all'); ?>" /></th>
 	<th>&nbsp;</th>
-<?php if ($popup == TRUE): ?>
 	<th scope="col"><?php echo _AT('name');   ?></th>
-	<th scope="col"><?php echo _AT('action'); ?></th>
 	<th scope="col"><?php echo _AT('date');   ?></th>
 	<th scope="col"><?php echo _AT('size');   ?></th>
-<?php else: ?>
-	<th scope="col"><?php echo _AT('name'); ?></th>
-	<th scope="col"><?php echo _AT('date'); ?></th>
-	<th scope="col" colspan="2"><?php echo _AT('size'); ?></th>
-<?php endif; ?>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="6"><input type="submit" name="rename" value="<?php echo _AT('rename'); ?>" /> 
+	<td colspan="5"><input type="submit" name="rename" value="<?php echo _AT('rename'); ?>" /> 
 		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
 		<input type="submit" name="move"   value="<?php echo _AT('move'); ?>" /></td>
 </tr>
 <tr>
-	<td colspan="5" align="right"><strong><?php echo _AT('directory_total'); ?>:</strong></td>
+	<td colspan="4" align="right"><strong><?php echo _AT('directory_total'); ?>:</strong></td>
 	<td align="right">&nbsp;<strong><?php echo get_human_size(dirsize($current_path.$pathext.$file.'/')); ?></strong>&nbsp;</td>
 </tr>
 <tr>
-	<td colspan="5" align="right"><strong><?php echo _AT('course_total'); ?>:</strong></td>
+	<td colspan="4" align="right"><strong><?php echo _AT('course_total'); ?>:</strong></td>
 	<td align="right">&nbsp;<strong><?php echo get_human_size($course_total); ?></strong>&nbsp;</td>
 </tr>
 <tr>
-	<td colspan="5" align="right"><strong><?php echo _AT('course_available'); ?>:</strong></td>
+	<td colspan="4" align="right"><strong><?php echo _AT('course_available'); ?>:</strong></td>
 	<td align="right"><strong><?php
 		if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 			echo _AT('unlimited');
@@ -270,12 +263,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<td >&nbsp;';
 		$dirs[$file1] .= $filename.'</td>';
 
-		if ($popup == TRUE) {
-			$dirs[$file1] .= '<td  align="center">';
-			$dirs[$file1] .= ''._AT('na').'</td>';
-		}
-		
-		$dirs[$file1] .= '<td  align="center">&nbsp;';
+		$dirs[$file1] .= '<td  align="right">&nbsp;';
 		$dirs[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$dirs[$file1] .= '&nbsp;</td>';
 
@@ -308,13 +296,12 @@ while (false !== ($file = readdir($dir)) ) {
 
 		$files[$file1] .= '&nbsp;</td>';
 
+		$files[$file1] .= '<td  align="right">';
+
 		if ($popup == TRUE) {
-			$files[$file1] .= '<td  align="center">';
-			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\');" /></td>';
+			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\');" />&nbsp;';
 		}
 
-
-		$files[$file1] .= '<td  align="center">&nbsp;';
 		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$files[$file1] .= '&nbsp;</td>';
 		
