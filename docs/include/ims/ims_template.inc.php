@@ -104,7 +104,7 @@ function print_organizations($parent_id,
 				}
 
 				/* file should be relative to content. let's double check */
-				if ((substr($file, 0, 1) == '/') || ( strpos($file, '..') !== false) ) {
+				if ((substr($file, 0, 1) == '/')) {
 					continue;
 				}
 
