@@ -12,6 +12,27 @@
 /****************************************************************/
 // $Id$
 
+function apply_category_theme($category_id) {
+	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
+		global $db;
+
+		if ($category_id) {
+			// apply the theme for this category:
+			$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$category_id";
+			$result = mysql_query($sql, $db);
+			if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
+				$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
+			} else {			
+				$th = get_default_theme();
+				$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+			}
+		} else {			
+			$th = get_default_theme();
+			$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+		}
+	}
+}
+
 function count_login( ) {
 	global $db, $moduleFactory;
 
@@ -161,23 +182,6 @@ if (!$row = mysql_fetch_assoc($result)) {
 $owner_id = $row['member_id'];
 $_SESSION['packaging'] = $row['content_packaging'];
 
-if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
-	if ($row['cat_id']) {
-		// apply the theme for this category:
-		$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$row[cat_id]";
-		$result = mysql_query($sql, $db);
-		if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
-			$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
-		} else {			
-			$th = get_default_theme();
-			$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
-		}
-	} else {			
-		$th = get_default_theme();
-		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
-	}
-}
-
 $_SESSION['groups'] = array();
 unset($_SESSION['fs_owner_type']);
 unset($_SESSION['fs_owner_id']);
@@ -185,7 +189,7 @@ unset($_SESSION['fs_folder_id']);
 
 switch ($row['access']){
 	case 'public':
-
+		apply_category_theme($row['cat_id']);
 
 		if (!$_SESSION['valid_user'] && ($row['u_release_date'] < time())) {
 			$_SESSION['course_id']	  = $course;
@@ -261,6 +265,8 @@ switch ($row['access']){
 		/* we're already logged in */
 		$_SESSION['course_id'] = $course;
 
+		apply_category_theme($row['cat_id']);
+
 		/* check if we're an admin here */
 		if ($owner_id == $_SESSION['member_id']) {
 			$_SESSION['is_admin'] = true;
@@ -321,6 +327,8 @@ switch ($row['access']){
 			/* update users_online */
 			add_user_online();
 
+			apply_category_theme($row['cat_id']);
+
 			$_SESSION['groups'] = get_groups($course);
 
 			if ($_GET['f']) {
@@ -350,9 +358,12 @@ switch ($row['access']){
 			header('Location: '.$_base_href.'bounce.php?course=0');
 			exit;
 		} else if ($row['u_release_date'] > time()) {
+			// only instructor and TAs may view  a course before it is released.
 			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
 		}
 		/* we have requested or are enrolled in this course */
+
+		apply_category_theme($row['cat_id']);
 
 		$_SESSION['enroll'] = AT_ENROLL_YES;
 		$_SESSION['s_cid']  = $row2['last_cid'];
