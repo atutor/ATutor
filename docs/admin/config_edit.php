@@ -95,7 +95,7 @@ if (isset($_POST['cancel'])) {
 			$mail->SendQueue();
 		}
 
-		header('Location: '.$_SERVER['PHP_SELF']);
+		header('Location: index.php');
 		exit;
 	}
 }

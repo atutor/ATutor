@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('SECTIONS_SAVED');
-	header('Location: '.$_SERVER['PHP_SELF']);
+	header('Location: modules.php');
 	exit;
 }
 

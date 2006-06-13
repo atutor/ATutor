@@ -65,9 +65,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</table></td>
 </tr>
 </table>
-	
 	<script type="text/javascript">
-	<!--
+	//<!--
 	function smilie(thesmilie) {
 		// inserts smilie text
 		document.form.body.value += thesmilie+" ";
