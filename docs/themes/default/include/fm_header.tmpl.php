@@ -35,7 +35,7 @@ global $system_courses;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 </head>
-<body onload="setstates(); <?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+<body onload="<?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <?php
 	if ($this->popup == 1 && $this->framed != 1) {
 		echo '<div align="right"><a href="javascript:window.close()">'._AT('close_file_manager') .'</a></div>';
