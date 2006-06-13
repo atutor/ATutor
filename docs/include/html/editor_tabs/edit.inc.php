@@ -22,7 +22,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	
 	<?php
 		if ($content_row['content_path']) {
-			echo '	<div class="row">'._AT('packaged_in').'<br /> <a href="'.$_base_href.'tools/filemanager/index.php?pathext='.urlencode($content_row['content_path'].'/').SEP.'framed=1">'.$content_row['content_path'].'</a></div>';
+			echo '	<div class="row">'._AT('packaged_in').'<br />'.$content_row['content_path'].'</div>';
 		}
 	?>
 	<div class="row">
