@@ -36,10 +36,6 @@ global $system_courses;
 	<?php endif; ?>
 </head>
 <body onload="<?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<?php
-	if ($this->popup == 1 && $this->framed != 1) {
-		echo '<div align="right"><a href="javascript:window.close()">'._AT('close_file_manager') .'</a></div>';
-	} 
-?>
+<div align="right"><a href="javascript:window.close()"><?php echo _AT('close_file_manager'); ?></a></div>
 <a name="content"></a>
 <?php global $msg; $msg->printAll(); ?>
