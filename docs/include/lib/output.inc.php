@@ -17,7 +17,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /* Output functions found in this file, in order:
 /*
 /*	- AT_date(format, timestamp, format_type)
-/*	- print_editor (array editor_links)
 /*
 /*	- _AC([...])
 /*	- _AT([...])
@@ -190,55 +189,6 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	return $output;
 }
 
-
-/**
-* Prints the editor box (either large or small version)
-* @access  public
-* @param   array of string arrays $links	looks like:  array (array('privs', 'title', 'url'))
-* @param   boolean $large					true if box should be large, false if small
-* @see     $_base_path						in include/vitals.inc.php
-* @see     _AT()							in include/lib/output.inc.php
-* @see     authenticate()					in include/vitals.inc.php
-* @author  Joel Kronenberg
-*/
-function print_editor( $links, $large ) {
-	if (!is_array($links) || !count($links)) {
-		return;
-	}
-	
-	global $_base_path;
-
-	if ($large) {
-		$output_buffered = '<p><span class="editorlargebox">';
-	} else {
-		$output_buffered = ' <span class="editorsmallbox"><small>';
-	}
-	if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
-		if ($large) {
-			$output_buffered .= '<img src="'.$_base_path.'images/pen3.gif" border="0" class="menuimage11" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="28" width="32" />';
-		} else {
-			$output_buffered .= '<img src="'.$_base_path.'images/pen2.gif" border="0" class="menuimage12" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="14" width="16" />';
-		}
-	}
-	foreach($links as $link) {
-		if (authenticate($link['priv'], AT_PRIV_RETURN)) {
-			if ($output_buffered_links){
-				$output_buffered_links .= ' | ';
-			}
-			$output_buffered_links .= '<a href="'.$link['url'].'">'.$link['title'].'</a>';
-		}
-	}
-	if ($output_buffered_links) {
-		echo $output_buffered, ' ', $output_buffered_links;
-		if ($large) {
-			echo '</span></p>';
-		} else {
-			echo '</small></span>';
-		}
-	}
-
-	return;
-}
 
 
 /****************************************************************************/

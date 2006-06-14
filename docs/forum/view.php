@@ -46,11 +46,7 @@ function print_entry($row) {
 	echo '<tr>';
 	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><strong>'.AT_Print($row['subject'], 'forums_threads.subject').'</strong>';
 	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
-		unset($editors);
-		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id']);
-		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP.'nest=1');
-
-		print_editor($editors , $large = false);
+		echo ' - <a href="editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].'">'._AT('edit').'</a> | <a href="forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP.'nest=1">'._AT('delete').'</a> | ';
 	}
 
 	if ($_SESSION['valid_user']) {
