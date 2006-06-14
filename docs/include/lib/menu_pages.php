@@ -131,7 +131,8 @@ if ($_SESSION['course_id'] > 0) {
 
 		$_pages['admin/cron_config.php']['title_var'] = 'cron_config';
 		$_pages['admin/cron_config.php']['parent']    = 'admin/config_edit.php';
-		$_pages['admin/config_edit.php']['children'] = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/cron_config.php'));
+		$_pages['admin/cron_config.php']['guide']     = 'admin/?p=cron_setup.php';
+		$_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/cron_config.php'));
 	}
 }
 

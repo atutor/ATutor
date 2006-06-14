@@ -63,7 +63,7 @@ global $system_courses, $_custom_css;
 
 var newwindow;
 function poptastic(url) {
-	newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
+	newwindow=window.open(url,'popup','height=700,width=700,scrollbars=yes,resizable=yes');
 	if (window.focus) {newwindow.focus()}
 }
 
