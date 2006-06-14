@@ -79,6 +79,7 @@ $_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
 
 $_pages['editor/edit_post.php']['title_var'] = 'edit_post';
 $_pages['editor/edit_post.php']['parent']    = 'forum/index.php?fid='.$fid;
+$_pages['editor/edit_post.php']['children']  = array();
 
 
 $onload = 'document.form.subject.focus();';
@@ -86,8 +87,6 @@ $onload = 'document.form.subject.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
-echo '<h3><a href="forum/index.php?fid='.$_GET['fid'].'">' . AT_print(get_forum_name($_GET['fid']), 'forums.title') . '</a></h3>';
-	
 if (isset($_GET['pid'])) {
 	$pid = intval($_GET['pid']);
 } else {
@@ -107,7 +106,6 @@ if (!($row = mysql_fetch_assoc($result))) {
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -135,7 +133,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 
 	<div class="row buttons">
 		<input name="submit" type="submit" value="  <?php echo _AT('save'); ?>" accesskey="s" />
-		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " /></td>
+		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 	</div>
 </div>
 </form>

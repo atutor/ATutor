@@ -109,9 +109,9 @@ $_pages['forum/new_thread.php?fid='.$fid]['parent']    = 'forum/index.php?fid='.
 $_pages['forum/view.php']['title']  = $post_row['subject'];
 $_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
 
-$_pages['forum/delete_thread.php']['title_var'] = 'delete_thread';
+$_pages['forum/delete_thread.php']['title_var'] = 'delete_post';
 $_pages['forum/delete_thread.php']['parent']    = 'forum/index.php?fid='.$fid;
-
+$_pages['forum/delete_thread.php']['children']  = array();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
