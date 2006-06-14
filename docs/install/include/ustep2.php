@@ -41,6 +41,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$errors[] = 'Unable to connect to database <b>'.$_POST['db_name'].'</b>.';
 		}
 
+		$sql = "SELECT VERSION() AS version";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+		if (version_compare($row['version'], '4.0.2', '>=') === FALSE) {
+			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.0.2 or later.';
+		}
+
 		if (!$_POST['override']) {
 			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['tb_prefix']."languages";
 			$result = mysql_query($sql, $db);
