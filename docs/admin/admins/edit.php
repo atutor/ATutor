@@ -16,6 +16,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
+if ($_GET['login'] == $_SESSION['login']) {
+	$msg->addError('ADMIN_EDIT_OWN_ACCOUNT');
+	header('Location: index.php');
+	exit;
+}
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
