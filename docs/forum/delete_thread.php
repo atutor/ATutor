@@ -31,7 +31,7 @@ if (isset($_POST['submit_no'])) {
 	
 	$msg->addFeedback('CANCELLED'); 
 	if ($_POST['nest']) {
-		header('Location: view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'ppid='.$_POST['ppid']);
+		header('Location: view.php?fid='.$_POST['fid'].SEP.'pid='. ($_POST['ppid'] ? $_POST['ppid'] : $_POST['pid']));
 		exit;
 	} else {
 		header('Location: index.php?fid='.$_POST['fid']);
