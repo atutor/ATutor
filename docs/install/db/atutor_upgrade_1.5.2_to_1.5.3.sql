@@ -3,11 +3,11 @@
 ###############################################################
 
 CREATE TABLE `groups_types` (
-	`type_id` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL AUTO_INCREMENT ,
+	`type_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
 	`course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
 	`title` VARCHAR( 80 ) NOT NULL default '',
 	PRIMARY KEY ( `type_id` ) ,
-	INDEX ( `course_id` )
+	KEY ( `course_id` )
 );
 
 ALTER TABLE `groups` CHANGE `course_id` `type_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
