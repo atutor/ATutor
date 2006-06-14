@@ -52,11 +52,22 @@ if (!query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 }
 
 
-$sql = "SELECT post_id, member_id, private, num_comments, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] ORDER BY date DESC";
+if (isset($_GET['p'])) {
+	$page = abs($_GET['p']);
+} else {
+	$page = 1;
+}
+
+$num_posts_per_page = 20;
+$start = ($page - 1) * $num_posts_per_page;
+
+$count = 0;
+
+$sql = "SELECT post_id, member_id, private, num_comments, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] ORDER BY date DESC LIMIT $start, " . ($num_posts_per_page+1);
 $result = mysql_query($sql, $db);
 ?>
 <?php if (mysql_num_rows($result)): ?>
-	<?php while ($row = mysql_fetch_assoc($result)): ?>
+	<?php while (($row = mysql_fetch_assoc($result)) && ($count < $num_posts_per_page)): $count++; ?>
 		<div class="entry">
 			<h2><a href="blogs/post.php?ot=<?php echo BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']; ?>"><?php echo AT_PRINT($row['title'], 'blog_posts.title'); ?></a>
 			<?php if ($row['private']): ?>
@@ -70,6 +81,12 @@ $result = mysql_query($sql, $db);
 			<hr />
 		</div>
 	<?php endwhile; ?>
+	<?php
+		if (mysql_num_rows($result) > $num_posts_per_page) {
+
+			echo '<a href="blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'p='.(++$page).'">'._AT('previous_posts').'</a>';
+		}
+	?>
 <?php else: ?>
 	<p><?php echo _AT('none_found'); ?></p>
 <?php endif; ?>
