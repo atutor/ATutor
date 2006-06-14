@@ -51,7 +51,7 @@ $no_good = FALSE;
 			<th scope="cols">Status</th>
 		</tr>
 		<tr>
-			<td>Apache 1.3.0+</td>
+			<td>Webserver</td>
 			<td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
 			<td align="center"><?php echo $good; ?></td>
 		</tr>
