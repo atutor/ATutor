@@ -352,7 +352,8 @@ class Module {
 
 		if (!function_exists($fn_name) && is_file(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php')) {
 			require_once(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php');
-		} else if (function_exists($fn_name)) {
+		} 
+		if (function_exists($fn_name)) {
 			$fn_name($group_id);
 		}
 	}
