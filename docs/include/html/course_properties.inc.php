@@ -16,6 +16,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
+
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	load_editor('banner');
+}
+
 if (!isset($isadmin, $course, $db)) {
 	return;	
 }
@@ -91,10 +96,14 @@ if (isset($_POST['form_course'])) {
 	$row['rss']                 = 0; // default to off
 	$row['release_date']		= '0';
 }
+/*
+if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
+	$anchor =  "#banner";
+} */
 
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form">
 	<input type="hidden" name="form_course" value="true" />
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
 	<input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
@@ -266,8 +275,26 @@ if (isset($_POST['form_course'])) {
 	</div>
 
 	<div class="row">
+		<?php echo _AT('formatting'); ?>
+			<br />
+		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] === 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.course_form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>,
+
+		<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.course_form.setvisual.disabled=false;"  /> <label for="html"><?php echo _AT('html'); ?></label>
+		<?php
+			if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+				echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+				echo '<input type="submit" name="settext"   value="'._AT('switch_text').'" />';
+			} else {
+				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" ';
+				if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
+				echo '/>';
+			} 
+		?>
+	</div>
+	<div class="row">
+
 		<label for="banner"><?php echo _AT('banner'); ?></label><br />
-		<textarea id="banner" cols="45" rows="2" name="banner"><?php echo $row['banner']; ?></textarea>
+		<textarea id="banner" cols="45" rows="15" name="banner"><?php echo $row['banner']; ?></textarea>
 	</div>
 
 <?php if (!$course) : ?>
