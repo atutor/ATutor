@@ -16,7 +16,7 @@ $page = 'my_courses';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
@@ -71,6 +71,10 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
+//} else if (($_POST['setvisual'] || $_POST['settext'])){			
+//}else if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+//		header("Location: ".$_SERVER['PHP_SELF'].'#banner');
+// 		exit;
 } else if (isset($_POST['form_course'])) {
 	$_POST['instructor'] = $_SESSION['member_id'];
 
