@@ -111,7 +111,7 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 <html lang="<?php if ($req_lang) { echo $req_lang; } else { echo 'dp'; } ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title><?php echo get_text('doc_title'); ?></title>
+	<title><?php get_text('doc_title'); ?></title>
 	<link rel="stylesheet" href="common/styles.css" type="text/css" />
 </head>
 <body>
@@ -120,15 +120,15 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 		<?php get_text('page_not_translated'); ?>
 	</div>
 <?php endif; ?>
-<h1><?php echo get_text('doc_title'); ?></h1>
-<p><?php echo get_text('doc_welcome'); ?></p>
+<h1><?php get_text('doc_title'); ?></h1>
+<p><?php get_text('doc_welcome'); ?></p>
 
 	<ol>
-		<li><a href="general/"><?php echo get_text('doc_user'); ?></a></li>
-		<li><a href="admin/"><?php echo get_text('doc_admin'); ?></a></li>
-		<li><a href="instructor/"><?php echo get_text('doc_instructor'); ?></a></li>
-		<li><a href="developer/guidelines.html"><?php echo get_text('doc_dev'); ?></a></li>
-		<li><a href="developer/modules.html"><?php echo get_text('doc_mods'); ?></a></li>
+		<li><a href="general/"><?php get_text('doc_user'); ?></a></li>
+		<li><a href="admin/"><?php get_text('doc_admin'); ?></a></li>
+		<li><a href="instructor/"><?php get_text('doc_instructor'); ?></a></li>
+		<li><a href="developer/guidelines.html"><?php get_text('doc_dev'); ?></a></li>
+		<li><a href="developer/modules.html"><?php get_text('doc_mods'); ?></a></li>
 	</ol>
 
 	<ol>
@@ -139,33 +139,33 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 
 <?php if ($enable_user_notes && (!isset($_SESSION['handbook_admin']) || (isset($_SESSION['handbook_admin']) && !$_SESSION['handbook_admin']))): ?>
 	<div style="text-align: right;">
-		<p><?php echo get_text('doc_notes_enabled');  ?></p>
+		<p><?php get_text('doc_notes_enabled');  ?></p>
 	</div>
 <?php elseif ($enable_user_notes): ?>
 
-	<p><?php echo get_text('doc_logged_in'); ?></p>
+	<p><?php get_text('doc_logged_in'); ?></p>
 
 	<?php
 		$sql = "SELECT note_id, date, section, page, email, note FROM ".AT_HANDBOOK_DB_TABLE_PREFIX."handbook_notes WHERE approved=0 ORDER BY date DESC";
 		$result = mysql_query($sql, $db);
 	?>
 	<div class="add-note">
-		<h3><?php echo get_text('doc_unapproved_notes'); ?></h3>
+		<h3><?php get_text('doc_unapproved_notes'); ?></h3>
 	</div>
 
 	<?php if ($result && (mysql_num_rows($result) > 0)): ?>
 		<?php while ($row = mysql_fetch_assoc($result)): ?>
 			<div class="note">
 				<h5><?php echo $row['date']; ?>
-					<a href="approve_note.php?id=<?php echo $row['note_id']; ?>" onclick="return confirm('<?php echo get_text('doc_approved_confirm'); ?>');"><?php echo get_text('doc_approve'); ?></a> | 
-					<a href="delete_note.php?id=<?php echo $row['note_id']; ?>" onclick="return confirm('<?php echo get_text('doc_delete_confirm'); ?>');"><?php echo get_text('doc_delete'); ?></a>
+					<a href="approve_note.php?id=<?php echo $row['note_id']; ?>" onclick="return confirm('<?php echo get_text('doc_approved_confirm'); ?>');"><?php  get_text('doc_approve'); ?></a> | 
+					<a href="delete_note.php?id=<?php echo $row['note_id']; ?>" onclick="return confirm('<?php echo get_text('doc_delete_confirm'); ?>');"><?php get_text('doc_delete'); ?></a>
 				</h5>
 				<h4><?php echo $row['email'];?></h4>
 				<p><?php echo nl2br($row['note']); ?></p>
 			</div>
 		<?php endwhile; ?>
 	<?php else: ?>
-		<div class="note"><?php echo get_text('doc_no_notes'); ?></div>
+		<div class="note"><?php get_text('doc_no_notes'); ?></div>
 	<?php endif; ?>
 
 <?php endif; ?>

@@ -1,4 +1,6 @@
 <?php
+require(dirname(__FILE__) .'/common/vitals.inc.php');
+
 function my_add_null_slashes( $string ) {
     return ( $string );
 }
@@ -70,38 +72,36 @@ if (!isset($_GET['p'])) {
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>ATutor 1.5 Documentation - Add Note</title>
+	<title><?php get_text('add_note'); ?></title>
 	<link rel="stylesheet" href="common/styles.css" type="text/css" />
-</head>
-<body>
-
 <style type="text/css">
 div.input-form div.row {
 	margin-bottom: 10px;
 }
 </style>
-
+</head>
+<body>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="section" value="<?php echo key($_GET); ?>" />
 <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['p']); ?>" />
 
 <div class="input-form">
 	<div class="row">
-		<p>If you ask a question, report a bug, or request a feature, your note will not be posted. Notes must be approved by an administrator before they are posted.</p>
+		<p><?php get_text('add_note_blurb'); ?></p>
 	</div>
 
 	<div class="row">
-		<label for="email">Your email address (or name):</label><br />
+		<label for="email"><?php get_text('email_name'); ?>:</label><br />
 		<input type="text" name="email" value="" id="email" size="40" />
 	</div>
 
 	<div class="row">
-		<label for="note">Your note:</label><br />
+		<label for="note"><?php get_text('your_note');?>:</label><br />
 		<textarea name="note" id="note" cols="50" rows="20"></textarea>
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="Add Note" />
+		<input type="submit" name="submit" value="<?php get_text('add_note'); ?>" />
 	</div>
 
 </form>

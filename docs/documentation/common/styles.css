@@ -1,7 +1,6 @@
 pre {
 	font-family: Verdana, Arial, sans-serif;
 }
-
 body{
 	background-color: #fafafa;
     font-family: Verdana, Arial,sans-serif;
@@ -95,11 +94,9 @@ dd p {
 dd p:last-child {
 	padding-bottom: 0px;
 }
-
 acronym {
 	cursor: help;
 }
-
 a[href*="http"] {
 	padding-right: 8px;
 	background-image: url('link-out.gif');
@@ -107,22 +104,19 @@ a[href*="http"] {
 	background-position: right 4px;
 	margin-right: 2px;
 }
-
 div#nav-links {
 	margin-left: 20px;
 	margin-right: 20px;
 	margin-bottom: 20px;
 }
-
 div#nav-links a {
 	color: black;
 	text-decoration: none;
 	border-bottom: 1px solid;
 }
-
 pre {
 	font-family: Courier, monospace;
-	background-color: #EEEEFF;
+	background-color: #eef;
 	padding: 5px;
 	margin-left: 20px;
 	color:#761596;
@@ -130,20 +124,18 @@ pre {
 	width: 50%;
 	font-size: smaller;
 }
-
 div.seq {
 	font-size: smaller;
 	padding: 5px;
 	border: 1px dashed #cfcfcf;
 }
-
 div.tag {
 	margin: 10px;
 	font-size: smaller;
 	padding: 5px;
+	line-height: 110%;
+	color: #cfcfcf;
 }
-
-
 div.add-note {
 	background-color: #f0f0f0;
 	padding: 5px;
