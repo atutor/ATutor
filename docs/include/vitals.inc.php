@@ -763,7 +763,6 @@ define('AT_ENABLE_CATEGORY_THEMES', $_config['theme_categories']);
 define('AT_COURSE_BACKUPS',         $_config['course_backups']);
 define('AT_EMAIL_CONFIRMATION',     $_config['email_confirmation']);
 define('AT_MASTER_LIST',            $_config['master_list']);
-define('AT_ENABLE_HANDBOOK_NOTES',  $_config['enable_handbook_notes']);
 $MaxFileSize       = $_config['max_file_size']; 
 $MaxCourseSize     = $_config['max_course_size'];
 $MaxCourseFloat    = $_config['max_course_float'];

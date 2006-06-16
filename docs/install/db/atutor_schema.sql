@@ -420,6 +420,7 @@ CREATE TABLE `handbook_notes` (
 `date` DATETIME NOT NULL default '0000-00-00 00:00:00',
 `section` VARCHAR( 15 ) NOT NULL default '',
 `page` VARCHAR( 50 ) NOT NULL default '',
+`approved` tinyint NOT NULL default 0,
 `email` VARCHAR( 50 ) NOT NULL default '',
 `note` TEXT NOT NULL default '',
 PRIMARY KEY ( `note_id` )

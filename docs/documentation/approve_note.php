@@ -21,27 +21,26 @@ $_GET['id'] = intval($_GET['id']);
 $config_location = '../include/config.inc.php';
 if (is_file($config_location) && is_readable($config_location)) {
 	require($config_location);
-	if (defined('AT_ENABLE_HANDBOOK_NOTES') && AT_ENABLE_HANDBOOK_NOTES) {
-		define('AT_HANDBOOK_DB_USER', DB_USER);
+	$db = mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+	mysql_select_db(DB_NAME, $db);
 
-		define('AT_HANDBOOK_DB_PASSWORD', DB_PASSWORD);
-		define('AT_HANDBOOK_DB_DATABASE', DB_NAME);
-
-		define('AT_HANDBOOK_DB_PORT', DB_PORT);
-
-		define('AT_HANDBOOK_DB_HOST', DB_HOST);
-
-		define('AT_HANDBOOK_DB_TABLE_PREFIX', TABLE_PREFIX);
-
+	// check atutor config table to see if handbook notes is enabled.
+	$sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='user_notes'";
+	$result = @mysql_query($sql, $db);
+	if (($row = mysql_fetch_assoc($result)) && $row['value']) {
 		define('AT_HANDBOOK_ENABLE', true);
+		$enable_user_notes = true;
 	}
+	define('AT_HANDBOOK_DB_TABLE_PREFIX', TABLE_PREFIX);
+
+	define('AT_HANDBOOK_ENABLE', true);
 }
 if (!defined('AT_HANDBOOK_ENABLE')) {
 	// use local config file
 	require('./config.inc.php');
 }
 
-if (defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
+if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 	$db = @mysql_connect(AT_HANDBOOK_DB_HOST . ':' . AT_HANDBOOK_DB_PORT, AT_HANDBOOK_DB_USER, AT_HANDBOOK_DB_PASSWORD);
 	if (@mysql_select_db(AT_HANDBOOK_DB_DATABASE, $db)) {
 		$enable_user_notes = true;

@@ -29,6 +29,6 @@ $text['doc_approve'] = 'Approve';
 $text['doc_delete'] = 'Delete';
 $text['doc_delete_confirm'] = 'Are you sure you want to delete this note?';
 $text['doc_no_notes'] = 'There are no un-approved user contributed notes.';
-$text['doc_logged_in'] = 'Logged in as notes moderator. <a href="index_list.php?logout">Log-out</a>There are no un-approved user contributed notes.';
+$text['doc_logged_in'] = 'Logged in as notes moderator. <a href="index_list.php?logout">Log-out</a>. There are no un-approved user contributed notes.';
 
 ?>

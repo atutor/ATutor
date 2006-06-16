@@ -224,3 +224,5 @@ ALTER TABLE `links`
 
 
 ALTER TABLE `members` CHANGE `gender` `gender` ENUM( 'm', 'f', 'n' ) DEFAULT 'n' NOT NULL;
+
+ALTER TABLE `handbook_notes` ADD `approved` TINYINT DEFAULT '0' NOT NULL AFTER `page` ;
