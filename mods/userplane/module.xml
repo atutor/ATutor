@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">UserPlane</name> 
+    <description lang="en">This modules links the Userplane Web Chat into ATutor</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2006-06-17</date> 
+        <state>stable</state> 
+	<notes>You will need to create a Userplane account at http://www.userplane.com/buy/index.cfm, then through the administrator's UserPlane manager, enter that ID into the UserPlane ID field.  </notes> 
+    </release> 
+</module>
