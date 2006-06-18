@@ -108,11 +108,12 @@ acronym {
 	<li><a href="#data_dir">Creating a Data Directory</a></li>
 	<li><a href="#execute">Executing an SQL FILE</a></li>
 	<li><a href="#errors">Generating Error Messages</a></li>
+
 	</ul>
 
 <li><a href="#auth">Authentication &amp; Privileges</a></li>
 <li><a href="#localisation">Localisation</a></li>
-
+<li><a href="#config">Configuration Options</a></li>
 <li><a href="#styles">Custom Style Sheets</a></li>
 <li><a href="#sidemenu">Side Menu Boxes</a></li>
 <li><a href="#tools">Student Tools</a></li>
@@ -506,6 +507,74 @@ INSERT INTO `language_text` VALUES ('en',
                                     'Example Maker',
                                      NOW(),
                                     'the module title');
+</pre>
+<a name="config"></a>
+<h2>Configuration Options</h2>
+<p>Module configuration options can be stored in the ATutor <kbd>config</kbd> table, and retrieved using a <kbd>$_config[]</kbd> array variable. All module configuration key/value pairs are automatically loaded from the table into global memory while ATutor is running, and can be accessed from any of the module scripts (or from anywhere is ATutor for that matter). The value for a particular configuration option is retrieved by entering its key into the array. To retrieve a URL for the Example Maker module for example,  you might use <kbd>$_config['example_maker']</kbd>. </p>
+<p>In the following example of an <kbd>index_admin.php</kbd> file, the form below accepts a URL to an external application used by the Example Maker module (though it could be any value). In this case imagine a third party application has been installed, and the URL to the application is being stored as a configuration option for the example_maker module. When the form is submitted, <kbd>$_POST['uri']</kbd> is inserted into the config table as the value for the <kbd>example_maker</kbd> key. The following is an example module administrator script used to add/edit a config option for the example_maker module.</p>
+
+<h3>The <kbd>index_admin.php</kbd> File</h3>
+<pre>
+
+&lt;?php
+if (isset($_POST['submit'])) {
+	// trim whitespace from the value submitted
+	$_POST['uri'] = trim($_POST['uri']);
+
+	// display an error message if the value is empty
+	if (!$_POST['uri']){
+		$msg->addError('EXAMPLE_MAKER_ADD_EMPTY');
+	}
+	
+	// if no errors, insert the key "example_maker" and value "$_POST['uri']" into the config table	
+	if (!$msg->containsErrors()) {
+		$_POST['uri'] = $addslashes($_POST['uri']);
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('example_maker', '$_POST[uri]')";
+		mysql_query($sql, $db);
+		$msg->addFeedback('EXAMPLE_MAKER_URL_SAVED');
+
+		header('Location: '.$_SERVER['PHP_SELF']);
+		exit;
+	}
+}
+
+require (AT_INCLUDE_PATH.'header.inc.php');
+
+/*******
+ *  First check to see if there is a value for the example_maker key $_config['example_maker']
+ *  If there isn't a value then a missing value message is displayed
+ *  The form below that has a single field for submitting a value, in this case a URL
+ *  If the value exists in the config table, then display it in the text field using  $_config['example_maker']
+ */
+	
+?>
+
+&lt;?php if ($_config['example_maker']): ?>
+	&lt;div class="input-form">
+		&lt;div class="row">
+			&lt;p>&lt;?php echo _AT('example_maker_text'); ?>&lt;/p>
+		&lt;/div>
+	&lt;/div>
+&lt;?php else: ?>
+	&lt;div class="input-form">
+		&lt;div class="row">
+			&lt;p>&lt;?php echo _AT('example_maker_missing_url');  ?>&lt;/p>
+		&lt;/div>
+	&lt;/div>
+&lt;?php endif; ?>
+
+&lt;form action="&lt;?php  $_SERVER['PHP_SELF']; ?>" method="post">
+	&lt;div class="input-form">
+		&lt;div class="row">
+			&lt;p>&lt;label for="uri">&lt;?php echo _AT('example_maker_url'); ?>&lt;/label>&lt;/p>
+	
+			&lt;input type="text" name="uri" value="&lt;?php echo $_config['example_maker']; ?>" id="uri" size="60" style="min-width: 65%;" />
+		&lt;/div>
+		&lt;div class="row buttons">
+			&lt;input type="submit" name="submit" value="&lt;?php echo _AT('save'); ?>"  />
+		&lt;/div>
+	&lt;/div>
+&lt;/form>
 </pre>
 
 <a name="styles"></a>
