@@ -167,7 +167,7 @@ if (isset($_POST['submit'])) {
 
 		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 			$student_id  = $addslashes($_POST['student_id']);
-			$student_pin = $addslashes($_POST['student_pin']);
+			$student_pin = md5($addslashes($_POST['student_pin']));
 			if ($student_id) {
 				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=$m_id WHERE public_field='$student_id'";
 				mysql_query($sql, $db);
