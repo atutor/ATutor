@@ -501,7 +501,7 @@ CREATE TABLE `language_pages` (
 CREATE TABLE `master_list` (
   `public_field` CHAR( 30 ) NOT NULL default '',
   `hash_field` CHAR( 40 ) NOT NULL default '',
-  `member_id` MEDIUMINT UNSIGNED NOT NULL default '',
+  `member_id` MEDIUMINT UNSIGNED NOT NULL default 0,
   PRIMARY KEY ( `public_field` )
 );
 
@@ -697,8 +697,8 @@ CREATE TABLE `related_content` (
 
 CREATE TABLE `reading_list` (
 	`reading_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL default '',
-	`resource_id` MEDIUMINT UNSIGNED NOT NULL default '',
+	`course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
+	`resource_id` MEDIUMINT UNSIGNED NOT NULL default 0,
 	`required` enum('required','optional') NOT NULL DEFAULT 'required',
 	`date_start` DATE NOT NULL DEFAULT '0000-00-00',
 	`date_end` DATE NOT NULL DEFAULT '0000-00-00',
@@ -712,7 +712,7 @@ CREATE TABLE `reading_list` (
 
 CREATE TABLE `external_resources` (
 	`resource_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL default '',
+	`course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
 	`type` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 	`title` varchar(255) NOT NULL DEFAULT '',
 	`author` varchar(150) NOT NULL DEFAULT '',

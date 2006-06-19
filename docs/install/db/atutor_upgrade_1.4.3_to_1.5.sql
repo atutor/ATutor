@@ -75,6 +75,6 @@ ALTER TABLE `messages` ADD `course_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT N
 CREATE TABLE `master_list` (
   `public_field` CHAR( 30 ) NOT NULL ,
   `hash_field` CHAR( 40 ) NOT NULL ,
-  `member_id` MEDIUMINT UNSIGNED NOT NULL ,
+  `member_id` MEDIUMINT UNSIGNED NOT NULL 0,
   PRIMARY KEY ( `public_field` )
 );

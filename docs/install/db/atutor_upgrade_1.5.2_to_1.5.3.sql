@@ -56,8 +56,8 @@ ALTER TABLE `courses` ADD `banner` TEXT NOT NULL default '';
 
 CREATE TABLE `reading_list` (
 	`reading_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
-	`resource_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+	`course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
+	`resource_id` MEDIUMINT UNSIGNED NOT NULL default 0,
 	`required` enum('required','optional') NOT NULL DEFAULT 'required',
 	`date_start` DATE NOT NULL DEFAULT '0000-00-00',
 	`date_end` DATE NOT NULL DEFAULT '0000-00-00',
@@ -70,7 +70,7 @@ CREATE TABLE `reading_list` (
 
 CREATE TABLE `external_resources` (
 	`resource_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL default '',
+	`course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
 	`type` TINYINT UNSIGNED NOT NULL DEFAULT 0,
 	`title` varchar(255) NOT NULL DEFAULT '',
 	`author` varchar(150) NOT NULL DEFAULT '',
