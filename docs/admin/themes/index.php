@@ -30,6 +30,13 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	exit;
 } else if (isset($_GET['default'], $_GET['theme_dir'])) {
 	set_theme_as_default($theme);
+	$_config['pref_defaults'] = unserialize($_config['pref_defaults']);
+	$_config['pref_defaults']['PREF_THEME'] = $theme;
+	$_config['pref_defaults'] = serialize($_config['pref_defaults']);
+
+	$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_defaults','{$_config['pref_defaults']}')";
+	$result = mysql_query($sql, $db);
+
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if (isset($_GET['enable'], $_GET['theme_dir'])) {
