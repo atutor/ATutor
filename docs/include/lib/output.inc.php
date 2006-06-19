@@ -634,7 +634,7 @@ function image_replace($text) {
 	
 	$text = eregi_replace("\[image(\|)?([[:alnum:][:space:]]*)\]" .
 						 "[:space:]*" .
-						 "([[:alnum:]#?/&=\:\"\'\.]+)" .
+						 "([[:alnum:]#?/&=:\"'.-]+)" .
 						 "[:space:]*" .
 						 "((\[/image\])|(.*\[/image\]))",
 				  "<img src=\"\\3\" alt=\"\\2\" />",
