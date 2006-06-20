@@ -88,16 +88,22 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				$current_cat_id = $categories[$cat_id]['cat_parent'];
 				$exclude = true; /* exclude the children */
 				
+				//remove the current cat_id and it's sub cats from list, don't want to print them out.
+				foreach ($categories[$current_cat_id]['children'] as $id=>$child) {
+					if ($child == $cat_id) {
+						unset($categories[$current_cat_id]['children'][$id]);
+					}
+				}
+				unset($categories[$cat_id]);
+
 				$auth = manage_links();
 				if ($auth == LINK_CAT_AUTH_ALL) {
 					echo '<option value="0-'.LINK_CAT_COURSE.'-'.$_SESSION['course_id'].'">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
 					echo '<option value="0-'.LINK_CAT_COURSE.'-'.$_SESSION['course_id'].'"></option>';
 				}
-
 				select_link_categories($categories, 0, $current_cat_id, $exclude, 0, TRUE);
 			?></select>
 	</div>
-
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
