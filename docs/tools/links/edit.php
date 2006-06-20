@@ -16,6 +16,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
+if (!manage_links()) {
+	$msg->addError('ACCESS_DENIED');
+	header('Location: '.$_base_href.'links/index.php');
+	exit;
+}
+
 $lid = explode('-', $_REQUEST['lid']);
 $link_id = intval($lid[0]);
 

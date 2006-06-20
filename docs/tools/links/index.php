@@ -19,7 +19,7 @@ require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (!manage_links()) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: links/index.php');
+	header('Location: '.$_base_href.'links/index.php');
 	exit;
 }
 

@@ -23,6 +23,10 @@ if (!$_SESSION['enroll']) {
 
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
+if (!manage_links()) {
+	$_pages['links/index.php']['children']  = array('links/add.php');
+}
+
 if (!isset($_POST['url'])) {
 	$_POST['url'] = "http://";
 }

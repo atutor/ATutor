@@ -46,11 +46,25 @@ function links_authenticate($owner_type, $owner_id) {
 
 /* return true if user is able to manage group or course links */
 function manage_links() {
+	global $db;
 
 	if (authenticate(AT_PRIV_GROUPS, true)) {
 		return LINK_CAT_AUTH_ALL;
 	} else if (!empty($_SESSION['groups'])) {
-		return LINK_CAT_AUTH_GROUP;
+		//find a group that uses links
+		foreach ($_SESSION['groups'] as $group_id) {
+			$sql = "SELECT modules FROM ".TABLE_PREFIX."groups WHERE group_id=$group_id";
+			$result = mysql_query($sql, $db);
+
+			$row = mysql_fetch_assoc($result);
+			$mods = explode('|', $row['modules']);
+
+			if (in_array("_standard/links", $mods)) {
+				return LINK_CAT_AUTH_GROUP;
+			}
+		}
+
+		return FALSE;
 	}
 
 	return LINK_CAT_AUTH_NONE;

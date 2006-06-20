@@ -16,6 +16,11 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
+if (!manage_links()) {
+	$msg->addError('ACCESS_DENIED');
+	header('Location: '.$_base_href.'links/index.php');
+	exit;
+}
 
 if (isset($_POST['submit'])) {
 	$cat_parent_id  = intval($_POST['cat_parent_id']);
@@ -36,7 +41,7 @@ if (isset($_POST['submit'])) {
 
 			if (!links_authenticate($owner_type, $owner_id)) {
 				$msg->addError('ACCESS_DENIED');
-				header('Location: '.$_base_href.'links/index.php');
+				header('Location: '.$_base_href.'index.php');
 				exit;
 			}
 		} else {
