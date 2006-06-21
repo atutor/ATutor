@@ -56,6 +56,26 @@ if (!isset($_GET['cat_parent_id'])) {
 } else {
 	$parent_id = intval($_GET['cat_parent_id']);
 }
+
+$groups = implode(',', $_SESSION['groups']);
+$auth = manage_links();
+
+if ($auth == LINK_CAT_AUTH_ALL) {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP."))";
+} else if ($auth == LINK_CAT_AUTH_GROUP) {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP;
+} 
+
+if ($parent_id) {
+	$sql .= " AND L.cat_id=$parent_id";
+} 
+$sql .= " ORDER BY $col $order";
+
+$result = mysql_query($sql, $db);
+$num_results = mysql_num_rows($result);
+
+if ($num_results > 0):
+
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -86,7 +106,7 @@ if (!isset($_GET['cat_parent_id'])) {
 	</div>
 </div>
 </form>
-
+<?php endif; ?>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
@@ -104,30 +124,6 @@ if (!isset($_GET['cat_parent_id'])) {
 </thead>
 
 <?php
-	//$links = get_links($owner_type, $owner_id);
-
-	$groups = implode(',', $_SESSION['groups']);
-	$auth = manage_links();
-
-	if ($auth == LINK_CAT_AUTH_ALL) {
-		$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP."))";
-	} else if ($auth == LINK_CAT_AUTH_GROUP) {
-		$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP;
-	} 
-
-	/*if ($parent_id) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."links L, ".TABLE_PREFIX."links_categories C WHERE L.cat_id=C.cat_id AND C.owner_id=$_SESSION[course_id] AND L.cat_id=$parent_id";
-	} else {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."links L, ".TABLE_PREFIX."links_categories C WHERE L.cat_id=C.cat_id AND C.owner_id=$_SESSION[course_id]";  
-	}*/
-
-	if ($parent_id) {
-		$sql .= " AND L.cat_id=$parent_id";
-	} 
-	$sql .= " ORDER BY $col $order";
-
-	$result = mysql_query($sql, $db);
-
 	if ($row = mysql_fetch_assoc($result)) {  ?>
 	<tfoot>
 	<tr>
