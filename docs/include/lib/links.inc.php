@@ -199,6 +199,10 @@ function get_child_categories ($cat_id, $categories) {
 function get_group_name($owner_id) {
 	global $db;
 
+	if (!$owner_id) {
+		return false;
+	}
+
 	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$owner_id;
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
