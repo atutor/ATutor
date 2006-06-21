@@ -100,8 +100,11 @@ if (!empty($groups)) {
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
+if ($num_results > 0):
+
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+
 <div class="input-form">
         <div class="row">
 			<h3><?php echo _AT('results_found', $num_results); ?></h3>
@@ -139,6 +142,7 @@ $num_results = mysql_num_rows($result);
 		</div>
 </div>
 </form>
+<?php endif; ?>
 
 	<table class="data static" summary="" rules="cols">
 	<colgroup>
