@@ -115,6 +115,7 @@ if (!isset($_POST['submit'])) {
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_array($result))){
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('QUESTION_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -140,7 +141,6 @@ if (!isset($_POST['submit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printErrors();
 ?>
 <form action="tools/tests/edit_question_multi.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
