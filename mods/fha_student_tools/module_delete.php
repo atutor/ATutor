@@ -6,7 +6,7 @@
  * $course is the ID of the course to delete.
  */
 
-function fha_refresher_delete($course) {
+function fha_student_tools_delete($course) {
 	global $db;
 
 	// delete hello_world course table entries
