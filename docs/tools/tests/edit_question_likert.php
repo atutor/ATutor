@@ -113,6 +113,7 @@ if (isset($_POST['cancel'])) {
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_array($result))){
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('QUESTION_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -135,8 +136,6 @@ if (isset($_POST['cancel'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$msg->printErrors();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
