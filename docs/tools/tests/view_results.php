@@ -125,21 +125,27 @@ if ($row = mysql_fetch_assoc($result)){
 					}
 
 					/* for each non-empty choice: */
+					/* for each non-empty choice: */
 					for ($i=0; ($i < 10) && ($row['choice_'.$i] != ''); $i++) {
 						if ($i > 0) {
-							echo $spacer;
+							echo '<br />';
 						}
-
 						if (is_array($answer_row['answer'])) {
 							print_result($row['choice_'.$i], $row['answer_'.$i], $i, (int) in_array($i, $answer_row['answer']), $row['answer_'.$answer_row['answer']]);
 			
 							if (is_array($answer_row['answer']) && ($row['answer_'.$i] == 1) && in_array($i, $answer_row['answer'])) {
 								echo $mark_right;
+							} else if (is_array($answer_row['answer']) && ($row['answer_'.$i] == 1) && !in_array($i, $answer_row['answer'])) {
+								echo $mark_wrong;
 							} else if (is_array($answer_row['answer']) && ($row['answer_'.$i] != 1) && in_array($i, $answer_row['answer'])) {
 								echo $mark_wrong;
 							}
 						} else {
-							print_result($row['choice_'.$i], $row['answer_'.$i], $i, (int) ($i == $answer_row['answer']), $row['answer_'.$answer_row['answer']]);
+							$show_answer = 0;
+							if ($answer_row['answer'] == $i) {
+								$show_answer = 1;
+							}
+							print_result($row['choice_'.$i], $row['answer_'.$i], $i, $show_answer, $row['answer_'.$answer_row['answer']]);
 							if (($row['answer_'.$i] == 1) && ($answer_row['answer'] == $i)) {
 								echo $mark_right;
 							} else if ($row['answer_'.$i] == 1) {
@@ -147,14 +153,7 @@ if ($row = mysql_fetch_assoc($result)){
 							}
 						}
 					}
-					if (!is_array($answer_row['answer'])) {
-						echo $spacer;
-						print_result('<em>'._AT('left_blank').'</em>', -1, -1, (int) (-1 == $answer_row['answer']), false);
-						if ($answer_row['answer'] == -1) {
-							echo $mark_wrong;
-						}
-					}
-
+	
 					echo '</p>';
 					break;
 
