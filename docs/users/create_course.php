@@ -71,15 +71,11 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
-//} else if (($_POST['setvisual'] || $_POST['settext'])){			
-//}else if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-//		header("Location: ".$_SERVER['PHP_SELF'].'#banner');
-// 		exit;
-} else if (isset($_POST['form_course'])) {
+}else if (isset($_POST['form_course']) && $_POST['submit'] != '') {
 	$_POST['instructor'] = $_SESSION['member_id'];
 
-	$errors = add_update_course($_POST);
-	
+		$errors = add_update_course($_POST);
+
 	if ($errors !== FALSE) {
 		$msg->addFeedback('COURSE_CREATED');
 		header('Location: '.$_base_href.'bounce.php?course='.$addslashes($errors).SEP.'p='.urlencode('index.php'));
@@ -93,7 +89,7 @@ $onload = 'document.course_form.title.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
-
+debug($_POST);
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>
