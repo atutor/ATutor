@@ -275,20 +275,13 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 	</div>
 
 	<div class="row">
-		<?php echo _AT('formatting'); ?>
-			<br />
-		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] === 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.course_form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>,
-
-		<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.course_form.setvisual.disabled=false;"  /> <label for="html"><?php echo _AT('html'); ?></label>
 		<?php
 			if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 				echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-				echo '<input type="submit" name="settext"   value="'._AT('switch_text').'" />';
+				echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
 			} else {
-				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" ';
-				if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
-				echo '/>';
-			} 
+				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" />';
+			}
 		?>
 	</div>
 	<div class="row">
