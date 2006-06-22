@@ -16,6 +16,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
+
 if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 	authenticate(AT_PRIV_CONTENT);
 }
@@ -84,6 +85,12 @@ if (course_realpath($current_path . $pathext . $file) == FALSE) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	load_editor('body_text');
+}
+
+
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -96,7 +103,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row">
 		<h3><?php echo $file; ?></h3>
 	</div>
-	
+		<div class="row">
+		<?php
+			if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+				echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+				echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
+			} else {
+				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" />';
+			}
+		?>
+	</div>
 	<div class="row">
 		<label for="body_text"><?php echo _AT('body'); ?></label><br />
 		<textarea  name="body_text" id="body_text" rows="25"><?php echo htmlspecialchars($_POST['body_text']); ?></textarea>

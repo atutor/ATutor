@@ -77,12 +77,14 @@ if (isset($_POST['savenewfile'])) {
 		/* only html or txt extensions allowed */
 		if ($_POST['extension'] == 'html') {
 			$extension = 'html';
+			$head_html = "<html>\n<head>\n<title>".$_POST['filename']."</title>\n<head>\n<body>";
+			$foot_html ="\n</body>\n</html>";
 		} else {
 			$extension = 'txt';
 		}
 
 		if (!@file_exists($current_path.$pathext.$filename.'.'.$extension)) {
-			$content = str_replace("\r\n", "\n", $_POST['body_text']);
+			$content = str_replace("\r\n", "\n", $head_html.$_POST['body_text'].$foot_html);
 			
 			if (course_realpath($current_path . $pathext . $filename.'.'.$extension) == FALSE) {
 				$msg->addError('FILE_NOT_SAVED');
@@ -128,12 +130,20 @@ if (isset($_POST['savenewfile'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	load_editor('body_text');
+}
+
 $pathext = $_GET['pathext']; 
 $popup   = $_GET['popup'];
 
 $msg->printAll();
 if (!$_POST['extension']) {
 	$_POST['extension'] = 'txt';
+	$_POST['formatting'] = 0;
+}else if($_POST['extension'] == "html"){
+	$_POST['formatting'] = 1;
 }
 
 ?>
@@ -147,15 +157,22 @@ if (!$_POST['extension']) {
 			<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
 		</div>
 
-		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
-			<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['extension'] == 'txt') { echo 'checked="checked"'; } ?> />
-			<label for="text"><?php echo _AT('text'); ?></label>
+<div class="row">
 
-			<input type="radio" name="extension" value="html" id="html" <?php if ($_POST['extension'] == 'html') { echo 'checked="checked"'; } ?> />
-			<label for="html"><?php echo _AT('html'); ?></label>
-		</div>
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
+		<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+		<label for="text"><?php echo _AT('plain_text'); ?></label>
 
+		, <input type="radio" name="extension" value="html" id="html" <?php if ($_POST['formatting'] ==1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+		<label for="html"><?php echo _AT('html'); ?></label>
+
+		<?php if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) : ?>
+			<input type="hidden" name="setvisual" value="<?php echo $_POST['setvisual']; ?>" />
+			<input type="submit" name="settext" value="<?php echo _AT('switch_text'); ?>" />
+		<?php else: ?>
+			<input type="submit" name="setvisual" value="<?php echo _AT('switch_visual'); ?>" <?php if ($_POST['formatting']==0) { echo 'disabled="disabled"'; } ?> />
+		<?php endif; ?>
+	</div>
 		<div class="row">
 			<label for="body_text"><?php echo _AT('body');  ?></label><br />
 			<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
