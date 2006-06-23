@@ -16,11 +16,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-if (isset($_POST['back'])) {
-	header('Location: my_tests.php');
-	exit;
-} 
-
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$content_base_href = 'get.php/';
 } else {
@@ -82,7 +77,7 @@ $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".
 $result	= mysql_query($sql, $db); 
 
 $count = 1;
-echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
+echo '<form method="get" action="'.$_base_href.'tools/my_tests.php">';
 
 if ($row = mysql_fetch_assoc($result)){
 	echo '<div class="input-form">';
@@ -117,28 +112,16 @@ if ($row = mysql_fetch_assoc($result)){
 					if ($i > 0) {
 						echo '<br />';
 					}
+					$text = $row['choice_' . $i];
+					$correct_choice = ($row['answer_'.$i] == 1) ? TRUE : FALSE;
+
 					if (is_array($answer_row['answer'])) {
-						print_result($row['choice_'.$i], $row['answer_'.$i], $i, (int) in_array($i, $answer_row['answer']), $row['answer_'.$answer_row['answer']]);
-		
-						if (is_array($answer_row['answer']) && ($row['answer_'.$i] == 1) && in_array($i, $answer_row['answer'])) {
-							echo $mark_right;
-						} else if (is_array($answer_row['answer']) && ($row['answer_'.$i] == 1) && !in_array($i, $answer_row['answer'])) {
-							echo $mark_wrong;
-						} else if (is_array($answer_row['answer']) && ($row['answer_'.$i] != 1) && in_array($i, $answer_row['answer'])) {
-							echo $mark_wrong;
-						}
+						$checked = in_array($i, $answer_row['answer']) ? TRUE : FALSE;
 					} else {
-						$show_answer = 0;
-						if ($answer_row['answer'] == $i) {
-							$show_answer = 1;
-						}
-						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $show_answer, $row['answer_'.$answer_row['answer']]);
-						if (($row['answer_'.$i] == 1) && ($answer_row['answer'] == $i)) {
-							echo $mark_right;
-						} else if ($row['answer_'.$i] == 1) {
-							echo $mark_wrong;
-						}
+						$checked = ($answer_row['answer'] == $i) ? TRUE : FALSE;
 					}
+
+					print_result($text, $checked, $correct_choice);
 				}
 
 				echo '</p>';
@@ -149,41 +132,21 @@ if ($row = mysql_fetch_assoc($result)){
 			case AT_TESTS_TF:
 				/* true or false question */
 				if ($row['weight']) {
-					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
+					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], FALSE, TRUE);
 					echo '<br />';
 				}
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
-				/* avman */
-				if($answer_row['answer']== $row['answer_0']){
-					$correct=1;
-				} else {
-					$correct='';
-				}
-
-				print_result(_AT('true'), $row['answer_0'], 1, (int) ($answer_row['answer'] == 1), $correct);
-				if (($answer_row['answer'] == 1) && ($row['answer_0'] == 1)){
-					echo $mark_right;
-				} else if (($answer_row['answer'] == 1) && ($row['answer_0'] != 1)) {
-					echo $mark_wrong;
-				} else if ($row['answer_0'] == 1) {
-					echo $mark_wrong;
-				}
+				// true:
+				print_result(_AT('true'), ($answer_row['answer'] == 1) ? TRUE : FALSE, ($row['answer_0'] == 1) ? TRUE : FALSE);
+				
 				echo '<br />';
 
-				print_result(_AT('false'), $row['answer_0'], 2, (int) ($answer_row['answer'] == 2), $correct);
-				if (($answer_row['answer'] == 2) && ($row['answer_0'] == 2)){
-					echo $mark_right;
-				} else if (($answer_row['answer'] == 2) && ($row['answer_0'] != 2)) {
-					echo $mark_wrong;
-				} else if ($row['answer_0'] == 2) {
-					echo $mark_wrong;
-				}
-				echo '<br />';
-				print_result('<em>'._AT('left_blank').'</em>', -1, -1, (int) ($answer_row['answer'] == -1), false);
-				if ($answer_row['answer'] == -1) {
-					echo $mark_wrong;
-				}
+				// false:
+				print_result(_AT('false'), ($answer_row['answer'] == 2) ? TRUE : FALSE, ($row['answer_0'] == 2) ? TRUE : FALSE);
+
+				// left empty:
+
 				$my_score=($my_score+$answer_row['score']);
 				$this_total += $row['weight'];
 				echo '</p>';
@@ -214,7 +177,7 @@ if ($row = mysql_fetch_assoc($result)){
 					if ($i > 0) {
 						echo '<br />';
 					}
-					print_result($row['choice_'.$i], '' , $i, AT_print($answer_row['answer'], 'tests_answers.answer'), 'none');
+					print_result($row['choice_'.$i], ($answer_row['answer'] == $i) ? TRUE : FALSE);
 				}
 
 				echo '</p>';
