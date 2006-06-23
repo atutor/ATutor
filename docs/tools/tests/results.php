@@ -166,7 +166,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 <tbody>
 <?php if ($rows): ?>
 	<?php foreach ($rows as $row): ?>
-		<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = true;">
+		<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['result_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" /></td>
 			<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><?php echo $row['full_name']; ?></td>
