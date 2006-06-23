@@ -59,6 +59,7 @@ $this->_pages['tools/tests/delete_test.php']['parent']    = 'tools/tests/index.p
 
 $this->_pages['tools/view_results.php']['title_var'] = 'view_results';
 $this->_pages['tools/view_results.php']['parent']    = 'tools/my_tests.php';
+$this->_pages['tools/view_results.php']['children']  = array(); // to create the "back to tests" link
 
 	// test questions
 	$this->_pages['tools/tests/create_question_tf.php']['title_var'] = 'create_new_question';
