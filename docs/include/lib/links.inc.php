@@ -128,6 +128,10 @@ function get_link_categories($manage=false, $list=false) {
 			$categories[0][] = $row['cat_id'];
 		}
 	}
+	
+	//sort($categories, SORT_STRING);
+
+	//debug($categories);
 
 	return $categories;
 }
@@ -148,17 +152,12 @@ function select_link_categories($categories, $cat_id, $current_cat_id, $exclude,
 			return;
 		}
 
-		if ($row['owner_id'] == LINK_CAT_GROUP && empty($row['name'])) {
-			echo '<optgroup label="'.$categories[$cat_id]['cat_name'].'">';
-		} else {
-
-			if ($owner) {
-				echo '<option value="'.$cat_id.'-'.$row['owner_type'].'-'.$row['owner_id'].'"';
-			} else  {
-				echo '<option value="'.$cat_id.'"';
-			}
+		if ($owner) {
+			echo '<option value="'.$cat_id.'-'.$row['owner_type'].'-'.$row['owner_id'].'"';
+		} else  {
+			echo '<option value="'.$cat_id.'"';
 		}
-
+	
 		if ($exclude && is_array($categories[$cat_id]['children']) && in_array($current_cat_id, $categories[$cat_id]['children'])) {
 			echo ' selected="selected"';
 		} else if (!$exclude && ($cat_id == $current_cat_id)) {
@@ -172,7 +171,6 @@ function select_link_categories($categories, $cat_id, $current_cat_id, $exclude,
 			foreach($categories[$cat_id]['children'] as $child_cat_id) {
 				select_link_categories($categories, $child_cat_id, $current_cat_id, $exclude, $depth+1, $owner);
 			}
-			echo '</optgroup>';
 		}
 	}
 }
