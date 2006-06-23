@@ -151,7 +151,11 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 		echo '</td>';
 
-		echo '<td class="row1" align="center"><input type="text" name="ordering['.$row['question_id'].']" value="'.$row['ordering'].'" size="2" /></td>';
+		if ($random) {
+			echo '<td class="row1" align="center">'._AT('na').'</td>';
+		} else {
+			echo '<td class="row1" align="center"><input type="text" name="ordering['.$row['question_id'].']" value="'.$row['ordering'].'" size="2" /></td>';
+		}
 
 		echo '<td class="row1">';
 		if (strlen($row['question']) > 45) {
