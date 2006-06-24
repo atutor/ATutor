@@ -1,0 +1,23 @@
+Userplane WebChat for ATutor ReadMe
+
+This module can be installed with ATutor to add live text, audio, and video chat to ATutor courses. Each course on an ATutor system is provided with its own Webchat.
+
+1. Copy the downloaded file into the ATutor mods/ directory and unzip it there. 
+
+On Windows systems use and application like WinZip the extract the file into the mods/ directory
+
+On Unix/Linux systems use the command:
+
+tar xzvf atutor_userplane.tar.gz
+
+2. Login to ATutor as the administrator and run Install Module under the Modules tab, Select the Userplane module, which should be listed as available to be installed when the module has been unzipped into the modes directory
+
+3. Setup your Userplane community. You may set up your own private community by visiting the Userplane registration site
+
+https://www.userplane.com/buy/
+
+You may choose to use the Free version of Userplane when you register, in which case advertisements will be displayed when the WebChat opens, or you can purchase a community ID which will remove the advertisements.
+
+You may also choose to use the ATutor community ID, and access the already established atutor.ca Userplane community. This is an advertised version of Userplane, which also includes direct access to ATutor support. The ATutor Community ID is ( e2405db9bcd4f802ffed98a4d1a15ac3 )
+
+4. Once you have your community ID, and the module has been installed, and enabled, click on the administrator's Userplane Tab to enter the community ID. Once the ID has been saved Userplan is ready to go. 
