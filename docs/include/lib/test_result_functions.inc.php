@@ -58,8 +58,8 @@ function print_result($text, $checked, $correct_choice = null) {
 		$right = ' <img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" title="'._AT('correct_answer').'" height="16" width="16" style="vertical-align: middle" />';
 		$wrong = ' <img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" title="'._AT('wrong_answer').'" height="16" width="16" style="vertical-align: middle" />';
 		$empty = ' <img src="'.$_base_path.'images/clr.gif" alt="" title="" height="16" width="16" style="vertical-align: middle" />';
-		$check_empty = ' <img src="'.$_base_path.'images/checkbox_empty.gif" alt="" title="" height="13" width="13" style="vertical-align: middle" /> ';
-		$check_check = ' <img src="'.$_base_path.'images/checkbox_check.gif" alt="" title="" height="13" width="13" style="vertical-align: middle" /> ';
+		$check_empty = ' <img src="'.$_base_path.'images/checkbox_empty.gif" alt="'._AT('unchecked').'" title="'._AT('unchecked').'" height="13" width="13" style="vertical-align: middle" /> ';
+		$check_check = ' <img src="'.$_base_path.'images/checkbox_check.gif" alt="'._AT('checked').'" title="'._AT('checked').'" height="13" width="13" style="vertical-align: middle" /> ';
 	}
 
 	// mark this choice
