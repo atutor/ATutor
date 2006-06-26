@@ -174,7 +174,7 @@ function toggleToc(objId) {
 //-->
 </script>
 <!-- section title -->
-<div><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a><h1 id="section-title"><?php echo $this->section_title; ?></h1>
+<div><a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a><h1 id="section-title"><?php echo $this->section_title; ?></h1>
 </div>
 
 <!-- top help/search/login links -->
