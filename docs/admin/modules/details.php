@@ -152,7 +152,7 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 	<?php if (is_array($module->_pages)): ?>
 		<div class="row">
 			<?php if (!isset($_GET['files'])): ?>
-				<a href="<?php echo $_SERVER['REQUEST_URI'].SEP; ?>files#files"><?php echo _AT('files'); ?></a><br />
+				<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES).SEP; ?>files#files"><?php echo _AT('files'); ?></a><br />
 			<?php else: ?>
 				<?php $module_pages = array_keys($module->_pages); ?>
 				<?php natsort($module_pages); ?>

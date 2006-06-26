@@ -71,7 +71,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		// show the form to vote
 		echo '<tr>';
 		echo '<td valign="top" class="dropdown" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
-		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" />';
+		echo '<form method="post" action="'.htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES).'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" />';
 		echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">';
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 			if ($row['choice' . $i]) {

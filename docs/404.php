@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-$_info = array('404_BLURB', $_SERVER['REQUEST_URI']);
+$_info = array('404_BLURB', htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES));
 $msg->printInfos($_info);
 
 $msg->printAll();

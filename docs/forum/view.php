@@ -110,7 +110,7 @@ $msg->printAll();
 
 ?>
 	<!-- hidden direct link to post message -->
-	<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#post" style="border: 0px;"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('reply'); ?>" /></a>
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#post" style="border: 0px;"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('reply'); ?>" /></a>
 <?php
 	/**
 	* Jacek M.

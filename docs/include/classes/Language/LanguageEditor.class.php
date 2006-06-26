@@ -271,7 +271,7 @@ class LanguageEditor extends Language {
 
 		$fromLanguage =& $languageManager->getLanguage('en');
 
-		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
+		echo '<form method="post" action="'.htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES).'">';
 		echo '<table border="0" cellpadding="0" cellspacing="2">';
 		echo '<tr>';
 		echo '<td>Show: ';
