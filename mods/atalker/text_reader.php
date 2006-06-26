@@ -55,7 +55,7 @@
  	fputs($fp, $scheme_in);
  	fclose($fp);
 	
-	$file_props = "-mode --tts -eval ".AT_SPEECH_DIR.$now.".scm";
+	//$file_props = "-mode --tts -eval ".AT_SPEECH_DIR.$now.".scm";
 
 	if(!$_POST['create'] && !$_POST['remove']){
 	

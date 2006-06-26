@@ -17,7 +17,27 @@
 
 	define('AT_INCLUDE_PATH', '../../../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
+	$_POST['textin'] = $addslashes(stripslashes($_POST['textin']));	
+	$_POST['add'] = $addslashes(stripslashes($_POST['add']));	
+	$_POST['type'] = $addslashes(stripslashes($_POST['type']));	
+	$_POST['page'] = $addslashes(stripslashes($_POST['page']));	
+	$_POST['popup'] = $addslashes(stripslashes($_POST['popup']));	
+	$_POST['download'] = $addslashes(stripslashes($_POST['download']));	
+	$_POST['read'] = $addslashes(stripslashes($_POST['read']));	
+	$_POST['save'] = $addslashes(stripslashes($_POST['save']));	
+	$_POST['file_type'] = $addslashes(stripslashes($_POST['file_type']));	
+	$_POST['volumn'] = $addslashes(stripslashes($_POST['volumn']));	
+	$_POST['duration'] = $addslashes(stripslashes($_POST['duration']));	
+	$_POST['filename'] = $addslashes(stripslashes($_POST['filename']));	
 
+
+	$_POST['export'] = $addslashes(stripslashes($_POST['export']));	
+	$_POST['language'] = $addslashes(stripslashes($_POST['language']));	
+	$_POST['speaker'] = $addslashes(stripslashes($_POST['speaker']));
+	$_POST['base'] = $addslashes(stripslashes($_POST['base']));
+	$_POST['middle'] = $addslashes(stripslashes($_POST['middle']));
+	$_POST['range'] = $addslashes(stripslashes($_POST['range']));
+	$_POST['rate'] = $addslashes(stripslashes($_POST['rate']));
 // with the following line, only administrators can access this page
 admin_authenticate(AT_ADMIN_PRIV_COURSES);
 

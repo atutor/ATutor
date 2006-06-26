@@ -159,11 +159,11 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 			</select>
 			<label for="speaker"><?php echo _AT('speaker'); ?></label>
 			<select name="speaker" id="speaker">
-				<option value="male1" <?php if($_POST['speaker'] == 'male1'){ echo $select; } ?>><?php echo _AT('male1'); ?></option>
+				<option value="male1" <?php if($_POST['speaker'] == 'male1' || !$_POST['speaker']){ echo $select; } ?>><?php echo _AT('male1'); ?></option>
 				<option value="male2" <?php if($_POST['speaker'] == 'male2'){ echo $select; } ?>><?php echo _AT('male2'); ?></option>
 				<option value="male3" <?php if($_POST['speaker'] == 'male3'){ echo $select; } ?>><?php echo _AT('male3'); ?></option>
 				<option value="male4" <?php if($_POST['speaker'] == 'male4'){ echo $select; } ?>><?php echo _AT('male4'); ?></option>
-				<option value="female1" <?php if($_POST['speaker'] == 'female1' || !$_POST['speaker']){ echo $select; } ?>><?php echo _AT('female1'); ?></option>
+				<option value="female1" <?php if($_POST['speaker'] == 'female1'){ echo $select; } ?>><?php echo _AT('female1'); ?></option>
 			</select>		
 		</td>
 	</tr>
