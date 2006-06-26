@@ -20,6 +20,7 @@ $result = mysql_query($sql, $db);
 
 echo '<ol id="tools">';
 
+$blogs = false;
 while ($row = mysql_fetch_assoc($result)) {
 	if (strpos($row['modules'], '_standard/blogs') !== FALSE) {
 		// retrieve the last posted date/time from this blog
@@ -32,9 +33,14 @@ while ($row = mysql_fetch_assoc($result)) {
 		}
 
 		echo '<li class="top-tool"><a href="blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id'].'">'.$row['title'].$last_updated.'</a></li>';
+		$blogs = true;
 	}
 }
 echo '</ol>';
+
+if (!$blogs) {
+	echo _AT('none_found');
+}
 ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
