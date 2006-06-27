@@ -32,7 +32,7 @@ $tid = intval($_REQUEST['tid']);
 
 if (isset($_POST['submit'])) {
 	// check if we own this tid:
-	$sql    = "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+	$sql    = "SELECT test_id, random FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		/*
@@ -61,6 +61,7 @@ if (isset($_POST['submit'])) {
 
 		//update the weights & order
 		$total_weight = 0;
+		$count = 1;
 		foreach ($_POST['weight'] as $qid => $weight) {
 			$weight = $addslashes($weight);
 			if ($_POST['required'][$qid]) {
@@ -69,14 +70,19 @@ if (isset($_POST['submit'])) {
 				$required = 0;
 			}
 			
-			$orders = $_POST['ordering'];
-			asort($orders);
-			$orders = array_keys($orders);
-			$orders = array_flip($orders);
+			if (!$row['random']) {
+				$orders = $_POST['ordering'];
+				asort($orders);
+				$orders = array_keys($orders);
+				$orders = array_flip($orders);
+				$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=".($orders[$qid]+1)." WHERE question_id=$qid AND test_id=".$tid;
+			} else {
+				$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=$count WHERE question_id=$qid AND test_id=".$tid;
+			}
 
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=".($orders[$qid]+1)." WHERE question_id=$qid AND test_id=".$tid;
 			$result	= mysql_query($sql, $db);
 			$total_weight += $weight;
+			$count++;
 		}
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests SET out_of='$total_weight' WHERE test_id=$tid";
