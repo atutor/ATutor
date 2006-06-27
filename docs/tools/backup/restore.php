@@ -58,7 +58,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 		<input type="checkbox" value="1" name="all" id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 
 		<?php
-		$modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_DISABLED, 0, TRUE);
+		$modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
 		$keys = array_keys($modules);
 		$i=0;
 		?>
