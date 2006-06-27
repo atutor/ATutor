@@ -52,15 +52,20 @@ if(isset($_POST['export'])) {
 			$this_row .= quote_csv($row['email'])."\n";
 		}
 
-		
-		header('Content-Type: text/csv');
-		header('Content-transfer-encoding: binary');
-		header('Content-Disposition: attachment; filename="course_list_'.$_SESSION['course_id'].'.csv"');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
+		if ($this_row) {
+			header('Content-Type: text/csv');
+			header('Content-transfer-encoding: binary');
+			header('Content-Disposition: attachment; filename="course_list_'.$_SESSION['course_id'].'.csv"');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
 
-		echo $this_row;
+			echo $this_row;
+		} else {
+			// nothing to send. empty file
+			$msg->addError('ENROLLMENT_NONE_FOUND');
+			header('Location: export_course_list.php');
+		}
 		exit;
 	}
 }
