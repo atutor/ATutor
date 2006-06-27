@@ -86,9 +86,9 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 	} else if ($row && $row['status'] == AT_STATUS_DISABLED) {
 		$msg->addError('ACCOUNT_DISABLED');
 	} else if ($row) {
-		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
+		$_SESSION['login']		= get_login($_SESSION['member_id']);
 		assign_session_prefs(unserialize(stripslashes($row['preferences'])));
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];

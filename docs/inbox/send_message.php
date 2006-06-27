@@ -154,7 +154,7 @@ if ($reply_to) {
 		<?php
 			if (!$reply_to) {
 				//echo '<small class="spacer">'._AT('same_course_users').'</small><br />';
-				$sql	= "SELECT DISTINCT M.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a') ORDER BY M.login";
+				$sql	= "SELECT DISTINCT M.first_name, M.second_name, M.last_name, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a') ORDER BY M.first_name, M.second_name, M.last_name, M.login";
 
 				$result = mysql_query($sql, $db);
 				$row	= mysql_fetch_assoc($result);
@@ -166,7 +166,13 @@ if ($reply_to) {
 					} else if (isset ($_POST['to']) && $_POST['to'] == $row['member_id']) {
 						echo ' selected="selected"';
 					}
-					echo '>'.AT_print($row['login'], 'members.login').'</option>';
+					echo '>';
+					if ($_config_defaults['display_full_name'] && $row['first_name'] && $row['last_name']) {
+						echo AT_print($row['first_name'] . ' ' . $row['second_name'] . ' ' . $row['last_name'], 'members.login');
+					} else {
+						AT_print($row['login'], 'members.login');
+					}
+					echo '</option>';
 				} while ($row = mysql_fetch_assoc($result));
 				echo '</select>';
 			} else {
