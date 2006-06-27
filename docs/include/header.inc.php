@@ -103,6 +103,19 @@ $_current_sub_level_page = get_current_sub_navigation_page($current_page);
 
 $_path = get_path($current_page);
 
+if ($_SESSION['course_id'] > 0) {
+	$_path[] = array('url' => $_base_path . 'index.php', 'title' => $_SESSION['course_title']);
+} else if ($_SESSION['course_id'] < 0) {
+	$_path[] = array('url' => $_base_path . 'admin/index.php', 'title' => _AT('administration'));
+}
+
+if ($_SESSION['member_id']) {
+	$_path[] = array('url' => $_base_path . 'bounce.php?course=0', 'title' => _AT('my_start_page'));
+} else if (!$_SESSION['course_id']) {
+	$_path[] = array('url' => $_base_path . 'login.php', 'title' => SITE_NAME);
+}
+
+
 unset($_path[0]);
 if ($_path[2]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[3];
@@ -118,6 +131,8 @@ if (isset($_pages[$current_page]['title'])) {
 } else {
 	$_page_title = _AT($_pages[$current_page]['title_var']);
 }
+
+
 
 /* calculate the section_title: */
 if ($_SESSION['course_id'] > 0) {
