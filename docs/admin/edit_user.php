@@ -28,6 +28,14 @@ if (isset($_POST['cancel'])) {
 if (isset($_POST['submit'])) {
 	$id = intval($_POST['id']);
 
+	//check if student id (public field) is already being used
+	if (!$_POST['overwrite'] && !empty($_POST['student_id'])) {
+		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."master_list WHERE public_field='$_POST[student_id]' && member_id<>0",$db);
+		if (mysql_num_rows($result) != 0) {
+			$msg->addError('CREATE_MASTER_USED');
+		}
+	}
+
 	/* email check */
 	if ($_POST['email'] == '') {
 		$msg->addError('EMAIL_MISSING');
@@ -141,24 +149,20 @@ if (isset($_POST['submit'])) {
 			exit;
 		}
 
+
 		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 			$_POST['student_id'] = $addslashes($_POST['student_id']);
-			$student_pin = md5($addslashes($_POST['student_pin']));
+			$student_pin = sha1($addslashes($_POST['student_pin']));
 
-			$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=0 WHERE member_id=$id";
-			$result = mysql_query($sql, $db);
-
-			if ($_POST['student_id']) {
-				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=$id WHERE public_field='$_POST[student_id]'";
+			//if changed, delete old stud id
+			if (!empty($_POST['old_student_id']) && $_POST['old_student_id'] != $_POST['student_id']) {
+				$sql = "DELETE FROM ".TABLE_PREFIX."master_list WHERE public_field=".$_POST['old_student_id']." AND member_id=$id";
 				$result = mysql_query($sql, $db);
-				if (mysql_affected_rows($db) == 0) {
-					$sql = "SELECT member_id FROM ".TABLE_PREFIX."master_list WHERE member_id=$id AND public_field='$_POST[student_id]'";
-					$result = mysql_query($sql, $db);
-					if (!$row = mysql_fetch_assoc($result)) {
-						$sql = "REPLACE INTO ".TABLE_PREFIX."master_list VALUES ('$_POST[student_id]', '$student_pin', $id)";
-						mysql_query($sql, $db);
-					}
-				}
+			}
+			//if new is set
+			if (!empty($_POST['student_id']) && $_POST['old_student_id'] != $_POST['student_id']) {
+				$sql = "REPLACE INTO ".TABLE_PREFIX."master_list VALUES ('$_POST[student_id]', '', $id)";
+				$result = mysql_query($sql, $db);
 			}
 		}
 
@@ -216,6 +220,7 @@ if (empty($_POST)) {
 		$sql    = "SELECT public_field FROM ".TABLE_PREFIX."master_list WHERE member_id=$id";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
+			$_POST['old_student_id'] = $row['public_field'];
 			$_POST['student_id'] = $row['public_field'];
 		}
 	}
