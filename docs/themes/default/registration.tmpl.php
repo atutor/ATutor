@@ -2,6 +2,7 @@
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php global $languageManager, $_config; ?>
+<input name="ml" type="hidden" value="<?php echo $this->ml; ?>" />
 <div class="input-form">
 
 	<?php if (!$_POST['member_id'] && defined('AT_MASTER_LIST') && AT_MASTER_LIST && !admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>

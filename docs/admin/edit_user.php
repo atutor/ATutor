@@ -17,7 +17,11 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['cancel'])) {
-	header('Location: ./users.php');
+	if (isset($_POST['ml']) && $_REQUEST['ml']) {
+		header('Location: '.$_base_href.'admin/master_list.php');
+	} else {
+		header('Location: '.$_base_href.'admin/users.php');
+	}
 	exit;
 }
 
@@ -181,7 +185,11 @@ if (isset($_POST['submit'])) {
 		}
 
 		$msg->addFeedback('PROFILE_UPDATED_ADMIN');
-		header('Location: '.$_base_href.'admin/users.php');
+		if (isset($_POST['ml']) && $_REQUEST['ml']) {
+			header('Location: '.$_base_href.'admin/master_list.php');
+		} else {
+			header('Location: '.$_base_href.'admin/users.php');
+		}
 		exit;
 	}
 }
@@ -214,6 +222,14 @@ if (empty($_POST)) {
 }
 
 $savant->assign('languageManager', $languageManager);
+
+if (isset($_REQUEST['ml']) && $_REQUEST['ml']) {
+	// redirect back to the master list
+	$savant->assign('ml', 1);
+} else {
+	$savant->assign('ml', 0);
+}
+
 
 /* HAVE TO SEND MEMBER_ID THROUGH FORM AS A HIDDEN POST VARIABLE!!! */
 /* PUT IN IF LOOP THAT LETS YOU SEE STATUS RADIO BUTTONS */

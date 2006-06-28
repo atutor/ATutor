@@ -110,11 +110,19 @@ if (isset($_POST['submit_yes'])) {
 	write_to_log(AT_ADMIN_LOG_DELETE, 'member_track', mysql_affected_rows($db), $sql);
 
 	$msg->addFeedback('USER_DELETED');
-	header('Location: users.php');
+	if (isset($_POST['ml']) && $_REQUEST['ml']) {
+		header('Location: '.$_base_href.'admin/master_list.php');
+	} else {
+		header('Location: '.$_base_href.'admin/users.php');
+	}
 	exit;
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: users.php');
+	if (isset($_POST['ml']) && $_REQUEST['ml']) {
+		header('Location: '.$_base_href.'admin/master_list.php');
+	} else {
+		header('Location: '.$_base_href.'admin/users.php');
+	}
 	exit;
 }
 
@@ -136,6 +144,7 @@ if (!($row_log = mysql_fetch_assoc($result))) {
 	} else {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
 		$hidden_vars['id'] = $id;
+		$hidden_vars['ml'] = intval($_REQUEST['ml']);
 		$confirm = array('DELETE_USER', AT_print($row_log['login'], 'members.login'));
 		$msg->addConfirm($confirm, $hidden_vars);
 		$msg->printConfirm();
