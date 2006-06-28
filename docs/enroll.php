@@ -137,8 +137,26 @@ if ($_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	$msg->printErrors('LOGIN_ENROL');	
 	?>
-	<?php
-	echo '<p><a href="login.php?course='.$_SESSION[course_id].'">'._AT('login_into_atutor').'</a><br /><a href="registration.php">'._AT('register_an_account').'</a></p>';
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo _AT('login'); ?></h3>
+			<p><a href="login.php?course=<?php echo $_SESSION[course_id]; ?>"><?php echo _AT('login_into_atutor'); ?></a></p>
+		</div>
+	</div>
+
+	<form action="registration.php" method="get">
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo _AT('new_user');?></h3>
+			<p><?php echo _AT('registration_text'); ?></p>
+		</div>
+		<div class="row buttons">
+			<input type="submit" name="register" value="<?php echo _AT('register'); ?>" class="button" />
+		</div>
+	</div>
+	</form>
+
+<?php
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
