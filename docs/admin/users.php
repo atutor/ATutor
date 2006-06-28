@@ -70,7 +70,7 @@ if ($_GET['search']) {
 	$search = $addslashes($_GET['search']);
 	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
 	$search = '%'.$search.'%';
-	$search = "((M.first_name LIKE '$search') OR (M.last_name LIKE '$search') OR (M.email LIKE '$search') OR (M.login LIKE '$search'))";
+	$search = "((M.first_name LIKE '$search') OR (M.second_name LIKE '$search') OR (M.last_name LIKE '$search') OR (M.email LIKE '$search') OR (M.login LIKE '$search'))";
 } else {
 	$search = '1';
 }
@@ -127,9 +127,9 @@ $count  = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
 
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-	$sql	= "SELECT M.member_id, M.login, M.first_name, M.last_name, M.email, M.status, L.public_field FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, L.public_field FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid ORDER BY $col $order LIMIT $offset, $results_per_page";
 } else {
-	$sql	= "SELECT M.member_id, M.login, M.first_name, M.last_name, M.email, M.status FROM ".TABLE_PREFIX."members M WHERE M.status $status AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status FROM ".TABLE_PREFIX."members M WHERE M.status $status AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
 }
 $result = mysql_query($sql, $db);
 
@@ -154,7 +154,7 @@ $result = mysql_query($sql, $db);
 		</div>
 
 		<div class="row">
-			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('login_name').', '._AT('first_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
+			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('login_name').', '._AT('first_name').', '._AT('second_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
 			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
 		</div>
 
@@ -196,20 +196,28 @@ $result = mysql_query($sql, $db);
 		<col />
 		<col class="sort" />
 		<col span="<?php echo 4 + $col_counts; ?>" />
+	<?php elseif($col == 'public_field'): ?>
+		<col span="<?php echo 1 + $col_counts; ?>" />
+		<col class="sort" />
+		<col span="3" />
 	<?php elseif($col == 'first_name'): ?>
 		<col span="<?php echo 2 + $col_counts; ?>" />
 		<col class="sort" />
 		<col span="3" />
-	<?php elseif($col == 'last_name'): ?>
+	<?php elseif($col == 'second_name'): ?>
 		<col span="<?php echo 3 + $col_counts; ?>" />
+		<col class="sort" />
+		<col span="3" />
+	<?php elseif($col == 'last_name'): ?>
+		<col span="<?php echo 4 + $col_counts; ?>" />
 		<col class="sort" />
 		<col span="2" />
 	<?php elseif($col == 'email'): ?>
-		<col span="<?php echo 4 + $col_counts; ?>" />
+		<col span="<?php echo 5 + $col_counts; ?>" />
 		<col class="sort" />
 		<col />
 	<?php elseif($col == 'status'): ?>
-		<col span="<?php echo 5 + $col_counts; ?>" />
+		<col span="<?php echo 6 + $col_counts; ?>" />
 		<col class="sort" />
 	<?php endif; ?>
 </colgroup>
@@ -221,6 +229,7 @@ $result = mysql_query($sql, $db);
 		<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=public_field<?php echo $page_string; ?>"><?php echo _AT('student_id'); ?></a></th>
 	<?php endif; ?>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=first_name<?php echo $page_string; ?>"><?php echo _AT('first_name'); ?></a></th>
+	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=second_name<?php echo $page_string; ?>"><?php echo _AT('second_name'); ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=last_name<?php echo $page_string; ?>"><?php echo _AT('last_name');   ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
@@ -245,6 +254,7 @@ $result = mysql_query($sql, $db);
 				<?php endif; ?>
 
 				<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
+				<td><?php echo AT_print($row['second_name'], 'members.second_name'); ?></td>
 				<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
 				<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
 				<td><?php 
