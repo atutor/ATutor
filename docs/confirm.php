@@ -78,24 +78,29 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['email'] = $addslashes($_POST['email']);
 
-	$sql    = "SELECT member_id, email, creation_date FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND status=".AT_STATUS_UNCONFIRMED;
+	$sql    = "SELECT member_id, email, creation_date, status FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]'";
 	$result = mysql_query($sql, $db);
 
 	if ($row = mysql_fetch_assoc($result)) {
-		$code = substr(md5($row['email'] . $row['creation_date']. $row['member_id']), 0, 10);
-		$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code;
 
-		/* send the email confirmation message: */
-		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-		$mail = new ATutorMailer();
+		if ($row['status'] == AT_STATUS_UNCONFIRMED) {
+			$code = substr(md5($row['email'] . $row['creation_date']. $row['member_id']), 0, 10);
+			$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code;
 
-		$mail->From     = $_config['contact_email'];
-		$mail->AddAddress($row['email']);
-		$mail->Subject = SITE_NAME . ': ' . _AT('email_confirmation_subject');
-		$mail->Body    = _AT('email_confirmation_message', $_base_href, $confirmation_link)."\n\n";
-		$mail->Send();
+			/* send the email confirmation message: */
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			$mail = new ATutorMailer();
 
-		$msg->addFeedback('CONFIRMATION_SENT');
+			$mail->From     = $_config['contact_email'];
+			$mail->AddAddress($row['email']);
+			$mail->Subject = SITE_NAME . ': ' . _AT('email_confirmation_subject');
+			$mail->Body    = _AT('email_confirmation_message', $_base_href, $confirmation_link)."\n\n";
+			$mail->Send();
+
+			$msg->addFeedback('CONFIRMATION_SENT');
+		} else {
+			$msg->addFeedback('ACCOUNT_CONFIRMED');
+		}
 
 		header('Location: '.$_base_href.'login.php');
 		exit;
