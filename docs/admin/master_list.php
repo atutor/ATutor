@@ -115,10 +115,18 @@ if (isset($_POST['submit'])) {
 
 	exit;
 } else if (isset($_GET['edit'], $_GET['id'])) {
-	header('Location: '.$_base_href.'admin/master_list_edit.php?id='.$_GET['id']);
+	if (substr($_GET['id'], 0, 1) != '-') {
+		header('Location: '.$_base_href.'admin/edit_user.php?id='.$_GET['id']);
+	} else {
+		header('Location: '.$_base_href.'admin/master_list_edit.php?id='.substr($_GET['id'], 1));
+	}
 	exit;
 } else if (isset($_GET['delete'], $_GET['id'])) {
-	header('Location: '.$_base_href.'admin/master_list_delete.php?id='.$_GET['id']);
+	if (substr($_GET['id'], 0, 1) != '-') {
+		header('Location: '.$_base_href.'admin/admin_delete.php?id='.$_GET['id']);
+	} else {
+		header('Location: '.$_base_href.'admin/master_list_delete.php?id='.substr($_GET['id'], 1));
+	}
 	exit;
 } else if (isset($_GET['delete']) || isset($_GET['edit'])) {
 	$msg->addError('NO_ITEM_SELECTED');
@@ -156,9 +164,9 @@ if ($_GET['reset_filter']) {
 
 if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	if ($_GET['status'] == 1) {
-		$status = ' member_id=0 ';
+		$status = ' M.member_id=0 ';
 	} else {
-		$status = ' member_id>0 ';
+		$status = ' M.member_id>0 ';
 	}
 	$page_string .= SEP.'status='.$_GET['status'];
 } else {
@@ -179,16 +187,16 @@ if ($_GET['search']) {
 		if ($term) {
 			if (strpos($term, '-') === FALSE) {
 				$term = '%'.$term.'%';
-				$sql .= "(public_field LIKE '$term') OR ";
+				$sql .= "(M.public_field LIKE '$term') OR ";
 			} else {
 				// range search
 				$range = explode('-', $term, 2);
 				$range[0] = trim($range[0]);
 				$range[1] = trim($range[1]);
 				if (is_numeric($range[0]) && is_numeric($range[1])) {
-					$sql .= "(public_field >= $range[0] AND public_field <= $range[1]) OR ";
+					$sql .= "(M.public_field >= $range[0] AND M.public_field <= $range[1]) OR ";
 				} else {
-					$sql .= "(public_field >= '$range[0]' AND public_field <= '$range[1]') OR ";
+					$sql .= "(M.public_field >= '$range[0]' AND M.public_field <= '$range[1]') OR ";
 				}
 			}
 		}
@@ -199,7 +207,7 @@ if ($_GET['search']) {
 	$search = '1';
 }
 
-$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."master_list WHERE $status AND $search";
+$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."master_list M WHERE $status AND $search";
 
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
@@ -213,7 +221,7 @@ if (!$page) {
 	$page = 1;
 }
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."master_list WHERE $status AND $search ORDER BY public_field";
+$sql	= "SELECT M.*, B.login, B.first_name, B.second_name, B.last_name FROM ".TABLE_PREFIX."master_list M LEFT JOIN ".TABLE_PREFIX."members B USING (member_id) WHERE $status AND $search ORDER BY M.public_field";
 $result = mysql_query($sql, $db);
 ?>
 
@@ -268,22 +276,52 @@ $result = mysql_query($sql, $db);
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('student_id'); ?></th>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
+	<th scope="col"><?php echo _AT('first_name'); ?></th>
+	<th scope="col"><?php echo _AT('second_name'); ?></th>
+	<th scope="col"><?php echo _AT('last_name'); ?></th>
 </tr>
 </thead>
 <?php if ($num_results > 0): ?>
 <tfoot>
 <tr>
-	<td colspan="3"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
 <tbody>
 	<?php while($row = mysql_fetch_assoc($result)): ?>
 		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['public_field']; ?>">
-			<td><input type="radio" name="id" value="<?php echo $row['public_field']; ?>" id="m<?php echo $row['public_field']; ?>" /></td>
-			<td><label for="m<?php echo $row['public_field']; ?>"><?php echo $row['public_field']; ?></label></td>
-			<td><?php 
+			<td><input type="radio" name="id" value="<?php 
 				if ($row['member_id']) {
-					echo get_login($row['member_id']);
+					echo $row['member_id'];
+				} else {
+					echo '-'.$row['public_field'];
+				}
+				?>" id="m<?php echo $row['public_field']; ?>" /></td>
+			<td><label for="m<?php echo $row['public_field']; ?>"><?php echo $row['public_field']; ?></label></td>
+			<td><?php
+				if ($row['member_id']) {
+					echo $row['login'];
+				} else {
+					echo '-';
+				}
+				?></td>
+			<td><?php
+				if ($row['member_id']) {
+					echo $row['first_name'];
+				} else {
+					echo '-';
+				}
+				?></td>
+			<td><?php
+				if ($row['member_id']) {
+					echo $row['second_name'];
+				} else {
+					echo '-';
+				}
+				?></td>
+			<td><?php
+				if ($row['member_id']) {
+					echo $row['last_name'];
 				} else {
 					echo '-';
 				}
@@ -293,7 +331,7 @@ $result = mysql_query($sql, $db);
 </tbody>
 <?php else: ?>
 	<tr>
-		<td colspan="3"><?php echo _AT('none_found'); ?></td>
+		<td colspan="6"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </table>
