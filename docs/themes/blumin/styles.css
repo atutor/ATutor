@@ -1218,3 +1218,11 @@ ul#home-links li a img {
 	color: #000;
 	background: #fff;
 }
+
+/* tree */
+.img-size-tree {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.45em;
+	width:1.45em;
+}
