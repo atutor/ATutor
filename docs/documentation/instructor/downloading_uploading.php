@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Downloading &amp; Uploading Backups</h2>
 	<p>Backups can be downloaded and stored locally by selecting from the list of backups created and using the <kbd>Download</kbd> button. Locally stored backups can be uploaded back into the original course, into a new course, or into another installation of ATutor.</p>

@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Instructor Requests</h2>
 	<p>If the <a href="system_preferences.php">System Preferences</a> <em>Allow Instructor Requests</em> option is enabled and the <em>Auto Approve Instructor Requests</em> option is disabled, then pending instructor account requests will be listed on this page.</p>

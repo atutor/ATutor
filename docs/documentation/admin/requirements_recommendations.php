@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Requirements &amp; Recommendations</h2>
 	<h3>Web Server</h3>

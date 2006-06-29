@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Announcements</h2>
 	<p>Announcements added through the Manage section will appear on the course Home page, sorted by date in descending order.</p>

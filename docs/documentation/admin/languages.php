@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Languages</h2>
 	<p>ATutor can be displayed in many different languages! Only completely translated languages are made available as importable packages from the atutor.ca website.</p>

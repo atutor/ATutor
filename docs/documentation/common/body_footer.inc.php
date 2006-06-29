@@ -75,7 +75,7 @@
 </div>
 
 <div class="tag">
-	This page was last modified <?php echo date("r.", getlastmod()); ?><br />
+	<?php echo htmlspecialchars($lm); ?><br />
 	All text is available under the terms of the GNU Free Documentation License. 
 </div>
 </body>

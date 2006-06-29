@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Course Lists</h2>
 <p>It is possible to enter or import a course enrollment list into your ATutor course. Those on the list can be added to the <code>Enrolled</code> list immediately, or added to the <code>Not Enrolled</code> list and later moved to the Enrolled list when the time comes to give students access to the course. When users are added or moved to the Enrolled list, they are sent an email with instructions on how to access the course.</p>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
+// $Id: body_header.inc.php 6230 2006-05-26 21:35:34Z greg $
 
 require(dirname(__FILE__) . '/vitals.inc.php');
 

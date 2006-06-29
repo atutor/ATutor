@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Groups</h2>
 	<p>The group area allows an instructor or assistant with Group privileges to create and manage groups of enrolled students within various projects. This may be useful for assigning group-specific tests or assignments, brainstorming, collaborative projects, online discussions and case studies, peer editing or responses, and so on.</p>

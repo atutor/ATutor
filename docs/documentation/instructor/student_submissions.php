@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Test Submissions</h2>
 	<p>To view the submissions of a test, choose a test from the Test/Survey Manager and use the <code>Submissions</code> button.  The list of student submissions will be listed, and can be filtered to show all, marked or unmarked tests.</p>

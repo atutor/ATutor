@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Troubleshooting</h2>
 	<p>A variety of strategies are available for troubleshooting an ATutor installation that may not be functioning properly.</p>

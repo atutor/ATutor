@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Preferences</h2>
 <p>The following preferences allow the user to control how informtion is displayed for his/her experience.</p>

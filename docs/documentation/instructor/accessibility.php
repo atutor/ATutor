@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Accessibility</h2>
 	<p>The Accessibility tab performs an analysis of the content for accessibility problems. Recommendations are given and you are given the option to implement or reverse corrections.</p>

@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Student Tools</h2>
 	<p>Student Tools is a collection of course features that may be useful for various types of learning activities. Tools include: Forums, Glossary, Site-map, Links, Polls, TILE Repository Search, Tests &amp; Surveys, My Tracker, Export Content, Chat, Directory, Inbox, and Packages. Instructors can decide where these tools will be accessed from - the <em>Main Navigation</em>, and/or <em>Course Home</em>.</p>

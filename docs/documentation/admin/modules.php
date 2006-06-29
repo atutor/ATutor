@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Modules</h2>
 	<p>Since version 1.5.2, ATutor provides the facility to install, enable, or disable student, instructor, and administrator tools as modules.</p>

@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 	<h2>Enrollment</h2>
 	<p>The Enrollment list for a particular course determines which of your students have access to the course content and course management tools. Instructors can create, import and export student lists. </p>

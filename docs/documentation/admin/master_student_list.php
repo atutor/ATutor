@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Master Student List</h2>
 	<p>If the <a href="system_preferences.php">System Preferences</a> <em>Authenticate Against A Master Student List</em> option is enabled, this page will allow an administrator to manage that list. If enabled, only new registrations that validate against the master list will be successful. The master list is flexible and can be used to validate any two fields, one of which is publicly viewable to Administrators, while the other is hidden. A common use of this feature would be to authenticate students using a previously assigned Student ID &amp; Birth Date combination. Two extra fields will appear on the Registration screen when master list authentication is enabled.</p>

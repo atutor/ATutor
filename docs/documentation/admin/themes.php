@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Themes</h2>
 	<p>Themes are used for changing the look and feel of an ATutor installation. Themes can be set as a personal preference or forced to display by default using the <a href="system_preferences.php">System Preferences</a> <em>Theme Specific Categories</em> option.</p>

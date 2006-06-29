@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Properties</h2>
 	<p>In the properties tab, you can move the content page, select a Release Date, enter keywords for easier searching, and specify its related topics.</p>

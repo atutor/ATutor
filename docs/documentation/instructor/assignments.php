@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Assignments</h2>
 	<p>The assignment manager works alongside the <a href="../general/file_storage.php">File Storage</a> area by letting instructors create virtual assignment drop-boxes within it. A student can submit files to the assignment workspace, and the instructor can view and download the submissions through the assignment manager or the file storage area directly.</p>

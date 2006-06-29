@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Inbox</h2>
 <p>The Inbox is used for privately messaging other users in your courses. Inbox messages appear in a table, with new messages flagged. Selecting a message will display its contents at the top of the screen.</p>

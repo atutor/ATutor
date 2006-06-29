@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>File Manager</h2>
 	<p>ATutor has a file system used for storing course content resource files, and it is managed with the <em>File Manager</em>. The File Manager allows instructors to include files associated with course content into content pages. The File Manager also allows you to create, edit, move, and delete files. The File Manager should not be confuse with the <a href="..//general/file_storage.php">File Storage</a> area.</p>

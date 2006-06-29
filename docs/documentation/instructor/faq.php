@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Frequently Asked Questions (FAQs)</h2>
 	<p>If an instructor would like to compile a list of frequently asked questions (and answers) for course members, they may do so by going to the FAQ section of the Manage area. Topics must first be created, and then questions can be created and associated with a particular topic. </p>

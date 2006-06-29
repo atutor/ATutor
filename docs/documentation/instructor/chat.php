@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Chat</h2>
 	<p>The chat section is used for managing chat transcripts. An active transcript will record all of the chat messages as they are posted. There can be only one active transcript at a time.</p>

@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>SCORM Packages</h2>
 	<p>The Packages tool, when enabled, allows instructors to include SCORM 1.2 Sharable Content Objects (SCOs) as part of their courses. SCOs remain separated from the course content as complete learning units. SCOs should not be confused with content packages which are loaded into ATutor using the Import/Export tool in the Content Manager.</p>

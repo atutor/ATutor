@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Properties</h2>
 	<p>The Properties Manager allows instructors to adjust the visual, functional, and technical details of a course. Properties set during installation can be changed with the Properties Manager. The Properties Manager is also where you <a href="delete_course.php">delete a course</a>. Additional properties are managed by the ATutor system administrator, including upload file size limitations and space limitations for a course. Contact an ATutor administrator if these properties need to be changed.</p>

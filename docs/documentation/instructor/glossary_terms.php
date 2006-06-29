@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Glossary Terms</h2>
 <p>If <em>Terms</em> were specified in the Content tab, they may be defined under the Glossary tab. Enter the definition or explanation for each term specified in the Content. See the Terms section in <a href="content_edit.php">Entering Content</a> for details on how to add glossary terms to your content. </p> 

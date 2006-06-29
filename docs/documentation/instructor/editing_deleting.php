@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Editing &amp; Deleting Backups</h2>
 	<p>Selecting a backup and using the <kbd>Delete</kbd> button will delete that backup.</p>

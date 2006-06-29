@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Extracting Zip Archives</h2>
 	<p>After uploading a ZIP file to the File Manager, select the <em>Extract Archive</em> icon next to the file name. This will display the contents of the zip file and suggest a directory name in which to unzip the archive. Use the <code>Extract</code> button in the ZIP file viewer to unzip the file into the specified directory.</p>

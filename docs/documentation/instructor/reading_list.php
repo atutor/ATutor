@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Reading List</h2>
 	<p>The reading list area allows instructors and assistants with Reading List privileges to list course resources and schedule when they should be read. </p>

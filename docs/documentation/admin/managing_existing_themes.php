@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Managing Existing Themes</h2>
 	<p>All available themes on an ATutor system are listed in the Administrator's Themes section.</p>

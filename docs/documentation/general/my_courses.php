@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>My Courses</h2>
 <p>Courses that the user is in enrolled in, or courses that are pending enrollment, are listed on the <em>My Courses</em> page.</p>
