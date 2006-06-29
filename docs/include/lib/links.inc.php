@@ -80,7 +80,12 @@ function get_link_categories($manage=false, $list=false) {
 	/* get all the categories: */
 	/* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
 
-	$groups = implode(',', $_SESSION['groups']);
+	if ($_SESSION['groups']) {
+		$groups = implode(',', $_SESSION['groups']);
+	} else {
+		// not in any groups
+		$groups = 0;
+	}
 
 	//if suggest a link page
 	if ($_SERVER['PHP_SELF'] == $_base_path.'links/add.php') {
@@ -90,11 +95,10 @@ function get_link_categories($manage=false, $list=false) {
 			if ($list) {
 				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'') ORDER BY parent_id, name";
 			} else {
+
 				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.") ORDER BY parent_id, name";
 			}
-			
 		} else if (!empty($groups)) { 
-
 			if ($list) { //only group subcats
 				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'' ORDER BY parent_id, name";
 			} else { //only group cats and subcats 
