@@ -246,6 +246,7 @@ if ($result && $questions) {
 				}
 				echo '<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
 				if (array_sum(array_slice($row, 16, -6)) > 1) {
+					echo '<input type="hidden" name="answers['.$row['question_id'].'][]" value="-1" />';
 					for ($i=0; $i < 10; $i++) {
 						if ($row['choice_'.$i] != '') {
 							if ($i > 0) {
