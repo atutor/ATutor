@@ -314,9 +314,10 @@ function fs_get_file_path($file_id) {
 	$end_part = substr($file_id, -WORKSPACE_PATH_DEPTH);
 	$path = WORKSPACE_FILE_PATH;
 	$dirs = max(-WORKSPACE_PATH_DEPTH, -strlen($file_id));
+	$id_threshold = pow(10,WORKSPACE_PATH_DEPTH); // only check for the dir before reaching this value.
     for ($i = -1; $i >= $dirs; $i--) {
 		$path .= substr($file_id, $i, 1) . DIRECTORY_SEPARATOR;
-		if ($file_id <= pow(10,WORKSPACE_PATH_DEPTH)) {
+		if ($file_id <= $id_threshold) {
 			if (!is_dir($path)) {
 				@mkdir($path);
 			}
