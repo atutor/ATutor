@@ -291,6 +291,8 @@ $_field_formatting['blog_posts.title']	     = AT_FORMAT_NONE;
 
 $_field_formatting['blog_posts_comments.comment'] = AT_FORMAT_ALL & ~AT_FORMAT_HTML;
 
+$_field_formatting['courses.banner'] = AT_FORMAT_ALL;
+
 if (isset($_GET['cid'])) {
 	$cid = intval($_GET['cid']);
 } else if (isset($_POST['cid'])) {

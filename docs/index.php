@@ -79,7 +79,7 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 $sql = "SELECT banner FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
-	$savant->assign('banner', $row['banner']);
+	$savant->assign('banner', AT_print($row['banner'], 'courses.banner'));
 } else {
 	$savant->assign('banner', '');
 }

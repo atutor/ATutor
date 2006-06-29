@@ -581,6 +581,9 @@ function myCodes($text, $html = false) {
 	if (isset($sequence_links['next']) && $sequence_links['next']['url']) {
 		$text = str_replace('[nid]', $sequence_links['next']['url'], $text);
 	}
+	if (isset($sequence_links['resume']) && $sequence_links['resume']['url']) {
+		$text = str_replace('[nid]', $sequence_links['resume']['url'], $text);
+	}
 
 	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
 	$html = !$html ? 0 : 1;
