@@ -568,16 +568,31 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 				<?php endif; ?>
 			</td>
 			<td valign="top"><?php echo get_login($file_info['member_id']); ?></td>
-			<td align="right" valign="top">
+			<td valign="top">
 				<?php if ($_config['fs_versioning']): ?>
-					<?php if ($file_info['num_revisions']): ?>
-						<a href="<?php echo 'file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_revisions']; ?></a>
+					<?php if ($file_info['num_revisions']): 
+						if ($file_info['num_revisions'] == 1) {
+							$lang_var = 'fs_revision';
+						} else {
+							$lang_var = 'fs_revisions';
+						}
+						?>
+						
+						<a href="<?php echo 'file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo _AT($lang_var, $file_info['num_revisions']); ?></a>
 					<?php else: ?>
 						-
 					<?php endif; ?>
 				<?php endif; ?>
 			</td>
-			<td align="right" valign="top"><a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo $file_info['num_comments']; ?></a></td>
+			<td valign="top">
+			<?php 
+			if ($file_info['num_comments'] == 1) {
+				$lang_var = 'fs_comment';
+			} else {
+				$lang_var = 'fs_comments';
+			}
+			?>
+			<a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo _AT($lang_var, $file_info['num_comments']); ?></a></td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
 			<td align="right" valign="top"><?php echo AT_date(_AT('filemanager_date_format'), $file_info['date'], AT_DATE_MYSQL_DATETIME); ?></td>
 		</tr>
