@@ -39,9 +39,9 @@ if (isset($_POST['submit_no'])) {
 		exit;
 	}
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."links WHERE link_id=$link_id";
+	$sql = "DELETE FROM ".TABLE_PREFIX."links WHERE link_id=$_POST[link_id]";
 	$result = mysql_query($sql, $db);
-	
+
 	$msg->addFeedback('LINK_DELETED');
 	header('Location: '.$_base_href.'tools/links/index.php');
 	exit;
