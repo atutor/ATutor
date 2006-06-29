@@ -139,7 +139,14 @@ class SqlUtility
 					$parts[$size_of_parts-1] = $prefix . str_replace('`', '', $parts[$size_of_parts-1]);
 					$matches[0] = implode(' ', $parts);
 				}
+			} else if ($matches[1] == 'ALTER TABLE') {
+				$parts = explode(' ', $matches[0]);
+				if ($parts[3] == 'RENAME') {
+					$parts[4] = $prefix . str_replace('`', '', $parts[4]);
+					$matches[0] = implode(' ', $parts);
+				}
 			}
+
 			return $matches;
 		}
 		return false;

@@ -60,22 +60,23 @@ if (get_magic_quotes_gpc()==1) {
             // [0] contains the prefixed query
             // [4] contains unprefixed table name
 
+
 			if ($_POST['tb_prefix'] || ($_POST['tb_prefix'] == '')) {
 	            $prefixed_query = SqlUtility::prefixQuery($piece, $_POST['tb_prefix']);
 			} else {
 				$prefixed_query = $piece;
 			}
-	
+
 			if ($prefixed_query != false ) {
                 $table = $_POST['tb_prefix'].$prefixed_query[4];
                 if($prefixed_query[1] == 'CREATE TABLE'){
                     if (mysql_query($prefixed_query[0],$db) !== false) {
-						$progress[] = 'Table <b>'.$table . '</b> created successfully.';
+						$progress[] = 'Table <strong>'.$table . '</strong> created successfully.';
                     } else {
 						if (mysql_errno($db) == 1050) {
-							$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
+							$progress[] = 'Table <strong>'.$table . '</strong> already exists. Skipping.';
 						} else {
-							$errors[] = 'Table <b>' . $table . '</b> creation failed.';
+							$errors[] = 'Table <strong>' . $table . '</strong> creation failed.';
 						}
                     }
                 }
@@ -84,7 +85,12 @@ if (get_magic_quotes_gpc()==1) {
                 }elseif($prefixed_query[1] == 'REPLACE INTO'){
                     mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'ALTER TABLE'){
-                    mysql_query($prefixed_query[0],$db);
+                    if (mysql_query($prefixed_query[0],$db) !== false) {
+						$progress[] = 'Table <strong>'.$table.'</strong> alterned successfully.';
+					} else {
+						$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
+					}
+
                 }elseif($prefixed_query[1] == 'DROP TABLE'){
                     mysql_query($prefixed_query[1] . ' ' .$table,$db);
                 }elseif($prefixed_query[1] == 'UPDATE'){
