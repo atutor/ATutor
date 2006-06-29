@@ -1,4 +1,4 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Administrators</h2>
 	<p>An ATutor installation can be maintained by multiple administrators, each with their own privileges. The three kinds of administrator accounts are described below.</p>
