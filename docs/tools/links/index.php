@@ -78,9 +78,9 @@ if ($parent_id) {
 $sql .= " ORDER BY $col $order";
 
 $result = mysql_query($sql, $db);
-$num_results = mysql_num_rows($result);
 
-if ($num_results > 0): ?>
+if (!empty($categories)) {
+?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
@@ -110,7 +110,7 @@ if ($num_results > 0): ?>
 	</div>
 </div>
 </form>
-<?php endif; ?>
+<?php } ?>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
