@@ -316,7 +316,7 @@ function fs_get_file_path($file_id) {
 	$dirs = max(-WORKSPACE_PATH_DEPTH, -strlen($file_id));
     for ($i = -1; $i >= $dirs; $i--) {
 		$path .= substr($file_id, $i, 1) . DIRECTORY_SEPARATOR;
-		if ($file_id < pow(10,WORKSPACE_PATH_DEPTH)) {
+		if ($file_id <= pow(10,WORKSPACE_PATH_DEPTH)) {
 			if (!is_dir($path)) {
 				@mkdir($path);
 			}
