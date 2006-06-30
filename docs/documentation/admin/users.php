@@ -2,8 +2,8 @@
 
 <h2>Users</h2>
 
-	<p>The Users section allows the managing of students, instructors, and administrators. Note that administrators are not 
-considered regular users of the system; an administrator account can not normally be used to login to a course. For the 
+	<p>The Users section allows managment of students, instructors, and administrators. Note that administrators are not 
+considered regular users of the system; an administrator account can not normally be used to login to a course. They can however login temporarily as the course instructor, using the View button in the administrator's Courses listing. For the 
 purposes of documentation the term "users" will be reserved for any account type that is <em>not</em> an administrator.</p>	
 
 <p>There are four types of user accounts that can exist in an ATutor installation, as defined by their Status:	

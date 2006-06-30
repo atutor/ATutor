@@ -2,12 +2,12 @@
 
 <h2>Requirements &amp; Recommendations</h2>
 	<h3>Web Server</h3>
-		<p>The ATutor development and testing processes are done almost exclusively on Apache 1.3, and as such we strongly recommend it for production environments. ATutor has been successfully installed on other web servers, including, Zeus, lighttpd, Apache 2 (using pre-forking), Abyss, Zazou Mini Web Server, Microsoft IIS, and Jana-Server.</p>
+		<p>The ATutor development and testing processes are done primarily on Apache 1.3 and Apache 2 (using pre-forking), and as such we strongly recommend them for production environments. ATutor has been successfully installed on other web servers, including, Zeus, lighttpd, Abyss, Zazou Mini Web Server, Microsoft IIS, and Jana-Server.</p>
 
 		<p>The web server can be configured with <acronym title="Secure Sockets Layer">SSL</acronym> for added security or to use a non-standard port and ATutor will function without modification.</p>
 
 	<h3>PHP</h3>
-		<p><acronym title="Recursive acronym for PHP: Hypertext Preprocessor, the language ATutor is written in">PHP</acronym> 4.3.0 or higher with Zlib, MySQL, and session support enabled is required. PHP version 5.0.2 or higher is also supported. Additionally, the following <kbd>php.ini</kbd> configuration setting is required:</p>
+		<p><acronym title="Recursive acronym for PHP: Hypertext Preprocessor, the language ATutor is written in">PHP</acronym> 4.3.0 or higher with Zlib, MySQL, and session support enabled is required. PHP version 5.0.2 or higher is also supported. Additionally, the following <kbd>php.ini</kbd> configuration settings are required:</p>
 
 		<pre>safe_mode               = Off
 display_errors          = Off

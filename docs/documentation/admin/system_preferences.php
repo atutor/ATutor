@@ -27,7 +27,7 @@
 			<dd>Whether or not to enable Master Student List authentication. If enabled, only new accounts that validate against the master list will be created. See the <a href="master_student_list.php">Master Student List</a> section for additional details on using this feature.</dd>
 
 			<dt>Require Email Confirmation Upon Registration</dt>
-			<dd>If enabled, email confirmation is required in order to login to the system directly following registration. As new accounts are created, an email is sent with instructions on how to confirm their account. The user will not be allowed to login until after they confirm their account.</dd>
+			<dd>If  email confirmation is enabled, before they can login, registrants must confirm their registration by replying to a message sent to the email address they registered with.  </dd>
 
 			<dt>Allow Instructor Requests</dt>
 			<dd>If enabled, students will be allowed to request that their account be upgraded to an instructor account. Instructor account requests must be approved by administrators using the <a href="instructor_requests.php">Instructor Requests</a> section.</dd>
@@ -36,7 +36,7 @@
 			<dd>If enabled, and if <em>Allow Instructor Requests</em> is enabled, then an email notification message will be sent to the <em>Contact Email</em> each time a new instructor account request is made. This does not affect whether or not instructor requests can be made, only whether or not a notification message is sent out each time.</dd>
 
 			<dt>Auto Approve Instructor Requests</dt>
-			<dd>If <em>Allow Instructor Requests</em> is enabled, then existing students requesting instructor accounts will be upgraded automatically, bypassing the approval process. Additionally, any newly created accounts will be created as instructors rather than as students.</dd>
+			<dd>If <em>Allow Instructor Requests</em> is enabled, then existing students requesting instructor accounts will be upgraded automatically, bypassing the approval process. Additionally, any newly created accounts will be created as instructors rather than as students. Useful for setting up a demo version of ATutor. </dd>
 
 			<dt>Theme Specific Categories</dt>
 			<dd>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="categories.php">Categories</a> section to create and manage course categories, and the <a href="themes.php">Themes</a> section to install and manage themes.</dd>
@@ -48,7 +48,7 @@
 			<dd>A list of all the file types, by extension, that are not allowed to be stored on the server. Any file that is being imported or uploaded with an extension in the specified list will be ignored and not saved. The list must contain only the file extensions seperated by commas without the leading dot.</dd>
 
 			<dt>Cache Directory</dt>
-			<dd>Where cached data is stored. On a Windows machine the path should look like <kbd>C:\Windows\temp\</kbd>, while on Unix it should look like <kbd>/tmp/cache/</kbd>. On newer Linux/Unix based system shared memory device can also be used <kbd>/dev/shm/</kbd> if it is available.  Leave empty to disable caching.</dd>
+			<dd>Where cached data is stored. On a Windows machine the path should look like <kbd>C:\Windows\temp\</kbd>, while on Unix it should look like <kbd>/tmp/cache/</kbd>. On some Linux/Unix based systems, a shared memory device can also be used <kbd>/dev/shm/</kbd> if it is available.  Leave empty to disable caching.</dd>
 
 			<dt>Course Backups</dt>
 			<dd>The maximum number of backups that can be stored per course. The stored backups do not count towards the course's <em>Max Course Size</em>.</dd>
@@ -60,7 +60,7 @@
 			<dd>If enabled, every file revision in the File Storage area will be saved. If space is a concern, the administrator may wish to disable this feature.</dd>
 
 			<dt>Enable Mail Queue</dt>
-			<dd>The administrator may wish to set up a <a href="cron_setup.php">cron job</a> (automated event scheduler) for email. If enabled, and if cron has been set up, system email will be sent out at a certain time instead of immediately.</dd>
+			<dd>The administrator may wish to set up a <a href="cron_setup.php">cron job</a> (automated event scheduler) for email. If enabled, and if cron has been set up, system email will be sent out at a certain time instead of immediately. This can help speed up email capable features where a slower mail server is being used.</dd>
 		</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>

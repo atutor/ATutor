@@ -1,12 +1,12 @@
 <?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Languages</h2>
-	<p>ATutor can be displayed in many different languages! Only completely translated languages are made available as importable packages from the atutor.ca website.</p>
+	<p>ATutor can be displayed in many different languages! Through the Langauge Manager completed languages packs can be selected and imported directly from the atutor.ca website. </p>
 
 <h3>Managing Existing Languages</h3>
 	<p>Installed languages can be edited, deleted or exported as an ATutor language pack for redistribution. When exporting a language, a download prompt will appear asking to download a zip file of the language pack.</p>
 	
-	<p>Editing the language allows you to change the following:
+	<p>Editing the language properties allows you to change the following:
 	<ul>
 		<li>Language Code</li>
 		<li>Locale</li>
@@ -19,7 +19,7 @@
 	</ul>
 	</p>
 
-	<p>Note that the default language (as specified in the <a href="system_preferences.php">System Preferences</a> <em>Default Language</em>) cannot be deleted.</p>
+	<p>Note that the default language (as specified in the <a href="system_preferences.php">System Preferences</a> <em>Default Language</em>) cannot be disabled or deleted unless another language has been installed.</p>
 
 
 <h3>Importing Languages</h3>
@@ -48,12 +48,11 @@
 	<ol>
 		<li>Set the AT_DEVEL_TRANSLATE constant in /include/vitals.inc.php to '1'</li> 
 		<li>Set the session language to the language you wish to translate by using the language selector at the bottom of the screen.</li>
-		<li>Use the <code>Translate</code> button to pop up a translation box</li>
-		<li>Translating from English to the chosen language can now be done. </li>
+		<li>Use the <code>Translate</code> button to pop up a translation window.</li>
 	</ol>
 	</p>
 
-	<p>One can assist the ATutor project by translating to a new language from within ATutor and exporting it to create a new language pack. For official documentation on translating see the <a href="http://atutor.ca/atutor/docs/translate.php" target="_new">atutor.ca/atutor/docs/translate.php</a>.</p>
+	<p>You can contribute to the ATutor community by  exporting a language pack from your ATutor installation, and attaching it to a message in the atutor.ca <a href="http://atutor.ca/forum/4/1.html">Translation Forum</a>. Also see the <a href="http://atutor.ca/atutor/docs/translate.php">Translator Documentation</a> for further details about translating ATutor.</p>
 
 
 <?php require('../common/body_footer.inc.php'); ?>
