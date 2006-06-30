@@ -74,9 +74,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </div>
 </form>
 
-<form name="form1" method="post" action="admin/language_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
 
 <div class="input-form">
+	<form name="form1" method="post" action="admin/language_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
 	<div class="row">
 		<h3><?php echo _AT('import_a_new_lang'); ?></h3>
 	</div>
@@ -93,8 +93,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('import'); ?>" />
 	</div>
+	</form>
 
 	<div class="row">
+		<form name="form1" method="post" action="admin/language_import.php">
+
 		<?php echo _AT('import_remote_language'); ?><br />
 		<?php
 				require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
@@ -107,9 +110,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				}
 
 		?>
+		</form>
 	</div>
 </div>
-</form>
 
 <form method="get">
 <div class="input-form">
