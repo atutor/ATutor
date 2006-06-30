@@ -457,6 +457,16 @@ class ContentManager
 		global $_base_path;
 
 		$sequence_links = array();
+
+		$first = $this->getNextContent(0); // get first
+		if ($_SESSION['prefs']['PREF_NUMBERING'] && $first) {
+			$first['title'] = $this->getNumbering($first['content_id']).' '.$first['title'];
+		}
+		if ($first) {
+			$first['url'] = $_base_path.'content.php?cid='.$first['content_id'];
+			$sequence_links['first'] = $first;
+		}
+
 		if (!$cid && $_SESSION['s_cid']) {
 			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
 
