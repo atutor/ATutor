@@ -86,7 +86,7 @@ if (get_magic_quotes_gpc()==1) {
                     mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'ALTER TABLE'){
                     if (mysql_query($prefixed_query[0],$db) !== false) {
-						$progress[] = 'Table <strong>'.$table.'</strong> alterned successfully.';
+						$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
 					} else {
 						$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
 					}
