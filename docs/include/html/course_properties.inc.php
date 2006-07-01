@@ -16,6 +16,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
+$_GET['show_courses'] = $addslashes(intval($_GET['show_courses']));
+$_GET['current_cat'] = $addslashes(intval($_GET['current_cat']));
 
 if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 	load_editor('banner');
