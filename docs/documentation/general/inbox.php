@@ -5,6 +5,6 @@
 
 <p>In the sub-navigation there is a link to send a message. Choose the recipient, enter a subject and a message, and use the <code>Send</code> button. </p>
 
-<p>Note: use the <em>Inbox Notification</em> <a href="../general/preferences.php">preference</a> to receive emails when a new Inbox message is received.</p>
+<p>Note: use the <em>Inbox Notification</em> <a href="preferences.php">preference</a> to receive emails when a new Inbox message is received.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

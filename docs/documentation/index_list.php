@@ -132,9 +132,9 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 	</ol>
 
 	<ol>
-		<li><a href="http://www.atutor.ca">atutor.ca</a></li>
-		<li><a href="http://www.atutor.ca/forums/">atutor.ca/forums/</a></li>
-		<li><a href="http://www.atutor.ca/atutor/docs/index.php">atutor.ca/atutor/docs/</a></li>
+		<li><a href="http://www.atutor.ca" target="new">atutor.ca</a></li>
+		<li><a href="http://www.atutor.ca/forums/" target="new">atutor.ca/forums/</a></li>
+		<li><a href="http://www.atutor.ca/atutor/docs/index.php" target="new">atutor.ca/atutor/docs/</a></li>
 	</ol>
 
 <?php if ($enable_user_notes && (!isset($_SESSION['handbook_admin']) || (isset($_SESSION['handbook_admin']) && !$_SESSION['handbook_admin']))): ?>

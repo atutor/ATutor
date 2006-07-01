@@ -16,7 +16,7 @@
     $_pages['login.php']					= 'Login';
     $_pages['register.php']					= 'Register';
     $_pages['browse_courses.php']			= 'Browse Courses';
-    $_pages['password_reminder.php']		= 'Password Reminder';
+    $_pages['password_reminder.php']		= 'Forgot Your Password';
     $_pages['my_start_page.php']			= 'My Start Page';
     $_pages['my_courses.php']				= 'My Courses';
     $_pages['create_course.php']			= 'Create Courses';

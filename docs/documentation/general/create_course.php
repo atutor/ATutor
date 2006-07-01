@@ -2,6 +2,6 @@
 
 <h2>Create Course</h2>
 
-<p>Only Instructors may create courses though students are given the option of requesting instructor accounts. View the <a href="../instructor/creating_courses.php" target="_top">Instructor Documentation</a> on creating courses.</p>
+<p>Only Instructors may create courses,  though if enabled,  students can request instructor accounts by selecting the Create Course link. View the <a href="../instructor/creating_courses.php">Instructor Documentation</a> on creating courses.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
