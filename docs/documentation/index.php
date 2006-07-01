@@ -93,8 +93,8 @@ if (isset($_GET['p'])) {
 <frameset rows="24,*">
 	<frame src="<?php echo $path; ?>frame_header.php?<?php echo $section; ?>&amp;<?php echo $req_lang; ?>" frameborder="0" name="header" title="header" scrolling="no" noresize="noresize">
 	<frameset cols="22%, *" id="frameset1">
-		<frame frameborder="0" scrolling="auto" marginwidth="0" marginheight="0" src="<?php echo $path; ?>frame_toc.php?<?php echo $section; ?>&amp;<?php echo $req_lang; ?>" name="toc" id="toc" title="TOC">
-		<frame frameborder="0" src="<?php echo $body.'?'.$req_lang; ?>" name="body" title="blank">
+		<frame frameborder="0" scrolling="auto" marginwidth="0" marginheight="0" src="<?php echo $path; ?>frame_toc.php?<?php echo $section; ?>&amp;<?php echo $req_lang; ?>" name="toc" id="toc" title="Table of Contents">
+		<frame frameborder="0" src="<?php echo $body.'?'.$req_lang; ?>" name="body" title="Content">
 	</frameset>
 
 	<noframes>
