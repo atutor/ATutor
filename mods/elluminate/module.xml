@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Elluminate</name> 
+    <description lang="en">Elluminate is a leading provider of live Web conferencing and eLearning solutions for the real-time organization. Serving corporate and academic sectors, the company ensures the best user experience through superior quality VoIP, communications that are in-sync regardless of connection speed, broad cross-platform support, and advanced yet easy-to-use moderator tools.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2006-07-02</date> 
+        <state>stable</state> 
+        <notes>Requires Sun Java WebStart on the client's computer. Elluminate must be installed before installing this module. Once the module is installed and enabled, open the Administrator's Elluminate screen to enter the URL, and optional guest password. See the readme file included with the module for further details.</notes> 
+    </release> 
+</module>

@@ -1,0 +1,24 @@
+.normalbody {
+    font-family: "Trebuchet MS", Verdana, Tahoma, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 13pt;
+    color: Black;
+
+    font-weight: normal;
+}
+.logintable {
+border:1px  #99CCCC solid;
+    padding: 2px;
+}
+.field0ff
+{
+    background: #ffffff;
+    font-size: 11px;
+    color: #000000;
+    font-family: Verdana,Arial,sans-serif;
+}
+.sideIndent1 {
+    font-family: "Trebuchet MS", Verdana, Tahoma, Arial, sans-serif;
+    font-size: 8pt;
+    padding-left: 10px;
+}
