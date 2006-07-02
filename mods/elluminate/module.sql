@@ -6,8 +6,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','elluminate','Elluminate',NO
 INSERT INTO `language_text` VALUES ('en', '_module','elluminate_text','Use Elluminate to conduct live collaborative activities.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','elluminate_pw','Optional guest password.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','elluminate_open','Open Elluminate',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','elluminate_loginname','Please enter your name for the session.<br> (Note: The Name may not exceed 32 characters',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','elluminate_passwordln','(Note: Passwords are case sensitive)',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','elluminate_loginname','Please enter your name for the session.<br> (Note: The Name may not exceed 32 characters) ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','elluminate_passwordln',' (Note: Passwords are case sensitive)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','elluminate_password','Password',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','elluminate_name','Name',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','elluminate_location','The location of your Elluminate installation:',NOW(),'');
