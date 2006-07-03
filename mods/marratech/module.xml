@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Marratech</name> 
+    <description lang="en">Marratech is a collaborative Web conferencing  environment. Enjoy real-time video with exceptional quality voice plus an interactive whiteboard. Up to five people can meet, talk, see each other and share documents or pictures and make notes on the free version of Marratech Manager.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2006-07-03</date> 
+        <state>stable</state> 
+	<notes>Requires Marratech client be installed on the user's system, and the Marratech Manager on the server the user is connecting to. See http://marratech.com, or http://www.marratech.com/free. </notes> 
+    </release> 
+</module>
