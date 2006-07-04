@@ -56,9 +56,11 @@ if (isset($_POST['cancel'])) {
 		// check for valid passwords
 		if ($_POST['password'] != $_POST['password2']){
 			$msg->addError('PASSWORD_MISMATCH');
-		} else if (strlen($_POST['password']) < 8) {
+		} 
+		if (strlen($_POST['password']) < 8) {
 			$msg->addError('PASSWORD_LENGTH');
-		} else if ((preg_match('/[a-z]+/i', $_POST['password']) + preg_match('/[0-9]+/i', $_POST['password']) + preg_match('/[_\-\/+!@#%^$*&)(|.]+/i', $_POST['password'])) < 2) {
+		} 
+		if ((preg_match('/[a-z]+/i', $_POST['password']) + preg_match('/[0-9]+/i', $_POST['password']) + preg_match('/[_\-\/+!@#%^$*&)(|.]+/i', $_POST['password'])) < 2) {
 			$msg->addError('PASSWORD_CHARS');
 		}
 
