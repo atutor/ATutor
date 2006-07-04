@@ -398,7 +398,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	<div style="margin: 0px auto; width: 70%">
 		<div class="input-form" style="width: 48%; float: right">
 			<div class="row">
-				<h3><a onclick="javascript:document.getElementById('folder').style.display='';document.form0.new_folder_name.focus();" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
+				<h3><a onclick="javascript:toggleform('folder'); document.form0.new_folder_name.focus();" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
 			</div>
 			<div  id="folder">
 				<div class="row">
@@ -412,7 +412,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		</div>
 		<div class="input-form" style="float: left; width: 48%">
 			<div class="row">
-				<h3><a onclick="javascript:document.getElementById('upload').style.display='';document.form0.file.focus();" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
+				<h3><a onclick="javascript:toggleform('upload');document.form0.file.focus();" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
 			</div>
 			<div id="upload">
 				<div class="row">
@@ -646,6 +646,18 @@ function CheckAll() {
 function hideform(id) {
 	document.getElementById(id).style.display='none';
 }
+
+function toggleform(id) {
+	if (document.getElementById(id).style.display == "none") {
+		//show
+		document.getElementById(id).style.display='';	
+
+	} else {
+		//hide
+		document.getElementById(id).style.display='none';
+	}
+}
+
 // -->
 </script>
 
