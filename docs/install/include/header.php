@@ -22,29 +22,14 @@ if ($step < 4) {
 	}
 }
 
-$install_steps[0] = array(	'name' => 'Introduction',
-							'file' => 'index.php');
-
-$install_steps[1] = array(	'name' => 'Terms of Use',
-							'file' => 'step1.php');
-
-$install_steps[2] = array(	'name' => 'Database',
-							'file' => 'step2.php');
-
-$install_steps[3] = array(	'name' => 'Accounts &amp; Preferences');
-
-//$install_steps[4] = array(	'name' => 'Personal Account &amp; Defaults',
-//							'file' => 'step4.php');
-
-$install_steps[4] = array(	'name' => 'Content Directory');
-
-$install_steps[5] = array(	'name' => 'Save Configuration');
-
-$install_steps[6] = array(	'name' => 'Anonymous Usage Collection');
-
-$install_steps[7] = array(	'name' => 'Done!',
-							'file' => 'step5.php');
-
+$install_steps[0] = array('name' => 'Introduction');
+$install_steps[1] = array('name' => 'Terms of Use');
+$install_steps[2] = array('name' => 'Database');
+$install_steps[3] = array('name' => 'Accounts &amp; Preferences');
+$install_steps[4] = array('name' => 'Content Directory');
+$install_steps[5] = array('name' => 'Save Configuration');
+$install_steps[6] = array('name' => 'Anonymous Usage Collection');
+$install_steps[7] = array('name' => 'Done!');
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">

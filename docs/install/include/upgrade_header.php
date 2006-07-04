@@ -13,6 +13,16 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 error_reporting(E_ALL ^ E_NOTICE);
 
+if ($step < 5) {
+	error_reporting(0);
+	include('../include/config.inc.php');
+	error_reporting(E_ALL ^ E_NOTICE);
+	if (defined('AT_INSTALL')) {
+		echo 'ATutor appears to have been installed already.';
+		exit;
+	}
+}
+
 $new_version = $new_version ? $new_version : $_POST['step1']['new_version'];
 
 $install_steps[0] = array('name' => 'Introduction');
