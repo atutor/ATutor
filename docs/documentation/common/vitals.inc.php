@@ -94,7 +94,6 @@ function get_available_languages($section) {
 define('AT_HANDBOOK', true);
 session_name('ATutorID');
 session_start();
-session_write_close();
 // $lang is the language we've found to display
 // $req_lang is the language we're requesting
 

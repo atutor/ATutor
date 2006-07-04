@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require(dirname(__FILE__) .'/common/vitals.inc.php');
 
 if($_GET['lang']){
@@ -106,7 +104,6 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 	@mysql_select_db(AT_HANDBOOK_DB_DATABASE, $db);
 	$enable_user_notes = true;
 }
-
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="<?php if ($req_lang) { echo $req_lang; } else { echo 'dp'; } ?>">
 <head>
@@ -120,6 +117,7 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 		<?php get_text('page_not_translated'); ?>
 	</div>
 <?php endif; ?>
+
 <h1><?php get_text('doc_title'); ?></h1>
 <p><?php get_text('doc_welcome'); ?></p>
 

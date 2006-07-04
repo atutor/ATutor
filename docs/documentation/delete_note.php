@@ -1,5 +1,5 @@
 <?php
-session_start();
+require(dirname(__FILE__) .'/common/vitals.inc.php');
 
 if (!isset($_SESSION['handbook_admin']) || !$_SESSION['handbook_admin'] || !isset($_GET['id'])) {
 	exit;
@@ -54,7 +54,7 @@ if ($enable_user_notes) {
 }
 
 if (isset($_GET['p'])) {
-	header('Location: '.key($_GET). '/' . $_GET['p']);
+	header('Location: '.$section. '/' . $_GET['p']);
 } else {
 	header('Location: index_list.php');
 }

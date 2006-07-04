@@ -1,5 +1,5 @@
 <?php
-session_start();
+require(dirname(__FILE__) .'/common/vitals.inc.php');
 
 if (!isset($_SESSION['handbook_admin']) || !$_SESSION['handbook_admin'] || !isset($_GET['id'])) {
 	exit;
