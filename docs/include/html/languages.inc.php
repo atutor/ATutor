@@ -28,6 +28,6 @@ if($languageManager->getNumLanguages() < 2){
 		echo '</form>';
 	} else {
 		echo '<small>'._AT('translate_to').' </small>';
-		$languageManager->printList($_SESSION['lang'], 'lang', 'lang', $_my_uri);
+		$languageManager->printList($_SESSION['lang'], 'lang', 'lang', htmlspecialchars($_my_uri));
 	}
 ?></div>
