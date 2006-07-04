@@ -13,7 +13,6 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $_my_uri;
 global $_base_path, $include_all, $include_one;
 global $savant;
 

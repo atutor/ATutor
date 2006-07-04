@@ -13,7 +13,6 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $contentManager;
-global $_my_uri;
 global $_base_path, $path;
 global $savant;
 
@@ -34,7 +33,7 @@ if (count($related) == 0) {
 
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
-$savant->assign('close_url', $_my_uri.'disable='.PREF_RELATED.SEP.'menu_jump=3');
+$savant->assign('close_url', htmlspecialchars($_my_uri).'disable='.PREF_RELATED.SEP.'menu_jump=3');
 $savant->assign('dropdown_close', _AT('close_related_topics'));
 
 $savant->assign('title', _AT('related_topics'));

@@ -28,7 +28,7 @@ if ($_SESSION['course_id'] > 0) {
 		$savant->assign('right_menu_open', TRUE);
 		$savant->assign('popup_help', 'MAIN_MENU');
 		$savant->assign('menu_url', '<a name="menu"></a>');
-		$savant->assign('close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
+		$savant->assign('close_menu_url', htmlspecialchars($_my_uri).'disable='.PREF_MAIN_MENU);
 		$savant->assign('close_menus', _AT('close_menus'));
 	}	
 

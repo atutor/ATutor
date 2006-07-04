@@ -14,7 +14,6 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $contentManager;
-global $_my_uri;
 global $_base_path;
 global $savant;
 global $glossary;
