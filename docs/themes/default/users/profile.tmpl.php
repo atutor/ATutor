@@ -15,8 +15,9 @@
 				<input name="login" type="hidden" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" />
 	</div>
 	<div class="row">
-		<label for="email"><?php echo _AT('email_address'); ?></label><br /><?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>
-		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email']) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?>
+		<?php echo _AT('email_address'); ?><br />
+		<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>
+		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email']) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
 	</div>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="first_name"><?php echo _AT('first_name'); ?></label><br />

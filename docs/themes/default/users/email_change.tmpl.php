@@ -1,6 +1,6 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<script language="JavaScript" src="sha-1factory.js"></script>
+<script language="JavaScript" type="text/javascript" src="sha-1factory.js"></script>
 <script language="JavaScript" type="text/javascript">
 //<!--
   function crypt_sha1() {
@@ -24,7 +24,6 @@
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />
 			<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
-			</label>
 		</div>
 
 		<div class="row buttons">

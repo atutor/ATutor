@@ -108,7 +108,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				if ($folder_id == 0) {
 					echo ' checked="checked"';
 				}
-			?>/><label for="fhome"><?php echo fs_get_workspace($owner_type, $owner_id); ?>
+			?>/><label for="fhome"><?php echo fs_get_workspace($owner_type, $owner_id); ?></label>
 			<?php 
 				if ($folder_id == $current_folder_id) {
 					echo ' '._AT('current_location');

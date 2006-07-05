@@ -144,7 +144,7 @@ if (isset($_POST['description'])) {
 
 	<div class="row">
 		<label for="body"><?php echo _AT('contents');  ?></label><br />
-		<textarea name="body" id="body" rows="25"><?php echo htmlspecialchars($_POST['body']); ?></textarea>
+		<textarea name="body" id="body" rows="25" cols="30"><?php echo htmlspecialchars($_POST['body']); ?></textarea>
 	</div>
 
 	<div class="row buttons">
