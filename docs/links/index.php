@@ -111,7 +111,7 @@ if ($num_results > 0):
 		</div>
 
         <div class="row">
-			<label for="cat_parent_id"><?php echo _AT('select_cat'); ?></label>
+			<label for="category_parent"><?php echo _AT('select_cat'); ?></label>
 	        <br />
 			<?php if (!empty($categories)): ?>
 				<select name="cat_parent_id" id="category_parent"><?php

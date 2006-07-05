@@ -71,16 +71,6 @@ usort($files, 'fs_revisions_sort_compare');
 <input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
 <input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <table class="data">
-<thead>
-<tr>
-	<th>&nbsp;</th>
-	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=num_revisions"><?php echo _AT('revision');  ?></a></th>
-	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=file_name"><?php echo _AT('file_name'); ?></a></th>
-	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=date"><?php echo _AT('date');      ?></a></th>
-	<th><?php echo _AT('author');    ?></th>
-	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=num_comments"><?php echo _AT('comments');  ?></a></th>
-	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=file_size"><?php echo _AT('size');      ?></a></th>
-</tr>
 <colgroup>
 	<?php if ($col == 'num_revisions'): ?>
 		<col />
@@ -103,6 +93,17 @@ usort($files, 'fs_revisions_sort_compare');
 		<col class="sort" />
 	<?php endif; ?>
 </colgroup>
+<thead>
+<tr>
+	<th>&nbsp;</th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=num_revisions"><?php echo _AT('revision');  ?></a></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=file_name"><?php echo _AT('file_name'); ?></a></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=date"><?php echo _AT('date');      ?></a></th>
+	<th><?php echo _AT('author');    ?></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=num_comments"><?php echo _AT('comments');  ?></a></th>
+	<th><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'id='.$id.SEP.$orders[$order]; ?>=file_size"><?php echo _AT('size');      ?></a></th>
+</tr>
+
 </thead>
 <tfoot>
 <tr>

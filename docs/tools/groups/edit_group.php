@@ -109,7 +109,7 @@ $row['modules'] = explode('|', $row['modules']);
 
 	<div class="row">
 		<label for="description"><?php echo _AT('description'); ?>:</label><br />
-		<textarea name="description" cols="10" rows="2"><?php echo $row['description']; ?></textarea>
+		<textarea name="description" id="description" cols="10" rows="2"><?php echo $row['description']; ?></textarea>
 	</div>
 
 	<div class="row">
