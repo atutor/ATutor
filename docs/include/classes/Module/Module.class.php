@@ -549,7 +549,12 @@ class Module {
 			}
 
 			$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.', '.$_cron_interval.', 0)';
-			$result = mysql_query($sql, $db);
+			mysql_query($sql, $db);
+			if (mysql_affected_rows($db) != 1) {
+				// in case this module has to be re-installed (because it was Missing)
+				$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
+				mysql_query($sql, $db);
+			}
 		}
 	}
 
