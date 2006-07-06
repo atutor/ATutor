@@ -32,14 +32,14 @@ function fha_refresher_cron() {
 			if ((abs($refresh_difference) < $max_refresh_period) && ($refresh_difference < 0)) {
 				$refresh_difference = abs($refresh_difference);
 				if ((round($refresh_difference / 24 / 60 / 60)  % $row['reminder_period']) == 0) {
-					$sql = "SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$test_row[member_id]";
+					$sql = "SELECT login, email FROM ".TABLE_PREFIX."members WHERE member_id=$test_row[member_id]";
 					$member_result = mysql_query($sql, $db);
 					$member_row = mysql_fetch_assoc($member_result);
 					
 					$mail->From     = $_config['contact_email'];
 					$mail->AddAddress($member_row['email']);
 					$mail->Subject = $subject;
-					$mail->Body    = _AT('fha_ref_automatic_email_body',$_SESSION['course_title']);
+					$mail->Body    = _AT('fha_ref_automatic_email_body',$_SESSION['course_title'], $member_row['login']);
 
 					$mail->Send();
 

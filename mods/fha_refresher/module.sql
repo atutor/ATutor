@@ -27,9 +27,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','fha_ref_reminder_period','R
 INSERT INTO `language_text` VALUES ('en', '_module','fha_ref_max_refresh_period','Maximum Refresh Period (Days)',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_module','fha_ref_automatic_email_reminder','Automatic Email Reminder',NOW(),'');
-
-INSERT INTO `language_text` VALUES ('en', '_module','fha_ref_automatic_email_body','Greetings!\nThis is an automatic e-mail reminder. According to our records you are due for a course refresher for the following topic:\n %s\nPlease visit https://fhaol.primesignal.com and take the course at your earliest convenience. You will continue receiving these automatic reminders periodically until you take the refresher.\nThanks\nOnline Learning Initiatives\nFraser Health Authority',NOW(),'');
-
+INSERT INTO `language_text` VALUES ('en' ,'_module', 'fha_ref_automatic_email_body', 'Greetings!\n\nCourse Refresher:\n\nThis is an automatic e-mail reminder from the FHA Online Learning System. Please do not reply to this message.\n\nAccording to our records you are due for a course refresher for the following topic:\n\n%s\n\nPlease visit https://fhaol.primesignal.com and take the course at your earliest convenience.   If the link does not open your browser automatically, please copy and paste the link into your Internet browser\'s address bar.\n\nYour Login Name is: %s\n\nIf you have forgotten your password, please use the Password Reminder feature on the Login Page and an email will be sent to your account prompting you to create a new password.\n\nYou will continue to receive these automatic reminders periodically until you take the refresher.\n\nThanks.\n\nOnline Learning Initiatives\nFraser Health Authority', NOW(), '');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_FHA_REF_MISSING_TEST','You must select a test.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_FHA_REF_MISSING_SCORE','You must enter a pass score.',NOW(),'');
