@@ -200,6 +200,9 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && $_SESSION['valid_user']) {
 
 		if ($_SESSION['course_id'] == -1) {
+			if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
+				$_SESSION['prefs']['PREF_THEME'] = 'default';
+			}
 			$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 		} else {
 			//check if enabled
@@ -211,20 +214,24 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 			} else {
 				// get default
 				$default_theme = get_default_theme();
+				if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
+					$default_theme = array('dir_name' => 'default');
+				}
 				$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
 				$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 			}
 		}
 	} else {
-
 		// get default
 		$default_theme = get_default_theme();
+		if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
+			$default_theme = array('dir_name' => 'default');
+		}
 		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
 		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 	}
 
 	require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
-
 
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 	$msg =& new Message($savant);
