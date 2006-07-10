@@ -106,12 +106,9 @@ function print_select($pid, $depth) {
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-
 	<th scope="col">#</th>
 	<th scope="col"><?php echo _AT('title'); ?></th>
-	<th scope="col"><?php echo _AT('last_modified'); ?></th>
 	<th scope="col"><?php echo _AT('num_pages'); ?></th>
-
 </tr>
 </thead>
 <tfoot>
@@ -132,7 +129,6 @@ function print_select($pid, $depth) {
 				<td><input type="radio" name="id" value="<?php echo $row['content_id']; ?>" id="c<?php echo $row['content_id']; ?>"></td>
 				<td><?php echo $row['ordering']; ?></td>
 				<td><label for="c<?php echo $row['content_id']; ?>"><?php echo AT_print($row['title'], 'content.title'); ?></label></td>
-				<td><?php echo AT_date(_AT('announcement_date_format'), $row['last_modified'], AT_DATE_MYSQL_DATETIME); ?></td>
 				<td><?php echo count($all_content[$row['content_id']]); ?></td>
 			</tr>
 		<?php endforeach; ?>
