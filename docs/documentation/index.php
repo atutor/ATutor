@@ -21,7 +21,7 @@ if (substr($parts['dirname'], -5) == 'admin') {
 } else if (substr($parts['dirname'], -7) == 'general') {
 	$section = 'general';
 } else {
-	header('Location: index_list.php');
+	header('Location: index/index.php');
 	exit;
 }
 

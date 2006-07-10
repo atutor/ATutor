@@ -45,6 +45,7 @@ function get_text($var, $return = FALSE) {
 	global $req_lang, $lang, $section;
 
 	static $req_lang_text, $lang_text;
+
 	if (!isset($req_lang_text) && ($req_lang != 'en')) {
 		$text = array();
 		if (file_exists(dirname(__FILE__) . '/'.$req_lang.'/text.php')) {
@@ -98,7 +99,7 @@ session_start();
 // $req_lang is the language we're requesting
 
 
-$_available_sections = array('admin' => 'admin', 'instructor' => 'instructor', 'general' => 'general');
+$_available_sections = array('admin' => 'admin', 'instructor' => 'instructor', 'general' => 'general', 'index' => 'index');
 $available_languages = array('en' => 'en', 'fr'=>'fr');
 
 $parts = pathinfo($_SERVER['PHP_SELF']);
@@ -117,17 +118,19 @@ if (isset($_available_sections[$second_last_dir_name])) {
 	$section = $last_dir_name;
 	$rel_path = '../';
 	get_available_languages($section);
+
 	foreach ($_GET as $lang_name => $garbage) {
 		if (isset($available_languages[$lang_name])) {
 			$lang = $req_lang = $lang_name;
 			break;
 		}
 	}
-	if (isset($_SESSION['lang']) && isset($available_languages[$_SESSION['lang']])) {
+	if (!$lang && !$req_lang && isset($_SESSION['lang']) && isset($available_languages[$_SESSION['lang']])) {
 		$lang = $req_lang = $_SESSION['lang'];
-	} else {
+	} else if (!$lang && !$req_lang) {
 		$lang = $req_lang = 'en';
 	}
+
 } else {
 	foreach ($_available_sections as $section_name) {
 		if (isset($_GET[$section_name])) {

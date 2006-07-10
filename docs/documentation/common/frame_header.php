@@ -59,7 +59,7 @@ if (top.name == 'popup') {
 // -->
 </script>
 
-<a href="../index_list.php" target="_top"><?php get_text('return_to_handbook'); ?></a> | 
+<a href="../index/<?php echo $req_lang; ?>" target="_top"><?php get_text('return_to_handbook'); ?></a> | 
 
 <input type="text" name="query" /> <input type="submit" name="search" value="<?php get_text('search'); ?>" /> |  <a href="print.php?<?php echo $section; ?>" target="_top"><?php get_text('print_version'); ?></a>
 			<script type="text/javascript">
