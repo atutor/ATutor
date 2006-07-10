@@ -100,9 +100,9 @@ if (isset($_POST['cancel'])) {
 	$_POST['login'] = strtolower($_POST['login']);
 
 	//check date of birth
-	$mo = intval($_POST['month']);
-	$day = intval($_POST['day']);
-	$yr = intval($_POST['year']);
+	$mo = $_POST['month'] = intval($_POST['month']);
+	$day = $_POST['day'] = intval($_POST['day']);
+	$yr = $_POST['year'] = intval($_POST['year']);
 
 	/* let's us take (one or) two digit years (ex. 78 = 1978, 3 = 2003) */
 	if ($yr <= date('y')) { 
@@ -216,6 +216,8 @@ if (isset($_POST['cancel'])) {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
+} else {
+	$_POST = array();
 }
 
 unset($_SESSION['member_id']);
