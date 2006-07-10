@@ -17,7 +17,7 @@ session_write_close();
 //authenticate(USER_CLIENT, USER_ADMIN);
 require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 
-	$myPrefs = getPrefs($_GET['chatID']);
+$myPrefs = getPrefs($_GET['chatID']);
 
 require('include/html/chat_header.inc.php');
 
@@ -43,6 +43,4 @@ $now = time();
         return true;
 	}
 //--></script>
-<?php
-	require('include/html/chat_footer.inc.php');
-?>
+<?php require('include/html/chat_footer.inc.php'); ?>

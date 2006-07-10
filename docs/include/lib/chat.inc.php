@@ -43,7 +43,9 @@ function postMessage($chatID, $message, &$topMsgNum, &$bottomMsgNum) {
 	global $admin;
 
 	$topMsgNum++;
-	
+	if (!is_dir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs')) {
+		@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs');
+	}
 	$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$topMsgNum.'.message', 'w+');
 	if (!$fp) {
 		// error

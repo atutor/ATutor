@@ -102,6 +102,9 @@ if (isset($errors)) {
 		if ($_POST['step3']['welcome_course']) {
 			@mkdir($cdir.'/1');
 			@mkdir($cdir.'/chat/1');
+			@mkdir($cdir.'/chat/1/msgs');
+			@mkdir($cdir.'/chat/1/tran');
+			@mkdir($cdir.'/chat/1/users');
 			@mkdir($cdir.'/backups/1');
 			@mkdir($cdir.'/feeds/1');
 			@copy('../images/index.html', $cdir . '/index.html');
