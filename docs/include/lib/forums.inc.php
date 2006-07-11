@@ -186,6 +186,8 @@ function edit_forum($_POST) {
 	$_POST['title']  = $addslashes($_POST['title']);
 	$_POST['body']   = $addslashes($_POST['body']);
 
+	$_POST['fid']    = intval($_POST['fid']);
+
 	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]' WHERE forum_id=$_POST[fid]";
 	$result = mysql_query($sql,$db);
 
