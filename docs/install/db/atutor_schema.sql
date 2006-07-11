@@ -111,7 +111,7 @@ CREATE TABLE `content` (
   `content_id` mediumint(8) unsigned NOT NULL auto_increment,
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `content_parent_id` mediumint(8) unsigned NOT NULL default '0',
-  `ordering` tinyint(4) NOT NULL default '0',
+  `ordering` mediumint(8) NOT NULL default '0',
   `last_modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `revision` tinyint(3) unsigned NOT NULL default '0',
   `formatting` tinyint(4) NOT NULL default '0',
@@ -818,7 +818,7 @@ CREATE TABLE `tests_questions_assoc` (
   `test_id` mediumint(8) unsigned NOT NULL default '0',
   `question_id` mediumint(8) unsigned NOT NULL default '0',
   `weight` varchar(4) NOT NULL default '',
-  `ordering` tinyint(3) unsigned NOT NULL default '0',
+  `ordering` mediumint(8) unsigned NOT NULL default '0',
   `required` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`test_id`,`question_id`),
   KEY `test_id` (`test_id`)
