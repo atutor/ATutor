@@ -1,5 +1,5 @@
 <?php
-
+$text = array();
 $text['next_chapter'] = 'Next Chapter';
 $text['previous_chapter'] = 'Previous Chapter';
 $text['page_not_translated'] = 'This page has not yet been translated to that language.';
@@ -38,4 +38,5 @@ $text['add_note'] = 'Add Note';
 $text['add_note_blurb'] = 'If you ask a question, report a bug, or request a feature, your note will not be posted. Notes must be approved by an administrator before they are posted.';
 $text['email_name'] = 'Your email address (or name)';
 $text['your_note'] = 'Your note';
+$text['note_added'] = 'Your note has been saved. It will appear only after it has been approved by an administrator.';
 ?>

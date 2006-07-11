@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 		// insert into DB
 		$sql = "INSERT INTO ".AT_HANDBOOK_DB_TABLE_PREFIX."handbook_notes VALUES (0, NOW(), '$_POST[section]', '$_POST[page]', 0, '$_POST[email]', '$_POST[note]')";
 		mysql_query($sql, $db);
-		header('Location: '.$_POST['section']. '/' . $_POST['page']);
+		header('Location: '.$_POST['section']. '/' . $_POST['page'].'?noted');
 		exit;
 	}
 }

@@ -82,3 +82,9 @@ while (current($_pages) !== FALSE) {
 		<?php get_text('page_not_translated'); ?>
 	</div>
 <?php endif; ?>
+
+<?php if (isset($_GET['noted'])): ?>
+	<div style="margin: 20px auto; border: 1px solid #aaf; padding: 4px; text-align: center; background-color: #eef;">
+		<?php get_text('note_added'); ?>
+	</div>
+<?php endif; ?>
