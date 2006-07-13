@@ -16,7 +16,6 @@ $page = 'my_courses';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
