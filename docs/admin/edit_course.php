@@ -22,22 +22,13 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: courses.php');
 	exit;
-} else if (isset($_POST['course'])) {
+} else if (isset($_POST['course']) && !isset($_POST['setvisual'])) {
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
 	$errors = add_update_course($_POST, TRUE);
 
 	if (is_numeric($errors)) {
-		if ($_REQUEST['show_courses'] != '') {
-			$msg->addFeedback('COURSE_PROPERTIES');
-
-			header('Location: '.$_base_href.'admin/courses.php');
-			exit;
-		} else {
-			$msg->addFeedback('COURSE_PROPERTIES');
-
-			header('Location: '.$_base_href.'admin/courses.php');
-			exit;
-		}	
+		header('Location: '.$_base_href.'admin/courses.php');
+		exit;
 	}
 
 }
@@ -46,7 +37,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printAll();
 
-$course = $_GET['course'];
+$course = intval($_REQUEST['course']);
 $isadmin   = TRUE;
 
 

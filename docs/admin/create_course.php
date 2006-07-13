@@ -21,13 +21,9 @@ require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	if ($_REQUEST['show_courses'] != '') {
-		header('Location: '.$_base_href.'users/admin/course_categories.php?course='.intval($_REQUEST['course_id']).SEP.'this_course='.intval($_REQUEST['course_id']).SEP.'show_courses='.intval($_REQUEST['show_courses']).SEP.'current_cat='.intval($_REQUEST['current_cat']));
-	} else {		
-		header('Location: '.$_base_href.'admin/courses.php');
-	}
+	header('Location: '.$_base_href.'admin/courses.php');
 	exit;
-} else if (isset($_POST['form_course'])) {
+} else if (isset($_POST['form_course']) && !isset($_POST['setvisual'])) {
 	$errors = add_update_course($_POST, TRUE);
 
 	if ($errors !== FALSE) {
