@@ -8,7 +8,7 @@
 
 	<p>Notice that the URL being used will be unique for each installation and that for security reasons the requested URL includes a secret six-character alpha-numerica authentication key. The cron will not run if the key is incorrect or missing.</p>
 
-	<p>The <a href="system_preferences.php"><em>Mail Queue</em></a> feature requires the cron to be set-up and running correctly before it can be enabled.</p>
+	<p>The <em><a href="system_preferences.php">Mail Queue</a></em> feature requires the cron to be set-up and running correctly before it can be enabled.</p>
 
 	<h3>Unix Setup</h3>
 		<ol>

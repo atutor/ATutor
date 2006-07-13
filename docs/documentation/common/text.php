@@ -2,8 +2,8 @@
 $text = array();
 $text['next_chapter'] = 'Next Chapter';
 $text['previous_chapter'] = 'Previous Chapter';
-$text['page_not_translated'] = 'This page has not yet been translated to that language.';
-$text['atutor_documentation'] = 'ATutor Documentation';
+$text['page_not_translated'] = 'This section has not yet been translated to your requested language.';
+$text['atutor_documentation'] = 'ATutor Handbook';
 $text['handbook_toc'] = 'Handbook TOC';
 $text['close_popup'] = 'Close Pop-up';
 $text['return_to_handbook'] = 'Return to Handbook';
@@ -21,7 +21,7 @@ $text['doc_dev'] = 'Developer Documentation';
 $text['doc_instructor'] = 'Instructor Documentation';
 $text['doc_mods'] = 'Module Development Documentation';
 $text['doc_notes_enabled'] = 'User contributed notes is <em>enabled</em>. <a href="index.php?login">Administrator Login</a>.';
-$text['doc_title'] = 'ATutor 1.5.3 Documentation';
+$text['doc_title'] = 'ATutor Handbook';
 $text['doc_welcome'] = 'Welcome to the official ATutor Handbook!';
 $text['doc_unapproved_notes'] = 'Un-Approved User Contributed Notes';
 $text['doc_approved_confirm'] = 'Are you sure you want to approve this note?';
@@ -39,4 +39,5 @@ $text['add_note_blurb'] = 'If you ask a question, report a bug, or request a fea
 $text['email_name'] = 'Your email address (or name)';
 $text['your_note'] = 'Your note';
 $text['note_added'] = 'Your note has been saved. It will appear only after it has been approved by an administrator.';
+$text['back_to_chapters'] = 'Back to Chapters';
 ?>

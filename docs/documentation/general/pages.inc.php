@@ -1,17 +1,5 @@
 <?php
-/************************************************************************/
-/* ATutor																*/
-/************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
-/************************************************************************/
-// $Id: pages.inc.php 6137 2006-04-28 16:57:44Z heidi $
-
+	$_pages = array();
     $_pages['introduction.php']				= 'Introduction';
     $_pages['login.php']					= 'Login';
     $_pages['register.php']					= 'Register';

@@ -1,4 +1,5 @@
 <?php
+	$_pages = array();
 	$_pages['introduction.php']                  = 'Introduction';
 	$_pages['installation.php']                  = 'Installation';
 	$_pages['requirements_recommendations.php']  = 'Requirements &amp; Recommendations';
@@ -9,9 +10,6 @@
 	$_pages['system_preferences.php']            = 'System Preferences';
 	$_pages['default_preferences.php']			 = 'Default Preferences';
 	$_pages['languages.php']                     = 'Languages';
-	$_pages['importing_languages.php']			 = 'Importing Languages';
-	$_pages['managing_existing_languages.php']	 = 'Managing Existing Languages';
-	$_pages['translating_atutor.php']			 = 'Translating ATutor';
 	$_pages['themes.php']                        = 'Themes';
 	$_pages['importing_themes.php']              = 'Importing/Exporting Themes';
 	$_pages['managing_existing_themes.php']		 = 'Managing Existing Themes';

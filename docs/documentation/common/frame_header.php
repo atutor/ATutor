@@ -61,7 +61,7 @@ if (top.name == 'popup') {
 
 <a href="../index/<?php echo $req_lang; ?>" target="_top"><?php get_text('return_to_handbook'); ?></a> | 
 
-<input type="text" name="query" /> <input type="submit" name="search" value="<?php get_text('search'); ?>" /> |  <a href="print.php?<?php echo $section; ?>" target="_top"><?php get_text('print_version'); ?></a>
+<input type="text" name="query" /> <input type="submit" name="search" value="<?php get_text('search'); ?>" /> |  <a href="print.php?<?php echo $section; ?>&amp;<?php echo $req_lang; ?>" target="_top"><?php get_text('print_version'); ?></a>
 			<script type="text/javascript">
 			//<!--
 			document.writeln(' | ');
