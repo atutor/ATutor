@@ -145,8 +145,9 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	$keys = array_keys($module_list);
 	foreach($keys as $dir_name) {
 		$module =& $module_list[$dir_name];
-		$module->setIsMissing();
+		$module->setIsMissing($module->isExtra());
 	}
+
 
 	if (!isset($errors)) {
 		unset($errors);
