@@ -325,21 +325,7 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="writing-portable-code"></a>11. Writing Portable Code</h2>
-	<p>When writing your PHP code please try to use functions that exist since (the minimum requirement) PHP version 4.2.0. If you have to use a function that only exists in later versions of PHP, provide an alternative for older versions. To check if the function is available use either <kbd>version_compare(phpversion(), $min_version)</kbd> or <kbd>function_exists($function_name)</kbd>. For example, to make use of <kbd>file_get_contents()</kbd>, which is only available in PHP 4.3.0 and later, use the following:
-<pre class="code">
-if (version_compare(phpversion(), '4.3.0') < 0) {
-    function file_get_contents($filename) {
-        $fd = @fopen($filename, 'rb');
-        if ($fd === false) {
-            $content = false;
-        } else {
-            $content = @fread($fd, filesize($filename));
-            @fclose($fd);
-        }
-        return $content;
-    }
-}
-</pre></p>
+	<p>When writing your PHP code please try to use functions that exist since (the minimum requirement) PHP version 4.3.0. If you have to use a function that only exists in later versions of PHP, provide an alternative for older versions. To check if the function is available use either <kbd>version_compare(phpversion(), $min_version)</kbd> or <kbd>function_exists($function_name)</kbd>.
 
 	<p>Code has to work on both Windows and UNIX. You should never use <kbd>exec()</kbd> or <kbd>system()</kbd>. In most cases we prefer to write code that works on both systems as is, without the need for if-statements that check for the operating system, since duplicating the functionality twice (once for each operating system) can be a source of bugs. Review the <a href="#php-configuration">PHP Configuration</a> section for details on how best to set-up your development environment.</p>
 
