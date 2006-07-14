@@ -220,6 +220,19 @@ if (isset($errors)) {
 
 <p>If the old ATutor installation directory was renamed to <kbd>ATutor_old</kbd> then enter that name below. The old version must be at the same directory level as the new version.</p>
 
+<?php
+	$dirs = scandir('../../');
+	$path = realpath('../../').'/';
+	foreach ($dirs as $key => $value) {
+		if ($value == '.' || $value == '..') {
+			unset($dirs[$key]);
+		}
+		if (!is_dir($path . $value) || !file_exists($path . $value . '/include/config.inc.php')) {
+			unset($dirs[$key]);
+		}
+	}
+?>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
 <input type="hidden" name="step" value="1" />
@@ -228,7 +241,13 @@ if (isset($errors)) {
 <tr>
 	<td class="row1"><div class="required" title="Required Field">*</div><b><label for="dir">Old Directory Name:</label></b><br />
 		The old directory must be at the same level as the current directory.</td>
-		<td class="row1" valign="middle"><input type="text" id="dir" name="old_path" value="<?php if (!empty($_POST['old_path'])) { echo stripslashes(htmlspecialchars($_POST['old_path'])); } ?>" class="formfield" /></td>
+		<td class="row1" valign="middle">
+		<select name="old_path">
+			<?php foreach ($dirs as $dir): ?>
+				<option value="<?php echo htmlspecialchars($dir); ?>"><?php echo $dir; ?>/</option>
+			<?php endforeach; ?>
+		</select>
+		</td>
 </tr>
 </table>
 
