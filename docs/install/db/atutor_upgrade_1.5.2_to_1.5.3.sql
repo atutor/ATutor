@@ -197,8 +197,8 @@ CREATE TABLE `blog_posts_comments` (
    INDEX ( `post_id` )
 );
 
-## add blog to the modules
-INSERT INTO `modules` VALUES ('_standard/blogs',         2, 0, 0, 0, 0);
+## add blog to the modules (added to 1.5.3.1)
+##INSERT INTO `modules` VALUES ('_standard/blogs',         2, 0, 0, 0, 0);
 
 
 ALTER TABLE `members` CHANGE `gender` `gender` ENUM( 'm', 'f', 'n' ) DEFAULT 'n' NOT NULL;
