@@ -479,12 +479,13 @@ class Module {
 	/**
 	* Sets the status to missing if the module dir doesn't exist.
 	* @access  public
+	* @param   boolean $force whether or not to force the module to be missing (used for bundled extra modules upon upgrade)
 	* @author  Joel Kronenberg
 	*/
-	function setIsMissing() {
+	function setIsMissing($force = false) {
 		global $db;
 		// if the directory doesn't exist then set the status to MISSING
-		if (!is_dir(AT_MODULE_PATH . $this->_directoryName)) {
+		if ($force || !is_dir(AT_MODULE_PATH . $this->_directoryName)) {
 			$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_MISSING.' WHERE dir_name="'.$this->_directoryName.'"';
 			$result = mysql_query($sql, $db);
 		}
