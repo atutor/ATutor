@@ -238,7 +238,7 @@ $result = mysql_query($sql, $db);
 <?php if ($num_results > 0): ?>
 	<tfoot>
 	<tr>
-		<td colspan="<?php echo 6 + $col_counts; ?>"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
+		<td colspan="<?php echo 7 + $col_counts; ?>"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
 						<input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> 
 						<input type="submit" name="password" value="<?php echo _AT('password'); ?>" />
 						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
