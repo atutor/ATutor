@@ -69,7 +69,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$enrolled[$row['course_id']] = $row['cnt'];
 }
 
-$sql	= "SELECT C.*, M.login FROM ".TABLE_PREFIX."courses C, ".TABLE_PREFIX."members M WHERE C.member_id=M.member_id $and ORDER BY $col $order";
+$sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) WHERE 1 $and ORDER BY $col $order";
 $result = mysql_query($sql, $db);
 
 if ($_GET['id']) {
@@ -107,7 +107,7 @@ $num_rows = mysql_num_rows($result);
 	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('Instructor');          ?></a></th>
 	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=access<?php echo $page_string; ?>"><?php echo _AT('access');             ?></a></th>
 	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=created_date<?php echo $page_string; ?>"><?php echo _AT('created_date'); ?></a></th>
-	<th scope="col"><?php echo _AT('category'); ?></th>
+	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=cat_name<?php echo $page_string; ?>"><?php echo _AT('category'); ?></a></th>
 	<th scope="col"><?php echo _AT('enrolled'); ?></th>
 </tr>
 </thead>
@@ -128,7 +128,7 @@ $num_rows = mysql_num_rows($result);
 			<td><?php echo AT_print($row['login'],'members.login'); ?></td>
 			<td><?php echo _AT($row['access']); ?></td>
 			<td><?php echo $row['created_date']; ?></td>
-			<td><?php echo ($current_cats[$row['cat_id']] ? $current_cats[$row['cat_id']] : _AT('cats_uncategorized'))?></td>
+			<td><?php echo ($row['cat_name'] ? $row['cat_name'] : '-')?></td>
 			<td><?php echo ($enrolled[$row['course_id']] ? $enrolled[$row['course_id']] : 0); ?></td>
 		</tr>
 	<?php endwhile; ?>
