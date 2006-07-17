@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		$msg->addError('LOGIN_NAME_MISSING');
 	} else {
 		/* check for special characters */
-		if (!(eregi("^[a-zA-Z0-9_.]([a-zA-Z0-9_.])*$", $_POST['login']))) {
+		if (!(eregi("^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$", $_POST['login']))) {
 			$msg->addError('LOGIN_CHARS');
 		} else {
 			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]'",$db);

@@ -32,7 +32,7 @@
 				<input name="member_id" type="hidden" value="<?php echo intval($_POST['member_id']); ?>" />
 				<input name="login" type="hidden" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" />
 		<?php else: ?>
-			<input id="login" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
+			<input id="login" name="login" type="text" maxlength="20" size="30" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
 			<small>&middot; <?php echo _AT('contain_only'); ?><br />
 				   &middot; <?php echo _AT('20_max_chars'); ?></small>
 		<?php endif; ?>

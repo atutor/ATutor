@@ -52,9 +52,9 @@ function checkUserInfo($record) {
 		$record['uname'] = stripslashes (strtolower (substr ($record['fname'], 0, 1).$_POST['sep_choice'].$record['lname']));
 	} 		
 
-	$record['uname'] = preg_replace("{[^a-zA-Z0-9._]}","", trim($record['uname']));
+	$record['uname'] = preg_replace("{[^a-zA-Z0-9._-]}","", trim($record['uname']));
 
-	if (!(eregi("^[a-zA-Z0-9._]([a-zA-Z0-9._])*$", $record['uname']))) {
+	if (!(eregi("^[a-zA-Z0-9._-]([a-zA-Z0-9._-])*$", $record['uname']))) {
 		$record['err_uname'] = _AT('import_err_username_invalid');
 	} 
 
