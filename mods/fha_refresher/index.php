@@ -10,17 +10,13 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['enabled']            = abs($_POST['enabled']);
 	$_POST['test_id']            = abs($_POST['test_id']);
-	$_POST['score']              = abs($_POST['score']);
+	$_POST['score']              = abs(intval($_POST['score']));
 	$_POST['refresher_period']   = abs($_POST['refresher_period']);
 	$_POST['reminder_period']    = abs($_POST['reminder_period']);
 	$_POST['max_refresh_period'] = abs($_POST['max_refresh_period']);
 	
 	if (!$_POST['test_id']) {
 		$msg->addError('FHA_REF_MISSING_TEST');
-	}
-
-	if (!$_POST['score']) {
-		$msg->addError('FHA_REF_MISSING_SCORE');
 	}
 
 	if (!$_POST['refresher_period']) {

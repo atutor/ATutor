@@ -1,16 +1,13 @@
 <?php
 
+// simple cron script to run daily
+
 function fha_refresher_cron() {
 	global $db, $system_courses, $_config;
 
 	require_once(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 	$mail = new ATutorMailer;
-
-	// simple cron script to run daily (doesn't check to see if it is run more often)
-
-	// this script is vulnerable to being run (maliciously) more often. certain secret
-	// _GET arguments should be passed to authenticate its execution.
 
 	$subject = _AT('fha_ref_automatic_email_reminder');
 
