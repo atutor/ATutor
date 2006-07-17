@@ -60,7 +60,7 @@ if (isset($_GET['asc'])) {
 
 if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	$status = '=' . intval($_GET['status']);
-	$page_string .= SEP.'status='.$_GET['status'];
+	$page_string .= SEP.'status='.$status;
 } else {
 	$status = '<>-1';
 }
@@ -142,15 +142,15 @@ $result = mysql_query($sql, $db);
 
 		<div class="row">
 			<?php echo _AT('account_status'); ?><br />
-			<input type="radio" name="status" value="0" id="s0" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('disabled'); ?></label> 
+			<input type="radio" name="status" value="0" id="s0" <?php if ($status == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('disabled'); ?></label> 
 
-			<input type="radio" name="status" value="1" id="s1" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unconfirmed'); ?></label> 
+			<input type="radio" name="status" value="1" id="s1" <?php if ($status == 1) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unconfirmed'); ?></label> 
 
-			<input type="radio" name="status" value="2" id="s2" <?php if ($_GET['status'] == 2) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('student'); ?></label>
+			<input type="radio" name="status" value="2" id="s2" <?php if ($status == 2) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('student'); ?></label>
 
-			<input type="radio" name="status" value="3" id="s3" <?php if ($_GET['status'] == 3) { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('instructor'); ?></label>
+			<input type="radio" name="status" value="3" id="s3" <?php if ($status == 3) { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('instructor'); ?></label>
 
-			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+			<input type="radio" name="status" value="" id="s" <?php if ($status == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
 		</div>
 
 		<div class="row">
@@ -187,7 +187,7 @@ $result = mysql_query($sql, $db);
 </div>
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
+<input type="hidden" name="status" value="<?php echo $status; ?>" />
 
 <?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {  $col_counts = 1; } else { $col_counts = 0; } ?>
 <table summary="" class="data" rules="cols">
