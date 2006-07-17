@@ -54,10 +54,6 @@ if (isset($_GET['asc'])) {
 	$col   = 'title';
 }
 
-if ($_GET['id']) {
-	$and .= ' AND C.member_id='.intval($_GET['id']);
-}
-
 // get number of courses on the system
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
 $result = mysql_query($sql, $db);
@@ -75,7 +71,6 @@ $offset = ($page-1)*$results_per_page;
 
 ${'highlight_'.$col} = ' style="background-color: #fff;"';
 
-
 $sql	  = "SELECT COUNT(*)-1 AS cnt, course_id FROM ".TABLE_PREFIX."course_enrollment WHERE approved='y' OR approved='a' GROUP BY course_id";
 $sql    = "SELECT COUNT(*) AS cnt, approved, course_id FROM ".TABLE_PREFIX."course_enrollment WHERE approved='y' OR approved='a' GROUP BY course_id, approved";
 $result = mysql_query($sql, $db);
@@ -86,13 +81,9 @@ while ($row = mysql_fetch_assoc($result)) {
 	$enrolled[$row['course_id']][$row['approved']] = $row['cnt'];
 }
 
-$sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) WHERE 1 $and ORDER BY $col $order LIMIT $offset, $results_per_page";
+$sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) ORDER BY $col $order LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
 
-if ($_GET['id']) {
-	echo '<h3>'._AT('courses_for_login', AT_print($row['login'], 'members.login')).'</h3>';
-}
-		
 $num_rows = mysql_num_rows($result);
 ?>
 
