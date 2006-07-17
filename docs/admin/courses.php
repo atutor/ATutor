@@ -34,14 +34,6 @@ if (isset($_GET['view'], $_GET['id'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-$result = mysql_query($sql, $db);
-if(mysql_num_rows($result) != 0){
-	while($row = mysql_fetch_array($result)){
-		$current_cats[$row['cat_id']] = $row['cat_name'];
-	}
-}
-
 $orders = array('asc' => 'desc', 'desc' => 'asc');
 
 if (isset($_GET['asc'])) {
