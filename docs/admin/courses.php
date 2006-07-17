@@ -41,6 +41,7 @@ if ($_GET['reset_filter']) {
 }
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$_access = array('public', 'protected', 'private');
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
@@ -54,8 +55,25 @@ if (isset($_GET['asc'])) {
 	$col   = 'title';
 }
 
+if (isset($_GET['access']) && ($_GET['access'] != '') && isset($_access[$_GET['access']])) {
+	$access = 'C.access = \'' . $_access[$_GET['access']].'\'';
+	$page_string .= SEP.'access='.$_GET['access'];
+} else {
+	$access = '1';
+}
+
+if ($_GET['search']) {
+	$page_string .= SEP.'search='.urlencode($_GET['search']);
+	$search = $addslashes($_GET['search']);
+	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
+	$search = '%'.$search.'%';
+	$search = "((C.title LIKE '$search') OR (C.description LIKE '$search'))";
+} else {
+	$search = '1';
+}
+
 // get number of courses on the system
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses C WHERE 1 AND $access AND $search";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 $num_results = $row['cnt'];
@@ -71,7 +89,6 @@ $offset = ($page-1)*$results_per_page;
 
 ${'highlight_'.$col} = ' style="background-color: #fff;"';
 
-$sql	  = "SELECT COUNT(*)-1 AS cnt, course_id FROM ".TABLE_PREFIX."course_enrollment WHERE approved='y' OR approved='a' GROUP BY course_id";
 $sql    = "SELECT COUNT(*) AS cnt, approved, course_id FROM ".TABLE_PREFIX."course_enrollment WHERE approved='y' OR approved='a' GROUP BY course_id, approved";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
@@ -81,11 +98,41 @@ while ($row = mysql_fetch_assoc($result)) {
 	$enrolled[$row['course_id']][$row['approved']] = $row['cnt'];
 }
 
-$sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) ORDER BY $col $order LIMIT $offset, $results_per_page";
+$sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) WHERE 1 AND $access AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
 
 $num_rows = mysql_num_rows($result);
 ?>
+
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo _AT('results_found', $num_results); ?></h3>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('access'); ?><br />
+
+			<input type="radio" name="access" value="0" id="s0" <?php if ($_GET['access'] == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('public'); ?></label> 
+
+			<input type="radio" name="access" value="1" id="s1" <?php if ($_GET['access'] == 1) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('protected'); ?></label> 
+
+			<input type="radio" name="access" value="2" id="s2" <?php if ($_GET['access'] == 2) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('private'); ?></label>
+
+			<input type="radio" name="access" value="" id="s" <?php if ($_GET['access'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+		</div>
+
+		<div class="row">
+			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('title').', '._AT('description'); ?>)</label><br />
+			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</div>
+</form>
 
 <div class="paging">
 	<ul>
