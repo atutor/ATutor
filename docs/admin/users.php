@@ -111,7 +111,7 @@ if ($_GET['searchid']) {
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 	$sql	= "SELECT COUNT(M.member_id) AS cnt FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid";
 } else {
-	$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."members WHERE status $status AND $search";
+	$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."members M WHERE status $status AND $search";
 }
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
