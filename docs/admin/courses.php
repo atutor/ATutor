@@ -56,9 +56,13 @@ ${'highlight_'.$col} = ' style="background-color: #fff;"';
 
 
 $sql	  = "SELECT COUNT(*)-1 AS cnt, course_id FROM ".TABLE_PREFIX."course_enrollment WHERE approved='y' OR approved='a' GROUP BY course_id";
+$sql    = "SELECT COUNT(*) AS cnt, approved, course_id FROM ".TABLE_PREFIX."course_enrollment WHERE approved='y' OR approved='a' GROUP BY course_id, approved";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
-	$enrolled[$row['course_id']] = $row['cnt'];
+	if ($row['approved'] == 'y') {
+		$row['cnt']--; // remove the instructor
+	}
+	$enrolled[$row['course_id']][$row['approved']] = $row['cnt'];
 }
 
 $sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) WHERE 1 $and ORDER BY $col $order";
@@ -77,19 +81,19 @@ $num_rows = mysql_num_rows($result);
 	<?php if ($col == 'title'): ?>
 		<col />
 		<col class="sort" />
-		<col span="5" />
+		<col span="6" />
 	<?php elseif($col == 'login'): ?>
 		<col span="2" />
 		<col class="sort" />
-		<col span="4" />
+		<col span="5" />
 	<?php elseif($col == 'access'): ?>
 		<col span="3" />
 		<col class="sort" />
-		<col span="3" />
+		<col span="4" />
 	<?php elseif($col == 'created_date'): ?>
 		<col span="4" />
 		<col class="sort" />
-		<col span="2" />
+		<col span="3" />
 	<?php endif; ?>
 </colgroup>
 <thead>
@@ -101,11 +105,12 @@ $num_rows = mysql_num_rows($result);
 	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=created_date<?php echo $page_string; ?>"><?php echo _AT('created_date'); ?></a></th>
 	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=cat_name<?php echo $page_string; ?>"><?php echo _AT('category'); ?></a></th>
 	<th scope="col"><?php echo _AT('enrolled'); ?></th>
+	<th scope="col"><?php echo _AT('alumni'); ?></th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="7"><input type="submit" name="view" value="<?php echo _AT('view'); ?>" /> 
+	<td colspan="8"><input type="submit" name="view" value="<?php echo _AT('view'); ?>" /> 
 					<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
 					<input type="submit" name="backups" value="<?php echo _AT('backups'); ?>" /> 
 					<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
@@ -121,12 +126,13 @@ $num_rows = mysql_num_rows($result);
 			<td><?php echo _AT($row['access']); ?></td>
 			<td><?php echo $row['created_date']; ?></td>
 			<td><?php echo ($row['cat_name'] ? $row['cat_name'] : '-')?></td>
-			<td><?php echo ($enrolled[$row['course_id']] ? $enrolled[$row['course_id']] : 0); ?></td>
+			<td><?php echo ($enrolled[$row['course_id']]['y'] ? $enrolled[$row['course_id']]['y'] : 0); ?></td>
+			<td><?php echo ($enrolled[$row['course_id']]['a'] ? $enrolled[$row['course_id']]['a'] : 0); ?></td>
 		</tr>
 	<?php endwhile; ?>
 <?php else: ?>
 	<tr>
-		<td colspan="7"><?php echo _AT('none_found'); ?></td>
+		<td colspan="8"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>
