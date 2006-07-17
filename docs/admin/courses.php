@@ -34,6 +34,12 @@ if (isset($_GET['view'], $_GET['id'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
+$page_string = '';
+
+if ($_GET['reset_filter']) {
+	unset($_GET);
+}
+
 $orders = array('asc' => 'desc', 'desc' => 'asc');
 
 if (isset($_GET['asc'])) {
@@ -52,6 +58,21 @@ if ($_GET['id']) {
 	$and .= ' AND C.member_id='.intval($_GET['id']);
 }
 
+// get number of courses on the system
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_assoc($result);
+$num_results = $row['cnt'];
+
+$results_per_page = 100;
+$num_pages = max(ceil($num_results / $results_per_page), 1);
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}	
+$count  = (($page-1) * $results_per_page) + 1;
+$offset = ($page-1)*$results_per_page;
+
 ${'highlight_'.$col} = ' style="background-color: #fff;"';
 
 
@@ -65,7 +86,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$enrolled[$row['course_id']][$row['approved']] = $row['cnt'];
 }
 
-$sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) WHERE 1 $and ORDER BY $col $order";
+$sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) WHERE 1 $and ORDER BY $col $order LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
 
 if ($_GET['id']) {
@@ -74,6 +95,21 @@ if ($_GET['id']) {
 		
 $num_rows = mysql_num_rows($result);
 ?>
+
+<div class="paging">
+	<ul>
+	<?php for ($i=1; $i<=$num_pages; $i++): ?>
+		<li>
+			<?php if ($i == $page) : ?>
+				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string.SEP.$order.'='.$col; ?>"><em><?php echo $i; ?></em></a>
+			<?php else: ?>
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string.SEP.$order.'='.$col; ?>"><?php echo $i; ?></a>
+			<?php endif; ?>
+		</li>
+	<?php endfor; ?>
+	</ul>
+</div>
+
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
 <table class="data" summary="" rules="cols">
