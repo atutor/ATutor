@@ -13,6 +13,9 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+$_POST['db_login']    = urldecode($_POST['db_login']);
+$_POST['db_password'] = urldecode($_POST['db_password']);
+
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);
 

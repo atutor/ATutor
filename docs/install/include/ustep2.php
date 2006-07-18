@@ -16,13 +16,16 @@ ignore_user_abort(true);
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-	function update_one_ver($up_file) {
-		global $progress;
-		$update_file = implode('_',$up_file);
-		queryFromFile('db/'.$update_file.'sql');
-		$progress[] = 'Successful update from version '.$up_file[2].' to '.$up_file[4];
-		return $up_file[4];
-	} 
+function update_one_ver($up_file) {
+	global $progress;
+	$update_file = implode('_',$up_file);
+	queryFromFile('db/'.$update_file.'sql');
+	$progress[] = 'Successful update from version '.$up_file[2].' to '.$up_file[4];
+	return $up_file[4];
+}
+
+$_POST['db_login'] = urldecode($_POST['db_login']);
+$_POST['db_password'] = urldecode($_POST['db_password']);
 
 	unset($errors);
 	//check DB & table connection
