@@ -4,11 +4,6 @@
 $sql = array();
 $sql['polls'] = 'SELECT question, created_date, choice1, choice2, choice3, choice4, choice5, choice6, choice7 FROM '.TABLE_PREFIX.'polls WHERE course_id=?';
 
-/* the tables to be restored, the order matters! */
-/* the key must be the module directory name.    */
-/* a {table_name}Table class must exist that extends AbstractTable */
-	$restore_tables = array('polls');
-
 function polls_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
 	$new_row[0]  = 0;
