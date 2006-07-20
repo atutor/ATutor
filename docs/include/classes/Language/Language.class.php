@@ -129,6 +129,15 @@ class Language {
 	}
 
 	// public
+	function saveToPreferences($id) {
+		global $db;
+		if ($id) {
+			$sql = "UPDATE ".TABLE_PREFIX."members SET language='".$this->code."' WHERE member_id=$id";
+			mysql_query($sql,$db);
+		}
+	}
+
+	// public
 	// returns whether or not this language is right-to-left
 	// possible langues are: arabic, farsi, hebrew, urdo
 	function isRTL() {

@@ -173,6 +173,9 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 		exit;
 	}
 	$myLang->saveToSession();
+	if (isset($_GET['lang'])) {
+		$myLang->saveToPreferences($_SESSION['member_id']);
+	}
 	$myLang->sendContentTypeHeader();
 
 	/* set right-to-left language */
