@@ -263,6 +263,52 @@ class LanguageManager {
 		return isset($this->availableLanguages[$code]);
 	}
 
+	// public
+	// import language pack from specified file
+	function import($filename) {
+		global $languageManager, $msg;
+
+		$import_path = AT_CONTENT_DIR . 'import/';
+
+		$archive = new PclZip($filename);
+		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
+			exit('Error : ' . $archive->errorInfo(true));
+		}
+
+		$language_xml = @file_get_contents($import_path.'language.xml');
+
+		$languageParser =& new LanguageParser();
+		$languageParser->parse($language_xml);
+		$languageEditor =& $languageParser->getLanguageEditor(0);
+
+		if (($languageEditor->getAtutorVersion() != VERSION) 
+			&& (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE)) 
+			{
+				$msg->addError('LANG_WRONG_VERSION');
+		}
+
+		if (($languageEditor->getStatus() != AT_LANG_STATUS_PUBLISHED) 
+			&& ($languageEditor->getStatus() != AT_LANG_STATUS_COMPLETE) 
+			&& (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE)) 
+			{
+				$msg->addError('LANG_NOT_COMPLETE');
+		}
+
+		if ($languageManager->exists($languageEditor->getCode())) {
+			$msg->addError('LANG_EXISTS');
+		}
+
+		if (!$msg->containsErrors()) {
+			$languageEditor->import($import_path . 'language_text.sql');
+			$msg->addFeedback('IMPORT_LANG_SUCCESS');
+		}
+
+		// remove the files:
+		@unlink($import_path . 'language.xml');
+		@unlink($import_path . 'language_text.sql');
+		@unlink($import_path . 'readme.txt');
+		@unlink($filename);
+	}
 	
 	function getXML() {
 		global $lang_db;

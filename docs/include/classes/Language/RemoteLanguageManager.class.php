@@ -56,7 +56,13 @@ class RemoteLanguageManager extends LanguageManager {
 
 		$fp = fopen($filename, 'wb+');
 		fwrite($fp, $language_pack, strlen($language_pack));
+	}
 
+	function import($language_code) {
+		$filename = tempnam(AT_CONTENT_DIR . 'import', $language_code);
+		$this->fetchLanguage($language_code, $filename);
+
+		parent::import($filename);
 	}
 }
 

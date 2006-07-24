@@ -16,29 +16,7 @@ function languages_cron() {
 		if (($language->getStatus() == AT_LANG_STATUS_PUBLISHED) && !$languageManager->exists($language->getCode())) {
 			// language does not exist
 
-			$filename = AT_CONTENT_DIR . 'import/ATutor_language_file.zip';
-			$remoteLanguageManager->fetchLanguage($language->getCode(), $filename);
-
-			$import_path = AT_CONTENT_DIR . 'import/';
-			$archive = new PclZip($filename);
-			if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
-				@unlink($filename);
-				continue;
-			}
-
-			$language_xml = @file_get_contents($import_path.'language.xml');
-
-			$languageParser =& new LanguageParser();
-			$languageParser->parse($language_xml);
-			$languageEditor =& $languageParser->getLanguageEditor(0);
-
-			$languageEditor->import($import_path . 'language_text.sql');
-
-			// remove the files:
-			@unlink($import_path . 'language.xml');
-			@unlink($import_path . 'language_text.sql');
-			@unlink($import_path . 'readme.txt');
-			@unlink($filename);
+			$remoteLanguageManager->import($language->getCode());
 		}
 	}
 }
