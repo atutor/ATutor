@@ -68,7 +68,7 @@ function print_entry($row) {
 		$type = 'class="user instructor" title="'._AT('instructor').'"';
 	}
 
-	echo '<span class="bigspacer">'._AT('posted_by').' <a href="inbox/send_message.php?l='.$row['member_id'].'" '.$type.'>'.AT_print($row['login'], 'members.login').'</a> '._AT('posted_on').' '.$date.'</span><br />';
+	echo '<span class="bigspacer">'._AT('posted_by').' <a href="profile.php?id='.$row['member_id'].'" '.$type.'>'.AT_print($row['login'], 'members.login').'</a> '._AT('posted_on').' '.$date.'</span><br />';
 	echo AT_print($row['body'], 'forums_threads.body');
 	echo '</p>';
 	echo '</td>';
