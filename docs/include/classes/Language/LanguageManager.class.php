@@ -204,6 +204,9 @@ class LanguageManager {
 		return current($uknown_language);
 	}
 
+	function getAvailableLanguages() {
+		return $this->availableLanguages;
+	}
 
 	// public
 	function printDropdown($current_language, $name, $id) {

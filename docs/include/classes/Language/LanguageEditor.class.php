@@ -362,7 +362,7 @@ class LanguageEditor extends Language {
 
 		// check if this language exists before calling this method
 
-		require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
+		require_once(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
 		$sqlUtility =& new SqlUtility();
 
 		$sqlUtility->queryFromFile($language_sql_file, TABLE_PREFIX_LANG);

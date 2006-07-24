@@ -53,6 +53,7 @@ class LanguageParser {
 
 	// public
 	function getLanguageEditor($row_num) {
+		require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
 		return new LanguageEditor($this->language_rows[$row_num]);
 	}
 

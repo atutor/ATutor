@@ -20,6 +20,10 @@
 * @see		Language.class.php
 * @package	Language
 */
+
+require_once(AT_INCLUDE_PATH.'classes/Language/LanguageParser.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
+
 class RemoteLanguageManager extends LanguageManager {
 
 	function RemoteLanguageManager() {
