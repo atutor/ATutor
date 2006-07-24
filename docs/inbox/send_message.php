@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (($_POST['submit']) || ($_POST['submit_delete'])) {
 	if (($_POST['to'] == '') || ($_POST['to'] == 0)) {
-		 $msg->addError('NO_RECIPIENT');
+		$msg->addError('NO_RECIPIENT');
 	}
 	if ($_POST['subject'] == '') {
 		$msg->addError('MSG_SUBJECT_EMPTY');
@@ -154,7 +154,7 @@ if ($reply_to) {
 		<?php
 			if (!$reply_to) {
 				//echo '<small class="spacer">'._AT('same_course_users').'</small><br />';
-				$sql	= "SELECT DISTINCT M.first_name, M.second_name, M.last_name, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a') ORDER BY M.first_name, M.second_name, M.last_name, M.login";
+				$sql	= "SELECT DISTINCT M.first_name, M.second_name, M.last_name, M.login, M.member_id FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a') ORDER BY M.first_name, M.second_name, M.last_name, M.login";
 
 				$result = mysql_query($sql, $db);
 				$row	= mysql_fetch_assoc($result);
@@ -163,7 +163,7 @@ if ($reply_to) {
 					echo '<option value="'.$row['member_id'].'"';
 					if ($reply_to == $row['member_id']){
 						echo ' selected="selected"';
-					} else if (isset ($_POST['to']) && $_POST['to'] == $row['member_id']) {
+					} else if (isset($_POST['to']) && $_POST['to'] == $row['member_id']) {
 						echo ' selected="selected"';
 					}
 					echo '>';
