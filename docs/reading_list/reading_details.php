@@ -14,7 +14,6 @@
 // $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_READING_LIST);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
