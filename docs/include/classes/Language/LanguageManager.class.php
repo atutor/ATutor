@@ -73,7 +73,6 @@ class LanguageManager {
 			if ((defined('TABLE_SUFFIX_LANG') && TABLE_SUFFIX_LANG) || (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE)) {
 				$row['status'] = AT_LANG_STATUS_PUBLISHED; // b/c the print drop down checks for it.				
 			}
-			//$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
 			$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
 		}
 		$this->numLanguages = count($this->availableLanguages);

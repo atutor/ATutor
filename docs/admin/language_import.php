@@ -29,15 +29,74 @@ if (isset($_POST['submit_import'])) {
 	require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
 	$remoteLanguageManager =& new RemoteLanguageManager();
 	$remoteLanguageManager->import($_POST['language']);
-} else if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$_FILES['file']['size']) {
-	$_SESSION['done'] = 1;
+
+	header('Location: language_import.php');
+	exit;
+} else if (isset($_POST['submit']) && (!is_uploaded_file($_FILES['file']['tmp_name']) || !$_FILES['file']['size'])) {
 	$msg->addError('LANG_IMPORT_FAILED');
-} else if (!$_FILES['file']['name']) {
+} else if (isset($_POST['submit']) && !$_FILES['file']['name']) {
 	$msg->addError('IMPORTFILE_EMPTY');
-} else if (is_uploaded_file($_FILES['file']['tmp_name'])) {
+} else if (isset($_POST['submit']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
 	$languageManager->import($_FILES['file']['tmp_name']);
+
+	header('Location: language_import.php');
+	exit;
 }
 
-header('Location: language.php');
-exit;
 ?>
+<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+
+<div class="input-form">
+	<form name="form1" method="post" action="admin/language_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
+	<div class="row">
+		<h3><?php echo _AT('import_a_new_lang'); ?></h3>
+	</div>
+
+	<div class="row">
+		<p><?php echo _AT('import_lang_howto'); ?></p>
+	</div>
+	
+	<div class="row">
+		<label for="file"><?php echo _AT('import_a_new_lang'); ?></label><br />
+		<input type="file" name="file" id="file" />
+	</div>
+	
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('import'); ?>" />
+	</div>
+	</form>
+
+	<div class="row">
+		<form name="form1" method="post" action="admin/language_import.php">
+
+		<?php echo _AT('import_remote_language'); ?><br />
+		<?php
+			require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
+			$remoteLanguageManager =& new RemoteLanguageManager();
+			if ($remoteLanguageManager->getNumLanguages()) {
+				$found = false;
+				foreach ($remoteLanguageManager->getAvailableLanguages() as $codes){
+					$language = current($codes);
+					if (!$languageManager->exists($language->getCode()) && ($language->getStatus() == AT_LANG_STATUS_PUBLISHED)) {
+						if (!$found) {
+							echo '<select name="language">';
+							$found = true;
+						}
+						echo '<option value="'.$language->getCode().'">'.$language->getNativeName().'</option>';
+					}
+				}
+				if ($found) {
+					echo '</select>';
+					echo '<input type="submit" name="submit_import" value="' . _AT('import') . '" class="button" />';
+				} else {
+					echo _AT('none_found');
+				}
+
+			} else {
+				echo _AT('cannot_find_remote_languages');
+			}
+		?>
+		</form>
+	</div>
+</div>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

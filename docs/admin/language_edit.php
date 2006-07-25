@@ -39,7 +39,7 @@ if (isset($_POST['cancel'])) {
 	$languageEditor =& new LanguageEditor($_GET['lang_code']);
 	$state = $languageEditor->updateLanguage($_POST, $languageManager->exists($_POST['code'], $_POST['locale']));
 
-	if (!$msg->containsErrors() && state !== FALSE) {
+	if (!$msg->containsErrors() && $state !== FALSE) {
 		$msg->addFeedback('LANG_UPDATED');
 		header('Location: language.php');
 		exit;
