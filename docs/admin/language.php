@@ -44,7 +44,7 @@ if (AT_DEVEL_TRANSLATE == 1) {
 	$msg->addWarning('TRANSLATE_ON');	
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

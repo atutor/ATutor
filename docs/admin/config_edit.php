@@ -232,6 +232,16 @@ if (!isset($_POST['submit'])) {
 		<?php endif; ?>
 	</div>
 
+	<div class="row">
+		<?php echo _AT('auto_install_languages'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['auto_install_languages'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<?php echo _AT('auto_install_languages_cron'); ?><br />
+		<?php if (!$_config['last_cron'] || (time() - (int) $_config['last_cron'] > 2 * 60 * 60)): ?>
+			<input type="radio" name="auto_install_languages" value="1" disabled="disabled" /><?php echo _AT('enable'); ?> <input type="radio" name="auto_install_languages" value="0" id="ai_n" checked="checked" /><label for="ai_n"><?php echo _AT('disable'); ?></label>
+		<?php else: ?>
+			<input type="radio" name="auto_install_languages" value="1" id="ai_y" <?php if($_config['auto_install_languages']) { echo 'checked="checked"'; }?>  /><label for="ai_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="auto_install_languages" value="0" id="ai_n" <?php if(!$_config['auto_install_languages']) { echo 'checked="checked"'; }?>  /><label for="ai_n"><?php echo _AT('disable'); ?></label>
+		<?php endif; ?>
+	</div>
+
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s"  />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />

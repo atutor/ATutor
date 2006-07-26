@@ -46,12 +46,8 @@ if (isset($_POST['submit_import'])) {
 ?>
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
+<form name="form1" method="post" action="admin/language_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
 <div class="input-form">
-	<form name="form1" method="post" action="admin/language_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
-	<div class="row">
-		<h3><?php echo _AT('import_a_new_lang'); ?></h3>
-	</div>
-
 	<div class="row">
 		<p><?php echo _AT('import_lang_howto'); ?></p>
 	</div>
@@ -64,12 +60,17 @@ if (isset($_POST['submit_import'])) {
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('import'); ?>" />
 	</div>
-	</form>
+</div>
+</form>
+
+
+<form name="form1" method="post" action="admin/language_import.php">
+<div class="input-form">
+	<div class="row">
+		<?php echo _AT('import_remote_language'); ?>
+	</div>
 
 	<div class="row">
-		<form name="form1" method="post" action="admin/language_import.php">
-
-		<?php echo _AT('import_remote_language'); ?><br />
 		<?php
 			require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
 			$remoteLanguageManager =& new RemoteLanguageManager();
@@ -82,21 +83,21 @@ if (isset($_POST['submit_import'])) {
 							echo '<select name="language">';
 							$found = true;
 						}
-						echo '<option value="'.$language->getCode().'">'.$language->getNativeName().'</option>';
+						echo '<option value="'.$language->getCode().'">'.$language->getEnglishName().' - '.$language->getNativeName().'</option>';
 					}
 				}
 				if ($found) {
-					echo '</select>';
-					echo '<input type="submit" name="submit_import" value="' . _AT('import') . '" class="button" />';
+					echo '</select></div>';
+					echo '<div class="row buttons"><input type="submit" name="submit_import" value="' . _AT('import') . '" class="button" /></div>';
 				} else {
 					echo _AT('none_found');
+					echo '</div>';
 				}
-
 			} else {
 				echo _AT('cannot_find_remote_languages');
+				echo '</div>';
 			}
 		?>
-		</form>
-	</div>
 </div>
+</form>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

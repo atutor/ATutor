@@ -603,7 +603,7 @@ INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2, 0, 0);
 INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4, 0, 0);
 INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8, 0, 0);
 INSERT INTO `modules` VALUES ('_core/cats_categories',   2, 0,         32, 0, 0);
-INSERT INTO `modules` VALUES ('_core/languages',         2, 0,         64, 0, 0);
+INSERT INTO `modules` VALUES ('_core/languages',         2, 0,         64, 1440, 0);
 INSERT INTO `modules` VALUES ('_core/themes',            2, 0,         128, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/rss_feeds',	 2, 0,	       256, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/directory',     2, 0, 0, 0, 0);

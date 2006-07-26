@@ -48,6 +48,7 @@ $_config_defaults['fs_versioning']             = 1;
 $_config_defaults['display_full_name']         = 1; // not currently a config option
 $_config_defaults['last_cron']                 = 0; // cron has to be enabled manually
 $_config_defaults['enable_mail_queue']         = 0; // mail queue can only be enabled if cron is running
+$_config_defaults['auto_install_languages']    = 0; // auto install languages can only be enabled if cron is running
 
 $_config = $_config_defaults;
 
@@ -156,7 +157,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('VERSION',		'1.5.3.1');
+define('VERSION',		'1.5.3.2');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/

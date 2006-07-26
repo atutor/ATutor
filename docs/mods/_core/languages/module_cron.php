@@ -2,6 +2,10 @@
 
 // this cron checks for new available languages and installs them if found.
 function languages_cron() {
+	global $_config;
+	if (!$_config['auto_install_languages']) { return; }
+
+
 	global $languageManager;
 
 	require(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
