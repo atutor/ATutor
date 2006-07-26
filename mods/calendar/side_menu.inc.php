@@ -11,7 +11,13 @@ while($row = mysql_fetch_array($result)){
 	$webcalendar_url_db = $row[1];
 }
 
-$sql9  = "SELECT * from webcal_entry_user WHERE cal_login='".$_SESSION['login']."'";
+$sql2 = "SELECT login from ".TABLE_PREFIX."members WHERE member_id ='$_SESSION[member_id]'";
+$result10 = mysql_query($sql2, $db);
+while($row2 = mysql_fetch_row($result10)){
+	$this_login = $row2['0'];
+}
+
+$sql9  = "SELECT * from webcal_entry_user WHERE cal_login='$this_login'";
 $result9 = mysql_query($sql9, $db);
 $today = date("d-M-Y");
 
@@ -21,7 +27,7 @@ echo '<ul style="margin-left:-2em;">';
 while($row = mysql_fetch_array($result9)){
 	$today = date(Ymd);
 	// Get ten approved entries associated with a user, from today onward.
- 	$sql10  = "SELECT A.*, B.* FROM webcal_entry AS A,  webcal_entry_user AS B WHERE A.cal_id='".$row[0]."' AND A.cal_date >= '$today'  AND A.cal_id = B.cal_id AND  (B.cal_status = 'A' || A.cal_access = 'P') AND B.cal_login = '".$_SESSION['login']."'  LIMIT 10";
+ 	$sql10  = "SELECT A.*, B.* FROM webcal_entry AS A,  webcal_entry_user AS B WHERE A.cal_id='".$row[0]."' AND A.cal_date >= '$today'  AND A.cal_id = B.cal_id AND  (B.cal_status = 'A' || A.cal_access = 'P') AND B.cal_login = '".$this_login."'  LIMIT 10";
  	$result10 = mysql_query($sql10, $db);
 	while($row2 = mysql_fetch_assoc($result10)){
 		$this_date = split("*./4", $row2['cal_date']);
