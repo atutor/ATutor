@@ -45,6 +45,10 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 		header('Location: index.php');
 		exit;
 	}
+	for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
+		$_POST['c' . $i] = stripslashes($addslashes($_POST['c' . $i]));
+	}
+	$_POST['question'] = stripslashes($addslashes($_POST['question']));
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -57,7 +61,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php  echo _AT('question'); ?></label><br />
-		<textarea name="question" cols="45" rows="3" id="question" style="width:90%;"><?php if (isset ($_POST['question'])) echo stripslashes($_POST['question']);  ?></textarea>
+		<textarea name="question" cols="45" rows="3" id="question" style="width:90%;"><?php if (isset ($_POST['question'])) echo htmlspecialchars($_POST['question']);  ?></textarea>
 	</div>
 
 <?php for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++): ?>
@@ -66,7 +70,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 		<?php } ?>
 		<label for="c<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo $i; ?></label><br />
-		<input type="text" name="c<?php echo $i; ?>" value="<?php if (isset ($_POST['c' . $i])) echo stripslashes($_POST['c' . $i]);  ?>" size="40" id="c<?php echo $i; ?>" />
+		<input type="text" name="c<?php echo $i; ?>" value="<?php if (isset($_POST['c' . $i])) echo htmlspecialchars($_POST['c' . $i]);  ?>" size="50" id="c<?php echo $i; ?>" />
 	</div>
 <?php endfor; ?>
 

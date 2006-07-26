@@ -53,6 +53,10 @@ if ($_POST['edit_poll']) {
 		Header('Location: index.php');
 		exit;
 	}
+	for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
+		$_POST['c' . $i] = stripslashes($addslashes($_POST['c' . $i]));
+	}
+	$_POST['question'] = stripslashes($addslashes($_POST['question']));
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -80,7 +84,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?>:</label><br />
-		<textarea name="question" cols="55" rows="3" id="question"><?php if (isset ($_POST['question'])) { echo stripslashes($_POST['question']); } else { echo $row['question']; } ?></textarea>
+		<textarea name="question" cols="55" rows="3" id="question"><?php if (isset ($_POST['question'])) { echo htmlspecialchars($_POST['question']); } else { echo htmlspecialchars($row['question']); } ?></textarea>
 	</div>
 
 <?php
@@ -90,7 +94,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php } ?>
 			<label for="c<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo $i; ?>:</label><br />
-			<input type="text" name="c<?php echo $i; ?>" id="c<?php echo $i; ?>" value="<?php if (isset ($_POST['c' . $i])) { echo stripslashes($_POST['c' . $i]); } else { echo htmlspecialchars(stripslashes($row['choice' . $i])); }?>" size="40" />
+			<input type="text" name="c<?php echo $i; ?>" id="c<?php echo $i; ?>" value="<?php if (isset ($_POST['c' . $i])) { echo htmlspecialchars($_POST['c' . $i]); } else { echo htmlspecialchars($row['choice' . $i]); }?>" size="40" />
 		</div>
 
 <?php endfor; ?>
