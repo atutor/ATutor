@@ -34,13 +34,18 @@ require('include/classes/sqlutility.php');
 
 
 function my_add_null_slashes( $string ) {
-    return ( $string );
+    return mysql_real_escape_string(stripslashes($string));
+}
+function my_null_slashes($string) {
+	return $string;
 }
 
-if (get_magic_quotes_gpc()==1) {
-	$addslashes = 'my_add_null_slashes';
+if ( get_magic_quotes_gpc() == 1 ) {
+	$addslashes   = 'my_add_null_slashes';
+	$stripslashes = 'stripslashes';
 } else {
-	$addslashes = 'addslashes';
+	$addslashes   = 'mysql_real_escape_string';
+	$stripslashes = 'my_null_slashes';
 }
 
     function queryFromFile($sql_file_path){
@@ -142,7 +147,7 @@ function print_feedback( $feedback ) {
 
 function store_steps($step) {
 
-	global $addslashes;
+	global $stripslashes;
 
 	foreach($_POST as $key => $value) {
 		if (substr($key, 0, strlen('step')) == 'step') {
