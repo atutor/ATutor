@@ -115,13 +115,13 @@ if (!isset($_POST['submit'])) {
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="sitename"><?php echo _AT('site_name'); ?></label><br />
-		<input type="text" name="site_name" size="40" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $_config['site_name']; } ?>" />
+		<input type="text" name="site_name" size="40" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo $stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $_config['site_name']; } ?>" />
 	</div>
 
 	<div class="row">
 		<label for="home_url"><?php echo _AT('home_url'); ?></label><br />
 
-		<input type="text" name="home_url" size="40" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $_config['home_url']; } ?>"  />
+		<input type="text" name="home_url" size="40" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo $stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $_config['home_url']; } ?>"  />
 	</div>
 
 	<div class="row">
@@ -141,22 +141,22 @@ if (!isset($_POST['submit'])) {
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cemail"><?php echo _AT('contact_email'); ?></label><br />
-		<input type="text" name="contact_email" id="cemail" size="40" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $_config['contact_email']; } ?>"  />
+		<input type="text" name="contact_email" id="cemail" size="40" value="<?php if (!empty($_POST['email'])) { echo $stripslashes(htmlspecialchars($_POST['email'])); } else { echo $_config['contact_email']; } ?>"  />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="maxfile"><?php echo _AT('maximum_file_size'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_file_size']; ?>)<br />
-		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $_config['max_file_size']; } ?>"  /> <?php echo _AT('bytes'); ?>
+		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo $stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $_config['max_file_size']; } ?>"  /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="maxcourse"><?php echo _AT('maximum_course_size'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_course_size']; ?>)<br />
-		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo stripslashes(htmlspecialchars($_POST['max_course_size'])); } else { echo $_config['max_course_size']; } ?>"  /> <?php echo _AT('bytes'); ?>
+		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo $stripslashes(htmlspecialchars($_POST['max_course_size'])); } else { echo $_config['max_course_size']; } ?>"  /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="float"><?php echo _AT('maximum_course_float'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_course_float']; ?>)<br />
-		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo stripslashes(htmlspecialchars($_POST['max_course_float'])); } else { echo $_config['max_course_float']; } ?>"  /> <?php echo _AT('bytes'); ?>
+		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo $stripslashes(htmlspecialchars($_POST['max_course_float'])); } else { echo $_config['max_course_float']; } ?>"  /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
@@ -203,12 +203,12 @@ if (!isset($_POST['submit'])) {
 
 	<div class="row">
 		<label for="cache"><?php echo _AT('cache_directory'); ?></label><br />
-		<input type="text" name="cache_dir" id="cache" size="40" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $_config['cache_dir']; } ?>"  />
+		<input type="text" name="cache_dir" id="cache" size="40" value="<?php if (!empty($_POST['cache_dir'])) { echo $stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $_config['cache_dir']; } ?>"  />
 	</div>
 
 	<div class="row">
 		<label for="course_backups"><?php echo _AT('course_backups'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['course_backups']; ?>)<br />
-		<input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $_config['course_backups']; } ?>"  />
+		<input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo $stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $_config['course_backups']; } ?>"  />
 	</div>
 
 	<div class="row">

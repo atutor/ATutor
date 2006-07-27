@@ -45,12 +45,12 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title'] = $addslashes($_POST['title']);
-		$_POST['author'] = $addslashes($_POST['author']);
+		$_POST['title']     = $addslashes($_POST['title']);
+		$_POST['author']    = $addslashes($_POST['author']);
 		$_POST['publisher'] = $addslashes($_POST['publisher']);
-		$_POST['date'] = $addslashes($_POST['date']);
-		$_POST['comments'] = $addslashes($_POST['comments']);
-		$_POST['isbn'] = $addslashes($_POST['isbn']);
+		$_POST['date']      = $addslashes($_POST['date']);
+		$_POST['comments']  = $addslashes($_POST['comments']);
+		$_POST['isbn']      = $addslashes($_POST['isbn']);
 		
 		$id = intval ($_POST['id']);
 
@@ -90,13 +90,13 @@ if (isset($_POST['cancel'])) {
 		}
 		exit;
 	} else { // submission contained an error, update form values for redisplay
-		$title       = stripslashes($addslashes($_POST['title']));
-		$author      = stripslashes($addslashes($_POST['author']));
-		$publisher   = stripslashes($addslashes($_POST['publisher']));
-		$date        = stripslashes($addslashes($_POST['date']));
-		$comments    = stripslashes($addslashes($_POST['comments']));
-		$isbn        = stripslashes($addslashes($_POST['isbn']));
-		$page_return = stripslashes($addslashes($_POST['page_return']));
+		$title       = $stripslashes($_POST['title']);
+		$author      = $stripslashes($_POST['author']);
+		$publisher   = $stripslashes($_POST['publisher']);
+		$date        = $stripslashes($_POST['date']);
+		$comments    = $stripslashes($_POST['comments']);
+		$isbn        = $stripslashes($_POST['isbn']);
+		$page_return = $stripslashes($_POST['page_return']);
 	}
 }
 

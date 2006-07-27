@@ -97,16 +97,16 @@ if (isset($errors)) {
 	<tr>
 		<td class="row1"><small><b><label for="username">Username:</label></b><br />
 		May contain only letters, numbers, or underscores.<br />20 character maximum.</small></td>
-		<td class="row1"><input type="text" name="username" id="username" maxlength="20" size="20" value="<?php if (!empty($_POST['username'])) { echo stripslashes(htmlspecialchars($_POST['username'])); } ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="username" id="username" maxlength="20" size="20" value="<?php if (!empty($_POST['username'])) { echo $stripslashes(htmlspecialchars($_POST['username'])); } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="password">Password:</label></b><br />
 		Use a combination of letters, numbers and symbols.<br />15 character maximum.</small></td>
-		<td class="row1"><input type="text" name="password" id="password" maxlength="15" size="15" value="<?php if (!empty($_POST['password'])) { echo stripslashes(htmlspecialchars($_POST['password'])); } ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="password" id="password" maxlength="15" size="15" value="<?php if (!empty($_POST['password'])) { echo $stripslashes(htmlspecialchars($_POST['password'])); } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="email">Email:</label></b></small></td>
-		<td class="row1"><input type="text" name="email" id="email" size="30" maxlength="60" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="email" id="email" size="30" maxlength="60" value="<?php if (!empty($_POST['email'])) { echo $stripslashes(htmlspecialchars($_POST['email'])); } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Instructor Account:</b><br />

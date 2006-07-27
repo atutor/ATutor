@@ -25,7 +25,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="keywords"><?php echo _AT('search_words'); ?></label><br />
-			<input type="text" name="q" size="30" id="keywords" value="<?php echo htmlspecialchars(stripslashes($_GET['q'])); ?>" />
+			<input type="text" name="q" size="30" id="keywords" value="<?php echo htmlspecialchars($stripslashes($_GET['q'])); ?>" />
 		</div>
 
 		<div class="row buttons">

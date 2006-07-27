@@ -109,7 +109,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>	
 	
 	<div class="row">
-	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php if (isset($_POST['comment'])) echo stripslashes($_POST['comment']);  ?>" />
+	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php if (isset($_POST['comment'])) echo $stripslashes($_POST['comment']);  ?>" />
 	</div>
 
 <h3><?php echo _AT('rl_read_by_date'); ?></h3>

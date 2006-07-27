@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 
 		if (isset($result['faultstring'])) {
 			$msg->addError('GOOGLE_KEY_INVALID');
-			$key = htmlspecialchars(stripslashes($addslashes($_POST['key'])));
+			$key = htmlspecialchars($stripslashes($_POST['key']));
 		} else {
 			$key = $addslashes($_POST['key']);
 			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES('gsearch','$key')";

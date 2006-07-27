@@ -74,10 +74,10 @@ if (isset($_POST['submit'])) {
 		$mail = new ATutorMailer;
 
 		$mail->From     = $_POST['from_email'];
-		$mail->FromName = stripslashes($addslashes($_POST['from']));
+		$mail->FromName = $stripslashes($_POST['from']);
 		$mail->AddAddress($_config['contact_email']);
-		$mail->Subject = stripslashes($addslashes($_POST['subject']));
-		$mail->Body    = stripslashes($addslashes($_POST['body']));
+		$mail->Subject = $stripslashes($_POST['subject']);
+		$mail->Body    = $stripslashes($_POST['body']);
 
 		if(!$mail->Send()) {
 		   $msg->printErrors('SENDING_ERROR');
@@ -97,22 +97,22 @@ $msg->printErrors();
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="from"><?php echo _AT('from_name'); ?></label><br />
-		<input type="text" name="from" id="from" size="40" value="<?php echo htmlspecialchars(stripslashes($addslashes($_POST['from']))); ?>" />
+		<input type="text" name="from" id="from" size="40" value="<?php echo htmlspecialchars($stripslashes($_POST['from'])); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="from_email"><?php echo _AT('from_email'); ?></label><br />
-		<input type="text" name="from_email" id="from_email" size="40" value="<?php echo htmlspecialchars(stripslashes($addslashes($_POST['from_email']))); ?>" />
+		<input type="text" name="from_email" id="from_email" size="40" value="<?php echo htmlspecialchars($stripslashes($_POST['from_email'])); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
-		<input type="text" name="subject" id="subject" size="40" value="<?php echo htmlspecialchars(stripslashes($addslashes($_POST['subject']))); ?>" />
+		<input type="text" name="subject" id="subject" size="40" value="<?php echo htmlspecialchars($stripslashes($_POST['subject'])); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body_text"><?php echo _AT('body'); ?></label><br />
-		<textarea cols="55" rows="15" id="body_text" name="body"><?php echo htmlspecialchars(stripslashes($addslashes($_POST['body']))); ?></textarea>
+		<textarea cols="55" rows="15" id="body_text" name="body"><?php echo htmlspecialchars($stripslashes($_POST['body'])); ?></textarea>
 	</div>
 
 	<div class="row buttons">

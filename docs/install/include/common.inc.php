@@ -155,7 +155,7 @@ function store_steps($step) {
 			continue;
 		}
 
-		$_POST['step'.$step][$key] = urlencode(stripslashes($addslashes($value)));
+		$_POST['step'.$step][$key] = urlencode($stripslashes($value));
 	}
 }
 

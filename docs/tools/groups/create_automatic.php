@@ -139,9 +139,9 @@ if (isset($_POST['cancel'])) {
 		header('Location: index.php');
 		exit;
 	} else {
-		$_POST['type_title']  = stripslashes($addslashes($_POST['type_title']));
-		$_POST['prefix']      = stripslashes($addslashes($_POST['prefix']));
-		$_POST['description'] = stripslashes($addslashes($_POST['description']));
+		$_POST['type_title']  = $stripslashes($_POST['type_title']);
+		$_POST['prefix']      = $stripslashes($_POST['prefix']);
+		$_POST['description'] = $stripslashes($_POST['description']);
 	}
 }
 

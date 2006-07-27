@@ -101,12 +101,12 @@ if (!$num_topics) {
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?>:</label><br />
-		<input type="text" name="question" size="50" id="question" value="<?php if (isset ($_POST['question'])) { echo stripslashes($_POST['question']); } else { echo $row['question']; } ?>" />
+		<input type="text" name="question" size="50" id="question" value="<?php if (isset ($_POST['question'])) { echo $stripslashes($_POST['question']); } else { echo $row['question']; } ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="answer"><?php  echo _AT('answer'); ?></label><br />
-		<textarea name="answer" cols="45" rows="3" id="answer" style="width:90%;"><?php if (isset ($_POST['answer'])) { echo stripslashes($_POST['answer']); } else { echo $row['answer']; } ?></textarea>
+		<textarea name="answer" cols="45" rows="3" id="answer" style="width:90%;"><?php if (isset ($_POST['answer'])) { echo $stripslashes($_POST['answer']); } else { echo $row['answer']; } ?></textarea>
 	</div>
 
 	<div class="row buttons">

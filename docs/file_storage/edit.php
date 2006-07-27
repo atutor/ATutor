@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['name'] = $addslashes($_POST['name']);
 		$_POST['comment'] = $addslashes(trim($_POST['comment']));
 		$_POST['description'] = $addslashes(trim($_POST['description']));
-		$_POST['body'] = stripslashes($addslashes($_POST['body']));
+		$_POST['body'] = $stripslashes($_POST['body']); // saved to disk not db so no need to escape.
 		$original_file = fs_get_file_path($_POST['id']);
 		$folder = abs($_POST['folder']);
 
@@ -131,10 +131,10 @@ if (!$row = mysql_fetch_assoc($result)) {
 	exit;
 }
 if (isset($_POST['description'])) {
-	$row['description'] = stripslashes($addslashes($_POST['description']));
-	$row['file_name']   = stripslashes($addslashes($_POST['name']));
-	$row['comment']     = stripslashes($addslashes($_POST['comment']));
-	$_POST['body']      = stripslashes($addslashes($_POST['body']));
+	$row['description'] = $stripslashes($_POST['description']);
+	$row['file_name']   = $stripslashes($_POST['name']);
+	$row['comment']     = $stripslashes($_POST['comment']);
+	$_POST['body']      = $stripslashes($_POST['body']);
 }
 $ext = fs_get_file_extension($row['file_name']);
 $file_path = fs_get_file_path($id);

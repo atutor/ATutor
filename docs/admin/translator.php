@@ -63,7 +63,7 @@ if ($_SESSION['language'] != 'en') {
 
 	<li>
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"> 
-			<input type="text" name="search_term" value="<?php echo htmlspecialchars(stripslashes($addslashes($_REQUEST['search_term']))); ?>" /> <input type="submit" name="search" value="Search Phrase" class="submit" /> 
+			<input type="text" name="search_term" value="<?php echo htmlspecialchars($stripslashes($_REQUEST['search_term'])); ?>" /> <input type="submit" name="search" value="Search Phrase" class="submit" /> 
 		</form>
 	</li>
 </ol>
@@ -72,7 +72,7 @@ if ($_SESSION['language'] != 'en') {
 <?php if (($_REQUEST['new'] == 1) && $_SESSION['status'] == $_USER_ADMIN) { ?>
 <a name="anchor"></a>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>#anchor">
-	<input type="hidden" name="search_term" value="<?php echo htmlspecialchars(stripslashes($addslashes($_REQUEST['search_term']))); ?>" />
+	<input type="hidden" name="search_term" value="<?php echo htmlspecialchars($stripslashes($_REQUEST['search_term'])); ?>" />
 	<input type="hidden" name="v" value="<?php echo $_REQUEST['v']; ?>" />
 	<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
 	<input type="hidden" name="function" value="add_term" />
@@ -141,7 +141,7 @@ function trans_form($page) {
 	<input type="hidden" name="v" value="<?php echo $row['variable']; ?>" />
 	<input type="hidden" name="k" value="<?php echo $row['term']; ?>" />
 	<input type="hidden" name="f" value="<?php echo $_REQUEST['f']; ?>" />
-	<input type="hidden" name="search_term" value="<?php echo htmlspecialchars(stripslashes($addslashes($_REQUEST['search_term']))); ?>" />
+	<input type="hidden" name="search_term" value="<?php echo htmlspecialchars($stripslashes($_REQUEST['search_term'])); ?>" />
 	<input type="hidden" name="page" value="<?php echo $page; ?>" />
 	<input type="hidden" name="function" value="edit_term" />
 
@@ -589,7 +589,7 @@ function display_search_terms ($variable, $term1, $lang_code, $new, $updated) {
 			}
 
 			if ($row['term'] != $term1) {
-				echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$row['variable'].SEP.'search=1'.SEP.'search_term='.urlencode(stripslashes($_REQUEST['search_term'])).SEP.'k='.$row['term'].SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$row['variable'].SEP.'search=1'.SEP.'search_term='.urlencode($stripslashes($_REQUEST['search_term'])).SEP.'k='.$row['term'].SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
 				echo $row['term'];
 				echo '</a>';
 			} else {

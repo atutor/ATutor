@@ -77,9 +77,9 @@ if (isset($_POST['cancel'])) {
 		header('Location: index.php');
 		exit;
 	} else {
-		$_POST['new_type']    = stripslashes($addslashes($_POST['new_type']));
-		$_POST['prefix']      = stripslashes($addslashes($_POST['prefix']));
-		$_POST['description'] = stripslashes($addslashes($_POST['description']));
+		$_POST['new_type']    = $stripslashes($_POST['new_type']);
+		$_POST['prefix']      = $stripslashes($_POST['prefix']);
+		$_POST['description'] = $stripslashes($_POST['description']);
 	}
 }
 

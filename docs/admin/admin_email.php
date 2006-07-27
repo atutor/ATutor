@@ -63,8 +63,8 @@ if ($_POST['cancel']) {
 		$mail->From     = $_config['contact_email'];
 		$mail->FromName = $_config['site_name'];
 		$mail->AddAddress($_config['contact_email']);
-		$mail->Subject = stripslashes($addslashes($_POST['subject']));
-		$mail->Body    = stripslashes($addslashes($_POST['body']));
+		$mail->Subject = $stripslashes($_POST['subject']);
+		$mail->Body    = $stripslashes($_POST['body']);
 
 		if(!$mail->Send()) {
 		   //echo 'There was an error sending the message';

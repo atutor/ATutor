@@ -48,7 +48,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php  echo _AT('name'); ?></label><br />
-		<input type="text" name="name" size="50" id="name" value="<?php if (isset($_POST['name'])) echo stripslashes($_POST['name']);  ?>" />
+		<input type="text" name="name" size="50" id="name" value="<?php if (isset($_POST['name'])) echo $stripslashes($_POST['name']);  ?>" />
 	</div>
 
 	<div class="row buttons">

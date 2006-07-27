@@ -23,24 +23,24 @@ if (isset($_POST['submit'])) {
 	
 	$maintainers_xml = '';
 	if (isset($_POST['name_1'], $_POST['email_1']) && $_POST['name_1'] && $_POST['email_1']) {
-		$maintainers_xml .= str_replace(array('{NAME}', '{EMAIL}'), array(stripslashes($addslashes($_POST['name_1'])), stripslashes($addslashes($_POST['email_1']))), $maintainer_xml);
+		$maintainers_xml .= str_replace(array('{NAME}', '{EMAIL}'), array($stripslashes($_POST['name_1']), $stripslashes($_POST['email_1'])), $maintainer_xml);
 	}
 
 	if (isset($_POST['name_2'], $_POST['email_2']) && $_POST['name_2'] && $_POST['email_2']) {
-		$maintainers_xml .= str_replace(array('{NAME}', '{EMAIL}'), array(stripslashes($addslashes($_POST['name_2'])), stripslashes($addslashes($_POST['email_2']))), $maintainer_xml);
+		$maintainers_xml .= str_replace(array('{NAME}', '{EMAIL}'), array($stripslashes($_POST['name_2']), $stripslashes($_POST['email_2'])), $maintainer_xml);
 	}
 	$maintainers_xml .= "\n";
 	$tokens = array('{NAME}', '{DESCRIPTION}', '{MAINTAINERS}', '{URL}', '{VERSION}', '{USER_PRIVILEGE}', '{DATE}', '{LICENSE}', '{STATE}', '{NOTES}');
-	$replace = array(stripslashes($addslashes($_POST['name'])),
-					stripslashes($addslashes($_POST['description'])), 
+	$replace = array($stripslashes($_POST['name']),
+					$stripslashes($_POST['description']),
 					$maintainers_xml, 
-					stripslashes($addslashes($_POST['url'])),
-					stripslashes($addslashes($_POST['version'])),
-					stripslashes($addslashes($_POST['priv'])),
-					stripslashes($addslashes($_POST['date'])),
-					stripslashes($addslashes($_POST['license'])),
-					stripslashes($addslashes($_POST['state'])),
-					stripslashes($addslashes($_POST['notes'])));
+					$stripslashes($_POST['url']),
+					$stripslashes($_POST['version']),
+					$stripslashes($_POST['priv']),
+					$stripslashes($_POST['date']),
+					$stripslashes($_POST['license']),
+					$stripslashes($_POST['state']),
+					$stripslashes($_POST['notes']));
 
 	$module_xml = str_replace($tokens, $replace, $module_xml);
 }

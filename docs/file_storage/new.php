@@ -52,7 +52,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['description'] = $addslashes(trim($_POST['description']));
 		$_POST['comment'] = $addslashes(trim($_POST['comment']));
 		$_POST['name'] = $addslashes($_POST['name']);
-		$_POST['body'] = stripslashes($addslashes($_POST['body']));
+		$_POST['body'] = $stripslashes($_POST['body']); // file gets saved to disk not db, so no need to escape.
 
 		if ($_POST['comment']) {
 			$num_comments = 1;
@@ -107,10 +107,10 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 	load_editor('body');
 }
 if (isset($_POST['description'])) {
-	$_POST['description'] = stripslashes($addslashes($_POST['description']));
-	$_POST['name']   = stripslashes($addslashes($_POST['name']));
-	$_POST['comment']     = stripslashes($addslashes($_POST['comment']));
-	$_POST['body']      = stripslashes($addslashes($_POST['body']));
+	$_POST['description'] = $stripslashes($_POST['description']);
+	$_POST['name']        = $stripslashes($_POST['name']);
+	$_POST['comment']     = $stripslashes($_POST['comment']);
+	$_POST['body']        = $stripslashes($_POST['body']);
 }
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix; ?>" method="post" name="form">

@@ -85,11 +85,11 @@ if (isset($_POST['cancel'])) {
 		}
 		exit;
 	} else { // submission contained an error, update form values for redisplay
-		$title       = stripslashes($addslashes($_POST['title']));
-		$author      = stripslashes($addslashes($_POST['author']));
-		$date        = stripslashes($addslashes($_POST['date']));
-		$comments    = stripslashes($addslashes($_POST['comments']));
-		$page_return = stripslashes($addslashes($_POST['page_return']));
+		$title       = $stripslashes($_POST['title']);
+		$author      = $stripslashes($_POST['author']);
+		$date        = $stripslashes($_POST['date']);
+		$comments    = $stripslashes($_POST['comments']);
+		$page_return = $stripslashes($_POST['page_return']);
 	}
 }
 

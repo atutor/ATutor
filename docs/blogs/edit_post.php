@@ -80,11 +80,11 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<div class="row">
 		<label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" value="<?php echo stripslashes($post_row['title']); ?>" size="50" />
+		<input type="text" name="title" id="title" value="<?php echo $post_row['title']; ?>" size="50" />
 	</div>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label><br />
-		<textarea name="body" id="body" cols="40" rows="10"><?php echo stripslashes($post_row['body']); ?></textarea>
+		<textarea name="body" id="body" cols="40" rows="10"><?php echo $post_row['body']; ?></textarea>
 	</div>
 
 	<div class="row">	
