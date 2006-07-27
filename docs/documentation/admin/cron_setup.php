@@ -23,5 +23,8 @@
 			  </li>
 		</ol>
 
+	<h3>Windows et al Setup</h3>
+		<p><a href="http://www.webcron.org">webcron.org</a> offers free web-based cron services and is available in multiple languages.</p>
+
 
 <?php require('../common/body_footer.inc.php'); ?>
