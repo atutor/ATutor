@@ -88,7 +88,7 @@ if ($_POST['submit']) {
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('glossary_term');  ?></label><br/ >
-		<input type="text" name="word" size="40" id="title" value="<?php echo htmlspecialchars(stripslashes($row['word'])); ?>" />
+		<input type="text" name="word" size="40" id="title" value="<?php echo htmlspecialchars($stripslashes($row['word'])); ?>" />
 	</div>
 
 	<div class="row">

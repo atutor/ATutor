@@ -64,9 +64,9 @@ if (isset($_POST['cancel'])) {
 		header('Location: '.$_base_href.'tools/links/index.php');
 		exit;
 	} else {
-		$_POST['title']  = stripslashes($_POST['title']);
-		$_POST['url'] == stripslashes($_POST['url']);
-		$_POST['description']  = stripslashes($_POST['description']);
+		$_POST['title']  = $stripslashes($_POST['title']);
+		$_POST['url']    = $stripslashes($_POST['url']);
+		$_POST['description'] = $stripslashes($_POST['description']);
 	}
 } else {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."links WHERE link_id=".$link_id;

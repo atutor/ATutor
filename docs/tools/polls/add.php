@@ -46,9 +46,9 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 		exit;
 	}
 	for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
-		$_POST['c' . $i] = stripslashes($addslashes($_POST['c' . $i]));
+		$_POST['c' . $i] = $stripslashes($_POST['c' . $i]);
 	}
-	$_POST['question'] = stripslashes($addslashes($_POST['question']));
+	$_POST['question'] = $stripslashes($_POST['question']);
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

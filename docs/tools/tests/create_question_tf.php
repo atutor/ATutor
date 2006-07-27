@@ -98,7 +98,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php print_VE('feedback'); ?>
 		<br />
 	
-		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars($stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 	
 	<div class="row">
@@ -106,7 +106,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php print_VE('question'); ?>
 		<br />
 
-		<textarea id="question" cols="50" rows="6" name="question" style="width:90%;"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		<textarea id="question" cols="50" rows="6" name="question" style="width:90%;"><?php echo htmlspecialchars($stripslashes($_POST['question'])); ?></textarea>
 	</div>
 	
 	<div class="row">
