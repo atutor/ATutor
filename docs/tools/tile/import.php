@@ -72,7 +72,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 	</div>
 
 	<div class="row">
-		<strong><?php echo _AT('import_content_package'); ?>:</strong> <?php echo urldecode($_GET['title']); ?>
+		<strong><?php echo _AT('import_content_package'); ?>:</strong> <?php echo urldecode($stripslashes($_GET['title'])); ?>
 	</div>
 
 	<div class="row buttons">
