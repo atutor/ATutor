@@ -60,7 +60,10 @@
 			<dd>If enabled, every file revision in the File Storage area will be saved. If space is a concern, the administrator may wish to disable this feature.</dd>
 
 			<dt>Enable Mail Queue</dt>
-			<dd>The administrator may wish to set up a <a href="cron_setup.php">cron job</a> (automated event scheduler) for email. If enabled, and if cron has been set up, system email will be sent out at a certain time instead of immediately. This can help speed up email capable features where a slower mail server is being used.</dd>
+			<dd>The administrator may wish to set up a <a href="cron_setup.php">cron job</a> (automated event scheduler) for email. If enabled, and if the cron has been set up, system email will be sent out at a certain time instead of immediately. This can help speed up email capable features where a slower mail server is being used.</dd>
+
+			<dt>Automatically Install New Language Packs</dt>
+			<dd>If enabled, and if the <a href="cron_setup.php">cron job</a> (automated event scheduler) has been set up, new language packs published on atutor.ca will be imported automatically.</dd>
 		</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>
