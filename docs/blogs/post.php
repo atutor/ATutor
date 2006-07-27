@@ -115,8 +115,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	<input type="hidden" name="id" value="<?php echo $id; ?>" />
 	<div class="input-form">
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="comments"><?php echo _AT('comments'); ?></label><br />
-			<textarea name="body" id="comments" cols="40" rows="3"></textarea>
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="commentsarea"><?php echo _AT('comments'); ?></label><br />
+			<textarea name="body" id="commentsarea" cols="40" rows="3"></textarea>
 		</div>
 
 		<div class="row">	
