@@ -67,7 +67,7 @@ function get_groups($course_id) {
 	if (authenticate(AT_PRIV_GROUPS, true)) {
 		$sql = "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$course_id";
 	} else {
-		$sql = "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T, ".TABLE_PREFIX."groups_members M ON (G.type_id=T.type_id AND  G.group_id=M.group_id) WHERE T.course_id=$course_id AND M.member_id=$_SESSION[member_id]";
+		$sql = "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN (".TABLE_PREFIX."groups_types T, ".TABLE_PREFIX."groups_members M) ON (G.type_id=T.type_id AND  G.group_id=M.group_id) WHERE T.course_id=$course_id AND M.member_id=$_SESSION[member_id]";
 	}
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
