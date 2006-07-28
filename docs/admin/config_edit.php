@@ -121,7 +121,7 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<label for="home_url"><?php echo _AT('home_url'); ?></label><br />
 
-		<input type="text" name="home_url" size="40" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo $stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $_config['home_url']; } ?>"  />
+		<input type="text" name="home_url" size="50" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo $stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $_config['home_url']; } ?>"  />
 	</div>
 
 	<div class="row">
