@@ -30,7 +30,8 @@ while($row = mysql_fetch_array($result9)){
  	$sql10  = "SELECT A.*, B.* FROM webcal_entry AS A,  webcal_entry_user AS B WHERE A.cal_id='".$row[0]."' AND A.cal_date >= '$today'  AND A.cal_id = B.cal_id AND  (B.cal_status = 'A' || A.cal_access = 'P') AND B.cal_login = '".$this_login."'  LIMIT 10";
  	$result10 = mysql_query($sql10, $db);
 	while($row2 = mysql_fetch_assoc($result10)){
-		$this_date = split("*./4", $row2['cal_date']);
+		#$this_date = split("*./4", $row2['cal_date']);
+		$this_date = split(".*/4", $row2['cal_date']);
 		$this_date = chunk_split($row2['cal_date'], 4, '-');
 		$this_date = trim(chunk_split($this_date, 7, '-'), '-');
 		echo '<li><a href="'.$webcalendar_url_db.'view_entry.php?id='.$row2['cal_id'].SEP.'date='.$row2['cal_date'].'" onclick="window.open(\' '.$webcalendar_url_db.'view_entry.php?id='.$row2['cal_id'].SEP.'date='.$row2['cal_date'].'\',\'calendarwin\',\'width=600,height=520,scrollbars=yes, resizable=yes\'); return false">'.$row2['cal_name'].'</a><br /><small><small> ('.$this_date.')</small></small></li>';
