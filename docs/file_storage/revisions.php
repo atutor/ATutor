@@ -45,13 +45,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $id = abs($_GET['id']);
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$cols   = array('num_revisions' => 1, 'file_name' => 1, 'date' => 1, 'num_comments' => 1, 'file_size' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
-	$col   = $addslashes($_GET['asc']);
+	$col   = isset($cols[$_GET['asc']]) ? $_GET['asc'] : 'num_revisions';
 } else if (isset($_GET['desc'])) {
 	$order = 'desc';
-	$col   = $addslashes($_GET['desc']);
+	$col   = isset($cols[$_GET['desc']]) ? $_GET['desc'] : 'num_revisions';
 } else {
 	// no order set
 	$order = 'desc';

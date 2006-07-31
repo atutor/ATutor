@@ -34,15 +34,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 // sort order of table
 $orders = array('ASC' => 'DESC', 'DESC' => 'ASC');
+$cols   = array('title' => 1, 'date' => 1);
 $sort = 'title';
 $order = 'ASC';
-if (isset ($_GET['sort'])){
-	$sort = $addslashes($_GET['sort']);
-	if (($sort != 'title') && ($sort != 'due_date')){
-		$sort = 'title';
-	}
+if (isset($_GET['sort'])){
+	$sort = isset($cols[$_GET['sort']]) ? $_GET['sort'] : 'title';
 }
-if (isset ($_GET['order'])){
+if (isset($_GET['order'])){
 	$order = $addslashes($_GET['order']);
 	if (($order != 'ASC') && ($order != 'DESC')){
 		$order = 'ASC';
@@ -74,9 +72,9 @@ $result = mysql_query($sql, $db);
 <thead>
 <tr>
 	<th>&nbsp;</th>
-	<th scope="col"><a href="assignments/index_instructor.php?sort=title&order=<?php echo $orders[$order]; ?>"><?php echo _AT('title'); ?></a></th>
+	<th scope="col"><a href="assignments/index_instructor.php?sort=title<?php echo SEP; ?>order=<?php echo $orders[$order]; ?>"><?php echo _AT('title'); ?></a></th>
 	<th scope="col"><?php echo _AT('assigned_to'); ?></th>
-	<th scope="col"><a href="assignments/index_instructor.php?sort=date_due&order=<?php echo $orders[$order]; ?>"><?php echo _AT('due_date'); ?></a></th>
+	<th scope="col"><a href="assignments/index_instructor.php?sort=date_due<?php echo SEP; ?>order=<?php echo $orders[$order]; ?>"><?php echo _AT('due_date'); ?></a></th>
 </tr>
 </thead>
 <?php if (($result != 0) && ($row = mysql_fetch_assoc($result))) : ?>

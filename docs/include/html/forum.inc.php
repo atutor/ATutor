@@ -29,13 +29,14 @@ $num_pages = ceil($num_threads/$num_per_page);
 $page_string = SEP.'fid='. $fid;
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$cols   = array('subject' => 1, 'num_comments' => 1, 'login' => 1, 'last_comment' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
-	$col   = $addslashes($_GET['asc']);
+	$col   = isset($cols[$_GET['asc']]) ? $_GET['asc'] : 'last_comment';
 } else if (isset($_GET['desc'])) {
 	$order = 'desc';
-	$col   = $addslashes($_GET['desc']);
+	$col   = isset($cols[$_GET['desc']]) ? $_GET['desc'] : 'last_comment';
 } else {
 	// no order set
 	$order = 'desc';

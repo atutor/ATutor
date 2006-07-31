@@ -35,13 +35,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$cols   = array('login' => 1, 'real_name' => 1, 'email' => 1, 'last_login' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
-	$col   = $addslashes($_GET['asc']);
+	$col   = isset($cols[$_GET['asc']]) ? $_GET['asc'] : 'login';
 } else if (isset($_GET['desc'])) {
 	$order = 'desc';
-	$col   = $addslashes($_GET['desc']);
+	$col   = isset($cols[$_GET['desc']]) ? $_GET['desc'] : 'login';
 } else {
 	// no order set
 	$order = 'asc';

@@ -20,13 +20,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$cols   = array('total_hits' => 1, 'unique_hits' => 1, 'average_duration' => 1, 'total_duration' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
-	$col   = $addslashes($_GET['asc']);
+	$col   = isset($cols[$_GET['asc']]) ? $_GET['asc'] : 'total_hits';
 } else if (isset($_GET['desc'])) {
 	$order = 'desc';
-	$col   = $addslashes($_GET['desc']);
+	$col   = isset($cols[$_GET['desc']]) ? $_GET['desc'] : 'total_hits';
 } else {
 	// no order set
 	$order = 'desc';

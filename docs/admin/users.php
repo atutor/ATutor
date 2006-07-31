@@ -45,13 +45,14 @@ if ($_GET['reset_filter']) {
 
 $page_string = '';
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$cols   = array('login' => 1, 'public_field' => 1, 'first_name' => 1, 'second_name' => 1, 'last_name' => 1, 'email' => 1, 'status' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
-	$col   = $addslashes($_GET['asc']);
+	$col   = isset($cols[$_GET['asc']]) ? $_GET['asc'] : 'login';
 } else if (isset($_GET['desc'])) {
 	$order = 'desc';
-	$col   = $addslashes($_GET['desc']);
+	$col   = isset($cols[$_GET['desc']]) ? $_GET['desc'] : 'login';
 } else {
 	// no order set
 	$order = 'asc';

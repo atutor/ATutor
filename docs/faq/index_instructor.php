@@ -39,20 +39,6 @@ if (isset($_GET['edit'], $_GET['item'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$orders = array('asc' => 'desc', 'desc' => 'asc');
-
-if (isset($_GET['asc'])) {
-	$order = 'asc';
-	$col   = $addslashes($_GET['asc']);
-} else if (isset($_GET['desc'])) {
-	$order = 'desc';
-	$col   = $addslashes($_GET['desc']);
-} else {
-	// no order set
-	$order = 'desc';
-	$col   = 'created_date';
-}
-
 $counter = 1;
 $sql	 = "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";
 $result  = mysql_query($sql, $db);

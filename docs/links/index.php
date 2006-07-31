@@ -55,13 +55,14 @@ $categories = get_link_categories();
 //ascending decscending columns...
 $page_string = '';
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$cols   = array('LinkName' => 1, 'CatName' => 1, 'description' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
-	$col   = $addslashes($_GET['asc']);
+	$col   = isset($cols[$_GET['asc']]) ? $_GET['asc'] : 'LinkName';
 } else if (isset($_GET['desc'])) {
 	$order = 'desc';
-	$col   = $addslashes($_GET['desc']);
+	$col   = isset($cols[$_GET['desc']]) ? $_GET['desc'] : 'LinkName';
 } else {
 	// no order set
 	$order = 'asc';
@@ -97,6 +98,7 @@ if (!empty($groups)) {
 } else {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
 }
+
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 

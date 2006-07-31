@@ -41,14 +41,15 @@ if ($_GET['reset_filter']) {
 }
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$cols   = array('title' => 1, 'login' => 1, 'access' => 1, 'created_date' => 1, 'cat_name' => 1);
 $_access = array('public', 'protected', 'private');
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
-	$col   = $_GET['asc'];
+	$col   = isset($cols[$_GET['asc']]) ? $_GET['asc'] : 'title';
 } else if (isset($_GET['desc'])) {
 	$order = 'desc';
-	$col   = $_GET['desc'];
+	$col   = isset($cols[$_GET['desc']]) ? $_GET['desc'] : 'title';
 } else {
 	// no order set
 	$order = 'asc';

@@ -35,13 +35,14 @@ if ($_GET['reset_filter']) {
 }
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
+$cols   = array('login' => 1, 'full_name' => 1, 'date_taken' => 1, 'fs' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
-	$col   = $addslashes($_GET['asc']);
+	$col   = isset($cols[$_GET['asc']]) ? $_GET['asc'] : 'login';
 } else if (isset($_GET['desc'])) {
 	$order = 'desc';
-	$col   = $addslashes($_GET['desc']);
+	$col   = isset($cols[$_GET['desc']]) ? $_GET['desc'] : 'login';
 } else {
 	// no order set
 	$order = 'asc';
