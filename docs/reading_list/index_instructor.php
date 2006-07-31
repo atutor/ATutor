@@ -17,6 +17,12 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
 if (isset($_GET['edit'])) {
+	if (!isset($_GET['reading'])) {
+		$msg->addError('NO_ITEM_SELECTED');
+		header('Location: index_instructor.php');
+		exit;
+	}
+
 	// reading ID of item that will be edited
 	$_GET['reading'] = intval($_GET['reading']);
 
@@ -33,8 +39,13 @@ if (isset($_GET['edit'])) {
 			exit;
 		}
 	}
-	$msg->addFeedback ('RL_READING_NOT_FOUND');
+	$msg->addError('RL_READING_NOT_FOUND');
 } else if (isset($_GET['delete'])) {
+	if (!isset($_GET['reading'])) {
+		$msg->addError('NO_ITEM_SELECTED');
+		header('Location: index_instructor.php');
+		exit;
+	}
 	$_GET['reading'] = intval($_GET['reading']);
 	header('Location: delete_reading.php?id='. $_GET['reading']);
 	exit;
