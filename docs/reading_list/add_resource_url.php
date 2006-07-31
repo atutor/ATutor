@@ -28,12 +28,7 @@ $page_return = $_GET['page_return'];
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 
-	if (trim($_POST['page_return']) != ''){
-		header('Location: '. $_POST['page_return']);
-	}
-	else {
-		header('Location: index_instructor.php');
-	}
+	header('Location: index_instructor.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	if (trim($_POST['title']) == '') {
