@@ -34,33 +34,31 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $sql	= "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";			
 $result= mysql_query($sql, $db);
 
-//if(mysql_num_rows($result) > 0) {		
-
-	$gloss_results = array();
-	while ($row = mysql_fetch_assoc($result)) {
-		$gloss_results[] = $row;
-	}
-	$num_results = count($gloss_results);
-	$results_per_page = 25;
-	$num_pages = ceil($num_results / $results_per_page);
-	$page = intval($_GET['p']);
-	if (!$page) {
-		$page = 1;
-	}
+$gloss_results = array();
+while ($row = mysql_fetch_assoc($result)) {
+	$gloss_results[] = $row;
+}
+$num_results = count($gloss_results);
+$results_per_page = 25;
+$num_pages = ceil($num_results / $results_per_page);
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}
 	
-	$count = (($page-1) * $results_per_page) + 1;
-	$gloss_results = array_slice($gloss_results, ($page-1)*$results_per_page, $results_per_page);
+$count = (($page-1) * $results_per_page) + 1;
+$gloss_results = array_slice($gloss_results, ($page-1)*$results_per_page, $results_per_page);
 	
-	if($num_pages > 1) {
-		echo _AT('page').': ';
-		for ($i=1; $i<=$num_pages; $i++) {
-			if ($i == $page) {
-				echo '<strong>'.$i.'</strong>';
-			} else {
-				echo ' | <a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
-			}
+if($num_pages > 1) {
+	echo _AT('page').': ';
+	for ($i=1; $i<=$num_pages; $i++) {
+		if ($i == $page) {
+			echo '<strong>'.$i.'</strong>';
+		} else {
+			echo ' | <a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
 		}
 	}
+}
 ?>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
