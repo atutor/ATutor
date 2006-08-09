@@ -74,7 +74,12 @@ if (isset($_POST['submit'])) {
 					$num_correct = array_sum(array_slice($row, 3));
 					if ($num_correct > 1) {
 						// multi correct
-						if (is_array($_POST['answers'][$row['question_id']])) {
+						if (is_array($_POST['answers'][$row['question_id']]) && count($_POST['answers'][$row['question_id']]) > 1) {
+							if ($_POST['answers'][$row['question_id']][0] == -1) {
+								// assumes that the -1 place holder is always first.
+								// place holder was added in 1.5.3 in case a multi-choice multi-select is left blank.
+								unset($_POST['answers'][$row['question_id']][0]);
+							}
 							$num_answer_correct = 0;
 							foreach ($_POST['answers'][$row['question_id']] as $answer) {
 								if ($row['answer_' . $answer]) {
