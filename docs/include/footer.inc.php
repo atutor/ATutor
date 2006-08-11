@@ -79,5 +79,10 @@ if ($framed || $popup) {
 	$savant->display('include/footer.tmpl.php');
 }
 
-debug($_SESSION);
+if (defined('AT_DEVEL') && AT_DEVEL) {
+	debug(TABLE_PREFIX, 'TABLE_PREFIX');
+	debug(DB_NAME, 'DB_NAME');
+	debug(VERSION, 'VERSION');
+	debug($_SESSION);
+}
 ?>
