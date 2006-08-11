@@ -75,11 +75,9 @@ if (isset($_POST['submit'])) {
 					if ($num_correct > 1) {
 						// multi correct
 						if (is_array($_POST['answers'][$row['question_id']]) && count($_POST['answers'][$row['question_id']]) > 1) {
-							if ($_POST['answers'][$row['question_id']][0] == -1) {
-								// assumes that the -1 place holder is always first.
-								// place holder was added in 1.5.3 in case a multi-choice multi-select is left blank.
-								unset($_POST['answers'][$row['question_id']][0]);
-							}
+							if (($i = array_search('-1', $_POST['answers'][$row['question_id']])) !== FALSE) {
+                                unset($_POST['answers'][$row['question_id']][$i]);
+                            }
 							$num_answer_correct = 0;
 							foreach ($_POST['answers'][$row['question_id']] as $answer) {
 								if ($row['answer_' . $answer]) {
@@ -95,12 +93,12 @@ if (isset($_POST['submit'])) {
 							} else {
 								$score = 0;
 							}
+							$_POST['answers'][$row['question_id']] = implode('|', $_POST['answers'][$row['question_id']]);
 						} else {
 							// no answer given
 							$_POST['answers'][$row['question_id']] = '-1'; // left blank
 							$score = 0;
 						}
-						$_POST['answers'][$row['question_id']] = implode('|', $_POST['answers'][$row['question_id']]);
 					} else {
 						// single correct answer
 						$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
