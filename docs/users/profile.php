@@ -94,6 +94,7 @@ if (isset($_POST['submit'])) {
 		// insert into the db.
 		$_POST['website']    = $addslashes($_POST['website']);
 		$_POST['first_name'] = $addslashes($_POST['first_name']);
+		$_POST['second_name']= $addslashes($_POST['second_name']);
 		$_POST['last_name']  = $addslashes($_POST['last_name']);
 		$_POST['address']    = $addslashes($_POST['address']);
 		$_POST['postal']     = $addslashes($_POST['postal']);
