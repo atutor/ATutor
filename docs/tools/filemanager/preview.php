@@ -17,8 +17,10 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$get_file = $_base_path . 'get.php/';
+	$file = 'b64:'.base64_encode($_GET['file']);
 } else {
 	$get_file = $_base_path . 'content/' . $_SESSION['course_id'] . '/';
+	$file = $_GET['file'];
 }
 
 ?>
@@ -31,8 +33,8 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 <frameset rows="50,*">
 
-<frame src="preview_top.php?file=<?php echo 'b64:'.base64_encode($_GET['file']).SEP.'pathext='. $_GET['pathext'] . SEP . 'popup=' . $_GET['popup']; ?>" scrolling="no" marginwidth="0" marginheight="0" />
-<frame src="<?php echo $get_file; ?><?php echo 'b64:'.base64_encode($_GET['file']); ?>" />
+<frame src="preview_top.php?file=<?php echo $file.SEP.'pathext='. $_GET['pathext'] . SEP . 'popup=' . $_GET['popup']; ?>" scrolling="no" marginwidth="0" marginheight="0" />
+<frame src="<?php echo $get_file; ?><?php echo $file; ?>" />
 
 <noframes>
   <p><?php echo _AT('frame_contains'); ?><br />
