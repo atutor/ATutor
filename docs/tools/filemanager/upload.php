@@ -20,7 +20,7 @@ if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 	authenticate(AT_PRIV_CONTENT);
 }
 
-
+$_SESSION['done'] = 1;
 $popup = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
 
@@ -55,8 +55,6 @@ if (isset($_POST['submit'])) {
 		/* check if this file extension is allowed: */
 		/* $IllegalExtentions is defined in ./include/config.inc.php */
 		if (in_array($ext, $IllegalExtentions)) {
-			$_SESSION['done'] = 1;
-
 			$errors = array('FILE_ILLEGAL', $ext);
 			$msg->addError($errors);
 			header('Location: index.php?pathext='.$_POST['pathext']);
@@ -118,33 +116,26 @@ if (isset($_POST['submit'])) {
 										SEP);
 						$msg->addFeedback($f);
 						
-						$_SESSION['done'] = 1;
 						header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
 						exit;
 					} /* else */
 
 					$msg->addFeedback('FILE_UPLOADED');
 
-					$_SESSION['done'] = 1;
 					header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
 					exit;
 				}
 			} else {
-				$_SESSION['done'] = 1;
 				$msg->addError(array('MAX_STORAGE_EXCEEDED', get_human_size($my_MaxCourseSize)));
 				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
 				exit;
 			}
 		} else {
-			$_SESSION['done'] = 1;
 			$msg->addError(array('FILE_TOO_BIG', get_human_size($my_MaxFileSize)));
-			session_write_close();
-
 			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
 			exit;
 		}
 	} else {
-		$_SESSION['done'] = 1;
 		$msg->addError('FILE_NOT_SELECTED');
 		header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
 		exit;

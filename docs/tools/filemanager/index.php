@@ -27,6 +27,7 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) &&
 }
 
 require('top.php');
+$_SESSION['done'] = 1;
 
 require(AT_INCLUDE_PATH.'html/filemanager_display.inc.php');
 
