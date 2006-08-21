@@ -75,7 +75,7 @@ if ($row = mysql_fetch_assoc($result)){
 			<?php  echo _AT('rl_author'). ": ". $row['author']; ?><br/>
 			<?php  echo _AT('rl_publisher'). ": ". $row['publisher']; ?><br/>
 			<?php  echo _AT('date'). ": ". $row['date']; ?><br/>
-			<?php  echo _AT('rl_id'). ": ". $row['id']; ?><br/>
+			<?php  echo _AT('id'). ": ". $row['id']; ?><br/>
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
