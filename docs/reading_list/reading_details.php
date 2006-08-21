@@ -63,7 +63,7 @@ if ($row = mysql_fetch_assoc($result)){
 	<div class="input-form">	
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>" ; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?> br/>
+			<?php  echo _AT('rl_author'). ": ". $row['author']; ?><br />
 			<?php  echo _AT('date'). ": ". $row['date']; ?><br/>
 			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
 		</p>
