@@ -75,6 +75,10 @@ if (isset($_POST['submit'])) {
 		$dob = '0000-00-00';
 		$yr = $mo = $day = 0;
 	}
+
+	if (($_POST['gender'] != 'm') && ($_POST['gender'] != 'f')) {
+		$_POST['gender'] = 'n'; // not specified
+	}
 		
 	$login = strtolower($_POST['login']);
 	if (!$msg->containsErrors()) {			
@@ -97,8 +101,6 @@ if (isset($_POST['submit'])) {
 		$_POST['province']   = $addslashes($_POST['province']);
 		$_POST['country']    = $addslashes($_POST['country']);
 		$_POST['phone']      = $addslashes($_POST['phone']);
-		$_POST['gender']     = $addslashes($_POST['gender']);
-
 
 		$sql = "UPDATE ".TABLE_PREFIX."members SET website='$_POST[website]', first_name='$_POST[first_name]', second_name='$_POST[second_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]', private_email=$_POST[private_email] WHERE member_id=$_SESSION[member_id]";
 

@@ -136,6 +136,10 @@ if (isset($_POST['cancel'])) {
 		}
 	}
 
+	if (($_POST['gender'] != 'm') && ($_POST['gender'] != 'f')) {
+		$_POST['gender'] = 'n'; // not specified
+	}
+
 
 	if (!$msg->containsErrors()) {
 		if (($_POST['website']) && (!ereg("://",$_POST['website']))) { 
