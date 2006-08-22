@@ -390,7 +390,7 @@ function add_user_online() {
 	global $db;
 
     $expiry = time() + 900; // 15min
-    $sql    = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.get_login($_SESSION['member_id']).'", '.$expiry.')';
+    $sql    = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.addslashes(get_display_name($_SESSION['member_id'])).'", '.$expiry.')';
     $result = mysql_query($sql, $db);
 
 	/* garbage collect and optimize the table every so often */
@@ -423,6 +423,24 @@ function get_login($id){
 	}
 
 	return $row['login'];
+}
+
+function get_display_name($id) {
+	static $db, $_config, $display_name_formats;
+
+	if (!$id) {
+		return $_SESSION['login'];
+	}
+
+	if (!isset($db, $_config)) {
+		global $db, $_config, $display_name_formats;
+	}
+
+	$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
+	$result	= mysql_query($sql, $db);
+	$row	= mysql_fetch_assoc($result);
+
+	return _AT($display_name_formats[$_config['display_name_format']], $row['login'], $row['first_name'], $row['second_name'], $row['last_name']);
 }
 
 function get_forum_name($fid){

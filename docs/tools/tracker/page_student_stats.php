@@ -42,7 +42,7 @@ $result = mysql_query($sql, $db);
 <?php if ($row = mysql_fetch_assoc($result)) : ?>
 	<?php do { ?>
 	<tr onmousedown="document.location='<?php echo $_base_href; ?>tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>'" title="<?php echo _AT('member_stats'); ?>">
-		<td><a href="<?php echo $_base_href; ?>tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>"><?php echo AT_print(get_login($row['member_id']), 'members.login'); ?></a></td>
+		<td><a href="<?php echo $_base_href; ?>tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>"><?php echo get_display_name($row['member_id']); ?></a></td>
 		<td><?php echo $row['counter']; ?></td>
 		<td><?php echo $row['average']; ?></td>
 		<td><?php echo $row['total']; ?></td>

@@ -51,7 +51,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['url'] == $addslashes($_POST['url']);
 		$_POST['description']  = $addslashes($_POST['description']);
 
-		$name = $_SESSION['login'];
+		$name = get_display_name($_SESSION['member_id']);
 		$email = '';
 
 		//check if new cat is auth? -- shouldn't be a prob. since cat dropdown is already filtered

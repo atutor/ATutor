@@ -68,7 +68,11 @@ if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || (substr($onload, -8) !=
 }
 
 if ($_SESSION['valid_user'] === true) {
-	$savant->assign('user_name', AT_print($_SESSION['login'], 'members.login'));
+	if ($_SESSION['member_id']) {
+		$savant->assign('user_name', get_display_name($_SESSION['member_id']));
+	} else {
+		$savant->assign('user_name', $_SESSION['login']);
+	}
 } else {
 	$savant->assign('user_name', _AT('guest'));
 }

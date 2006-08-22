@@ -173,7 +173,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 
 		echo '<td class="row1" width="10%" align="center">'.$row['num_comments'].'</td>';
 
-		echo '<td class="row1" width="10%"><a href="'.$_base_href.'profile.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></td>';
+		echo '<td class="row1" width="10%"><a href="'.$_base_href.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
 
 		echo '<td class="row1" width="20%" align="right" nowrap="nowrap">';
 		echo AT_date(_AT('forum_date_format'), $row['last_comment'], AT_DATE_MYSQL_DATETIME);

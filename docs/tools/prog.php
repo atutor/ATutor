@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
+sleep(1);
 $_user_location = 'prog';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -35,10 +35,11 @@ if ($_GET['tile']) {
 </head>
 <body <?php
 	if ($_SESSION['done']) {
-		echo 'onLoad="parent.window.close();"';
+		echo 'onload="parent.window.close();"';
 	}
 ?>>
-<?php if (!$_GET['frame']) {  ?>
+<?php 
+if (!$_GET['frame']) {  ?>
 &nbsp;<a href="javascript:window.close();"><?php echo _AT('close'); ?></a>
 <h3><?php echo _AT($lang_variable); ?></h3>
 <p><small><?php echo _AT('window_auto_close'); ?></small></p>
@@ -47,7 +48,7 @@ if ($_GET['tile']) {
 <table border="0" align="center">
 <tr>
 	<td><img src="<?php echo $_base_href; ?>images/transfer.gif" height="20" width="90" alt="<?php echo _AT($lang_variable); ?>"></td>
-	<td valign="middle"><iframe src="prog.php?frame=1" width="100" height="25" frameborder="0" scrolling=no marginwidth="0" marginheight="1">
+	<td valign="middle"><iframe src="prog.php?frame=1" width="100" height="25" frameborder="0" scrolling="no" marginwidth="0" marginheight="1">
 </iframe>
 <?php } else { 
 	$tmp_dir = ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR;

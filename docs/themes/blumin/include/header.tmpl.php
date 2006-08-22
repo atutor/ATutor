@@ -233,7 +233,7 @@ function toggleToc(objId) {
 <!-- the sub navigation -->
 <div style="float: right; padding-top: 5px; padding-right: 5px; font-size:0.85em; text-transform: lowercase; ">
 	<?php if ($_SESSION['valid_user']): ?>					
-		<strong><?php echo $_SESSION['login']; ?></strong> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+		<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 	<?php else: ?>
 		 <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
 	<?php endif; ?>

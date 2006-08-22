@@ -45,12 +45,30 @@ $_config_defaults['pref_defaults']			   = 'a:4:{s:10:"PREF_THEME";s:7:"default";
 $_config_defaults['pref_inbox_notify']		   = 0;
 $_config_defaults['check_version']	           = 0;
 $_config_defaults['fs_versioning']             = 1;
-$_config_defaults['display_full_name']         = 1; // not currently a config option
 $_config_defaults['last_cron']                 = 0; // cron has to be enabled manually
 $_config_defaults['enable_mail_queue']         = 0; // mail queue can only be enabled if cron is running
 $_config_defaults['auto_install_languages']    = 0; // auto install languages can only be enabled if cron is running
+$_config_defaults['display_name_format']       = 1; // 0-5, see (array) display_name_formats
+
+// to be removed. see vitals:get_login()
+$_config_defaults['display_full_name']         = 1; // not currently a config option
 
 $_config = $_config_defaults;
+
+
+/* display name formats
+ * L = login name
+ * F = first name
+ * S = second name
+ * T = last name */
+$display_name_formats = array();
+$display_name_formats[0] = 'display_name_format_l';
+$display_name_formats[1] = 'display_name_format_fst';
+$display_name_formats[2] = 'display_name_format_fstl';
+$display_name_formats[3] = 'display_name_format_fl';
+$display_name_formats[4] = 'display_name_format_lf';
+$display_name_formats[5] = 'display_name_format_lfst';
+
 
 /* links */
 define('LINK_CAT_COURSE',	1);

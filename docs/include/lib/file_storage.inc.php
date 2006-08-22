@@ -133,7 +133,7 @@ function fs_get_folder_by_id($folder_id, $owner_type, $owner_id) {
 
 			$rows = array('title' => $row['title'], 'folder_id' => $folder_id);
 		} else {
-			$rows = array('title' => get_login($folder_id), 'folder_id' => $folder_id);
+			$rows = array('title' => get_display_name($folder_id), 'folder_id' => $folder_id);
 		}
 	} else {
 		if (is_array($folder_id)) {

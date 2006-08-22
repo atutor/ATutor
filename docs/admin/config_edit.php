@@ -46,6 +46,11 @@ if (isset($_POST['cancel'])) {
 	$_POST['check_version']             = $_POST['check_version'] ? 1 : 0;
 	$_POST['fs_versioning']             = $_POST['fs_versioning'] ? 1 : 0;
 	$_POST['enable_mail_queue']         = $_POST['enable_mail_queue'] ? 1 : 0;
+	$_POST['display_name_format']       = $_POST['display_name_format'];
+
+	if (!isset($display_name_formats[$_POST['display_name_format']])) {
+		$_POST['display_name_format'] = $_config_defaults['display_name_format'];
+	}
 
 	//check that all values have been set	
 	if (!$_POST['site_name']) {
@@ -160,6 +165,13 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
+		<?php echo _AT('display_name_format'); ?> (<?php echo _AT('default'); ?>: <em><?php echo _AT($display_name_formats[$_config_defaults['display_name_format']], _AT('login_name'), _AT('first_name'), _AT('second_name'), _AT('last_name')); ?></em>)<br />
+		<?php foreach ($display_name_formats as $key => $value): ?>
+			<input type="radio" name="display_name_format" value="<?php echo $key; ?>" id="dnf<?php echo $key; ?>" <?php if ($_config['display_name_format'] == $key) { echo 'checked="checked"'; }?> /><label for="dnf<?php echo $key; ?>"><em><?php echo _AT($value, _AT('login_name'), _AT('first_name'), _AT('second_name'), _AT('last_name')); ?></em></label><br />
+		<?php endforeach; ?>
+	</div>
+
+	<div class="row">
 		<?php echo _AT('master_list_authentication'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['master_list'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="master_list" value="1" id="ml_y" <?php if ($_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_y"><?php echo _AT('enable'); ?></label> 
 
@@ -243,7 +255,7 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s"  />
+			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s"  />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
 	</div>
 </div>

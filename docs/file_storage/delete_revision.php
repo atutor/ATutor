@@ -83,7 +83,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 	$msg->printErrors('FILE_NOT_EXIST');
 } else {
 	$hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id);
-	$msg->addConfirm(array('FILE_DELETE', '<li>'.$row['date'].' - '. $row['file_name'].' - '.get_login($row['member_id']).'</li>'), $hidden_vars);
+	$msg->addConfirm(array('FILE_DELETE', '<li>'.$row['date'].' - '. $row['file_name'].' - '.get_display_name($row['member_id']).'</li>'), $hidden_vars);
 	$msg->printConfirm();
 }
 

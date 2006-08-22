@@ -155,7 +155,7 @@ function toggleToc(objId) {
 				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
 			<?php endif; ?>
 		<?php if ($_SESSION['valid_user']): ?>
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  | 
+			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo get_display_name($_SESSION['member_id']); ?></strong>  | 
 			<?php if ($_SESSION['course_id'] > -1): ?>
 				<?php if (get_num_new_messages()): ?>
 					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> - <?php echo get_num_new_messages(); ?></a> | 

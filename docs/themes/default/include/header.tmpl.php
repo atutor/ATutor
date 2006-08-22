@@ -187,7 +187,7 @@ function toggleToc(objId) {
 			<?php if ($_SESSION['is_super_admin']): ?>
 				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
 			<?php endif; ?>
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo $_SESSION['login']; ?></strong>  |
+			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo get_display_name($_SESSION['member_id']); ?></strong>  |
 			<?php if ($_SESSION['course_id'] > -1): ?>
 				<?php if (get_num_new_messages()): ?>
 					<strong><a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> - <?php echo get_num_new_messages(); ?></a></strong> | 
@@ -199,7 +199,7 @@ function toggleToc(objId) {
 			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php elseif ($_SESSION['course_id'] == -1): ?>
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo $_SESSION['login']; ?></strong>  |
+			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo get_display_name($_SESSION['member_id']); ?></strong>  |
 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> |
 			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>

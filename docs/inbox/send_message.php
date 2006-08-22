@@ -59,7 +59,7 @@ if (isset($_POST['cancel'])) {
 		if ($row_notify['inbox_notify'] == 1) {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
-			$body = _AT('notification_new_inbox', $_SESSION['login'], $_base_href.'bounce.php?course='.$_SESSION['course_id']);
+			$body = _AT('notification_new_inbox', get_display_name($_SESSION['member_id']), $_base_href.'bounce.php?course='.$_SESSION['course_id']);
 			
 			$mail = new ATutorMailer;
 			$mail->AddAddress($row_notify['email'], $row_notify['first_name'] . ' ' . $row_notify['last_name']);
@@ -167,16 +167,12 @@ if ($reply_to) {
 						echo ' selected="selected"';
 					}
 					echo '>';
-					if ($_config_defaults['display_full_name'] && $row['first_name'] && $row['last_name']) {
-						echo AT_print($row['first_name'] . ' ' . $row['second_name'] . ' ' . $row['last_name'], 'members.login');
-					} else {
-						AT_print($row['login'], 'members.login');
-					}
+					echo get_display_name($row['member_id']);
 					echo '</option>';
 				} while ($row = mysql_fetch_assoc($result));
 				echo '</select>';
 			} else {
-				echo '<strong>'.get_login($reply_to).'</strong>';
+				echo '<strong>'.get_display_name($reply_to).'</strong>';
 				echo '<input type="hidden" name="to" value="'.$reply_to.'" />';
 			} ?>
 	</div>

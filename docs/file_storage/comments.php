@@ -130,7 +130,7 @@ if (!$files) {
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $current_file['file_name']; ?> <small> - <?php echo _AT('revision'); ?> <?php echo $current_file['num_revisions']; ?></small></h3>
-		<span style="font-size: small"><?php echo get_login($current_file['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $current_file['date'], AT_DATE_MYSQL_DATETIME); ?></span>
+		<span style="font-size: small"><?php echo get_display_name($current_file['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $current_file['date'], AT_DATE_MYSQL_DATETIME); ?></span>
 		<p><?php echo nl2br($current_file['comments']); ?></p>
 	</div>
 </div>
@@ -145,7 +145,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 				<form method="post" action="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id;?>" name="form">
 				<input type="hidden" name="comment_id" value="<?php echo $row['comment_id']; ?>" />
 				<div class="row">
-					<a name="c<?php echo $row['comment_id']; ?>"></a><h4><?php echo get_login($row['member_id']); ?> - <?php echo $row['date']; ?></h4>
+					<a name="c<?php echo $row['comment_id']; ?>"></a><h4><?php echo get_display_name($row['member_id']); ?> - <?php echo $row['date']; ?></h4>
 					<textarea rows="4" cols="40" name="edit_comment"><?php echo htmlspecialchars($row['comment']); ?></textarea>
 				</div>
 				<div class="row buttons">
@@ -156,7 +156,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 						
 			<?php else: ?>
 				<div class="row">
-					<h4><?php echo get_login($row['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h4>
+					<h4><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h4>
 					<p><?php echo nl2br($row['comment']); ?></p>
 						<?php if ($row['member_id'] == $_SESSION['member_id']): ?>
 							<div style="text-align:right; font-size: smaller">

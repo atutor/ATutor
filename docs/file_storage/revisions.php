@@ -129,7 +129,7 @@ usort($files, 'fs_revisions_sort_compare');
 				<?php endif; ?>
 		</td>
 		<td valign="top"><?php echo AT_date(_AT('filemanager_date_format'), $file['date'], AT_DATE_MYSQL_DATETIME); ?></td>
-		<td valign="top"><?php echo get_login($file['member_id']); ?></td>
+		<td valign="top"><?php echo get_display_name($file['member_id']); ?></td>
 		<td valign="top"><a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file['file_id']; ?>"><?php echo $file['num_comments']; ?></a></td>
 		<td valign="top"><?php echo get_human_size($file['file_size']); ?></td>
 	</tr>

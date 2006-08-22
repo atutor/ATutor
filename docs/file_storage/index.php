@@ -568,7 +568,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 					<p class="fm-desc"><?php echo $file_info['description']; ?></p>
 				<?php endif; ?>
 			</td>
-			<td valign="top"><?php echo get_login($file_info['member_id']); ?></td>
+			<td valign="top"><?php echo get_display_name($file_info['member_id']); ?></td>
 			<td valign="top">
 				<?php if ($_config['fs_versioning']): ?>
 					<?php if ($file_info['num_revisions']): 

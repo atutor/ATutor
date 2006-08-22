@@ -61,7 +61,7 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 		$_POST['url'] == $addslashes($_POST['url']);
 		$_POST['description']  = $addslashes($_POST['description']);
 
-		$name = $_SESSION['login'];
+		$name = get_display_name($_SESSION['member_id']);
 		$email = '';
 
 		$approved = intval($_POST['approved']);

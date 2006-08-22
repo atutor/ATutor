@@ -27,7 +27,7 @@ if ($_POST['desc_submit']) {
 					.'jsessionid='.$_POST['sessionid']
 					.'?file='.urlencode($_POST['pg_url'])
 					.'&output=chunk'
-					.'&name='.$_SESSION['login']
+					.'&name='.urlencode(get_display_name($_SESSION['member_id']))
 					.'&email='.urlencode($_base_href)
 					.$desc_query;
 

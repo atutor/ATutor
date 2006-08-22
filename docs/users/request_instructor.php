@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 			if ($row = mysql_fetch_assoc($result)) {
 				$email = $row['email'];
 			}
-			$tmp_message = _AT('req_message_instructor', $_SESSION['login'], $_POST['description'], $_base_href);
+			$tmp_message = _AT('req_message_instructor', get_display_name($_SESSION['member_id']), $_POST['description'], $_base_href);
 
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 

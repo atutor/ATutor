@@ -62,7 +62,7 @@ if (isset($_GET['view'])) {
 	<tbody>
 	<tr>
 		<td><?php
-			$from = get_login($row['from_member_id']);
+			$from = get_display_name($row['from_member_id']);
 
 			echo '<span class="bigspacer">'._AT('from').' <strong>'.AT_print($from, 'members.logins').'</strong> '._AT('posted_on').' ';
 			echo AT_date(_AT('inbox_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME);
@@ -122,7 +122,7 @@ $result = mysql_query($sql,$db);
 		}
 		echo '</td>';
 
-		$name = AT_print(get_login($row['from_member_id']), 'members.logins');
+		$name = get_display_name($row['from_member_id']);
 
 		echo '<td align="left" valign="middle">';
 

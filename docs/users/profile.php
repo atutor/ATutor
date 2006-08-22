@@ -42,6 +42,10 @@ if (isset($_POST['submit'])) {
 		$msg->addError('LAST_NAME_MISSING');
 	}
 
+	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
+	$_POST['second_name'] = str_replace('<', '', $_POST['second_name']);
+	$_POST['last_name'] = str_replace('<', '', $_POST['last_name']);
+
 	// check if first+last is unique
 	if ($_POST['first_name'] && $_POST['last_name']) {
 		$first_name_sql  = $addslashes($_POST['first_name']);

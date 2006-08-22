@@ -27,7 +27,12 @@ if (isset($_POST['cancel'])) {
 
 	$_POST['password'] = trim($_POST['password']);
 	$_POST['first_name'] = trim($_POST['first_name']);
+	$_POST['second_name'] = trim($_POST['second_name']);
 	$_POST['last_name'] = trim($_POST['last_name']);
+
+	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
+	$_POST['second_name'] = str_replace('<', '', $_POST['second_name']);
+	$_POST['last_name'] = str_replace('<', '', $_POST['last_name']);
 
 	/* login name check */
 	if ($_POST['login'] == '') {
