@@ -23,6 +23,8 @@
 			  </li>
 		</ol>
 
+		<p>Note: If your site uses <acronym title="Secure Sockets Layer">SSL</acronym> then replace <em>http</em> with <em>https</em> and you may also need to add <code>--no-check-certificate</code> to <code>wget</code>.</p>
+
 	<h3>Windows et al Setup</h3>
 		<p><a href="http://www.webcron.org">webcron.org</a> offers free web-based cron services and is available in multiple languages.</p>
 
