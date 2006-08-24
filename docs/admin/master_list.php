@@ -220,8 +220,9 @@ $page = intval($_GET['p']);
 if (!$page) {
 	$page = 1;
 }
+$offset = ($page-1)*$results_per_page;
 
-$sql	= "SELECT M.*, B.login, B.first_name, B.second_name, B.last_name FROM ".TABLE_PREFIX."master_list M LEFT JOIN ".TABLE_PREFIX."members B USING (member_id) WHERE $status AND $search ORDER BY M.public_field";
+$sql	= "SELECT M.*, B.login, B.first_name, B.second_name, B.last_name FROM ".TABLE_PREFIX."master_list M LEFT JOIN ".TABLE_PREFIX."members B USING (member_id) WHERE $status AND $search ORDER BY M.public_field LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
 ?>
 
