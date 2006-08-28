@@ -121,11 +121,12 @@ function add_users($user_list, $enroll, $course) {
 				$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
 		
-				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '', '', '','','','','', '', $status, '$_config[pref_defaults]', '$now','$_config[default_language]', $_config[pref_inbox_notify], 1)";
+				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '', '', '','','','','', '', $status, '$_config[pref_defaults]', '$now','$_config[default_language]', $_config[pref_inbox_notify], 1)";
 
-				if ($result = mysql_query($sql, $db)) {
-					$student['exists'] = _AT('import_err_email_exists');
+				$result = mysql_query($sql, $db);
+				if (mysql_affected_rows($db) == 1) {
 					$m_id = mysql_insert_id($db);
+					$student['exists'] = _AT('import_err_email_exists');
 
 					$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid) VALUES ($m_id, $course, '$enroll', 0)";
 
