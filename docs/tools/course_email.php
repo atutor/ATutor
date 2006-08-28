@@ -171,7 +171,7 @@ if ($row['cnt'] == 0) {
 		?>
 		<?php if ($row = mysql_fetch_assoc($result)): ?>
 			<br /><br />
-			Or, Groups:<br />
+			<?php echo _AT('or_groups'); ?>:<br />
 			<select name="groups[]" multiple="multiple" size="10" style="padding-right: 5px">
 				<?php do { ?>
 					<optgroup label="<?php echo $row['title']; ?>">
