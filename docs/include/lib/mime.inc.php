@@ -75,6 +75,7 @@ $mime['ustar'] = array('application/x-ustar',   '');
 $mime['src']   = array('application/x-wais-source',   'src');
 $mime['zip']   = array('application/zip',   'zip');
 
+$mime['ogg']   = array('audio/x-ogg',  'audio');
 $mime['au']    = array('audio/basic',  'audio');
 $mime['snd']   = array('audio/basic',  'audio');
 $mime['mid']   = array('audio/midi',   'audio');
@@ -139,6 +140,7 @@ $mime['mpg']   = array('video/mpeg',   'video');
 $mime['mpe']   = array('video/mpeg',   'video');
 $mime['qt']    = array('video/quicktime',   'qt');
 $mime['mov']   = array('video/quicktime',   'qt');
+$mime['wmv']   = array('video/x-ms-wmv',   'video');
 $mime['avi']   = array('video/x-msvideo',   'video');
 $mime['movie'] = array('video/x-sgi-movie',  'video');
 $mime['ice']   = array('x-conference/x-cooltalk',   '');
