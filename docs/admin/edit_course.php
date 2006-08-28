@@ -27,6 +27,7 @@ if (isset($_POST['cancel'])) {
 	$errors = add_update_course($_POST, TRUE);
 
 	if (is_numeric($errors)) {
+		$msg->addFeedback('COURSE_PROPERTIES');
 		header('Location: '.$_base_href.'admin/courses.php');
 		exit;
 	}
