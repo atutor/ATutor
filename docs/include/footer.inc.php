@@ -24,13 +24,11 @@ $stack_files = array();
 if ($_SESSION['course_id'] > 0) {
 	$savant->assign('my_uri', $_my_uri);
 
-	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && $_SESSION['prefs'][PREF_MAIN_MENU_SIDE] != MENU_LEFT) {
-		$savant->assign('right_menu_open', TRUE);
-		$savant->assign('popup_help', 'MAIN_MENU');
-		$savant->assign('menu_url', '<a name="menu"></a>');
-		$savant->assign('close_menu_url', htmlspecialchars($_my_uri).'disable='.PREF_MAIN_MENU);
-		$savant->assign('close_menus', _AT('close_menus'));
-	}	
+	$savant->assign('right_menu_open', TRUE);
+	$savant->assign('popup_help', 'MAIN_MENU');
+	$savant->assign('menu_url', '<a name="menu"></a>');
+	$savant->assign('close_menu_url', htmlspecialchars($_my_uri).'disable='.PREF_MAIN_MENU);
+	$savant->assign('close_menus', _AT('close_menus'));
 
 	//copyright can be found in include/html/copyright.inc.php
 
