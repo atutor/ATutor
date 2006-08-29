@@ -17,7 +17,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
 // initial values for form
-$id = "0";
+$id = intval($_REQUEST['id']);
 $title = "";
 $author = "";
 $publisher = ""; 
@@ -46,8 +46,6 @@ if (isset($_POST['cancel'])) {
 		$_POST['date'] = $addslashes($_POST['date']);
 		$_POST['comments'] = $addslashes($_POST['comments']);
 		
-		$id = intval ($_POST['id']);
-
 		if ($id == '0'){ // creating a new URL resource
 			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES ($id, $_SESSION[course_id],
 			".RL_TYPE_AV.", 
@@ -93,7 +91,7 @@ if (isset($_POST['cancel'])) {
 }
 
 // is user modifying an existing AV resource?
-if (isset($_GET['id'])){
+if ($id && !isset($_POST['submit'])){
 	// yes, get resource from database
 	$id = intval ($_GET['id']);
 
@@ -107,6 +105,8 @@ if (isset($_GET['id'])){
 		$comments  = $row['comments'];
 	}
 	// change title of page to 'edit AV resource' (default is 'add AV resource')
+	$_pages['reading_list/add_resource_av.php'][title_var] = 'rl_edit_resource_av';
+} else if ($id) {
 	$_pages['reading_list/add_resource_av.php'][title_var] = 'rl_edit_resource_av';
 }
 

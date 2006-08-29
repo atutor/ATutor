@@ -17,7 +17,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
 // initial values for form
-$id = "0";
+$id = intval($_REQUEST['id']);
 $title = "";
 $author = "";
 $publisher = ""; 
@@ -48,8 +48,6 @@ if (isset($_POST['cancel'])) {
 		$_POST['comments']  = $addslashes($_POST['comments']);
 		$_POST['isbn']      = $addslashes($_POST['isbn']);
 		
-		$id = intval ($_POST['id']);
-
 		if ($id == '0'){ // creating a new file resource
 			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES ($id, $_SESSION[course_id],
 				".RL_TYPE_FILE.", 
@@ -96,7 +94,7 @@ if (isset($_POST['cancel'])) {
 }
 
 // is user modifying an existing file resource?
-if (isset($_GET['id'])){
+if ($id && !isset($_POST['submit'])){
 	// yes, get resource from database
 	$id = intval ($_GET['id']);
 
@@ -111,6 +109,8 @@ if (isset($_GET['id'])){
 		$isbn      = $row['id'];
 	}
 	// change title of page to 'edit file resource' (default is 'add file resource')
+	$_pages['reading_list/add_resource_file.php']['title_var'] = 'rl_edit_resource_file';
+} else if ($id) {
 	$_pages['reading_list/add_resource_file.php']['title_var'] = 'rl_edit_resource_file';
 }
 

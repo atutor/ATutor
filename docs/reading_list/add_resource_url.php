@@ -17,7 +17,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
 // initial values for form
-$id = "0";
+$id = intval($_REQUEST['id']);
 $title = "";
 $author = "";
 $comments = "";
@@ -44,8 +44,6 @@ if (isset($_POST['cancel'])) {
 		$_POST['url'] = $addslashes($_POST['url']);
 		$_POST['comments'] = $addslashes($_POST['comments']);
 		
-		$id = intval ($_POST['id']);
-
 		if ($id == '0'){ // creating a new URL resource
 			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES ($id, $_SESSION[course_id],
 			".RL_TYPE_URL.", 
@@ -83,7 +81,7 @@ if (isset($_POST['cancel'])) {
 	} else { // submission contained an error, update form values for redisplay
 		$title       = $stripslashes($_POST['title']);
 		$author      = $stripslashes($_POST['author']);
-		$publisher   = $stripslashes($_POST['publisher']); 
+		$url         = $stripslashes($_POST['url']); 
 		$date        = $stripslashes($_POST['date']);
 		$comments    = $stripslashes($_POST['comments']);
 		$isbn        = $stripslashes($_POST['id']);
@@ -92,7 +90,7 @@ if (isset($_POST['cancel'])) {
 }
 
 // is user modifying an existing URL resource?
-if (isset($_GET['id'])){
+if ($id && !isset($_POST['submit'])){
 	// yes, get resource from database
 	$id = intval ($_GET['id']);
 
@@ -105,6 +103,8 @@ if (isset($_GET['id'])){
 		$url      = $row['url'];
 	}
 	// change title of page to 'edit URL resource' (default is 'add URL resource')
+	$_pages['reading_list/add_resource_url.php']['title_var'] = 'rl_edit_resource_url';
+} else if ($id) {
 	$_pages['reading_list/add_resource_url.php']['title_var'] = 'rl_edit_resource_url';
 }
 

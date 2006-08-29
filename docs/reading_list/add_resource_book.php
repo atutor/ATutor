@@ -17,7 +17,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 
 // initial values for form
-$id = "";
+$id = intval($_REQUEST['id']);
 $title = "";
 $author = "";
 $publisher = ""; 
@@ -48,9 +48,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['comments']  = $addslashes($_POST['comments']);
 		$_POST['isbn']      = $addslashes($_POST['isbn']);
 		
-		$id = intval ($_POST['id']);
-
-		if ($id == '0'){ // creating a new book resource
+		if ($id == 0){ // creating a new book resource
 			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES ($id, $_SESSION[course_id],
 				".RL_TYPE_BOOK.", 
 				'$_POST[title]', 
@@ -97,9 +95,8 @@ if (isset($_POST['cancel'])) {
 }
 
 // is user modifying an existing book resource?
-if (isset($_GET['id'])){
+if ($id && !isset($_POST['submit'])){
 	// yes, get resource from database
-	$id = intval ($_GET['id']);
 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 	$result = mysql_query($sql, $db);
@@ -112,6 +109,8 @@ if (isset($_GET['id'])){
 		$isbn      = $row['id'];
 	}
 	// change title of page to 'edit book resource' (default is 'add book resource')
+	$_pages['reading_list/add_resource_book.php']['title_var'] = 'rl_edit_resource_book';
+} else if ($id) {
 	$_pages['reading_list/add_resource_book.php']['title_var'] = 'rl_edit_resource_book';
 }
 
