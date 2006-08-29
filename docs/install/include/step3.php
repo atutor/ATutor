@@ -22,6 +22,9 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	$_POST['site_name']      = trim($_POST['site_name']);
 	$_POST['home_url']	     = trim($_POST['home_url']);
 	$_POST['email']	         = trim($_POST['email']);
+	$_POST['account_email']  = trim($_POST['account_email']);
+	$_POST['account_fname']  = trim($_POST['account_fname']);
+	$_POST['account_lname']  = trim($_POST['account_lname']);
 
 	/* Super Administrator Account checking: */
 	if ($_POST['admin_username'] == ''){
@@ -51,7 +54,6 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$errors[] = 'Contact email is not valid.';
 	}
 
-
 	/* Personal Account checking: */
 	if ($_POST['account_username'] == ''){
 		$errors[] = 'Personal Account Username cannot be empty.';
@@ -74,9 +76,19 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$errors[] = 'Invalid Personal Account email is not valid.';
 	}
 
+	if ($_POST['account_fname'] == '') {
+		$errors[] = 'Personal Account First Name cannot be empty.';
+	}
+	if ($_POST['account_lname'] == '') {
+		$errors[] = 'Personal Account Last Name cannot be empty.';
+	}
 	if (!isset($errors)) {
 		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
 		@mysql_select_db($_POST['step2']['db_name'], $db);
+
+		$_POST['account_email'] = $addslashes($_POST['account_email']);
+		$_POST['account_fname'] = $addslashes($_POST['account_fname']);
+		$_POST['account_lname'] = $addslashes($_POST['account_lname']);
 
 		if ($_POST['instructor']) {
 			$status = 3;
@@ -86,7 +98,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 'en', 1, NOW())";
 		$result= mysql_query($sql, $db);
 
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[account_username]','$_POST[account_password]','$_POST[account_email]','','','','', '','', '','','','','', '',$status,'', NOW(),'en', 0, 1)";
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[account_username]','$_POST[account_password]','$_POST[account_email]','','$_POST[account_fname]','','$_POST[account_lname]','','', '','','','','', '',$status,'', NOW(),'en', 0, 1)";
 		$result = mysql_query($sql ,$db);
 
 		$_POST['site_name'] = $addslashes($_POST['site_name']);
@@ -180,7 +192,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="email">Administrator Email:</label></b></td>
-			<td class="row1"><input type="text" name="admin_email" id="email" size="30" value="<?php if (!empty($_POST['admin_email'])) { echo stripslashes(htmlspecialchars($_POST['admin_email'])); } else { echo $defaults['admin_email']; } ?>" class="formfield" /></td>
+			<td class="row1"><input type="text" name="admin_email" id="email" size="40" value="<?php if (!empty($_POST['admin_email'])) { echo stripslashes(htmlspecialchars($_POST['admin_email'])); } else { echo $defaults['admin_email']; } ?>" class="formfield" /></td>
 		</tr>
 		</table>
 
@@ -198,7 +210,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="cemail">Contact Email:</label></b><br />
 			The email that will be used as the return email when needed and when instructor account requests are made.</td>
-			<td class="row1"><input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" class="formfield" /></td>
+			<td class="row1"><input type="text" name="email" id="cemail" size="40" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="optional" title="Optional Field">?</div><b><label for="home_url">Optional 'Home' URL:</b><br />
@@ -227,22 +239,27 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_email">Email:</label></b></td>
-			<td class="row1"><input type="text" name="account_email" id="account_email" size="30" maxlength="60" value="<?php if (!empty($_POST['account_email'])) { echo stripslashes(htmlspecialchars($_POST['account_email'])); } ?>" class="formfield" /></td>
+			<td class="row1"><input type="text" name="account_email" id="account_email" size="40" maxlength="60" value="<?php if (!empty($_POST['account_email'])) { echo stripslashes(htmlspecialchars($_POST['account_email'])); } ?>" class="formfield" /></td>
+		</tr>
+		<tr>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_fname">First Name:</label></b></td>
+			<td class="row1"><input type="text" name="account_fname" id="account_fname" size="40" maxlength="60" value="<?php if (!empty($_POST['account_fname'])) { echo stripslashes(htmlspecialchars($_POST['account_fname'])); } ?>" class="formfield" /></td>
+		</tr>
+		<tr>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_lname">Last Name:</label></b></td>
+			<td class="row1"><input type="text" name="account_lname" id="account_lname" size="40" maxlength="60" value="<?php if (!empty($_POST['account_lname'])) { echo stripslashes(htmlspecialchars($_POST['account_lname'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="optional" title="Optional Field">?</div><b>Instructor Account:</b><br />
-			Do you want this to be an instructor account allowing you to create courses?<br />
-			Default: <kbd>Yes</kbd></td>
+			Do you want this to be an instructor account allowing you to create courses?</td>
 			<td class="row1"><input type="radio" name="instructor" value="1" id="en_y" <?php if($_POST['instructor']== 1 || empty($_POST['instructor'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="instructor" value="0" id="en_n" <?php if($_POST['instructor']===0) { echo "checked"; }?>/><label for="en_n">No</label></td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="optional" title="Optional Field">?</div><b>Welcome Course:</b><br />
-			Do you want to create the basic <em>Welcome Course</em>? Only possible if an instructor account above is created.<br />
-			Default: <kbd>Yes</kbd></td>
+			Do you want to create the basic <em>Welcome Course</em>? Only possible if an instructor account above is created.</td>
 			<td class="row1"><input type="radio" name="welcome_course" value="1" id="wc_y" <?php if($_POST['welcome_course']== 1 || empty($_POST['welcome_course'])) { echo 'checked'; }?>/><label for="wc_y">Yes</label>, <input type="radio" name="welcome_course" value="0" id="wc_n" <?php if ($_POST['welcome_course'] === 0) { echo 'checked'; }?>/><label for="wc_n">No</label></td>
 		</tr>
 		</table>
-
 	<br />
 	<br />
 	<div align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></div>
