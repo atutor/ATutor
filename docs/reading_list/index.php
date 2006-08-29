@@ -41,7 +41,7 @@ $result = mysql_query($sql, $db);
 			$resource_result = mysql_query($sql, $db);
 			if ($resource_row = mysql_fetch_assoc($resource_result)){ 
 			?>
-				<tr>
+			<tr onclick="document.location='reading_list/display_resource.php?id=<?php echo $id ?>'">
 				<td>
 				<?php  if ($row['date_start'] == '0000-00-00'){
 					echo _AT ('none');
