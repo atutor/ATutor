@@ -44,7 +44,7 @@ if (isset($_POST['cancel'])) {
 
 	$result = mysql_query($sql,$db);
 
-	$msg->addFeedback('URL_ADDED');
+	$msg->addFeedback('URL_EDITED');
 	header('Location: index_instructor.php');
 	exit;
 }

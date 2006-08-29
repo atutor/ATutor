@@ -44,7 +44,7 @@ if (isset($_POST['cancel'])) {
 
 	$result = mysql_query($sql,$db);
 
-	$msg->addFeedback('FILE_ADDED');
+	$msg->addFeedback('FILE_EDITED');
 	header('Location: index_instructor.php');
 	exit;
 }

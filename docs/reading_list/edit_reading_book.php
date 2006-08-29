@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 
 	$result = mysql_query($sql,$db);
 
-	$msg->addFeedback('BOOK_ADDED');
+	$msg->addFeedback('BOOK_EDITED');
 	header('Location: index_instructor.php');
 	exit;
 }
