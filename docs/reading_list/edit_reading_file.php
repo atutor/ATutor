@@ -111,7 +111,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo htmlspecialchars($rowreading['comment']);  ?>" />
 	</div>
 
-<h3><?php ecoh _AT('rl_read_by_date'); ?></h3>
+<h3><?php echo _AT('rl_read_by_date'); ?></h3>
 	<div class="row">
 		<input type="radio" id="nodate" name="hasdate" value="false" <?php
 		if ($rowreading['date_start'] == '0000-00-00'){
