@@ -153,13 +153,12 @@ else if (isset($_POST['submit'])) {
 		// note: if due date is NOT set then ignore the late submission date
 		if ($has_due_date == 'true'){
 			$date_due = $dueyear. '-' .str_pad ($duemonth, 2, "0", STR_PAD_LEFT). '-' .str_pad ($dueday, 2, "0", STR_PAD_LEFT). ' '.str_pad ($duehour, 2, "0", STR_PAD_LEFT). ':' .str_pad ($dueminute, 2, "0", STR_PAD_LEFT) . ':00';
-			
-			if ($late_submit == '1'){ // never accept late submissions
-				$date_cutoff = $date_due; // cutoff date will be same as due date
-			}
-			else if ($late_submit == '2'){ // accept late submissions until date
-				$date_cutoff = $cutoffyear. '-' .str_pad ($cutoffmonth, 2, "0", STR_PAD_LEFT). '-' .str_pad ($cutoffday, 2, "0", STR_PAD_LEFT). ' '.str_pad ($cutoffhour, 2, "0", STR_PAD_LEFT). ':' .str_pad ($cutoffminute, 2, "0", STR_PAD_LEFT) . ':00';
-			}
+		}
+
+		if ($late_submit == '1'){ // never accept late submissions
+			$date_cutoff = $date_due; // cutoff date will be same as due date
+		} else if ($late_submit == '2'){ // accept late submissions until date
+			$date_cutoff = $cutoffyear. '-' .str_pad ($cutoffmonth, 2, "0", STR_PAD_LEFT). '-' .str_pad ($cutoffday, 2, "0", STR_PAD_LEFT). ' '.str_pad ($cutoffhour, 2, "0", STR_PAD_LEFT). ':' .str_pad ($cutoffminute, 2, "0", STR_PAD_LEFT) . ':00';
 		}
 
 		// Are we creating a new assignment or updating an existing assignment?
