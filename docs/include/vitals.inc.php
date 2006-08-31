@@ -104,6 +104,12 @@ unregister_GLOBALS();
 	}
 
 	if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && ($_user_location != 'public')) {
+		if (isset($in_get) && $in_get && (($pos = strpos($_SERVER['PHP_SELF'], 'get.php/')) !== FALSE)) {
+			$redirect = substr($_SERVER['PHP_SELF'], 0, $pos) . 'login.php';
+			header('Location: '.$redirect);
+			exit;
+		}
+
 		header('Location: '.$_base_href.'login.php');
 		exit;
 	}
