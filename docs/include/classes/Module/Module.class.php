@@ -499,6 +499,17 @@ class Module {
 	function disable() {
 		global $db;
 
+		// remove any privileges admins, students
+		if ($this->_privilege > 1) {
+			$sql = 'UPDATE '. TABLE_PREFIX . 'course_enrollment SET `privileges`=`privileges`-'.$this->_privilege.' WHERE `privileges` > 1 AND (`privileges` & '.$this->_privilege.')<>0';
+			$result = mysql_query($sql, $db);
+		}
+
+		if ($this->_admin_privilege > 1) {
+			$sql = 'UPDATE '. TABLE_PREFIX . 'admins SET `privileges`=`privileges`-'.$this->_admin_privilege.' WHERE `privileges` > 1 AND (`privileges` & '.$this->_admin_privilege.')<>0';
+			$result = mysql_query($sql, $db);
+		}
+
 		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
 		$result = mysql_query($sql, $db);
 
