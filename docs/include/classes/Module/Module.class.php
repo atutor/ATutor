@@ -141,7 +141,7 @@ class ModuleFactory {
 	// private
 	// used for sorting modules
 	function compare($a, $b) {
-		return strnatcmp($a->getName(), $b->getName());
+		return strnatcasecmp($a->getName(), $b->getName());
 	}
 }
 
