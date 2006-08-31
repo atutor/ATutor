@@ -28,19 +28,12 @@ if (isset($_POST['submit'])) {
 	$side_menu = '';
 	$_stack_names = array();
 
-	foreach($_stacks as $name=>$info) {
-		$_stack_names[] = $name;
-	}
+	$_stack_names = array_keys($_stacks);
 
 	$_POST['stack'] = array_unique($_POST['stack']);
 	$_POST['stack'] = array_intersect($_POST['stack'], $_stack_names);
 
-	foreach($_POST['stack'] as $dropdown) {
-		if($dropdown != '') {
-			$side_menu .= $dropdown . '|';
-		}
-	}
-	$side_menu = substr($side_menu, 0, -1);
+	$side_menu = implode('|', $_POST['stack']);
 
 	$sql    = "UPDATE ".TABLE_PREFIX."courses SET side_menu='$side_menu' WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);

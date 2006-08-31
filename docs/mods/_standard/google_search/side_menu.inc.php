@@ -1,5 +1,5 @@
 <?php
-global $savant, $_config;
+global $savant, $_config, $stripslashes;
 ob_start(); 
 ?>
 
