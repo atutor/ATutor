@@ -69,22 +69,15 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-$_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($_REQUEST['fid']);
-$_pages['forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
-$_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php?fid='.$_REQUEST['fid']);
+$_pages['forum/index.php?fid='.$_REQUEST['fid']]['title']    = get_forum_name($_REQUEST['fid']);
+$_pages['forum/index.php?fid='.$_REQUEST['fid']]['parent']   = 'forum/list.php';
+$_pages['forum/index.php?fid='.$_REQUEST['fid']]['children'] = array('forum/move_thread.php');
 
-$_pages['forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
-$_pages['forum/new_thread.php?fid='.$fid]['parent']    = 'forum/index.php?fid='.$_REQUEST['fid'];
-
-$_pages['forum/view.php']['title']  = $post_row['subject'];
-$_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$_REQUEST['fid'];
-
-$_pages['forum/move_thread.php']['title_var'] = 'move_post';
+$_pages['forum/move_thread.php']['title_var'] = 'move_thread';
 $_pages['forum/move_thread.php']['parent']    = 'forum/index.php?fid='.$_REQUEST['fid'];
 $_pages['forum/move_thread.php']['children']  = array();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="fid" value="<?php echo $_REQUEST['fid']; ?>" />
