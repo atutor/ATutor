@@ -22,9 +22,7 @@ require('../common/body_header.inc.php'); ?>
 <dl>
 	<dt>Stick Thread</dt>
 	<dd><p>Use the exclamation point icon next to a thread to stick it.  This keeps the specified thread at the top of the forum's thread list and is useful for keeping important information visible to forum users. </p>
-
 	<p>To unstick a thread, just use the <em>Sticky Thread</em> icon again.</p>
-
 	<p>Some possible uses of a sticky thread include: course dates, forum rules, contact information, or important course material.</p>
 	</dd>
 
@@ -34,8 +32,11 @@ require('../common/body_header.inc.php'); ?>
 	<p>To change the lock preferences or unlock a thread, use the <em>Unlock Thread</em> icon.</p>
 	</dd>
 
+	<dt>Move Thread</dt>
+	<dd>To move a thread, use the <em>Move Thread</em> icon next to the thread title. This will move all posts within the thread to the target forum.</dd>
+
 	<dt>Delete Thread</dt>
-	<dd>To delete a thread, use the <em>Delete Thread</em> icon next to the thread title.  This will delete all messages within the thread and cannot be undeleted.</dd>
+	<dd>To delete a thread, use the <em>Delete Thread</em> icon next to the thread title. This will delete all posts within the thread and cannot be undeleted.</dd>
 </dl>
 
 <?php require('../common/body_footer.inc.php'); ?>

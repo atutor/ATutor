@@ -23,6 +23,9 @@
 			<dt>Maximum Course Float</dt>
 			<dd>How much a course can be over its <em>Maximum Course Size</em> limit while still allowing a file to upload or import. Makes the course limit actually be <em>Max Course Size</em> + <em>Max Course Float</em>. When <em>Max Course Float</em> is reached, no more uploads will be allowed for that course until files are deleted and the course's space usage falls under the Maximum Course Size.</dd>
 
+			<dt>Display Name Format</dt>
+			<dd>The Display Name Format option controls how non-administrator users' names appear. This option is available in ATutor 1.5.4+.</dd>
+
 			<dt>Authenticate Against A Master Student List</dt>
 			<dd>Whether or not to enable Master Student List authentication. If enabled, only new accounts that validate against the master list will be created. See the <a href="master_student_list.php">Master Student List</a> section for additional details on using this feature.</dd>
 
@@ -63,7 +66,7 @@
 			<dd>The administrator may wish to set up a <a href="cron_setup.php">cron job</a> (automated event scheduler) for email. If enabled, and if the cron has been set up, system email will be sent out at a certain time instead of immediately. This can help speed up email capable features where a slower mail server is being used.</dd>
 
 			<dt>Automatically Install New Language Packs</dt>
-			<dd>If enabled, and if the <a href="cron_setup.php">cron job</a> (automated event scheduler) has been set up, new language packs published on atutor.ca will be imported automatically.</dd>
+			<dd>If enabled, and if the <a href="cron_setup.php">cron job</a> (automated event scheduler) has been set up, new language packs published on atutor.ca will be imported automatically This option is available in ATutor 1.5.3.2+.</dd>
 		</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>
