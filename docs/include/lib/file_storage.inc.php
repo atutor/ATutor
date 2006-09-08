@@ -221,7 +221,7 @@ function fs_print_folders($current_folder_id, $parent_folder_id, &$folders, $dis
 		if ($disable) {
 			echo ' disabled="disabled"';
 		}
-		echo '/><label for="f'.$folder_id.'">'.$folder_info['title'];
+		echo '/><label for="f'.$folder_id.'">'.htmlspecialchars($folder_info['title']);
 		if ($folder_id == $current_folder_id) {
 			echo ' '._AT('current_location');
 		}

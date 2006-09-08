@@ -211,7 +211,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 		$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id IN ($files) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_name";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
-			$file_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/file_types/'.fs_get_file_type_icon($row['file_name']).'.gif" height="16" width="16" alt="" title="" /> '.$row['file_name'].'</li>';
+			$file_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/file_types/'.fs_get_file_type_icon($row['file_name']).'.gif" height="16" width="16" alt="" title="" /> '.htmlspecialchars($row['file_name']).'</li>';
 		}
 		$msg->addConfirm(array('FILE_DELETE', $file_list_to_print), $hidden_vars);
 	}
@@ -222,7 +222,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 		$hidden_vars['folders'] = $folders;
 		$rows = fs_get_folder_by_id($_GET['folders'], $owner_type, $owner_id);
 		foreach ($rows as $row) {
-			$dir_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/folder.gif" height="18" width="20" alt="" title="" /> '.$row['title'].'</li>';
+			$dir_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/folder.gif" height="18" width="20" alt="" title="" /> '.htmlspecialchars($row['title']).'</li>';
 		}
 		$msg->addConfirm(array('DIR_DELETE', $dir_list_to_print), $hidden_vars);
 	}
@@ -506,10 +506,10 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 			<a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=0"><?php echo _AT('home'); ?></a>
 		<?php foreach ($folder_path as $folder_info): ?>
 			<?php if ($folder_info['folder_id'] == $folder_id): ?>
-				» <?php echo $folder_info['title']; ?>
+				» <?php echo htmlspecialchars($folder_info['title']); ?>
 				<?php $parent_folder_id = $folder_info['parent_folder_id']; ?>
 			<?php else: ?>
-				» <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a>
+				» <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a>
 			<?php endif; ?>
 		<?php endforeach; ?>
 	</td>
@@ -551,7 +551,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 	<?php foreach ($folders as $folder_info): ?>
 		<tr onmousedown="document.form['f<?php echo $folder_info['folder_id']; ?>'].checked = !document.form['f<?php echo $folder_info['folder_id']; ?>'].checked; rowselectbox(this, document.form['f<?php echo $folder_info['folder_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $folder_info['folder_id']; ?>_1">
 			<td width="10"><input type="checkbox" name="folders[]" value="<?php echo $folder_info['folder_id']; ?>" id="f<?php echo $folder_info['folder_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
-			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo $folder_info['title']; ?></a></td>
+			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -563,9 +563,9 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 		<tr onmousedown="document.form['r<?php echo $file_info['file_id']; ?>'].checked = !document.form['r<?php echo $file_info['file_id']; ?>'].checked; rowselectbox(this, document.form['r<?php echo $file_info['file_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $file_info['file_id']; ?>_0">
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td valign="top">
-				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $file_info['file_name']; ?>
+				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo htmlspecialchars($file_info['file_name']); ?>
 				<?php if ($file_info['description']): ?>
-					<p class="fm-desc"><?php echo $file_info['description']; ?></p>
+					<p class="fm-desc"><?php echo htmlspecialchars($file_info['description']); ?></p>
 				<?php endif; ?>
 			</td>
 			<td valign="top"><?php echo get_display_name($file_info['member_id']); ?></td>
