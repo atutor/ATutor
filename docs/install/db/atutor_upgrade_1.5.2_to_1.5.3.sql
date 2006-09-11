@@ -22,23 +22,6 @@ INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
 ALTER TABLE `modules` ADD `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL , ADD `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL ;
 
 
-# --------------------------------------------------------
-
-# assignments table
-CREATE TABLE `assignments` (
-	`assignment_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL default '',
-	`title` VARCHAR(60) NOT NULL default '',
-	`assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
-	`date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-	`date_cutoff` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-	`multi_submit` TINYINT DEFAULT '0',
-	PRIMARY KEY  (`assignment_id`),
-	INDEX (`course_id`)
-) TYPE = MYISAM;
-
-# --------------------------------------------------------
-
 # forum groups table
 CREATE TABLE `forums_groups` (
   `forum_id` mediumint( 8 ) unsigned NOT NULL default '0',
