@@ -64,21 +64,22 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('EMAIL_EXISTS');
 	}
 
+	$priv = 0;
+	if (isset($_POST['priv_admin'])) {
+		// overrides all above.
+		$priv = AT_ADMIN_PRIV_ADMIN;
+	} else if (isset($_POST['privs'])) {
+		foreach ($_POST['privs'] as $value) {
+			$priv += intval($value);
+		}
+	}
+	$_POST['privs'] = $priv;
+
 	if (!$msg->containsErrors()) {
 		$_POST['login']     = $addslashes($_POST['login']);
 		$_POST['password']  = $addslashes($_POST['password']);
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
-
-		$priv = 0;
-		if (isset($_POST['priv_admin'])) {
-			// overrides all above.
-			$priv = AT_ADMIN_PRIV_ADMIN;
-		} else if (isset($_POST['privs'])) {
-			foreach ($_POST['privs'] as $value) {
-				$priv += intval($value);
-			}
-		}
 
 		$admin_lang = $_config['default_language']; 
 
@@ -92,6 +93,11 @@ if (isset($_POST['cancel'])) {
 		header('Location: index.php');
 		exit;
 	}
+	$_POST['login']             = $stripslashes($_POST['login']);
+	$_POST['password']          = $stripslashes($_POST['password']);
+	$_POST['confirm_password']  = $stripslashes($_POST['confirm_password']);
+	$_POST['real_name']         = $stripslashes($_POST['real_name']);
+	$_POST['email']             = $stripslashes($_POST['email']);
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -101,27 +107,27 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
-		<input type="text" name="login" id="login" size="25" value="<?php echo $_POST['login']; ?>" />
+		<input type="text" name="login" id="login" size="25" value="<?php echo htmlspecialchars($_POST['login']); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
-		<input type="password" name="password" id="password" size="25" />
+		<input type="password" name="password" id="password" size="25" value="<?php echo htmlspecialchars($_POST['password']); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('confirm_password'); ?></label><br />
-		<input type="password" name="confirm_password" id="password2" size="25" />
+		<input type="password" name="confirm_password" id="password2" size="25" value="<?php echo htmlspecialchars($_POST['confirm_password']); ?>" />
 	</div>
 
 	<div class="row">
 		<label for="real_name"><?php echo _AT('real_name'); ?></label><br />
-		<input type="text" name="real_name" id="real_name" size="30" value="<?php echo $_POST['real_name']; ?>" />
+		<input type="text" name="real_name" id="real_name" size="30" value="<?php echo htmlspecialchars($_POST['real_name']); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email'); ?></label><br />
-		<input type="text" name="email" id="email" size="30" value="<?php echo $_POST['email']; ?>" />
+		<input type="text" name="email" id="email" size="30" value="<?php echo htmlspecialchars($_POST['email']); ?>" />
 	</div>
 
 	<div class="row">
