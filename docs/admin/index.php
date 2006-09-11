@@ -68,7 +68,7 @@ if ($_config['check_version']) {
 		</form>
 	</div>
 
-	<?php if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)): ?>
+	<?php if (false && admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)): ?>
 	<div class="input-form" style="width: 98%;">
 		<form method="get" action="<?php echo $_base_href; ?>admin/fix_content.php">
 			<div class="row">
