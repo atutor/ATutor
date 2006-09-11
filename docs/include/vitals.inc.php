@@ -531,7 +531,7 @@ if (!$_SESSION['is_admin']       &&
 	{
 		$diff = time() - $_SESSION['cid_time'];
 		if ($diff > 0) {
-			$sql = "UPDATE ".TABLE_PREFIX."member_track SET counter=counter+1, duration=duration+$diff WHERE member_id=$_SESSION[member_id] AND content_id=$_SESSION[s_cid]";
+			$sql = "UPDATE ".TABLE_PREFIX."member_track SET counter=counter+1, duration=duration+$diff, last_accessed=NOW() WHERE member_id=$_SESSION[member_id] AND content_id=$_SESSION[s_cid]";
 
 			$result = mysql_query($sql, $db);
 
