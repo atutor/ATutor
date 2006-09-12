@@ -71,6 +71,7 @@ if (isset($_GET['asc'])) {
 
 //search
 if ($_GET['search']) {
+	$_GET['search'] = trim($_GET['search']);
 	$page_string .= SEP.'search='.urlencode($_GET['search']);
 	$search = $addslashes($_GET['search']);
 	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
