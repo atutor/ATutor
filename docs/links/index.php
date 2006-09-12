@@ -102,8 +102,6 @@ if (!empty($groups)) {
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
-if ($num_results > 0):
-
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
@@ -144,52 +142,51 @@ if ($num_results > 0):
 		</div>
 </div>
 </form>
-<?php endif; ?>
 
-	<table class="data static" summary="" rules="cols">
-	<colgroup>
-		<?php if ($col == 'LinkName'): ?>
-			<col class="sort" />
-			<col span="2" />
-		<?php elseif($col == 'name'): ?>
-			<col />
-			<col class="sort" />
-			<col />
-		<?php elseif($col == 'description'): ?>
-			<col span="2" />
-			<col class="sort" />
-		<?php endif; ?>
-	</colgroup>
-	<thead>
-	<tr>
-		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=LinkName<?php echo $page_string; ?>"><?php echo _AT('title');          ?></a></th>
-		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=name<?php echo $page_string; ?>"><?php echo _AT('category');        ?></a></th>
-		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=description<?php echo $page_string; ?>"><?php echo _AT('description'); ?></a></th>
-	</tr>
-	</thead>
-	<tbody>
-		<?php if ($row = mysql_fetch_assoc($result)) : ?>
-		<?php
-		do {
-			?>
-			<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;">
-				<td><a href="links/index.php?view=<?php echo $row['link_id']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'links.LinkName'); ?></a></td>
-				<td><?php 
-					if (empty($row['name'])) {
-						$row['name'] = get_group_name($row['owner_id']);
-					}
-					echo AT_print($row['name'], 'links.name'); 
-				?></td>
-				<td><?php echo AT_print($row['Description'], 'links.Description'); ?></td>
-			</tr>
-		<?php 
-			} while ($row = mysql_fetch_assoc($result)); ?>
-		<?php else: ?>
-			<tr>
-				<td colspan="3"><?php echo _AT('none_found'); ?></td>
-			</tr>
-		<?php endif; ?>
-	</tbody>
-	</table>
+<table class="data static" summary="" rules="cols">
+<colgroup>
+	<?php if ($col == 'LinkName'): ?>
+		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'name'): ?>
+		<col />
+		<col class="sort" />
+		<col />
+	<?php elseif($col == 'description'): ?>
+		<col span="2" />
+		<col class="sort" />
+	<?php endif; ?>
+</colgroup>
+<thead>
+<tr>
+	<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=LinkName<?php echo $page_string; ?>"><?php echo _AT('title');          ?></a></th>
+	<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=name<?php echo $page_string; ?>"><?php echo _AT('category');           ?></a></th>
+	<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=description<?php echo $page_string; ?>"><?php echo _AT('description'); ?></a></th>
+</tr>
+</thead>
+<tbody>
+	<?php if ($row = mysql_fetch_assoc($result)) : ?>
+	<?php
+	do {
+		?>
+		<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;">
+			<td><a href="links/index.php?view=<?php echo $row['link_id']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'links.LinkName'); ?></a></td>
+			<td><?php 
+				if (empty($row['name'])) {
+					$row['name'] = get_group_name($row['owner_id']);
+				}
+				echo AT_print($row['name'], 'links.name'); 
+			?></td>
+			<td><?php echo AT_print($row['Description'], 'links.Description'); ?></td>
+		</tr>
+	<?php 
+		} while ($row = mysql_fetch_assoc($result)); ?>
+	<?php else: ?>
+		<tr>
+			<td colspan="3"><?php echo _AT('none_found'); ?></td>
+		</tr>
+	<?php endif; ?>
+</tbody>
+</table>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
