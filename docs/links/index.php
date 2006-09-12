@@ -103,6 +103,7 @@ $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
 ?>
+<?php if ($num_results > 0 || isset($_GET['filter'])): ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
 <div class="input-form">
@@ -142,6 +143,7 @@ $num_results = mysql_num_rows($result);
 		</div>
 </div>
 </form>
+<?php endif; ?>
 
 <table class="data static" summary="" rules="cols">
 <colgroup>
