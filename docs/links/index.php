@@ -55,7 +55,7 @@ $categories = get_link_categories();
 //ascending decscending columns...
 $page_string = '';
 $orders = array('asc' => 'desc', 'desc' => 'asc');
-$cols   = array('LinkName' => 1, 'CatName' => 1, 'description' => 1);
+$cols   = array('LinkName' => 1, 'name' => 1, 'description' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
@@ -98,7 +98,6 @@ if (!empty($groups)) {
 } else {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
 }
-
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
@@ -151,7 +150,7 @@ if ($num_results > 0):
 		<?php if ($col == 'LinkName'): ?>
 			<col class="sort" />
 			<col span="2" />
-		<?php elseif($col == 'CatName'): ?>
+		<?php elseif($col == 'name'): ?>
 			<col />
 			<col class="sort" />
 			<col />
@@ -163,7 +162,7 @@ if ($num_results > 0):
 	<thead>
 	<tr>
 		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=LinkName<?php echo $page_string; ?>"><?php echo _AT('title');          ?></a></th>
-		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=CatName<?php echo $page_string; ?>"><?php echo _AT('category');        ?></a></th>
+		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=name<?php echo $page_string; ?>"><?php echo _AT('category');        ?></a></th>
 		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=description<?php echo $page_string; ?>"><?php echo _AT('description'); ?></a></th>
 	</tr>
 	</thead>
@@ -178,7 +177,7 @@ if ($num_results > 0):
 					if (empty($row['name'])) {
 						$row['name'] = get_group_name($row['owner_id']);
 					}
-					echo AT_print($row['name'], 'links.CatName'); 
+					echo AT_print($row['name'], 'links.name'); 
 				?></td>
 				<td><?php echo AT_print($row['Description'], 'links.Description'); ?></td>
 			</tr>
