@@ -556,11 +556,12 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 	if ($package_base_path == '.') {
 		$package_base_path = '';
 	}
-	if (is_dir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name)) {
 
+	if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+		if (!$msg->containsErrors()) {
+			$msg->addError('IMPORT_FAILED');
+		}
 	}
-
-	rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name);
 	clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
 	if (isset($_POST['url'])) {
@@ -569,11 +570,15 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 
 
 if ($_POST['s_cid']){
-	$msg->addFeedback('IMS_IMPORT_SUCCESS');
+	if (!$msg->containsErrors()) {
+		$msg->addFeedback('IMS_IMPORT_SUCCESS');
+	}
 	header('Location: ../../editor/edit_content.php?cid='.intval($_POST['cid']));
 	exit;
 } else {
-	$msg->addFeedback('IMS_IMPORT_SUCCESS');
+	if (!$msg->containsErrors()) {
+		$msg->addFeedback('IMS_IMPORT_SUCCESS');
+	}
 	if ($_GET['tile']) {
 		header('Location: '.$_base_href.'tools/tile/index.php');
 	} else {
