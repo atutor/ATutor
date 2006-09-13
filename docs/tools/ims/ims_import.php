@@ -25,6 +25,7 @@ authenticate(AT_PRIV_CONTENT);
 $_SESSION['done'] = 1;
 
 $package_base_path = '';
+$xml_base_path = '';
 $element_path = array();
 $imported_glossary = array();
 
@@ -33,9 +34,12 @@ $imported_glossary = array();
 	function startElement($parser, $name, $attrs) {
 		global $items, $path, $package_base_path;
 		global $element_path;
-		static $current_identifier;		
+		global $xml_base_path;
+		static $current_identifier;
 
-		if ($name == 'file') {
+		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
+			$xml_base_path = $attrs['xml:base'];
+		} else if ($name == 'file') {
 			// special case for webCT content packages that don't specify the `href` attribute 
 			// with the `<resource>` element.
 			// we take the `href` from the first `<file>` element.
@@ -428,6 +432,12 @@ if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
 if ($package_base_path) {
 	$package_base_path = implode('/', $package_base_path);
 }
+if ($xml_base_path) {
+	$package_base_path = $xml_base_path . $package_base_path;
+
+	mkdir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$xml_base_path);
+	$package_base_name = $xml_base_path . $package_base_name;
+}
 reset($items);
 
 /* get the top level content ordering offset */
@@ -437,6 +447,9 @@ $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 	
 	foreach ($items as $item_id => $content_info) {
+		if (isset($content_info['href'], $xml_base_path)) {
+			$content_info['href'] = $xml_base_path . $content_info['href'];
+		}
 		if (!isset($content_info['href'])) {
 			// this item doesn't have an identifierref. so create an empty page.
 			$content = '';
@@ -475,7 +488,6 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 		} else if (in_array($ext, array('txt', 'css', 'html', 'htm', 'csv', 'asc', 'tsv', 'xml', 'xsl'))) {
 			/* this is a plain text file */
 			$content = file_get_contents(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
-
 			if ($content === false) {
 				/* if we can't stat() it then we're unlikely to be able to read it */
 				/* so we'll never get here. */
@@ -483,7 +495,7 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 			}
 
 			// get the contents of the 'head' element
-			$head = get_html_head ($content);
+			$head = get_html_head($content);
 			$content = get_html_body($content);
 			if ($contains_glossary_terms) {
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
