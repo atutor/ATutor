@@ -213,9 +213,8 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	*										$args[1..x] = optional arguments to the formatting string 
 	* @return	string|array		full resulting message
 	* @see		$_base_href			in include/vitals.inc.php
-	* @see		$lang_db			in include/vitals.inc.php
+	* @see		$db			        in include/vitals.inc.php
 	* @see		TABLE_PREFIX_LANG	in include/vitals.inc.php
-	* @see		AT_CVS_DEVELOPMENT	in include/vitals.inc.php
 	* @see		cache()				in include/phpCache/phpCache.inc.php
 	* @see		cache_variable()	in include/phpCache/phpCache.inc.php
 	* @author	Joel Kronenberg
@@ -239,12 +238,12 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 				if (preg_match("/^(AT_ERROR|AT_INFOS|AT_WARNING|AT_FEEDBACK|AT_HELP|AT_CONFIRM).*/", $args[0])) {
 		
 					global $_base_href;
-					global $lang_db;
+					global $db;
 					global $_base_path;
 					
 					/* get $_msgs_new from the DB */
 					$sql	= 'SELECT text FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' WHERE term="' . $args[0] . '" AND variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
-					$result	= @mysql_query($sql, $lang_db);
+					$result	= @mysql_query($sql, $db);
 					$i = 1;
 					$msgs = '';
 					
@@ -258,7 +257,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 					}
 					if (defined('TABLE_SUFFIX_LANG') && TABLE_SUFFIX_LANG) {
 						$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'language_pages (`term`, `page`) VALUES ("'.$args[0].'", "'.$_rel_url.'")';
-						mysql_query($sql, $lang_db);
+						mysql_query($sql, $db);
 					}
 
 					return $msgs;
@@ -271,12 +270,12 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 			$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
 
 			if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {
-				global $lang_db;
+				global $db;
 
 				/* get $_template from the DB */
 			
 				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L, '.TABLE_PREFIX_LANG.'language_pages'.TABLE_SUFFIX_LANG.' P WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable<>"_msgs" AND L.term=P.term AND P.page="'.$_rel_url.'"';
-				$result	= mysql_query($sql, $lang_db);
+				$result	= mysql_query($sql, $db);
 				while ($row = mysql_fetch_assoc($result)) {
 					// saves us from doing an ORDER BY
 					if ($row['language_code'] == $_SESSION['lang']) {
@@ -311,13 +310,13 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 		//error_reporting($c_error);
 
 		if (empty($outString)) {
-			global $lang_db;
+			global $db;
 
 			//$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable<>"_msgs" AND L.term="'.$format.'"';
 
 			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L WHERE L.language_code="'.$_SESSION['lang'].'" AND L.variable<>"_msgs" AND L.term="'.$format.'"';
 
-			$result	= mysql_query($sql, $lang_db);
+			$result	= mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 
 			$_template[$row['term']] = stripslashes($row['text']);
@@ -335,7 +334,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 			/* purge the language cache */
 			/* update the locations */
 			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'language_pages (`term`, `page`) VALUES ("'.$format.'", "'.$_rel_url.'")';
-			mysql_query($sql, $lang_db);
+			mysql_query($sql, $db);
 
 		}
 
@@ -778,13 +777,13 @@ function getTranslatedCodeStr($codes) {
 
 	if (!isset($_msgs_new)) {
 		if ( !($lang_et = cache(120, 'msgs_new', $_SESSION['lang'])) ) {
-			global $lang_db, $_base_path;
+			global $db, $_base_path;
 
 			$parent = Language::getParentCode($_SESSION['lang']);
 
 			/* get $_msgs_new from the DB */
 			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
-			$result	= @mysql_query($sql, $lang_db);
+			$result	= @mysql_query($sql, $db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
 				// do not cache key as a digit (no contstant(), use string)
@@ -817,7 +816,7 @@ function getTranslatedCodeStr($codes) {
 			/* the language for this msg is missing: */
 		
 			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs"';
-			$result	= @mysql_query($sql, $lang_db);
+			$result	= @mysql_query($sql, $db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
 				if (($row['term']) === $codes) {

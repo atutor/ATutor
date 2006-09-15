@@ -14,7 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 1);
-define('AT_DEVEL_TRANSLATE', 0);
+define('AT_DEVEL_TRANSLATE', 1);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -140,16 +140,9 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 		exit;
 	}
 
-	/* development uses a common language db */
-	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
-		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
-	} else {
-		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
-		define('AT_CVS_DEVELOPMENT', '');
-		define('TABLE_SUFFIX_LANG', '');
-
-		$lang_db =& $db;
-	}
+	define('TABLE_PREFIX_LANG', TABLE_PREFIX);
+	define('TABLE_SUFFIX_LANG', '');
+	$lang_db =& $db;
 }
 
 /* defaults: */

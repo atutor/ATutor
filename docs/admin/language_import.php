@@ -25,21 +25,7 @@ require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
 $_SESSION['done'] = 1;
 
-if (isset($_POST['svn_submit'])) {
-	$_POST['lang'] = $addslashes($_POST['lang']);
-	$sql = "SELECT * FROM language_text_SVN WHERE language_code='en'";
-	$result = mysql_query($sql, $lang_db);
-	$sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ";
-	while ($row = mysql_fetch_assoc($result)) {
-		$row['text'] = addslashes($row['text']);
-		$row['context'] = addslashes($row['context']);
-		$sql .= "('{$row['language_code']}', '{$row['variable']}', '{$row['term']}', '{$row['text']}', '{$row['revised_date']}', '{$row['context']}'),";
-	}
-	$sql = substr($sql, 0, -1);
-	mysql_query($sql, $db);
-	header('Location: language_import.php');
-	exit;
-} else if (isset($_POST['submit_import'])) {
+if (isset($_POST['submit_import'])) {
 	require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
 	$remoteLanguageManager =& new RemoteLanguageManager();
 	$remoteLanguageManager->import($_POST['language']);
@@ -114,20 +100,6 @@ if (isset($_POST['svn_submit'])) {
 		?>
 </div>
 </form>
-
-<?php if (defined('AT_DEVEL') && AT_DEVEL && ($lang_db != $db)): ?>
-	<form name="form1" method="post" action="admin/language_import.php">
-		<div class="input-form">
-			<div class="row">
-				Import English language from the SVN language database to local installation.
-			</div>
-
-			<div class="row buttons">
-				<input type="submit" name="svn_submit" value="<?php echo _AT('import'); ?>" />
-			</div>
-		</div>
-	</form>
-<?php endif; ?>
 
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

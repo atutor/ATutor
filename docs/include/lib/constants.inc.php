@@ -70,6 +70,11 @@ $display_name_formats[4] = 'display_name_format_lf';
 $display_name_formats[5] = 'display_name_format_lfst';
 
 
+/* the atutor.ca language translation server: */
+define('AT_LANG_DB_HOST', 'atutorsvn.atrc.utoronto.ca');
+define('AT_LANG_DB_USER', 'read_dev_lang');
+define('AT_LANG_DB_PASS', 'read_dev_lang');
+
 /* links */
 define('LINK_CAT_COURSE',	1);
 define('LINK_CAT_GROUP',	2);

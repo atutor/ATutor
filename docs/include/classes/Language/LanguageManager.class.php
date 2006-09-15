@@ -65,10 +65,10 @@ class LanguageManager {
 	* Initializes availableLanguages and numLanguages.
 	*/
 	function LanguageManager() {
-		global $lang_db;
+		global $db;
 
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'languages'.TABLE_SUFFIX_LANG.' ORDER BY native_name';
-		$result = mysql_query($sql, $lang_db);
+		$result = mysql_query($sql, $db);
 		while($row = mysql_fetch_assoc($result)) {
 			if ((defined('TABLE_SUFFIX_LANG') && TABLE_SUFFIX_LANG) || (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE)) {
 				$row['status'] = AT_LANG_STATUS_PUBLISHED; // b/c the print drop down checks for it.				
@@ -213,7 +213,7 @@ class LanguageManager {
 
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
-			if ($language->getStatus() == AT_LANG_STATUS_PUBLISHED) {
+			if ((defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) || ($language->getStatus() == AT_LANG_STATUS_PUBLISHED)) {
 				echo '<option value="'.$language->getCode().'"';
 				if ($language->getCode() == $current_language) {
 					echo ' selected="selected"';
@@ -308,9 +308,50 @@ class LanguageManager {
 		@unlink($import_path . 'readme.txt');
 		@unlink($filename);
 	}
+
+	// public
+	// imports LIVE language from the atutor language database
+	function liveImport($language_code) {
+		global $db;
+
+		$tmp_lang_db = mysql_connect(AT_LANG_DB_HOST, AT_LANG_DB_USER, AT_LANG_DB_PASS);
+		if (!$tmp_lang_db) {
+			/* AT_ERROR_NO_DB_CONNECT */
+			echo 'Unable to connect to db.';
+			exit;
+		}
+		if (!mysql_select_db('dev_atutor_langs', $tmp_lang_db)) {
+			echo 'DB connection established, but database "dev_atutor_langs" cannot be selected.';
+			exit;
+		}
+
+		$sql = "SELECT * FROM languages_SVN WHERE language_code='$language_code'";
+		$result = mysql_query($sql, $tmp_lang_db);
+
+		if ($row = mysql_fetch_assoc($result)) {
+			$row['reg_exp'] = addslashes($row['reg_exp']);
+			$row['native_name'] = addslashes($row['native_name']);
+			$row['english_name'] = addslashes($row['english_name']);
+
+			$sql = "REPLACE INTO ".TABLE_PREFIX."languages VALUES ('{$row['language_code']}', '{$row['char_set']}', '{$row['direction']}', '{$row['reg_exp']}', '{$row['native_name']}', '{$row['english_name']}', 3)";
+			$result = mysql_query($sql, $db);
+
+			$sql = "SELECT * FROM language_text_SVN WHERE language_code='$language_code'";
+			$result = mysql_query($sql, $tmp_lang_db);
+
+			$sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ";
+			while ($row = mysql_fetch_assoc($result)) {
+				$row['text'] = addslashes($row['text']);
+				$row['context'] = addslashes($row['context']);
+				$sql .= "('{$row['language_code']}', '{$row['variable']}', '{$row['term']}', '{$row['text']}', '{$row['revised_date']}', '{$row['context']}'),";
+			}
+			$sql = substr($sql, 0, -1);
+			mysql_query($sql, $db);
+		}
+	}
 	
 	function getXML() {
-		global $lang_db;
+		global $db;
 
 		$lang_xml = '<?xml version="1.0" encoding="iso-8859-1"?>
 		<!-- These are ATutor language packs - http://www.atutor.ca-->

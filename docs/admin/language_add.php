@@ -27,7 +27,7 @@ if (isset($_POST['cancel'])) {
 	if ($languageManager->exists($_POST['code'], $_POST['locale'])) {
 		$msg->addError('LANG_EXISTS');
 	} else {
-		$state = LanguageEditor::addLanguage($_POST, $lang_db);
+		$state = LanguageEditor::addLanguage($_POST, $db);
 	}
 
 	if (!$msg->containsErrors() && $state !== FALSE) {
