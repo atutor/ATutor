@@ -23,17 +23,17 @@ require('include/html/chat_header.inc.php');
 ?>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<th align="left"><?php echo _AC('chat_options'); ?></th>
+	<th align="left"><?php echo _AT('chat_options'); ?></th>
 </tr>
 </table>
 
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<td align="right"><a href="prefs.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AC('chat_edit_prefs'); ?></a> | <a href="logout.php" target="_top" accesskey="q" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_exit'); ?></a></td></tr></table>
+	<td align="right"><a href="prefs.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('chat_edit_prefs'); ?></a> | <a href="logout.php" target="_top" accesskey="q" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AT('chat_exit'); ?></a></td></tr></table>
 <br /><br />
 <table width="100%" border="0" cellpadding="5" cellspacing="0"><tr>
 <th
-align="left"><?php echo _AC('chat_list_and_history'); ?></th></tr></table><?php
+align="left"><?php echo _AT('chat_list_and_history'); ?></th></tr></table><?php
 	echo '<ul>';
 	if ($dir = opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
 		while (($file = readdir($dir)) !== false) {
@@ -50,7 +50,7 @@ align="left"><?php echo _AC('chat_list_and_history'); ?></th></tr></table><?php
 			} else if ($now - $la < $admin['chatSessionLifeSpan']) {
 				$colour	= getChatIDColour($chatName, $myPrefs['colours']);
 				if ($chatName == $_SESSION['login']) {
-					echo '<li><a href="filterHistory.php?filterChatID='.$chatName.'" target="_top" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'"><span style="color:'.$colour.'">'.$chatName.'</span></a> ('._AC('chat_you').')</li>';
+					echo '<li><a href="filterHistory.php?filterChatID='.$chatName.'" target="_top" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'"><span style="color:'.$colour.'">'.$chatName.'</span></a> ('._AT('chat_you').')</li>';
 				} else if($chatName != '') {
 					echo '<li><a href="filterHistory.php?filterChatID='.$chatName.'" target="_top" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'"><span style="color:'.$colour.'">'.$chatName.'</span></a></li>';
 				}
@@ -58,8 +58,8 @@ align="left"><?php echo _AC('chat_list_and_history'); ?></th></tr></table><?php
                 resetLastAccessed($chatName);
 				$topMsgNum = $bottomMsgNum = 0;
                 howManyMessages($topMsgNum, $bottomMsgNum);
-				postMessage(_AC('chat_system'),
-							_AC('chat_user_logged_out', $chatName),
+				postMessage(_AT('chat_system'),
+							_AT('chat_user_logged_out', $chatName),
 							$topMsgNum,
 							$bottomMsgNum);
 			}
@@ -69,18 +69,18 @@ align="left"><?php echo _AC('chat_list_and_history'); ?></th></tr></table><?php
 	echo '</ul>';
 
 	echo '<table width="100%" border="0" cellpadding="5" cellspacing="0">
-           <tr><td align="right"><a href="history.php" target="_top" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'._AC('chat_full_history').'</a> | <a href="options.php" target="options" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'._AC('chat_refresh_user_list').'</a></td></tr></table>';
+           <tr><td align="right"><a href="history.php" target="_top" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'._AT('chat_full_history').'</a> | <a href="options.php" target="options" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'._AT('chat_refresh_user_list').'</a></td></tr></table>';
 
     //if ($myPrefs['navigationAidFlag'] > 0) {
         echo '<br /><br />';
 		echo '<table width="100%" border="0" cellpadding="5" cellspacing="0">
-           <tr><td align="left"><h4>'._AC('chat_quick_keys').'</h4></td></tr></table>';
+           <tr><td align="left"><h4>'._AT('chat_quick_keys').'</h4></td></tr></table>';
 
-        echo '<ul><li>'._AC('chat_altc').'</li>
-               <li>'._AC('chat_post').'</li>
-               <li>'._AC('chat_altr').'</li>
-               <li>'._AC('chat_altm').'</li>
-               <li>'._AC('chat_altq').'</li></ul>';
+        echo '<ul><li>'._AT('chat_altc').'</li>
+               <li>'._AT('chat_post').'</li>
+               <li>'._AT('chat_altr').'</li>
+               <li>'._AT('chat_altm').'</li>
+               <li>'._AT('chat_altq').'</li></ul>';
     //}
 ?>
 <?php

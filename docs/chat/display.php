@@ -36,7 +36,7 @@ require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 		//$message = $_POST['message'];
 		postMessage($_SESSION['login'], $tmp_message, $topMsgNum, $bottomMsgNum);
 	} else if ($_REQUEST['firstLoginFlag'] > 0) {
-        postMessage(_AC('chat_system'), _AC('chat_user_logged_in', $_SESSION['login']), $topMsgNum, $bottomMsgNum);
+        postMessage(_AT('chat_system'), _AT('chat_user_logged_in', $_SESSION['login']), $topMsgNum, $bottomMsgNum);
     }
 
 require('include/html/chat_header.inc.php');
@@ -56,7 +56,7 @@ require('include/html/chat_header.inc.php');
 <a name="messages"></a>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<th align="left"><?php echo _AC('chat_messages') ?></th>
+	<th align="left"><?php echo _AT('chat_messages') ?></th>
 </tr>
 </table>
 
@@ -71,7 +71,7 @@ require('include/html/chat_header.inc.php');
 	if ($min <= $topMsgNum) {
 	   echo '<table border="0" cellpadding="2" cellspacing="0" width="98%" class="chat-display" align="center">';
 	} else {
-	   echo '<p>'._AC('chat_no_new_messages').'</p>';
+	   echo '<p>'._AT('chat_no_new_messages').'</p>';
 	}
 
 	if ($myPrefs['newestFirstFlag'] > 0) {
@@ -92,23 +92,23 @@ require('include/html/chat_header.inc.php');
 	echo '<tr>';
 	echo '<td align="right">';
     if ($myPrefs['navigationAidFlag'] > 0) {	
-		echo '<a accesskey="m" href="display.php#messages" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'" title="'._AC('chat_jump_to_message').' Alt-m">'._AC('chat_jump_to_message').'</a> | ';
+		echo '<a accesskey="m" href="display.php#messages" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'" title="'._AT('chat_jump_to_message').' Alt-m">'._AT('chat_jump_to_message').'</a> | ';
 	}
 
-	echo '<a accesskey="r" href="display.php" target="display" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'" title="'._AC('chat_refresh_message').' Alt-r">'._AC('chat_refresh_message').'</a>';
+	echo '<a accesskey="r" href="display.php" target="display" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'" title="'._AT('chat_refresh_message').' Alt-r">'._AT('chat_refresh_message').'</a>';
 	echo '</td></tr>';
 	echo '</table>';
     
     echo '<br /><br />';
     if ($myPrefs['refresh'] == 'manual') {
 		echo '<table width="100%" border="0" cellpadding="5" cellspacing="0">
-           <tr><th align="left">'._AC('chat_compose_message').'</th></tr></table>';
+           <tr><th align="left">'._AT('chat_compose_message').'</th></tr></table>';
 		echo '<p>';
 
 		echo '<form action="display.php" target="display" name="f1" method="post" onSubmit="return checkForm();">
 			   <input type="hidden" name="set" value="1" />
 			   <label accesskey="c" for="message"><input type="text" maxlength="200" size="50" id="message" name="message" value="" class="input" title="Alt-c" onfocus="this.className=\'input highlight\'" onblur="this.className=\'input\'" /></label>
-			   <input type="submit" name="submit" value="'._AC('chat_send').'" class="button" title="'._AC('chat_send').'" onfocus="this.className=\'submit highlight\'" onblur="this.className=\'submit\'" />';
+			   <input type="submit" name="submit" value="'._AT('chat_send').'" class="button" title="'._AT('chat_send').'" onfocus="this.className=\'submit highlight\'" onblur="this.className=\'submit\'" />';
 
 		echo '</form></p>';
 		echo '<script language="javascript"><!--

@@ -111,7 +111,7 @@ if($_GET['csv']=='1'){
 		if($row['from_cid']=='' || $row['from_cid'] == '0'){
 			$this_row .= '"0",';
 		}else if ($title_refs[$row['from_cid']] == ''){
-			$this_row .= quote_csv(_AC('deleted')).',';
+			$this_row .= quote_csv(_AT('deleted')).',';
 		}else if ($title_refs[$row['from_cid']] != ''){
 			$this_row .= quote_csv($title_refs[$row['from_cid']]).",";
 		}else{
@@ -120,7 +120,7 @@ if($_GET['csv']=='1'){
 		if($row['to_cid']=='' || $row['to_cid'] == '0'){
 			$this_row .= '"0",';
 		}else if($title_refs[$row['to_cid']] == ''){
-			$this_row .= quote_csv(_AC('deleted')).',';
+			$this_row .= quote_csv(_AT('deleted')).',';
 		}else if($title_refs[$row['to_cid']] != ''){
 			$this_row .= quote_csv($title_refs[$row['to_cid']]).",";
 		}else{

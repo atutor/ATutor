@@ -22,6 +22,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	?></title>
 	<base href="<?php echo $_base_href; ?>" />
 	<link rel="stylesheet" href="<?php echo $_base_path; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $_base_path.'themes/'.$_SESSION['prefs']['PREF_THEME']; ?>/forms.css" type="text/css" />
 	<?php
 		
 		if ($myLang->isRTL()) {

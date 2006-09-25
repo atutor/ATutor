@@ -23,7 +23,7 @@ $admin = getAdminSettings();
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<p align="center"><a href="chat/chat.php?firstLoginFlag=1"><strong> <?php echo _AC('enter_chat');  ?></strong></a></p><br />
+<p align="center"><a href="chat/chat.php?firstLoginFlag=1"><strong> <?php echo _AT('enter_chat');  ?></strong></a></p><br />
 <?php
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
@@ -87,7 +87,7 @@ if (count($tran_files) == 0) {
 	<tr>
 		<th scope="col"><a href="chat/index.php?<?php echo $orders[$order]; ?>=name"><?php echo _AT('chat_transcript');?></a></th>
 		<th scope="col"><?php echo _AT('status'); ?></th>
-		<th scope="col"><a href="chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AC('chat_date'); ?></a></th> 
+		<th scope="col"><a href="chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('chat_date'); ?></a></th> 
 	</tr>
 	</thead>
 	<?php
@@ -110,7 +110,7 @@ if (count($tran_files) == 0) {
 			<td><a href="chat/view_transcript.php?t=<?php echo $file; ?>"><?php echo $file; ?></a></td>
 			<td>
 				<?php if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) { 
-					echo _AC('chat_currently_active');
+					echo _AT('chat_currently_active');
 				} else {
 					echo _AT('chat_inactive');
 				}?>

@@ -16,7 +16,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_LANGUAGES, TRUE) || admin_authenticate(AT_A
 	//admin
 	$this->_pages['admin/language.php']['title_var'] = 'languages';
 	$this->_pages['admin/language.php']['guide']     = 'admin/?p=languages.php';
-	$this->_pages['admin/language.php']['children']  = array('admin/language_import.php', 'admin/language_translate.php');
+	$this->_pages['admin/language.php']['children']  = array('admin/language_import.php', 'admin/language_editor.php', 'admin/language_translate.php');
 
 		$this->_pages['admin/language_add.php']['title_var'] = 'add_language';
 		$this->_pages['admin/language_add.php']['parent']    = 'admin/language.php';
@@ -32,5 +32,10 @@ if (admin_authenticate(AT_ADMIN_PRIV_LANGUAGES, TRUE) || admin_authenticate(AT_A
 
 	$this->_pages['admin/language_translate.php']['title_var'] = 'translate';
 	$this->_pages['admin/language_translate.php']['parent']    = 'admin/language.php';
+
+	$this->_pages['admin/language_editor.php']['title_var'] = 'editor';
+	$this->_pages['admin/language_editor.php']['parent']    = 'admin/language.php';
+
+	$this->_pages['admin/language_term.php']['title_var'] = 'editor';
 }
 ?>

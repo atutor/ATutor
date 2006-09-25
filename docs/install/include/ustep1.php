@@ -213,7 +213,7 @@ if (isset($errors)) {
 <ol>
 	<li>Release Candidate (RC) installations cannot be upgraded.</li>
 	<li>Depending on the size of the existing courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 6).</li>
-	<li>All installed language packs and changes made to the default English language will be deleted.</li>
+	<li>All installed language packs and will be deleted.</li>
 	<li>Some installed themes may not be supported by this version of ATutor.</li>
 	<li>All extra modules will have to be reinstalled before they can be enabled again.</li>
 </ol>

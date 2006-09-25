@@ -51,24 +51,11 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.0.2 or later.';
 		}
 
-		if (!$_POST['override']) {
-			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['tb_prefix']."languages";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
-			$found_lang = false;
-			if ($row['cnt'] > 1) {
-				$found_lang = true;
-			}
-			if ($found_lang == false) {
-				$_POST['override'] = true;
-			}
-		}
-
-		if (!$errors && $_POST['override']) {
+		if (!$errors) {
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			unset($errors);
 
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text WHERE 1";
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text WHERE `variable`<>'_c_template' AND `variable`<>'_c_msgs'";
 			@mysql_query($sql, $db);
 
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'en'";

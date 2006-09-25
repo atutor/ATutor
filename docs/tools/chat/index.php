@@ -78,7 +78,7 @@ if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/')) {
 }
 
 if (count($tran_files) == 0) {
-	echo '<p>'._AC('chat_none_found').'</p>';
+	echo '<p>'._AT('chat_none_found').'</p>';
 } else {?>
 	
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -99,7 +99,7 @@ if (count($tran_files) == 0) {
 		<th scope="col">&nbsp;</th>
 		<th scope="col"><a href="tools/chat/index.php?<?php echo $orders[$order]; ?>=name"><?php echo _AT('chat_transcript');?></a></th>
 		<th scope="col"><?php echo _AT('status'); ?></th>
-		<th scope="col"><a href="tools/chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AC('chat_date'); ?></a></th> 
+		<th scope="col"><a href="tools/chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('chat_date'); ?></a></th> 
 		</th> 
 	</tr>
 	</thead>
@@ -125,7 +125,7 @@ if (count($tran_files) == 0) {
 			<td><label for="<?php echo $file; ?>"><?php echo $file; ?></label></td>
 			<td>
 				<?php if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) { 
-					echo _AC('chat_currently_active');
+					echo _AT('chat_currently_active');
 				} else {
 					echo _AT('chat_inactive');
 				}?>

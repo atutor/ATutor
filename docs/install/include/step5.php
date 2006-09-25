@@ -85,7 +85,7 @@ if(isset($_POST['submit'])) {
 		$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
 
 		// kludge to fix the missing slashes when magic_quotes_gpc is On
-		if ($addslashes != 'addslashes') {
+		if ($addslashes != 'mysql_real_escape_string') {
 			$_POST['content_dir'] = addslashes($_POST['content_dir']);
 		}
 
@@ -94,7 +94,7 @@ if(isset($_POST['submit'])) {
 		return;
 	} else {
 		// kludge to fix the missing slashes when magic_quotes_gpc is On
-		if ($addslashes != 'addslashes') {
+		if ($addslashes != 'mysql_real_escape_string') {
 			$_POST['content_dir'] = addslashes($_POST['content_dir']);
 		}
 	}

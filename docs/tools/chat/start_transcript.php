@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 			$admin['produceTran'] = 1;
 			$admin['tranFile'] = $_POST['tranFile'] . '.html';
 			writeAdminSettings($admin);
-			$tran = '<p>'._AC('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
+			$tran = '<p>'._AT('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
 			$tran .= '<table border="0" cellpadding="3" summary="" class="chat-transcript">';
 				
 			$fp = fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
@@ -129,7 +129,7 @@ if (isset($_POST['submit'])) {
 		$admin['produceTran'] = 0;
 		writeAdminSettings($admin);
 			
-		$tran = '<p>'._AC('chat_transcript_end').' '.date('Y-M-d H:i').'</p>';
+		$tran = '<p>'._AT('chat_transcript_end').' '.date('Y-M-d H:i').'</p>';
 		$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'a');
 
 		@flock($fp, LOCK_EX); 
@@ -200,7 +200,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form name="f1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		<?php echo _AC('chat_keep_tran'); ?>
+		<?php echo _AT('chat_keep_tran'); ?>
 	</div>
 
 <?php
@@ -209,23 +209,23 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	if ($admin['produceTran'] > 0) {
 		echo '<input type="hidden" name="function" value="stopTran" />';
 		echo '<div class="row">';
-			echo _AC('chat_current_tran').' <a href="tools/chat/view_transcript.php?t='.str_replace('.html', '', $admin['tranFile']).'" >'.str_replace('.html', '', $admin['tranFile']).'</a>.</p>';
+			echo _AT('chat_current_tran').' <a href="tools/chat/view_transcript.php?t='.str_replace('.html', '', $admin['tranFile']).'" >'.str_replace('.html', '', $admin['tranFile']).'</a>.</p>';
 		echo '</div>';
 
 		echo '<div class="row buttons">';
-	    	echo '<input type="submit" value="'._AC('chat_stop_tran').'" name="submit2" />';
+	    	echo '<input type="submit" value="'._AT('chat_stop_tran').'" name="submit2" />';
 		echo '</div>';
 
     } else {
         echo '<input type="hidden" name="function" value="startTran" />';
 
 		echo '<div class="row">';
-			echo _AC('chat_tran_file_name').' ';
+			echo _AT('chat_tran_file_name').' ';
 			echo '<input type="text" name="tranFile" class="formfield" />';
 		echo '</div>';		
 
 		echo '<div class="row buttons">';
-    		echo '<input type="submit" value="'._AC('chat_start_tran').'" name="submit2" />';
+    		echo '<input type="submit" value="'._AT('chat_start_tran').'" name="submit2" />';
 		echo '</div>';
     }
 	echo '</div>';

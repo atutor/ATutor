@@ -78,7 +78,7 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 	<?php if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)): ?>
 			<div class="row">
 				<input type="checkbox" name="to_tile" id="to_tile" value="1" />
-				<label for="to_tile"><?php echo _AC('tile_export'); ?></label>
+				<label for="to_tile"><?php echo _AT('tile_export'); ?></label>
 			</div>
 	<?php endif; ?>
 	
