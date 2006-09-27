@@ -12,6 +12,40 @@
 /****************************************************************/
 // $Id$
 
+/**
+ * BEWARE OF THE HACKS USED TO IMPLEMENT THIS FEATURE:
+ *
+ * this page is to allow admins to edit/customize their language
+ * and save the changes made in a way that allows the upgrading of
+ * ATutor without the loss of that language. It also allows customized
+ * language to be reverted back to its original form.
+ *
+ * since we couldn't change the database as it would break backwards
+ * compatability, none of the fields could be changed which means
+ * that the only way to store the extra language would be by reusing
+ * the `variable` field, which is part of the PK.
+ *
+ * reusing the `variable` is a huge hack and doesn't correctly support
+ * module language as there is nothing enfocing storing module language
+ * in an independant way. ideally there would be another field in the
+ * database designating custom or not and the `variable` field would
+ * be removed completely since it doesn't have much effect any more.
+ *
+ * custom language is stored as `_c_template` and `_c_msgs` for template
+ * and feedback messages, respectively. Why use "_c" as the prefix?
+ * because it comes before "_t" and _m" in the alphabet. This lets us
+ * sort the language by `variable` and limit it to one result. That is 
+ * how the custom language terms are retrieved in place of default
+ * language.
+ *
+ * another oddity is that although custom language text isn't deleted
+ * upon upgrades, the language definitions are, which means those terms
+ * cannot be edited until after the language pack is reinstalled.
+ * this also means that if a term has changed the system might be unaware
+ * of new replacement tokens and could break.
+ *
+ */
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_LANGUAGES);
@@ -92,7 +126,9 @@ $num_results = mysql_num_rows($result);
 
 <form name="form" method="post">
 <div class="input-form">
-	<div class="row" style="float: left">
+	<table cellspacing="0" cellpadding="0">
+	<tr>
+	<td valign="top">
 		<?php if ($num_results): ?>
 			<select size="<?php echo min(max($num_results,2), 25); ?>" name="terms" id="terms" onchange="javascript:showtext(this);">
 				<?php
@@ -107,13 +143,15 @@ $num_results = mysql_num_rows($result);
 		<?php else: ?>
 			<p><?php echo _AT('none_found'); ?></p>
 		<?php endif; ?>
-	</div>
+	</td>
 
-	<div class="row" style="float: right">
+	<td valign="top">
 		<div class="row">
-			<iframe src="admin/language_term.php" frameborder="0" height="400" width="450" marginheight="0" marginwidth="0" name="tran" id="tran"></iframe>
+			<iframe src="admin/language_term.php" frameborder="0" height="430" width="450" marginheight="0" marginwidth="0" name="tran" id="tran"></iframe>
 		</div>
-	</div>
+	</td>
+	</tr>
+	</table>
 </div>
 </form>
 
