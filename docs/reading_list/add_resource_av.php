@@ -126,7 +126,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="author"><?php  echo _AT('rl_author'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="author"><?php  echo _AT('author'); ?></label><br />
 		<input type="text" name="author" size="25" id="author" value="<?php echo htmlspecialchars($author); ?>" />
 	</div>
 
@@ -141,7 +141,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<label for="comments"><?php  echo _AT('rl_comment'); ?></label><br />
+		<label for="comments"><?php  echo _AT('comment'); ?></label><br />
 		<textarea name="comments" cols="30" rows="2" id="comments"><?php echo htmlspecialchars($comments); ?></textarea>
 	</div>
 

@@ -44,7 +44,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?> 
+			<?php  echo _AT('author'). ": ". $row['author']; ?> 
 		</div>
 		<div class="row">
 			<?php  echo _AT('rl_publisher'). ": ". $row['publisher']; ?> 
@@ -56,7 +56,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 			<?php  echo _AT('rl_isbn_number'). ": ". $row['id']; ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?> 
 		</div>
 
 	<?php elseif ($row['type'] == RL_TYPE_URL): ?>
@@ -70,10 +70,10 @@ if (!$row = mysql_fetch_assoc($result)) {
 			<?php echo _AT('location'). ": " ?><a href="<?php echo $row['url']?>"><?php echo $row['url']; ?></a> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?> 
+			<?php  echo _AT('author'). ": ". $row['author']; ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?> 
 		</div>
 
 	<?php elseif ($row['type'] == RL_TYPE_HANDOUT): ?>
@@ -84,13 +84,13 @@ if (!$row = mysql_fetch_assoc($result)) {
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?> 
+			<?php  echo _AT('author'). ": ". $row['author']; ?> 
 		</div>
 		<div class="row">
 			<?php  echo _AT('date'). ": ". $row['date']; ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?> 
 		</div>
 
 	<?php elseif ($row['type'] == RL_TYPE_AV): ?>
@@ -101,13 +101,13 @@ if (!$row = mysql_fetch_assoc($result)) {
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?> 
+			<?php  echo _AT('author'). ": ". $row['author']; ?> 
 		</div>
 		<div class="row">
 			<?php  echo _AT('date'). ": ". $row['date']; ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?> 
 		</div>
 
 	<?php elseif ($row['type'] == RL_TYPE_FILE): ?>
@@ -118,7 +118,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?> 
+			<?php  echo _AT('author'). ": ". $row['author']; ?> 
 		</div>
 		<div class="row">
 			<?php  echo _AT('rl_publisher'). ": ". $row['publisher']; ?> 
@@ -130,7 +130,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 			<?php  echo _AT('rl_id'). ": ". $row['id']; ?> 
 		</div>
 		<div class="row">
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?> 
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?> 
 		</div>
 	<?php endif; ?>
 

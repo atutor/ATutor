@@ -294,10 +294,6 @@ function _AT() {
 		$_template[$row['term']] = stripslashes($row['text']);
 		$outString = $_template[$row['term']];
 		if (empty($outString)) {
-			if (AT_DEVEL_TRANSLATE) {
-				global $langEditor;
-				$langEditor->addMissingTerm($format);
-			}
 			return ('[ '.$format.' ]');
 		}
 		$outString = $_template[$row['term']];

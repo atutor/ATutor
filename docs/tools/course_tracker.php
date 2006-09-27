@@ -164,7 +164,7 @@ if ($_GET['reset']==1){
 	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see below
 	 */
 	$msg->addFeedback('CANCELLED');
-	echo '<center><a href="'.$_SERVER['PHP_SELF'].'?reset=2">'._AT('yes_delete').'</a> | <a href="'.$_SERVER['PHP_SELF'].'">'._AT('no_cancel').'</a></center>';
+	echo '<center><a href="'.$_SERVER['PHP_SELF'].'?reset=2">'._AT('yes_delete').'</a> | <a href="'.$_SERVER['PHP_SELF'].'">'._AT('no').'</a></center>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 } else if($_GET['reset']==2) {

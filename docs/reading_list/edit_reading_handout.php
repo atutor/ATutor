@@ -98,16 +98,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if ($rowreading['required'] == 'required'){
 			echo 'checked="checked"';
 		}?>/>
-		<label for="required"><?php  echo _AT('rl_required'); ?></label>
+		<label for="required"><?php  echo _AT('required'); ?></label>
 		<input type="radio" name="readstatus" value="optional" id="optional" <?php
 		if ($rowreading['required'] == 'optional'){
 			echo 'checked="checked"';
 		}?>/>
-		<label for="optional"><?php  echo _AT('rl_optional'); ?></label>
+		<label for="optional"><?php  echo _AT('optional'); ?></label>
 	</div>	
 	
 	<div class="row">
-	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo htmlspecialchars($rowreading['comment']);  ?>" />
+	<label for="comment"><?php  echo _AT('comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo htmlspecialchars($rowreading['comment']);  ?>" />
 	</div>
 
 <h3><?php echo _AT('rl_read_by_date'); ?></h3>
@@ -126,7 +126,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		}?>/>
 		<label for="hasdate"><?php  echo _AT('rl_reading_date'); ?></label><br/>
 
-		<label for="startdate"><?php  echo _AT('rl_start_date'); ?>:</label>
+		<label for="startdate"><?php  echo _AT('start_date'); ?>:</label>
 		<?php  $array_date_start = explode ('-', $rowreading['date_start'], 3); ?>
 
 		<select name="startday" id="startdate">
@@ -147,7 +147,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php } ?>
 		</select>
 	
-		<br/><label for="enddate"><?php  echo _AT('rl_end_date'); ?>:</label>
+		<br/><label for="enddate"><?php  echo _AT('end_date'); ?>:</label>
 		<?php  $array_date_end = explode ('-', $rowreading['date_end'], 3); ?>
 
 		<select name="endday" id="enddate">

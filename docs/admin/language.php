@@ -60,7 +60,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('name_in_language'); ?></th>
 	<th scope="col"><?php echo _AT('name_in_english'); ?></th>
-	<th scope="col"><?php echo _AT('code'); ?></th>
+	<th scope="col"><?php echo _AT('lang_code'); ?></th>
 	<th scope="col"><?php echo _AT('charset'); ?></th>
 </tr>
 </thead>

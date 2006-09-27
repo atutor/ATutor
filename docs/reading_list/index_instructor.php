@@ -93,8 +93,8 @@ $result = mysql_query($sql, $db);
 	<th><?php echo _AT('rl_start'); ?></th>
 	<th><?php echo _AT('rl_end'); ?></th>
 	<th><?php echo _AT('title'); ?></th>
-	<th><?php echo _AT('rl_required'); ?></th>
-	<th><?php echo _AT('rl_comment'); ?></th>
+	<th><?php echo _AT('required'); ?></th>
+	<th><?php echo _AT('comment'); ?></th>
 </tr>
 </thead>
 <tfoot>

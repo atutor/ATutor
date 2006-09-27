@@ -84,7 +84,7 @@ for ($k = 0; $k < $j; $k++) {
 	</div>
 
 	<div class="row">
-		<?php echo _AT('user_privileges'); ?><br />
+		<?php echo _AT('privileges'); ?><br />
 			<table width="100%" border="0" cellspacing="5" cellpadding="0" summary="">
 			<tr>
 			<?php		

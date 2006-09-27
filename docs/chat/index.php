@@ -87,7 +87,7 @@ if (count($tran_files) == 0) {
 	<tr>
 		<th scope="col"><a href="chat/index.php?<?php echo $orders[$order]; ?>=name"><?php echo _AT('chat_transcript');?></a></th>
 		<th scope="col"><?php echo _AT('status'); ?></th>
-		<th scope="col"><a href="chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('chat_date'); ?></a></th> 
+		<th scope="col"><a href="chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th> 
 	</tr>
 	</thead>
 	<?php

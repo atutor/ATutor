@@ -71,7 +71,7 @@ $fid  = intval($_GET['fid']);
 
 <?php if ($_GET['unlock']): ?>
 	<div class="row">
-		<input type="radio" name="lock" value="0" id="un"><label for="un"><?php echo _AT('unlock'); ?></label>
+		<input type="radio" name="lock" value="0" id="un"><label for="un"><?php echo _AT('unlock_thread'); ?></label>
 	</div>
 
 <?php endif; ?>

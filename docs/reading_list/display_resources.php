@@ -76,7 +76,7 @@ $result = mysql_query($sql, $db);
 	<th>&nbsp;</th>
 	<th><?php echo _AT('type'); ?></th>
 	<th><?php echo _AT('title'); ?></th>
-	<th><?php echo _AT('rl_author'); ?></th>
+	<th><?php echo _AT('author'); ?></th>
 </tr>
 </thead>
 <tfoot>

@@ -147,9 +147,9 @@ if (!empty($categories)) {
 
 			<td align="center"><?php 
 					if($row['Approved']) { 
-						echo _AT('yes1'); 
+						echo _AT('yes'); 
 					} else { 
-						echo _AT('no1'); 
+						echo _AT('no'); 
 					} ?></td>
 			<td align="center"><?php echo $row['hits']; ?></td>
 		</tr>

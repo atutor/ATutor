@@ -37,7 +37,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="course_list"><?php echo _AT('import_course_list'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="course_list"><?php echo _AT('list_import_course_list'); ?></label><br />
 		<input type="file" name="file" id="course_list" />
 	</div>
 

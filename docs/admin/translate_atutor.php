@@ -22,9 +22,7 @@ if (!$_REQUEST['f']) {
 	$_REQUEST['f']	= 'en';
 }
 
-if (AT_DEVEL_TRANSLATE != 1) { exit; }
-//if (!isset($_SESSION['translate'])) { exit; }
-//define variables to be used
+if (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE) { exit; }
 
 $_INCLUDE_PATH = AT_INCLUDE_PATH;
 $_TABLE_PREFIX = TABLE_PREFIX;
@@ -80,10 +78,7 @@ $row = mysql_fetch_assoc($result);
 	</li>
 	<br />
 
-<?php
+	<?php require_once('translator.php'); ?>
 
-require_once('translator.php');
-
-?>
 </body>
 </html>

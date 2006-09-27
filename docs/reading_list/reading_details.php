@@ -34,11 +34,11 @@ if ($row = mysql_fetch_assoc($result)){
 	<div class="input-form">
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?><br/>
+			<?php  echo _AT('author'). ": ". $row['author']; ?><br/>
 			<?php  echo _AT('rl_publisher'). ": ". $row['publisher']; ?><br/>
 			<?php  echo _AT('date'). ": ". $row['date']; ?><br/>
 			<?php  echo _AT('rl_isbn_number'). ": ". $row['id']; ?><br/>
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
 <?php elseif ($row['type'] == RL_TYPE_URL): ?>
@@ -46,37 +46,37 @@ if ($row = mysql_fetch_assoc($result)){
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
 			<?php echo _AT('location'). ": " ?><a href="<?php echo $row['url']?>"><?php echo $row['url']; ?></a><br/>
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?><br/>
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
+			<?php  echo _AT('author'). ": ". $row['author']; ?><br/>
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?>
 			</p>
 	</div>
 <?php elseif ($row['type'] == RL_TYPE_HANDOUT): ?>
 	<div class="input-form">	
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?><br/>
+			<?php  echo _AT('author'). ": ". $row['author']; ?><br/>
 			<?php  echo _AT('date'). ": ". $row['date']; ?><br/>
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
 <?php elseif ($row['type'] == RL_TYPE_AV): ?>
 	<div class="input-form">	
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>" ; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?><br />
+			<?php  echo _AT('author'). ": ". $row['author']; ?><br />
 			<?php  echo _AT('date'). ": ". $row['date']; ?><br/>
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
 <?php elseif ($row['type'] == RL_TYPE_FILE): ?>
 	<div class="input-form">	
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?><br/>
-			<?php  echo _AT('rl_author'). ": ". $row['author']; ?><br/>
+			<?php  echo _AT('author'). ": ". $row['author']; ?><br/>
 			<?php  echo _AT('rl_publisher'). ": ". $row['publisher']; ?><br/>
 			<?php  echo _AT('date'). ": ". $row['date']; ?><br/>
 			<?php  echo _AT('id'). ": ". $row['id']; ?><br/>
-			<?php  echo _AT('rl_comment'). ": ". $row['comments']; ?>
+			<?php  echo _AT('comment'). ": ". $row['comments']; ?>
 		</p>
 	</div>
 <?php endif;

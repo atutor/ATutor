@@ -136,7 +136,7 @@ $msg->printErrors();
 				$y = '';
 			}
 		?>
-		<input type="radio" id="yes" name="approved" value="1" <?php echo $y; ?> /><label for="yes"><?php echo _AT('yes1'); ?></label>  <input type="radio" id="no" name="approved" value="0" <?php echo $n; ?> /><label for="no"><?php echo _AT('no1'); ?></label>
+		<input type="radio" id="yes" name="approved" value="1" <?php echo $y; ?> /><label for="yes"><?php echo _AT('yes'); ?></label>  <input type="radio" id="no" name="approved" value="0" <?php echo $n; ?> /><label for="no"><?php echo _AT('no'); ?></label>
 	</div>
 	
 	<div class="row buttons">

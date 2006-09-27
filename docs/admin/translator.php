@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id$
 
-if ( !isset($db) || !isset($_INCLUDE_PATH) || !isset($_SESSION['language'])	) { exit; }
+if ( !isset($db) || !defined('AT_INCLUDE_PATH') || !isset($_SESSION['language'])	) { echo 'xx'; exit; }
 
 if ($_POST['function'] == 'edit_term') {
 	if ($_POST['submit2']) {
@@ -105,7 +105,7 @@ if ($_SESSION['language'] != 'en') {
 <?php
 	}
 	if ($_REQUEST['v'] && $_REQUEST['k']) {
-		$sql	= "SELECT * FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE term='$_REQUEST[k]' AND variable='$_REQUEST[v]' AND `language_code`='$_REQUEST[f]'";
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."language_text WHERE term='$_REQUEST[k]' AND variable='$_REQUEST[v]' AND `language_code`='$_REQUEST[f]'";
 		$result	= mysql_query($sql, $db);
 		$row	= mysql_fetch_assoc($result);
 		if ($row == '') {
@@ -117,7 +117,7 @@ if ($_SESSION['language'] != 'en') {
 		if ($_SESSION['language'] == 'en') {
 			$row2 = $row;
 		} else {
-			$sql	= "SELECT text FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE term='$_REQUEST[k]' AND variable='$_REQUEST[v]' AND `language_code`='$_SESSION[language]'";
+			$sql	= "SELECT text FROM ".TABLE_PREFIX."language_text WHERE term='$_REQUEST[k]' AND variable='$_REQUEST[v]' AND `language_code`='$_SESSION[language]'";
 		}
 
 		$result	= mysql_query($sql, $db);
@@ -130,8 +130,6 @@ function trans_form($page) {
 	global $langs;
 	global $success_error;
 	global $db;
-	global $_TABLE_SUFFIX;
-	global $_TABLE_PREFIX;
 	global $_USER_ADMIN;
 	global $addslashes;
 	global $stripslashes;
@@ -168,7 +166,7 @@ function trans_form($page) {
 	<tr>
 		<td valign="top" align="right" nowrap="nowrap"><b>Pages:</b></td>
 		<td><?php 
-					$sql	= "SELECT * FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." WHERE `term`='$_REQUEST[k]' ORDER BY page LIMIT 11";
+					$sql	= "SELECT * FROM ".TABLE_PREFIX."language_pages WHERE `term`='$_REQUEST[k]' ORDER BY page LIMIT 11";
 					$result	= mysql_query($sql, $db);
 
 					if (mysql_num_rows($result) > 10) {
@@ -224,7 +222,7 @@ function trans_form($page) {
 		}
 		echo '</li>';
 
-		$sql0 = "SELECT DISTINCT page FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." ORDER BY page";
+		$sql0 = "SELECT DISTINCT page FROM ".TABLE_PREFIX."language_pages ORDER BY page";
 		$result0 = mysql_query($sql0, $db);
 				
 		while ($row0 = mysql_fetch_assoc($result0)) {
@@ -248,12 +246,12 @@ function trans_form($page) {
 
 
 function delete_term($variable, $term) {
-	global $addslashes, $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+	global $db;
 
-	$sql = "DELETE FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND term='$term'";
+	$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE variable='$variable' AND term='$term'";
 	$result = mysql_query($sql, $db);
 
-	$sql3 = "DELETE FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." WHERE term='$term'";
+	$sql3 = "DELETE FROM ".TABLE_PREFIX."language_pages WHERE term='$term'";
 	$result3 = mysql_query($sql3, $db);
 
 	unset($_REQUEST['k']);
@@ -261,18 +259,18 @@ function delete_term($variable, $term) {
 }
 
 function update_term($text, $context, $variable, $term) {
-	global $addslashes, $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+	global $addslashes, $db;
 	
 	$term    = $addslashes(trim($term));
 	$text    = $addslashes(trim($text));
 	$context = $addslashes(trim($context));
 
 	if ($_SESSION['language'] == 'en') {
-		$sql	= "UPDATE ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." SET `text`='$text', revised_date=NOW(), context='$context' WHERE variable='$variable' AND term='$term' AND language_code='en'";
+		$sql	= "UPDATE ".TABLE_PREFIX."language_text SET `text`='$text', revised_date=NOW(), context='$context' WHERE variable='$variable' AND term='$term' AND language_code='en'";
 	}
 	
 	else {
-		$sql	= "REPLACE INTO ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." VALUES ('$_SESSION[language]', '$variable', '$term', '$text', NOW(), '')";
+		$sql	= "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ('$_SESSION[language]', '$variable', '$term', '$text', NOW(), '')";
 
 		$trans = get_html_translation_table(HTML_ENTITIES);
 		$trans = array_flip($trans);
@@ -295,13 +293,13 @@ function update_term($text, $context, $variable, $term) {
 }
 
 function add_term($text, $context, $variable, $term) {
-	global $addslashes, $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+	global $addslashes, $db;
 
 	$term    = $addslashes(trim($term));
 	$text    = $addslashes(trim($text));
 	$context = $addslashes(trim($context));
 
-	$sql	= "INSERT INTO ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." VALUES ('en', '$variable', '$term', '$text', NOW(), '$context')";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."language_text VALUES ('en', '$variable', '$term', '$text', NOW(), '$context')";
 	$result = mysql_query($sql, $db);
 
 	if (!$result) {
@@ -315,12 +313,12 @@ function add_term($text, $context, $variable, $term) {
 }
 
 function display_page_terms ($variable, $term1, $lang_code, $new, $updated, $page) {
-	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+	global $db;
 	
 	echo '<li><a name="anchor1"></a>';
 	echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'page='.urlencode($page).SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.updated.'#anchor">'.$page.'</a>';
 			
-	$sql1 = "SELECT term FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." WHERE page='$page' ORDER BY term";
+	$sql1 = "SELECT term FROM ".TABLE_PREFIX."language_pages WHERE page='$page' ORDER BY term";
 	$result1 = mysql_query($sql1, $db);
 
 	$term_list = array();
@@ -328,7 +326,7 @@ function display_page_terms ($variable, $term1, $lang_code, $new, $updated, $pag
 	while ($row1 = mysql_fetch_assoc($result1)) {
 	
 		if ($_SESSION['language'] != 'en') {
-			$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND `language_code`='$_SESSION[language]' AND term='$row1[term]' ORDER BY `term`";
+			$sql	= "SELECT term, revised_date+0  AS r_date FROM ".TABLE_PREFIX."language_text WHERE variable='$variable' AND `language_code`='$_SESSION[language]' AND term='$row1[term]' ORDER BY `term`";
 			$result = mysql_query($sql, $db);
 								
 			while ($row = mysql_fetch_assoc($result)) {
@@ -343,9 +341,9 @@ function display_page_terms ($variable, $term1, $lang_code, $new, $updated, $pag
 	foreach ($term_list as $term) {
 
 		if ($_REQUEST['f'] == 'en') {
-			$sql	= "SELECT *, revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$_REQUEST[v]' AND language_code='en' AND term='$term'";
+			$sql	= "SELECT *, revised_date+0 AS r_date FROM ".TABLE_PREFIX."language_text WHERE variable='$_REQUEST[v]' AND language_code='en' AND term='$term'";
 		} else {
-			$sql	= "SELECT * FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$_REQUEST[v]' AND language_code='$_REQUEST[f]' AND term='$term'";
+			$sql	= "SELECT * FROM ".TABLE_PREFIX."language_text WHERE variable='$_REQUEST[v]' AND language_code='$_REQUEST[f]' AND term='$term'";
 		}
 				
 		$result	= mysql_query($sql, $db);
@@ -398,10 +396,10 @@ function display_page_terms ($variable, $term1, $lang_code, $new, $updated, $pag
 }
 
 function display_all_terms ($variable, $term1, $lang_code, $new, $updated) {
-	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+	global $db;
 
 	if ($_SESSION['language'] != 'en') {
-		$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND `language_code`='$_SESSION[language]' ORDER BY `term`";
+		$sql	= "SELECT term, revised_date+0  AS r_date FROM ".TABLE_PREFIX."language_text WHERE variable='$variable' AND `language_code`='$_SESSION[language]' ORDER BY `term`";
 		$result = mysql_query($sql, $db);
 
 		$t_keys = array();
@@ -411,9 +409,9 @@ function display_all_terms ($variable, $term1, $lang_code, $new, $updated) {
 	}
 
 	if ($lang_code == 'en') {
-		$sql	= "SELECT *, revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND language_code='en' ORDER BY term";
+		$sql	= "SELECT *, revised_date+0 AS r_date FROM ".TABLE_PREFIX."language_text WHERE variable='$variable' AND language_code='en' ORDER BY term";
 	} else {
-		$sql	= "SELECT * FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND language_code='$lang_code' ORDER BY term";
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."language_text WHERE variable='$variable' AND language_code='$lang_code' ORDER BY term";
 	}
 	$result	= mysql_query($sql, $db);
 
@@ -466,10 +464,10 @@ function display_all_terms ($variable, $term1, $lang_code, $new, $updated) {
 }
 
 function display_unused_terms ($variable, $term1, $lang_code, $new, $updated) {
-	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+	global $db;
 
 	if ($_SESSION['language'] != 'en') {
-		$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND `language_code`='$_SESSION[language]' ORDER BY `term`";
+		$sql	= "SELECT term, revised_date+0  AS r_date FROM ".TABLE_PREFIX."language_text WHERE variable='$variable' AND `language_code`='$_SESSION[language]' ORDER BY `term`";
 		$result = mysql_query($sql, $db);
 
 		$t_keys = array();
@@ -479,15 +477,14 @@ function display_unused_terms ($variable, $term1, $lang_code, $new, $updated) {
 	}
 
 	if ($lang_code == 'en') {
-		$sql	= "SELECT lt.*, lt.revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." lt LEFT JOIN ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." lp ON lt.term = lp.term WHERE lp.term IS NULL AND lt.variable='$variable' AND lt.language_code='en' ORDER BY lt.term";
+		$sql	= "SELECT lt.*, lt.revised_date+0 AS r_date FROM ".TABLE_PREFIX."language_text lt LEFT JOIN ".TABLE_PREFIX."language_pages lp ON lt.term = lp.term WHERE lp.term IS NULL AND lt.variable='$variable' AND lt.language_code='en' ORDER BY lt.term";
 	} else {
-		$sql	= "SELECT lt.* FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." lt LEFT JOIN ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." lp ON lt.term = NULL WHERE lt.variable='$variable' AND lt.language_code='$lang_code' ORDER BY lt.term";
+		$sql	= "SELECT lt.* FROM ".TABLE_PREFIX."language_text lt LEFT JOIN ".TABLE_PREFIX."language_pages lp ON lt.term = NULL WHERE lt.variable='$variable' AND lt.language_code='$lang_code' ORDER BY lt.term";
 	}
 	$result	= mysql_query($sql, $db);
 
 	echo '<ul>';
 	while ($row = mysql_fetch_assoc($result)) {
-		//echo $row['r_date'].'d;flskdf;sldkf';
 		if ($_SESSION['language'] != 'en') {
 			if ($new && $updated) {
 				if ((!($t_keys[$row['term']] == '')) && (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']]))) {
@@ -536,11 +533,11 @@ function display_unused_terms ($variable, $term1, $lang_code, $new, $updated) {
 
 
 function display_search_terms ($variable, $term1, $lang_code, $new, $updated) {
-	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX, $addslashes, $stripslashes;
+	global $db, $addslashes, $stripslashes;
 
 	$_REQUEST['search_term'] = $addslashes($_REQUEST['search_term']);
 
-	$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE (variable LIKE '%$_REQUEST[search_term]%' OR text LIKE '%$_REQUEST[search_term]%') AND (`language_code`='$_SESSION[language]' OR `language_code`='en') GROUP BY `term` ORDER BY `term`";
+	$sql	= "SELECT term, revised_date+0  AS r_date FROM ".TABLE_PREFIX."language_text WHERE (variable LIKE '%$_REQUEST[search_term]%' OR text LIKE '%$_REQUEST[search_term]%') AND (`language_code`='$_SESSION[language]' OR `language_code`='en') GROUP BY `term` ORDER BY `term`";
 	$result = mysql_query($sql, $db);
 
 	$t_keys = array();
@@ -548,7 +545,7 @@ function display_search_terms ($variable, $term1, $lang_code, $new, $updated) {
 		$t_keys[$row['term']] = $row['r_date'];
 	}
 
-	$sql	= "SELECT *, revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE (variable LIKE '%$_REQUEST[search_term]%' OR text LIKE '%$_REQUEST[search_term]%') AND (language_code='en' OR language_code='$_SESSION[language]') GROUP BY `term` ORDER BY term";
+	$sql	= "SELECT *, revised_date+0 AS r_date FROM ".TABLE_PREFIX."language_text WHERE (variable LIKE '%$_REQUEST[search_term]%' OR text LIKE '%$_REQUEST[search_term]%') AND (language_code='en' OR language_code='$_SESSION[language]') GROUP BY `term` ORDER BY term";
 	$result	= mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) == 0) {

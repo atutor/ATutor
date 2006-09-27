@@ -69,7 +69,7 @@ if (!isset($_POST['submit'])) {
 
 <div class="input-form" style="width:60%">
 	<div class="row">
-		<label for="code"><?php echo _AT('code'); ?></label><br />
+		<label for="code"><?php echo _AT('lang_code'); ?></label><br />
 		<input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo $_POST['code']; ?>" />
 	</div>
 

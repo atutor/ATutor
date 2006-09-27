@@ -34,7 +34,7 @@ $this->_pages['packages/index.php']['img']       = 'images/content_pkg.gif';
 $this->_pages['packages/index.php']['children']  = array ('packages/preferences.php');
 $this->_pages['packages/index.php']['guide']     = 'general/?p=6.2.packages.php';
 
-	$this->_pages['packages/preferences.php']['title_var'] = 'package_preferences';
+	$this->_pages['packages/preferences.php']['title_var'] = 'preferences';
 	$this->_pages['packages/preferences.php']['parent']    = 'packages/index.php';
 
 	$this->_pages['packages/cmidata.php']['title_var'] = 'cmi_data';

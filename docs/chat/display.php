@@ -108,7 +108,7 @@ require('include/html/chat_header.inc.php');
 		echo '<form action="display.php" target="display" name="f1" method="post" onSubmit="return checkForm();">
 			   <input type="hidden" name="set" value="1" />
 			   <label accesskey="c" for="message"><input type="text" maxlength="200" size="50" id="message" name="message" value="" class="input" title="Alt-c" onfocus="this.className=\'input highlight\'" onblur="this.className=\'input\'" /></label>
-			   <input type="submit" name="submit" value="'._AT('chat_send').'" class="button" title="'._AT('chat_send').'" onfocus="this.className=\'submit highlight\'" onblur="this.className=\'submit\'" />';
+			   <input type="submit" name="submit" value="'._AT('send').'" class="button" title="'._AT('send').'" onfocus="this.className=\'submit highlight\'" onblur="this.className=\'submit\'" />';
 
 		echo '</form></p>';
 		echo '<script language="javascript"><!--

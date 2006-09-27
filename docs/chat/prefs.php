@@ -74,14 +74,14 @@ require('include/html/chat_header.inc.php');
 
 <p><b><?php echo _AT('chat_message_chime') ?></b>
 	<select name="bingFlag">
-		<option value="0"><?php echo _AT('chat_chime_no'); ?></option>
-		<option value="1" <?php echo $bFSelT; ?>><?php echo _AT('chat_chime_yes'); ?></option>
+		<option value="0"><?php echo _AT('no'); ?></option>
+		<option value="1" <?php echo $bFSelT; ?>><?php echo _AT('yes'); ?></option>
 	</select></p>
 <p><?php echo _AT('chat_chime_help');  ?></p>
 
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<td align="left"><input type="submit" value="<?php echo _AT('chat_next'); ?>" name="submit" class="submit" onFocus="this.className='submit highlight'" onBlur="this.className='submit'" />
+	<td align="left"><input type="submit" value="<?php echo _AT('next'); ?>" name="submit" class="submit" onFocus="this.className='submit highlight'" onBlur="this.className='submit'" />
                      <input type="submit" value="<?php echo _AT('chat_enter'); ?>" name="submit_r" class="submit" onFocus="this.className='submit highlight'" onBlur="this.className='submit'" /></td>
 </tr>
 </table>

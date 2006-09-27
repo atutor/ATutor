@@ -64,14 +64,14 @@ require('include/html/chat_header.inc.php');
 
 <p><b><?php echo _AT('chat_newmsg_prefs'); ?></b>
 	<select name="onlyNewFlag">
-		<option value="0"><?php echo _AT('chat_newmsg_no'); ?></option>
-        <option value="1" <?php echo $oNFSelT;?>><?php echo _AT('chat_newmsg_yes'); ?></option>
+		<option value="0"><?php echo _AT('no'); ?></option>
+        <option value="1" <?php echo $oNFSelT;?>><?php echo _AT('yes'); ?></option>
 	</select></p>
 <p><?php echo _AT('chat_message_new_help') ;?></p>
 
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<td align="left"><input type="submit" value="<?php echo _AT('chat_previous'); ?>" name="submit_p" class="submit" onFocus="this.className='submit highlight'" onBlur="this.className='submit'" /> <input type="submit" value="<?php echo _AT('chat_enter'); ?>" name="submit_r" class="submit" onFocus="this.className='submit highlight'" onBlur="this.className='submit'" /></td>
+	<td align="left"><input type="submit" value="<?php echo _AT('previous'); ?>" name="submit_p" class="submit" onFocus="this.className='submit highlight'" onBlur="this.className='submit'" /> <input type="submit" value="<?php echo _AT('chat_enter'); ?>" name="submit_r" class="submit" onFocus="this.className='submit highlight'" onBlur="this.className='submit'" /></td>
 </tr>
 </table>
 

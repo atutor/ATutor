@@ -56,7 +56,7 @@ require('include/html/chat_header.inc.php');
 ?>
 		<table width="100%" border="0" cellpadding="5" cellspacing="0">
 		<tr>
-			<td align="right"><a href="history.php?hisTopNum=<?php echo $prevNumT; ?>" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_previous'); ?></a> | <a href="history.php?hisTopNum=<?php echo $nextNumT; ?>" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_next'); ?></a> | <a href="chat.php" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_return'); ?></a></td>
+			<td align="right"><a href="history.php?hisTopNum=<?php echo $prevNumT; ?>" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('previous'); ?></a> | <a href="history.php?hisTopNum=<?php echo $nextNumT; ?>" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('next'); ?></a> | <a href="chat.php" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_return'); ?></a></td>
 		</tr>
 		</table>
 <?php
@@ -64,7 +64,7 @@ require('include/html/chat_header.inc.php');
 ?>
 		<table width="100%" border="0" cellpadding="5" cellspacing="0">
 		<tr>
-			<td align="right"><a href="history.php?hisTopNum=<?php echo $prevNumT; ?>" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_previous'); ?></a> | <a href="chat.php" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_return'); ?></a></td>
+			<td align="right"><a href="history.php?hisTopNum=<?php echo $prevNumT; ?>" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('previous'); ?></a> | <a href="chat.php" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_return'); ?></a></td>
 		</tr>
 		</table>
 <?php
@@ -72,7 +72,7 @@ require('include/html/chat_header.inc.php');
 ?>
 		<table width="100%" border="0" cellpadding="5" cellspacing="0">
 		<tr>
-			<td align="right"><a href="history.php?hisTopNum=<?php echo $nextNumT; ?>" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_next'); ?></a> | <a href="chat.php" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_return'); ?></a></td>
+			<td align="right"><a href="history.php?hisTopNum=<?php echo $nextNumT; ?>" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('next'); ?></a> | <a href="chat.php" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AT('chat_return'); ?></a></td>
 		</tr>
 		</table>
 <?php

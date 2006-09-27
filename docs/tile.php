@@ -63,10 +63,10 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		<?php echo _AT('search_in'); ?><br />
 
 		<input type="radio" name="field" value="anyField" id="taf" <?php if (!isset($_GET['field']) || ($_GET['field'] == 'anyField')) { echo 'checked="checked"'; } ?> /><label for="taf"><?php echo _AT('tile_any_field'); ?></label><br />
-		<input type="radio" name="field" value="title" id="tt" <?php if ($_GET['field'] == 'title') { echo 'checked="checked"'; } ?> /><label for="tt"><?php echo _AT('tile_title'); ?></label><br />
+		<input type="radio" name="field" value="title" id="tt" <?php if ($_GET['field'] == 'title') { echo 'checked="checked"'; } ?> /><label for="tt"><?php echo _AT('title'); ?></label><br />
 		<input type="radio" name="field" value="author" id="ta" <?php if ($_GET['field'] == 'author') { echo 'checked="checked"'; } ?> /><label for="ta"><?php echo _AT('tile_author'); ?></label><br />
 		<input type="radio" name="field" value="subject" id="tk" <?php if ($_GET['field'] == 'subject') { echo 'checked="checked"'; } ?> /><label for="tk"><?php echo _AT('tile_keyword'); ?></label><br />
-		<input type="radio" name="field" value="description" id="td" <?php if ($_GET['field'] == 'description') { echo 'checked="checked"'; } ?> /><label for="td"><?php echo _AT('tile_description'); ?></label><br />
+		<input type="radio" name="field" value="description" id="td" <?php if ($_GET['field'] == 'description') { echo 'checked="checked"'; } ?> /><label for="td"><?php echo _AT('description'); ?></label><br />
 		<input type="radio" name="field" value="technicalFormat" id="tf" <?php if ($_GET['field'] == 'technicalFormat') { echo 'checked="checked"'; } ?> /><label for="tf"><?php echo _AT('tile_technical_format'); ?></label>
 	</div>
 

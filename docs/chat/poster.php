@@ -30,7 +30,7 @@ $now = time();
 <tr>
 	<td>
 	<form action="display.php?set=<?php echo $now; ?>" target="display" name="f1" method="post" onsubmit="return checkForm();" />
-		<input type="hidden" name="message" value="<?php echo $now; ?>" /><label accesskey="c" for="tempField"><input type="text" maxlength="200" size="40" name="tempField" id="tempField" value="" class="input" onfocus="this.className='input highlight'" onblur="this.className='input'" /></label><input type="submit" value="<?php echo _AT('chat_send'); ?>" class="button" onfocus="this.className='submit highlight'" onblur="this.className='submit'" />	
+		<input type="hidden" name="message" value="<?php echo $now; ?>" /><label accesskey="c" for="tempField"><input type="text" maxlength="200" size="40" name="tempField" id="tempField" value="" class="input" onfocus="this.className='input highlight'" onblur="this.className='input'" /></label><input type="submit" value="<?php echo _AT('send'); ?>" class="button" onfocus="this.className='submit highlight'" onblur="this.className='submit'" />	
 	</form>
 	</td>
 </tr>

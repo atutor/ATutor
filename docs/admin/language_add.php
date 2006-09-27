@@ -43,7 +43,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <input type="hidden" name="import" value="1" />
 <div class="input-form" style="width:60%">
 	<div class="row">
-		<label for="code"><?php echo _AT('code'); ?></label><br />
+		<label for="code"><?php echo _AT('lang_code'); ?></label><br />
 		<input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo $_POST['code']; ?>" />
 	</div>
 

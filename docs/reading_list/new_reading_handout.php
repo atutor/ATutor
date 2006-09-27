@@ -104,13 +104,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		else {
 			echo 'checked="checked"';
 		}?>/>
-		<label for="required"><?php  echo _AT('rl_required'); ?></label>
+		<label for="required"><?php  echo _AT('required'); ?></label>
 		<input type="radio" name="readstatus" value="optional" id="optional" <?php if (isset($_POST['readstatus']) && ($_POST['readstatus'] == 'optional')) { echo ' checked="checked"'; } ?>/>
-		<label for="optional"><?php  echo _AT('rl_optional'); ?></label>
+		<label for="optional"><?php  echo _AT('optional'); ?></label>
 	</div>	
 	
 	<div class="row">
-	<label for="comment"><?php  echo _AT('rl_comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php if (isset($_POST['comment'])) echo $stripslashes($_POST['comment']);  ?>" />
+	<label for="comment"><?php  echo _AT('comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php if (isset($_POST['comment'])) echo $stripslashes($_POST['comment']);  ?>" />
 	</div>
 
 <h3><?php echo _AT('rl_read_by_date'); ?></h3>
@@ -132,7 +132,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="radio" id="hasdate" name="hasdate" value="true" <?php if (isset($_POST['hasdate']) && ($_POST['hasdate'] == 'true')) { echo ' checked="checked"'; } ?>/>
 		<label for="hasdate"><?php  echo _AT('rl_reading_date'); ?></label><br/>
 
-		<label for="startdate"><?php  echo _AT('rl_start_date'); ?>:</label>
+		<label for="startdate"><?php  echo _AT('start_date'); ?>:</label>
 
 		<select name="startday" id="startdate">
 		<?php for ($i = 1; $i <= 31; $i++){ ?>
@@ -153,7 +153,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</select>
 	
 	
-		<br/><label for="enddate"><?php  echo _AT('rl_end_date'); ?>:</label>
+		<br/><label for="enddate"><?php  echo _AT('end_date'); ?>:</label>
 
 		<select name="endday" id="enddate">
 		<?php for ($i = 1; $i <= 31; $i++){ ?>
