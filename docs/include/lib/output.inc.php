@@ -197,7 +197,6 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 * @return	string|array		full resulting message
 * @see		$_base_href			in include/vitals.inc.php
 * @see		$db			        in include/vitals.inc.php
-* @see		TABLE_PREFIX_LANG	in include/vitals.inc.php
 * @see		cache()				in include/phpCache/phpCache.inc.php
 * @see		cache_variable()	in include/phpCache/phpCache.inc.php
 * @author	Joel Kronenberg
@@ -286,7 +285,7 @@ function _AT() {
 	if (empty($outString)) {
 		global $db;
 
-		$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L WHERE L.language_code="'.$_SESSION['lang'].'" AND L.variable<>"_msgs" AND L.term="'.$format.'"';
+		$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'language_text L WHERE L.language_code="'.$_SESSION['lang'].'" AND L.variable<>"_msgs" AND L.term="'.$format.'"';
 
 		$result	= mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
@@ -300,7 +299,7 @@ function _AT() {
 		$outString = vsprintf($outString, $args);
 
 		/* update the locations */
-		$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'language_pages (`term`, `page`) VALUES ("'.$format.'", "'.$_rel_url.'")';
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'language_pages (`term`, `page`) VALUES ("'.$format.'", "'.$_rel_url.'")';
 		mysql_query($sql, $db);
 	}
 
@@ -743,7 +742,7 @@ function getTranslatedCodeStr($codes) {
 			$parent = Language::getParentCode($_SESSION['lang']);
 
 			/* get $_msgs_new from the DB */
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
 			$result	= @mysql_query($sql, $db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
@@ -776,7 +775,7 @@ function getTranslatedCodeStr($codes) {
 		if ($message == '') {
 			/* the language for this msg is missing: */
 		
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs"';
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX.'language_text WHERE variable="_msgs"';
 			$result	= @mysql_query($sql, $db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {

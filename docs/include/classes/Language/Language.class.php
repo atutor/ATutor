@@ -171,7 +171,7 @@ class Language {
 	
 	// public
 	function getTerm($term) {
-		$sql = "SELECT *, UNIX_TIMESTAMP(L.revised_date) AS revised_date_unix FROM ".TABLE_PREFIX_LANG."language_text".TABLE_SUFFIX_LANG." L WHERE L.language_code='".$this->getCode()."' AND L.variable='_template' AND L.term='$term'";
+		$sql = "SELECT *, UNIX_TIMESTAMP(L.revised_date) AS revised_date_unix FROM ".TABLE_PREFIX."language_text L WHERE L.language_code='".$this->getCode()."' AND L.variable='_template' AND L.term='$term'";
 
 		$result = mysql_query($sql, $this->db);
 		$row = mysql_fetch_assoc($result);

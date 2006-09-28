@@ -139,24 +139,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 						E_USER_ERROR);
 		exit;
 	}
-
-	define('TABLE_PREFIX_LANG', TABLE_PREFIX);
-	define('TABLE_SUFFIX_LANG', '');
-	$lang_db =& $db;
 }
-
-/* defaults: */
-/*if (empty($_SESSION['prefs']) || (count($_SESSION['prefs']) < 2)){
-	$temp_prefs = unserialize(AT_DEFAULT_PREFS);
-	$tmp_theme  = get_default_theme();
-	$temp_prefs['PREF_THEME'] = $tmp_theme['dir_name'];
-
-	assign_session_prefs($temp_prefs);
-	
-	if ($_SESSION['valid_user'] && $_SESSION['member_id']) {
-		save_prefs();
-	}
-} */
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 
