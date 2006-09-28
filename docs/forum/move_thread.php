@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if ($_REQUEST['fid'] == $_REQUEST['new_fid']) {
-		$msg->addFeedback('THREAD_MOVED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php?fid='.$_REQUEST['fid']);
 		exit;
 	}
@@ -64,7 +64,7 @@ if (isset($_POST['cancel'])) {
 	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET forum_id=$_REQUEST[new_fid] WHERE (parent_id=$_REQUEST[pid] OR post_id=$_REQUEST[pid]) AND forum_id=$_REQUEST[fid]";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('THREAD_MOVED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php?fid='.$_REQUEST['fid']);
 	exit;
 }

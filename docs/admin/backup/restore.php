@@ -40,7 +40,7 @@ if (isset($_POST['cancel'])) {
 		$Backup =& new Backup($db, $_POST['in_course']);
 		$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id'], $_POST['course']);
 
-		$msg->addFeedBack('IMPORT_SUCCESS');
+		$msg->addFeedBack('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
 	}

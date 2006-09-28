@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) {
 	$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$home_links', main_links='$main_links' WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('SECTIONS_SAVED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: modules.php');
 	exit;
 }

@@ -76,7 +76,7 @@ if (isset($_POST['cancel'])) {
 		$errors = add_update_course($_POST);
 
 	if ($errors !== FALSE) {
-		$msg->addFeedback('COURSE_CREATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_href.'bounce.php?course='.$addslashes($errors).SEP.'p='.urlencode('index.php'));
 		exit;
 	}

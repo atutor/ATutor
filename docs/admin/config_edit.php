@@ -91,7 +91,7 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 
-		$msg->addFeedback('SYSTEM_PREFS_SAVED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		// special case: disabling the mail queue should flush all queued mail:
 		if (!$_POST['enable_mail_queue'] && $_POST['old_enable_mail_queue']) {

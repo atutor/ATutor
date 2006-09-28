@@ -55,7 +55,7 @@ authenticate(AT_PRIV_TESTS);
 			}
 		}
 
-		$msg->addFeedback('TEST_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_href.'tools/tests/index.php');
 		exit;
 

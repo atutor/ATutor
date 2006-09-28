@@ -126,7 +126,7 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 		
-		$msg->addFeedback('TEST_UPDATED');		
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');		
 		
 		header('Location: index.php');
 		exit;

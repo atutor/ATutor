@@ -62,7 +62,7 @@ if (isset($_POST['cancel'])) {
 		fclose($f);
 	}
 
-	$msg->addFeedback('FEED_SAVED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 } 

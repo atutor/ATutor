@@ -37,7 +37,7 @@ if (isset($_POST['submit_no'])) {
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss_title.cache');
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.inc.php');
 
-	$msg->addFeedback('FEED_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 }

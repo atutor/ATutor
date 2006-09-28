@@ -32,7 +32,7 @@ else if (isset($_POST['submit_yes'])) {
 	require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 	fs_delete_workspace(WORKSPACE_ASSIGNMENT, $_POST['assignment_id']);
 
-	$msg->addFeedback('ASSIGNMENT_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index_instructor.php');
 	exit;
 }

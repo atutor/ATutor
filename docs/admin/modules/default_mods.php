@@ -151,7 +151,7 @@ if (isset($_POST['submit'])) {
 	}
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('SECTIONS_SAVED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }

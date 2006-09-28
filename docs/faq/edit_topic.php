@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 		$sql	= "UPDATE ".TABLE_PREFIX."faq_topics SET name='$_POST[name]' WHERE topic_id=$id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
-		$msg->addFeedback('TOPIC_UPDATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index_instructor.php');
 		exit;
 	}

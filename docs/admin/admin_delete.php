@@ -109,7 +109,7 @@ if (isset($_POST['submit_yes'])) {
 	mysql_query($sql, $db);
 	write_to_log(AT_ADMIN_LOG_DELETE, 'member_track', mysql_affected_rows($db), $sql);
 
-	$msg->addFeedback('USER_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	if (isset($_POST['ml']) && $_REQUEST['ml']) {
 		header('Location: '.$_base_href.'admin/master_list.php');
 	} else {

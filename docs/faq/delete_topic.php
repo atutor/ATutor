@@ -31,7 +31,7 @@ if (isset($_POST['submit_no'])) {
 		$result = mysql_query($sql, $db);
 	}
 
-	$msg->addFeedback('TOPIC_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index_instructor.php');
 	exit;
 }

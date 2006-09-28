@@ -89,11 +89,11 @@ if (isset($_POST['submit_no'])) {
 	}
 
 	if ($ppid) {
-		$msg->addFeedback('MESSAGE_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: view.php?fid='.$fid.SEP.'pid='.$ppid);
 		exit;
 	} else {
-		$msg->addFeedback('THREAD_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php?fid='.$fid);
 		exit;
 	}

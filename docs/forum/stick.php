@@ -22,7 +22,7 @@ $pid = intval($_GET['pid']);
 $sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET sticky=ABS(sticky-1) WHERE post_id=$pid";
 $result = mysql_query($sql, $db);
 
-$msg->addFeedback('STICKY_UPDATED');
+$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 header('Location: '.$_base_href.'forum/index.php?fid='.intval($_GET['fid']));
 exit;

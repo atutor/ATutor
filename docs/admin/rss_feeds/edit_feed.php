@@ -45,7 +45,7 @@ if (isset($_GET['submit'])) {
 		//delete old cache file
 		@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.cache');
 
-		$msg->addFeedback('FEED_SAVED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
 	} 

@@ -176,7 +176,7 @@ if ($_GET['reset']==1){
 		
 	$sql_delete= "delete from ".TABLE_PREFIX."g_click_data where course_id='$_SESSION[course_id]'";
 	if ($result_delete_track=mysql_query($sql_delete, $db)){
-		$msg->addFeedback('TRACKING_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 		$msg->addError('TRACKING_NOT_DELETED');
 		require(AT_INCLUDE_PATH.'footer.inc.php');

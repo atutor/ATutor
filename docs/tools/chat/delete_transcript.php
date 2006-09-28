@@ -36,7 +36,7 @@ if ($_POST['submit_yes']) {
 		writeAdminSettings($admin);
 	}
 
-	$msg->addFeedback('TRAN_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	Header('Location: index.php');
 	exit;
 }

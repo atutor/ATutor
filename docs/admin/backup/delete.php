@@ -25,7 +25,7 @@ if (isset($_POST['submit_yes'])) {
 	$Backup =& new Backup($db, $_POST['course']);
 	$Backup->delete($_POST['backup_id']);
 
-	$msg->addFeedback('BACKUP_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit_no'])) {

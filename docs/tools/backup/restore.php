@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 	} else {
 		$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
 
-		$msg->addFeedback('IMPORT_SUCCESS');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
 	}

@@ -180,7 +180,7 @@ else if (isset($_POST['submit'])) {
 			$sql = "UPDATE ".TABLE_PREFIX."assignments SET title='$title', assign_to=$assign_to, date_due='$date_due', date_cutoff='$date_cutoff' WHERE assignment_id='$id' AND course_id=$_SESSION[course_id]";
 
 			$result = mysql_query($sql,$db);
-			$msg->addFeedback('ASSIGNMENT_UPDATED');
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}
 		header('Location: index_instructor.php');
 		exit;

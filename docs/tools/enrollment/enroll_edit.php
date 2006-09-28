@@ -168,7 +168,7 @@ function group ($list, $gid) {
 	$sql = substr($sql, 0, -1);
 	mysql_query($sql, $db);
 
-	$msg->addFeedback('STUDENT_ADDED_GROUP');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 }
@@ -182,7 +182,7 @@ function group_remove ($ids, $gid) {
 	if ($ids) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$gid AND member_id IN ($ids)";
 		mysql_query($sql, $db);
-		$msg->addFeedback('STUDENT_REMOVE_GROUP');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 
 	header('Location: index.php');
@@ -252,14 +252,14 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
 	//Mark student as a member of the group
 	group($_POST['id'],$_POST['gid']);
 	
-	$msg->addFeedback('STUDENT_ADDED_GROUP');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php?current_tab=');
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='group_remove' ) {
 	// Remove student as a member of the group
 	group_remove($_POST['id'],$_POST['gid']);
 	
-	$msg->addFeedback('STUDENT_REMOVE_GROUP');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php?current_tab='.$_POST['current_tab']);
 	exit;
 }

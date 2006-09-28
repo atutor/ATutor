@@ -167,8 +167,7 @@ function enable_theme ($theme_dir) {
 		$result = mysql_query($sql, $db);
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 	} 
-	$feedback = array('THEME_ENABLED', $theme_dir);
-	$msg->addFeedback($feedback);
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 }
 
 function disable_theme ($theme_dir) {
@@ -207,6 +206,7 @@ function set_theme_as_default ($theme_dir) {
 	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '2' WHERE dir_name = '$theme_dir'";
 	$result = mysql_query($sql, $db);
 
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	$feedback = array('THEME_DEFAULT', $theme_dir);
 	$msg->addFeedback($feedback);
 	$_SESSION['prefs']['PREF_THEME'] = $theme_dir;
@@ -233,7 +233,7 @@ function delete_theme ($theme_dir) {
 		require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() */
 		if ($status != 0) {
 			disable_theme($theme_dir);
-			$msg->deleteFeedback(THEME_DISABLED);
+			$msg->deleteFeedback('THEME_DISABLED');
 		}
 
 		$dir = '../../themes/' . $theme_dir;
@@ -245,7 +245,7 @@ function delete_theme ($theme_dir) {
 
 		write_to_log(AT_ADMIN_LOG_DELETE, 'themes', mysql_affected_rows($db), $sql);
 
-		$msg->addFeedback('THEME_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		return TRUE;
 	}
 }

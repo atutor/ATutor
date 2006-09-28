@@ -52,7 +52,7 @@ if (isset($_POST['cancel'])) {
 		)";
 	$result = mysql_query($sql,$db);
 
-	$msg->addFeedback('URL_ADDED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index_instructor.php');
 	exit;
 }

@@ -24,7 +24,7 @@ admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
 if(isset($_POST['import'])) {
 	import_theme();
-	$msg->addFeedback('THEME_IMPORT_SUCCESS');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 }

@@ -113,7 +113,7 @@ if (isset($_POST['cancel'])) {
 			$result = mysql_query($sql, $db);
 		}
 
-		$msg->addFeedback('TEST_ADDED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
 	}

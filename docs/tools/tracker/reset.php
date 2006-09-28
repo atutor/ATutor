@@ -28,7 +28,7 @@ else if (isset($_POST['submit_yes'])) {
 	$sql    = "DELETE FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('TRACKING_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: ./index.php');
 	exit;
 }
