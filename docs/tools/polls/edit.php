@@ -49,7 +49,7 @@ if ($_POST['edit_poll']) {
 		$sql = "UPDATE ".TABLE_PREFIX."polls SET question='$_POST[question]', $choices WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
-		$msg->addFeedback('POLL_UPDATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		Header('Location: index.php');
 		exit;
 	}

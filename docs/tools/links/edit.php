@@ -59,7 +59,7 @@ if (isset($_POST['cancel'])) {
 		$sql	= "UPDATE ".TABLE_PREFIX."links SET cat_id=$_POST[cat], Url='$_POST[url]', LinkName='$_POST[title]', Description='$_POST[description]', SubmitName='$name', Approved=$_POST[approved] WHERE link_id=".$link_id;
 		mysql_query($sql, $db);
 	
-		$msg->addFeedback('LINK_UPDATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		header('Location: '.$_base_href.'tools/links/index.php');
 		exit;

@@ -36,7 +36,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
 	if (!$module->isEnabled() && !$module->isCore() && !$module->isMissing()) {
 		$module->enable();
-		$msg->addFeedback('MOD_ENABLED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
@@ -50,7 +50,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		$msg->addError('DISABLE_MISSING_MODULE');
 	} else if ($module->isEnabled()) {
 		$module->disable();
-		$msg->addFeedback('MOD_DISABLED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;

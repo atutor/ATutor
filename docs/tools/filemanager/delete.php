@@ -52,7 +52,7 @@ if (isset($_POST['submit_yes'])) {
 			}			
 		}
 		if ($result) 
-			$msg->addFeedback('FILE_DELETED');
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 	/* delete directory */
 	if (isset($_POST['listofdirs'])) {

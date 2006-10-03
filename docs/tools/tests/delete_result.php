@@ -48,7 +48,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 unset($hidden_vars);
 $hidden_vars['tid'] = $tid;
 $hidden_vars['rid'] = $rid;
-$msg->addConfirm('DELETE_TEST_RESULTS', $hidden_vars);
+$msg->addConfirm('DELETE', $hidden_vars);
 
 $msg->printConfirm();
 

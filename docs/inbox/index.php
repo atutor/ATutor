@@ -34,7 +34,7 @@ if ($_GET['delete']) {
 	$_GET['delete'] = intval($_GET['delete']);
 
 	if($result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[delete]",$db)){
-		$msg->addFeedback('MSG_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 
 	$_GET['delete'] = '';
@@ -44,7 +44,7 @@ $msg->printFeedbacks();
 
 
 if (isset($_GET['s'])) {
-	$msg->printFeedbacks('MSG_SENT');
+	$msg->printFeedbacks('ACTION_COMPLETED_SUCCESSFULLY');
 }
 
 if (isset($_GET['view'])) {

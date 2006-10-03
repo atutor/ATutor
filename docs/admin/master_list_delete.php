@@ -28,7 +28,7 @@ if (isset($_POST['submit_no'])) {
 
 	write_to_log(AT_ADMIN_LOG_DELETE, 'master_list', mysql_affected_rows($db), $sql);
 
-	$msg->addFeedback('LIST_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_base_href.'admin/master_list.php');
 	exit;
 }

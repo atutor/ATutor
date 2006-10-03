@@ -76,7 +76,7 @@ if (isset($_POST['cancel'])) {
 
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 
-		$msg->addFeedback('ADMIN_EDITED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
 	}

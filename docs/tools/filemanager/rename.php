@@ -52,7 +52,7 @@ if (isset($_POST['rename_action'])) {
 	}
 	else if ($current_path.$pathext.$_POST['new_name'] == $current_path.$pathext.$_POST['oldname']) {
 		//do nothing
-		$msg->addFeedback('RENAMED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
 		exit;
 	}
@@ -69,7 +69,7 @@ if (isset($_POST['rename_action'])) {
 	}
 	else {
 		@rename($current_path.$pathext.$_POST['oldname'], $current_path.$pathext.$_POST['new_name']);
-		$msg->addFeedback('RENAMED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
 		exit;
 	}

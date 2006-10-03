@@ -72,7 +72,7 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 
-		$msg->addFeedback('GROUPS_CREATED_SUCCESSFULLY');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		header('Location: index.php');
 		exit;

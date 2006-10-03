@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 		}
 		unset($mail);
 		
-		$msg->printFeedbacks('MSG_SENT');
+		$msg->printFeedbacks('ACTION_COMPLETED_SUCCESSFULLY');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

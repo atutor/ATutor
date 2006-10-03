@@ -31,7 +31,7 @@ if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
 		require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 		add_forum($_POST);
 		
-		$msg->addFeedback('FORUM_ADDED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_href.'tools/forums/index.php');
 		exit;
 	}

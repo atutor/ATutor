@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 	$Backup->setCourseID($_POST['course']);
 	$error = $Backup->create($_POST['description']);
 	if ($error !== FALSE) {
-		$msg->addFeedback('BACKUP_CREATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
 	}

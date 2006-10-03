@@ -38,7 +38,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars['backup_id'] = $_GET['backup_id'];
 $hidden_vars['course']    = $_GET['course'];
-$msg->addConfirm('DELETE_BACKUP', $hidden_vars);
+$msg->addConfirm('DELETE', $hidden_vars);
 $msg->printConfirm();
 
 require (AT_INCLUDE_PATH.'footer.inc.php');

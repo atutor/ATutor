@@ -63,7 +63,7 @@ if (isset($_POST['cancel'])) {
 			// index to new file resource
 			$id_new = mysql_insert_id($db);
 
-			$msg->addFeedback('RL_FILE_ADDED');
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		} else { // modifying an existing file resource
 
 			$sql = "UPDATE ".TABLE_PREFIX."external_resources SET title='$_POST[title]', author='$_POST[author]', publisher='$_POST[publisher]', date='$_POST[date]', comments='$_POST[comments]', id='$_POST[isbn]' WHERE resource_id='$id' AND course_id=$_SESSION[course_id]";
@@ -73,7 +73,7 @@ if (isset($_POST['cancel'])) {
 			// index to file resource
 			$id_new = $id;
 
-			$msg->addFeedback('RL_RESOURCE_UPDATED');
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}
 
 		if (trim($_POST['page_return']) != ''){

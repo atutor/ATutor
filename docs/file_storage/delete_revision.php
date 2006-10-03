@@ -66,7 +66,7 @@ if (isset($_POST['submit_no'])) {
 		}
 	}
 
-	$msg->addFeedback('FILE_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	if ($back_id) {
 		header('Location: revisions.php'.$owner_arg_prefix.'id='.$back_id);
 	} else {

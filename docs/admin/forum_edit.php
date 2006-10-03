@@ -85,7 +85,7 @@ if (isset($_POST['cancel'])) {
 				write_to_log(AT_ADMIN_LOG_REPLACE, 'forums_courses', mysql_affected_rows($db), $sql);
 			}
 		}
-		$msg->addFeedback('FORUM_UPDATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_href.'admin/forums.php');
 		exit;
 	}

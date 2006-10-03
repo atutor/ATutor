@@ -30,7 +30,7 @@ if (isset($_POST['submit_no'])) {
 	// (if this forum is shared, then we do not want to delete it.)
 	if (!is_shared_forum($_POST['fid']) && valid_forum_user($_POST['fid'])) {
 		delete_forum($_POST['fid']);
-		$msg->addFeedback('FORUM_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 		$msg->addError('FORUM_NO_DEL_SHARE');
 	}

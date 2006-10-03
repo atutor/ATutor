@@ -49,7 +49,7 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 			mysql_query($sql, $db);
 		}
 
-		$msg->addFeedback('COMMENT_ADDED_SUCCESSFULLY');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		header('Location: post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id);
 		exit;

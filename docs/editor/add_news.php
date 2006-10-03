@@ -48,7 +48,7 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body_text]')";
 		mysql_query($sql, $db);
 	
-		$msg->addFeedback('NEWS_ADDED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		/* update announcement RSS: */
 		if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS1.0.xml')) {

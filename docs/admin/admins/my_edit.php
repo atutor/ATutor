@@ -51,7 +51,7 @@ if (isset($_POST['cancel'])) {
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]' WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql, $db);
 
-		$msg->addFeedback('ADMIN_EDITED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_href.'admin/index.php');
 		exit;
 	}

@@ -50,7 +50,7 @@ if (isset($_POST['cancel'])) {
 	$sql = substr($sql, 0, -1);
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('QUESTION_ADDED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: questions.php?tid='.$tid);
 	exit;
 } else if (isset($_POST['submit_no'])) {

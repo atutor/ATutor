@@ -52,7 +52,7 @@ if (isset($_POST['cancel'])) {
 			@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml');
 		}
 
-		$msg->addFeedback('NEWS_UPDATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_href.'tools/news/index.php');
 		exit;
 	}

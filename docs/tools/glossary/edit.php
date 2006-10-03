@@ -43,7 +43,7 @@ if ($_POST['submit']) {
 		
 		$result = mysql_query($sql, $db);
 
-		$msg->addFeedback('GLOS_UPDATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		Header('Location: index.php');
 		exit;
 	}

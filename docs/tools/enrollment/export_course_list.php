@@ -76,7 +76,7 @@ if(isset($_POST['cancel'])) {
 }
 
 if(isset($_POST['done'])) {
-	$msg->addFeedback('COMPLETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 }

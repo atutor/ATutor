@@ -34,7 +34,7 @@ if (isset($_POST['cancel'])) {
 		header('Location: upload.php');
 		exit;
 	} else {
-		$msg->addFeedback('BACKUP_UPLOADED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
 	}
@@ -42,9 +42,6 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printAll();
-
-//<form onsubmit="openWindow('php echo $_base_href; tools/prog.php');" name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; " enctype="multipart/form-data" > 
 ?>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" >

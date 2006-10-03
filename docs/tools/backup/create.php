@@ -27,7 +27,7 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	//make backup of current course
 	$Backup->create($_POST['description']);
-	$msg->addFeedback('BACKUP_CREATED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 }

@@ -50,7 +50,7 @@ if (isset($_POST['submit_no'])) {
 	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('FORUM_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: forums.php');
 	exit;
 }

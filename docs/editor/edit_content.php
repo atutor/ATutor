@@ -32,7 +32,7 @@ require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 
 if ($_POST['close'] || $_GET['close']) {
 	if ($_GET['close']) {
-		$msg->addFeedback('CONTENT_UPDATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 		$msg->addFeedback('CLOSED');
 		if ($cid == 0) {

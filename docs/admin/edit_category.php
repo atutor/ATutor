@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db), $sql);
 
-		$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		header('Location: course_categories.php');
 		exit;

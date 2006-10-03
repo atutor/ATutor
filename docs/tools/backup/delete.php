@@ -44,7 +44,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	
 	$index['backup_id'] = $_GET['backup_id'];
-	$msg->addConfirm('DELETE_BACKUP', $index);
+	$msg->addConfirm('DELETE', $index);
 	$msg->printConfirm();
 
 require (AT_INCLUDE_PATH.'footer.inc.php');

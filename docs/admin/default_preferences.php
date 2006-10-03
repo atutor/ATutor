@@ -30,7 +30,6 @@ if (isset($_GET['submit'])) {
 	$_GET['form_focus'] = intval($_GET['form_focus']);
 
 	$default_theme = get_default_theme();
-	//$default_lang = $_config['default_language'];
 
 	$pref_defaults = array('PREF_THEME'=>$default_theme['dir_name'], 'PREF_NUMBERING'=>$_GET['numbering'], 'PREF_JUMP_REDIRECT'=>$_GET['use_jump_redirect'], 'PREF_FORM_FOCUS'=>$_GET['form_focus']);
 
@@ -46,7 +45,7 @@ if (isset($_GET['submit'])) {
 	$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_inbox_notify','$_GET[mnot]')";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('PREFS_SAVED2');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }

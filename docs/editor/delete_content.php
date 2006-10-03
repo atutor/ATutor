@@ -55,7 +55,7 @@ if (is_array($children) && (count($children)>0) ) {
 	$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 }
 	
-$msg->addConfirm('DELETE_CONTENT', $hidden_vars);
+$msg->addConfirm('DELETE', $hidden_vars);
 $msg->printConfirm();
 	
 require(AT_INCLUDE_PATH.'footer.inc.php');

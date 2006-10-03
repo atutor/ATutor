@@ -23,7 +23,7 @@ if (isset($_POST['addmore'])) {
 	header('Location: create_course_list.php');
 	exit;
 } else if (isset($_POST['return'])) {
-	$msg->addFeedback('COMPLETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['cancel'])) {

@@ -583,13 +583,13 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 
 if ($_POST['s_cid']){
 	if (!$msg->containsErrors()) {
-		$msg->addFeedback('IMS_IMPORT_SUCCESS');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 	header('Location: ../../editor/edit_content.php?cid='.intval($_POST['cid']));
 	exit;
 } else {
 	if (!$msg->containsErrors()) {
-		$msg->addFeedback('IMS_IMPORT_SUCCESS');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 	if ($_GET['tile']) {
 		header('Location: '.$_base_href.'tools/tile/index.php');

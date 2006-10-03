@@ -134,7 +134,7 @@ if (isset($_POST['cancel'])) {
 		}
 		unset($mail);
 
-		$msg->addFeedback('MSG_SENT');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;

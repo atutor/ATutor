@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 				exit;
 			}
 
-			$msg->addFeedback('EMAIL_UPDATED');
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}
 		header('Location: ./profile.php');
 		exit;

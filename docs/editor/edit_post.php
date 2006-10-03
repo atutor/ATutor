@@ -58,7 +58,7 @@ if ($_POST['edit_post']) {
 		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]' WHERE post_id=$_POST[pid]";
 		$result = mysql_query($sql,$db);
 
-		$msg->addFeedback('POST_EDITED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		if ($_POST['ppid'] == 0) {
 			$_POST['ppid'] = $_POST['pid'];
 		}

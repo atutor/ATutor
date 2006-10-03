@@ -29,7 +29,7 @@ if (isset($_POST['submit_no'])) {
 	delete_course($_SESSION['course_id'], $entire_course = true); // delete the course
 	cache_purge('system_courses','system_courses'); // purge the system_courses cache (if successful)
 	
-	$msg->addFeedback('COURSE_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_base_href.'bounce.php?course=0');
 	exit;
 }

@@ -84,7 +84,7 @@ if (isset($_POST['cancel'])) {
 			WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
 
-		$msg->addFeedback('QUESTION_ADDED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		if ($_POST['tid']) {
 			header('Location: questions.php?tid='.$_POST['tid']);			
 		} else {

@@ -158,7 +158,7 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 			$msg->addError(array('FOLDER_NOT_CREATED', $_POST['dirname'] ));
 		}
 		else {
-			$msg->addFeedback('FOLDER_CREATED');
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}
 	}
 }

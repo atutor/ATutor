@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES $terms_sql";
 		$result = mysql_query($sql, $db);
 
-		$msg->addFeedback('GLOS_UPDATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
 	}

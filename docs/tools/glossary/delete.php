@@ -32,7 +32,7 @@ if ($_POST['submit_yes']) {
 	$sql = "UPDATE ".TABLE_PREFIX."glossary SET related_word_id=0 WHERE related_word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('GLOSSARY_DELETE2');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 } else if ($_POST['submit_no']) {
@@ -55,7 +55,7 @@ if ($_GET['gid'] == 0) {
 $hidden_vars['word'] = $_GET['t'];
 $hidden_vars['gid']  = $_GET['gid'];
 		
-$msg->addConfirm('GLOSSARY_DELETE',  $hidden_vars);
+$msg->addConfirm('DELETE',  $hidden_vars);
 $msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 	
 $msg->printConfirm();

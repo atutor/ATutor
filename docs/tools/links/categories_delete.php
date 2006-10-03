@@ -46,7 +46,7 @@ if (isset($_POST['submit_no'])) {
 	if (mysql_num_rows($result) == 0) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."links_categories WHERE owner_id=$owner_id AND owner_type=$owner_type AND cat_id=$cat_id";
 		$result = mysql_query($sql, $db);
-		$msg->addFeedback('CAT_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 		$msg->addError('LINK_CAT_NOT_EMPTY');
 	}

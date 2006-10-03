@@ -62,7 +62,7 @@ if (isset($_GET['submit'])) {
 	$sql = "UPDATE ".TABLE_PREFIX."members SET inbox_notify = $_GET[mnot] WHERE member_id = $_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('PREFS_SAVED2');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_base_href.'users/preferences.php');
 	exit;
 }

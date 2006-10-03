@@ -43,7 +43,7 @@ if (isset($_POST['cancel'])) {
 			write_to_log(AT_ADMIN_LOG_INSERT, 'forums_courses', mysql_affected_rows($db), $sql);
 		}
 
-		$msg->addFeedback('FORUM_ADDED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		if($course =="0"){
 			$msg->addFeedback('FORUM_POSTING');
 		}

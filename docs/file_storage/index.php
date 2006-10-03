@@ -247,7 +247,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 		foreach ($files as $file) {
 			fs_delete_file($file, $owner_type, $owner_id);
 		}
-		$msg->addFeedback('FILE_DELETED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 
 	if (isset($folders)) {
@@ -282,7 +282,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (0, $parent_folder_id, $owner_type, $owner_id, '$_POST[new_folder_name]')";
 		$result = mysql_query($sql, $db);
-		$msg->addFeedback('FOLDER_CREATED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
 		exit;
 	}

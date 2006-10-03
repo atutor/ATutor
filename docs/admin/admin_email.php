@@ -73,8 +73,8 @@ if ($_POST['cancel']) {
 		}
 		unset($mail);
 
-		$msg->addFeedback('MSG_SENT');
-		header('Location: users.php#feedback');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		header('Location: users.php');
 		exit;
 	}
 }

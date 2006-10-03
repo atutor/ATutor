@@ -42,7 +42,7 @@ if (isset($_POST['submit_no'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."links WHERE link_id=$_POST[link_id]";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('LINK_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_base_href.'tools/links/index.php');
 	exit;
 }

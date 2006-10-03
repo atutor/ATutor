@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		if (!is_shared_forum($_POST['fid'])) {
 			edit_forum($_POST);
-			$msg->addFeedback('FORUM_UPDATED');
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		} else {
 			$msg->addError('FORUM_NO_EDIT_SHARE');
 		}

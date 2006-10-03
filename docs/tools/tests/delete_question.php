@@ -43,7 +43,7 @@ authenticate(AT_PRIV_TESTS);
 
 	unset($hidden_vars);
 	$hidden_vars['qid'] = $_GET['qid'];
-	$msg->addConfirm('DELETE_TEST_QUESTION', $hidden_vars);
+	$msg->addConfirm('DELETE', $hidden_vars);
 
 	$msg->printConfirm();
 

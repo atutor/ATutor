@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE ".TABLE_PREFIX."links_categories SET parent_id=$parent_id, name='$cat_name', owner_type=$owner_type, owner_id=$owner_id WHERE cat_id=".$cat_id;
 
 		$result = mysql_query($sql, $db);
-		$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		header('Location: categories.php');
 		exit;

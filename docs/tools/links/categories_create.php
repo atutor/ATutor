@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (0, $owner_type, $owner_id, '$cat_name', $parent_id)";
 		$result = mysql_query($sql, $db);
 
-		$msg->addFeedback('CAT_ADDED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		
 		header('Location: categories.php');
 		exit;

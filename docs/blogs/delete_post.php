@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 5824 2005-12-08 16:43:32Z joel $
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -34,7 +34,7 @@ if (isset($_POST['submit_no'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id";
 	mysql_query($sql, $db);
 
-	$msg->addFeedback('POST_DELETED_SUCCESSFULLY');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 	header('Location: view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid']);
 	exit;
@@ -60,7 +60,7 @@ $_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['children'
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars = array('id' => $id, 'ot' => $_REQUEST['ot'], 'oid' => $_REQUEST['oid']);
-$msg->addConfirm(array('POST_DELETE', $post_row['date'] . ' - ' . $post['title']), $hidden_vars);
+$msg->addConfirm('DELETE', $hidden_vars);
 $msg->printConfirm();
 ?>
 

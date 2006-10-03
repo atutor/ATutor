@@ -64,7 +64,7 @@ if (isset($_POST['delete'])) {
 		rmdir($dir_);
 	}
 	
-	$msg->addFeedback('LOGS_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: error_logging.php');
 	exit;
 } 
@@ -188,7 +188,7 @@ if (isset($_POST['view'])) {
 	foreach($delete_store as $elem => $val) 
 		unlink($dir_ . '/' . $elem);
 		
-	$msg->addFeedback('LOGS_DELETED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: ' . $_SERVER['PHP_SELF']);
 }
 ?>

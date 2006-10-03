@@ -34,7 +34,7 @@ $backup_row = $Backup->getRow($_REQUEST['backup_id']);
 
 if (isset($_POST['edit'])) {
 	$Backup->edit($_POST['backup_id'], $_POST['new_description']);
-	$msg->addFeedback('BACKUP_EDIT');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
 } 

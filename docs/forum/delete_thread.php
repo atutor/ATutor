@@ -120,11 +120,9 @@ $hidden_vars['pid']  = $_GET['pid'];
 $hidden_vars['ppid'] = $_GET['ppid'];
 $hidden_vars['nest'] = $_GET['nest'];
 
+$msg->addConfirm('DELETE', $hidden_vars);
 if (($ppid=='') || ($ppid =='0')) {
-	$msg->addConfirm('DELETE_THREAD', $hidden_vars);
 	$ppid = '0';
-} else {
-	$msg->addConfirm('DELETE_MESSAGE', $hidden_vars);
 }
 
 $msg->printConfirm();

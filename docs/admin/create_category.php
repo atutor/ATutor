@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id, '$cat_theme')";
 		$result = mysql_query($sql, $db);
 		$cat_id = mysql_insert_id($db);
-		$msg->addFeedback('CAT_ADDED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		
 		write_to_log(AT_ADMIN_LOG_INSERT, 'course_cats', mysql_affected_rows($db), $sql);
 

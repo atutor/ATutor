@@ -59,7 +59,7 @@ if (isset($_POST['submit_yes'])) {
 
 	$result	= mysql_query($sql, $db);
 
-	$msg->addFeedback('QUESTION_ADDED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: question_db.php');
 	exit;
 }
@@ -158,7 +158,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 
 			$result	= mysql_query($sql, $db);
 
-			$msg->addFeedback('QUESTION_ADDED');
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			header('Location: question_db.php');
 			exit;
 		}

@@ -79,7 +79,7 @@ if (isset($_POST['cancel'])) {
 			0)";
 		$result	= mysql_query($sql, $db);
 		
-		$msg->addFeedback('QUESTION_ADDED');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: question_db.php');
 		exit;
 	}

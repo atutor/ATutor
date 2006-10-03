@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 		}
 		unset($mail);
 		
-		$msg->addFeedback('MSG_SENT');
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: ' . $to);
 		exit;
 	}
