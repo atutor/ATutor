@@ -42,7 +42,7 @@ if (isset($_GET['edit'], $_GET['id'])) {
 		|| isset($_GET['statistics']) 
 		|| isset($_GET['delete'])) {
 
-	$msg->addError('NO_TEST_SELECTED');
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

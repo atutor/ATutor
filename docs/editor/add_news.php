@@ -35,10 +35,20 @@ if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
 
 if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 	$_POST['formatting'] = intval($_POST['formatting']);
+	$_POST['title'] = trim($_POST['title']);
+	$_POST['body_text'] = trim($_POST['body_text']);
 	
-	if (($_POST['title'] == '') && ($_POST['body_text'] == '') && !isset($_POST['setvisual'])) {
-		$msg->addError('ANN_BOTH_EMPTY');
+	$missing_fields = array();
+
+	if (!$_POST['body_text']) {
+		$missing_fields[] = _AT('body');
 	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	}
+
 	if (!$msg->containsErrors() && (!isset($_POST['setvisual']) || isset($_POST['submit']))) {
 
 		$_POST['formatting']  = $addslashes($_POST['formatting']);
@@ -76,7 +86,7 @@ $msg->printErrors();
 
 	<div class="input-form">
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
+			<label for="title"><?php echo _AT('title'); ?></label><br />
 			<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>" />
 		</div>
 

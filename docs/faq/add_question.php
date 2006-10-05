@@ -21,13 +21,24 @@ if (isset($_POST['cancel'])) {
 	header('Location: index_instructor.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	if (trim($_POST['question']) == '') {
-		$msg->addError('QUESTION_EMPTY');
+	$_POST['question'] = trim($_POST['question']);
+	$_POST['answer'] = trim($_POST['answer']);
+
+	$missing_fields = array();
+	
+	if (!$_POST['question']) {
+		$missing_fields[] = _AT('question');
 	}
 
-	if (trim($_POST['answer']) == '') {
-		$msg->addError('ANSWER_EMPTY');
+	if (!$_POST['answer']) {
+		$missing_fields[] = _AT('answer');
 	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	}
+
 
 	if (!$msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);

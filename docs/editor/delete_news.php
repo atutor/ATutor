@@ -49,7 +49,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$result = mysql_query($sql,$db);
 	if (mysql_num_rows($result) == 0) {
-		$msg->printErrors('ANN_NOT_FOUND');
+		$msg->printErrors('ITEM_NOT_FOUND');
 	} else {
 		$row = mysql_fetch_assoc($result);
 

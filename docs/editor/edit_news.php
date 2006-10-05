@@ -75,7 +75,7 @@ if (isset($_GET['aid'])) {
 }
 
 if ($aid == 0) {
-	$msg->printErrors('ANN_ID_ZERO');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -83,7 +83,7 @@ if ($aid == 0) {
 $sql = "SELECT * FROM ".TABLE_PREFIX."news WHERE news_id=$aid AND course_id=$_SESSION[course_id]";
 $result = mysql_query($sql,$db);
 if (!($row = mysql_fetch_array($result))) {
-	$msg->printErrors('ANN_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
