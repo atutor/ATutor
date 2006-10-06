@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Cmap Concept Mapping Server</name> 
+    <description lang="en">This module links the Cmap concept mapping server into ATutor.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2006-09-29</date> 
+        <state>stable</state> 
+	<notes>A Cmap server must be running and functioning properly to make use of this module once installed. There is also a client CmapTools that can be installed on the users system so they to can interact with the server for collaborative concept map authoring. See the Cmap site for full details (http://cmap.ihmc.us/) Once the module is installed, go to the Cmap admin tool created in ATutor, and enter the URL to your Cmap server.</notes> 
+    </release> 
+</module>
