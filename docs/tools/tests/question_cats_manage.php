@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 		header('Location: question_cats.php');
 		exit;
 	} else {
-		$msg->addError('CAT_NO_NAME');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 }
 

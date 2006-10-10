@@ -46,14 +46,23 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 		exit;
 	}
 
-	if ($_POST['title'] == '') {		
-		$msg->addError('TITLE_EMPTY');
+	$missing_fields = array();
+	if ($_POST['cat'] == 0 || $_POST['cat'] == '') {
+		$missing_fields[] = _AT('category');
 	}
-	if (($_POST['url'] == '') || ($_POST['url'] == 'http://')) {
-		$msg->addError('URL_EMPTY');
+	if (trim($_POST['title']) == '') {
+		$missing_fields[] = _AT('title');
 	}
-	if ($_POST['description'] == '') {		
-		$msg->addError('DESCRIPTION_EMPTY');
+	if (trim($_POST['url']) == '' || $_POST['url'] == 'http://') {
+		$missing_fields[] = _AT('url');
+	}
+	if (trim($_POST['description']) == '') {
+		$missing_fields[] = _AT('description');
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {

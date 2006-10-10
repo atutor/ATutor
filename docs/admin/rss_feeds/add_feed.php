@@ -22,12 +22,17 @@ if (isset($_POST['cancel'])) {
 	header("Location: index_admin.php");
 	exit;
 } else if (isset($_POST['submit'])) {
-	//check both fields are not empty
+	$missing_fields = array();
+
 	if (trim($_POST['title']) == '') {
-		$msg->addError('TITLE_EMPTY');
+		$missing_fields[] = _AT('title');
 	}
 	if (trim($_POST['url']) == '') {
-		$msg->addError('URL_EMPTY');
+		$missing_fields[] = _AT('url');
+	}
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {

@@ -36,19 +36,25 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.$_base_href.'links/index.php');
 	exit;
 } else if (isset($_POST['add_link']) && isset($_POST['submit'])) {
+	$missing_fields = array();
+	if ($_POST['cat'] == 0 || $_POST['cat'] == '') {
+		$missing_fields[] = _AT('category');
+	}
+	if (trim($_POST['title']) == '') {
+		$missing_fields[] = _AT('title');
+	}
+	if (trim($_POST['url']) == '' || $_POST['url'] == 'http://') {
+		$missing_fields[] = _AT('url');
+	}
+	if (trim($_POST['description']) == '') {
+		$missing_fields[] = _AT('description');
+	}
 
-	if ($_POST['cat'] == 0 || $_POST['cat'] == '') {		
-		$msg->addError('CAT_EMPTY');
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
-	if ($_POST['title'] == '') {		
-		$msg->addError('TITLE_EMPTY');
-	}
-	if (($_POST['url'] == 'http://') || $_POST['url'] == '') {		
-		$msg->addError('URL_EMPTY');
-	}
-	if ($_POST['description'] == '') {		
-		$msg->addError('DESCRIPTION_EMPTY');
-	}
+
 
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
 

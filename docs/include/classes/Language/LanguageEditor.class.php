@@ -68,19 +68,29 @@ class LanguageEditor extends Language {
 		$row['native_name']  = trim($row['native_name']);
 		$row['english_name'] = trim($row['english_name']);
 
+		$missing_fields = array();
+
 		if ($row['code'] == '') {
-			$msg->addError('LANG_CODE_MISSING');
+			$missing_fields[] = _AT('lang_code');
 		}
 		if ($row['charset'] == '') {
-			$msg->addError('LANG_CHARSET_MISSING');
+			$missing_fields[] = _AT('charset');
+		}
+		if ($row['reg_exp'] == '') {
+			$missing_fields[] = _AT('reg_exp');
 		}
 		if ($row['native_name'] == '') {
-			$msg->addError('LANG_NNAME_MISSING');
+			$missing_fields[] = _AT('name_in_language');
 		}
 		if ($row['english_name'] == '') {
-			$msg->addError('LANG_ENAME_MISSING');
+			$missing_fields[] = _AT('name_in_english');
 		}
 		
+		if ($missing_fields) {
+			$missing_fields = implode(', ', $missing_fields);
+			$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+		}
+
 		if (!$msg->containsErrors()) {
 			$row['code']         = $addslashes($row['code']);
 			$row['locale']       = $addslashes($row['locale']);
@@ -112,21 +122,29 @@ class LanguageEditor extends Language {
 	// returns true or false, depending on success if db update
 	// can be called staticly
     function updateLanguage($row, $new_exists) {
-		if($row['code'] == '') {
-			$this->msg->addError('LANG_CODE_MISSING');
+		$missing_fields = array();
+
+		if ($row['code'] == '') {
+			$missing_fields[] = _AT('lang_code');
 		}
 		if ($row['charset'] == '') {
-			$this->msg->addError('LANG_CHARSET_MISSING');
+			$missing_fields[] = _AT('charset');
 		}
 		if ($row['reg_exp'] == '') {
-			$this->msg->addError('LANG_REGEX_MISSING');
+			$missing_fields[] = _AT('reg_exp');
 		}
 		if ($row['native_name'] == '') {
-			$this->msg->addError('LANG_NNAME_MISSING');
+			$missing_fields[] = _AT('name_in_language');
 		}
 		if ($row['english_name'] == '') {
-			$this->msg->addError('LANG_ENAME_MISSING');
+			$missing_fields[] = _AT('name_in_english');
 		}
+		
+		if ($missing_fields) {
+			$missing_fields = implode(', ', $missing_fields);
+			$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+		}
+
 
 		if (!$this->msg->containsErrors()) {
 			global $addslashes;

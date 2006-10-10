@@ -91,7 +91,7 @@ function save_changes($redir) {
 	}
 
 	if ($_POST['title'] == '') {
-		$msg->addError('NO_TITLE');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 		
 	if (!$msg->containsErrors()) {

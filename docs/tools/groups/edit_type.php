@@ -24,7 +24,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['title']   = trim($_POST['title']);
 
 	if (!$_POST['title']) {
-		$msg->addError('NO_TITLE');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 
 	if (!$msg->containsErrors()) {

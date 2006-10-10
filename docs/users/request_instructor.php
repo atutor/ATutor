@@ -24,7 +24,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 
 } else if ($_POST['description'] == ''){
-	$msg->addError('DESC_REQUIRED');
+	$msg->addError(array('EMPTY_FIELDS', _AT('description')));
 	header('Location: '.$_base_href.'users/create_course.php');
 	exit;
 } else if (isset($_POST['form_request_instructor'])) {

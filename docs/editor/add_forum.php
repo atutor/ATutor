@@ -24,7 +24,7 @@ if ($_POST['cancel']) {
 
 if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
 	if ($_POST['title'] == '') {
-		$msg->addError('FORUM_TITLE_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 
 	if (!$msg->containsErrors()) {

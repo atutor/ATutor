@@ -31,11 +31,18 @@ if (isset($_POST['cancel'])) {
 	header('Location: index_instructor.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	$missing_fields = array();
+
 	if (trim($_POST['title']) == '') {
-		$msg->addError('TITLE_EMPTY');
+		$missing_fields[] = _AT('title');
 	}
-	if (trim($_POST['url']) == '') {
-		$msg->addError('RL_URL_EMPTY');
+	if (trim($_POST['author']) == '') {
+		$missing_fields[] = _AT('url');
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {

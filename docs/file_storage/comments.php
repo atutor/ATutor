@@ -41,7 +41,7 @@ if (isset($_GET['done'])) {
 	$_POST['comment_id'] = abs($_POST['comment_id']);
 
 	if (!$_POST['edit_comment']) {
-		$msg->addError('MISSING_COMMENT');
+		$msg->addError(array('EMPTY_FIELDS', _AT('comments')));
 	}
 
 	if (!$msg->containsErrors()) {
@@ -62,7 +62,7 @@ if (isset($_GET['done'])) {
 	$_POST['id'] = abs($_POST['id']);
 
 	if (!$_POST['comment']) {
-		$msg->addError('MISSING_COMMENT');
+		$msg->addError(array('EMPTY_FIELDS', _AT('comments')));
 	}
 
 	if (!$msg->containsErrors()) {

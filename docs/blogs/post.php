@@ -38,7 +38,7 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 	$_POST['private'] = abs($_POST['private']);
 
 	if ($_POST['body'] == '') {
-		$msg->addError('EMPTY_COMMENTS');
+		$msg->addError(array('EMPTY_FIELDS', _AT('comments')));
 	}
 
 	if (!$msg->containsErrors()) {

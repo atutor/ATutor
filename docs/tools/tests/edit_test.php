@@ -47,7 +47,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['instructions'] = trim($_POST['instructions']);
 
 	if ($_POST['title'] == '') {
-		$msg->addError('NO_TITLE');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 
 	$day_start	= intval($_POST['day_start']);

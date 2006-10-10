@@ -35,7 +35,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$_POST['prefix']) {
-		$msg->addError('NO_TITLE');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 
 	if (!$msg->containsErrors()) {
