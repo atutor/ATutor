@@ -21,13 +21,21 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.$_base_href.'admin/forums.php');
 	exit;
 } else if (isset($_POST['add_forum'])) {
+	$missing_fields = array();
+
 	if (empty($_POST['title'])) {
-		$msg->addError('TITLE_EMPTY');
+		$missing_fields[] = _AT('title');
 	} 
 
 	if (empty($_POST['courses'])) {
-		$msg->addError('NO_COURSE_SELECTED');
+		$missing_fields[] = _AT('courses');
 	} 
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	}
+
 
 	if (!($msg->containsErrors())) {
 		//add forum

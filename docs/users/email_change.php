@@ -59,14 +59,14 @@ if (isset($_POST['submit'])) {
 			}
 		}
 	} else {
-		$msg->addError('PASSWORD_MISSING');
-		Header('Location: email_change.php');
+		$msg->addError(array('EMPTY_FIELDS', _AT('password')));
+		header('Location: email_change.php');
 		exit;
 	}
 		
 	// email check
 	if ($_POST['email'] == '') {
-		$msg->addError('EMAIL_MISSING');
+		$msg->addError(array('EMPTY_FIELDS', _AT('email')));
 	} else {
 		if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 			$msg->addError('EMAIL_INVALID');

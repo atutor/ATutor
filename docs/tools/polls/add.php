@@ -23,7 +23,7 @@ if ($_POST['cancel']) {
 
 if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 	if (trim($_POST['question']) == '') {
-		$msg->addError('POLL_QUESTION_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 	}
 
 	if ((trim($_POST['c1']) == '') || (trim($_POST['c2']) == '')) {

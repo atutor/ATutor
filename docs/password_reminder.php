@@ -109,7 +109,7 @@ if (isset($_POST['cancel'])) {
 		
 		/* password check */
 		if ($_POST['password'] == '') { 
-			$msg->addError('PASSWORD_MISSING');
+			$msg->addError(array('EMPTY_FIELDS', _AT('password')));
 		} else {
 			// check for valid passwords
 			if ($_POST['password'] != $_POST['password2']){

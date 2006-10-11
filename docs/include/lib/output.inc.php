@@ -275,9 +275,16 @@ function _AT() {
 	}
 
 	$num_args = func_num_args();
-		
 	$format		= array_shift($args);
 	$outString	= vsprintf($_template[$format], $args);
+
+/*	if (!@vsprintf($_template[$format], $args)) {
+		var_dump($args);
+		debug($_template[$format]);
+		debug($format);
+		exit;
+	}
+*/
 	if ($outString === false) {
 		return ('[Error parsing language. Variable: <code>'.$format.'</code>. Value: <code>'.$_template[$format].'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
 	}

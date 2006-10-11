@@ -17,7 +17,6 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
@@ -25,8 +24,7 @@ if (isset($_POST['cancel'])) {
 }
 
 $onload = 'document.form.from.focus();';
-
-require (AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($_SESSION['member_id']) {
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -46,27 +44,34 @@ if (!$_config['contact_email']) {
 }
 
 if (isset($_POST['submit'])) {
+	$missing_fields = array();
+
 	$_POST['subject'] = trim($_POST['subject']);
 	$_POST['body']	  = trim($_POST['body']);
 
 	if ($_POST['from'] == '') {
-		$msg->addError('NAME_MISSING');
+		$missing_fields[] = _AT('from_name');
 	}
 
 	if ($_POST['from_email'] == '') {
-		$msg->addError('EMAIL_MISSING');
+		$missing_fields[] = _AT('from_email');
 	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['from_email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
 
 	if ($_POST['subject'] == '') {
-		$msg->addError('MSG_SUBJECT_EMPTY');
+		$missing_fields[] = _AT('subject');
 	}
 		
 	if ($_POST['body'] == '') {
-		$msg->addError('MSG_BODY_EMPTY');
+		$missing_fields[] = _AT('body');
 	}
-		
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	}
+
 	if (!$msg->containsErrors()) {
 
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');

@@ -31,7 +31,7 @@ if (isset($_GET['poll_id'])) {
 
 if ($_POST['edit_poll']) {
 	if (trim($_POST['question']) == '') {
-		$msg->addError('POLL_QUESTION_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 	}
 
 	if ((trim($_POST['c1']) == '') || (trim($_POST['c2']) == '')) {

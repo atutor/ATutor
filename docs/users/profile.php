@@ -34,12 +34,14 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
+	$missing_fields = array();
+
 	if (!$_POST['first_name']) { 
-		$msg->addError('FIRST_NAME_MISSING');
+		$missing_fields[] = _AT('first_name');
 	}
 
 	if (!$_POST['last_name']) { 
-		$msg->addError('LAST_NAME_MISSING');
+		$missing_fields[] = _AT('last_name');
 	}
 
 	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
@@ -83,7 +85,12 @@ if (isset($_POST['submit'])) {
 	if (($_POST['gender'] != 'm') && ($_POST['gender'] != 'f')) {
 		$_POST['gender'] = 'n'; // not specified
 	}
-		
+	
+	
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	}
 	$login = strtolower($_POST['login']);
 	if (!$msg->containsErrors()) {			
 		if (($_POST['website']) && (!ereg('://',$_POST['website']))) { $_POST['website'] = 'http://'.$_POST['website']; }

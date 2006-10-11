@@ -27,9 +27,11 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	$missing_fields = array();
+
 	/* password validation */
 	if ($_POST['password'] == '') { 
-		$msg->addError('PASSWORD_MISSING');
+		$missing_fields[] = _AT('password');
 	} else {
 		// check for valid passwords
 		if ($_POST['password'] != $_POST['confirm_password']){
@@ -39,7 +41,7 @@ if (isset($_POST['cancel'])) {
 
 	/* email validation */
 	if ($_POST['email'] == '') {
-		$msg->addError('EMAIL_MISSING');
+		$missing_fields[] = _AT('email');
 	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
@@ -61,13 +63,16 @@ if (isset($_POST['cancel'])) {
 	}
 	$_POST['privs'] = $priv;
 
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	}
+
 	if (!$msg->containsErrors()) {
 		$_POST['login']     = $addslashes($_POST['login']);
 		$_POST['password']  = $addslashes($_POST['password']);
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
-
-
 
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);

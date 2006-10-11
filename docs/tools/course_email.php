@@ -27,6 +27,8 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	$missing_fields = array();
+
 	$_POST['to_enrolled']   = trim($_POST['to_enrolled']);
 	$_POST['to_unenrolled'] = trim($_POST['to_unenrolled']);
 	$_POST['to_alumni']     = trim($_POST['to_alumni']);
@@ -41,15 +43,20 @@ if (isset($_POST['cancel'])) {
 		 ($_POST['to_assistants'] == '') &&
 		 ($_POST['groups']        == '')
 		) {
-		$msg->addError('MSG_TO_EMPTY');
+			$missing_fields[] = _AT('to');
 	}
 
 	if ($_POST['subject'] == '') {
-		$msg->addError('MSG_SUBJECT_EMPTY');
+		$missing_fields[] = _AT('subject');
 	}
 
 	if ($_POST['body'] == '') {
-		$msg->addError('MSG_BODY_EMPTY');
+		$missing_fields[] = _AT('body');
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {

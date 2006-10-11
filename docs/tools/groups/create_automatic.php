@@ -31,12 +31,14 @@ if (isset($_POST['cancel'])) {
 	$_POST['num_groups']   = abs($_POST['num_groups']);
 	$_POST['num_g']        = intval($_POST['num_g']);
 
+	$missing_fields = array();
+
 	if (!$_POST['type_title']) {
-		$msg->addError('GROUP_TYPE_TITLE_MISSING');
+		$missing_fields[] = _AT('groups_type');
 	}
 
 	if (!$_POST['prefix']) {
-		$msg->addError('GROUP_PREFIX_MISSING');
+		$missing_fields[] = _AT('group_prefix');
 	}
 
 	$course_owner = $system_courses[$_SESSION['course_id']]['member_id'];
@@ -61,7 +63,7 @@ if (isset($_POST['cancel'])) {
 		$num_students_per_group = $_POST['num_students'];
 
 		if ($num_students_per_group == 0) {
-			$msg->addError('GROUP_NUM_STUDENTS_MISSING');
+			$missing_fields[] = _AT('number_of_students_per_group');
 		} else {
 			if ($total_students == 0) {
 				$msg->addError('GROUP_NO_STUDENTS');
@@ -73,7 +75,7 @@ if (isset($_POST['cancel'])) {
 		$num_groups = $_POST['num_groups'];
 
 		if ($num_groups == 0) {
-			$msg->addError('GROUP_NUM_GROUPS_MISSING');
+			$missing_fields[] = _AT('number_of_groups');
 		} else {
 			if ($total_students > 0) {
 				// to uniformly distribute all the groups we place the remaining students
@@ -88,6 +90,11 @@ if (isset($_POST['cancel'])) {
 				$num_students_per_group = 0;
 			}
 		}
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {

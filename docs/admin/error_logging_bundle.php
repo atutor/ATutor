@@ -24,7 +24,8 @@ if (isset($_POST['back'])) {
 if (isset($_POST['step2'])) { // e-mail bundle
 
 	if ($_POST['email_add'] == '') {
-		$msg->addError('NO_RECIPIENT');
+		$msg->addError(array('EMPTY_FIELDS', _AT('recipient_address')));
+
 		header('Location: ' . $_SERVER['PHP_SELF']);
 		exit;
 	}

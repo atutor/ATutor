@@ -30,7 +30,7 @@ if (isset($_POST['cancel'])) {
 	// (if this forum is shared, then we do not want to edit it.)
 
 	if ($_POST['title'] == '') {
-		$msg->addError('TITLE_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 
 	if (!$msg->containsErrors()) {

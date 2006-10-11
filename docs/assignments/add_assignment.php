@@ -116,7 +116,7 @@ else if (isset($_POST['submit'])) {
 
 	// ensure title is not empty
 	if (trim($title) == '') {
-		$msg->addError('TITLE_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 
 	// If due date is set and user has selected 'accept late submission until'

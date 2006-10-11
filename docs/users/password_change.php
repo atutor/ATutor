@@ -45,14 +45,14 @@ if (isset($_POST['submit'])) {
 			}
 		}
 	} else {
-		$msg->addError('PASSWORD_MISSING');
-		Header('Location: password_change.php');
+		$msg->addError(array('EMPTY_FIELDS', _AT('password')));
+		header('Location: password_change.php');
 		exit;
 	}
 
 	// new password check
 	if ($_POST['password'] == '') { 
-		$msg->addError('PASSWORD_MISSING');
+		$msg->addError(array('EMPTY_FIELDS', _AT('password')));
 	} else {
 		if ($_POST['password'] != $_POST['password2']) {
 			$msg->addError('PASSWORD_MISMATCH');

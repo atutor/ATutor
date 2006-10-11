@@ -26,6 +26,8 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
+	$missing_fields = array();
+
 	$id = intval($_POST['id']);
 
 	//check if student id (public field) is already being used
@@ -38,7 +40,7 @@ if (isset($_POST['submit'])) {
 
 	/* email check */
 	if ($_POST['email'] == '') {
-		$msg->addError('EMAIL_MISSING');
+		$missing_fields[] = _AT('email');
 	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
@@ -50,11 +52,11 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (!$_POST['first_name']) { 
-		$msg->addError('FIRST_NAME_MISSING');
+		$missing_fields[] = _AT('first_name');
 	}
 
 	if (!$_POST['last_name']) { 
-		$msg->addError('LAST_NAME_MISSING');
+		$missing_fields[] = _AT('last_name');
 	}
 
 	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
@@ -94,6 +96,12 @@ if (isset($_POST['submit'])) {
 	} else if (!$mo || !$day || !$yr) {
 		$dob = '0000-00-00';
 		$yr = $mo = $day = 0;
+	}
+
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {

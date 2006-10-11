@@ -39,14 +39,19 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?fid='.$fid);
 	exit;
 } else if (isset($_POST['submit'])) {
+	$missing_fields = array();
+
 	if ($_POST['subject'] == '')  {
-		$msg->addError('MSG_SUBJECT_EMPTY');
+		$missing_fields[] = _AT('subject');
 	}
 
 	if ($_POST['body'] == '') {
-		$msg->addError('MSG_BODY_EMPTY');
+		$missing_fields[] = _AT('body');
 	}
-
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	}
 	if (!$msg->containsErrors()) {
 		if ($_POST['replytext'] != '') {
 			$_POST['body'] .= "\n\n".'[reply][b]'._AT('in_reply_to').': [/b]'."\n";

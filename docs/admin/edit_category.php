@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 	if ($cat_name == '') {
-		$msg->addError('TITLE_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 
 	if (!$msg->containsErrors()) {

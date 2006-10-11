@@ -22,6 +22,7 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
+	$missing_fields = array();
 
 	//check if student id (public field) is already being used
 	if (!$_POST['overwrite'] && !empty($_POST['student_id'])) {
@@ -33,7 +34,7 @@ if (isset($_POST['submit'])) {
 
 	/* login name check */
 	if ($_POST['login'] == '') {
-		$msg->addError('LOGIN_NAME_MISSING');
+		$missing_fields[] = _AT('login_name');
 	} else {
 		/* check for special characters */
 		if (!(eregi("^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$", $_POST['login']))) {
@@ -54,7 +55,7 @@ if (isset($_POST['submit'])) {
 
 	/* password check:	*/
 	if ($_POST['password'] == '') { 
-		$msg->addError('PASSWORD_MISSING');
+		$missing_fields[] = _AT('password');
 	} else {
 		// check for valid passwords
 		if ($_POST['password'] != $_POST['password2']){
@@ -65,7 +66,7 @@ if (isset($_POST['submit'])) {
 	
 	/* email check */
 	if ($_POST['email'] == '') {
-		$msg->addError('EMAIL_MISSING');
+		$missing_fields[] = _AT('email');
 	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
@@ -76,12 +77,12 @@ if (isset($_POST['submit'])) {
 		$msg->addError('EMAIL_EXISTS');
 	}
 
-	if (!$_POST['first_name']) { 
-		$msg->addError('FIRST_NAME_MISSING');
+	if (!$_POST['first_name']) {
+		$missing_fields[] = _AT('first_name');
 	}
 
-	if (!$_POST['last_name']) { 
-		$msg->addError('LAST_NAME_MISSING');
+	if (!$_POST['last_name']) {
+		$missing_fields[] = _AT('last_name');
 	}
 
 	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
@@ -123,6 +124,11 @@ if (isset($_POST['submit'])) {
 	} else if (!$mo || !$day || !$yr) {
 		$dob = '0000-00-00';
 		$yr = $mo = $day = 0;
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {

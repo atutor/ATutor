@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 	$cat_theme = $addslashes($_POST['cat_theme']);
 
 	if ($cat_name == '') {
-		$msg->addError('TITLE_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 
 	if ($_POST['theme_parent']) {

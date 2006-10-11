@@ -25,12 +25,18 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	global $_config_defaults;
 
 	$Backup =& new Backup($db);
+	$missing_fields = array();
 
 	if ($_POST['title'] == '') {
-		$msg->addError('TITLE_EMPTY');
+		$missing_fields[] = _AT('title');
 	} 
 	if (!$_POST['instructor']) {
-		$msg->addError('INSTRUCTOR_EMPTY');
+		$missing_fields[] = _AT('instructor');
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	$_POST['access']      = $addslashes($_POST['access']);

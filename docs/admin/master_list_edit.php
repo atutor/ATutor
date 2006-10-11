@@ -25,7 +25,7 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['public_field'] = trim($_POST['public_field']);
 	if ($_POST['public_field'] == '') {
-		$msg->addError('EMPTY_STUDENT_ID');
+		$msg->addError(array('EMPTY_FIELDS', _AT('student_id')));
 	}
 
 	if (!$msg->containsErrors()) {

@@ -101,8 +101,8 @@ if (empty($_top_level_pages)) {
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_COURSE][0]);
 	}
 }
-
 $_sub_level_pages        = get_sub_navigation($current_page);
+
 $_current_sub_level_page = get_current_sub_navigation_page($current_page);
 
 $_path = get_path($current_page);
@@ -218,7 +218,6 @@ if ($_SESSION['course_id'] > -1) {
 //require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 //$err =& new ErrorHandler();
 
-
 // if filemanager is a inside a popup or a frame
 // i don't like this code. i don't know were these two variables are coming from
 // anyone can add ?framed=1 to a URL to alter the behaviour.
@@ -229,6 +228,5 @@ if ($_REQUEST['framed'] || $_REQUEST['popup']) {
 } else {
 	$savant->display('include/header.tmpl.php');
 }
-
 
 ?>

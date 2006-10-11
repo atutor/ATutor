@@ -49,16 +49,23 @@ if ($row) {
 }
 
 if (isset($_POST['submit'])) {
+	$missing_fields = array();
+
 	$to_email = $_POST['email'];
 	$_POST['subject'] = trim($_POST['subject']);
 	$_POST['body']	  = trim($_POST['body']);
 
 	if ($_POST['subject'] == '') {
-		$msg->addError('MSG_SUBJECT_EMPTY');
+		$missing_fields[] = _AT('subject');
 	}
 		
 	if ($_POST['body'] == '') {
-		$msg->addError('MSG_BODY_EMPTY');
+		$missing_fields[] = _AT('body');
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {

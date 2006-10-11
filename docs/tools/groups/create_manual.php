@@ -30,12 +30,17 @@ if (isset($_POST['cancel'])) {
 	$_POST['prefix'] = trim($_POST['prefix']);
 	$_POST['new_type'] = trim($_POST['new_type']);
 
-	if (!$_POST['type'] && !$_POST['new_type']) {
-		$msg->addError('GROUP_TYPE_TITLE_MISSING');
-	}
+	$missing_fields = array();
 
+	if (!$_POST['type'] && !$_POST['new_type']) {
+		$missing_fields[] = _AT('groups_type');
+	}
 	if (!$_POST['prefix']) {
-		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
+		$missing_fields[] = _AT('title');
+	}
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {
