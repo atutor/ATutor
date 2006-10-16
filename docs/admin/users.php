@@ -58,10 +58,9 @@ if (isset($_GET['asc'])) {
 	$order = 'asc';
 	$col   = 'login';
 }
-
 if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	$status = '=' . intval($_GET['status']);
-	$page_string .= SEP.'status='.$status;
+	$page_string .= SEP.'status'.$status;
 } else {
 	$status = '<>-1';
 }
