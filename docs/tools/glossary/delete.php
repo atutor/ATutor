@@ -47,7 +47,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $_GET['gid'] = intval($_GET['gid']);
 
 if ($_GET['gid'] == 0) {
-	$msg->printErrors('GLOS_ID_MISSING');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

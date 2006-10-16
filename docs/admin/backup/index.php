@@ -42,7 +42,7 @@ if (isset($_POST['restore'], $backup_id)) {
 	header('Location: edit.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
 	exit;
 } else if (!empty($_POST) && !$backup_id) {
-	$msg->addError('DID_NOT_SELECT_A_BACKUP');
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 

@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['id'] = abs($_POST['id']);
 
 	if (!$_POST['name']) {
-		$msg->addError('MISSING_FOLDER_NAME');
+		$msg->addError(array('EMPTY_FIELDS', _AT('name')));
 	}
 
 	if (!$msg->containsErrors()) {

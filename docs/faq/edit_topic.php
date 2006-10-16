@@ -50,7 +50,7 @@ $onload = 'document.form.name.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($id == 0) {
-	$msg->printErrors('TOPIC_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -58,7 +58,7 @@ if ($id == 0) {
 $sql	= "SELECT name FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] AND topic_id=$id ORDER BY name";
 $result = mysql_query($sql, $db);
 if (!$row = mysql_fetch_assoc($result)) {
-	$msg->printErrorS('TOPIC_NOT_FOUND');
+	$msg->printErrorS('ITEM_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 } else if (!$_POST['name']) {

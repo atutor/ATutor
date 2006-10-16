@@ -38,7 +38,7 @@ $mark_wrong = ' <img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer'
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db); 
 if (!$row = mysql_fetch_assoc($result)){
-	$msg->printErrors('RESULT_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

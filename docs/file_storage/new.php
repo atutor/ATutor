@@ -40,12 +40,14 @@ if (isset($_POST['cancel'])) {
 		$sql = "SELECT folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
 		$result = mysql_query($sql, $db);
 		if (!$row = mysql_fetch_assoc($result)) {
-			exit('not authenticated');
+			$msg->addError('ACCESS_DENIED');
+			header('Location: index.php');
+			exit;
 		}
 	}
 
 	if (!$_POST['name']) {
-		$msg->addError('NEED_FILENAME');
+		$msg->addError(array('EMPTY_FIELDS', _AT('file_name')));
 	}
 
 	if (!$msg->containsErrors()) {

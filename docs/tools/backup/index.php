@@ -39,7 +39,7 @@ if (isset($_POST['restore'], $_POST['backup_id'])) {
 	header('Location: edit.php?backup_id=' . $_POST['backup_id']);
 	exit;
 } else if (!empty($_POST)) {
-	$msg->addError('DID_NOT_SELECT_A_BACKUP');
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

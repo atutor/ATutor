@@ -28,7 +28,7 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSI
 $result = mysql_query($sql, $db);
 if (!$row = mysql_fetch_assoc($result)) {
 	// can't get resource from database
-	$msg->addError('RL_RESOURCE_NOT_FOUND');
+	$msg->addError('ITEM_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

@@ -23,13 +23,22 @@ if ($_POST['cancel']) {
 }
 
 if ($_POST['submit']) {
+	$missing_fields = array();
+
+	$_POST['word'] = trim($_POST['word']);
+	$_POST['definition'] = trim($_POST['definition']);
 
 	if ($_POST['word'] == '') {
-		$msg->addError('TERM_EMPTY');
+		$missing_fields[] = _AT('glossary_term');
 	}
 
 	if ($_POST['definition'] == '') {
-		$msg->addError('DEFINITION_EMPTY');
+		$missing_fields[] = _AT('glossary_definition');
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	$_POST['related_term'] = intval($_POST['related_term']);
@@ -60,7 +69,7 @@ if ($_POST['submit']) {
 }
 
 if ($gid == 0) {
-	$msg->printErrors('GLOS_ID_MISSING');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -70,7 +79,7 @@ $msg->printErrors();
 $result = mysql_query("SELECT * FROM ".TABLE_PREFIX."glossary WHERE word_id=$gid", $db);
 
 if (!( $row = @mysql_fetch_array($result)) ) {
-	$msg->printErrors('TERM_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

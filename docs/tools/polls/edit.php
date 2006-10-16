@@ -62,7 +62,7 @@ if ($_POST['edit_poll']) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 	if ($poll_id == 0) {
-		$msg->printErrors('POLL_NOT_FOUND');
+		$msg->printErrors('ITEM_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -70,7 +70,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_assoc($result))) {
-		$msg->printErrors('POLL_NOT_FOUND');
+		$msg->printErrors('ITEM_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

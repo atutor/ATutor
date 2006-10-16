@@ -66,7 +66,7 @@ $onload = 'document.form.topic.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($id == 0) {
-	$msg->printErrors('QUESTION_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -74,7 +74,7 @@ if ($id == 0) {
 $sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE entry_id=$id";
 $result = mysql_query($sql,$db);
 if (!($row = mysql_fetch_assoc($result))) {
-	$msg->printErrors('QUESTION_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

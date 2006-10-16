@@ -39,7 +39,7 @@ if (isset($_GET['edit'])) {
 			exit;
 		}
 	}
-	$msg->addError('RL_READING_NOT_FOUND');
+	$msg->addError('ITEM_NOT_FOUND');
 } else if (isset($_GET['delete'])) {
 	if (!isset($_GET['reading'])) {
 		$msg->addError('NO_ITEM_SELECTED');

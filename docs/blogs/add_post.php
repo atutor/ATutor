@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['body']  = $addslashes(trim($_POST['body']));
 
 	if ($_POST['body'] == '') {
-		$msg->addError('EMPTY_BODY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('body')));
 	}
 
 	if (!$msg->containsErrors()) {

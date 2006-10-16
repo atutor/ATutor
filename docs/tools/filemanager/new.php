@@ -125,7 +125,7 @@ if (isset($_POST['savenewfile'])) {
 			exit;
 		}
 	} else {
-		$msg->addError('NEED_FILENAME');
+		$msg->addError(array('EMPTY_FIELDS', _AT('file_name')));
 	}
 }
 

@@ -170,7 +170,7 @@ if (($course === 0) && $_SESSION['valid_user']) {
 $sql	= "SELECT member_id, content_packaging, cat_id, access, title, UNIX_TIMESTAMP(release_date) AS u_release_date FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
 if (!$row = mysql_fetch_assoc($result)) {
-	$msg->addError('NO_SUCH_COURSE');
+	$msg->addError('ITEM_NOT_FOUND');
 	if ($_SESSION['member_id']) {
 		header('Location: '.$_base_href.'users/index.php');
 	} else {

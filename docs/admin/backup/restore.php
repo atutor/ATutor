@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	if (!$_POST['material']) {
-		$msg->addError('RESTORE_MATERIAL');
+		$msg->addError(array('EMPTY_FIELDS', _AT('material')));
 	}
 
 	if (!$msg->containsErrors()) {

@@ -272,7 +272,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 	$_POST['new_folder_name'] = trim($_POST['new_folder_name']);
 
 	if (!$_POST['new_folder_name']) {
-		$msg->addError('MISSING_FOLDER_NAME');
+		$msg->addError(array('EMPTY_FIELDS', _AT('name')));
 	}
 
 	if (!$msg->containsErrors()) {

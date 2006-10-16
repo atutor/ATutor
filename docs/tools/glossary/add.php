@@ -25,16 +25,20 @@ if ($_POST['cancel']) {
 
 if (isset($_POST['submit'])) {
 	$num_terms = intval($_POST['num_terms']);
+	$missing_fields = array();
 
 	for ($i=0; $i<$num_terms; $i++) {
 
 		if ($_POST['ignore'][$i] == '') {
+			$_POST['word'][$i] = trim($_POST['word'][$i]);
+			$_POST['definition'][$i] = trim($_POST['definition'][$i]);
+
 			if ($_POST['word'][$i] == '') {
-				$msg->addError('TERM_EMPTY');
+				$missing_fields[] = _AT('glossary_term');
 			}
 
 			if ($_POST['definition'][$i] == '') {
-				$msg->addError('DEFINITION_EMPTY');
+				$missing_fields[] = _AT('glossary_definition');
 			}
 
 			if ($terms_sql != '') {
@@ -56,6 +60,11 @@ if (isset($_POST['submit'])) {
 				$terms_sql .= "(0, $_SESSION[course_id], '{$_POST[word][$i]}', '{$_POST[definition][$i]}', {$_POST[related_term][$i]})";
 			}
 		}
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	if (!$msg->containsErrors()) {

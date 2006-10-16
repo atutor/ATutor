@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 	$id = abs($_POST['id']);
 
 	if ($_POST['body'] == '') {
-		$msg->addError('EMPTY_BODY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('body')));
 	}
 
 	if (!$msg->containsErrors()) {

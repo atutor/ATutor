@@ -73,7 +73,7 @@ if (!$_POST['submit']) {
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_array($result))){
-		$msg->printErrors('QUESTION_NOT_FOUND');
+		$msg->printErrors('ITEM_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

@@ -37,7 +37,7 @@ $tid = intval($_GET['tid']);
 $sql = "SELECT title, random, num_questions, instructions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result	= mysql_query($sql, $db); 
 if (!($test_row = mysql_fetch_assoc($result))) {
-	$msg->printErrors('TEST_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

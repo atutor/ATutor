@@ -99,7 +99,7 @@ if (isset($_GET['pid'])) {
 }
 
 if ($pid == 0) {
-	$msg->addError('POST_ID_ZERO');
+	$msg->addError('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -107,7 +107,7 @@ if ($pid == 0) {
 $sql = "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid";
 $result = mysql_query($sql,$db);
 if (!($row = mysql_fetch_assoc($result))) {
-	$msg->addError('POST_NOT_FOUND');
+	$msg->addError('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

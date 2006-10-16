@@ -60,7 +60,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$row = get_cat_info($cat_id);
 
 	if (empty($row)) {
-		$msg->printErrors('CAT_NOT_FOUND');
+		$msg->printErrors('ITEM_NOT_FOUND');
 	} else {
 		$hidden_vars['cat_name']= $row['name'];
 		$hidden_vars['cat_id']	= $row['cat_id'];

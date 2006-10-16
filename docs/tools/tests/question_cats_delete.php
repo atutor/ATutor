@@ -38,7 +38,7 @@ if (isset($_POST['submit_yes'])) {
 	exit;
 } else if (!isset($_GET['catid'])) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->addError('CAT_NOT_FOUND');
+	$msg->addError('ITEM_NOT_FOUND');
 	$msg->printErrors();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;

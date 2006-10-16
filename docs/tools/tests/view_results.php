@@ -71,7 +71,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_S
 $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))){
-	$msg->printErrors('TEST_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

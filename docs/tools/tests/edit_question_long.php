@@ -78,7 +78,7 @@ if (!isset($_POST['submit'])) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=3";
 	$result	= mysql_query($sql, $db);
 	if (!($row = mysql_fetch_assoc($result))){
-		$msg->printErrors('QUESTION_NOT_FOUND');
+		$msg->printErrors('ITEM_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

@@ -53,7 +53,7 @@ if ($row = mysql_fetch_assoc($result)){
 	$msg->printConfirm();
 }
 else {
-	$msg->addError('RL_RESOURCE_NOT_FOUND');
+	$msg->addError('ITEM_NOT_FOUND');
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

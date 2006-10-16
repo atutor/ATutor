@@ -114,7 +114,7 @@ if (isset($_POST['cancel'])) {
 
 	if (!($row = mysql_fetch_array($result))){
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printErrors('QUESTION_NOT_FOUND');
+		$msg->printErrors('ITEM_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
