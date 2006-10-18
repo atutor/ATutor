@@ -273,18 +273,17 @@ function _AT() {
 		}
 		$_template = $_cache_template;
 	}
-
 	$num_args = func_num_args();
-	$format		= array_shift($args);
-	$outString	= vsprintf($_template[$format], $args);
-
-/*	if (!@vsprintf($_template[$format], $args)) {
-		var_dump($args);
-		debug($_template[$format]);
-		debug($format);
-		exit;
+	if (is_array($args[0])) {
+		$args = $args[0];
+		$num_args = count($args);
 	}
-*/
+	$format	  = array_shift($args);
+
+	$outString	= vsprintf($_template[$format], $args);
+	$str = ob_get_contents();
+
+
 	if ($outString === false) {
 		return ('[Error parsing language. Variable: <code>'.$format.'</code>. Value: <code>'.$_template[$format].'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
 	}
