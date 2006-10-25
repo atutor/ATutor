@@ -195,6 +195,17 @@ $no_good = FALSE;
 					} ?></td>
 		</tr>
 		<tr>
+			<td><kbd>session.auto_start = 0</kbd></td>
+			<td><?php if (ini_get('session.auto_start')) {
+							echo '1</td><td align="center">';
+							echo $bad;
+							$no_good = TRUE;
+						} else {
+							echo '0</td><td align="center">';
+							echo $good;
+						} ?></td>
+		</tr>
+		<tr>
 			<td><kbd>session.save_path</kbd></td>
 			<td><?php
 				if ($session_error == '') {
