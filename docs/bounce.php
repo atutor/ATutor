@@ -93,6 +93,7 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 		$_SESSION['course_id']  = -1;
 		$_SESSION['privileges'] = intval($row['privileges']);
 		$_SESSION['lang'] = $row['language'];
+		unset($_SESSION['member_id']);
 		unset($_SESSION['is_super_admin']);
 
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
