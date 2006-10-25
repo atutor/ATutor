@@ -92,10 +92,11 @@ if ($_GET['cat_parent_id']) {
 }
 
 //get links
-$groups = implode(',', $_SESSION['groups']);
+$_SESSION['groups'] = array();
+$tmp_groups = implode(',', $_SESSION['groups']);
 
-if (!empty($groups)) {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.")) AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
+if (!empty($tmp_groups)) {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($tmp_groups) AND owner_type=".LINK_CAT_GROUP.")) AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
 } else {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
 }
