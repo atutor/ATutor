@@ -102,7 +102,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['prefix']      = $addslashes($_POST['prefix']);
 		$_POST['description'] = $addslashes($_POST['description']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."groups_types VALUES (0, $_SESSION[course_id], '$_POST[type_title]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."groups_types VALUES (NULL, $_SESSION[course_id], '$_POST[type_title]')";
 		$result = mysql_query($sql, $db);
 		$group_type_id = mysql_insert_id($db);
 
@@ -110,7 +110,7 @@ if (isset($_POST['cancel'])) {
 
 		for($i=0; $i<$num_groups; $i++) {
 			$group_title = $_POST['prefix'] . ' ' . ($i + 1);
-			$sql = "INSERT INTO ".TABLE_PREFIX."groups VALUES (0, $group_type_id, '$group_title', '$_POST[description]', '$modules')";
+			$sql = "INSERT INTO ".TABLE_PREFIX."groups VALUES (NULL, $group_type_id, '$group_title', '$_POST[description]', '$modules')";
 			$result = mysql_query($sql, $db);
 
 			$group_id = mysql_insert_id($db);

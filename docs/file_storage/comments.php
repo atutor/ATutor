@@ -68,7 +68,7 @@ if (isset($_GET['done'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['comment'] = $addslashes($_POST['comment']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $_POST[id], $_SESSION[member_id], NOW(), '$_POST[comment]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $_POST[id], $_SESSION[member_id], NOW(), '$_POST[comment]')";
 		if (mysql_query($sql, $db)) {
 			$sql = "UPDATE ".TABLE_PREFIX."files SET num_comments=num_comments+1 WHERE file_id=$_POST[id]";
 			mysql_query($sql, $db);

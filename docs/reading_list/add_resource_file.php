@@ -56,7 +56,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['isbn']      = $addslashes($_POST['isbn']);
 		
 		if ($id == '0'){ // creating a new file resource
-			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES ($id, $_SESSION[course_id],
+			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES (NULL, $_SESSION[course_id],
 				".RL_TYPE_FILE.", 
 				'$_POST[title]', 
 				'$_POST[author]', 

@@ -43,7 +43,7 @@ if (isset($_POST['cancel'])) {
 		$date_end = $_POST['endyear']. '-' .str_pad ($_POST['endmonth'], 2, "0", STR_PAD_LEFT). '-' .str_pad ($_POST['endday'], 2, "0", STR_PAD_LEFT);
 	}
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."reading_list VALUES (0, $_SESSION[course_id],
+	$sql = "INSERT INTO ".TABLE_PREFIX."reading_list VALUES (NULL, $_SESSION[course_id],
 		'$_POST[existingbook]',
 		'$_POST[readstatus]',
 		'$date_start',

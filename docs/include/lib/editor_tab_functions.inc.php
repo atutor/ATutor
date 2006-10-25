@@ -147,7 +147,7 @@ function save_changes($redir) {
 			} else if ($key === false && ($d != '')) {
 				$w = addslashes($w);
 				$related_id = intval($_POST['related_term'][$old_w]);
-				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$w', '$d', $related_id)";
+				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$w', '$d', $related_id)";
 
 				//debug($sql);
 				$result = mysql_query($sql, $db);

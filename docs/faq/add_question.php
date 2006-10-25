@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 		$sql    = "SELECT topic_id FROM ".TABLE_PREFIX."faq_topics WHERE topic_id=$_POST[topic_id] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
-			$sql	= "INSERT INTO ".TABLE_PREFIX."faq_entries VALUES (0, $_POST[topic_id], NOW(), 1, '$_POST[question]', '$_POST[answer]')";
+			$sql	= "INSERT INTO ".TABLE_PREFIX."faq_entries VALUES (NULL, $_POST[topic_id], NOW(), 1, '$_POST[question]', '$_POST[answer]')";
 			$result = mysql_query($sql,$db);
 		}
 		

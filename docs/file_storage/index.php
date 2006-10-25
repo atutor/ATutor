@@ -280,7 +280,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 
 		$parent_folder_id = abs($_POST['folder']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (0, $parent_folder_id, $owner_type, $owner_id, '$_POST[new_folder_name]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (NULL, $parent_folder_id, $owner_type, $owner_id, '$_POST[new_folder_name]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
@@ -325,7 +325,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 			$num_comments = 0;
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']}, '$_POST[description]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (NULL, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']}, '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 
 		if ($result && ($file_id = mysql_insert_id($db))) {

@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 				$_POST['definition'][$i]   = $addslashes($_POST['definition'][$i]);
 				$_POST['related_term'][$i] = $addslashes($_POST['related_term'][$i]);
 
-				$terms_sql .= "(0, $_SESSION[course_id], '{$_POST[word][$i]}', '{$_POST[definition][$i]}', {$_POST[related_term][$i]})";
+				$terms_sql .= "(NULL, $_SESSION[course_id], '{$_POST[word][$i]}', '{$_POST[definition][$i]}', {$_POST[related_term][$i]})";
 			}
 		}
 	}

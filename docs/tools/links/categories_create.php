@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 			$parent_id = 0;
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (0, $owner_type, $owner_id, '$cat_name', $parent_id)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (NULL, $owner_type, $owner_id, '$cat_name', $parent_id)";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

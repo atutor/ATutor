@@ -28,7 +28,7 @@ if (isset($_POST['cancel'])) {
 
 	if (!empty($_POST['title']) && !isset($_POST['catid'])) {
 		$_POST['title'] = $addslashes($_POST['title']);
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions_categories VALUES (0, $_SESSION[course_id], '$_POST[title]')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions_categories VALUES (NULL, $_SESSION[course_id], '$_POST[title]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: question_cats.php');

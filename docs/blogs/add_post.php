@@ -40,7 +40,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['title'] = htmlspecialchars($_POST['title']);
 		$_POST['body']  = htmlspecialchars($_POST['body']);
 		$_POST['private'] = abs($_POST['private']);
-		$sql = "INSERT INTO ".TABLE_PREFIX."blog_posts VALUES (0, $_SESSION[member_id], ".BLOGS_GROUP.", $_POST[oid], $_POST[private], NOW(), 0, '$_POST[title]', '$_POST[body]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."blog_posts VALUES (NULL, $_SESSION[member_id], ".BLOGS_GROUP.", $_POST[oid], $_POST[private], NOW(), 0, '$_POST[title]', '$_POST[body]')";
 		mysql_query($sql, $db);
 
 		$msg->addFeedback('POST_ADDED_SUCCESSFULLY');

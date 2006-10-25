@@ -55,7 +55,7 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['body_text']  = $addslashes($_POST['body_text']);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body_text]')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body_text]')";
 		mysql_query($sql, $db);
 	
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 
 	if (!$msg->containsErrors()) {
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id, '$cat_theme')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (NULL, '$cat_name', $cat_parent_id, '$cat_theme')";
 		$result = mysql_query($sql, $db);
 		$cat_id = mysql_insert_id($db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

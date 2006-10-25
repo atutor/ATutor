@@ -28,7 +28,7 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['name'] = $addslashes($_POST['name']);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."faq_topics VALUES (0, $_SESSION[course_id], '$_POST[name]')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."faq_topics VALUES (NULL, $_SESSION[course_id], '$_POST[name]')";
 		$result = mysql_query($sql,$db);
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

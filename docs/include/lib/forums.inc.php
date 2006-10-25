@@ -162,7 +162,7 @@ function add_forum($_POST) {
 	$_POST['title'] = $addslashes($_POST['title']);
 	$_POST['body']  = $addslashes($_POST['body']);
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0,'$_POST[title]', '$_POST[body]', 0, 0, NOW())";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL,'$_POST[title]', '$_POST[body]', 0, 0, NOW())";
 	$result = mysql_query($sql,$db);
 
 	$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(),  $_SESSION[course_id])";

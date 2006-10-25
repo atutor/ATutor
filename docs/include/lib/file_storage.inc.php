@@ -497,7 +497,7 @@ function fs_copy_file($file_id, $src_owner_type, $src_owner_id, $dest_owner_type
 	if (!$row = mysql_fetch_assoc($result)) {
 		return false;
 	}
-	$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $dest_owner_type, $dest_owner_id, $_SESSION[member_id], $dest_folder_id, 0, NOW(), 0, 0, '$row[file_name]', '$row[file_size]', '$row[description]')";
+	$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (NULL, $dest_owner_type, $dest_owner_id, $_SESSION[member_id], $dest_folder_id, 0, NOW(), 0, 0, '$row[file_name]', '$row[file_size]', '$row[description]')";
 	$result = mysql_query($sql, $db);
 
 	$id = mysql_insert_id($db);

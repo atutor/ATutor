@@ -54,7 +54,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['message'] = $addslashes($_POST['message']);
 		$_POST['to'] = intval($_POST['to']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (0, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), 1, 0, '$_POST[subject]', '$_POST[message]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), 1, 0, '$_POST[subject]', '$_POST[message]')";
 
 		$result = mysql_query($sql,$db);
 

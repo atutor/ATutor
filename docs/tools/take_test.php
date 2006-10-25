@@ -55,7 +55,7 @@ if ( (($test_row['start_date'] > time()) || ($test_row['end_date'] < time())) ||
 if (isset($_POST['submit'])) {
 	// insert
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (0, $tid, $_SESSION[member_id], NOW(), '')";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, $_SESSION[member_id], NOW(), '')";
 	$result	= mysql_query($sql, $db);
 	$result_id = mysql_insert_id($db);
 

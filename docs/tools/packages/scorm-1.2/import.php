@@ -326,7 +326,7 @@ function doImport () {
 	$file = $_FILES['file']['name'];
 	$sql = "INSERT INTO ".TABLE_PREFIX."packages
 	        VALUES (
-			0,
+			NULL,
 			'$file',
 			'$now',
 			$_SESSION[course_id],

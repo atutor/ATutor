@@ -44,7 +44,7 @@ if (isset($_POST['cancel'])) {
 		$row = mysql_fetch_assoc($result);
 		*/
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES ( NULL,
 			$_POST[category_id],
 			$_SESSION[course_id],
 			2,

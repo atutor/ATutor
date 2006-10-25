@@ -38,7 +38,7 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 		}
 		$choices = substr($choices, 0, -1);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."polls VALUES (0, $_SESSION[course_id], '$_POST[question]', NOW(), 0, $choices)";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."polls VALUES (NULL, $_SESSION[course_id], '$_POST[question]', NOW(), 0, $choices)";
 		$result = mysql_query($sql,$db);
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

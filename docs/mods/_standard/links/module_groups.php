@@ -4,7 +4,7 @@
 function links_create_group($group_id) {
 	global $db;
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."links_categories VALUES ('', ".LINK_CAT_GROUP.", $group_id, '', 0)";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (NULL, ".LINK_CAT_GROUP.", $group_id, '', 0)";
 	$result = mysql_query($sql,$db);
 }
 

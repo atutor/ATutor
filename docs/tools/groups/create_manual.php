@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['description'] = $addslashes($_POST['description']);
 
 		if ($_POST['new_type']) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."groups_types VALUES (0, $_SESSION[course_id], '$_POST[new_type]')";
+			$sql = "INSERT INTO ".TABLE_PREFIX."groups_types VALUES (NULL, $_SESSION[course_id], '$_POST[new_type]')";
 			$result = mysql_query($sql, $db);
 			$type_id = mysql_insert_id($db);
 		} else {
@@ -62,7 +62,7 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 		if ($type_id) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."groups VALUES (0, $type_id, '$_POST[prefix]', '$_POST[description]', '$modules')";
+			$sql = "INSERT INTO ".TABLE_PREFIX."groups VALUES (NULL, $type_id, '$_POST[prefix]', '$_POST[description]', '$modules')";
 			$result = mysql_query($sql, $db);
 
 			$group_id = mysql_insert_id($db);

@@ -187,7 +187,7 @@ class Backup {
 	// private
 	// adds a backup to the database
 	function add($row) {
-		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (0, $this->course_id, NOW(), '$row[description]', '$row[file_size]', '$row[system_file_name]', '$row[file_name]', '$row[contents]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (NULL, $this->course_id, NOW(), '$row[description]', '$row[file_size]', '$row[system_file_name]', '$row[file_name]', '$row[contents]')";
 		mysql_query($sql, $this->db);
 	}
 

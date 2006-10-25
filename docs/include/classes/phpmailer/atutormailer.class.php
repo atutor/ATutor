@@ -101,7 +101,7 @@ class ATutorMailer extends PHPMailer {
 	*/
 	function QueueMail($to_email, $to_name, $from_email, $from_name, $subject, $body) {
 		global $db;
-		$sql = "INSERT INTO ".TABLE_PREFIX."mail_queue VALUES (0, '$to_email', '$to_name', '$from_email', '$from_name', '".addslashes($this->CharSet)."', '$subject', '$body')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."mail_queue VALUES (NULL, '$to_email', '$to_name', '$from_email', '$from_name', '".addslashes($this->CharSet)."', '$subject', '$body')";
 		return mysql_query($sql, $db);
 	}
 

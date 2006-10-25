@@ -40,14 +40,14 @@ while ($row = mysql_fetch_assoc($result)) {
 if (!isset ($p['auto_advance'])) {
 	$p['auto_advance']           = 0;
 	$sql = "INSERT INTO ".TABLE_PREFIX."cmi
-		VALUES (0, 0, $_SESSION[member_id], 'auto_advance', '0')";
+		VALUES (NULL, 0, $_SESSION[member_id], 'auto_advance', '0')";
 	$result = mysql_query($sql, $db);
 
 }
 if (!isset ($p['show_rte_communication'])) {
 	$p['show_rte_communication'] = 0;
 	$sql = "INSERT INTO ".TABLE_PREFIX."cmi
-		VALUES (0, 0, $_SESSION[member_id],
+		VALUES (NULL, 0, $_SESSION[member_id],
 			'show_rte_communication', '0'
 		)";
 	$result = mysql_query($sql, $db);

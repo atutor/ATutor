@@ -31,7 +31,7 @@ $R = $_POST['iR'];
 $ic = sizeOf ($L);
 for ($i=0; $i<$ic; $i++) {
 	$sql = "INSERT INTO ".TABLE_PREFIX."cmi
-		VALUES (0,
+		VALUES (NULL,
 			 $_POST[sco_id],
 			 $_SESSION[member_id],
 			'$L[$i]', '$R[$i]'

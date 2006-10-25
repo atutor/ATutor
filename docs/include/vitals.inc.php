@@ -139,6 +139,9 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 						E_USER_ERROR);
 		exit;
 	}
+
+	$sql = "SET time_zone = 'Europe/Paris'";
+	mysql_query($sql, $db);
 }
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library

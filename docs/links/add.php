@@ -68,7 +68,7 @@ if (isset($_POST['cancel'])) {
 
 		$approved = 0; //not approved for student submissions
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."links VALUES (0, $_POST[cat], '$_POST[url]', '$_POST[title]', '$_POST[description]', $approved, '$name', '$email', NOW(), 0)";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."links VALUES (NULL, $_POST[cat], '$_POST[url]', '$_POST[title]', '$_POST[description]', $approved, '$name', '$email', NOW(), 0)";
 		mysql_query($sql, $db);
 	
 		$msg->addFeedback('LINK_ADDED');

@@ -205,7 +205,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 		$announcement = _AT('default_announcement');
 		
-		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $instructor, NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (NULL, $new_course_id, $instructor, NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
 		$result = mysql_query($sql,$db);
 		
 		if ($isadmin) {
@@ -213,7 +213,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		}
 
 		// create forum for Welcome Course
-		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
 		$result = mysql_query($sql,$db);
 
 		if ($isadmin) {

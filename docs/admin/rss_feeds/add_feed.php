@@ -52,7 +52,7 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['url'] = $addslashes($_POST['url']);
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."feeds VALUES(0, '".$_POST['url']."')";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."feeds VALUES (NULL, '".$_POST['url']."')";
 	$result = mysql_query($sql, $db);
 
 	$feed_id = mysql_insert_id($db);

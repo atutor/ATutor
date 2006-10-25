@@ -98,7 +98,7 @@ if (isset($_POST['cancel'])) {
 		$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
 		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[result_release], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (NULL, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[result_release], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '')";
 
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);

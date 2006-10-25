@@ -404,7 +404,7 @@ if (file_exists($import_path . 'glossary.xml')){
 	$contains_glossary_terms = true;
 	foreach ($imported_glossary as $term => $defn) {
 		if (!$glossary[urlencode($term)]) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$term', '$defn', 0)";
+			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$term', '$defn', 0)";
 			mysql_query($sql, $db);	
 		}
 	}
@@ -538,7 +538,7 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 		}
 
 		$sql= 'INSERT INTO '.TABLE_PREFIX.'content VALUES 
-				(0,	'
+				(NULL,	'
 				.$_SESSION['course_id'].','															
 				.$content_parent_id.','		
 				.($content_info['ordering'] + $my_offset + 1).','
@@ -550,16 +550,18 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 		$result = mysql_query($sql, $db);
 
 		// store the contents of the 'head' section
+		/**
 		if ($result){
 			// get content ID
 			$id = mysql_insert_id($db);
 			$head = addslashes($head);
 
-			$sql = 'INSERT INTO '.TABLE_PREFIX.'head VALUES (0, '.$_SESSION['course_id'].','
+			$sql = 'INSERT INTO '.TABLE_PREFIX.'head VALUES (NULL, '.$_SESSION['course_id'].','
 				.$id.','
 				.'"'.$head.'")';
 			$resultHead = mysql_query($sql, $db);
 		}
+		**/
 
 		/* get the content id and update $items */
 		$items[$item_id]['real_content_id'] = mysql_insert_id($db);

@@ -164,7 +164,7 @@ else if (isset($_POST['submit'])) {
 		// Are we creating a new assignment or updating an existing assignment?
 		if ($id == '0'){
 			// creating a new assignment
-			$sql = "INSERT INTO ".TABLE_PREFIX."assignments VALUES (0, $_SESSION[course_id],
+			$sql = "INSERT INTO ".TABLE_PREFIX."assignments VALUES (NULL, $_SESSION[course_id],
 				'$title',
 				'$assign_to',
 				'$date_due',

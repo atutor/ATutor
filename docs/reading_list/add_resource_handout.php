@@ -53,7 +53,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['comments'] = $addslashes($_POST['comments']);
 		
 		if ($id == '0'){ // creating a new handout resource
-			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES ($id, $_SESSION[course_id],
+			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES (NULL, $_SESSION[course_id],
 			".RL_TYPE_HANDOUT.", 
 			'$_POST[title]', 
 			'$_POST[author]', 

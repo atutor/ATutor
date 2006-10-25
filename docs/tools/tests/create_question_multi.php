@@ -28,7 +28,7 @@ if (isset($_POST['submit_yes'])) {
 	$_POST['question']   = $addslashes($_POST['question']);
 	$_POST['properties'] = intval($_POST['properties']);
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
+	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, 
 				$_POST[category_id],
 				$_SESSION[course_id],
 				1,
@@ -127,7 +127,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			$_POST['question'] = $addslashes($_POST['question']);
 			$_POST['properties']   = intval($_POST['properties']);
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
+			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, 
 				$_POST[category_id],
 				$_SESSION[course_id],
 				1,

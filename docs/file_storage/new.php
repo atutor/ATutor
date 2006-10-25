@@ -63,7 +63,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$size = strlen($_POST['body']);
-		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '$_POST[name]',$size, '$_POST[description]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (NULL, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '$_POST[name]',$size, '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 
 		if ($result && ($file_id = mysql_insert_id($db))) {
@@ -88,7 +88,7 @@ if (isset($_POST['cancel'])) {
 			}
 
 			if ($_POST['comment']){
-				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
+				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
 				mysql_query($sql, $db);
 			}
 

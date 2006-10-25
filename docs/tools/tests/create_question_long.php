@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['feedback'] = $addslashes($_POST['feedback']);
 		$_POST['question'] = $addslashes($_POST['question']);
 	
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
+		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL,
 			$_POST[category_id],
 			$_SESSION[course_id],
 			3,

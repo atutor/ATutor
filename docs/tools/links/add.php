@@ -75,7 +75,7 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 
 		$approved = intval($_POST['approved']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."links VALUES (0, $cat_id, '$_POST[url]', '$_POST[title]', '$_POST[description]', $approved, '$name', '$email', NOW(), 0)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."links VALUES (NULL, $cat_id, '$_POST[url]', '$_POST[title]', '$_POST[description]', $approved, '$name', '$email', NOW(), 0)";
 		mysql_query($sql, $db);
 	
 		$msg->addFeedback('LINK_ADDED');

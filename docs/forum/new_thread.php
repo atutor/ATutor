@@ -78,7 +78,7 @@ if (isset($_POST['cancel'])) {
 		$sql_subject = $addslashes($_POST['subject']);
 		$sql_body    = $addslashes($_POST['body']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES(0, $_POST[parent_id], $_SESSION[member_id], $_POST[fid], '".addslashes(get_display_name($_SESSION['member_id']))."', '$now', 0, '$sql_subject', '$sql_body', '$now', 0, 0)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES (NULL, $_POST[parent_id], $_SESSION[member_id], $_POST[fid], '".addslashes(get_display_name($_SESSION['member_id']))."', '$now', 0, '$sql_subject', '$sql_body', '$now', 0, 0)";
 		$result = mysql_query($sql, $db);
 		$this_id = mysql_insert_id($db);
 

@@ -52,7 +52,7 @@ if (isset($_POST['cancel'])) {
 			$num_comments = 0;
 			
 			if ($_POST['comment']){
-				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $_POST[id], $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
+				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $_POST[id], $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
 				mysql_query($sql, $db);
 
 				$num_comments = 1;
@@ -75,7 +75,7 @@ if (isset($_POST['cancel'])) {
 			$row = mysql_fetch_assoc($result);
 
 			if ($_config['fs_versioning']) {
-				$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (0, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size, '$_POST[description]')";
+				$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (NULL, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size, '$_POST[description]')";
 				$result = mysql_query($sql, $db);
 
 				$file_id = mysql_insert_id($db);
@@ -90,7 +90,7 @@ if (isset($_POST['cancel'])) {
 					$result = mysql_query($sql, $db);
 
 					if ($_POST['comment']){
-						$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (0, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
+						$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
 						mysql_query($sql, $db);
 					}
 				}
