@@ -1,5 +1,4 @@
 <?php
-
 require(AT_INCLUDE_PATH . 'classes/nusoap.php');
 
 class SOAP_Google { 
@@ -16,9 +15,7 @@ class SOAP_Google {
     function SOAP_Google($licenseKey) {
         $this->_licenseKey = $licenseKey;
 
-        $this->_soapClient = new soapclient(
-          "http://api.google.com/search/beta2"
-        );
+        $this->_soapClient = new nusoapclient("http://api.google.com/search/beta2");
     }
 
 /**
@@ -100,11 +97,11 @@ class SOAP_Google {
     * @access private
     */
     function _performAPICall($apiCall, $parameters) {
-        $result = $this->_soapClient->call(
-          $apiCall,
-          $parameters,
-          "urn:GoogleSearch"
-        );
+			$result = $this->_soapClient->call(
+			  $apiCall,
+			  $parameters,
+			  "urn:GoogleSearch"
+			);
 
 		// if (!PEAR::isError($result)) {
 		if (is_array($result)) {

@@ -4,11 +4,10 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-require('../../mods/_standard/google_search/SOAP_Google.php');
-
 $key = $_config['gsearch'];
 
 if (isset($_POST['submit'])) {
+	require('../../mods/_standard/google_search/SOAP_Google.php');
 	$_POST['key'] = trim($_POST['key']);
 
 	if ($_POST['key']) {
