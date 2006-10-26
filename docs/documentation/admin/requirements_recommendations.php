@@ -22,6 +22,7 @@ post_max_size           = 8M ; or greater
 file_uploads            = On
 upload_max_filesize     = 2M ; or greater
 session.use_trans_sid   = 0
+session.auto_start      = 0
 include_path            = ".:/usr/local/lib/php" ; must include . (dot)
 </pre>
 
