@@ -168,7 +168,7 @@ if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
 
 
 $dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
-$url_parts	 = explode('/', $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF']);
+$url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 $_base_href	 = array_slice($url_parts, 0, count($url_parts) - $dir_deep-1);
 $_base_href	 = $server_protocol . implode('/', $_base_href).'/';
 $_base_path  = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST']));
