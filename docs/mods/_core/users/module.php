@@ -38,6 +38,9 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 			$this->_pages['admin/admins/edit.php']['title_var'] = 'edit_admin';
 			$this->_pages['admin/admins/edit.php']['parent']    = 'admin/admins/index.php';
 
+			$this->_pages['admin/admins/password.php']['title_var'] = 'password';
+			$this->_pages['admin/admins/password.php']['parent']    = 'admin/admins/index.php';
+
 			$this->_pages['admin/admins/delete.php']['title_var'] = 'delete_admin';
 			$this->_pages['admin/admins/delete.php']['parent']    = 'admin/admins/index.php';
 	}

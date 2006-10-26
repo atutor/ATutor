@@ -76,11 +76,14 @@ if ($_SESSION['course_id'] > 0) {
 	$_pages['admin/index.php']['title_var'] = 'home';
 	$_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
 	$_pages['admin/index.php']['guide']     = 'admin/?p=configuration.php';
-	$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php');
+	$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admin/admins/my_password.php');
 
 	$_pages['admin/admins/my_edit.php']['title_var'] = 'my_account';
 	$_pages['admin/admins/my_edit.php']['parent']    = 'admin/index.php';
 	$_pages['admin/admins/my_edit.php']['guide']     = 'admin/?p=my_account.php';
+
+	$_pages['admin/admins/my_password.php']['title_var'] = 'change_password';
+	$_pages['admin/admins/my_password.php']['parent']    = 'admin/index.php';
 
 	if (admin_authenticate(AT_ADMIN_PRIV_USERS, AT_PRIV_RETURN)) {
 		$_pages[AT_NAV_ADMIN][] = 'admin/config_edit.php';

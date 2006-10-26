@@ -29,16 +29,6 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
 
-	/* password validation */
-	if ($_POST['password'] == '') { 
-		$missing_fields[] = _AT('password');
-	} else {
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['confirm_password']){
-			$msg->addError('PASSWORD_MISMATCH');
-		}
-	}
-
 	/* email validation */
 	if ($_POST['email'] == '') {
 		$missing_fields[] = _AT('email');
@@ -70,14 +60,13 @@ if (isset($_POST['cancel'])) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['login']     = $addslashes($_POST['login']);
-		$_POST['password']  = $addslashes($_POST['password']);
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='*****', real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
 
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 
@@ -86,8 +75,6 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 	$_POST['login']             = $stripslashes($_POST['login']);
-	$_POST['password']          = $stripslashes($_POST['password']);
-	$_POST['confirm_password']  = $stripslashes($_POST['confirm_password']);
 	$_POST['real_name']         = $stripslashes($_POST['real_name']);
 	$_POST['email']             = $stripslashes($_POST['email']);
 } 
@@ -106,7 +93,6 @@ if (!($row = mysql_fetch_assoc($result))) {
 }
 if (!isset($_POST['submit'])) {
 	$_POST = $row;
-	$_POST['confirm_password'] = $_POST['password'];
 	if (query_bit($row['privileges'], AT_ADMIN_PRIV_ADMIN)) {
 		$_POST['priv_admin'] = 1;
 	}
@@ -119,16 +105,6 @@ if (!isset($_POST['submit'])) {
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $row['login']; ?></h3>
-	</div>
-
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
-		<input type="password" name="password" id="password" size="25" value="<?php echo htmlspecialchars($_POST['password']); ?>" />
-	</div>
-
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('confirm_password'); ?></label><br />
-		<input type="password" name="confirm_password" id="password2" size="25" value="<?php echo htmlspecialchars($_POST['confirm_password']); ?>"  />
 	</div>
 
 	<div class="row">

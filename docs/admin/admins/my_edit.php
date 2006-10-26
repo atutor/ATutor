@@ -23,16 +23,6 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
 
-	/* password validation */
-	if ($_POST['password'] == '') { 
-		$missing_fields[] = _AT('password');
-	} else {
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['confirm_password']){
-			$msg->addError('PASSWORD_MISMATCH');
-		}
-	}
-
 	/* email validation */
 	if ($_POST['email'] == '') {
 		$missing_fields[] = _AT('email');
@@ -55,22 +45,20 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]' WHERE login='$_SESSION[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]' WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_href.'admin/index.php');
 		exit;
 	}
-	$_POST['password']          = $stripslashes($_POST['password']);
-	$_POST['confirm_password']  = $stripslashes($_POST['confirm_password']);
 	$_POST['real_name']         = $stripslashes($_POST['real_name']);
 	$_POST['email']             = $stripslashes($_POST['email']);
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[login]'";
+$sql = "SELECT real_name, email FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[login]'";
 $result = mysql_query($sql, $db);
 if (!($row = mysql_fetch_assoc($result))) {
 	$msg->addError('USER_NOT_FOUND');
@@ -86,16 +74,6 @@ if (!isset($_POST['submit'])) {
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
-		<input type="password" name="password" id="password" size="25" value="<?php echo htmlspecialchars($_POST['password']); ?>" />
-	</div>
-
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('confirm_password'); ?></label><br />
-		<input type="password" name="confirm_password" id="password2" size="25" value="<?php echo htmlspecialchars($_POST['confirm_password']); ?>"  />
-	</div>
-
 	<div class="row">
 		<label for="real_name"><?php echo _AT('real_name'); ?></label><br />
 		<input type="text" name="real_name" id="real_name" size="30" value="<?php echo htmlspecialchars($_POST['real_name']); ?>" />
