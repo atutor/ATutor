@@ -26,9 +26,6 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['edit_forum'])) {
 	$_POST['fid'] = intval($_POST['fid']);
 
-	// check if this forum is shared:
-	// (if this forum is shared, then we do not want to edit it.)
-
 	if ($_POST['title'] == '') {
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
