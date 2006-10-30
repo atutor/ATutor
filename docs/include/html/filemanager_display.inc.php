@@ -98,8 +98,7 @@ if ($popup == TRUE) {
 }
 $labelcol = 3;
 
-
-if ($framed != TRUE) {
+if (TRUE || $framed != TRUE) {
 	if ($_GET['overwrite'] != '') {
 		// get file name, out of the full path
 		$path_parts = pathinfo($current_path.$_GET['overwrite']);
