@@ -37,12 +37,11 @@ $result	= mysql_query($sql, $db);
 
 <?php
 while ($row = mysql_fetch_assoc($result)) {
-/*	
 	// this code hides tests from the user if they are not enrolled.
 	if (!authenticate_test($row['test_id'])) {
 		continue;
 	}
-*/
+
 	$count++;
 	echo '<tr>';
 	echo '<td>';
