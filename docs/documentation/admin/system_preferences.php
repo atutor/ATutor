@@ -33,7 +33,7 @@
 			<dd>If  email confirmation is enabled, before they can login, registrants must confirm their registration by replying to a message sent to the email address they registered with.  </dd>
 
 			<dt>Allow Instructor Requests</dt>
-			<dd>If enabled, students will be allowed to request that their account be upgraded to an instructor account. Instructor account requests must be approved by administrators using the <a href="instructor_requests.php">Instructor Requests</a> section.</dd>
+			<dd>If enabled, students will be allowed to request that their account be upgraded to an instructor account. Instructor account requests must be approved by administrators using the <a href="instructor_requests.php">Instructor Requests</a> section. If disabled then the <em>Create Course</em> link used for requesting an instructor account will be removed and only the administrators will be able to create instructor accounts.</dd>
 
 			<dt>Instructor Request Email Notification</dt>
 			<dd>If enabled, and if <em>Allow Instructor Requests</em> is enabled, then an email notification message will be sent to the <em>Contact Email</em> each time a new instructor account request is made. This does not affect whether or not instructor requests can be made, only whether or not a notification message is sent out each time.</dd>

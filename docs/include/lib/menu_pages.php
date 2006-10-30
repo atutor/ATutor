@@ -166,7 +166,13 @@ $_pages['logout.php']['parent']    = AT_NAV_PUBLIC;
 /* my start page pages */
 $_pages['users/index.php']['title_var'] = 'my_courses';
 $_pages['users/index.php']['parent']    = AT_NAV_START;
-$_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), (array) $_pages['users/index.php']['children']);
+if ($_SESSION['member_id'] && !$_SESSION['course_id']) {
+	if ((get_instructor_status() === FALSE) && (!defined('ALLOW_INSTRUCTOR_REQUESTS') || !ALLOW_INSTRUCTOR_REQUESTS)) {
+		$_pages['users/index.php']['children']  = array_merge(array('users/browse.php'), (array) $_pages['users/index.php']['children']);
+	} else {
+		$_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), (array) $_pages['users/index.php']['children']);
+	}
+}
 	
 	$_pages['users/browse.php']['title_var'] = 'browse_courses';
 	$_pages['users/browse.php']['parent']    = 'users/index.php';
