@@ -32,7 +32,7 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['password']     = $addslashes($_POST['password']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]' WHERE login='$_POST[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', last_login=last_login WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
 
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='********' WHERE login='$_POST[login]'";

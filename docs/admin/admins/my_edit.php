@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]' WHERE login='$_SESSION[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', last_login=last_login WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

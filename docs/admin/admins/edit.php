@@ -63,7 +63,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv, last_login=last_login WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
 
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";

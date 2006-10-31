@@ -62,7 +62,7 @@ if (isset($_POST['submit'])) {
 	if (!$msg->containsErrors()) {			
 		$_POST['password']   = $addslashes($_POST['password']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]' WHERE login='$_SESSION[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', last_login=last_login WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('PASSWORD_CHANGED');

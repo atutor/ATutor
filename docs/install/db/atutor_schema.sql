@@ -7,6 +7,17 @@
 # Table structure for table `admin_log`
 # since 1.5
 
+CREATE TABLE `admins` (
+   `login` VARCHAR( 30 ) NOT NULL default '',
+   `password` VARCHAR( 30 ) NOT NULL default '',
+   `real_name` VARCHAR( 30 ) NOT NULL default '',
+   `email` VARCHAR( 50 ) NOT NULL default '',
+   `language` varchar(5) NOT NULL default '',
+   `privileges` MEDIUMINT UNSIGNED NOT NULL default 0,
+   `last_login` TIMESTAMP NOT NULL default 0,
+   PRIMARY KEY ( `login` )
+);
+
 CREATE TABLE `admin_log` (
   `login` varchar(30) NOT NULL default '',
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -17,17 +28,6 @@ CREATE TABLE `admin_log` (
   KEY `login` (`login`)
 );
 
-
-CREATE TABLE `admins` (
-   `login` VARCHAR( 30 ) NOT NULL default '',
-   `password` VARCHAR( 30 ) NOT NULL default '',
-   `real_name` VARCHAR( 30 ) NOT NULL default '',
-   `email` VARCHAR( 50 ) NOT NULL default '',
-   `language` varchar(5) NOT NULL default '',
-   `privileges` MEDIUMINT UNSIGNED NOT NULL default 0,
-   `last_login` DATETIME NOT NULL default '0000-00-00 00:00:00',
-   PRIMARY KEY ( `login` )
-);
 
 # --------------------------------------------------------
 # Table structure for table `assignments`
