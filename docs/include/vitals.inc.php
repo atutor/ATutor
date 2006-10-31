@@ -139,9 +139,6 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 						E_USER_ERROR);
 		exit;
 	}
-
-	$sql = "SET time_zone = 'Europe/Paris'";
-	mysql_query($sql, $db);
 }
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
@@ -734,14 +731,10 @@ if (isset($_GET['expand'])) {
 */
 function write_to_log($operation_type, $table_name, $num_affected, $details) {
 	global $db;
-	static $now;
 
-	if (!$now) {
-		$now = date('Y-m-d H:i:s');
-	}
 	if ($num_affected > 0) {
 		$details = addslashes(stripslashes($details));
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', '$now', $operation_type, '$table_name', $num_affected, '$details')";
+		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', NULL, $operation_type, '$table_name', $num_affected, '$details')";
 		$result = mysql_query($sql, $db);
 	}
 }

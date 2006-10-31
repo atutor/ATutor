@@ -107,8 +107,7 @@ if (isset($_GET['asc'])) {
 		<td colspan="6"><?php echo _AT('no_admins_found'); ?></td>
 	</tr><?php
 	} else {
-
-		while ($row = mysql_fetch_assoc($result)) : ?>
+		while ($row = mysql_fetch_assoc($result)): ?>
 			<tr onmousedown="document.form['m<?php echo $row['login']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['login']; ?>">
 				<td><input type="radio" name="login" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>" /></td>
 				<td><label for="m<?php echo $row['login']; ?>"><?php echo $row['login'];      ?></label></td>

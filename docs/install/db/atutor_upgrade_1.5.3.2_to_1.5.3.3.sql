@@ -4,4 +4,4 @@
 
 # convert DATETIME fields to TIMESTAMP
 ALTER TABLE `admins` CHANGE `last_login` `last_login` TIMESTAMP NOT NULL;
-
+ALTER TABLE `admin_log` CHANGE `time` `time` TIMESTAMP NOT NULL ;

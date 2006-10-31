@@ -20,7 +20,7 @@ CREATE TABLE `admins` (
 
 CREATE TABLE `admin_log` (
   `login` varchar(30) NOT NULL default '',
-  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `time` TIMESTAMP NOT NULL,
   `operation` varchar(20) NOT NULL default '',
   `table` varchar(30) NOT NULL default '',
   `num_affected` tinyint(3) NOT NULL default '0',
