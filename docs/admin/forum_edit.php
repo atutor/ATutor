@@ -44,7 +44,7 @@ if (isset($_POST['cancel'])) {
 		$forum_id = intval($_POST['forum']);
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['description']  = $addslashes($_POST['description']);
-		$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='" . $_POST['title'] . "', description='" . $_POST['description'] . "' WHERE forum_id=".$forum_id;
+		$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='" . $_POST['title'] . "', description='" . $_POST['description'] . "', last_post=last_post WHERE forum_id=".$forum_id;
 		$result	= mysql_query($sql, $db);
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', mysql_affected_rows($db), $sql);
 

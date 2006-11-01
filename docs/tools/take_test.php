@@ -149,7 +149,7 @@ if (isset($_POST['submit'])) {
 
 	if ($set_final_score || !$out_of) {
 		// update the final score (when no open ended questions are found)
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$result_id AND member_id=$_SESSION[member_id]";
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken WHERE result_id=$result_id AND member_id=$_SESSION[member_id]";
 		$result	= mysql_query($sql, $db);
 	}
 

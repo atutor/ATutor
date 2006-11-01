@@ -81,12 +81,10 @@ if (isset($_POST['cancel'])) {
 			unset($mail);
 		}
 
-		if ($_POST['replied'] != '') {
-			$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET replied=1 WHERE message_id=$_POST[replied]",$db);
-		}
-
 		if ($_POST['submit_delete']) {
 			$result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE message_id=$_POST[replied] AND to_member_id=$_SESSION[member_id]",$db);
+		} else if ($_POST['replied'] != '') {
+			$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET replied=1, date_sent=date_sent WHERE message_id=$_POST[replied]",$db);
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

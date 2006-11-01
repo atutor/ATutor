@@ -55,13 +55,13 @@ if (isset($_POST['cancel'])) {
 	} // else:
 
 	/* Decrement count for number of posts and topics*/
-	$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1 WHERE forum_id=$_REQUEST[fid]";
+	$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1, last_post=last_post WHERE forum_id=$_REQUEST[fid]";
 	$result = mysql_query($sql, $db);
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts+1+".$row['num_comments'].", num_topics=num_topics+1 WHERE forum_id=$_REQUEST[new_fid]";
+	$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts+1+".$row['num_comments'].", num_topics=num_topics+1, last_post=last_post WHERE forum_id=$_REQUEST[new_fid]";
 	$result = mysql_query($sql, $db);
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET forum_id=$_REQUEST[new_fid] WHERE (parent_id=$_REQUEST[pid] OR post_id=$_REQUEST[pid]) AND forum_id=$_REQUEST[fid]";
+	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET forum_id=$_REQUEST[new_fid], last_comment=last_comment, date=date WHERE (parent_id=$_REQUEST[pid] OR post_id=$_REQUEST[pid]) AND forum_id=$_REQUEST[fid]";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

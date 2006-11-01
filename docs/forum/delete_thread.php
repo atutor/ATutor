@@ -60,7 +60,7 @@ if (isset($_POST['submit_no'])) {
 		} // else:
 
 		/* Decrement count for number of posts and topics*/
-		$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1 WHERE forum_id=$fid";
+		$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1, last_post=last_post WHERE forum_id=$fid";
 		$result = mysql_query($sql, $db);
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE (parent_id=$pid OR post_id=$pid) AND forum_id=$fid";
@@ -79,11 +79,11 @@ if (isset($_POST['submit_no'])) {
 		}
 
 	    /* Decrement count of comments in forums_threads table*/
-		$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-1 WHERE post_id=$ppid";
+		$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-1, last_comment=last_comment, date=date WHERE post_id=$ppid";
 		$result = mysql_query($sql, $db);
 
 		/* Decrement count of posts in forums table */
-		$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1 WHERE forum_id=$fid";
+		$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1, last_post=last_post WHERE forum_id=$fid";
 		$result = mysql_query($sql, $db);
 
 	}

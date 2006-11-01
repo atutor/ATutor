@@ -113,7 +113,7 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 
-		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now', date=date WHERE post_id=$_POST[parent_id]";
 		$result = mysql_query($sql, $db);
 
 		if ($subscriber_email_list) {

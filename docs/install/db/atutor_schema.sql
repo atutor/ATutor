@@ -269,7 +269,7 @@ CREATE TABLE `files_comments` (
   `comment_id` mediumint(8) unsigned NOT NULL auto_increment,
   `file_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date` TIMESTAMP NOT NULL,
   `comment` text NOT NULL default '',
   PRIMARY KEY  (`comment_id`)
 ) TYPE=MyISAM;
@@ -299,7 +299,7 @@ CREATE TABLE `forums` (
   `description` text NOT NULL default '',
   `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
   `num_posts` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
-  `last_post` DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
+  `last_post` TIMESTAMP NOT NULL,
   PRIMARY KEY  (`forum_id`)
 ) TYPE=MyISAM;
 
@@ -310,7 +310,7 @@ CREATE TABLE `forums` (
 CREATE TABLE `forums_accessed` (
   `post_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `last_accessed` timestamp(14) NOT NULL default 0,
+  `last_accessed` timestamp NOT NULL,
   `subscribe` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`post_id`,`member_id`)
 ) TYPE=MyISAM;
@@ -356,11 +356,11 @@ CREATE TABLE `forums_threads` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `forum_id` mediumint(8) unsigned NOT NULL default '0',
   `login` varchar(20) NOT NULL default '',
-  `last_comment` datetime NOT NULL default '0000-00-00 00:00:00',
+  `last_comment` TIMESTAMP NOT NULL,
   `num_comments` mediumint(8) unsigned NOT NULL default '0',
   `subject` varchar(100) NOT NULL default '',
   `body` text NOT NULL default '',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date` TIMESTAMP NOT NULL,
   `locked` tinyint(4) NOT NULL default '0',
   `sticky` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`post_id`)
@@ -417,7 +417,7 @@ CREATE TABLE `groups_types` (
 
 CREATE TABLE `handbook_notes` (
 `note_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+`date` TIMESTAMP NOT NULL,
 `section` VARCHAR( 15 ) NOT NULL default '',
 `page` VARCHAR( 50 ) NOT NULL default '',
 `approved` tinyint NOT NULL default 0,
@@ -432,7 +432,7 @@ PRIMARY KEY ( `note_id` )
 
 CREATE TABLE `instructor_approvals` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `request_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `request_date` TIMESTAMP NOT NULL,
   `notes` text NOT NULL default '',
   PRIMARY KEY  (`member_id`)
 ) TYPE=MyISAM;
@@ -527,7 +527,7 @@ CREATE TABLE `members` (
   `phone` varchar(15) NOT NULL default '',
   `status` tinyint(4) NOT NULL default '0',
   `preferences` text NOT NULL default '',
-  `creation_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `creation_date` TIMESTAMP NOT NULL,
   `language` varchar(5) NOT NULL default '',
   `inbox_notify` tinyint(3) unsigned NOT NULL default '0',
   `private_email` TINYINT DEFAULT '1' NOT NULL,
@@ -544,7 +544,7 @@ CREATE TABLE `member_track` (
   `content_id` mediumint(8) unsigned NOT NULL default '0',
   `counter` mediumint(8) unsigned NOT NULL default '0',
   `duration` mediumint(8) unsigned NOT NULL default '0',
-  `last_accessed` datetime default 0 NULL,
+  `last_accessed` TIMESTAMP NULL,
   KEY `member_id` (`member_id`),
   KEY `content_id` (`content_id`)
 ) TYPE=MyISAM;
@@ -557,7 +557,7 @@ CREATE TABLE `messages` (
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `from_member_id` mediumint(8) unsigned NOT NULL default '0',
   `to_member_id` mediumint(8) unsigned NOT NULL default '0',
-  `date_sent` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_send` TIMESTAMP NOT NULL,
   `new` tinyint(4) NOT NULL default '0',
   `replied` tinyint(4) NOT NULL default '0',
   `subject` varchar(150) NOT NULL default '',
@@ -622,7 +622,7 @@ CREATE TABLE `news` (
   `news_id` mediumint(8) unsigned NOT NULL auto_increment,
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date` TIMESTAMP NOT NULL,
   `formatting` tinyint(4) NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
   `body` text NOT NULL default '',
@@ -636,7 +636,7 @@ CREATE TABLE `polls` (
   `poll_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
   `question` VARCHAR( 100 ) NOT NULL default '',
-  `created_date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+  `created_date` TIMESTAMP NOT NULL,
   `total` SMALLINT UNSIGNED NOT NULL default '0',
   `choice1` VARCHAR( 100 ) NOT NULL default '',
   `count1` SMALLINT UNSIGNED NOT NULL default '0',
@@ -842,7 +842,7 @@ CREATE TABLE `tests_results` (
   `result_id` mediumint(8) unsigned NOT NULL auto_increment,
   `test_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `date_taken` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date_taken` TIMESTAMP NOT NULL,
   `final_score` char(5) NOT NULL default '',
   PRIMARY KEY  (`result_id`),
   KEY `test_id` (`test_id`)

@@ -51,7 +51,7 @@ if ($_POST['cancel']) {
 		}
 	}
 
-	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score='$final_score' WHERE result_id=$rid";
+	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score='$final_score', date_taken=date_taken WHERE result_id=$rid";
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('RESULTS_UPDATED');

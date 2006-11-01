@@ -47,7 +47,7 @@ if (isset($_GET['done'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['edit_comment'] = $addslashes($_POST['edit_comment']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."files_comments SET comment='$_POST[edit_comment]' WHERE member_id=$_SESSION[member_id] AND comment_id=$_POST[comment_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."files_comments SET comment='$_POST[edit_comment]', date=date WHERE member_id=$_SESSION[member_id] AND comment_id=$_POST[comment_id]";
 		mysql_query($sql, $db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['id']);

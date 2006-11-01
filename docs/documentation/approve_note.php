@@ -49,7 +49,7 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 
 if ($enable_user_notes) {
 	// insert into DB
-	$sql = "UPDATE ".AT_HANDBOOK_DB_TABLE_PREFIX."handbook_notes SET approved=1 WHERE note_id=$_GET[id]";
+	$sql = "UPDATE ".AT_HANDBOOK_DB_TABLE_PREFIX."handbook_notes SET approved=1, date=date WHERE note_id=$_GET[id]";
 	mysql_query($sql, $db);
 }
 

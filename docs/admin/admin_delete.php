@@ -44,12 +44,12 @@ if (isset($_POST['submit_yes'])) {
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
 			/* update the forum posts counter */
-			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts - $row[cnt] WHERE forum_id=$row[forum_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts - $row[cnt], last_post=last_post WHERE forum_id=$row[forum_id]";
 			mysql_query($sql, $db);
 			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', mysql_affected_rows($db), $sql);
 			
 			/* update the topics reply counter */
-			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-$row[cnt] WHERE post_id=$row[parent_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-$row[cnt], last_comment=last_comment, date=date WHERE post_id=$row[parent_id]";
 			mysql_query($sql, $db);
 			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums_threads', mysql_affected_rows($db), $sql);
 		}
@@ -60,7 +60,7 @@ if (isset($_POST['submit_yes'])) {
 		while ($row = mysql_fetch_assoc($result)) {
 			/* update the forum posts and topics counters */
 			$num_posts = $row['num_comments'] + 1;
-			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics-1, num_posts=num_posts - $num_posts WHERE forum_id=$row[forum_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics-1, num_posts=num_posts - $num_posts, last_post=last_post WHERE forum_id=$row[forum_id]";
 			mysql_query($sql, $db);
 			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', mysql_affected_rows($db), $sql);
 

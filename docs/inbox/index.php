@@ -19,7 +19,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 $_GET['view'] = intval($_GET['view']);
 
 if ($_GET['view']) {
-	$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET new=0 WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[view]",$db);
+	$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET new=0, date_sent=date_sent WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[view]",$db);
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

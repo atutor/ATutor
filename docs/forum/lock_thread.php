@@ -44,7 +44,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['pid']  = intval($_POST['pid']);
 	$_POST['fid']  = intval($_POST['fid']);
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET locked=$_POST[lock] WHERE post_id=$_POST[pid]";
+	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET locked=$_POST[lock], last_comment=last_comment, date=date WHERE post_id=$_POST[pid]";
 	$result = mysql_query($sql, $db);
 
 	if($_POST['lock'] == '1' || $_POST['lock'] == '2'){

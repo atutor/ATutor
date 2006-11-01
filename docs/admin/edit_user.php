@@ -150,7 +150,8 @@ if (isset($_POST['submit'])) {
 													phone    = '$_POST[phone]',
 													status   = $_POST[status],
 													language = '$_SESSION[lang]', 
-													private_email = $_POST[private_email]
+													private_email = $_POST[private_email],
+													creation_date=creation_date
 				WHERE member_id = $id";
 		$result = mysql_query($sql, $db);
 		if (!$result) {

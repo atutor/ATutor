@@ -26,7 +26,7 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	exit;
 } else if (isset($_GET['confirm'], $_GET['id'])) {
 	$id  = intval($_GET['id']);
-	$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT." WHERE status=".AT_STATUS_UNCONFIRMED." AND member_id=$id";
+	$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT.", creation_date=creation_date WHERE status=".AT_STATUS_UNCONFIRMED." AND member_id=$id";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACCOUNT_CONFIRMED');

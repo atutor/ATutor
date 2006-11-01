@@ -188,7 +188,7 @@ function edit_forum($_POST) {
 
 	$_POST['fid']    = intval($_POST['fid']);
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]' WHERE forum_id=$_POST[fid]";
+	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]', last_post=last_post WHERE forum_id=$_POST[fid]";
 	$result = mysql_query($sql,$db);
 
 	return;

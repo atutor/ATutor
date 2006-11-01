@@ -36,7 +36,7 @@ if (isset($_GET['deny']) && isset($_GET['id'])) {
 
 	write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', mysql_affected_rows($db), $sql);
 
-	$sql = 'UPDATE '.TABLE_PREFIX.'members SET status='.AT_STATUS_INSTRUCTOR.' WHERE member_id='.$id;
+	$sql = 'UPDATE '.TABLE_PREFIX.'members SET status='.AT_STATUS_INSTRUCTOR.', creation_date=creation_date WHERE member_id='.$id;
 	$result = mysql_query($sql, $db);
 
 	write_to_log(AT_ADMIN_LOG_UPDATE, 'members', mysql_affected_rows($db), $sql);

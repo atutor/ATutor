@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['body_text']  = $addslashes($_POST['body_text']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."news SET title='$_POST[title]', body='$_POST[body_text]', formatting=$_POST[formatting] WHERE news_id=$_POST[aid] AND course_id=$_SESSION[course_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."news SET title='$_POST[title]', body='$_POST[body_text]', formatting=$_POST[formatting], date=date WHERE news_id=$_POST[aid] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
 		/* update announcement RSS: */

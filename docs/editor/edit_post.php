@@ -60,7 +60,7 @@ if ($_POST['edit_post']) {
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 	if (!$msg->containsErrors()) {
-		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]' WHERE post_id=$_POST[pid]";
+		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]', last_comment=last_comment, date=date WHERE post_id=$_POST[pid]";
 		$result = mysql_query($sql,$db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
