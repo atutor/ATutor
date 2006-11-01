@@ -14,6 +14,9 @@
 			<dt>Contact Email</dt>
 			<dd>The reply address used for emails sent for instructor requests and other system emails.</dd>
 
+			<dt>Time Zone</dt>
+			<dd>Changing ATutor's time zone to one other than that specific by the server requires MySQL 4.1.3+ and PHP's <kbd>putenv</kbd> command must be allowed. Additionally MySQL's time zone tables must be loaded; see <a href="http://dev.mysql.com/doc/refman/4.1/en/time-zone-support.html" target="_new">MySQL Server Time Zone Support</a> for additional details. This option is available in ATutor 1.5.3.3+.</dd>
+
 			<dt>Maximum File Size</dt>
 			<dd>Maximum allowable file size in Bytes that can be uploaded to the course's File Manager. This does not override the value set for <kbd>upload_max_filesize</kbd> in <kbd>php.ini</kbd>.</dd>
 

@@ -48,7 +48,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['check_version']             = $_POST['check_version'] ? 1 : 0;
 	$_POST['fs_versioning']             = $_POST['fs_versioning'] ? 1 : 0;
 	$_POST['enable_mail_queue']         = $_POST['enable_mail_queue'] ? 1 : 0;
-	$_POST['display_name_format']       = $_POST['display_name_format'];
+	$_POST['display_name_format']       = intval($_POST['display_name_format']);
 
 	if (!isset($display_name_formats[$_POST['display_name_format']])) {
 		$_POST['display_name_format'] = $_config_defaults['display_name_format'];
@@ -84,6 +84,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['home_url']      = $addslashes($_POST['home_url']);
 		$_POST['default_language']      = $addslashes($_POST['default_language']);
 		$_POST['contact_email'] = $addslashes($_POST['contact_email']);
+		$_POST['time_zone']     = $addslashes($_POST['time_zone']);
 
 		foreach ($_config as $name => $value) {
 			// the isset() is needed to avoid overridding settings that don't get set here (ie. modules)
@@ -154,6 +155,31 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cemail"><?php echo _AT('contact_email'); ?></label><br />
 		<input type="text" name="contact_email" id="cemail" size="40" value="<?php if (!empty($_POST['email'])) { echo $stripslashes(htmlspecialchars($_POST['email'])); } else { echo $_config['contact_email']; } ?>"  />
+	</div>
+
+	<div class="row">
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="time_zone"><?php echo _AT('time_zone'); ?></label><br />
+			<?php
+				@putenv("TZ=UTC");
+				$before = date('O');
+				@putenv("TZ=US/Eastern");
+				$after = date('O');
+				@putenv("TZ={$_config['time_zone']}");
+
+				$sql = "SELECT Name FROM mysql.time_zone_name ORDER BY Name";
+				$result = mysql_query($sql, $db);
+			?>
+			<?php if ($result && mysql_num_rows($result) && ($before != $after)): ?>
+				<select name="time_zone" id="time_zone">
+					<option value="" <?php if (!$_config['time_zone']) { echo 'selected="selected"'; } ?>><?php echo _AT('use_system_time'); ?></option>
+					<option value=""></option>
+					<?php while ($row = mysql_fetch_assoc($result)): ?>
+						<option <?php if ($_config['time_zone'] == $row['Name']) { echo 'selected="selected"'; } ?>><?php echo $row['Name']; ?></option>
+					<?php endwhile; ?>
+				</select>
+			<?php else: ?>
+				<?php echo _AT('time_zones_not_supported'); ?>
+			<?php endif; ?>
 	</div>
 
 	<div class="row">

@@ -171,13 +171,11 @@ define('AT_DEFAULT_PREFS',  $_config['prefs_default']);
 $_config['home_defaults'] .= (isset($_config['home_defaults_2']) ? $_config['home_defaults_2'] : '');
 $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['main_defaults_2'] : '');
 
-$_config['time_zone'] = 'America/Toronto';
-
 if ($_config['time_zone']) {
 	$sql = "SET time_zone='{$_config['time_zone']}'";
 	mysql_query($sql, $db);
 
-	putenv("TZ={$_config['time_zone']}");
+	@putenv("TZ={$_config['time_zone']}");
 }
 
 /***** 7. start language block *****/
