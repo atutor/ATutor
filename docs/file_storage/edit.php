@@ -58,7 +58,7 @@ if (isset($_POST['cancel'])) {
 				$num_comments = 1;
 			}
 
-			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]', description='$_POST[description]', num_comments=num_comments+$num_comments WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
+			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]', description='$_POST[description]', num_comments=num_comments+$num_comments, date=date WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
 			mysql_query($sql, $db);
 		} else {
 			// this file is editable, and has changed
@@ -86,7 +86,7 @@ if (isset($_POST['cancel'])) {
 					fwrite($fp, $_POST['body'], $size);
 					fclose($fp);
 
-					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
+					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id, date=date WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
 					$result = mysql_query($sql, $db);
 
 					if ($_POST['comment']){

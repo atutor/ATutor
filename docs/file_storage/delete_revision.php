@@ -41,10 +41,10 @@ if (isset($_POST['submit_no'])) {
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
-	$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$row[parent_file_id] WHERE parent_file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
+	$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$row[parent_file_id], date=date WHERE parent_file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
 	mysql_query($sql, $db);
 
-	$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=num_revisions-1 WHERE file_id>$id AND owner_type=$row[owner_type] AND owner_id=$row[owner_id] AND folder_id=$row[folder_id]";
+	$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=num_revisions-1, date=date WHERE file_id>$id AND owner_type=$row[owner_type] AND owner_id=$row[owner_id] AND folder_id=$row[folder_id]";
 	mysql_query($sql, $db);
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";

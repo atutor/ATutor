@@ -337,10 +337,10 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
 				if ($_config['fs_versioning']) {
-					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id WHERE file_id=$row[file_id]";
+					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id, date=date WHERE file_id=$row[file_id]";
 					$result = mysql_query($sql, $db);
 
-					$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=$row[num_revisions]+1 WHERE file_id=$file_id";
+					$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=$row[num_revisions]+1, date=date WHERE file_id=$file_id";
 					$result = mysql_query($sql, $db);
 				} else {
 					fs_delete_file($row['file_id'], $owner_type, $owner_id);

@@ -53,7 +53,7 @@ if (isset($_POST['cancel'])) {
 				fs_delete_file($row['file_id'], $owner_type, $owner_id);
 			}
 
-			$sql = "UPDATE ".TABLE_PREFIX."files SET folder_id={$_POST['new_folder']} WHERE file_id=$file AND owner_type=$owner_type AND owner_id=$owner_id";
+			$sql = "UPDATE ".TABLE_PREFIX."files SET folder_id={$_POST['new_folder']}, date=date WHERE file_id=$file AND owner_type=$owner_type AND owner_id=$owner_id";
 			mysql_query($sql, $db);
 		}
 		$msg->addFeedback('FILES_MOVED');

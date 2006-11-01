@@ -44,7 +44,7 @@ if (isset($_POST['submit_no'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."blog_posts_comments WHERE comment_id=$delete_id AND post_id=$id";
 	$result = mysql_query($sql, $db);
 	if (mysql_affected_rows($db) == 1) {
-		$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET num_comments=num_comments-1 WHERE owner_type=$owner_type AND owner_id=$owner_id AND post_id=$id";
+		$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET num_comments=num_comments-1, date=date WHERE owner_type=$owner_type AND owner_id=$owner_id AND post_id=$id";
 		$result = mysql_query($sql, $db);
 	}
 

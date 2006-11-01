@@ -45,7 +45,7 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."blog_posts_comments VALUES (NULL, $id, $_SESSION[member_id], NOW(), $_POST[private], '$_POST[body]')";
 		mysql_query($sql, $db);
 		if (mysql_affected_rows($db) == 1) {
-			$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET num_comments=num_comments+1 WHERE post_id=$id";
+			$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET num_comments=num_comments+1, date=date WHERE post_id=$id";
 			mysql_query($sql, $db);
 		}
 

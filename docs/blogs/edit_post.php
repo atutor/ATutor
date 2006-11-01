@@ -40,7 +40,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['title'] = htmlspecialchars($_POST['title']);
 		$_POST['body']  = htmlspecialchars($_POST['body']);
 		$_POST['private'] = abs($_POST['private']);
-		$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET private=$_POST[private], title='$_POST[title]', body='$_POST[body]' WHERE owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id";
+		$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET private=$_POST[private], title='$_POST[title]', body='$_POST[body]', date=date WHERE owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id";
 		mysql_query($sql, $db);
 
 		$msg->addFeedback('POST_ADDED_SUCCESSFULLY');

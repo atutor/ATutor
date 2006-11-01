@@ -269,7 +269,7 @@ class Backup {
 	// public
 	function edit($backup_id, $description) {
 		// update description in the table:
-		$sql	= "UPDATE ".TABLE_PREFIX."backups SET description='$description' WHERE backup_id=$backup_id AND course_id=$this->course_id";
+		$sql	= "UPDATE ".TABLE_PREFIX."backups SET description='$description', date=date WHERE backup_id=$backup_id AND course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
 
 	}

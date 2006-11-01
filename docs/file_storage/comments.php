@@ -70,7 +70,7 @@ if (isset($_GET['done'])) {
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $_POST[id], $_SESSION[member_id], NOW(), '$_POST[comment]')";
 		if (mysql_query($sql, $db)) {
-			$sql = "UPDATE ".TABLE_PREFIX."files SET num_comments=num_comments+1 WHERE file_id=$_POST[id]";
+			$sql = "UPDATE ".TABLE_PREFIX."files SET num_comments=num_comments+1, date=date WHERE file_id=$_POST[id]";
 			mysql_query($sql, $db);
 		}
 
