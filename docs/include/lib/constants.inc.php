@@ -21,38 +21,35 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /* config variables. if they're not in the db then it uses the installation default values: */
 $_config_defaults = array();
 $_config_defaults['contact_email']             = '';
-$_config_defaults['email_notification']        = 1;
-$_config_defaults['allow_instructor_requests'] = 1;
-$_config_defaults['auto_approve_instructors']  = 0;
+$_config_defaults['email_notification']        = 1; // enabled
+$_config_defaults['allow_instructor_requests'] = 1; // enabled
+$_config_defaults['auto_approve_instructors']  = 0; // disabled
 $_config_defaults['max_file_size']             = 1048576;  // 1MB
 $_config_defaults['max_course_size']           = 10485760; // 10 MB
 $_config_defaults['max_course_float']          = 2097152;  // 2MB
 $_config_defaults['illegal_extentions']        = 'exe|asp|php|php3|bat|cgi|pl|com|vbs|reg|pcd|pif|scr|bas|inf|vb|vbe|wsc|wsf|wsh';
 $_config_defaults['site_name']                 = '';
-$_config_defaults['home_url']                  = '';
+$_config_defaults['home_url']                  = ''; // empty means disabled
 $_config_defaults['default_language']          = 'en';
-$_config_defaults['cache_dir']                 = '';
-$_config_defaults['enable_category_themes']    = 0;
-$_config_defaults['course_backups']            = 5;
-$_config_defaults['email_confirmation']        = 0;
-$_config_defaults['master_list']               = 0;
-$_config_defaults['user_notes']                = 0; // whether to enable the user contributed handbook notes
-$_config_defaults['theme_categories']          = 0;
+$_config_defaults['cache_dir']                 = ''; // empty means disabled
+$_config_defaults['enable_category_themes']    = 0; // disabled
+$_config_defaults['course_backups']            = 5; // number of backups
+$_config_defaults['email_confirmation']        = 0; // disabled
+$_config_defaults['master_list']               = 0; // disabled
+$_config_defaults['user_notes']                = 0; // disabled - whether to enable the user contributed handbook notes
+$_config_defaults['theme_categories']          = 0; // disabled
 $_config_defaults['main_defaults']	           = 'forum/list.php|glossary/index.php|file_storage/index.php';
 $_config_defaults['home_defaults']             = 'forum/list.php|file_storage/index.php|glossary/index.php|chat/index.php|tile.php|faq/index.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php|groups.php|reading_list/index.php|blogs/index.php';
 $_config_defaults['side_defaults']             = 'menu_menu|related_topics|users_online|glossary|search|poll|posts';
 $_config_defaults['pref_defaults']			   = 'a:4:{s:10:"PREF_THEME";s:7:"default";s:14:"PREF_NUMBERING";i:1;s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}';
-$_config_defaults['pref_inbox_notify']		   = 0;
-$_config_defaults['check_version']	           = 0;
-$_config_defaults['fs_versioning']             = 1;
+$_config_defaults['pref_inbox_notify']		   = 0; // disabled
+$_config_defaults['check_version']	           = 0; // disabled
+$_config_defaults['fs_versioning']             = 1; // enabled - file storage version control
 $_config_defaults['last_cron']                 = 0; // cron has to be enabled manually
 $_config_defaults['enable_mail_queue']         = 0; // mail queue can only be enabled if cron is running
 $_config_defaults['auto_install_languages']    = 0; // auto install languages can only be enabled if cron is running
 $_config_defaults['display_name_format']       = 1; // 0-5, see (array) display_name_formats
-
-// to be removed. see vitals:get_login()
-$_config_defaults['display_full_name']         = 1; // not currently a config option
-
+$_config_defaults['time_zone']                 = ''; // empty means disabled or not supported
 $_config = $_config_defaults;
 
 

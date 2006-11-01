@@ -143,6 +143,43 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 
+/* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
+$sql    = "SELECT * FROM ".TABLE_PREFIX."config";
+$result = mysql_query($sql, $db);
+while ($row = mysql_fetch_assoc($result)) { 
+	$_config[$row['name']] = $row['value'];
+}
+
+/* following is added as a transition period and backwards compatability: */
+define('EMAIL',                     $_config['contact_email']);
+define('EMAIL_NOTIFY',              $_config['email_notification']);
+define('ALLOW_INSTRUCTOR_REQUESTS', $_config['allow_instructor_requests']);
+define('AUTO_APPROVE_INSTRUCTORS',  $_config['auto_approve_instructors']);
+define('SITE_NAME',                 $_config['site_name']);
+define('HOME_URL',                  $_config['home_url']);
+define('DEFAULT_LANGUAGE',          $_config['default_language']);
+define('CACHE_DIR',                 $_config['cache_dir']);
+define('AT_ENABLE_CATEGORY_THEMES', $_config['theme_categories']);
+define('AT_COURSE_BACKUPS',         $_config['course_backups']);
+define('AT_EMAIL_CONFIRMATION',     $_config['email_confirmation']);
+define('AT_MASTER_LIST',            $_config['master_list']);
+$MaxFileSize       = $_config['max_file_size']; 
+$MaxCourseSize     = $_config['max_course_size'];
+$MaxCourseFloat    = $_config['max_course_float'];
+$IllegalExtentions = explode('|',$_config['illegal_extentions']);
+define('AT_DEFAULT_PREFS',  $_config['prefs_default']);
+$_config['home_defaults'] .= (isset($_config['home_defaults_2']) ? $_config['home_defaults_2'] : '');
+$_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['main_defaults_2'] : '');
+
+$_config['time_zone'] = 'America/Toronto';
+
+if ($_config['time_zone']) {
+	$sql = "SET time_zone='{$_config['time_zone']}'";
+	mysql_query($sql, $db);
+
+	putenv("TZ={$_config['time_zone']}");
+}
+
 /***** 7. start language block *****/
 	// set current language
 	require(AT_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
@@ -165,7 +202,6 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 	if ($myLang->isRTL()) {
 		$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. eg. rtl_tree */
 	}
-
 /***** end language block ****/
 
 /* 8. load common libraries */
@@ -392,13 +428,9 @@ function get_login($id){
 
 	$id		= intval($id);
 
-	$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
+	$sql	= 'SELECT login FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
 	$result	= mysql_query($sql, $db);
 	$row	= mysql_fetch_assoc($result);
-
-	if ($_config_defaults['display_full_name'] && $row['first_name'] && $row['last_name']) {
-		return $row['first_name'] . ' ' . $row['second_name'] . ' ' . $row['last_name'];
-	}
 
 	return $row['login'];
 }
@@ -749,34 +781,6 @@ function get_group_title($group_id) {
 	return FALSE;
 }
 
-/* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
-
-$sql    = "SELECT * FROM ".TABLE_PREFIX."config";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) { 
-	$_config[$row['name']] = $row['value'];
-}
-
-/* following is added as a transition period and backwards compatability: */
-define('EMAIL',                     $_config['contact_email']);
-define('EMAIL_NOTIFY',              $_config['email_notification']);
-define('ALLOW_INSTRUCTOR_REQUESTS', $_config['allow_instructor_requests']);
-define('AUTO_APPROVE_INSTRUCTORS',  $_config['auto_approve_instructors']);
-define('SITE_NAME',                 $_config['site_name']);
-define('HOME_URL',                  $_config['home_url']);
-define('DEFAULT_LANGUAGE',          $_config['default_language']);
-define('CACHE_DIR',                 $_config['cache_dir']);
-define('AT_ENABLE_CATEGORY_THEMES', $_config['theme_categories']);
-define('AT_COURSE_BACKUPS',         $_config['course_backups']);
-define('AT_EMAIL_CONFIRMATION',     $_config['email_confirmation']);
-define('AT_MASTER_LIST',            $_config['master_list']);
-$MaxFileSize       = $_config['max_file_size']; 
-$MaxCourseSize     = $_config['max_course_size'];
-$MaxCourseFloat    = $_config['max_course_float'];
-$IllegalExtentions = explode('|',$_config['illegal_extentions']);
-define('AT_DEFAULT_PREFS',  $_config['prefs_default']);
-$_config['home_defaults'] .= (isset($_config['home_defaults_2']) ? $_config['home_defaults_2'] : '');
-$_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['main_defaults_2'] : '');
 
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
