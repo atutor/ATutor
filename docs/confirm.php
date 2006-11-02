@@ -59,9 +59,9 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 
 		if ($code == $m) {
 			if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR." WHERE member_id=$id";
+				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR.", creation_date=creation_date WHERE member_id=$id";
 			} else {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT." WHERE member_id=$id";
+				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT.", creation_date=creation_date WHERE member_id=$id";
 			}
 			$result = mysql_query($sql, $db);
 
