@@ -13,7 +13,6 @@
 // $Id$
 
 require_once(AT_INCLUDE_PATH.'classes/zipfile.class.php');
-require_once(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
 
 define('NUMBER',	1);
 define('TEXT',		2);
