@@ -160,16 +160,10 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="time_zone"><?php echo _AT('time_zone'); ?></label><br />
 			<?php
-				@putenv("TZ=UTC");
-				$before = date('O');
-				@putenv("TZ=US/Eastern");
-				$after = date('O');
-				@putenv("TZ={$_config['time_zone']}");
-
 				$sql = "SELECT Name FROM mysql.time_zone_name ORDER BY Name";
-				$result = mysql_query($sql, $db);
+				$result = @mysql_query($sql, $db);
 			?>
-			<?php if ($result && mysql_num_rows($result) && ($before != $after)): ?>
+			<?php if ($result && mysql_num_rows($result)): ?>
 				<select name="time_zone" id="time_zone">
 					<option value="" <?php if (!$_config['time_zone']) { echo 'selected="selected"'; } ?>><?php echo _AT('use_system_time'); ?></option>
 					<option value=""></option>

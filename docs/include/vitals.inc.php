@@ -175,7 +175,11 @@ if ($_config['time_zone']) {
 	$sql = "SET time_zone='{$_config['time_zone']}'";
 	mysql_query($sql, $db);
 
-	@putenv("TZ={$_config['time_zone']}");
+	if (function_exists('date_default_timezone_set')) {
+		date_default_timezone_set($_config['time_zone']);
+	} else {
+		@putenv("TZ={$_config['time_zone']}");
+	}
 }
 
 /***** 7. start language block *****/
