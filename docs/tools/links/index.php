@@ -70,6 +70,8 @@ if ($auth == LINK_CAT_AUTH_ALL) {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP."))";
 } else if ($auth == LINK_CAT_AUTH_GROUP) {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP;
+} else if ($auth == LINK_CAT_AUTH_COURSE) {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP."))";
 } 
 
 if ($parent_id) {

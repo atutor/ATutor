@@ -26,7 +26,7 @@ function links_authenticate($owner_type, $owner_id) {
 
 	//if admin or TA w/ right privs, can manage all links
 	//if ($_SESSION['is_admin'] || $_SESSION['privileges'] > 0) {
-	if (authenticate(AT_PRIV_GROUPS, true)) {
+	if (authenticate(AT_PRIV_GROUPS+AT_PRIV_LINKS, true)) {
 		return true;
 	}
 
@@ -48,9 +48,13 @@ function links_authenticate($owner_type, $owner_id) {
 function manage_links() {
 	global $db;
 
-	if (authenticate(AT_PRIV_GROUPS, true)) {
+	if (authenticate(AT_PRIV_GROUPS, true) && authenticate(AT_PRIV_LINKS, true)) { //course and group links
 		return LINK_CAT_AUTH_ALL;
-	} else if (!empty($_SESSION['groups'])) {
+	} else if (authenticate(AT_PRIV_GROUPS, true)) { //all group links
+		return LINK_CAT_AUTH_GROUP;
+	} else if (authenticate(AT_PRIV_LINKS, true)) { //course links
+		return LINK_CAT_AUTH_COURSE;
+	} else if (!empty($_SESSION['groups'])) { //particular group links
 		//find a group that uses links
 		foreach ($_SESSION['groups'] as $group_id) {
 			$sql = "SELECT modules FROM ".TABLE_PREFIX."groups WHERE group_id=$group_id";
@@ -91,21 +95,27 @@ function get_link_categories($manage=false, $list=false) {
 	if ($_SERVER['PHP_SELF'] == $_base_path.'links/add.php') {
 		$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") ORDER BY parent_id, name";
 	} else if ($manage) {
-		if ( authenticate(AT_PRIV_GROUPS, true) ) { //everything but group-named cats
+		$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE ";
+		if ( authenticate(AT_PRIV_GROUPS, true) && authenticate(AT_PRIV_COURSE, true) ) { 
 			if ($list) {
-				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'') ORDER BY parent_id, name";
+				$sql .= "(owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'')";
 			} else {
-
-				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.") ORDER BY parent_id, name";
+				$sql .= "(owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.")";
 			}
-		} else if (!empty($groups)) { 
-			if ($list) { //only group subcats
-				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'' ORDER BY parent_id, name";
-			} else { //only group cats and subcats 
-				$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." ORDER BY parent_id, name";
-			}
-		}	
 
+		} else if ( authenticate(AT_PRIV_LINKS, true) ) {
+			$sql .= "(owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.")";
+			if (!empty($groups)) {
+				$sql .= " OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.")";			
+			}
+		} else if ( authenticate(AT_PRIV_GROUPS, true) || !empty($groups) ) { 
+			if ($list) {
+				$sql .= "(owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP." AND name<>'')";
+			} else {
+				$sql .= "(owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.")";
+			}
+		} 	
+		$sql .= " ORDER BY parent_id, name";
 	} else {
 		if (!empty($groups)) {
 			$sql = "SELECT * FROM ".TABLE_PREFIX."links_categories WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP.") ORDER BY parent_id, name";
@@ -116,7 +126,6 @@ function get_link_categories($manage=false, $list=false) {
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)) {
-
 		//if group, get name
 		if (empty($row['name'])) {
 			$row['name'] = get_group_name($row['owner_id']);
@@ -132,10 +141,6 @@ function get_link_categories($manage=false, $list=false) {
 			$categories[0][] = $row['cat_id'];
 		}
 	}
-	
-	//sort($categories, SORT_STRING);
-
-	//debug($categories);
 
 	return $categories;
 }

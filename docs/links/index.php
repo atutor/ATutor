@@ -92,7 +92,6 @@ if ($_GET['cat_parent_id']) {
 }
 
 //get links
-$_SESSION['groups'] = array();
 $tmp_groups = implode(',', $_SESSION['groups']);
 
 if (!empty($tmp_groups)) {
