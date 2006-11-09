@@ -40,7 +40,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['weight']   = intval($_POST['weight']);
 
 	if ($_POST['question'] == ''){
-		$msg->addError('QUESTION_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 	}
 
 	if (!$msg->containsErrors()) {

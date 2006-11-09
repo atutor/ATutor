@@ -76,7 +76,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	if ($_POST['question'] == ''){
-		$msg->addError('QUESTION_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 	}
 		
 	if (!$msg->containsErrors()) {

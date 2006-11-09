@@ -29,7 +29,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['properties']  = intval($_POST['properties']);
 
 	if ($_POST['question'] == ''){
-		$msg->addError('QUESTION_EMPTY');
+		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 	}
 
 	if (!$msg->containsErrors()) {

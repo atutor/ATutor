@@ -37,12 +37,22 @@ if (isset($_POST['cancel'])) {
 	$_POST['category_id'] = intval($_POST['category_id']);
 	$_POST['alignment']   = intval($_POST['alignment']);
 
+	$empty_fields = array();
 	if ($_POST['question'] == ''){
-		$msg->addError('QUESTION_EMPTY');
+		$empty_fields[] = _AT('question');
 	}
-	if (($_POST['choice'][0] == '') || ($_POST['choice'][1] == '')){
-		$msg->addError('CHOICES_EMPTY');
+	if ($_POST['choice'][0] == '') {
+		$empty_fields[] = _AT('choice').' 1';
 	}
+
+	if ($_POST['choice'][1] == '') {
+		$empty_fields[] = _AT('choice').' 2';
+	}
+
+	if (!empty($empty_fields)) {
+		$msg->addError(array('EMPTY_FIELDS', implode(', ', $empty_fields)));
+	}
+
 	if (!$msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);
 
