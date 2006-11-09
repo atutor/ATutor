@@ -57,7 +57,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['question'] = $addslashes($_POST['question']);
 
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {

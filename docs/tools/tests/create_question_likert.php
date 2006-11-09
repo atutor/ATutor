@@ -51,7 +51,7 @@ if (isset($_POST['cancel'])) {
 
 		for ($i=0; $i<10; $i++) {
 			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
-			$_POST['answer'][$i] = $addslashes(intval($_POST['answer'][$i]));
+			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {
 				/* an empty option can't be correct */
