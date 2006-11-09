@@ -89,7 +89,7 @@ if (isset($_POST['submit'])) {
 		$result	= mysql_query($sql, $db);
 	}
 	$total_weight = 0;
-	$msg->addFeedback('QUESTION_WEIGHT_UPDATED');
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_SERVER['PHP_SELF'] .'?tid='.$tid);
 	exit;
 }
