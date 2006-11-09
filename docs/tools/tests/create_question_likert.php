@@ -21,7 +21,7 @@ require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: questions.php?tid='.$tid);
+	header('Location: question_db.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required']    = intval($_POST['required']);
