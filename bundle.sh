@@ -60,10 +60,6 @@ rm -f $atutor_dir/ATutor/include/config.inc.php
 echo -n "<?php /* This file is a placeholder. Do not delete. Use the automated installer. */ ?>" > $atutor_dir/ATutor/include/config.inc.php
 sleep 1
 
-echo "\nRemoving $atutor_dir/ATutor/include/cvs_development.inc.php"
-rm $atutor_dir/ATutor/include/cvs_development.inc.php
-sleep 1
-
 #echo "\nRemoving $atutor_dir/ATutor/themes/clean_blue"
 #rm -r $atutor_dir/ATutor/themes/clean_blue
 #sleep 1
