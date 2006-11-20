@@ -16,7 +16,7 @@ CREATE TABLE `admins` (
    `privileges` MEDIUMINT UNSIGNED NOT NULL default 0,
    `last_login` TIMESTAMP NOT NULL default 0,
    PRIMARY KEY ( `login` )
-);
+) TYPE = MYISAM;
 
 CREATE TABLE `admin_log` (
   `login` varchar(30) NOT NULL default '',
@@ -26,7 +26,7 @@ CREATE TABLE `admin_log` (
   `num_affected` tinyint(3) NOT NULL default '0',
   `details` TEXT NOT NULL default '',
   KEY `login` (`login`)
-);
+) TYPE = MYISAM;
 
 
 # --------------------------------------------------------
@@ -92,7 +92,7 @@ CREATE TABLE `blog_posts_comments` (
    `comment` TEXT NOT NULL default '',
    PRIMARY KEY ( `comment_id` ) ,
    INDEX ( `post_id` )
-);
+) TYPE = MYISAM;
 
 # --------------------------------------------------------
 # Table structure for table `config`
@@ -102,7 +102,7 @@ CREATE TABLE `config` (
   `name` CHAR( 30 ) NOT NULL default '',
   `value` CHAR( 255 ) NOT NULL default '',
   PRIMARY KEY ( `name` )
-);
+) TYPE = MYISAM;
 
 # --------------------------------------------------------
 # Table structure for table `content`
@@ -206,7 +206,7 @@ CREATE TABLE `faq_topics` (
   `name` varchar(250) NOT NULL default '',
   KEY `course_id` (`course_id`),
   PRIMARY KEY  (`topic_id`)
-) ;
+) TYPE = MYISAM;
 
 # --------------------------------------------------------
 # Table structure for table `faq_entries`
@@ -218,7 +218,7 @@ CREATE TABLE `faq_entries` (
   `question` varchar(250) NOT NULL default '',
   `answer` text NOT NULL default '',
   PRIMARY KEY  (`entry_id`)
-) ;
+) TYPE = MYISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `feeds`
@@ -237,7 +237,7 @@ CREATE TABLE `feeds` (
 CREATE TABLE `file_storage_groups` (
   `group_id` MEDIUMINT UNSIGNED NOT NULL default 0,
   PRIMARY KEY ( `group_id` )
-);
+) TYPE = MYISAM;
 
 #
 # Table structure for table `files`
@@ -389,7 +389,7 @@ CREATE TABLE `groups` (
   `description` text NOT NULL default '',
   `modules` varchar(100) NOT NULL default '',
   PRIMARY KEY  (`group_id`)
-);
+) TYPE = MYISAM;
 
 
 # --------------------------------------------------------
@@ -399,7 +399,7 @@ CREATE TABLE `groups_members` (
 `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
 `member_id` MEDIUMINT UNSIGNED NOT NULL default '0',
  PRIMARY KEY  (`group_id`,`member_id`)
-);
+) TYPE = MYISAM;
 
 # --------------------------------------------------------
 # Table structure for table `groups_types` (since 1.5.3)
@@ -410,7 +410,7 @@ CREATE TABLE `groups_types` (
   `title` varchar(80) NOT NULL default '',
   PRIMARY KEY  (`type_id`),
   KEY `course_id` (`course_id`)
-);
+) TYPE = MYISAM;
 
 # --------------------------------------------------------
 # Table structure for table `handbook_notes`
@@ -424,7 +424,7 @@ CREATE TABLE `handbook_notes` (
 `email` VARCHAR( 50 ) NOT NULL default '',
 `note` TEXT NOT NULL default '',
 PRIMARY KEY ( `note_id` )
-);
+) TYPE = MYISAM;
 
 
 # --------------------------------------------------------
@@ -503,7 +503,7 @@ CREATE TABLE `master_list` (
   `hash_field` CHAR( 40 ) NOT NULL default '',
   `member_id` MEDIUMINT UNSIGNED NOT NULL default 0,
   PRIMARY KEY ( `public_field` )
-);
+) TYPE = MYISAM;
 
 # --------------------------------------------------------
 # Table structure for table `members`
@@ -577,7 +577,7 @@ CREATE TABLE `modules` (
   `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL ,
   `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY ( `dir_name` )
-);
+) TYPE = MYISAM;
 
 INSERT INTO `modules` VALUES ('_core/properties',        2, 1,         0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/statistics',    2, 1,         0, 0, 0);
@@ -670,7 +670,7 @@ CREATE TABLE `mail_queue` (
   `subject` VARCHAR( 200 ) NOT NULL default '',
   `body` TEXT NOT NULL default '',
   PRIMARY KEY ( `mail_id` )
-);
+) TYPE = MYISAM;
 
 # --------------------------------------------------------
 
@@ -860,7 +860,7 @@ CREATE TABLE `themes` (
   `extra_info` varchar(255) NOT NULL default '',
   `status` tinyint(3) unsigned NOT NULL default '1',
   PRIMARY KEY  (`title`)
-);
+) TYPE = MYISAM;
 
 # insert the default theme
 INSERT INTO `themes` VALUES ('Atutor', '1.5.2', 'default', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);

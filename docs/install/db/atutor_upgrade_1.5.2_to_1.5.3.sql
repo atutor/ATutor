@@ -8,7 +8,7 @@ CREATE TABLE `groups_types` (
 	`title` VARCHAR( 80 ) NOT NULL default '',
 	PRIMARY KEY ( `type_id` ) ,
 	KEY ( `course_id` )
-);
+) TYPE = MYISAM;
 
 ALTER TABLE `groups` CHANGE `course_id` `type_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
 ALTER TABLE `groups` ADD `description` TEXT NOT NULL default '' , ADD `modules` VARCHAR(100) NOT NULL default '';
@@ -72,7 +72,7 @@ CREATE TABLE `external_resources` (
 CREATE TABLE `file_storage_groups` (
   `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
   PRIMARY KEY ( `group_id` )
-);
+) TYPE = MYISAM;
 
 
 CREATE TABLE `files` (
@@ -145,7 +145,7 @@ CREATE TABLE `mail_queue` (
   `subject` VARCHAR( 200 ) NOT NULL default '',
   `body` TEXT NOT NULL default '',
   PRIMARY KEY ( `mail_id` )
-);
+) TYPE = MYISAM;
 
 #install new themes
 
@@ -178,7 +178,7 @@ CREATE TABLE `blog_posts_comments` (
    `comment` TEXT NOT NULL default '',
    PRIMARY KEY ( `comment_id` ) ,
    INDEX ( `post_id` )
-);
+) TYPE = MYISAM;
 
 ## add blog to the modules (added to 1.5.3.1)
 ##INSERT INTO `modules` VALUES ('_standard/blogs',         2, 0, 0, 0, 0);
