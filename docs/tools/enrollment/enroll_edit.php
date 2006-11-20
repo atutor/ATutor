@@ -107,7 +107,7 @@ function unenroll ($list) {
 * @author  Shozub Qureshi
 */
 function enroll ($list) {
-	global $db, $msg, $_base_href;	
+	global $db, $msg, $_base_href, $_config;	
 	require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 	$num_list = count($list);
