@@ -115,11 +115,6 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			$result = mysql_query($sql ,$db);
 		}
 
-		if ($_POST['welcome_course'] && $_POST['instructor']) {
-			$_POST['tb_prefix'] = $_POST['step2']['tb_prefix'];
-			queryFromFile('db/atutor_welcome_course.sql');
-		}
-
 		unset($_POST['admin_username']);
 		unset($_POST['admin_password']);
 		unset($_POST['admin_email']);
@@ -253,11 +248,6 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 			<td class="row1"><div class="optional" title="Optional Field">?</div><b>Instructor Account:</b><br />
 			Do you want this to be an instructor account allowing you to create courses?</td>
 			<td class="row1"><input type="radio" name="instructor" value="1" id="en_y" <?php if($_POST['instructor']== 1 || empty($_POST['instructor'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="instructor" value="0" id="en_n" <?php if($_POST['instructor']===0) { echo "checked"; }?>/><label for="en_n">No</label></td>
-		</tr>
-		<tr>
-			<td class="row1"><div class="optional" title="Optional Field">?</div><b>Welcome Course:</b><br />
-			Do you want to create the basic <em>Welcome Course</em>? Only possible if an instructor account above is created.</td>
-			<td class="row1"><input type="radio" name="welcome_course" value="1" id="wc_y" <?php if($_POST['welcome_course']== 1 || empty($_POST['welcome_course'])) { echo 'checked'; }?>/><label for="wc_y">Yes</label>, <input type="radio" name="welcome_course" value="0" id="wc_n" <?php if ($_POST['welcome_course'] === 0) { echo 'checked'; }?>/><label for="wc_n">No</label></td>
 		</tr>
 		</table>
 	<br />
