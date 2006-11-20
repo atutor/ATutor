@@ -13,7 +13,7 @@ CREATE TABLE `groups_types` (
 ALTER TABLE `groups` CHANGE `course_id` `type_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
 ALTER TABLE `groups` ADD `description` TEXT NOT NULL default '' , ADD `modules` VARCHAR(100) NOT NULL default '';
 
-UPDATE `modules` SET `privilege`=65536 WHERE `dir_name`='_core/groups';
+UPDATE `modules` SET `privilege`=1048576 WHERE `dir_name`='_core/groups';
 INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0);
 INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0);
 INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
