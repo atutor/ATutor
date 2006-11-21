@@ -105,7 +105,7 @@ reset($path);
 $first_page = current($path);
 
 // use any styles that were part of the imported document
-$_custom_css = $_base_href.'headstuff.php?cid='.$cid.SEP.'path='.urlEncode($_base_href.$course_base_href.$content_base_href);
+// $_custom_css = $_base_href.'headstuff.php?cid='.$cid.SEP.'path='.urlEncode($_base_href.$course_base_href.$content_base_href);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
