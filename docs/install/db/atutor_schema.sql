@@ -24,7 +24,7 @@ CREATE TABLE `admin_log` (
   `operation` varchar(20) NOT NULL default '',
   `table` varchar(30) NOT NULL default '',
   `num_affected` tinyint(3) NOT NULL default '0',
-  `details` TEXT NOT NULL default '',
+  `details` TEXT NOT NULL,
   KEY `login` (`login`)
 ) TYPE = MYISAM;
 
@@ -57,7 +57,7 @@ CREATE TABLE `backups` (
   `file_size` int(10) unsigned NOT NULL default 0,
   `system_file_name` varchar(50) NOT NULL default '',
   `file_name` varchar(150) NOT NULL default '',
-  `contents` TEXT NOT NULL default '',
+  `contents` TEXT NOT NULL ,
   PRIMARY KEY  (`backup_id`),
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM;
@@ -89,7 +89,7 @@ CREATE TABLE `blog_posts_comments` (
    `member_id` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
    `date` TIMESTAMP NOT NULL,
    `private` TINYINT UNSIGNED DEFAULT '0' NOT NULL ,
-   `comment` TEXT NOT NULL default '',
+   `comment` TEXT NOT NULL ,
    PRIMARY KEY ( `comment_id` ) ,
    INDEX ( `post_id` )
 ) TYPE = MYISAM;
@@ -119,7 +119,7 @@ CREATE TABLE `content` (
   `keywords` varchar(100) NOT NULL default '',
   `content_path` varchar(100) NOT NULL default '',
   `title` varchar(150) NOT NULL default '',
-  `text` text NOT NULL default '',
+  `text` text NOT NULL ,
   `inherit_release_date` TINYINT UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`)
@@ -175,25 +175,25 @@ CREATE TABLE `courses` (
   `access` enum('public','protected','private') NOT NULL default 'public',
   `created_date` date NOT NULL default '0000-00-00',
   `title` varchar(100) NOT NULL default '',
-  `description` text NOT NULL default '',
+  `description` text NOT NULL ,
   `notify` tinyint(4) NOT NULL default '0',
   `max_quota` varchar(30) NOT NULL default '',
   `max_file_size` varchar(30) NOT NULL default '',
   `hide` tinyint(4) NOT NULL default '0',
-  `preferences` text NOT NULL default '',
-  `header` text NOT NULL default '',
-  `footer` text NOT NULL default '',
-  `copyright` text NOT NULL default '',
-  `banner_text` text NOT NULL default '',
-  `banner_styles` text NOT NULL default '',
+  `preferences` text NOT NULL ,
+  `header` text NOT NULL ,
+  `footer` text NOT NULL ,
+  `copyright` text NOT NULL ,
+  `banner_text` text NOT NULL ,
+  `banner_styles` text NOT NULL ,
   `primary_language` varchar(5) NOT NULL default '',
   `rss` tinyint NOT NULL default 0,
   `icon` varchar(20) NOT NULL default '',
-  `home_links` text NOT NULL default '',
-  `main_links` text NOT NULL default '',
+  `home_links` text NOT NULL ,
+  `main_links` text NOT NULL ,
   `side_menu` VARCHAR( 255 ) NOT NULL default '',
   `release_date` datetime NOT NULL default '0000-00-00 00:00:00',
-   `banner` TEXT NOT NULL default '',
+   `banner` TEXT NOT NULL ,
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;
 
@@ -216,7 +216,7 @@ CREATE TABLE `faq_entries` (
   `revised_date` TIMESTAMP NOT NULL,
   `approved` tinyint(4) NOT NULL default '0',
   `question` varchar(250) NOT NULL default '',
-  `answer` text NOT NULL default '',
+  `answer` text NOT NULL ,
   PRIMARY KEY  (`entry_id`)
 ) TYPE = MYISAM ;
 
@@ -255,7 +255,7 @@ CREATE TABLE `files` (
   `num_revisions` tinyint(3) unsigned NOT NULL default '0',
   `file_name` varchar(80) NOT NULL default '',
   `file_size` int(11) NOT NULL default '0',
-  `description` text NOT NULL default '',
+  `description` text NOT NULL ,
   PRIMARY KEY  (`file_id`)
 ) TYPE=MyISAM;
 
@@ -270,7 +270,7 @@ CREATE TABLE `files_comments` (
   `file_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `date` TIMESTAMP NOT NULL,
-  `comment` text NOT NULL default '',
+  `comment` text NOT NULL ,
   PRIMARY KEY  (`comment_id`)
 ) TYPE=MyISAM;
 
@@ -296,7 +296,7 @@ CREATE TABLE `folders` (
 CREATE TABLE `forums` (
   `forum_id` mediumint(8) unsigned NOT NULL auto_increment,
   `title` varchar(60) NOT NULL default '',
-  `description` text NOT NULL default '',
+  `description` text NOT NULL ,
   `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
   `num_posts` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
   `last_post` TIMESTAMP NOT NULL,
@@ -359,7 +359,7 @@ CREATE TABLE `forums_threads` (
   `last_comment` TIMESTAMP NOT NULL,
   `num_comments` mediumint(8) unsigned NOT NULL default '0',
   `subject` varchar(100) NOT NULL default '',
-  `body` text NOT NULL default '',
+  `body` text NOT NULL ,
   `date` TIMESTAMP NOT NULL,
   `locked` tinyint(4) NOT NULL default '0',
   `sticky` tinyint(4) NOT NULL default '0',
@@ -373,7 +373,7 @@ CREATE TABLE `glossary` (
   `word_id` mediumint(8) unsigned NOT NULL auto_increment,
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `word` varchar(60) NOT NULL default '',
-  `definition` text NOT NULL default '',
+  `definition` text NOT NULL ,
   `related_word_id` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`word_id`),
   KEY `course_id` (`course_id`)
@@ -386,7 +386,7 @@ CREATE TABLE `groups` (
   `group_id` mediumint(8) unsigned NOT NULL auto_increment,
   `type_id` mediumint(8) unsigned NOT NULL default '0',
   `title` varchar(20) NOT NULL default '',
-  `description` text NOT NULL default '',
+  `description` text NOT NULL ,
   `modules` varchar(100) NOT NULL default '',
   PRIMARY KEY  (`group_id`)
 ) TYPE = MYISAM;
@@ -422,7 +422,7 @@ CREATE TABLE `handbook_notes` (
 `page` VARCHAR( 50 ) NOT NULL default '',
 `approved` tinyint NOT NULL default 0,
 `email` VARCHAR( 50 ) NOT NULL default '',
-`note` TEXT NOT NULL default '',
+`note` TEXT NOT NULL ,
 PRIMARY KEY ( `note_id` )
 ) TYPE = MYISAM;
 
@@ -433,7 +433,7 @@ PRIMARY KEY ( `note_id` )
 CREATE TABLE `instructor_approvals` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `request_date` TIMESTAMP NOT NULL,
-  `notes` text NOT NULL default '',
+  `notes` text NOT NULL ,
   PRIMARY KEY  (`member_id`)
 ) TYPE=MyISAM;
 
@@ -526,7 +526,7 @@ CREATE TABLE `members` (
   `country` varchar(50) NOT NULL default '',
   `phone` varchar(15) NOT NULL default '',
   `status` tinyint(4) NOT NULL default '0',
-  `preferences` text NOT NULL default '',
+  `preferences` text NOT NULL ,
   `creation_date` TIMESTAMP NOT NULL,
   `language` varchar(5) NOT NULL default '',
   `inbox_notify` tinyint(3) unsigned NOT NULL default '0',
@@ -561,7 +561,7 @@ CREATE TABLE `messages` (
   `new` tinyint(4) NOT NULL default '0',
   `replied` tinyint(4) NOT NULL default '0',
   `subject` varchar(150) NOT NULL default '',
-  `body` text NOT NULL default '',
+  `body` text NOT NULL ,
   PRIMARY KEY  (`message_id`),
   KEY `to_member_id` (`to_member_id`)
 ) TYPE=MyISAM;
@@ -625,7 +625,7 @@ CREATE TABLE `news` (
   `date` TIMESTAMP NOT NULL,
   `formatting` tinyint(4) NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
-  `body` text NOT NULL default '',
+  `body` text NOT NULL ,
   PRIMARY KEY  (`news_id`)
 ) TYPE=MyISAM;
 
@@ -668,7 +668,7 @@ CREATE TABLE `mail_queue` (
   `from_name` VARCHAR( 50 ) NOT NULL default '',
   `char_set` VARCHAR( 20 ) NOT NULL default '',
   `subject` VARCHAR( 200 ) NOT NULL default '',
-  `body` TEXT NOT NULL default '',
+  `body` TEXT NOT NULL ,
   PRIMARY KEY ( `mail_id` )
 ) TYPE = MYISAM;
 
@@ -702,7 +702,7 @@ CREATE TABLE `reading_list` (
 	`required` enum('required','optional') NOT NULL DEFAULT 'required',
 	`date_start` DATE NOT NULL DEFAULT '0000-00-00',
 	`date_end` DATE NOT NULL DEFAULT '0000-00-00',
-	`comment` text NOT NULL default '',
+	`comment` text NOT NULL ,
 	PRIMARY KEY  (`reading_id`),
 	INDEX (`course_id`)
 ) TYPE = MYISAM;
@@ -738,7 +738,7 @@ CREATE TABLE `tests` (
   `end_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `randomize_order` tinyint(4) NOT NULL default '0',
   `num_questions` tinyint(3) unsigned NOT NULL default '0',
-  `instructions` text NOT NULL default '',
+  `instructions` text NOT NULL ,
   `content_id` mediumint(8) NOT NULL default '0',
   `result_release` tinyint(4) unsigned NOT NULL default '0',
   `random` tinyint(4) unsigned NOT NULL default '0',
@@ -757,9 +757,9 @@ CREATE TABLE `tests_answers` (
   `result_id` mediumint(8) unsigned NOT NULL default '0',
   `question_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `answer` text NOT NULL default '',
+  `answer` text NOT NULL ,
   `score` varchar(5) NOT NULL default '',
-  `notes` text NOT NULL default '',
+  `notes` text NOT NULL ,
   PRIMARY KEY  (`result_id`,`question_id`,`member_id`)
 ) TYPE=MyISAM;
 
@@ -783,8 +783,8 @@ CREATE TABLE `tests_questions` (
   `category_id` mediumint(8) unsigned NOT NULL default '0',
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `type` tinyint(3) unsigned NOT NULL default '0',
-  `feedback` text NOT NULL default '',
-  `question` text NOT NULL default '',
+  `feedback` text NOT NULL ,
+  `question` text NOT NULL ,
   `choice_0` varchar(255) NOT NULL default '',
   `choice_1` varchar(255) NOT NULL default '',
   `choice_2` varchar(255) NOT NULL default '',
