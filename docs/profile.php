@@ -42,20 +42,12 @@ if ($profile_row = mysql_fetch_assoc($result)) {
 		$status = _AT('enrolled');
 	}
 
-	$privs = array();
-	$_privs = array();
-	foreach ($_privs as $key => $priv) {		
-		if (query_bit($row_en['privileges'], $key)) { 
-			$privs[] = $priv['name'];
-		}
-	}
 	$_pages['profile.php']['title'] = _AT($display_name_formats[$_config['display_name_format']], $profile_row['login'], $profile_row['first_name'], $profile_row['second_name'], $profile_row['last_name']);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$savant->assign('row', $profile_row);
 	$savant->assign('status', $status);
-	$savant->assign('privs', $privs);
 	$savant->display('profile.tmpl.php');
 } else {
 	$msg->printErrors('NO_SUCH_USER');

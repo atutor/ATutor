@@ -47,18 +47,7 @@ global $display_name_formats, $_config;
 			</dt>
 
 			<dt><?php echo _AT('status'); ?></dt>
-			<dd>
-				<?php echo $this->status; ?>
-				<?php
-				if ($this->privs) {
-					$priv_string = "(";
-					foreach ($this->privs as $priv) {
-						$priv_string .= _AT($priv).', ';
-					}				
-					$priv_string = substr($priv_string, 0, -2);
-					echo $priv_string .')';
-				}
-				?></dd>
+			<dd><?php echo $this->status; ?></dd>
 		</dl>
 		<div style="clear: both; size: 1em"></div>
 	</div>
