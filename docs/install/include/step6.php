@@ -99,20 +99,6 @@ if (isset($errors)) {
 		$cdir = urldecode(trim($_POST['step4']['content_dir']));
 
 		@chmod('../include/config.inc.php', 0444);
-		if ($_POST['step3']['welcome_course']) {
-			@mkdir($cdir.'/1');
-			@mkdir($cdir.'/chat/1');
-			@mkdir($cdir.'/chat/1/msgs');
-			@mkdir($cdir.'/chat/1/tran');
-			@mkdir($cdir.'/chat/1/users');
-			@mkdir($cdir.'/backups/1');
-			@mkdir($cdir.'/feeds/1');
-			@copy('../images/index.html', $cdir . '/index.html');
-			@copy('../images/index.html', $cdir . '/backups/1/index.html');
-			@copy('../images/index.html', $cdir . '/feeds/1/index.html');
-			@copy('../images/index.html', $cdir . '/chat/1/index.html');
-			@copy('../images/index.html', $cdir . '/1/index.html');
-		}
 
 		print_feedback($progress);
 
