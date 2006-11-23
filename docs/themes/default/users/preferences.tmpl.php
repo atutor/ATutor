@@ -31,8 +31,7 @@
 	<div class="row">
 		<?php echo _AT('inbox_notification'); ?><br />
 		<?php
-			$yes = '';
-			$no  = '';
+			$yes = $no  = '';
 			if ($this->notify == 1) {
 				$yes = ' checked="checked"';
 			} else {
@@ -46,7 +45,7 @@
 	<div class="row">
 		<?php echo _AT('show_numbers');  ?><br />
 		<?php
-			$num = '';  $num2 = '';
+			$num = $num2 = '';
 			if ($_SESSION['prefs']['PREF_NUMBERING'] == 1) {
 				$num = ' checked="checked"';
 			} else {
@@ -83,7 +82,7 @@
 	<div class="row">
 		<?php echo _AT('form_focus');  ?><br />
 		<?php
-			$num = '';  $num2 = '';
+			$num = $num2 = '';
 			if ($_SESSION['prefs']['PREF_FORM_FOCUS'] == 1) {
 				$num = ' checked="checked"';
 			} else {
@@ -93,25 +92,23 @@
 			<input type="radio" name ="form_focus" id="focus_off" value="0" <?php echo $num2; ?> /><label for="focus_off"><?php echo _AT('disable');  ?></label>
 	</div>
 
-	<!-- div class="row">
+	<div class="row">
 		<?php
-			global $languageManager;
-				echo '<label for="lang">'._AT('default_language').'</label><br />';
-				$languageManager->printDropdown($_SESSION['lang'], 'lang', 'lang');
-		?>
-	</div -->
-
-	<!-- div class="row">
-		<?php echo _AT('course_primary_lang');  ?><br /><?php
-			$num = '';  $num2 = '';
-			if ($_SESSION['prefs']['PREF_COURSE_LANG'] == 1) {
-				$num = ' checked="checked"';
-			} else {
+			$num0 = $num1 = $num2 = '';
+			if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) {
+				$num1 = ' checked="checked"';
+			} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) {
 				$num2 = ' checked="checked"';
+			} else {
+				$num0 = ' checked="checked"';
 			}
-			?><input type="radio" name ="use_jump_redirect" id="jump_en" value="1" <?php echo $num; ?> /><label for="jump_en"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name ="use_jump_redirect" id="jump_dis" value="0" <?php echo $num2; ?> /><label for="jump_dis"><?php echo _AT('disable');  ?></label>
-	</div -->
+		?>
+		<?php echo _AT('content_editor'); ?><br />
+		<input type="radio" name="content_editor" id="ce_0" value="0" <?php echo $num0; ?>/><label for="ce_0"><?php echo _AT('plain_text');?></label>
+		<input type="radio" name="content_editor" id="ce_1" value="1" <?php echo $num1; ?>/><label for="ce_1"><?php echo _AT('html'); ?></label>
+		<input type="radio" name="content_editor" id="ce_2" value="2" <?php echo $num2; ?>/><label for="ce_2"><?php echo _AT('html') . ' - '. _AT('visual_editor'); ?></label>
+	</div>
+
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />

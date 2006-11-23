@@ -24,14 +24,15 @@ if (isset($_GET['cancel'])) {
 
 if (isset($_GET['submit'])) {
 	
-	$_GET['mnot'] = intval($_GET['mnot']);
-	$_GET['numbering'] = intval($_GET['numbering']);
+	$_GET['mnot']              = intval($_GET['mnot']);
+	$_GET['numbering']         = intval($_GET['numbering']);
 	$_GET['use_jump_redirect'] = intval($_GET['use_jump_redirect']);
-	$_GET['form_focus'] = intval($_GET['form_focus']);
+	$_GET['form_focus']        = intval($_GET['form_focus']);
+	$_GET['content_editor']    = intval($_GET['content_editor']);
 
 	$default_theme = get_default_theme();
 
-	$pref_defaults = array('PREF_THEME'=>$default_theme['dir_name'], 'PREF_NUMBERING'=>$_GET['numbering'], 'PREF_JUMP_REDIRECT'=>$_GET['use_jump_redirect'], 'PREF_FORM_FOCUS'=>$_GET['form_focus']);
+	$pref_defaults = array('PREF_THEME'=>$default_theme['dir_name'], 'PREF_NUMBERING'=>$_GET['numbering'], 'PREF_JUMP_REDIRECT'=>$_GET['use_jump_redirect'], 'PREF_FORM_FOCUS'=>$_GET['form_focus'], 'PREF_CONTENT_EDITOR' => $_GET['content_editor']);
 
 	$pref_defaults = serialize($pref_defaults);
 
@@ -100,17 +101,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<input type="radio" name ="use_jump_redirect" id="jump_dis" value="0" <?php echo $num2; ?> /><label for="jump_dis"><?php echo _AT('disable');  ?></label>
 	</div>
 
-	<!--div class="row">
-		<?php echo _AT('auto_login1');  ?><br /><?php
-			if ($pref_defaults['PREF_JUMP_REDIRECT'] == 1 ) {
-				$auto_en = 'checked="checked"';
-			} else {
-				$auto_dis = 'checked="checked"';
-			}
-		?><input type="radio" name ="auto" id="auto_en" value="enable" <?php echo $auto_en; ?> /><label for="auto_en"><?php echo _AT('enable');  ?></label> 
-		<input type="radio" name ="auto" id="auto_dis" value="disable" <?php echo $auto_dis; ?> /><label for="auto_dis"><?php echo _AT('disable');  ?></label>
-	</div-->
-
 	<div class="row">
 		<?php echo _AT('form_focus');  ?><br />
 		<?php
@@ -122,6 +112,23 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			}
 			?><input type="radio" name ="form_focus" id="focus_on" value="1" <?php echo $num; ?> /><label for="focus_on"><?php echo _AT('enable');  ?></label> 
 			<input type="radio" name ="form_focus" id="focus_off" value="0" <?php echo $num2; ?> /><label for="focus_off"><?php echo _AT('disable');  ?></label>
+	</div>
+
+	<div class="row">
+		<?php
+			$num0 = $num1 = $num2 = '';
+			if ($pref_defaults['PREF_CONTENT_EDITOR'] == 1) {
+				$num1 = ' checked="checked"';
+			} else if ($pref_defaults['PREF_CONTENT_EDITOR'] == 2) {
+				$num2 = ' checked="checked"';
+			} else {
+				$num0 = ' checked="checked"';
+			}
+		?>
+		<?php echo _AT('content_editor'); ?><br />
+		<input type="radio" name="content_editor" id="ce_0" value="0" <?php echo $num0; ?>/><label for="ce_0"><?php echo _AT('plain_text');?></label>
+		<input type="radio" name="content_editor" id="ce_1" value="1" <?php echo $num1; ?>/><label for="ce_1"><?php echo _AT('html'); ?></label>
+		<input type="radio" name="content_editor" id="ce_2" value="2" <?php echo $num2; ?>/><label for="ce_2"><?php echo _AT('html') . ' - '. _AT('visual_editor'); ?></label>
 	</div>
 
 	<div class="row buttons">

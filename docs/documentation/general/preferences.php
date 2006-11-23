@@ -21,6 +21,9 @@
 
     <dt>Form Focus On Page Load</dt>
     <dd>If enabled, the cursor will be placed at the first field of the form when a page loads.</dd>
+
+	<dt>Content Editor</dt>
+	<dd>This preference controls how content is entered. Choose between <em>Plain Text</em> for entering content text that will escape any HTML markup and will be formatted as entered; <em>HTML</em> for entering HTML content manually; and <em>HTML - Visual Editor</em> for entering HTML content using the visual (also known as a <acronym title="What You See Is What You Get">WYSIWYG</acronym>) editor which represents the content as it will be displayed. It is also possible to change the editor manually for each item.</dd>
 </dl>
 
 

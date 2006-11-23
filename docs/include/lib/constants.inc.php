@@ -41,7 +41,7 @@ $_config_defaults['theme_categories']          = 0; // disabled
 $_config_defaults['main_defaults']	           = 'forum/list.php|glossary/index.php|file_storage/index.php';
 $_config_defaults['home_defaults']             = 'forum/list.php|file_storage/index.php|glossary/index.php|chat/index.php|tile.php|faq/index.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php|groups.php|reading_list/index.php|blogs/index.php';
 $_config_defaults['side_defaults']             = 'menu_menu|related_topics|users_online|glossary|search|poll|posts';
-$_config_defaults['pref_defaults']			   = 'a:4:{s:10:"PREF_THEME";s:7:"default";s:14:"PREF_NUMBERING";i:1;s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}';
+$_config_defaults['pref_defaults']			   = 'a:4:{s:10:"PREF";s:7:"default";s:14:"PREF_NUMBERING";i:1;s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}';
 $_config_defaults['pref_inbox_notify']		   = 0; // disabled
 $_config_defaults['check_version']	           = 0; // disabled
 $_config_defaults['fs_versioning']             = 1; // enabled - file storage version control
@@ -320,6 +320,5 @@ if (isset($_GET['cid'])) {
 } else if (isset($_POST['cid'])) {
 	$cid = intval($_POST['cid']);
 }
-
 
 ?>

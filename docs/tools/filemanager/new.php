@@ -131,6 +131,24 @@ if (isset($_POST['savenewfile'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
+
+if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
+	if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) {
+		$_POST['formatting'] = 1;
+		$_REQUEST['settext'] = 0;
+		$_REQUEST['setvisual'] = 0;
+
+	} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) {
+		$_POST['formatting'] = 1;
+		$_POST['settext'] = 0;
+		$_POST['setvisual'] = 1;
+
+	} else { // else if == 0
+		$_POST['formatting'] = 0;
+		$_REQUEST['settext'] = 0;
+		$_REQUEST['setvisual'] = 0;
+	}
+}
 if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 	load_editor('body_text');
 }
