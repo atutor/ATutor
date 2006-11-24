@@ -10,9 +10,13 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: index.php 3850 2005-03-14 15:02:26Z shozubq $
-
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+
+<?php if (!$this->courses && get_instructor_status()): ?>
+	<?php global $msg; $msg->printInfos('NO_COURSES_INST'); ?>
+<?php elseif (!$this->courses): ?>
+	<?php global $msg; $msg->printInfos('NO_COURSES'); ?>
+<?php endif; ?>
 
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">
