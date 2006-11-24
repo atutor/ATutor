@@ -106,7 +106,7 @@ while ($row_members = mysql_fetch_assoc($result_members)) {
 	$all_[$row_members['member_id']]['online'] = FALSE;
 }
 
-$sql_online = "SELECT member_id FROM ".TABLE_PREFIX."users_online WHERE course_id = $_SESSION[course_id]";
+$sql_online = "SELECT member_id FROM ".TABLE_PREFIX."users_online WHERE course_id = $_SESSION[course_id] AND expiry>".time();
 $result_online = mysql_query($sql_online, $db);
 
 while ($row_online = mysql_fetch_assoc($result_online)) {
