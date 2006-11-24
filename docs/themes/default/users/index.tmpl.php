@@ -1,7 +1,9 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<?php if (!$this->courses): ?>
-		<p><?php echo _AT('none_found'); ?> <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a>.</p>
+<?php if (!$this->courses && get_instructor_status()): ?>
+	<?php global $msg; $msg->printInfos('NO_COURSES_INST'); ?>
+<?php elseif (!$this->courses): ?>
+	<?php global $msg; $msg->printInfos('NO_COURSES'); ?>
 <?php endif; ?>
 
 <?php foreach ($this->courses as $row):?>	

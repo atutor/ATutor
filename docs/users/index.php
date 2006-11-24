@@ -97,7 +97,6 @@ function get_category_name($cat_id) {
 	return $row['cat_name'];
 }
 
-
 $savant->assign('courses', $courses);
 
 $savant->display('users/index.tmpl.php');
