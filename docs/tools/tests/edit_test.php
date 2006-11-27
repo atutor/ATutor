@@ -300,18 +300,22 @@ $msg->printErrors();
 			//show groups
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
 			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
-				echo '<em>'.$row['title'].'</em><br />';
+			if (mysql_num_rows($result)) {
+				while ($row = mysql_fetch_assoc($result)) {
+					echo '<em>'.$row['title'].'</em><br />';
 
-				$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
-				$g_result = mysql_query($sql, $db);
-				while ($grow = mysql_fetch_assoc($g_result)) {
-					echo '&nbsp;<label><input type="checkbox" value="'.$grow['group_id'].'" name="groups['.$grow['group_id'].']" '; 
-					if (is_array($current_groups) && in_array($grow['group_id'], $current_groups)) {
-						echo 'checked="checked"';
+					$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
+					$g_result = mysql_query($sql, $db);
+					while ($grow = mysql_fetch_assoc($g_result)) {
+						echo '&nbsp;<label><input type="checkbox" value="'.$grow['group_id'].'" name="groups['.$grow['group_id'].']" '; 
+						if (is_array($current_groups) && in_array($grow['group_id'], $current_groups)) {
+							echo 'checked="checked"';
+						}
+						echo '/>'.$grow['title'].'</label><br />';
 					}
-					echo '/>'.$grow['title'].'</label><br />';
 				}
+			} else {
+				echo _AT('none_found');
 			}
 		?>
 	</div>
