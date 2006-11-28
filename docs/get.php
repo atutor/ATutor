@@ -90,7 +90,7 @@ if ($ext == '') {
 
 //check that this file is within the content directory & exists
 
-// NOTE!! for some reason realpath() is not returning FALSE when the file doesn't exist! NOTE!!
+// NOTE!! for some reason realpath() is not returning FALSE when the file doesn't exist!
 $real = realpath($file);
 
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
@@ -101,6 +101,11 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 	} else {
 		header('Content-Disposition: filename="'.$pathinfo['basename'].'"');
 	}
+	
+	if ($_config['x-sendfile']) {
+		header('x-Sendfile: '.$real);  // for apache 2 and lighttpd 1.5+
+		exit;
+	} // else:
 
 	header('Content-Type: '.$ext);
 
