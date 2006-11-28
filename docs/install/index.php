@@ -46,6 +46,27 @@ $no_good = FALSE;
 		<table class="data" style="width: 75%; max-width: 600px;">
 		<tbody>
 		<tr>
+			<th scope="cols">File Integrity</th>
+			<th scope="cols">Detected</th>
+			<th scope="cols">Status</th>
+		</tr>
+		<tr>
+			<td>Case Sensitivity</td>
+			<td><?php if (file_exists('../include/classes/CSVExport.class.php') && file_exists('../include/classes/csvexport.class.php')) {
+						echo 'Ignored</td><td align="center">';
+						echo $good;
+					} else if (file_exists('../include/classes/CSVExport.class.php')) {
+						echo 'Enforced</td><td align="center">';
+						echo $good;
+					} else {
+						echo 'Enforced</td><td align="center">';
+						echo $bad;
+						$no_good = TRUE;
+					} ?></td>
+		</tr>
+		</tbody>
+		<tbody>
+		<tr>
 			<th scope="cols">Web Server Options</th>
 			<th scope="cols">Detected</th>
 			<th scope="cols">Status</th>
