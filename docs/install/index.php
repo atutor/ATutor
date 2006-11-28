@@ -37,7 +37,7 @@ $no_good = FALSE;
 ?>
 <h3>Welcome to the ATutor Installation</h3>
 <p>This process will step you through your ATutor installation or upgrade.</p>
-<p>During this process be sure not to use your browser's <em>Refresh</em> or <em>Reload</em> option as it may complicate the installation process.</p>
+<p>During this process be sure not to use your browser's <em>Refresh</em> or <em>Reload</em> feature as it may complicate the installation process.</p>
 
 <p>Before you continue you may want to review the <a href="../documentation/admin/" target="_new"><em>ATutor Handbook</em></a> for more detailed instructions.</p>
 
