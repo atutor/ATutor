@@ -1,29 +1,67 @@
 <?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Requirements &amp; Recommendations</h2>
+	<p>The first step when installing or upgrading ATutor is to check if the minimum requirements are met. The following describes those checks.</p>
+
+	<h3>File Integrity</h3>
+		<p>The Case Sensitivity check verifies that file names were not converted to lower-case during the extraction process. This is not an issue on case-insensitive operating systems like MS Windows, but is an issue on case-sensative ones like Linux.</p>
+
 	<h3>Web Server</h3>
 		<p>The ATutor development and testing processes are done primarily on Apache 1.3 and Apache 2 (using pre-forking), and as such we strongly recommend them for production environments. ATutor has been successfully installed on other web servers, including, Zeus, lighttpd, Abyss, Zazou Mini Web Server, Microsoft IIS, and Jana-Server.</p>
 
 		<p>The web server can be configured with <acronym title="Secure Sockets Layer">SSL</acronym> for added security or to use a non-standard port and ATutor will function without modification.</p>
 
-	<h3>PHP</h3>
-		<p><acronym title="Recursive acronym for PHP: Hypertext Preprocessor, the language ATutor is written in">PHP</acronym> 4.3.0 or higher with Zlib, MySQL, and session support enabled is required. PHP version 5.0.2 or higher is also supported. Additionally, the following <kbd>php.ini</kbd> configuration settings are required:</p>
 
-		<pre>safe_mode               = Off
-display_errors          = Off
+	<h3>PHP</h3>
+		<p>ATutor is written in the <acronym title="Recursive acronym for PHP: Hypertext Preprocessor">PHP</acronym> language. The PHP configuration file contains many configuration settings that can be changed. The following are the minimum requirements needed to install and use ATutor.</p>
+
+		<dl>
+			<dt>PHP 4.3.0+</dt>
+			<dd>PHP 4.3.0 or higher is required. Version 5.2.0 or higher is recommended.</dd>
+
+			<dt><kbd>zlib</kbd></dt>
+			<dd>Zlib support must be enabled in PHP; It is used for compressing and uncompressing ZIP files.</dd>
+
+			<dt><kbd>mysql</kbd></dt>
+			<dd>MySQL support must be enabled in PHP.</dd>
+
+			<dt><kbd>safe_mode = Off</kbd></dt>
+			<dd><kbd>safe_mode</kbd> must be disabled in PHP. ATutor cannot function with the restrictions enforced when <kbd>safe_mode</kbd> is enabled.</dd>
+
+			<dt><kbd>file_uploads = On</kbd></dt>
+			<dd>File uploads support must be enabled in PHP.</dd>
+
+			<dt><kbd>upload_max_filesize</kbd> >= 2 MB</dt>
+			<dd>This option specifies the maximum size of files that can be uploaded to ATutor.</dd>
+
+			<dt><kbd>post_max_size</kbd> >= 8 MB</dt>
+			<dd>This value must be larger than the <kbd>upload_max_filesize</kbd>.</dd>
+
+			<dt><kbd>sessions</kbd></dt>
+			<dd>Sessions support must be enabled in PHP.</dd>
+
+			<dt><kbd>session.auto_start = 0</kbd></dt>
+			<dd><kbd>session.auto_start</kbd> must be disabled in PHP.</dd>
+
+			<dt><kbd>session.save_path</kbd></dt>
+			<dd><kbd>session.save_path</kbd> must be set to a real path that can store session data.</dd>
+
+			<dt><kbd>.</kbd> in <kbd>include_path</kbd></dt>
+			<dd><kbd>.</kbd> must be in the list of paths in the <kbd>include_path</kbd> option.</dd>
+		</dl>
+
+
+		<p>Additionally, the following <kbd>php.ini</kbd> configuration settings are recommended:</p>
+		<pre>display_errors          = Off
 arg_separator.input     = ";&amp;"
 register_globals        = Off
 magic_quotes_gpc        = Off
 magic_quotes_runtime    = Off
 allow_url_fopen         = On
+allow_url_include       = Off
 register_argc_argv      = Off
 zlib.output_compression = On
-post_max_size           = 8M ; or greater
-file_uploads            = On
-upload_max_filesize     = 2M ; or greater
 session.use_trans_sid   = 0
-session.auto_start      = 0
-include_path            = ".:/usr/local/lib/php" ; must include . (dot)
 </pre>
 
 	<h3>MySQL</h3>

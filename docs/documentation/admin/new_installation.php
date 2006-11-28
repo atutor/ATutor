@@ -5,9 +5,11 @@
 
 	<h3>Windows Considerations</h3>
 		<p>To extract the ATutor <kbd>.tar.gz</kbd> archive you will need an application like <a href="http://winzip.com" target="_new">WinZip</a> or <a href="http://rarlabs.com" target="_new">WinRar</a>.</p>
-
+		
 	<h3>Unix Considerations</h3>
 		<p>To extract the ATutor <kbd>.tar.gz</kbd> archive, use the command <kbd>tar -zxvf ATutor-version_number.tar.gz</kbd>, which will create a directory called <kbd>ATutor</kbd> in your current working directory.</p>
+
+		<p>Extracting the files on a Windows machine and then uploading them via <acronym title="File Transfer Protocol">FTP</acronym> is not recommended, as it may not preserve the case-sensitive file names.</p>
 
 		<p>Installing on a Unix machine requires some knowledge of file and directory permissions. You will be required to create a content directory and set permissions for that directory and for the <kbd>include/config.inc.php</kbd> file, so that the web server can write to them. The installation will not be successful if the permissions are not correctly set on that file and directory.</p>
 
