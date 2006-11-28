@@ -212,20 +212,25 @@ if (isset($errors)) {
 
 <ol>
 	<li>Release Candidate (RC) installations cannot be upgraded.</li>
-	<li>Depending on the size of the existing courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 6).</li>
+	<li>Depending on the size of the existing courses, some steps (particularly 2 and 6) of the upgrade may require considerable time to complete.</li>
 	<li>All installed language packs and will be deleted.</li>
-	<li>Some installed themes may not be supported by this version of ATutor.</li>
+	<li>Some installed themes may not be supported by this version.</li>
 	<li>All extra modules will have to be reinstalled before they can be enabled again.</li>
 </ol>
 
-<p>If the old ATutor installation directory was renamed to <kbd>ATutor_old</kbd> then enter that name below. The old version must be at the same directory level as the new version.</p>
+<p>Select the old ATutor installation directory below.</p>
 
 <?php
 	$dirs = scandir('../../');
 	$path = realpath('../../').'/';
+	$current_dir = basename(realpath(getcwd() .'../../'));
 	foreach ($dirs as $key => $value) {
 		if ($value == '.' || $value == '..') {
 			unset($dirs[$key]);
+		}
+		if ($current_dir == $value) {
+			unset($dirs[$key]);
+			continue;
 		}
 		if (!is_dir($path . $value) || !file_exists($path . $value . '/include/config.inc.php')) {
 			unset($dirs[$key]);
@@ -237,16 +242,20 @@ if (isset($errors)) {
 <input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
 <input type="hidden" name="step" value="1" />
 
-<table width="50%" class="tableborder" cellspacing="0" cellpadding="1" border="0" align="center">
+<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" border="0" align="center">
 <tr>
 	<td class="row1"><div class="required" title="Required Field">*</div><b><label for="dir">Old Directory Name:</label></b><br />
 		The old directory must be at the same level as the current directory.</td>
 		<td class="row1" valign="middle">
-		<select name="old_path">
-			<?php foreach ($dirs as $dir): ?>
-				<option value="<?php echo htmlspecialchars($dir); ?>"><?php echo $dir; ?>/</option>
-			<?php endforeach; ?>
-		</select>
+		<?php if ($dirs): ?>
+			<select name="old_path">
+				<?php foreach ($dirs as $dir): ?>
+					<option value="<?php echo htmlspecialchars($dir); ?>"><?php echo $dir; ?>/</option>
+				<?php endforeach; ?>
+			</select>
+		<?php else: ?>
+			<em>None found.</em>
+		<?php endif; ?>
 		</td>
 </tr>
 </table>
