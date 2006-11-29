@@ -104,12 +104,12 @@ $row['modules'] = explode('|', $row['modules']);
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" value="<?php echo $row['title']; ?>" size="20" maxlength="40" />
+		<input type="text" name="title" id="title" value="<?php echo htmlspecialchars($row['title']); ?>" size="20" maxlength="40" />
 	</div>
 
 	<div class="row">
 		<label for="description"><?php echo _AT('description'); ?>:</label><br />
-		<textarea name="description" id="description" cols="10" rows="2"><?php echo $row['description']; ?></textarea>
+		<textarea name="description" id="description" cols="10" rows="2"><?php echo htmlspecialchars($row['description']); ?></textarea>
 	</div>
 
 	<div class="row">
