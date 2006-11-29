@@ -168,10 +168,10 @@ $count = 0;
 <table class="data static" style="width: 60%" rules="rows">
 <thead>
 	<tr>
-		<th style="text-align:left;"><?php echo _AT('login');      ?></th>
-		<th style="text-align:left;"><?php echo _AT('first_name'); ?></th>
-		<th style="text-align:left;"><?php echo _AT('last_name');  ?></th>
-		<th style="text-align:left;"><?php echo _AT('groups');     ?></th>
+		<th><?php echo _AT('login');      ?></th>
+		<th><?php echo _AT('first_name'); ?></th>
+		<th><?php echo _AT('last_name');  ?></th>
+		<th><?php echo _AT('groups');     ?></th>
 	</tr>
 </thead>
 <tfoot>
@@ -186,8 +186,6 @@ $count = 0;
 <tbody>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<tr <?php if ($_GET['gid'] && $_GET['gid'] == $groups_members[$row['member_id']]) { echo 'style="background-color: #dfd; font-weight: bold;"';} ?> id="r<?php echo ++$count; ?>">
-			<!-- Using mutliple labels is acceptable, but JAWS only reads the last one 
-				see: http://www.access-matters.com/2005/09/10/speaking-form-labels-summary/#mult -->
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['first_name']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['last_name']; ?></label></td>
@@ -195,7 +193,7 @@ $count = 0;
 				<select name="groups[<?php echo $row['member_id']; ?>]" id="m<?php echo $row['member_id']; ?>" onchange="javascript:hirow(this, <?php echo $count; ?>);">
 					<option value="0"></option>
 					<?php foreach ($tmp_groups as $group => $title): ?>
-						<option value="<?php echo $group; ?>" <?php if ($groups_members[$row['member_id']] == $group) { echo 'selected="selected"'; } ?>><?php echo $title; ?></option>
+						<option value="<?php echo $group; ?>" <?php if ($groups_members[$row['member_id']] == $group) { echo 'selected="selected"'; } ?>><?php echo htmlspecialchars($title); ?></option>
 					<?php endforeach; ?>
 				</select>
 			</td>
