@@ -557,7 +557,7 @@ CREATE TABLE `messages` (
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `from_member_id` mediumint(8) unsigned NOT NULL default '0',
   `to_member_id` mediumint(8) unsigned NOT NULL default '0',
-  `date_send` TIMESTAMP NOT NULL,
+  `date_sent` TIMESTAMP NOT NULL,
   `new` tinyint(4) NOT NULL default '0',
   `replied` tinyint(4) NOT NULL default '0',
   `subject` varchar(150) NOT NULL default '',
