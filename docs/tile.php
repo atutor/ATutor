@@ -80,29 +80,34 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_GET['query'])) {
 
-	require(AT_INCLUDE_PATH . 'classes/nusoap.php');
+	if (!extension_loaded('soap')) {
+		require(AT_INCLUDE_PATH . 'classes/nusoap.php');
+		// Create the client instance
+		$client = new nusoapclient(AT_TILE_WSDL, true);
 
-	// Create the client instance
-	$client = new soapclient(AT_TILE_WSDL, true);
+		// Check for an error
+		$error = $client->getError();
+		if ($error) {
+			// Display the error
 
-	// Check for an error
-	$error = $client->getError();
-	if ($error) {
-		// Display the error
+			$msg->addError('TILE_UNAVAILABLE');
+			$msg->printAll();
 
-		$msg->addError('TILE_UNAVAILABLE');
-		$msg->printAll();
+			require(AT_INCLUDE_PATH.'footer.inc.php');
+			exit;
+		}
 
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
+		// Create the proxy
+		$proxy = $client->getProxy();
+	} else {
+		// Create the client instance
+		$proxy = new soapclient(AT_TILE_WSDL);
 	}
-
-	// Create the proxy
-	$proxy = $client->getProxy();
 
 	$search_input = array('query' => $_GET['query'], 'field' => $_GET['field'], 'content' => 'contentPackage');
 
 	$results = $proxy->doSearch($search_input);
+
 
 	if ($results) {
 		$num_results = count($results);
