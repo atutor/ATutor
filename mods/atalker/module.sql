@@ -102,10 +102,13 @@ insert  into voices values
 ('en01', 'voice_kal_diphone', '1', '1.0'), 
 ('it02', 'voice_pc_mbrola', '1', '1.0');
 
+# The following Alter had to be removed because it broken languages
+# other than Italian.
+#ALTER TABLE languages ADD
+#	voice_id varchar(4) NULL;
+#	
 
-ALTER TABLE languages ADD
-	voice_id varchar(4) NULL;
-	
+
 insert  into languages values 
 ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3, 'en01'), 
 INSERT INTO `language_text` VALUES ('it', 'iso-8859-1', 'ltr', 'it|italian', 'Italian', 'Italian', 3, 'it01');
