@@ -45,6 +45,7 @@ for ($i=0; $i < 10; $i++) {
 	<script type="text/javascript" src="<?php echo $_base_href; ?>jscripts/jquery.js"></script>
 	<script type="text/javascript" src="<?php echo $_base_href; ?>jscripts/interface.js"></script>
 	<script type="text/javascript" src="<?php echo $_base_href; ?>jscripts/wz_jsgraphics.js"></script>
+	<link rel="stylesheet" href="<?php echo $_base_href; ?>themes/default/styles.css" type="text/css" />
 <style type="text/css">
 * {
 	margin: 0px;

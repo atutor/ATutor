@@ -67,7 +67,7 @@ if (isset($_POST['cancel'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL,
 			$_POST[category_id],
 			$_SESSION[course_id],
-			".AT_TESTS_ORDERING.",
+			6,
 			'$_POST[feedback]',
 			'$_POST[question]',
 			'{$_POST[choice][0]}',

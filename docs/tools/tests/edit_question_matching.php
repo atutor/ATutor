@@ -109,7 +109,7 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 } else {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=".AT_TESTS_MATCHING;
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=5";
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_assoc($result))){

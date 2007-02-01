@@ -28,7 +28,6 @@ class RemoteLanguageManager extends LanguageManager {
 
 	function RemoteLanguageManager() {
 		$version = str_replace('.','_',VERSION);
-
 		$language_xml = @file_get_contents('http://update.atutor.ca/languages/'.$version.'/languages.xml');
 		if ($language_xml !== FALSE) {
 

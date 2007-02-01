@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id$
+// $Id: create_question_matching.php 6706 2007-02-01 16:28:49Z joel $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL,
 			$_POST[category_id],
 			$_SESSION[course_id],
-			5,
+			8,
 			'$_POST[feedback]',
 			'$_POST[instructions]',
 			'{$_POST[question][0]}',

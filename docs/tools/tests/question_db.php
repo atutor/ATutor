@@ -86,12 +86,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form" style="width: 30%">
 	<div class="row">
 		<label for="question"><?php echo _AT('create_new_question'); ?></label><br />
-		<select name="question_type" class="dropdown" id="question">
-			<option value="multi"><?php echo _AT('test_mc'); ?></option>
-			<option value="tf"><?php echo _AT('test_tf'); ?></option>
+		<select name="question_type" class="dropdown" id="question" size="8">
+			<option value="multianswer"><?php echo _AT('test_ma'); ?></option>
+			<option value="multichoice"><?php echo _AT('test_mc'); ?></option>
+			<option value="truefalse"><?php echo _AT('test_tf'); ?></option>
 			<option value="long"><?php echo _AT('test_open'); ?></option>
 			<option value="likert"><?php echo _AT('test_lk'); ?></option>
 			<option value="matching"><?php echo _AT('test_matching'); ?></option>
+			<option value="matchingdd"><?php echo _AT('test_matchingdd'); ?></option>
 			<option value="ordering"><?php echo _AT('test_ordering'); ?></option>
 		</select>
 	</div>

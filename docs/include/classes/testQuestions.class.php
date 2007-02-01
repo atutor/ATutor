@@ -25,6 +25,7 @@ function & test_question_factory($question_type) {
 		return $objs[$question_type];
 	}
 	if (!isset($question_classes)) {
+		/** NOTE: The indices are CONSTANTS do NOT change!! **/
 		$question_classes = array();
 		$question_classes[1] = 'MultichoiceQuestion';
 		$question_classes[2] = 'TruefalseQuestion';
@@ -33,6 +34,7 @@ function & test_question_factory($question_type) {
 		$question_classes[5] = 'MatchingQuestion';
 		$question_classes[6] = 'OrderingQuestion';
 		$question_classes[7] = 'MultianswerQuestion';
+		$question_classes[8] = 'MatchingddQuestion';
 	}
 
 	if (isset($question_classes[$question_type])) {
@@ -602,15 +604,6 @@ class MatchingQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function getDisplayTemplateName($row) {
-		if ($row['properties'] == 1) {
-			// drag n drop
-			return 'matchingdd.tmpl.php';
-		} // else:
-	
-		return $this->template;
-	}
-
 	/*public */function mark($row) { 
 		$num_choices = count($_POST['answers'][$row['question_id']]);
 		$num_answer_correct = 0;
@@ -640,6 +633,14 @@ class MatchingQuestion extends AbstracttestQuestion {
 	}
 }
 
+/**
+* matchingddQuestion
+*
+*/
+class MatchingddQuestion extends MatchingQuestion {
+	/*protected */ var $sPrefix = 'matchingdd';
+	/*protected */ var $sType   = 'test_matchingdd';
+}
 /**
 * multichoiceQuestion
 *
