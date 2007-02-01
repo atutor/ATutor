@@ -77,19 +77,14 @@ foreach ($cats as $cat) {
 		echo '</tr>';
 
 		do {
-			//if ($tid) {
-				echo '<tr onmousedown="document.form[\'q' . $row['question_id'] . '\'].checked = !document.form[\'q' . $row['question_id'] . '\'].checked;">';
-				echo '<td>';
-				echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
-			/*} else {
-				echo '<tr onmousedown="document.form[\'q'.$row['question_id'].'\'].checked = !document.form[\'q'.$row['question_id'].'\'].checked;rowselect(this);" id="r_'.$row['question_id'].'">';
-				echo '<td><input type="checkbox" name="id" value="'.$row['question_id'].'|'.$row['type'].'" id="q'.$row['question_id'].'" /></td>';
-			}*/
+			echo '<tr onmousedown="document.form[\'q' . $row['question_id'] . '\'].checked = !document.form[\'q' . $row['question_id'] . '\'].checked;">';
+			echo '<td>';
+			echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
 			echo '<td>';
 			if (strlen($row['question']) > 45) {
-				echo substr(htmlspecialchars($row['question']), 0, 43) . '...';
+				echo AT_print(substr(htmlentities($row['question']), 0, 43), 'tests_questions.question') . '&hellip;';
 			} else {
-				echo htmlspecialchars($row['question']);
+				echo AT_print(htmlentities($row['question']), 'tests_questions.question');
 			}
 
 			echo '</td>';
