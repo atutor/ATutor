@@ -46,61 +46,6 @@ function authenticate_test($tid) {
 	return FALSE;
 }
 
-// text - the text to display
-// checked - whether this option should be checked or not
-// correct_choice - FALSE: false/negative choice, TRUE: true/correct choice (from the test), or null for no correct/wrong choice (likert)
-function print_result($text, $checked, $correct_choice = null) {
-	global $_base_path;
-
-	static $right, $wrong, $empty, $check_empty, $check_check;
-
-	if (!isset($right)) {
-		$right = ' <img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" title="'._AT('correct_answer').'" height="16" width="16" style="vertical-align: middle" />';
-		$wrong = ' <img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" title="'._AT('wrong_answer').'" height="16" width="16" style="vertical-align: middle" />';
-		$empty = ' <img src="'.$_base_path.'images/clr.gif" alt="" title="" height="16" width="16" style="vertical-align: middle" />';
-		$check_empty = ' <img src="'.$_base_path.'images/checkbox_empty.gif" alt="'._AT('unchecked').'" title="'._AT('unchecked').'" height="13" width="13" style="vertical-align: middle" /> ';
-		$check_check = ' <img src="'.$_base_path.'images/checkbox_check.gif" alt="'._AT('checked').'" title="'._AT('checked').'" height="13" width="13" style="vertical-align: middle" /> ';
-	}
-
-	// mark this choice
-	if (isset($correct_choice)) {
-		if ($checked && $correct_choice) {
-			echo $right;
-		} else if ($checked && !$correct_choice) {
-			echo $wrong;
-		} else if (!$checked && $correct_choice) {
-			echo $wrong;
-		} else { // !$checked && !$correct_choice
-			echo $empty;
-		}
-	} else {
-		echo $empty;
-	}
-	
-	if ($checked) {
-		echo $check_check;
-	} else {
-		echo $check_empty;
-	}
-	echo $text;
-	if ($correct_choice == 1) {
-		echo ' - ' . $right;
-	}
-}
-
-function print_score($correct, $weight, $qid, $score, $put_zero = true, $disabled = false) {
-	echo '<input type="text" size="5" name="scores['.$qid.']" value="';
-
-	if ($score != '') {
-		echo $score;
-	} else if ($correct) {
-		echo $weight;
-	} else if ($put_zero) {
-		echo '0';
-	}
-	echo '" style="width: 30px; font-weight: bold; text-align: right;" maxlength="4" '.($disabled ? 'disabled="disabled" ' : '').'/><strong> / '.floatval($weight).'</strong>';
-}
-
 function print_question_cats($cat_id = 0) {	
 
 	global $db;
