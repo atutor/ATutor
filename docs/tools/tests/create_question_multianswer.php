@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id$
+// $Id: create_question_multi.php 6706 2007-02-01 16:28:49Z joel $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -19,17 +19,14 @@ authenticate(AT_PRIV_TESTS);
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 if (isset($_POST['submit_yes'])) {
+
+	//add slahes throughout - does that fix it?
+	$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
+	$_POST['choice'] = array_pad($_POST['choice'], 10, '');
+		
 	$_POST['feedback']   = $addslashes($_POST['feedback']);
 	$_POST['question']   = $addslashes($_POST['question']);
 	$_POST['properties'] = intval($_POST['properties']);
-	$_POST['answer']     = intval($_POST['answer']);
-
-	$answers    = array_fill(0, 9, 0);
-	$answers[$_POST['answer']] = 1;
-
-	for ($i=0; $i<10; $i++) {
-		$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
-	}
 
 	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, 
 				$_POST[category_id],
@@ -47,16 +44,16 @@ if (isset($_POST['submit_yes'])) {
 				'{$_POST[choice][7]}',
 				'{$_POST[choice][8]}',
 				'{$_POST[choice][9]}',
-				{$answers[0]},
-				{$answers[1]},
-				{$answers[2]},
-				{$answers[3]},
-				{$answers[4]},
-				{$answers[5]},
-				{$answers[6]},
-				{$answers[7]},
-				{$answers[8]},
-				{$answers[9]},
+				{$_POST[answer][0]},
+				{$_POST[answer][1]},
+				{$_POST[answer][2]},
+				{$_POST[answer][3]},
+				{$_POST[answer][4]},
+				{$_POST[answer][5]},
+				{$_POST[answer][6]},
+				{$_POST[answer][7]},
+				{$_POST[answer][8]},
+				{$_POST[answer][9]},
 				'',
 				'',
 				'',
@@ -222,7 +219,7 @@ $msg->printConfirm();
 		
 		<br />
 
-		<small><input type="radio" name="answer" id="answer_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>			
+		<small><input type="checkbox" name="answer[<?php echo $i; ?>]" id="answer_<?php echo $i; ?>" value="1" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>			
 		
 		<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]"><?php 
 		echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea> 

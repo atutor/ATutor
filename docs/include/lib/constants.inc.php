@@ -179,7 +179,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('VERSION',		'1.5.3.3');
+define('VERSION',		'1.5.4');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/
@@ -215,7 +215,7 @@ define('AT_TESTS_LONG',				3); // long answer
 define('AT_TESTS_LIKERT',			4); // likert
 define('AT_TESTS_MATCHING',			5); // matching
 define('AT_TESTS_ORDERING',			6); // ordering
-
+define('AT_TESTS_MA',               7); // multiple answer
 
 /* QPROP = question property: */
 define('AT_TESTS_QPROP_WORD',       1);

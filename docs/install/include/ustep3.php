@@ -115,9 +115,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('enable_handbook_notes', '".($_POST['step1']['enable_handbook_notes'] ? 1 : 0)."')";
 		mysql_query($sql, $db);
-	}
 
-	if (version_compare($_POST['step1']['old_version'], '1.5.2', '<')) {
 		// check for bits 8192 and 4096 and remove them if they're set.
 		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."course_enrollment SET `privileges` = `privileges` - 8192 WHERE `privileges` & 8192";
 		mysql_query($sql, $db);
@@ -134,6 +132,14 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		mysql_query($sql, $db);
 
 		$sql = "DELETE FROM ".$_POST['step1']['tb_prefix']."tests_groups";
+		mysql_query($sql, $db);
+	}
+
+	if (version_compare($_POST['step1']['old_version'], '1.5.4', '<')) {
+		/* find all the multiple choice multiple answer questions and convert them to 
+		 * Multiple Answer which is number 7.
+		 */
+		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."tests_questions SET type=7 WHERE type=1 AND answer_0 + answer_1 + answer_2 + answer_3 + answer_4 + answer_5 + answer_6 + answer_7 + answer_8 + answer_9 > 1";
 		mysql_query($sql, $db);
 	}
 

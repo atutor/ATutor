@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
+// $Id: edit_question_multi.php 6656 2006-11-09 20:02:42Z heidi $
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -38,19 +38,33 @@ if (isset($_POST['cancel'])) {
 	$_POST['tid']	   = intval($_POST['tid']);
 	$_POST['qid']	   = intval($_POST['qid']);
 	$_POST['weight']   = intval($_POST['weight']);
-	$_POST['answer']   = intval($_POST['answer']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 	}
 
 	if (!$msg->containsErrors()) {
-		$answers    = array_fill(0, 9, 0);
-		$answers[$_POST['answer']] = 1;
+		$choice_new = array(); // stores the non-blank choices
+		$answer_new = array(); // stores the associated "answer" for the choices
 
 		for ($i=0; $i<10; $i++) {
 			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
+
+			if ($_POST['choice'][$i] == '') {
+				/* an empty option can't be correct */
+				$_POST['answer'][$i] = 0;
+			} else {
+				/* filter out empty choices/ remove gaps */
+				$choice_new[] = $_POST['choice'][$i];
+				$answer_new[] = $_POST['answer'][$i];
+			}
 		}
+
+		$_POST['answer'] = $answer_new;
+		$_POST['choice'] = $choice_new;
+		$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
+		$_POST['choice'] = array_pad($_POST['choice'], 10, '');
 
 		$_POST['feedback']   = $addslashes($_POST['feedback']);
 		$_POST['question']   = $addslashes($_POST['question']);
@@ -71,16 +85,16 @@ if (isset($_POST['cancel'])) {
 			choice_7='{$_POST[choice][7]}',
 			choice_8='{$_POST[choice][8]}',
 			choice_9='{$_POST[choice][9]}',
-			answer_0={$answers[0]},
-			answer_1={$answers[1]},
-			answer_2={$answers[2]},
-			answer_3={$answers[3]},
-			answer_4={$answers[4]},
-			answer_5={$answers[5]},
-			answer_6={$answers[6]},
-			answer_7={$answers[7]},
-			answer_8={$answers[8]},
-			answer_9={$answers[9]}
+			answer_0={$_POST[answer][0]},
+			answer_1={$_POST[answer][1]},
+			answer_2={$_POST[answer][2]},
+			answer_3={$_POST[answer][3]},
+			answer_4={$_POST[answer][4]},
+			answer_5={$_POST[answer][5]},
+			answer_6={$_POST[answer][6]},
+			answer_7={$_POST[answer][7]},
+			answer_8={$_POST[answer][8]},
+			answer_9={$_POST[answer][9]}
 
 			WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 
@@ -97,7 +111,7 @@ if (isset($_POST['cancel'])) {
 }
 
 if (!isset($_POST['submit'])) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=1";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=7";
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_array($result))){
@@ -169,7 +183,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<label for="choice_<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo ($i+1); ?></label> 
 			<?php print_VE('choice_' . $i); ?>			
 			<br />
-			<small><input type="radio" name="answer" id="answer_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>
+			<small><input type="checkbox" name="answer[<?php echo $i; ?>]" id="answer_<?php echo $i; ?>" value="1" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>
 			
 
 			<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea>

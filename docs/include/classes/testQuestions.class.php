@@ -26,12 +26,13 @@ function & test_question_factory($question_type) {
 	}
 	if (!isset($question_classes)) {
 		$question_classes = array();
-		$question_classes[AT_TESTS_MC]       = 'MultichoiceQuestion';
-		$question_classes[AT_TESTS_TF]       = 'TruefalseQuestion';
-		$question_classes[AT_TESTS_LONG]     = 'LongQuestion';
-		$question_classes[AT_TESTS_LIKERT]   = 'LikertQuestion';
-		$question_classes[AT_TESTS_MATCHING] = 'MatchingQuestion';
-		$question_classes[AT_TESTS_ORDERING] = 'OrderingQuestion';
+		$question_classes[1] = 'MultichoiceQuestion';
+		$question_classes[2] = 'TruefalseQuestion';
+		$question_classes[3] = 'LongQuestion';
+		$question_classes[4] = 'LikertQuestion';
+		$question_classes[5] = 'MatchingQuestion';
+		$question_classes[6] = 'OrderingQuestion';
+		$question_classes[7] = 'MultianswerQuestion';
 	}
 
 	if (isset($question_classes[$question_type])) {
@@ -150,6 +151,22 @@ function test_question_qti_export(/* array */ $question_ids) {
 	}
 
 	/**
+	* Public
+	* Prints the name of this question
+	*/
+	/*final public */function printName( ) {
+		echo _AT($this->sType);
+	}
+
+	/**
+	* Public
+	* Returns the prefix string (used for file names)
+	*/
+	/*final public */function getPrefix( ) {
+		return $this->sPrefix;
+	}
+
+	/**
 	* Display the current question (for taking or previewing a test/question)
 	*/
 	/*final public */function display($row) {
@@ -158,7 +175,7 @@ function test_question_qti_export(/* array */ $question_ids) {
 
 		// print the question specific template
 		$this->assignDisplayVariables($row);
-		$this->savant->display('test_questions/' . $this->getDisplayTemplateName($row));
+		$this->savant->display('test_questions/' . $this->sPrefix . '.tmpl.php');
 		
 		// print the generic question footer
 		$this->displayFooter();
@@ -173,7 +190,7 @@ function test_question_qti_export(/* array */ $question_ids) {
 
 		// print the question specific template
 		$this->assignDisplayResultVariables($row, $answer_row);
-		$this->savant->display('test_questions/' . $this->getDisplayResultTemplateName($row));
+		$this->savant->display('test_questions/' . $this->sPrefix . '_result.tmpl.php');
 		
 		// print the generic question footer
 		$this->displayFooter();
@@ -193,7 +210,7 @@ function test_question_qti_export(/* array */ $question_ids) {
 	/*final public */function exportQTI($row, $encoding) {
 		$this->savant->assign('encoding', $encoding);
 		$this->assignQTIVariables($row);
-		$xml = $this->savant->fetch('test_questions/'. $this->getQTITemplateName());
+		$xml = $this->savant->fetch('test_questions/'. $this->sPrefix . '_qti_2p1.tmpl.php');
 
 		return $xml;
 	}
@@ -243,9 +260,9 @@ function test_question_qti_export(/* array */ $question_ids) {
 *
 */
 class OrderingQuestion extends AbstractTestQuestion {
-	/*protected */ var $template = 'ordering.tmpl.php';
 	/*protected */ var $sType = 'test_ordering';
-
+	/*protected */ var $sPrefix = 'ordering';
+	
 	/*protected */function assignDisplayResultVariables($row, $answer_row) {
 		$answers = explode('|', $answer_row['answer']);
 
@@ -311,14 +328,7 @@ class OrderingQuestion extends AbstractTestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function getDisplayTemplateName($row) { return $this->template; }
-	/*protected */function getDisplayResultTemplateName($row) { return 'ordering_result.tmpl.php'; }
-	/*protected */function getDisplayResultStatisticsTemplateName() { return 'ordering_stats.tmpl.php'; }
-	/*protected */function getQTITemplateName() { return 'ordering_qti_2p1.tmpl.php'; }
-
-
 	/*public */function mark($row) { 
-
 		$this->seed($row['question_id']);
 		$num_choices = count($_POST['answers'][$row['question_id']]);
 		$answers = range(0, $num_choices-1);
@@ -365,8 +375,8 @@ class OrderingQuestion extends AbstractTestQuestion {
 *
 */
 class TruefalseQuestion extends AbstracttestQuestion {
-	/*protected */ var $template = 'truefalse.tmpl.php';
-	/*protected */ var $sType = 'test_tf';
+	/*protected */ var $sPrefix = 'truefalse';
+	/*protected */ var $sType   = 'test_tf';
 
 	/*protected */function assignQTIVariables($row) {
 		$this->savant->assign('row', $row);
@@ -397,11 +407,6 @@ class TruefalseQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function getDisplayTemplateName($row) { return $this->template; }
-	/*protected */function getDisplayResultTemplateName($row) { return 'truefalse_result.tmpl.php'; }
-	/*protected */function getDisplayResultStatisticsTemplateName() { return 'truefalse_stats.tmpl.php'; }
-	/*protected */function getQTITemplateName() { return 'truefalse_qti_2p1.tmpl.php'; }
-
 	/*public */function mark($row) { 
 		$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
 
@@ -417,8 +422,8 @@ class TruefalseQuestion extends AbstracttestQuestion {
 *
 */
 class LikertQuestion extends AbstracttestQuestion {
-	/*protected */ var $template = 'likert.tmpl.php';
-	/*protected */ var $sType = 'test_lk';
+	/*protected */ var $sPrefix = 'likert';
+	/*protected */ var $sType   = 'test_lk';
 
 	/*protected */function assignQTIVariables($row) {
 		$choices = $this->getChoices($row);
@@ -464,11 +469,6 @@ class LikertQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function getDisplayTemplateName($row) { return $this->template; }
-	/*protected */function getDisplayResultTemplateName($row) { return 'likert_result.tmpl.php'; }
-	/*protected */function getDisplayResultStatisticsTemplateName() { return 'likert_stats.tmpl.php'; }
-	/*protected */function getQTITemplateName() { return 'likert_qti_2p1.tmpl.php'; }
-
 	/*public */function mark($row) { 
 		$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
 		return 0;
@@ -480,7 +480,7 @@ class LikertQuestion extends AbstracttestQuestion {
 *
 */
 class LongQuestion extends AbstracttestQuestion {
-	/*protected */ var $template = 'long.tmpl.php';
+	/*protected */ var $sPrefix = 'long';
 	/*protected */ var $sType = 'test_open';
 
 	/*protected */function assignQTIVariables($row) {
@@ -508,11 +508,6 @@ class LongQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function getDisplayTemplateName($row) { return $this->template; }
-	/*protected */function getDisplayResultTemplateName($row) { return 'long_result.tmpl.php'; }
-	/*protected */function getDisplayResultStatisticsTemplateName() { return 'long_stats.tmpl.php'; }
-	/*protected */function getQTITemplateName() { return 'long_qti_2p1.tmpl.php'; }
-
 	/*public */function mark($row) { 
 		global $addslashes;
 		$_POST['answers'][$row['question_id']] = $addslashes($_POST['answers'][$row['question_id']]);
@@ -525,8 +520,8 @@ class LongQuestion extends AbstracttestQuestion {
 *
 */
 class MatchingQuestion extends AbstracttestQuestion {
-	/*protected */ var $template = 'matching.tmpl.php';
-	/*protected */ var $sType = 'test_matching';
+	/*protected */ var $sPrefix = 'matching';
+	/*protected */ var $sType   = 'test_matching';
 
 	/*protected */function assignQTIVariables($row) {
 		$choices = $this->getChoices($row);
@@ -615,9 +610,6 @@ class MatchingQuestion extends AbstracttestQuestion {
 	
 		return $this->template;
 	}
-	/*protected */function getDisplayResultTemplateName($row) { return 'matching_result.tmpl.php'; }
-	/*protected */function getDisplayResultStatisticsTemplateName() { return 'matching_stats.tmpl.php'; }
-	/*protected */function getQTITemplateName() { return 'matching_qti_2p1.tmpl.php'; }
 
 	/*public */function mark($row) { 
 		$num_choices = count($_POST['answers'][$row['question_id']]);
@@ -653,8 +645,8 @@ class MatchingQuestion extends AbstracttestQuestion {
 *
 */
 class MultichoiceQuestion extends AbstracttestQuestion {
-	/*protected */var $template = 'multichoice.tmpl.php';
-	/*protected */var $sType = 'test_mc';
+	/*protected */ var $sPrefix = 'multichoice';
+	/*protected */var $sType    = 'test_mc';
 
 	/*protected */function assignQTIVariables($row) {
 		$choices = $this->getChoices($row);
@@ -704,7 +696,6 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 			}
 		}
 
-
 		$this->savant->assign('num_choices', $num_choices);
 		$this->savant->assign('num_results', $num_results);
 		$this->savant->assign('num_blanks', (int) $answers['-1']['count']);
@@ -712,74 +703,61 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function getDisplayTemplateName($row) {
-		$total_answers = 0;
-		for ($i=0; $i < 10; $i++) {
-			$total_answers += $row['answer_'.$i];
+	/*public */function mark($row) { 
+		// single correct answer
+		$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
+		if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
+			$score = $row['weight'];
+		} else if ($_POST['answers'][$row['question_id']] == -1) {
+			$has_answer = 0;
+			for($i=0; $i<10; $i++) {
+				$has_answer += $row['answer_'.$i];
+			}
+			if (!$has_answer && $row['weight']) {
+				// If MC has no answer and user answered "leave blank"
+				$score = $row['weight'];
+			}
 		}
-		if ($total_answers > 1) {
-			return 'multianswer.tmpl.php';
-		} // else:
-		return $this->template;
+		return $score;
 	}
-	/*protected */function getDisplayResultTemplateName($row) { return 'multichoice_result.tmpl.php'; }
-	/*protected */function getDisplayResultStatisticsTemplateName( ) { return 'multichoice_stats.tmpl.php'; }
-	/*protected */function getQTITemplateName() { 
-		$total_answers = 0;
-		for ($i=0; $i < 10; $i++) {
-			$total_answers += $row['answer_'.$i];
-		}
-		if ($total_answers > 1) {
-			return 'multianswer_qti_2p1.tmpl.php';
-		} // else:
-		return 'multichoice_qti_2p1.tmpl.php';
-	}
+}
+
+/**
+* multianswerQuestion
+*
+*/
+class MultianswerQuestion extends MultichoiceQuestion {
+	/*protected */ var $sPrefix = 'multianswer';
+	/*protected */ var $sType   = 'test_ma';
 
 	/*public */function mark($row) { 
 		$num_correct = array_sum(array_slice($row, 3));
-		if ($num_correct > 1) {
-			// multi correct
-			if (is_array($_POST['answers'][$row['question_id']]) && count($_POST['answers'][$row['question_id']]) > 1) {
-				if (($i = array_search('-1', $_POST['answers'][$row['question_id']])) !== FALSE) {
-					unset($_POST['answers'][$row['question_id']][$i]);
-				}
-				$num_answer_correct = 0;
-				foreach ($_POST['answers'][$row['question_id']] as $item_id => $answer) {
-					if ($row['answer_' . $answer]) {
-						// correct answer
-						$num_answer_correct++;
-					} else {
-						// wrong answer
-						$num_answer_correct--;
-					}
-					$_POST['answers'][$row['question_id']][$item_id] = intval($_POST['answers'][$row['question_id']][$item_id]);
-				}
-				if ($num_answer_correct == $num_correct) {
-					$score = $row['weight'];
+
+		if (is_array($_POST['answers'][$row['question_id']]) && count($_POST['answers'][$row['question_id']]) > 1) {
+			if (($i = array_search('-1', $_POST['answers'][$row['question_id']])) !== FALSE) {
+				unset($_POST['answers'][$row['question_id']][$i]);
+			}
+			$num_answer_correct = 0;
+			foreach ($_POST['answers'][$row['question_id']] as $item_id => $answer) {
+				if ($row['answer_' . $answer]) {
+					// correct answer
+					$num_answer_correct++;
 				} else {
-					$score = 0;
+					// wrong answer
+					$num_answer_correct--;
 				}
-				$_POST['answers'][$row['question_id']] = implode('|', $_POST['answers'][$row['question_id']]);
+				$_POST['answers'][$row['question_id']][$item_id] = intval($_POST['answers'][$row['question_id']][$item_id]);
+			}
+			if ($num_answer_correct == $num_correct) {
+				$score = $row['weight'];
 			} else {
-				// no answer given
-				$_POST['answers'][$row['question_id']] = '-1'; // left blank
 				$score = 0;
 			}
+			$_POST['answers'][$row['question_id']] = implode('|', $_POST['answers'][$row['question_id']]);
 		} else {
-			// single correct answer
-			$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
-			if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
-				$score = $row['weight'];
-			} else if ($_POST['answers'][$row['question_id']] == -1) {
-				$has_answer = 0;
-				for($i=0; $i<10; $i++) {
-					$has_answer += $row['answer_'.$i];
-				}
-				if (!$has_answer && $row['weight']) {
-					// If MC has no answer and user answered "leave blank"
-					$score = $row['weight'];
-				}
-			}
+			// no answer given
+			$_POST['answers'][$row['question_id']] = '-1'; // left blank
+			$score = 0;
 		}
 		return $score;
 	}

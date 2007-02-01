@@ -64,9 +64,18 @@ $this->_pages['tools/view_results.php']['children']  = array(); // to create the
 	// test questions
 	$this->_pages['tools/tests/create_question_tf.php']['title_var'] = 'create_new_question';
 	$this->_pages['tools/tests/create_question_tf.php']['parent']    = 'tools/tests/question_db.php';
-	
+
+	$this->_pages['tools/tests/create_question_truefalse.php']['title_var'] = 'create_new_question';
+	$this->_pages['tools/tests/create_question_truefalse.php']['parent']    = 'tools/tests/question_db.php';
+
 	$this->_pages['tools/tests/create_question_multi.php']['title_var'] = 'create_new_question';
 	$this->_pages['tools/tests/create_question_multi.php']['parent']    = 'tools/tests/question_db.php';
+
+	$this->_pages['tools/tests/create_question_multichoice.php']['title_var'] = 'create_new_question';
+	$this->_pages['tools/tests/create_question_multichoice.php']['parent']    = 'tools/tests/question_db.php';
+
+	$this->_pages['tools/tests/create_question_multianswer.php']['title_var'] = 'create_new_question';
+	$this->_pages['tools/tests/create_question_multianswer.php']['parent']    = 'tools/tests/question_db.php';
 
 	$this->_pages['tools/tests/create_question_long.php']['title_var'] = 'create_new_question';
 	$this->_pages['tools/tests/create_question_long.php']['parent']    = 'tools/tests/question_db.php';
@@ -82,9 +91,18 @@ $this->_pages['tools/view_results.php']['children']  = array(); // to create the
 
 	$this->_pages['tools/tests/edit_question_tf.php']['title_var'] = 'edit_question';
 	$this->_pages['tools/tests/edit_question_tf.php']['parent']    = 'tools/tests/question_db.php';
-	
+
+	$this->_pages['tools/tests/edit_question_truefalse.php']['title_var'] = 'edit_question';
+	$this->_pages['tools/tests/edit_question_truefalse.php']['parent']    = 'tools/tests/question_db.php';
+
 	$this->_pages['tools/tests/edit_question_multi.php']['title_var'] = 'edit_question';
 	$this->_pages['tools/tests/edit_question_multi.php']['parent']    = 'tools/tests/question_db.php';
+
+	$this->_pages['tools/tests/edit_question_multichoice.php']['title_var'] = 'edit_question';
+	$this->_pages['tools/tests/edit_question_multichoice.php']['parent']    = 'tools/tests/question_db.php';
+
+	$this->_pages['tools/tests/edit_question_multianswer.php']['title_var'] = 'edit_question';
+	$this->_pages['tools/tests/edit_question_multianswer.php']['parent']    = 'tools/tests/question_db.php';
 
 	$this->_pages['tools/tests/edit_question_long.php']['title_var'] = 'edit_question';
 	$this->_pages['tools/tests/edit_question_long.php']['parent']    = 'tools/tests/question_db.php';

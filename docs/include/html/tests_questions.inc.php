@@ -89,29 +89,9 @@ foreach ($cats as $cat) {
 
 			echo '</td>';
 			echo '<td>';
-			switch ($row['type']) {
-				case AT_TESTS_MC:
-					echo _AT('test_mc');
-					break;
+			$o = test_question_factory($row['type']);
+			$o->printName( );
 					
-				case AT_TESTS_TF:
-					echo _AT('test_tf');
-					break;
-			
-				case AT_TESTS_LONG:
-					echo _AT('test_open');
-					break;
-				case AT_TESTS_LIKERT:
-					echo _AT('test_lk');
-					break;
-				case AT_TESTS_MATCHING:
-					echo _AT('test_matching');
-					break;
-				case AT_TESTS_ORDERING:
-					echo _AT('test_ordering');
-					break;
-			}
-						
 			echo '</td>';
 			
 			echo '</tr>';

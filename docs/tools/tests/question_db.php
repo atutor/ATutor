@@ -27,39 +27,15 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) |
 } else if (isset($_GET['edit'])) {
 	$id  = current($_GET['questions']);
 	$ids = explode('|', $id[0], 2);
-	switch ($ids[1]) {
-		case AT_TESTS_MC:
-			$name = 'multi';
-			break;
-
-		case AT_TESTS_TF:
-			$name = 'tf';
-			break;
-
-		case AT_TESTS_LONG:
-			$name = 'long';
-			break;
-
-		case AT_TESTS_LIKERT:
-			$name = 'likert';
-		break;
-
-		case AT_TESTS_MATCHING:
-			$name = 'matching';
-		break;
-
-		case AT_TESTS_ORDERING:
-			$name = 'ordering';
-		break;
-
-		default:
-			header('Location: '.$_base_href.'tools/tests/index.php');
-			exit;
-		break;
+	$o = test_question_factory($ids[1]);
+	if ($name = $o->getPrefix()) {
+		header('Location: '.$_base_href.'tools/tests/edit_question_'.$name.'.php?qid='.intval($ids[0]));
+		exit;
+	} else {
+		header('Location: '.$_base_href.'tools/tests/index.php');
+		exit;
 	}
 
-	header('Location: '.$_base_href.'tools/tests/edit_question_'.$addslashes($name).'.php?qid='.intval($ids[0]));
-	exit;
 } else if (isset($_GET['delete'])) {
 	$id  = current($_GET['questions']);
 	$ids = array();
