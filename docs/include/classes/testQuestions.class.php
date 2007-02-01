@@ -35,14 +35,17 @@
  *     /tools/tests/create_question_[prefix].php
  *     /tools/tests/edit_question_[prefix].php
  *
- * 4 - Create the following template files:
+ * 4 - Edit /tools/tests/question_db.php and add the question
+ *     to the select menu using $sPrefix as the value.
+ *
+ * 5 - Create the following template files:
  *
  *     /themes/default/test_questions/[prefix].tmpl.php
  *     /themes/default/test_questions/[prefix]_qti_2p1.tmpl.php
  *     /themes/default/test_questions/[prefix]_result.tmpl.php
  *     /themes/default/test_questions/[prefix]_stats.tmpl.php
  *
- * 5 - Done!
+ * 6 - Done!
  **/
 
 /**
