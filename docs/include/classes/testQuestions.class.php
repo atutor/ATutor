@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -11,6 +11,39 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id: results_all_quest.php 6702 2007-01-23 18:45:57Z joel $
+
+/*
+ * Steps to follow when adding a new question type:
+ *
+ * 1 - Create a class extending AbstractQuestion or extend an 
+ *     existing question class.
+ *     Define $sPrefix and $sType appropriately.
+ *     Implement the following methods, which set template variables:
+ *
+ *        assignQTIVariables()
+ *        assignDisplayResultVariables()
+ *        assignDisplayVariables()
+ *        assignDisplayStatisticsVariables()
+ *     
+ *     And implement mark() which is used for marking the result.
+ *
+ * 2 - Add the new class name to $question_classes in test_question_factory()
+ *
+ * 3 - Create the following files for creating and editing, where
+ *     [prefix] is the value defined by $sPrefix:
+ *
+ *     /tools/tests/create_question_[prefix].php
+ *     /tools/tests/edit_question_[prefix].php
+ *
+ * 4 - Create the following template files:
+ *
+ *     /themes/default/test_questions/[prefix].tmpl.php
+ *     /themes/default/test_questions/[prefix]_qti_2p1.tmpl.php
+ *     /themes/default/test_questions/[prefix]_result.tmpl.php
+ *     /themes/default/test_questions/[prefix]_stats.tmpl.php
+ *
+ * 5 - Done!
+ **/
 
 /**
  * Used to create question objects based on $question_type.
@@ -641,6 +674,7 @@ class MatchingddQuestion extends MatchingQuestion {
 	/*protected */ var $sPrefix = 'matchingdd';
 	/*protected */ var $sType   = 'test_matchingdd';
 }
+
 /**
 * multichoiceQuestion
 *
