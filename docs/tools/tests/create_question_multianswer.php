@@ -31,7 +31,7 @@ if (isset($_POST['submit_yes'])) {
 	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, 
 				$_POST[category_id],
 				$_SESSION[course_id],
-				1,
+				7,
 				'$_POST[feedback]',
 				'$_POST[question]',
 				'{$_POST[choice][0]}',
