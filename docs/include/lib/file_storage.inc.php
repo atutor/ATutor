@@ -65,6 +65,12 @@ function fs_authenticate($owner_type, $owner_id) {
 			return WORKSPACE_AUTH_READ;
 		}
 	}
+	/* else if ($owner_type == WORKSPACE_SYSTEM) {
+		if (admin_authenticate(AT_ADMIN_PRIV_FILE_STORAGE, TRUE)) {
+			return WORKSPACE_AUTH_RW;
+		} // else
+		return WORKSPACE_AUTH_READ; // everyone can read the System File Space
+	} */
 
 	return WORKSPACE_AUTH_NONE;
 }
@@ -89,7 +95,11 @@ function fs_get_workspace($owner_type, $owner_id) {
 	} else if ($owner_type == WORKSPACE_ASSIGNMENT) {
 		$row    = fs_get_assignment($owner_id);
 		return ($row ? $row['title'] : false);
-	}
+	} /*
+		else if ($owner_type == WORKSPACE_SYSTEM) {
+		return _AT('system_files');
+     }
+	*/
 }
 
 /**

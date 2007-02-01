@@ -14,7 +14,7 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
-
+require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 /* check to make sure we can access this test: */
 if ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS) {
@@ -66,79 +66,8 @@ if (isset($_POST['submit'])) {
 	$result	= mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		if (isset($_POST['answers'][$row['question_id']])) {
-			$score = 0;
-
-			switch ($row['type']) {
-				case AT_TESTS_MC:
-					// multiple choice
-					$num_correct = array_sum(array_slice($row, 3));
-					if ($num_correct > 1) {
-						// multi correct
-						if (is_array($_POST['answers'][$row['question_id']]) && count($_POST['answers'][$row['question_id']]) > 1) {
-							if (($i = array_search('-1', $_POST['answers'][$row['question_id']])) !== FALSE) {
-                                unset($_POST['answers'][$row['question_id']][$i]);
-                            }
-							$num_answer_correct = 0;
-							foreach ($_POST['answers'][$row['question_id']] as $answer) {
-								if ($row['answer_' . $answer]) {
-									// correct answer
-									$num_answer_correct++;
-								} else {
-									// wrong answer
-									$num_answer_correct--;
-								}
-							}
-							if ($num_answer_correct == $num_correct) {
-								$score = $row['weight'];
-							} else {
-								$score = 0;
-							}
-							$_POST['answers'][$row['question_id']] = implode('|', $_POST['answers'][$row['question_id']]);
-						} else {
-							// no answer given
-							$_POST['answers'][$row['question_id']] = '-1'; // left blank
-							$score = 0;
-						}
-					} else {
-						// single correct answer
-						$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
-						if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
-							$score = $row['weight'];
-						} else if ($_POST['answers'][$row['question_id']] == -1) {
-							$has_answer = 0;
-							for($i=0; $i<10; $i++) {
-								$has_answer += $row['answer_'.$i];
-							}
-							if (!$has_answer && $row['weight']) {
-								// If MC has no answer and user answered "leave blank"
-								$score = $row['weight'];
-							}
-						}
-					}
-
-					break;
-
-				case AT_TESTS_TF:
-					// true or false
-					$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
-
-					if ($row['answer_0'] == $_POST['answers'][$row['question_id']]) {
-						$score = $row['weight'];
-					}
-					break;
-
-				case AT_TESTS_LONG:
-					// open ended question
-					$_POST['answers'][$row['question_id']] = $addslashes($_POST['answers'][$row['question_id']]);
-					$scores = ''; // open ended can't be marked automatically
-
-					$set_final_score = FALSE;
-					break;
-
-				case AT_TESTS_LIKERT:
-					$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
-					break;
-			} // end switch
+			$obj = test_question_factory($row['type']);
+			$score = $obj->mark($row);
 
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_answers VALUES ($result_id, $row[question_id], $_SESSION[member_id], '{$_POST[answers][$row[question_id]]}', '$score', '')";
 			mysql_query($sql, $db);
@@ -147,7 +76,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	if ($set_final_score || !$out_of) {
+	if ($final_score) {
 		// update the final score (when no open ended questions are found)
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken WHERE result_id=$result_id AND member_id=$_SESSION[member_id]";
 		$result	= mysql_query($sql, $db);
@@ -172,6 +101,8 @@ $content_id = $test_row['content_id'];
 $anonymous = $test_row['anonymous'];
 $instructions = $test_row['instructions'];
 $title = $test_row['title'];
+
+$_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
 
 if ($test_row['random']) {
 	/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
@@ -211,162 +142,52 @@ while ($row = mysql_fetch_assoc($result)) {
 	$questions[] = $row;
 }
 
+if (!$result || !$questions) {
+	echo '<p>'._AT('no_questions').'</p>';
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 if ($test_row['random']) {
-	srand((float)microtime() * 1000000);
 	shuffle($questions);
 }
 
-$count = 1;
-if ($result && $questions) {
-	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
-	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
-
-	echo '<div class="input-form" style="width:80%;">';
-	echo '<div class="row">';
-	echo '<h2>'.$title.'</h2>';
-
-	if ($instructions!='') {
-		echo '<p><br /><strong>'._AT('instructions').'</strong>:  '. $instructions .'</p>';
-	}
-	if ($anonymous) {
-		echo '<em><strong>'._AT('test_anonymous').'</strong></em>';
-	}
-	echo '</div>';
-	foreach ($questions as $row) {
-		echo '<div class="row"><h3>'.$count.')</h3> ';
-		$count++;
-		if ($row['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
-			$spacer = '<br />';
-		} else {
-			$spacer = ', ';
-		}
-
-		switch ($row['type']) {
-			case AT_TESTS_MC:
-
-				if ($row['weight']) {
-					if ($row['weight'] == 1) {
-						echo '('.$row['weight'].' '.strtolower(_AT('mark')).')';
-					} else {
-						echo '('.$row['weight'].' '._AT('marks').')';
-					}
-				}
-				echo '<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
-				if (array_sum(array_slice($row, 16, -6)) > 1) {
-					echo '<input type="hidden" name="answers['.$row['question_id'].'][]" value="-1" />';
-					for ($i=0; $i < 10; $i++) {
-						if ($row['choice_'.$i] != '') {
-							if ($i > 0) {
-								echo $spacer;
-							}
-
-							echo '<input type="checkbox" name="answers['.$row['question_id'].'][]" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_questions.choice_'.$i).'</label>';
-						}
-					}
-				} else {
-					for ($i=0; $i < 10; $i++) {
-						if ($row['choice_'.$i] != '') {
-							if ($i > 0) {
-								echo $spacer;
-							}
-
-							echo '<input type="radio" name="answers['.$row['question_id'].']" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_questions.choice_'.$i).'</label>';
-						}
-					}
-
-					echo $spacer;
-					echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><em>'._AT('leave_blank').'</em></label>';
-				}
-				break;
-
-			case AT_TESTS_TF:
-				/* true or false question */
-				if ($row['weight']) {
-					if ($row['weight'] == 1) {
-						echo '('.$row['weight'].' '.strtolower(_AT('mark')).')';
-					} else {
-						echo '('.$row['weight'].' '._AT('marks').')';
-					}
-				}
-
-				echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="1" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('true').'</label>';
-
-				echo $spacer;
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="2" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('false').'</label>';
-
-				echo $spacer;
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><em>'._AT('leave_blank').'</em></label>';
-				break;
-
-			case AT_TESTS_LONG:
-				if ($row['weight']) {
-					if ($row['weight'] == 1) {
-						echo '('.$row['weight'].' '.strtolower(_AT('mark')).')';
-					} else {
-						echo '('.$row['weight'].' '._AT('marks').')';
-					}
-				}
-				echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
-				switch ($row['properties']) {
-					case 1:
-							/* one word */
-							echo '<input type="text" name="answers['.$row['question_id'].']" class="formfield" size="15" />';
-						break;
-
-					case 2:
-							/* sentence */
-							echo '<input type="text" name="answers['.$row['question_id'].']" class="formfield" size="45" />';
-						break;
-				
-					case 3:
-							/* paragraph */
-							echo '<textarea cols="55" rows="5" name="answers['.$row['question_id'].']" class="formfield"></textarea>';
-						break;
-
-					case 4:
-							/* page */
-							echo '<textarea cols="55" rows="25" name="answers['.$row['question_id'].']" class="formfield"></textarea>';
-						break;
-				}
-				break;
-			case AT_TESTS_LIKERT:
-				if ($row['weight']) {
-					if ($row['weight'] == 1) {
-						echo '('.$row['weight'].' '.strtolower(_AT('mark')).')';
-					} else {
-						echo '('.$row['weight'].' '._AT('marks').')';
-					}
-				}
-				echo '<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
-
-				for ($i=0; $i < 10; $i++) {
-					if ($row['choice_'.$i] != '') {
-						if ($i > 0) {
-							echo $spacer;
-						}
-
-						echo '<input type="radio" name="answers['.$row['question_id'].']" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
-					}
-				}
-
-				echo $spacer;
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><em>'._AT('leave_blank').'</em></label>';
-				break;					
-		}
-		echo '</p>';
-		echo '</div>';
-	} while ($row = mysql_fetch_assoc($result));
-
-	echo '<div class="row buttons">';
-	echo '<input type="submit" name="submit" value="'._AT('submit').'" accesskey="s" />';
-	echo '</div>';
-	echo '</div>';
-	echo '</form><br />';
-
-} else {
-	echo '<p>'._AT('no_questions').'</p>';
-}
-
-require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+<div class="input-form" style="width:80%">
+	<div class="row"><h2><?php echo $title; ?></h2></div>
+
+	<?php if ($instructions!=''): ?>
+		<div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">
+			<strong><?php echo _AT('instructions'); ?></strong>
+		</div>
+		<div class="row" style="padding-bottom: 20px"><?php echo $instructions; ?></div>
+	<?php endif; ?>
+
+	<?php if ($anonymous): ?>
+		<div class="row"><em><strong><?php echo _AT('test_anonymous'); ?></strong></em></div>
+	<?php endif; ?>
+
+	<?php
+	foreach ($questions as $row) {
+		$obj = test_question_factory($row['type']);
+		$obj->display($row);
+	}
+	?>
+	<div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">
+		<strong><?php echo _AT('done'); ?>!</strong>
+	</div>
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" accesskey="s" />
+	</div>
+</div>
+</form>
+<script type="text/javascript">
+//<!--
+function iframeSetHeight(id, height) {
+	document.getElementById("qframe" + id).style.height = (height + 20) + "px";
+}
+//-->
+</script>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

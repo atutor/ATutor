@@ -190,6 +190,14 @@ if ($row = mysql_fetch_assoc($result)) {
 				echo _AT('test_lk');
 				$link = 'tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'];
 				break;
+			case AT_TESTS_MATCHING:
+				echo _AT('test_matching');
+				$link = 'tools/tests/edit_question_matching.php?tid='.$tid.SEP.'qid='.$row['question_id'];
+				break;
+			case AT_TESTS_ORDERING:
+				echo _AT('test_ordering');
+				$link = 'tools/tests/edit_question_ordering.php?tid='.$tid.SEP.'qid='.$row['question_id'];
+				break;
 		}
 		echo '</td>';
 		

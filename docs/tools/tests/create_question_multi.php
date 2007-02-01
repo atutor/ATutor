@@ -54,6 +54,16 @@ if (isset($_POST['submit_yes'])) {
 				{$_POST[answer][7]},
 				{$_POST[answer][8]},
 				{$_POST[answer][9]},
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
 				$_POST[properties],
 				0)";
 
@@ -99,8 +109,6 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			}
 		}
 			
-		//debug($has_answer);
-
 		if ($has_answer != TRUE) {
 	
 			$hidden_vars['required']    = htmlspecialchars($_POST['required']);

@@ -147,7 +147,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			if ($questions[$i]['weight'] && $count) {
 					echo number_format($questions[$i]['score']/$count, 1);
 			} else {
-				echo '<span style="color:#ccc;">-</span>';
+				echo '0.0';
 			}
 			echo '</strong></td>';
 	}
@@ -170,7 +170,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			if ($questions[$i]['weight'] && $count) {
 				echo number_format($questions[$i]['score']/$count/$questions[$i]['weight']*100, 1).'%';
 			} else {
-				echo '<span style="color:#ccc;">-</span>';
+				echo '00.0%';
 			}
 		echo '</strong></td>';
 	}

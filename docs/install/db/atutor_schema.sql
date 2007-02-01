@@ -778,7 +778,7 @@ CREATE TABLE `tests_groups` (
 # --------------------------------------------------------
 # Table structure for table `tests_questions`
 
-CREATE TABLE `tests_questions` (
+CREATE TABLE `AT_tests_questions` (
   `question_id` mediumint(8) unsigned NOT NULL auto_increment,
   `category_id` mediumint(8) unsigned NOT NULL default '0',
   `course_id` mediumint(8) unsigned NOT NULL default '0',
@@ -805,6 +805,16 @@ CREATE TABLE `tests_questions` (
   `answer_7` tinyint(4) NOT NULL default '0',
   `answer_8` tinyint(4) NOT NULL default '0',
   `answer_9` tinyint(4) NOT NULL default '0',
+  `option_0` VARCHAR( 255 ) NOT NULL default '',
+  `option_1` VARCHAR( 255 ) NOT NULL default '',
+  `option_2` VARCHAR( 255 ) NOT NULL default '',
+  `option_3` VARCHAR( 255 ) NOT NULL default '',
+  `option_4` VARCHAR( 255 ) NOT NULL default '',
+  `option_5` VARCHAR( 255 ) NOT NULL default '',
+  `option_6` VARCHAR( 255 ) NOT NULL default '',
+  `option_7` VARCHAR( 255 ) NOT NULL default '',
+  `option_8` VARCHAR( 255 ) NOT NULL default '',
+  `option_9` VARCHAR( 255 ) NOT NULL default '',
   `properties` tinyint(4) NOT NULL default '0',
   `content_id` mediumint(8) NOT NULL,  
   PRIMARY KEY  (`question_id`),

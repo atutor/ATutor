@@ -11,35 +11,45 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-
-$page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 authenticate(AT_PRIV_TESTS);
 
-if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['preview']) || isset($_GET['add'])) && !isset($_GET['id'])){
+// converts array entries to ints
+function intval_array ( & $value, $key) { $value = (int) $value; }
+
+if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) || isset($_GET['preview']) || isset($_GET['add'])) && !isset($_GET['questions'])){
 	$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_GET['submit_create'])) {
 	header('Location: '.$_base_href.'tools/tests/create_question_'.$addslashes($_GET['question_type']).'.php');
 	exit;
 } else if (isset($_GET['edit'])) {
-	$ids = explode('|', $_GET['id'], 2);
+	$id  = current($_GET['questions']);
+	$ids = explode('|', $id[0], 2);
 	switch ($ids[1]) {
-		case 1:
+		case AT_TESTS_MC:
 			$name = 'multi';
 			break;
 
-		case 2:
+		case AT_TESTS_TF:
 			$name = 'tf';
 			break;
 
-		case 3:
+		case AT_TESTS_LONG:
 			$name = 'long';
 			break;
 
-		case 4:
+		case AT_TESTS_LIKERT:
 			$name = 'likert';
+		break;
+
+		case AT_TESTS_MATCHING:
+			$name = 'matching';
+		break;
+
+		case AT_TESTS_ORDERING:
+			$name = 'ordering';
 		break;
 
 		default:
@@ -51,17 +61,43 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['preview']) 
 	header('Location: '.$_base_href.'tools/tests/edit_question_'.$addslashes($name).'.php?qid='.intval($ids[0]));
 	exit;
 } else if (isset($_GET['delete'])) {
-	$ids = explode('|', $_GET['id'], 2);
-	header('Location: '.$_base_href.'tools/tests/delete_question.php?qid='.intval($ids[0]));
+	$id  = current($_GET['questions']);
+	$ids = array();
+	foreach ($_GET['questions'] as $category_questions) {
+		$ids = array_merge($ids, $category_questions);
+	}
+
+	array_walk($ids, 'intval_array');
+	$ids = implode(',',$ids);
+
+	header('Location: '.$_base_href.'tools/tests/delete_question.php?qid='.$ids);
 	exit;
 } else if (isset($_GET['preview'])) {
-	$ids = explode('|', $_GET['id'], 2);
-	header('Location: '.$_base_href.'tools/tests/preview_question.php?qid='.intval($ids[0]));
+	$ids = array();
+	foreach ($_GET['questions'] as $category_questions) {
+		$ids = array_merge($ids, $category_questions);
+	}
+
+	array_walk($ids, 'intval_array');
+	$ids = implode(',',$ids);
+
+	header('Location: '.$_base_href.'tools/tests/preview_question.php?qid='.$ids);
 	exit;
 } else if (isset($_GET['add'])) {
-	$ids = explode('|', $_GET['id'], 2);
+	$id  = current($_GET['questions']);
+	$ids = explode('|', $id[0], 2);
+} else if (isset($_GET['export'])) {
 
-	//tools/tests/add_test_questions_confirm.php
+	$ids = array();
+	foreach ($_GET['questions'] as $category_questions) {
+		$ids = array_merge($ids, $category_questions);
+	}
+
+	array_walk($ids, 'intval_array');
+
+	test_question_qti_export($ids);
+
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -79,6 +115,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<option value="tf"><?php echo _AT('test_tf'); ?></option>
 			<option value="long"><?php echo _AT('test_open'); ?></option>
 			<option value="likert"><?php echo _AT('test_lk'); ?></option>
+			<option value="matching"><?php echo _AT('test_matching'); ?></option>
+			<option value="ordering"><?php echo _AT('test_ordering'); ?></option>
 		</select>
 	</div>
 

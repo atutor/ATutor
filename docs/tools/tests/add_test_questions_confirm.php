@@ -59,7 +59,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-if (!is_array($_POST['add_questions']) || !count($_POST['add_questions'])) {
+if (!is_array($_POST['questions']) || !count($_POST['questions'])) {
 	$msg->addError('NO_QUESTIONS_SELECTED');
 	header('Location: add_test_questions.php?tid='.$tid);
 	require(AT_INCLUDE_PATH.'footer.inc.php');
@@ -68,7 +68,7 @@ if (!is_array($_POST['add_questions']) || !count($_POST['add_questions'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-foreach ($_POST['add_questions'] as $cat_array) {
+foreach ($_POST['questions'] as $cat_array) {
 	$questions .= addslashes(implode(',',$cat_array)).',';
 }
 $questions = substr($questions, 0, -1);

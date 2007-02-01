@@ -3,6 +3,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
 define('AT_PRIV_FILE_STORAGE',       $this->getPrivilege() );
+// define('AT_ADMIN_PRIV_FILE_STORAGE',       $this->getAdminPrivilege() );
 
 
 // if this module is to be made available to students on the Home or Main Navigation

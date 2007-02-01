@@ -83,10 +83,11 @@ define('LINK_CAT_AUTH_COURSE',  2);
 define('LINK_CAT_AUTH_GROUP',	3);
 
 /* drafting room constants */
-define('WORKSPACE_COURSE',     1);
-define('WORKSPACE_PERSONAL',   2);
+define('WORKSPACE_COURSE',     1); // aka Course Files
+define('WORKSPACE_PERSONAL',   2); // aka My Files
 define('WORKSPACE_ASSIGNMENT', 3);
 define('WORKSPACE_GROUP',      4);
+define('WORKSPACE_SYSTEM',     5);
 define('WORKSPACE_PATH_DEPTH', 1); // how deep the directories should be
 define('WORKSPACE_FILE_PATH',  AT_CONTENT_DIR . 'file_storage/');
 
@@ -212,6 +213,9 @@ define('AT_TESTS_MC',				1); // multiple choice
 define('AT_TESTS_TF',				2); // true/false
 define('AT_TESTS_LONG',				3); // long answer
 define('AT_TESTS_LIKERT',			4); // likert
+define('AT_TESTS_MATCHING',			5); // matching
+define('AT_TESTS_ORDERING',			6); // ordering
+
 
 /* QPROP = question property: */
 define('AT_TESTS_QPROP_WORD',       1);

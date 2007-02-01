@@ -140,13 +140,17 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 	<?php if ($col == 'login'): ?>
 		<col />
 		<col class="sort" />
+		<col span="3" />
+	<?php elseif ($col == 'full_name'): ?>
+		<col span="2" />
+		<col class="sort" />
 		<col span="2" />
 	<?php elseif($col == 'date_taken'): ?>
-		<col span="2" />
+		<col span="3" />
 		<col class="sort" />
 		<col span="1" />
 	<?php elseif($col == 'fs'): ?>
-		<col span="3" />
+		<col span="4" />
 		<col class="sort" />
 	<?php endif; ?>
 </colgroup>

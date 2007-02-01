@@ -70,6 +70,16 @@ if (isset($_POST['cancel'])) {
 			0,
 			0,
 			0,
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
+			'',
 			$_POST[properties],
 			0)";
 		$result	= mysql_query($sql, $db);
