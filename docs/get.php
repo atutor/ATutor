@@ -109,7 +109,7 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 
 	header('Content-Type: '.$ext);
 
-	echo @file_get_contents($real);
+	@readfile($real);
 	exit;
 } else {
 	header('HTTP/1.1 404 Not Found', TRUE);
