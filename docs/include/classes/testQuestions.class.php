@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: results_all_quest.php 6702 2007-01-23 18:45:57Z joel $
+// $Id$
 
 /*
  * Steps to follow when adding a new question type:
