@@ -65,7 +65,7 @@ class TestQuestions {
 
 	static function getQuestionClasses() {
 		/** NOTE: The indices are CONSTANTS. Do NOT change!! **/
-		$question_classes = array();
+		$question_classes = array(); // type ID => class name
 		$question_classes[1] = 'MultichoiceQuestion';
 		$question_classes[2] = 'TruefalseQuestion';
 		$question_classes[3] = 'LongQuestion';

@@ -14,10 +14,6 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 
-// supress notices:
-error_reporting(E_ALL ^ E_NOTICE);
-
-
 /* content id of an optional chapter */
 $cid = intval($_REQUEST['cid']);
 $c   = intval($_REQUEST['c']);
