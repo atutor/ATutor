@@ -40,7 +40,7 @@ $result	= mysql_query($sql, $db);
 <div class="input-form">
 	<?php
 	while ($row = mysql_fetch_assoc($result)) {
-		$obj = test_question_factory($row['type']);
+		$obj = TestQuestions::getQuestion($row['type']);
 		$obj->display($row);
 	}
 	?>

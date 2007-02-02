@@ -17,7 +17,7 @@
  *
  * 1 - Create a class extending AbstractQuestion or extend an 
  *     existing question class.
- *     Define $sPrefix and $sType appropriately.
+ *     Define $sPrefix and $sNameVar appropriately.
  *     Implement the following methods, which set template variables:
  *
  *        assignQTIVariables()
@@ -29,44 +29,42 @@
  *
  * 2 - Add the new class name to $question_classes in test_question_factory()
  *
- * 3 - Add $sType to the language database.
+ * 3 - Add $sNameVar to the language database.
  *
  * 4 - Create the following files for creating and editing the question,
- *     where [prefix] is the value defined by $sPrefix:
+ *     where "{PREFIX}" is the value defined by $sPrefix:
  *
- *     /tools/tests/create_question_[prefix].php
- *     /tools/tests/edit_question_[prefix].php
+ *     /tools/tests/create_question_{PREFIX}.php
+ *     /tools/tests/edit_question_{PREFIX}.php
  *
  * 5 - Add those two newly created pages to 
  *     /mods/_standard/tests/module.php
  *
- * 6 - Edit /tools/tests/question_db.php and add the question
- *     to the select menu using $sPrefix as the value.
+ * 6 - Create the following template files:
  *
- * 7 - Create the following template files:
+ *     /themes/default/test_questions/{PREFIX}.tmpl.php
+ *     /themes/default/test_questions/{PREFIX}_qti_2p1.tmpl.php
+ *     /themes/default/test_questions/{PREFIX}_result.tmpl.php
+ *     /themes/default/test_questions/{PREFIX}_stats.tmpl.php
  *
- *     /themes/default/test_questions/[prefix].tmpl.php
- *     /themes/default/test_questions/[prefix]_qti_2p1.tmpl.php
- *     /themes/default/test_questions/[prefix]_result.tmpl.php
- *     /themes/default/test_questions/[prefix]_stats.tmpl.php
- *
- * 8 - Done!
+ * 7 - Done!
  **/
 
-/**
- * Used to create question objects based on $question_type.
- * A singleton that creates one obj per question since
- * questions are all stateless.
- * Returns a reference to the question object.
- */
-function & test_question_factory($question_type) {
-	static $objs, $question_classes;
-
-	if (isset($objs[$question_type])) {
-		return $objs[$question_type];
+class TestQuestions {
+	// returns array of prefix => name, sorted!
+	static function getQuestionPrefixNames() {
+		$question_prefix_names = array(); // prefix => name
+		$questions = TestQuestions::getQuestionClasses();
+		foreach ($questions as $type => $question) {
+			$o = TestQuestions::getQuestion($type);
+			$question_prefix_names[$o->getPrefix()] = $o->getName();
+		}
+		asort($question_prefix_names);
+		return $question_prefix_names;
 	}
-	if (!isset($question_classes)) {
-		/** NOTE: The indices are CONSTANTS do NOT change!! **/
+
+	static function getQuestionClasses() {
+		/** NOTE: The indices are CONSTANTS. Do NOT change!! **/
 		$question_classes = array();
 		$question_classes[1] = 'MultichoiceQuestion';
 		$question_classes[2] = 'TruefalseQuestion';
@@ -76,16 +74,34 @@ function & test_question_factory($question_type) {
 		$question_classes[6] = 'OrderingQuestion';
 		$question_classes[7] = 'MultianswerQuestion';
 		$question_classes[8] = 'MatchingddQuestion';
+
+		return $question_classes;
 	}
 
-	if (isset($question_classes[$question_type])) {
-		global $savant;
-		$objs[$question_type] =& new $question_classes[$question_type]($savant);
-	} else {
-		return FALSE;
-	}
+	/**
+	 * Used to create question objects based on $question_type.
+	 * A singleton that creates one obj per question since
+	 * questions are all stateless.
+	 * Returns a reference to the question object.
+	 */
+	static function & getQuestion($question_type) {
+		static $objs, $question_classes;
 
-	return $objs[$question_type];
+		if (isset($objs[$question_type])) {
+			return $objs[$question_type];
+		}
+
+		$question_classes = TestQuestions::getQuestionClasses();
+
+		if (isset($question_classes[$question_type])) {
+			global $savant;
+			$objs[$question_type] =& new $question_classes[$question_type]($savant);
+		} else {
+			return FALSE;
+		}
+
+		return $objs[$question_type];
+	}
 }
 
 function test_question_qti_export(/* array */ $question_ids) {
@@ -164,22 +180,15 @@ function test_question_qti_export(/* array */ $question_ids) {
 	*/
 	/*protected */static $count = 0;
 
-	// abstract public function qtiExport();
-	// abstract public function qtiImport();
-
 	/**
 	* Constructor method.  Initialises variables.
 	*/
-	function __construct(&$savant) {
-		$this->savant =& $savant;
-	}
+	function AbstractTestQuestion(&$savant) { $this->savant =& $savant; }
 
 	/**
 	* Public interface for resetting the question counter
 	*/
-	/*final public */function resetCounter() {
-		self::$count = 0;
-	}
+	/*final public */function resetCounter() { self::$count = 0; }
 
 	/**
 	* Public
@@ -197,17 +206,19 @@ function test_question_qti_export(/* array */ $question_ids) {
 	* Public
 	* Prints the name of this question
 	*/
-	/*final public */function printName( ) {
-		echo _AT($this->sType);
-	}
+	/*final public */function printName() { echo $this->getName(); }
+
+	/**
+	* Public
+	* Prints the name of this question
+	*/
+	/*final public */function getName() { return _AT($this->sNameVar); }
 
 	/**
 	* Public
 	* Returns the prefix string (used for file names)
 	*/
-	/*final public */function getPrefix( ) {
-		return $this->sPrefix;
-	}
+	/*final public */function getPrefix() { return $this->sPrefix; }
 
 	/**
 	* Display the current question (for taking or previewing a test/question)
@@ -258,7 +269,6 @@ function test_question_qti_export(/* array */ $question_ids) {
 		return $xml;
 	}
 
-
 	/**
 	* print the question template header
 	*/
@@ -268,7 +278,7 @@ function test_question_qti_export(/* array */ $question_ids) {
 		$this->savant->assign('question_id', $question_id);
 		$this->savant->assign('score', $score);
 		$this->savant->assign('weight', $weight);
-		$this->savant->assign('type',   _AT($this->sType));
+		$this->savant->assign('type',   _AT($this->sNameVar));
 		$this->savant->assign('number', self::$count);
 		$this->savant->display('test_questions/header.tmpl.php');
 	}
@@ -303,7 +313,7 @@ function test_question_qti_export(/* array */ $question_ids) {
 *
 */
 class OrderingQuestion extends AbstractTestQuestion {
-	/*protected */ var $sType = 'test_ordering';
+	/*protected */ var $sNameVar = 'test_ordering';
 	/*protected */ var $sPrefix = 'ordering';
 	
 	/*protected */function assignDisplayResultVariables($row, $answer_row) {
@@ -419,7 +429,7 @@ class OrderingQuestion extends AbstractTestQuestion {
 */
 class TruefalseQuestion extends AbstracttestQuestion {
 	/*protected */ var $sPrefix = 'truefalse';
-	/*protected */ var $sType   = 'test_tf';
+	/*protected */ var $sNameVar   = 'test_tf';
 
 	/*protected */function assignQTIVariables($row) {
 		$this->savant->assign('row', $row);
@@ -466,7 +476,7 @@ class TruefalseQuestion extends AbstracttestQuestion {
 */
 class LikertQuestion extends AbstracttestQuestion {
 	/*protected */ var $sPrefix = 'likert';
-	/*protected */ var $sType   = 'test_lk';
+	/*protected */ var $sNameVar   = 'test_lk';
 
 	/*protected */function assignQTIVariables($row) {
 		$choices = $this->getChoices($row);
@@ -524,7 +534,7 @@ class LikertQuestion extends AbstracttestQuestion {
 */
 class LongQuestion extends AbstracttestQuestion {
 	/*protected */ var $sPrefix = 'long';
-	/*protected */ var $sType = 'test_open';
+	/*protected */ var $sNameVar = 'test_open';
 
 	/*protected */function assignQTIVariables($row) {
 		$this->savant->assign('row', $row);
@@ -564,7 +574,7 @@ class LongQuestion extends AbstracttestQuestion {
 */
 class MatchingQuestion extends AbstracttestQuestion {
 	/*protected */ var $sPrefix = 'matching';
-	/*protected */ var $sType   = 'test_matching';
+	/*protected */ var $sNameVar   = 'test_matching';
 
 	/*protected */function assignQTIVariables($row) {
 		$choices = $this->getChoices($row);
@@ -680,7 +690,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 */
 class MatchingddQuestion extends MatchingQuestion {
 	/*protected */ var $sPrefix = 'matchingdd';
-	/*protected */ var $sType   = 'test_matchingdd';
+	/*protected */ var $sNameVar   = 'test_matchingdd';
 }
 
 /**
@@ -689,7 +699,7 @@ class MatchingddQuestion extends MatchingQuestion {
 */
 class MultichoiceQuestion extends AbstracttestQuestion {
 	/*protected */ var $sPrefix = 'multichoice';
-	/*protected */var $sType    = 'test_mc';
+	/*protected */var $sNameVar = 'test_mc';
 
 	/*protected */function assignQTIVariables($row) {
 		$choices = $this->getChoices($row);
@@ -747,7 +757,6 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 	}
 
 	/*public */function mark($row) { 
-		// single correct answer
 		$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
 		if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
 			$score = $row['weight'];
@@ -770,8 +779,8 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 *
 */
 class MultianswerQuestion extends MultichoiceQuestion {
-	/*protected */ var $sPrefix = 'multianswer';
-	/*protected */ var $sType   = 'test_ma';
+	/*protected */ var $sPrefix  = 'multianswer';
+	/*protected */ var $sNameVar = 'test_ma';
 
 	/*public */function mark($row) { 
 		$num_correct = array_sum(array_slice($row, 3));

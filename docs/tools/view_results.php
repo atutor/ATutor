@@ -101,7 +101,7 @@ if (mysql_num_rows($result) == 0) {
 		$result_a	= mysql_query($sql, $db); 
 		$answer_row = mysql_fetch_assoc($result_a);
 
-		$obj = test_question_factory($row['type']);
+		$obj = TestQuestions::getQuestion($row['type']);
 		$obj->displayResult($row, $answer_row);
 
 		$my_score=($my_score+$answer_row['score']);

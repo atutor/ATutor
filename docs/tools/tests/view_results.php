@@ -106,7 +106,7 @@ if (mysql_num_rows($result) == 0) {
 		$sql		= "SELECT C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id]";
 		$result_a	= mysql_query($sql, $db);
 		if ($answer_row = mysql_fetch_assoc($result_a)) {
-			$obj = test_question_factory($row['type']);
+			$obj = TestQuestions::getQuestion($row['type']);
 			$obj->displayResult($row, $answer_row, TRUE);
 
 			if ($row['feedback']) {

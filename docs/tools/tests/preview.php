@@ -113,7 +113,7 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 	
 	<?php
 	do {
-		$o = test_question_factory($row['type']);
+		$o = TestQuestions::getQuestion($row['type']);
 		$o->display($row);
 	} while ($row = mysql_fetch_assoc($result));
 	?>

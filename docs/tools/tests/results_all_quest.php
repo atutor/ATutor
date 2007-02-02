@@ -84,7 +84,7 @@ foreach ($questions as $q_id => $q) {
 
 	//catch random unanswered
 	if($ans[$q_id]) {
-		$obj = test_question_factory($q['type']);
+		$obj = TestQuestions::getQuestion($q['type']);
 		$obj->displayResultStatistics($q, $ans[$q_id]);
 	}
 }

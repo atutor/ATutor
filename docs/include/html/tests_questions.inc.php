@@ -89,8 +89,8 @@ foreach ($cats as $cat) {
 
 			echo '</td>';
 			echo '<td>';
-			$o = test_question_factory($row['type']);
-			$o->printName( );
+			$o = TestQuestions::getQuestion($row['type']);
+			$o->printName();
 					
 			echo '</td>';
 			

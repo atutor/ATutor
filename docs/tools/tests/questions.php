@@ -173,7 +173,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		echo '</td>';
 		echo '<td nowrap="nowrap">';
-		$o = test_question_factory($row['type']);
+		$o = TestQuestions::getQuestion($row['type']);
 		echo $o->printName();
 		echo '</td>';
 

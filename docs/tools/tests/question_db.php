@@ -27,7 +27,7 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) |
 } else if (isset($_GET['edit'])) {
 	$id  = current($_GET['questions']);
 	$ids = explode('|', $id[0], 2);
-	$o = test_question_factory($ids[1]);
+	$o = TestQuestions::getQuestion($ids[1]);
 	if ($name = $o->getPrefix()) {
 		header('Location: '.$_base_href.'tools/tests/edit_question_'.$name.'.php?qid='.intval($ids[0]));
 		exit;
@@ -86,15 +86,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form" style="width: 30%">
 	<div class="row">
 		<label for="question"><?php echo _AT('create_new_question'); ?></label><br />
+		<?php $questions = TestQuestions::getQuestionPrefixNames(); ?>
 		<select name="question_type" class="dropdown" id="question" size="8">
-			<option value="multianswer"><?php echo _AT('test_ma'); ?></option>
-			<option value="multichoice"><?php echo _AT('test_mc'); ?></option>
-			<option value="truefalse"><?php echo _AT('test_tf'); ?></option>
-			<option value="long"><?php echo _AT('test_open'); ?></option>
-			<option value="likert"><?php echo _AT('test_lk'); ?></option>
-			<option value="matching"><?php echo _AT('test_matching'); ?></option>
-			<option value="matchingdd"><?php echo _AT('test_matchingdd'); ?></option>
-			<option value="ordering"><?php echo _AT('test_ordering'); ?></option>
+			<?php foreach ($questions as $type => $name): ?>
+				<option value="<?php echo $type; ?>"><?php echo $name; ?></option>
+			<?php endforeach; ?>
 		</select>
 	</div>
 

@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 	$result	= mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		if (isset($_POST['answers'][$row['question_id']])) {
-			$obj = test_question_factory($row['type']);
+			$obj = TestQuestions::getQuestion($row['type']);
 			$score = $obj->mark($row);
 
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_answers VALUES ($result_id, $row[question_id], $_SESSION[member_id], '{$_POST[answers][$row[question_id]]}', '$score', '')";
@@ -171,7 +171,7 @@ if ($test_row['random']) {
 
 	<?php
 	foreach ($questions as $row) {
-		$obj = test_question_factory($row['type']);
+		$obj = TestQuestions::getQuestion($row['type']);
 		$obj->display($row);
 	}
 	?>
