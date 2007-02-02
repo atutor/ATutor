@@ -217,9 +217,11 @@ if (count($used_glossary_terms)) {
 	foreach ($used_glossary_terms as $term) {
 		$term_key = urlencode($term);
 		$glossary[$term_key] = str_replace('&', '&amp;', $glossary[$term_key]);
+		$escaped_term = str_replace('&', '&amp;', $term);
 		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
-									array($term, $glossary[$term_key]),
+									array($escaped_term, $glossary[$term_key]),
 									$glossary_term_xml);
+
 		$terms_html .= str_replace(	array('{ENCODED_TERM}', '{TERM}', '{DEFINITION}'),
 									array($term_key, $term, $glossary[$term_key]),
 									$glossary_term_html);

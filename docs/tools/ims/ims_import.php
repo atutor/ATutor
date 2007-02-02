@@ -399,7 +399,6 @@ if (file_exists($import_path . 'glossary.xml')){
 					xml_error_string(xml_get_error_code($xml_parser)),
 					xml_get_current_line_number($xml_parser)));
 	}
-
 	xml_parser_free($xml_parser);
 	$contains_glossary_terms = true;
 	foreach ($imported_glossary as $term => $defn) {
@@ -409,6 +408,7 @@ if (file_exists($import_path . 'glossary.xml')){
 		}
 	}
 }
+
 
 /* generate a unique new package base path based on the package file name and date as needed. */
 /* the package name will be the dir where the content for this package will be put, as a result */
@@ -499,8 +499,9 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 			$content = get_html_body($content);
 			if ($contains_glossary_terms) {
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
-				$content = preg_replace('/<a href="([.\w\d\s]+[^"]+)" target="body" class="at-term">([.\w\d\s"]+)<\/a>/i', '[?]\\2[/?]', $content);
+				$content = preg_replace('/<a href="([.\w\d\s]+[^"]+)" target="body" class="at-term">([.\w\d\s&;"]+)<\/a>/i', '[?]\\2[/?]', $content);
 			}
+
 			/* potential security risk? */
 			if ( strpos($content_info['href'], '..') === false) {
 				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
