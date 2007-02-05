@@ -120,9 +120,9 @@ if ($test_row['random']) {
 			$non_required_questions[] = $row['question_id'];
 		}
 	}
-
+	
 	$num_required = count($required_questions);
-	if ($num_required < $num_questions) {
+	if ($num_required < max(1, $num_questions)) {
 		shuffle($non_required_questions);
 		$required_questions = array_merge($required_questions, array_slice($non_required_questions, 0, $num_questions - $num_required));
 	}
