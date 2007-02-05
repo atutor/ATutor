@@ -25,6 +25,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	$missing_fields             = array();
 	$_POST['title']				= $addslashes(trim($_POST['title']));
 	$_POST['format']			= intval($_POST['format']);
 	$_POST['randomize_order']	= intval($_POST['randomize_order']);
@@ -44,10 +45,20 @@ if (isset($_POST['cancel'])) {
 		$_POST['content_id'] = 0;
 	}
 
+
 	$_POST['instructions'] = trim($_POST['instructions']);
 
 	if ($_POST['title'] == '') {
-		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
+		$missing_fields[] = 'title';
+	}
+
+	if ($_POST['random'] && !$_POST['num_questions']) {
+		$missing_fields[] = 'num_questions_per_test';
+	}
+
+	if ($missing_fields) {
+		$missing_fields = implode(', ', $missing_fields);
+		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
 	$day_start	= intval($_POST['day_start']);
