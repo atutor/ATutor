@@ -102,10 +102,19 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 		header('Content-Disposition: filename="'.$pathinfo['basename'].'"');
 	}
 	
-	if ($_config['x-sendfile']) {
-		header('x-Sendfile: '.$real);  // for apache 2 and lighttpd 1.5+
-		exit;
-	} // else:
+	/**
+	 * although we can check if mod_xsendfile is installed in apache2
+	 * we can't actually check if it's enabled. also, we can't check if
+	 * it's enabled and installed in lighty, so instead we send the 
+	 * header anyway, if it works then the line after it will not
+	 * execute. if it doesn't work, then the line after it will replace
+	 * it so that the full server path is not exposed.
+	 *
+	 * x-sendfile is supported in apache2 and lighttpd 1.5+ (previously
+	 * named x-send-file in lighttpd 1.4)
+	 */
+	header('x-Sendfile: '.$real);
+	header('x-Sendfile: ', TRUE); // if we get here then it didn't work
 
 	header('Content-Type: '.$ext);
 
