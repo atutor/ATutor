@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 print_progress($step);
 
 /* try copying the content over from the old dir to the new one */
-require('../include/lib/filemanager.inc.php');
+require('../include/lib/filemanager.inc.php'); // for copys()
 
 $content_dir = urldecode(trim($_POST['step4']['content_dir']));
 $_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from'])) . DIRECTORY_SEPARATOR;
@@ -38,42 +38,25 @@ $_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from'])) . D
 
 if ($_POST['step4']['copy_from'] && ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR)) {
 	if (is_dir($_POST['step4']['copy_from'])) {
+		$files = scandir($_POST['step4']['copy_from']);
 
-		$courses = scandir($_POST['step4']['copy_from']);
+		foreach ($files as $file) {
+			if ($file == '.' || $file == '..') { continue; }
 
-		foreach ($courses as $course) {
-			if (is_numeric($course)) {
-				copys($_POST['step4']['copy_from'].$course, $content_dir.$course);
-				if (is_dir($content_dir.$course)) {					
-					$progress[] = 'Course content directory <b>'.$course.'</b> copied successfully.';
+			if (is_dir($file)) {
+				copys($_POST['step4']['copy_from'].$file, $content_dir.$file);
+				if (is_dir($content_dir.$course)) {			
+					$progress[] = 'Course content directory <b>'.$file.'</b> copied successfully.';
 				} else {
-					$errors[] = 'Course content directory <b>'.$course.'</b> <strong>NOT</strong> copied.';
+					$errors[] = 'Course content directory <b>'.$file.'</b> <strong>NOT</strong> copied.';
 				}
-			} 
+			} else {
+				// a regular file
+				copy($_POST['step4']['copy_from'].$file, $content_dir.$file);
+			}
 		}
 	}
 
-	if (is_dir($_POST['step4']['copy_from'].'chat/')) {
-		$courses = scandir($_POST['step4']['copy_from'].'chat/');
-
-		foreach ($courses as $course) {
-			if (is_numeric($course)) {
-				copys($_POST['step4']['copy_from'].'chat/'.$course, $content_dir.'chat/'.$course);
-			} 
-		}
-		$progress[] = 'Course chat directories copied successfully.';
-	}
-
-	if (is_dir($_POST['step4']['copy_from'].'backups/')) {
-		$courses = scandir($_POST['step4']['copy_from'].'backups/');
-
-		foreach ($courses as $course) {
-			if (is_numeric($course)) {
-				copys($_POST['step4']['copy_from'].'backups/'.$course, $content_dir.'backups/'.$course);
-			} 
-		}
-		$progress[] = 'Course backup directories copied successfully.';
-	}
 } else {
 	$progress[] = 'Using existing content directory <strong>'.$content_dir.'</strong>.';
 }
