@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$answers    = array_fill(0, 9, 0);
+		$answers    = array_fill(0, 10, 0);
 		$answers[$_POST['answer']] = 1;
 
 		for ($i=0; $i<10; $i++) {

@@ -67,7 +67,7 @@ function print_VE ($area) {
 	global $_base_href;
 ?>
 	<script type="text/javascript" language="javascript">
-		document.writeln('<a href="#" onclick="javascript:window.open(\'<?php echo $_base_href; ?>tools/tests/form_editor.php?area=<?php echo $area; ?>\',\'newWin1\',\'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480\')" style="cursor: pointer; text-decoration: none" ><?php echo _AT('use_visual_editor'); ?></a>');
+		document.writeln('<a href="#" onclick="javascript:window.open(\'<?php echo $_base_href; ?>tools/tests/form_editor.php?area=<?php echo $area; ?>\',\'newWin1\',\'toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480\'); return false;" style="cursor: pointer; text-decoration: none" ><?php echo _AT('use_visual_editor'); ?></a>');
 	</script>
 
 <?php
