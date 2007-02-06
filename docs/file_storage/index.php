@@ -145,6 +145,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 			} else {
 				$file_mime = 'application/octet-stream';
 			}
+			$file_path = fs_get_file_path($file_id) . $file_id;
 
 			header('Content-Type: ' . $file_mime);
 			header('Content-transfer-encoding: binary'); 
@@ -153,7 +154,12 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
 			header('Content-Length: '.$row['file_size']);
-			@readfile(fs_get_file_path($file_id) . $file_id);
+
+			// see the note in get.php about the use of x-Sendfile
+			header('x-Sendfile: '.$file_path);
+			header('x-Sendfile: ', TRUE); // if we get here then it didn't work
+
+			@readfile($file_path);
 			exit;
 		}
 	} else {
