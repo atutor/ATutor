@@ -118,13 +118,13 @@ function add_users($user_list, $enroll, $course) {
 
 			if (!$student['exists']) {
 				$student = sql_quote($student);
-				$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 		
-				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '0000-00-00', 'n', '','','','','', '', $status, '$_config[pref_defaults]', '$now','$_config[default_language]', $_config[pref_inbox_notify], 1)";
+				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '0000-00-00', 'n', '','','','','', '', $status, '$_config[pref_defaults]', NOW(),'$_config[default_language]', $_config[pref_inbox_notify], 1)";
 
 				$result = mysql_query($sql, $db);
 				if (mysql_affected_rows($db) == 1) {
 					$m_id = mysql_insert_id($db);
+
 					$student['exists'] = _AT('import_err_email_exists');
 
 					$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid) VALUES ($m_id, $course, '$enroll', 0)";
@@ -134,8 +134,12 @@ function add_users($user_list, $enroll, $course) {
 
 						if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
 
+							$sql    = "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$m_id";
+							$result = mysql_query($sql, $db);
+							$row    = mysql_fetch_assoc($result);
+							$code   = substr(md5($row['email'] . $row['creation_date'] . $m_id), 0, 10);
+
 							// send email here.
-							$code = substr(md5($student['email'] . $now . $m_id), 0, 10);
 							$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 			
 							$subject = $_config['site_name'].': '._AT('email_confirmation_subject');
