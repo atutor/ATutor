@@ -28,7 +28,6 @@ if (isset($_POST['cancel'])) {
 	$_POST['question']     = trim($_POST['question']);
 	$_POST['category_id']  = intval($_POST['category_id']);
 	$_POST['answer']       = intval($_POST['answer']);
-	$_POST['properties']   = intval($_POST['properties']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError(array('EMPTY_FIELDS', _AT('statement')));
@@ -80,7 +79,7 @@ if (isset($_POST['cancel'])) {
 			'',
 			'',
 			'',
-			$_POST[properties],
+			5,
 			0)";
 		$result	= mysql_query($sql, $db);
 		
@@ -119,12 +118,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<textarea id="question" cols="50" rows="6" name="question" style="width:90%;"><?php echo htmlspecialchars($stripslashes($_POST['question'])); ?></textarea>
 	</div>
 	
-	<div class="row">
-		<?php echo _AT('option_alignment'); ?><br />
-		<label for="prop_5"><input type="radio" name="properties" id="prop_5" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
-		<label for="prop_6"><input type="radio" name="properties" id="prop_6" value="6" /><?php echo _AT('horizontal'); ?></label>
-	</div>
-
 	<div class="row">
 		<?php echo _AT('answer'); ?><br />
 		<input type="radio" name="answer" value="1" id="answer1" /><label for="answer1"><?php echo _AT('true'); ?></label>, 

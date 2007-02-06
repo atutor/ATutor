@@ -43,7 +43,6 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 
 		$_POST['feedback']   = $addslashes($_POST['feedback']);
 		$_POST['question']   = $addslashes($_POST['question']);
-		$_POST['properties'] = intval($_POST['properties']);
 
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, 
 				$_POST[category_id],
@@ -81,7 +80,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 				'',
 				'',
 				'',
-				$_POST[properties],
+				5,
 				0)";
 		$result	= mysql_query($sql, $db);
 
@@ -121,12 +120,6 @@ $msg->printConfirm();
 		<?php print_VE('question'); ?>
 		<textarea id="question" cols="50" rows="4" name="question" style="width:90%;"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
-	</div>
-
-	<div class="row">
-		<label for="properties"><?php echo _AT('option_alignment'); ?></label><br />
-		<label for="prop_5"><input type="radio" name="properties" id="prop_5" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
-		<label for="prop_6"><input type="radio" name="properties" id="prop_6" value="6" /><?php echo _AT('horizontal'); ?></label>
 	</div>
 
 <?php
