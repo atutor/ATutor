@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
+// $Id: edit_question_matching.php 6713 2007-02-01 21:27:03Z joel $
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/likert_presets.inc.php');
@@ -107,7 +107,7 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 } else {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=5";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=8";
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_assoc($result))){

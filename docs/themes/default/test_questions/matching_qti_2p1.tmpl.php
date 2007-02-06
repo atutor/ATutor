@@ -14,12 +14,16 @@
 	<responseDeclaration identifier="RESPONSE" cardinality="multiple" baseType="directedPair">
 		<correctResponse>
 			<?php for ($i=0; $i < $this->num_choices; $i++): ?>
-				<value>Choice<?php echo $i; ?> Option<?php echo $this->row['answer_'.$i]; ?></value>
+				<?php if ($this->row['answer_'.$i] > -1): ?>
+					<value>Choice<?php echo $i; ?> Option<?php echo $this->row['answer_'.$i]; ?></value>
+				<?php endif; ?>
 			<?php endfor; ?>
 		</correctResponse>
 		<mapping lowerBound="0" defaultValue="0">
 			<?php for ($i=0; $i < $this->num_choices; $i++): ?>
-				<mapEntry mapKey="Choice<?php echo $i; ?> Option<?php echo $this->row['answer_'.$i]; ?>" mappedValue="1"/>
+				<?php if ($this->row['answer_'.$i] > -1): ?>
+					<mapEntry mapKey="Choice<?php echo $i; ?> Option<?php echo $this->row['answer_'.$i]; ?>" mappedValue="1"/>
+				<?php endif; ?>
 			<?php endfor; ?>
 		</mapping>
 	  <?php if ($this->row['feedback']): ?>
