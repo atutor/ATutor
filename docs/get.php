@@ -11,8 +11,9 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-
 define('AT_INCLUDE_PATH', 'include/');
+ob_end_clean();
+header("Content-Encoding: none");
 if (isset($_GET['test'])) {
 	header('HTTP/1.1 200 OK', TRUE);
 	header('ATutor-Get: OK');

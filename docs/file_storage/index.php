@@ -147,6 +147,8 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 			}
 			$file_path = fs_get_file_path($file_id) . $file_id;
 
+			ob_end_clean();
+			header("Content-Encoding: none");
 			header('Content-Type: ' . $file_mime);
 			header('Content-transfer-encoding: binary'); 
 			header('Content-Disposition: attachment; filename="'.htmlspecialchars($row['file_name']).'"');

@@ -244,6 +244,8 @@ class Backup {
 		header('Content-Length: '.$my_backup['file_size']);
 
 		// see the note in get.php about the use of x-Sendfile
+		ob_end_clean();
+		header("Content-Encoding: none");
 		header('x-Sendfile: ' . AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
 		header('x-Sendfile: ', TRUE); // if we get here then it didn't work
 
