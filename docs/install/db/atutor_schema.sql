@@ -778,7 +778,7 @@ CREATE TABLE `tests_groups` (
 # --------------------------------------------------------
 # Table structure for table `tests_questions`
 
-CREATE TABLE `AT_tests_questions` (
+CREATE TABLE `tests_questions` (
   `question_id` mediumint(8) unsigned NOT NULL auto_increment,
   `category_id` mediumint(8) unsigned NOT NULL default '0',
   `course_id` mediumint(8) unsigned NOT NULL default '0',
