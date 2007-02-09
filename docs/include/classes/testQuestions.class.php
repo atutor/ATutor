@@ -258,7 +258,7 @@ function test_question_qti_export(/* array */ $question_ids) {
 		self::$count++;
 
 		$this->assignDisplayStatisticsVariables($row, $answers);
-		$this->savant->display('test_questions/' . $this->getDisplayResultStatisticsTemplateName( ));
+		$this->savant->display('test_questions/' . $this->sPrefix . '_stats.tmpl.php');
 	}
 
 	/*final public */function exportQTI($row, $encoding) {
