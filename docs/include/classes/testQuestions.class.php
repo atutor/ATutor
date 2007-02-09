@@ -161,6 +161,23 @@ function test_question_qti_export(/* array */ $question_ids) {
 	exit;
 }
 
+/**
+* keeps count of the question number (when displaying the question)
+* need this function because PHP 4 doesn't support static members
+*/
+function TestQuestionCounter($increment = FALSE) {
+	static $count;
+
+	if (!isset($count)) { 
+		$count = 0;
+	}
+	if ($increment) {
+		$count++;
+	}
+
+	return $count;
+}
+
 
 /**
  * testQuestion
@@ -176,19 +193,9 @@ function test_question_qti_export(/* array */ $question_ids) {
 	/*protected */ var $savant;
 
 	/**
-	* int $count - keeps count of the question number (when displaying the question)
-	*/
-	/*protected */static $count = 0;
-
-	/**
 	* Constructor method.  Initialises variables.
 	*/
 	function AbstractTestQuestion(&$savant) { $this->savant =& $savant; }
-
-	/**
-	* Public interface for resetting the question counter
-	*/
-	/*final public */function resetCounter() { self::$count = 0; }
 
 	/**
 	* Public
@@ -255,7 +262,7 @@ function test_question_qti_export(/* array */ $question_ids) {
 	* print the question template header
 	*/
 	/*final public */function displayResultStatistics($row, $answers) {
-		self::$count++;
+		TestQuestionCounter(TRUE);
 
 		$this->assignDisplayStatisticsVariables($row, $answers);
 		$this->savant->display('test_questions/' . $this->sPrefix . '_stats.tmpl.php');
@@ -273,13 +280,13 @@ function test_question_qti_export(/* array */ $question_ids) {
 	* print the question template header
 	*/
 	/*final private */function displayHeader($weight, $score = FALSE, $question_id = FALSE) {
-		self::$count++;
+		TestQuestionCounter(TRUE);
 
 		$this->savant->assign('question_id', $question_id);
 		$this->savant->assign('score', $score);
 		$this->savant->assign('weight', $weight);
 		$this->savant->assign('type',   _AT($this->sNameVar));
-		$this->savant->assign('number', self::$count);
+		$this->savant->assign('number', TestQuestionCounter());
 		$this->savant->display('test_questions/header.tmpl.php');
 	}
 
