@@ -27,7 +27,7 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$missing_fields        = array();
 	$_POST['title']        = $addslashes(trim($_POST['title']));
-	$_POST['num']	       = intval($_POST['num']);
+	$_POST['num_questions']	= intval($_POST['num_questions']);
 	$_POST['num_takes']	   = intval($_POST['num_takes']);
 	$_POST['content_id']   = intval($_POST['content_id']);
 	$_POST['num_takes']    = intval($_POST['num_takes']);
@@ -108,7 +108,7 @@ if (isset($_POST['cancel'])) {
 		$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
 		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (NULL, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[result_release], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (NULL, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num_questions], '$_POST[instructions]', $_POST[content_id], $_POST[result_release], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '')";
 
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);
@@ -129,8 +129,8 @@ if (isset($_POST['cancel'])) {
 	}
 }
 
-if (isset($_POST['num']) && ($_POST['num'] === 0)) {
-	$_POST['num'] = '';
+if (isset($_POST['num_questions']) && ($_POST['num_questions'] === 0)) {
+	$_POST['num_questions'] = '';
 }
 
 $onload = 'document.form.title.focus();';
@@ -232,7 +232,7 @@ $msg->printErrors();
 				$disabled = 'disabled="disabled" ';
 			}
 		?>
-		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num.disabled=true;" /><label for="random"><?php echo _AT('no'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes'); ?></label>, <input type="text" name="num" id="num" size="2" value="<?php echo $_POST['num']; ?>" <?php echo $disabled . $n; ?> /> <label for="num"><?php echo _AT('num_questions_per_test'); ?></label>
+		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num_questions.disabled=true;" /><label for="random"><?php echo _AT('no'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num_questions.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes'); ?></label>, <input type="text" name="num_questions" id="num_questions" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label>
 	</div>
 
 
