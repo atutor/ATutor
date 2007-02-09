@@ -62,12 +62,37 @@ if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	$status = '<>-1';
 }
 
+if (isset($_GET['include']) && $_GET['include'] == 'one') {
+	$checked_include_one = ' checked="checked"';
+	$page_string .= SEP.'include=one';
+} else {
+	$_GET['include'] = 'all';
+	$checked_include_all = ' checked="checked"';
+	$page_string .= SEP.'include=all';
+}
+
 if ($_GET['search']) {
 	$page_string .= SEP.'search='.urlencode($_GET['search']);
 	$search = $addslashes($_GET['search']);
-	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
-	$search = '%'.$search.'%';
-	$search = "((M.first_name LIKE '$search') OR (M.second_name LIKE '$search') OR (M.last_name LIKE '$search') OR (M.email LIKE '$search') OR (M.login LIKE '$search'))";
+	$search = explode(' ', $search);
+
+	if ($_GET['include'] == 'all') {
+		$predicate = 'AND ';
+	} else {
+		$predicate = 'OR ';
+	}
+
+	$sql = '';
+	foreach ($search as $term) {
+		$term = trim($term);
+		$term = str_replace(array('%','_'), array('\%', '\_'), $term);
+		if ($term) {
+			$term = '%'.$term.'%';
+			$sql .= "((M.first_name LIKE '$term') OR (M.second_name LIKE '$term') OR (M.last_name LIKE '$term') OR (M.email LIKE '$term') OR (M.login LIKE '$term')) $predicate";
+		}
+	}
+	$sql = '('.substr($sql, 0, -strlen($predicate)).')';
+	$search = $sql;
 } else {
 	$search = '1';
 }
@@ -153,6 +178,12 @@ $result = mysql_query($sql, $db);
 		<div class="row">
 			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('login_name').', '._AT('first_name').', '._AT('second_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
 			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+		</div>
+
+		<div class="row">
+			<?php echo _AT('search_match'); ?><br />
+			<input type="radio" name="include" value="all" id="all" <?php echo $checked_include_all; ?> /><label for="all"><?php echo _AT('search_all_words'); ?></label><br />
+			<input type="radio" name="include" value="one" id="one" <?php echo $checked_include_one; ?> /><label for="one"><?php echo _AT('search_any_word'); ?></label>
 		</div>
 
 		<?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
