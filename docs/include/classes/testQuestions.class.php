@@ -52,7 +52,7 @@
 
 class TestQuestions {
 	// returns array of prefix => name, sorted!
-	static function getQuestionPrefixNames() {
+	/*static */function getQuestionPrefixNames() {
 		$question_prefix_names = array(); // prefix => name
 		$questions = TestQuestions::getQuestionClasses();
 		foreach ($questions as $type => $question) {
@@ -63,7 +63,7 @@ class TestQuestions {
 		return $question_prefix_names;
 	}
 
-	static function getQuestionClasses() {
+	/*static */function getQuestionClasses() {
 		/** NOTE: The indices are CONSTANTS. Do NOT change!! **/
 		$question_classes = array(); // type ID => class name
 		$question_classes[1] = 'MultichoiceQuestion';
@@ -84,7 +84,7 @@ class TestQuestions {
 	 * questions are all stateless.
 	 * Returns a reference to the question object.
 	 */
-	static function & getQuestion($question_type) {
+	/*static */function & getQuestion($question_type) {
 		static $objs, $question_classes;
 
 		if (isset($objs[$question_type])) {
