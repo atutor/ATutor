@@ -68,13 +68,20 @@ if (!is_array($_POST['questions']) || !count($_POST['questions'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+foreach ($_POST['questions'] as $id => $cat_array) {
+	foreach ($cat_array as $idx => $q) {
+		$_POST['questions'][$id][$idx] = intval($q);
+	}
+}
 foreach ($_POST['questions'] as $cat_array) {
 	$questions .= addslashes(implode(',',$cat_array)).',';
 }
+
 $questions = substr($questions, 0, -1);
 
 $sql = "SELECT question, question_id FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($questions) AND course_id=$_SESSION[course_id] ORDER BY question";
 $result = mysql_query($sql, $db);
+
 $questions = '';
 while ($row = mysql_fetch_assoc($result)) {
 	$questions .= '<li>'.htmlspecialchars($row['question']).'</li>';
