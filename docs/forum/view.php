@@ -106,10 +106,7 @@ $_pages['forum/view.php']['title']  = $post_row['subject'];
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printAll();
-
 ?>
-	<!-- hidden direct link to post message -->
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#post" style="border: 0px;"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('reply'); ?>" /></a>
 <?php
 	/**
@@ -166,7 +163,7 @@ $msg->printAll();
 	} else {
 		$start--;
 	}
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$pid AND forum_id=$fid ORDER BY date ASC LIMIT $start, $num_per_page";
+	$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$pid AND forum_id=$fid ORDER BY date ASC LIMIT $start, $num_per_page";
 	$result	= mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)) {

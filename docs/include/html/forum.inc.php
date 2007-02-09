@@ -43,7 +43,7 @@ if (isset($_GET['asc'])) {
 	$col   = 'last_comment';
 }
 
-$sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
+$sql	= "SELECT *, last_comment + 0 AS stamp, DATE_FORMAT(last_comment, '%Y-%m-%d %H-%i:%s') AS last_comment FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
 $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_assoc($result))) {
