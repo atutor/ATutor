@@ -11,10 +11,9 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-
-$page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 authenticate(AT_PRIV_TESTS);
 
@@ -31,8 +30,6 @@ $_pages['tools/tests/add_test_questions.php']['title_var']    = 'add_questions';
 $_pages['tools/tests/add_test_questions.php']['parent']   = 'tools/tests/questions.php?tid='.$_GET['tid'];
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$msg->printAll();
 ?>
 
 <?php $tid = intval($_GET['tid']); ?>
