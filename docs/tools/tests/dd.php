@@ -26,7 +26,7 @@ $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
 $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
-$_colours = array('#FF0000', '#00FF00', '#0000FF', '#F23AA3', '#9999CC', '#990026', '#0099CC', '#22C921', '#007D48', '#00248F');
+$_colours = array('#FF9900', '#00FF00', '#0000FF', '#F23AA3', '#9999CC', '#990026', '#0099CC', '#22C921', '#007D48', '#00248F');
 
 $num_options = 0;
 for ($i=0; $i < 10; $i++) {
@@ -57,7 +57,7 @@ option {
 li {
 	padding: 5px;
 	border: 1px solid #ccc;
-	margin: 5px;
+	margin: 8px;
 }
 li.question {
 	width: 200px;
@@ -69,7 +69,8 @@ li.question:hover {
 li.answer {
 	width: 200px;
 	overflow: auto;
-	margin: 15px 5px;
+	padding: 8px;
+	margin: 8px;
 }
 .dropactive {
 	background-color: #fc9;
