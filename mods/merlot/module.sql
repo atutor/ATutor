@@ -1,12 +1,12 @@
 # sql file for Merlot module
 
-INSERT INTO `language_text` VALUES ('en', '_module','merlot','Merlot Repository',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','merlot_howto','Enter terms to search for in the Merlot educational resources. Use and/or to narrow search results. <strong>Maximum results displayed: 25</strong>',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot','MERLOT Repository',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot_howto','Enter terms to search for in the MERLOT Repository of Educational Resources. Use and/or to narrow search results. <strong>Maximum results displayed: 25</strong>',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_results_displayed','Results Displayed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_results_found','Results Found',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_add_to_link_howto','The following link will be added to the course links. Select a category and adjust the title and description as needed.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_creation_date','Creation Date',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','merlot_full_record','View Full Record',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot_full_record','View MERLOT Record',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_add_to_link','Add to course links',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_attribute','Find material by attributes',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_keywords','Keywords',NOW(),'');
@@ -33,12 +33,12 @@ INSERT INTO `language_text` VALUES ('en', '_module','merlot_category','Link Cate
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_submit','Submit',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_add_link','Add Course Link',NOW(),'');
 
-INSERT INTO `language_text` VALUES ('en', '_module','merlot_config','Enter the location of the Merlot repository (http://fedsearch.merlot.org:9090/jaxrpc-MerlotSearch/searchservice?WSDL ) and the Merlot key. A free Merlot key can be obtained at: ( http://fedsearch.merlot.org:9090/jaxrpc-MerlotKey/keysignup.html  ) ',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','merlot_location','Merlot Location',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','merlot_key','Merlot Key',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MERLOT_NOT_CONFIG','The Merlot Repository does not appear to be activated. Please contact your ATutor administrator to have it turned on.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_MERLOT_CONFIG_SAVED','The Merlot configuration was successfully saved.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MERLOTKEY_ADD_EMPTY','The Merlot Key field can not be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MERLOTURL_ADD_EMPTY','The Merlot Location field can not be empty.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot_config','Enter the location of the MERLOT repository (http://fedsearch.merlot.org:9090/jaxrpc-MerlotSearch/searchservice?WSDL ) and the MERLOT key. A free MERLOT key can be obtained at: ( http://fedsearch.merlot.org:9090/jaxrpc-MerlotKey/keysignup.html  ) ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot_location','MERLOT Location',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot_key','MERLOT Key',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MERLOT_NOT_CONFIG','The MERLOT Repository does not appear to be activated. Please contact your ATutor administrator to have it turned on.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_MERLOT_CONFIG_SAVED','The MERLOT configuration was successfully saved.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MERLOTKEY_ADD_EMPTY','The MERLOT Key field can not be empty.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MERLOTURL_ADD_EMPTY','The MERLOT Location field can not be empty.',NOW(),'');
 
 

@@ -50,10 +50,13 @@ if($_REQUEST['advanced']){
 }else{?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" method="get" name="form">
 		<div class="input-form" style="width: 40%;padding:5px;">
+
 			<div>
+			<img src="<?php echo $_base_path; ?>mods/merlot/merlot.gif" height="50" width="50" style="margin-right:3px;float:left;text-align:right;" alt="<?php  echo _AT('merlot'); ?>" />
 			<?php  echo _AT('merlot_howto'); ?>
 			</div>
 			<div class="row">
+
 					<label for="words2"><?php echo _AT('search_words'); ?></label><br />
 					<input type="text" name="query" size="40" id="words2" value="<?php echo stripslashes(htmlspecialchars($_GET['query'])); ?>" /><br />
 				<small>
