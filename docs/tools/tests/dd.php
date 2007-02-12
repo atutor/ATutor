@@ -105,7 +105,7 @@ li.answer {
 		<?php endfor; ?>
 	</ul>
 
-	<ol style="position: absolute; list-style-type: upper-alpha; top: 10px; left: 320px" id="a">
+	<ol style="position: absolute; list-style-type: upper-alpha; top: 10px; left: 310px" id="a">
 		<?php for ($i=0; $i < 10; $i++): ?>
 			<?php if ($row['option_'. $i] != ''): ?>
 				<li class="answer" id="a<?php echo $i; ?>" value="<?php echo $i; ?>"><?php echo $_letters[$i]; ?>. <?php echo $row['option_'.$i]; ?></li>
@@ -117,7 +117,7 @@ li.answer {
 <script type="text/javascript">
 // <!--
 if($.browser.msie) {
-	var padding = 5;
+	var padding = 8;
 } else {
 	var padding = 15;
 }
@@ -155,7 +155,7 @@ $(document).ready(
 				ondrop:	function (drag)  {
 					var lx = drag.offsetLeft + $("#" + drag.id).width() + padding;
 					var ly = drag.offsetTop  + $("#" + drag.id).height()/2 + 10;
-					var rx = this.offsetLeft + 320;
+					var rx = this.offsetLeft + 310;
 					var ry = this.offsetTop  + $("#" + this.id).height()/2 + 10;
 
 					document.getElementById('s' + drag.value).selectedIndex =  this.value + 1;

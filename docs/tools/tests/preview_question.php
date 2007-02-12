@@ -50,7 +50,7 @@ $result	= mysql_query($sql, $db);
 <script type="text/javascript">
 //<!--
 function iframeSetHeight(id, height) {
-	document.getElementById("qframe" + id).style.height = (height + 20) + "px";
+	document.getElementById("qframe" + id).style.height = (height + 30) + "px";
 }
 //-->
 </script>
