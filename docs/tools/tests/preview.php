@@ -16,6 +16,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 authenticate(AT_PRIV_TESTS);
+$_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
 
 if ($_POST['back']) {
 	header('Location: index.php');
