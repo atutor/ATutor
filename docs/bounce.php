@@ -84,11 +84,12 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $set_to_public = false;
 if ($_SERVER['PHP_SELF'] == $_base_path."acl.php") {
 	//search through the auth table and find password that matches get password
-	$sql = "SELECT course_id FROM ".TABLE_PREFIX."course_access WHERE password='".key($_GET)."'";
+	$key = $addslashes(key($_GET));
+	$sql = "SELECT course_id FROM ".TABLE_PREFIX."course_access WHERE password='$key'";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		$set_to_public = true;
-		$_POST['course'] = $row['course_id'];
+		$_GET['course'] = $row['course_id'];
 		$_SESSION['member_id'] = 0;
 		$_SESSION['valid_user'] = false;
 		$_SESSION['login'] = 'guest';
