@@ -154,7 +154,7 @@ if ($section == 'admin'){
 			'groups.php',
 			'links.php',
 			'polls.php',
-			'properties.php' => array('delete_course.php'),
+			'properties.php' => array('authenticated_access.php', 'delete_course.php'),
 			'reading_list.php',
 			'statistics.php',
 			'student_tools.php' => array('side_menu.php'),

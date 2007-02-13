@@ -36,6 +36,7 @@
     $_pages['links.php']                         = 'Links';
     $_pages['polls.php']                         = 'Polls';
     $_pages['properties.php']                    = 'Course Properties';
+    $_pages['authenticated_access.php']          = 'Authenticated Access';
     $_pages['delete_course.php']                 = 'Delete Course';
     $_pages['reading_list.php']					 = 'Reading List';
     $_pages['statistics.php']                    = 'Statistics';
