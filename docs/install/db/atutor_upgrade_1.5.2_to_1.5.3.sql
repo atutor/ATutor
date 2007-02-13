@@ -112,7 +112,7 @@ CREATE TABLE `folders` (
 ## assignment manager
 CREATE TABLE `assignments` (
   `assignment_id` MEDIUMINT(6) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `course_id` MEDIUMINT UNSIGNED NOT NULL default '',
+  `course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
   `title` VARCHAR(60) NOT NULL default '',
   `assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
   `date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
