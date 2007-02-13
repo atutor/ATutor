@@ -76,13 +76,16 @@ for($i = 0; $i< $num_questions; $i++) {
 }
 echo $nl;
 
+$guest_text = '- '._AT('guest').' -';
 
 //get test results
-$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.final_score<>'' AND R.member_id=M.member_id ORDER BY M.login, R.date_taken";
+$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.final_score<>'' ORDER BY M.login, R.date_taken";
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 if ($row = mysql_fetch_array($result)) {
 	do {
+		$row['login']     = $row['login']     ? $row['login']     : $guest_text;
+
 		echo quote_csv($row['login']).', ';
 		echo quote_csv($row['date_taken']).', ';
 

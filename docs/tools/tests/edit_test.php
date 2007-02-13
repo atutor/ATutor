@@ -32,6 +32,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['num_questions']		= intval($_POST['num_questions']);
 	$_POST['num_takes']			= intval($_POST['num_takes']);
 	$_POST['anonymous']			= intval($_POST['anonymous']);
+	$_POST['allow_guests'] = $_POST['allow_guests'] ? 1 : 0;
 	$_POST['instructions']      = $addslashes($_POST['instructions']);
 
 	/* this doesn't actually get used: */
@@ -120,7 +121,7 @@ if (isset($_POST['cancel'])) {
 		$result	= mysql_query($sql, $db);
 
 		if ($row = mysql_fetch_assoc($result)) {
-			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  result_release=$_POST[result_release], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  result_release=$_POST[result_release], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous], guests=$_POST[allow_guests] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql, $db);
 
 			$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
@@ -159,6 +160,7 @@ if (!isset($_POST['submit'])) {
 	}
 
 	$_POST	= $row;
+	$_POST['allow_guests'] = $row['guests'];
 } else {
 	$_POST['start_date'] = $start_date;
 	$_POST['end_date']	 = $end_date;
@@ -228,6 +230,22 @@ $msg->printErrors();
 		?>
 		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no'); ?></label>
 		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('allow_guests'); ?><br />
+		<?php 
+			if ($_POST['allow_guests'] == 1) {
+				$y = 'checked="checked"';
+				$n = '';
+			} else {
+				$y = '';
+				$n = 'checked="checked"';
+			}
+		?>
+
+		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> /><label for="allow_guestsN"><?php echo _AT('no'); ?></label> 
+		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
 	</div>
 
 	<div class="row">

@@ -14,3 +14,6 @@ ADD `option_6` VARCHAR( 255 ) NOT NULL AFTER `option_5` ,
 ADD `option_7` VARCHAR( 255 ) NOT NULL AFTER `option_6` ,
 ADD `option_8` VARCHAR( 255 ) NOT NULL AFTER `option_7` ,
 ADD `option_9` VARCHAR( 255 ) NOT NULL AFTER `option_8` ;
+
+## alter the tests table to support guest tests
+ALTER TABLE `tests` ADD `guests` TINYINT NOT NULL DEFAULT '0';

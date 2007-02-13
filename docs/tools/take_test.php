@@ -16,26 +16,27 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
+$tid = intval($_REQUEST['tid']);
+
+//make sure max attempts not reached, and still on going
+$sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
+$result= mysql_query($sql, $db);
+$test_row = mysql_fetch_assoc($result);
 /* check to make sure we can access this test: */
-if ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS) {
+if (!$test_row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
+	echo 'x';
 	$msg->printInfos('NOT_ENROLLED');
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
-$tid = intval($_REQUEST['tid']);
-
-if (!authenticate_test($tid)) {
+if (!$test_row['guests'] && !authenticate_test($tid)) {
 	header('Location: my_tests.php');
 	exit;
 }
 
-//make sure max attempts not reached, and still on going
-$sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
-$result= mysql_query($sql, $db);
-$test_row = mysql_fetch_assoc($result);
 $out_of = $test_row['out_of'];
 
 $sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$tid." AND member_id=".$_SESSION['member_id'];
@@ -83,6 +84,10 @@ if (isset($_POST['submit'])) {
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	if (!$_SESSION['enroll']) {
+		header('Location: ../tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id);		
+		exit;
+	}
 	header('Location: ../tools/my_tests.php');
 	exit;		
 }

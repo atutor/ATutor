@@ -38,7 +38,7 @@ $result	= mysql_query($sql, $db);
 <?php
 while ($row = mysql_fetch_assoc($result)) {
 	// this code hides tests from the user if they are not enrolled.
-	if (!authenticate_test($row['test_id'])) {
+	if (!$row['guests'] && !authenticate_test($row['test_id'])) {
 		continue;
 	}
 
@@ -95,6 +95,11 @@ if (!$count) {
 	</tbody>
 </table>
 <br />
+
+<?php if (!$_SESSION['enroll']): ?>
+	<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+	<?php exit; ?>
+<?php endif; ?>
 <h4><?php echo _AT('completed_tests'); ?></h4><br />
 <table class="data static" summary="" rules="cols">
 <thead>

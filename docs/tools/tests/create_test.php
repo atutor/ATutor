@@ -32,8 +32,8 @@ if (isset($_POST['cancel'])) {
 	$_POST['content_id']   = intval($_POST['content_id']);
 	$_POST['num_takes']    = intval($_POST['num_takes']);
 	$_POST['anonymous']    = intval($_POST['anonymous']);
+	$_POST['allow_guests'] = $_POST['allow_guests'] ? 1 : 0;
 	$_POST['instructions'] = $addslashes($_POST['instructions']);
-
 
 	// currently these options are ignored for tests:
 	$_POST['format']       = intval($_POST['format']);
@@ -108,7 +108,7 @@ if (isset($_POST['cancel'])) {
 		$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
 		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (NULL, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num_questions], '$_POST[instructions]', $_POST[content_id], $_POST[result_release], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (NULL, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num_questions], '$_POST[instructions]', $_POST[content_id], $_POST[result_release], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '', $_POST[allow_guests])";
 
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);
@@ -197,6 +197,22 @@ $msg->printErrors();
 
 		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no'); ?></label> 
 		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('allow_guests'); ?><br />
+		<?php 
+			if ($_POST['allow_guests'] == 1) {
+				$y = 'checked="checked"';
+				$n = '';
+			} else {
+				$y = '';
+				$n = 'checked="checked"';
+			}
+		?>
+
+		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> /><label for="allow_guestsN"><?php echo _AT('no'); ?></label> 
+		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
 	</div>
 
 	<div class="row">

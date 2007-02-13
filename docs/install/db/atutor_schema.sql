@@ -746,6 +746,7 @@ CREATE TABLE `tests` (
   `num_takes` tinyint(4) unsigned NOT NULL default '0',
   `anonymous` tinyint(4) NOT NULL default '0',
   `out_of` varchar(4) NOT NULL default '',
+  `guests` TINYINT NOT NULL DEFAULT '0',
   PRIMARY KEY  (`test_id`)
 ) TYPE=MyISAM;
 

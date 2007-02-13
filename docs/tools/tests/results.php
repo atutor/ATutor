@@ -75,7 +75,7 @@ $anonymous = $row['anonymous'];
 $random = $row['random'];
 
 //count total
-$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id";
+$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid";
 $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $num_sub = $row['cnt'];
@@ -84,11 +84,14 @@ $num_sub = $row['cnt'];
 if ($anonymous == 1) {
 	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $status ORDER BY $col $order";
 } else {	
-	$sql	= "SELECT R.*, login, CONCAT(first_name, ' ', second_name, ' ', last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $status ORDER BY $col $order, R.final_score $order";
+	$sql	= "SELECT R.*, login, CONCAT(first_name, ' ', second_name, ' ', last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid $status ORDER BY $col $order, R.final_score $order";
 }
 
 $result = mysql_query($sql, $db);
+$guest_text = '- '._AT('guest').' -';
 while ($row = mysql_fetch_assoc($result)) {
+	$row['full_name'] = $row['full_name'] ? $row['full_name'] : $guest_text;
+	$row['login']     = $row['login']     ? $row['login']     : $guest_text;
 	$rows[$row['result_id']] = $row;
 }
 
