@@ -85,7 +85,7 @@ $set_to_public = false;
 if ($_SERVER['PHP_SELF'] == $_base_path."acl.php") {
 	//search through the auth table and find password that matches get password
 	$key = $addslashes(key($_GET));
-	$sql = "SELECT course_id FROM ".TABLE_PREFIX."course_access WHERE password='$key'";
+	$sql = "SELECT * FROM ".TABLE_PREFIX."course_access WHERE password='$key' AND (expiry_date > NOW() OR expiry_date+0 = 0) AND enabled=1";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		$set_to_public = true;
