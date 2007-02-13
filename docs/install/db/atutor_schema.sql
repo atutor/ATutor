@@ -127,6 +127,18 @@ CREATE TABLE `content` (
 
 
 # --------------------------------------------------------
+# Table structure for table `course_access`
+
+CREATE TABLE `course_access` (
+  `password` char(8) NOT NULL ,
+  `course_id` mediumint(8) unsigned NOT NULL ,
+  `expiry_date` timestamp NOT NULL ,
+  `enabled` tinyint(4) NOT NULL ,
+  PRIMARY KEY ( `password` ) ,
+  UNIQUE (`course_id`)
+) TYPE=MyISAM ;
+
+# --------------------------------------------------------
 # Table structure for table `course_cats`
 
 CREATE TABLE `course_cats` (

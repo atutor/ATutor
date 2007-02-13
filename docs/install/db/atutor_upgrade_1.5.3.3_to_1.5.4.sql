@@ -17,3 +17,15 @@ ADD `option_9` VARCHAR( 255 ) NOT NULL AFTER `option_8` ;
 
 ## alter the tests table to support guest tests
 ALTER TABLE `tests` ADD `guests` TINYINT NOT NULL DEFAULT '0';
+
+# --------------------------------------------------------
+# Table structure for table `course_access`
+
+CREATE TABLE `course_access` (
+  `password` char(8) NOT NULL ,
+  `course_id` mediumint(8) unsigned NOT NULL ,
+  `expiry_date` timestamp NOT NULL ,
+  `enabled` tinyint(4) NOT NULL ,
+  PRIMARY KEY ( `password` ) ,
+  UNIQUE (`course_id`)
+) TYPE=MyISAM ;

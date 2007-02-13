@@ -80,6 +80,22 @@ function get_groups($course_id) {
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+$set_to_public = false;
+if ($_SERVER['PHP_SELF'] == $_base_path."acl.php") {
+	//search through the auth table and find password that matches get password
+	$sql = "SELECT course_id FROM ".TABLE_PREFIX."course_access WHERE password='".key($_GET)."'";
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		$set_to_public = true;
+		$_POST['course'] = $row['course_id'];
+		$_SESSION['member_id'] = 0;
+		$_SESSION['valid_user'] = false;
+		$_SESSION['login'] = 'guest';
+	}
+}
+
+
 if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 	$sql = "SELECT login, `privileges`, language FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[is_super_admin]' AND `privileges`>0";
 	$result = mysql_query($sql, $db);
@@ -187,6 +203,11 @@ $_SESSION['groups'] = array();
 unset($_SESSION['fs_owner_type']);
 unset($_SESSION['fs_owner_id']);
 unset($_SESSION['fs_folder_id']);
+
+//check for acl var
+if ($set_to_public) {
+	$row['access'] = "public";
+}
 
 switch ($row['access']){
 	case 'public':

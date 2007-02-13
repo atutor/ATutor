@@ -31,10 +31,14 @@ $this->_pages['admin/delete_course.php']['parent']    = 'admin/courses.php';
 //instructor pages
 $this->_pages['tools/course_properties.php']['title_var'] = 'properties';
 $this->_pages['tools/course_properties.php']['parent']    = 'tools/index.php';
-$this->_pages['tools/course_properties.php']['children']  = array('tools/delete_course.php');
+$this->_pages['tools/course_properties.php']['children']  = array('tools/delete_course.php', 'tools/access.php');
 $this->_pages['tools/course_properties.php']['guide']     = 'instructor/?p=properties.php';
 
 	$this->_pages['tools/delete_course.php']['title_var'] = 'delete_course';
 	$this->_pages['tools/delete_course.php']['parent']    = 'tools/course_properties.php';
+
+	$this->_pages['tools/access.php']['title_var'] = 'authenticated_access';
+	$this->_pages['tools/access.php']['parent']    = 'tools/course_properties.php';
+	$this->_pages['tools/access.php']['guide']     = 'instructor/?p=authenticated_access.php';
 
 ?>
