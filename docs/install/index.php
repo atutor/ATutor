@@ -67,17 +67,6 @@ $no_good = FALSE;
 		</tbody>
 		<tbody>
 		<tr>
-			<th scope="cols">Web Server Options</th>
-			<th scope="cols">Detected</th>
-			<th scope="cols">Status</th>
-		</tr>
-		<tr>
-			<td>Webserver</td>
-			<td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
-			<td align="center"><?php echo $good; ?></td>
-		</tr>
-		<tbody>
-		<tr>
 			<th scope="cols">PHP Options</th>
 			<th scope="cols">Detected</th>
 			<th scope="cols">Status</th>
