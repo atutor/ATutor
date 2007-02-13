@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: delete_course.php 6617 2006-10-03 19:58:52Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
