@@ -59,30 +59,28 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-//check course access level
-$sql = "SELECT access FROM ".TABLE_PREFIX."courses WHERE course_id=".$_SESSION['course_id'];
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_array($result)) {
-	$access = $row['access'];
+if ($system_courses[$_SESSION['course_id']]['access'] == 'public') { 
+	// if this course is public, then we can't use this feature
+	$msg->printInfos('ACCESS_PUBLIC');
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
+	exit;
 }
 
-if (isset($access) && ($access == "private" || ($access == "protected")) ) { 
+$sql = "SELECT * FROM ".TABLE_PREFIX."course_access WHERE course_id=".$_SESSION['course_id'];
+$result = mysql_query($sql, $db);
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."course_access WHERE course_id=".$_SESSION['course_id'];
-	$result = mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_array($result)) {		
-		$enabled = $row['enabled'];
-		$password = $row['password'];
-		$expiry = $row['expiry_date'];
-		$has_entry = true;
-	} else {
-		$enabled = 0;
-		$password = strtoupper(substr(md5(rand()), 3, 8));
-		$expiry = 0;
-		$has_entry = false;
-	}
-	$url = $_base_href.'acl.php?'.$password;
+if ($row = mysql_fetch_array($result)) {		
+	$enabled = $row['enabled'];
+	$password = $row['password'];
+	$expiry = $row['expiry_date'];
+	$has_entry = true;
+} else {
+	$enabled = 0;
+	$password = strtoupper(substr(md5(rand()), 3, 8));
+	$expiry = 0;
+	$has_entry = false;
+}
+$url = $_base_href.'acl.php?'.$password;
 
 ?>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -139,30 +137,5 @@ if (isset($access) && ($access == "private" || ($access == "protected")) ) {
 				<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 			</div>
 		</div>
-
-		<?php
-		/*
-		<div class="input-form">
-			<div class="row"><h3>Email Link</h3></div>
-			<div class="row">
-				When enabled, the following URL can be given to those who you wish to access the course with a restricted guest login:<br />
-				<code></code>
-			</div>
-			<div class="row">
-				Email this link, allowing guest access to your course, to the following people:<br />
-				<input type="text" name="guest_emails" value="" size="100" />
-			</div>
-			<div class="row buttons">
-				<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" /> 
-			</div>
-		</div> */ ?>	
 	</form>
-
-
-<?php
-} else {
-	//error msg re: public access
-	$msg->printInfos('ACCESS_PUBLIC');
-}
-require(AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
