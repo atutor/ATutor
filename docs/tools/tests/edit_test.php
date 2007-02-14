@@ -150,7 +150,7 @@ $onload = 'document.form.title.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!isset($_POST['submit'])) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+	$sql	= "SELECT *, DATE_FORMAT(start_date, '%Y-%m-%d %H:%i:00') AS start_date, DATE_FORMAT(end_date, '%Y-%m-%d %H:%i:00') AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_assoc($result))){

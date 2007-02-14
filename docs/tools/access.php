@@ -66,7 +66,7 @@ if ($system_courses[$_SESSION['course_id']]['access'] == 'public') {
 	exit;
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."course_access WHERE course_id=".$_SESSION['course_id'];
+$sql = "SELECT *, expiry_date+0 AS expiry_date FROM ".TABLE_PREFIX."course_access WHERE course_id=".$_SESSION['course_id'];
 $result = mysql_query($sql, $db);
 
 if ($row = mysql_fetch_array($result)) {		
