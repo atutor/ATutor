@@ -10,19 +10,14 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id$
+// $Id: index.php 6751 2007-02-12 18:56:44Z joel $
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('NOT_OWNER');
-	require (AT_INCLUDE_PATH.'footer.inc.php'); 
-	exit;
-}
+admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT);
 
-$course_id = $_SESSION['course_id'];
+$course_id = intval($_REQUEST['course_id']);
 
-require(AT_INCLUDE_PATH.'html/enrollment.inc.php');
+require(AT_INCLUDE_PATH.'html/enroll_edit.inc.php');
 exit;
 ?>

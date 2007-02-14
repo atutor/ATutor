@@ -1,4 +1,5 @@
 <?php
+// the order matters, b/c it what generates the prev/next links
 	$_pages = array();
 	$_pages['introduction.php']                  = 'Introduction';
 	$_pages['installation.php']                  = 'Installation';
@@ -18,6 +19,8 @@
 	$_pages['feeds.php']						 = 'Syndicated Feeds';
 	$_pages['google_key.php']					 = 'Google Key';
 	$_pages['cron_setup.php']					 = 'Cron Set-up';
+	$_pages['enrollment.php']                    = 'Enrollment';
+	$_pages['enrollment_privileges.php']         = 'Privileges';
 	$_pages['users.php']                         = 'Users';
 	$_pages['instructor_requests.php']           = 'Instructor Requests';
 	$_pages['master_student_list.php']           = 'Master Student List';

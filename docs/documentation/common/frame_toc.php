@@ -92,6 +92,9 @@ if ($section == 'admin'){
 												'google_key.php',
 												'cron_setup.php'
 												),
+				'enrollment.php' => array(
+									'enrollment_privileges.php',
+									),
 				'users.php' => array(
 										'instructor_requests.php',
 										'master_student_list.php',

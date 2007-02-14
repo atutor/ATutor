@@ -601,7 +601,7 @@ INSERT INTO `modules` VALUES ('_core/file_manager',      2, 32,        0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/links',         2, 64,        0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/forums',        2, 128,       16, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/student_tools', 2, 256,       0, 0, 0);
-INSERT INTO `modules` VALUES ('_core/enrolment',         2, 512,       0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/enrolment',         2, 512,       512, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/course_email',  2, 1024,      0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/announcements', 2, 2048,      0, 0, 0);
 # INSERT INTO `modules` VALUES ('acollab',               2, 8192+4096, 0, 0, 0);

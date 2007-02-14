@@ -141,6 +141,14 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		 */
 		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."tests_questions SET type=7 WHERE type=1 AND answer_0 + answer_1 + answer_2 + answer_3 + answer_4 + answer_5 + answer_6 + answer_7 + answer_8 + answer_9 > 1";
 		mysql_query($sql, $db);
+
+		$sql = "SELECT MAX(admin_privilege) AS max FROM ".$_POST['step1']['tb_prefix']."modules";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+		$priv = $row['max'] * 2;
+
+		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."modules SET `admin_privilege`=$priv WHERE `dir_name`='_core/enrolment'";
+		mysql_query($sql, $db);
 	}
 
 	/* deal with the extra modules: */
