@@ -5,8 +5,14 @@ define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $_custom_css = $_base_path . 'mods/hello_world/module.css'; // use a custom stylesheet
 
-$success_url = $_base_href . 'mods/ecomm/success.php?mid='.$_SESSION['member_id'].SEP.'cid='.$_REQUEST['course_id'];
-$failed_url =$_base_href . 'mods/ecomm/failed.php?mid='.$_SESSION['member_id'].SEP.'cid='.$_REQUEST['course_id'];
+$success_url = $_base_href . 'mods/ecomm/index_mystart.php?mid='.$_SESSION['member_id'].SEP.'cid='.$_REQUEST['course_id'];
+$failed_url =$_base_href . 'mods/ecomm/failure.php';
+
+
+if($_POST['cancel']){
+	header('location:'.$failed_url);
+	exit;
+}
 
 //echo $success_url;
 //echo $_base_href;
@@ -44,9 +50,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	}else{
 		$course = htmlspecialchars(addslashes($_REQUEST['course']));
 	}
-
-
-	//$course = htmlspecialchars(addslashes($_REQUEST['project']));
+	$amount = floatval($amount);
 	$firstname = htmlspecialchars(addslashes($_POST['firstname']));
 	$lastname= htmlspecialchars(addslashes($_POST['lastname']));
 	$email = htmlspecialchars(addslashes($_POST['EMail']));
@@ -100,7 +104,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 			$error .= '<li>'._AT('ec_telephone').'</li>';
 		}
 		if($country == ''){
-			$error .= '<li>'._AT('ec_amount').'</li>';
+			$error .= '<li>'._AT('ec_country').'</li>';
 		}
 		//if($service && ($tmp_amount != $amount) && $invoice_id == ''){
 		//	$error .= '<li>Invoice/Quote ID (required if amount has changed)</li>';
@@ -112,8 +116,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 
 ?>
-<h2><?php echo _AT('ec_payments_gateway'); ?></h2>
-<div style="border:3px solid rgb(112, 161, 202); background-color: rgb(235, 244, 249); padding: 1em;  margin-left: auto; margin-right: auto; width: 70%;" >
+
+<div style="border:1px solid rgb(112, 161, 202); background-color: rgb(235, 244, 249); padding: 1em;  margin-left: auto; margin-right: auto; width: 70%;" >
 
 
 
@@ -166,7 +170,7 @@ if($_POST['next'] && !$error){
 
 	<br />
 	
-	<h4><?php echo _AT('ec_requirements'); ?>Requirements to procede</h4>
+	<h4><?php echo _AT('ec_requirements'); ?></h4>
 	<ul>
 	<li><?php echo _AT('ec_requirements_ssl'); ?></li>
 	<li><?php echo _AT('ec_requirements_cookies'); ?></li>
@@ -189,18 +193,16 @@ if($_POST['next'] && !$error){
 		<input type="hidden"  name="course" value="<?php echo $course; ?>">
 		<input type="hidden"  name="comment" value="<?php echo $comment; ?>">
 		<input type="hidden"  name="course_id" value="<?php echo $course_id; ?>">
-		<input type="hidden"  name="service" value="<?php echo $service; ?>">
-		<input type="hidden"  name="invoice_id" value="<?php echo $invoice_id; ?>">
-		<input type="hidden"  name="invoice" value="<?php echo $invoice; ?>">
+
 		<!-- Info sent to mirapay -->
 		<input type="hidden" name="MTID" value="<?php echo $_SESSION['MTID']; ?>">
 		<input type="hidden" name="Merchant_ID" value="<?php echo MERCHANT_ID; ?>">
 		<input type="hidden"  name="MKEY" value="<?php echo $mkey; ?>">
 		<input type="hidden"  name="amount" value="<?php echo $amount; ?>">
-		<input type="hidden"  name="SuccessURL" value="http://www.atutor.ca/payment/success.php">
-		<input type="hidden"  name="FailURL" value="http://www.atutor.ca/payment/failure.php">
+		<input type="hidden"  name="SuccessURL" value="<?php echo $success_url; ?>">
+		<input type="hidden"  name="FailURL" value="<?php echo $failed_url; ?>">
 		<input type="hidden"  name="EMail" value="<?php echo $email; ?>">
-		<input type="submit" name="confirm" value="<?php echo _AT('ec_confirm'); ?>"><input type="submit" name="modify" value="<?php echo _AT('ec_modify'); ?>">
+		<input type="submit" name="confirm" value="<?php echo _AT('ec_confirm'); ?>"><input type="submit" name="modify" value="<?php echo _AT('ec_modify'); ?>"><input type="submit" name="cancel" value="<?php echo _AT('ec_cancel'); ?>">
 	</form>
 	
 	<?php
@@ -237,26 +239,15 @@ if($_POST['next'] && !$error){
 		miraid='', 
 		date=NOW(), 
 		approval='', 
-		project='$course', 
+		course_name='$course', 
 		comments = '$comment', 
-		course_id='$course_id', 
-		invoice_id = '$invoice_id'";
+		course_id='$course_id'";
 	
-	if($result = mysql_query($sql, $db)){
-		$update = 1;
-	}else{
-		$update = 2;
-	}
-	
-	$mtid = mysql_insert_id($db);
+		$result = mysql_query($sql, $db);
 
-		$successurl = "http://www.atutor.ca/shop/success.php";
-		$failurl = "http://www.atutor.ca/shop/fail.php";
+	
+		$mtid = mysql_insert_id($db);
 		$mkey = md5($mtid.$amount.$password);
-
-		//if($invoice){
-		//	$contribinfo = '<dt><strong>Invoice #</strong>: '.$invoice_id.' </dt>';	
-		//}
 
 		if($course){
 			$contribinfo = '<dt><strong>'._AT('ec_course').'</strong>: '.$course.' </dt>';
@@ -380,96 +371,58 @@ if($_POST['next'] && !$error){
 	if($member['country']){
 		$country = $member['country'];
 	}
+	echo $error;
+	///Get the fee for the current course
+	$sql = "SELECT course_fee from ".TABLE_PREFIX."ec_course_fees WHERE course_id = '$course_id'; ";
+	$result = mysql_query($sql, $db);
+	$this_course_fee = mysql_result($result, $row['0']);
 
-
-		echo $error;
-/*	if($_REQUEST['service']){?>
-			<!--h3>Service Purchase: <?php echo $service; ?></h3>
-			<ul>
-			<li>Replace the amount below with an Invoice or Quote amount if you have been provided with one. </li>
-			
-	
-			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-			<input type="hidden" name="service" value="<?php echo $service;  ?>" />
-			<input type="hidden" name="tmp_amount" value="<?php echo $tmp_amount;  ?>" />
-			Amount $ <input type="text" size="8" maxlength="8" name="amount2" class="input" value="<?php echo $amount; ?>" /> CAD
-			 <img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" alt="Accepting Visa" align="middle"/> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" alt="Accepting Master Card"  align="middle"/><br /><br />
-			Invoice/Quote ID <input type="text" size="8" maxlength="8" name="invoice_id" class="input" value="<?php echo $invoice_id; ?>" /> <strong><small>(required if amount above changes)</small></strong>
-
-		<br /><br /></li></ul>
-		<?php 
- }else if($invoice)	{ ?>
-			<h3>Invoice Payment</h3>
-			<ul>
-			<li>Enter the Total Amount listed on the invoice into the Amount field below, and enter the invoice number into the Invoice # field.  </li>
-			
-	
-			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-			<input type="hidden" name="invoice" value="<?php echo $invoice;  ?>" />
-			Amount $ <input type="text" size="8" maxlength="8" name="amount2" class="input" value="<?php echo $amount; ?>" /> CAD
-			<br /><br />
-			Invoice # &nbsp;<input type="text" size="12" maxlength="12" name="invoice_id" class="input" value="<?php echo $invoice_id; ?>" /> <br /><br />
-			Payment Methods:  <img src="<?php echo $_base_path; ?>mods/ecommimages/visa_42x27.gif" alt="Accepting Visa" align="middle"/> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" alt="Accepting Master Card"  align="middle"/>
-
-		<br /><br /></li></ul -->
-	
-<?php 
-  }else{
-		/// Contributor Shop Page
-		?>
-		<h3><?php echo _AT('ec_payfeesfor'); ?>: <?php echo $course; ?></h3>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	///Check if a partial payment has already been made so the balance can be calculated
+	$sql4 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$_GET[course_id]' AND member_id = '$_SESSION[member_id]'";
+	if($result4 = mysql_query($sql4,$db)){
+		$amount_paid = '';
+		while($row4 = mysql_fetch_array($result4)){
+			$amount_paid = $amount_paid+$row4['0'];
+		}
+	}
+	$balance_course_fee = ($this_course_fee - $amount_paid);
+	?>
+	<h3><?php echo _AT('ec_payfeesfor'); ?>: </h3>
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<input type="hidden" name="course" value="<?php echo $course  ?>" />
-		<ol>
-		<li>Choose an amount from the selector, or type the amount you wish to contribute to this project:</li>
-		<li>Amount is calculated in Canadian Dollars.</li>
-		</ol>
-		<strong><?php echo _AT('ec_amount'); ?></strong>:  $<select name="amount1" class="input" ><option></option>
-		<option>10</option>
-		<option>25</option>
-		<option>50</option>
-		<option>100</option>
-		<option>500</option>
-		<option>1000</option>
-		<option>5000</option>
-		
-		</select>  or <input type="text" size="8" maxlength="8" name="amount2" class="input" value="<?php echo $amount; ?>" /> CAD
-		 <img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle"/> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" alt="<?php echo _AT('ec_acceptmastercard'); ?>"  align="middle"/><br /><br />  
-<?php }  */ ?>
 
-		<?php
-		$sql = "SELECT course_fee from ".TABLE_PREFIX."ec_course_fees WHERE course_id = '$course_id'; ";
-		$result = mysql_query($sql, $db);
-		$this_course_fee = mysql_result($result, $row['0']);
-		?>
-		<h3><?php echo _AT('ec_payfeesfor'); ?>: </h3><br /><br />
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-		<input type="hidden" name="course" value="<?php echo $course  ?>" />
-		<input type="hidden" name="amount1" value="<?php echo $this_course_fee  ?>" />
+		<input type="hidden" name="amount1" value="<?php echo $this_course_fee;  ?>" />
 		<div style="margin-left: 2em;"><br />
 		<?php
-		 echo '<strong>'.$course.'</strong><br />'; 
-		 echo '<strong>'. _AT('ec_this_course_fee').'</strong>: '.$_config['ec_currency_symbol'].' '.$this_course_fee.' '.$_config['ec_currency'];
-
+		echo '<strong>'. _AT('ec_course_name').'</strong> '.$course.'</strong><br />'; 
+		if($amount_paid > 0){
+			echo '<strong>'. _AT('ec_this_course_fee').'</strong> '.$_config['ec_currency_symbol'].$this_course_fee.' '.$_config['ec_currency'].'<br />';
+			echo '<strong>'. _AT('ec_amount_recieved').'</strong> '.$_config['ec_currency_symbol'].$amount_paid.'</strong><br />';
+			echo '<strong>'. _AT('ec_balance_due').'</strong> '.$_config['ec_currency_symbol'].$balance_course_fee.'</strong><br />';
+		}else{
+			echo '<strong>'. _AT('ec_this_course_fee').'</strong> '.$_config['ec_currency_symbol'].$this_course_fee.' '.$_config['ec_currency'];
+		}
 		?>
 		<?php echo $_config['currency']; ?>
-			<br /><br /><img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle"/> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" alt="<?php echo _AT('ec_acceptmastercard'); ?>"  align="middle"/>  
+		<br /><br /><img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle"/> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" alt="<?php echo _AT('ec_acceptmastercard'); ?>"  align="middle"/>  
 		</div>
-		 <br />
+		<br />
 		<ul>
-		<li><?php echo _AT('ec_complete_thisinfo'); ?></li>
-		<li><?php echo _AT('ec_next_toproceed'); ?></li>
+			<li><?php echo _AT('ec_complete_thisinfo'); ?></li>
+			<li><?php echo _AT('ec_next_toproceed'); ?></li>
 		</ul>
-	<br /><h3><?php echo _AT('ec_purchaser_info'); ?></h3>
-	<span style="color:red; font-size:15pt;">*</span><span><?php echo _AT('ec_required'); ?></span>
+		<br /><h3><?php echo _AT('ec_purchaser_info'); ?></h3>
+
+		<span style="color:red; font-size:15pt;">*</span><span><?php echo _AT('ec_required'); ?></span>
 		<input type="hidden" name="member_id" value="<?php  echo $_SESSION['member_id']; ?>" />
 		<input type="hidden" name="course_id" value="<?php echo $course_id;  ?>" />
+
 		<table>
 			<?php
 			if($service){ ?>
 			<tr><td><label for="service">ATutor Service</label></td><td><input type="text" id="service" name="service" value="<?php echo $service; ?>" size="30" class="input" /></td></tr>
 			<?php }else if(!$invoice && !$service){?>
-			<tr><td><label for="project"><?php echo _AT('ec_course'); ?></label></td><td><input type="text" id="project" name="course" value="<?php echo $course; ?>" size="30" class="input" /></td></tr>
+			<tr><td><label for="course"><?php echo _AT('ec_course'); ?></label></td><td><input type="text" id="course" name="course" value="<?php echo $course; ?>" size="30" class="input" /></td></tr>
 			<?php } ?>
 			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="firstname"><?php echo _AT('ec_firstname'); ?></label>:</td><td><input type="text" id="firstname" name="firstname" value="<?php echo $firstname; ?>" size="30"  class="input"/></td></tr>
 			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="lastname"><?php echo _AT('ec_lastname'); ?></label>:</td><td><input type="text" id="lastname" name="lastname" value="<?php echo $lastname; ?>" size="30" class="input" /></td></tr>

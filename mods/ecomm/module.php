@@ -25,7 +25,7 @@ $this->_stacks['ecomm'] = array('title_var'=>'ecomm', 'file'=>'mods/ecomm/side_m
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_student_tool = 'mods/ecomm/index.php';
+//$_student_tool = 'mods/ecomm/index.php';
 // ** possible alternative: **
 // $this->addTool('./index.php');
 
@@ -41,8 +41,17 @@ if (admin_authenticate(AT_ADMIN_PRIV_ECOMM, TRUE) || admin_authenticate(AT_ADMIN
 /*******
  * instructor Manage section:
  */
+/*
+$sql2 = "SELECT value from ".TABLE_PREFIX."config WHERE name = 'ec_allow_instructors'";
+$result2 = mysql_query($sql2,$db);
+$this_ec_allow_instructors = mysql_result($result2,0);
+*/
+
+//if($this_ec_allow_instructors == '1'){
 $this->_pages['mods/ecomm/index_instructor.php']['title_var'] = 'ecomm';
 $this->_pages['mods/ecomm/index_instructor.php']['parent']   = 'tools/index.php';
+//}
+
 // ** possible alternative: **
 // $this->pages['./index_instructor.php']['title_var'] = 'ecomm';
 // $this->pages['./index_instructor.php']['parent']    = 'tools/index.php';

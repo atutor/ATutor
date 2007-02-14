@@ -11,9 +11,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 <h3><?php echo _AT('ec_payment_confirmation'); ?></h3>
 <br /><br />
-<div style="border:3px solid green; padding: 1em;  margin-left: auto; margin-right: auto; width: 80%; background-color: #e5ffe9;" >
-<?php echo _AT('ec_payment_confirmation_text'); ?>
-</div><br /><br />
+
 <?php
 
 
@@ -34,14 +32,14 @@ if($_GET['MTID']){
 	$sqla = "SELECT * from ".TABLE_PREFIX."ec_course_fees WHERE course_id = '$_GET[cid]'";
 	$resulta = mysql_query($sqla,$db);
 ;
-	while($row = mysql_fetch_row($resulta)){
-		if($row['1'] = '1' && $total_amount_paid >= $row['0']){
+	while($row2 = mysql_fetch_assoc($resulta)){
+		if($row2['auto_approve'] == '1' && $total_amount_paid >= $row2['course_fee']){
 			$sql2 = "UPDATE ".TABLE_PREFIX."course_enrollment set approved = 'y' WHERE member_id = $_GET[mid] AND course_id = '$_GET[cid]'";
 			if($result2 = mysql_query($sql2,$db)){
-				$msg->printFeedbacks(_AT('ec_payment_confirmed_auto'));
+				$msg->printFeedbacks('EC_PAYMENT_CONFIRMED_AUTO');
 			}
 		}else{
-				$msg->printFeedbacks(_AT('ec_payment_confirmed_manual'));
+				$msg->printFeedbacks('EC_PAYMENT_CONFIRMED_MANUAL');
 		}
 
 		/// If auto email when payment is made, send an email to the instructor (maybe this should be an admin option)

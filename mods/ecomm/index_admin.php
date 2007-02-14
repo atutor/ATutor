@@ -3,7 +3,6 @@ define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ECOMM);
 
-
 if (isset($_POST['submit'])) {
 	$_POST['ec_uri'] = trim($_POST['ec_uri']); 
 
@@ -37,15 +36,45 @@ if (isset($_POST['submit'])) {
 		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_currency_symbol', '$_POST[ec_currency_symbol]')";
 		mysql_query($sql, $db);
 
-		$msg->addFeedback('EC_ADD_SAVED');
+		if($_POST['ec_allow_instructors'] == 'on'){
+			$ec_allow_instructor = '1';
+		}else{
+			$ec_allow_instructor = '0';
+		}
+		if($_POST['ec_allow_instructors'] == 'on'){
+			$_POST['ec_allow_instructors'] = $addslashes($_POST['ec_allow_instructors']);
+			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_allow_instructors', '1')";
+			mysql_query($sql, $db);
+		}else{
+			$_POST['ec_allow_instructors'] = $addslashes($_POST['ec_allow_instructors']);
+			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_allow_instructors', '0')";
+			mysql_query($sql, $db);
+		}
 
-		header('Location: '.$_SERVER['PHP_SELF']);
-		exit;
+		if($_POST['ec_email_admin'] == 'on'){
+			$_POST['ec_email_admin'] = $addslashes($_POST['ec_email_admin']);
+			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_email_admin', '1')";
+			mysql_query($sql, $db);
+		}else{
+			$_POST['ec_email_admin'] = $addslashes($_POST['ec_email_admin']);
+			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_email_admin', '0')";
+			mysql_query($sql, $db);
+		}
+		$msg->addFeedback('EC_ADD_SAVED');
 	}
 }
 
-require (AT_INCLUDE_PATH.'header.inc.php'); ?>
+		$sql2 = "SELECT value from ".TABLE_PREFIX."config WHERE name = 'ec_allow_instructors'";
+		$result2 = mysql_query($sql2,$db);
+		$this_ec_allow_instructors = mysql_result($result2,0);
 
+		$sql2 = "SELECT value from ".TABLE_PREFIX."config WHERE name = 'ec_email_admin'";
+		$result2 = mysql_query($sql2,$db);
+		$this_ec_email_admin = mysql_result($result2,0);
+
+require (AT_INCLUDE_PATH.'header.inc.php'); 
+
+?>
 
 <?php if ($_config['ec_uri']): ?>
 	<div class="input-form">
@@ -88,7 +117,26 @@ require (AT_INCLUDE_PATH.'header.inc.php'); ?>
 	
 			<input type="text" name="ec_currency_symbol" value="<?php echo $_config['ec_currency_symbol']; ?>" id="ec_currency_symbol" size="20"" />
 		</div>
-
+		<div class="row">
+			<p><label for="ec_allow_instructors"><?php echo _AT('ec_allow_instructors'); ?></label></p>				
+			<input type="checkbox" name="ec_allow_instructors"
+			<?php
+				if($this_ec_allow_instructors == '1'){
+					echo 'checked="checked"';
+				}
+			?>
+			 id="ec_allow_instructors" />
+		</div>
+		<div class="row">
+			<p><label for="ec_email_admin"><?php echo _AT('ec_email_admin'); ?></label></p>				
+			<input type="checkbox" name="ec_email_admin"
+			<?php
+				if($this_ec_email_admin == '1'){
+					echo 'checked="checked"';
+				}
+			?>
+			 id="ec_email_admin" />
+		</div>
 		<div class="row buttons">
 			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>"  class="button"  />
 		</div>
@@ -96,4 +144,6 @@ require (AT_INCLUDE_PATH.'header.inc.php'); ?>
 </form>
 
 
-<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php
+
+require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -9,13 +9,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
-<h2><?php echo _AT('ec_payments'); ?></h2>
+<h3><?php echo _AT('ec_payment_failed'); ?></h3><br />
 
-<h3>Payment Failed/Cancelled</h3><br /><br />
-<div style="border:3px solid red; padding: 1em;  margin-left: auto; margin-right: auto; width: 80%;background-color: #FBF4ED;" >
-The credit card processing service returned an error. The payment failed or was cancelled. 
-</div><br /><br />
-<p align="center"><a href="/payment">Return to ATutor Payment</a></p>
+<?php $msg->printErrors('EC_PAYMENT_FAILED'); ?>
 
-
+<p align="center"><a href="mods/ecomm/index_mystart.php"><?php echo _AT('ec_return_to_payments'); ?></a>
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
