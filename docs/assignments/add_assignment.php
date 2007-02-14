@@ -25,7 +25,7 @@ if (isset ($_GET['id'])){
 	// editing an existing assignment
 	$id = intval($_GET['id']); 
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] AND assignment_id=$id";
+	$sql = "SELECT *, DATE_FORMAT(date_due, '%Y-%m-%d %H:%i:00') AS date_due, DATE_FORMAT(date_cutoff, '%Y-%m-%d %H:%i:00') AS date_cutoff FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] AND assignment_id=$id";
 
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_assoc($result))) {

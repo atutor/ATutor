@@ -299,7 +299,7 @@ class ContentManager
 	}
 
 	function & getContentPage($content_id) {
-		$sql	= "SELECT *, release_date+0 AS r_date, NOW()+0 AS n_date FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$this->course_id";
+		$sql	= "SELECT *, DATE_FORMAT(release_date, '%Y-%m-%d %H:%i:00') AS release_date, release_date+0 AS r_date, NOW()+0 AS n_date FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
 
 		return $result;

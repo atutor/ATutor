@@ -95,7 +95,7 @@ if (isset($_POST['form_course'])) {
 	}
 
 } else if ($course) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+	$sql	= "SELECT *, DATE_FORMAT(release_date, '%Y-%m-%d %H:%i:00') AS release_date FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 	$result = mysql_query($sql, $db);
 	if (!($row	= mysql_fetch_assoc($result))) {
 		echo _AT('no_course_found');
