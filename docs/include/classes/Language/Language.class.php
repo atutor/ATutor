@@ -132,7 +132,7 @@ class Language {
 	function saveToPreferences($id) {
 		global $db;
 		if ($id) {
-			$sql = "UPDATE ".TABLE_PREFIX."members SET language='".$this->code."' WHERE member_id=$id";
+			$sql = "UPDATE ".TABLE_PREFIX."members SET language='".$this->code."', creation_date=creation_date, last_login=last_login WHERE member_id=$id";
 			mysql_query($sql,$db);
 		}
 	}

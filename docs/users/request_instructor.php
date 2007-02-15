@@ -29,7 +29,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['form_request_instructor'])) {
 	 if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
-		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR.", creation_date=creation_date WHERE member_id=$_SESSION[member_id]";
+		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR.", creation_date=creation_date, last_login=last_login WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('ACCOUNT_APPROVED');

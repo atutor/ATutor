@@ -125,7 +125,7 @@ if (isset($_POST['cancel'])) {
 			//save data
 			$_POST['password']   = $addslashes($_POST['password']);
 
-			$sql	= "UPDATE ".TABLE_PREFIX."members SET password='".$_POST['password']."' WHERE member_id=".intval($_REQUEST['id']);
+			$sql	= "UPDATE ".TABLE_PREFIX."members SET password='".$_POST['password']."', last_login=last_login WHERE member_id=".intval($_REQUEST['id']);
 			$result = mysql_query($sql,$db);
 
 			//send confirmation email

@@ -151,7 +151,8 @@ if (isset($_POST['submit'])) {
 													status   = $_POST[status],
 													language = '$_SESSION[lang]', 
 													private_email = $_POST[private_email],
-													creation_date=creation_date
+													creation_date=creation_date,
+													last_login=last_login
 				WHERE member_id = $id";
 		$result = mysql_query($sql, $db);
 		if (!$result) {

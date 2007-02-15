@@ -102,6 +102,9 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 			setcookie('ATPass',  $row['pass'],  $cookie_expire, $parts['path'], $parts['host'], 0);
 		}
 
+		$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
+		mysql_query($sql, $db);
+
 		$msg->addFeedback('LOGIN_SUCCESS');
 		header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;

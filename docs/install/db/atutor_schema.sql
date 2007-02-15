@@ -543,6 +543,7 @@ CREATE TABLE `members` (
   `language` varchar(5) NOT NULL default '',
   `inbox_notify` tinyint(3) unsigned NOT NULL default '0',
   `private_email` TINYINT DEFAULT '1' NOT NULL,
+  `last_login` TIMESTAMP NOT NULL,
   PRIMARY KEY  (`member_id`),
   UNIQUE KEY `login` (`login`)
 ) TYPE=MyISAM;

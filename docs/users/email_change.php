@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 		} else {
 
 			//insert into database
-			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$_POST[email]', creation_date=creation_date WHERE member_id=$_SESSION[member_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$_POST[email]', creation_date=creation_date, last_login=last_login WHERE member_id=$_SESSION[member_id]";
 			$result = mysql_query($sql,$db);
 			if (!$result) {
 				$msg->printErrors('DB_NOT_UPDATED');

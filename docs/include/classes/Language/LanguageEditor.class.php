@@ -195,7 +195,7 @@ class LanguageEditor extends Language {
 		$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE language_code='$this->code'";
 		mysql_query($sql, $this->db);
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET language='".DEFAULT_LANGUAGE."' WHERE language='$this->code'";
+		$sql = "UPDATE ".TABLE_PREFIX."members SET language='".DEFAULT_LANGUAGE."', creation_date=creation_date, last_login=last_login WHERE language='$this->code'";
 		mysql_query($sql, $this->db);
 
 		$sql = "UPDATE ".TABLE_PREFIX."courses SET primary_language='".DEFAULT_LANGUAGE."' WHERE primary_language='$this->code'";

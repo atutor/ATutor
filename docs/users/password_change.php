@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 		// insert into the db.
 		$_POST['password']   = $addslashes($_POST['password']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', creation_date=creation_date WHERE member_id=$_SESSION[member_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', creation_date=creation_date, last_login=last_login WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql,$db);
 		if (!$result) {
 			require(AT_INCLUDE_PATH.'header.inc.php');

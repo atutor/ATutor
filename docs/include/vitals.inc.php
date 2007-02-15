@@ -490,7 +490,7 @@ function save_prefs( ) {
 
 	if ($_SESSION['valid_user']) {
 		$data	= addslashes(serialize($_SESSION['prefs']));
-		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'" WHERE member_id='.$_SESSION['member_id'];
+		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'", creation_date=creation_date, last_login=last_login WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql, $db); 
 	}
  
@@ -793,7 +793,7 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 		$sql = "UPDATE ".TABLE_PREFIX."admins SET language = '$_SESSION[lang]' WHERE login = '$_SESSION[login]'";
 		$result = mysql_query($sql, $db);
 	} else {
-		$sql = "UPDATE ".TABLE_PREFIX."members SET language = '$_SESSION[lang]' WHERE member_id = $_SESSION[member_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."members SET language = '$_SESSION[lang]', creation_date=creation_date, last_login=last_login WHERE member_id = $_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 	}
 }

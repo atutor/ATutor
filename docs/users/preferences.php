@@ -60,7 +60,7 @@ if (isset($_GET['submit'])) {
 
 	/* also update message notification pref */
 	$_GET['mnot'] = intval($_GET['mnot']);
-	$sql = "UPDATE ".TABLE_PREFIX."members SET inbox_notify = $_GET[mnot], creation_date=creation_date WHERE member_id = $_SESSION[member_id]";
+	$sql = "UPDATE ".TABLE_PREFIX."members SET inbox_notify = $_GET[mnot], creation_date=creation_date, last_login=last_login WHERE member_id = $_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

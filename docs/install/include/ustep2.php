@@ -79,7 +79,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			}
 			
 			/* reset all the accounts to English */
-			$sql = "UPDATE ".$_POST['tb_prefix']."members SET language='en'";
+			$sql = "UPDATE ".$_POST['tb_prefix']."members SET language='en', creation_date=creation_date, last_login=last_login";
 			@mysql_query($sql, $db);
 
 			/* set all the courses to 'en' as primary language if empty. added 1.4.1 */

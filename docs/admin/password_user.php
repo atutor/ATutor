@@ -35,7 +35,7 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['id'] = intval($_POST['id']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET password= '$_POST[password]', creation_date=creation_date WHERE member_id=$_POST[id]";
+		$sql = "UPDATE ".TABLE_PREFIX."members SET password= '$_POST[password]', creation_date=creation_date, last_login=last_login WHERE member_id=$_POST[id]";
 		$result = mysql_query($sql, $db);
 
 		$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[id]";

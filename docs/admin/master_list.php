@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 			// disable missing accounts
 			$existing_accounts = implode(',', $existing_accounts);
 
-			$sql    = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_DISABLED." WHERE member_id IN ($existing_accounts)";
+			$sql    = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_DISABLED.", creation_date=creation_date, last_login=last_login WHERE member_id IN ($existing_accounts)";
 			$result = mysql_query($sql, $db);
 			
 			write_to_log(AT_ADMIN_LOG_UPDATE, 'members', mysql_affected_rows($db), $sql);

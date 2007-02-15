@@ -29,3 +29,6 @@ CREATE TABLE `course_access` (
   PRIMARY KEY ( `password` ) ,
   UNIQUE (`course_id`)
 ) TYPE=MyISAM ;
+
+## alter the members table to support last login
+ALTER TABLE `members` ADD `last_login` TIMESTAMP NOT NULL ;
