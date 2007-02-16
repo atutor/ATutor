@@ -16,42 +16,56 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN);
 
-if (isset($_POST['cancel'])) {
+if (isset($_POST['regenerate'])) {
+	$password = strtoupper(substr(md5(rand()), 3, 8));
+
+	$sql = "UPDATE ".TABLE_PREFIX."course_access SET `password`='$password' WHERE course_id=".$_SESSION['course_id'];
+	$result = mysql_query($sql, $db);
+	if (!mysql_affected_rows($db)) {
+		// conflict. try again
+		$password = strtoupper(substr(md5(rand()), 2, 7));
+		$sql = "UPDATE ".TABLE_PREFIX."course_access SET `password`='$password' WHERE course_id=".$_SESSION['course_id'];
+		$result = mysql_query($sql, $db);
+	}
+
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	header('Location: '.$_base_href.'tools/access.php');
+	exit;
+} else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.$_base_href.'tools/course_properties.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$auth = intval($_POST['auth']);
-	if ($_POST['has_entry'] || $auth) {
-		//expiry date
-		if (intval($_POST['expiry_date'])) {
-			$day_expire		= intval($_POST['day_expire']);
-			$month_expire	= intval($_POST['month_expire']);
-			$year_expire	= intval($_POST['year_expire']);
-			$hour_expire	= intval($_POST['hour_expire']);
-			$min_expire		= intval($_POST['min_expire']);
 
-			if (strlen($month_expire) == 1){
-				$month_expire = "0$month_expire";
-			}
-			if (strlen($day_expire) == 1){
-				$day_expire = "0$day_expire";
-			}
-			if (strlen($hour_expire) == 1){
-				$hour_expire = "0$hour_expire";
-			}
-			if (strlen($min_expire) == 1){
-				$min_expire = "0$min_expire";
-			}
-			$expiry_date = "$year_expire-$month_expire-$day_expire $hour_expire:$min_expire:00";
-		} else {
-			$expiry_date = 0;
+	//expiry date
+	if (intval($_POST['expiry_date'])) {
+		$day_expire		= intval($_POST['day_expire']);
+		$month_expire	= intval($_POST['month_expire']);
+		$year_expire	= intval($_POST['year_expire']);
+		$hour_expire	= intval($_POST['hour_expire']);
+		$min_expire		= intval($_POST['min_expire']);
+
+		if (strlen($month_expire) == 1){
+			$month_expire = "0$month_expire";
 		}
-
-		$sql = "REPLACE INTO ".TABLE_PREFIX."course_access VALUES ('".$_POST['password']."',".$_SESSION['course_id'].",'".$expiry_date."',".$auth.")";
-		$result = mysql_query($sql, $db);
+		if (strlen($day_expire) == 1){
+			$day_expire = "0$day_expire";
+		}
+		if (strlen($hour_expire) == 1){
+			$hour_expire = "0$hour_expire";
+		}
+		if (strlen($min_expire) == 1){
+			$min_expire = "0$min_expire";
+		}
+		$expiry_date = "$year_expire-$month_expire-$day_expire $hour_expire:$min_expire:00";
+	} else {
+		$expiry_date = 0;
 	}
 
+	$sql = "UPDATE ".TABLE_PREFIX."course_access SET `expiry_date`='$expiry_date', enabled=$auth WHERE course_id=".$_SESSION['course_id'];
+	$result = mysql_query($sql, $db);
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_base_href.'tools/course_properties.php');
 	exit;
@@ -66,35 +80,38 @@ if ($system_courses[$_SESSION['course_id']]['access'] == 'public') {
 	exit;
 }
 
-$sql = "SELECT *, expiry_date+0 AS expiry_date FROM ".TABLE_PREFIX."course_access WHERE course_id=".$_SESSION['course_id'];
+$sql = "SELECT password, expiry_date+0 AS expiry_date, enabled FROM ".TABLE_PREFIX."course_access WHERE course_id=".$_SESSION['course_id'];
 $result = mysql_query($sql, $db);
 
-if ($row = mysql_fetch_array($result)) {		
+if ($row = mysql_fetch_assoc($result)) {		
 	$enabled = $row['enabled'];
 	$password = $row['password'];
 	$expiry = $row['expiry_date'];
-	$has_entry = true;
 } else {
 	$enabled = 0;
 	$password = strtoupper(substr(md5(rand()), 3, 8));
 	$expiry = 0;
-	$has_entry = false;
+	$sql = "INSERT INTO ".TABLE_PREFIX."course_access VALUES ('$password', {$_SESSION['course_id']},'0000-00-00 00:00:00', 0)";
+	$result = mysql_query($sql, $db);
 }
 $url = $_base_href.'acl.php?'.$password;
 
 ?>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-		<input type="hidden" name="has_entry" value="<?php echo $has_entry; ?>" />
 		<div class="input-form">
 			<div class="row">				
 				<?php echo _AT('auth_access_text'); ?>
 			</div>
 			<div class="row">
-				<label for="url"><?php echo _AT('url').' ('. _AT('read_only').')'; ?></label><br />
-				<input type="hidden" name="password" value="<?php echo $password; ?>" />
-				<input type="text" name="url" id="url" readonly="readonly" size="80" value="<?php echo $url; ?>" /> 
+				<?php echo _AT('url'); ?><br />
+				<kbd><?php echo $url; ?></kbd>
 			</div>
+			<div class="row buttons">
+				<input type="submit" name="regenerate" value="<?php echo _AT('regenerate'); ?>"  />
+			</div>
+		</div>
 
+		<div class="input-form">
 			<div class="row">
 				<?php echo _AT('authenticated_access'); ?><br />
 				<input type="radio" name="auth" id="enable" value="1" <?php if($enabled) { echo 'checked="checked"'; } ?> /> <label for="enable"><?php echo _AT('enable'); ?></label> <input type="radio" name="auth" id="disable" value="0" <?php if(!$enabled) { echo 'checked="checked"'; } ?> /> <label for="disable"><?php echo _AT('disable'); ?></label> 
@@ -111,7 +128,6 @@ $url = $_base_href.'acl.php?'.$password;
 						$today_day   = substr($expiry, 6, 2);
 						$today_mon   = substr($expiry, 4, 2);
 						$today_year  = substr($expiry, 0, 4);
-
 						$today_hour  = substr($expiry, 8, 2);
 						$today_min   = substr($expiry, 10, 2);
 
@@ -133,7 +149,7 @@ $url = $_base_href.'acl.php?'.$password;
 			</div>
 
 			<div class="row buttons">
-				<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" /> 
+				<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" /> 
 				<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 			</div>
 		</div>
