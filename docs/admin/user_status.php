@@ -42,12 +42,12 @@ if (isset($_POST['submit_yes'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$hidden_vars['ids'] = $_GET['ids'];
-$hidden_vars['status'] = $status;
-
 $names = get_login($ids);
 $names_html = '<ul>'.html_get_list($names).'</ul>';
 $status_name = get_status_name($status);
+
+$hidden_vars['ids'] = implode(',', array_keys($names));
+$hidden_vars['status'] = $status;
 
 $confirm = array('EDIT_STATUS', $status_name, $names_html);
 $msg->addConfirm($confirm, $hidden_vars);
