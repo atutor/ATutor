@@ -796,4 +796,12 @@ function getTranslatedCodeStr($codes) {
 	return $message;
 }
 
+function html_get_list($array) {
+	$list = '';
+	foreach ($array as $value) {
+		$list .= '<li>'.$value.'</li>';
+	}
+	return $list;
+}
+
 ?>

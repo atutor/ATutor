@@ -83,5 +83,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 	$this->_pages['admin/admin_delete.php']['title_var'] = 'delete_user';
 	$this->_pages['admin/admin_delete.php']['parent']    = 'admin/users.php';
 
+	$this->_pages['admin/user_status.php']['title_var'] = 'status';
+	$this->_pages['admin/user_status.php']['parent']    = 'admin/users.php';
+
 }
 ?>

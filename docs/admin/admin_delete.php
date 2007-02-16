@@ -19,10 +19,46 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
-$id = intval($_GET['id']);
+$ids = explode(',', $_REQUEST['id']);
 
 if (isset($_POST['submit_yes'])) {
-	$id = intval($_POST['id']);
+	
+	foreach($ids as $id) {
+		delete_user(intval($id));
+	}
+
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	if (isset($_POST['ml']) && $_REQUEST['ml']) {
+		header('Location: '.$_base_href.'admin/master_list.php');
+	} else {
+		header('Location: '.$_base_href.'admin/users.php');
+	}
+	exit;
+} else if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+	if (isset($_POST['ml']) && $_REQUEST['ml']) {
+		header('Location: '.$_base_href.'admin/master_list.php');
+	} else {
+		header('Location: '.$_base_href.'admin/users.php');
+	}
+	exit;
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+$names = get_login($ids);
+$names_html = '<ul>'.html_get_list($names).'</ul>';
+$hidden_vars['id'] =  implode(',', array_keys($names));
+$hidden_vars['ml'] = intval($_REQUEST['ml']);
+
+$confirm = array('DELETE_USER', $names_html);
+$msg->addConfirm($confirm, $hidden_vars);
+$msg->printConfirm();
+
+require(AT_INCLUDE_PATH.'footer.inc.php');
+
+
+function delete_user($id) {
+	global $db;
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$id";
 	mysql_query($sql, $db);
@@ -109,47 +145,6 @@ if (isset($_POST['submit_yes'])) {
 	mysql_query($sql, $db);
 	write_to_log(AT_ADMIN_LOG_DELETE, 'member_track', mysql_affected_rows($db), $sql);
 
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	if (isset($_POST['ml']) && $_REQUEST['ml']) {
-		header('Location: '.$_base_href.'admin/master_list.php');
-	} else {
-		header('Location: '.$_base_href.'admin/users.php');
-	}
-	exit;
-} else if (isset($_POST['submit_no'])) {
-	$msg->addFeedback('CANCELLED');
-	if (isset($_POST['ml']) && $_REQUEST['ml']) {
-		header('Location: '.$_base_href.'admin/master_list.php');
-	} else {
-		header('Location: '.$_base_href.'admin/users.php');
-	}
-	exit;
+	return;
 }
-
-
-$sql	= "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-$result = mysql_query($sql, $db);
-if (!($row_log = mysql_fetch_assoc($result))) {
-	require(AT_INCLUDE_PATH.'header.inc.php'); 
-	echo _AT('no_user_found');
-} else {
-	$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
-	if (($row2 = mysql_fetch_assoc($result))) {
-		$msg->addError('NODELETE_USER');
-
-		header('Location: '.$_base_href.'admin/users.php');
-		exit;
-
-	} else {
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$hidden_vars['id'] = $id;
-		$hidden_vars['ml'] = intval($_REQUEST['ml']);
-		$confirm = array('DELETE_USER', AT_print($row_log['login'], 'members.login'));
-		$msg->addConfirm($confirm, $hidden_vars);
-		$msg->printConfirm();
-	}
-}
-
-require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

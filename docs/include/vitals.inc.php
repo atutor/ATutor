@@ -428,13 +428,26 @@ function add_user_online() {
 function get_login($id){
 	global $db, $_config_defaults;
 
-	$id		= intval($id);
+	if (is_array($id)) {
+		$id		= implode(',',$id);
+		$sql	= 'SELECT login, member_id FROM '.TABLE_PREFIX.'members WHERE member_id IN ('.$id.') ORDER BY login';
 
-	$sql	= 'SELECT login FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
-	$result	= mysql_query($sql, $db);
-	$row	= mysql_fetch_assoc($result);
+		$rows = array();
+		$result	= mysql_query($sql, $db);
+		while( $row	= mysql_fetch_assoc($result)) {
+			$rows[$row['member_id']] = $row['login'];
+		}
+		return $rows;
+	} else {
+		$id		= intval($id);
+		$sql	= 'SELECT login FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
 
-	return $row['login'];
+		$result	= mysql_query($sql, $db);
+		$row	= mysql_fetch_assoc($result);
+
+		return $row['login'];
+	}
+
 }
 
 function get_display_name($id) {
@@ -781,6 +794,24 @@ function get_group_title($group_id) {
 		return $row['title'];
 	}
 	return FALSE;
+}
+
+function get_status_name($status_id) {
+
+	switch ($status_id) {
+		case AT_STATUS_DISABLED:
+				return _AT('disabled');
+				break;
+		case AT_STATUS_UNCONFIRMED:
+			return _AT('unconfirmed');
+			break;
+		case AT_STATUS_STUDENT:
+			return _AT('student');
+			break;
+		case AT_STATUS_INSTRUCTOR:
+			return _AT('instructor');
+			break;
+	}
 }
 
 

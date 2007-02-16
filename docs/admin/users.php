@@ -15,22 +15,25 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
-if (isset($_GET['delete'], $_GET['id'])) {
-	header('Location: admin_delete.php?id='.$_GET['id']);
+if ( (isset($_GET['edit']) || isset($_GET['password'])) && (isset($_GET['id']) && count($_GET['id']) > 1) ) {
+	$msg->addError('SELECT_ONE_ITEM');
+} else if (isset($_GET['delete'], $_GET['id'])) {
+	$ids = implode(',', $_GET['id']);
+	header('Location: admin_delete.php?id='.$ids);
 	exit;
 } else if (isset($_GET['edit'], $_GET['id'])) {
-	header('Location: edit_user.php?id='.$_GET['id']);
+	header('Location: edit_user.php?id='.$_GET['id'][0]);
 	exit;
 } else if (isset($_GET['password'], $_GET['id'])) {
-	header('Location: password_user.php?id='.$_GET['id']);
+	header('Location: password_user.php?id='.$_GET['id'][0]);
 	exit;
-} else if (isset($_GET['confirm'], $_GET['id'])) {
-	$id  = intval($_GET['id']);
-	$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT.", creation_date=creation_date, last_login=last_login WHERE status=".AT_STATUS_UNCONFIRMED." AND member_id=$id";
-	$result = mysql_query($sql, $db);
+} else if (isset($_GET['apply'], $_GET['id'])) {
+	$ids = implode(',', $_GET['id']);
+	$status = intval($_GET['change_status']);
+	header('Location: user_status.php?ids='.$ids.'&status='.$status);
+	exit;
 
-	$msg->addFeedback('ACCOUNT_CONFIRMED');
-} else if (isset($_GET['confirm']) || isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['password'])) {
+} else if (isset($_GET['apply']) || isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['password'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -271,17 +274,28 @@ $result = mysql_query($sql, $db);
 <?php if ($num_results > 0): ?>
 	<tfoot>
 	<tr>
-		<td colspan="<?php echo 8 + $col_counts; ?>"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
-						<input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> 
-						<input type="submit" name="password" value="<?php echo _AT('password'); ?>" />
-						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+		<td colspan="<?php echo 8 + $col_counts; ?>">
+			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
+			<!-- input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" / --> 
+			<input type="submit" name="password" value="<?php echo _AT('password'); ?>" />
+			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /><br />
+			<div style="padding:5px;"><?php echo _AT('status'); ?>:
+			<select name="change_status">
+				<option value="<?php echo AT_STATUS_DISABLED; ?>"><?php echo _AT('disable'); ?></option>
+				<?php if ($_config['email_confirmation']) {echo '<option value="'.AT_STATUS_UNCONFIRMED.'">'._AT('unconfirmed').'</option>'; } ?>
+				<option value="<?php echo AT_STATUS_STUDENT; ?>"><?php echo _AT('student'); ?></option>
+				<option value="<?php echo AT_STATUS_INSTRUCTOR; ?>"><?php echo _AT('instructor'); ?></option>	
+			</select>
+			<input type="submit" name="apply" value="<?php echo _AT('apply'); ?>" />
+			</div>
+		</td>
 	</tr>
 	</tfoot>
 	<tbody>
 		<?php while($row = mysql_fetch_assoc($result)): ?>
-			<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['member_id']; ?>">
-				<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" /></td>
-				<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></label></td>
+			<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = !document.form['m<?php echo $row['member_id']; ?>'].checked;">
+				<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
+				<td><?php echo $row['login']; ?></td>
 				<?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
 					<td><?php echo $row['public_field']; ?></td>
 				<?php endif; ?>
@@ -290,21 +304,7 @@ $result = mysql_query($sql, $db);
 				<td><?php echo AT_print($row['second_name'], 'members.second_name'); ?></td>
 				<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
 				<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
-				<td><?php 
-					switch ($row['status']) {
-							case AT_STATUS_DISABLED:
-									echo _AT('disabled');
-								break;
-							case AT_STATUS_UNCONFIRMED:
-									echo _AT('unconfirmed');
-								break;
-							case AT_STATUS_STUDENT:
-									echo _AT('student');
-								break;
-							case AT_STATUS_INSTRUCTOR:
-									echo _AT('instructor');
-								break;
-					} ?></td>
+				<td><?php echo get_status_name($row['status']); ?></td>
 				<td nowrap="nowrap">
 					<?php if ($row['last_login'] == 0): ?>
 						<?php echo _AT('never'); ?>
