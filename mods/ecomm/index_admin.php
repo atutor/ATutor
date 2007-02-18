@@ -65,12 +65,13 @@ if (isset($_POST['submit'])) {
 }
 
 		$sql2 = "SELECT value from ".TABLE_PREFIX."config WHERE name = 'ec_allow_instructors'";
-		$result2 = mysql_query($sql2,$db);
-		$this_ec_allow_instructors = mysql_result($result2,0);
-
+		if($result2 = mysql_query($sql2,$db)){
+			$this_ec_allow_instructors = mysql_result($result2,0);
+		}
 		$sql2 = "SELECT value from ".TABLE_PREFIX."config WHERE name = 'ec_email_admin'";
-		$result2 = mysql_query($sql2,$db);
-		$this_ec_email_admin = mysql_result($result2,0);
+		if($result2 = mysql_query($sql2,$db)){
+			$this_ec_email_admin = mysql_result($result2,0);
+		}
 
 require (AT_INCLUDE_PATH.'header.inc.php'); 
 

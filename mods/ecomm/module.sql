@@ -15,6 +15,7 @@ CREATE TABLE `ec_shop` (
   `miraid` varchar(12) NOT NULL,
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `approval` int(8) NOT NULL,
+  `course_name` varchar( 255 ) NOT NULL ,
   `amount` float unsigned default NULL,
   `comments` text,
   `course_id` int(8) unsigned default NULL,
@@ -22,13 +23,13 @@ CREATE TABLE `ec_shop` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE `atutorsvn`.`temp` (
-`course_id` smallint( 8 ) NOT NULL ,
-`course_fee` float NOT NULL ,
-`auto_approve` tinyint( 1 ) default NULL ,
-`auto_email` tinyint( 1 ) default NULL ,
-PRIMARY KEY ( `course_id` )
-) ENGINE = MYISAM DEFAULT CHARSET = latin1;
+ CREATE  TABLE  `atutorsvn`.`ec_course_fees`(
+  `course_id` smallint( 8  )  NOT  NULL ,
+  `course_fee` float NOT  NULL ,
+  `auto_approve` tinyint( 1  )  default NULL ,
+  `auto_email` tinyint( 1  )  default NULL ,
+ PRIMARY  KEY (  `course_id`  )
+) ENGINE  =  MyISAM  DEFAULT CHARSET  = latin1;
 
 
 INSERT INTO `language_text` VALUES ('en', '_module','ecomm','Payments',NOW(),'');
