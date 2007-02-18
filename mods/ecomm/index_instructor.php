@@ -5,6 +5,15 @@ authenticate(AT_PRIV_HELLO_WORLD);
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 
+if($_config['ec_allow_instructors'] != 1 && !$_SESSION['is_super_admin']){
+
+$msg->printInfos('EC_PAYMENTS_TURNED_OFF');
+require (AT_INCLUDE_PATH.'footer.inc.php'); 
+exit;
+}
+
+
+
 
 $this_course_id = intval($_POST['course_id']);
 $this_course_fee = addslashes($_POST['ec_course_fee']);

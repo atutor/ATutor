@@ -113,5 +113,6 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_PAYMENT_FAILED','The payment was cancelled or  failed.',NOW(),'');
 
 UPDATE  `language_text` set text = 'Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index_mystart.php">Payments</a> tab above, where they can be paid.' WHERE term = 'AT_FEEDBACK_APPROVAL_PENDING' AND language_code='en';
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Course fees are being managed by the systems administrator.',NOW(),'');
 
-
+EC_PAYMENTS_TURNED_OFF

@@ -50,6 +50,8 @@ $this_ec_allow_instructors = mysql_result($result2,0);
 //if($this_ec_allow_instructors == '1'){
 $this->_pages['mods/ecomm/index_instructor.php']['title_var'] = 'ecomm';
 $this->_pages['mods/ecomm/index_instructor.php']['parent']   = 'tools/index.php';
+$this->_pages['mods/ecomm/index_instructor.php']['children'] = array('tools/enrollment/index.php');
+
 //}
 
 // ** possible alternative: **
