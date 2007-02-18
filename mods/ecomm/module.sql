@@ -102,6 +102,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_amount_recieved','Amount
 INSERT INTO `language_text` VALUES ('en', '_module','ec_email_admin','Email payment notices to the administrator.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_admin_payment_mail_instruction','A payment has been made. To review the payment login to ATutor as an administrator and select the Payments tab.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_login','Login.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_settings','Payment Settings.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_received','Payments Received.',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_PAID_COURSES','You have not enrolled in any courses that require fees to be paid. <a href="./users/browse.php">Browse</a> existing courses. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_ADD_SAVED','Payment settings were successfully saved. ',NOW(),'');

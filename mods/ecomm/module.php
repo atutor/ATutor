@@ -34,20 +34,17 @@ $this->_stacks['ecomm'] = array('title_var'=>'ecomm', 'file'=>'mods/ecomm/side_m
  */
 if (admin_authenticate(AT_ADMIN_PRIV_ECOMM, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages[AT_NAV_ADMIN] = array('mods/ecomm/index_admin.php');
-	$this->_pages['mods/ecomm/index_admin.php']['title_var'] = 'ecomm';
+	$this->_pages['mods/ecomm/index_admin.php']['title_var'] = 'payments';
+	$this->_pages['mods/ecomm/payments_admin.php']['title_var'] = 'payments_received';
+	$this->_pages['mods/ecomm/payments_admin.php']['parent']   = 'mods/ecomm/index_admin.php';
+	$this->_pages['mods/ecomm/index_admin.php']['children'] = array('mods/ecomm/payments_admin.php','admin/enrollment/index.php');
 	$this->_pages['mods/ecomm/index_admin.php']['parent']    = AT_NAV_ADMIN;
 }
 
 /*******
  * instructor Manage section:
  */
-/*
-$sql2 = "SELECT value from ".TABLE_PREFIX."config WHERE name = 'ec_allow_instructors'";
-$result2 = mysql_query($sql2,$db);
-$this_ec_allow_instructors = mysql_result($result2,0);
-*/
 
-//if($this_ec_allow_instructors == '1'){
 $this->_pages['mods/ecomm/index_instructor.php']['title_var'] = 'ecomm';
 $this->_pages['mods/ecomm/index_instructor.php']['parent']   = 'tools/index.php';
 $this->_pages['mods/ecomm/index_instructor.php']['children'] = array('tools/enrollment/index.php');

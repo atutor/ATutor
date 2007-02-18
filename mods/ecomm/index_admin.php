@@ -77,6 +77,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
+
 <?php if ($_config['ec_uri']): ?>
 	<div class="input-form">
 		<div class="row">
