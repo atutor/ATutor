@@ -105,7 +105,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_login','Login.',NOW(),''
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_settings','Payment Settings.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_received','Payments Received.',NOW(),'');
 
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_PAID_COURSES','You have not enrolled in any courses that require fees to be paid. <a href="./users/browse.php">Browse</a> existing courses. ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_PAID_COURSES','You have not enrolled in any courses that require fees to be paid. <a href="./users/browse.php">Browse</a> courses. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_ADD_SAVED','Payment settings were successfully saved. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_STUDENTS_ENROLLED','No students have requested enrollment in this course. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_PAYMENT_CONFIRMED_AUTO','Your payment has been received, and your course enrolment has been approved. You may now login to the course. ',NOW(),'');
