@@ -126,7 +126,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 				}
 			?>
 			 id="ec_allow_instructors" />
-		</div>
+		</div> 
 		<div class="row">
 			<p><label for="ec_email_admin"><?php echo _AT('ec_email_admin'); ?></label></p>				
 			<input type="checkbox" name="ec_email_admin"
