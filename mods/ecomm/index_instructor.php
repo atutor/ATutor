@@ -12,9 +12,6 @@ require (AT_INCLUDE_PATH.'footer.inc.php');
 exit;
 }
 
-
-
-
 $this_course_id = intval($_POST['course_id']);
 $this_course_fee = addslashes($_POST['ec_course_fee']);
 $this_auto_approve = addslashes($_POST['ec_auto_approve']);
@@ -48,14 +45,13 @@ if($_POST['submit']){
 }
 
 $sql2 = "SELECT * from ".TABLE_PREFIX."ec_course_fees WHERE course_id='$_SESSION[course_id]'";
-$result2 = mysql_query($sql2,$db);
-
-while($row = mysql_fetch_array($result2)){
-	$this_course_fee = $row['1'];
-	$this_auto_approve = $row['2'];
-	$this_auto_email = $row['3'];
-}	
-
+if($result2 = mysql_query($sql2,$db)){
+	while($row = mysql_fetch_array($result2)){
+		$this_course_fee = $row['1'];
+		$this_auto_approve = $row['2'];
+		$this_auto_email = $row['3'];
+	}	
+}
 $msg->printAll();
 ?>
 
@@ -95,57 +91,76 @@ $msg->printAll();
 </form>
 
 <?php
-	$sql = "SELECT  s.course_id,  s.member_id,  f.course_fee, f.auto_approve , m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE f.course_id = '$_SESSION[course_id]' AND s.course_id = '$_SESSION[course_id]' AND s.member_id = m.member_id GROUP BY m.login, m.first_name, m.last_name";
+	$sql2 = "SELECT  s.course_id,  s.member_id,  f.course_fee, f.auto_approve , m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE f.course_id = '$_SESSION[course_id]' AND s.course_id = '$_SESSION[course_id]' AND s.member_id = m.member_id GROUP BY m.login, m.first_name, m.last_name";
 
-	$result = mysql_query($sql,$db);
+	if($result2 = mysql_query($sql2,$db)){
+		if(mysql_num_rows($result2) >=1){ ?>
+		
+		<table class="data static" summary="">
+		<tr>
+			<th scope="col"><?php echo _AT('ec_student_name'); ?></th>
+			<th scope="col"><?php echo _AT('ec_payment_made'); ?></th>
+			<th scope="col"><?php echo _AT('ec_enroll_approved'); ?></th>
+		</tr>
+		<?php
+		
+			while($row = mysql_fetch_assoc($result2)){
+				
+				echo '<tr><td>'.$row['first_name'].' '.$row['last_name'].' ('.$row['login'].')</td>';
+			
+				$sql3 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$row[course_id]' AND member_id = '$row[member_id]'";
+		
+				$result3 = mysql_query($sql3,$db);
+		
+				$amount_paid = '';
+				while($row3 = mysql_fetch_assoc($result3)){
+					//$amount_paid = $amount_paid.'+'.$row3['amount'];
+					$amount_paid = $amount_paid+$row3['amount'];
+				}
+				if($amount_paid != 0){
+				
+					echo '<td>'.$amount_paid.'</td>';
+				}else{
+					echo '<td>0</td>';
+				}	
+			
+				$sql4 = "SELECT * from ".TABLE_PREFIX."course_enrollment WHERE course_id = '$_SESSION[course_id]' AND member_id = '$row[member_id]'";
+				if($result4 = mysql_query($sql4, $db)){
+					if(mysql_num_rows($result4) >= '1'){
+						while($row4 = mysql_fetch_assoc($result4)){
+	
+							if($row4['approved'] == 'y'){
+								echo '<td>'._AT('yes').'</td></tr>';
+							}else{
+								echo '<td>'._AT('no').' <small>( <a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small><form action="tools/enrollment/enroll_edit.php "method="get">
+									<input type="hidden" name="id0" value="'.$row['member_id'].'" />
+									<input type="hidden" name="func" value="enroll" />
+									<input type="hidden" name="tab" value="0" />
+									<input type="hidden" name="owner" value="'.$_SESSION['member_id'].'" />
+									<input type="hidden" name="gid" value="0" />
+									<input type="hidden" name="course_id" value="'.$_SESSION['course_id'].'" />
+									<input type="submit" name ="submit" value="'._AT('enroll').'"/>
+									</form></td></tr>';
+							}
+						}
+					}else{
+						echo '<td>'._AT('no').'</td></tr>';
+					}
+				}else{
+						echo '<td>'._AT('no').'</td></tr>';
+				}
 
-//echo $sql."<br />";
-//echo mysql_num_rows($result);
-	if(mysql_num_rows($result) >=1){ ?>
-	
-	<table class="data static" summary="">
-	<tr>
-		<th scope="col"><?php echo _AT('ec_student_name'); ?></th>
-		<th scope="col"><?php echo _AT('ec_payment_made'); ?></th>
-		<th scope="col"><?php echo _AT('ec_enroll_approved'); ?></th>
-	</tr>
-	<?php
-	
-		while($row = mysql_fetch_assoc($result)){
-			
-			echo '<tr><td>'.$row['first_name'].' '.$row['last_name'].' ('.$row['login'].')</td>';
-		
-			$sql3 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$row[course_id]' AND member_id = '$row[member_id]'";
-	
-			$result3 = mysql_query($sql3,$db);
-	
-			$amount_paid = '';
-			while($row3 = mysql_fetch_assoc($result3)){
-				//$amount_paid = $amount_paid.'+'.$row3['amount'];
-				$amount_paid = $amount_paid+$row3['amount'];
 			}
-			if($amount_paid != 0){
-			
-				echo '<td>'.$amount_paid.'</td>';
-			}else{
-				echo '<td>0</td>';
-			}	
-		
-			$sql4 = "SELECT * from ".TABLE_PREFIX."course_enrollment WHERE course_id = '$_SESSION[course_id]' AND member_id = '$row[member_id]'";
-			$result4 = mysql_query($sql4, $db);
-		while($row4 = mysql_fetch_array($result4)){
-		
-			if($row4['approved'] == 'y'){
-				echo '<td>'._AT('yes').'</td>';
-			}else{
-				echo '<td>'._AT('no').'</td>';
-			}
+			//echo $sql4;
+	
+			//echo '</table>';
+		}else{
+			$msg->printInfos('EC_NO_STUDENTS_ENROLLED');
 		}
+	}else{
+		echo '<td>'._AT('no').'</td></tr>';
 	}
 		echo '</table>';
-}else{
-	$msg->printInfos('EC_NO_STUDENTS_ENROLLED');
-}
 
 
  require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
