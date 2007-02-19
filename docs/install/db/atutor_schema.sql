@@ -312,6 +312,7 @@ CREATE TABLE `forums` (
   `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
   `num_posts` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
   `last_post` TIMESTAMP NOT NULL,
+  `mins_to_edit` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY  (`forum_id`)
 ) TYPE=MyISAM;
 

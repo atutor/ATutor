@@ -32,3 +32,6 @@ CREATE TABLE `course_access` (
 
 ## alter the members table to support last login
 ALTER TABLE `members` ADD `last_login` TIMESTAMP NOT NULL ;
+
+## alter the forums table to support minutes to edit
+ALTER TABLE `forums` ADD `mins_to_edit` SMALLINT UNSIGNED NOT NULL DEFAULT '0';

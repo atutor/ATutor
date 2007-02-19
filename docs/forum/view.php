@@ -29,8 +29,8 @@ if (!valid_forum_user($fid)) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-
-$_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
+$forum_info = get_forum($fid, $_SESSION['course_id']);
+$_pages['forum/index.php?fid='.$fid]['title']    = $forum_info['title'];
 $_pages['forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
 $_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php?fid='.$fid);
 
@@ -41,12 +41,17 @@ $_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
 
 
 function print_entry($row) {
-	global $page,$system_courses;
+	global $page,$system_courses, $forum_info;
 
 	echo '<tr>';
 	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><strong>'.AT_Print($row['subject'], 'forums_threads.subject').'</strong>';
 	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
 		echo ' - <a href="editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].'">'._AT('edit').'</a> | <a href="forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP.'nest=1">'._AT('delete').'</a> | ';
+	} else if (($row['member_id'] == $_SESSION['member_id']) && (($row['udate'] + $forum_info['mins_to_edit'] * 60) > time())) {
+		// note:
+		// this will change when the layout is updated to remove the tables. that is why the language hasn't been added yet!
+
+		echo ' - <a href="editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].'">'._AT('edit').'</a> <strong>[[(for another '.round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60).' minutes)]]</strong> | ';
 	}
 
 	if ($_SESSION['valid_user']) {
@@ -90,7 +95,7 @@ if (!$_GET['page']) {
 $start = ($page-1)*$num_per_page;
 	
 /* get the first thread first */
-$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
+$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
 $result	= mysql_query($sql, $db);
 
 if (!($post_row = mysql_fetch_array($result))) {
@@ -163,7 +168,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	} else {
 		$start--;
 	}
-	$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$pid AND forum_id=$fid ORDER BY date ASC LIMIT $start, $num_per_page";
+	$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$pid AND forum_id=$fid ORDER BY date ASC LIMIT $start, $num_per_page";
 	$result	= mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)) {

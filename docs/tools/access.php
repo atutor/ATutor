@@ -29,11 +29,11 @@ if (isset($_POST['regenerate'])) {
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.$_base_href.'tools/access.php');
+	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'tools/course_properties.php');
+	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if (isset($_POST['submit'])) {
 	$auth = intval($_POST['auth']);
@@ -67,7 +67,7 @@ if (isset($_POST['regenerate'])) {
 	$result = mysql_query($sql, $db);
 	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.$_base_href.'tools/course_properties.php');
+	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
 

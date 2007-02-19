@@ -161,8 +161,9 @@ function add_forum($_POST) {
 
 	$_POST['title'] = $addslashes($_POST['title']);
 	$_POST['body']  = $addslashes($_POST['body']);
+	$_POST['edit']  = intval($_POST['edit']);
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL,'$_POST[title]', '$_POST[body]', 0, 0, NOW())";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL,'$_POST[title]', '$_POST[body]', 0, 0, NOW(), $_POST[edit])";
 	$result = mysql_query($sql,$db);
 
 	$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(),  $_SESSION[course_id])";
@@ -187,8 +188,9 @@ function edit_forum($_POST) {
 	$_POST['body']   = $addslashes($_POST['body']);
 
 	$_POST['fid']    = intval($_POST['fid']);
+	$_POST['edit']    = intval($_POST['edit']);
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]', last_post=last_post WHERE forum_id=$_POST[fid]";
+	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]', last_post=last_post, mins_to_edit=$_POST[edit] WHERE forum_id=$_POST[fid]";
 	$result = mysql_query($sql,$db);
 
 	return;
