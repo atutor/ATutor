@@ -202,6 +202,10 @@ function alumni ($list) {
 	$result = mysql_query($sql, $db);
 }
 
+
+//course_owner
+$owner = $system_courses[$course_id]['member_id'];
+
 if (isset($_POST['submit_no'])) {
 	//if user decides to forgo option
 	$msg->addFeedback('CANCELLED');
@@ -261,8 +265,6 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-//course_owner
-$owner = $system_courses[$course_id]['member_id'];
 //Store id's into a hidden element for use by functions
 $j = 0;
 while ($_GET['id'.$j]) {
