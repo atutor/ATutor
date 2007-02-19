@@ -64,7 +64,7 @@ $all_forums = get_forums($_SESSION['course_id']);
 </tr>
 </tfoot>
 <tbody>
-<?php if ($all_forums['nonshared'] || $all_forums['shared']): ?>
+<?php if ($all_forums['nonshared']): ?>
 	<?php foreach($all_forums['nonshared'] as $row): ?>
 		<tr onmousedown="document.form['f<?php echo $row['forum_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['forum_id']; ?>">
 			<td width="10"><input type="radio" name="id" value="<?php echo $row['forum_id']; ?>" id="f<?php echo $row['forum_id']; ?>" /></td>
