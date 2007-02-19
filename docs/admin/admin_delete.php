@@ -58,7 +58,17 @@ require(AT_INCLUDE_PATH.'footer.inc.php');
 
 
 function delete_user($id) {
-	global $db;
+	global $db, $msg;
+
+	//make sure not instructor of a course
+	$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
+	$result = mysql_query($sql, $db);
+	if (($row = mysql_fetch_assoc($result))) {
+		/*$msg->addError('NODELETE_USER');
+		header('Location: '.$_base_href.'users.php');
+		exit;*/
+		return;
+	}
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$id";
 	mysql_query($sql, $db);
