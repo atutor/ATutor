@@ -166,8 +166,7 @@ if (isset($_POST['cancel'])) {
 			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics+1, last_post='$now' WHERE forum_id=$_POST[fid]";
 			$result	 = mysql_query($sql, $db);
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-			header('Location: ./index.php?fid='.$fid);
-			exit;
+			$_POST['parent_id'] = $this_id;
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
