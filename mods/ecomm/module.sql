@@ -23,7 +23,7 @@ CREATE TABLE `ec_shop` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 
- CREATE  TABLE  `atutorsvn`.`ec_course_fees`(
+ CREATE  TABLE  `ec_course_fees`(
   `course_id` smallint( 8  )  NOT  NULL ,
   `course_fee` float NOT  NULL ,
   `auto_approve` tinyint( 1  )  default NULL ,
