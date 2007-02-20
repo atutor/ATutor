@@ -1,4 +1,5 @@
 <?php
+$page = 'ec_payments';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -44,14 +45,13 @@ if($_GET['MTID']){
 
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 			
-			/// Get the course title and instructor id
-			$sql2= "SELECT  title, member_id from ".TABLE_PREFIX."courses WHERE course_id = '$_GET[cid]'";
+			/// Get the course title
+			$sql2= "SELECT  title from ".TABLE_PREFIX."courses WHERE course_id = '$_GET[cid]'";
 			$result2 = mysql_query($sql2,$db);
 			while($row2 = mysql_fetch_array($result2)){
 				$course_title  = $row2['0'];
-				//$course_instructor  = $row2['1'];
 			}
-			//$course_title  = mysql_result($result2, 0);
+
 
 			/// Get the sender's name and email address
 			$sql3= "SELECT login, email, first_name, last_name  from ".TABLE_PREFIX."members WHERE member_id = '$_GET[mid]'";
@@ -111,11 +111,17 @@ if($_GET['MTID']){
 }
 
 /// Get a list of enrolled courses or pending enrollments, and display their fee payment status 
+//debug($system_courses);
+
+//echo $_SESSION['course_id'];
+//debug($system_courses[$_SESSION['course_id']]);
+//$this_course_instructor = $system_courses[$_SESSION['course_id']]['member_id'];
 $sql = "SELECT course_id from  ".TABLE_PREFIX."course_enrollment WHERE member_id = '$_SESSION[member_id]'";
+
+//echo $sql;
 $result = mysql_query($sql,$db);
 //debug($course_title);
-if(@mysql_num_rows($result) >=1 && $course_instructor != $_SESSION['member_id']){ ?>
-
+if(@mysql_num_rows($result) >=1){ ?>
 	<table class="data" rules="cols" summary="">
 	<thead>
 		<tr>
@@ -128,61 +134,62 @@ if(@mysql_num_rows($result) >=1 && $course_instructor != $_SESSION['member_id'])
 	</thead>
 	<?php
 		while($row = mysql_fetch_assoc($result)){
-
-			$sql7 = "SELECT member_id from ".TABLE_PREFIX."courses WHERE course_id = '$row[course_id]' ";
-			$result7 = mysql_query($sql7,$db);
-			$this_course_instructor = mysql_result($result7,0);
-
-			if($this_course_instructor != $_SESSION['member_id']){
-				$sql2 = "SELECT course_fee from ".TABLE_PREFIX."ec_course_fees WHERE course_id = '$row[course_id]'";
-				if($result2 = mysql_query($sql2,$db)){
-					$this_course_fee = mysql_result($result2,0);
-				}
-				$sql3 = "SELECT title from ".TABLE_PREFIX."courses WHERE course_id = '$row[course_id]' ";
-				$result3 = mysql_query($sql3,$db);
-				$this_course_title = mysql_result($result3,0);
-// 				$result2 = mysql_query($sql2,$db);
-// 				while($row3 = mysql_fetch_array($result3)){
-// 					$course_title  = $row3['0'];
-// 					$course_instructor  = $row3['1'];
-// 				}
-				echo '<tr><td>'.$this_course_title.'</td><td>'.$_config['ec_currency_symbol'].$this_course_fee.' '.$_config['ec_currency'].'</td>';
-			
-				$sql4 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$row[course_id]' AND member_id = '$_SESSION[member_id]' AND course_id = '$row[course_id]'";
-				$result4 = mysql_query($sql4,$db);
-	
-				$amount_paid = '';
-				while($row4 = mysql_fetch_array($result4)){
-					$amount_paid = $amount_paid+$row4['0'];
-				}
-				if($amount_paid != 0){
-				
-					echo '<td>'.$_config['ec_currency_symbol'].$amount_paid.'</td>';
-				}else{
-					echo '<td>'.$_config['ec_currency_symbol'].'0</td>';
-				}
-			
-				$sql4 = "SELECT * from ".TABLE_PREFIX."course_enrollment WHERE course_id = '$row[course_id]' AND member_id = '$_SESSION[member_id]'";
-		
-				$result4 = mysql_query($sql4, $db);
-				while($row4 = mysql_fetch_array($result4)){
-				
-				if($row4['approved'] == 'y'){
-						echo '<td>'._AT('yes').' (<a href="bounce.php?course='.$row['course_id'].'">'._AT('ec_login').'</a>)</td>';
-					}else{
-						echo '<td>'._AT('no').'</td>';
+			if($_SESSION['member_id'] != $system_courses[$row['course_id']]['member_id']){
+				$payment_count++;
+				$sql7 = "SELECT member_id from ".TABLE_PREFIX."courses WHERE course_id = '$row[course_id]' ";
+				$result7 = mysql_query($sql7,$db);
+				$this_course_instructor = mysql_result($result7,0);
+				if($system_courses[$row['course_id']]['member_id'] != $_SESSION['member_id']){
+					$sql2 = "SELECT course_fee from ".TABLE_PREFIX."ec_course_fees WHERE course_id = '$row[course_id]'";
+					if($result2 = mysql_query($sql2,$db)){
+						$this_course_fee = mysql_result($result2,0);
 					}
-				}
+					$sql3 = "SELECT title from ".TABLE_PREFIX."courses WHERE course_id = '$row[course_id]' ";
+					$result3 = mysql_query($sql3,$db);
+					$this_course_title = mysql_result($result3,0);
+
+					echo '<tr><td>'.$this_course_title.'</td><td>'.$_config['ec_currency_symbol'].$this_course_fee.' '.$_config['ec_currency'].'</td>';
+				
+					$sql4 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$row[course_id]' AND member_id = '$_SESSION[member_id]' AND course_id = '$row[course_id]'";
+					$result4 = mysql_query($sql4,$db);
 		
-				if($amount_paid >= $this_course_fee){
-					echo '<td>'._AT('ec_full_payment_recieved').' | <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('ec_remove').'</a></td>';
-				}else{
-					echo '<td> <a href="mods/ecomm/payment.php?course_id='.$row['course_id'].'">'._AT('ec_make_payment').'</a> | <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('ec_remove').'</a></td>';
-				}
+					$amount_paid = '';
+					while($row4 = mysql_fetch_array($result4)){
+						$amount_paid = $amount_paid+$row4['0'];
+					}
+					if($amount_paid != 0){
+					
+						echo '<td>'.$_config['ec_currency_symbol'].$amount_paid.'</td>';
+					}else{
+						echo '<td>'.$_config['ec_currency_symbol'].'0</td>';
+					}
+				
+					$sql4 = "SELECT * from ".TABLE_PREFIX."course_enrollment WHERE course_id = '$row[course_id]' AND member_id = '$_SESSION[member_id]'";
 			
+					$result4 = mysql_query($sql4, $db);
+					while($row4 = mysql_fetch_array($result4)){
+					
+					if($row4['approved'] == 'y'){
+							echo '<td>'._AT('yes').' (<a href="bounce.php?course='.$row['course_id'].'">'._AT('ec_login').'</a>)</td>';
+						}else{
+							echo '<td>'._AT('no').'</td>';
+						}
+					}
+			
+					if($amount_paid >= $this_course_fee){
+						echo '<td>'._AT('ec_full_payment_recieved').' | <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('ec_remove').'</a></td>';
+					}else{
+						echo '<td> <a href="mods/ecomm/payment.php?course_id='.$row['course_id'].'">'._AT('ec_make_payment').'</a> | <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('ec_remove').'</a></td>';
+					}
+	
+				}
 			}
-		}
+		}	
 		echo '</table>';
+		if($payment_count == 0){
+		
+			$msg->printInfos('EC_NO_PAID_COURSES');
+		}
 	}else{
 		$msg->printInfos('EC_NO_PAID_COURSES');
 	}

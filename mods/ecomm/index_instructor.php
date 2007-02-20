@@ -130,24 +130,16 @@ $msg->printAll();
 						while($row4 = mysql_fetch_assoc($result4)){
 	
 							if($row4['approved'] == 'y'){
-								echo '<td>'._AT('yes').'</td></tr>';
+								echo '<td>'._AT('yes').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=unenroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('unenroll').'</a>)</small></td></tr>';
 							}else{
-								echo '<td>'._AT('no').' <small>( <a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small><form action="tools/enrollment/enroll_edit.php "method="get">
-									<input type="hidden" name="id0" value="'.$row['member_id'].'" />
-									<input type="hidden" name="func" value="enroll" />
-									<input type="hidden" name="tab" value="0" />
-									<input type="hidden" name="owner" value="'.$_SESSION['member_id'].'" />
-									<input type="hidden" name="gid" value="0" />
-									<input type="hidden" name="course_id" value="'.$_SESSION['course_id'].'" />
-									<input type="submit" name ="submit" value="'._AT('enroll').'"/>
-									</form></td></tr>';
+								echo '<td>'._AT('no').' <small>( <a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small>';
 							}
 						}
 					}else{
-						echo '<td>'._AT('no').'</td></tr>';
+						echo '<td>'._AT('no').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small></td></tr>';
 					}
 				}else{
-						echo '<td>'._AT('no').'</td></tr>';
+						echo '<td>'._AT('no').'xxx</td></tr>';
 				}
 
 			}

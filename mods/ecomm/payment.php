@@ -378,7 +378,7 @@ if($_POST['next'] && !$error){
 	$this_course_fee = mysql_result($result, $row['0']);
 
 	///Check if a partial payment has already been made so the balance can be calculated
-	$sql4 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$_GET[course_id]' AND member_id = '$_SESSION[member_id]'";
+	$sql4 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$_REQUEST[course_id]' AND member_id = '$_SESSION[member_id]'";
 	if($result4 = mysql_query($sql4,$db)){
 		$amount_paid = '';
 		while($row4 = mysql_fetch_array($result4)){
@@ -391,7 +391,7 @@ if($_POST['next'] && !$error){
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<input type="hidden" name="course" value="<?php echo $course  ?>" />
 
-		<input type="hidden" name="amount1" value="<?php echo $this_course_fee;  ?>" />
+
 		<div style="margin-left: 2em;"><br />
 		<?php
 		echo '<strong>'. _AT('ec_course_name').'</strong> '.$course.'</strong><br />'; 
@@ -399,9 +399,16 @@ if($_POST['next'] && !$error){
 			echo '<strong>'. _AT('ec_this_course_fee').'</strong> '.$_config['ec_currency_symbol'].$this_course_fee.' '.$_config['ec_currency'].'<br />';
 			echo '<strong>'. _AT('ec_amount_recieved').'</strong> '.$_config['ec_currency_symbol'].$amount_paid.'</strong><br />';
 			echo '<strong>'. _AT('ec_balance_due').'</strong> '.$_config['ec_currency_symbol'].$balance_course_fee.'</strong><br />';
+			$this_course_fee = $balance_course_fee;
+		}else if($amount){
+			echo '<strong>'. _AT('ec_this_course_fee').'</strong> '.$_config['ec_currency_symbol'].$this_course_fee.' '.$_config['ec_currency'].'<br />';
+			echo '<strong>'. _AT('ec_amount_recieved').'</strong> '.$_config['ec_currency_symbol'].$amount_paid.'</strong><br />';
+			echo '<strong>'. _AT('ec_balance_due').'</strong> '.$_config['ec_currency_symbol'].$amount.'</strong><br />';
+			$this_course_fee = $amount;
 		}else{
 			echo '<strong>'. _AT('ec_this_course_fee').'</strong> '.$_config['ec_currency_symbol'].$this_course_fee.' '.$_config['ec_currency'];
 		}
+
 		?>
 		<?php echo $_config['currency']; ?>
 		<br /><br /><img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle"/> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" alt="<?php echo _AT('ec_acceptmastercard'); ?>"  align="middle"/>  
@@ -412,21 +419,16 @@ if($_POST['next'] && !$error){
 			<li><?php echo _AT('ec_next_toproceed'); ?></li>
 		</ul>
 		<br /><h3><?php echo _AT('ec_purchaser_info'); ?></h3>
-
+		<input type="hidden" name="amount1" value="<?php echo $this_course_fee;  ?>" />
 		<span style="color:red; font-size:15pt;">*</span><span><?php echo _AT('ec_required'); ?></span>
 		<input type="hidden" name="member_id" value="<?php  echo $_SESSION['member_id']; ?>" />
 		<input type="hidden" name="course_id" value="<?php echo $course_id;  ?>" />
 
 		<table>
-			<?php
-			if($service){ ?>
-			<tr><td><label for="service">ATutor Service</label></td><td><input type="text" id="service" name="service" value="<?php echo $service; ?>" size="30" class="input" /></td></tr>
-			<?php }else if(!$invoice && !$service){?>
-			<tr><td><label for="course"><?php echo _AT('ec_course'); ?></label></td><td><input type="text" id="course" name="course" value="<?php echo $course; ?>" size="30" class="input" /></td></tr>
-			<?php } ?>
+
 			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="firstname"><?php echo _AT('ec_firstname'); ?></label>:</td><td><input type="text" id="firstname" name="firstname" value="<?php echo $firstname; ?>" size="30"  class="input"/></td></tr>
 			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="lastname"><?php echo _AT('ec_lastname'); ?></label>:</td><td><input type="text" id="lastname" name="lastname" value="<?php echo $lastname; ?>" size="30" class="input" /></td></tr>
-			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="email"><?php echo _AT('ec_lastname'); ?>:</label> </td><td><input type="text" id="email" name="EMail" value="<?php echo $email; ?>" size="40" class="input"/></td></tr>
+			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="email"><?php echo _AT('ec_email'); ?>:</label> </td><td><input type="text" id="email" name="EMail" value="<?php echo $email; ?>" size="40" class="input"/></td></tr>
 			<tr><td><label for="org"><?php echo _AT('ec_organization'); ?></label>:</td><td><input type="text" id="org" name="organization" value="<?php echo $organization; ?>" size="30"  class="input"/></td></tr>
 			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="address"><?php echo _AT('ec_address'); ?></label>: </td><td><textarea type="text" id="address" name="address" cols="40" rows="5" class="input"><?php echo $address; ?></textarea></td></tr>
 			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="postal"><?php echo _AT('ec_postal'); ?></label></td><td><input type="text" id="postal" name="postal" value="<?php echo $postal; ?>" size="10" class="input" /></td></tr>
@@ -440,7 +442,7 @@ if($_POST['next'] && !$error){
 	
 <?php
 }
-
+//debug($_POST);
 //////// End of screen 1
 ?>
 

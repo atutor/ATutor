@@ -104,16 +104,18 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_admin_payment_mail_instr
 INSERT INTO `language_text` VALUES ('en', '_module','ec_login','login',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_settings','Payment Settings.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_received','Payments Received.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_retuen_to_payments','Return to Payments.',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_PAID_COURSES','You have not enrolled in any courses that require fees to be paid. <a href="./users/browse.php">Browse</a> courses. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_ADD_SAVED','Payment settings were successfully saved. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_STUDENTS_ENROLLED','No students have requested enrolment. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_PAYMENT_CONFIRMED_AUTO','Your payment has been received, and your course enrolment has been approved. You may now login to the course. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_PAYMENT_CONFIRMED_MANUAL','Your payment has been received. You will receive a notice by email when your enrolment in the course has been manually approved. ',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_SAVED','Course payment setting have been saved.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_NOT_SAVED','Unable to save course payment setting. Contact your system administrator to report the problem',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_SAVED','Course payment settings have been saved.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_NOT_SAVED','Unable to save course payment settings. Contact your system administrator to report the problem',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_PAYMENT_FAILED','The payment was cancelled or  failed.',NOW(),'');
 
 UPDATE  `language_text` set text = 'Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index_mystart.php">Payments</a> tab above, where they can be paid.' WHERE term = 'AT_FEEDBACK_APPROVAL_PENDING' AND language_code='en';
+
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Course fees are being managed by the systems administrator.',NOW(),'');
 

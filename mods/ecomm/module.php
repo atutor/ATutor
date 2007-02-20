@@ -48,7 +48,6 @@ if (admin_authenticate(AT_ADMIN_PRIV_ECOMM, TRUE) || admin_authenticate(AT_ADMIN
 $this->_pages['mods/ecomm/index_instructor.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/index_instructor.php']['parent']   = 'tools/index.php';
 $this->_pages['mods/ecomm/index_instructor.php']['children'] = array('tools/enrollment/index.php');
-
 $this->_pages['tools/enrollment/index.php']['children'] = array('mods/ecomm/index_instructor.php');
 
 
@@ -64,17 +63,11 @@ $this->_pages['tools/enrollment/index.php']['children'] = array('mods/ecomm/inde
 $this->_pages['mods/ecomm/index.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/index.php']['img']       = 'mods/ecomm/ecomm.jpg';
 $this->_pages['mods/ecomm/payment.php']['title_var'] = 'ec_payments';
-//$this->_pages['mods/ecomm/success.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/failure.php']['title_var'] = 'ec_payments';
-/* public pages */
-//$this->_pages[AT_NAV_PUBLIC] = array('mods/ecomm/payment.php');
-//$this->_pages['mods/ecomm/payment.php']['title_var'] = 'ecomm';
-//$this->_pages['mods/ecomm/payment.php']['parent'] = 'login.php';
-//$this->_pages['login.php']['children'] = array('mods/ecomm/payment.php');
 
 /* my start page pages */
 $this->_pages[AT_NAV_START]  = array('mods/ecomm/index_mystart.php');
 $this->_pages['mods/ecomm/index_mystart.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/index_mystart.php']['parent'] = 'users/index.php';
-$this->_pages['users/index.php']['children'] = array('mods/ecomm/index_mystart.php');
+
 ?>
