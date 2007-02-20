@@ -37,10 +37,10 @@ if($_POST['submit']){
 		auto_email =   '$insert_email'";
 
 		if($result = mysql_query($sql,$db)){
-			$msg->addFeedback('COURSE_PAYMENT_SETTINGS_SAVED');
+			$msg->addFeedback('EC_COURSE_PAYMENT_SETTINGS_SAVED');
 
 		}else{
-			$msg->addError('COURSE_PAYMENT_SETTINGS_NOT_SAVED');
+			$msg->addError('EC_COURSE_PAYMENT_SETTINGS_NOT_SAVED');
 		}
 }
 
@@ -91,12 +91,13 @@ $msg->printAll();
 </form>
 
 <?php
+
 	$sql2 = "SELECT  s.course_id,  s.member_id,  f.course_fee, f.auto_approve , m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE f.course_id = '$_SESSION[course_id]' AND s.course_id = '$_SESSION[course_id]' AND s.member_id = m.member_id GROUP BY m.login, m.first_name, m.last_name";
 
 	if($result2 = mysql_query($sql2,$db)){
 		if(mysql_num_rows($result2) >=1){ ?>
 		
-		<table class="data static" summary="">
+		<table class="data static" summary="" border="1">
 		<tr>
 			<th scope="col"><?php echo _AT('ec_student_name'); ?></th>
 			<th scope="col"><?php echo _AT('ec_payment_made'); ?></th>
@@ -130,29 +131,28 @@ $msg->printAll();
 						while($row4 = mysql_fetch_assoc($result4)){
 	
 							if($row4['approved'] == 'y'){
-								echo '<td>'._AT('yes').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=unenroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('unenroll').'</a>)</small></td></tr>';
+								echo '<td>'._AT('yes').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=unenroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('unenroll').'</a>)</small></td>';
 							}else{
 								echo '<td>'._AT('no').' <small>( <a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small>';
 							}
 						}
 					}else{
-						echo '<td>'._AT('no').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small></td></tr>';
+						echo '<td>'._AT('no').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small></td>';
 					}
 				}else{
-						echo '<td>'._AT('no').'xxx</td></tr>';
+						echo '<td>'._AT('no').'xxx</td>';
 				}
 
 			}
-			//echo $sql4;
-	
-			//echo '</table>';
+			echo '</tr></table>';
 		}else{
-			$msg->printInfos('EC_NO_STUDENTS_ENROLLED');
+		//echo '</tr></table>';
+			$infos = "EC_NO_STUDENTS_ENROLLED";			
 		}
 	}else{
-		echo '<td>'._AT('no').'</td></tr>';
+		echo '<td>'._AT('no').'</td>';
+		echo '</tr></table>';
 	}
-		echo '</table>';
-
-
+	//echo '</tr></table>';
+$msg->printInfos($infos);
  require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

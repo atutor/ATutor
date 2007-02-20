@@ -39,9 +39,8 @@ if($_GET['MTID']){
 		}else{
 				$msg->printFeedbacks('EC_PAYMENT_CONFIRMED_MANUAL');
 		}
-
 		/// If auto email when payment is made, send an email to the instructor (maybe this should be an admin option)
-		if($row['2'] == '1'){
+		if($row2['auto_email'] == '1' || $_config['ec_email_admin'] == '1'){
 
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 			
@@ -63,6 +62,7 @@ if($_GET['MTID']){
 
 			/// Get the instructor's email address
 			$sql4= "SELECT c.member_id, m.email  from ".TABLE_PREFIX."courses AS c, ".TABLE_PREFIX."members as m WHERE c.course_id = '$_GET[cid]' AND c.member_id = m.member_id";
+//echo $sql4;
 			$result4 = mysql_query($sql4,$db);
 			while($row4 = mysql_fetch_array($result4)){
 				$instructor_email = $row4['1'];	
@@ -70,46 +70,52 @@ if($_GET['MTID']){
 			
 			
 			/// Email Instructror if set
-/*
+
 			$sql = "SELECT m.member_id, f.auto_email from ".TABLE_PREFIX."courses AS m,  ".TABLE_PREFIX."ec_course_fees AS f WHERE m.course_id = '$_GET[cid]'";
-			if($result = mysql_query($sql,$db)){
-	
-				$mail = new ATutorMailer;
+				
+			$mail = new ATutorMailer;
+				if($result = mysql_query($sql,$db)){
 		
-				$mail->From     = $sender_email;
-				$mail->FromName = $sender_name;
-				$mail->AddAddress($instructor_email);
-				$mail->Subject = _AT('ec_payment_made'); 
-				$mail->Body    = _AT('ec_payment_mail_instruction', $cid);
-		
-				if(!$mail->Send()) {
-					$msg->printErrors('SENDING_ERROR');
-					exit;
+				//	$mail = new ATutorMailer;
+			
+					$mail->From     = $sender_email;
+					$mail->FromName = $sender_name;
+					$mail->AddAddress($instructor_email);
+					$mail->Subject = _AT('ec_payment_made'); 
+					$mail->Body    = _AT('ec_payment_mail_instruction', $cid);
+			
+					if(!$mail->Send()) {
+						$msg->printErrors('SENDING_ERROR');
+						exit;
+					}
+					$mail->ClearAddresses();
+					
+					//unset($mail);
 				}
-				unset($mail);
-			}
 			/// Email Administrator  if set
-			if($_config['ec_email_admin']){
-	
-				$mail = new ATutorMailer;
+				if($_config['ec_email_admin']){
 		
-				$mail->From     = $sender_email;
-				$mail->FromName = $sender_name;
-				$mail->AddAddress($_config('contact_email'));
-				$mail->Subject = _AT('ec_payment_made'); 
-				$mail->Body    = _AT('ec_admin_payment_mail_instruction', $cid);
-		
-				if(!$mail->Send()) {
-					$msg->printErrors('SENDING_ERROR');
-					exit;
+					//$mail = new ATutorMailer;
+			
+					$mail->From     = $sender_email;
+					$mail->FromName = $sender_name;
+					$mail->AddAddress($_config['contact_email']);
+					$mail->Subject = _AT('ec_payment_made'); 
+					$mail->Body    = _AT('ec_admin_payment_mail_instruction', $cid);
+			
+					if(!$mail->Send()) {
+						$msg->printErrors('SENDING_ERROR');
+						exit;
+					}
 				}
-				unset($mail);
-			}*/
+			unset($mail);
 
 		}
 	}
 }
 
+//echo $instructor_email;
+//debug();
 /// Get a list of enrolled courses or pending enrollments, and display their fee payment status 
 //debug($system_courses);
 

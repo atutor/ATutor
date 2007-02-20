@@ -18,7 +18,7 @@ define('AT_ADMIN_PRIV_ECOMM', $this->getAdminPrivilege());
 /*******
  * create a side menu box/stack.
  */
-$this->_stacks['ecomm'] = array('title_var'=>'ecomm', 'file'=>'mods/ecomm/side_menu.inc.php');
+//$this->_stacks['ecomm'] = array('title_var'=>'ecomm', 'file'=>'mods/ecomm/side_menu.inc.php');
 // ** possible alternative: **
 // $this->addStack('ecomm', array('title_var' => 'ecomm', 'file' => './side_menu.inc.php');
 
