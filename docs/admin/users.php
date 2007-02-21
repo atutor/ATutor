@@ -33,6 +33,8 @@ if ( (isset($_GET['edit']) || isset($_GET['password'])) && (isset($_GET['id']) &
 		header('Location: user_status.php?ids='.$ids.'&status='.$status);
 		exit;
 	}
+} else if ( (isset($_GET['apply']) || isset($_GET['apply_all'])) && $_GET['change_status'] < -1) {
+	$msg->addError('NO_ACTION_SELECTED');
 } else if (isset($_GET['apply']) || isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['password'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
