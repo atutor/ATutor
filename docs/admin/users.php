@@ -74,7 +74,7 @@ if (isset($_GET['last_login_days']) && ($_GET['last_login_days'] != '' && $_GET[
 	if ($have) {
 		$ll =  " >= TO_DAYS(NOW())-$days)";
 	} else {
-		$ll =  " < TO_DAYS(NOW())-$days)";
+		$ll =  " < TO_DAYS(NOW())-$days || last_login=0)";
 	}
 	$last_login_days = '(TO_DAYS(last_login)'.$ll;
 } else {
@@ -149,6 +149,7 @@ if ($_GET['searchid']) {
 } else {
 	$searchid = '1';
 }
+
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 	$sql	= "SELECT COUNT(M.member_id) AS cnt FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days";
 } else {
@@ -173,10 +174,11 @@ if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
 }
 
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, L.public_field FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, L.public_field FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
 } else {
-	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login FROM ".TABLE_PREFIX."members M WHERE M.status $status AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login FROM ".TABLE_PREFIX."members M WHERE M.status $status AND $search AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
 }
+
 $result = mysql_query($sql, $db);
 
 if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
