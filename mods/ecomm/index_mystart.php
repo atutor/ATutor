@@ -82,7 +82,7 @@ if($_GET['MTID']){
 					$mail->FromName = $sender_name;
 					$mail->AddAddress($instructor_email);
 					$mail->Subject = _AT('ec_payment_made'); 
-					$mail->Body    = _AT('ec_payment_mail_instruction', $cid);
+					$mail->Body    = _AT('ec_payment_mail_instruction', $course_title);
 			
 					if(!$mail->Send()) {
 						$msg->printErrors('SENDING_ERROR');
@@ -99,9 +99,13 @@ if($_GET['MTID']){
 			
 					$mail->From     = $sender_email;
 					$mail->FromName = $sender_name;
-					$mail->AddAddress($_config['contact_email']);
+					if($_config['ec_contact_email']){
+						$mail->AddAddress($_config['ec_contact_email']);
+					}else{
+						$mail->AddAddress($_config['contact_email']);
+					}
 					$mail->Subject = _AT('ec_payment_made'); 
-					$mail->Body    = _AT('ec_admin_payment_mail_instruction', $cid);
+					$mail->Body    = _AT('ec_admin_payment_mail_instruction', $course_title);
 			
 					if(!$mail->Send()) {
 						$msg->printErrors('SENDING_ERROR');

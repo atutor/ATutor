@@ -202,7 +202,7 @@ if($_POST['next'] && !$error){
 		<input type="hidden"  name="SuccessURL" value="<?php echo $success_url; ?>">
 		<input type="hidden"  name="FailURL" value="<?php echo $failed_url; ?>">
 		<input type="hidden"  name="EMail" value="<?php echo $email; ?>">
-		<input type="submit" name="confirm" value="<?php echo _AT('ec_confirm'); ?>"><input type="submit" name="modify" value="<?php echo _AT('ec_modify'); ?>"><input type="submit" name="cancel" value="<?php echo _AT('ec_cancel'); ?>">
+		<input type="submit" class="button" name="confirm" value="<?php echo _AT('ec_confirm'); ?>"><input class="button" type="submit" name="modify" value="<?php echo _AT('ec_modify'); ?>"><input type="submit" class="button" name="cancel" value="<?php echo _AT('ec_cancel'); ?>">
 	</form>
 	
 	<?php
@@ -310,8 +310,27 @@ if($_POST['next'] && !$error){
 		<input type="hidden"  name="SuccessURL" value="<?php echo $success_url; ?>">
 		<input type="hidden"  name="FailURL" value="<?php echo $failed_url; ?>">
 		<input type="hidden"  name="EMail" value="<?php echo $email; ?>">
-		<input type="submit" name="confirm" value="<?php echo _AT('ec_paybycredit'); ?>"> &nbsp;<img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" title="<?php echo _AT('ec_acceptvisa'); ?>" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle" /> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" title="<?php echo _AT('ec_acceptmastercard'); ?>" alt="<?php echo _AT('ec_acceptmastercard'); ?>" align="middle" />
-	</form><br/><br />
+		<input class="button" type="submit" name="confirm" value="<?php echo _AT('ec_paybycredit'); ?>"> &nbsp;<img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" title="<?php echo _AT('ec_acceptvisa'); ?>" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle" /> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" title="<?php echo _AT('ec_acceptmastercard'); ?>" alt="<?php echo _AT('ec_acceptmastercard'); ?>" align="middle" />
+	</form><?php echo _AT('or'); ?> 
+
+	<form onclick="window.open('mods/ecomm/invoice.php', null, 'height=350,width=350,status=yes,toolbar=no,menubar=no,location=no'); return false;" method="post">
+
+		<input type="hidden"  name="firstname" value="<?php echo $firstname; ?>">
+		<input type="hidden"  name="lastname" value="<?php echo $lastname; ?>">
+		<input type="hidden"  name="organization" value="<?php echo $organization; ?>">
+		<input type="hidden"  name="address" value="<?php echo $address; ?>">
+		<input type="hidden"  name="postal" value="<?php echo $postal; ?>">
+		<input type="hidden"  name="telephone" value="<?php echo $telephone; ?>">
+		<input type="hidden"  name="country" value="<?php echo $country; ?>">
+		<input type="hidden"  name="receipt" value="<?php echo $receipt; ?>">
+		<input type="hidden"  name="course" value="<?php echo $course; ?>">
+		<input type="hidden"  name="comment" value="<?php echo $comment; ?>">
+		<input type="hidden"  name="tmp_amount" value="<?php echo $tmp_amount; ?>">
+		<input type="hidden"  name="invoice_id" value="<?php echo $invoice_id; ?>">
+		<input type="hidden"  name="invoice" value="<?php echo $invoice; ?>">
+		<input type="hidden"  name="Amount1" value="<?php echo $amount; ?>">
+		<input type="hidden"  name="EMail" value="<?php echo $email; ?>">
+		<input class="button" type="submit" name="bycheque" value="<?php echo _AT('ec_paybycheque'); ?>" > &nbsp;</form><br/><br />
 
 	<?php
 
@@ -437,7 +456,7 @@ if($_POST['next'] && !$error){
 			<tr><td><label for="comment"><?php echo _AT('ec_comments'); ?></label>: </td><td><textarea type="text" id="comment" name="comment" cols="40" rows="5" class="input"><?php echo $comment; ?></textarea></td></tr>
 		</table>
 		<input type="hidden" name="amount" value="<?php echo $amount; ?>">
-		<input type="submit" name="next" value="<?php echo _AT('ec_next_step'); ?>">
+		<input class="button" type="submit" name="next" value="<?php echo _AT('ec_next_step'); ?>">
 	</form>
 	
 <?php

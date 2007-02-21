@@ -44,18 +44,35 @@ if (isset($_GET['asc'])) {
 	$col   = 's.date';
 }
 
+if($_POST['startdate'] && $_POST['enddate']){
+		$sql_daterange = "AND s.date >= '$_POST[startdate]' AND s.date <='$_POST[enddate]' ";
+}else if($_POST['startdate']){
+		$sql_daterange = "AND s.date >= '$_POST[startdate]'";
+}
 
-
-
-
-	//$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, f.course_fee, f.auto_approve , m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m GROUP BY m.login, m.first_name, m.last_name LIMIT $offset, $results_per_page";
-	//$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, f.course_fee, f.auto_approve, m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE s.member_id = m.member_id AND  s.course_id = f.course_id ORDER BY s.date DESC LIMIT $offset, $results_per_page";
-	//$result = mysql_query($sql,$db);
-	$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, s.approval, s.course_name, f.course_fee, f.auto_approve, m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE s.member_id = m.member_id AND  s.course_id = f.course_id GROUP BY s.member_id, s.course_id  ORDER BY  $col $order LIMIT $offset, $results_per_page";
+	$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, s.approval, s.course_name, f.course_fee, f.auto_approve, m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE s.member_id = m.member_id AND  s.course_id = f.course_id $sql_daterange GROUP BY s.member_id, s.course_id  ORDER BY  $col $order LIMIT $offset, $results_per_page";
 
 //echo $col;
 	$result = mysql_query($sql,$db);
-	require (AT_INCLUDE_PATH.'header.inc.php'); 
+	require (AT_INCLUDE_PATH.'header.inc.php'); ?>
+
+<script language="javascript" type="text/javascript" src="mods/ecomm/datetimepicker.js"></script>
+	<div class="input-form">
+	<p><?php echo _AT('ec_date_picker');  ?></p>
+	<form action="<?php  echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<div class="row">
+	<label for="startdate"><?php echo _AT('ec_start_date');  ?></label>	<input type="Text" id="startdate" name="startdate" maxlength="25" size="25" value="<?php echo $_POST['startdate']; ?>"><a href="javascript:NewCal('startdate','ddmmyyyy',true,24)"><img src="mods/ecomm/images/cal.gif" width="16" height="16" border="0" alt="<?php echo _AT('ec_start_date');  ?>"></a>
+	<label for="enddate"><?php echo _AT('ec_end_date');  ?></label><input type="Text" id="enddate"  name="enddate" maxlength="25" size="25"><a href="javascript:NewCal('enddate','ddmmyyyy',true,24)"><img src="mods/ecomm/images/cal.gif" width="16" height="16" border="0" alt="<?php echo _AT('ec_end_date');  ?>"></a>
+	<input type="submit" value="<?php echo _AT('ec_set_date');  ?>" class="button">
+</div>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<input type="hidden" name="thisquery" value="<?php echo $sql; ?>" />
+		<input type="submit" class="button" name="export" value="Export Data Displayed Below" /></form>
+</div>
+</form>
+<br />
+
+<?
 //echo $sql;
 	if(@mysql_num_rows($result) >=1){ ?>
 	
@@ -148,7 +165,7 @@ if (isset($_GET['asc'])) {
 				echo '<td>'._AT('na').'</td>';
 			}*/
 
-echo '<td><a href="admin/enrollment/index.php?tab=0'.SEP.'course_id='.$row['course_id'].'">'.$row['course_name'].'</a></td>';
+		echo '<td><a href="admin/enrollment/index.php?tab=0'.SEP.'course_id='.$row['course_id'].'">'.$row['course_name'].'</a></td>';
 	
 		/// Get the payment date
 			if($row['date']){

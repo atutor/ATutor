@@ -32,8 +32,8 @@ CREATE  TABLE  `ec_course_fees`(
 
 
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments','Payments',NOW(),'');
-
-INSERT INTO `language_text` VALUES ('en', '_module','ec_confirm_info','Confirm the following information before proceeding. If the information is correct, click the Confirm button to move on to the next step. Otherwise use Modify button to return and make corrections.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ecomm','Payments',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_confirm_info','Confirm the following information before proceeding. If the information is correct, click the Confirm button to move on to the next step. Otherwise use the Modify button to return and make corrections.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_course','Course',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_amount','Amount',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_firstname','First Name',NOW(),'');
@@ -55,6 +55,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_confirm','Confirm',NOW()
 INSERT INTO `language_text` VALUES ('en', '_module','ec_modify','Modify ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_select_creditcard','Select the Pay by Credit Card button below to move to the secure credit card payment site. Following a payment,  a printable receipt will be generated and email will be sent to the payee with details of the transaction.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_paybycredit','Pay by Credit Card',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_date','Date Paid',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_acceptvisa','Accepting Visa',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_acceptmastercard','Accepting Master Card',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payfeesfor','Pay Fees',NOW(),'');
@@ -78,7 +79,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_instr_currency','(Curren
 INSERT INTO `language_text` VALUES ('en', '_module','ec_course_fee','Fee to charge for this course: ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_auto_approve','Auto approve enrolment when fee has been paid: ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_made','Course Fees Received ',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_mail_instruction','Course Fees Received ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_mail_instruction','Course fees have been received for the course: %s. Login as the course instructor and review the payment through the Manage tab, then choose Payments. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_mail_instruction','Course fees have been recieved for course %. Login to the Payments utility to review the payment, and to approved the enrolment if Auto Approve Enrolment has not been set. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_made','Fees Received ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_allow_instructors','Allow instructors to manage payments ',NOW(),'');
@@ -99,11 +100,21 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_course_name','Course Tit
 INSERT INTO `language_text` VALUES ('en', '_module','ec_balance_due','Balance Due.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_amount_recieved','Amount Received.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_email_admin','Email payment notices to the administrator.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_admin_payment_mail_instruction','A payment has been made. To review the payment login to ATutor as an administrator and select the Payments tab.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_admin_payment_mail_instruction','A payment has been made for course: %s. To review the payment login to ATutor as an administrator and select the Payments tab.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_login','login',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_settings','Payment Settings.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_received','Payments Received.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_retuen_to_payments','Return to Payments.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_return_to_payments','Return to Payments.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_start_date','Start Date',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_end_date','End Date',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_set_date','Set Dates',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_email','EMail notification of payments to: (if different from the ATutor contact email, set in System Preferences)',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_address','Address where cheques should be sent.',NOW(),'');
+
+
+INSERT INTO `languageec_contact_address_text` VALUES ('en', '_module','ec_date_picker','The table below shows by default the past 30 payments. Use the date selectors to select a specific date range.',NOW(),'');
+
+
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_PAID_COURSES','You have not enrolled in any courses that require fees to be paid. <a href="./users/browse.php">Browse</a> courses. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_ADD_SAVED','Payment settings were successfully saved. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_STUDENTS_ENROLLED','No students have requested enrolment. ',NOW(),'');

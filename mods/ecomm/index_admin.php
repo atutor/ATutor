@@ -60,6 +60,15 @@ if (isset($_POST['submit'])) {
 			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_email_admin', '0')";
 			mysql_query($sql, $db);
 		}
+
+		$_POST['ec_contact_email'] = $addslashes($_POST['ec_contact_email']);
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_contact_email', '$_POST[ec_contact_email]')";
+		mysql_query($sql, $db);
+
+		$_POST['ec_contact_address'] = $addslashes($_POST['ec_contact_address']);
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_contact_address', '$_POST[ec_contact_address]')";
+		mysql_query($sql, $db);
+
 		$msg->addFeedback('EC_ADD_SAVED');
 	}
 }
@@ -119,6 +128,18 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	
 			<input type="text" name="ec_currency_symbol" value="<?php echo $_config['ec_currency_symbol']; ?>" id="ec_currency_symbol" size="20"" />
 		</div>
+		<div class="row">
+			<p><label for="ec_contact_email"><?php echo _AT('ec_contact_email'); ?></label></p>
+	
+			<input type="text" name="ec_contact_email" value="<?php echo $_config['ec_contact_email']; ?>" id="ec_contact_email" size="20" />
+		</div>
+
+		<div class="row">
+			<p><label for="ec_contact_address"><?php echo _AT('ec_contact_address'); ?></label></p>
+			<textarea  name="ec_contact_address" id="ec_contact_address"  cols="20" rows="5" class="input"/><?php echo $_config['ec_contact_address']; ?></textarea>
+		</div>
+
+
 		<div class="row">
 			<p><label for="ec_allow_instructors"><?php echo _AT('ec_allow_instructors'); ?></label></p>				
 			<input type="checkbox" name="ec_allow_instructors"
