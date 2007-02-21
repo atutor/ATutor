@@ -25,8 +25,14 @@ $status = intval($_REQUEST['status']);
 if (isset($_POST['submit_yes'])) {
 
 	foreach ($ids as $id) {
-		$sql = "UPDATE ".TABLE_PREFIX."members SET status=".$status." WHERE member_id=".intval($id);
-		$result = mysql_query($sql,$db);
+		//make sure not instructor of a course
+		$id = intval($id);
+		$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
+		$result = mysql_query($sql, $db);
+		if (!mysql_fetch_assoc($result)) {
+			$sql2 = "UPDATE ".TABLE_PREFIX."members SET status=".$status." WHERE member_id=$id";
+			$result2 = mysql_query($sql2,$db);
+		}
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

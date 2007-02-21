@@ -17,27 +17,25 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if ( (isset($_GET['edit']) || isset($_GET['password'])) && (isset($_GET['id']) && count($_GET['id']) > 1) ) {
 	$msg->addError('SELECT_ONE_ITEM');
-} else if (isset($_GET['delete'], $_GET['id'])) {
-	$ids = implode(',', $_GET['id']);
-	header('Location: admin_delete.php?id='.$ids);
-	exit;
 } else if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location: edit_user.php?id='.$_GET['id'][0]);
 	exit;
 } else if (isset($_GET['password'], $_GET['id'])) {
 	header('Location: password_user.php?id='.$_GET['id'][0]);
 	exit;
-} else if (isset($_GET['apply'], $_GET['id'])) {
+} else if ( isset($_GET['apply']) && isset($_GET['id']) && $_GET['change_status'] >= -1) {
 	$ids = implode(',', $_GET['id']);
 	$status = intval($_GET['change_status']);
-	header('Location: user_status.php?ids='.$ids.'&status='.$status);
-	exit;
-
+	if ($status==-1) {
+		header('Location: admin_delete.php?id='.$ids);
+		exit;
+	} else {
+		header('Location: user_status.php?ids='.$ids.'&status='.$status);
+		exit;
+	}
 } else if (isset($_GET['apply']) || isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['password'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
-
-require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($_GET['reset_filter']) {
 	unset($_GET);
@@ -59,10 +57,28 @@ if (isset($_GET['asc'])) {
 	$col   = 'login';
 }
 if (isset($_GET['status']) && ($_GET['status'] != '')) {
+	$_GET['status'] = intval($_GET['status']);
 	$status = '=' . intval($_GET['status']);
 	$page_string .= SEP.'status'.$status;
 } else {
 	$status = '<>-1';
+	$_GET['status'] = '';
+}
+
+if (isset($_GET['last_login_days']) && ($_GET['last_login_days'] != '' && $_GET['last_login_days'] != '-1')) {
+	$have = intval($_GET['last_login_have']);
+	$days = intval($_GET['last_login_days']);
+	$page_string .= SEP.'last_login_have='.$have;
+	$page_string .= SEP.'last_login_days='.$days;
+
+	if ($have) {
+		$ll =  " >= TO_DAYS(NOW())-$days)";
+	} else {
+		$ll =  " < TO_DAYS(NOW())-$days)";
+	}
+	$last_login_days = '(TO_DAYS(last_login)'.$ll;
+} else {
+	$last_login_days = '1';
 }
 
 if (isset($_GET['include']) && $_GET['include'] == 'one') {
@@ -134,9 +150,9 @@ if ($_GET['searchid']) {
 	$searchid = '1';
 }
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-	$sql	= "SELECT COUNT(M.member_id) AS cnt FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid";
+	$sql	= "SELECT COUNT(M.member_id) AS cnt FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days";
 } else {
-	$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."members M WHERE status $status AND $search";
+	$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."members M WHERE status $status AND $search AND $last_login_days";
 }
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
@@ -151,12 +167,36 @@ if (!$page) {
 $count  = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
 
+if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
+	$offset = 0;
+	$results_per_page = 999999;
+}
+
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, L.public_field FROM ".TABLE_PREFIX."members M LEFT JOIN ".TABLE_PREFIX."master_list L USING (member_id) WHERE M.status $status AND $search AND $searchid ORDER BY $col $order LIMIT $offset, $results_per_page";
 } else {
 	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login FROM ".TABLE_PREFIX."members M WHERE M.status $status AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
 }
 $result = mysql_query($sql, $db);
+
+if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
+
+	$ids = '';
+	while($row = mysql_fetch_assoc($result)) {
+		$ids .= $row['member_id'].','; 
+	}
+	$ids = substr($ids,0,-1);
+	$status = intval($_GET['change_status']);
+
+	if ($status==-1) {
+		header('Location: admin_delete.php?id='.$ids);
+		exit;
+	} else {
+		header('Location: user_status.php?ids='.$ids.'&status='.$status);
+		exit;
+	}
+}
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -196,6 +236,16 @@ $result = mysql_query($sql, $db);
 			</div>
 		<?php endif; ?>
 
+		<div class="row">
+			<label for="last_login_have"><?php echo _AT('last_login'); ?></label><br />					
+			<select name="last_login_have" id="last_login_have">
+				<option value="-1">- <?php echo _AT('select'); ?> -</option>
+				<option value="1" <?php if($_GET['last_login_have']=='1') { echo 'selected="selected"';}?>><?php echo _AT('have'); ?></option>
+				<option value="0" <?php if(isset($_GET['last_login_have']) && $_GET['last_login_have']=='0') { echo 'selected="selected"';}?>><?php echo _AT('have_not'); ?></option>
+			</select> <?php echo _AT('logged_in_within'); ?>: <input type="text" name="last_login_days" size="3" value="<?php echo htmlspecialchars($_GET['last_login_days']); ?>" /> <?php echo _AT('days'); ?> <br />
+			
+		</div>
+
 		<div class="row buttons">
 			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
@@ -218,7 +268,7 @@ $result = mysql_query($sql, $db);
 </div>
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="status" value="<?php echo $status; ?>" />
+<input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
 
 <?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {  $col_counts = 1; } else { $col_counts = 0; } ?>
 <table summary="" class="data" rules="cols">
@@ -258,7 +308,8 @@ $result = mysql_query($sql, $db);
 </colgroup>
 <thead>
 <tr>
-	<th scope="col">&nbsp;</th>
+	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
+
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('login_name');      ?></a></th>
 	<?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
 		<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=public_field<?php echo $page_string; ?>"><?php echo _AT('student_id'); ?></a></th>
@@ -270,24 +321,29 @@ $result = mysql_query($sql, $db);
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=last_login<?php echo $page_string; ?>"><?php echo _AT('last_login'); ?></a></th>
 </tr>
+
 </thead>
 <?php if ($num_results > 0): ?>
 	<tfoot>
 	<tr>
 		<td colspan="<?php echo 8 + $col_counts; ?>">
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
-			<!-- input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" / --> 
 			<input type="submit" name="password" value="<?php echo _AT('password'); ?>" />
-			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /><br />
-			<div style="padding:5px;"><?php echo _AT('status'); ?>:
-			<select name="change_status">
-				<option value="<?php echo AT_STATUS_DISABLED; ?>"><?php echo _AT('disable'); ?></option>
-				<?php if ($_config['email_confirmation']) {echo '<option value="'.AT_STATUS_UNCONFIRMED.'">'._AT('unconfirmed').'</option>'; } ?>
-				<option value="<?php echo AT_STATUS_STUDENT; ?>"><?php echo _AT('student'); ?></option>
-				<option value="<?php echo AT_STATUS_INSTRUCTOR; ?>"><?php echo _AT('instructor'); ?></option>	
+			 <span style="padding:0px 10px">|</span> 
+			
+			 <select name="change_status">
+				<option value="-2"><?php echo _AT('more_options'); ?></option>
+				<optgroup label="<?php echo _AT('status'); ?>">
+					<option value="<?php echo AT_STATUS_STUDENT; ?>"><?php echo _AT('student'); ?></option>
+					<option value="<?php echo AT_STATUS_INSTRUCTOR; ?>"><?php echo _AT('instructor'); ?></option>	
+					<?php if ($_config['email_confirmation']) {echo '<option value="'.AT_STATUS_UNCONFIRMED.'">'._AT('unconfirmed').'</option>'; } ?>
+					<option value="<?php echo AT_STATUS_DISABLED; ?>"><?php echo _AT('disable'); ?></option>				
+				</optgroup>
+				<option value="-3" disable="disable">- - - - - - - - -</option>	
+				<option value="-1"><?php echo _AT('delete'); ?></option>				
 			</select>
 			<input type="submit" name="apply" value="<?php echo _AT('apply'); ?>" />
-			</div>
+			<input type="submit" name="apply_all" value="<?php echo _AT('apply_to_all_results'); ?>" />
 		</td>
 	</tr>
 	</tfoot>
@@ -322,5 +378,15 @@ $result = mysql_query($sql, $db);
 <?php endif; ?>
 </table>
 </form>
-
+<script language="JavaScript" type="text/javascript">
+//<!--
+function CheckAll() {
+	for (var i=0;i<document.form.elements.length;i++)	{
+		var e = document.form.elements[i];
+		if ((e.name == 'id[]') && (e.type=='checkbox'))
+			e.checked = document.form.selectall.checked;
+	}
+}
+//-->
+</script>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
