@@ -35,3 +35,16 @@ ALTER TABLE `members` ADD `last_login` TIMESTAMP NOT NULL ;
 
 ## alter the forums table to support minutes to edit
 ALTER TABLE `forums` ADD `mins_to_edit` SMALLINT UNSIGNED NOT NULL DEFAULT '0';
+
+## table for saving sent inbox messages
+CREATE TABLE `messages_sent` (
+   `message_id` mediumint( 8 ) unsigned NOT NULL AUTO_INCREMENT ,
+   `course_id` mediumint( 8 ) unsigned NOT NULL default '0',
+   `from_member_id` mediumint( 8 ) unsigned NOT NULL default '0',
+   `to_member_id` mediumint( 8 ) unsigned NOT NULL default '0',
+   `date_sent` timestamp NOT NULL ,
+   `subject` varchar( 150 ) NOT NULL default '',
+   `body` text NOT NULL ,
+   PRIMARY KEY ( `message_id` ) ,
+   KEY `from_member_id` ( `from_member_id` )
+) ENGINE = MYISAM;

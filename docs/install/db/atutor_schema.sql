@@ -581,6 +581,21 @@ CREATE TABLE `messages` (
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------
+# Table structure for table `messages_sent` (since 1.5.4)
+
+CREATE TABLE `messages_sent` (
+   `message_id` mediumint( 8 ) unsigned NOT NULL AUTO_INCREMENT ,
+   `course_id` mediumint( 8 ) unsigned NOT NULL default '0',
+   `from_member_id` mediumint( 8 ) unsigned NOT NULL default '0',
+   `to_member_id` mediumint( 8 ) unsigned NOT NULL default '0',
+   `date_sent` timestamp NOT NULL ,
+   `subject` varchar( 150 ) NOT NULL default '',
+   `body` text NOT NULL ,
+   PRIMARY KEY ( `message_id` ) ,
+   KEY `from_member_id` ( `from_member_id` )
+) ENGINE = MYISAM;
+
+# --------------------------------------------------------
 # Table structure for table `modules` (since 1.5.2)
 
 CREATE TABLE `modules` (  

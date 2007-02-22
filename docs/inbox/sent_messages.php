@@ -25,14 +25,10 @@ if (!$_SESSION['valid_user']) {
 
 $_GET['view'] = intval($_GET['view']);
 
-if ($_GET['view']) {
-	$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET new=0, date_sent=date_sent WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[view]",$db);
-}
-
 if ($_GET['delete']) {
 	$_GET['delete'] = intval($_GET['delete']);
 
-	if($result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[delete]",$db)){
+	if($result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id=$_GET[delete]",$db)){
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 
@@ -41,24 +37,39 @@ if ($_GET['delete']) {
 } else if (isset($_POST['submit_yes'], $_POST['ids'])) {
 	$ids = $addslashes($_POST['ids']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
+	$sql = "DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
 	mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
-	header('Location: index.php');
+	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 
-	header('Location: index.php');
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
+} else if (isset($_POST['move'])) {
+	$_POST['id'][] = 0; // to make it non-empty
+	$_POST['id'] = implode(',', $_POST['id']);
+	$ids = $addslashes($_POST['id']);
+
+	$sql = "INSERT INTO ".TABLE_PREFIX."messages SELECT 0, course_id, from_member_id, to_member_id, date_sent, 0, 0, subject, body FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
+	mysql_query($sql, $db);
+
+	$sql = "DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
+	mysql_query($sql, $db);
+
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+
+	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_GET['view']) && $_GET['view']) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE message_id=$_GET[view] AND to_member_id=$_SESSION[member_id]";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."messages_sent WHERE message_id=$_GET[view] AND from_member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 
 	if ($row = mysql_fetch_assoc($result)) {
@@ -72,9 +83,9 @@ if (isset($_GET['view']) && $_GET['view']) {
 	<tbody>
 	<tr>
 		<td><?php
-			$from = get_display_name($row['from_member_id']);
+			$from = get_display_name($row['to_member_id']);
 
-			echo '<span class="bigspacer">'._AT('from').' <strong>'.AT_print($from, 'members.logins').'</strong> '._AT('posted_on').' ';
+			echo '<span class="bigspacer">'._AT('to').' <strong>'.AT_print($from, 'members.logins').'</strong> '._AT('posted_on').' ';
 			echo AT_date(_AT('inbox_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME);
 			echo '</span>';
 			echo '<p>';
@@ -88,8 +99,8 @@ if (isset($_GET['view']) && $_GET['view']) {
 	<tr>
 		<td>
 			<form method="get" action="inbox/send_message.php">
-			<input type="hidden" name="reply" value="<?php echo $_GET['view']; ?>" />
-			<input type="submit" name="submit" value="<?php echo _AT('reply'); ?>" accesskey="r" />
+			<input type="hidden" name="forward" value="<?php echo $_GET['view']; ?>" />
+			<input type="submit" name="submit" value="<?php echo _AT('forward'); ?>" />
 		</form>
 		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="hidden" name="delete" value="<?php echo $_GET['view']; ?>" />
@@ -108,23 +119,28 @@ if (isset($_GET['view']) && $_GET['view']) {
 	$msg->printConfirm();
 }
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
+$msg->printInfos(array('INBOX_SENT_MSGS_TTL', $_config['sent_msgs_ttl']));
+
+$sql	= "SELECT * FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
 $result = mysql_query($sql,$db);
 ?>
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data static" summary="" rules="rows">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col">&nbsp;</th>
-	<th scope="col" ><?php echo _AT('from');   ?></th>
+	<th scope="col" ><?php echo _AT('to');   ?></th>
 	<th scope="col" ><?php echo _AT('subject');?></th>
 	<th scope="col" ><?php echo _AT('date');   ?></th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="5"><input type="submit" name="delete" value="<?php echo _AT('delete'); ?>"/></td>
+	<td colspan="4">
+		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>"/>
+		<input type="submit" name="move" value="<?php echo _AT('move_to_inbox'); ?>"/>
+	</td>
 </tr>
 </tfoot>
 <tbody>
@@ -136,16 +152,9 @@ $result = mysql_query($sql,$db);
 			<tr>
 		<?php endif; ?>
 		<td><input type="checkbox" name="id[]" value="<?php echo $row['message_id']; ?>" id="m<?php echo $row['message_id']; ?>" <?php if (isset($_POST['id']) && in_array($row['message_id'], $_POST['id'])) { echo 'checked="checked"'; } ?>/></td>
-		<td valign="middle">
 		<?php
-		if ($row['new'] == 1)	{
-			echo _AT('new');
-		} else if ($row['replied'] == 1) {
-			echo _AT('replied');
-		}
-		echo '</td>';
 
-		$name = get_display_name($row['from_member_id']);
+		$name = get_display_name($row['to_member_id']);
 
 		echo '<td align="left" valign="middle">';
 
@@ -171,20 +180,11 @@ $result = mysql_query($sql,$db);
 	} while ($row = mysql_fetch_assoc($result)); ?>
 <?php else: ?>
 	<tr>
-		<td colspan="5"><?php echo _AT('none_found'); ?></td>
+		<td colspan="4"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>
 </table>
 </form>
-
-<?php
-// since Inbox isn't a module, it can't have a cron job.
-// so, we delete the expires sent messages with P =  1/7.
-if (!rand(0, 6)) {
-	$sql = "DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND TO_DAYS(date_sent) < (TO_DAYS(NOW()) - {$_config['sent_msgs_ttl']}) LIMIT 100";
-	mysql_query($sql, $db);
-}
-?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

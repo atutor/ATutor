@@ -50,6 +50,7 @@ $_config_defaults['enable_mail_queue']         = 0; // mail queue can only be en
 $_config_defaults['auto_install_languages']    = 0; // auto install languages can only be enabled if cron is running
 $_config_defaults['display_name_format']       = 1; // 0-5, see (array) display_name_formats
 $_config_defaults['time_zone']                 = ''; // empty means disabled or not supported
+$_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent msgs are deleted
 $_config = $_config_defaults;
 
 

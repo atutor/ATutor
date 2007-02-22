@@ -55,7 +55,10 @@ if (isset($_POST['cancel'])) {
 		$_POST['to'] = intval($_POST['to']);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), 1, 0, '$_POST[subject]', '$_POST[message]')";
+		$result = mysql_query($sql,$db);
 
+		// sent message box:
+		$sql = "INSERT INTO ".TABLE_PREFIX."messages_sent VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), '$_POST[subject]', '$_POST[message]')";
 		$result = mysql_query($sql,$db);
 
 		//send email notification if recipient has message notification enabled
@@ -118,15 +121,22 @@ if (($_GET['reply'] == '') && $_GET['id']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$_GET['reply'] = intval($_GET['reply']);
+$_GET['forward'] = intval($_GET['forward']);
 
-if ($_GET['reply'] != '') {
-
-	$_GET['reply'] = intval($_GET['reply']);
-
+if ($_GET['reply']) {
 	// get the member_id of the sender
 	$result = mysql_query("SELECT from_member_id,subject,body FROM ".TABLE_PREFIX."messages WHERE message_id=$_GET[reply] AND to_member_id=$_SESSION[member_id]",$db);
-	if ($myinfo = mysql_fetch_array($result)) {
+	if ($myinfo = mysql_fetch_assoc($result)) {
 		$reply_to	= $myinfo['from_member_id'];
+		$subject	= $myinfo['subject'];
+		$body		= $myinfo['body'];
+	}
+} else if ($_GET['forward']) {
+	// get the member_id of the sender
+	$result = mysql_query("SELECT subject, body FROM ".TABLE_PREFIX."messages_sent WHERE message_id=$_GET[forward] AND from_member_id=$_SESSION[member_id]",$db);
+	if ($myinfo = mysql_fetch_assoc($result)) {
+		$reply_to	= 0;
 		$subject	= $myinfo['subject'];
 		$body		= $myinfo['body'];
 	}
@@ -185,8 +195,10 @@ if ($reply_to) {
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" id="subject" value="<?php
 			if (($subject != '') && ($_POST['subject'] == '')) {
-				if (!(substr($subject, 0, 2) == 'Re')) {
-					$subject = "Re: $subject";
+				if ($_GET['reply'] && !(substr($subject, 0, 2) == _AT('re'))) {
+					$subject = _AT('re').' : '.$subject;
+				} else if ($_GET['forward'] && !(substr($subject, 0, 2) == _AT('fwd'))) {
+					$subject = _AT('fwd').' : '.$subject;
 				}
 				echo ContentManager::cleanOutput($subject);
 			} else {

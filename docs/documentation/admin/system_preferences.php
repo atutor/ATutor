@@ -59,6 +59,9 @@
 			<dt>Course Backups</dt>
 			<dd>The maximum number of backups that can be stored per course. The stored backups do not count towards the course's <em>Max Course Size</em>.</dd>
 
+			<dt>Number of Days to Keep Copied Sent Messages for</dt>
+			<dd>All sent messages are copied to the sender's <em>Sent Messages</em> area. This option specifies the number of days old a copied message has to be before it is automatically deleted. The recipient's message is not affected.</dd>
+
 			<dt>Check for ATutor Updates Automatically</dt>
 			<dd>If enabled, ATutor will check the atutor.ca web site for updates whenever the administrator logs in. This option is available since ATutor 1.5.2.</dd>
 

@@ -594,14 +594,16 @@ table.data tfoot tr:first-child td {
 	background-position: 4px 5px;
 	padding-left: 40px;
 }
-
-table.data.static tfoot td, table.data.static tfoot tr:first-child td {
+/*
+ for the inbox table
+table.data.static tfoot td {
 	padding: 5px;
 	background-image: none;
 	padding-left: 0px;
 }
+*/
 
-table.data tfoot input {
+table.data tfoot input, table.data.static tfoot input {
 	border: 1px solid #999;
 	background-color: white;
 	padding: 2px;

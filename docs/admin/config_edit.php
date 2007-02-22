@@ -37,6 +37,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['master_list']        = intval($_POST['master_list']);
 	$_POST['email_confirmation'] = intval($_POST['email_confirmation']);
 	$_POST['email_notification'] = intval($_POST['email_notification']);
+	$_POST['sent_msgs_ttl']      = intval($_POST['sent_msgs_ttl']);
 	$_POST['allow_instructor_requests'] = intval($_POST['allow_instructor_requests']);
 	$_POST['auto_approve_instructors']  = intval($_POST['auto_approve_instructors']);
 	$_POST['theme_categories']          = intval($_POST['theme_categories']);
@@ -108,7 +109,7 @@ if (isset($_POST['cancel'])) {
 			$mail->SendQueue();
 		}
 
-		header('Location: index.php');
+		header('Location: '.$_SERVER['PHP_SELF']);
 		exit;
 	}
 }
@@ -248,6 +249,11 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<label for="course_backups"><?php echo _AT('course_backups'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['course_backups']; ?>)<br />
 		<input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo $stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $_config['course_backups']; } ?>"  />
+	</div>
+
+	<div class="row">
+		<label for="sent_msgs_ttl"><?php echo _AT('sent_msgs_ttl_text'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['sent_msgs_ttl']; ?>)<br />
+		<input type="text" size="3" name="sent_msgs_ttl" id="sent_msgs_ttl" value="<?php if (!empty($_POST['sent_msgs_ttl'])) { echo intval($_POST['sent_msgs_ttl']); } else { echo $_config['sent_msgs_ttl']; } ?>"  />
 	</div>
 
 	<div class="row">

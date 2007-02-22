@@ -218,10 +218,16 @@ $_pages['tools/index.php']['title_var'] = 'manage';
 $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 $_pages['inbox/index.php']['title_var'] = 'inbox';
-$_pages['inbox/index.php']['children']  = array('inbox/send_message.php');
+$_pages['inbox/index.php']['children']  = array('inbox/sent_messages.php', 'inbox/send_message.php', 'inbox/export.php');
+
+	$_pages['inbox/sent_messages.php']['title_var'] = 'sent_messages';
+	$_pages['inbox/sent_messages.php']['parent']    = 'inbox/index.php';
 
 	$_pages['inbox/send_message.php']['title_var'] = 'send_message';
 	$_pages['inbox/send_message.php']['parent']    = 'inbox/index.php';
+
+	$_pages['inbox/export.php']['title_var'] = 'export';
+	$_pages['inbox/export.php']['parent']    = 'inbox/index.php';
 
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent']    = 'index.php';
