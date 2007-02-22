@@ -67,7 +67,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	$_GET['status'] = '';
 }
 
-if (isset($_GET['last_login_days'], $_GET['last_login_have']) && ($_GET['last_login_have'] > 0) && $_GET['last_login_days']) {
+if (isset($_GET['last_login_days'], $_GET['last_login_have']) && ($_GET['last_login_have'] >= 0) && $_GET['last_login_days']) {
 	$have = intval($_GET['last_login_have']);
 	$days = intval($_GET['last_login_days']);
 	$page_string .= SEP.'last_login_have='.$have;
