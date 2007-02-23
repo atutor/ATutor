@@ -72,66 +72,6 @@ $_pages['forum/view.php']['title']  = $post_row['subject'];
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<style>
-	#forum-thread li {
-		clear:left;
-		border:1px solid #eee;
-		border-bottom: 1px solid #f0f0f0;
-		float:left;
-		width: 99%;
-		list-style: none;
-	}
-	#forum-thread li.even {
-		background: #fdfdfd;
-		border-top: none;
-	}
-	#forum-thread li.odd {
-		background: #fff;
-	}
-	div.forum-post-author {
-		float:left;
-		width:150px;
-		padding:8px 10px;
-	}
-	div.forum-post-author a.title {
-		font-size: 1.1em;
-		line-height: 1.2em;
-		font-weight: bold;
-		text-decoration:none;
-	}	
-	div.forum-post-author img.profile-picture {
-		border: 2px solid #f0f0f0;
-	}
-	div.forum-post-content {
-		margin-left: 150px;
-		padding: 5px 0px 18px 18px;
-	}
-	div.forum-post-content h3 {
-		font-weight: 500;
-	}
-	div.forum-post-ctrl {
-		float: right;
-		padding-right: 5px;
-		color: #a1a1a1;
-	}
-	div.forum-post-ctrl a {
-		text-decoration: none;
-	}
-	div.forum-post-ctrl span {
-		color: black;
-		background-color: #fefdc2;
-		padding: 3px;
-	}
-	div.forum-post-content p.date {
-		color: #a1a1a1;
-		border-bottom: 1px solid #f0f0f0;
-	}
-	div.forum-post-content div.body p {
-		margin-bottom:20px;
-	}
-</style>
-
-
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#post" style="border: 0px;"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('reply'); ?>" /></a>
 <?php
 	/**
