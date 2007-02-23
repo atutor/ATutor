@@ -51,7 +51,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 	return;
 }
 ?>
-<table class="data static" summary="" rules="cols">
+<table class="data static" summary="" rules="rows">
 <colgroup>
 	<?php if ($col == 'subject'): ?>
 		<col class="sort" />
@@ -73,11 +73,8 @@ if (!($row = mysql_fetch_assoc($result))) {
 <thead>
 <tr>
 	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=subject<?php echo $page_string; ?>"><?php echo _AT('topic'); ?></a></th>
-
 	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=num_comments<?php echo $page_string; ?>"><?php echo _AT('replies'); ?></a></th>
-
 	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('started_by'); ?></a></th>
-
 	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=last_comment<?php echo $page_string; ?>"><?php echo _AT('last_comment'); ?></a></th>
 <?php
 	$colspan = 4;
@@ -90,7 +87,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 	echo '</thead>';
 	echo '<tfoot>';
 	echo '<tr>';
-	echo '<td colspan="'.$colspan.'" align="right">'._AT('page').': ';
+	echo '<td style="background-image: none" colspan="'.$colspan.'" align="right">'._AT('page').': ';
 
 	for ($i=1; $i<=$num_pages; $i++) {
 		if ($i == $page) {
@@ -118,7 +115,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 			$row['subject'] = substr($row['subject'], 0, 25).'...';
 		}
 		echo '<tr>';
-		echo '<td class="row1" width="60%">';
+		echo '<td>';
 
 		if ($_SESSION['valid_user']) {
 			if ($row['stamp'] > $last_accessed[$row['post_id']]['last_accessed']) {
@@ -171,16 +168,16 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		echo '</td>';
 
-		echo '<td class="row1" width="10%" align="center">'.$row['num_comments'].'</td>';
+		echo '<td width="10%" align="center">'.$row['num_comments'].'</td>';
 
-		echo '<td class="row1" width="10%"><a href="'.$_base_href.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
+		echo '<td width="10%"><a href="'.$_base_href.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
 
-		echo '<td class="row1" width="20%" align="right" nowrap="nowrap">';
+		echo '<td width="20%" align="right" nowrap="nowrap">';
 		echo AT_date(_AT('forum_date_format'), $row['last_comment'], AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 
 		if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
-			echo '<td class="row1" nowrap="nowrap">';
+			echo '<td nowrap="nowrap">';
 			echo ' <a href="forum/stick.php?fid='.$fid.SEP.'pid='.$row['post_id'].'"><img src="images/forum/sticky.gif" border="0" alt="'._AT('sticky_thread').'" title="'._AT('sticky_thread').'" /></a> ';
 
 			if ($row['locked'] != 0) {

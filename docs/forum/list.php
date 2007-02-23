@@ -18,7 +18,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/forums.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
-<table class="data static" summary="" rules="groups">
+<table class="data static" summary="" rules="rows">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('forum');        ?></th>

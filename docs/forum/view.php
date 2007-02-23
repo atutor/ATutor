@@ -40,46 +40,6 @@ $_pages['forum/new_thread.php?fid='.$fid]['parent']    = 'forum/index.php?fid='.
 $_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
 
 
-function print_entry($row) {
-	global $page,$system_courses, $forum_info;
-
-	echo '<tr>';
-	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><strong>'.AT_Print($row['subject'], 'forums_threads.subject').'</strong>';
-	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
-		echo ' - <a href="editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].'">'._AT('edit').'</a> | <a href="forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP.'nest=1">'._AT('delete').'</a> | ';
-	} else if (($row['member_id'] == $_SESSION['member_id']) && (($row['udate'] + $forum_info['mins_to_edit'] * 60) > time())) {
-		// note:
-		// this will change when the layout is updated to remove the tables. that is why the language hasn't been added yet!
-
-		echo ' - <a href="editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].'">'._AT('edit').'</a> <strong>[[(for another '.round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60).' minutes)]]</strong> | ';
-	}
-
-	if ($_SESSION['valid_user']) {
-		echo ' <a href="forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
-
-		if ($row['parent_id'] == 0) {
-			echo $row['post_id'];
-		} else {
-			echo $row['parent_id'];
-		}
-		echo SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >'._AT('reply').'</a>';
-	}
-	echo '<br />';
-
-	$date = AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME);
-
-	$type = 'class="user"';
-	if ($system_courses[$_SESSION['course_id']]['member_id'] == $row['member_id']) {
-		$type = 'class="user instructor" title="'._AT('instructor').'"';
-	}
-
-	echo '<span class="bigspacer">'._AT('posted_by').' <a href="profile.php?id='.$row['member_id'].'" '.$type.'>'.AT_print($row['login'], 'members.login').'</a> '._AT('posted_on').' '.$date.'</span><br />';
-	echo AT_print($row['body'], 'forums_threads.body');
-	echo '</p>';
-	echo '</td>';
-	echo '</tr>';
-}
-
 if ($_REQUEST['reply']) {
 	$onload = 'document.form.subject.focus();';
 }
@@ -112,6 +72,66 @@ $_pages['forum/view.php']['title']  = $post_row['subject'];
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
+<style>
+	#forum-thread li {
+		clear:left;
+		border:1px solid #eee;
+		border-bottom: 1px solid #f0f0f0;
+		float:left;
+		width: 99%;
+		list-style: none;
+	}
+	#forum-thread li.even {
+		background: #fdfdfd;
+		border-top: none;
+	}
+	#forum-thread li.odd {
+		background: #fff;
+	}
+	div.forum-post-author {
+		float:left;
+		width:150px;
+		padding:8px 10px;
+	}
+	div.forum-post-author a.title {
+		font-size: 1.1em;
+		line-height: 1.2em;
+		font-weight: bold;
+		text-decoration:none;
+	}	
+	div.forum-post-author img.profile-picture {
+		border: 2px solid #f0f0f0;
+	}
+	div.forum-post-content {
+		margin-left: 150px;
+		padding: 5px 0px 18px 18px;
+	}
+	div.forum-post-content h3 {
+		font-weight: 500;
+	}
+	div.forum-post-ctrl {
+		float: right;
+		padding-right: 5px;
+		color: #a1a1a1;
+	}
+	div.forum-post-ctrl a {
+		text-decoration: none;
+	}
+	div.forum-post-ctrl span {
+		color: black;
+		background-color: #fefdc2;
+		padding: 3px;
+	}
+	div.forum-post-content p.date {
+		color: #a1a1a1;
+		border-bottom: 1px solid #f0f0f0;
+	}
+	div.forum-post-content div.body p {
+		margin-bottom:20px;
+	}
+</style>
+
+
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#post" style="border: 0px;"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('reply'); ?>" /></a>
 <?php
 	/**
@@ -141,9 +161,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$parent_name = $post_row['subject'];
 
-	echo '<table class="data static" summary="" rules="rows">';
-	echo '<tr>';
-	echo '<td class="row1" align="right">'._AT('page').': ';
+	echo '<div>';
+	echo _AT('page').': ';
 	for ($i=1; $i<=$num_pages; $i++) {
 		if ($i == $page) {
 			echo $i;
@@ -155,9 +174,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo ' <span class="spacer">|</span> ';
 		}
 	}
-	echo '</td>';
-	echo '</tr>';
-	
+	echo '</div>';
+	echo '<ul id="forum-thread">';
+
 	if ($page == 1) {
 		print_entry($post_row);
 		$subject   = $post_row['subject'];
@@ -178,8 +197,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$saved_post = $row;
 		}
 	}
-	echo '<tr>';
-	echo '<td class="row1" align="right">'._AT('page').': ';
+	echo '</ul>';
+
+	echo '<div style="margin-top: 20px; clear: both;">';
+	echo _AT('page').': ';
 	for ($i=1; $i<=$num_pages; $i++) {
 		if ($i == $page) {
 			echo $i;
@@ -191,9 +212,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo ' <span class="spacer">|</span> ';
 		}
 	}
-	echo '</td>';
-	echo '</tr>';
-	echo '</table>';
+	echo '</div>';
 
 	$parent_id = $pid;
 	$body	   = '';
