@@ -3,7 +3,7 @@
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-$_custom_css = $_base_path . 'mods/hello_world/module.css'; // use a custom stylesheet
+//$_custom_css = $_base_path . 'mods/hello_world/module.css'; // use a custom stylesheet
 
 $success_url = $_base_href . 'mods/ecomm/index_mystart.php?mid='.$_SESSION['member_id'].SEP.'cid='.$_REQUEST['course_id'];
 $failed_url =$_base_href . 'mods/ecomm/failure.php';
@@ -60,6 +60,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	$telephone = htmlspecialchars(addslashes($_POST['telephone']));
 	$country = htmlspecialchars(addslashes($_POST['country']));
 	$comment = htmlspecialchars(addslashes($_POST['comment']));
+	$invoice = intval($_POST['invoice']);
 	//$service  = htmlspecialchars(addslashes($_REQUEST['service']));
 	$course_id = intval($_REQUEST['course_id']);
 	//$invoice_id = htmlspecialchars(addslashes($_POST['invoice_id']));
@@ -106,9 +107,6 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		if($country == ''){
 			$error .= '<li>'._AT('ec_country').'</li>';
 		}
-		//if($service && ($tmp_amount != $amount) && $invoice_id == ''){
-		//	$error .= '<li>Invoice/Quote ID (required if amount has changed)</li>';
-		//}
 		if($error){
 			$error = '<div style="border:thick red solid; width: 400px; align:centre; padding:2em;"><strong>'._AT('ec_invalid_fields').'</strong><br /><ul>'.$error.'</ul></div>';
 		}
@@ -122,7 +120,6 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 
 <?php
-
 //////////
 /// Screen 2
 /// Confirm the information entered
@@ -224,8 +221,9 @@ if($_POST['next'] && !$error){
 	//if($service){
 	//$course = $service;
 	//}
-	$sql = "INSERT into ".TABLE_PREFIX."ec_shop  set 
-		shopid='', 
+
+	$sql = "REPLACE into ".TABLE_PREFIX."ec_shop  set 
+		shopid='$_POST[mtid]', 
 		member_id = '$_SESSION[member_id]', 
 		firstname='$firstname', 
 		lastname='$lastname', 
@@ -285,7 +283,13 @@ if($_POST['next'] && !$error){
 		echo $contribinfo;
 
 	?>
+<script type="text/javascript">
+function invoice_window(){
+	window.open('mods/ecomm/invoice.php','invwin','height=450px, width=450px')
+	//var mitd = document.purchase_form.mtid;
+}
 
+</script>
 	<form name="purchase_form" method="post"
 	action="<?php echo $_config['ec_uri']; ?>">
 		<!-- stored  for history -->
@@ -312,25 +316,15 @@ if($_POST['next'] && !$error){
 		<input type="hidden"  name="EMail" value="<?php echo $email; ?>">
 		<input class="button" type="submit" name="confirm" value="<?php echo _AT('ec_paybycredit'); ?>"> &nbsp;<img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" title="<?php echo _AT('ec_acceptvisa'); ?>" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle" /> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" title="<?php echo _AT('ec_acceptmastercard'); ?>" alt="<?php echo _AT('ec_acceptmastercard'); ?>" align="middle" />
 	</form><?php echo _AT('or'); ?> 
-
-	<form onclick="window.open('mods/ecomm/invoice.php', null, 'height=350,width=350,status=yes,toolbar=no,menubar=no,location=no'); return false;" method="post">
-
-		<input type="hidden"  name="firstname" value="<?php echo $firstname; ?>">
-		<input type="hidden"  name="lastname" value="<?php echo $lastname; ?>">
-		<input type="hidden"  name="organization" value="<?php echo $organization; ?>">
-		<input type="hidden"  name="address" value="<?php echo $address; ?>">
-		<input type="hidden"  name="postal" value="<?php echo $postal; ?>">
-		<input type="hidden"  name="telephone" value="<?php echo $telephone; ?>">
-		<input type="hidden"  name="country" value="<?php echo $country; ?>">
-		<input type="hidden"  name="receipt" value="<?php echo $receipt; ?>">
-		<input type="hidden"  name="course" value="<?php echo $course; ?>">
-		<input type="hidden"  name="comment" value="<?php echo $comment; ?>">
-		<input type="hidden"  name="tmp_amount" value="<?php echo $tmp_amount; ?>">
-		<input type="hidden"  name="invoice_id" value="<?php echo $invoice_id; ?>">
-		<input type="hidden"  name="invoice" value="<?php echo $invoice; ?>">
+	<! --form action="mods/ecomm/invoice.php?mtid=<?php echo $mtid; ?>" method="post"  -->
+	<form  method="GET">
 		<input type="hidden"  name="Amount1" value="<?php echo $amount; ?>">
-		<input type="hidden"  name="EMail" value="<?php echo $email; ?>">
-		<input class="button" type="submit" name="bycheque" value="<?php echo _AT('ec_paybycheque'); ?>" > &nbsp;</form><br/><br />
+		<input type="hidden"  name="mtid" value="<?php echo $mtid; ?>">
+		
+
+
+<input class="button" type="submit" name="bycheque" value="<?php echo _AT('ec_paybycheque'); ?>" onclick="window.open('mods/ecomm/invoice.php?mtid=<?php echo $mtid.SEP; ?>amount=<?php echo $amount; ?>','invwindow','height=425px, width=520px'); return false" /> 
+</form><br/><br />
 
 	<?php
 
@@ -442,7 +436,7 @@ if($_POST['next'] && !$error){
 		<span style="color:red; font-size:15pt;">*</span><span><?php echo _AT('ec_required'); ?></span>
 		<input type="hidden" name="member_id" value="<?php  echo $_SESSION['member_id']; ?>" />
 		<input type="hidden" name="course_id" value="<?php echo $course_id;  ?>" />
-
+		<input type="hidden" name="mtid" value="<?php echo $mtid;  ?>" />
 		<table>
 
 			<tr><td><span style="color:red; font-size:15pt;">*</span><label for="firstname"><?php echo _AT('ec_firstname'); ?></label>:</td><td><input type="text" id="firstname" name="firstname" value="<?php echo $firstname; ?>" size="30"  class="input"/></td></tr>

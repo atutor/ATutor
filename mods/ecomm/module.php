@@ -64,10 +64,11 @@ $this->_pages['mods/ecomm/index.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/index.php']['img']       = 'mods/ecomm/ecomm.jpg';
 $this->_pages['mods/ecomm/payment.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/failure.php']['title_var'] = 'ec_payments';
+$this->_pages['mods/ecomm/invoice.php']['title_var'] = 'ec_payments';
 
 /* my start page pages */
 $this->_pages[AT_NAV_START]  = array('mods/ecomm/index_mystart.php');
 $this->_pages['mods/ecomm/index_mystart.php']['title_var'] = 'ec_payments';
-$this->_pages['mods/ecomm/index_mystart.php']['parent'] = 'users/index.php';
+$this->_pages['mods/ecomm/index_mystart.php']['parent'] = AT_NAV_START;
 
 ?>

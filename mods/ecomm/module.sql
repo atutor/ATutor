@@ -53,8 +53,9 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_requirements_javascript'
 INSERT INTO `language_text` VALUES ('en', '_module','ec_requirements_comment','Note that most current browsers will have these enabled by default. If you are unable to complete the transaction, check these settings in your browser to be sure they are enabled.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_confirm','Confirm',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_modify','Modify ',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_select_creditcard','Select the Pay by Credit Card button below to move to the secure credit card payment site. Following a payment,  a printable receipt will be generated and email will be sent to the payee with details of the transaction.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_select_creditcard','Select the Pay by Credit Card button below to move to the secure credit card payment site. Following a payment,  a printable receipt will be generated and email will be sent to the payee with details of the transaction. Or, select Pay by Cheque to send payment by regular mail.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_paybycredit','Pay by Credit Card',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_paybycheque','Pay by Cheque',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_date','Date Paid',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_acceptvisa','Accepting Visa',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_acceptmastercard','Accepting Master Card',NOW(),'');
