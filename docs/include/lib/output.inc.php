@@ -804,4 +804,43 @@ function html_get_list($array) {
 	return $list;
 }
 
+/**
+ * print_paginator
+ *
+ * print out list of page links
+ */
+function print_paginator($current_page, $num_rows, $request_args, $rows_per_page = 50, $window = 5) {
+	$num_pages = ceil($num_rows / $rows_per_page);
+	$request_args = '?'.$request_args;
+
+    if ($num_rows) {
+		echo '<div class="paging">';
+	    echo '<ul>';
+		
+		$i=max($current_page-$window - max($window-$num_pages+$current_page,0), 1);
+
+		if ($i > 1) {
+			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.'&p=1">1</a></li>';
+			if ($i > 2) {
+		        echo '<li>&hellip;</li>';
+			}
+		}
+
+		for ($i; $i<= min($current_page+$window -min($current_page-$window,0),$num_pages); $i++) {
+			if ($current_page == $i) {
+				echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.'&p='.$i.'" class="current"><em>'.$current_page.'</em></a></li>';
+			} else {
+				echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.'&p='.$i.'">'.$i.'</a></li>';
+			}
+		}
+        if ($i <= $num_pages) {
+			if ($i < $num_pages) {
+		        echo '<li>&hellip;</li>';
+	        }
+			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.'&p='.$num_pages.'">'.$num_pages.'</a></li>';
+		}
+		echo '</ul>';
+		echo '</div>';
+	}
+}
 ?>

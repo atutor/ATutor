@@ -799,41 +799,28 @@ option#start-page {
 
 /* paging */
 div.paging {
-   width: 100%;
+   width: 98%;
    text-align: center;
-   margin: 0.5em auto;
+	padding: 5px;
+	margin: 10px;
 }
-div.paging ul {
-   list-style: none;
-   display: inline;
-   padding: 0px;
-   border: 1px solid #000;
+div.paging ul, div.paging ul li {
+	display: inline;
+	padding: 0px;
+	margin: 0px;
 }
-div.paging li { 
-	display: inline; 
-	padding-left: 2px; 
-	padding-right: 2px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-}
-
-div.paging li a {
+div.paging ul li a {
+	padding: 7px;
+	background-color: #fafaff;
 	text-decoration: none;
-	padding-left: 4px;
-	padding-right: 4px;
-	border-left: 1px solid white;
-	border-right: 1px solid white;
 }
-
-div.paging li a:hover, div.paging li a.current {
-   background-color: #efefef;
-   border-left: 1px solid #000;
-   border-right: 1px solid #000;
+div.paging ul li a:hover, div.paging ul li a.current {
+	background-color: #aaf;
+	color: white;
+	font-weight: bold;
 }
-
 
 /* users/index.php */
-
 div.course {
 	position: relative;
 	width: 300px;

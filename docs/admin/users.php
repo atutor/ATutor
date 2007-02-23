@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -161,7 +161,7 @@ $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 $num_results = $row['cnt'];
 
-$results_per_page = 100;
+$results_per_page = 50;
 $num_pages = max(ceil($num_results / $results_per_page), 1);
 $page = intval($_GET['p']);
 if (!$page) {
@@ -257,25 +257,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 </form>
 
-<div class="paging">
-	<ul>
-	<?php for ($i=1; $i<=$num_pages; $i++): ?>
-		<li>
-			<?php if ($i == $page) : ?>
-				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string.SEP.$order.'='.$col; ?>"><em><?php echo $i; ?></em></a>
-			<?php else: ?>
-				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string.SEP.$order.'='.$col; ?>"><?php echo $i; ?></a>
-			<?php endif; ?>
-		</li>
-	<?php endfor; ?>
-	</ul>
-</div>
+<?php print_paginator($page, $num_results, $page_string . SEP . $order .'='. $col, $results_per_page); ?>
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
 
 <?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {  $col_counts = 1; } else { $col_counts = 0; } ?>
-<table summary="" class="data" rules="cols">
+<table summary="" class="data" rules="rows">
 <colgroup>
 	<?php if ($col == 'login'): ?>
 		<col />
@@ -353,7 +341,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</tfoot>
 	<tbody>
 		<?php while($row = mysql_fetch_assoc($result)): ?>
-			<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = !document.form['m<?php echo $row['member_id']; ?>'].checked;">
+			<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = !document.form['m<?php echo $row['member_id']; ?>'].checked; togglerowhighlight(this, 'm<?php echo $row['member_id']; ?>');" id="rm<?php echo $row['member_id']; ?>">
 				<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 				<td><?php echo $row['login']; ?></td>
 				<?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
@@ -387,8 +375,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 function CheckAll() {
 	for (var i=0;i<document.form.elements.length;i++)	{
 		var e = document.form.elements[i];
-		if ((e.name == 'id[]') && (e.type=='checkbox'))
+		if ((e.name == 'id[]') && (e.type=='checkbox')) {
 			e.checked = document.form.selectall.checked;
+			togglerowhighlight(document.getElementById("r" + e.id), e.id);
+		}
+	}
+}
+
+function togglerowhighlight(obj, boxid) {
+	if (document.getElementById(boxid).checked) {
+		obj.className = 'selected';
+	} else {
+		obj.className = '';
 	}
 }
 //-->
