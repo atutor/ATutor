@@ -54,6 +54,11 @@ if($_POST['startdate'] && $_POST['enddate']){
 
 //echo $col;
 	$result = mysql_query($sql,$db);
+if($_POST['export']){
+	header('Location: payments_export_csv.php?thisquery='.urlencode($_POST['thisquery']));
+	exit;
+}
+
 	require (AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <script language="javascript" type="text/javascript" src="mods/ecomm/datetimepicker.js"></script>
@@ -67,7 +72,7 @@ if($_POST['startdate'] && $_POST['enddate']){
 </div>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="thisquery" value="<?php echo $sql; ?>" />
-		<input type="submit" class="button" name="export" value="Export Data Displayed Below" /></form>
+		<input type="submit" class="button" name="export" value="<?php echo _AT('ec_export_data'); ?>" /></form>
 </div>
 </form>
 <br />

@@ -11,7 +11,6 @@ CREATE TABLE `ec_shop` (
   `postal` varchar(15) default NULL,
   `telephone` varchar(20) default NULL,
   `country` varchar(25) default NULL,
-  `receipt` enum('0','1') default NULL,
   `miraid` varchar(12) NOT NULL,
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `approval` int(8) NOT NULL,
@@ -109,6 +108,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_return_to_payments','Ret
 INSERT INTO `language_text` VALUES ('en', '_module','ec_start_date','Start Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_end_date','End Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_set_date','Set Dates',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_export_data','Export Data Displayed Below',NOW(),'');
+
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_email','EMail notification of payments to: (if different from the ATutor contact email, set in System Preferences)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_address','Address where cheques should be sent.',NOW(),'');
 INSERT INTO `languageec_contact_address_text` VALUES ('en', '_module','ec_date_picker','The table below shows by default the past 30 payments. Use the date selectors to select a specific date range.',NOW(),'');
@@ -121,4 +122,4 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_NOT_SAVED','Unable to save course payment settings. Contact your system administrator to report the problem',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_PAYMENT_FAILED','The payment was cancelled or  failed.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Course fees are being managed by the systems administrator.',NOW(),'');
-UPDATE  `language_text` set text = 'Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index_mystart.php">Payments</a> tab above, where they can be paid.' WHERE term = 'AT_FEEDBACK_APPROVAL_PENDING' AND language_code='en';
+UPDATE `language_text` set text = 'Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index_mystart.php">Payments</a> tab above, where they can be paid.' WHERE term = 'AT_FEEDBACK_APPROVAL_PENDING' AND language_code='en';
