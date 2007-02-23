@@ -57,12 +57,10 @@ $this->_pages['mods/hello_world/index.php']['img']       = 'mods/hello_world/hel
 /* public pages */
 $this->_pages[AT_NAV_PUBLIC] = array('mods/hello_world/index_public.php');
 $this->_pages['mods/hello_world/index_public.php']['title_var'] = 'hello_world';
-$this->_pages['mods/hello_world/index_public.php']['parent'] = 'login.php';
-$this->_pages['login.php']['children'] = array('mods/hello_world/index_public.php');
+$this->_pages['mods/hello_world/index_public.php']['parent'] = AT_NAV_PUBLIC;
 
 /* my start page pages */
 $this->_pages[AT_NAV_START]  = array('mods/hello_world/index_mystart.php');
 $this->_pages['mods/hello_world/index_mystart.php']['title_var'] = 'hello_world';
-$this->_pages['mods/hello_world/index_mystart.php']['parent'] = 'users/index.php';
-$this->_pages['users/index.php']['children'] = array('mods/hello_world/index_mystart.php');
+$this->_pages['mods/hello_world/index_mystart.php']['parent'] = AT_NAV_START;
 ?>
