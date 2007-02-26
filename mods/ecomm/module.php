@@ -15,19 +15,6 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 define('AT_PRIV_ECOMM',       $this->getPrivilege());
 define('AT_ADMIN_PRIV_ECOMM', $this->getAdminPrivilege());
 
-/*******
- * create a side menu box/stack.
- */
-//$this->_stacks['ecomm'] = array('title_var'=>'ecomm', 'file'=>'mods/ecomm/side_menu.inc.php');
-// ** possible alternative: **
-// $this->addStack('ecomm', array('title_var' => 'ecomm', 'file' => './side_menu.inc.php');
-
-/*******
- * if this module is to be made available to students on the Home or Main Navigation.
- */
-//$_student_tool = 'mods/ecomm/index.php';
-// ** possible alternative: **
-// $this->addTool('./index.php');
 
 /*******
  * add the admin pages when needed.
@@ -51,12 +38,6 @@ $this->_pages['mods/ecomm/index_instructor.php']['parent']   = 'tools/index.php'
 $this->_pages['mods/ecomm/index_instructor.php']['children'] = array('tools/enrollment/index.php');
 $this->_pages['tools/enrollment/index.php']['children'] = array('mods/ecomm/index_instructor.php');
 
-
-//}
-
-// ** possible alternative: **
-// $this->pages['./index_instructor.php']['title_var'] = 'ecomm';
-// $this->pages['./index_instructor.php']['parent']    = 'tools/index.php';
 
 /*******
  * student page.

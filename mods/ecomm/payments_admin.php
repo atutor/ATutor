@@ -78,7 +78,6 @@ if($_POST['export']){
 <br />
 
 <?
-//echo $sql;
 	if(@mysql_num_rows($result) >=1){ ?>
 	
 <div class="paging">
@@ -160,15 +159,6 @@ if($_POST['export']){
 			}else{
 					echo '<td>'._AT('no').' <small>(<a href="admin/enrollment/enroll_edit.php?id0='.$row['member_id'].SEP.'func=enroll'.SEP.'tab=0'.SEP.'course_id='.$row['course_id'].'">'._AT('enroll').'</a>)</small></td>';
 			}
-		/// Get the course title	
-/*
-			$sql5= "SELECT  title from ".TABLE_PREFIX."courses WHERE course_id = '$row[course_id]'";
-			$result5 = mysql_query($sql5,$db);
-			if($course_title  = mysql_result($result5, 0)){
-				echo '<td><a href="admin/enrollment/index.php?tab=0'.SEP.'course_id='.$row['course_id'].'">'.$course_title.'</a></td>';
-			}else{
-				echo '<td>'._AT('na').'</td>';
-			}*/
 
 		echo '<td><a href="admin/enrollment/index.php?tab=0'.SEP.'course_id='.$row['course_id'].'">'.$row['course_name'].'</a></td>';
 	

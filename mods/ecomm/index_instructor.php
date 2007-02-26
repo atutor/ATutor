@@ -153,6 +153,6 @@ $msg->printAll();
 		echo '<td>'._AT('no').'</td>';
 		echo '</tr></table>';
 	}
-	//echo '</tr></table>';
+
 $msg->printInfos($infos);
  require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
