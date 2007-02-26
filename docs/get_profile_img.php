@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: get.php 6738 2007-02-07 17:21:30Z joel $
+// $Id$
 define('AT_INCLUDE_PATH', 'include/');
 ob_end_clean();
 header("Content-Encoding: none");
