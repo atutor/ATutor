@@ -15,7 +15,7 @@ define('AT_INCLUDE_PATH', 'include/');
 ob_end_clean();
 header("Content-Encoding: none");
 
-$_user_location	= 'users';
+$_user_location	= 'public';
 
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'lib/mime.inc.php');

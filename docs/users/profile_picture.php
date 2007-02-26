@@ -16,7 +16,6 @@ define('AT_INCLUDE_PATH', '../include/');
 $_user_location	= 'users';
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-
 function profile_image_delete($id) {
 	$extensions = array('gif', 'jpg', 'png');
 
@@ -58,13 +57,13 @@ function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
 	} else if ($type == 'jpg') {
 		imagejpeg($thumbnail_img, $dest, 75);
 	} else {
-		imagepng($thumbnail_img, $dest, 75);
+		imagepng($thumbnail_img, $dest, 7);
 	}
 }
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: profile.php');
+	header('Location: profile.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	if (isset($_POST['delete']) && !$_FILES['file']['size']) {
@@ -126,7 +125,7 @@ if (isset($_POST['cancel'])) {
 		$thumbnail_width  = 100;
 
 		resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
-	} else if ($width < $height && $height > 100) {
+	} else if ($width <= $height && $height > 100) {
 		$thumbnail_height= 100;
 		$thumbnail_width = intval(100 * $width / $height);
 		resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);

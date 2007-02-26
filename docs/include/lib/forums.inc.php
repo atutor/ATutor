@@ -252,7 +252,7 @@ function print_entry($row) {
 		<a name="<?php echo $row['post_id']; ?>"></a>
 		<div class="forum-post-author">
 			<a href="profile.php?id=<?php echo $row['member_id']; ?>" class="title"><?php echo AT_print($row['login'], 'members.login'); ?></a><br />
-			<img src="/a/images/clr.gif" class="profile-picture" width="100" height="100" alt="" /><br />
+			<img src="get_profile_img.php?id=<?php echo $row['member_id']; ?>" class="profile-picture" width="100" height="100" alt="" /><br />
 		</div>
 
 		<div class="forum-post-content">
