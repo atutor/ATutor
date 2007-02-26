@@ -37,11 +37,19 @@ foreach ($extensions as $extension) {
 	}
 }
 
+$pathinfo = pathinfo($file);
+$ext = $pathinfo['extension'];
+if ($ext == '') {
+	$ext = 'application/octet-stream';
+} else {
+	$ext = $mime[$ext][0];
+}
+
 $real = realpath($file);
 
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
 
-	header('Content-Disposition: filename="'.$pathinfo['basename'].'"');
+	header('Content-Disposition: filename="'.$size.$id.'.'.$pathinfo['extension'].'"');
 	
 	/**
 	 * although we can check if mod_xsendfile is installed in apache2
