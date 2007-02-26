@@ -50,7 +50,15 @@ $_config_defaults['enable_mail_queue']         = 0; // mail queue can only be en
 $_config_defaults['auto_install_languages']    = 0; // auto install languages can only be enabled if cron is running
 $_config_defaults['display_name_format']       = 1; // 0-5, see (array) display_name_formats
 $_config_defaults['time_zone']                 = ''; // empty means disabled or not supported
+
+/* profile pictures */
+$_config_defaults['prof_pic_max_file_size']	   = 819200; // 800kb
+//$_config_defaults['prof_pic_save_original']     = 1; // enabled
+$_config_defaults['prof_pic_max_pixels']        = '100'; // 100, max height and/or width in pixels
+$_config_defaults['prof_pic_crop']              = 0; // disabled, will crop or resize if false
+
 $_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent msgs are deleted
+
 $_config = $_config_defaults;
 
 

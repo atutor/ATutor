@@ -192,7 +192,7 @@ if ($_SESSION['member_id'] && !$_SESSION['course_id']) {
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
 $_pages['users/profile.php']['guide']     = 'general/?p=profile.php';
-$_pages['users/profile.php']['children']  = array('users/password_change.php', 'users/email_change.php');
+$_pages['users/profile.php']['children']  = array_merge(array('users/password_change.php', 'users/email_change.php'), (array) $_pages['users/profile.php']['children']);
 
 	$_pages['users/password_change.php']['title_var'] = 'change_password';
 	$_pages['users/password_change.php']['parent']    = 'users/profile.php';
