@@ -48,6 +48,9 @@ global $display_name_formats, $_config;
 
 			<dt><?php echo _AT('status'); ?></dt>
 			<dd><?php echo $this->status; ?></dd>
+
+			<dt><?php echo _AT('picture'); ?></dt>
+			<dd><a href="get_profile_img.php?id=<?php echo $this->row['member_id'].SEP.'size=o'; ?>"><img src="get_profile_img.php?id=<?php echo $this->row['member_id']; ?>" class="profile-picture" alt="" /></a></dd>
 		</dl>
 		<div style="clear: both; size: 1em"></div>
 	</div>
