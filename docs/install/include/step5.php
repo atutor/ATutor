@@ -68,12 +68,24 @@ if(isset($_POST['submit'])) {
 			$errors[] = '<strong>'.$_POST['content_dir'].'/file_storage</strong> directory is not writable.';
 		}
 
+		if (!is_dir($_POST['content_dir'].'/profile_pictures')) {
+			if (!@mkdir($_POST['content_dir'].'/profile_pictures')) {
+				$errors[] = '<strong>'.$_POST['content_dir'].'/file_storage</strong> directory does not exist and cannot be created.';  
+			} else {
+				mkdir($_POST['content_dir'].'/profile_pictures/originals');
+				mkdir($_POST['content_dir'].'/profile_pictures/thumbs');
+			}
+		} else if (!is_writable($_POST['content_dir'].'/profile_pictures')){
+			$errors[] = '<strong>'.$_POST['content_dir'].'/profile_pictures</strong> directory is not writable.';
+		}
+
 		// save blank index.html pages to those directories
 		@copy('../images/index.html', $_POST['content_dir'] . '/import/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/chat/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/backups/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/feeds/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/file_storage/index.html');
+		@copy('../images/index.html', $_POST['content_dir'] . '/profile_pictures/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/index.html');
 	}
 

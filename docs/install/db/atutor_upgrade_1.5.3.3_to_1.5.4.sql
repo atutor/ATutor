@@ -48,3 +48,6 @@ CREATE TABLE `messages_sent` (
    PRIMARY KEY ( `message_id` ) ,
    KEY `from_member_id` ( `from_member_id` )
 ) ENGINE = MYISAM;
+
+## add the profile_pictures module
+INSERT INTO `modules` VALUES ('_standard/profile_pictures', 2, 0, 0, 0, 0);

@@ -3,105 +3,175 @@ define('AT_INCLUDE_PATH', '../include/');
 $_user_location	= 'users';
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+
+function profile_image_delete($id) {
+	$extensions = array('gif', 'jpg', 'png');
+
+	foreach ($extensions as $extension) {
+		if (file_exists(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension)) {
+			unlink(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension);
+		}
+		if (file_exists(AT_CONTENT_DIR.'profile_pictures/thumbs/'. $id.'.'.$extension)) {
+			unlink(AT_CONTENT_DIR.'profile_pictures/thumbs/'. $id.'.'.$extension);
+		}
+	}
+}
+
+function profile_image_exists($id) {
+	$extensions = array('gif', 'jpg', 'png');
+
+	foreach ($extensions as $extension) {
+		if (file_exists(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension)) {
+			return true;
+		}
+	}
+}
+
+function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
+	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
+
+	if ($type == 'gif') {
+		$source = imagecreatefromgif($src);
+	} else if ($type == 'jpg') {
+		$source = imagecreatefromjpeg($src);
+	} else {
+		$source = imagecreatefrompng($src);
+	}
+	
+	imagecopyresampled($thumbnail_img, $source, 0, 0, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
+
+	if ($type == 'gif') {
+		imagegif($thumbnail_img, $dest);
+	} else if ($type == 'jpg') {
+		imagejpeg($thumbnail_img, $dest, 75);
+	} else {
+		imagepng($thumbnail_img, $dest, 75);
+	}
+}
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	Header('Location: profile.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	$filename = stripslashes($_FILES['upload_file']['name']);
+	if (isset($_POST['delete']) && !$_FILES['file']['size']) {
+		profile_image_delete($_SESSION['member_id']);
 
-	//make sure extension is jpg, jpeg, gif, or png
-	$exe = explode('.', $filename);
-	$exe = $exe[1];
+		$msg->addFeedback('PROFILE_UPDATED');
 
-	if ($exe!='jpg' && $exe!='jpeg' && $exe!='png' && $exe!='gif') {
-		$msg->addError('FILE_ILLEGAL', $exe);
 		header('Location: profile_picture.php');
 		exit;
 	}
 
-	//make sure under max file size
-	if ($_FILES['size'] > $_config['prof_pic_max_file_size']) {
+	// check if this is a supported file type
+	$filename   = $stripslashes($_FILES['file']['name']);
+	$path_parts = pathinfo($filename);
+	$extension  = strtolower($path_parts['extension']);
+	$image_attributes = getimagesize($_FILES['file']['tmp_name']);
+
+	if ($extension == 'jpeg') {
+		$extension = 'jpg';
+	}
+
+	if (!in_array($extension, array('jpg', 'gif', 'png'))) {
+		$msg->addError('FILE_ILLEGAL');
+		header('Location: profile_picture.php');
+		exit;
+	} else if ($image_attributes[2] > IMAGETYPE_PNG) {
+		$msg->addError('FILE_ILLEGAL');
+		header('Location: profile_picture.php');
+		exit;
+	}
+
+	// make sure under max file size
+	if ($_FILES['file']['size'] > $_config['prof_pic_max_file_size']) {
 		$msg->addError('FILE_MAX_SIZE');
 		header('Location: profile_picture.php');
 		exit;
 	}
 
-	$new_filename = $_SESSION['member_id'] .'.'. $exe;
-	$save_orig = AT_CONTENT_DIR.'profile_pictures/originals/'. $new_filename;
-	$save_100 = AT_CONTENT_DIR.'profile_pictures/thumbs/'. $new_filename;
+	// delete the old images (if any)
+	profile_image_delete($_SESSION['member_id']);
 
-	//save original
-	if (move_uploaded_file($_FILES['upload_file']['tmp_name'], $save_orig)) {
-		$msg->addFeedback('FILE_SAVED');
-	} else {
+	$new_filename   = $_SESSION['member_id'] . '.' . $extension;
+	$original_img  = AT_CONTENT_DIR.'profile_pictures/originals/'. $new_filename;
+	$thumbnail_img = AT_CONTENT_DIR.'profile_pictures/thumbs/'. $new_filename;
+
+	// save original
+	if (!move_uploaded_file($_FILES['file']['tmp_name'], $original_img)) {
 		$msg->addError('CANNOT_OVERWRITE_FILE');
-	}	
-
-
-	//resize
-	list($width, $height) = getimagesize($save_orig);
-	if ($width >= $height && $width>100) {
-		$new_height = 100;
-		$new_width= ($width * 100) / $height;
-	} else {
-		$new_width = 100;
-		$new_height= ($height * 100) / $width;
+		header('Location: profile_picture.php');
+		exit;
 	}
 
-	$thumb_100 = imagecreatetruecolor($new_width, $new_height);
-	$source = imagecreatefromjpeg($save_orig);
-	
-	imagecopyresized($thumb_100, $source, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+	// resize the original and save it at $thumbnail_file
+	$width  = $image_attributes[0];
+	$height = $image_attributes[1];
 
-	if ($exe=='jpeg' || $exe=='jpg') {
-		//imagejpeg($thumb_100);
-	} else if ($exe=='gif') {
-		//imagegif($thumb_100);
-	} else if($exe=='png') {
-		//imagepng($thumb_100);
+	if ($width > $height && $width>100) {
+		$thumbnail_height = intval(100 * $height / $width);
+		$thumbnail_width  = 100;
+
+		resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
+	} else if ($width < $height && $height > 100) {
+		$thumbnail_height= 100;
+		$thumbnail_width = intval(100 * $width / $height);
+		resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
+	} else {
+		// no resizing, just copy the image.
+		// it's too small to resize.
+		copy($original_img, $thumbnail_img);
 	}
 
-	//save thumb
-	if (($f = @fopen($save_100,'w')) && @fwrite($f, $thumb_100) !== FALSE && @fclose($f)){
-		$msg->addFeedback('FILE_SAVED');	
-	} else {
-		$msg->addError('CANNOT_OVERWRITE_FILE');
-	}	
+	$msg->addFeedback('PROFILE_UPDATED');
 
-
-	header('Location: profile.php');
+	header('Location: profile_picture.php');
 	exit;
 }
 
-require (AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+// check if GD is installed
+if (!extension_loaded('gd')) {
+	$msg->printInfos('FEATURE_NOT_AVAILABLE');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+$gd_info = gd_info();
 ?>
 
 <form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<?php global $_config; ?>
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $_config['prof_pic_max_file_size']; ?>" />
 <div class="input-form">
-
+<?php if (profile_image_exists($_SESSION['member_id'])): ?>
 	<div class="row">
-		<label for="login"><?php echo _AT('current_picture'); ?></label><br />
-
-		<img src="" alt="" />
-		<input type="checkbox" name="delete" value="1" /> <?php echo _AT('delete'); ?>
+		<img src="get_profile_img.php?id=<?php echo $_SESSION['member_id']; ?>" alt="" />
+		<input type="checkbox" name="delete" value="1" id="del"/><label for="del"><?php echo _AT('delete'); ?></label>
 	</div>
-</div>
-
-<div class="input-form">
+<?php endif; ?>
 
 	<div class="row">
-		<label for="login"><?php echo _AT('upload_new_picture'); ?></label><br />
-		<input type="file" name="upload_file" />
+		<h3><?php echo _AT('upload_new_picture'); ?></h3>
+		<input type="file" name="file" />
+		(
+		<?php if ($gd_info['GIF Create Support']): ?>
+			GIF
+		<?php endif; ?>
+		<?php if ($gd_info['JPG Support']): ?>
+			JPG
+		<?php endif; ?>
+		<?php if ($gd_info['PNG Support']): ?>
+			PNG
+		<?php endif; ?>
+		)
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" />
-		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
 </form>
 
-<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

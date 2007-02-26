@@ -15,29 +15,26 @@ define('AT_INCLUDE_PATH', 'include/');
 ob_end_clean();
 header("Content-Encoding: none");
 
-$in_get = TRUE;
+$_user_location	= 'users';
 
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'lib/mime.inc.php');
 
-$path = AT_CONTENT_DIR . 'profile_pictures/';
-
-$member_id = intval($_GET['id']);
-$size = $_GET['size'];  //t (thumbnail) or o (original)
-
-$file_base = $path . $_SESSION['member_id'];
-
-if (file_exists($file_base.'.jpg')) {
-	$file = $file_base.'.jpg';
+$id = intval($_GET['id']);
+if (isset($_GET['size']) && $_GET['size'] == 'o') {
+	$size = 'originals'; //t (thumbnail) or o (original)
+} else {
+	$size = 'thumbs';
 }
 
-//send header mime type
-$pathinfo = pathinfo($file);
-$ext = $pathinfo['extension'];
-if ($ext == '') {
-	$ext = 'application/octet-stream';
-} else {
-	$ext = $mime[$ext][0];
+$file = AT_CONTENT_DIR . 'profile_pictures/' . $size .'/'. $id .'.';
+
+$extensions = array('gif', 'jpg', 'png');
+
+foreach ($extensions as $extension) {
+	if (file_exists($file.$extension)) {
+		$file .= $extension;
+	}
 }
 
 $real = realpath($file);
