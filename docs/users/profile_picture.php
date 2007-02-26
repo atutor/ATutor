@@ -158,7 +158,7 @@ $gd_info = gd_info();
 <div class="input-form">
 <?php if (profile_image_exists($_SESSION['member_id'])): ?>
 	<div class="row">
-		<img src="get_profile_img.php?id=<?php echo $_SESSION['member_id']; ?>" alt="" />
+		<a href="get_profile_img.php?id=<?php echo $_SESSION['member_id'].SEP.'size=o'; ?>"><img src="get_profile_img.php?id=<?php echo $_SESSION['member_id']; ?>" alt="" /></a>
 		<input type="checkbox" name="delete" value="1" id="del"/><label for="del"><?php echo _AT('delete'); ?></label>
 	</div>
 <?php endif; ?>
