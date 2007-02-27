@@ -50,6 +50,9 @@ if (isset($_POST['cancel'])) {
 
 		header('Location: profile_picture.php');
 		exit;
+	} else if (!$_FILES['file']['size']) {
+		header('Location: profile_picture.php');
+		exit;
 	}
 
 	// check if this is a supported file type
@@ -63,11 +66,11 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!in_array($extension, array('jpg', 'gif', 'png'))) {
-		$msg->addError('FILE_ILLEGAL');
+		$msg->addError(array('FILE_ILLEGAL', $extension));
 		header('Location: profile_picture.php');
 		exit;
 	} else if ($image_attributes[2] > IMAGETYPE_PNG) {
-		$msg->addError('FILE_ILLEGAL');
+		$msg->addError(array('FILE_ILLEGAL', $extension));
 		header('Location: profile_picture.php');
 		exit;
 	}
