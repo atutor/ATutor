@@ -3,7 +3,6 @@
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-//$_custom_css = $_base_path . 'mods/hello_world/module.css'; // use a custom stylesheet
 
 $success_url = $_base_href . 'mods/ecomm/index_mystart.php?mid='.$_SESSION['member_id'].SEP.'cid='.$_REQUEST['course_id'];
 $failed_url =$_base_href . 'mods/ecomm/failure.php';
@@ -14,8 +13,6 @@ if($_POST['cancel']){
 	exit;
 }
 
-//echo $success_url;
-//echo $_base_href;
 ///////////// Mira pay stuff
 $password = $_config['ec_password'];
 define(MERCHANT_ID, $_config['ec_vendor_id']);
@@ -61,10 +58,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	$country = htmlspecialchars(addslashes($_POST['country']));
 	$comment = htmlspecialchars(addslashes($_POST['comment']));
 	$invoice = intval($_POST['invoice']);
-	//$service  = htmlspecialchars(addslashes($_REQUEST['service']));
 	$course_id = intval($_REQUEST['course_id']);
-	//$invoice_id = htmlspecialchars(addslashes($_POST['invoice_id']));
-	//$invoice = htmlspecialchars(addslashes($_REQUEST['invoice']));
+
 
 	if($_GET['amount']){
 		$tmp_amount = htmlspecialchars(addslashes($_GET['amount']));
@@ -218,10 +213,6 @@ if($_POST['next'] && !$error){
 	///////////////
 	echo  _AT('ec_select_creditcard');
 
-	//if($service){
-	//$course = $service;
-	//}
-
 	$sql = "REPLACE into ".TABLE_PREFIX."ec_shop  set 
 		shopid='$_POST[mtid]', 
 		member_id = '$_SESSION[member_id]', 
@@ -286,7 +277,6 @@ if($_POST['next'] && !$error){
 <script type="text/javascript">
 function invoice_window(){
 	window.open('mods/ecomm/invoice.php','invwin','height=450px, width=450px')
-	//var mitd = document.purchase_form.mtid;
 }
 
 </script>
@@ -316,16 +306,14 @@ function invoice_window(){
 		<input type="hidden"  name="EMail" value="<?php echo $email; ?>">
 		<input class="button" type="submit" name="confirm" value="<?php echo _AT('ec_paybycredit'); ?>"> &nbsp;<img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" title="<?php echo _AT('ec_acceptvisa'); ?>" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle" /> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" title="<?php echo _AT('ec_acceptmastercard'); ?>" alt="<?php echo _AT('ec_acceptmastercard'); ?>" align="middle" />
 	</form><?php echo _AT('or'); ?> 
-	<! --form action="mods/ecomm/invoice.php?mtid=<?php echo $mtid; ?>" method="post"  -->
+<?php
+if($_config['ec_contact_address'] != ''){ ?>
 	<form  method="GET">
 		<input type="hidden"  name="Amount1" value="<?php echo $amount; ?>">
 		<input type="hidden"  name="mtid" value="<?php echo $mtid; ?>">
-		
-
-
-<input class="button" type="submit" name="bycheque" value="<?php echo _AT('ec_paybycheque'); ?>" onclick="window.open('mods/ecomm/invoice.php?mtid=<?php echo $mtid.SEP; ?>amount=<?php echo $amount; ?>','invwindow','height=425px, width=520px'); return false" /> 
-</form><br/><br />
-
+		<input class="button" type="submit" name="bycheque" value="<?php echo _AT('ec_paybycheque'); ?>" onclick="window.open('mods/ecomm/invoice.php?mtid=<?php echo $mtid.SEP; ?>amount=<?php echo $amount; ?>','invwindow','height=425px, width=520px'); return false" /> 
+	</form><br/><br />
+<?php } ?>
 	<?php
 
 	/// End of screen 3
@@ -455,8 +443,7 @@ function invoice_window(){
 	
 <?php
 }
-//debug($_POST);
-//////// End of screen 1
+
 ?>
 
 </div>

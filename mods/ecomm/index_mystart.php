@@ -62,7 +62,7 @@ if($_GET['MTID']){
 
 			/// Get the instructor's email address
 			$sql4= "SELECT c.member_id, m.email  from ".TABLE_PREFIX."courses AS c, ".TABLE_PREFIX."members as m WHERE c.course_id = '$_GET[cid]' AND c.member_id = m.member_id";
-//echo $sql4;
+
 			$result4 = mysql_query($sql4,$db);
 			while($row4 = mysql_fetch_array($result4)){
 				$instructor_email = $row4['1'];	
@@ -94,16 +94,15 @@ if($_GET['MTID']){
 				}
 			/// Email Administrator  if set
 				if($_config['ec_email_admin']){
-		
-					//$mail = new ATutorMailer;
-			
+					If($_config['ec_contact_email']){
+						$contact_admin_email = $_config['ec_contact_email'];
+					}else{
+						$contact_admin_email = $_config['contact_email'];
+					}
+
 					$mail->From     = $sender_email;
 					$mail->FromName = $sender_name;
-					if($_config['ec_contact_email']){
-						$mail->AddAddress($_config['ec_contact_email']);
-					}else{
-						$mail->AddAddress($_config['contact_email']);
-					}
+					$mail->AddAddress($contact_admin_email);
 					$mail->Subject = _AT('ec_payment_made'); 
 					$mail->Body    = _AT('ec_admin_payment_mail_instruction', $course_title);
 			
@@ -118,19 +117,13 @@ if($_GET['MTID']){
 	}
 }
 
-//echo $instructor_email;
-//debug();
-/// Get a list of enrolled courses or pending enrollments, and display their fee payment status 
-//debug($system_courses);
 
-//echo $_SESSION['course_id'];
-//debug($system_courses[$_SESSION['course_id']]);
-//$this_course_instructor = $system_courses[$_SESSION['course_id']]['member_id'];
+/// Get a list of enrolled courses or pending enrollments, and display their fee payment status 
+
 $sql = "SELECT course_id from  ".TABLE_PREFIX."course_enrollment WHERE member_id = '$_SESSION[member_id]'";
 
-//echo $sql;
 $result = mysql_query($sql,$db);
-//debug($course_title);
+
 if(@mysql_num_rows($result) >=1){ ?>
 	<table class="data" rules="cols" summary="">
 	<thead>

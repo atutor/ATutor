@@ -109,9 +109,12 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_start_date','Start Date'
 INSERT INTO `language_text` VALUES ('en', '_module','ec_end_date','End Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_set_date','Set Dates',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_export_data','Export Data Displayed Below',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_date_picker','Select a date range to display. (e.g. 2007-2-6 13:11:11)',NOW(),'');
+
+
 
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_email','EMail notification of payments to: (if different from the ATutor contact email, set in System Preferences)',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_address','Address where cheques should be sent.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_address','Address where cheques should be sent. (leave empty to disabled cheque payments)',NOW(),'');
 INSERT INTO `languageec_contact_address_text` VALUES ('en', '_module','ec_date_picker','The table below shows by default the past 30 payments. Use the date selectors to select a specific date range.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_PAID_COURSES','You have not enrolled in any courses that require fees to be paid. <a href="./users/browse.php">Browse</a> courses. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_ADD_SAVED','Payment settings were successfully saved. ',NOW(),'');

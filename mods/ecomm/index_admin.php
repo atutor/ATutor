@@ -61,14 +61,17 @@ if (isset($_POST['submit'])) {
 			mysql_query($sql, $db);
 		}
 
-		$_POST['ec_contact_email'] = $addslashes($_POST['ec_contact_email']);
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_contact_email', '$_POST[ec_contact_email]')";
-		mysql_query($sql, $db);
+		if($_POST['ec_contact_admin'] != ''){
+			$_POST['ec_contact_email'] = $addslashes($_POST['ec_contact_email']);
+			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_contact_email', '$_POST[ec_contact_email]')";
+			mysql_query($sql, $db);
+		}
 
-		$_POST['ec_contact_address'] = $addslashes($_POST['ec_contact_address']);
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_contact_address', '$_POST[ec_contact_address]')";
-		mysql_query($sql, $db);
-
+		if($_POST['ec_contact_address'] != ''){
+			$_POST['ec_contact_address'] = $addslashes($_POST['ec_contact_address']);
+			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_contact_address', '$_POST[ec_contact_address]')";
+			mysql_query($sql, $db);
+		}
 		$msg->addFeedback('EC_ADD_SAVED');
 	}
 }

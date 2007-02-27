@@ -50,10 +50,13 @@ if($_POST['startdate'] && $_POST['enddate']){
 		$sql_daterange = "AND s.date >= '$_POST[startdate]'";
 }
 
-	$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, s.approval, s.course_name, f.course_fee, f.auto_approve, m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE s.member_id = m.member_id AND  s.course_id = f.course_id $sql_daterange GROUP BY s.member_id, s.course_id  ORDER BY  $col $order LIMIT $offset, $results_per_page";
+//	$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, s.approval, s.course_name, f.course_fee, f.auto_approve, m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE s.member_id = m.member_id AND  s.course_id = f.course_id $sql_daterange GROUP BY s.member_id, s.course_id  ORDER BY  $col $order LIMIT $offset, $results_per_page";
+	$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, s.approval, s.course_name, f.course_fee, f.auto_approve, m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE s.member_id = m.member_id AND  s.course_id = f.course_id ORDER BY  $col $order LIMIT $offset, $results_per_page";
 
-//echo $col;
-	$result = mysql_query($sql,$db);
+	if($result = mysql_query($sql,$db)){
+echo $sql;
+echo mysql_num_rows($result);
+	}
 if($_POST['export']){
 	header('Location: payments_export_csv.php?thisquery='.urlencode($_POST['thisquery']));
 	exit;
@@ -63,21 +66,25 @@ if($_POST['export']){
 
 <script language="javascript" type="text/javascript" src="mods/ecomm/datetimepicker.js"></script>
 	<div class="input-form">
-	<p><?php echo _AT('ec_date_picker');  ?></p>
-	<form action="<?php  echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<div class="row">
-	<label for="startdate"><?php echo _AT('ec_start_date');  ?></label>	<input type="Text" id="startdate" name="startdate" maxlength="25" size="25" value="<?php echo $_POST['startdate']; ?>"><a href="javascript:NewCal('startdate','ddmmyyyy',true,24)"><img src="mods/ecomm/images/cal.gif" width="16" height="16" border="0" alt="<?php echo _AT('ec_start_date');  ?>"></a>
-	<label for="enddate"><?php echo _AT('ec_end_date');  ?></label><input type="Text" id="enddate"  name="enddate" maxlength="25" size="25"><a href="javascript:NewCal('enddate','ddmmyyyy',true,24)"><img src="mods/ecomm/images/cal.gif" width="16" height="16" border="0" alt="<?php echo _AT('ec_end_date');  ?>"></a>
-	<input type="submit" value="<?php echo _AT('ec_set_date');  ?>" class="button">
-</div>
+		<p><?php echo _AT('ec_date_picker');  ?></p>
+		<form action="<?php  echo $_SERVER['PHP_SELF']; ?>" method="post">
+			<div class="row">
+		<label for="startdate"><?php echo _AT('ec_start_date');  ?></label>	<input type="Text" id="startdate" name="startdate" maxlength="25" size="25" value="<?php echo $_POST['startdate']; ?>"><a href="javascript:NewCal('startdate','ddmmyyyy',true,24)"><img src="mods/ecomm/images/cal.gif" width="16" height="16" border="0" alt="<?php echo _AT('ec_start_date');  ?>"></a>
+		<label for="enddate"><?php echo _AT('ec_end_date');  ?></label><input type="Text" id="enddate"  name="enddate" maxlength="25" size="25"><a href="javascript:NewCal('enddate','ddmmyyyy',true,24)"><img src="mods/ecomm/images/cal.gif" width="16" height="16" border="0" alt="<?php echo _AT('ec_end_date');  ?>"></a>
+		<input type="submit" value="<?php echo _AT('ec_set_date');  ?>" class="button">
+		</div>
+
+<?php
+
+	if(@mysql_num_rows($result) >=1){ ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="thisquery" value="<?php echo $sql; ?>" />
 		<input type="submit" class="button" name="export" value="<?php echo _AT('ec_export_data'); ?>" /></form>
-</div>
 </form>
 <br />
-
-<?
+<?php  }  ?>
+</div>
+<?php
 	if(@mysql_num_rows($result) >=1){ ?>
 	
 <div class="paging">
