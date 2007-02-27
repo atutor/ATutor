@@ -32,7 +32,7 @@ if ($_GET['delete']) {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 
-	header('Location: index.php');
+	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if (isset($_POST['submit_yes'], $_POST['ids'])) {
 	$ids = $addslashes($_POST['ids']);
@@ -74,42 +74,29 @@ if (isset($_GET['view']) && $_GET['view']) {
 
 	if ($row = mysql_fetch_assoc($result)) {
 ?>
-	<table align="center" border="0" cellpadding="2" cellspacing="1" width="98%" class="data static" summary="">
-	<thead>
-	<tr>
-		<th><?php echo AT_print($row['subject'], 'messages.subject'); ?></th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr>
-		<td><?php
-			$from = get_display_name($row['to_member_id']);
+	<ul id="inbox-msg">
+	<li>
+		<div class="forum-post-author">
+			<a href="profile.php?id=<?php echo $row['to_member_id']; ?>" class="title"><?php echo get_display_name($row['to_member_id']); ?></a><br />
+			<?php print_profile_img($row['to_member_id']); ?>
+		</div>
 
-			echo '<span class="bigspacer">'._AT('to').' <strong>'.AT_print($from, 'members.logins').'</strong> '._AT('posted_on').' ';
-			echo AT_date(_AT('inbox_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME);
-			echo '</span>';
-			echo '<p>';
-			echo AT_print($row['body'], 'messages.body');
-			echo '</p>';
+		<div class="forum-post-content">
+			<h3><?php echo AT_Print($row['subject'], 'messages.subject'); ?></h3>
+			<div>
+				<div class="forum-post-ctrl">
+					<a href="inbox/send_message.php?forward=<?php echo $_GET['view']; ?>"><?php echo _AT('forward'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>"><?php echo _AT('delete'); ?></a>
+				</div>
+				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></p>
+			</div>
 
-		?></td>
-	</tr>
-	</tbody>
-	<tfoot>
-	<tr>
-		<td>
-			<form method="get" action="inbox/send_message.php">
-			<input type="hidden" name="forward" value="<?php echo $_GET['view']; ?>" />
-			<input type="submit" name="submit" value="<?php echo _AT('forward'); ?>" />
-		</form>
-		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-			<input type="hidden" name="delete" value="<?php echo $_GET['view']; ?>" />
-			<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" accesskey="x" />
-		</form></td>
-	</tr>
-	</tfoot>
-	</table>
-	<br />	
+			<div class="body">
+				<p><?php echo AT_print($row['body'], 'messages.body'); ?></p>
+			</div>
+		</div>
+	</div>
+	</li>
+	</ul>
 	<?php
 	}
 } else if (isset($_POST['delete'], $_POST['id'])) {
