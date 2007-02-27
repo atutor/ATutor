@@ -102,17 +102,14 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_amount_recieved','Amount
 INSERT INTO `language_text` VALUES ('en', '_module','ec_email_admin','Email payment notices to the administrator.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_admin_payment_mail_instruction','A payment has been made for course: %s. To review the payment login to ATutor as an administrator and select the Payments tab.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_login','login',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_settings','Payment Settings.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_received','Payments Received.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_return_to_payments','Return to Payments.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_settings','Payment Settings',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_payments_received','Payments Received',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_return_to_payments','Return to Payments',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_start_date','Start Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_end_date','End Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_set_date','Set Dates',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_export_data','Export Data Displayed Below',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_date_picker','Select a date range to display. (e.g. 2007-2-6 13:11:11)',NOW(),'');
-
-
-
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_email','EMail notification of payments to: (if different from the ATutor contact email, set in System Preferences)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_address','Address where cheques should be sent. (leave empty to disabled cheque payments)',NOW(),'');
 INSERT INTO `languageec_contact_address_text` VALUES ('en', '_module','ec_date_picker','The table below shows by default the past 30 payments. Use the date selectors to select a specific date range.',NOW(),'');

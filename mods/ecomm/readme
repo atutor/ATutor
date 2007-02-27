@@ -1,11 +1,14 @@
 # ATutor Ecommerce Module Readme
 
+##This moldule is intended for use with ATutor 1.5.4+, though it should work with
+## older versions except for the admin enrollment functions, which were added in 1.5.4.
+
 This module allows for payment of course fees, and automated enrollment when payments are recieved.
 
 It is currently setup to run with the MiraPay credit card processing service:
 https://ws1.eigendev.com/mira/
 
-A test account is available. Enter the following information into the admin payments settings screen. You will need to setup a proper merchant account with Mirapay to actually use the system for collecting your own payments
+#A test account is available. Enter the following information into the admin payments settings screen. You will need to setup a proper merchant account with Mirapay to actually use the system for collecting your own payments, but to test the module the test account works well enough.
 
 Test Location:
 https://www3.eigendev.com/mirapay/secure_credit.php
@@ -15,6 +18,8 @@ e911ca205ec7c2a9436af9102c497fd4
 
 Test Password:
 test
+
+# Use the following credit card info to make fake payments through the test account.
 
 Test Credit Card #
 4444333322221111
@@ -28,21 +33,24 @@ Installation & Setup
 
 2. As the ATutor administrator, under the Modules tab choose Install Module, and choose the Payments module from the list of available modules. If you do not see the module available, make sure you have unpacked it into to right place ( /ATutor/mods/ecomm/)
 
-3. When installed, on the main admin modules screen enable the module.
+3. After installed, on the main admin modules screen enable the module.
 
-4. Once enabled, go to the admin's Payments tab and enter the Test information above into the appropriate fields, along with the currency and curreny symbol, and save those setting.
+4. Once enabled, go to the admin's Payments tab and enter the Test information listed above into the appropriate fields, along with the currency and curreny symbol, and save those setting.
 
-5. Optionally, the admin can allow instructors to manage their own payments by selecting the associated checkbox in the payments settings.
+5.Optionally, the admin can enter a mailing address to which cheques can be sent, if that is to be one of the payment method. Leave this field empty to disabled cheques as a method of payment.
 
-6. Optionally, the administrator can receive an email notification when new payments are made by selecting  the associated checkbox in the payments settings
+6. Optionally, the admin can allow instructors to manage their own payments by selecting the associated checkbox in the payments settings.
+
+7. Optionally, the administrator can receive an email notification when new payments are made by selecting  the associated checkbox in the payments settings
 
 
 How the module works
-Payments are course fees associated with an enrollment in a Private course. When a student attempts to enroll in a private course that has a fee associated with it, an entry will be added to the student's Payments screen, accessed through a tab in MyStart page. If the student clicks on Make Payment, they are asked to fill in some personal information, confirm that information, then they are redirectled to the secure payment site, where they enter their visa or master card number (availability of either depending on the merchant account), and submit the payment. Just before being redirected to the secure site the information entered by the student is stored in the ec_shop table, and it is updated when the payment service has confirmed the payment. If the course has been set to auto-enroll students, they will immediately be given access to the course. If manual enrollment is set, they will recieve a notice of their pending enrolment, which the instructor, or administrator must approve.
+Payments are course fees associated with an enrollment in a Private course. When a student attempts to enroll in a private course that has a fee associated with it, an entry will be added to the student's Payments screen, accessed through a tab in MyStart page. If the student clicks on Make Payment, they are asked to fill in some personal information, confirm that information, then they are redirectled to the secure payment site, where they enter their visa or master card number (availability of either depending on the merchant account), and submit the payment. Just before being redirected to the secure site the information entered by the student is stored in the ec_shop table, and it is updated when the payment service has confirmed the payment. If the course has been set to auto-enroll students, they will immediately be given access to the course. If manual enrollment is set, they will recieve a notice of their pending enrolment, which the instructor, or administrator must approve. 
 
-Administrators can manage indivudal course payments and settings by logging into a specific course, then managing the course payment settings as describe below for Instructors.
 
-If instrutors are allowed to manage their payments, they can access Payments through the Manage screen, where they can set the price for the course, and set whether to auto-enroll students, and whether to send an email to the instructor when a payment  has been received. These settings are saved in the ec_course_fees table.
+Administrators can manage individual course payments and settings by logging into a specific course, then managing the course payment settings as describe below for Instructors.
+
+If instrutors are allowed to manage their payments, set by the administrator in step 6 above, they can access Payments through the Manage screen, where they can set the price for the course, and set whether to auto-enroll students, and whether to send an email to the instructor when a payment  has been received. These settings are saved in the ec_course_fees table.
 
 To make a payment students must first click on Enter Course in the Browse Course listing, then choose to enroll in the course. Then under the Payments Tab, click on Make Payment next to the course that is pending enrollment.
 

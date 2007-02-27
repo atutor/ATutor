@@ -25,6 +25,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_ECOMM, TRUE) || admin_authenticate(AT_ADMIN
 	$this->_pages['mods/ecomm/payments_admin.php']['title_var'] = 'ec_payments_received';
 	$this->_pages['mods/ecomm/payments_admin.php']['parent']   = 'mods/ecomm/index_admin.php';
 	$this->_pages['mods/ecomm/payments_export_csv.php']['title_var'] = 'ec_payments';
+	$this->_pages['admin/enrollment/index.php']['children'] =array('mods/ecomm/payments_admin.php');
 	$this->_pages['mods/ecomm/index_admin.php']['children'] = array('mods/ecomm/payments_admin.php','admin/enrollment/index.php');
 	$this->_pages['mods/ecomm/index_admin.php']['parent']    = AT_NAV_ADMIN;
 }

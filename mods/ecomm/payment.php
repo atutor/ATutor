@@ -27,13 +27,13 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 ///Validate form fields
 	if($_POST['amount1']){
-		$amount = $_POST['amount1'];
+		$amount = floatval($_POST['amount1']);
 	}else if($_POST['amount2']){
-		$amount = $_POST['amount2'];
+		$amount = floatval($_POST['amount2']);
 	}else if($_POST['amount']){
-		$amount = $_POST['amount'];
+		$amount = floatval($_POST['amount']);
 	}else if($_GET['amount']){
-		$amount = $_GET['amount'];
+		$amount = floatval($_GET['amount']);
 	}
 
 	$member_id = intval($_POST['member_id']);
@@ -224,11 +224,11 @@ if($_POST['next'] && !$error){
 		postal='$postal', 
 		telephone='$telephone', 	
 		country='$country', 
-		receipt='$receipt', 
 		miraid='', 
 		date=NOW(), 
 		approval='', 
 		course_name='$course', 
+		amount='$amount', 
 		comments = '$comment', 
 		course_id='$course_id'";
 	
@@ -305,9 +305,12 @@ function invoice_window(){
 		<input type="hidden"  name="FailURL" value="<?php echo $failed_url; ?>">
 		<input type="hidden"  name="EMail" value="<?php echo $email; ?>">
 		<input class="button" type="submit" name="confirm" value="<?php echo _AT('ec_paybycredit'); ?>"> &nbsp;<img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" title="<?php echo _AT('ec_acceptvisa'); ?>" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle" /> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" title="<?php echo _AT('ec_acceptmastercard'); ?>" alt="<?php echo _AT('ec_acceptmastercard'); ?>" align="middle" />
-	</form><?php echo _AT('or'); ?> 
+	</form>
 <?php
-if($_config['ec_contact_address'] != ''){ ?>
+if($_config['ec_contact_address'] != ''){ 
+echo _AT('or'); 
+?>
+
 	<form  method="GET">
 		<input type="hidden"  name="Amount1" value="<?php echo $amount; ?>">
 		<input type="hidden"  name="mtid" value="<?php echo $mtid; ?>">
