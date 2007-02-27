@@ -51,7 +51,6 @@ if($_POST['startdate'] && $_POST['enddate']){
 }
 
 	$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, s.approval, s.course_name, f.course_fee, f.auto_approve, m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE s.member_id = m.member_id AND  s.course_id = f.course_id $sql_daterange GROUP BY s.member_id, s.course_id  ORDER BY  $col $order LIMIT $offset, $results_per_page";
-	//$sql = "SELECT  s.course_id,  s.date, s.shopid, s.member_id, s.approval, s.course_name, f.course_fee, f.auto_approve, m.login, m.first_name, m.last_name from ".TABLE_PREFIX."ec_shop AS s, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE s.member_id = m.member_id AND  s.course_id = f.course_id";
 
 	$result = mysql_query($sql,$db);
 
