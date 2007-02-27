@@ -29,16 +29,6 @@ function profile_image_delete($id) {
 	}
 }
 
-function profile_image_exists($id) {
-	$extensions = array('gif', 'jpg', 'png');
-
-	foreach ($extensions as $extension) {
-		if (file_exists(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension)) {
-			return true;
-		}
-	}
-}
-
 function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
 	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
 

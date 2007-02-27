@@ -797,7 +797,6 @@ function get_group_title($group_id) {
 }
 
 function get_status_name($status_id) {
-
 	switch ($status_id) {
 		case AT_STATUS_DISABLED:
 				return _AT('disabled');
@@ -814,6 +813,27 @@ function get_status_name($status_id) {
 	}
 }
 
+function profile_image_exists($id) {
+	$extensions = array('gif', 'jpg', 'png');
+
+	foreach ($extensions as $extension) {
+		if (file_exists(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension)) {
+			return true;
+		}
+	}
+}
+
+function print_profile_img($id) {
+	global $moduleFactory;
+	if ($moduleFactory->getModule('_standard/profile_pictures')->isEnabled() === FALSE) {
+		return;
+	}
+	if (profile_image_exists($id)) {
+		echo '<img src="get_profile_img.php?id='.$id.'" class="profile-picture" alt="" />';
+	} else {
+		echo '<img src="images/clr.gif" height="100" width="100" class="profile-picture" alt="" />';
+	}
+}
 
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 

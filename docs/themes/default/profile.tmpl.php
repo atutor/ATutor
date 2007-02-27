@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-global $display_name_formats, $_config;
+global $display_name_formats, $moduleFactory;
 
 ?>
 <div class="input-form">
@@ -49,8 +49,15 @@ global $display_name_formats, $_config;
 			<dt><?php echo _AT('status'); ?></dt>
 			<dd><?php echo $this->status; ?></dd>
 
-			<dt><?php echo _AT('picture'); ?></dt>
-			<dd><a href="get_profile_img.php?id=<?php echo $this->row['member_id'].SEP.'size=o'; ?>"><img src="get_profile_img.php?id=<?php echo $this->row['member_id']; ?>" class="profile-picture" alt="" /></a></dd>
+			<?php if ($moduleFactory->getModule('_standard/profile_pictures')->isEnabled() === TRUE): ?>
+				<dt><?php echo _AT('picture'); ?></dt>
+				<dd><?php if (profile_image_exists($this->row['member_id'])): ?>
+					<a href="get_profile_img.php?id=<?php echo $this->row['member_id'].SEP.'size=o'; ?>"><?php print_profile_img($this->row['member_id']); ?></a>
+					<?php else: ?>
+						<?php echo _AT('none'); ?>
+					<?php endif; ?>
+				</dd>
+			<?php endif; ?>
 		</dl>
 		<div style="clear: both; size: 1em"></div>
 	</div>
