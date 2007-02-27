@@ -16,19 +16,6 @@ define('AT_INCLUDE_PATH', '../include/');
 $_user_location	= 'users';
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-function profile_image_delete($id) {
-	$extensions = array('gif', 'jpg', 'png');
-
-	foreach ($extensions as $extension) {
-		if (file_exists(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension)) {
-			unlink(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension);
-		}
-		if (file_exists(AT_CONTENT_DIR.'profile_pictures/thumbs/'. $id.'.'.$extension)) {
-			unlink(AT_CONTENT_DIR.'profile_pictures/thumbs/'. $id.'.'.$extension);
-		}
-	}
-}
-
 function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
 	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
 

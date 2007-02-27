@@ -1,7 +1,7 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<?php global $languageManager, $_config; ?>
+<?php global $languageManager, $_config, $moduleFactory; ?>
 <input name="ml" type="hidden" value="<?php echo $this->ml; ?>" />
 <div class="input-form">
 
@@ -103,6 +103,18 @@
 	<div class="row">
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
+
+	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && $moduleFactory->getModule('_standard/profile_pictures')->isEnabled() === TRUE): ?>
+		<div class="row">
+			<?php echo _AT('picture'); ?><br/>
+			<?php if (profile_image_exists($_POST['member_id'])): ?>
+				<?php print_profile_img($_POST['member_id']); ?>
+				<input type="checkbox" name="profile_pic_delete" value="1" id="profile_pic_delete" /><label for="profile_pic_delete"><?php echo _AT('delete'); ?></label>
+			<?php else: ?>
+				<?php echo _AT('none'); ?>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
 
 	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
 		<input type="hidden" name="old_student_id" value="<?php echo $_POST['old_student_id']; ?>" />

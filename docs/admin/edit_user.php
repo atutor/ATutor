@@ -105,6 +105,9 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
+		if (isset($_POST['profile_pic_delete'])) {
+			profile_image_delete($id);
+		}
 		if (($_POST['website']) && (!ereg("://",$_POST['website']))) { 
 			$_POST['website'] = "http://".$_POST['website']; 
 		}

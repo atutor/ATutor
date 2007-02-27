@@ -835,6 +835,19 @@ function print_profile_img($id) {
 	}
 }
 
+function profile_image_delete($id) {
+	$extensions = array('gif', 'jpg', 'png');
+
+	foreach ($extensions as $extension) {
+		if (file_exists(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension)) {
+			unlink(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension);
+		}
+		if (file_exists(AT_CONTENT_DIR.'profile_pictures/thumbs/'. $id.'.'.$extension)) {
+			unlink(AT_CONTENT_DIR.'profile_pictures/thumbs/'. $id.'.'.$extension);
+		}
+	}
+}
+
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
 $moduleFactory =& new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
