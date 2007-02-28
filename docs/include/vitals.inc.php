@@ -825,7 +825,8 @@ function profile_image_exists($id) {
 
 function print_profile_img($id) {
 	global $moduleFactory;
-	if ($moduleFactory->getModule('_standard/profile_pictures')->isEnabled() === FALSE) {
+	$mod = $moduleFactory->getModule('_standard/profile_pictures');
+	if ($mod->isEnabled() === FALSE) {
 		return;
 	}
 	if (profile_image_exists($id)) {
