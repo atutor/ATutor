@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca                                             */
 /*                                                              */
@@ -190,7 +190,7 @@ $result = mysql_query($sql,$db);
 if (!$row = mysql_fetch_assoc($result)) {
 	$msg->addError('ITEM_NOT_FOUND');
 	if ($_SESSION['member_id']) {
-		header('Location: '.$_base_href.'users/index.php');
+		header('Location: '.AT_BASE_HREF.'users/index.php');
 	} else {
 		header('Location: login.php');
 	}
@@ -227,7 +227,7 @@ switch ($row['access']){
 			count_login();
 		} else if (!$_SESSION['valid_user']) {
 			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
-			header('Location: '.$_base_href.'browse.php');
+			header('Location: '.AT_BASE_HREF.'browse.php');
 			exit;
 
 		} else {
@@ -255,7 +255,7 @@ switch ($row['access']){
 
 		if (($row['u_release_date'] > time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
 			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
-			header('Location: '.$_base_href.'bounce.php?course=0');
+			header('Location: '.AT_BASE_HREF.'bounce.php?course=0');
 			exit;
 		} else if ($row['u_release_date'] > time()) {
 			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
@@ -311,7 +311,7 @@ switch ($row['access']){
 
 		if (($row['u_release_date'] > time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
 			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
-			header('Location: '.$_base_href.'bounce.php?course=0');
+			header('Location: '.AT_BASE_HREF.'bounce.php?course=0');
 			exit;
 		} else if ($row['u_release_date'] > time()) {
 			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
@@ -378,7 +378,7 @@ switch ($row['access']){
 
 		if (($row['u_release_date'] > time()) && !$row2['privileges']) {
 			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
-			header('Location: '.$_base_href.'bounce.php?course=0');
+			header('Location: '.$_AT_BASE_HREF.'bounce.php?course=0');
 			exit;
 		} else if ($row['u_release_date'] > time()) {
 			// only instructor and TAs may view  a course before it is released.

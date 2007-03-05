@@ -43,7 +43,7 @@ if (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE) {
 	</div>
 
 	<div class="row buttons">
-		<input type="button" onclick="javascript:window.open('<?php echo $_base_href; ?>admin/translate_atutor.php', 'newWin1', 'toolbar=0, location=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, copyhistory=0, width=640, height=480')" value="<?php echo _AT('translate'); ?>" <?php echo $button_state; ?> />
+		<input type="button" onclick="javascript:window.open('<?php echo AT_BASE_HREF; ?>admin/translate_atutor.php', 'newWin1', 'toolbar=0, location=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, copyhistory=0, width=640, height=480')" value="<?php echo _AT('translate'); ?>" <?php echo $button_state; ?> />
 	</div>
 </div>
 </form>

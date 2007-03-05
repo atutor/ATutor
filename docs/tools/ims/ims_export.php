@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -33,7 +33,7 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id'] . 'x' . date('Ymd'));
 
-	header('Location: '.AT_TILE_IMPORT. '?cp='.urlencode($_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m));
+	header('Location: '.AT_TILE_IMPORT. '?cp='.urlencode(AT_BASE_HREF. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m));
 	exit;
 } else if (isset($_GET['m'])) {
 	/* for TILE */
@@ -268,7 +268,7 @@ $vcard = new vCard();
 if ($row = mysql_fetch_assoc($result)) {
 	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
 	$vcard->setEmail($row['email']);
-	$vcard->setNote('Originated from an ATutor at '.$_base_href.'. See ATutor.ca for additional information.');
+	$vcard->setNote('Originated from an ATutor at '.AT_BASE_HREF.'. See ATutor.ca for additional information.');
 	$vcard->setURL($row['website']);
 
 	$imsmanifest_xml = str_replace('{VCARD}', $vcard->getVCard(), $imsmanifest_xml);

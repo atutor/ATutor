@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 	<div class="row">
 		<?php echo _AT('cron_url'); ?><br />
-		<code><?php echo $_base_href; ?>admin/cron.php?k=<?php echo $_config['cron_key']; ?></code>
+		<code><?php echo AT_BASE_HREF; ?>admin/cron.php?k=<?php echo $_config['cron_key']; ?></code>
 	</div>
 </div>
 

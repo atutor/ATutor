@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -28,7 +28,7 @@ if (isset($_POST['cancel'])) {
 
 	if (is_numeric($errors)) {
 		$msg->addFeedback('COURSE_PROPERTIES');
-		header('Location: '.$_base_href.'admin/courses.php');
+		header('Location: '.AT_BASE_HREF.'admin/courses.php');
 		exit;
 	}
 

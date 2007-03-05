@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -170,7 +170,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 
 		echo '<td width="10%" align="center">'.$row['num_comments'].'</td>';
 
-		echo '<td width="10%"><a href="'.$_base_href.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
+		echo '<td width="10%"><a href="'.AT_BASE_HREF.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
 
 		echo '<td width="20%" align="right" nowrap="nowrap">';
 		echo AT_date(_AT('forum_date_format'), $row['last_comment'], AT_DATE_MYSQL_DATETIME);

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -56,7 +56,7 @@ authenticate(AT_PRIV_TESTS);
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.$_base_href.'tools/tests/index.php');
+		header('Location: '.AT_BASE_HREF.'tools/tests/index.php');
 		exit;
 
 	} /* else: */

@@ -37,7 +37,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 <form name="form1" method="post"
       action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data"
-      onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
+      onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php');">
 
 	<?php echo _AT('package_type_info')?>
 	<div class="row">

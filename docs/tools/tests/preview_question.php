@@ -19,7 +19,7 @@ authenticate(AT_PRIV_TESTS);
 $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
 
 if (isset($_GET['submit'])) {
-	header('Location: '.$_base_href.'tools/tests/question_db.php');
+	header('Location: '.AT_BASE_HREF.'tools/tests/question_db.php');
 	exit;
 }
 

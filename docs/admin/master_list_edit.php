@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -20,7 +20,7 @@ $_REQUEST['id'] = $addslashes($_REQUEST['id']);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/master_list.php');
+	header('Location: '.AT_BASE_HREF.'admin/master_list.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['public_field'] = trim($_POST['public_field']);
@@ -38,7 +38,7 @@ if (isset($_POST['cancel'])) {
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
-		header('Location: '.$_base_href.'admin/master_list.php');
+		header('Location: '.AT_BASE_HREF.'admin/master_list.php');
 		exit;
 	}
 } 

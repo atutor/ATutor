@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -16,9 +16,9 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-	$get_file = $_base_href.'get.php/';
+	$get_file = AT_BASE_HREF.'get.php/';
 } else {
-	$get_file = $_base_href.'content/' . $_SESSION['course_id'] . '/';
+	$get_file = AT_BASE_HREF.'content/' . $_SESSION['course_id'] . '/';
 }
 
 ?>

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -116,16 +116,16 @@ if (isset($_POST['submit'])) {
 	exit;
 } else if (isset($_GET['edit'], $_GET['id'])) {
 	if (substr($_GET['id'], 0, 1) != '-') {
-		header('Location: '.$_base_href.'admin/edit_user.php?id='.$_GET['id'] . SEP . 'ml=1');
+		header('Location: '.AT_BASE_HREF.'admin/edit_user.php?id='.$_GET['id'] . SEP . 'ml=1');
 	} else {
-		header('Location: '.$_base_href.'admin/master_list_edit.php?id='.substr($_GET['id'], 1) . SEP . 'ml=1');
+		header('Location: '.AT_BASE_HREF.'admin/master_list_edit.php?id='.substr($_GET['id'], 1) . SEP . 'ml=1');
 	}
 	exit;
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	if (substr($_GET['id'], 0, 1) != '-') {
-		header('Location: '.$_base_href.'admin/admin_delete.php?id='.$_GET['id'] . SEP . 'ml=1');
+		header('Location: '.AT_BASE_HREF.'admin/admin_delete.php?id='.$_GET['id'] . SEP . 'ml=1');
 	} else {
-		header('Location: '.$_base_href.'admin/master_list_delete.php?id='.substr($_GET['id'], 1) . SEP . 'ml=1');
+		header('Location: '.AT_BASE_HREF.'admin/master_list_delete.php?id='.substr($_GET['id'], 1) . SEP . 'ml=1');
 	}
 	exit;
 } else if (isset($_GET['delete']) || isset($_GET['edit'])) {

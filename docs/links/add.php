@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -33,7 +33,7 @@ if (!isset($_POST['url'])) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'links/index.php');
+	header('Location: '.AT_BASE_HREF.'links/index.php');
 	exit;
 } else if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 	$missing_fields = array();
@@ -73,7 +73,7 @@ if (isset($_POST['cancel'])) {
 	
 		$msg->addFeedback('LINK_ADDED');
 
-		header('Location: '.$_base_href.'links/index.php');
+		header('Location: '.AT_BASE_HREF.'links/index.php');
 		exit;
 	} else {
 		$_POST['title']  = stripslashes($_POST['title']);

@@ -94,7 +94,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	$sql = "INSERT INTO ".TABLE_PREFIX."course_access VALUES ('$password', {$_SESSION['course_id']},'0000-00-00 00:00:00', 0)";
 	$result = mysql_query($sql, $db);
 }
-$url = $_base_href.'acl.php?'.$password;
+$url = AT_BASE_HREF.'acl.php?'.$password;
 
 ?>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

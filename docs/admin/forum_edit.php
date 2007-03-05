@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -21,7 +21,7 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/forums.php');
+	header('Location: '.AT_BASE_HREF.'admin/forums.php');
 	exit;
 } else if (isset($_POST['edit_forum'])) {
 	$missing_fields = array();
@@ -94,7 +94,7 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.$_base_href.'admin/forums.php');
+		header('Location: '.AT_BASE_HREF.'admin/forums.php');
 		exit;
 	}
 }

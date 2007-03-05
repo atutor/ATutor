@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -29,7 +29,6 @@ global $myLang;
 global $page;
 global $savant;
 global $errors, $onload;
-global $_base_href;
 global $_user_location;
 global $_base_path;
 global $cid;
@@ -39,7 +38,7 @@ global $addslashes;
 
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-	$_tmp_base_href = $_base_href . 'get.php/';
+	$_tmp_base_href = AT_BASE_HREF . 'get.php/';
 } else {
 	$_tmp_base_href = 'content/' . $_SESSION['course_id'] . '/';
 }
@@ -53,7 +52,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 	<link rel="stylesheet" href="<?php echo $_base_path.'themes/'.$_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-		<base href="<?php echo $_base_href; ?>" />
+		<base href="<?php echo AT_BASE_HREF; ?>" />
 
 </head>
 

@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -66,7 +66,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 
 		<div class="row buttons">
-		<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" onclick="openWindow('<?php echo $_base_href; ?>tools/prog.php');" /> 
+		<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" onclick="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php');" /> 
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	<?php endif; ?>

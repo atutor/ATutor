@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -61,13 +61,13 @@ if ($system_courses[$course]['rss'] && (($version == 1) || ($version == 2))) {
 	$rss->useCached();
 	$rss->title          = $system_courses[$course]['title'];
 	$rss->description    = $system_courses[$course]['description'];
-	$rss->link           = $_base_href;
-	$rss->syndicationURL = $_base_href;
+	$rss->link           = AT_BASE_HREF;
+	$rss->syndicationURL = AT_BASE_HREF;
 	
 	$image = new FeedImage();
 	$image->title = 'ATutor Logo';
-	$image->url   = $_base_href . 'images/at-logo.v.3.gif';
-	$image->link  = $_base_href;
+	$image->url   = AT_BASE_HREF . 'images/at-logo.v.3.gif';
+	$image->link  = AT_BASE_HREF;
 	$rss->image   = $image;
 
 	$sql = "SELECT A.*, M.login from ".TABLE_PREFIX."news A, ".TABLE_PREFIX."members M WHERE A.course_id = ".$course." AND A.member_id=M.member_id ORDER BY A.date DESC LIMIT 5";
@@ -78,10 +78,10 @@ if ($system_courses[$course]['rss'] && (($version == 1) || ($version == 2))) {
 		$item = new FeedItem();
 		
 		$item->title          = $data['title'];
-		$item->link           = $_base_href . 'index.php';
+		$item->link           = AT_BASE_HREF . 'index.php';
 		$item->description    = $data['body'];
 		$item->date           = strtotime($data['date']);
-		$item->source         = $_base_href;
+		$item->source         = AT_BASE_HREF;
 		$item->author         = $data['login'];
 
 		$rss->addItem($item);

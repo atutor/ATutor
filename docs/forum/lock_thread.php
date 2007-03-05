@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -37,7 +37,7 @@ $_pages['forum/lock_thread.php']['parent']    = 'forum/index.php?fid='.$fid;
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'forum/index.php?fid='.$fid);
+	header('Location: '.AT_BASE_HREF.'forum/index.php?fid='.$fid);
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['lock'] = intval($_POST['lock']);
@@ -49,11 +49,11 @@ if (isset($_POST['cancel'])) {
 
 	if($_POST['lock'] == '1' || $_POST['lock'] == '2'){
 		$msg->addFeedback('THREAD_LOCKED');
-		header('Location: '.$_base_href.'forum/index.php?fid='.$fid);
+		header('Location: '.AT_BASE_HREF.'forum/index.php?fid='.$fid);
 		exit;
 	} else {
 		$msg->addFeedback('THREAD_UNLOCKED');
-		header('Location: '.$_base_href.'forum/index.php?fid='.$fid);
+		header('Location: '.AT_BASE_HREF.'forum/index.php?fid='.$fid);
 		exit;
 	}
 }

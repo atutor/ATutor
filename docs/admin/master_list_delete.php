@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -18,7 +18,7 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/master_list.php');
+	header('Location: '.AT_BASE_HREF.'admin/master_list.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['id'] = $addslashes($_POST['id']);
@@ -29,7 +29,7 @@ if (isset($_POST['submit_no'])) {
 	write_to_log(AT_ADMIN_LOG_DELETE, 'master_list', mysql_affected_rows($db), $sql);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.$_base_href.'admin/master_list.php');
+	header('Location: '.AT_BASE_HREF.'admin/master_list.php');
 	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>

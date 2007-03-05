@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -103,7 +103,7 @@ function unenroll ($list) {
 * @author  Shozub Qureshi
 */
 function enroll ($list) {
-	global $db, $msg, $_base_href, $_config, $course_id, $owner;
+	global $db, $msg, $_config, $course_id, $owner;
 	require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 	$num_list = count($list);
@@ -133,7 +133,7 @@ function enroll ($list) {
 
 	while ($row_to = mysql_fetch_assoc($result_to)) {
 		// send email here.
-		$login_link = $_base_href . 'login.php?course=' . $course_id;
+		$login_link = AT_BASE_HREF . 'login.php?course=' . $course_id;
 		$subject = SITE_NAME.': '._AT('enrol_message_subject');
 		$body = SITE_NAME.': '._AT('enrol_message_approved', $_SESSION['course_title'], $login_link)."\n\n";
 

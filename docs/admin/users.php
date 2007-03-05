@@ -26,7 +26,7 @@ if ( (isset($_GET['edit']) || isset($_GET['password'])) && (isset($_GET['id']) &
 } else if ( isset($_GET['apply']) && isset($_GET['id']) && $_GET['change_status'] >= -1) {
 	$ids = implode(',', $_GET['id']);
 	$status = intval($_GET['change_status']);
-	if ($status==-1) {
+	if ($status == -1) {
 		header('Location: admin_delete.php?id='.$ids);
 		exit;
 	} else {
@@ -328,10 +328,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<optgroup label="<?php echo _AT('status'); ?>">
 					<option value="<?php echo AT_STATUS_STUDENT; ?>"><?php echo _AT('student'); ?></option>
 					<option value="<?php echo AT_STATUS_INSTRUCTOR; ?>"><?php echo _AT('instructor'); ?></option>	
-					<?php if ($_config['email_confirmation']) {echo '<option value="'.AT_STATUS_UNCONFIRMED.'">'._AT('unconfirmed').'</option>'; } ?>
+					<?php if ($_config['email_confirmation']): ?>
+						<option value="<?php echo AT_STATUS_UNCONFIRMED; ?>"><?php echo _AT('unconfirmed'); ?></option>
+					<?php endif; ?>
 					<option value="<?php echo AT_STATUS_DISABLED; ?>"><?php echo _AT('disable'); ?></option>				
 				</optgroup>
-				<option value="-3" disable="disable">- - - - - - - - -</option>	
+				<option value="-2" disabled="disabled">- - - - - - - - -</option>	
 				<option value="-1"><?php echo _AT('delete'); ?></option>				
 			</select>
 			<input type="submit" name="apply" value="<?php echo _AT('apply'); ?>" />

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['cancel'])) {
-	header('Location: '.$_base_href.'admin/users.php');
+	header('Location: '.AT_BASE_HREF.'admin/users.php');
 	exit;
 }
 
@@ -203,7 +203,7 @@ if (isset($_POST['submit'])) {
 		
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION && ($_POST['status'] == AT_STATUS_UNCONFIRMED)) {
 			$code = substr(md5($_POST['email'] . $now . $m_id), 0, 10);
-			$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
+			$confirmation_link = AT_BASE_HREF . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 
 			/* send the email confirmation message: */
 			$mail->Subject = $_config['site_name'] . ': ' . _AT('email_confirmation_subject');
@@ -213,14 +213,14 @@ if (isset($_POST['submit'])) {
 			$mail->Subject = $_config['site_name'].": "._AT('account_information');
 			$body .= _AT('admin_new_account', $_config['site_name'])."\n\n";
 		}
-		$body .= _AT('web_site') .' : '.$_base_href."\n";
+		$body .= _AT('web_site') .' : '.AT_BASE_HREF."\n";
 		$body .= _AT('login_name') .' : '.$_POST['login'] . "\n";
 		$body .= _AT('password') .' : '.$_POST['password'] . "\n";
 		$mail->Body    = $body;
 		$mail->Send();
 
 		$msg->addFeedback('PROFILE_CREATED_ADMIN');
-		header('Location: '.$_base_href.'admin/users.php');
+		header('Location: '.AT_BASE_HREF.'admin/users.php');
 		exit;
 	}
 }

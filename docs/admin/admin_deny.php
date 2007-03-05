@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 	if ($row = mysql_fetch_array($result)) {
 		$to_email = $row['email'];
 
-		$message = _AT('instructor_request_deny', $_base_href)." \n";
+		$message = _AT('instructor_request_deny', AT_BASE_HREF)." \n";
 		if ($_POST['msg_option'] == $other_option) {
 			$message.=addslashes($_POST['other_msg']);
 		} else if ($_POST['msg_option']) {

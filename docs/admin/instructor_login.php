@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -34,13 +34,13 @@ if (isset($_POST['submit_yes'])) {
 		$_SESSION['is_super_admin'] = $admin_login;
 		session_write_close();
 
-		header('Location: '.$_base_href.'bounce.php?course='.$_POST['course']);
+		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_POST['course']);
 		exit;
 	}
 } else if (isset($_POST['submit_no'])) {
 
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/courses.php');
+	header('Location: '.AT_BASE_HREF.'admin/courses.php');
 	exit;
 }
 

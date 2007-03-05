@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -21,7 +21,7 @@ if (isset($_GET['mod'])) {
 	$dir_name = str_replace(array('.','..'), '', $_GET['mod']);
 
 	if (isset($_GET['install'])) {
-		header('Location: '.$_base_href.'admin/modules/details.php?mod='.urlencode($dir_name).SEP.'new=1');
+		header('Location: '.AT_BASE_HREF.'admin/modules/details.php?mod='.urlencode($dir_name).SEP.'new=1');
 		exit;
 	}
 

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -20,12 +20,12 @@ $_POST['description'] = trim($_POST['description']);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'users/index.php');
+	header('Location: '.AT_BASE_HREF.'users/index.php');
 	exit;
 
 } else if ($_POST['description'] == ''){
 	$msg->addError(array('EMPTY_FIELDS', _AT('description')));
-	header('Location: '.$_base_href.'users/create_course.php');
+	header('Location: '.AT_BASE_HREF.'users/create_course.php');
 	exit;
 } else if (isset($_POST['form_request_instructor'])) {
 	 if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 			if ($row = mysql_fetch_assoc($result)) {
 				$email = $row['email'];
 			}
-			$tmp_message = _AT('req_message_instructor', get_display_name($_SESSION['member_id']), $_POST['description'], $_base_href);
+			$tmp_message = _AT('req_message_instructor', get_display_name($_SESSION['member_id']), $_POST['description'], AT_BASE_HREF);
 
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 

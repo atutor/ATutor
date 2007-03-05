@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -341,7 +341,7 @@ function paste_from_file() {
 
 //for accessibility checker
 function write_temp_file() {
-	global $_POST, $_base_href, $msg;
+	global $_POST, $msg;
 
 	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 		$content_base = 'get.php/';

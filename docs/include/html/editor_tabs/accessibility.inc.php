@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -28,7 +28,7 @@ if ($_POST['desc_submit']) {
 					.'?file='.urlencode($_POST['pg_url'])
 					.'&output=chunk'
 					.'&name='.urlencode(get_display_name($_SESSION['member_id']))
-					.'&email='.urlencode($_base_href)
+					.'&email='.urlencode(AT_BASE_HREF)
 					.$desc_query;
 
 		if (@file_get_contents($checker_url) === false) {
@@ -78,11 +78,11 @@ if ($_POST['desc_submit']) {
 			$_POST['content_path'] = $content_row['content_path'];
 			write_temp_file();
 
-			$pg_url = $_base_href.'get_acheck.php/'.$_POST['cid'] . '.html';
+			$pg_url = AT_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
 
 			$checker_url = AT_ACHECKER_URL.'Checkacc?file='.urlencode($pg_url)
 							. '&guide=wcag-2-0-aa&output=chunk&line=5'
-							. '&vurl=' . urlencode($_base_href . 'editor/view_item.php');
+							. '&vurl=' . urlencode(AT_BASE_HREF . 'editor/view_item.php');
 
 			$report = @file_get_contents($checker_url);
 

@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (!manage_links()) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.$_base_href.'links/index.php');
+	header('Location: '.AT_BASE_HREF.'links/index.php');
 	exit;
 }
 
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 
 		if (!links_authenticate($owner_type, $owner_id)) {
 			$msg->addError('ACCESS_DENIED');
-			header('Location: '.$_base_href.'tools/links/categories.php');
+			header('Location: '.AT_BASE_HREF.'tools/links/categories.php');
 			exit;
 		}
 
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 	//authorized to edit this cat?
 	if (!links_authenticate($row['owner_type'], $row['owner_id'])) {
 		$msg->addError('ACCESS_DENIED');
-		header('Location: '.$_base_href.'tools/links/categories.php');
+		header('Location: '.AT_BASE_HREF.'tools/links/categories.php');
 		exit;
 	}
 }

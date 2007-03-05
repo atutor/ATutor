@@ -82,7 +82,7 @@ if (mysql_num_rows($result) == 0) {
 }
 
 ?>
-<form method="get" action="<?php echo $_base_href; ?>tools/my_tests.php">
+<form method="get" action="<?php echo AT_BASE_HREF; ?>tools/my_tests.php">
 <div class="input-form">
 	<div class="row">
 		<h2><?php echo AT_print($test_title, 'tests.title'); ?></h2>

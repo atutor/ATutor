@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -595,7 +595,7 @@ if ($_POST['s_cid']){
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 	if ($_GET['tile']) {
-		header('Location: '.$_base_href.'tools/tile/index.php');
+		header('Location: '.AT_BASE_HREF.'tools/tile/index.php');
 	} else {
 		header('Location: ./index.php?cid='.intval($_POST['cid']));
 	}

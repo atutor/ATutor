@@ -41,7 +41,7 @@ echo '</h3>';
 
 $msg->addInfo('CSS_DEPRECATED');
 if (file_exists('../' . $filename)) {
-	$info = array('CSS_DEPRECATED_DL', $_base_href . $filename);
+	$info = array('CSS_DEPRECATED_DL', AT_BASE_HREF . $filename);
 	$msg->addInfo($info);
 }
 

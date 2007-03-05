@@ -108,7 +108,7 @@ $result = mysql_query($sql, $db);
 <tbody>
 <?php if ($row = mysql_fetch_assoc($result)): ?>
 	<?php do { ?>
-		<tr onmousedown="document.location='<?php echo $_base_href; ?>tools/tracker/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>'" title="<?php echo _AT('details'); ?>">
+		<tr onmousedown="document.location='<?php echo AT_BASE_HREF; ?>tools/tracker/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>'" title="<?php echo _AT('details'); ?>">
 			<td><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></td>
 			<td><?php echo $row['total_hits'];       ?></td>
 			<td><?php echo $row['unique_hits'];      ?></td>

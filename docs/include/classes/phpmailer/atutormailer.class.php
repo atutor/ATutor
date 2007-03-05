@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor                                                               */
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton */
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg, Heidi Hazelton */
 /* http://atutor.ca                                                     */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -62,11 +62,11 @@ class ATutorMailer extends PHPMailer {
 	* @author  Joel Kronenberg
 	*/
 	function Send() {
-		global $_base_href, $_config;
+		global $_config;
 
 		// attach the ATutor footer to the body first:
 		$this->Body .= 	"\n\n".'----------------------------------------------'."\n";
-		$this->Body .= _AT('sent_via_atutor', $_base_href);
+		$this->Body .= _AT('sent_via_atutor', AT_BASE_HREF);
 		if ($_SESSION['course_id'] > 0) {
 			$this->Body .= 'login.php?course='.$_SESSION['course_id'].' | ' . $_SESSION['course_title'];
 		}

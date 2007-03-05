@@ -110,7 +110,7 @@ unregister_GLOBALS();
 			exit;
 		}
 
-		header('Location: '.$_base_href.'login.php');
+		header('Location: '.AT_BASE_HREF.'login.php');
 		exit;
 	}
 
@@ -264,7 +264,7 @@ if (($_user_location == 'users') && $_SESSION['valid_user'] && ($_SESSION['cours
 }
 
 if (($_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_location != 'prog') && !$_GET['h'] && ($_user_location != 'public')) {
-	header('Location:'.$_base_href.'users/index.php');
+	header('Location:'.AT_BASE_HREF.'users/index.php');
 	exit;
 }
 
@@ -726,8 +726,7 @@ function admin_authenticate($privilege = 0, $check = false) {
 		if ($check) {
 			return false;
 		}
-		global $_base_href;
-		header('Location: '.$_base_href.'login.php');
+		header('Location: '.AT_BASE_HREF.'login.php');
 		exit;
 	}
 

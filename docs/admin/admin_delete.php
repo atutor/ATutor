@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -14,48 +14,9 @@
 /* deletes a user from the system.                              */
 /****************************************************************/
 // $Id$
-
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
-
-$ids = explode(',', $_REQUEST['id']);
-
-if (isset($_POST['submit_yes'])) {
-	
-	foreach($ids as $id) {
-		delete_user(intval($id));
-	}
-
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	if (isset($_POST['ml']) && $_REQUEST['ml']) {
-		header('Location: '.$_base_href.'admin/master_list.php');
-	} else {
-		header('Location: '.$_base_href.'admin/users.php');
-	}
-	exit;
-} else if (isset($_POST['submit_no'])) {
-	$msg->addFeedback('CANCELLED');
-	if (isset($_POST['ml']) && $_REQUEST['ml']) {
-		header('Location: '.$_base_href.'admin/master_list.php');
-	} else {
-		header('Location: '.$_base_href.'admin/users.php');
-	}
-	exit;
-}
-
-require(AT_INCLUDE_PATH.'header.inc.php'); 
-$names = get_login($ids);
-$names_html = '<ul>'.html_get_list($names).'</ul>';
-$hidden_vars['id'] =  implode(',', array_keys($names));
-$hidden_vars['ml'] = intval($_REQUEST['ml']);
-
-$confirm = array('DELETE_USER', $names_html);
-$msg->addConfirm($confirm, $hidden_vars);
-$msg->printConfirm();
-
-require(AT_INCLUDE_PATH.'footer.inc.php');
-
 
 function delete_user($id) {
 	global $db, $msg;
@@ -65,7 +26,7 @@ function delete_user($id) {
 	$result = mysql_query($sql, $db);
 	if (($row = mysql_fetch_assoc($result))) {
 		/*$msg->addError('NODELETE_USER');
-		header('Location: '.$_base_href.'users.php');
+		header('Location: '.AT_BASE_HREF.'users.php');
 		exit;*/
 		return;
 	}
@@ -157,4 +118,42 @@ function delete_user($id) {
 
 	return;
 }
+
+$ids = explode(',', $_REQUEST['id']);
+
+if (isset($_POST['submit_yes'])) {
+	
+	foreach($ids as $id) {
+		delete_user(intval($id));
+	}
+
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	if (isset($_POST['ml']) && $_REQUEST['ml']) {
+		header('Location: '.AT_BASE_HREF.'admin/master_list.php');
+	} else {
+		header('Location: '.AT_BASE_HREF.'admin/users.php');
+	}
+	exit;
+} else if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+	if (isset($_POST['ml']) && $_REQUEST['ml']) {
+		header('Location: '.AT_BASE_HREF.'admin/master_list.php');
+	} else {
+		header('Location: '.AT_BASE_HREF.'admin/users.php');
+	}
+	exit;
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+$names = get_login($ids);
+$names_html = '<ul>'.html_get_list($names).'</ul>';
+$hidden_vars['id'] =  implode(',', array_keys($names));
+$hidden_vars['ml'] = intval($_REQUEST['ml']);
+
+$confirm = array('DELETE_USER', $names_html);
+$msg->addConfirm($confirm, $hidden_vars);
+$msg->printConfirm();
+
+require(AT_INCLUDE_PATH.'footer.inc.php');
+
 ?>

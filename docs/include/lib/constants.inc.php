@@ -174,6 +174,8 @@ $_base_href	 = array_slice($url_parts, 0, count($url_parts) - $dir_deep-1);
 $_base_href	 = $server_protocol . implode('/', $_base_href).'/';
 $_base_path  = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST']));
 
+define('AT_BASE_HREF', $_base_href);
+
 /* relative uri */
 $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_deep-1));
 

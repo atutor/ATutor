@@ -37,7 +37,7 @@ if (isset($_POST['cancel'])) {
 
 	if (is_numeric($errors)) {
 		$msg->addFeedback('COURSE_PROPERTIES');
-		header('Location: '.$_base_href.'tools/index.php');	
+		header('Location: '.AT_BASE_HREF.'tools/index.php');	
 		exit;
 	}
 		
@@ -53,7 +53,7 @@ if (isset($_POST['cancel'])) {
 
 	if (is_numeric($errors)) {
 		$msg->addFeedback('COURSE_PROPERTIES');
-		header('Location: '.$_base_href.'tools/index.php');	
+		header('Location: '.AT_BASE_HREF.'tools/index.php');	
 		exit;
 	}
 }

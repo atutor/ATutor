@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -19,7 +19,7 @@ require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (!manage_links()) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.$_base_href.'links/index.php');
+	header('Location: '.AT_BASE_HREF.'links/index.php');
 	exit;
 }
 
@@ -30,7 +30,7 @@ if (isset($_POST['edit']) && isset($_POST['link_id'])) {
 	header('Location: delete.php?lid='.$_POST['link_id']);
 	exit;
 } else if (isset($_POST['view']) && isset($_POST['link_id'])) {
-	$onload = 'window.open(\''.$_base_href.'links/index.php?view='.$_POST['link_id'].'\',\'link\');';
+	$onload = 'window.open(\''.AT_BASE_HREF.'links/index.php?view='.$_POST['link_id'].'\',\'link\');';
 } else if (!empty($_POST)) {
 	$msg->addError('NO_ITEM_SELECTED');
 }

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -21,7 +21,7 @@ require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/modules/add_new.php');
+	header('Location: '.AT_BASE_HREF.'admin/modules/add_new.php');
 	exit;
 } else if (isset($_POST['mod']) && isset($_POST['submit_yes'])) {
 	$module =& $moduleFactory->getModule($_POST['mod']);
@@ -29,10 +29,10 @@ if (isset($_POST['submit_no'])) {
 	$module->install();
 
 	if ($msg->containsErrors()) {
-		header('Location: '.$_base_href.'admin/modules/details.php?mod='.$addslashes($_POST['mod']).SEP.'new=1');
+		header('Location: '.AT_BASE_HREF.'admin/modules/details.php?mod='.$addslashes($_POST['mod']).SEP.'new=1');
 	} else {
 		$msg->addFeedback('MOD_INSTALLED');
-		header('Location: '.$_base_href.'admin/modules/index.php');
+		header('Location: '.AT_BASE_HREF.'admin/modules/index.php');
 	}
 	exit;
 } else if (isset($_GET['submit'])) {

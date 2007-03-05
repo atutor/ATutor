@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -38,7 +38,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			}
 
 			echo '<tr>';
-			echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . $contentManager->_menu_info[$row['content_id']]['title'] . '</a></td>';
+			echo '<td><a href='.AT_BASE_HREF.'content.php?cid='.$row['content_id']. '>' . $contentManager->_menu_info[$row['content_id']]['title'] . '</a></td>';
 			echo '<td>' . $row['total_hits'] . '</td>';
 			echo '<td>' . $row['total_duration'] . '</td>';
 			if ($row['last_accessed'] == '') {

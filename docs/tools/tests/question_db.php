@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -22,17 +22,17 @@ function intval_array ( & $value, $key) { $value = (int) $value; }
 if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) || isset($_GET['preview']) || isset($_GET['add'])) && !isset($_GET['questions'])){
 	$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_GET['submit_create'], $_GET['question_type'])) {
-	header('Location: '.$_base_href.'tools/tests/create_question_'.$addslashes($_GET['question_type']).'.php');
+	header('Location: '.AT_BASE_HREF.'tools/tests/create_question_'.$addslashes($_GET['question_type']).'.php');
 	exit;
 } else if (isset($_GET['edit'])) {
 	$id  = current($_GET['questions']);
 	$ids = explode('|', $id[0], 2);
 	$o = TestQuestions::getQuestion($ids[1]);
 	if ($name = $o->getPrefix()) {
-		header('Location: '.$_base_href.'tools/tests/edit_question_'.$name.'.php?qid='.intval($ids[0]));
+		header('Location: '.AT_BASE_HREF.'tools/tests/edit_question_'.$name.'.php?qid='.intval($ids[0]));
 		exit;
 	} else {
-		header('Location: '.$_base_href.'tools/tests/index.php');
+		header('Location: '.AT_BASE_HREF.'tools/tests/index.php');
 		exit;
 	}
 
@@ -46,7 +46,7 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) |
 	array_walk($ids, 'intval_array');
 	$ids = implode(',',$ids);
 
-	header('Location: '.$_base_href.'tools/tests/delete_question.php?qid='.$ids);
+	header('Location: '.AT_BASE_HREF.'tools/tests/delete_question.php?qid='.$ids);
 	exit;
 } else if (isset($_GET['preview'])) {
 	$ids = array();
@@ -57,7 +57,7 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) |
 	array_walk($ids, 'intval_array');
 	$ids = implode(',',$ids);
 
-	header('Location: '.$_base_href.'tools/tests/preview_question.php?qid='.$ids);
+	header('Location: '.AT_BASE_HREF.'tools/tests/preview_question.php?qid='.$ids);
 	exit;
 } else if (isset($_GET['add'])) {
 	$id  = current($_GET['questions']);

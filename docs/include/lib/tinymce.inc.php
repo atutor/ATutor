@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -14,7 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function load_editor($name = FALSE) {
-	global $_base_path, $_base_href, $content_base_href;
+	global $_base_path, $content_base_href;
 
 	 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) { 
 		$course_base_href = 'get.php/'; 
@@ -52,7 +52,7 @@ function load_editor($name = FALSE) {
 	external_link_list_url : "example_data/example_link_list.js",
 	external_image_list_url : "example_data/example_image_list.js",
 	flash_external_list_url : "example_data/example_flash_list.js",
-	document_base_url: "'.$_base_href.$course_base_href.$content_base_href.'"
+	document_base_url: "'.AT_BASE_HREF.$course_base_href.$content_base_href.'"
 	});';
 	echo '</script>';
 }

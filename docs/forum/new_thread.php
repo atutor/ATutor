@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -128,7 +128,7 @@ if (isset($_POST['cancel'])) {
 				$mail = new ATutorMailer;
 				$mail->AddAddress($subscriber['email'], $subscriber['full_name']);
 
-				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
+				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  AT_BASE_HREF.'bounce.php?course='.$_SESSION['course_id']);
 				$body .= "\n----------------------------------------------\n";
 				$body .= _AT('posted_by').": ".get_display_name($_SESSION['member_id'])."\n";
 				$body .= $_POST['body']."\n";

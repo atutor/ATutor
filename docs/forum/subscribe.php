@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -70,13 +70,13 @@ if($_REQUEST['t']){
 
 if ($_GET['us'] == '1') {
 	$msg->addFeedback(array('THREAD_UNSUBSCRIBED', $thread_name));
-	header('Location: '.$_base_href.'forum/'.$this_pid);
+	header('Location: '.AT_BASE_HREF.'forum/'.$this_pid);
 	exit;
 }
 
 /* else: */
 	$msg->addFeedback(array('THREAD_SUBSCRIBED', $thread_name ));
-	header('Location: '.$_base_href.'forum/'.$this_pid);
+	header('Location: '.AT_BASE_HREF.'forum/'.$this_pid);
 	exit;
 
 ?>

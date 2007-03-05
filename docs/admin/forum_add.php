@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -18,7 +18,7 @@ admin_authenticate(AT_ADMIN_PRIV_FORUMS);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/forums.php');
+	header('Location: '.AT_BASE_HREF.'admin/forums.php');
 	exit;
 } else if (isset($_POST['add_forum'])) {
 	$missing_fields = array();
@@ -56,7 +56,7 @@ if (isset($_POST['cancel'])) {
 		if($course =="0"){
 			$msg->addFeedback('FORUM_POSTING');
 		}
-		header('Location: '.$_base_href.'admin/forums.php');
+		header('Location: '.AT_BASE_HREF.'admin/forums.php');
 		exit;
 	}
 }

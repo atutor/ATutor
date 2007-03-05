@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006                                      */
+/* Copyright (c) 2002-2007                                      */
 /* Written by Greg Gay & Joel Kronenberg & Chris Ridpath        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
@@ -26,7 +26,7 @@ if (isset($_GET['edit'])) {
 	exit;
 } else if (isset($_GET['submissions'])){
 	$_GET['assignment'] = intval($_GET['assignment']);
-	header('Location: '.$_base_href.'file_storage/index.php?ot='.WORKSPACE_ASSIGNMENT.SEP.'oid='.$_GET['assignment']);
+	header('Location: '.AT_BASE_HREF.'file_storage/index.php?ot='.WORKSPACE_ASSIGNMENT.SEP.'oid='.$_GET['assignment']);
 	exit;
 }
 

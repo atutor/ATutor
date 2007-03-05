@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -100,7 +100,7 @@ function checkUserInfo($record) {
 }
 
 function add_users($user_list, $enroll, $course) {
-	global $db, $_base_href;
+	global $db;
 	global $msg;
 	global $_config;
 
@@ -140,17 +140,17 @@ function add_users($user_list, $enroll, $course) {
 							$code   = substr(md5($row['email'] . $row['creation_date'] . $m_id), 0, 10);
 
 							// send email here.
-							$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
+							$confirmation_link = AT_BASE_HREF . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 			
 							$subject = $_config['site_name'].': '._AT('email_confirmation_subject');
 							$body = _AT(array('new_account_enroll_confirm', $_SESSION['course_title'], $confirmation_link))."\n\n";
 						} else {
 							$subject = $_config['site_name'].': '._AT('account_information');
-							$body = _AT(array('new_account_enroll',$_base_href, $_SESSION['course_title']))."\n\n";
+							$body = _AT(array('new_account_enroll',AT_BASE_HREF, $_SESSION['course_title']))."\n\n";
 						}
 						
 						//$body .= SITE_NAME.': '._AT('account_information')."\n";
-						$body .= _AT('web_site') .' : '.$_base_href."\n";
+						$body .= _AT('web_site') .' : '.AT_BASE_HREF."\n";
 						$body .= _AT('login_name') .' : '.$student['uname'] . "\n";
 						$body .= _AT('password') .' : '.$student['uname'] . "\n";
 

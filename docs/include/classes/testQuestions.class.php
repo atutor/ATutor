@@ -328,9 +328,7 @@ class OrderingQuestion extends AbstractTestQuestion {
 
 		$num_choices = count($this->getChoices($row));
 
-		global $_base_href;
-
-		$this->savant->assign('base_href', $_base_href);
+		$this->savant->assign('base_href', AT_BASE_HREF);
 		$this->savant->assign('num_choices', $num_choices);
 		$this->savant->assign('answers', $answers);
 		$this->savant->assign('row', $row);
@@ -443,9 +441,8 @@ class TruefalseQuestion extends AbstracttestQuestion {
 	}
 
 	/*protected */function assignDisplayResultVariables($row, $answer_row) {
-		global $_base_href;
 
-		$this->savant->assign('base_href', $_base_href);
+		$this->savant->assign('base_href', AT_BASE_HREF);
 		$this->savant->assign('answers', $answer_row['answer']);
 		$this->savant->assign('row', $row);
 	}
@@ -609,9 +606,9 @@ class MatchingQuestion extends AbstracttestQuestion {
 
 		$answer_row['answer'] = explode('|', $answer_row['answer']);
 
-		global $_letters, $_base_href;
+		global $_letters;
 
-		$this->savant->assign('base_href', $_base_href);
+		$this->savant->assign('base_href', AT_BASE_HREF);
 		$this->savant->assign('answers', $answer_row['answer']);
 		$this->savant->assign('letters', $_letters);
 		$this->savant->assign('num_options', $num_options);
@@ -629,10 +626,10 @@ class MatchingQuestion extends AbstracttestQuestion {
 			}
 		}
 		
-		global $_letters, $_base_href;
+		global $_letters;
 
 		$this->savant->assign('num_choices', $num_choices);
-		$this->savant->assign('base_href', $_base_href);
+		$this->savant->assign('base_href', AT_BASE_HREF);
 		$this->savant->assign('letters', $_letters);
 		$this->savant->assign('num_options', $num_options);
 		$this->savant->assign('row', $row);
@@ -723,9 +720,8 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 			$answer_row['answer'] = array($answer_row['answer']);
 		}
 
-		global $_base_href;
 
-		$this->savant->assign('base_href', $_base_href);
+		$this->savant->assign('base_href', AT_BASE_HREF);
 		$this->savant->assign('answers', $answer_row['answer']);
 		$this->savant->assign('row', $row);
 	}

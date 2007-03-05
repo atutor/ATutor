@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -21,7 +21,7 @@ $rid = intval($_REQUEST['rid']);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'tools/tests/results.php?tid='.$tid);
+	header('Location: '.AT_BASE_HREF.'tools/tests/results.php?tid='.$tid);
 	exit;
 
 } else if (isset($_POST['submit_yes'])) {
@@ -33,7 +33,7 @@ if (isset($_POST['submit_no'])) {
 	$result	= mysql_query($sql, $db);
 		
 	$msg->addFeedback('RESULT_DELETED');
-	header('Location: '.$_base_href.'tools/tests/results.php?tid='.$tid);
+	header('Location: '.AT_BASE_HREF.'tools/tests/results.php?tid='.$tid);
 	exit;
 } 
 

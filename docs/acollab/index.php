@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -26,10 +26,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 function check_location(){
 <!--
 	if(frames['0'].window.document.forms[0].login){
-		location.replace("<?php echo $_base_href; ?>acollab/bounce.php");
+		location.replace("<?php echo AT_BASE_HREF; ?>acollab/bounce.php");
 	}
 	if(frames['0'].window.document.forms[0].jump &&  !frames['0'].window.document.forms[0].p){
-		location.replace('<?php echo $_base_href; ?>index.php');
+		location.replace('<?php echo AT_BASE_HREF; ?>index.php');
 	}
 }
 -->

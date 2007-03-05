@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -49,7 +49,7 @@ if ($_POST['submit']) {
 
 			$to_email = $row['email'];
 			$tmp_message  = $row['first_name']  .' ' . $row['last_name']."\n\n";
-			$tmp_message .= _AT('enrol_messagenew', $system_courses[$course]['title'], $_base_href );
+			$tmp_message .= _AT('enrol_messagenew', $system_courses[$course]['title'], AT_BASE_HREF );
 
 			if ($to_email != '') {
 				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');

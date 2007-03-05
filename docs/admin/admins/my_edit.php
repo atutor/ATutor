@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -18,7 +18,7 @@ admin_authenticate();
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/index.php');
+	header('Location: '.AT_BASE_HREF.'admin/index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.$_base_href.'admin/index.php');
+		header('Location: '.AT_BASE_HREF.'admin/index.php');
 		exit;
 	}
 	$_POST['real_name']         = $stripslashes($_POST['real_name']);

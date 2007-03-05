@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -28,7 +28,7 @@ if (isset($_POST['submit_no'])) {
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('COURSE_REMOVED');
 	}
-	header("Location: ".$_base_href."users/index.php");
+	header("Location: ".AT_BASE_HREF."users/index.php");
 	exit;
 }
 

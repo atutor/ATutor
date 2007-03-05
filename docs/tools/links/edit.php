@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -18,7 +18,7 @@ require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (!manage_links()) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.$_base_href.'links/index.php');
+	header('Location: '.AT_BASE_HREF.'links/index.php');
 	exit;
 }
 
@@ -27,7 +27,7 @@ $link_id = intval($lid[0]);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'tools/links/index.php');
+	header('Location: '.AT_BASE_HREF.'tools/links/index.php');
 	exit;
 } else if (isset($_POST['edit_link']) && isset($_POST['submit'])) {
 
@@ -67,7 +67,7 @@ if (isset($_POST['cancel'])) {
 	
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
-		header('Location: '.$_base_href.'tools/links/index.php');
+		header('Location: '.AT_BASE_HREF.'tools/links/index.php');
 		exit;
 	} else {
 		$_POST['title']  = $stripslashes($_POST['title']);
@@ -84,7 +84,7 @@ if (isset($_POST['cancel'])) {
 
 		if (!links_authenticate($cat_row['owner_type'], $cat_row['owner_id'])) {
 			$msg->addError('ACCESS_DENIED');
-			header('Location: '.$_base_href.'tools/links/index.php');
+			header('Location: '.AT_BASE_HREF.'tools/links/index.php');
 			exit;
 		}
 

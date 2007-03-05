@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -195,7 +195,6 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 *								i.e		$args[0] = the term to the format string $_template[term]
 *										$args[1..x] = optional arguments to the formatting string 
 * @return	string|array		full resulting message
-* @see		$_base_href			in include/vitals.inc.php
 * @see		$db			        in include/vitals.inc.php
 * @see		cache()				in include/phpCache/phpCache.inc.php
 * @see		cache_variable()	in include/phpCache/phpCache.inc.php
@@ -220,7 +219,6 @@ function _AT() {
 		// replaced the preg_match with a test of the substring.
 		$sub_arg = substr($args[0], 0, 7); // 7 is the shortest type of msg (AT_HELP)
 		if (in_array($sub_arg, array('AT_ERRO','AT_INFO','AT_WARN','AT_FEED','AT_HELP','AT_CONF'))) {
-			global $_base_href;
 			global $db;
 			global $_base_path;
 					
@@ -248,8 +246,7 @@ function _AT() {
 	
 	// a template variable
 	if (!isset($_template)) {
-		global $_base_href;
-		$url_parts = parse_url($_base_href);
+		$url_parts = parse_url(AT_BASE_HREF);
 		$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
 
 		if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {

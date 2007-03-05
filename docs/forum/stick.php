@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -24,7 +24,7 @@ $result = mysql_query($sql, $db);
 
 $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
-header('Location: '.$_base_href.'forum/index.php?fid='.intval($_GET['fid']));
+header('Location: '.AT_BASE_HREF.'forum/index.php?fid='.intval($_GET['fid']));
 exit;
 
 ?>

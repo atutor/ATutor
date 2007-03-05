@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2007 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -31,7 +31,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		if ($tests) { ?>
 				<table border="0" cellspacing="0" cellpadding="0" align="center">
 				<tr>
-					<td class="test-box"><small><a href="<?php echo $_base_href ?>tools/my_tests.php?g=32"><?php echo _AT('curren_tests_surveys'); ?></a></small></td>
+					<td class="test-box"><small><a href="<?php echo AT_BASE_HREF; ?>tools/my_tests.php?g=32"><?php echo _AT('curren_tests_surveys'); ?></a></small></td>
 				</tr>
 				<tr>
 					<td class="dropdown"><?php echo $tests; ?></td>

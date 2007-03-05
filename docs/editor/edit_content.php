@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -36,7 +36,7 @@ if ($_POST['close'] || $_GET['close']) {
 	} else {
 		$msg->addFeedback('CLOSED');
 		if ($cid == 0) {
-			header('Location: '.$_base_href.'tools/content/index.php');
+			header('Location: '.AT_BASE_HREF.'tools/content/index.php');
 			exit;
 		}
 	}

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -18,9 +18,9 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['cancel'])) {
 	if (isset($_POST['ml']) && $_REQUEST['ml']) {
-		header('Location: '.$_base_href.'admin/master_list.php');
+		header('Location: '.AT_BASE_HREF.'admin/master_list.php');
 	} else {
-		header('Location: '.$_base_href.'admin/users.php');
+		header('Location: '.AT_BASE_HREF.'admin/users.php');
 	}
 	exit;
 }
@@ -191,7 +191,7 @@ if (isset($_POST['submit'])) {
 			$row    = mysql_fetch_assoc($result);
 
 			$code = substr(md5($row['email'] . $row['creation_date']. $id), 0, 10);
-			$confirmation_link = $_base_href . 'confirm.php?id='.$id.SEP.'m='.$code;
+			$confirmation_link = AT_BASE_HREF . 'confirm.php?id='.$id.SEP.'m='.$code;
 
 			/* send the email confirmation message: */
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -207,9 +207,9 @@ if (isset($_POST['submit'])) {
 
 		$msg->addFeedback('PROFILE_UPDATED_ADMIN');
 		if (isset($_POST['ml']) && $_REQUEST['ml']) {
-			header('Location: '.$_base_href.'admin/master_list.php');
+			header('Location: '.AT_BASE_HREF.'admin/master_list.php');
 		} else {
-			header('Location: '.$_base_href.'admin/users.php');
+			header('Location: '.AT_BASE_HREF.'admin/users.php');
 		}
 		exit;
 	}

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -70,7 +70,7 @@ if ($_config['check_version']) {
 
 	<?php if (false && admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)): ?>
 	<div class="input-form" style="width: 98%;">
-		<form method="get" action="<?php echo $_base_href; ?>admin/fix_content.php">
+		<form method="get" action="<?php echo AT_BASE_HREF; ?>admin/fix_content.php">
 			<div class="row">
 				<h3><?php echo _AT('fix_content_ordering'); ?></h3>
 				<p><?php echo _AT('fix_content_ordering_text'); ?></p>
