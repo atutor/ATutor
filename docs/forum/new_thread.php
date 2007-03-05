@@ -130,7 +130,7 @@ if (isset($_POST['cancel'])) {
 
 				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
 				$body .= "\n----------------------------------------------\n";
-				$body .= _AT('posted_by').": ".$_SESSION[login]."\n";
+				$body .= _AT('posted_by').": ".get_display_name($_SESSION['member_id'])."\n";
 				$body .= $_POST['body']."\n";
 				$mail->FromName = $_config['site_name'];
 				$mail->From     = $_config['contact_email'];
