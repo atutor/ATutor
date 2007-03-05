@@ -157,6 +157,10 @@ $num_rows = mysql_num_rows($result);
 		<col span="4" />
 		<col class="sort" />
 		<col span="3" />
+	<?php elseif($col == 'cat_name'): ?>
+		<col span="5" />
+		<col class="sort" />
+		<col span="2" />
 	<?php endif; ?>
 </colgroup>
 <thead>
