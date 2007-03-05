@@ -8,7 +8,7 @@
 		<dd>In the left column of the Properties screen in the Content Editor choose the 'up arrow' to move the current content <em>Before</em> another item. Choose the 'down arrow' to move the content <em>After</em> that item. Choose the 'plus sign' to make the current content a <em>Child of</em>, or sub-topic, for that item. </dd>
 
 		<dt>Release Date</dt>
-		<dd>The release date is the date when the content will be visible to students. A future release can be scheduled by specifying a later date. Specifying a release date that has past will release the content immediately. By default, the Release Date is set as the current date and time.</dd>
+		<dd>The release date specifies when the content page will be visible to students. Content can be scheduled for release by specifying date in the future. Specifying a release date that has past will release the content immediately. The release date of a page affects all of its sub-pages as well, such that a sub-page is released only when the most distant release date of all its parent pages has passed. By default, the Release Date is set as the current date and time.</dd>
 		
 		<dt>Keywords</dt>
 		<dd>Words entered into the Keywords area are given greater emphasis during searching. Therefore they will be placed higher in a list of search results than if there were no keywords. Keywords are also used as Learning Object Metadata when a content package is generated.</dd>

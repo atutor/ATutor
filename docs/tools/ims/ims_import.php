@@ -546,7 +546,7 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 				.'"'.$last_modified.'",													
 				0,1,NOW(),"","'.$content_info['new_path'].'",'
 				.'"'.$content_info['title'].'",'
-				.'"'.$content.'", 0)';
+				.'"'.$content.'")';
 
 		$result = mysql_query($sql, $db);
 

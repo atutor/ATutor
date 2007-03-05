@@ -201,7 +201,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 		$cid = $contentManager->addContent($new_course_id, 0, 1,_AT('welcome_to_atutor'),
 											addslashes(_AT('this_is_content')),
-											'', '', 1, date('Y-m-d H:00:00'), 0);
+											'', '', 1, date('Y-m-d H:00:00'));
 
 		$announcement = _AT('default_announcement');
 		

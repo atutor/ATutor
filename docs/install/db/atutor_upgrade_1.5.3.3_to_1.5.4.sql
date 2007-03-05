@@ -51,3 +51,6 @@ CREATE TABLE `messages_sent` (
 
 ## add the profile_pictures module
 INSERT INTO `modules` VALUES ('_standard/profile_pictures', 2, 0, 0, 0, 0);
+
+## remove inherit_release_date field
+ALTER TABLE `content` DROP `inherit_release_date`;

@@ -156,14 +156,16 @@ $parser->set_element_handler('openHandler','closeHandler');
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 } else {
-	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id AND release_date<=NOW() ORDER BY content_parent_id, ordering";
+	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 }
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
-	$content[$row['content_parent_id']][] = $row;
-	if ($cid == $row['content_id']) {
-		$top_content = $row;
-		$top_content_parent_id = $row['content_parent_id'];
+	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
+		$content[$row['content_parent_id']][] = $row;
+		if ($cid == $row['content_id']) {
+			$top_content = $row;
+			$top_content_parent_id = $row['content_parent_id'];
+		}
 	}
 }
 

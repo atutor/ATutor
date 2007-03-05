@@ -45,7 +45,6 @@ function content_convert($row, $course_id, $table_id_map, $version) {
 	$new_row[9] = $row[8];
 	$new_row[10] = $row[9];
 	$new_row[11] = $row[10];
-	$new_row[12] = 0;
 
 	return $new_row;
 }

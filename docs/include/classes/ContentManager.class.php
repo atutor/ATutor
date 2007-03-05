@@ -126,7 +126,7 @@ class ContentManager
 	}
 
 
-	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $inherit_release_date) {
+	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date) {
 		
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['course_id'] != -1)) {
 			return false;
@@ -137,7 +137,7 @@ class ContentManager
 		$result = mysql_query($sql, $this->db);
 
 		/* main topics all have minor_num = 0 */
-		$sql = "INSERT INTO ".TABLE_PREFIX."content VALUES (NULL,$course_id, $content_parent_id, $ordering, NOW(), 0, $formatting, '$release_date', '$keywords', '', '$title','$text', $inherit_release_date)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."content VALUES (NULL,$course_id, $content_parent_id, $ordering, NOW(), 0, $formatting, '$release_date', '$keywords', '', '$title','$text')";
 
 		$err = mysql_query($sql, $this->db);
 
@@ -893,14 +893,30 @@ class ContentManager
 	}
 
 
-	/* returns false if this page has not yet been released, or is under a page that has not been released, true otherwise */
+	/* returns the timestamp of release if this page has not yet been released, or is under a page that has not been released, true otherwise */
+	/* finds the max(timestamp) of all parents and returns that, true if less than now */
 	/* Access: public */
 	function isReleased($cid) {
-		if ($this->_menu_info[$cid]['u_release_date'] <= time()) {
-			return true;
+		if ($this->_menu_info[$cid]['content_parent_id'] == 0) {
+			// this $cid has no parent, so we check its release date directly
+			if ($this->_menu_info[$cid]['u_release_date'] <= time()) {	
+				// yup! it's released
+				return true;
+			} else {
+				// nope! not released
+				return $this->_menu_info[$cid]['u_release_date'];
+			}
 		}
+		// this is a sub page, need to check ALL its parents
+		$parent = $this->isReleased($this->_menu_info[$cid]['content_parent_id']); // recursion
 
-		return false;
+		if ($parent !== TRUE && $parent > $this->_menu_info[$cid]['u_release_date']) {
+			return $parent;
+		} else if ($this->_menu_info[$cid]['u_release_date'] <= time()) {
+			return true;
+		} else {
+			return $this->_menu_info[$cid]['u_release_date'];
+		}
 	}
 }
 

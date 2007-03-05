@@ -27,6 +27,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				$today_min   = $_POST['min'];		
 		}?>
 		<?php require(AT_INCLUDE_PATH.'html/release_date.inc.php');	?>
+		<?php echo _AT('applies_to_all_sub_pages'); ?>
 	</div>
 
 	<div class="row">

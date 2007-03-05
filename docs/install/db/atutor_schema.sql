@@ -120,7 +120,6 @@ CREATE TABLE `content` (
   `content_path` varchar(100) NOT NULL default '',
   `title` varchar(150) NOT NULL default '',
   `text` text NOT NULL ,
-  `inherit_release_date` TINYINT UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM ;
