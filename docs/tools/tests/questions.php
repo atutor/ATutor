@@ -122,7 +122,7 @@ $result	= mysql_query($sql, $db);
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('num');      ?></th>
-	<th scope="col"><?php echo _AT('weight');   ?></th>
+	<th scope="col"><?php echo _AT('points');   ?></th>
 	<th scope="col"><?php echo _AT('order'); ?></th>
 	<th scope="col"><?php echo _AT('question'); ?></th>
 	<th scope="col"><?php echo _AT('type');     ?></th>
