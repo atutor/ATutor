@@ -33,7 +33,7 @@ require('include/classes/sqlutility.php');
 
 
 function my_add_null_slashes( $string ) {
-    return mysql_real_escape_string(stripslashes($string));
+    return @mysql_real_escape_string(stripslashes($string));
 }
 function my_null_slashes($string) {
 	return $string;
