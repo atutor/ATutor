@@ -48,13 +48,13 @@ if (! isset($GLOBALS['_SAVANT2']['error'])) {
 * Please see the documentation at {@link http://phpsavant.com/}, and be
 * sure to donate! :-)
 * 
-* $Id: Savant2.php,v 1.29 2005/09/11 22:42:24 pmjones Exp $
+* $Id: Savant2.php,v 1.32 2006/03/05 16:58:38 pmjones Exp $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 
 * @package Savant2
 * 
-* @version 2.4.0 stable
+* @version 2.4.3 stable
 * 
 * @license LGPL http://www.gnu.org/copyleft/lesser.html
 * 
@@ -71,6 +71,19 @@ if (! isset($GLOBALS['_SAVANT2']['error'])) {
 */
 
 class Savant2 {
+	
+	
+	/**
+	* 
+	* PHP5 ONLY:  Whether or not to use __autoload().  Default is false.
+	* 
+	* @access private
+	* 
+	* @var bool
+	* 
+	*/
+	
+	var $_autoload = false;
 	
 	
 	/**
@@ -313,6 +326,11 @@ class Savant2 {
 			$this->setPath('resource', null);
 		}
 		
+		// do we allow __autoload() use?
+		if (isset($conf['autoload'])) {
+			$this->setAutoload($conf['autoload']);
+		}
+		
 		// set the error class
 		if (isset($conf['error'])) {
 			$this->setError($conf['error']);
@@ -345,6 +363,22 @@ class Savant2 {
 				(array) $config['escape']
 			);
 		}	
+	}
+	
+	/**
+	* 
+	* Sets whether or not __autoload() is used when loading classes.
+	* 
+	* @access public
+	* 
+	* @param bool $flag True to use __autoload(), false to not use it.
+	* 
+	* @return void
+	* 
+	*/
+	
+	function setAutoload($flag) {
+		$this->_autoload = (bool) $flag;
 	}
 	
 	
@@ -505,6 +539,36 @@ class Savant2 {
 	}
 	
 	
+	/**
+	* 
+	* Internal version of class_exists() to allow for differing behaviors.
+	* 
+	* Under PHP4, there is only 1 param to class_exists(); in PHP5, there 
+	* are two.  However, if you pass 2 params to the PHP4 version, you get
+	* a parameter count warning; hence, this method.
+	* 
+	* Under PHP5, checks $this->_autload to see if __autoload() should be
+	* called.
+	* 
+	* @access public
+	* 
+	* @param string $class A class name.
+	* 
+	* @return bool Whether or not the class exists.
+	* 
+	*/
+	
+	function _classExists($class) {
+		if (PHP_VERSION < '5') {
+			// version 4.x
+			return class_exists($class);
+		} else {
+			// version 5.x
+			return class_exists($class, $this->_autoload);
+		}
+	}
+	
+	
 	// -----------------------------------------------------------------
 	//
 	// Output escaping and management.
@@ -521,10 +585,10 @@ class Savant2 {
 	* 
 	* <code>
 	* $savant->setEscape(
-	*     'stripslashes',
-	*     'htmlspecialchars',
-	*     array('StaticClass', 'method'),
-	*     array($object, $method)
+	*	 'stripslashes',
+	*	 'htmlspecialchars',
+	*	 array('StaticClass', 'method'),
+	*	 array($object, $method)
 	* );
 	* </code>
 	* 
@@ -549,10 +613,10 @@ class Savant2 {
 	* 
 	* <code>
 	* $savant->addEscape(
-	*     'stripslashes',
-	*     'htmlspecialchars',
-	*     array('StaticClass', 'method'),
-	*     array($object, $method)
+	*	 'stripslashes',
+	*	 'htmlspecialchars',
+	*	 array('StaticClass', 'method'),
+	*	 array($object, $method)
 	* );
 	* </code>
 	* 
@@ -598,11 +662,11 @@ class Savant2 {
 	* 
 	* // use replacement callbacks
 	* $result = $savant->escape(
-	*     $value,
-	*     'stripslashes',
-	*     'htmlspecialchars',
-	*     array('StaticClass', 'method'),
-	*     array($object, $method)
+	*	 $value,
+	*	 'stripslashes',
+	*	 'htmlspecialchars',
+	*	 array('StaticClass', 'method'),
+	*	 array($object, $method)
 	* );
 	* </code>
 	* 
@@ -657,11 +721,11 @@ class Savant2 {
 	* 
 	* // use replacement callbacks
 	* $this->_(
-	*     $value,
-	*     'stripslashes',
-	*     'htmlspecialchars',
-	*     array('StaticClass', 'method'),
-	*     array($object, $method)
+	*	 $value,
+	*	 'stripslashes',
+	*	 'htmlspecialchars',
+	*	 array('StaticClass', 'method'),
+	*	 array($object, $method)
 	* );
 	* </code>
 	* 
@@ -735,7 +799,7 @@ class Savant2 {
 		$this->_path[$type] = array();
 		
 		// convert from string to path
-		if (is_string($new) && ! strpos('://', $new)) {
+		if (is_string($new) && ! strpos($new, '://')) {
 			// the search config is a string, and it's not a stream
 			// identifier (the "://" piece), add it as a path
 			// string.
@@ -852,7 +916,7 @@ class Savant2 {
 				// access only to defined paths.
 				
 				// is the path based on a stream?
-				if (strpos('://', $path) === false) {
+				if (strpos($path, '://') === false) {
 					// not a stream, so do a realpath() to avoid
 					// directory traversal attempts on the local file
 					// system. Suggested by Ian Eure, initially
@@ -1336,7 +1400,7 @@ class Savant2 {
 		$file = "$class.php";
 		
 		// is it loaded?
-		if (! class_exists($class)) {
+		if (! $this->_classExists($class)) {
 			
 			$result = $this->findFile('resource', $file);
 			if (! $result) {
@@ -1538,7 +1602,7 @@ class Savant2 {
 		$file = "$class.php";
 		
 		// is it loaded?
-		if (! class_exists($class)) {
+		if (! $this->_classExists($class)) {
 			
 			$result = $this->findFile('resource', $file);
 			if (! $result) {
@@ -1680,7 +1744,7 @@ class Savant2 {
 		$file = $class . '.php';
 		
 		// is it loaded?
-		if (! class_exists($class)) {
+		if (! $this->_classExists($class)) {
 			
 			// find the error class
 			$result = $this->findFile('resource', $file);

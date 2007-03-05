@@ -7,13 +7,13 @@
 * You have to extend this class for it to be useful; e.g., "class
 * Savant2_Plugin_example extends Savant2_Plugin".
 * 
-* $Id: Compiler.php,v 1.4 2004/12/13 13:23:45 pmjones Exp $
+* $Id: Compiler.php,v 1.5 2005/08/09 22:19:39 pmjones Exp $
 * 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 
 * @package Savant2
 * 
-* @license http://www.gnu.org/copyleft/lesser.html LGPL
+* @license LGPL http://www.gnu.org/copyleft/lesser.html
 * 
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU Lesser General Public License as
