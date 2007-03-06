@@ -88,7 +88,11 @@ if ($anonymous == 1) {
 }
 
 $result = mysql_query($sql, $db);
-$guest_text = '- '._AT('guest').' -';
+if ($anonymous == 1) {
+	$guest_text = '<em>'._AT('anonymous').'</em>';
+} else {
+	$guest_text = '- '._AT('guest').' -';
+}
 while ($row = mysql_fetch_assoc($result)) {
 	$row['full_name'] = $row['full_name'] ? $row['full_name'] : $guest_text;
 	$row['login']     = $row['login']     ? $row['login']     : $guest_text;
