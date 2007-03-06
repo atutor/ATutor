@@ -38,6 +38,26 @@ function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
 	}
 }
 
+// check if GD is installed
+if (!extension_loaded('gd')) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printInfos('FEATURE_NOT_AVAILABLE');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+$gd_info = gd_info();
+$supported_images = array();
+if ($gd_info['GIF Create Support']) {
+	$supported_images[] = 'gif';
+}
+if ($gd_info['JPG Support']) {
+	$supported_images[] = 'jpg';
+}
+if ($gd_info['PNG Support']) {
+	$supported_images[] = 'png';
+}
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: profile.php');
@@ -65,7 +85,7 @@ if (isset($_POST['cancel'])) {
 		$extension = 'jpg';
 	}
 
-	if (!in_array($extension, array('jpg', 'gif', 'png'))) {
+	if (!in_array($extension, $supported_images)) {
 		$msg->addError(array('FILE_ILLEGAL', $extension));
 		header('Location: profile_picture.php');
 		exit;
@@ -123,14 +143,6 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-// check if GD is installed
-if (!extension_loaded('gd')) {
-	$msg->printInfos('FEATURE_NOT_AVAILABLE');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
-$gd_info = gd_info();
 ?>
 
 <form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -145,19 +157,7 @@ $gd_info = gd_info();
 
 	<div class="row">
 		<h3><?php echo _AT('upload_new_picture'); ?></h3>
-		<input type="file" name="file" />
-		(
-		<?php if ($gd_info['GIF Create Support']): ?>
-			GIF
-		<?php endif; ?>
-		<?php if ($gd_info['JPG Support']): ?>
-			JPG
-		<?php endif; ?>
-		<?php if ($gd_info['PNG Support']): ?>
-			PNG
-		<?php endif; ?>
-		)
-	</div>
+		<input type="file" name="file" /> (<?php echo implode(', ', $supported_images); ?>)</div>
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
