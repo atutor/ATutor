@@ -104,7 +104,7 @@
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
 
-	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && $moduleFactory->getModule('_standard/profile_pictures')->isEnabled() === TRUE): ?>
+	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && $_POST['member_id'] && $moduleFactory->getModule('_standard/profile_pictures')->isEnabled() === TRUE): ?>
 		<div class="row">
 			<?php echo _AT('picture'); ?><br/>
 			<?php if (profile_image_exists($_POST['member_id'])): ?>
