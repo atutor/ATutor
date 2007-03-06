@@ -70,6 +70,10 @@ if (isset($_POST['cancel'])) {
 
 		header('Location: profile_picture.php');
 		exit;
+	} else if ($_FILES['file']['error'] == UPLOAD_ERR_FORM_SIZE) {
+		$msg->addError(array('FILE_MAX_SIZE', $_config['prof_pic_max_file_size'] . ' ' . _AT('bytes')));
+		header('Location: profile_picture.php');
+		exit;
 	} else if (!$_FILES['file']['size']) {
 		header('Location: profile_picture.php');
 		exit;
