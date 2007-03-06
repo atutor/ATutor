@@ -58,6 +58,13 @@ if ($gd_info['PNG Support']) {
 	$supported_images[] = 'png';
 }
 
+if (!$supported_images) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printInfos('FEATURE_NOT_AVAILABLE');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: profile.php');
