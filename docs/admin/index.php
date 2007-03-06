@@ -67,21 +67,6 @@ if ($_config['check_version']) {
 			</div>
 		</form>
 	</div>
-
-	<?php if (false && admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)): ?>
-	<div class="input-form" style="width: 98%;">
-		<form method="get" action="<?php echo AT_BASE_HREF; ?>admin/fix_content.php">
-			<div class="row">
-				<h3><?php echo _AT('fix_content_ordering'); ?></h3>
-				<p><?php echo _AT('fix_content_ordering_text'); ?></p>
-			</div>
-
-			<div class="row buttons">
-				<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" />
-			</div>
-		</form>
-	</div>
-	<?php endif; ?>
 </div>
 
 <div style="width: 55%;">
