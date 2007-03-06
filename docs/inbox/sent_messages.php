@@ -113,7 +113,7 @@ $result = mysql_query($sql,$db);
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data static" summary="" rules="rows">
+<table class="data" summary="" rules="rows">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
@@ -138,7 +138,7 @@ $result = mysql_query($sql,$db);
 		<?php else: ?>
 			<tr>
 		<?php endif; ?>
-		<td><input type="checkbox" name="id[]" value="<?php echo $row['message_id']; ?>" id="m<?php echo $row['message_id']; ?>" <?php if (isset($_POST['id']) && in_array($row['message_id'], $_POST['id'])) { echo 'checked="checked"'; } ?>/></td>
+		<td><input type="checkbox" name="id[]" value="<?php echo $row['message_id']; ?>" id="m<?php echo $row['message_id']; ?>" <?php if (isset($_POST['id']) && in_array($row['message_id'], $_POST['id'])) { echo 'checked="checked"'; } ?> title="<?php echo _AT('delete').': '.AT_print($row['subject'], 'messages.subject');?>"/></td>
 		<?php
 
 		$name = get_display_name($row['to_member_id']);
