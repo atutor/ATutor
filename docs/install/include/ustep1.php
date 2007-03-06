@@ -213,7 +213,7 @@ if (isset($errors)) {
 <ol>
 	<li>Release Candidate (RC) installations cannot be upgraded.</li>
 	<li>Depending on the size of the existing courses, some steps (particularly 2 and 6) of the upgrade may require considerable time to complete.</li>
-	<li>All installed language packs and will be deleted.</li>
+	<li>All installed language packs will be deleted.</li>
 	<li>Some installed themes may not be supported by this version.</li>
 	<li>All extra modules will have to be reinstalled before they can be enabled again.</li>
 </ol>
@@ -262,6 +262,8 @@ if (isset($errors)) {
 
 <br />
 
-<br /><p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p>
+<?php if ($dirs): ?>
+	<br /><p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p>
+<?php endif; ?>
 
 </form>
