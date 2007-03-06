@@ -76,7 +76,7 @@ if ($_SESSION['course_id'] > 0) {
 	$_pages['admin/index.php']['title_var'] = 'home';
 	$_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
 	$_pages['admin/index.php']['guide']     = 'admin/?p=configuration.php';
-	$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admin/admins/my_password.php');
+	$_pages['admin/index.php']['children'] = array_merge(array('admin/admins/my_edit.php', 'admin/admins/my_password.php'), (array) $_pages['admin/index.php']['children']);
 
 	$_pages['admin/admins/my_edit.php']['title_var'] = 'my_account';
 	$_pages['admin/admins/my_edit.php']['parent']    = 'admin/index.php';
@@ -99,7 +99,7 @@ if ($_SESSION['course_id'] > 0) {
 	$_pages['admin/error_logging.php']['title_var'] = 'error_logging';
 	$_pages['admin/error_logging.php']['parent']    = 'admin/config_edit.php';
 	$_pages['admin/error_logging.php']['guide']     = 'admin/?p=error_logging.php';
-	$_pages['admin/error_logging.php']['children']  = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
+	$_pages['admin/error_logging.php']['children']  = array_merge(array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php'), (array) $_pages['admin/error_logging.php']['children']);
 
 	$_pages['admin/error_logging_reset.php']['title_var'] = 'reset_log';
 	$_pages['admin/error_logging_reset.php']['parent']    = 'admin/error_logging.php';
@@ -218,7 +218,7 @@ $_pages['tools/index.php']['title_var'] = 'manage';
 $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 $_pages['inbox/index.php']['title_var'] = 'inbox';
-$_pages['inbox/index.php']['children']  = array('inbox/sent_messages.php', 'inbox/send_message.php', 'inbox/export.php');
+$_pages['inbox/index.php']['children']  = array_merge(array('inbox/sent_messages.php', 'inbox/send_message.php', 'inbox/export.php'), (array) $_pages['inbox/index.php']['children']);
 
 	$_pages['inbox/sent_messages.php']['title_var'] = 'sent_messages';
 	$_pages['inbox/sent_messages.php']['parent']    = 'inbox/index.php';
@@ -239,7 +239,7 @@ $_pages['about.php']['title_var']  = 'about_atutor';
 $_pages['404.php']['title_var']  = '404';
 
 $_pages['help/index.php']['title_var']  = 'help';
-$_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/contact_support.php');
+$_pages['help/index.php']['children'] = array_merge(array('help/accessibility.php', 'help/contact_support.php'), (array) $_pages['help/index.php']['children']);
 
 	$_pages['help/accessibility.php']['title_var']  = 'accessibility';
 	$_pages['help/accessibility.php']['parent'] = 'help/index.php';
