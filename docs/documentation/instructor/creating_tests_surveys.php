@@ -14,7 +14,10 @@
 	
 		<dt>Anonymous</dt>
 		<dd>Set this to No in most cases, or set it to Yes if you are creating a survey or poll.</dd>
-	
+
+		<dt>Allow Guest</dt>
+		<dd>Set this if you wish to allow users who are not logged into a course to take the test. In Release Results, set to "Once quiz has been submitted" to allow guest users to see the results of the test after they have completed it. Also see <a href="authenticated_access.php">Authenticated Access</a> for information about guest access to protected and private courses.</dd>
+		
 		<dt>Release Results</dt>
 		<dd>Defines the availability of test results to students, either once the test has been submitted, once submitted and completely marked, or not at all. In the latter case, the Release Results property can later be changed to <em>Once quiz has been submitted</em> to make results available to students once all submissions have been marked.</dd>
 
