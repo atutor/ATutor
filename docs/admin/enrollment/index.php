@@ -19,12 +19,19 @@ admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT);
 if (!isset($_GET['course_id'])) {
 	$sql = "SELECT course_id FROM ".TABLE_PREFIX."courses ORDER BY title LIMIT 1";
 	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
-	$course_id = intval($row['course_id']);
+	if ($row = mysql_fetch_assoc($result)) {
+		$course_id = intval($row['course_id']);
+	} else {
+		require(AT_INCLUDE_PATH.'header.inc.php');		
+		echo _AT('none_found');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
 } else {
 	$course_id = intval($_REQUEST['course_id']);
 }
-
-require(AT_INCLUDE_PATH.'html/enrollment.inc.php');
+if (isset($system_courses[$course_id]['member_id'])) {
+	require(AT_INCLUDE_PATH.'html/enrollment.inc.php');
+}
 exit;
 ?>
