@@ -255,11 +255,19 @@ $msg->printErrors();
 	<div class="row">
 		<?php echo _AT('start_date');  ?><br />
 		<?php
-			$today_day  = date('d');
-			$today_mon  = date('m');
-			$today_year = date('Y');
-			$today_hour = date('H');
-			$today_min  = 0;
+			if (!isset($_POST['submit'])) {
+				$today_day  = date('d');
+				$today_mon  = date('m');
+				$today_year = date('Y');
+				$today_hour = date('H');
+				$today_min  = 0;
+			} else {
+				$today_day  = intval($day_start);
+				$today_mon  = intval($month_start);
+				$today_year = intval($year_start);
+				$today_hour = intval($hour_start);
+				$today_min  = intval($min_start);
+			}
 
 			$name = '_start';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
@@ -270,11 +278,19 @@ $msg->printErrors();
 	<div class="row">
 		<?php echo _AT('end_date');  ?><br />
 		<?php
-			$today_day  = date('d');
-			$today_mon  = date('m');
-			$today_year = date('Y');
-			$today_hour = date('H');
-			$today_min  = 0;
+			if (!isset($_POST['submit'])) {
+				$today_day  = date('d');
+				$today_mon  = date('m');
+				$today_year = date('Y');
+				$today_hour = date('H');
+				$today_min  = 0;
+			} else {
+				$today_day  = intval($day_end);
+				$today_mon  = intval($month_end);
+				$today_year = intval($year_end);
+				$today_hour = intval($hour_end);
+				$today_min  = intval($min_end);
+			}
 					
 			$name = '_end';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
