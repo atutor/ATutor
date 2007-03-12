@@ -282,13 +282,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<div class="row">
 			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('login_name').', '._AT('first_name').', '._AT('second_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
-			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
-		</div>
-
-		<div class="row">
-			<?php echo _AT('search_match'); ?><br />
-			<input type="radio" name="match" value="all" id="match_all" <?php echo $checked_match_all; ?> /><label for="match_all"><?php echo _AT('search_all_words'); ?></label><br />
-			<input type="radio" name="match" value="one" id="match_one" <?php echo $checked_match_one; ?> /><label for="match_one"><?php echo _AT('search_any_word'); ?></label>
+			<input type="text" name="search" id="search" size="40" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+			<br/>
+			<?php echo _AT('search_match'); ?>:
+			<input type="radio" name="match" value="all" id="match_all" <?php echo $checked_match_all; ?> /><label for="match_all"><?php echo _AT('search_all_words'); ?></label> <input type="radio" name="match" value="one" id="match_one" <?php echo $checked_match_one; ?> /><label for="match_one"><?php echo _AT('search_any_word'); ?></label>
 		</div>
 
 		<div class="row buttons">
