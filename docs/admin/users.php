@@ -184,9 +184,8 @@ if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 $result = mysql_query($sql, $db);
 
 if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
-
 	$ids = '';
-	while($row = mysql_fetch_assoc($result)) {
+	while ($row = mysql_fetch_assoc($result)) {
 		$ids .= $row['member_id'].','; 
 	}
 	$ids = substr($ids,0,-1);
@@ -260,6 +259,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
+<input type="hidden" name="search" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+<input type="hidden" name="include" value="<?php echo htmlspecialchars($_GET['include']); ?>" />
 
 <?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {  $col_counts = 1; } else { $col_counts = 0; } ?>
 <table summary="" class="data" rules="rows">
