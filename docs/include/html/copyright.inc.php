@@ -18,7 +18,7 @@ global $_base_path;
 global $system_courses;
 
 ?>
-<div align="center"><br /><?php
+<div align="center"><?php
 
 	if ($system_courses[$_SESSION['course_id']]['copyright'] != '') {	
 		echo '<small>' . AT_print($system_courses[$_SESSION['course_id']]['copyright'], 'courses.copyright') . '</small><br />';
