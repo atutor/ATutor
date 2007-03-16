@@ -18,63 +18,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_TESTS);
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-if (isset($_POST['submit_yes'])) {
-
-	//add slahes throughout - does that fix it?
-	$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
-	$_POST['choice'] = array_pad($_POST['choice'], 10, '');
-		
-	$_POST['feedback']   = $addslashes($_POST['feedback']);
-	$_POST['question']   = $addslashes($_POST['question']);
-	$_POST['properties'] = intval($_POST['properties']);
-
-	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, 
-				$_POST[category_id],
-				$_SESSION[course_id],
-				7,
-				'$_POST[feedback]',
-				'$_POST[question]',
-				'{$_POST[choice][0]}',
-				'{$_POST[choice][1]}',
-				'{$_POST[choice][2]}',
-				'{$_POST[choice][3]}',
-				'{$_POST[choice][4]}',
-				'{$_POST[choice][5]}',
-				'{$_POST[choice][6]}',
-				'{$_POST[choice][7]}',
-				'{$_POST[choice][8]}',
-				'{$_POST[choice][9]}',
-				{$_POST[answer][0]},
-				{$_POST[answer][1]},
-				{$_POST[answer][2]},
-				{$_POST[answer][3]},
-				{$_POST[answer][4]},
-				{$_POST[answer][5]},
-				{$_POST[answer][6]},
-				{$_POST[answer][7]},
-				{$_POST[answer][8]},
-				{$_POST[answer][9]},
-				'',
-				'',
-				'',
-				'',
-				'',
-				'',
-				'',
-				'',
-				'',
-				'',
-				$_POST[properties],
-				0)";
-
-	$result	= mysql_query($sql, $db);
-
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: question_db.php');
-	exit;
-}
-
-
 if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: question_db.php');
@@ -138,7 +81,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, 
 				$_POST[category_id],
 				$_SESSION[course_id],
-				1,
+				7,
 				'$_POST[feedback]',
 				'$_POST[question]',
 				'{$_POST[choice][0]}',
@@ -161,6 +104,16 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 				{$_POST[answer][7]},
 				{$_POST[answer][8]},
 				{$_POST[answer][9]},
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
+				'',
 				$_POST[properties],
 				0)";
 
@@ -179,7 +132,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printConfirm();
 ?>
-<form action="tools/tests/create_question_multi.php" method="post" name="form">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="required" value="1" />
 <div class="input-form">
 	<div class="row">
