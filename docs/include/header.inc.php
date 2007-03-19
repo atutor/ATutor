@@ -178,12 +178,7 @@ if ($_SESSION['course_id'] > -1) {
 
 		$nav_courses = array(); /* the list of courses we're enrolled in or own */
 		while ($row = @mysql_fetch_assoc($result)) {
-			if (strlen($system_courses[$row['course_id']]['title']) > 33) {
-				$tmp_title = substr($system_courses[$row['course_id']]['title'], 0, 30). '...';
-			} else {
-				$tmp_title = $system_courses[$row['course_id']]['title'];
-			}
-			$nav_courses[$row['course_id']] = $tmp_title;
+			$nav_courses[$row['course_id']] = $system_courses[$row['course_id']]['title'];
 		}
 
 		natcasesort($nav_courses);
