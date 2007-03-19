@@ -113,7 +113,7 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 
 	<div class="row">
 		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label> 
-		<?php print_VE('feedback'); ?>
+		<?php print_VE('optional_feedback'); ?>
 
 		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
 		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
@@ -136,7 +136,7 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 		<?php endif; ?>
 		<?php echo _AT('question'); ?> <?php echo ($i+1); ?>
 		
-		<?php print_VE('question_' . $i); ?>
+		<?php print_VE('question'); ?>
 		
 		<br />
 
@@ -161,7 +161,7 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php endif; ?>
 			<?php echo _AT('answer'); ?> <?php echo $_letters[$i]; ?>
-			<?php print_VE('answer_' . $i); ?>
+			<?php print_VE('answer'); ?>
 			<br />
 			<textarea id="answer_<?php echo $i; ?>" cols="50" rows="2" name="answer[<?php echo $i; ?>]"><?php 
 			echo htmlspecialchars(stripslashes($_POST['answer'][$i])); ?></textarea>

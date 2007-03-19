@@ -158,7 +158,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php endif; ?> <?php echo _AT('item'); ?> <?php echo ($i+1); ?>
 			
-			<?php print_VE('choice_' . $i); ?>
+			<?php print_VE('choice'); ?>
 			
 			<br />
 	

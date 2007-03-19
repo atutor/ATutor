@@ -104,7 +104,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label>		
-		<?php print_VE('feedback'); ?>
+		<?php print_VE('optional_feedback'); ?>
 		<br />
 	
 		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars($stripslashes($_POST['feedback'])); ?></textarea>
@@ -112,7 +112,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('statement'); ?></label>
-		<?php print_VE('question'); ?>
+		<?php print_VE('statement'); ?>
 		<br />
 
 		<textarea id="question" cols="50" rows="6" name="question" style="width:90%;"><?php echo htmlspecialchars($stripslashes($_POST['question'])); ?></textarea>

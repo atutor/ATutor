@@ -71,14 +71,7 @@ function init() {
 <form name="form">
 	<table cellspacing="1" cellpadding="0" width="99%" border="0" class="bodyline" align="center" summary="">
 		<tr>
-			<th class="cyan">
-				<?php 
-					if (preg_match ('/choice/', $area))
-						echo _AT('choice') . ' ' . (intval(substr($area ,-1 , 1))+1);
-					else 
-						echo _AT($area);
-				?>
-			</th>
+			<th class="cyan"><?php echo _AT($area); ?></th>
 		</tr>
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1">

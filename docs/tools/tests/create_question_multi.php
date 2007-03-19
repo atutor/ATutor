@@ -110,7 +110,7 @@ $msg->printConfirm();
 
 	<div class="row">
 		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label>
-		<?php print_VE('feedback'); ?>	
+		<?php print_VE('optional_feedback'); ?>	
 		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
 		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
@@ -128,7 +128,7 @@ $msg->printConfirm();
 	<div class="row">
 		<?php echo _AT('choice'); ?> <?php echo ($i+1); ?>
 		
-		<?php print_VE('choice_' . $i); ?>
+		<?php print_VE('choice'); ?>
 		
 		<br />
 

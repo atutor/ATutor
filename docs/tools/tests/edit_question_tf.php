@@ -122,7 +122,7 @@ if ($_POST['answer'] == '') {
 
 	<div class="row">
 		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label> 
-		<?php print_VE('feedback'); ?>
+		<?php print_VE('optional_feedback'); ?>
 		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
 			echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
