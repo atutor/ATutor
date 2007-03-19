@@ -153,12 +153,13 @@ if(@mysql_num_rows($result) >=1){ ?>
 
 					echo '<tr><td>'.$this_course_title.'</td><td>'.$_config['ec_currency_symbol'].$this_course_fee.' '.$_config['ec_currency'].'</td>';
 				
-					$sql4 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$row[course_id]' AND member_id = '$_SESSION[member_id]' AND course_id = '$row[course_id]'";
+					$sql4 = "SELECT miraid, amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$row[course_id]' AND member_id = '$_SESSION[member_id]' AND course_id = '$row[course_id]'";
 					$result4 = mysql_query($sql4,$db);
 		
 					$amount_paid = '';
 					while($row4 = mysql_fetch_array($result4)){
-						$amount_paid = $amount_paid+$row4['0'];
+						$amount_paid = $amount_paid+$row4['1'];
+						$miraid = $row4['0'];
 					}
 					if($amount_paid != 0){
 					
@@ -171,7 +172,7 @@ if(@mysql_num_rows($result) >=1){ ?>
 			
 					$result4 = mysql_query($sql4, $db);
 					while($row4 = mysql_fetch_array($result4)){
-					$miraid = $row4['miraid'];
+
 					if($row4['approved'] == 'y'){
 							echo '<td>'._AT('yes').' (<a href="bounce.php?course='.$row['course_id'].'">'._AT('ec_login').'</a>)</td>';
 						}else{
