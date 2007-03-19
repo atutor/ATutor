@@ -52,6 +52,7 @@ $_config_defaults['display_name_format']       = 1; // 0-5, see (array) display_
 $_config_defaults['time_zone']                 = ''; // empty means disabled or not supported
 $_config_defaults['prof_pic_max_file_size']	   = 819200; // max size of an uploaded profile pic, in bytes. default 800 KB
 $_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent inbox msgs are deleted
+$_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled, 0 < enabled
 
 $_config = $_config_defaults;
 

@@ -22,15 +22,8 @@ $post_limit = 5;
 	
 ob_start();
 
-$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE course_id = $_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
-		$forum_list .= $row['forum_id'] . ',';
-	}
-	$forum_list = substr($forum_list, 0, -1);
-
+$forum_list = get_group_concat('forums_courses', 'forum_id', "course_id={$_SESSION['course_id']}");
+if ($forum_list != 0) {
 	$sql = "SELECT login, subject, post_id, forum_id FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id IN ($forum_list) ORDER BY last_comment DESC LIMIT $post_limit";
 	$result = mysql_query($sql, $db);
 

@@ -848,6 +848,51 @@ function profile_image_delete($id) {
 	}
 }
 
+/**
+ * get_group_concat
+ * returns a list of $field values from $table using $where_clause, separated by $separator.
+ * uses mysql's GROUP_CONCAT() if available and if within the limit (default is 1024), otherwise
+ * it does it the old school way.
+ * returns the list (as a string) or (int) 0, if none found.
+ */
+function get_group_concat($table, $field, $where_clause = 1, $separator = ',') {
+	global $_config, $db;
+	if (!isset($_config['mysql_group_concat_max_len'])) {
+		$sql = "SELECT  @@global.group_concat_max_len AS max";
+		$result = mysql_query($sql, $db);
+		if ($result && ($row = mysql_fetch_assoc($result))) {
+			$_config['mysql_group_concat_max_len'] = $row['max'];
+		} else {
+			$_config['mysql_group_concat_max_len'] = 0;
+		}
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('mysql_group_concat_max_len', '{$_config['mysql_group_concat_max_len']}')";
+		mysql_query($sql, $db);
+	}
+	if ($_config['mysql_group_concat_max_len'] > 0) {
+		$sql = "SELECT GROUP_CONCAT($field SEPARATOR '$separator') AS list FROM ".TABLE_PREFIX."$table WHERE $where_clause";
+
+		$result = mysql_query($sql, $db);
+		if ($row = mysql_fetch_assoc($result)) {
+			if (strlen($row['list']) < $_config['mysql_group_concat_max_len']) {
+				return $row['list'];
+			} // else: list is truncated, do it the old way
+		} else {
+			return 0; // empty
+		}
+	} // else:
+
+	$list = '';
+	$sql = "SELECT $field AS id FROM ".TABLE_PREFIX."$table WHERE $where_clause";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$list .= $row['id'] . ',';
+	}
+	if ($list) {
+		return substr($list, 0, -1);
+	}
+	return 0;
+}
+
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
 $moduleFactory =& new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
