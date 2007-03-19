@@ -228,7 +228,6 @@ if($_POST['next'] && !$error){
 		date=NOW(), 
 		approval='', 
 		course_name='$course', 
-		amount='$amount', 
 		comments = '$comment', 
 		course_id='$course_id'";
 	

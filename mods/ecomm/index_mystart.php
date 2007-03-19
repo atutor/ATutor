@@ -171,7 +171,7 @@ if(@mysql_num_rows($result) >=1){ ?>
 			
 					$result4 = mysql_query($sql4, $db);
 					while($row4 = mysql_fetch_array($result4)){
-					
+					$miraid = $row4['miraid'];
 					if($row4['approved'] == 'y'){
 							echo '<td>'._AT('yes').' (<a href="bounce.php?course='.$row['course_id'].'">'._AT('ec_login').'</a>)</td>';
 						}else{
@@ -179,7 +179,7 @@ if(@mysql_num_rows($result) >=1){ ?>
 						}
 					}
 			
-					if($amount_paid >= $this_course_fee){
+					if($amount_paid >= $this_course_fee && $miraid !=''){
 						echo '<td>'._AT('ec_full_payment_recieved').' | <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('ec_remove').'</a></td>';
 					}else{
 						echo '<td> <a href="mods/ecomm/payment.php?course_id='.$row['course_id'].'">'._AT('ec_make_payment').'</a> | <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('ec_remove').'</a></td>';
