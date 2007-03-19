@@ -69,7 +69,6 @@ if (isset($_POST['cancel'])) {
 			category_id=$_POST[category_id],
 			feedback='',
 			question='$_POST[question]',
-			properties='$_POST[properties]',
 			choice_0='{$_POST[choice][0]}',
 			choice_1='{$_POST[choice][1]}',
 			choice_2='{$_POST[choice][2]}',
@@ -134,14 +133,6 @@ if (isset($_POST['cancel'])) {
 
 	for ($i=0; $i<10; $i++) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
-	}
-	
-	$_POST['properties'] = $row['properties'];
-	
-	if ($_POST['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
-		$align_vert = ' checked="checked"';
-	} else {
-		$align_hor  = ' checked="checked"';
 	}
 }
 
@@ -215,12 +206,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		
 		<textarea id="question" cols="50" rows="6" name="question"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
-	</div>
-
-	<div class="row">
-		<label for="properties"><?php echo _AT('option_alignment'); ?></label><br />
-		<label for="prop_5"><input type="radio" name="properties" id="prop_5" value="5" <?php echo $align_vert; ?> /><?php echo _AT('vertical'); ?></label>
-		<label for="prop_6"><input type="radio" name="properties" id="prop_6" value="6" <?php echo $align_hor;  ?> /><?php echo _AT('horizontal'); ?></label>
 	</div>
 
 <?php

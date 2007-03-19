@@ -47,7 +47,6 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['feedback']   = '';
 		$_POST['question']   = $addslashes($_POST['question']);
-		$_POST['properties'] = intval($_POST['properties']);
 
 		for ($i=0; $i<10; $i++) {
 			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
@@ -95,7 +94,7 @@ if (isset($_POST['cancel'])) {
 			'',
 			'',
 			'',
-			$_POST[properties],
+			0,
 			0)";
 		$result	= mysql_query($sql, $db);
 		
@@ -193,11 +192,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
 	</div>
 
-	<div class="row">
-		<label for="properties"><?php echo _AT('option_alignment'); ?></label><br />
-		<label for="prop_5"><input type="radio" name="properties" id="prop_5" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
-		<label for="prop_6"><input type="radio" name="properties" id="prop_6" value="6" /><?php echo _AT('horizontal'); ?></label>
-	</div>
 
 <?php for ($i=0; $i<10; $i++) { ?>
 		<div class="row">

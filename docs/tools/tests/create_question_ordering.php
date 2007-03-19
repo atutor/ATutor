@@ -115,10 +115,6 @@ $onload = 'document.form.category_id.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if (!isset($_POST['properties'])) {
-	$_POST['properties'] = 1;
-}
-
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="required" value="1" />

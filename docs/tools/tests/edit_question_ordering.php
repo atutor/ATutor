@@ -76,7 +76,6 @@ if (isset($_POST['cancel'])) {
 			category_id=$_POST[category_id],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
-			properties='$_POST[properties]',
 			choice_0='{$_POST[choice][0]}',
 			choice_1='{$_POST[choice][1]}',
 			choice_2='{$_POST[choice][2]}',
@@ -126,12 +125,6 @@ if (isset($_POST['cancel'])) {
 
 	for ($i=0; $i<10; $i++) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
-	}
-	
-	if ($_POST['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
-		$align_vert = ' checked="checked"';
-	} else {
-		$align_hor  = ' checked="checked"';
 	}
 }
 
