@@ -46,9 +46,9 @@ $no_good = FALSE;
 		<table class="data" style="width: 75%; max-width: 600px;">
 		<tbody>
 		<tr>
-			<th scope="cols">File Integrity</th>
-			<th scope="cols">Detected</th>
-			<th scope="cols">Status</th>
+			<th scope="col">File Integrity</th>
+			<th scope="col">Detected</th>
+			<th scope="col">Status</th>
 		</tr>
 		<tr>
 			<td>Case Sensitivity</td>
@@ -67,9 +67,9 @@ $no_good = FALSE;
 		</tbody>
 		<tbody>
 		<tr>
-			<th scope="cols">PHP Options</th>
-			<th scope="cols">Detected</th>
-			<th scope="cols">Status</th>
+			<th scope="col">PHP Options</th>
+			<th scope="col">Detected</th>
+			<th scope="col">Status</th>
 		</tr>
 		<tr>
 			<td>PHP 4.3.0+</td>
@@ -245,9 +245,9 @@ $no_good = FALSE;
 		</tbody>
 		<tbody>
 		<tr>
-			<th scope="cols">MySQL Options</th>
-			<th scope="cols">Detected</th>
-			<th scope="cols">Status</th>
+			<th scope="col">MySQL Options</th>
+			<th scope="col">Detected</th>
+			<th scope="col">Status</th>
 		</tr>
 		<tr>
 			<td>MySQL 4.0.2+</td>
