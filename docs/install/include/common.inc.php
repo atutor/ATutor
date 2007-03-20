@@ -188,7 +188,7 @@ function print_progress($step) {
 			if ($step > $i) {
 				echo '<img src="../images/check.gif" height="9" width="9" alt="Step Done!" /> ';
 			} else {
-				echo '<img src="../images/clr.gif" height="9" width="9"> ';
+				echo '<img src="../images/clr.gif" height="9" width="9" alt=""> ';
 			}
 			echo 'Step '.$i.': '.$install_steps[$i]['name'].'</small>';
 		}
