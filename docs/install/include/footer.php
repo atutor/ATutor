@@ -11,13 +11,8 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
-
-</td>
-</tr>
-<tr height="30">
-	<td colspan="4" bgcolor="#354A81">&nbsp;</td>
-</tr>
-</table>
+</div>
+<div style="margin-top: 20px; height: 30px; background-color: #354A81; padding: 10px">&nbsp;</div>
 
 </body>
 </html>

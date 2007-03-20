@@ -45,10 +45,9 @@ $install_steps[8] = array('name' => 'Done!');
 </head>
 
 <body>
-<table height="100%" width="100%" cellpadding="0" cellspacing="0" border="0">
-<tr height="50" bgcolor="#354A81">
-	<td><h2 class="header">ATutor <?php echo $new_version; ?> Upgrade</h2></td>
-	<td align="right" valign="middle"><img src="../images/logo.gif" height="29" width="84" alt="ATutor Logo" id="logo" /></td>
-</tr>
-<tr>
-	<td colspan="2" valign="top" class="content">
+<div style="height: 70px; vertical-align: bottom; background: #354A81">
+	<h1 id="header">ATutor <?php echo $new_version; ?> Upgrade</h1>
+	<img src="../images/logo.gif" height="29" width="84" alt="ATutor Logo" id="logo" />
+</div>
+<div style="clear: all"></div>
+<div class="content">

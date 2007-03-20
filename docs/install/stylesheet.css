@@ -71,14 +71,12 @@ p.error {
 	margin-right: 0px;
 }
 
-p.header {
+h1#header {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-weight: bold;
 	color: white;
-	margin-bottom: 10px;
-	margin-top: 0px;
-	margin-left: 5px;
-	margin-right: 0px;
+	float: left;
+	display: inline;
+	margin: 10px;
 }
 
 
@@ -389,11 +387,8 @@ h3 {
 	border-bottom: 1px solid #354A81;
 }
 
-.header {
-	color: white;
-}
 
-td.content {
+.content {
 	padding: 20px;
 	font-size: small;
 }
@@ -433,11 +428,12 @@ tr.fbkbox{
 	vertical-align: top;
 	font-size: smaller;
 }
-#logo {
+img#logo {
 	padding: 10px;
 	background-color: #eeeeee;
 	border: 1px solid #cccccc;
 	margin: 10px;
+	float: right;
 }
 
 div.install {
