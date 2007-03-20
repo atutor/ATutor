@@ -182,7 +182,7 @@ function print_progress($step) {
 	$num_steps = count($install_steps);
 	for ($i=0; $i<$num_steps; $i++) {
 		if ($i == $step) {
-			echo '<b style="margin-left: 12px; color: #006699;">Step '.$i.': '.$install_steps[$i]['name'].' (current step)</b>';
+			echo '<strong style="margin-left: 12px; color: #006699;">Step '.$i.': '.$install_steps[$i]['name'].'</strong>';
 		} else {
 			echo '<small style="margin-left: 10px; color: gray;">';
 			if ($step > $i) {
