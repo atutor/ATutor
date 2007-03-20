@@ -26,14 +26,20 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) |
 	exit;
 } else if (isset($_GET['edit'])) {
 	$id  = current($_GET['questions']);
-	$ids = explode('|', $id[0], 2);
-	$o = TestQuestions::getQuestion($ids[1]);
-	if ($name = $o->getPrefix()) {
-		header('Location: '.AT_BASE_HREF.'tools/tests/edit_question_'.$name.'.php?qid='.intval($ids[0]));
-		exit;
+	$num_selected = count($id);
+
+	if ($num_selected == 1) {
+		$ids = explode('|', $id[0], 2);
+		$o = TestQuestions::getQuestion($ids[1]);
+		if ($name = $o->getPrefix()) {
+			header('Location: '.AT_BASE_HREF.'tools/tests/edit_question_'.$name.'.php?qid='.intval($ids[0]));
+			exit;
+		} else {
+			header('Location: '.AT_BASE_HREF.'tools/tests/index.php');
+			exit;
+		}
 	} else {
-		header('Location: '.AT_BASE_HREF.'tools/tests/index.php');
-		exit;
+		$msg->addError('SELECT_ONE_ITEM');
 	}
 
 } else if (isset($_GET['delete'])) {
