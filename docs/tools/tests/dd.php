@@ -51,6 +51,9 @@ for ($i=0; $i < 10; $i++) {
 	margin: 0px;
 	padding: 0px;
 }
+body {
+	background-color: #fdfdfd;
+}
 option {
 	padding-right: 5px;
 }
@@ -186,7 +189,7 @@ function selectLine(value, id) {
 
 	var lx = document.getElementById("q" + id).offsetLeft + $("#q" + id).width() + padding;
 	var ly = document.getElementById("q" + id).offsetTop  + $("#q" + id).height()/2 + 10;
-	var rx = document.getElementById("a" + value).offsetLeft + 320;
+	var rx = document.getElementById("a" + value).offsetLeft + 310;
 	var ry = document.getElementById("a" + value).offsetTop + $("#a" + value).height()/2 + 10;
 
 	window.top.document.getElementById("<?php echo $_GET['qid']; ?>q" + id).value = value;
