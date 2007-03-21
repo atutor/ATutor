@@ -49,7 +49,8 @@ global $display_name_formats, $moduleFactory;
 			<dt><?php echo _AT('status'); ?></dt>
 			<dd><?php echo $this->status; ?></dd>
 
-			<?php if ($moduleFactory->getModule('_standard/profile_pictures')->isEnabled() === TRUE): ?>
+			<?php $mod = $moduleFactory->getModule('_standard/profile_pictures'); 
+			if ($mod->isEnabled() === TRUE): ?>
 				<dt><?php echo _AT('picture'); ?></dt>
 				<dd><?php if (profile_image_exists($this->row['member_id'])): ?>
 					<a href="get_profile_img.php?id=<?php echo $this->row['member_id'].SEP.'size=o'; ?>"><?php print_profile_img($this->row['member_id']); ?></a>
