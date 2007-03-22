@@ -9,38 +9,18 @@
 
 	<?php endif; ?> 
 
-	</td>
+</div>
+</div>
 	<?php if (($_SESSION['course_id'] > 0) && $this->side_menu): ?>
-		<td valign="top" style="width: 25%">
-		<script type="text/javascript">
-		//<![CDATA[
-		var state = getcookie("side-menu");
-		if (state && (state == 'none')) {
-			document.writeln('<a name="menu"><div style="display:none;" id="side-menu">');
-		} else {
-			document.writeln('<a name="menu"><div style="" id="side-menu">');
-		}
-		//]]>
-		</script>
-			<?php foreach ($this->side_menu as $dropdown_file): ?>
-				<?php if (file_exists($dropdown_file)) { require($dropdown_file); } ?>
-			<?php endforeach; ?>
-		<script type="text/javascript">
-		//<![CDATA[
-			document.writeln('</div>');
-		//]]>
-		</script>
-		</td>
+		<div id="rightcolumn">
+			<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
+		</div>
 	<?php endif; ?>
-</tr>
-<tr>
-	<td colspan="2">
-		<br /><br />
-		<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
-		<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
-		<br />
-	</td>
-</tr>
-</table>
+</div>
+<div id="footer">
+	<br /><br />
+	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
+	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
+</div>
 </body>
 </html>

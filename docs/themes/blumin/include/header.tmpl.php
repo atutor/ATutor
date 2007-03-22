@@ -72,104 +72,10 @@ global $system_courses, $_custom_css;
 <script language="JavaScript" src="<?php echo $this->base_path; ?>overlib.js" type="text/javascript"></script>
 <script language="javascript" type="text/javascript">
 //<!--
-
 var newwindow;
 function poptastic(url) {
 	newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
 	if (window.focus) {newwindow.focus()}
-}
-
-function getexpirydate(nodays){
-	var UTCstring;
-	Today = new Date();
-	nomilli=Date.parse(Today);
-	Today.setTime(nomilli+nodays*24*60*60*1000);
-	UTCstring = Today.toUTCString();
-	return UTCstring;
-}
-
-function setcookie(name,value,duration){
-	cookiestring=name+"="+escape(value)+";path=/;expires="+getexpirydate(duration);
-	document.cookie=cookiestring;
-	if(!getcookie(name)){
-		return false;
-	} else {
-		return true;
-	}
-}
-
-function getcookie(cookiename) {
-	var cookiestring=""+document.cookie;
-	var index1=cookiestring.indexOf(cookiename);
-	if (index1==-1 || cookiename=="") return ""; 
-	var index2=cookiestring.indexOf(';',index1);
-	if (index2==-1) index2=cookiestring.length; 
-	return unescape(cookiestring.substring(index1+cookiename.length+1,index2));
-}
-
-function setDisplay(objId) {
-	var toc = document.getElementById(objId);
-
-	var state = getcookie(objId);
-	if (document.getElementById(objId) && state && (state == 'none')) {
-		toggleToc(objId);
-	}
-}
-
-
-function setstates() {
-	return;
-	var objId = "side-menu";
-	var state = getcookie(objId);
-	if (document.getElementById(objId) && state && (state == 'none')) {
-		toggleToc(objId);
-	}
-
-	var objId = "toccontent";
-	var state = getcookie(objId);
-	if (document.getElementById(objId) && state && (state == 'none')) {
-		toggleToc(objId);
-	}
-	return true;
-}
-
-function showTocToggle(objId, show, hide, key, selected) {
-	if(document.getElementById) {
-		if (key) {
-			var accesskey = " accesskey='" + key + "' title='"+ show + "/" + hide + " Alt+"+ key +"'";
-		} else {
-			var accesskey = "";
-		}
-
-		if (selected == 'hide') {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
-		} else {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
-		}
-	}
-}
-
-function toggleToc(objId) {
-	var toc = document.getElementById(objId);
-	if (toc == null) {
-		return;
-	}
-	var showlink=document.getElementById(objId + 'showlink');
-	var hidelink=document.getElementById(objId + 'hidelink');
-	if (hidelink.style.display == 'none') {
-		toc.style.display = '';
-		hidelink.style.display='';
-		showlink.style.display='none';
-	} else {
-		toc.style.display = 'none';
-		hidelink.style.display='none';
-		showlink.style.display='';
-	}
-	setcookie(objId, toc.style.display, 1);
 }
 //-->
 </script>
@@ -270,13 +176,8 @@ function toggleToc(objId) {
 	<?php endforeach; ?> <?php echo $this->page_title; ?>
 </div>
 
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="99%">
-	<tr>
-		<?php if ($_SESSION['course_id'] > 0): ?>
-			<td valign="top" width="100%">
-		<?php else: ?>
-			<td valign="top" width="100%" colspan="2">
-		<?php endif; ?>
+<div id="contentwrapper">
+<div id="contentcolumn">
 
 <!-- the page title -->
 	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: right; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
