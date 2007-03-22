@@ -54,7 +54,7 @@ if ($_GET['delete']) {
 	$_POST['id'] = implode(',', $_POST['id']);
 	$ids = $addslashes($_POST['id']);
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."messages SELECT 0, course_id, from_member_id, to_member_id, date_sent, 0, 0, subject, body FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
+	$sql = "INSERT INTO ".TABLE_PREFIX."messages SELECT 0, course_id, from_member_id, {$_SESSION['member_id']}, date_sent, 0, 0, subject, body FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
 	mysql_query($sql, $db);
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
@@ -93,6 +93,7 @@ if (isset($_GET['view']) && $_GET['view']) {
 			<div class="body">
 				<p><?php echo AT_print($row['body'], 'messages.body'); ?></p>
 			</div>
+			<div style="clear: both; font-size:0.1em"></div>
 		</div>
 	</div>
 	</li>
