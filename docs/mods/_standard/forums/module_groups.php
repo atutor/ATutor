@@ -4,7 +4,7 @@
 function forums_create_group($group_id) {
 	global $db;
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL,'', '', 0, 0, NOW())";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL,'', '', 0, 0, NOW(), 0)";
 	$result = mysql_query($sql,$db);
 
 	$sql	= "INSERT INTO ".TABLE_PREFIX."forums_groups VALUES (LAST_INSERT_ID(),  $group_id)";
