@@ -55,7 +55,7 @@
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />
 		<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
-		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email']) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
+		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email'] || !isset($_POST['submit'])) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
 	</div>
 
 	<div class="row">
@@ -104,7 +104,9 @@
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
 
-	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && $_POST['member_id'] && $moduleFactory->getModule('_standard/profile_pictures')->isEnabled() === TRUE): ?>
+	<?php 
+	$mod = $moduleFactory->getModule('_standard/profile_pictures');
+	if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && $_POST['member_id'] && $mod->isEnabled() === TRUE): ?>
 		<div class="row">
 			<?php echo _AT('picture'); ?><br/>
 			<?php if (profile_image_exists($_POST['member_id'])): ?>
