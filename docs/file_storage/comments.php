@@ -157,7 +157,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 			<?php else: ?>
 				<div class="row">
 					<h4><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h4>
-					<p><?php echo htmlspecialchars(nl2br($row['comment'])); ?></p>
+					<p><?php echo nl2br(htmlspecialchars($row['comment'])); ?></p>
 						<?php if ($row['member_id'] == $_SESSION['member_id']): ?>
 							<div style="text-align:right; font-size: smaller">
 								<a href="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id.SEP.'comment_id='.$row['comment_id']; ?>#c<?php echo $row['comment_id']; ?>"><?php echo _AT('edit'); ?></a> | <a href="file_storage/delete_comment.php<?php echo $owner_arg_prefix . 'file_id='.$id.SEP; ?>id=<?php echo $row['comment_id']; ?>"><?php echo _AT('delete'); ?></a>
