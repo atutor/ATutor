@@ -177,7 +177,11 @@ function poptastic(url) {
 </div>
 
 <div id="contentwrapper">
-<div id="contentcolumn">
+<div id="contentcolumn"
+	<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu): ?>
+		style="margin-right:0px;width:99%;"
+	<?php endif; ?>
+	>
 
 <!-- the page title -->
 	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: right; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
