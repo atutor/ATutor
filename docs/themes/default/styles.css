@@ -82,10 +82,7 @@ div#toc{
 	border: 1px solid #999;
 	background-color: white;
 	padding: 2px;
-	padding-left: 10px;
-	padding-right: 10px;
-	min-width: 100px;
-	margin-left: 5px;
+
 }
 
 .button input:hover {
@@ -100,8 +97,6 @@ input.button {
 	padding: 2px;
 	padding-left: 10px;
 	padding-right: 10px;
-	min-width: 100px;
-	margin-left: 5px;
 }
 input.button:hover {
 	background-color: #f5f5ff;
