@@ -351,7 +351,7 @@ class zipfile {
 		}
 		$file_name = str_replace(array('"', '<', '>', '|', '?', '*', ':', '/', '\\'), '', $file_name);
 
-		header('Content-Type: application/zip');
+		header('Content-Type: application/x-zip');
 		header('Content-transfer-encoding: binary'); 
 		header('Content-Disposition: attachment; filename="'.htmlspecialchars($file_name).'.zip"');
 		header('Expires: 0');
