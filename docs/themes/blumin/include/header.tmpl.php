@@ -122,25 +122,22 @@ function poptastic(url) {
 	<img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> <img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 </div>
 <br />
+<div id="topnavlistcontainer">
 <!-- the main navigation. in our case, tabs -->
-
-
-	<div id="topnavlistcontainer">
-	<!-- the main navigation. in our case, tabs -->
-		<ul id="topnavlist">
-			<?php foreach ($this->top_level_pages as $page): ?>
-				<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-				<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-				<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-				<?php if ($page['url'] == $this->current_top_level_page): ?>
-					<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
-				<?php else: ?>
-					<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
-				<?php endif; ?>
-				<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-			<?php endforeach; ?>
-		</ul>
-	</div>
+	<ul id="topnavlist">
+		<?php foreach ($this->top_level_pages as $page): ?>
+			<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+			<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+			<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+			<?php if ($page['url'] == $this->current_top_level_page): ?>
+				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
+			<?php else: ?>
+				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
+			<?php endif; ?>
+			<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+		<?php endforeach; ?>
+	</ul>
+</div>
 
 <!-- the sub navigation -->
 <div style="float: right; padding-top: 5px; padding-right: 5px; font-size:0.85em; text-transform: lowercase; ">

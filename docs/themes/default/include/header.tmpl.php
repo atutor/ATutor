@@ -164,56 +164,63 @@ function toggleToc(objId) {
 }
 //-->
 </script>
-<!-- the bread crumbs -->
-<div id="breadcrumbs">
-	<div style="float: right;">
-		<!-- hidden direct link to content -->
-		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" style="border: 0px;" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
-		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu" style="border: 0px;" accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
-		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
-			<!-- start the jump menu -->
-			<?php if (empty($_GET)): ?>
-				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
-			<?php else: ?>
-				<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
-			<?php endif; ?>
-			<label for="jumpmenu" accesskey="j"></label>
-				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
-					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
-					<optgroup label="<?php echo _AT('courses_below'); ?>">
-						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
-							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
-						<?php endforeach; ?>
-					</optgroup>
-				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
-			<!-- /end the jump menu -->
-			<?php if ($_SESSION['is_super_admin']): ?>
-				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
-			<?php endif; ?>
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo get_display_name($_SESSION['member_id']); ?></strong>  |
-			<?php if ($_SESSION['course_id'] > -1): ?>
-				<?php if (get_num_new_messages()): ?>
-					<strong><a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> - <?php echo get_num_new_messages(); ?></a></strong> | 
-				<?php else: ?>
-					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a> | 
-				<?php endif; ?>
-			<?php endif; ?>
-			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> |
-			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
-			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
-		<?php elseif ($_SESSION['course_id'] == -1): ?>
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo get_display_name($_SESSION['member_id']); ?></strong>  |
-			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> |
-			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
-			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
-		<?php else: ?>
-			<a href="<?php echo $this->base_path; ?>browse.php"><?php echo _AT('browse_courses'); ?></a> | 
-			<a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | 
- 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
-			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
-		<?php endif; ?>
-	</div>
 
+<div id="member-links" style="float: right;">
+	<?php if ($_SESSION['is_super_admin']): ?>
+		<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
+	<?php endif; ?>
+
+	<?php if ($_SESSION['valid_user']): ?>
+		<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo get_display_name($_SESSION['member_id']); ?></strong>  |
+		<?php if ($_SESSION['course_id'] > -1): ?>
+			<?php if (get_num_new_messages()): ?>
+				<strong><a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> - <?php echo get_num_new_messages(); ?></a></strong> | 
+			<?php else: ?>
+				<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a> | 
+			<?php endif; ?>
+		<?php endif; ?>
+		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> |
+		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
+		<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+	<?php elseif ($_SESSION['course_id'] == -1): ?>
+		<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo get_display_name($_SESSION['member_id']); ?></strong>  |
+		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> |
+		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
+		<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+	<?php else: ?>
+		<a href="<?php echo $this->base_path; ?>browse.php"><?php echo _AT('browse_courses'); ?></a> | 
+		<a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | 
+		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
+		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+	<?php endif; ?>
+</div>
+
+<div style="float: right;">
+	<!-- hidden direct link to content -->
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" style="border: 0px;" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu" style="border: 0px;" accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+
+	<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
+		<!-- start the jump menu -->
+		<?php if (empty($_GET)): ?>
+			<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
+		<?php else: ?>
+			<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
+		<?php endif; ?>
+		<label for="jumpmenu" accesskey="j"></label>
+		<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
+			<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
+			<optgroup label="<?php echo _AT('courses_below'); ?>">
+				<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
+					<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
+				<?php endforeach; ?>
+			</optgroup>
+		</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
+		<!-- /end the jump menu -->
+	<?php endif; ?>
+</div>
+
+<div id="breadcrumbs">
 	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;">
 	<?php foreach ($this->path as $page): ?>
 		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo $page['title']; ?></a> &raquo; 

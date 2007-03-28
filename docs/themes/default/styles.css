@@ -404,18 +404,22 @@ div#breadcrumbs {
 	color: black;
 	border-bottom: dashed 1pt #A7D2F8;
 }
-div#breadcrumbs a {
+div#breadcrumbs a:link, div#breadcrumbs a:visited, div#member-links a:link, div#member-links a:visited {
 	color: black;
 	text-decoration:none;
-	border-bottom: 1px solid;
 }
-div#breadcrumbs a:hover {
-	text-decoration:none;
+div#breadcrumbs a:hover, div#member-links a:hover {
+	text-decoration:underline;
 }
 
-div#breadcrumbs a:focus {
+div#breadcrumbs a:focus, div#member-links a:focus {
 	text-decoration:none;
 	color: #AFAFAF;
+}
+
+div#member-links {
+	margin-top:3px;
+	padding-right:5px;
 }
 
 h2.page-title {
