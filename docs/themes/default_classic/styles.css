@@ -9,6 +9,7 @@ body {
 	font-size: small;
 	background-color: white;
 	/*border-right: 1px solid #788CB3;*/
+	width:100%;
 }
 
 html,body {
@@ -423,19 +424,22 @@ div#breadcrumbs {
 	background-color: #788CB3;
 	color: white;
 }
-div#breadcrumbs a {
+div#breadcrumbs a, div#member-links a {
 	color: white;
-	text-decoration:none;
-	border-bottom: 1px solid;
 }
-div#breadcrumbs a:hover {
+div#breadcrumbs a:hover, div#member-links a:hover{
 	text-decoration:none;
 }
 
-div#breadcrumbs a:focus {
+div#breadcrumbs a:focus, div#member-links a:focus {
 	text-decoration:none;
 	font-weight: bold;
 	color: #FFFF00;
+}
+
+div#member-links {
+	margin-top:3px;
+	padding-right:5px;
 }
 
 h2.page-title {
