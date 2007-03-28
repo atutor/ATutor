@@ -1286,3 +1286,60 @@ div.forum-post-content div.body p { margin-bottom:20px; }
 
 /** inbox stuff - reuses some of the forum layout **/
 #inbox-msg li { clear:left; border:1px solid #eee; border-bottom: 1px solid #f0f0f0; width: 98%; list-style: none; }
+
+
+div#topnavlistcontainer {
+    /* Navigational Plone Tabs(tm), implemented by customizing the a tag - they are surprisingly elegant. The power of CSS runs strong in these :) */
+    background: transparent;
+    border-collapse: collapse;
+    border-bottom: 1px solid #8CACBB;
+    padding: 0.5em 0em 0em 2em;
+    white-space: nowrap;
+	font-size:0.85em;
+}
+ul#topnavlist {
+	padding: 0px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 3px;
+	white-space: nowrap;
+	margin-top: 0px;
+	margin-bottom:0px;
+}
+
+ul#topnavlist li {
+	list-style: none;
+	display: inline;
+	margin: 0px;
+}
+
+ul#topnavlist li:first-child a {
+	margin-left: 8px;
+}
+
+ul#topnavlist li a:hover, ul#topnavlist li a.active, ul#topnavlist li a:focus {
+    background: #DEE7EC;
+    border-bottom: 1px solid #DEE7EC;
+    color: #436976;
+}
+
+ul#topnavlist li a {
+    /* The normal, unselected tabs. They are all links */
+    background: transparent;
+    border-color: #8CACBB;
+    border-width: 1px; 
+    border-style: solid solid none solid;
+    color: #436976;
+    height: 1.2em;
+    margin-right: 0.5em;
+    padding: 0em 2em 0em;
+    text-transform: lowercase;
+}
+
+ul#topnavlist li a.selected {
+    /* The selected tab. There's only one of this */
+    background: #DEE7EC;
+    border-bottom: #DEE7EC 1px solid;
+    color: #436976;
+    font-weight: normal;
+}
