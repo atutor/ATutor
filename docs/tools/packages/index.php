@@ -31,6 +31,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	$_pages['tools/packages/index.php']['children'] = array (
 	        'tools/packages/import.php'
 	);
+	/*
 	if (sizeOf ($pkgs) > 0) {
 		array_push ($_pages['tools/packages/index.php']['children'], 
 	       		            'tools/packages/delete.php'
@@ -39,6 +40,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	       			    'tools/packages/settings.php'
 		);
 	}
+	*/
 }
 
 
