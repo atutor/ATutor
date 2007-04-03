@@ -10,11 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
-
+// $Id: profile_picture.php 6850 2007-03-06 19:35:37Z joel $
 define('AT_INCLUDE_PATH', '../include/');
-$_user_location	= 'users';
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-$member_id = $_SESSION['member_id'];
+admin_authenticate(AT_ADMIN_PRIV_USERS);
+
+$member_id = intval($_GET['member_id']);
 
 require(AT_INCLUDE_PATH.'html/profile_picture.inc.php'); ?>

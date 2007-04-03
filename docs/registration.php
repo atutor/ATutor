@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
 $_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', 'include/');
