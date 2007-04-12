@@ -21,6 +21,15 @@ require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 authenticate(AT_PRIV_TESTS);
 
 $area = $_GET['area'];
+$number = null;
+
+$parts = explode('_', $area, 2);
+if (is_numeric($parts[1])) {
+	$parts[1]++;
+	$title = _AT($parts[0]) . ' ' . $parts[1];
+} else {
+	$title = _AT($area);
+}
 
 $onload = 'onload="init();"';
 
@@ -71,7 +80,7 @@ function init() {
 <form name="form">
 	<table cellspacing="1" cellpadding="0" width="99%" border="0" class="bodyline" align="center" summary="">
 		<tr>
-			<th class="cyan"><?php echo _AT($area); ?></th>
+			<th class="cyan"><?php echo $title; ?></th>
 		</tr>
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1">
