@@ -112,11 +112,10 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 	</div>
 
 	<div class="row">
-		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label> 
+		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
 		<?php print_VE('optional_feedback'); ?>
 
-		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
-		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -136,7 +135,7 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 		<?php endif; ?>
 		<?php echo _AT('question'); ?> <?php echo ($i+1); ?>
 		
-		<?php print_VE('question'); ?>
+		<?php print_VE('question_' . $i); ?>
 		
 		<br />
 
@@ -147,8 +146,7 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 			<?php endforeach; ?>
 		</select>
 		
-		<textarea id="question_<?php echo $i; ?>" cols="50" rows="2" name="question[<?php echo $i; ?>]"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'][$i])); ?></textarea> 
+		<textarea id="question_<?php echo $i; ?>" cols="50" rows="2" name="question[<?php echo $i; ?>]"><?php echo htmlspecialchars(stripslashes($_POST['question'][$i])); ?></textarea> 
 	</div>
 <?php endfor; ?>
 	
@@ -161,10 +159,9 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php endif; ?>
 			<?php echo _AT('answer'); ?> <?php echo $_letters[$i]; ?>
-			<?php print_VE('answer'); ?>
+			<?php print_VE('answer_' . $i); ?>
 			<br />
-			<textarea id="answer_<?php echo $i; ?>" cols="50" rows="2" name="answer[<?php echo $i; ?>]"><?php 
-			echo htmlspecialchars(stripslashes($_POST['answer'][$i])); ?></textarea>
+			<textarea id="answer_<?php echo $i; ?>" cols="50" rows="2" name="answer[<?php echo $i; ?>]"><?php echo htmlspecialchars(stripslashes($_POST['answer'][$i])); ?></textarea>
 		</div>
 	<?php endfor; ?>
 

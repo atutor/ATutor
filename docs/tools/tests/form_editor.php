@@ -60,7 +60,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 <script type="text/javascript"><!--
 function init() {
-	document.form.body_text.value = window.opener.document.getElementById("<?php echo $area; ?>").value;
+	tinyMCE.setContent(window.opener.document.getElementById("<?php echo $area; ?>"). value);
 }
 //--></script>
 

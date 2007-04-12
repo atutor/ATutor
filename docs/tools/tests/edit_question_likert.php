@@ -204,8 +204,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		
 		<?php print_VE('question'); ?>
 		
-		<textarea id="question" cols="50" rows="6" name="question"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		<textarea id="question" cols="50" rows="6" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
 	</div>
 
 <?php

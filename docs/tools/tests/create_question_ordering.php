@@ -127,11 +127,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label> 
+		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
 		<?php print_VE('optional_feedback'); ?>
 
-		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
-		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -147,12 +146,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php endif; ?> <?php echo _AT('item'); ?> <?php echo ($i+1); ?>
 			
-			<?php print_VE('choice'); ?>
+			<?php print_VE('choice_' . $i); ?>
 			
 			<br />
 	
-			<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]"><?php 
-			echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea> 
+			<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea> 
 		</div>
 	<?php endfor; ?>
 	

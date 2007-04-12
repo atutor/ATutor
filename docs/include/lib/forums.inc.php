@@ -111,6 +111,7 @@ function get_forum($forum_id, $course = '') {
 		$result = mysql_query($sql, $db);
 		$forum = mysql_fetch_assoc($result);
 	} else {
+
 		return;
 	}
 

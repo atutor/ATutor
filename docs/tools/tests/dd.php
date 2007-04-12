@@ -63,14 +63,14 @@ li {
 	margin: 8px;
 }
 li.question {
-	width: 200px;
+	width: 180px;
 	overflow: auto;
 }
 li.question:hover {
 	cursor: move;
 }
 li.answer {
-	width: 200px;
+	width: 180px;
 	overflow: auto;
 	padding: 8px;
 	margin: 8px;

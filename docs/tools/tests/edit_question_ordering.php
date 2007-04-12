@@ -148,8 +148,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		
 		<?php print_VE('question'); ?>
 		
-		<textarea id="question" cols="50" rows="6" name="question"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		<textarea id="question" cols="50" rows="6" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
 	</div>
 
 	<?php for ($i=0; $i<10; $i++): ?>
@@ -158,7 +157,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php endif; ?> <?php echo _AT('item'); ?> <?php echo ($i+1); ?>
 			
-			<?php print_VE('choice'); ?>
+			<?php print_VE('choice_' . $i); ?>
 			
 			<br />
 	

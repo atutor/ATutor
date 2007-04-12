@@ -147,11 +147,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 	
 	<div class="row">
-		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label> 
+		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
 		<?php print_VE('optional_feedback'); ?>	
 
-		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
-			echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -165,7 +164,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	for ($i=0; $i<10; $i++) { ?>
 		<div class="row">
 			<label for="choice_<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo ($i+1); ?></label> 
-			<?php print_VE('choice'); ?>			
+			<?php print_VE('choice_'.$i); ?>			
 			<br />
 			<small><input type="checkbox" name="answer[<?php echo $i; ?>]" id="answer_<?php echo $i; ?>" value="1" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>
 			

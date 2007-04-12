@@ -103,11 +103,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label>		
+		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label>		
 		<?php print_VE('optional_feedback'); ?>
 		<br />
 	
-		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars($stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars($stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 	
 	<div class="row">

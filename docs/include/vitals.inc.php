@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL',1);
+define('AT_DEVEL', 1);
 define('AT_DEVEL_TRANSLATE', 1);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
@@ -31,8 +31,6 @@ function unregister_GLOBALS() {
        if (!in_array($k, $noUnset) && isset($GLOBALS[$k])) { unset($GLOBALS[$k]); }
    }
 }
-
-unregister_GLOBALS();
 
 /*
  * structure of this document (in order):
@@ -89,10 +87,12 @@ unregister_GLOBALS();
 	}
 
 	ob_start();
-		//session_set_cookie_params(0, $_base_path);
-		session_start();
-		$str = ob_get_contents();
+	//session_set_cookie_params(0, $_base_path);
+	session_start();
+	$str = ob_get_contents();
 	ob_end_clean();
+
+	unregister_GLOBALS();
 
 	if ($str) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
@@ -906,6 +906,5 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 		$result = mysql_query($sql, $db);
 	}
 }
-
 
 ?>

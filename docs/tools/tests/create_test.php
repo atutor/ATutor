@@ -41,11 +41,11 @@ if (isset($_POST['cancel'])) {
 	$_POST['difficulty']   = 0;  //intval($_POST['difficulty']); 	/* avman */
 	    
 	if ($_POST['title'] == '') {
-		$missing_fields[] = 'title';
+		$missing_fields[] = _AT('title');
 	}
 
 	if ($_POST['random'] && !$_POST['num_questions']) {
-		$missing_fields[] = 'num_questions_per_test';
+		$missing_fields[] = _AT('num_questions_per_test');
 	}
 
 	if ($missing_fields) {
