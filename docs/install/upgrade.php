@@ -35,31 +35,35 @@ if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
 require('include/upgrade_header.php');
 
 if ($step == 1) {
+	// in:  select directory
+	// out: confirm verions
 	require('include/ustep1.php');
 }
-
 if ($step == 2) {
+	// in:  update database
+	// out: -
 	require('include/ustep2.php');
 }
-
-/* write the config.inc.php file with any new options */
 if ($step == 3) {
+	// in:  display version specific notices
+	// out: update database with new options
 	require('include/ustep3.php');
 }
-
-//content dir
 if ($step == 4) {
+	// in:  determine where the old content dir is and if it has to be copied
+	// out: try to create the directory and set permissions
 	require('include/step5.php');
 }
-
 if ($step == 5) {
+	// in:  copy the config file
+	// out: -
 	require('include/ustep5.php');
 }
-
 if ($step == 6) {
+	// in:  copy the content if needed
+	// out: -
 	require('include/ustep4.php');
 }
-
 /* anonymous data collection */
 if ($step == 7) {	
 	require('include/step7.php');

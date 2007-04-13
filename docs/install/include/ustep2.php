@@ -20,7 +20,7 @@ function update_one_ver($up_file) {
 	global $progress;
 	$update_file = implode('_',$up_file);
 	queryFromFile('db/'.$update_file.'sql');
-	$progress[] = 'Successful update from version '.$up_file[2].' to '.$up_file[4];
+	//$progress[] = 'Successful update from version '.$up_file[2].' to '.$up_file[4];
 	return $up_file[4];
 }
 
@@ -104,6 +104,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			}
 		}
 	}
+
 	print_progress($step);
 
 	unset($_POST['submit']);

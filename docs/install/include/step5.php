@@ -13,19 +13,18 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-if(isset($_POST['submit'])) {
-
+if (isset($_POST['submit'])) {
 	$_POST['content_dir'] = $stripslashes($_POST['content_dir']);
 
 	unset($errors);
 
-	if(!file_exists($_POST['content_dir']) || !realpath($_POST['content_dir'])) {
+	if (!file_exists($_POST['content_dir']) || !realpath($_POST['content_dir'])) {
 		$errors[] = '<strong>Content Directory</strong> entered does not exist.';
 	} else if (!is_dir($_POST['content_dir'])) {
 		$errors[] = '<strong>Content Directory</strong> is not a directory.';
 	} else if (!is_writable($_POST['content_dir'])){
 		$errors[] = 'The Content Directory is not writable.';
-	} else {
+	} else if (isset($_POST['step1']['old_version'])) {
 
 		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
 

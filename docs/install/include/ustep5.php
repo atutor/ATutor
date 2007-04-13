@@ -89,7 +89,6 @@ if (isset($errors)) {
 
 			write_config_file('../include/config.inc.php', $comments);
 		}
-
 		@chmod('../include/config.inc.php', 0444);
 
 		print_feedback($progress);
