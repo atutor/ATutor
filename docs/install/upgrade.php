@@ -55,14 +55,14 @@ if ($step == 4) {
 	require('include/step5.php');
 }
 if ($step == 5) {
-	// in:  copy the config file
-	// out: -
-	require('include/ustep5.php');
-}
-if ($step == 6) {
 	// in:  copy the content if needed
 	// out: -
 	require('include/ustep4.php');
+}
+if ($step == 6) {
+	// in:  copy the config file
+	// out: -
+	require('include/ustep5.php');
 }
 /* anonymous data collection */
 if ($step == 7) {	
