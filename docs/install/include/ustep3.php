@@ -134,6 +134,11 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$sql = "DELETE FROM ".$_POST['step1']['tb_prefix']."tests_groups";
 		mysql_query($sql, $db);
 	}
+	if (version_compare($_POST['step1']['old_version'], '1.5.3.3', '<')) {
+		// set display_name_format to "login"
+		$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."config VALUES ('display_name_format', '0')";
+		mysql_query($sql, $db);
+	}
 
 	if (version_compare($_POST['step1']['old_version'], '1.5.4', '<')) {
 		/* find all the multiple choice multiple answer questions and convert them to 
