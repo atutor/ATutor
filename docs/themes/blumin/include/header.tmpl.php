@@ -58,7 +58,7 @@ global $system_courses, $_custom_css;
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="<?php echo $this->base_path; ?>print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
@@ -142,7 +142,7 @@ function poptastic(url) {
 </div>
 
 <!-- the sub navigation -->
-<div style="float: right; padding-top: 5px; padding-right: 5px; font-size:0.85em; text-transform: lowercase; ">
+<div style="float: right; padding-top: 5px; padding-right: 5px; font-size:0.85em; text-transform: lowercase;" id="suv-nav-logout">
 	<?php if ($_SESSION['valid_user']): ?>					
 		<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 	<?php else: ?>
