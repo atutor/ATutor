@@ -1,0 +1,1573 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id: guidelines.html 3071 2005-01-12 21:53:13Z joel $ -->
+<html>
+<head>
+	<title>ATutor Developer Documentation</title>
+	<meta name="author" content="Joel Kronenberg" />
+	<meta name="description" content="ATutor developer documentation and coding guidelines" />
+
+<style type="text/css">
+h1 {
+	background-color: #CCCCCC;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-bottom: 10px;
+	text-align: right;
+}
+
+h2 {
+	background-color: #DDDDDD;
+	padding-left: 10px;
+	margin-bottom: 0px;
+}
+h3 {
+	background-color: #EFEFEF;
+	padding-left: 20px;
+	margin-bottom: 0px;
+}
+h4  { margin-bottom: 0px; }
+p   { margin-top: 0px;    }
+dl  { margin-top: 0px;    }
+kbd { color: #761596;     }
+blockquote { font-style: italic; }
+pre.code {
+	background-color: #EEEEFF;
+	padding: 5px;
+	margin-left: 20px;
+	color:#761596;
+    margin-top: 0px;
+}
+.top {
+	float: right;
+	color: green;
+	padding-top: 2px;
+	padding-right: 5px;
+}
+
+@media print {
+	h2 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+	}
+	h3 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+		width: 75%;
+	}
+	.top {
+		display: none;
+	}
+
+	pre.code {
+		page-break-inside: avoid;
+	}
+}
+</style>
+</head>
+<body>
+<h1><a name="top"></a>ATutor Developer Documentation</h1>
+
+<h2>Table of Contents</h2>
+
+<ul>
+	<li>0. <a href="#version">Version Considerations</a></li>
+	<li>1. <a href="#introduction">Introduction</a></li>
+	<li>2. <a href="#conventions">Conventions Used in This Document</a>
+		<ul>
+			<li>2.1 <a href="#typographic-conventions">Typographic Conventions</a></li>
+			<li>2.2 <a href="#links-conventions">Links</a></li>
+			<li>2.3 <a href="#function-definitions">Function Definitions (Prototypes)</a></li>
+		</ul></li>
+    <li>3. <a href="#setup">Setup</a>
+		<ul>
+			<li>3.1 <a href="#php-configuration">PHP Configuration</a></li>
+		</ul></li>
+    <li>4. <a href="#subversion">Subversion (SVN)</a>
+		<ul>
+			<li>4.1 <a href="#svn-install">Installing an SVN Client &amp; Checking-Out</a></li>
+			<li>4.2 <a href="#svn-installing_atutor">Installing ATutor From SVN</a></li>
+			<li>4.3 <a href="#svn-update">Updating ATutor From SVN</a></li>
+			<li>4.4 <a href="#svn-keywords">Keywords</a></li>
+		</ul></li>
+    <li>5. <a href="#communication">Communication</a></li>
+    <li>6. <a href="#patches">Patches</a></li>
+    <li>7. <a href="#editor-tips">Editor Tips</a></li>
+    <li>8. <a href="#proposed-features">Proposed Features</a></li>
+    <li>9. <a href="#bug-tracking">Bug Tracking</a></li>
+    <li>10. <a href="#creating-bundles">Creating Bundles</a></li>
+	<li>11. <a href="#writing-portable-code">Writing Portable Code</a></li>
+	<li>12. <a href="#coding-style">Coding Style</a>
+		<ul>
+			<li>12.1 <a href="#indentation">Indentation</a></li>
+			<li>12.2 <a href="#line-length">Line Length</a></li>
+			<li>12.3 <a href="#whitespace">Using Whitespace</a></li>
+			<li>12.4 <a href="#sql-guidelines">SQL Guidelines</a></li>
+			<li>12.5 <a href="#sql-joins">SQL/99 Joins</a></li>
+			<li>12.6 <a href="#control-flow-constructs">Control Flow Constructs</a></li>
+			<li>12.7 <a href="#commenting">Commenting</a></li>
+			<li>12.8 <a href="#naming-conventions">Naming Conventions</a>
+				<ul>
+					<li>12.8.1 <a href="#naming-variables">Naming Variables</a></li>
+					<li>12.8.2 <a href="#naming-functions">Naming Functions</a></li>
+					<li>12.8.3 <a href="#naming-files">Naming Files</a></li>
+				</ul></li>
+		</ul></li>
+	<li>13. <a href="#directory-structure">Directory Structure</a>
+		<ul>
+			<li>13.1 <a href="#directories">Directories</a></li>
+			<li>13.2 <a href="#files">Files</a></li>
+		</ul></li>
+	<li>14. <a href="#database-structure">Database Structure</a></li>
+	<li>15. <a href="#localisation">Localisation</a>
+		<ul>
+			<li>15.1 <a href="#adding-language">Adding &amp; Editing Language</a></li>
+		</ul></li>
+	<li>16. <a href="#error-feedback-messages">Error and Feedback Messages</a>
+		<ul>
+			<li>16.1 <a href="#error-feedback-internals">Internals</a></li>
+			<li>16.2 <a href="#error-feedback-adding">Adding Messages</a></li>
+			<li>16.3 <a href="#error-feedback-printing">Printing Messages</a></li>
+		</ul>
+	</li>
+	<li>17. <a href="#useful-variables">Useful Variables</a>
+		<ul>
+			<li>17.1 <a href="#var-db">$db</a></li>
+			<li>17.2 <a href="#var-addslashes">$addslashes</a></li>
+			<li>17.3 <a href="#var-base_href">$_base_href</a></li>
+			<li>17.4 <a href="#var-base_path">$_base_path</a></li>
+			<li>17.5 <a href="#var-user_location">$_user_location</a></li>
+			<li>17.6 <a href="#var-rel_url">$_rel_url</a></li>
+			<li>17.7 <a href="#var-my_uri">$_my_uri</a></li>
+			<li>17.8 <a href="#var-content_manager">$contentManager</a></li>
+			<li>17.9 <a href="#var-section">$_section</a></li>
+		</ul></li>
+	<li>18. <a href="#useful-functions">Useful Functions</a>
+		<ul>
+			<li>18.1 <a href="#fn-authenticate">authenticate()</a></li>
+			<li>18.2 <a href="#fn-at">_AT()</a></li>
+			<li>18.3 <a href="#fn-at_print">AT_print()</a></li>
+			<li>18.4 <a href="#fn-at_date">AT_date()</a></li>
+			<li>18.5 <a href="#fn-addslashes">$addslashes()</a></li>
+			<li>18.6 <a href="#fn-debug">debug()</a></li>
+			<li>18.7 <a href="#fn-get_login">get_login()</a></li>
+			<li>18.8 <a href="#fn-urlencode_feedback">urlencode_feedback()</a></li>
+		</ul></li>
+	<li>19. <a href="#useful-constants">Useful Constants</a>
+		<ul>
+			<li>19.1 <a href="#const-include_path">AT_INCLUDE_PATH</a></li>
+			<li>19.2 <a href="#const-sep">SEP</a></li>
+			<li>19.3 <a href="#const-devel">AT_DEVEL</a></li>
+			<li>19.4 <a href="#const-table_prefix">TABLE_PREFIX</a></li>
+			<li>19.5 <a href="#const-version">VERSION</a></li>
+		</ul></li>
+	<li>20. <a href="#install-upgrade-scripts">Install &amp; Upgrade Scripts</a>
+		<ul>
+			<li>20.1 <a href="#install-script">Install Script</a></li>
+			<li>20.2 <a href="#upgrade-script">Upgrade Script</a></li>
+		</ul></li>
+	<li>21. <a href="#accessibility">Accessibility</a></li>
+	<li>22. <a href="#validation">Validation</a></li>
+	<li>23. <a href="#example">Sample Script</a></li>
+	<li>24. <a href="#credits-sources">Credits &amp; Additional Sources</a></li>
+</ul>
+
+<a href="#top" class="top">top</a>
+<h2><a name="version"></a>0. Version Considerations</h2>
+	<p>This document is found in ATutor's <kbd>documentation/</kbd> directory and is maintained along with the rest of the code in the code repository. The latest version of this document will always be available in the repository. Versions bundled with ATutor releases are specific to that release. If you are modifying a previous version of ATutor then you should refer to the version of these guidlines as they are available with that specific version.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="introduction"></a>1. Introduction</h2>
+	<p>ATutor, as an open source project, encourages PHP developers to contribute new features. To ensure that newly contributed code is easy to accept and maintain, we must urge you to follow the guidelines we outline below. These rules and recommendations were created to ease the distributed development process.</p>
+
+	<p>The latest version of this document can always be found at <a href="http://atutor.ca">ATutor.ca</a>.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="conventions"></a>2. Conventions Used in This Document</h2>
+	<p>This section covers the typographical conventions used in this document.</p>
+
+	<h3><a name="typographic-conventions"></a>2.1 Typographic Conventions</h3>
+	<dl>
+		<dt><kbd>Constant width</kbd></dt>
+		<dd><p>Used for commands and code examples. Example: Use the <kbd>debug()</kbd> function to view a variable.</p></dd>
+
+		<dt><kbd>`Constant width surrounded by quotes`</kbd></dt>
+		<dd><p>Constant-width font with surrounding quotes is used for filenames and path names. Example: The <kbd>`vitals.php`</kbd> file is important.</p></dd>
+
+		<dt>Square brackets (<kbd>`[`</kbd> and <kbd>`]`</kbd>)</dt>
+		<dd><p>In syntax descriptions, square brackets (<kbd>`[`</kbd> and <kbd>`]`</kbd>) are used to indicate optional words or clauses. Not to be confused with the use of square brackets in <kbd>array</kbd> definitions. For example, in the following statement, <kbd>version</kbd> is optional: <kbd>./bundle.sh [version]</kbd>.</p></dd>
+
+		<dt>Pipe (<kbd>`|`</kbd>)</dt>
+		<dd><p>When a syntax element consists of a number of alternatives, the alternatives are separated by pipes (<kbd>`|`</kbd>).</p></dd>
+	</dl>
+
+	<p>Example code is to be used as examples only and not as tested production code. In most cases its usefulness in the context of the example outweighs its correctness as workable code. In other cases the syntax and style used in the example itself are irrelevant and do not follow the coding guidelines outlined below. For example, <kbd>array</kbd>s may be documented using <kbd>string</kbd> keys without quoting their value, <kbd>$_SESSION[prefs]</kbd>, while in practice it is always best to escape the key with quotes: <kbd>$_SESSION['prefs']</kbd>.</p>
+
+	<h3><a name="links-conventions"></a>2.2 Links</h3>
+		<p>All the links in this document open in the current browser. Links that are not obviously to external sites are supplemented with <em>title</em> text. All other links are assumed to be anchors within this document.</p>
+
+	<h3><a name="function-definitions"></a>2.3 Function Definitions (Prototypes)</h3>
+		<p>The usage of the square brackets (<kbd>`[`</kbd> and <kbd>`]`</kbd>) around parameters imply that they are optional, in which case the function documentation will then state what the default value for that variable is. Please pay close attention to the return types of functions: If a function is described to return <kbd>boolean</kbd> then it will return either <kbd>TRUE</kbd> or <kbd>FALSE</kbd> and <strong>not</strong> an <kbd>integer</kbd> such as 0 or 1. Optional arguments to functions must always be listed as the last parameters in the list.</p>
+
+		<p><kbd>returned_type <strong>function_name</strong>( param_type $param_name [, opt_param_type $opt_param_name])</kbd></p>
+		<dl>
+			<dt><kbd>returned_type</kbd></dt>
+			<dd><p>Type of value this function returns. See <a href="http://www.php.net/manual/en/language.types.php" title="PHP.net - Chapter 6. Types">Types</a> and <a href="http://www.php.net/manual/en/types.comparisons.php" title="PHP.net - Appendix O. PHP type comparison tables">PHP type comparison tables</a>.</p></dd>
+
+			<dt><kbd>function_name</kbd></dt>
+			<dd><p>The function name.</p></dd>
+
+			<dt><kbd>param_type</kbd> and <kbd>opt_param_type</kbd></dt>
+			<dd><p>The type of the parameter that the function expects. See <a href="http://www.php.net/manual/en/language.types.php" title="PHP.net - Chapter 6. Types">Types</a> and <a href="http://www.php.net/manual/en/types.comparisons.php" title="PHP.net - Appendix O. PHP type comparison tables">PHP type comparison tables</a>.</p></dd>
+
+			<dt><kbd>$param_name</kbd> and <kbd>$opt_param_name</kbd></dt>
+			<dd><p>The names of the parameters as they are used in the function. The <kbd>$opt_param_name</kbd> is optional.</p></dd>
+		</dl>
+	</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="setup">3. Setup</a></h2>
+	<p>Please review the <a href="http://atutor.ca/atutor/docs/requirements.php" title="ATutor.ca - requirements">ATutor requirements</a> and ensure that your development environment meets the minimum requirements.</p>
+
+	<ul>
+		<li><a href="http://dev.mysql.com/doc/mysql/en/Installing.html">MySQL.com - Installation MySQL</a></li>
+		<li><a href="http://www.php.net/manual/en/installation.php">PHP.net - Installing PHP with Apache</a></li>
+		<li><a href="http://www.thesitewizard.com/archive/php4install.shtml">How to Install and Configure PHP4 to Run with Apache on Windows</a></li>
+	</ul>
+
+	<h3><a name="php-configuration"></a>3.1 PHP Configuration</h3>
+	<p>If you have a dedicated development environment that doesn't share a web server with other production code, then it is best to use the bundled <kbd>php.ini-dist</kbd> configuration file as the default--simply rename it to <kbd>php.ini</kbd>. Listed below are the essential configuration options and their recommended value:</p>
+<pre class="code">
+safe_mode            = Off
+error_reporting      = E_ALL
+display_errors       = On
+arg_separator.input  = ";&"
+register_globals     = Off
+magic_quotes_gpc     = Off
+magic_quotes_runtime = Off
+allow_url_fopen      = On
+register_argc_argv   = Off</pre></p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="subversion"></a>4. Subversion (SVN)</h2>
+	<p>We have adopted Subversion (SVN) in place of the aging CVS, allowing us to open up the development repository while still maintaining control over the core project. Additional information can be found on the <a href="http://subversion.tigris.org/project_packages.html">Subversion homepage</a>.</p>
+
+	<h3><a name="svn-install"></a>4.1 Installing an SVN Client &amp; Checking-Out</h3>
+		<p>To obtain a working copy of ATutor, you need to install an SVN client and do a <kbd>checkout</kbd> from our repository of the latest ATutor source code. Checking out the repository creates a copy of it on your local machine with the necessary version control information. The location of the copied files should be web accessible, i.e. a directory under your web server's path. </p>
+
+		<p>For windows users, we recommend using <a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, which is a feature-rich SVN extension for Windows that supports many of the options of other SVN clients (file browser and filters not being one of them). Once TortoiseSVN has been successfully installed and you've rebooted your computer, go to a working directory where you wish to <kbd>checkout</kbd> the ATutor source code. Right-click to pop-up the context menu and select the command "Checkout...".</p>
+
+		<p>For repository URL, enter <kbd>http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk</kbd>. If you enter a folder name that does not yet exist, a directory with that name will be created. Press "OK", and the source will be downloaded to your computer.</p>
+
+		<p>For non-Windows users, download an appropriate SVN package from the <a href="http://subversion.tigris.org/project_packages.html" title="Subversion packages">Subversion homepage</a> and follow the installation instructions. These packages use the command-line client. Checking out the most recent ATutor source code can be done with the following command: <kbd>svn checkout http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk</kbd>.</p>
+		<p>The checkout includes:</p>
+		<ul>
+			<li><kbd>bundle.sh</kbd> - Execute this shell script to generate an installable bundle of the ATutor.</li>
+			<li><kbd>docs/</kbd> - The ATutor source code</li>
+			<li><kbd>mods/</kbd> - Extra module source code</li>
+		</ul>
+		<p>Extra modules can also be checked out into the ATutor <kbd>mods/</kbd> directory, from where they can be easily installed using the ATutor administor's Install Modules tool. See the <a href="modules.html">ATutor Module Documentation</a> for more about creating and modifying modules. From within the <kbd>docs/mods/</kbd> directory of your development version of ATutor, use  <kbd>svn checkout http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk/mods/[module_name]</kbd>.</p>
+	<h3><a name="svn-installing_atutor"></a>4.2 Installing ATutor From SVN</h3>
+		<p>Before starting the installation process you should create an empty <kbd>`config.inc.php`</kbd> file in the <kbd>`include/`</kbd> directory: use <kbd>touch config.inc.php</kbd> on UNIX. Browse to the location of your checked out files in a web browser and proceed with the ATutor installation instructions. This will set up the database and user accounts for your ATutor system. The resulting ATutor installation will be your development environment.</p>
+
+	<h3><a name="svn-update"></a>4.3 Updating ATutor From SVN</h3>
+		<p>You should periodically perform updates from the repository to make sure you are working with the developers' latest files. To do this with TortoiseSVN, right click on the working folder and select "Update" from the context menu. For command-line svn clients, use: <kbd>svn update</kbd>.</p>
+
+		<p>Always review the latest SVN SQL upgrade file to ensure your database structure is up-to-date. The file will contain schema changes of the current pre-released source. Example: If the current working source will be version 1.9, then the upgrade file to keep track of will be named <kbd>atutor_upgrade_<em>x.y.z</em>_to_1.9.sql</kbd>, where <kbd><em>x.y.z</em></kbd> is the version of the currently available stable release.</p>
+
+	<h3><a name="svn-keywords"></a>4.4 Keywords</h3>
+		<p>Until Subversion supports server wide configuration options, the <kbd>svn:keyword="Id"</kbd> option will have to be set on a file-by-file basis via the client. After the keyword property has been set for the given file, add the line <kbd>// $ I d</kbd> (without the spaces) at the top of the file directly below the main comment block to identify the author, date and time of the last <kbd>commit</kbd>.</p>
+
+		<p>After the file has been added and committed to the repository the keyword will be expanded into <kbd>// $Id: guidelines.html 3071 2005-01-12 21:53:13Z joel $</kbd>. It is helpful to read that line when first opening a file as it lets you know if you were the last person to edit that file and if not, to look out for possible changes.</p>
+
+		<p>To set <kbd>svn:keyword="Id"</kbd> on a file using TortoiseSVN, right-click on a file, select "Properties" then select the "TortoiseSVN" tab, enter <kbd>svn:keywords</kbd> in the drop-down and <kbd>Id</kbd> in the text box then use the "Set" button.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="communication"></a>5. Communication</h2>
+	<p>All communication between developers should occur in the <a href="http://atutor.ca/forum/12/1.html">Development Forum</a>. Please try to keep discussions public including any feature proposals.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="patches"></a>6. Patches</h2>
+	<p>Patches should be applied using the UNIX <kbd>patch</kbd> command. Make sure your <kbd>`.patch`</kbd> or <kbd>`.diff`</kbd> files will be compatible or send explicit instructions on how to apply your changes. Always specify what release or source date you are patching against. We prefer unified diffs. Diffs can be posted as attachment to the atutor.ca <a href="http://www.atutor.ca/forum/12/1.html">Development Forum </a>.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="editor-tips"></a>7. Editor Tips</h2>
+	<p>We use <a href="http://editplus.com">EditPlus</a>, but you can use whichever editor and settings you feel comfortable with. The most important part when editing is to ensure that tabs meet the coding guidelines on <a href="#indentation">indentation</a>.</p>
+
+	<p>A few desirable features for a good text editor are listed below:
+	<ul>
+		<li>Column and row numbering.</li>
+		<li>Jump to line number.</li>
+		<li>Word wrap toggle.</li>
+		<li>Being able to specify soft or hard tabs.</li>
+		<li>Syntax highlighting.</li>
+		<li>Trim trailing whitespace.</li>
+		<li>DOS to UNIX CR/LF conversions. Your editor must be able to save files with UNIX style line breaks. This means the <kbd>\n</kbd> character instead of the </kbd>\r</kbd> (Mac style) or <kbd>\r\n</kbd> (Windows style).</li>
+	</ul></p>
+
+
+<a href="#top" class="top">top</a>
+<h2><a name="proposed-features"></a>8. Proposed Features</h2>
+	<p>The <a href="http://atutor.ca/atutor/features.php" title="ATutor.ca - Proposed Features">Proposed Features</a> page lists features which have been requested by the ATutor community. ATutor.ca members can vote on features to establish a priority, while potential developers may then assign themselves to tasks. New feature requests should be posted to the <a href="http://atutor.ca/forum/2/1.html" title="ATutor.ca - Feature Requests Forum">ATutor Feature Requests</a> forum.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="bug-tracking"></a>9. Bug Tracking</h2>
+	<p>Please report bugs to the <a href="http://atutor.ca/forum/3/1.html" title="ATutor.ca - Bug Forum">ATutor Bug Reports</a> forum. Be sure to indicate the code version being used, such as a release candidate, stable release, nightly build, or SVN checkout, etc. Also be sure to describe the details of the system that ATutor is being developed or tested on, such as the operating system, web server and version, PHP version, etc. Browse the <a href="http://www.atutor.ca/development/bugs/">Current Bug Summary</a> for a list of active big fixing.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="creating-bundles"></a>10. Creating Bundles</h2>
+	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will retrieve the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
+		
+		<dl>
+			<dt><kbd>./bundle.sh [version_number]</kbd><dt>
+			<dd><p>Note that you will need execute permissions on the script to use it, and if it isn't in your <kbd>PATH</kbd> then you will have to prefix it with a <kbd>./</kbd>. The optional <kbd>version_number</kbd> argument will be used for suffixing onto the file name.  For example, a version number of <kbd>1.8RC1</kbd> will generate a file named <kbd>ATutor-1.8RC1.tar.gz</kbd>.</p></dd>
+		</dl>
+	</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="writing-portable-code"></a>11. Writing Portable Code</h2>
+	<p>When writing your PHP code please try to use functions that exist since (the minimum requirement) PHP version 4.3.0. If you have to use a function that only exists in later versions of PHP, provide an alternative for older versions. To check if the function is available use either <kbd>version_compare(phpversion(), $min_version)</kbd> or <kbd>function_exists($function_name)</kbd>.
+
+	<p>Code has to work on both Windows and UNIX. You should never use <kbd>exec()</kbd> or <kbd>system()</kbd>. In most cases we prefer to write code that works on both systems as is, without the need for if-statements that check for the operating system, since duplicating the functionality twice (once for each operating system) can be a source of bugs. Review the <a href="#php-configuration">PHP Configuration</a> section for details on how best to set-up your development environment.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="coding-style"></a>12. Coding Style</h2>
+	<p>This section should help those who would like to modify or add code. Anyone who wishes to contribute code must adhere to these guidelines or the code may not be accepted. Please try to write code that is easy to read and maintain with appropriate comments as needed. Correctness and efficiency are easier to certify if code is simple to read and understand.</p>
+
+	<h3><a name="indentation"></a>12.1 Indentation</h3>
+		<p>The importance of indentation for code organization cannot be exaggerated enough. Although indentation is not mandatory in PHP, it is a powerful visual organization tool that should consistently be applied to code.</p>
+		<ul>
+			<li>Indent using 4 spaces for each level.</li>
+			<li>Think carefully about when too many nested levels has been reached. (Usually 4-5 is a good limit).</li>
+			<li>Use <em>Hard tabs</em>, as described below.</li>
+		</ul>
+
+		<p>Internally, we have used hard tabs as we all use the same editor, but we may decide to move to soft tabs in the future. Hard tabs are regular tabs while soft tabs are not really tabs at all; each soft tab is actually represented by a certain number of regular spaces. The benefit of using soft tabs is that they always appear the same, regardless of the editor's tab-spacing. With soft tabs set and enforced, it is easy to maintain consistent indentation and whitespace treatment throughout code. When hard tabs are used, especially if there are multiple developers using different editors, it is easy for mixed levels of indentation to be introduced, confusing the code's layout.</p>
+
+	<h3><a name="line-length"></a>12.2 Line Length</h3>
+		<p>Split the long lines into multiple lines: 
+<pre class="code">
+if (($month = 'jan') || ($month = 'feb') || ($month = 'mar') || ($month = 'apr')) {
+    return 1;
+}
+</pre></p>
+
+    <p>You can indent the second line to signify the association with the upper. For particularly long lines, you can indent and align every condition:
+<pre class="code">
+if (($month = 'jan') || 
+    ($month = 'feb') || 
+    ($month = 'mar') || 
+    ($month = 'apr')) {
+
+    return 1;
+}
+</pre></p>
+
+        <p>This methodology works equally well for function parameters:
+<pre class="code">
+echo format_content($content_row['text'], 
+                    $content_row['formatting'], 
+                    $glossary,
+                    $indent);
+</pre></p>
+
+	<h3><a name="whitespace"></a>12.3 Using Whitespace</h3>
+		<p>Whitespace can be used to provide and reinforce logical structure in the code. For example, it can be effectively used to group assignments and show associations. The following example is poorly formatted and difficult to read:
+
+<pre class="code">
+$password = 'mypassword';
+$website_url = 'http://atutor.ca';
+$first_name = 'Joel';
+$last_name = 'Kronenberg';
+</pre></p>
+
+        <p>But this code block can be improved by using whitespace to logically group related assignments together and align them on the equal sign (<kbd>=</kbd>):
+<pre class="code">
+$pet_type    = 'mypassword';
+$website_url = 'http://atutor.ca';
+$first_name  = 'Joel';
+$last_name   = 'Kronenberg';
+</pre></p>
+
+	<h3><a name="sql-guidelines"></a>12.4 SQL Guidelines</h3>
+		<p>Similar formatting and layout rules applied to PHP can be applied to SQL queries as well. SQL queries, especially in database systems that support complex subqueries, can become convoluted. As with PHP code, whitespace and line breaks should be used in SQL code as needed. Consider the following:
+        
+<pre class="code">
+select employees.first_name, employees.last_name from 
+               employees where employees.vacation_time > 0 order by employees.last_name";
+</pre>        
+        </p>
+
+		<p>This is a simple query, but it is poorly organized. Its organization can be improved in a number of ways, including the following:
+        <ul>
+            <li>Capitalize SQL keywords.</li>
+            <li>Break lines on SQL keywords.</li>
+            <li>Use table aliases to keep code clean.</li>
+        </ul>
+        
+<pre class="code">
+SELECT   S.first_name, S.last_name 
+FROM     students S
+WHERE    S.email = '' 
+ORDER BY S.last_name";
+</pre></p>
+
+		<h3><a name="sql-joins"></a>12.5 SQL/99 Joins</h3>
+	   <p>ANSI SQL/99 features ANSI compliant joins. There are several advantages in using this new syntax, one of which is the separation of the <kbd>JOIN</kbd> condition from the <kbd>WHERE</kbd> clause.
+<pre class="code">
+SELECT	M.email, M.login 
+FROM	members M, forums_subscriptions S 
+WHERE	S.member_id=M.member_id 
+AND     M.email <> ''
+</pre>
+SQL/99 makes a clear distinction between the fields in the <kbd>JOIN</kbd> condition and the <kbd>WHERE</kbd> clause:
+<pre class="code">
+SELECT	M.email, M.login
+FROM	members M
+JOIN	forums_subscriptions S USING (member_id)
+WHERE	M.email <> ''
+</pre></p>
+
+	<h3><a name="control-flow-constructs"></a>12.6 Control Flow Constructs</h3>
+		<p>
+			<ul>
+				<li><em>Always</em> use <kbd>&lt;?php ?></kbd> instead of the short form <kbd>&lt;? ?></kbd>. This implies that you must not use the <kbd>&lt;?=$var;?></kbd> short form either.</li>
+				<li>Always include the optional semicolon in single line PHP blocks: <kbd>&lt;?php echo $something<big>;</big> ?></kbd>
+				<li>Use <kbd>'</kbd> instead of <kbd>"</kbd> if there are no variables or special characters.</li>
+				<li>Use spaces around string concatenating. <kbd>echo 'str' . $value . 'str2';</kbd></li>
+				<li>Parenthesis <kbd>`( )`</kbd> should come right after a function name. <kbd>function()</kbd> not <kbd>function ()</kbd></li>
+				<li>Parenthesis <kbd>`( )`</kbd> should have a space right after a language construct (<kbd>if</kbd>, <kbd>while</kbd>, <kbd>for</kbd>). Examples: <kbd>for (...)</kbd>, <kbd>while (condition)</kbd></li>
+				<li>Avoid using <kbd>continue</kbd> and <kbd>break</kbd> as it makes debugging more difficult.</li>
+	            <li>Braces formatting is illustrating below. We use K&R style where the initial brace is placed on the same line as the keyword and the trailing brace inline on its own line with the keyword:
+<pre class="code">
+if (condition) {
+    ...
+} else if (condition) {
+    ...
+} else {
+    ...
+}
+</pre></li>
+				<li>Arrays should be referenced with no spaces. <kbd>$arr['index']</kbd> not <kbd>$arr[ 'index' ]</kbd></li>
+				<li>Avoid using short if-statement construct (<kbd>$var = ($query ? $val1 : $val2)</kbd>) except in very rare cases. It is confusing and has a lot of bug potential.</li>
+			</ul>
+		</p>
+
+	<h3><a name="commenting"></a>12.7 Commenting</h3>
+		<p>Avoid using Shell/Perl-style (<kbd>## this is a comment</kbd>) comments entirely. Use C-style comments (<kbd>/* ... */</kbd>) for large comment blocks and C++-style comments (<kbd>// ...</kbd>) for single-line comments only:
+<pre class="code">
+/* This is a comment block
+ * it is used for describing
+ * the code below.
+ */
+...
+// this is a single line comment
+</pre></p>
+	<p>Please, document while you code. See <a href="http://phpdocu.sourceforge.net/howto.php">phpdoc</a>, like <a href="http://java.sun.com/docs/books/jls/first_edition/html/18.doc.html">javadoc</a>, for how to document functions, classes, methods, and variables. Coding is often hurried, but it will save a lot of time in the end to do this type of documenting! It looks like this:
+   <pre class="code">
+   /**
+   * what the function does in one line.
+   * more detailed description on 0-n lines, if needed.
+   * @access  [public|static|pseudostatic]
+   * @param   [string|int|double|bool|array|object|mixed] $paramName1 desc
+   * @param   [string|int|double|bool|array|object|mixed] $paramName2 desc
+   *  ...
+   * @param   [string|int|double|bool|array|object|mixed] $paramNameN desc
+   * @return  datatype  description
+   * @throws  <em>not until PHP 5</em>
+   * @see     some_function()
+   * @todo    description
+   * @since   ATutor version, PHP version   (comma separated list)
+   * @status  stable|experimental           (if not set then considered stable)
+   * @pattern singleton|factory|mvc|observer|facade|...
+   * @author  description                   (comma separated list)
+   */
+   function something() {
+   }
+   </pre>
+   Note that the description should be given as plain text not HTML.  The <kbd>@pattern singleton</kbd> means that the constructor returns a reference to an already existing instance, if there is one.</p>
+
+	<h3><a name="naming-conventions"></a>12.8 Naming Conventions</h3>
+	<ul>
+		<li><a name="naming-variables"></a>12.8.1 Naming Variables:
+			<ul>
+				<li>Use capital letters for constants. E.g. <kbd>define('CONSTANT', 1)</kbd> and use the capital form of  <kbd>TRUE</kbd>, <kbd>FALSE</kbd> and <kbd>NULL</kbd></li>
+				<li>Otherwise, use all lower case</li>
+				<li>Use <kbd>_</kbd> to separate words. E.g. <kbd>$green_colour_value</kbd></li>
+				<li>Loop variables can be of the usual variety: <kbd>$i</kbd>, <kbd>$j</kbd>, <kbd>$k</kbd>, etc.</li>
+				<li>Count variables should follow the format $*_count. E.g. <kbd>$bug_count</kbd>, and always initialised to 0</li>
+				<li>Temporary variables should be prefixed with <kbd>temp_</kbd></li>
+				<li><kbd>$sql</kbd>, <kbd>$result</kbd>, and <kbd>$row</kbd> should be used for SQL query, results, and rows respectively</li>
+			</ul>
+		</li>
+
+		<li><a name="naming-functions"></a>12.8.2 Naming Functions:
+			<ul>
+				<li>Use all lower case</li>
+				<li>Use <kbd>_</kbd> to separate words. E.g. <kbd>setup_page_breaks()</kbd></li>
+				<li>Keep functions to 5 words or less</li>
+				<li>Functions that print should be prefixed with <kbd>print_</kbd>.</li>
+				<li>Try to use prefixes to group functions (E.g., <kbd>email_</kbd>, <kbd>news_</kbd>, etc.)</li>
+			</ul>
+		</li>
+
+		<li><a name="naming-files"></a>12.8.3 Naming Files:
+			<ul>
+				<li>Use all lower case</li>
+				<li>Use <kbd>_</kbd> to separate words. E.g. <kbd>view_new_bugs_page.php</kbd></li>
+				<li>Use <kbd>.php</kbd> file extensions (not <kbd>.html</kbd> or <kbd>.php3</kbd>)</li>
+				<li>Filenames must be less than 32 characters in length as this works with older file systems like MacOS</li>
+				<li>Included files should be suffixed by <kbd>.inc.php</kbd></li>
+				<li>Files containing classes should be suffixed by <kbd>.class.php</kbd></li>
+				<li>Exception: Files being included as part of an external library should not be renamed</li>
+			</ul>
+		</li>
+	</ul>
+
+<a href="#top" class="top">top</a>
+<h2><a name="directory-structure"></a>13. Directory Structure</h2>
+	The following is a short explanation of the important components of the ATutor directory structure.
+
+	<h3><a name="directories"></a>13.1 Directories</h3>
+	<dl>
+		<dt><kbd>`acollab/`</kbd></dt>
+			<dd>This directory contains files related to ACollab connectivity. These files are necessary to allow ATutor to link into the ACollab system.</dd>
+
+		<dt><kbd>`admin/`</kbd></dt>
+			<dd>This directory contains files used for the administration area (when a user logs in as an administrator). This includes files for system statistics, instructor requests, management of users, courses, categories and languages, and server configuration.</dd>
+
+		<dt><kbd>`editor/`</kbd></dt>
+			<dd>This directory contains files used by a course instructor (or privileged user) to edit course content such as the glossary, course content, forums, announcements, and polls.</dd>
+
+		<dt><a name="directories-include"></a><kbd>`include/`</kbd></dt>
+			<dd>This directory contains files that are required or included into other files.</dd>
+
+		<dt><kbd>`include/classes/`</kbd></dt>
+			<dd>This directory contains classes, essential to certain ATutor functions, such as the phpMailer, XML, Savant templating, and content management classes.</dd>
+
+		<dt><kbd>`include/html/`</kbd></dt>
+			<dd>This directory contains files that output HTML, usually displayed on (included into) multiple pages.</dd>
+
+		<dt><kbd>`include/lib/`</kbd></dt>
+			<dd>This directory contains library files that hold functions and constants used throughout ATutor code.</dd>
+
+		<dt><kbd>`install/include/`</kbd></dt>
+			<dd>This directory contains files used during the installation process, including each step of the fresh install and upgrade processes.</dd>
+
+		<dt><kbd>`install/db/`</kbd></dt>
+			<dd>This directory contains the SQL files necessary to set up or upgrade the ATutor database.</dd>
+
+		<dt><kbd>`jscripts/`</kbd></dt>
+			<dd>This directory contains all JavaScript files.</dd>
+
+		<dt><kbd>`themes/`</kbd></dt>
+			<dd>This directory contains the different themes installed on an ATutor system, each with its own subdirectory.</dd>
+	</dl>
+
+	<h3><a name="files"></a>13.2 Files</h3>
+	<dl>
+		<dt><kbd>`include/config.inc.php`</kbd></dt>
+			<dd>This file is created during installation and contains specific configuration information for an ATutor system.</dd>
+
+		<dt><a name="files-vitals"></a><kbd>`include/vitals.inc.php`</kbd></dt>
+			<dd>This file is included by every directly accessible page.  It connects to the database, initiates the user session, includes common libraries and constants, and defines frequently used functions.</dd>
+
+		<dt><kbd>`include/cvs_development.inc.php`</kbd></dt>
+			<dd>This file is used to connect to the development language database.  Renaming the file will force your system to use the languages available locally.</dd>
+
+		<dt><kbd>`themes/themes_readme.txt`</kbd></dt>
+			<dd>This file contains detailed information on how to create and install a theme.</dd>
+
+		<dt><a name="files-header"></a><kbd>`include/header.inc.php`</kbd></dt>
+			<dd>This file outputs the page's header using the correct template and theme.</dd>
+
+		<dt><a name="files-feedback"></a><kbd>`include/html/feedback.inc.php`</kbd></dt>
+			<dd>This file outputs a feedback, error, help, or informative message from the given set variables. See <a href="#error-feedback-messages">Error and Feedback Messages</a>.</dd>
+
+		<dt><a name="files-footer"></a><kbd>`include/html/footer.inc.php`</kbd></dt>
+			<dd>This file outputs the page's footer using the correct template and theme.</dd>
+	</dl>
+
+
+<a href="#top" class="top">top</a>
+<h2><a name="database-structure"></a>14. Database Structure</h2>
+	<p>A <a href="database.gif">database model diagram</a> (153 KB GIF) created from the ATutor 1.4.1 database schema is available.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="localisation"></a>15. Localisation</h2>
+	<p>All language terms and phrases are stored in the ATutor database. See the <a href="#fn-at"><kbd>_AT()</kbd></a> function for details on displaying text. There are three tables that are used for managing languages, their roles are as follows:
+		<dl>
+			<dt><kbd>`language_pages`</kbd></dt>
+			<dd>This table is used to cross reference language terms with pages. It allows selecting, via a <kbd>JOIN</kbd>, only the terms needed for a particular page. The <kbd>JOIN</kbd> may be slow at first but once the result is cached, subsequent calls are many times faster such that only the language needed for a particular page is restored from cache.</dd>
+
+			<dt><kbd>`language_text`</kbd></dt>
+			<dd>This table holds all of the text for an ATutor installation.</dd>
+
+			<dt><kbd>`languages`</kbd></dt>
+			<dd>This table holds the list of all available languages on the system and their attributes.</dd>
+
+		</dl></p>
+
+	<h3><a name="adding-language"></a>15.1 Adding &amp; Editing Language</h3>
+		<p>Please see the <a href="http://atutor.ca/atutor/docs/howto.php">HowTo Course</a> for more details on translating a language within ATutor.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="error-feedback-messages"></a>16. Error and Feedback Messages</h2>
+	<p>All messages are handled using the <kbd>Message</kbd> class. The main purpose of the <kbd>Message</kbd> class is to encapsulate the functionality of tracking 
+		and managing various message types during a session by providing a nice layer of abstraction between you and the interface to <kbd>$_SESSION</kbd>, where the messages are stored.</p>
+
+	<p>At the moment six types of messages are supported:
+	<dl>
+		<dt><kbd>Error</kbd></dt>
+		<dd>Messages reflecting negative feedback to the user, indicating issues that need resolving or addressing.</dd>
+
+		<dt><kbd>Feedback</kbd></dt>
+		<dd>Messages reflecting positive feedback, aknowledging a users action was successfull.</dd>
+
+		<dt><kbd>Warning</kbd></dt>
+		<dd>Messages warning the user of a possible action with undesireable effects.</dd>
+
+		<dt><kbd>Help</kbd></dt>
+		<dd>Messages with helpful information about the current page.</dd>
+
+		<dt><kbd>Info</kbd></dt>
+		<dd>Messages with useful information.</dd>
+
+		<dt><kbd>Confirmation</kbd></dt>
+		<dd>Messages requiring a confirmation in order to execute an action.</dd>
+
+	</dl></p>
+
+		
+	<p>Please note that using the old method of passing messages is not supported anymore.</p>
+
+	<p>Messages can be passed between pages and can be accessed at any time, without any time restriction other than a session timeout.</p>
+
+	<h3><a name="error-feedback-internals"></a>16.1 Internals</h3>
+		<p>Essentially the internals of the class are divided into two segments, a section responsible for printing graphics via Savant templates and another that manages the storage of Messages.</p>
+	
+		<p>Tracking messages is accomplished by storing message codes and their optional arguments associatively in <kbd>$_SESSION</kbd>. Printing messages is accomplished via Savant and built in templates which can be found in <kbd>`templates/`</kbd>.</p>
+	
+		<p>The relational tracking structure is organized in the following manner inside <kbd>$_SESSION</kbd> in no particular order.
+			<ul>
+				<li><kbd>message</kbd>
+					<ul>
+						<li><kbd>error</kbd>
+							<ul>
+								<li><kbd>AT_ERROR_{*}</kbd>
+									<ul>
+										<li><kbd>AT_ERROR_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+										<li><kbd>[argument_2]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+		
+						<li><kbd>warning</kbd>
+							<ul>
+								<li><kbd>AT_WARNING_{*}</kbd>
+									<ul>
+										<li><kbd>AT_WARNING_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+			
+						<li><kbd>info</kbd>
+							<ul>
+								<li><kbd>AT_INFOS_{*}</kbd>
+									<ul>
+										<li><kbd>AT_INFOS_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li><kbd>help</kbd>
+							<ul>
+								<li><kbd>AT_HELP_{*}</kbd>
+									<ul>
+										<li><kbd>AT_HELP_{*}</kbd></li>
+										<li><kbd>[argument_1</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li><kbd>feedback</kbd>
+							<ul>
+								<li><kbd>AT_FEEDBACK_{*}</kbd>
+									<ul>
+										<li><kbd>AT_FEEDBACK_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li><kbd>confirm</kbd>
+							<ul>
+								<li><kbd>AT_CONFIRM_{*}</kbd>
+									<ul>
+										<li><kbd>AT_CONFIRM_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</p>
+	
+	<p>Messages are automaticaaly purged from <kbd>$_SESSION</kbd> following an appropriate print command.</p>
+
+	<h3><a name="error-feedback-usage"></a>16.2 Adding Messages</h3>
+		<kbd>$msg->add{Error|Warning|Info|Feedback|Help}($code);</kbd><br /><br />
+
+		<p><kbd>$code</kbd> is a <kbs>String</kbd> of a language _msgs code or an array with element 0 being the language _msgs code followed by optional arguments. Refer to the language_text table in the database.</p>
+
+		<p><strong>Important:</strong> One important thing to note is that <kbd>$code</kbd> must be stripped of the prefix for that type of message. By prefix it is meant <kbd>AT_[code_type]_</kbd>. For example:
+
+			<ul>
+				<li><kbd>`AT_ERROR_FORUM_NOT_FOUND`</kbd> should be specified as <kbd>`FORUM_NOT_FOUND`</kbd>, by stripping off the <kbd>`AT_ERROR_`</kbd> prefix.</li>
+				<li><kbd>`AT_WARNING_DELETE_MESSAGE`</kbd> as <kbd>`DELETE_MESSAGE`</kbd> by stripping off <kbd>`AT_WARNING_`</kbd>.</li>
+				<li><kbd>`AT_FEEDBACK_LOGOUT`</kbd> as <kbd>`LOGOUT`</kbd> by stripping off <kbd>`AT_FEEDBACK_`</kbd>.</li>
+				<li><kbd>`AT_INFOS_MSG_SEND_LOGIN`</kbd> as <kbd>`MSG_SEND_LOGIN`</kbd> by stripping off <kbd>`AT_INFOS_`</kbd>.</li>
+				<li><kbd>`AT_HELP_FILE_EXPORTABLE`</kbd> as <kbd>`FILE_EXPORTABLE`</kbd> by stripping off <kbd>`AT_HELP_`</kbd>.</li>
+			</ul>
+		</p>
+
+		<p>There are two ways of adding messages: a single code or a code with an array fo arguments. You can mix-and-match, a combination of both is supported even for the same code. Below is description of the formats:</p>
+
+		<p>
+			<dt>Adding single code</dt>
+			<dt><kbd>$msg->addHelp('FILE_EXPORTABLE');</kbd></dt>
+		<br/>
+		<dt><b>OR</b></dt>
+		<br/>
+		<dt>Adding array with arguments</dt>
+		<dt><kbd>$f = array('FILE_EXPORTABLE', 'arg', 'arg2', ...);</kbd></dt>
+		<dt><kbd>$msg->addHelp($f);</kbd></dt>
+		</p>
+
+		<p>A nice feature implemented is that you do not have to provide all
+		the arguments for a particular code at one time. Subsequent adding of
+		the same code will just append the argument. This allows for greater
+		manipulative flexibility in your source, without writing redundant code. Also note
+		that encoding Feedback codes is no longer necessary for redirection.<p>
+
+		<p><b>Example 1:</b>
+		<dt><kbd>$feedback=array('FORUM_ADDED', 'ac_access_groups');</kbd></dt>
+		<dt><kbd>$msg->addFeedback($feedback);</kbd></dt><br/>
+
+		<dt><kbd>// Before we print lets another another one to the same code</kbd></dt>
+		<dt><kbd>$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');</kbd></dt>
+		<dt><kbd>$msg->addFeedback($feedback2);</kbd></dt><br/>
+
+		<dt><kbd>// No need to url_encode the code</kbd></dt>
+		<dt><kbd>$filename = 'archive.zip';</kbd></dt>
+		<dt><kbd>$f = array('FILE_UPLOADED_ZIP', $file_name);</kbd></dt>
+		<dt><kbd>$msg->addFeedback($f);</kbd></dt>
+
+		</p>
+
+<p>Snapshot of a portion of <kbd>$_SESSION</kbd> as a result:</p>
+<pre class="code">
+	[feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => Array
+                        (
+                            [0] => AT_FEEDBACK_FORUM_ADDED
+                            [1] => ac_access_groups
+                            [2] => about_atutor_help_text
+                        )
+                        
+                    [AT_FEEDBACK_FILE_UPLOADED_ZIP] => Array
+                        (
+                            [0] => AT_FEEDBACK_FILE_UPLOADED_ZIP
+                            [1] => archive.zip
+                        )
+
+
+                )
+	...
+</pre>
+
+<p>
+<dt><kbd>header('Location: file_manager.php');</kbd></dt>
+<dt><kbd>exit;</kbd></dt>
+</p>
+
+<h3><a name="error-feedback-printing"></a>16.3 Printing Messages</h3>
+<kbd>$msg->print{Errors|Warnings|Infos|Feedbacks|Helps|All}($optional);</kbd><br/><br/>
+
+<p>Each will dump all the corresponding tracked messages of that type onto
+the page at that given line with appropriate graphics defined by its templates file.<p>
+
+<p><kbd>printAll()</kbd> allows all Messages of all types to be dumped immediatley.</p>
+
+<p>One thing to remember is that once a type of Message is printed
+all tracked data relating to that type is gone. There is no need to worry
+about purging messages from <kbd>$_SESSION</kbd>. The class manages this.</p>
+
+<p><b>Notice</b> <kbd>$optional</kbd> as the argument to this function. This allows you
+to shortcut the process of adding and printing Message's in one go. For example,
+suppose you want to add a Message and print it right away. Thus, you pass as an
+argument ANY argument that you would pass when adding a Message of that type. 
+Essentially, two lines of code are accomplished in one.</p>
+<dt>Example:</dt>
+<pre class="code">
+	$msg->addError('MAX_ATTEMPTS');
+	$msg->printErrors();
+	
+	can also be accomplished as:
+	
+	$msg->printErrors('MAX_ATTEMPTS');
+</pre>
+
+<h4><a name="Boolean"></a>Printing String inside Feedback style box</h4>
+
+<kbd>printNoLookup($str);</kbd><br/><br/>
+
+<p>Print <kbd>$str</kbd> inside a Feedback Message type style box. Performs
+no dialog with <kbd>$_SESSION</kbd> or any language mappings in the language_text DB table.
+Strictly used in <kbd>/resources/links/index.php</kbd> for compatibility.
+</p>
+
+<h4><a name="Boolean"></a>Checking for existance of specific Message type</h4>
+
+<kbd>contains{Errors|Warnings|Feedbacks|Helps|Infos}();</kbd><br/><br/>
+
+<p>Returns true if the type of Message is being tracked and contains
+some kind of data. Useful for branching conditions in knowning
+when to print a Message or not. Otherwise returns false.</p>
+
+<h4><a name="Boolean"></a>Manually Deleting a specific Message from storage</h4>
+
+<kbd>delete{Error|Warning|Feedback|Help|Info}($code);</kbd><br/><br/>
+
+<p>Will delete anything related to <kbd>$code</kbd> from <kbd>$_SESSION</kbd></p>
+<dt>Example:</dt>
+<pre class="code">
+	$msg->deleteFeedback('CANCELLED');
+</pre>
+
+<h4><a name="Example"></a>Example Code</h4>
+	
+<pre class="code">
+
+...
+
+require_once(AT_INCLUDE_PATH . '/classes/Message/Message.class.php');
+
+global $savant;
+
+$msg =& new Message($savant); 
+
+$msg->addError('FORUM_NOT_FOUND');
+$msg->addWarning('SAVE_YOUR_WORK');
+$msg->addInfo('NO_SEARCH_RESULTS');
+$msg->addFeedback('FORUM_ADDED');
+
+/* State of relevant section of $_SESSION at this point 
+[message] => Array
+        (
+            [error] => Array
+                (
+                    [AT_ERROR_FORUM_NOT_FOUND] => AT_ERROR_FORUM_NOT_FOUND
+                )
+
+            [warning] => Array
+                (
+                    [AT_WARNING_SAVE_YOUR_WORK] => AT_WARNING_SAVE_YOUR_WORK
+                )
+
+            [info] => Array
+                (
+                    [AT_INFOS_NO_SEARCH_RESULTS] => AT_INFOS_NO_SEARCH_RESULTS
+                )
+
+            [feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => AT_FEEDBACK_FORUM_ADDED
+                )
+
+        )
+*/
+
+// Now print them
+$msg->printErrors();
+$msg->printWarnings();
+$msg->printInfos();
+$msg->printFeedbacks();
+
+/* State of relevant section of $_SESSION at this point
+ [message] => Array
+        (
+        )
+ */
+
+// Let's add an array of arguments
+$feedback=array('FORUM_ADDED', 'ac_access_groups');
+$msg->addFeedback($feedback);
+
+// Before we print lets another another one to the same code
+$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');
+$msg->addFeedback($feedback2);
+
+$msg->addHelp('DEMO_HELP2');
+
+$help=array('DEMO_HELP2', $_my_uri);
+$msg->addHelp($help);
+
+$help2=array('ADD_TEST', $_my_uri);
+$msg->addHelp($help2);
+
+// No need to url_encode the code
+$filename = 'archive.zip';
+$f = array('FILE_UPLOADED_ZIP', $file_name);
+$msg->addFeedback($f);
+
+/* State of relevant section of $_SESSION at this point. Notice the second addFeddback call above
+ * had its arguments appended
+
+ [message] => Array
+        (
+            [feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => Array
+                        (
+                            [0] => AT_FEEDBACK_FORUM_ADDED
+                            [1] => ac_access_groups
+                            [2] => about_atutor_help_text
+                        )
+                        
+                    [AT_FEEDBACK_FILE_UPLOADED_ZIP] => Array
+                        (
+                            [0] => AT_FEEDBACK_FILE_UPLOADED_ZIP
+                            [1] => archive.zip
+                        )
+
+                )
+
+            [help] => Array
+                (
+                    [AT_HELP_DEMO_HELP2] => Array
+                        (
+                            [0] => AT_HELP_DEMO_HELP2
+                            [1] => /~Jay/docs/index.php?
+                        )
+
+                    [AT_HELP_ADD_TEST] => Array
+                        (
+                            [0] => AT_HELP_ADD_TEST
+                            [1] => /~Jay/docs/index.php?
+                        )
+
+                )
+
+        }
+*/
+
+$msg->printAll();
+
+/* State of relevant section of $_SESSION at this point
+ [message] => Array
+        (
+        )
+ */
+ 
+ ...
+</pre>
+
+
+<a href="#top" class="top">top</a>
+<h2><a name="useful-variables"></a>17. Useful Variables</h2>
+	<p>Most of the variables documented here are required for most pages to function correctly. <kbd>constant</kbd> variables, although not explicitly declared as constants, should be considered as such, and not altered.</p>
+
+	<h3><a name="var-db"></a>17.1 $db</h3>
+		<h4>Description</h4>
+			<p><kbd>constant resource $db</kbd></p>
+
+			<p><kbd>$db</kbd> is the main database handler. Use it to connect to the ATutor database.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+
+	<h3><a name="var-addslashes"></a>17.2 $addslashes</h3>
+		<p>See <a href="#fn-addslashes"><kbd>$addslashes()</kbd></a>.</p>
+
+	<h3><a name="var-base_href"></a>17.3 $_base_href</h3>
+		<h4>Description</h4>
+		<p><kbd>constant string $_base_href</kbd></p>
+		<p>The full URL to ATutor's base installation. Supports both regular and SSL protocols. Example: <kbd>http://myserver.org/files/ATutor/</kbd>.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
+
+	<h3><a name="var-base_path"></a>17.4 $_base_path</h3>
+		<h4>Description</h4>
+		<p><kbd>constant string $_base_path</kbd></p>
+		<p>The full absolute path to ATutor's base installation. Example: <kbd>/files/ATutor/</kbd>.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
+
+	<h3><a name="var-user_location"></a>17.5 $_user_location</h3>
+		<h4>Description</h4>
+		<p><kbd>constant $_user_location</kbd></p>
+		<p><kbd>$_user_location</kbd> can be one of five values: <kbd>`public`</kbd>, <kbd>`admin`</kbd>, <kbd>`users`</kbd>, <kbd>`prog`</kbd> or <em>empty</em>. This variable must be set <em>before</em> requiring <kbd>`vitals.inc.php`</kbd>, and specifies what kind of general user authentication the page declaring it needs.</p>
+
+		<p><kbd>`public`</kbd> pages can be viewed by any user, signed-in as a member or not. <kbd>`admin`</kbd> pages (those in the <kbd>`admin/`</kbd> directory) can only be viewed by the administrator. <kbd>`users`</kbd> pages (those in the <kbd>`users/`</kbd> directory) can only be viewed by logged in members. If <kbd>$_user_location</kbd> is empty, it is assumed the page can only be accessed when a user is signed-in and viewing a course. <kbd>`prog`</kbd> is reserved for the pop-up window displaying the progress bar.</p>
+
+		<p>This variable was added as a way of specifying which template to use (public, admin, or member). Its role as a way of authenticating is not thoroughly established.</p>
+
+		<h4>Location</h4>
+			<p><em>Declared on every page that is directly accessible.</em></p>
+
+
+	<h3><a name="var-rel_url"></a>17.6 $_rel_url</h3>
+		<h4>Description</h4>
+		<p><kbd>constant string $_rel_url</kbd></p>
+		<p>The absolute path and file name relative to ATutor's base installation. If ATutor was installed in <kbd>http://myserver.org/files/ATutor/</kbd>, the <kbd>$_rel_url</kbd> of the Site-Map page, for example, would evaluate to <kbd>/tools/sitemap/index.php</kbd>.</p>
+
+		<p>This URL will always be the same for a given page, regardless of the location or path of an installation. This variable was added as a way of standardising the <kbd>`page`</kbd> value in the <kbd>`lang_base_pages`</kbd> table.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
+
+	<h3><a name="var-my_uri"></a>17.7 $_my_uri</h3>
+		<h4>Description</h4>
+		<p><kbd>constant string $_my_uri</kbd></p>
+		<p>The full path and file name to the current page in a format that is ready to accept additional URL arguments. The argument separator will be defined as <kbd><a href="#const-sep">SEP</a></kbd>.  For example, if the current URL is <kbd>http://myserver.org/index.php?cid=806;disable=PREF_MENU;menu_jump=2</kbd>, then <kbd>$_my_uri</kbd> would be <kbd>/index.php?cid=806;</kbd>.</p>
+
+		<p>So, <kbd>$_my_uri</kbd> is the URL to the current page without the temporary switch arguments. The following URL arguments are removed:
+
+		<kbd>enable</kbd>, <kbd>disable</kbd>, <kbd>expand</kbd>, <kbd>menu_jump</kbd>, <kbd>g</kbd>, <kbd>collapse</kbd>, <kbd>f</kbd>, <kbd>e</kbd>, <kbd>save</kbd>, and <kbd>lang</kbd>.</p>
+		
+		<h4>Location</h4>
+			<p><kbd>`include/lib/vitals.inc.php`</kbd></p>
+
+	<h3><a name="var-content_manager"></a>17.8 $contentManager</h3>
+		<h4>Description</h4>
+		<p><kbd>constant ContentManager $contentManager</kbd></p>
+		<p>The <kbd>$contentManager</kbd> object provides access to methods for operating on content. All access to the <kbd>`content`</kbd> table should be done through this object.</p>
+
+		<h4>Locations</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd><br />
+			<kbd>`include/classes/ContentManager.class.php`</kbd></p>
+
+	<h3><a name="var-section"></a>17.9 $_section</h3>
+		<h4>Description</h4>
+		<p><kbd>array $_section</kbd></p>
+
+		<p>This variable is a two-dimensional <kbd>array</kbd> used to display a page's breadcrumbs. The first index identifies the page starting from <kbd>0</kbd> such that <kbd>$_section[0]</kbd> defines the first page in the hierarchy, <kbd>$_section[1]</kbd> the second, and so on. The second index is used to assign that page's properties, defined as follows: index <kbd>0</kbd> is the page title, and index <kbd>1</kbd> is the URL. This variable must be defined <em>before</em> the <kbd>`header.inc.php</kbd> file is required.</p>
+		
+		<p>The URL for the last page (i.e.. the current page) is optional.</p>
+
+		<h4>Example 1</h4>
+			<p>To assign the path to the site-map:
+<pre class="code">
+// the Site-Map is a sub-page of the Tools page, hence we define the path:
+
+$_section[0][0] = _AT('tools');              // the Tools' page title
+$_section[0][1] = 'tools/';                  // the Tools' page URL
+$_section[1][0] = _AT('sitemap');            // the Site-Map's page title
+$_section[1][1] = 'tools/sitemap/index.php'; // the Site-Map's page URL
+</pre></p>
+
+		<h4>Location</h4>
+			<p><em>Declared on every page that is directly accessible.</em></p>
+
+		
+<a href="#top" class="top">top</a>
+<h2><a name="useful-functions"></a>18. Useful Functions</h2>
+	<p>The functions listed below provide vital functionality for ATutor pages. Developers will most likely end up using most, if not all, of the functions below. Please review the <a href="#function-definitions">Function Definitions (Prototypes)</a> section for an explanation of the syntax being used. Additional javadoc comments can be found with each function's definition.</p>
+
+	<h3><a name="fn-authenticate"></a>18.1 authenticate()</h3>
+		<p><kbd>authenticate()</kbd> -- Authenticates the current user against a specified privilege.</p>
+
+		<h4>Description</h4>
+			<p><kbd>mixed <strong>authenticate</strong>( integer $privilege [, boolean $check]</em> )</kbd></p>
+
+			<p>Authenticates the current user against <kbd>$privilege</kbd>. If <kbd>$check</kbd> is <kbd>AT_PRIV_RETURN</kbd> then the function will return the status of the authentication with <kbd>TRUE</kbd> meaning the user has been successfully authenticated or <kbd>FALSE</kbd> otherwise. With <kbd>$check</kbd> set to <kbd>FALSE</kbd> (default), the function will call <kbd>exit</kbd> to abort the script if the user cannot be authenticated and return <kbd>TRUE</kbd> otherwise.</p>
+
+			<p>The instructor user will always return <kbd>TRUE</kbd>.</p>
+
+			<p><kbd>$privilege</kbd> is set to one of the constants defined in <kbd>`include/lib/constants.inc.php`</kbd>.</p>
+
+			<p>Please use only <kbd>AT_PRIV_RETURN</kbd> or <kbd>FALSE</kbd> as possible values for <kbd>$check</kbd> as additional options may be added and the value of the constant changed.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+
+		<h4>Example 1</h4>
+			<p>To authenticate an entire page using the announcements management privilege:
+<pre class="code">
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH . 'vitals.inc.php');
+/**
+/* exit if the user cannot be authenticated
+ * otherwise continue loading the page.
+ */
+authenticate(AT_PRIV_ANNOUNCEMENTS);
+</pre></p>
+		<h4>Example 2</h4>
+			<p>To authenticate a block of code using the forums management privilege:
+<pre class="code">
+if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
+    // ... this user has been authenticated
+}
+</pre></p>
+
+	<h3><a name="fn-at"></a>18.2 _AT()</h3>
+		<p><kbd>_AT()</kbd> -- Returns translated terms.</p>
+
+		<h4>Description</h4>
+			<p><kbd>string <strong>_AT</strong>( string $term [, string $argument1 [, string $argument2 ...]] )</kbd></p>
+			
+			<p>This function returns a translated version of <kbd>$term</kbd> based on the user's current language preference as defined in <kbd>$_SESSION[lang]</kbd>. If <kbd>$term</kbd> cannot be found in the language database, it will return <kbd>`[ $term ]`</kbd> to signify that it was not found.</p>
+
+			<p>Terms may require supplements in the form of additional arguments (see example 2). A term may require zero or more arguments. If a <kbd>term</kbd> requires arguments, then they must all be provided; no argument can be left out.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/lib/output.inc.php`</kbd></p>
+
+		<h4>Example 1</h4>
+			<p>Printing a single term:
+<pre class="code">
+/* echo a translated version of the 'tools' string.
+ * i.e. 'Tools' in English, 'Outils' in French, etc..
+ */
+ $_SESSION['lang'] = 'en';
+echo '&lt;h2>' . _AT('tools') . '&lt;/h2>';
+
+ $_SESSION['lang'] = 'fr';
+echo '&lt;h2>' . _AT('tools') . '&lt;/h2>';
+</pre></p>
+
+			<p>Result:
+<pre class="code">&lt;h2>Tools&lt;/h2>
+&lt;h2>Outils&lt;/h2>
+</pre></p>
+
+		<h4>Example 2</h4>
+			<p>Printing a phrase with arguments:
+<pre class="code">
+$username = 'Jon';
+echo _AT('welcome_message', $username);
+</pre></p>
+			<p>Result:
+<pre class="code">Hello, Jon. Welcome back.</pre></p>
+
+
+	<h3><a name="fn-at_print"></a>18.3 AT_print()</h3>
+		<p><kbd>AT_print()</kbd> -- Transforms and formats user data for printing.</p>
+
+		<h4>Description</h4>
+			<p><kbd>string <strong>AT_print</strong>( string $input, string $field_name [, boolean $runtime_html] )</kbd></p>
+
+			<p>This function returns a transformed version of <kbd>$input</kbd> based on the rules specified by <kbd>$field_name</kbd>. <kbd>$input</kbd> is assumed to originate from the database, but it may be generalised in the future.</p>
+
+			<p><kbd>$field_name</kbd> is the unique name of the <kbd>$input</kbd> field in the form of <kbd><em>table_name</em>.<em>field_name</em></kbd>. The formatting options for the given field are defined in <kbd>`include/lib/constants.inc.php`</kbd>. If <kbd>$field_name</kbd> is not a valid option as defined in the constants file then the function will return <kbd>$input</kbd> unchanged.</p>
+
+			<p>The boolean <kbd>$runtime_html</kbd> is used by fields which have an optional HTML formatting field. <kbd>$runtime_html</kbd> should be the associated HTML formatting field for that data. If set to <kbd>FALSE</kbd> then HTML elements will be escaped from <kbd>$input</kbd> and new line characters converted to <kbd>&lt;br /></kbd>s.</p>
+
+			<p>No data from the database should be printed without passing it through this function first.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/lib/output.inc.php`</kbd></p>
+
+		<h4>Example 1</h4>
+		<p>Printing a field where HTML is not allowed:
+<pre class="code">
+$username = 'my_name&lt;b>_is';
+$value    = AT_print($username, 'members.login'); // escape the '&lt;b>' tag
+echo $value</pre></p>
+
+		<p>Result:
+<pre class="code">my_name&lt;b>_is</pre></p>
+
+
+	<h3><a name="fn-at_date"></a>18.4 AT_date()</h3>
+		<p><kbd>AT_date()</kbd> -- Returns a localised version of a date.</p>
+
+		<h4>Description</h4>
+			<p><kbd>string <strong>AT_date</strong>( [string $format [, integer $timestamp [, integer $format_type]]] )</kbd></p>
+
+			<p>This function returns the <kbd>string</kbd> representation of the given <kbd>$timestamp</kbd> as transformed by <kbd>$format</kbd>. Uses the same options as PHP's <kbd><a href="http://www.php.net/date" title="PHP.net - date()">date()</a></kbd> function, but requires a <kbd>%</kbd> in front of each argument. If <kbd>$timestamp</kbd> is not specified, then the current time will be used.</p>
+
+			<p><kbd>$format_type</kbd> specifies the type of time stamp being provided. Available types are defined in <kbd>`include/lib/constants.inc.php`</kbd>. Possible options are:
+				<dl>
+					<dt><kbd>AT_DATE_MYSQL_DATETIME</kbd></dt>
+					<dd>The default. Format <kbd>YYYY-MM-DD HH:MM:SS</kbd>.</dd>
+
+					<dt><kbd>AT_DATE_MYSQL_TIMESTAMP_14</kbd></dt>
+					<dd>Format <kbd>YYYYMMDDHHMMSS</kbd>.</dd>
+
+					<dt><kbd>AT_DATE_UNIX_TIMESTAMP</kbd></dt>
+					<dd>A regular UNIX time stamp; seconds since epoch.</dd>
+
+					<dt><kbd>AT_DATE_INDEX_VALUE</kbd></dt>
+					<dd>A special case specifying that only the single value of <kbd>$format</kbd> should be returned. The index into a specified date <kbd>array</kbd>. Only available for the following date options: <kbd>%D</kbd>, <kbd>%l</kbd>, <kbd>%F</kbd>, <kbd>%M</kbd>.</dd>
+				</dl>
+			</p>
+
+			<p>The following arguments are language dependent:
+				<dl>
+					<dt><kbd>%D</kbd></dt>
+					<dd>A three-letter textual representation of a day, Mon through Sun</dd>
+
+					<dt><kbd>%F</kbd></dt>
+					<dd>A full textual representation of a month, January through December</dd>
+
+					<dt><kbd>%l</kbd> (lowercase 'L')</kbd></dt>
+					<dd>A full textual representation of the day of the week, Monday through Sunday</dd>
+
+					<dt><kbd>%M</kbd></dt>
+					<dd>A three-letter textual representation of a month, Jan through Dec</dd>
+				</dl></p>
+	
+			<p>The following arguments are <em>not yet</em> supported to be language dependent, but may be in the future:
+				<dl>
+					<dt><kbd>%S</kbd></dt>
+					<dd>English ordinal suffix for the day of the month, 2 characters st, nd, rd or th. Works well with <kbd>%j</kbd></dd>
+
+					<dt><kbd>%a</kbd></dt>
+					<dd>Lowercase Ante meridiem and Post meridiem am or pm</dd>
+
+					<dt><kbd>%A</kbd></dt>
+					<dd>Uppercase Ante meridiem and Post meridiem AM or PM</dd>
+				</dl></p>
+
+			<p>In most (soon to be all) cases, <kbd>$format</kbd> will be specified using a call to <kbd>_AT()</kbd> to retrieve the correct date format for that language. See Example 2 below.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/lib/output.inc.php`</kbd></p>
+
+		<h4>Example 1</h4>
+			<p>Returning a specified date using a UNIX time stamp:
+<pre class="code">
+$time = mktime(0, 0, 0, 7, 14, 2004);
+echo AT_Date('%l %F %j, %Y', $time, AT_DATE_UNIX_TIMESTAMP);
+</pre></p>
+
+			<p>Result:
+<pre class="code">Wednesday July 14, 2004</pre></p>
+
+		<h4>Example 2</h4>
+			<p>Returning a specified date using a UNIX time stamp that is also language dependent:
+<pre class="code">
+$time = mktime(0, 0, 0, 7, 14, 2004);
+
+$_SESSION['lang'] = 'en';
+echo AT_Date(_AT('announcement_date_format'), $time, AT_DATE_UNIX_TIMESTAMP);
+
+echo '&lt;br />';
+$_SESSION['lang'] = 'fr';
+echo AT_Date(_AT('announcement_date_format'), $time, AT_DATE_UNIX_TIMESTAMP);
+</pre></p>
+
+			<p>Result:
+<pre class="code">Wednesday July 14, 2004
+mercredi, 14 juillet 2004</pre></p>
+
+		<h4>Example 3</h4>
+		<p>Returning a single month name:
+<pre class="code">
+$_SESSION['lang'] = 'fr';
+The second month in French is: &lt;?php echo AT_date('%F', 2, AT_DATE_INDEX_VALUE) ?>
+</pre></p>
+
+		<p>Result:
+<pre class="code">
+The second month in French is: février
+</pre></p>
+
+	<h3><a name="fn-addslashes"></a>18.5 $addslashes()</h3>
+		<p><kbd>$addslashes()</kbd> -- Quotes a string with slashes.</p>
+
+		<h4>Description</h4>
+			<p><kbd>string <strong>$addslashes</strong>( string $str )</kbd></p>
+
+			<p>If <kbd>get_magic_quotes_gpc</kbd> is disabled, then this variable function maps onto <kbd><a href="http://www.php.net/addslashes" title="PHP.net - addslashes()">addslashes()</a></kbd>, otherwise it maps onto <kbd>my_add_null_slashes()</kbd> which simply returns the input <kbd>$str</kbd> unchanged.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+
+		<h4>Example 1</h4>
+			<p>With <kbd>magic_quotes_gpc</kbd> enabled:
+<pre class="code">
+$str = "What's going on?";
+
+// prints magic_quotes_gpc: 1
+echo 'magic_quotes_gpc: ' . get_magic_quotes_gpc();
+
+// maps to my_add_null_slashes(). prints What\'s going on? [correct]
+echo $addslashes($str);
+
+// prints What\\\'s going on? [wrong]
+echo addslashes($str);
+</pre></p>
+
+		<h4>Example 2</h4>
+			<p>With <kbd>magic_quotes_gpc</kbd> disabled:
+<pre class="code">
+$str = "What's going on?";
+
+// prints magic_quotes_gpc: 0
+echo 'magic_quotes_gpc: ' . get_magic_quotes_gpc();
+
+// maps to addslashes(). prints What\'s going on? [correct]
+echo $addslashes($str);
+
+// prints What\'s going on? [correct]
+echo addslashes($str);
+</pre></p>
+
+
+	<h3><a name="fn-debug"></a>18.6 debug()</h3>
+		<p><kbd>debug()</kbd> -- Outputs a variable.</p>
+
+		<h4>Description</h4>
+			<p><kbd>void <strong>debug</strong>( mixed $var [, string $title] )</kbd></p>
+
+			<p>This function is used for printing variables for debugging. <kbd>$var</kbd> can be of any type. The output is nicely formatted and easy to read. <kbd>debug()</kbd> will not output anything if the constant <kbd><a href="#const-devel">AT_DEVEL</a></kbd> evaluates to <kbd>FALSE</kbd>.</p>
+
+			<p><kbd>$title</kbd> is available to label the debugging box for distinguishing it from other debugging boxes on the same page.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+
+		<h4>Example 1</h4>
+		<p>Viewing the contents of an <kbd>array</kbd>:
+<pre class="code">
+$my_array = array('apple' => 'green', 4 => 'something');
+debug($my_array, 'my_array');
+</pre></p>
+
+		<p>Result:
+<pre class="code">
+    <b>my_array</b>
+Array
+(
+    [apple] => green
+    [4] => something
+)
+</pre></p>
+
+	<h3><a name="fn-get_login"></a>18.7 get_login()</h3>
+		<p><kbd>get_login()</kbd> -- Returns the login name of a member.</p>
+
+		<h4>Description</h4>
+			<p><kbd>string <strong>get_login</strong>( integer $id )</kbd></p>
+
+			<p>Returns the login name of the member whose ID is <kbd>$id</kbd>. There is no error handling.</p>
+		
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+
+
+	<h3><a name="fn-urlencode_feedback"></a>18.8 urlencode_feedback()</h3>
+		<p><kbd>urlencode_feedback()</kbd> -- Encodes a feedback code.</p>
+
+		<h4>Description</h4>
+			<p><kbd>mixed <strong>urlencode_feedback</strong>( mixed $f )</kbd></p>
+
+			<p>This function returns a URL safe encoding of a feedback code. Its purpose is to encode the feedback into the URL so that the page being redirected to will then output the feedback. <kbd>$f</kbd> may be an <kbd>array</kbd> of feedback codes, where additionally, each feedback code may be an array consisting of supplementary arguments. If <kbd>$f</kbd> is an <kbd>array</kbd> then the return value will be its <kbd>string</kbd> representation, otherwise the function will return <kbd>$f</kbd> unchanged.</p>
+
+			<p>The way feedback is implemented may change in the future, so it is best to use this function even if the feedback code is not an <kbd>array</kbd>.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+		
+		<h4>Example 1</h4>
+		<p>To encode a feedback array:
+<pre class="code">
+$f[] = array(AT_FEEDBACK_FILE_UPLOADED_ZIP, $file_name);
+
+header('Location: file_manager.php?f='.urlencode_feedback($f));
+exit;
+</pre></p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="useful-constants"></a>19. Useful Constants</h2>
+	<p>These constants are part of the vital functionality of ATutor.</p>
+
+	<h3><a name="const-include_path"></a>19.1 AT_INCLUDE_PATH</h3>
+	<h4>Description</h4>
+		<p>The <kbd>AT_INCLUDE_PATH</kbd> must be defined <em>before</em> you <kbd>require</kbd> or <kbd>include</kbd> any files. The constant defines the relative path to the <kbd>`include/`</kbd> directory. For security reasons <em>no</em> file should ever be called-in without using this constant<em>!</em></p>
+
+		<h4>Example 1</h4>
+		<p>Requiring the vitals file from the tools page:
+				<pre class="code">define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH . 'vitals.inc.php');</pre></p>
+
+		<h4>Location</h4>
+			<p><em>Declared on every page that is directly accessible.</em></p>
+
+	<h3><a name="const-sep"></a>19.2 SEP</h3>
+	<h4>Description</h4>
+		<p>For XHTML compliance, we have created this constant to use when applying variables to URL arguments. The constant is one of the values defined by PHP's <kbd>arg_separator.input</kbd>, with a preference for the semi-colon (<kbd>`;`</kbd>), if available, over the ampersand (<kbd>`&amp;`</kbd>).</p>
+
+		<h4>Example 1</h4>
+		<p>Printing a dynamic link:
+<pre class="code">
+$arg1 = 'one';
+$arg2 = 'two';
+
+echo "SEP is ".SEP."\n";
+echo '&lt;a href="index.php?arg1=' . $arg1 . SEP . 'arg2=' . $arg2 . '">link&lt;/a>';</pre></p>
+		
+		<p>Result:
+<pre class="code">
+SEP is ;
+&lt;a href="index.php?arg1=one;arg2=two">link&lt;/a>
+</pre></p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
+
+
+	<h3><a name="const-devel"></a>19.3 AT_DEVEL</h3>
+	<h4>Description</h4>
+		<p>Enables or disables usage of the <a href="#fn-debug">debug()</a> function.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+
+
+	<h3><a name="const-table_prefix"></a>19.4 TABLE_PREFIX</h3>
+	<h4>Description</h4>
+		<p>The <kbd>TABLE_PREFIX</kbd> constant holds the prefix to the ATutor database tables. It is needed when creating SQL queries.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/config.inc.php`</kbd></p>
+
+
+	<h3><a name="const-version"></a>19.5 VERSION</h3>
+		<h4>Description</h4>
+		<p>The version number of this ATutor installation.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
+
+
+
+<a href="#top" class="top">top</a>
+<h2><a name="install-upgrade-scripts"></a>20. Install &amp; Upgrade Scripts</h2>
+	<p>Installing or upgrading ATutor is done with the scripts found in the <kbd>`install/`</kbd> directory. Two files in particular control the installation or upgrading flow and are appropriately named <kbd>`install.php`</kbd> and <kbd>`upgrade.php`</kbd>. For actual documentation on installing or upgrading please see <a href="http://atutor.ca/atutor/docs/installation.php">ATutor's official documentation</a>.</p>
+
+	<p>The <kbd>`install/`</kbd> directory contains two other subdirectories that are used during the installation or upgrade process. The <kbd>`install/db/`</kbd> directory contains database schema files and are clearly labeled. The <kbd>`install/include/`</kbd> directory contains scripts that are common to both processes and labeled according to their order in either process.</p>
+
+	<h3><a name="install-script">20.1 Install Script</h3>
+		<p>The <kbd>`install.php`</kbd> script requires each step as it's needed as the <kbd>$step</kbd> counter variable is incremented. To add or edit a step, edit the <kbd>`install.php`</kbd> file.</p>
+
+	<h3><a name="upgrade-script">20.2 Upgrade Script</h3>
+		<p>The <kbd>`upgrade.php`</kbd> script works exactly the same as the install script does, but requires different files (step prefixed with a 'u'). To upgrade the database schema an SQL file named <kbd>`atutor_upgrade_<em>from</em>_to_<em>to</em>.sql`</kbd> must be created, where <kbd><em>from</em></kbd> is the exact version of the previous ATutor version, and <kbd><em>to</em></kbd> is the next stable version.</p>
+
+
+<a href="#top" class="top">top</a>
+<h2><a name="accessibility"></a>21. Accessibility</h2>
+	<p>Part of ATutor's philosophy is to be "designed with accessibility and adaptability in mind", we advise you to consider carefully the practices outlined on the following sites:</p>
+	<ul>
+		<li><a href="http://www.w3.org/WAI/References/QuickTips/#QuickTips">WAI Quick Tips</a></li>
+		<li><a href="http://websavvy-access.org/standards/index.php">Web-Savvy & Standards Compliance</a></li>
+		<li><a href="http://atutor.ca/atutor/docs/atutor_access.php">ATutor's specific accessibility features</a></li>
+	</ul>
+
+<a href="#top" class="top">top</a>
+<h2><a name="validation"></a>22. Validation</h2>
+	<p>Please use the <a href="http://validator.w3.org/">W3C Markup Validation Service</a>, a free service, to check your pages for XHTML conformance, W3C Recommendations and other standards.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="example"></a>23. Sample Script</h2>
+<p>The following is sample code that shows the general flow of an ATutor script. The example shows how you may use some of the variables and functions available to you. Some scripts may not need all the variables and functions used below.
+<pre class="code" id="code">&lt;?php
+// 0. insert the SVN keywords
+// <a href="#svn-keywords">$Id</a>: guidelines.html 1275 2004-07-28 16:02:49Z joel $
+
+// 1. define relative path to `include` directory:
+define('<a href="#const-include_path">AT_INCLUDE_PATH</a>', '../<a href="#directories-include">include/</a>');
+
+// 2. require the `vitals` file before any others:
+require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-vitals">vitals.inc.php</a>');
+
+// 3. authenticate this user:
+<a href="#fn-authenticate">authenticate</a>(AT_PRIV_SPECIAL_PRIV);
+
+// 4. define the breadcrumbs path:
+<a href="#var-section">$_section[0][0]</a> =  <a href="#fn-at">_AT</a>('tools');
+<a href="#var-section">$_section[0][1]</a> = 'tools/';
+<a href="#var-section">$_section[1][0]</a> =  <a href="#fn-at">_AT</a>('my_page');
+<a href="#var-section">$_section[1][1]</a> =  'tools/page.php;
+
+// 5. handle any post request:
+if (isset($_POST['submit'])) {
+  // 5.1 check for errors:
+  if ($_POST['some_field'] == '') {
+      <a href="#error-feedback-messages">$msg->addError</a>('SOME_ERROR_CODE');
+  }
+
+  if (!<a href="#error-feedback-messages">$msg->containsErrors()</a>) {
+      //5.2 complete the desired action here. (example: insert into DB)
+
+      //5.3 set the feedback message and add it to the URL:
+      <a href="#error-feedback-messages">$msg->addFeedback</a>('MESSAGE');
+      $url = <a href="#var-base_href">$_base_href</a> . 'tools/index.php?arg1=yes';
+
+      //5.4 redirect after successful operation:
+      header('Location: ' . $url);
+      exit;
+  }
+}
+
+// 6. start the page display by calling the header
+require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-header">header.inc.php</a>');
+
+// 7. display any feedback or error messages that my occur:
+require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'html/<a href="#files-feedback">feedback.inc.php</a>');
+
+/*
+ * 8. display the page contents here.
+ */
+
+// 9. finish the page by calling the footer
+require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-footer">footer.inc.php</a>');
+?></pre></p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="credits-sources"></a>24. Credits &amp; Additional Sources</h2>
+	<ul>
+		<li><a href="http://atutor.ca">ATutor.ca</a></li>
+		<li><a href="http://atutor.ca/forum/12/1.html">ATutor Developer Support Forum</a></li>
+		<li>Documentation
+			<ul>
+				<li><a href="http://atutor.ca/atutor/docs/translate.php">ATutor Translator Documentation</a></li>
+				<li><a href="http://php.net/manual/en">PHP Manual</a></li>
+				<li><a href="http://svnbook.red-bean.com/svnbook/">Version Control with Subversion</a></li>
+				<li><a href="http://mysql.com/doc">MySQL Documentation</a></li>
+				<li><a href="http://www.zend.com/zend/week/index.php">PHP Weekly Summaries</a></li>
+				<li><a href="http://alltasks.net/code/php_coding_standard.html">PHP Coding Standard</a> by Todd Hoff and Fredrik Kristiansen</li>
+				<li><a href="http://www.blueshoes.org/en/developer/coding_guidelines/">Blueshoes.org - Coding Guidelines for BlueShoes Developers</a> by Andrej Arn</li>
+				<li><a href="http://www.blueshoes.org/en/developer/syntax_exam/">Blueshoes.org - PHP Syntax Exam</a></li>
+				<li><a href="http://www.blueshoes.org/en/developer/php_cheat_sheet/">Blueshoes.org - PHP Cheat Sheet</a></li>
+				<li><a href="http://www.htmlhelp.com/reference/css/">HTMLhelp.com - Cascading Style Sheets</a> by John Pozadzides and Liam Quinn</li>
+				<li><a href="http://httpd.apache.org/docs/">Apache HTTP Server Documentation</a></li>
+				<li><a href="http://www.w3.org/TR/WAI-WEBCONTENT/checkpoint-list.html">W3C's Web Content Accessibility Guidelines</a></li>
+			</ul>
+		</li>
+		<li>Tools
+			<ul>
+				<li><a href="http://www.phpmyadmin.net">phpMyAdmin</a></li>
+				<li><a href="http://editplus.com">EditPlus</a></li>
+				<li><a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a></li>
+			</ul>
+		</li>
+	</ul>
+
+</body>
+</html>
