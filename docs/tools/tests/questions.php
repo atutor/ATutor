@@ -26,7 +26,7 @@ $_pages['tools/tests/questions.php']['children'] = array('tools/tests/add_test_q
 $_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['title_var']    = 'add_questions';
 $_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['parent']   = 'tools/tests/questions.php?tid='.$_GET['tid'];
 
-$_pages['tools/tests/questions.php']['guide']    = 'instructor/?p=15.6.add_questions.php';
+$_pages['tools/tests/questions.php']['guide']    = 'instructor/?p=add_questions.php';
 
 
 $tid = intval($_REQUEST['tid']);
