@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="<?php echo $this->encoding; ?>"?>
+<<?php echo '?'; ?>xml version="1.0" encoding="<?php echo $this->encoding; ?>"<?php echo '?'; ?>>
 <manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_v1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:imsqti="http://www.imsglobal.org/xsd/imsqti_v2p1" identifier="MANIFEST-<?php echo md5(time()); ?>" xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p2 http://www.imsglobal.org/xsd/imscp_v1p2.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 http://www.imsglobal.org/xsd/imsmd_v1p2p2.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd">
 	<metadata>
 		<schema>IMS Content</schema>

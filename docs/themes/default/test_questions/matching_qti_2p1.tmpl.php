@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="<?php echo $this->encoding; ?>"?>
+<<?php echo '?'; ?>xml version="1.0" encoding="<?php echo $this->encoding; ?>"<?php echo '?'; ?>>
 <!-- matching question with partial marks -->
 <assessmentItem 
 	xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" 

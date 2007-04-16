@@ -127,7 +127,7 @@ function test_question_qti_export(/* array */ $question_ids) {
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)) {
-		$obj = test_question_factory($row['type']);
+		$obj = TestQuestions::getQuestion($row['type']);
 		$xml = $obj->exportQTI($row, $course_language_charset);
 		$local_dependencies = array();
 
