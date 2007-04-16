@@ -25,7 +25,6 @@ $test_row = mysql_fetch_assoc($result);
 /* check to make sure we can access this test: */
 if (!$test_row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo 'x';
 	$msg->printInfos('NOT_ENROLLED');
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
