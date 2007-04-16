@@ -17,3 +17,7 @@ label {
 	zoom:100%;
 	margin:0px;
 }
+
+table.data tfoot input {
+	min-width:0px;
+}
