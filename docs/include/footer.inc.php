@@ -52,6 +52,7 @@ $savant->assign('side_menu', $stack_files);
 // this js is indep of the theme used:
 ?>
 <script language="javascript" type="text/javascript">
+//<!--
 var selected;
 function rowselect(obj) {
 	obj.className = 'selected';
@@ -68,6 +69,7 @@ function rowselectbox(obj, checked, handler) {
 	else
 		obj.className = '';
 }
+//-->
 </script>
 <?php
 

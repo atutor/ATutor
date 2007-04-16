@@ -1,6 +1,6 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<script language="JavaScript" src="sha-1factory.js"></script>
+<script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
 
 <script language="JavaScript" type="text/javascript">
 //<!--
