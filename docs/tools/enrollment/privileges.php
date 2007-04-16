@@ -22,6 +22,6 @@ if (!authenticate(AT_PRIV_ADMIN, true)) {
 
 $course_id = $_SESSION['course_id'];
 
-require(AT_INCLUDE_PATH.'html/enrollment.inc.php');
+require(AT_INCLUDE_PATH.'html/privileges.inc.php');
 exit;
 ?>
