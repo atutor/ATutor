@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = '<strong>Content Directory</strong> is not a directory.';
 	} else if (!is_writable($_POST['content_dir'])){
 		$errors[] = 'The Content Directory is not writable.';
-	} else if (isset($_POST['step1']['old_version'])) {
+	} else if (!isset($_POST['step1']['old_version'])) {
 
 		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
 
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
 
 		if (!is_dir($_POST['content_dir'].'/profile_pictures')) {
 			if (!@mkdir($_POST['content_dir'].'/profile_pictures')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/file_storage</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$_POST['content_dir'].'/profile_pictures</strong> directory does not exist and cannot be created.';  
 			} else {
 				mkdir($_POST['content_dir'].'/profile_pictures/originals');
 				mkdir($_POST['content_dir'].'/profile_pictures/thumbs');
