@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 		$errors[] = '<strong>Content Directory</strong> is not a directory.';
 	} else if (!is_writable($_POST['content_dir'])){
 		$errors[] = 'The Content Directory is not writable.';
-	} else if (!isset($_POST['step1']['old_version'])) {
+	} else {
 
 		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
 
