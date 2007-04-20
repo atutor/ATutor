@@ -197,6 +197,10 @@ if (!$row = mysql_fetch_assoc($result)) {
 	exit;
 }
 
+if (!$_SESSION['member_id']) {
+	assign_session_prefs(unserialize(stripslashes($_config['pref_defaults'])));
+}
+
 $owner_id = $row['member_id'];
 $_SESSION['packaging'] = $row['content_packaging'];
 
