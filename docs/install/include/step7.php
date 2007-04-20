@@ -46,16 +46,16 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['log_yes']) {
 
-		$request  = '&upgrade=' . urlencode(stripslashes($addslashes($_POST['log_upgrade'])));
-		$request .= '&version=' . urlencode(stripslashes($addslashes($new_version)));
-		$request .= '&build='   . urlencode(stripslashes($addslashes($build)));
-		$request .= '&build_date='   . urlencode(stripslashes($addslashes($build_date)));
-		$request .= '&os='      . urlencode(stripslashes($addslashes($_POST['log_os'])));
-		$request .= '&server='  . urlencode(stripslashes($addslashes($_POST['log_server'])));
-		$request .= '&php='     . urlencode(stripslashes($addslashes($_POST['log_php'])));
-		$request .= '&mysql='   . urlencode(stripslashes($addslashes($_POST['log_mysql'])));
+		$request  = '&upgrade=' . urlencode($stripslashes($_POST['log_upgrade']));
+		$request .= '&version=' . urlencode($stripslashes($new_version));
+		$request .= '&build='   . urlencode($stripslashes($build));
+		$request .= '&build_date='   . urlencode($stripslashes($build_date));
+		$request .= '&os='      . urlencode($stripslashes($_POST['log_os']));
+		$request .= '&server='  . urlencode($stripslashes($_POST['log_server']));
+		$request .= '&php='     . urlencode($stripslashes($_POST['log_php']));
+		$request .= '&mysql='   . urlencode($stripslashes($_POST['log_mysql']));
 		if ($_POST['log_url_yes']) {
-			$request .= '&url=' . urlencode(stripslashes($addslashes($_POST['log_url'])));
+			$request .= '&url=' . urlencode($stripslashes($_POST['log_url']));
 		}
 
 		$header = "POST /install_log.php HTTP/1.1\r\n";
