@@ -30,22 +30,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  */
 $_course_privilege = TRUE; // possible values: FALSE | AT_PRIV_ADMIN | TRUE
 $_admin_privilege  = TRUE; // possible values: FALSE | TRUE
-//$_cron_interval    = 35; // run every 30 minutes
-
-
-/********
- * the following code is used for creating a module-specific directory.
- * it generates appropriate error messages to aid in its creation.
- */
-$directory = AT_CONTENT_DIR .'ecomm';
-
-// check if the directory is writeable
-if (!is_dir($directory) && !@mkdir($directory)) {
-	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' does not exist. Please create it.</li>'));
-} else if (!is_writable($directory) && @chmod($directory, 0666)) {
-	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' is not writeable. On Unix issue the command <kbd>chmod a+rw</kbd>.</li>'));
-}
-
 
 /******
  * the following code checks if there are any errors (generated previously)
