@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 				(0,	'
 				.$_SESSION['course_id'].','															
 				.$cid.','		
-				.$order.', NOW(),0,1,NOW(),"","", "'.$title.'", "'.$body.'", 0)';
+				.$order.', NOW(),0,1,NOW(),"","", "'.$title.'", "'.$body.'")';
 
 	$result = mysql_query($sql, $db);
 	header('Location: '.$_base_href.'index.php');
