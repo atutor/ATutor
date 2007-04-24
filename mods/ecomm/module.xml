@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
     <name lang="en">Payments</name> 
-    <description lang="en">This module can be used to connect to a payment service to collect fees for course enrollment. By default it come with a MiraPay configuration, but can be adapted without too much effort to work with other credit card payment services.</description> 
+    <description lang="en">This module can be used to connect to a payment service to collect fees for course enrollment. By default it comes with a MiraPay configuration, but can be adapted without too much effort to work with other credit card payment services.</description> 
     <maintainers>
         <maintainer> 
             <name>ATutor Team</name> 
@@ -11,9 +11,9 @@
     <url>http://atutor.ca</url> 
     <license>BSD</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2007-02-27</date> 
-        <state>release candidate 1</state> 
+        <version>0.2</version> 
+        <date>2007-05-01</date> 
+        <state>Beta</state> 
         <notes></notes> 
     </release> 
 </module>
