@@ -103,6 +103,7 @@ function add_users($user_list, $enroll, $course) {
 	global $db;
 	global $msg;
 	global $_config;
+	global $addslashes;
 
 	require_once(AT_INCLUDE_PATH.'classes/phpmailer/atutormailer.class.php');
 
@@ -117,7 +118,11 @@ function add_users($user_list, $enroll, $course) {
 		if (!$student['remove'])  {
 
 			if (!$student['exists']) {
-				$student = sql_quote($student);
+				$student['uname'] = $addslashes($student['uname']);
+				$student['email'] = $addslashes($student['email']);
+				$student['fname'] = $addslashes($student['fname']);
+				$student['lname'] = $addslashes($student['lname']);
+				$student['fname'] = $addslashes($student['fname']);
 		
 				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '0000-00-00', 'n', '','','','','', '', $status, '$_config[pref_defaults]', NOW(),'$_config[default_language]', $_config[pref_inbox_notify], 1, '0000-00-00 00:00:00')";
 
