@@ -61,33 +61,21 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 </form>
 
 <?php
-$sql2 = "SELECT  P.course_id,  P.member_id,  f.course_fee, f.auto_approve , m.login, m.first_name, m.last_name from ".TABLE_PREFIX."payments AS P, ".TABLE_PREFIX."ec_course_fees AS f, ".TABLE_PREFIX."members AS m WHERE f.course_id = '$_SESSION[course_id]' AND P.course_id = '$_SESSION[course_id]' AND P.member_id = m.member_id GROUP BY m.login, m.first_name, m.last_name";
-
+$sql2 = "SELECT  P.member_id,  P.amount, M.login FROM ".TABLE_PREFIX."payments AS P INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE P.course_id=$_SESSION[course_id] AND P.approved=1";
 $result = mysql_query($sql2,$db);
 if (mysql_num_rows($result)) { ?>
 	<table class="data static" summary="" border="1">
 	<tr>
-		<th scope="col"><?php echo _AT('ec_student_name'); ?></th>
+		<th scope="col"><?php echo _AT('login_name'); ?></th>
 		<th scope="col"><?php echo _AT('ec_payment_made'); ?></th>
-		<th scope="col"><?php echo _AT('ec_enroll_approved'); ?></th>
+		<th scope="col"><?php echo _AT('enrolled'); ?></th>
 	</tr>
 	<?php
-		while($row = mysql_fetch_assoc($result2)){
-			echo '<tr><td>'.$row['first_name'].' '.$row['last_name'].' ('.$row['login'].')</td>';
-			
-			$sql3 = "SELECT amount from ".TABLE_PREFIX."ec_shop WHERE course_id = '$row[course_id]' AND member_id = '$row[member_id]'";
-			$result3 = mysql_query($sql3,$db);
-		
-			$amount_paid = '';
-			while($row3 = mysql_fetch_assoc($result3)){
-				//$amount_paid = $amount_paid.'+'.$row3['amount'];
-				$amount_paid = $amount_paid+$row3['amount'];
-			}
-			if($amount_paid != 0){
-				echo '<td>'.$amount_paid.'</td>';
-			}else{
-				echo '<td>0</td>';
-			}	
+		while($row = mysql_fetch_assoc($result)){
+			echo '<tr>';
+			echo '<td>'.$row['login'].'</td>';
+	
+			echo '<td align="right">'.$_config['ec_currency_symbol'].number_format($row['amount'],2).' '.$_config['ec_currency'].'</td>';
 			
 			$sql4 = "SELECT * from ".TABLE_PREFIX."course_enrollment WHERE course_id = '$_SESSION[course_id]' AND member_id = '$row[member_id]'";
 			if($result4 = mysql_query($sql4, $db)){
@@ -111,6 +99,5 @@ if (mysql_num_rows($result)) { ?>
 } else {
 	$msg->printInfos('EC_NO_STUDENTS_ENROLLED');
 }
-
 
 require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
