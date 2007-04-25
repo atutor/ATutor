@@ -35,6 +35,11 @@ if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
 require('include/upgrade_header.php');
 
 if ($step == 1) {
+	if (!$new_version) {
+		echo 'You cannot access this page directly. <a href="index.php">Upgrade from here</a> using the <em>Upgrade</em> button.';
+		require('include/footer.php');
+		exit;
+	}
 	// in:  select directory
 	// out: confirm verions
 	require('include/ustep1.php');
