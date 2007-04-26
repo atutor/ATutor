@@ -158,7 +158,7 @@ $num_results = mysql_num_rows($result);
 <script language="javascript" type="text/javascript">
 //<!--
 function showtext(obj) {
-	frames['tran'].location.href = "admin/language_term.php?type=<?php echo $_variables[$_GET['type']].SEP; ?>term=" + obj.value;
+	frames['tran'].location.href = "<?php echo AT_BASE_HREF; ?>admin/language_term.php?type=<?php echo $_variables[$_GET['type']].SEP; ?>term=" + obj.value;
 }
 //-->
 </script>
