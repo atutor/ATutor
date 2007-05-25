@@ -70,7 +70,7 @@ if (isset($_GET['filter'], $_GET['search'])) {
 		// search `term` and `text` only
 		if (strlen($word) > 1) {
 			$word = str_replace(array('%','_'), array('\%', '\_'), $word);
-			$words[$key] = "(`term` LIKE '%$word%' OR `text` LIKE '%$word%')";
+			$words[$key] = "(CAST(`term` AS CHAR) LIKE '%$word%' OR CAST(`text` AS CHAR) LIKE '%$word%')";
 		} else {
 			unset($words[$key]);
 		}

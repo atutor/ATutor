@@ -537,7 +537,7 @@ function display_search_terms ($variable, $term1, $lang_code, $new, $updated) {
 
 	$_REQUEST['search_term'] = $addslashes($_REQUEST['search_term']);
 
-	$sql	= "SELECT term, revised_date+0  AS r_date FROM ".TABLE_PREFIX."language_text WHERE (variable LIKE '%$_REQUEST[search_term]%' OR text LIKE '%$_REQUEST[search_term]%') AND (`language_code`='$_SESSION[language]' OR `language_code`='en') GROUP BY `term` ORDER BY `term`";
+	$sql	= "SELECT term, revised_date+0  AS r_date FROM ".TABLE_PREFIX."language_text WHERE (variable LIKE '%$_REQUEST[search_term]%' OR CAST(`text` AS CHAR) LIKE '%$_REQUEST[search_term]%') AND (`language_code`='$_SESSION[language]' OR `language_code`='en') GROUP BY `term` ORDER BY `term`";
 	$result = mysql_query($sql, $db);
 
 	$t_keys = array();
@@ -545,7 +545,7 @@ function display_search_terms ($variable, $term1, $lang_code, $new, $updated) {
 		$t_keys[$row['term']] = $row['r_date'];
 	}
 
-	$sql	= "SELECT *, revised_date+0 AS r_date FROM ".TABLE_PREFIX."language_text WHERE (variable LIKE '%$_REQUEST[search_term]%' OR text LIKE '%$_REQUEST[search_term]%') AND (language_code='en' OR language_code='$_SESSION[language]') GROUP BY `term` ORDER BY term";
+	$sql	= "SELECT *, revised_date+0 AS r_date FROM ".TABLE_PREFIX."language_text WHERE (variable LIKE '%$_REQUEST[search_term]%' OR CAST(`text` AS CHAR) LIKE '%$_REQUEST[search_term]%') AND (language_code='en' OR language_code='$_SESSION[language]') GROUP BY `term` ORDER BY term";
 	$result	= mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) == 0) {
