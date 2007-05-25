@@ -24,7 +24,7 @@ if ($_SESSION['valid_user'] !== true) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: profile.php');
+	header('Location: '.AT_BASE_HREF.'admin/index.php');
 	exit;
 }
 
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('PASSWORD_CHANGED');
-		header('Location: ../index.php');
+		header('Location: '.AT_BASE_HREF.'admin/index.php');
 		exit;
 	}
 }

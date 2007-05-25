@@ -17,7 +17,7 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'admin/users.php');
+	header('Location: '.AT_BASE_HREF.'admin/admins/index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	if ($_POST['password'] == '') { 
@@ -39,7 +39,7 @@ if (isset($_POST['cancel'])) {
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: index.php');
+		header('Location: '.AT_BASE_HREF.'admin/admins/index.php');
 		exit;
 	}
 	$_POST['login'] = $stripslashes($_POST['login']);
