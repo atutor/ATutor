@@ -133,7 +133,7 @@ if (!isset($_POST['submit'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<form action="tools/tests/edit_question_multi.php" method="post" name="form">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
 <input type="hidden" name="required" value="1" />
