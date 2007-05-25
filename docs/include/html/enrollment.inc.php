@@ -299,7 +299,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 <input type="hidden" name="tab" value="<?php echo $current_tab; ?>" />
-
+<input type="hidden" name="course_id" value="<?php echo $course_id; ?>"/>
 <div style="width: 95%; margin-right: auto; margin-left: auto;">
 <ul id="navlist">
 	<?php for ($i = 0; $i< $num_tabs; $i++): ?>

@@ -16,7 +16,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT);
 
-if (!isset($_GET['course_id'])) {
+if (!isset($_REQUEST['course_id'])) {
 	$sql = "SELECT course_id FROM ".TABLE_PREFIX."courses ORDER BY title LIMIT 1";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
