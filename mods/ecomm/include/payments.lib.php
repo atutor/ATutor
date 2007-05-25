@@ -127,7 +127,7 @@ function approve_payment($payment_id, $transaction_id) {
 			} else {
 				$contact_admin_email = $_config['contact_email'];
 			}
-
+			$mail = new ATutorMailer;
 			$mail->From     = $_config['contact_email'];
 			$mail->AddAddress($contact_admin_email);
 			$mail->Subject = _AT('ec_payment_made'); 
