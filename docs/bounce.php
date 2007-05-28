@@ -163,14 +163,8 @@ if (($course === 0) && $_SESSION['valid_user']) {
 
 	header('Location: users/index.php');
 	exit;
-} else if (($course === 0) && ($_SESSION['login'] == 'guest')) {
-
-	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
-		$th = get_default_theme();
-		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
-	}
-
-	header('Location: users/index.php');
+} else if (($course === 0) && !$_SESSION['valid_user']) { // guests
+	header('Location: '.AT_BASE_HREF.'login.php');
 	exit;
 } else if ($course == -1) {
 	$_SESSION['course_id']    = 0;
