@@ -8,16 +8,16 @@ CREATE TABLE `payments` (
 `member_id` MEDIUMINT UNSIGNED NOT NULL ,
 `course_id` MEDIUMINT UNSIGNED NOT NULL ,
 `amount` FLOAT NOT NULL
-) ENGINE = MYISAM ;
+) ENGINE=MYISAM ;
 
 
-CREATE  TABLE  `ec_course_fees`(
-  `course_id` smallint( 8  )  NOT  NULL ,
+CREATE TABLE `ec_course_fees` (
+  `course_id` smallint( 8 )  NOT  NULL ,
   `course_fee` float NOT  NULL ,
-  `auto_approve` tinyint( 1  )  default NULL ,
-  `auto_email` tinyint( 1  )  default NULL ,
- PRIMARY  KEY (  `course_id`  )
-) ENGINE  =  MyISAM  DEFAULT CHARSET  = latin1;
+  `auto_approve` tinyint( 1 )  default NULL ,
+  `auto_email` tinyint( 1 )  default NULL ,
+ PRIMARY  KEY ( `course_id` )
+) ENGINE=MyISAM;
 
 
 
