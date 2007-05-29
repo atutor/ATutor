@@ -80,6 +80,8 @@ $payment_id = mysql_insert_id($db);
 	<div class="row buttons">
 		<?php //paypal_print_form($payment_id, $balance_course_fee, $course_id); ?>
 		<?php mirapay_print_form($payment_id, $balance_course_fee, $course_id); ?>
+		<?php check_payment_print_form($payment_id, $balance_course_fee, $course_id); ?>
+
 	</div>
 </div>
 		

@@ -6,7 +6,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 require (AT_INCLUDE_PATH.'html/frameset/header.inc.php');
 
-$sql = "SELECT * from ".TABLE_PREFIX."ec_shop WHERE shopid = '$_GET[mtid]'";
+$sql = "SELECT * from ".TABLE_PREFIX."members WHERE member_id = '$_SESSION[member_id]'";
 $result = mysql_query($sql,$db);
 
 $amount = floatval($_GET['amount']);
