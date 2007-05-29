@@ -509,6 +509,17 @@ INSERT INTO `language_text` VALUES ('en',
                                      NOW(),
                                     'the module title');
 </pre>
+<p>(Introduced in ATutor 1.5.4) On occassion it may be necessary to modify existing ATutor language to accommodate module functionality that alters the way ATutor itself functions by default. For example, when the payments module is installed the message displayed when a student enrolls in a course that requires a payment, needs to include mention of how to make a payment. In the SQL statement below, the second value (i.e. "variable" in the language_text table) is prefixed with "_c" for custom language. Possible custom language variables are _c_msgs, _c_template, and _c_module.</p>
+
+<pre>
+# Insert custom language:
+INSERT INTO `language_text` VALUES ('en', 
+					'_c_msgs',
+					'AT_INFOS_EC_PAYMENTS_TURNED_OFF','
+					Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index_mystart.php">Payments</a> tab above, where they can be paid.',
+					NOW(),'');
+</pre>
+
 <a name="config"></a>
 <h2>Configuration Options</h2>
 <p>Module configuration options can be stored in the ATutor <kbd>config</kbd> table, and retrieved using a <kbd>$_config[]</kbd> array variable. All module configuration key/value pairs are automatically loaded from the table into global memory while ATutor is running, and can be accessed from any of the module scripts (or from anywhere is ATutor for that matter). The value for a particular configuration option is retrieved by entering its key into the array. To retrieve a URL for the Example Maker module for example,  you might use <kbd>$_config['example_maker']</kbd>. </p>
