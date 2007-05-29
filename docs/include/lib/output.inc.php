@@ -383,6 +383,7 @@ function _AT() {
 			$input = trim(image_replace(' ' . $input . ' '));
 		}
 
+	
 		return $input;
 	}
 
@@ -658,7 +659,7 @@ function highlight($input, $var) {//$input is the string, $var is the text to be
 
 /* @See: ./index.php */
 function format_content($input, $html = 0, $glossary, $simple = false) {
-	global $_base_path;
+	global $_base_path, $_config_defaults;
 
 	if (!$html) {
 		$input = str_replace('<', '&lt;', $input);
@@ -703,11 +704,15 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 
 	$input = str_replace('CONTENT_DIR', '', $input);
 
+	if (isset($_config_defaults['latex_server']) && $_config_defaults['latex_server']) {
+		// see: http://www.forkosh.com/mimetex.html
+		$input = preg_replace('/\[tex\](.*?)\[\/tex\]/ie', "'<img src=\"'.\$_config_defaults['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
+	}
+
 	if ($html) {
 		$x = format_final_output($input, false);
 		return $x;
 	}
-
 
 	$output = format_final_output($input);
 
