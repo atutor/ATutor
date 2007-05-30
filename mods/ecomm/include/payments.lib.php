@@ -142,15 +142,16 @@ function approve_payment($payment_id, $transaction_id) {
 }
 
 function check_payment_print_form($payment_id, $amount, $course_id){
-global $db, $system_courses, $_config;
+global $db, $system_courses, $_config, $payment_id;
 
 if($_config['ec_contact_address'] != ''){ 
+echo _AT('or');
 ?>
 
 	<form  method="GET">
 		<input type="hidden"  name="Amount1" value="<?php echo $amount; ?>">
-		<input type="hidden"  name="mtid" value="<?php echo $mtid; ?>">
-		<input class="button" type="submit" name="bycheque" value="<?php echo _AT('ec_paybycheque'); ?>" onclick="window.open('mods/ecomm/invoice.php?mtid=<?php echo $mtid.SEP; ?>amount=<?php echo $amount; ?>','invwindow','height=425px, width=520px'); return false" /> 
+		<input type="hidden"  name="payment_id" value="<?php echo $payment_id; ?>">
+		<input class="button" type="submit" name="bycheque" value="<?php echo _AT('ec_paybycheque'); ?>" onclick="window.open('mods/ecomm/invoice.php?payment_id=<?php echo $payment_id.SEP; ?>course_title=<?php echo $system_courses[$course_id]['title'].SEP; ?>amount=<?php echo $amount; ?>','invwindow','height=425px, width=520px'); return false" /> 
 	</form><br/><br />
 <?php }
 }

@@ -25,7 +25,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_transaction_id','Transac
 INSERT INTO `language_text` VALUES ('en', '_module','ec_settings','Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments','Payments',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ecomm','Payments',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_confirm_info','Confirm the following information before proceeding. If the information is correct, click the Confirm button to move on to the next step. Otherwise use the Modify button to return and make corrections.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_confirm_info','Review the following information before proceeding. If the information is correct, click the Pay by Credit Card button (or Pay by Cheque if enabled) to move on to the next step.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_course','Course',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_amount','Amount',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_firstname','First Name',NOW(),'');
@@ -51,6 +51,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_date','Date Paid',NOW(),
 INSERT INTO `language_text` VALUES ('en', '_module','ec_acceptvisa','Accepting Visa',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_acceptmastercard','Accepting Master Card',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payfeesfor','Pay Fees',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_fees','Fees',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_complete_thisinfo','Complete the information below. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_next_toproceed','Use the <em>Next Step</em> button to review your information before proceding to the secure credit card payment site.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_purchaser_info','Purchaser Information',NOW(),'');
@@ -98,6 +99,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_return_to_payments','Ret
 INSERT INTO `language_text` VALUES ('en', '_module','ec_start_date','Start Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_end_date','End Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_set_date','Set Dates',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_invoice','Invoice',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_print_invoice','Print_invoice',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_export_data','Export Data Displayed Below',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_date_picker','Select a date range to display. (e.g. 2007-2-6)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_email','EMail notification of payments to: (if different from the ATutor contact email, set in System Preferences)',NOW(),'');
