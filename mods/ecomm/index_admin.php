@@ -23,9 +23,9 @@ if (isset($_POST['cancel'])) {
 	if (!$_POST['ec_vendor_id']){
 		$msg->addError('EC_ID_EMPTY');
 	}
-	if (!$_POST['ec_password']){
-		$msg->addError('EC_PASSWORD_EMPTY');
-	}		
+	//if (!$_POST['ec_password']){
+		//$msg->addError('EC_PASSWORD_EMPTY');
+	//}		
 	if (!$msg->containsErrors()) {
 		$_POST['ec_gateway'] = $addslashes($_POST['ec_gateway']);
 		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_gateway', '$_POST[ec_gateway]')";

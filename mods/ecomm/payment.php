@@ -70,8 +70,7 @@ $payment_id = mysql_insert_id($db);
 
 	<?php
 		/*
-		 * this payment form can be replaced by any other payment gateway.
-		 * a paypal version will be added soon, which will submit the form to paypal.
+		 * these payment forms below can be replaced by any other payment gateway.
 		 * when the gateway sends back the response then it is authenticated and if
 		 * the amounts match then the `payments` transaction is updated and approved.
 		*/

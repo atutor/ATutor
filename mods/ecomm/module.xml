@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
     <name lang="en">Payments</name> 
-    <description lang="en">This module can be used to connect to a payment service to collect fees for course enrollment. By default it comes with a MiraPay configuration, but can be adapted without too much effort to work with other credit card payment services.</description> 
+    <description lang="en">This module can be used to connect to a payment service to collect fees for course enrollment. By default it comes with PayPal and MiraPay configurations, but can be adapted without too much effort to work with other credit card payment services.</description> 
     <maintainers>
         <maintainer> 
             <name>ATutor Team</name> 
@@ -12,8 +12,8 @@
     <license>BSD</license> 
 	<release> 
         <version>0.2</version> 
-        <date>2007-05-01</date> 
+        <date>2007-05-04</date> 
         <state>Beta</state> 
-        <notes></notes> 
+        <notes>See the readme file included with the source code for details about setting up either a Paypal or MiraPay merchant account.</notes> 
     </release> 
 </module>
