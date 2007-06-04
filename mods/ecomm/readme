@@ -3,11 +3,20 @@
 ##This moldule is intended for use with ATutor 1.5.4+, though it should work with
 ## older versions except for the admin enrollment functions, which were added in 1.5.4.
 
-This module allows for payment of course fees, and automated enrollment when payments are recieved.
+This module allows for payment of course fees, and automated enrollment when payments are recieved. It can be used with one (and only one at a time) of the following payment gateways.
 
+Payment Gateways Supported
 It is currently setup to run with the MiraPay credit card processing service:
 https://ws1.eigendev.com/mira/
 
+Or
+
+It can be used with your PayPal account
+https://www.paypal.com/cgi-bin/webscr 
+
+
+---------------
+MiraPay Test Account
 #A test account is available. Enter the following information into the admin payments settings screen. You will need to setup a proper merchant account with Mirapay to actually use the system for collecting your own payments, but to test the module the test account works well enough.
 
 Test Location:
@@ -27,7 +36,26 @@ Test Credit Card #
 Test Expiry Date
 2222
 
+------------------
+PayPal Merchant Account Setup
+See the details for setting up a PayPal account at:
+http://www.paypal.com/cgi-bin/webscr?cmd=_merchant-outside
 
+The ATutor Payments module is written to run with PayPal "Buy Now Buttons" which allows customers to purchase one item at a time, in the case of ATutor, a single course at a time.
+
+Once you have your paypal account setup, enter the URL to the PayPal Credit Card processing in the Payments>Settings screen, followed theVendor ID (leave the password field empty)
+
+PayPal Location
+(for production)
+https://www.paypal.com/cgi-bin/webscr 
+or
+(for testing)
+https://www.sandbox.paypal.com/cgi-bin/webscr
+
+See details on setting up a sandbox for testing the modules at:
+https://www.paypal.com/en_US/ebook/PP_Sandbox_UserGuide/wwhelp/wwhimpl/js/html/wwhelp.htm
+
+--------------------
 Installation & Setup
 1. Unpack the downloaded module into the ATutor mods directory. This will create an ecomm/ directory which contains all the module files.
 
@@ -45,16 +73,15 @@ Installation & Setup
 
 
 How the module works
-Payments are course fees associated with an enrollment in a Private course. When a student attempts to enroll in a private course that has a fee associated with it, an entry will be added to the student's Payments screen, accessed through a tab in MyStart page. If the student clicks on Make Payment, they are asked to fill in some personal information, confirm that information, then they are redirectled to the secure payment site, where they enter their visa or master card number (availability of either depending on what the merchant account supports), and submit the payment. Just before being redirected to the secure site the information entered by the student is stored in the ec_shop table in ATutor, and it is updated when the payment service has confirmed the payment. 
+Payments are course fees associated with an enrollment in a Private course. When a student attempts to enroll in a private course that has a fee associated with it, an entry will be added to the student's Payments screen, accessed through a tab in MyStart page. If the student clicks on Make Payment, and confirms the information as correct, they are redirectled to the secure payment site, where they enter their visa or master card number (availability of either depending on what the merchant account supports), and submit the payment. Just before being redirected to the secure site the information entered by the student is stored in the ec_shop table in ATutor, and it is updated when the payment service has confirmed the payment. Payments that have been completed will be updated with a confirmation code from the payment gateway. 
 
-If the course has been set to auto-enroll students, they will immediately be given access to the course. If manual enrollment is set, they will recieve a notice of their pending enrolment, which the instructor, or administrator must approve. 
+If the course has been set to auto-enroll students, they will immediately be given access to the course. If manual enrollment is set, they will receive a notice of their pending enrolment, which the instructor, or administrator must approve. 
 
 Administrators can manage individual course payments and settings by logging into a specific course, then managing the course payment settings as describe below for Instructors.
 
 If instrutors are allowed to manage their payments, set by the administrator in step 6 above, they can access Payments through the Manage screen, where they can set the price for the course, and set whether to auto-enroll students, and whether to send an email to the instructor when a payment  has been received. These settings are saved in the ec_course_fees table.
 
 To make a payment students must first click on Enter Course in the Browse Course listing, then choose to enroll in the course. Then under the Payments Tab, click on Make Payment next to the course that is pending enrollment.
-
 
 
 

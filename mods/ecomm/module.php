@@ -35,7 +35,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_ECOMM, TRUE) || admin_authenticate(AT_ADMIN
 /*******
  * instructor Manage section:
  */
-
+$this->_pages['mods/ecomm/response_ipn.php']['title_var'] = 'ec_payments';
+$this->_pages['mods/ecomm/response_user.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/index_instructor.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/index_instructor.php']['parent']   = 'tools/index.php';
 $this->_pages['mods/ecomm/index_instructor.php']['children'] = array('tools/enrollment/index.php');
@@ -49,8 +50,11 @@ $this->_pages['mods/ecomm/index.php']['parent'] = AT_NAV_START;
 
 $this->_pages['mods/ecomm/payment.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/payment.php']['parent']    = 'mods/ecomm/index.php';
+$this->_pages['mods/ecomm/index.php']['children'] = array('users/index.php','users/browse.php');
 
 $this->_pages['mods/ecomm/failure.php']['title_var'] = 'ec_payments';
 $this->_pages['mods/ecomm/invoice.php']['title_var'] = 'ec_payments';
 
+//$this->_pages['mods/ecomm/payment.php']['title_var'] = 'browse';
+//$this->_pages['mods/ecomm/payment.php']['parent']    = 'users/browse.php';
 ?>

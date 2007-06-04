@@ -67,6 +67,10 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_this_course_fee','Course
 INSERT INTO `language_text` VALUES ('en', '_module','ec_vendor_id','Vendor ID assigned by credit card payment service ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_password','Password assigned by credit card payment service ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_currency','Currency ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_currency_symbol','Currency Symbol ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_currency_other','Other Currency ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_gateway','Payment Gateway ',NOW(),'');
+
 INSERT INTO `language_text` VALUES ('en', '_module','ec_course_fee','Fee to charge for this course ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_auto_approve','Auto approve enrollment when fee has been paid ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_made','Course Fees Received ',NOW(),'');
@@ -101,6 +105,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_end_date','End Date',NOW
 INSERT INTO `language_text` VALUES ('en', '_module','ec_set_date','Set Dates',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_invoice','Invoice',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_print_invoice','Print_invoice',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_paybypaypal','Pay by PayPal',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_export_data','Export Data Displayed Below',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_date_picker','Select a date range to display. (e.g. 2007-2-6)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_email','EMail notification of payments to: (if different from the ATutor contact email, set in System Preferences)',NOW(),'');
@@ -115,6 +120,6 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_NOT_SAVED','Unable to save course payment settings. Contact your system administrator to report the problem',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_PAYMENT_FAILED','The payment was cancelled or  failed.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Course fees are being managed by the systems administrator.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_c_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index_mystart.php">Payments</a> tab above, where they can be paid.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_c_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index.php">Payments</a> tab above, where they can be paid.',NOW(),'');
 
 

@@ -13,6 +13,7 @@ $payment_count = 0; // num listed courses
 $sql = "SELECT course_id, approved FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id]";
 $result = mysql_query($sql,$db);
 
+
 if (mysql_num_rows($result)) { ?>
 	<table class="data static" rules="rows" summary="">
 	<thead>
@@ -42,7 +43,7 @@ if (mysql_num_rows($result)) { ?>
 
 			echo '<tr>';
 			echo '<td>'.$system_courses[$row['course_id']]['title'].'</td>';
-			echo '<td align="right">'.$_config['ec_currency_symbol'].number_format($this_course_fee, 2).' '.$_config['ec_currency'].'</td>';
+			echo '<td align="center">'.$_config['ec_currency_symbol'].number_format($this_course_fee, 2).' '.$_config['ec_currency'].'</td>';
 
 			$sql4 = "SELECT SUM(amount) AS total_amount FROM ".TABLE_PREFIX."payments WHERE course_id='$row[course_id]' AND member_id = '$_SESSION[member_id]' AND approved=1";
 			$result4 = mysql_query($sql4,$db);
@@ -50,7 +51,7 @@ if (mysql_num_rows($result)) { ?>
 			$row4 = mysql_fetch_assoc($result4);
 			$amount_paid = $row4['total_amount'];
 
-			echo '<td align="right">'.$_config['ec_currency_symbol'].number_format($amount_paid, 2).'</td>';
+			echo '<td align="center">'.$_config['ec_currency_symbol'].number_format($amount_paid, 2).'</td>';
 				
 			if ($row['approved'] == 'y'){
 				echo '<td align="center">'._AT('yes').'</td>';
@@ -59,9 +60,9 @@ if (mysql_num_rows($result)) { ?>
 			}
 			
 			if ($amount_paid >= $this_course_fee){
-				echo '<td>'._AT('ec_full_payment_recieved').'</td>';
+				echo '<td align="center">'._AT('ec_full_payment_recieved').'</td>';
 			}else{
-				echo '<td><a href="mods/ecomm/payment.php?course_id='.$row['course_id'].'">'._AT('ec_make_payment').'</a></td>';
+				echo '<td align="center"><a href="mods/ecomm/payment.php?course_id='.$row['course_id'].'">'._AT('ec_make_payment').'</a></td>';
 			}
 		}	
 		echo '</table>';
@@ -71,5 +72,6 @@ if (mysql_num_rows($result)) { ?>
 } else {
 	$msg->printInfos('EC_NO_PAID_COURSES');
 }
+
 
  require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

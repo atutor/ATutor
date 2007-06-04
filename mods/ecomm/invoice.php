@@ -20,7 +20,7 @@ $date = date("F d, Y ");
 <tr><td><?php echo _AT('ec_invoice'); ?># AT_<?php echo $_GET['payment_id']; ?></td><td><?php echo $date;  ?></td></tr>
 <tr>
 	<td width="50%" valign="top">
-	To: <br /><?php
+	<?php echo _AT('to'); ?>: <br /><?php
 	while($row = mysql_fetch_assoc($result)){
 		if($row['last_name']){
 			$contribinfo .= ''.$row['first_name'].' ' .$row['last_name'].'<br />';
@@ -56,7 +56,7 @@ $date = date("F d, Y ");
 
 	</td>
 	<td width="50%" valign="top">
-	From:<br />
+	<?php echo _AT('from'); ?><br />
 	<?php echo nl2br($_config['ec_contact_address']); 
 
 		?>
@@ -69,7 +69,7 @@ $date = date("F d, Y ");
 			echo '<tr><td>'. $_GET['course_title'].'</td>';
 			echo '<td>'.$_config['ec_currency_symbol'].$amount.'</td></tr>';
 			echo '<tr><td colspan="2"><hr /></td></tr>';	
-			echo '<tr><td><strong>Total including taxes:</strong?></td><td>'.$_config['ec_currency_symbol'].$amount.' '.$_config['ec_currency'].'</td></tr>';
+			echo '<tr><td><strong>'._AT('ec_course_name').':</strong></td><td>'.$_config['ec_currency_symbol'].$amount.' '.$_config['ec_currency'].'</td></tr>';
 	?>
 </table>
 

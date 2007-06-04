@@ -32,6 +32,19 @@ if (!$page) {
 $count  = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
 
+// enroll/unenroll students
+
+if($_GET['func'] == 'enroll'){
+	$_GET['func']   = $addslashes($_GET['func']);
+	$sql = "REPLACE INTO ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id= '$_GET[course_id]' AND member_id = '$_GET[id0]'";
+	$result = mysql_query($sql,$db);
+}else if($_GET['func'] == 'unenroll'){
+
+	$_GET['func']   = $addslashes($_GET['func']);
+	$sql = "REPLACE INTO ".TABLE_PREFIX."course_enrollment SET approved = 'n' WHERE course_id= '$_GET[course_id]' AND member_id = '$_GET[id0]'";
+	$result = mysql_query($sql,$db);
+}
+
 /// Get a list of those who have made payments
 if ($_GET['reset_filter']) {
 	unset($_GET);
@@ -59,9 +72,9 @@ require (AT_INCLUDE_PATH.'header.inc.php'); ?>
 </thead>
 <?php while($row = mysql_fetch_assoc($result)): ?>
 <tr>
-	<td><?php echo $row['timestamp']; ?></td>
-	<td><?php echo $row['login']; ?></td>
-	<td><?php echo $system_courses[$row['course_id']]['title']; ?></td>
+	<td align="center"><?php echo $row['timestamp']; ?></td>
+	<td align="center"><a href="profile.php?id=<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></a></td>
+	<td align="center"><?php echo $system_courses[$row['course_id']]['title']; ?></td>
 	<td align="center">
 		<?php if (is_enrolled($row['member_id'], $row['course_id'])): ?>
 			<?php echo _AT('yes'); ?> - <a href="admin/enrollment/enroll_edit.php?id0=<?php echo $row['member_id'].SEP.'func=unenroll'.SEP.'tab=0'.SEP.'course_id='.$row['course_id']; ?>"><?php echo _AT('unenroll'); ?></a>
@@ -69,8 +82,8 @@ require (AT_INCLUDE_PATH.'header.inc.php'); ?>
 			<?php echo _AT('no'); ?> - <a href="admin/enrollment/enroll_edit.php?id0=<?php echo $row['member_id'].SEP.'func=enroll'.SEP.'tab=0'.SEP.'course_id='.$row['course_id']; ?>"><?php echo _AT('enroll'); ?></a>
 		<?php endif; ?>
 	</td>
-	<td align="right"><?php echo $_config['ec_currency_symbol'].number_format($row['amount'], 2); ?> <?php echo $_config['ec_currency']; ?></td>
-	<td align="right"><?php echo $row['transaction_id']; ?></td>
+	<td align="center"><?php echo $_config['ec_currency_symbol'].number_format($row['amount'], 2); ?> <?php echo $_config['ec_currency']; ?></td>
+	<td align="center"><?php echo $row['transaction_id']; ?></td>
 </tr>
 <?php endwhile; ?>
 </table>

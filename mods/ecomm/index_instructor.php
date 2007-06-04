@@ -26,6 +26,18 @@ if (isset($_POST['submit'])) {
 	exit;
 }
 
+if($_GET['func'] == 'enroll'){
+	$_GET['func']   = $addslashes($_GET['func']);
+	$sql = "REPLACE INTO ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id= '$_GET[course_id]' AND member_id = '$_GET[id0]'";
+	$result = mysql_query($sql,$db);
+}else if($_GET['func'] == 'unenroll'){
+
+	$_GET['func']   = $addslashes($_GET['func']);
+	$sql = "REPLACE INTO ".TABLE_PREFIX."course_enrollment SET approved = 'n' WHERE course_id= '$_GET[course_id]' AND member_id = '$_GET[id0]'";
+	$result = mysql_query($sql,$db);
+}
+
+
 $sql = "SELECT * from ".TABLE_PREFIX."ec_course_fees WHERE course_id='$_SESSION[course_id]'";
 $result = mysql_query($sql,$db);
 if ($row = mysql_fetch_assoc($result)){
@@ -64,18 +76,20 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 $sql2 = "SELECT  P.member_id,  P.amount, M.login FROM ".TABLE_PREFIX."payments AS P INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE P.course_id=$_SESSION[course_id] AND P.approved=1";
 $result = mysql_query($sql2,$db);
 if (mysql_num_rows($result)) { ?>
-	<table class="data static" summary="" border="1">
+	<table class="data static"  rules="rows" summary="">
+	<thead>
 	<tr>
-		<th scope="col"><?php echo _AT('login_name'); ?></th>
-		<th scope="col"><?php echo _AT('ec_payment_made'); ?></th>
-		<th scope="col"><?php echo _AT('enrolled'); ?></th>
+		<th scope="col"><?php echo  _AT('login_name'); ?></th>
+		<th scope="col"><?php echo  _AT('ec_payment_made'); ?></th>
+		<th scope="col"><?php echo  _AT('enrolled'); ?></th>
 	</tr>
+	</thead>
 	<?php
 		while($row = mysql_fetch_assoc($result)){
 			echo '<tr>';
-			echo '<td>'.$row['login'].'</td>';
+			echo '<td align="center"><a href="profile.php?id='.$row['member_id'].'">'.$row['login'].'</a></td>';
 	
-			echo '<td align="right">'.$_config['ec_currency_symbol'].number_format($row['amount'],2).' '.$_config['ec_currency'].'</td>';
+			echo '<td align="center">'.$_config['ec_currency_symbol'].number_format($row['amount'],2).' '.$_config['ec_currency'].'</td>';
 			
 			$sql4 = "SELECT * from ".TABLE_PREFIX."course_enrollment WHERE course_id = '$_SESSION[course_id]' AND member_id = '$row[member_id]'";
 			if($result4 = mysql_query($sql4, $db)){
@@ -83,16 +97,16 @@ if (mysql_num_rows($result)) { ?>
 					while($row4 = mysql_fetch_assoc($result4)){
 	
 						if($row4['approved'] == 'y'){
-							echo '<td>'._AT('yes').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=unenroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('unenroll').'</a>)</small></td>';
+							echo '<td align="center">'._AT('yes').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=unenroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('unenroll').'</a>)</small></td>';
 						}else{
-							echo '<td>'._AT('no').' <small>( <a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small>';
+							echo '<td align="center">'._AT('no').' <small>( <a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small>';
 						}
 					}
 				}else{
-					echo '<td>'._AT('no').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small></td>';
+					echo '<td align="center">'._AT('no').'<small> (<a href="tools/enrollment/enroll_edit.php?id0='.$row['member_id'].';func=enroll;tab=0;course_id='.$_SESSION['course_id'].'">'._AT('enroll').'</a>)</small></td>';
 				}
 			} else {
-				echo '<td>'._AT('no').'</td>';
+				echo '<td align="center">'._AT('no').'</td>';
 			}
 		}
 		echo '</tr></table>';
