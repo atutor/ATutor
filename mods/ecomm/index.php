@@ -6,6 +6,13 @@ require ('include/payments.lib.php');
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
+function is_enrolled($member_id, $course_id) {
+	global $db;
+	$sql = "SELECT approved FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$course_id AND member_id=$member_id AND approved<>'n'";
+	$result = mysql_query($sql, $db);
+	return (boolean) mysql_fetch_assoc($result);
+}
+
 /// Get a list of enrolled courses or pending enrollments, and display their fee payment status 
 
 $payment_count = 0; // num listed courses
@@ -42,7 +49,12 @@ if (mysql_num_rows($result)) { ?>
 			$payment_count++;
 
 			echo '<tr>';
-			echo '<td>'.$system_courses[$row['course_id']]['title'].'</td>';
+			if(is_enrolled($_SESSION['member_id'], $row['course_id'])){
+				echo '<td><a href="bounce.php?course='.$row['course_id'].'">'.$system_courses[$row['course_id']]['title'].'</a></td>';
+
+			}else{
+				echo '<td>'.$system_courses[$row['course_id']]['title'].'</td>';
+			}
 			echo '<td align="center">'.$_config['ec_currency_symbol'].number_format($this_course_fee, 2).' '.$_config['ec_currency'].'</td>';
 
 			$sql4 = "SELECT SUM(amount) AS total_amount FROM ".TABLE_PREFIX."payments WHERE course_id='$row[course_id]' AND member_id = '$_SESSION[member_id]' AND approved=1";
