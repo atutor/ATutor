@@ -24,6 +24,7 @@ function paypal_print_form($payment_id, $amount, $course_id) {
 			<input type="hidden" name="item_number" value="<?php echo $payment_id; ?>">
 			<input type="hidden" name="amount" value="<?php echo $amount; ?>">
 			<input type="hidden" name="page_style" value="Primary">
+			<input type="hidden" name="notify_url" value="http://greg-pc.atrc.utoronto.ca/atutorsvn/docs/mods/ecomm/response_ipn.php">
 			<input type="hidden" name="no_shipping" value="0">
 			<input type="hidden" name="return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_ipn.php?pid=<?php echo $payment_id; ?>">
 			<input type="hidden" name="cancel_return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_ipn.php">
@@ -31,7 +32,7 @@ function paypal_print_form($payment_id, $amount, $course_id) {
 			<input type="hidden" name="currency_code" value="<?php echo $_config['ec_currency']; ?>">
 			<input type="hidden" name="lc" value="CA">
 			<input type="hidden" name="bn" value="PP-BuyNowBF">
-			<input type="submit" src="https://www.sandbox.paypal.com/en_US/i/btn/x-click-but23.gif" border="0" name="submit" value="<?php echo _AT('ec_paybypaypal'); ?>">
+			<input type="submit" border="0" name="submit" value="<?php echo _AT('ec_paybypaypal'); ?>">
 			<img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" title="<?php echo _AT('ec_acceptvisa'); ?>" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle" /> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" title="<?php echo _AT('ec_acceptmastercard'); ?>" alt="<?php echo _AT('ec_acceptmastercard'); ?>" align="middle" />
 		</form>
 	
