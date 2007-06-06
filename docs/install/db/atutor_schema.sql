@@ -367,7 +367,6 @@ CREATE TABLE `forums_threads` (
   `parent_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `forum_id` mediumint(8) unsigned NOT NULL default '0',
-  `login` varchar(20) NOT NULL default '',
   `last_comment` TIMESTAMP NOT NULL,
   `num_comments` mediumint(8) unsigned NOT NULL default '0',
   `subject` varchar(100) NOT NULL default '',

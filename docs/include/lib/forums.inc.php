@@ -252,7 +252,7 @@ function print_entry($row) {
 	<li class="<?php if ($counter %2) { echo 'odd'; } else { echo 'even'; } ?>">
 		<a name="<?php echo $row['post_id']; ?>"></a>
 		<div class="forum-post-author">
-			<a href="profile.php?id=<?php echo $row['member_id']; ?>" class="title"><?php echo AT_print($row['login'], 'members.login'); ?></a><br />
+			<a href="profile.php?id=<?php echo $row['member_id']; ?>" class="title"><?php echo htmlspecialchars(get_display_name($row['member_id'])); ?></a><br />
 			<?php print_profile_img($row['member_id']); ?>
 		</div>
 

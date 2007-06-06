@@ -29,7 +29,7 @@ $num_pages = ceil($num_threads/$num_per_page);
 $page_string = SEP.'fid='. $fid;
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
-$cols   = array('subject' => 1, 'num_comments' => 1, 'login' => 1, 'last_comment' => 1);
+$cols   = array('subject' => 1, 'num_comments' => 1, 'last_comment' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
@@ -60,10 +60,6 @@ if (!($row = mysql_fetch_assoc($result))) {
 		<col  />
 		<col class="sort" />
 		<col span="3" />
-	<?php elseif($col == 'login'): ?>
-		<col span="2" />
-		<col class="sort" />
-		<col span="2" />
 	<?php elseif($col == 'last_comment'): ?>
 		<col span="3" />
 		<col class="sort" />
@@ -74,7 +70,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 <tr>
 	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=subject<?php echo $page_string; ?>"><?php echo _AT('topic'); ?></a></th>
 	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=num_comments<?php echo $page_string; ?>"><?php echo _AT('replies'); ?></a></th>
-	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('started_by'); ?></a></th>
+	<th scope="col"><?php echo _AT('started_by'); ?></th>
 	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=last_comment<?php echo $page_string; ?>"><?php echo _AT('last_comment'); ?></a></th>
 <?php
 	$colspan = 4;
