@@ -39,6 +39,9 @@
 		<dt>Colours</dt>
 		<dd><p>Like <em>code</em> and <em>terms</em>, colour may be added to text content in the same way. Use the appropriate colour icon to insert colour tags into the content. Valid colour options are blue, red, green, orange, purple, and gray. Also, colour codes can be typed in manually by using the following tags: <kbd>[blue][/blue]</kbd>, <kbd>[red][/red]</kbd>, <kbd>[green][/green]</kbd>, <kbd>[orange][/orange]</kbd>, <kbd>[purple][/purple]</kbd>, and <kbd>[gray][/gray]</kbd>.</p></dd>
 
+		<dt>LaTeX</dt>
+		<dd><p>Use <kbd>[tex][/tex]</kbd> to embed LaTeX equations into your content.</p></dd>
+
 		<dt>Upload from File</dt>
 		<dd><p>Rather than typing out content, it can be uploaded from a text or HTML file on your local file system. Once uploaded, the content of that file will be displayed in the <em>Body</em> window. Keep in mind that uploading in this manner will replace any existing content in the <em>Body</em> window.</p></dd>
 
