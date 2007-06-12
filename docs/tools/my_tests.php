@@ -58,11 +58,11 @@ while ($row = mysql_fetch_assoc($result)) {
 	}
 	echo '</td><td>';
 	if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-		echo '<i><b>'._AT('ongoing').'</b></i>';
+		echo '<em><strong>'._AT('ongoing').'</strong></em>';
 	} else if ($row['ue'] < time() ) {
-		echo '<i>'._AT('expired').'</i>';
+		echo '<em>'._AT('expired').'</em>';
 	} else if ($row['us'] > time() ) {
-		echo '<i>'._AT('pending').'</i>';
+		echo '<em>'._AT('pending').'</em>';
 	}
 	echo '</td>';
 	echo '<td>'.substr($row['start_date'], 0, -3).'</td>';
