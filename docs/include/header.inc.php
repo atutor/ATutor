@@ -67,7 +67,7 @@ if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || (substr($onload, -8) !=
 	$savant->assign('onload', $onload);
 }
 
-if ($_SESSION['valid_user'] === true) {
+if (isset($_SESSION['valid_user']) && $_SESSION['valid_user'] === true) {
 	if ($_SESSION['member_id']) {
 		$savant->assign('user_name', get_display_name($_SESSION['member_id']));
 	} else {
@@ -107,25 +107,24 @@ $_current_sub_level_page = get_current_sub_navigation_page($current_page);
 
 $_path = get_path($current_page);
 
-
 unset($_path[0]);
-if ($_path[2]['url'] == $_sub_level_pages[0]['url']) {
+if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[3];
-} else if ($_path[1]['url'] == $_sub_level_pages[0]['url']) {
+} else if (isset($_path[1]['url'], $_sub_level_pages[0]['url']) && $_path[1]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[2];
-} else {
+} else if (isset($_path[1])) {
 	$back_to_page = $_path[1];
 }
 
-if ($_SESSION['course_id'] > 0) {
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_path[] = array('url' => $_base_path . 'index.php', 'title' => $_SESSION['course_title']);
-} else if ($_SESSION['course_id'] < 0) {
+} else if (isset($_SESSION['course_id']) && $_SESSION['course_id'] < 0) {
 	$_path[] = array('url' => $_base_path . 'admin/index.php', 'title' => _AT('administration'));
 }
 
-if ($_SESSION['member_id']) {
+if (isset($_SESSION['member_id']) && $_SESSION['member_id']) {
 	$_path[] = array('url' => $_base_path . 'bounce.php?course=0', 'title' => _AT('my_start_page'));
-} else if (!$_SESSION['course_id']) {
+} else if (!isset($_SESSION['course_id']) || !$_SESSION['course_id']) {
 	$_path[] = array('url' => $_base_path . 'login.php', 'title' => SITE_NAME);
 }
 
@@ -139,9 +138,9 @@ if (isset($_pages[$current_page]['title'])) {
 
 
 /* calculate the section_title: */
-if ($_SESSION['course_id'] > 0) {
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$section_title = $_SESSION['course_title'];
-} else if (!$_SESSION['valid_user']) {
+} else if (!isset($_SESSION['valid_user']) || !$_SESSION['valid_user']) {
 	$section_title = SITE_NAME;
 	if (defined('HOME_URL') && HOME_URL) {
 		$_top_level_pages[] = array('url' => HOME_URL, 'title' => _AT('home'));
@@ -156,7 +155,7 @@ $savant->assign('sub_level_pages', $_sub_level_pages);
 $savant->assign('current_sub_level_page', $_current_sub_level_page);
 
 $savant->assign('path', $_path);
-$savant->assign('back_to_page', $back_to_page);
+$savant->assign('back_to_page', isset($back_to_page) ? $back_to_page : null);
 $savant->assign('page_title', $_page_title);
 $savant->assign('top_level_pages', $_top_level_pages);
 $savant->assign('section_title', $section_title);
@@ -167,7 +166,7 @@ if (isset($_pages[$current_page]['guide'])) {
 
 $myLang->sendContentTypeHeader();
 
-if ($_SESSION['course_id'] > -1) {
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 
 	/* the list of our courses: */
 	/* used for the courses drop down */
@@ -186,7 +185,7 @@ if ($_SESSION['course_id'] > -1) {
 		$savant->assign('nav_courses',    $nav_courses);
 	}
 
-	if (($_SESSION['course_id'] > 0) && isset($_SESSION['prefs'][PREF_JUMP_REDIRECT]) && $_SESSION['prefs'][PREF_JUMP_REDIRECT]) {
+	if (($_SESSION['course_id'] > 0) && isset($_SESSION['prefs']['PREF_JUMP_REDIRECT']) && $_SESSION['prefs']['PREF_JUMP_REDIRECT']) {
 		$savant->assign('rel_url', $_rel_url);
 	} else {
 		$savant->assign('rel_url', '');
@@ -216,12 +215,17 @@ if ($_SESSION['course_id'] > -1) {
 // if filemanager is a inside a popup or a frame
 // i don't like this code. i don't know were these two variables are coming from
 // anyone can add ?framed=1 to a URL to alter the behaviour.
-if ($_REQUEST['framed'] || $_REQUEST['popup']) {
+if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['popup']) && $_REQUEST['popup'])) {
 	$savant->assign('framed', 1);
 	$savant->assign('popup', 1);
 	$savant->display('include/fm_header.tmpl.php');
 } else {
+	error_reporting(E_ALL ^ E_NOTICE); // don't care if the header has notices.
 	$savant->display('include/header.tmpl.php');
+
+	if (defined('AT_DEVEL') && AT_DEVEL) {
+		error_reporting(E_ALL);
+	}
 }
 
 ?>

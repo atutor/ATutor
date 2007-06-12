@@ -50,7 +50,7 @@ class Language {
 			$this->nativeName        = $language_row['native_name'];
 			$this->englishName       = $language_row['english_name'];
 			$this->status            = $language_row['status'];
-			$this->atutor_version    = $language_row['version'];
+			$this->atutor_version    = isset($language_row['version']) ? $language_row['version'] : VERSION;
 
 		} else if (is_object($language_row)) {
 			$this->cloneThis($language_row);

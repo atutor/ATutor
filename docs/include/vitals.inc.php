@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_DEVEL_TRANSLATE', 0);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
@@ -48,8 +48,12 @@ function unregister_GLOBALS() {
 
 /**** 0. start system configuration options block ****/
 	error_reporting(0);
-		include(AT_INCLUDE_PATH.'config.inc.php');
-	error_reporting(E_ALL ^ E_NOTICE);
+	include(AT_INCLUDE_PATH.'config.inc.php');
+	if (defined('AT_DEVEL') && AT_DEVEL) {
+		error_reporting(E_ALL);
+	} else {
+		error_reporting(E_ALL ^ E_NOTICE);
+	}
 
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
 		header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -76,7 +80,11 @@ function unregister_GLOBALS() {
 	@session_cache_limiter('private, must-revalidate');
 
 	session_name('ATutorID');
-	error_reporting(E_ALL ^ E_NOTICE);
+	if (defined('AT_DEVEL') && AT_DEVEL) {
+		error_reporting(E_ALL);
+	} else {
+		error_reporting(E_ALL ^ E_NOTICE);
+	}
 
 	if (headers_sent()) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
@@ -103,7 +111,7 @@ function unregister_GLOBALS() {
 		exit;
 	}
 
-	if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && ($_user_location != 'public')) {
+	if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && (!isset($_user_location) || $_user_location != 'public')) {
 		if (isset($in_get) && $in_get && (($pos = strpos($_SERVER['PHP_SELF'], 'get.php/')) !== FALSE)) {
 			$redirect = substr($_SERVER['PHP_SELF'], 0, $pos) . 'login.php';
 			header('Location: '.$redirect);
@@ -141,8 +149,6 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 	}
 }
 
-require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
-
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
 $sql    = "SELECT * FROM ".TABLE_PREFIX."config";
 $result = mysql_query($sql, $db);
@@ -167,9 +173,11 @@ $MaxFileSize       = $_config['max_file_size'];
 $MaxCourseSize     = $_config['max_course_size'];
 $MaxCourseFloat    = $_config['max_course_float'];
 $IllegalExtentions = explode('|',$_config['illegal_extentions']);
-define('AT_DEFAULT_PREFS',  $_config['prefs_default']);
+define('AT_DEFAULT_PREFS',  isset($_config['prefs_default']) ? $_config['prefs_default'] : '');
 $_config['home_defaults'] .= (isset($_config['home_defaults_2']) ? $_config['home_defaults_2'] : '');
 $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['main_defaults_2'] : '');
+
+require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
 
 if ($_config['time_zone']) {
 	$sql = "SET time_zone='{$_config['time_zone']}'";
@@ -216,7 +224,7 @@ if ($_config['time_zone']) {
 	$savant =& new Savant2();
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
-	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && $_SESSION['valid_user']) {
+	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 
 		if ($_SESSION['course_id'] == -1) {
 			if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
@@ -255,15 +263,15 @@ if ($_config['time_zone']) {
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 	$msg =& new Message($savant);
 
-	$contentManager = new ContentManager($db, $_SESSION['course_id']);
+	$contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : 0);
 	$contentManager->initContent();
 /**************************************************/
 
-if (($_user_location == 'users') && $_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)) {
+if (isset($_user_location) && ($_user_location == 'users') && $_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)) {
 	$_SESSION['course_id'] = 0;
 }
 
-if (($_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_location != 'prog') && !$_GET['h'] && ($_user_location != 'public')) {
+if ((!isset($_SESSION['course_id']) || $_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_location != 'prog') && !isset($_GET['h']) && ($_user_location != 'public')) {
 	header('Location:'.AT_BASE_HREF.'users/index.php');
 	exit;
 }
@@ -318,7 +326,7 @@ while ($row = mysql_fetch_assoc($result)) {
 /*																	*/
 /********************************************************************/
 
-if ($_SESSION['course_id'] > 0) {
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$_SESSION['course_id'].' ORDER BY word';
 	$result = mysql_query($sql, $db);
 	$glossary = array();
@@ -400,7 +408,7 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 
 
 function add_user_online() {
-	if (!($_SESSION['member_id'] > 0)) {
+	if (!isset($_SESSION['member_id']) || !($_SESSION['member_id'] > 0)) {
 		return;
 	}
 	global $db;
@@ -535,14 +543,16 @@ function save_last_cid($cid) {
 			$_SESSION['cid_time'] = time();
 	}
 
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=$cid WHERE course_id=$_SESSION[course_id]";
+	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=$cid WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
 	mysql_query($sql, $db);
 }
 
-if (!$_SESSION['is_admin']       && 
-	!$_SESSION['privileges']     &&
+// there has to be a better way of expressing this if-statement!
+// and, does it really have to be here?
+if ((!isset($_SESSION['is_admin']) || !$_SESSION['is_admin'])       && 
+	(!isset($_SESSION['privileges']) || !$_SESSION['privileges'])     &&
 	!isset($in_get)              && 
-	$_SESSION['s_cid']           && 
+	isset($_SESSION['s_cid']) && $_SESSION['s_cid'] && 
 	$_SESSION['cid_time']        &&
     ($_SESSION['course_id'] > 0) && 
 	($_SESSION['s_cid'] != $_GET['cid']) && 
@@ -602,12 +612,14 @@ function get_instructor_status() {
 
 /****************************************************/
 /* update the user online list						*/
+if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 	$new_minute = time()/60;
 	$diff       = abs($_SESSION['last_updated'] - $new_minute);
 	if ($diff > ONLINE_UPDATE) {
 		$_SESSION['last_updated'] = $new_minute;
 		add_user_online();
 	}
+}
 
 /****************************************************/
 /* compute the $_my_uri variable					*/
@@ -722,7 +734,7 @@ function authenticate($privilege, $check = false) {
 }
 
 function admin_authenticate($privilege = 0, $check = false) {
-	if (!$_SESSION['valid_user'] || ($_SESSION['course_id'] != -1)) {
+	if (!isset($_SESSION['valid_user']) || !$_SESSION['valid_user'] || ($_SESSION['course_id'] != -1)) {
 		if ($check) {
 			return false;
 		}

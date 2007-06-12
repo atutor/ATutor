@@ -35,7 +35,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	<li style="padding-bottom: 20px;"><?php echo _AT('howto_course'); ?>
 		<br /><?php echo _AT('howto_course_text'); ?></li>
 
-	<li><a href="http://www.atutor.ca/forums/forum.php?fid=7"><?php echo _AT('tech_support_forum'); ?></a>
+	<li><a href="http://www.atutor.ca/forum/7/1.html"><?php echo _AT('tech_support_forum'); ?></a>
 		<br /><?php echo _AT('tech_support_forum_text'); ?></li>
 </ul>
 

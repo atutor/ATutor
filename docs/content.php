@@ -49,7 +49,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 $path	= $contentManager->getContentPath($cid);
 
 if ($content_row['content_path']) {
-	$content_base_href .= $content_row['content_path'].'/';
+	$content_base_href = $content_row['content_path'].'/';
 }
 
 $parent_headings = '';
@@ -62,7 +62,7 @@ $page_title .= $content_row['title'];
 $num_in_path = count($path)-1;
 for ($i=0; $i<$num_in_path; $i++) {
 	$content_info = $path[$i];
-	if ($_SESSION['prefs'][PREF_NUMBERING]) {
+	if ($_SESSION['prefs']['PREF_NUMBERING']) {
 		if ($contentManager->_menu_info[$content_info['content_id']]['content_parent_id'] == 0) {
 			$top_num = $contentManager->_menu_info[$content_info['content_id']]['ordering'];
 			$parent_headings .= $top_num;
@@ -74,7 +74,7 @@ for ($i=0; $i<$num_in_path; $i++) {
 	}
 }
 
-if ($_SESSION['prefs'][PREF_NUMBERING]) {
+if ($_SESSION['prefs']['PREF_NUMBERING']) {
 	if ($top_num != '') {
 		$top_num = $top_num.'.'.$content_row['ordering'];
 		$page_title .= $top_num.' ';
@@ -110,7 +110,7 @@ $first_page = current($path);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 save_last_cid($cid);
-if ($top_num != (int) $top_num) {
+if (isset($top_num) && $top_num != (int) $top_num) {
 	$top_num = substr($top_num, 0, strpos($top_num, '.'));
 }
 
@@ -145,7 +145,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 	} else {
 		if ($released_status !== TRUE) {
 			/* show the instructor that this content hasn't been released yet */
-			$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_MYSQL_TIMESTAMP));
+			$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_UNIX_TIMESTAMP));
 			$msg->addInfo($infos);
 			$msg->printAll();
 			unset($infos);
@@ -155,7 +155,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 		$savant->assign('body', format_content($content_row['text'], $content_row['formatting'], $glossary));
 	}
 } else {
-	$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_MYSQL_TIMESTAMP));
+	$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_UNIX_TIMESTAMP));
 	$msg->addInfo($infos);
 	$msg->printAll();
 	unset($infos);

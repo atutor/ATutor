@@ -21,13 +21,13 @@ global $system_courses;
 $side_menu = array();
 $stack_files = array();
 
-if ($_SESSION['course_id'] > 0) {
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$savant->assign('my_uri', $_my_uri);
 
 	$savant->assign('right_menu_open', TRUE);
 	$savant->assign('popup_help', 'MAIN_MENU');
 	$savant->assign('menu_url', '<a name="menu"></a>');
-	$savant->assign('close_menu_url', htmlspecialchars($_my_uri).'disable='.PREF_MAIN_MENU);
+	$savant->assign('close_menu_url', htmlspecialchars($_my_uri).'disable=PREF_MAIN_MENU');
 	$savant->assign('close_menus', _AT('close_menus'));
 
 	//copyright can be found in include/html/copyright.inc.php
@@ -76,7 +76,12 @@ function rowselectbox(obj, checked, handler) {
 if ($framed || $popup) {
 	$savant->display('include/fm_footer.tmpl.php');
 } else {
+	error_reporting(E_ALL ^ E_NOTICE); // don't care if the footer has notices.
 	$savant->display('include/footer.tmpl.php');
+
+	if (defined('AT_DEVEL') && AT_DEVEL) {
+		error_reporting(E_ALL);
+	}
 }
 
 if (defined('AT_DEVEL') && AT_DEVEL) {

@@ -18,7 +18,9 @@ return;
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
-define('AT_PRIV_ADMIN', $this->getPrivilege());
+if (!defined('AT_PRIV_ADMIN')) {
+	define('AT_PRIV_ADMIN', $this->getPrivilege());
+}
 
 //admin pages
 $this->_pages['admin/edit_course.php']['title_var'] = 'course_properties';

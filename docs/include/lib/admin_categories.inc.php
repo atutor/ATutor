@@ -86,6 +86,8 @@ function select_categories($categories, $cat_id, $current_cat_id, $exclude, $dep
 function get_categories() {
 	global $db;
 
+	$categories = array();
+
 	/* get all the categories: */
 	/* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
 	$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_parent, cat_name";
@@ -134,7 +136,7 @@ function recursive_get_subcategories($category_parent_id) {
 	}
 
 	$children = array();
-	if (is_array($categories[$category_parent_id]['children'])) {
+	if (isset($categories[$category_parent_id]['children']) && is_array($categories[$category_parent_id]['children'])) {
 		$children = $categories[$category_parent_id]['children'];
 		foreach ($categories[$category_parent_id]['children'] as $category_child_id) {
 			if ($category_child_id) {

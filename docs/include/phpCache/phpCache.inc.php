@@ -24,6 +24,9 @@ if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
 } else {
 	define('CACHE_ON', 0); /* enable caching */
 }
+if (!defined('CACHE_DIR')) {
+	define('CACHE_DIR', '');
+}
 
 
 	$CACHE_DEBUG = 0;			/* Default: 0 - Turn debugging on/off */

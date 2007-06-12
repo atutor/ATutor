@@ -136,6 +136,7 @@ if (!$files) {
 </div>
 
 <?php
+$_GET['comment_id'] = isset($_GET['comment_id']) ? intval($_GET['comment_id']) : 0;
 	$sql = "SELECT * FROM ".TABLE_PREFIX."files_comments WHERE file_id=$id ORDER BY date ASC";
 	$result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)): ?>

@@ -19,8 +19,10 @@ global $savant;
 global $glossary;
 
 ob_start(); 
-
-$result = $contentManager->getContentPage($_GET['cid']);
+$result = false;
+if (isset($_GET['cid'])) {
+	$result = $contentManager->getContentPage($_GET['cid']);
+}
 if ($result && ($row = mysql_fetch_array($result))) {
 	$matches = find_terms($row['text']);
 	$matches = $matches[0];
@@ -42,7 +44,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 			$original_v = $v;
 			$v = urlencode($v);
 
-			if ($glossary_key_lower[$v] != '') {
+			if (isset($glossary_key_lower[$v]) && $glossary_key_lower[$v] != '') {
 
 				$v_formatted = urldecode(array_search($glossary_key_lower[$v], $glossary));
 

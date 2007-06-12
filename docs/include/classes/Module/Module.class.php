@@ -77,7 +77,7 @@ class ModuleFactory {
 			$type = AT_MODULE_TYPE_CORE | AT_MODULE_TYPE_STANDARD | AT_MODULE_TYPE_EXTRA;
 		}
 
-		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules";
+		$sql	= "SELECT dir_name, privilege, admin_privilege, status, cron_interval, cron_last_run FROM ". TABLE_PREFIX . "modules";
 		$result = mysql_query($sql, $db);
 		while($row = mysql_fetch_assoc($result)) {
 			if (!isset($this->_modules[$row['dir_name']])) {
@@ -173,7 +173,7 @@ class Module {
 			$this->_status          = $row['status'];
 			$this->_privilege       = $row['privilege'];
 			$this->_admin_privilege = $row['admin_privilege'];
-			$this->_display_defaults= $row['display_defaults'];
+			$this->_display_defaults= isset($row['display_defaults']) ? $row['display_defaults'] : 0;
 			$this->_cron_interval   = $row['cron_interval'];
 			$this->_cron_last_run   = $row['cron_last_run'];
 
@@ -323,7 +323,7 @@ class Module {
 			return;
 		}
 		foreach ($this->_pages as $tmp_page => $item) {
-			if ($item['parent'] == $page) {
+			if (!empty($item['parent']) && $item['parent'] == $page) {
 				return $tmp_page;
 			}
 		}

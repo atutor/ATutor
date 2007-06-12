@@ -159,7 +159,7 @@ $onload = 'document.form.form_login.focus();';
 
 $savant->assign('course_id', $_GET['course']);
 
-if (isset($_GET['course'])) {
+if (isset($_GET['course']) && $_GET['course']) {
 	$savant->assign('title',  ' '._AT('to1').' '.$system_courses[$_GET['course']]['title']);
 } else {
 	$savant->assign('title',  ' ');

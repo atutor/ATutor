@@ -21,12 +21,12 @@ if (isset($_pages[AT_NAV_ADMIN])) {
 	array_unshift($_pages[AT_NAV_ADMIN], 'admin/index.php', 'admin/modules/index.php');
 }
 
-$_pages[AT_NAV_PUBLIC] = array_merge(array('login.php', 'registration.php', 'browse.php'), (array) $_pages[AT_NAV_PUBLIC]);
+$_pages[AT_NAV_PUBLIC] = array_merge(array('login.php', 'registration.php', 'browse.php'), (isset($_pages[AT_NAV_PUBLIC]) ? $_pages[AT_NAV_PUBLIC] : array()));
 $_pages[AT_NAV_START]  = array_merge(array('users/index.php',  'users/profile.php', 'users/preferences.php'), (array) $_pages[AT_NAV_START]);
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();
 
-if ($_SESSION['course_id'] > 0) {
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$main_links = $home_links = $side_menu = array();
 
 	if ($system_courses[$_SESSION['course_id']]['main_links']) {
@@ -70,7 +70,7 @@ if ($_SESSION['course_id'] > 0) {
 			}
 		}
 	}
-} else if ($_SESSION['course_id'] == -1) {
+} else if (isset($_SESSION['course_id']) && $_SESSION['course_id'] == -1) {
 	/* admin pages */
 
 	$_pages['admin/index.php']['title_var'] = 'home';
@@ -143,15 +143,15 @@ if ($_SESSION['course_id'] > 0) {
 /* public pages */
 $_pages['registration.php']['title_var'] = 'register';
 $_pages['registration.php']['parent']    = AT_NAV_PUBLIC;
-$_pages['registration.php']['children']  = $_pages['browse.php']['children'];
+$_pages['registration.php']['children']  = isset($_pages['browse.php']['children']) ? $_pages['browse.php']['children'] : array();
 
 $_pages['browse.php']['title_var'] = 'browse_courses';
 $_pages['browse.php']['parent']    = AT_NAV_PUBLIC;
-$_pages['browse.php']['children']  = $_pages['browse.php']['children'];
+$_pages['browse.php']['children']  = isset($_pages['browse.php']['children']) ? $_pages['browse.php']['children'] : array();
 
 $_pages['login.php']['title_var'] = 'login';
 $_pages['login.php']['parent']    = AT_NAV_PUBLIC;
-$_pages['login.php']['children']  = array_merge(array('password_reminder.php'), (array) $_pages['login.php']['children']);
+$_pages['login.php']['children']  = array_merge(array('password_reminder.php'), isset($_pages['login.php']['children']) ? $_pages['login.php']['children'] : array());
 
 $_pages['confirm.php']['title_var'] = 'confirm';
 $_pages['confirm.php']['parent']    = AT_NAV_PUBLIC;
@@ -167,7 +167,7 @@ $_pages['logout.php']['parent']    = AT_NAV_PUBLIC;
 $_pages['users/index.php']['title_var'] = 'my_courses';
 $_pages['users/index.php']['parent']    = AT_NAV_START;
 $_pages['users/index.php']['guide']     = 'general/?p=my_courses.php';
-if ($_SESSION['member_id'] && !$_SESSION['course_id']) {
+if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION['course_id']) || !$_SESSION['course_id'])) {
 	if ((get_instructor_status() === FALSE) && (!defined('ALLOW_INSTRUCTOR_REQUESTS') || !ALLOW_INSTRUCTOR_REQUESTS)) {
 		$_pages['users/index.php']['children']  = array_merge(array('users/browse.php'), (array) $_pages['users/index.php']['children']);
 	} else {
@@ -218,7 +218,7 @@ $_pages['tools/index.php']['title_var'] = 'manage';
 $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 $_pages['inbox/index.php']['title_var'] = 'inbox';
-$_pages['inbox/index.php']['children']  = array_merge(array('inbox/sent_messages.php', 'inbox/send_message.php', 'inbox/export.php'), (array) $_pages['inbox/index.php']['children']);
+$_pages['inbox/index.php']['children']  = array_merge(array('inbox/sent_messages.php', 'inbox/send_message.php', 'inbox/export.php'), isset($_pages['inbox/index.php']['children']) ? $_pages['inbox/index.php']['children'] : array());
 
 	$_pages['inbox/sent_messages.php']['title_var'] = 'sent_messages';
 	$_pages['inbox/sent_messages.php']['parent']    = 'inbox/index.php';
@@ -239,7 +239,7 @@ $_pages['about.php']['title_var']  = 'about_atutor';
 $_pages['404.php']['title_var']  = '404';
 
 $_pages['help/index.php']['title_var']  = 'help';
-$_pages['help/index.php']['children'] = array_merge(array('help/accessibility.php', 'help/contact_support.php'), (array) $_pages['help/index.php']['children']);
+$_pages['help/index.php']['children'] = array_merge(array('help/accessibility.php', 'help/contact_support.php'), isset($_pages['help/index.php']['children']) ? $_pages['help/index.php']['children'] : array());
 
 	$_pages['help/accessibility.php']['title_var']  = 'accessibility';
 	$_pages['help/accessibility.php']['parent'] = 'help/index.php';

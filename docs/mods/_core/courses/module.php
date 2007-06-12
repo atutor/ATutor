@@ -2,8 +2,12 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
-define('AT_PRIV_ADMIN', $this->getPrivilege());
-define('AT_ADMIN_PRIV_COURSES', $this->getAdminPrivilege());
+if (!defined('AT_PRIV_ADMIN')) {
+	define('AT_PRIV_ADMIN', $this->getPrivilege());
+}
+if (!defined('AT_ADMIN_PRIV_COURSES')) {
+	define('AT_ADMIN_PRIV_COURSES', $this->getAdminPrivilege());
+}
 
 
 // for admin

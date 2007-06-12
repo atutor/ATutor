@@ -386,17 +386,16 @@ class ContentManager
 		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
 		$myOrder  = $this->_menu_info[$content_id]['ordering'];
 
-		if (($this->_menu[$myParent][$myOrder-2] != '') && ($order==0)) {
+		if (isset($this->_menu[$myParent][$myOrder-2]) && ($this->_menu[$myParent][$myOrder-2] != '') && ($order==0)) {
 			// has sibling: checking if sibling has children
 			
 			$mySibling = $this->_menu[$myParent][$myOrder-2];
 			
-			if ( is_array($this->_menu[$mySibling['content_id']]) && ($order==0) ) {
+			if ( isset($this->_menu[$mySibling['content_id']]) && is_array($this->_menu[$mySibling['content_id']]) && ($order==0) ) {
 				$num_children = count($this->_menu[$mySibling['content_id']]);
 
 				// sibling has $num_children children
-				
-				return($this->getPreviousContent($this->_menu[$mySibling[content_id]][$num_children-1]['content_id'], 1));
+				return($this->getPreviousContent($this->_menu[$mySibling['content_id']][$num_children-1]['content_id'], 1));
 
 			} else {
 				// sibling has no children. return it
@@ -415,7 +414,7 @@ class ContentManager
 					 		 'ordering'		=> $this->_menu_info[$myParent]['ordering'],
 							 'title'		=> $this->_menu_info[$myParent]['title']));
 			} else {
-				if ( is_array($this->_menu[$content_id]) ) {
+				if ( isset($this->_menu[$content_id]) && is_array($this->_menu[$content_id]) ) {
 					$num_children = count($this->_menu[$content_id]);
 					return ($this->getPreviousContent($this->_menu[$content_id][$num_children-1]['content_id'], 1));
 
@@ -431,16 +430,17 @@ class ContentManager
 
 	/* Access: Private */
 	function getNextContent($content_id, $order=0) {
+		if (!$content_id) { return; }
+
 		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
 		$myOrder  = $this->_menu_info[$content_id]['ordering'];
-
 		/* if this content has children, then take the first one. */
-		if ( is_array($this->_menu[$content_id]) && ($order==0) ) {
+		if ( isset($this->_menu[$content_id]) && is_array($this->_menu[$content_id]) && ($order==0) ) {
 			/* has children */
 			return($this->_menu[$content_id][0]);
 		} else {
 			/* no children */
-			if ($this->_menu[$myParent][$myOrder] != '') {
+			if (isset($this->_menu[$myParent][$myOrder]) && $this->_menu[$myParent][$myOrder] != '') {
 				/* Has sibling */
 				return($this->_menu[$myParent][$myOrder]);
 			} else {
@@ -489,16 +489,18 @@ class ContentManager
 			}
 
 			$next['url'] = $_base_path.'content.php?cid='.$next['content_id'];
-			$previous['url'] = $_base_path.'content.php?cid='.$previous['content_id'];
+			if (isset($previous['content_id'])) {
+				$previous['url'] = $_base_path.'content.php?cid='.$previous['content_id'];
+			}
 			
-			if ($previous['content_id']) {
+			if (isset($previous['content_id'])) {
 				$sequence_links['previous'] = $previous;
 			} else if ($cid) {
 				$previous['url']   = $_base_path . 'index.php';
 				$previous['title'] = _AT('home');
 				$sequence_links['previous'] = $previous;
 			}
-			if ($next['content_id']) {
+			if (!empty($next['content_id'])) {
 				$sequence_links['next'] = $next;
 			}
 		}
@@ -586,9 +588,8 @@ class ContentManager
 			$this->start = false;
 		}
 
-		$top_level = $this->_menu[$parent_id];
-
-		if ( is_array($top_level) ) {
+		if ( isset($this->_menu[$parent_id]) && is_array($this->_menu[$parent_id]) ) {
+			$top_level = $this->_menu[$parent_id];
 			$counter = 1;
 			$num_items = count($top_level);
 			foreach ($top_level as $garbage => $content) {
@@ -600,7 +601,7 @@ class ContentManager
 				$on = false;
 
 				if ( ($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid) ) {
-					if ($highlighted[$content['content_id']]) {
+					if (isset($highlighted[$content['content_id']])) {
 						$link .= '<strong>';
 						$on = true;
 					}
@@ -633,7 +634,7 @@ class ContentManager
 					$on = true;
 				}
 
-				if ( is_array($this->_menu[$content['content_id']]) ) {
+				if ( isset($this->_menu[$content['content_id']]) && is_array($this->_menu[$content['content_id']]) ) {
 					/* has children */
 					for ($i=0; $i<$depth; $i++) {
 						if ($children[$i] == 1) {
@@ -660,7 +661,7 @@ class ContentManager
 						}
 					}
 
-					if ($_SESSION['menu'][$content['content_id']] == 1) {
+					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
 							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" />';
 
@@ -712,7 +713,7 @@ class ContentManager
 				
 				echo '<br />';
 
-				if ( $ignore_state || ($_SESSION['menu'][$content['content_id']] == 1)) {
+				if ( $ignore_state || (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1)) {
 
 					$depth ++;
 

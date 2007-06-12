@@ -256,7 +256,7 @@ function _AT() {
 
 			/* get $_template from the DB */
 			
-			$sql = "SELECT L.* FROM ".TABLE_PREFIX."language_text L, ".TABLE_PREFIX."language_pages P WHERE (L.language_code='{$_SESSION['lang']}' OR L.language_code='$parent') AND L.variable<>'_msgs' AND L.term=P.term AND P.page='$_rel_url' ORDER BY L.variable ASC LIMIT 1";
+			$sql = "SELECT L.* FROM ".TABLE_PREFIX."language_text L, ".TABLE_PREFIX."language_pages P WHERE L.language_code='{$_SESSION['lang']}' AND L.variable<>'_msgs' AND L.term=P.term AND P.page='$_rel_url' ORDER BY L.variable ASC LIMIT 1";
 			$result	= mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
 				// saves us from doing an ORDER BY
@@ -279,12 +279,22 @@ function _AT() {
 	}
 	$format	  = array_shift($args);
 
-	$outString	= vsprintf($_template[$format], $args);
-	$str = ob_get_contents();
+	if (isset($_template[$format])) {
+		/*
+		var_dump($_template);
+		var_dump($format);
+		var_dump($args);
+		exit;
+		*/
+		$outString	= vsprintf($_template[$format], $args);
+		$str = ob_get_contents();
+	} else {
+		$outString = '';
+	}
 
 
 	if ($outString === false) {
-		return ('[Error parsing language. Variable: <code>'.$format.'</code>. Value: <code>'.$_template[$format].'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
+		return ('[Error parsing language. Variable: <code>'.$format.'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
 	}
 
 	if (empty($outString)) {

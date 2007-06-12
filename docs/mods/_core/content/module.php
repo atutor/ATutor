@@ -2,7 +2,9 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
-define('AT_PRIV_CONTENT', $this->getPrivilege());
+if (!defined('AT_PRIV_CONTENT')) {
+	define('AT_PRIV_CONTENT', $this->getPrivilege());
+}
 
 //side menu dropdowns
 $this->_stacks['menu_menu'] = array('title_var'=>'menu_menu', 'file'=>AT_INCLUDE_PATH.'html/dropdowns/menu_menu.inc.php');

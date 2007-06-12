@@ -52,7 +52,7 @@ $_config_defaults['display_name_format']       = 1; // 0-5, see (array) display_
 $_config_defaults['time_zone']                 = ''; // empty means disabled or not supported
 $_config_defaults['prof_pic_max_file_size']	   = 819200; // max size of an uploaded profile pic, in bytes. default 800 KB
 $_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent inbox msgs are deleted
-$_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled, 0 < enabled
+$_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled/unsupported, (non-zero is the actual mysql value)
 $_config_defaults['latex_server']              = 'http://www.forkosh.dreamhost.com/mimetex.cgi?'; // the full URL to an external LaTeX parser
 
 $_config = $_config_defaults;
@@ -186,7 +186,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('VERSION',		'1.5.4');
+define('VERSION',		'1.5.5');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/

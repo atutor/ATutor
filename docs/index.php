@@ -37,7 +37,7 @@ $savant->assign('home_links', $home_links);
 /* the news announcements: */
 $news = array();
 $num_pages = 1;
-$page = intval($_GET['p']);
+$page = isset($_GET['p']) ? intval($_GET['p']) : 1;
 if (!$page) {
 	$page = 1;
 }	

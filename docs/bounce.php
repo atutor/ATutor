@@ -345,6 +345,12 @@ switch ($row['access']){
 			$_SESSION['course_title'] = $row['title'];
 			$_SESSION['enroll']	  = AT_ENROLL_YES;
 
+			$sql	= "SELECT last_cid FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
+			$result = mysql_query($sql, $db);
+			$row2 = mysql_fetch_assoc($result);
+
+			$_SESSION['s_cid']  = $row2['last_cid'];
+
 			/* update users_online */
 			add_user_online();
 

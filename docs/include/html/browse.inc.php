@@ -15,8 +15,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
-$cat	= $_GET['cat'] = intval($_GET['cat']);
-$show_course = $_GET['show_course'] = intval($_GET['show_course']);
+$cat	= $_GET['cat'] = isset($_GET['cat']) ? intval($_GET['cat']) : 0;
+$show_course = $_GET['show_course'] = isset($_GET['show_course']) ? intval($_GET['show_course']) : 0;
 
 $cats	= array();
 $cats[0]  = _AT('cats_all');
@@ -81,7 +81,7 @@ while ($row = mysql_fetch_assoc($result)) {
 $savant->assign('cat',	$cat);
 $savant->assign('show_course', $show_course);
 $savant->assign('cats', $cats);
-$savant->assign('sub_cats', $sub_cats);
+$savant->assign('sub_cats', isset($sub_cats) ? $sub_cats : array() );
 
 $savant->assign('course_row', $course_row);
 $savant->assign('courses', $courses);
