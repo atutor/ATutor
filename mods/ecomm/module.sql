@@ -106,6 +106,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_set_date','Set Dates',NO
 INSERT INTO `language_text` VALUES ('en', '_module','ec_invoice','Invoice',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_print_invoice','Print_invoice',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_paybypaypal','Pay by PayPal',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_store_log','Keep transaction log ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_log_file','Full path to writable transaction log file. (required if log is enable, create writable  file manually if necessary) ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_export_data','Export Data Displayed Below',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_date_picker','Select a date range to display. (e.g. 2007-2-6)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_email','EMail notification of payments to: (if different from the ATutor contact email, set in System Preferences)',NOW(),'');

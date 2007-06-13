@@ -55,6 +55,14 @@ https://www.sandbox.paypal.com/cgi-bin/webscr
 See details on setting up a sandbox for testing the modules at:
 https://www.paypal.com/en_US/ebook/PP_Sandbox_UserGuide/wwhelp/wwhimpl/js/html/wwhelp.htm
 
+PayPal IPN Setup
+For security purpose Instant Payment Notification (IPN) must be setup with your PayPal merchant account. You will be asked to provide a URL to the IPN notification verification script, included with the EComm module. While logged into your PayPal account, slect the Profile tab, then choose "Instant Payment Notification Preferences". Turn "ON" the service, and provide the URL. The URL should also include the password you entered when setting up the module Settings in ATutor. The URL would look something like this:
+
+
+http://www.mysite.com/ATutor/mods/ecomm/response_ipn.php?secret=payment01
+
+
+
 --------------------
 Installation & Setup
 1. Unpack the downloaded module into the ATutor mods directory. This will create an ecomm/ directory which contains all the module files.

@@ -85,5 +85,5 @@ if (mysql_num_rows($result)) { ?>
 	$msg->printInfos('EC_NO_PAID_COURSES');
 }
 
-
+//debug($_POST);
  require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

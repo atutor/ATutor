@@ -26,8 +26,8 @@ function paypal_print_form($payment_id, $amount, $course_id) {
 			<input type="hidden" name="page_style" value="Primary">
 			<input type="hidden" name="notify_url" value="http://greg-pc.atrc.utoronto.ca/atutorsvn/docs/mods/ecomm/response_ipn.php">
 			<input type="hidden" name="no_shipping" value="0">
-			<input type="hidden" name="return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_ipn.php?pid=<?php echo $payment_id; ?>">
-			<input type="hidden" name="cancel_return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_ipn.php">
+			<input type="hidden" name="return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_paypal_user.php?pid=<?php echo $payment_id; ?>">
+			<input type="hidden" name="cancel_return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_paypal_user.php">
 			<input type="hidden" name="no_note" value="1">
 			<input type="hidden" name="currency_code" value="<?php echo $_config['ec_currency']; ?>">
 			<input type="hidden" name="lc" value="CA">
@@ -41,15 +41,28 @@ function paypal_print_form($payment_id, $amount, $course_id) {
 }
 
 function paypal_authenticate_user_response() {
-	global $_config, $msg;
+	global $_config, $msg, $db;
+
+//don't do anything
+
+
+/*
 	if($_config['ec_gateway'] == 'PayPal'){ 
-		if (isset($_GET['pid'], $_GET['amt'], $_GET['tx'], $_GET['sig'])) {
+		$sql = "SELECT amount from ".TABLE_PREFIX."payments WHERE payment_id = '$_GET[pid]' ";
+		$result = mysql_query($sql, $db);
+		$this_amount = mysql_result($result,0);
+//print_r($_GET);
+//exit;
+
+		//if ($_GET['amt'] == $this_amount && $_POST['']) {
+		if ($_GET['amt'] == $this_amount) {
 				approve_payment($_GET['pid'], $_GET['tx']);
 				$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}else{
 				$msg->addError('EC_PAYMENT_FAILED');
 		}
 	}
+*/
 }
 function mirapay_print_form($payment_id, $amount, $course_id) {
 	global $_config;

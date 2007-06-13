@@ -16,6 +16,10 @@ if (isset($_POST['cancel'])) {
 	$_POST['ec_contact_address']   = trim($_POST['ec_contact_address']);
 	$_POST['ec_allow_instructors'] = intval($_POST['ec_allow_instructors']);
 	$_POST['ec_email_admin']       = intval($_POST['ec_email_admin']);
+	$_POST['ec_email_admin']       = intval($_POST['ec_email_admin']);
+	$_POST['ec_log_file']       = $addslashes($_POST['ec_log_file']);
+	$_POST['ec_store_log']       = intval($_POST['ec_store_log']);
+
 
 	if (!$_POST['ec_uri']){
 		$msg->addError('EC_URL_EMPTY');
@@ -64,6 +68,12 @@ if (isset($_POST['cancel'])) {
 		mysql_query($sql, $db);
 
 		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_email_admin', '{$_POST['ec_email_admin']}')";
+		mysql_query($sql, $db);
+
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_store_log', '{$_POST['ec_store_log']}')";
+		mysql_query($sql, $db);
+
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('ec_log_file', '{$_POST['ec_log_file']}')";
 		mysql_query($sql, $db);
 
 		$_POST['ec_contact_email'] = $addslashes($_POST['ec_contact_email']);
@@ -153,6 +163,16 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 			<input type="radio" name="ec_email_admin" value="1" id="email1" <?php if ($_config['ec_email_admin']){ echo 'checked="checked"'; } ?>/><label for="email1"><?php echo _AT('enable'); ?></label>
 
 			<input type="radio" name="ec_email_admin" value="0" id="email0" <?php if (!$_config['ec_email_admin']){ echo 'checked="checked"'; } ?>/><label for="email0"><?php echo _AT('disable'); ?></label>
+		</div>
+		<div class="row">
+			<?php echo _AT('ec_store_log'); ?><br/>
+			<input type="radio" name="ec_store_log" value="1" id="ipn1" <?php if ($_config['ec_store_log']){ echo 'checked="checked"'; } ?>/><label for="ipn1"><?php echo _AT('enable'); ?></label>
+
+			<input type="radio" name="ec_store_log" value="0" id="ipn0" <?php if (!$_config['ec_store_log']){ echo 'checked="checked"'; } ?>/><label for="ipn0"><?php echo _AT('disable'); ?></label>
+		</div> 
+		<div class="row">
+			<label for="ec_log_file"><?php echo _AT('ec_log_file'); ?></label><br/>
+			<input type="text" name="ec_log_file" value="<?php echo htmlspecialchars($_config['ec_log_file']); ?>" id="ec_log_file" size="60"/>
 		</div>
 		<div class="row buttons">
 			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>"  class="button" accesskey="s" />
