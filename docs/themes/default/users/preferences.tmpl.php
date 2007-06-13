@@ -58,7 +58,7 @@
 	<div class="row">
 		<?php echo _AT('jump_redirect'); ?><br />
 		<?php
-			$num = '';  $num2 = '';
+			$num = $num2 = '';
 			if ($_SESSION['prefs']['PREF_JUMP_REDIRECT'] == 1) {
 				$num = ' checked="checked"';
 			} else {
@@ -70,7 +70,8 @@
 
 	<div class="row">
 		<?php echo _AT('auto_login1');  ?><br /><?php
-			if ( ($_COOKIE['ATLogin'] != '') && ($_COOKIE['ATPass'] != '') ) {
+			$auto_en = $auto_dis = '';
+			if ( !empty($_COOKIE['ATLogin']) && !empty($_COOKIE['ATPass']) ) {
 				$auto_en = 'checked="checked"';
 			} else {
 				$auto_dis = 'checked="checked"';

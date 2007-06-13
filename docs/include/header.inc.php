@@ -68,7 +68,7 @@ if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || (substr($onload, -8) !=
 }
 
 if (isset($_SESSION['valid_user']) && $_SESSION['valid_user'] === true) {
-	if ($_SESSION['member_id']) {
+	if (!empty($_SESSION['member_id'])) {
 		$savant->assign('user_name', get_display_name($_SESSION['member_id']));
 	} else {
 		$savant->assign('user_name', $_SESSION['login']);
@@ -111,7 +111,7 @@ unset($_path[0]);
 if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[3];
 } else if (isset($_path[1]['url'], $_sub_level_pages[0]['url']) && $_path[1]['url'] == $_sub_level_pages[0]['url']) {
-	$back_to_page = $_path[2];
+	$back_to_page = isset($_path[2]) ? $_path[2] : null;
 } else if (isset($_path[1])) {
 	$back_to_page = $_path[1];
 }
@@ -220,12 +220,7 @@ if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['pop
 	$savant->assign('popup', 1);
 	$savant->display('include/fm_header.tmpl.php');
 } else {
-	error_reporting(E_ALL ^ E_NOTICE); // don't care if the header has notices.
 	$savant->display('include/header.tmpl.php');
-
-	if (defined('AT_DEVEL') && AT_DEVEL) {
-		error_reporting(E_ALL);
-	}
 }
 
 ?>

@@ -52,7 +52,7 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	}
 
 	$this_login		= $_POST['form_login'];
-	$auto_login		= intval($_POST['auto']);
+	$auto_login		= isset($_POST['auto']) ? intval($_POST['auto']) : 0;
 	$used_cookie	= false;
 }
 

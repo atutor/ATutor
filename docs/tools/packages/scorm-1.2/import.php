@@ -164,8 +164,6 @@ if (!$_FILES['file']['name']
 		chmod ($package_path, 0755);
 	}
 
-	//error_reporting(0);
-
 	$archive = new PclZip($_FILES['file']['tmp_name']);
 	if ($archive->extract (PCLZIP_OPT_PATH, $package_path) == 0) {
 
@@ -175,7 +173,6 @@ if (!$_FILES['file']['name']
 		clr_dir($package_path);
 		exit;
 	}
-	//error_reporting(E_ALL ^ E_NOTICE);
 
 	chmodPackageDir ($package_path);
 

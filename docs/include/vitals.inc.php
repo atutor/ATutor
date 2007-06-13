@@ -13,7 +13,8 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
+define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
@@ -49,11 +50,7 @@ function unregister_GLOBALS() {
 /**** 0. start system configuration options block ****/
 	error_reporting(0);
 	include(AT_INCLUDE_PATH.'config.inc.php');
-	if (defined('AT_DEVEL') && AT_DEVEL) {
-		error_reporting(E_ALL);
-	} else {
-		error_reporting(E_ALL ^ E_NOTICE);
-	}
+	error_reporting(AT_ERROR_REPORTING);
 
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
 		header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -80,11 +77,7 @@ function unregister_GLOBALS() {
 	@session_cache_limiter('private, must-revalidate');
 
 	session_name('ATutorID');
-	if (defined('AT_DEVEL') && AT_DEVEL) {
-		error_reporting(E_ALL);
-	} else {
-		error_reporting(E_ALL ^ E_NOTICE);
-	}
+	error_reporting(AT_ERROR_REPORTING);
 
 	if (headers_sent()) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
@@ -553,7 +546,7 @@ if ((!isset($_SESSION['is_admin']) || !$_SESSION['is_admin'])       &&
 	(!isset($_SESSION['privileges']) || !$_SESSION['privileges'])     &&
 	!isset($in_get)              && 
 	isset($_SESSION['s_cid']) && $_SESSION['s_cid'] && 
-	$_SESSION['cid_time']        &&
+	isset($_SESSION['cid_time']) && $_SESSION['cid_time'] &&
     ($_SESSION['course_id'] > 0) && 
 	($_SESSION['s_cid'] != $_GET['cid']) && 
 	($_SESSION['enroll'] != AT_ENROLL_NO) )  
@@ -614,6 +607,9 @@ function get_instructor_status() {
 /* update the user online list						*/
 if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 	$new_minute = time()/60;
+	if (!isset($_SESSION['last_updated'])) {
+		$_SESSION['last_updated'] = $new_minute;
+	}
 	$diff       = abs($_SESSION['last_updated'] - $new_minute);
 	if ($diff > ONLINE_UPDATE) {
 		$_SESSION['last_updated'] = $new_minute;

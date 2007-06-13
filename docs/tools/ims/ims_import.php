@@ -276,7 +276,7 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 	header('Location: index.php');
 	exit;
 }
-error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(AT_ERROR_REPORTING);
 
 
 /* get the course's max_quota */

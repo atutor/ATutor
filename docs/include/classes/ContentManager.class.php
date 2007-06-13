@@ -42,7 +42,7 @@ class ContentManager
 	}
 
 	function initContent( ) {
-		if ($this->course_id == '') {
+		if (!($this->course_id > 0)) {
 			return;
 		}
 		$sql = "SELECT content_id, content_parent_id, ordering, title, UNIX_TIMESTAMP(release_date) AS u_release_date FROM ".TABLE_PREFIX."content WHERE course_id=$this->course_id ORDER BY content_parent_id, ordering";
@@ -57,6 +57,7 @@ class ContentManager
 		$num_sections = 0;
 
 		$max_depth = array();
+		$_menu_info = array();
 
 		while ($row = mysql_fetch_assoc($result)) {
 			$num_sections++;

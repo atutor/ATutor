@@ -76,7 +76,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_pages['admin/index.php']['title_var'] = 'home';
 	$_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
 	$_pages['admin/index.php']['guide']     = 'admin/?p=configuration.php';
-	$_pages['admin/index.php']['children'] = array_merge(array('admin/admins/my_edit.php', 'admin/admins/my_password.php'), (array) $_pages['admin/index.php']['children']);
+	$_pages['admin/index.php']['children'] = array_merge(array('admin/admins/my_edit.php', 'admin/admins/my_password.php'), isset($_pages['admin/index.php']['children']) ?  $_pages['admin/index.php']['children'] : array());
 
 	$_pages['admin/admins/my_edit.php']['title_var'] = 'my_account';
 	$_pages['admin/admins/my_edit.php']['parent']    = 'admin/index.php';
@@ -99,7 +99,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_pages['admin/error_logging.php']['title_var'] = 'error_logging';
 	$_pages['admin/error_logging.php']['parent']    = 'admin/config_edit.php';
 	$_pages['admin/error_logging.php']['guide']     = 'admin/?p=error_logging.php';
-	$_pages['admin/error_logging.php']['children']  = array_merge(array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php'), (array) $_pages['admin/error_logging.php']['children']);
+	$_pages['admin/error_logging.php']['children']  = array_merge(array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php'), isset($_pages['admin/error_logging.php']['children']) ? $_pages['admin/error_logging.php']['children'] : array());
 
 	$_pages['admin/error_logging_reset.php']['title_var'] = 'reset_log';
 	$_pages['admin/error_logging_reset.php']['parent']    = 'admin/error_logging.php';
@@ -171,7 +171,7 @@ if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION
 	if ((get_instructor_status() === FALSE) && (!defined('ALLOW_INSTRUCTOR_REQUESTS') || !ALLOW_INSTRUCTOR_REQUESTS)) {
 		$_pages['users/index.php']['children']  = array_merge(array('users/browse.php'), (array) $_pages['users/index.php']['children']);
 	} else {
-		$_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), (array) $_pages['users/index.php']['children']);
+		$_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
 	}
 }
 	

@@ -122,7 +122,7 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 	}
 }
 
-if($_REQUEST['p']) {
+if (!empty($_REQUEST['p'])) {
 	$page = urldecode($_REQUEST['p']);
 	if (substr($page, 0, 1) == '/') {
 		$page = substr($page, 1);
@@ -358,7 +358,7 @@ switch ($row['access']){
 
 			$_SESSION['groups'] = get_groups($course);
 
-			if ($_GET['f']) {
+			if (!empty($_GET['f'])) {
 				header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 				exit;
 			} /* else */

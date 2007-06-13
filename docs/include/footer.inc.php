@@ -76,12 +76,7 @@ function rowselectbox(obj, checked, handler) {
 if ($framed || $popup) {
 	$savant->display('include/fm_footer.tmpl.php');
 } else {
-	error_reporting(E_ALL ^ E_NOTICE); // don't care if the footer has notices.
 	$savant->display('include/footer.tmpl.php');
-
-	if (defined('AT_DEVEL') && AT_DEVEL) {
-		error_reporting(E_ALL);
-	}
 }
 
 if (defined('AT_DEVEL') && AT_DEVEL) {
