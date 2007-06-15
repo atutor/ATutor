@@ -346,7 +346,15 @@ function insertFile(fileName, pathTo, ext) {
 		} else {
 			insertAtCursor(window.opener.document.form.body_text, html);
 		}
-
+	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid") {
+		var html = '[media]'+ pathTo + fileName + '[/media]';
+		if (window.parent.tinyMCE) {
+			window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
+		} else if (window.opener.tinyMCE) {
+			window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
+		} else {
+			insertAtCursor(window.opener.document.form.body_text, html);
+		}
 	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
 		var html = '<a href="' + pathTo+fileName + '">' + info + '</a>';

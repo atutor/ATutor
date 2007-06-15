@@ -45,7 +45,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<a href="javascript:smilie('[center] [/center]')" title="[center] [/center]"><?php echo _AT('center'); ?></a>,
 	<a href="javascript:smilie('[quote] [/quote]')" title="[quote] [/quote]"><?php echo _AT('quote'); ?></a>,
 	<a href="javascript:smilie('http://')" title="http://"><?php echo _AT('link'); ?></a>,
-	<a href="javascript:smilie('[image|alt text][/image]')" title="[image|alt text][/image]"><?php echo _AT('image'); ?></a><?php
+	<a href="javascript:smilie('[image|alt text][/image]')" title="[image|alt text][/image]"><?php echo _AT('image'); ?></a>,
+	<a href="javascript:smilie('[media][/media]')" title="[media] [/media]"><?php echo _AT('media'); ?></a><?php
 	if (isset($current_tab)) {
 		echo ',	<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a>';
 		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=true;">',_AT('add_code'), '</a>';

@@ -597,21 +597,59 @@ function highlight_code($code, $html) {
 }
 
 /* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
-function fix_quotes($text)
-{
+function fix_quotes($text){
 	return str_replace('\\"', '"', $text);
 }
 
+function embed_media($text) {
+	if (strpos($text, '[media]') === FALSE) {
+		return $text;
+	}
+
+	// .mpg
+	$text = preg_replace("#\[media\]([.\w\d]+[^\s\"]+).mpg\[/media\]#i", "<object data=\"\\1.mpg\" type=\"video/mpeg\" width=\"320\" height=\"255\"><param name=\"src\" value=\"\\1.mpg\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.mpg\">\\1.mpg</a></object>", $text);
+
+	// .avi
+	$text = preg_replace("#\[media\]([.\w\d]+[^\s\"]+).avi\[/media\]#i", "<object data=\"\\1.avi\" type=\"video/x-msvideo\" width=\"320\" height=\"255\"><param name=\"src\" value=\"\\1.avi\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.avi\">\\1.avi</a></object>", $text);
+
+	// .wmv
+	$text = preg_replace("#\[media\]([.\w\d]+[^\s\"]+).wmv\[/media\]#i", "<object data=\"\\1.wmv\" type=\"video/x-ms-wmv\" width=\"320\" height=\"255\"><param name=\"src\" value=\"\\1.wmv\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.wmv\">\\1.wmv</a></object>", $text);
+
+	// .mov
+	$text = preg_replace("#\[media\]([.\w\d]+[^\s\"]+).mov\[/media\]#i", "<object classid=\"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B\" codebase=\"http://www.apple.com/qtactivex/qtplugin.cab\" width=\"550\" height=\"400\"><param name=\"src\" value=\"\\1.mov\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><!--[if gte IE 7]> <!--><object type=\"video/quicktime\" data=\"\\1.mov\" width=\"550\" height=\"400\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><a href=\"\\1.mov\">\\1.mov</a></object><!--<![endif]--><!--[if lt IE 7]><a href=\"\\1.mov\">\\1.mov</a><![endif]--></object>", $text);
+
+	// .swf
+	$text = preg_replace("#\[media\]([.\w\d]+[^\s\"]+).swf\[/media\]#i", "<object type=\"application/x-shockwave-flash\" data=\"\\1.swf\" width=\"320\" height=\"240\">  <param name=\"movie\" value=\"\\1.swf\"><param name=\"loop\" value=\"false\"><a href=\"\\1.swf\">\\1.swf</a></object>", $text);
+
+	// youtube videos
+	$text = preg_replace("#http://(www.)?youtube.com/watch\?v=([a-z0-9_-]+)#i", '<object width="425" height="350"><param name="movie" value="http://www.youtube.com/v/\\2"></param><embed src="http://www.youtube.com/v/\\2" type="application/x-shockwave-flash" width="425" height="350"></embed></object>', $text);
+
+	// .mp3
+	$text = preg_replace("#\[media\](.+[^\s\"]+).mp3\[/media\]#i", "<object type=\"audio/mpeg\" data=\"\\1.mp3\" width=\"200\" height=\"20\"><param name=\"src\" value=\"\\1.mp3\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.mp3\">\\1.mp3</a></object>", $text);
+
+	// .wav
+	$text = preg_replace("#\[media\](.+[^\s\"]+).wav\[/media\]#i", "<object type=\"audio/x-wav\" data=\"\\1.wav\" width=\"200\" height=\"20\"><param name=\"src\" value=\"\\1.wav\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.wav\">\\1.wav</a></object>", $text);
+
+	// .ogg
+	$text = preg_replace("#\[media\](.+[^\s\"]+).ogg\[/media\]#i", "<object type=\"application/ogg\" data=\"\\1.ogg\" width=\"200\" height=\"20\"><param name=\"src\" value=\"\\1.ogg\"><a href=\"\\1.ogg\">\\1.ogg</a></object>", $text);
+
+	// .mid
+	$text = preg_replace("#\[media\](.+[^\s\"]+).ogg\[/media\]#i", "<object type=\"application/x-midi\" data=\"\\1.mid\" width=\"200\" height=\"20\"><param name=\"src\" value=\"\\1.mid\"><a href=\"\\1.mid\">\\1.mid</a></object>", $text);
+
+	return $text;
+}
 
 function make_clickable($text) {
-	$ret = eregi_replace("([[:space:]])(http[s]?)://([^[:space:]<]*)([[:alnum:]#?/&=])", "\\1<a href=\"\\2://\\3\\4\">\\3\\4</a>", $text);
+	$text = embed_media($text);
 
-	$ret = eregi_replace(	'([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
+	$text = eregi_replace("([[:space:]])(http[s]?)://([^[:space:]<]*)([[:alnum:]#?/&=])", "\\1<a href=\"\\2://\\3\\4\">\\3\\4</a>", $text);
+
+	$text = eregi_replace(	'([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
 							'\@'.'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)',
 							"<a href=\"mailto:\\1\">\\1</a>",
-							$ret);
+							$text);
 
-	return $ret;
+	return $text;
 }
 
 function image_replace($text) {

@@ -42,6 +42,9 @@
 		<dt>LaTeX</dt>
 		<dd><p>Use <kbd>[tex][/tex]</kbd> to embed LaTeX equations into your content.</p></dd>
 
+		<dt>Multimedia</dt>
+		<dd><p>Use <kbd>[media][/media]</kbd> to embed multimedia into your content. Supported formats are: mpeg, mov, wmv, mov, swf, mp3, wav, ogg, mid, and YouTube hosted videos.</p></dd>
+
 		<dt>Upload from File</dt>
 		<dd><p>Rather than typing out content, it can be uploaded from a text or HTML file on your local file system. Once uploaded, the content of that file will be displayed in the <em>Body</em> window. Keep in mind that uploading in this manner will replace any existing content in the <em>Body</em> window.</p></dd>
 
