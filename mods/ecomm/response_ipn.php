@@ -60,6 +60,11 @@ if (!$fp) {
 		if($_config['ec_currency'] != $_POST['mc_currency']){
 				$error[] = 'AT_ERROR_EC_PAYMENT_FAILED';
 		}
+		// check secret added to IPN url
+		if($_GET['secret'] != $_config['ec_password']){
+				$error[] = 'AT_ERROR_EC_PAYMENT_FAILED';
+		}
+
 		// process payment
 
 		if(!$error){
