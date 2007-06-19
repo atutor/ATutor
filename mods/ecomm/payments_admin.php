@@ -10,7 +10,7 @@ function is_enrolled($member_id, $course_id) {
 	return (boolean) mysql_fetch_assoc($result);
 }
 
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."payments";
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."payments WHERE approved=1";
 $result = mysql_query($sql, $db);
 if (($row = mysql_fetch_assoc($result)) && $row['cnt']) {
 	$num_results = $row['cnt'];
@@ -52,7 +52,7 @@ if ($_GET['reset_filter']) {
 
 $page_string = '';
 
-$sql = "SELECT P.*, M.login FROM ".TABLE_PREFIX."payments P INNER JOIN ".TABLE_PREFIX."members M USING (member_id)  ORDER BY timestamp desc LIMIT $offset, $results_per_page";
+$sql = "SELECT P.*, M.login FROM ".TABLE_PREFIX."payments P INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE P.approved=1 ORDER BY timestamp desc LIMIT $offset, $results_per_page";
 $result = mysql_query($sql,$db);
 
 require (AT_INCLUDE_PATH.'header.inc.php'); ?>
@@ -64,7 +64,7 @@ require (AT_INCLUDE_PATH.'header.inc.php'); ?>
 <tr>
 	<th scope="col"><?php echo _AT('date'); ?></th>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
-	<th scope="col"><?php echo _AT('ec_course_name'); ?></th>
+	<th scope="col"><?php echo _AT('course'); ?></th>
 	<th scope="col"><?php echo _AT('enrolled'); ?></th>
 	<th scope="col"><?php echo _AT('ec_payment_made'); ?></th>
 	<th scope="col"><?php echo _AT('ec_transaction_id'); ?></th>
@@ -73,7 +73,7 @@ require (AT_INCLUDE_PATH.'header.inc.php'); ?>
 <?php while($row = mysql_fetch_assoc($result)): ?>
 <tr>
 	<td align="center"><?php echo $row['timestamp']; ?></td>
-	<td align="center"><a href="profile.php?id=<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></a></td>
+	<td align="center"><?php echo $row['login']; ?></td>
 	<td align="center"><?php echo $system_courses[$row['course_id']]['title']; ?></td>
 	<td align="center">
 		<?php if (is_enrolled($row['member_id'], $row['course_id'])): ?>

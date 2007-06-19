@@ -7,13 +7,13 @@ CREATE TABLE `payments` (
 `transaction_id` CHAR( 100 ) NOT NULL ,
 `member_id` MEDIUMINT UNSIGNED NOT NULL ,
 `course_id` MEDIUMINT UNSIGNED NOT NULL ,
-`amount` FLOAT NOT NULL
+`amount` DECIMAL( 7, 2 ) NOT NULL DEFAULT '0'
 ) ENGINE=MYISAM ;
 
 
 CREATE TABLE `ec_course_fees` (
   `course_id` smallint( 8 )  NOT  NULL ,
-  `course_fee` float NOT  NULL ,
+  `course_fee` DECIMAL( 7, 2 ) NOT  NULL DEFAULT '0',
   `auto_approve` tinyint( 1 )  default NULL ,
   `auto_email` tinyint( 1 )  default NULL ,
  PRIMARY  KEY ( `course_id` )
@@ -24,6 +24,7 @@ CREATE TABLE `ec_course_fees` (
 INSERT INTO `language_text` VALUES ('en', '_module','ec_transaction_id','Transaction ID',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_settings','Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payments','Payments',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_approve_manually','Approve Manually',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ecomm','Payments',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_confirm_info','Review the following information before proceeding. If the information is correct, click the Pay by Credit Card button (or Pay by Cheque if enabled) to move on to the next step.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_course','Course',NOW(),'');
@@ -82,7 +83,6 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_cancel','Cancel',NOW(),'
 INSERT INTO `language_text` VALUES ('en', '_module','ec_auto_email','Email instructor when a payment has been received',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_requirements_comments','Note that most current browsers will have these enabled by default. If you are unable to complete the transaction, check these settings in your browser to be sure they are enabled.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_remove','Remove/Un-Enroll',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','ec_course_name','Course Name',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_this_course_fee','Course Fee',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_made','Payment Received',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_enroll_approved','Enrollment Approved',NOW(),'');
@@ -123,5 +123,6 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_PAYMENT_FAILED','The payment was cancelled or  failed.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Course fees are being managed by the systems administrator.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_c_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index.php">Payments</a> tab above, where they can be paid.',NOW(),'');
-
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_INVOICE_NOT_FOUND','Invoice number cannot be found.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_INVOICE_APPROVED','Invoice number has already been approved.',NOW(),'');
 

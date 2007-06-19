@@ -95,7 +95,7 @@ $_config['ec_allow_instructors'] = isset($_config['ec_allow_instructors']) ? $_c
 $_config['ec_email_admin']       = isset($_config['ec_email_admin'])       ? $_config['ec_email_admin']       : 0;
 $_config['ec_uri']               = isset($_config['ec_uri'])               ? $_config['ec_uri']               : '';
 $_config['ec_currency']          = isset($_config['ec_currency'])          ? $_config['ec_currency']          : 'USD';
-$_config['ec_currency_symbol']          = isset($_config['ec_currency_symbol'])          ? $_config['ec_currency_symbol']          : '$';
+$_config['ec_currency_symbol']   = isset($_config['ec_currency_symbol'])   ? $_config['ec_currency_symbol']   : '$';
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
@@ -181,8 +181,4 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 </form>
 
-<?php 
-
-
-
-require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

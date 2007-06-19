@@ -9,30 +9,27 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 * @param   dbl $amount	the fee for the course
 * @param   int $course_id		the numeric identifier for the course being paid for
 * @return  $_POST data		Pruchase information sent to Paypal
-* @author  Greg Gay
 */
-
 function paypal_print_form($payment_id, $amount, $course_id) {
 	global $_config, $system_courses;
 	if($_config['ec_gateway'] == 'PayPal'){
 ?>
 
 		<form action="<?php echo $_config['ec_uri']; ?>" method="post">
-			<input type="hidden" name="cmd" value="_xclick">
-			<input type="hidden" name="business" value="<?php echo $_config['ec_vendor_id']; ?>">
-			<input type="hidden" name="item_name" value="<?php echo htmlspecialchars($system_courses[$course_id]['title']); ?>">
-			<input type="hidden" name="item_number" value="<?php echo $payment_id; ?>">
-			<input type="hidden" name="amount" value="<?php echo $amount; ?>">
-			<input type="hidden" name="page_style" value="Primary">
-			<input type="hidden" name="notify_url" value="http://greg-pc.atrc.utoronto.ca/atutorsvn/docs/mods/ecomm/response_ipn.php">
-			<input type="hidden" name="no_shipping" value="0">
-			<input type="hidden" name="return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_paypal_user.php?pid=<?php echo $payment_id; ?>">
-			<input type="hidden" name="cancel_return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_paypal_user.php">
-			<input type="hidden" name="no_note" value="1">
-			<input type="hidden" name="currency_code" value="<?php echo $_config['ec_currency']; ?>">
-			<input type="hidden" name="lc" value="CA">
-			<input type="hidden" name="bn" value="PP-BuyNowBF">
-			<input type="submit" border="0" name="submit" value="<?php echo _AT('ec_paybypaypal'); ?>">
+			<input type="hidden" name="cmd" value="_xclick"/>
+			<input type="hidden" name="business" value="<?php echo $_config['ec_vendor_id']; ?>"/>
+			<input type="hidden" name="item_name" value="<?php echo htmlspecialchars($system_courses[$course_id]['title']); ?>"/>
+			<input type="hidden" name="item_number" value="<?php echo $payment_id; ?>"/>
+			<input type="hidden" name="amount" value="<?php echo $amount; ?>"/>
+			<input type="hidden" name="page_style" value="Primary"/>
+			<input type="hidden" name="notify_url" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_ipn.php"/>
+			<input type="hidden" name="no_shipping" value="0"/>
+			<input type="hidden" name="return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_paypal_user.php"/>
+			<input type="hidden" name="cancel_return" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/response_paypal_user.php"/>
+			<input type="hidden" name="no_note" value="1"/>
+			<input type="hidden" name="currency_code" value="<?php echo $_config['ec_currency']; ?>"/>
+			<input type="hidden" name="lc" value="CA"/>
+			<input type="submit" border="0" name="submit" value="<?php echo _AT('ec_paybypaypal'); ?>"/>
 			<img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" title="<?php echo _AT('ec_acceptvisa'); ?>" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle" /> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" title="<?php echo _AT('ec_acceptmastercard'); ?>" alt="<?php echo _AT('ec_acceptmastercard'); ?>" align="middle" />
 		</form>
 	
@@ -41,29 +38,9 @@ function paypal_print_form($payment_id, $amount, $course_id) {
 }
 
 function paypal_authenticate_user_response() {
-	global $_config, $msg, $db;
-
-//don't do anything
-
-
-/*
-	if($_config['ec_gateway'] == 'PayPal'){ 
-		$sql = "SELECT amount from ".TABLE_PREFIX."payments WHERE payment_id = '$_GET[pid]' ";
-		$result = mysql_query($sql, $db);
-		$this_amount = mysql_result($result,0);
-//print_r($_GET);
-//exit;
-
-		//if ($_GET['amt'] == $this_amount && $_POST['']) {
-		if ($_GET['amt'] == $this_amount) {
-				approve_payment($_GET['pid'], $_GET['tx']);
-				$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		}else{
-				$msg->addError('EC_PAYMENT_FAILED');
-		}
-	}
-*/
+	//don't do anything
 }
+
 function mirapay_print_form($payment_id, $amount, $course_id) {
 	global $_config;
 	if($_config['ec_gateway'] == 'MiraPay'){
@@ -116,15 +93,14 @@ function approve_payment($payment_id, $transaction_id) {
 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."ec_course_fees WHERE course_id=$course_id";
 	if($result = mysql_query($sql,$db)){
-	$course_fee_row = mysql_fetch_assoc($result);
+		$course_fee_row = mysql_fetch_assoc($result);
 	}
-	if($course_fee_row['auto_approve'] == '1'){
+	if ($course_fee_row['auto_approve'] == '1'){
 		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='y' WHERE member_id=$member_id AND course_id=$course_id";
 		mysql_query($sql, $db);
-				$msg->addFeedback('EC_PAYMENT_CONFIRMED_AUTO');
-	}else{
-
-				$msg->addFeedback('EC_PAYMENT_CONFIRMED_MANUAL');
+		$msg->addFeedback('EC_PAYMENT_CONFIRMED_AUTO');
+	} else {
+		$msg->addFeedback('EC_PAYMENT_CONFIRMED_MANUAL');
 	}
 	/// Get the course title
 	$course_title  = $system_courses[$course_id]['title'];
@@ -147,7 +123,7 @@ function approve_payment($payment_id, $transaction_id) {
 			
 		if(!$mail->Send()) {
 			$msg->printErrors('SENDING_ERROR');
-			exit;
+			return;
 		}
 		$mail->ClearAddresses();
 	}
@@ -168,16 +144,18 @@ function approve_payment($payment_id, $transaction_id) {
 			
 			if (!$mail->Send()) {
 				$msg->printErrors('SENDING_ERROR');
-				exit;
+				return;
 			}
 		}
 	}
 }
 
 function check_payment_print_form($payment_id, $amount, $course_id){
-global $db, $system_courses, $_config, $payment_id;
+	global $db, $system_courses, $_config, $payment_id;
 
-	if($_config['ec_contact_address'] != ''){
+	if (!$_config['ec_contact_address']) {
+		return;
+	}
 	echo _AT('or');
 	?>
 		<form  method="GET">
@@ -185,6 +163,22 @@ global $db, $system_courses, $_config, $payment_id;
 			<input type="hidden"  name="payment_id" value="<?php echo $payment_id; ?>">
 			<input class="button" type="submit" name="bycheque" value="<?php echo _AT('ec_paybycheque'); ?>" onclick="window.open('mods/ecomm/invoice.php?payment_id=<?php echo $payment_id.SEP; ?>course_title=<?php echo $system_courses[$course_id]['title'].SEP; ?>amount=<?php echo $amount; ?>','invwindow','height=425px, width=520px'); return false" /> 
 		</form><br/><br />
-	<?php }
+	<?php 
 }
+
+
+function log_paypal_ipn_requests($status) {
+	global $_config;
+
+	if (!$_config['ec_store_log'] || !$_config['ec_log_file']){
+		return;
+	}
+
+	$fp = fopen($_config['ec_log_file'], 'a+');
+	if (!$fp) { return; }
+	$data = date('Y-m-d H:i:s'). ' ' . $status .': '. print_r($_POST, true) . PHP_EOL;
+	fwrite($fp, $data);
+	fclose($fp);
+}
+
 ?>

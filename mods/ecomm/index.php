@@ -25,7 +25,7 @@ if (mysql_num_rows($result)) { ?>
 	<table class="data static" rules="rows" summary="">
 	<thead>
 		<tr>
-			<th scope="col"><?php echo _AT('ec_course_name'); ?></th>
+			<th scope="col"><?php echo _AT('course'); ?></th>
 			<th scope="col"><?php echo _AT('ec_this_course_fee'); ?></th>
 			<th scope="col"><?php echo _AT('ec_payment_made'); ?></th>
 			<th scope="col"><?php echo _AT('ec_enroll_approved'); ?></th>
@@ -70,7 +70,6 @@ if (mysql_num_rows($result)) { ?>
 			} else {
 				echo '<td align="center">'._AT('no').'</td>';
 			}
-			
 			if ($amount_paid >= $this_course_fee){
 				echo '<td align="center">'._AT('ec_full_payment_recieved').'</td>';
 			}else{
@@ -85,5 +84,4 @@ if (mysql_num_rows($result)) { ?>
 	$msg->printInfos('EC_NO_PAID_COURSES');
 }
 
-//debug($_POST);
- require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
