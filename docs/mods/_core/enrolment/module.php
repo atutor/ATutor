@@ -15,7 +15,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE) || admin_authenticate(AT_
 	$this->_pages['admin/enrollment/index.php']['parent']    = AT_NAV_ADMIN;
 	$this->_pages['admin/enrollment/index.php']['guide']     = 'admin/?p=enrollment.php';
 
-	$this->_pages['admin/enrollment/enroll_edit.php']['title_var']    = 'edit';
+	$this->_pages['admin/enrollment/enroll_edit.php']['title_var']    = 'enrollment';
 	$this->_pages['admin/enrollment/enroll_edit.php']['parent']   = 'admin/enrollment/index.php';
 
 	$this->_pages['admin/enrollment/privileges.php']['title_var'] = 'privileges';
@@ -44,7 +44,7 @@ $this->_pages['tools/enrollment/index.php']['children'] = array('tools/enrollmen
 	$this->_pages['tools/enrollment/privileges.php']['parent'] = 'tools/enrollment/index.php';
 	$this->_pages['tools/enrollment/privileges.php']['guide']     = 'instructor/?p=enrollment_privileges.php';
 	
-	$this->_pages['tools/enrollment/enroll_edit.php']['title_var']    = 'edit';
+	$this->_pages['tools/enrollment/enroll_edit.php']['title_var']    = 'enrollment';
 	$this->_pages['tools/enrollment/enroll_edit.php']['parent']   = 'tools/enrollment/index.php';
 
 ?>
