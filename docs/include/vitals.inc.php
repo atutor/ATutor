@@ -15,7 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
-define('AT_DEVEL_TRANSLATE', 1);
+define('AT_DEVEL_TRANSLATE', 0);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -880,10 +880,13 @@ function get_group_concat($table, $field, $where_clause = 1, $separator = ',') {
 		$sql = "SELECT GROUP_CONCAT($field SEPARATOR '$separator') AS list FROM ".TABLE_PREFIX."$table WHERE $where_clause";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
-			if ($row['list'] && strlen($row['list']) < $_config['mysql_group_concat_max_len']) {
+			if (!$row['list']) {
+				return 0; // empty
+			} else if ($row['list'] && strlen($row['list']) < $_config['mysql_group_concat_max_len']) {
 				return $row['list'];
 			} // else: list is truncated, do it the old way
 		} else {
+			// doesn't actually get here.
 			return 0; // empty
 		}
 	} // else:
