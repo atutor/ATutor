@@ -177,32 +177,32 @@ if ($_GET['search']) {
 $instructor_id = $system_courses[$course_id]['member_id'];
 if ($current_tab == 0) {
 	// enrolled
-	$sql_cnt = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$course_id AND CE.member_id=M.member_id AND approved='y' AND M.member_id<>$instructor_id AND CE.privileges=0 AND $search";
+	$sql_cnt = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
+				WHERE CE.course_id=$course_id AND approved='y' AND M.member_id<>$instructor_id AND CE.privileges=0 AND $search";
 	$sql	=  "SELECT CE.member_id, CE.privileges, CE.approved, M.login, M.first_name, M.second_name, M.last_name, M.email 
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$course_id AND CE.member_id=M.member_id AND approved='y' AND M.member_id<>$instructor_id AND CE.privileges=0 AND $search
+				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
+				WHERE CE.course_id=$course_id AND approved='y' AND M.member_id<>$instructor_id AND CE.privileges=0 AND $search
 				ORDER BY $col $order";
 } else if ($current_tab == 1) {
 	// assistants
 	$sql_cnt=  "SELECT COUNT(*) AS cnt
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$course_id AND CE.member_id=M.member_id AND CE.approved='y' AND CE.privileges>0 AND $search";
+				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
+				WHERE CE.course_id=$course_id AND CE.approved='y' AND CE.privileges>0 AND $search";
 	$sql	=  "SELECT CE.member_id, CE.approved, CE.privileges, M.login, M.first_name, M.second_name, M.last_name, M.email 
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$course_id AND CE.member_id=M.member_id AND CE.approved='y' AND CE.privileges>0 AND $search
+				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
+				WHERE CE.course_id=$course_id AND CE.approved='y' AND CE.privileges>0 AND $search
 				ORDER BY $col $order";
 
 } else if ($current_tab == 3) {
 	// pending
 	if ($system_courses[$course_id]['access'] == 'private') {
 		$sql_cnt = "SELECT COUNT(*) AS cnt 
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$course_id AND CE.member_id=M.member_id AND approved='n' AND $search";
+				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
+				WHERE CE.course_id=$course_id AND approved='n' AND $search";
 
 		$sql	=  "SELECT CE.member_id, CE.approved, CE.privileges, M.login, M.first_name, M.second_name, M.last_name, M.email 
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$course_id AND CE.member_id=M.member_id AND approved='n' AND $search
+				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
+				WHERE CE.course_id=$course_id AND approved='n' AND $search
 				ORDER BY $col $order";
 	} else {
 		// not sure what this is about
@@ -212,11 +212,11 @@ if ($current_tab == 0) {
 } else if ($current_tab == 2) {
 	// alumni
 	$sql_cnt=  "SELECT COUNT(*) AS cnt
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$course_id AND CE.member_id=M.member_id AND approved='a' AND $search";
+				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
+				WHERE CE.course_id=$course_id AND approved='a' AND $search";
 	$sql	=  "SELECT CE.member_id, CE.approved, CE.privileges, M.login, M.first_name, M.second_name, M.last_name, M.email 
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$course_id AND CE.member_id=M.member_id AND approved='a' AND $search
+				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
+				WHERE CE.course_id=$course_id AND approved='a' AND $search
 				ORDER BY $col $order";
 } else {
 	// not sure what this is about
