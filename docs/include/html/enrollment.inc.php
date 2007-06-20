@@ -173,21 +173,42 @@ if ($_GET['search']) {
 	$search = '1';
 }
 
-
 $instructor_id = $system_courses[$course_id]['member_id'];
+// retrieve all the members of this course (used later to get all those who aren't in this course)
+$course_enrollment = get_group_concat('course_enrollment', 'member_id', "course_id=$course_id AND member_id<>$instructor_id");
+$course_enrollment .= ','.$instructor_id;
+
+$tab_counts     = array();
+$tab_sql_counts = array();
+$tab_sql_counts[0] = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE CE.course_id=$course_id 
+						AND CE.approved='y' AND M.member_id<>$instructor_id AND CE.privileges=0 AND $search";
+$tab_sql_counts[1] = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE CE.course_id=$course_id 
+						AND CE.approved='y' AND CE.privileges>0 AND $search";
+$tab_sql_counts[2] = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE CE.course_id=$course_id 
+						AND approved='a' AND $search";
+$tab_sql_counts[3] = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE CE.course_id=$course_id
+						AND approved='n' AND $search";
+$tab_sql_counts[4] = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members M WHERE M.status>1 AND M.member_id NOT IN ($course_enrollment) AND $search";
+
+foreach ($tab_sql_counts as $tab => $sql) {
+	if ($tab == 3 && $system_courses[$course_id]['access'] != 'private') {
+		$tab_counts[$tab] = 0;
+	} else {
+		$result = mysql_query($sql);
+		$row    = mysql_fetch_assoc($result);
+		$tab_counts[$tab] = $row['cnt'];
+	}
+}
+
+
 if ($current_tab == 0) {
 	// enrolled
-	$sql_cnt = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
-				WHERE CE.course_id=$course_id AND approved='y' AND M.member_id<>$instructor_id AND CE.privileges=0 AND $search";
 	$sql	=  "SELECT CE.member_id, CE.privileges, CE.approved, M.login, M.first_name, M.second_name, M.last_name, M.email 
 				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
 				WHERE CE.course_id=$course_id AND approved='y' AND M.member_id<>$instructor_id AND CE.privileges=0 AND $search
 				ORDER BY $col $order";
 } else if ($current_tab == 1) {
 	// assistants
-	$sql_cnt=  "SELECT COUNT(*) AS cnt
-				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
-				WHERE CE.course_id=$course_id AND CE.approved='y' AND CE.privileges>0 AND $search";
 	$sql	=  "SELECT CE.member_id, CE.approved, CE.privileges, M.login, M.first_name, M.second_name, M.last_name, M.email 
 				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
 				WHERE CE.course_id=$course_id AND CE.approved='y' AND CE.privileges>0 AND $search
@@ -196,50 +217,31 @@ if ($current_tab == 0) {
 } else if ($current_tab == 3) {
 	// pending
 	if ($system_courses[$course_id]['access'] == 'private') {
-		$sql_cnt = "SELECT COUNT(*) AS cnt 
-				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
-				WHERE CE.course_id=$course_id AND approved='n' AND $search";
-
 		$sql	=  "SELECT CE.member_id, CE.approved, CE.privileges, M.login, M.first_name, M.second_name, M.last_name, M.email 
 				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
 				WHERE CE.course_id=$course_id AND approved='n' AND $search
 				ORDER BY $col $order";
 	} else {
 		// not sure what this is about
-		$sql_cnt = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members WHERE 0";
+//		$sql_cnt = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members WHERE 0";
 		$sql = "SELECT login FROM ".TABLE_PREFIX."members WHERE 0";
 	}
 } else if ($current_tab == 2) {
 	// alumni
-	$sql_cnt=  "SELECT COUNT(*) AS cnt
-				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
-				WHERE CE.course_id=$course_id AND approved='a' AND $search";
 	$sql	=  "SELECT CE.member_id, CE.approved, CE.privileges, M.login, M.first_name, M.second_name, M.last_name, M.email 
 				FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id)
 				WHERE CE.course_id=$course_id AND approved='a' AND $search
 				ORDER BY $col $order";
-} else {
-	// not sure what this is about
-	$tmp_sql	=  "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$course_id AND member_id<>$instructor_id ";
-	$tmp_result = mysql_query($tmp_sql, $db);
-	$course_enrollment = '';
-	while ($row = mysql_fetch_assoc($tmp_result)) {
-		$course_enrollment .= $row['member_id'] .',';
-	}
-	$course_enrollment .= $instructor_id;
+} else { // current_tab == 4
 
-	$sql_cnt=  "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members M WHERE M.status>1 AND M.member_id NOT IN ($course_enrollment) AND $search";
-
+//	$sql_cnt=  "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members M WHERE M.status>1 AND M.member_id NOT IN ($course_enrollment) AND $search";
+	
 	$sql	=  "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email FROM ".TABLE_PREFIX."members M WHERE M.member_id NOT IN ($course_enrollment) AND M.status>1 AND $search ORDER BY $col $order";
 }
 
 $results_per_page = 50;
 
-$result = mysql_query($sql_cnt, $db);
-$row = mysql_fetch_assoc($result);
-$num_results = $row['cnt'];
-
-$num_pages = max(ceil($num_results / $results_per_page), 1);
+$num_pages = max(ceil($tab_counts[$current_tab] / $results_per_page), 1);
 $page = intval($_GET['p']);
 if (!$page) {
 	$page = 1;
@@ -249,7 +251,7 @@ $offset = ($page-1)*$results_per_page;
 $sql .= " LIMIT $offset, $results_per_page";
 
 $enrollment_result = mysql_query($sql, $db);
-$page_string .= SEP . 'tab='.$current_tab;
+$page_string_w_tab = $page_string . SEP . 'tab='.$current_tab;
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
@@ -258,14 +260,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<input type="hidden" name="tab" value="<?php echo $current_tab; ?>"/>
 	<input type="hidden" name="course_id" value="<?php echo $course_id; ?>"/>
 	<div class="input-form">
-		<div class="row">
-			<h3><?php echo _AT('results_found', $num_results); ?></h3>
-		</div>
-
 		<?php if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE)): ?>
 			<div class="row">
 				<label for="course"><?php echo _AT('course'); ?></label><br/>
-				<select name="course_id">
+				<select name="course_id" id="course">
 				<?php
 				$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 				$result = mysql_query($sql, $db);
@@ -295,7 +293,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 </form>
 
-<?php print_paginator($page, $num_results, $page_string . SEP . $order .'='. $col, $results_per_page); ?>
+<?php print_paginator($page, $tab_counts[$current_tab], $page_string_w_tab . SEP . $order .'='. $col, $results_per_page); ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 <input type="hidden" name="tab" value="<?php echo $current_tab; ?>" />
@@ -304,9 +302,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <ul id="navlist">
 	<?php for ($i = 0; $i< $num_tabs; $i++): ?>
 		<?php if ($current_tab == $i): ?>
-			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.SEP; ?>course_id=<?php echo $course_id; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?></strong></a></li>
+			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></strong></a></li>
 		<?php else: ?>
-			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.SEP; ?>course_id=<?php echo $course_id; ?>"><?php echo _AT($tabs[$i]); ?></a></li>
+			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>"><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></a></li>
 		<?php endif; ?>
 	<?php endfor; ?>
 </ul>
@@ -339,15 +337,15 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tr>
 	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=login<?php echo $page_string;?>"><?php echo _AT('login_name'); ?></a></th>
+	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=login<?php echo $page_string_w_tab;?>"><?php echo _AT('login_name'); ?></a></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=first_name<?php echo $page_string;?>"><?php echo _AT('first_name'); ?></a></th>
+	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=first_name<?php echo $page_string_w_tab;?>"><?php echo _AT('first_name'); ?></a></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=second_name<?php echo $page_string;?>"><?php echo _AT('second_name'); ?></a></th>
+	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=second_name<?php echo $page_string_w_tab;?>"><?php echo _AT('second_name'); ?></a></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=last_name<?php echo $page_string;?>"><?php echo _AT('last_name'); ?></a></th>
+	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=last_name<?php echo $page_string_w_tab;?>"><?php echo _AT('last_name'); ?></a></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=email<?php echo $page_string;?>"><?php echo _AT('email'); ?></a></th>
+	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=email<?php echo $page_string_w_tab;?>"><?php echo _AT('email'); ?></a></th>
 </tr>
 </thead>
 <tfoot>
@@ -376,7 +374,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tr>
 </tfoot>
 <tbody>
-<?php if ($num_results): ?>
+<?php if ($tab_counts[$current_tab]): ?>
 	<?php while ($row = mysql_fetch_assoc($enrollment_result)): ?>
 		<tr onmousedown="document.selectform['m<?php echo $row['member_id']; ?>'].checked = !document.selectform['m<?php echo $row['member_id']; ?>'].checked;">
 			<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" title="<?php echo AT_print($row['login'], 'members.login'); ?>" /></td>

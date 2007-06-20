@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id$
 define('AT_INCLUDE_PATH', 'include/');
-ob_end_clean();
+@ob_end_clean();
 header("Content-Encoding: none");
 
 $_user_location	= 'public';
