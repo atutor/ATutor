@@ -93,7 +93,7 @@ if (isset($_GET['include']) && $_GET['include'] == 'one') {
 }
 
 if ($_GET['search']) {
-	$page_string .= SEP.'search='.urlencode($_GET['search']);
+	$page_string .= SEP.'search='.urlencode($stripslashes($_GET['search']));
 	$search = $addslashes($_GET['search']);
 	$search = explode(' ', $search);
 
