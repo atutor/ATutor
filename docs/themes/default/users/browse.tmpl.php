@@ -1,8 +1,9 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <div id="browse">
-	<div style="float: left; white-space:nowrap; padding-right:30px;">
-			<h3><?php echo _AT('cats_categories'); ?></h3>
+	<div style="white-space:nowrap; padding-right:30px;">
+
+			<!--h3><?php echo _AT('cats_categories'); ?></h3>
 
 			<ul class="browse-list">
 				<?php 
@@ -17,11 +18,10 @@
 						</div>
 					</li>
 				<?php endforeach; ?>		
-			</ul>			<br />
-
+			</ul>			<br /-->
 	</div>
 	<a name="courses"></a>
-	<div style="float: left; white-space:nowrap; padding-right:30px;">
+	<!--div style="float: left; white-space:nowrap; padding-right:30px;">
 			<h3><?php echo _AT('courses').': '.$this->cats[$this->cat]; ?></h3>
 
 			<?php if (isset($this->courses)):
@@ -59,35 +59,29 @@
 				echo _AT('no_courses');
 			endif;?>
 			<br />
-	</div>
+	</div-->
 
-	<div style="float: left; width: 40%;">
-		<h3><?php echo _AT('info');?>: 
-		<?php
-			if ($this->show_course == 0) {
-				echo _AT('all_courses'); 
-			} else {
-				echo $this->course_row[0]['title']; 
-			}
-		?> </h3>
-			
-
+	<ul style=" padding: 0px; margin: 0px">
 	<?php foreach ($this->course_row as $this->course_row): ?>
-		<a name="info"></a>
-		<div style="border:solid thin #999;">
-				<h4 style="clear: none;	display:inline;"><?php echo $this->course_row['title']; ?></h4>&nbsp;- <a href="bounce.php?course=<?php echo $this->course_row['course_id']; ?>"><?php echo _AT('enter_course'); ?></a>
-				<p><?php echo $this->course_row['description']; ?></p>
-				<p>
-				<?php 
-					echo _AT('instructor').': '. $this->course_row['login'];
-					echo ' - <a href="'. $_base_href.'contact_instructor.php?id='.$this->course_row['course_id'].'">'._AT('contact_instructor').'</a><br />'; 
-				?>
-				<?php echo _AT('access').': '._AT($this->course_row['access']); ?></p>
+		<li style="list-style: none; width: 80%">
+			<dl id="public-profile">
+				<dd><h3><a href="bounce.php?course=<?php echo $this->course_row['course_id']; ?>"><?php echo $this->course_row['title']; ?></a></h3></dd>
+				
+				<dt><?php echo _AT('description'); ?></dt>
+				<dd><?php echo $this->course_row['description']; ?>&nbsp;</dd>
 
-				<br />
-		</div><br />
+				<dt><?php echo _AT('category'); ?></dt>
+				<dd><?php echo $this->cats[$this->course_row['cat_id']]; ?>&nbsp;</dd>
+				
+				<dt><?php echo _AT('instructor'); ?></dt>
+				<dd><a href="<?php echo AT_BASE_HREF; ?>contact_instructor.php?id=<?php echo $this->course_row['course_id']; ?>"><?php echo get_display_name($this->course_row['member_id']); ?></a></dd>
+
+				<dt><?php echo _AT('access'); ?></dt>
+				<dd><?php echo _AT($this->course_row['access']); ?></dd>
+			</dl>
+		</li>
 	<?php endforeach; ?>
-	</div>
+	</ul>
 </div>
 <br />
 

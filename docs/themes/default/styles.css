@@ -623,12 +623,14 @@ table.data tfoot input[type=submit]:hover {
 
 /* course browser */
 
-div#browse {
+/*div#browse {
 	margin-left: auto; 
 	margin-right: auto; 
 	width: 80%;
 }
+*/
 
+/*
 div.browse-selected {
 	background-image: url('images/side_arrow.gif'); 
 	background-repeat: no-repeat; 
@@ -644,6 +646,7 @@ ul.browse-list {
 	list-style: none;
 	padding:0px;
 }
+*/
 
 /* feedback/errors */
 div#error {
@@ -1247,22 +1250,45 @@ p.fm-desc {
 /* profile page */
 dl#public-profile {
 	width: 100%;
+	padding-bottom: 25px;
 }
 dl#public-profile dt {
 	float: left;
 	font-weight: bold;
-	width: 30%;
+	width: 25%;
 	text-align: right;
 	clear: left;
-	border-right: 1px solid #f0f0f0;
-	padding: 5px 5px 5px 0px;
+	padding: 5px 10px 5px 0px;
 	vertical-align: middle;
-	margin-right: 5px;
 }
 dl#public-profile dd {
 	margin-bottom: 5px;
 	clear: right;
-	padding: 5px 0px 5px 5px;
+	padding: 5px 0px 5px 10px;
+	margin-left: 26%;
+	border-left: 1px solid #e0e0ff;
+}
+
+/* browse courses */
+dl.browse-course {
+	width: 100%;
+	padding-bottom: 25px;
+}
+dl.browse-course dt {
+	float: left;
+	font-weight: bold;
+	width: 25%;
+	text-align: right;
+	clear: left;
+	padding: 5px 10px 5px 0px;
+	vertical-align: middle;
+}
+dl.browse-course dd {
+	margin-bottom: 5px;
+	clear: right;
+	padding: 5px 0px 5px 10px;
+	margin-left: 26%;
+	border-left: 1px solid #e0e0ff;
 }
 
 /** forum stuff **/
