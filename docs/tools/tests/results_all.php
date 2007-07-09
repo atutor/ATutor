@@ -77,7 +77,7 @@ $num_questions = count($questions);
 
 //get all the marked tests for this test
 $guest_text = '- '._AT('guest').' -';
-$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.final_score<>'' ORDER BY M.login, R.date_taken";
+$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.status=1 AND R.test_id=$tid AND R.final_score<>'' ORDER BY M.login, R.date_taken";
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 if ($row = mysql_fetch_assoc($result)) {

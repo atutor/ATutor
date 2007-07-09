@@ -859,8 +859,7 @@ CREATE TABLE `tests_questions_assoc` (
   `weight` varchar(4) NOT NULL default '',
   `ordering` mediumint(8) unsigned NOT NULL default '0',
   `required` tinyint(3) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`test_id`,`question_id`),
-  KEY `test_id` (`test_id`)
+  PRIMARY KEY  (`test_id`,`question_id`)
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------
@@ -883,6 +882,7 @@ CREATE TABLE `tests_results` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `date_taken` TIMESTAMP NOT NULL,
   `final_score` char(5) NOT NULL default '',
+  `status` TINYINT NOT NULL DEFAULT '0',
   PRIMARY KEY  (`result_id`),
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM;

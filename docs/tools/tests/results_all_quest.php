@@ -62,7 +62,7 @@ $long_qs = substr($long_qs, 0, -1);
 //get the answers:  count | q_id | answer
 $sql = "SELECT count(*), A.question_id, A.answer, A.score
 		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
-		WHERE R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=$tid
+		WHERE R.status=1 AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=$tid
 		GROUP BY A.question_id, A.answer
 		ORDER BY A.question_id, A.answer";
 $result = mysql_query($sql, $db);

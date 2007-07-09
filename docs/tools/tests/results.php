@@ -75,16 +75,16 @@ $anonymous = $row['anonymous'];
 $random = $row['random'];
 
 //count total
-$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid";
+$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1";
 $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $num_sub = $row['cnt'];
 
 //get results based on filtre and sorting
 if ($anonymous == 1) {
-	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $status ORDER BY $col $order";
+	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
 } else {	
-	$sql	= "SELECT R.*, login, CONCAT(first_name, ' ', second_name, ' ', last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid $status ORDER BY $col $order, R.final_score $order";
+	$sql	= "SELECT R.*, login, CONCAT(first_name, ' ', second_name, ' ', last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
 }
 
 $result = mysql_query($sql, $db);
@@ -105,7 +105,7 @@ $num_results = mysql_num_rows($result);
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0)) {
 	$num_unmarked = $num_results;
 } else {
-	$sql		= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id AND R.final_score=''";
+	$sql		= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.status=1 AND R.member_id=M.member_id AND R.final_score=''";
 	$result	= mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
 	$num_unmarked = $row['cnt'];

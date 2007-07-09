@@ -115,13 +115,13 @@ $cols=6;
 			?></td>
 			<td><?php
 				//get # marked submissions
-				$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id'];
+				$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id'];
 				$result_sub	= mysql_query($sql_sub, $db);
 				$row_sub = mysql_fetch_assoc($result_sub);
 				echo $row_sub['sub_cnt'].' '._AT('submissions').', ';
 
 				//get # submissions
-				$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND final_score=''";
+				$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id']." AND final_score=''";
 				$result_sub	= mysql_query($sql_sub, $db);
 				$row_sub = mysql_fetch_assoc($result_sub);
 				echo $row_sub['marked_cnt'].' '._AT('unmarked');
