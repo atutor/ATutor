@@ -13,14 +13,18 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // $num_questions must be greater than or equal to $row_required['cnt'] + $row_optional['cnt']
-function get_total_weight($tid, $num_questions) {
+function get_total_weight($tid, $num_questions = null) {
 	global $db;
 	$sql = "SELECT SUM(weight) AS weight, required, COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid GROUP BY required ORDER BY required DESC";
 	$result = mysql_query($sql, $db);
 	$row_required = mysql_fetch_assoc($result);
 	$row_optional = mysql_fetch_assoc($result);
 
-	$total_weight = $row_required['weight'] + ($row_optional['weight'] / $row_optional['cnt']) * min($num_questions - $row_required['cnt'], $row_optional['cnt']);
+	if ($num_questions == null) {
+		$total_weight = $row_required['weight'] + $row_optional['weight'];
+	} else {
+		$total_weight = $row_required['weight'] + ($row_optional['weight'] / $row_optional['cnt']) * min($num_questions - $row_required['cnt'], $row_optional['cnt']);
+	}
 
 	return $total_weight;
 }

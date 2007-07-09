@@ -15,6 +15,7 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 authenticate(AT_PRIV_TESTS);
 
@@ -32,7 +33,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['num_questions']		= intval($_POST['num_questions']);
 	$_POST['num_takes']			= intval($_POST['num_takes']);
 	$_POST['anonymous']			= intval($_POST['anonymous']);
-	$_POST['allow_guests'] = $_POST['allow_guests'] ? 1 : 0;
+	$_POST['allow_guests']      = $_POST['allow_guests'] ? 1 : 0;
 	$_POST['instructions']      = $addslashes($_POST['instructions']);
 
 	/* this doesn't actually get used: */
@@ -121,7 +122,13 @@ if (isset($_POST['cancel'])) {
 		$result	= mysql_query($sql, $db);
 
 		if ($row = mysql_fetch_assoc($result)) {
-			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  result_release=$_POST[result_release], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous], guests=$_POST[allow_guests] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+			if ($_POST['random']) {
+				$total_weight = get_total_weight($tid, $_POST['num_questions']);
+			} else {
+				$total_weight = get_total_weight($tid);
+			}
+
+			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  result_release=$_POST[result_release], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous], guests=$_POST[allow_guests], out_of=$total_weight WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql, $db);
 
 			$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
