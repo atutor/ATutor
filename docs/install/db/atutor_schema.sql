@@ -883,6 +883,7 @@ CREATE TABLE `tests_results` (
   `date_taken` TIMESTAMP NOT NULL,
   `final_score` char(5) NOT NULL default '',
   `status` TINYINT NOT NULL DEFAULT '0',
+  `end_time` TIMESTAMP NOT NULL ,
   PRIMARY KEY  (`result_id`),
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM;

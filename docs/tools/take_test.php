@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 		$row    = mysql_fetch_assoc($result);
 		$result_id = $row['result_id'];
 	} else {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, 0, NOW(), '', 0)";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, 0, NOW(), '', 0, NOW())";
 		$result = mysql_query($sql, $db);
 		$result_id = mysql_insert_id($db);
 	}
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 
 	// update the final score
 	// update status to complate to fix refresh test issue.
-	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken, status=1 WHERE result_id=$result_id AND member_id=$_SESSION[member_id]";
+	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=$result_id AND member_id=$_SESSION[member_id]";
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -108,7 +108,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 /* Retrieve the content_id of this test */
-$num_questions = $test_row['num_questions'];	
+$num_questions = $test_row['num_questions'];
 $content_id = $test_row['content_id'];
 $anonymous = $test_row['anonymous'];
 $instructions = $test_row['instructions'];
@@ -178,7 +178,7 @@ if ($test_row['random']) {
 
 // save $questions with no response, and set status to 'in progress' in test_results <---
 if ($_SESSION['member_id'] && !$in_progress) {
-	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, $_SESSION[member_id], NOW(), '', 0)";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, $_SESSION[member_id], NOW(), '', 0, NOW())";
 	$result = mysql_query($sql, $db);
 	$result_id = mysql_insert_id($db);
 }

@@ -35,7 +35,7 @@ if ($_GET['reset_filter']) {
 }
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
-$cols   = array('login' => 1, 'full_name' => 1, 'date_taken' => 1, 'fs' => 1);
+$cols   = array('login' => 1, 'full_name' => 1, 'date_taken' => 1, 'fs' => 1, 'time_spent' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
@@ -82,9 +82,9 @@ $num_sub = $row['cnt'];
 
 //get results based on filtre and sorting
 if ($anonymous == 1) {
-	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
+	$sql	= "SELECT R.*, (R.end_time - R.date_taken) AS time_spent, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
 } else {	
-	$sql	= "SELECT R.*, login, CONCAT(first_name, ' ', second_name, ' ', last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
+	$sql	= "SELECT R.*, login, (R.end_time - R.date_taken) AS time_spent, CONCAT(first_name, ' ', second_name, ' ', last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
 }
 
 $result = mysql_query($sql, $db);
@@ -147,17 +147,21 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 	<?php if ($col == 'login'): ?>
 		<col />
 		<col class="sort" />
-		<col span="3" />
+		<col span="4" />
 	<?php elseif ($col == 'full_name'): ?>
 		<col span="2" />
 		<col class="sort" />
-		<col span="2" />
+		<col span="3" />
 	<?php elseif($col == 'date_taken'): ?>
 		<col span="3" />
 		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'time_spent'): ?>
+		<col span="4" />
+		<col class="sort" />
 		<col span="1" />
 	<?php elseif($col == 'fs'): ?>
-		<col span="4" />
+		<col span="5" />
 		<col class="sort" />
 	<?php endif; ?>
 </colgroup>
@@ -167,6 +171,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('login_name'); ?></a></th>
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=full_name"><?php echo _AT('full_name'); ?></a></th>
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=time_spent"><?php echo _AT('time_spent'); ?></a></th>
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
 </tr>
 </thead>
@@ -183,6 +188,8 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 			<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><?php echo $row['full_name']; ?></td>
 			<td><?php echo AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME); ?></td>
+			<td><?php echo get_human_time($row['time_spent']); ?></td>
+
 			<td align="center">
 				<?php if ($out_of) {
 					if ($random) {

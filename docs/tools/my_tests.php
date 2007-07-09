@@ -107,13 +107,16 @@ if (!$count) {
 <tr>
 	<th scope="col"><?php echo _AT('title');      ?></th>
 	<th scope="col"><?php echo _AT('date_taken'); ?></th>
+	<th scope="col"><?php echo _AT('time_spent'); ?></th>
 	<th scope="col"><?php echo _AT('mark');       ?></th>
 	<th scope="col"><?php echo _AT('submission'); ?></th>
 </tr>
 </thead>
 <tbody>
 <?php
-$sql	= "SELECT T.*, R.* FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE R.status=1 AND Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken DESC";
+
+
+$sql	= "SELECT T.*, R.*, (R.end_time - R.date_taken) AS diff FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE R.status=1 AND Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken DESC";
 
 $result	= mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
@@ -124,7 +127,8 @@ if ($row = mysql_fetch_assoc($result)) {
 	do {
 		echo '<tr>';
 		echo '<td><strong>'.AT_print($row['title'], 'tests.title').'</strong></td>';
-		echo '<td>'.$row['date_taken'].'</td>';
+		echo '<td>'.substr($row['date_taken'], 0, -3).'</td>';
+		echo '<td>'.get_human_time($row['diff']).'</td>';
 		echo '<td>';
 
 		if ($row['out_of'] == 0) {
