@@ -12,6 +12,19 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+// $num_questions must be greater than or equal to $row_required['cnt'] + $row_optional['cnt']
+function get_total_weight($tid, $num_questions) {
+	global $db;
+	$sql = "SELECT SUM(weight) AS weight, required, COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid GROUP BY required ORDER BY required DESC";
+	$result = mysql_query($sql, $db);
+	$row_required = mysql_fetch_assoc($result);
+	$row_optional = mysql_fetch_assoc($result);
+
+	$total_weight = $row_required['weight'] + ($row_optional['weight'] / $row_optional['cnt']) * min($num_questions - $row_required['cnt'], $row_optional['cnt']);
+
+	return $total_weight;
+}
+
 // returns T/F whether or not this member can view this test:
 function authenticate_test($tid) {
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
