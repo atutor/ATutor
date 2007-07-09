@@ -32,36 +32,31 @@ $_pages['tools/tests/questions.php']['guide']    = 'instructor/?p=add_questions.
 $tid = intval($_REQUEST['tid']);
 
 if (isset($_POST['submit'])) {
-	// check if we own this tid:
-	$sql    = "SELECT test_id, random FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+	$sql    = "SELECT test_id, random, num_questions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		/*
-		// For #1760
-		//check that randomized questions are all same weight.
-		$randomized_question_weight = -1;
+	if (!($row = mysql_fetch_assoc($result))) { exit; }
+
+	// #1760
+	// for each question that isn't required
+	if ($row['random']) {
 		foreach ($_POST['weight'] as $qid => $weight) {
-			$weight = $addslashes($weight);
-			if ($_POST['required'][$qid]) {
-				// do nothing
-			} else {
-				if ($randomized_question_weight == -1) {
-					// if first time through this loop.
-					$randomized_question_weight = $weight;
-				} else if ($randomized_question_weight != $weight) {
-					// The values of two non-required questions are not equal.
-					$msg->addError ("NON_REQUIRED_QUESTION_WEIGHT");
-					header('Location: '.$_SERVER['PHP_SELF'] .'?tid='.$tid);
-					exit;
-				} else {
-					// The values of non-required questions are equal so far.
-				}
+			if ($_POST['required'][$qid]) { continue; }
+			if (!$current_weight) { $current_weight = $weight; }
+
+			if ($current_weight != $weight) {
+				// the weights aren't the same.
+				$msg->addError('RAND_TEST_Q_WEIGHT');
+				break;
 			}
 		}
-		*/
+	}
 
+	if (!$msg->containsErrors()) {
 		//update the weights & order
 		$total_weight = 0;
+		$total_required_weight = 0;
+		$total_required_num = 0;
+		$optional_weight = 0;
 		$count = 1;
 		foreach ($_POST['weight'] as $qid => $weight) {
 			$weight = $addslashes($weight);
@@ -70,7 +65,18 @@ if (isset($_POST['submit'])) {
 			} else {
 				$required = 0;
 			}
-			
+
+			if ($row['random']) {
+				if ($required) {
+					$total_required_weight += $weight;
+					$total_required_num++;
+				} else {
+					$optional_weight = $weight; // what each optional question weights.
+				}
+			} else {
+				$total_weight += $weight; // not random, so just sum the weights
+			}
+				
 			if (!$row['random']) {
 				$orders = $_POST['ordering'];
 				asort($orders);
@@ -82,17 +88,30 @@ if (isset($_POST['submit'])) {
 			}
 
 			$result	= mysql_query($sql, $db);
-			$total_weight += $weight;
 			$count++;
 		}
 
-		$sql	= "UPDATE ".TABLE_PREFIX."tests SET out_of='$total_weight' WHERE test_id=$tid";
+		$num_questions_sql = '';
+		if ($row['random']) {
+			$row['num_questions'] -= $total_required_num;
+			if ($row['num_questions'] > 0) {
+				// how much do the optional questions add up to: (assume they all weight the same)
+				$total_weight = $total_required_weight + $optional_weight * $row['num_questions'];
+			} else {
+				$total_weight = $total_required_weight; // there are no more optional questions
+				$num_questions_sql = ', num_questions='.$total_required_num;
+			}
+		}
+
+
+		$sql	= "UPDATE ".TABLE_PREFIX."tests SET out_of='$total_weight' $num_questions_sql WHERE test_id=$tid";
 		$result	= mysql_query($sql, $db);
+
+		$total_weight = 0;
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		header('Location: '.$_SERVER['PHP_SELF'] .'?tid='.$tid);
+		exit;
 	}
-	$total_weight = 0;
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.$_SERVER['PHP_SELF'] .'?tid='.$tid);
-	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -116,7 +135,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_q
 $result	= mysql_query($sql, $db);
 
 ?>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?tid=<?php echo $tid; ?>" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <table class="data static" summary="" rules="cols">
 <thead>
@@ -144,12 +163,16 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 
 	do {
-		$total_weight += $row['weight'];
 		$count++;
 		echo '<tr>';
 		echo '<td class="row1" align="center"><strong>'.$count.'</strong></td>';
 		echo '<td class="row1" align="center">';
 		
+		if (isset($_POST['submit'])) {
+			$row['weight'] = $_POST['weight'][$row['question_id']];
+			$row['required'] = (isset($_POST['required'][$row['question_id']]) ? 1 : 0);
+		}
+
 		if ($row['type'] == 4) {
 			echo ''._AT('na').'';
 			echo '<input type="hidden" value="0" name="weight['.$row['question_id'].']" />';
@@ -200,12 +223,11 @@ if ($row = mysql_fetch_assoc($result)) {
 	//total weight
 	echo '<tfoot>';
 	echo '<tr><td>&nbsp;</td>';
-	echo '<td align="center" nowrap="nowrap"><strong>'._AT('total').':</strong> '.$total_weight.'</td>';
 	echo '<td colspan="';
 	if ($random) {
-		echo 5;
+		echo 7;
 	} else {
-		echo 4;
+		echo 5;
 	}
 
 	echo '" align="left" nowrap="nowrap">';

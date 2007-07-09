@@ -210,7 +210,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 	<?php endforeach; ?>
 <?php else: ?>
 	<tr>
-		<td colspan="4"><?php echo _AT('none_found'); ?></td>
+		<td colspan="6"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>

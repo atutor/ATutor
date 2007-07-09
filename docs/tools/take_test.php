@@ -38,7 +38,7 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 
 $out_of = $test_row['out_of'];
 
-$sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$tid." AND member_id=".$_SESSION['member_id'];
+$sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id=".$_SESSION['member_id'];
 $takes_result= mysql_query($sql, $db);
 $takes = mysql_fetch_assoc($takes_result);	
 

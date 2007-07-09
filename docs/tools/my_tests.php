@@ -76,7 +76,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 	if ($row['random']) {
 		echo '<td>'.$row['num_questions'].'</td>';
-		echo '<td>-</td>';
+		echo '<td>'.$row['out_of'].'</td>';
 	} else {
 		echo '<td>'.$row['numquestions'].'</td>';
 		if ($row['out_of'] > 0) {

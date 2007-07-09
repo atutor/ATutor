@@ -714,12 +714,11 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 	}
 
 	/*protected */function assignDisplayResultVariables($row, $answer_row) {
-		if (array_sum(array_slice($row, 16, -6)) > 1) {
+		if (strpos($answer_row['answer'], '|') !== false) {
 			$answer_row['answer'] = explode('|', $answer_row['answer']);
 		} else {
 			$answer_row['answer'] = array($answer_row['answer']);
 		}
-
 
 		$this->savant->assign('base_href', AT_BASE_HREF);
 		$this->savant->assign('answers', $answer_row['answer']);
