@@ -116,7 +116,7 @@ if (!$count) {
 <?php
 
 
-$sql	= "SELECT T.*, R.*, (R.end_time - R.date_taken) AS diff FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE R.status=1 AND Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken DESC";
+$sql	= "SELECT T.*, R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS diff FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE R.status=1 AND Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken DESC";
 
 $result	= mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);

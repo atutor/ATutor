@@ -82,7 +82,7 @@ $num_sub = $row['cnt'];
 
 //get results based on filtre and sorting
 if ($anonymous == 1) {
-	$sql	= "SELECT R.*, (R.end_time - R.date_taken) AS time_spent, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
+	$sql	= "SELECT R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
 } else {	
 	$sql	= "SELECT R.*, login, (R.end_time - R.date_taken) AS time_spent, CONCAT(first_name, ' ', second_name, ' ', last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
 }
