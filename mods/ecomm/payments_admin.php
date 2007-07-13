@@ -10,7 +10,8 @@ function is_enrolled($member_id, $course_id) {
 	return (boolean) mysql_fetch_assoc($result);
 }
 
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."payments WHERE approved=1";
+//$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."payments";
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment";
 $result = mysql_query($sql, $db);
 if (($row = mysql_fetch_assoc($result)) && $row['cnt']) {
 	$num_results = $row['cnt'];
@@ -52,7 +53,11 @@ if ($_GET['reset_filter']) {
 
 $page_string = '';
 
-$sql = "SELECT P.*, M.login FROM ".TABLE_PREFIX."payments P INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE P.approved=1 ORDER BY timestamp desc LIMIT $offset, $results_per_page";
+//$sql = "SELECT P.*, M.login FROM ".TABLE_PREFIX."payments P INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE P.approved=1 ORDER BY timestamp desc LIMIT $offset, $results_per_page";
+$sql = "SELECT P.*, M.login FROM ".TABLE_PREFIX."payments P INNER JOIN ".TABLE_PREFIX."members M USING (member_id)   ORDER BY  timestamp desc LIMIT $offset, $results_per_page";
+
+//$sql ="SELECT C.*, P.*,M.login FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."payments P, ".TABLE_PREFIX."members M WHERE M.member_id = E.member_id";
+
 $result = mysql_query($sql,$db);
 
 require (AT_INCLUDE_PATH.'header.inc.php'); ?>
