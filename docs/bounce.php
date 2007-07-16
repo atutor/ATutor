@@ -179,14 +179,14 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	exit; 
 }
 
-$sql	= "SELECT member_id, content_packaging, cat_id, access, title, UNIX_TIMESTAMP(release_date) AS u_release_date FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+$sql	= "SELECT member_id, content_packaging, cat_id, access, title, UNIX_TIMESTAMP(release_date) AS u_release_date, UNIX_TIMESTAMP(end_date) AS u_end_date FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
 if (!$row = mysql_fetch_assoc($result)) {
 	$msg->addError('ITEM_NOT_FOUND');
 	if ($_SESSION['member_id']) {
 		header('Location: '.AT_BASE_HREF.'users/index.php');
 	} else {
-		header('Location: login.php');
+		header('Location: '.AT_BASE_HREF.'login.php');
 	}
 	exit;
 }
@@ -208,11 +208,12 @@ if ($set_to_public) {
 	$row['access'] = "public";
 }
 
+//debug($row); exit;
 switch ($row['access']){
 	case 'public':
 		apply_category_theme($row['cat_id']);
 
-		if (!$_SESSION['valid_user'] && ($row['u_release_date'] < time())) {
+		if (!$_SESSION['valid_user'] && ($row['u_release_date'] < time()) && (!$row['u_end_date'] || $row['u_end_date'] > time())) {
 			$_SESSION['course_id']	  = $course;
 			/* guest login */
 			$_SESSION['login']		= 'guest';
@@ -224,7 +225,11 @@ switch ($row['access']){
 			/* add guest login to counter: */
 			count_login();
 		} else if (!$_SESSION['valid_user']) {
-			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			if ($row['u_release_date'] > time()) {
+				$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			} else {
+				$msg->addError(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
+			}
 			header('Location: '.AT_BASE_HREF.'browse.php');
 			exit;
 
@@ -257,6 +262,13 @@ switch ($row['access']){
 			exit;
 		} else if ($row['u_release_date'] > time()) {
 			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+
+		} else if ($row['u_end_date'] && ($row['u_end_date'] < time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
+			$msg->addError(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
+			header('Location: '.AT_BASE_HREF.'bounce.php?course=0');
+			exit;
+		} else if ($row['u_end_date'] && $row['u_end_date'] < time()) {
+			$msg->addInfo(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
 		}
 
 		/* add member login to counter: */
@@ -313,7 +325,16 @@ switch ($row['access']){
 			exit;
 		} else if ($row['u_release_date'] > time()) {
 			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+
+		} else if ($row['u_end_date'] && ($row['u_end_date'] < time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
+			$msg->addError(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
+			header('Location: '.AT_BASE_HREF.'bounce.php?course=0');
+			exit;
+		} else if ($row['u_end_date'] && $row['u_end_date'] < time()) {
+			$msg->addInfo(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
 		}
+
+
 		$_SESSION['course_title'] = $row['title'];
 
 		/* update users_online	*/
@@ -364,6 +385,8 @@ switch ($row['access']){
 			} /* else */
 			if ($row['u_release_date'] > time()) {
 				$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+			} else if ($row['u_end_date'] && $row['u_end_date'] < time()) {
+				$msg->addInfo(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
 			}
 			header('Location: ./'.$addslashes($page));
 			exit;
@@ -380,13 +403,19 @@ switch ($row['access']){
 			exit;
 		} /* else */
 
-		if (($row['u_release_date'] > time()) && !$row2['privileges']) {
+		if (($row['u_release_date'] > time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
 			$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
-			header('Location: '.$_AT_BASE_HREF.'bounce.php?course=0');
+			header('Location: '.AT_BASE_HREF.'bounce.php?course=0');
 			exit;
 		} else if ($row['u_release_date'] > time()) {
-			// only instructor and TAs may view  a course before it is released.
 			$msg->addInfo(array('COURSE_RELEASE', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
+
+		} else if ($row['u_end_date'] && ($row['u_end_date'] < time()) && !($_SESSION['is_admin'] || $_SESSION['privileges'])) {
+			$msg->addError(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
+			header('Location: '.AT_BASE_HREF.'bounce.php?course=0');
+			exit;
+		} else if ($row['u_end_date'] && $row['u_end_date'] < time()) {
+			$msg->addInfo(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
 		}
 		/* we have requested or are enrolled in this course */
 

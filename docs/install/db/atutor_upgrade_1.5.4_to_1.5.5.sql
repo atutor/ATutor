@@ -14,3 +14,6 @@ UPDATE TABLE `tests_results` SET status=1, date_taken=date_taken;
 ## times tests - #3084
 ALTER TABLE `tests_results` ADD `end_time` TIMESTAMP NOT NULL ;
 UPDATE TABLE `tests_results` SET date_taken=date_taken, end_time=date_taken;
+
+## end date - #3089
+ALTER TABLE `courses` ADD `end_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `release_date`;

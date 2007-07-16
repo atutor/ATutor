@@ -94,8 +94,32 @@ if (isset($_POST['form_course'])) {
 		$row['release_date'] = 0;
 	}
 
+	if (intval($_POST['end_date'])) {
+		$day_end	= intval($_POST['day_end']);
+		$month_end	= intval($_POST['month_end']);
+		$year_end	= intval($_POST['year_end']);
+		$hour_end	= intval($_POST['hour_end']);
+		$min_end	= intval($_POST['min_end']);
+
+		if (strlen($month_end) == 1){
+			$month_end = "0$month_end";
+		}
+		if (strlen($day_end) == 1){
+			$day_end = "0$day_end";
+		}
+		if (strlen($hour_end) == 1){
+			$hour_end = "0$hour_end";
+		}
+		if (strlen($min_end) == 1){
+			$min_end = "0$min_end";
+		}
+		$row['end_date'] = "$year_end-$month_end-$day_end $hour_end:$min_end:00";
+	} else {
+		$row['end_date'] = 0;
+	}
+
 } else if ($course) {
-	$sql	= "SELECT *, DATE_FORMAT(release_date, '%Y-%m-%d %H:%i:00') AS release_date FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+	$sql	= "SELECT *, DATE_FORMAT(release_date, '%Y-%m-%d %H:%i:00') AS release_date, DATE_FORMAT(end_date, '%Y-%m-%d %H:%i:00') AS end_date  FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 	$result = mysql_query($sql, $db);
 	if (!($row	= mysql_fetch_assoc($result))) {
 		echo _AT('no_course_found');
@@ -116,6 +140,7 @@ if (isset($_POST['form_course'])) {
 	$row['created_date']		= date('Y-m-d');
 	$row['rss']                 = 0; // default to off
 	$row['release_date']		= '0';
+	$row['end_date']            = '0';
 }
 /*
 if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
@@ -155,7 +180,6 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 				echo '<span id="inst">'._AT('none_found').'</span>';
 			}
 			?>
-		
 	</div>
 <?php endif; ?>
 
@@ -291,6 +315,36 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<input type="radio" name="release_date" value="1" id="release_later" <?php echo $rel_yes; ?> /> <label for="release_later"><?php echo _AT('release_on'); ?></label> 
 		<?php
 			$name = '_release';
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+		?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('end_date'); ?><br />
+		<?php
+			$end_no = $end_yes = '';
+
+			if (intval($row['end_date'])) {
+				$end_yes = ' checked="checked"';
+
+				$today_day   = substr($row['end_date'], 8, 2);
+				$today_mon   = substr($row['end_date'], 5, 2);
+				$today_year  = substr($row['end_date'], 0, 4);
+
+				$today_hour  = substr($row['end_date'], 11, 2);
+				$today_min   = substr($row['end_date'], 14, 2);
+			} else {
+				$end_no = ' checked="checked"'; 
+				$today_year  = date('Y')+1;
+			}
+
+		?>
+
+		<input type="radio" name="end_date" value="0" id="end_now" <?php echo $end_no; ?> /> <label for="end_now"><?php echo _AT('no_end_date'); ?></label><br />
+
+		<input type="radio" name="end_date" value="1" id="end_later" <?php echo $end_yes; ?> /> <label for="end_later"><?php echo _AT('end_on'); ?></label> 
+		<?php
+			$name = '_end';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 		?>
 	</div>

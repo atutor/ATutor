@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -901,6 +901,25 @@ function get_group_concat($table, $field, $where_clause = 1, $separator = ',') {
 		return substr($list, 0, -1);
 	}
 	return 0;
+}
+
+function get_human_time($seconds) {
+	if ($seconds < 0) { 
+		$out = '0'._AT('second_short'); 
+	} else if ($seconds > 60 * 60) { // more than 60 minutes.
+		$hours = floor($seconds / 60 / 60);
+		$minutes = floor(($seconds - $hours * 60 * 60) / 60);
+		$out = $hours ._AT('hour_short').' '.$minutes._AT('minute_short');
+
+		//$out = ($seconds
+	} else if ($seconds > 60) { // more than a minute
+		$minutes = floor($seconds / 60);
+		$out = $minutes ._AT('minute_short').' '.($seconds - $minutes * 60)._AT('second_short');
+	} else { // less than a minute
+		$out = $seconds . _AT('second_short');
+	}
+
+	return $out;
 }
 
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');

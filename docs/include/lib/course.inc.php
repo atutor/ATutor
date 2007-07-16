@@ -84,6 +84,34 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$release_date = "0000-00-00 00:00:00";
 	}
 
+	if ($_POST['end_date']) {
+		$day_end	= intval($_POST['day_end']);
+		$month_end	= intval($_POST['month_end']);
+		$year_end	= intval($_POST['year_end']);
+		$hour_end	= intval($_POST['hour_end']);
+		$min_end	= intval($_POST['min_end']);
+
+		if (!checkdate($month_end, $day_end, $year_end)) { //or date is in the past
+			$msg->addError('END_DATE_INVALID');
+		}
+
+		if (strlen($month_end) == 1){
+			$month_end = "0$month_end";
+		}
+		if (strlen($day_end) == 1){
+			$day_end = "0$day_end";
+		}
+		if (strlen($hour_end) == 1){
+			$hour_end = "0$hour_end";
+		}
+		if (strlen($min_end) == 1){
+			$min_end = "0$min_end";
+		}
+		$end_date = "$year_end-$month_end-$day_end $hour_end:$min_end:00";
+	} else {
+		$end_date = "0000-00-00 00:00:00";
+	}
+
 	$initial_content_info = explode('_', $_POST['initial_content'], 2);
 	//admin
 	$course_quotas = '';
@@ -150,7 +178,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$menu_defaults = ',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], $course_quotas primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date' $menu_defaults";
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], $course_quotas primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date', end_date='$end_date' $menu_defaults";
 
 	$result = mysql_query($sql, $db);
 	if (!$result) {

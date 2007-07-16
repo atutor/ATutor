@@ -204,6 +204,7 @@ CREATE TABLE `courses` (
   `main_links` text NOT NULL ,
   `side_menu` VARCHAR( 255 ) NOT NULL default '',
   `release_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `end_date` datetime NOT NULL default '0000-00-00 00:00:00',
    `banner` TEXT NOT NULL ,
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;

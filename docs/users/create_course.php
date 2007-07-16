@@ -11,8 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
-$page = 'my_courses';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
