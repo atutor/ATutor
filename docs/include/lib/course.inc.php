@@ -240,6 +240,8 @@ function add_update_course($_POST, $isadmin = FALSE) {
 			write_to_log(AT_ADMIN_LOG_INSERT, 'news', mysql_affected_rows($db), $sql);
 		}
 
+		/**
+		 * removed - #3098
 		// create forum for Welcome Course
 		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
 		$result = mysql_query($sql,$db);
@@ -254,6 +256,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		if ($isadmin) {
 			write_to_log(AT_ADMIN_LOG_INSERT, 'forums_courses', mysql_affected_rows($db), $sql);
 		}
+		***/
 
 	} else if (!$_POST['course'] && (count($initial_content_info) == 2)){
 
