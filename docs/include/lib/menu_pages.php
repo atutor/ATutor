@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2006 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2007 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /*
@@ -144,14 +143,17 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 $_pages['registration.php']['title_var'] = 'register';
 $_pages['registration.php']['parent']    = AT_NAV_PUBLIC;
 $_pages['registration.php']['children']  = isset($_pages['browse.php']['children']) ? $_pages['browse.php']['children'] : array();
+$_pages['registration.php']['guide']     = 'general/?p=register.php';
 
 $_pages['browse.php']['title_var'] = 'browse_courses';
 $_pages['browse.php']['parent']    = AT_NAV_PUBLIC;
 $_pages['browse.php']['children']  = isset($_pages['browse.php']['children']) ? $_pages['browse.php']['children'] : array();
+$_pages['browse.php']['guide']     = 'general/?p=browse_courses.php';
 
 $_pages['login.php']['title_var'] = 'login';
 $_pages['login.php']['parent']    = AT_NAV_PUBLIC;
 $_pages['login.php']['children']  = array_merge(array('password_reminder.php'), isset($_pages['login.php']['children']) ? $_pages['login.php']['children'] : array());
+$_pages['login.php']['guide']     = 'general/?p=login.php';
 
 $_pages['confirm.php']['title_var'] = 'confirm';
 $_pages['confirm.php']['parent']    = AT_NAV_PUBLIC;

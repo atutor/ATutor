@@ -20,13 +20,16 @@
 		<dd>Determines who can have access to the course content - any user, only logged in users, or logged in and enrolled users.</dd>
 
 		<dt>Release Date</dt>
-		<dd>The date when the course can be accessed by students. Or, available immediately.</dd>
+		<dd>An optional date from when the course can be accessed by non-privileged students.</dd>
+
+		<dt>End Date</dt>
+		<dd>An optional date from when the course can no longer be accessed by non-privileged students.</dd>
 
 		<dt>Banner</dt>
 		<dd>HTML that forms a custom banner or splash screen for the course home page. Appears above the course announcements, if there are any.</dd>
 
 		<dt>Initial Content</dt>
-		<dd>Initialise the course content to be either empty, basic place-holder content, or a restored backup from other courses you teach.</dd>
+		<dd>Initialise the course content to be either empty, basic place-holder content, or a restored backup from other courses you own.</dd>
 	</dl>
 
 <p>Enter the necessary information and use the <code>Save</code> button to proceed into the newly created course. </p>

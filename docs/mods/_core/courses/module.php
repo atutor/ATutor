@@ -25,6 +25,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
 
 		$this->_pages['admin/create_course.php']['title_var'] = 'create_course';
 		$this->_pages['admin/create_course.php']['parent']    = 'admin/courses.php';
+		$this->_pages['admin/create_course.php']['guide']     = 'admin/?p=creating_courses.php';
 
 		$_pages['admin/modules/default_mods.php']['title_var'] = 'default_modules';
 		$_pages['admin/modules/default_mods.php']['parent']    = 'admin/courses.php';
