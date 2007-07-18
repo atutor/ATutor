@@ -34,13 +34,13 @@ $row = array();
 
 $id = intval($_REQUEST['id']);
 if (isset($system_courses[$id], $system_courses[$id]['member_id'])) {
-	$sql	= "SELECT M.login, M.first_name, M.last_name, M.email FROM ".TABLE_PREFIX."members M WHERE M.member_id={$system_courses[$id][member_id]}";
+	$sql	= "SELECT M.member_id, M.first_name, M.last_name, M.email FROM ".TABLE_PREFIX."members M WHERE M.member_id={$system_courses[$id][member_id]}";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 }
 
 if ($row) {
-	$instructor_name = AT_print($row['login'], 'members.login');
+	$instructor_name = get_display_name($row['member_id']);
 	$instructor_email = AT_print($row['email'], 'members.email');
 } else {
 	$msg->addError('INST_INFO_NOT_FOUND');
