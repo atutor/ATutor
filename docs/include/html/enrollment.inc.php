@@ -376,7 +376,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tbody>
 <?php if ($tab_counts[$current_tab]): ?>
 	<?php while ($row = mysql_fetch_assoc($enrollment_result)): ?>
-		<tr onmousedown="document.selectform['m<?php echo $row['member_id']; ?>'].checked = !document.selectform['m<?php echo $row['member_id']; ?>'].checked;">
+		<tr onmousedown="document.selectform['m<?php echo $row['member_id']; ?>'].checked = !document.selectform['m<?php echo $row['member_id']; ?>'].checked; togglerowhighlight(this, 'm<?php echo $row['member_id']; ?>');" id="rm<?php echo $row['member_id']; ?>">
 			<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" title="<?php echo AT_print($row['login'], 'members.login'); ?>" /></td>
 			<td><?php echo AT_print($row['login'], 'members.login'); ?></td>
 			<td><?php echo AT_print($row['first_name'], 'members.name'); ?></td>
@@ -399,8 +399,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 function CheckAll() {
 	for (var i=0;i<document.selectform.elements.length;i++)	{
 		var e = document.selectform.elements[i];
-		if ((e.name == 'id[]') && (e.type=='checkbox'))
+		if ((e.name == 'id[]') && (e.type=='checkbox')) {
 			e.checked = document.selectform.selectall.checked;
+			togglerowhighlight(document.getElementById("r" + e.id), e.id);
+		}
+	}
+}
+
+function togglerowhighlight(obj, boxid) {
+	if (document.getElementById(boxid).checked) {
+		obj.className = 'selected';
+	} else {
+		obj.className = '';
 	}
 }
 //-->

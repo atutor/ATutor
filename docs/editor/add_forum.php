@@ -28,7 +28,7 @@ if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
 	}
 
 	if (!$msg->containsErrors()) {
-		require (AT_INCLUDE_PATH.'lib/forums.inc.php');
+		require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 		add_forum($_POST);
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

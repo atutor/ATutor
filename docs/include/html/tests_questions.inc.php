@@ -77,7 +77,7 @@ foreach ($cats as $cat) {
 		echo '</tr>';
 
 		do {
-			echo '<tr onmousedown="document.form[\'q' . $row['question_id'] . '\'].checked = !document.form[\'q' . $row['question_id'] . '\'].checked;">';
+			echo '<tr onmousedown="document.form[\'q' . $row['question_id'] . '\'].checked = !document.form[\'q' . $row['question_id'] . '\'].checked; togglerowhighlight(this, \'q'.$row['question_id'].'\');" id="rq'.$row['question_id'].'">';
 			echo '<td>';
 			echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
 			echo '<td>';
@@ -112,9 +112,19 @@ if (!$question_flag) {
 	function selectCat(catID, cat) {
 		for (var i=0;i<document.form.elements.length;i++) {
 			var e = document.form.elements[i];
-			if ((e.name == 'questions[' + catID + '][]') && (e.type=='checkbox'))
+			if ((e.name == 'questions[' + catID + '][]') && (e.type=='checkbox')) {
 				e.checked = cat.checked;
+				togglerowhighlight(document.getElementById("r" + e.id), e.id);
+			}
 		}
 	}
+	
+function togglerowhighlight(obj, boxid) {
+	if (document.getElementById(boxid).checked) {
+		obj.className = 'selected';
+	} else {
+		obj.className = '';
+	}
+}
 // -->
 </script>
