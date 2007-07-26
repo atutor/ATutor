@@ -60,6 +60,7 @@ if (isset($_POST['submit'])) {
 		if ($_POST['step1']['old_path'] != '') {
 			// get some usage data from this upgrade:
 			$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+			@mysql_select_db($_POST['step1']['db_name'], $db);
 
 			$db_size = 0; // db size in bytes
 			$sql = 'SHOW TABLE STATUS';
@@ -86,7 +87,7 @@ if (isset($_POST['submit'])) {
 			$sql = "SELECT GROUP_CONCAT(language_code) AS langs FROM ".$_POST['step1']['tb_prefix']."languages";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
-			$languages = $row['langs']
+			$languages = $row['langs'];
 
 			$request .= '&db='      . $db_size;     // db size in bytes
 			$request .= '&courses=' . $num_courses; // number of courses

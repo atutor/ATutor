@@ -155,6 +155,10 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."modules SET `admin_privilege`=$priv WHERE `dir_name`='_core/enrolment'";
 		mysql_query($sql, $db);
 	}
+	if (version_compare($_POST['step1']['old_version'], '1.5.5', '<')) {
+		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."tests_results SET status=1, date_taken=date_taken, end_time=date_taken";
+		mysql_query($sql, $db);
+	}
 
 	/* deal with the extra modules: */
 	/* for each module in the modules table check if that module still exists in the mod directory. */
