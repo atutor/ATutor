@@ -1248,11 +1248,11 @@ p.fm-desc {
 	font-size: small;
 }
 /* profile page */
-dl#public-profile {
+dl#public-profile, dl.col-list {
 	width: 100%;
 	padding-bottom: 25px;
 }
-dl#public-profile dt {
+dl#public-profile dt, dl.col-list dt {
 	float: left;
 	font-weight: bold;
 	width: 25%;
@@ -1261,13 +1261,16 @@ dl#public-profile dt {
 	padding: 5px 10px 5px 0px;
 	vertical-align: middle;
 }
-dl#public-profile dd {
+dl#public-profile dd, dl.col-list dd {
 	margin-bottom: 5px;
 	clear: right;
 	padding: 5px 0px 5px 10px;
 	margin-left: 26%;
 	border-left: 1px solid #e0e0ff;
 }
+
+dl.col-list dt { width: 30% }
+dl.col-list dd { margin-left: 32% }
 
 /* browse courses */
 dl.browse-course {

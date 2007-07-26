@@ -38,7 +38,6 @@ if ($_config['check_version']) {
 			$result = mysql_query($sql, $db);
 			$row    = mysql_fetch_assoc($result);
 		?>
-
 	<div class="input-form" style="width: 98%;">
 		<form method="get" action="admin/instructor_requests.php">
 			<div class="row">
@@ -51,22 +50,68 @@ if ($_config['check_version']) {
 			</div>
 		</form>
 	</div>
-
 	<?php endif; ?>
 
-	<div class="input-form" style="width: 98%;">
-		<form method="get" action="http://atutor.ca/check_atutor_version.php" target="_blank">
-		<input type="hidden" name="v" value="<?php echo urlencode(VERSION); ?>" />
-			<div class="row">
-				<h3><?php echo _AT('atutor_version'); ?></h3>
-				<p><?php echo _AT('atutor_version_text', VERSION); ?></p>
-			</div>
+	<div class="input-form" style="width: 98%">
+		<?php
+			$total = 0;
+			$sql = 'SHOW TABLE STATUS';
+			$result = mysql_query($sql, $db);
+			while($row = mysql_fetch_assoc($result)) {
+				$total += $row['Data_length']+$row['Index_length'];
+			}
 
-			<div class="row buttons">
-				<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" />
-			</div>
-		</form>
+			$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$num_courses = $row['cnt'];
+
+			$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$num_users = $row['cnt'];
+
+			$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."admins";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$num_users += $row['cnt'];
+
+			$sql = "SELECT VERSION()";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_array($result);
+			$mysql_version = $row[0];
+		?>
+
+		<div class="row">
+			<h3><?php echo _AT('statistics_information'); ?></h3>
+
+			<dl class="col-list">
+				<?php if ($total): ?>
+					<dt><?php echo _AT('database'); ?>:</dt>
+					<dd><?php echo number_format($total/AT_KBYTE_SIZE/AT_KBYTE_SIZE,2); ?> <acronym title="<?php echo _AT('megabytes'); ?>"><?php echo _AT('mb'); ?></acronym></dd>
+				<?php endif; ?>
+
+				<dt><?php echo _AT('courses'); ?>:</dt>
+				<dd><?php echo $num_courses; ?></dd>
+
+				<dt><?php echo _AT('users'); ?>:</dt>
+				<dd><?php echo $num_users; ?></dd>
+
+				<dt><?php echo _AT('atutor_version'); ?>:</dt>
+				<dd><?php echo _AT('atutor_version_text', VERSION, urlencode(VERSION)); ?></dd>
+
+				<dt><?php echo _AT('php_version'); ?>:</dt>
+				<dd><?php echo PHP_VERSION; ?></dd>
+
+				<dt><?php echo _AT('mysql_version'); ?>:</dt>
+				<dd><?php echo $mysql_version; ?></dd>
+
+				<dt><?php echo _AT('os'); ?>:</dt>
+				<dd><?php echo php_uname('s') . ' ' . php_uname('r'); ?></dd>
+			</dl>
+		</div>
 	</div>
+
 </div>
 
 <div style="width: 55%;">

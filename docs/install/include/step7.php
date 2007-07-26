@@ -44,16 +44,56 @@ if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
 	unset($action);
 
-	if ($_POST['log_yes']) {
+	// `true` is set to experiment to see if ppl are actually installing
+	// the `true` should be removed after 1.5.5
+	if (true || $_POST['log_yes']) {
 
 		$request  = '&upgrade=' . urlencode($stripslashes($_POST['log_upgrade']));
 		$request .= '&version=' . urlencode($stripslashes($new_version));
 		$request .= '&build='   . urlencode($stripslashes($build));
-		$request .= '&build_date='   . urlencode($stripslashes($build_date));
+		$request .= '&build_date=' . urlencode($stripslashes($build_date));
 		$request .= '&os='      . urlencode($stripslashes($_POST['log_os']));
 		$request .= '&server='  . urlencode($stripslashes($_POST['log_server']));
 		$request .= '&php='     . urlencode($stripslashes($_POST['log_php']));
 		$request .= '&mysql='   . urlencode($stripslashes($_POST['log_mysql']));
+
+		if ($_POST['step1']['old_path'] != '') {
+			// get some usage data from this upgrade:
+			$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+
+			$db_size = 0; // db size in bytes
+			$sql = 'SHOW TABLE STATUS';
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				$db_size += $row['Data_length']+$row['Index_length'];
+			}
+
+			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['step1']['tb_prefix']."courses";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$num_courses = $row['cnt'];
+
+			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['step1']['tb_prefix']."members";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$num_users = $row['cnt'];
+
+			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['step1']['tb_prefix']."admins";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$num_users += $row['cnt'];
+
+			$sql = "SELECT GROUP_CONCAT(language_code) AS langs FROM ".$_POST['step1']['tb_prefix']."languages";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$languages = $row['langs']
+
+			$request .= '&db='      . $db_size;     // db size in bytes
+			$request .= '&courses=' . $num_courses; // number of courses
+			$request .= '&users='   . $num_users;   // number of users (including admins)
+			$request .= '&langs='   . $languages;   // comma separated list of installed languages
+		}
+
 		if ($_POST['log_url_yes']) {
 			$request .= '&url=' . urlencode($stripslashes($_POST['log_url']));
 		}
@@ -65,10 +105,7 @@ if (isset($_POST['submit'])) {
 		$fp = fsockopen('www.atutor.ca', 80, $errno, $errstr, 30);
 
 		if ($fp) {
-			fputs ($fp, $header . $request . "\r\n\r\n");
-			while (!feof($fp)) {
-				$res .= fgets ($fp, 1024);
-			}
+			fputs($fp, $header . $request . "\r\n\r\n");
 			fclose($fp);
 		}
 	}
@@ -77,7 +114,6 @@ if (isset($_POST['submit'])) {
 	$step++;
 	return;
 }
-
 
 print_progress($step);
 
@@ -136,9 +172,11 @@ print_progress($step);
 			echo $url; ?><input type="hidden" name="log_url" value="<?php echo $url; ?>" /><br />
 		<input type="checkbox" name="log_url_yes" value="1" id="url_yes" /><label for="url_yes">Include this URL as well.</label></td>
 	</tr>
+	<?php /***
 	<tr>
 		<td class="row1" colspan="2"><div class="optional" title="Optional Field">?</div><input type="checkbox" name="log_yes" value="1" checked="checked" id="yes_send" /><label for="yes_send">Yes, send this information to atutor.ca.</label></td>
 	</tr>
+	***/ ?>
 	</table>
 
 <br />
