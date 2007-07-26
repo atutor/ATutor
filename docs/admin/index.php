@@ -54,11 +54,20 @@ if ($_config['check_version']) {
 
 	<div class="input-form" style="width: 98%">
 		<?php
-			$total = 0;
-			$sql = 'SHOW TABLE STATUS';
-			$result = mysql_query($sql, $db);
-			while($row = mysql_fetch_assoc($result)) {
-				$total += $row['Data_length']+$row['Index_length'];
+			if (!isset($_config['db_size']) || ($_config['db_size_ttl'] < time())) {
+				$_config['db_size'] = 0;
+				$sql = 'SHOW TABLE STATUS';
+				$result = mysql_query($sql, $db);
+				while($row = mysql_fetch_assoc($result)) {
+					$_config['db_size'] += $row['Data_length']+$row['Index_length'];
+				}
+
+				$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('db_size', '{$_config['db_size']}')";
+				mysql_query($sql, $db);
+
+				$ttl = time() + 24 * 60 * 60; // every 1 day.
+				$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('db_size_ttl', '$ttl')";
+				mysql_query($sql, $db);
 			}
 
 			$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
@@ -86,9 +95,9 @@ if ($_config['check_version']) {
 			<h3><?php echo _AT('statistics_information'); ?></h3>
 
 			<dl class="col-list">
-				<?php if ($total): ?>
+				<?php if ($_config['db_size']): ?>
 					<dt><?php echo _AT('database'); ?>:</dt>
-					<dd><?php echo number_format($total/AT_KBYTE_SIZE/AT_KBYTE_SIZE,2); ?> <acronym title="<?php echo _AT('megabytes'); ?>"><?php echo _AT('mb'); ?></acronym></dd>
+					<dd><?php echo number_format($_config['db_size']/AT_KBYTE_SIZE/AT_KBYTE_SIZE,2); ?> <acronym title="<?php echo _AT('megabytes'); ?>"><?php echo _AT('mb'); ?></acronym></dd>
 				<?php endif; ?>
 
 				<dt><?php echo _AT('courses'); ?>:</dt>
