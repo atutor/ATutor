@@ -21,6 +21,10 @@ if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE) || admin_authenticate(AT_
 	$this->_pages['admin/enrollment/privileges.php']['title_var'] = 'privileges';
 	$this->_pages['admin/enrollment/privileges.php']['parent']    = 'admin/enrollment/index.php';
 	$this->_pages['admin/enrollment/privileges.php']['guide']     = 'admin/?p=enrollment_privileges.php';
+
+	// linked from users.php
+	$this->_pages['admin/user_enrollment.php']['title_var'] = 'enrollment';
+	$this->_pages['admin/user_enrollment.php']['parent']    = 'admin/users.php';
 }
 
 $this->_pages['tools/enrollment/index.php']['title_var'] = 'enrollment';

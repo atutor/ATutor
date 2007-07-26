@@ -15,13 +15,16 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
-if ( (isset($_GET['edit']) || isset($_GET['password'])) && (isset($_GET['id']) && count($_GET['id']) > 1) ) {
+if ( (isset($_GET['edit']) || isset($_GET['password']) || isset($_GET['enrollment'])) && (isset($_GET['id']) && count($_GET['id']) > 1) ) {
 	$msg->addError('SELECT_ONE_ITEM');
 } else if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location: edit_user.php?id='.$_GET['id'][0]);
 	exit;
 } else if (isset($_GET['password'], $_GET['id'])) {
 	header('Location: password_user.php?id='.$_GET['id'][0]);
+	exit;
+} else if (isset($_GET['enrollment'], $_GET['id'])) {
+	header('Location: user_enrollment.php?id='.$_GET['id'][0]);
 	exit;
 } else if ( isset($_GET['apply']) && isset($_GET['id']) && $_GET['change_status'] >= -1) {
 	$ids = implode(',', $_GET['id']);
@@ -321,9 +324,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<td colspan="<?php echo 8 + $col_counts; ?>">
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
 			<input type="submit" name="password" value="<?php echo _AT('password'); ?>" />
-			 <span style="padding:0px 10px">|</span> 
+			<?php if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, true)): ?>
+				<input type="submit" name="enrollment" value="<?php echo _AT('enrollment'); ?>" />
+			<?php endif; ?>
+			<span style="padding:0px 10px">|</span> 
 			
-			 <select name="change_status">
+			<select name="change_status">
 				<option value="-2"><?php echo _AT('more_options'); ?></option>
 				<optgroup label="<?php echo _AT('status'); ?>">
 					<option value="<?php echo AT_STATUS_STUDENT; ?>"><?php echo _AT('student'); ?></option>
