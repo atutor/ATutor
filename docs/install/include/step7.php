@@ -131,9 +131,11 @@ print_progress($step);
 	?>
 <br />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
+	<?php /***
 	<tr>
 		<td class="row1" colspan="2">Would you like to send the following information to the atutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community.</td>
 	</tr>
+	***/ ?>
 	<tr>
 		<td class="row1" width="20%"><b>ATutor Version:</b></td>
 		<td class="row1"><?php echo $new_version; ?> (build <?php echo $build . ' - '.$build_date; ?>)</td>
