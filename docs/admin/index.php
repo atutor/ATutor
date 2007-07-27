@@ -67,9 +67,12 @@ if ($_config['check_version']) {
 
 				// get disk usage if we're on *nix
 				if (DIRECTORY_SEPARATOR == '/') {
-					$du = shell_exec('du -c '.escapeshellcmd(AT_CONTENT_DIR));
-					$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('du_size', '{$_config['du_size']}')";
-					mysql_query($sql, $db);
+					$du = shell_exec('du -sk '.escapeshellcmd(AT_CONTENT_DIR));
+					if ($du) {
+						$_config['du_size'] = (int) $du;
+						$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('du_size', '{$_config['du_size']}')";
+						mysql_query($sql, $db);
+					}
 				}
 
 				$ttl = time() + 24 * 60 * 60; // every 1 day.
@@ -109,7 +112,7 @@ if ($_config['check_version']) {
 
 				<?php if ($_config['du_size']): ?>
 					<dt><?php echo _AT('disk_usage'); ?>:</dt>
-					<dd><?php echo number_format($_config['du_size']/AT_KBYTE_SIZE/AT_KBYTE_SIZE,2); ?> <acronym title="<?php echo _AT('megabytes'); ?>"><?php echo _AT('mb'); ?></acronym></dd>
+					<dd><?php echo number_format($_config['du_size']/AT_KBYTE_SIZE,2); ?> <acronym title="<?php echo _AT('megabytes'); ?>"><?php echo _AT('mb'); ?></acronym></dd>
 				<?php endif; ?>
 
 				<dt><?php echo _AT('courses'); ?>:</dt>
