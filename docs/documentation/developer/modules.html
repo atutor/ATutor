@@ -118,6 +118,7 @@ acronym {
 <li><a href="#styles">Custom Style Sheets</a></li>
 <li><a href="#sidemenu">Side Menu Boxes</a></li>
 <li><a href="#tools">Student Tools</a></li>
+<li><a href="#groups">Group Tools</a></li>
 <li><a href="#navigation">Navigation &amp; Hierarchy</a></li>
 <li><a href="#delete">Course Deletion</a></li>
 <li><a href="#backup">Backing-Up and Restoring</a></li>
@@ -638,6 +639,13 @@ $savant->display('include/box.tmpl.php');
 	<p>The tool main page must be specified using the <kbd>$_student_tool</kbd> variable in the <kbd>module.php</kbd> file. The value of that variable must be the relative path to the file from the ATutor base directory (not the module directory). Example: <kbd>$_student_tool = 'mods/example_maker/index.php';</kbd>.</p>
 
 	<p>For the tool to correctly appear its Navigation &amp; Hierarchy must be defined correctly. If the tool is to have an instructor management section then the <em>parent</em> must be specified as being <kbd>tools/index.php</kbd> and the module must have a non-zero privilege level.</p>
+
+<a name="groups"></a>
+<h2>Group Tools</h2>
+	<p>Group tools are student tools that can also be group specific. A module can only implement one group tool. An instructor controls which group tools are available to a each group during the group creation process. Only group tools that are made available to students via the home page or main navigation are available for selection.</p>
+
+	<p>The group tool main page must be specified using the <kbd>$_group_tool</kbd> variable in the <kbd>module.php</kbd> file. The value of that variable must be the relative path to the file from the ATutor base directory (not the module directory). Example: <kbd>$_group_tool = 'mods/example_maker/index.php';</kbd>.</p>
+
 <a name="navigation"></a>
 <h2>Navigation &amp; Hierarchy</h2>
 	<p><em>Every</em> page in ATutor must have an entry in the global <kbd>$_pages</kbd> array where the key to the array is the relative path to the file from ATutor's base directory. Module pages are specified using the <kbd>$_module_pages</kbd> array, which are then merged into the <kbd>$_pages</kbd> array when the <kbd>module.php</kbd> file is loaded. The array supports the following attributes:</p>
