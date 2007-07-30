@@ -11,12 +11,11 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
 define('AT_INCLUDE_PATH', '../../include/');
 
 /* content id of an optional chapter */
-$cid = intval($_REQUEST['cid']);
-$c   = intval($_REQUEST['c']);
+$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : 0;
+$c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 
 if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	/* for TILE */
