@@ -13,7 +13,7 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $_base_path, $include_all, $include_one;
+global $_base_path, $include_all, $include_one, $stripslashes;
 global $savant;
 
 ob_start(); 
@@ -21,13 +21,18 @@ ob_start();
 if (!isset($include_all, $include_one)) {
 	$include_one = ' checked="checked"';
 }
+if (!isset($_GET['words'])) {
+	$_GET['words'] = '';
+} else {
+	$_GET['words'] = stripslashes(htmlspecialchars($_GET['words']));
+}
 ?>
 <form action="<?php echo $_base_path; ?>search.php#search_results" method="get" name="searchform">
 <input type="hidden" name="search" value="1" />
 <input type="hidden" name="find_in" value="this" />
 <input type="hidden" name="display_as" value="pages" />
 
-<input type="text" name="words" class="formfield" size="20" id="words" value="<?php echo stripslashes(htmlspecialchars($_GET['words'])); ?>" /><br />
+<input type="text" name="words" class="formfield" size="20" id="words" value="<?php echo $_GET['words']; ?>" /><br />
 <small>
 	<?php echo _AT('search_match'); ?>:<br />
 	<input type="radio" name="include" value="all" id="all2"<?php echo $include_all; ?> /><label for="all2"><?php echo _AT('search_all_words'); ?></label><br />
