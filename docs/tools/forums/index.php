@@ -31,17 +31,6 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'title';
-}
-
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
-} else {
-	$order = 'asc';
-}
 
 $all_forums = get_forums($_SESSION['course_id']);
 ?>

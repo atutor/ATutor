@@ -275,8 +275,9 @@ class Message {
 	
 
 	function addConfirm($code, $hidden_vars = '') {
+		$hidden_vars_string = '';
 		if (is_array($hidden_vars)) {
-			foreach($hidden_vars as $key => $value) {
+			foreach ($hidden_vars as $key => $value) {
 				$hidden_vars_string .= '<input type="hidden" name="'.$key.'" value="'.$value.'" />';
 			}
 		}

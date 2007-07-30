@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN);
 
-$course = intval($_REQUEST['course']);
+$course = isset($_REQUEST['course']) ? intval($_REQUEST['course']) : 0;
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
