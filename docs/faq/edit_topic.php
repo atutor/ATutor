@@ -61,7 +61,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 	$msg->printErrorS('ITEM_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
-} else if (!$_POST['name']) {
+} else if (!isset($_POST['name'])) {
 	$_POST['name'] = $row['name'];
 }
 
