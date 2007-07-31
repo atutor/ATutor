@@ -19,10 +19,12 @@ function get_total_weight($tid, $num_questions = null) {
 	$result = mysql_query($sql, $db);
 	$row_required = mysql_fetch_assoc($result);
 	$row_optional = mysql_fetch_assoc($result);
+	
+	$total_weight = 0;
 
 	if ($num_questions == null) {
 		$total_weight = $row_required['weight'] + $row_optional['weight'];
-	} else {
+	} else if ($row_optional['cnt'] > 0) {
 		$total_weight = $row_required['weight'] + ($row_optional['weight'] / $row_optional['cnt']) * min($num_questions - $row_required['cnt'], $row_optional['cnt']);
 	}
 
