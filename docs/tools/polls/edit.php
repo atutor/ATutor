@@ -46,7 +46,7 @@ if ($_POST['edit_poll']) {
 		}
 		$choices = substr($choices, 0, -1);
 
-		$sql = "UPDATE ".TABLE_PREFIX."polls SET question='$_POST[question]', created_date=created_date $choices WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."polls SET question='$_POST[question]', created_date=created_date, $choices WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
