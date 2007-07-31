@@ -25,9 +25,7 @@ $this->_stacks['hello_world'] = array('title_var'=>'hello_world', 'file'=>'mods/
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_student_tool = 'mods/hello_world/index.php';
-// ** possible alternative: **
-// $this->addTool('./index.php');
+$_group_tool = $_student_tool = 'mods/hello_world/index.php';
 
 /*******
  * add the admin pages when needed.
