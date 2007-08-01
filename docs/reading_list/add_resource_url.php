@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 	if (trim($_POST['title']) == '') {
 		$missing_fields[] = _AT('title');
 	}
-	if (trim($_POST['author']) == '') {
+	if (trim($_POST['url']) == '') {
 		$missing_fields[] = _AT('url');
 	}
 
