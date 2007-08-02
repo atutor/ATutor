@@ -80,8 +80,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 
 if ($_POST['verify']) {
-	for ($i=0; $i<$_POST['count']; $i++) {							
-		$students[] = checkUserInfo(array('fname' => $_POST['fname'.$i], 'lname' => $_POST['lname'.$i], 'email' => $_POST['email'.$i], 'uname' => $_POST['uname'.$i], 'remove' => $_POST['remove'.$i]));
+	for ($i=0; $i<$_POST['count']; $i++) {
+		$info = array('fname' => $_POST['fname'.$i], 'lname' => $_POST['lname'.$i], 'email' => $_POST['email'.$i], 'uname' => $_POST['uname'.$i], 'remove' => $_POST['remove'.$i]);
+		$students[] = checkUserInfo($info);
 
 		if (!empty($students[$i]['err_email']) || !empty($students[$i]['err_uname'])) {
 			$still_errors = TRUE;
@@ -143,12 +144,13 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 			//give status
 			if(!empty($student['err_email'])) {
 				echo $student['err_email'];
-			} 			
+			}
+
 			if(!empty($student['err_uname'])) {
 				if(!empty($student['err_email'])) {
 					echo '<br />';
 				}
-				echo $student['err_uname'];				
+				echo $student['err_uname'];
 			} 		
 			if (empty($student['err_uname']) && empty($student['err_email'])) {
 				 
