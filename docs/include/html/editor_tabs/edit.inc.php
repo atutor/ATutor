@@ -60,8 +60,7 @@ if (trim($_POST['body_text']) == '<br />') {
 }
 
 ?>
-
-		<textarea name="body_text" id="body_text" cols="" rows="20"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>	
+		<textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']); ?></textarea>	
 	</div>
 	<div class="row">
 		<?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?>
