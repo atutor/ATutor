@@ -82,6 +82,7 @@ if (isset($_GET['view']) && $_GET['view']) {
 			<div class="body">
 				<p><?php echo AT_print($row['body'], 'messages.body'); ?></p>
 			</div>
+			<div style="clear: both; font-size: 0.1em"></div>
 		</div>
 	</div>
 	</li>
