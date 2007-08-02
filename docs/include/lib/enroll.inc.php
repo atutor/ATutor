@@ -14,8 +14,9 @@
 
 function checkUserInfo($record) {
 	global $db, $addslashes;
+	static $email_list;
 
-	if(empty($record['remove'])) {
+	if (empty($record['remove'])) {
 		$record['remove'] = FALSE;			
 	}
 
@@ -31,20 +32,25 @@ function checkUserInfo($record) {
 		$record['err_email'] = _AT('import_err_email_missing');
 	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $record['email'])) {
 		$record['err_email'] = _AT('import_err_email_invalid');
-	}
+	} else if (isset($email_list[$record['email']])) {
+		$record['err_email'] = _AT('import_err_email_exists');
+	} else {
+		$record['email'] = $addslashes($record['email']);
 
-	$record['email'] = $addslashes($record['email']);
-
-	$sql="SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$record[email]'";
-	$result = mysql_query($sql,$db);
-	if (mysql_num_rows($result) != 0) {
-		$row = mysql_fetch_assoc($result);
-		$record['exists'] = _AT('import_err_email_exists');
-		$record['fname']  = $row['first_name']; 
-		$record['lname']  = $row['last_name'];
-		$record['email']  = $row['email'];
-		$record['uname']  = $row['login'];
-		$record['status'] = $row['status'];
+		$sql="SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$record[email]'";
+		$result = mysql_query($sql,$db);
+		if (mysql_num_rows($result) != 0) {
+			$row = mysql_fetch_assoc($result);
+			$record['exists'] = _AT('import_err_email_exists');
+			$record['fname']  = $row['first_name']; 
+			$record['lname']  = $row['last_name'];
+			$record['email']  = $row['email'];
+			$record['uname']  = $row['login'];
+			$record['status'] = $row['status'];
+		} else {
+			// it's good, add it to the list
+			$email_list[$record['email']] = true;
+		}
 	}
 
 	/* username check */
