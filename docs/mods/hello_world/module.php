@@ -61,4 +61,8 @@ $this->_pages['mods/hello_world/index_public.php']['parent'] = AT_NAV_PUBLIC;
 $this->_pages[AT_NAV_START]  = array('mods/hello_world/index_mystart.php');
 $this->_pages['mods/hello_world/index_mystart.php']['title_var'] = 'hello_world';
 $this->_pages['mods/hello_world/index_mystart.php']['parent'] = AT_NAV_START;
+
+function hello_world_get_group_url($group_id) {
+	return 'mods/hello_world/index.php';
+}
 ?>
