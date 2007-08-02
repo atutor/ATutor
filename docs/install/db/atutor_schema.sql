@@ -620,7 +620,6 @@ INSERT INTO `modules` VALUES ('_standard/student_tools', 2, 256,       0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/enrolment',         2, 512,       512, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/course_email',  2, 1024,      0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/announcements', 2, 2048,      0, 0, 0);
-# INSERT INTO `modules` VALUES ('acollab',               2, 8192+4096, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/polls',         2, 16384,     0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/faq',           2, 32768,     0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/groups',            2, 65536,     0, 0, 0);
