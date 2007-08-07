@@ -58,6 +58,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (trim($_POST['body_text']) == '<br />') {
 	$_POST['body_text'] = '';
 }
+if ($do_check) {
+	$_POST['body_text'] = $stripslashes($_POST['body_text']);
+}
 
 ?>
 		<textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']); ?></textarea>	
