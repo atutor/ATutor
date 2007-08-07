@@ -17,10 +17,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 	<div class="row"><?php 
 	
-		echo '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
+		echo '<h2>'.AT_print($stripslashes($_POST['title']), 'content.title').'</h2>';
 
 		if ($_POST['body_text']) {
-			echo format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
+			echo format_content($stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
 		} else { 
 			global $msg;
 		

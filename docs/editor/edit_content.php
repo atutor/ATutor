@@ -209,9 +209,9 @@ $pid = intval($_REQUEST['pid']);
 
 
 	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
-	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
+	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
 	if ($current_tab != 0) {
-		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
+		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
 		echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
 		echo '<input type="hidden" name="settext" value="'.$_POST['settext'].'" />';		
 		echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
