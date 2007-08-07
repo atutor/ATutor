@@ -10,6 +10,6 @@
 	<textarea cols="55" rows="5" name="answers[<?php echo $this->row['question_id']; ?>]" class="formfield"></textarea>
 
 <?php elseif ($this->row['properties'] == 4): /* page */ ?>
-	<textarea cols="55" rows="25" name="answers[<?php echo $row['question_id']; ?>]" class="formfield"></textarea>
+	<textarea cols="55" rows="25" name="answers[<?php echo $this->row['question_id']; ?>]" class="formfield"></textarea>
 
 <?php endif; ?>
