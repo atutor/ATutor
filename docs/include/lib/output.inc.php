@@ -602,6 +602,10 @@ function fix_quotes($text){
 }
 
 function embed_media($text) {
+	// youtube videos
+	$text = preg_replace("#http://(www.)?youtube.com/watch\?v=([a-z0-9_-]+)#i", '<object width="425" height="350"><param name="movie" value="http://www.youtube.com/v/\\2"></param><embed src="http://www.youtube.com/v/\\2" type="application/x-shockwave-flash" width="425" height="350"></embed></object>', $text);
+
+
 	if (strpos($text, '[media]') === FALSE) {
 		return $text;
 	}
@@ -620,9 +624,6 @@ function embed_media($text) {
 
 	// .swf
 	$text = preg_replace("#\[media\]([.\w\d]+[^\s\"]+).swf\[/media\]#i", "<object type=\"application/x-shockwave-flash\" data=\"\\1.swf\" width=\"320\" height=\"240\">  <param name=\"movie\" value=\"\\1.swf\"><param name=\"loop\" value=\"false\"><a href=\"\\1.swf\">\\1.swf</a></object>", $text);
-
-	// youtube videos
-	$text = preg_replace("#http://(www.)?youtube.com/watch\?v=([a-z0-9_-]+)#i", '<object width="425" height="350"><param name="movie" value="http://www.youtube.com/v/\\2"></param><embed src="http://www.youtube.com/v/\\2" type="application/x-shockwave-flash" width="425" height="350"></embed></object>', $text);
 
 	// .mp3
 	$text = preg_replace("#\[media\](.+[^\s\"]+).mp3\[/media\]#i", "<object type=\"audio/mpeg\" data=\"\\1.mp3\" width=\"200\" height=\"20\"><param name=\"src\" value=\"\\1.mp3\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.mp3\">\\1.mp3</a></object>", $text);
