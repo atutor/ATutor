@@ -29,8 +29,6 @@ $result	= mysql_query($sql, $db);
 	<th scope="col"><?php echo _AT('start_date'); ?></th>
 	<th scope="col"><?php echo _AT('end_date');   ?></th>
 	<th scope="col"><?php echo _AT('attempts');   ?></th>
-	<th scope="col"><?php echo _AT('questions');  ?></th>
-	<th scope="col"><?php echo _AT('out_of');     ?></th>
 </tr>
 </thead>
 <tbody>
@@ -52,7 +50,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$takes = mysql_fetch_assoc($takes_result);
 	if ( ($row['us'] <= time() && $row['ue'] >= time()) && 
 	   ( ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] < $row['num_takes']) )  ) {
-		echo '<strong><a href="tools/take_test.php?tid='.$row['test_id'].'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
+		echo '<strong><a href="tools/test_intro.php?tid='.$row['test_id'].'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
 	} else {
 		echo '<small class="bigspacer">'.AT_print($row['title'], 'tests.title').'';
 	}
@@ -74,6 +72,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		echo '<td>'.$takes['cnt'].'/'.$row['num_takes'].'</td>';
 	}
 
+/*
 	if ($row['random']) {
 		echo '<td>'.$row['num_questions'].'</td>';
 		echo '<td>'.$row['out_of'].'</td>';
@@ -85,7 +84,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			echo '<td><em>'._AT('na').'</em></td>';
 		}
 	}			
-
+*/
 	echo '</tr>';
 
 }
