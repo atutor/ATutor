@@ -635,7 +635,7 @@ function embed_media($text) {
 	$text = preg_replace("#\[media\](.+[^\s\"]+).ogg\[/media\]#i", "<object type=\"application/ogg\" data=\"\\1.ogg\" width=\"200\" height=\"20\"><param name=\"src\" value=\"\\1.ogg\"><a href=\"\\1.ogg\">\\1.ogg</a></object>", $text);
 
 	// .mid
-	$text = preg_replace("#\[media\](.+[^\s\"]+).ogg\[/media\]#i", "<object type=\"application/x-midi\" data=\"\\1.mid\" width=\"200\" height=\"20\"><param name=\"src\" value=\"\\1.mid\"><a href=\"\\1.mid\">\\1.mid</a></object>", $text);
+	$text = preg_replace("#\[media\](.+[^\s\"]+).mid\[/media\]#i", "<object type=\"application/x-midi\" data=\"\\1.mid\" width=\"200\" height=\"20\"><param name=\"src\" value=\"\\1.mid\"><a href=\"\\1.mid\">\\1.mid</a></object>", $text);
 
 	return $text;
 }
