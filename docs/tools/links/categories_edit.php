@@ -50,7 +50,6 @@ if (isset($_POST['submit'])) {
 
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-
 		header('Location: categories.php');
 		exit;
 	}
@@ -75,7 +74,10 @@ $categories = get_link_categories(true);
 
 $onload = 'document.form.category_name.focus();';
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+$current_cat_id = $categories[$cat_id]['cat_parent'];
+
 ?>
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>" />
@@ -90,13 +92,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row">
 		<label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label><br />
 		<select name="cat_parent_id" id="category_parent"><?php
-				$current_cat_id = $categories[$cat_id]['cat_parent'];
 				$exclude = true; /* exclude the children */
 				
 				//remove the current cat_id and it's sub cats from list, don't want to print them out.
-				foreach ($categories[$current_cat_id]['children'] as $id=>$child) {
-					if ($child == $cat_id) {
-						unset($categories[$current_cat_id]['children'][$id]);
+				if (is_array($categories[$current_cat_id]['children'])) {
+					foreach ($categories[$current_cat_id]['children'] as $id=>$child) {
+						if ($child == $cat_id) {
+							unset($categories[$current_cat_id]['children'][$id]);
+						}
 					}
 				}
 				unset($categories[$cat_id]);

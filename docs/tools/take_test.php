@@ -127,7 +127,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	// retrieve the test questions that were saved to `tests_answers`
 
-	$sql	= "SELECT R.*, A.*, Q.* FROM ".TABLE_PREFIX."tests_answers R INNER JOIN ".TABLE_PREFIX."tests_questions_assoc A USING (question_id) INNER JOIN ".TABLE_PREFIX."tests_questions Q USING (question_id) WHERE R.result_id=$result_id AND A.test_id=$tid";
+	$sql	= "SELECT R.*, A.*, Q.* FROM ".TABLE_PREFIX."tests_answers R INNER JOIN ".TABLE_PREFIX."tests_questions_assoc A USING (question_id) INNER JOIN ".TABLE_PREFIX."tests_questions Q USING (question_id) WHERE R.result_id=$result_id AND A.test_id=$tid ORDER BY Q.question_id";
 	
 } else if ($test_row['random']) {
 	/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
@@ -154,7 +154,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	$random_id_string = implode(',', $required_questions);
 
-	$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid AND TQA.question_id IN ($random_id_string)";
+	$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid AND TQA.question_id IN ($random_id_string) ORDER BY TQ.question_id";
 } else {
 	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 }
@@ -170,10 +170,6 @@ if (!$result || !$questions) {
 	echo '<p>'._AT('no_questions').'</p>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
-}
-
-if ($test_row['random']) {
-	shuffle($questions);
 }
 
 // save $questions with no response, and set status to 'in progress' in test_results <---
