@@ -44,9 +44,7 @@ if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
 	unset($action);
 
-	// `true` is set to experiment to see if ppl are actually installing
-	// the `true` should be removed after 1.5.5
-	if (true || $_POST['log_yes']) {
+	if ($_POST['log_yes']) {
 
 		$request  = '&upgrade=' . urlencode($stripslashes($_POST['log_upgrade']));
 		$request .= '&version=' . urlencode($stripslashes($new_version));
@@ -131,11 +129,9 @@ print_progress($step);
 	?>
 <br />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
-	<?php /***
 	<tr>
 		<td class="row1" colspan="2">Would you like to send the following information to the atutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community.</td>
 	</tr>
-	***/ ?>
 	<tr>
 		<td class="row1" width="20%"><b>ATutor Version:</b></td>
 		<td class="row1"><?php echo $new_version; ?> (build <?php echo $build . ' - '.$build_date; ?>)</td>
@@ -175,11 +171,9 @@ print_progress($step);
 			echo $url; ?><input type="hidden" name="log_url" value="<?php echo $url; ?>" /><br />
 		<input type="checkbox" name="log_url_yes" value="1" id="url_yes" /><label for="url_yes">Include this URL as well.</label></td>
 	</tr>
-	<?php /***
 	<tr>
 		<td class="row1" colspan="2"><div class="optional" title="Optional Field">?</div><input type="checkbox" name="log_yes" value="1" checked="checked" id="yes_send" /><label for="yes_send">Yes, send this information to atutor.ca.</label></td>
 	</tr>
-	***/ ?>
 	</table>
 
 <br />
