@@ -28,9 +28,10 @@ if (isset($_POST['delete'])) {
 		exit;
 	}
 } else if (isset($_POST['export'])) {
-	$language =& $languageManager->getLanguage($_POST['id']);
+	//$language =& $languageManager->getLanguage($_POST['id']);
+	$language = false;
 	if ($language === FALSE) {
-		$msg->addError('LANG_NOT_FOUND');
+		$msg->addError('ITEM_NOT_FOUND');
 	} else {
 		$languageEditor =& new LanguageEditor($language);
 		$languageEditor->export();
