@@ -19,7 +19,9 @@ admin_authenticate(AT_ADMIN_PRIV_LANGUAGES);
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
-if (isset($_POST['delete'])) {
+if ( (isset($_POST['delete']) || isset($_POST['export']) || isset($_POST['edit'])) && !isset($_POST['id'])){
+	$msg->addError('NO_ITEM_SELECTED');
+} else if (isset($_POST['delete'])) {
 	// check if this language is the only one that exists:
 	if ($languageManager->getNumLanguages() == 1) {
 		$msg->addError('LAST_LANGUAGE');

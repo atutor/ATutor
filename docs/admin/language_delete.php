@@ -35,17 +35,17 @@ if (isset($_POST['submit_yes'])) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 $language =& $languageManager->getLanguage($_GET['lang_code']);
 if ($language === FALSE) {
-	$msg->addError('LANG_NOT_FOUND'); // Originally AT_LANG_NOT_FOUND, make error code
-	$msg->printAll();
-		
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	$msg->addError('ITEM_NOT_FOUND'); // Originally AT_LANG_NOT_FOUND, make error code
+
+	header('Location: language.php?lang_code='.$_POST['delete_lang']);
 	exit;
 }
-		
+
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+
 $hidden_vars['lang_code'] = $_GET['lang_code'];
 
 $confirm = array('DELETE_LANG', $language->getEnglishName());
