@@ -24,7 +24,7 @@ if (isset($_REQUEST['oid'])) {
 	$_pages['blogs/delete_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']]['title_var'] = 'delete';
 	$_pages['blogs/delete_post.php']['title_var'] = 'delete';
 }
-$_pages['blogs/delete_comment.php']['title_var'] = 'delete_comment';
+$_pages['blogs/delete_comment.php']['title_var'] = 'delete';
 
 
 function blogs_get_group_url($group_id) {
