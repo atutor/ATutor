@@ -18,14 +18,16 @@ $CACHE_DEBUG=0;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 
-if ($_GET['view']) {
+if (isset($_GET['view'], $_GET['file'])) {
 	header("Location:view_transcript.php?t=".$_GET['file']);
 	exit;
+} else if ((isset($_GET['view']) || isset($_GET['delete'])) && !isset($_GET['file'])) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 $admin = getAdminSettings();
 
-if ($_GET['delete']) {
+if (isset($_GET['delete'], $_GET['file'])) {
 
 	if (($_GET['file'].'.html' == $admin['tranFile']) && ($admin['produceTran'])) {
 		$msg->addError('TRANSCRIPT_ACTIVE');

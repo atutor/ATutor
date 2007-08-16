@@ -41,13 +41,14 @@ if ($_POST['submit_yes']) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
 if (!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html')) {
-	$msg->printErrors('NOT_FOUND');
-	require (AT_INCLUDE_PATH.'footer.inc.php');
+	$msg->addError('FILE_NOT_FOUND');
+
+	header('Location: index.php');
 	exit;
 }
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars['m'] = $m;
 
