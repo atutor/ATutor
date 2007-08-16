@@ -29,7 +29,7 @@ if ($_GET['view']) {
 	$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET new=0, date_sent=date_sent WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[view]",$db);
 }
 
-if ($_GET['delete']) {
+if (isset($_GET['delete'])) {
 	$_GET['delete'] = intval($_GET['delete']);
 
 	if($result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[delete]",$db)){
@@ -51,6 +51,10 @@ if ($_GET['delete']) {
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 
+	header('Location: index.php');
+	exit;
+} else if (isset($_POST['delete']) && !isset($_POST['id'])) {
+	$msg->addError('NO_ITEM_SELECTED');
 	header('Location: index.php');
 	exit;
 }
@@ -100,7 +104,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[memb
 $result = mysql_query($sql,$db);
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="" rules="rows">
+<table class="data static" summary="" rules="rows">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

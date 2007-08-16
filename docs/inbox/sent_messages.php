@@ -49,7 +49,7 @@ if ($_GET['delete']) {
 
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
-} else if (isset($_POST['move'])) {
+} else if (isset($_POST['move'], $_POST['id'])) {
 	$_POST['id'][] = 0; // to make it non-empty
 	$_POST['id'] = implode(',', $_POST['id']);
 	$ids = $addslashes($_POST['id']);
@@ -62,6 +62,10 @@ if ($_GET['delete']) {
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
+} else if ((isset($_POST['delete']) || isset($_POST['move'])) && !isset($_POST['id'])) {
+	$msg->addError('NO_ITEM_SELECTED');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
@@ -114,7 +118,7 @@ $result = mysql_query($sql,$db);
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="" rules="rows">
+<table class="data static" summary="" rules="rows">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
