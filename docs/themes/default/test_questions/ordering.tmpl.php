@@ -6,7 +6,7 @@
 		<select name="answers[<?php echo $this->row['question_id']; ?>][<?php echo $i; ?>]" id="choice_<?php echo $this->row['question_id'].'_'.$i; ?>" />
 			<option value="-1">-</option>
 			<?php for ($j=0; $j < $this->num_choices; $j++): ?>
-				<option value="<?php echo $j; ?>"><?php echo ($j+1); ?></option>
+				<option value="<?php echo $j; ?>"<?php if (is_numeric($this->response[$i]) && $j == $this->response[$i]): ?>selected="selected"<?php endif; ?>><?php echo ($j+1); ?></option>
 			<?php endfor; ?>
 		</select> <label for="choice_<?php echo $this->row['question_id'].'_'.$i; ?>"><?php echo AT_print($this->row['choice_'.$i], 'tests_questions.choice_'.$i); ?></label>
 		</li>

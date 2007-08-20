@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 		$row    = mysql_fetch_assoc($result);
 		$result_id = $row['result_id'];
 	} else {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, 0, NOW(), '', 0, NOW())";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, 0, NOW(), '', 0, NOW(), 0)";
 		$result = mysql_query($sql, $db);
 		$result_id = mysql_insert_id($db);
 	}
@@ -174,7 +174,7 @@ if (!$result || !$questions) {
 
 // save $questions with no response, and set status to 'in progress' in test_results <---
 if ($_SESSION['member_id'] && !$in_progress) {
-	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, $_SESSION[member_id], NOW(), '', 0, NOW())";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, $_SESSION[member_id], NOW(), '', 0, NOW(), 0)";
 	$result = mysql_query($sql, $db);
 	$result_id = mysql_insert_id($db);
 }

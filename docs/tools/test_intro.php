@@ -17,14 +17,7 @@ require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 // test authentication
 $tid = intval($_GET['tid']);
-if (isset($_GET['cancel'])) {
-	$msg->addFeedback('CANCELLED');
-	header('Location: my_tests.php');
-	exit;
-} else if (isset($_GET['submit'])) {
-	header('Location: take_test.php?tid='.$tid);
-	exit;
-}
+
 
 // make sure max attempts not reached, and still on going
 $sql		= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
@@ -39,6 +32,19 @@ if (!$test_row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['e
 }
 if (!$test_row['guests'] && !authenticate_test($tid)) {
 	header('Location: my_tests.php');
+	exit;
+}
+
+if (isset($_GET['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: my_tests.php');
+	exit;
+} else if (isset($_GET['submit'])) {
+	if ($test_row['display']) {
+		header('Location: take_test_q.php?tid='.$tid);
+	} else {
+		header('Location: take_test.php?tid='.$tid);
+	}
 	exit;
 }
 
@@ -89,6 +95,9 @@ if (!$test_row['random']) {
 
 			<dt><?php echo _AT('anonymous'); ?></dt>
 			<dd><?php echo $test_row['anonymous'] ? _AT('yes') : _AT('no'); ?></dd>
+
+			<dt><?php echo _AT('display'); ?></dt>
+			<dd><?php echo $test_row['display'] ? _AT('one_question_per_page') : _AT('all_questions_on_page'); ?></dd>
 		</dl>
 	</div>
 

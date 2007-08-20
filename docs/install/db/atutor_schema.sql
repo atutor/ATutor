@@ -775,6 +775,7 @@ CREATE TABLE `tests` (
   `anonymous` tinyint(4) NOT NULL default '0',
   `out_of` varchar(4) NOT NULL default '',
   `guests` TINYINT NOT NULL DEFAULT '0',
+  `display` TINYINT NOT NULL DEFAULT '0',
   PRIMARY KEY  (`test_id`)
 ) TYPE=MyISAM;
 
@@ -884,6 +885,7 @@ CREATE TABLE `tests_results` (
   `final_score` char(5) NOT NULL default '',
   `status` TINYINT NOT NULL DEFAULT '0',
   `end_time` TIMESTAMP NOT NULL ,
+  `max_pos` TINYINT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY  (`result_id`),
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM;

@@ -127,6 +127,9 @@ $this->_pages['tools/view_results.php']['children']  = array(); // to create the
 $this->_pages['tools/take_test.php']['title_var'] = 'take_test';
 $this->_pages['tools/take_test.php']['parent']    = 'tools/my_tests.php';
 
+$this->_pages['tools/take_test_q.php']['title_var'] = 'take_test';
+$this->_pages['tools/take_test_q.php']['parent']    = 'tools/my_tests.php';
+
 $this->_pages['tools/test_intro.php']['title_var'] = 'take_test';
 $this->_pages['tools/test_intro.php']['parent']    = 'tools/my_tests.php';
 

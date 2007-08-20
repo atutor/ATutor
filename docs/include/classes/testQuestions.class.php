@@ -230,12 +230,12 @@ function TestQuestionCounter($increment = FALSE) {
 	/**
 	* Display the current question (for taking or previewing a test/question)
 	*/
-	/*final public */function display($row) {
+	/*final public */function display($row, $response = '') {
 		// print the generic question header
 		$this->displayHeader($row['weight']);
 
 		// print the question specific template
-		$this->assignDisplayVariables($row);
+		$this->assignDisplayVariables($row, $response);
 		$this->savant->display('test_questions/' . $this->sPrefix . '.tmpl.php');
 		
 		// print the generic question footer
@@ -342,22 +342,31 @@ class OrderingQuestion extends AbstractTestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function assignDisplayVariables($row) {
+	/*protected */function assignDisplayVariables($row, $response) {
 		// determine the number of choices this question has
 		// and save those choices to be re-assigned back to $row
 		// in the randomized order.
 		$choices = $this->getChoices($row);
 		$num_choices = count($choices);
 
+		// response from the test_answers table is in the correct order
+		// so, they have to be re-randomized in the same order as the
+		// choices are. this is only possible because of the seed() method.
+		$response = explode('|', $response);
+		$new_response = array();
+
 		// randomize the order of choices and re-assign to $row
 		$this->seed($row['question_id']);
 		$rand = array_rand($choices, $num_choices);
 		for ($i=0; $i < 10; $i++) {
 			$row['choice_'.$i] = $choices[$rand[$i]];
+			$new_response[$i]  = $response[$rand[$i]];
 		}
 
 		$this->savant->assign('num_choices', $num_choices);
 		$this->savant->assign('row', $row);
+
+		$this->savant->assign('response', $new_response);
 	}
 
 	/*protected */function assignDisplayStatisticsVariables($row, $answers) {
@@ -447,8 +456,9 @@ class TruefalseQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function assignDisplayVariables($row) {
+	/*protected */function assignDisplayVariables($row, $response) {
 		$this->savant->assign('row', $row);
+		$this->savant->assign('response', $response);
 	}
 
 	/*protected */function assignDisplayStatisticsVariables($row, $answers) {
@@ -495,12 +505,17 @@ class LikertQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function assignDisplayVariables($row) {
+	/*protected */function assignDisplayVariables($row, $response) {
 		$choices = $this->getChoices($row);
 		$num_choices = count($choices);
 
 		$this->savant->assign('num_choices', $num_choices);
 		$this->savant->assign('row', $row);
+
+		if (empty($response)) {
+			$response = -1;
+		}
+		$this->savant->assign('response', $response);
 	}
 
 	/*protected */function assignDisplayStatisticsVariables($row, $answers) {
@@ -549,8 +564,9 @@ class LongQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function assignDisplayVariables($row) {
+	/*protected */function assignDisplayVariables($row, $response) {
 		$this->savant->assign('row', $row);
+		$this->savant->assign('response', $response);
 	}
 
 	/*protected */function assignDisplayStatisticsVariables($row, $answers) {
@@ -615,9 +631,15 @@ class MatchingQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function assignDisplayVariables($row) {
+	/*protected */function assignDisplayVariables($row, $response) {
 		$choices = $this->getChoices($row);
 		$num_choices = count($choices);
+
+		if (empty($response)) {
+			$response = array_fill(0, $num_choices, -1);
+		} else {
+			$response = explode('|', $response);
+		}
 
 		$num_options = 0;
 		for ($i=0; $i < 10; $i++) {
@@ -625,7 +647,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 				$num_options++;
 			}
 		}
-		
+
 		global $_letters;
 
 		$this->savant->assign('num_choices', $num_choices);
@@ -633,6 +655,8 @@ class MatchingQuestion extends AbstracttestQuestion {
 		$this->savant->assign('letters', $_letters);
 		$this->savant->assign('num_options', $num_options);
 		$this->savant->assign('row', $row);
+
+		$this->savant->assign('response', $response);
 	}
 
 	/*protected */function assignDisplayStatisticsVariables($row, $answers) {
@@ -725,9 +749,15 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 		$this->savant->assign('row', $row);
 	}
 
-	/*protected */function assignDisplayVariables($row) {
+	/*protected */function assignDisplayVariables($row, $response) {
 		$choices = $this->getChoices($row);
 		$num_choices = count($choices);
+
+		if (empty($response)) {
+			$response = -1;
+		}
+		$response = explode('|', $response);
+		$this->savant->assign('response', $response);
 
 		$this->savant->assign('num_choices', $num_choices);
 		$this->savant->assign('row', $row);

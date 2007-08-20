@@ -137,7 +137,7 @@ $result	= mysql_query($sql, $db);
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?tid=<?php echo $tid; ?>" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<table class="data static" summary="" rules="cols">
+<table class="data static" summary="" rules="rows">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('num');      ?></th>

@@ -7,9 +7,9 @@
 			<?php for ($i=0; $i < $this->num_choices; $i++): ?>
 				<li style="padding: 4px">
 				<select name="answers[<?php echo $this->row['question_id']; ?>][<?php echo $i; ?>]">
-					<option>-</option>
+					<option value="-1" <?php if ('' === $this->response[$i] || -1 == $this->response[$i]): ?>selected="selected"<?php endif; ?>>-</option>
 					<?php for ($j=0; $j < $this->num_options; $j++): ?>
-						<option value="<?php echo $j; ?>"><?php echo $this->letters[$j]; ?></option>
+						<option value="<?php echo $j; ?>" <?php if (is_numeric($this->response[$i]) && $j == $this->response[$i]): ?>selected="selected"<?php endif; ?>><?php echo $this->letters[$j]; ?></option>
 					<?php endfor; ?>
 				</select>
 				<?php echo $this->row['choice_'. $i]; ?>

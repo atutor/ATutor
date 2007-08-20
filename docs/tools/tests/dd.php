@@ -85,6 +85,8 @@ li.answer {
 </head>
 <body>
 
+<?php $response = explode('|', $_GET['response']); ?>
+
 <?php for ($i=0; $i < 10; $i++): ?>
 	<?php if ($row['choice_'. $i] != ''): ?>
 		<div id="container<?php echo $i; ?>" style="position: absolute; top: 0px; left: 0px; width: 100%"></div>
@@ -97,9 +99,9 @@ li.answer {
 			<?php if ($row['choice_'. $i] != ''): ?>
 				<li class="question" id="q<?php echo $i; ?>" value="<?php echo $i; ?>">
 					<select name="s<?php echo $i; ?>" onchange="selectLine(this.value, '<?php echo $i; ?>');" id="s<?php echo $i; ?>">
-						<option value="">-</option>
+						<option value="-1">-</option>
 						<?php for ($j=0; $j < $num_options; $j++): ?>
-							<option value="<?php echo $j; ?>"><?php echo $_letters[$j]; ?></option>
+							<option value="<?php echo $j; ?>" <?php if($response[$i] == $j): ?>selected="selected"<?php endif; ?>><?php echo $_letters[$j]; ?></option>
 						<?php endfor; ?>
 					</select>
 				
@@ -116,7 +118,6 @@ li.answer {
 		<?php endfor; ?>
 	</ol>
 </form>
-
 <script type="text/javascript">
 // <!--
 if($.browser.msie) {
@@ -176,12 +177,15 @@ $(document).ready(
 		); // end droppable
 
         parent.iframeSetHeight(<?php echo $_GET['qid']; ?>, Math.max($("#q").height(), $("#a").height()));
+		<?php foreach ($response as $id => $value): ?>
+		selectLine(<?php echo $value; ?>, <?php echo $id; ?>);
+		<?php endforeach; ?>
 	}
 )
 
 function selectLine(value, id) {
-	if (value == "") {
-		window.top.document.getElementById("<?php echo $_GET['qid']; ?>q" + id).value = "";
+	if (value == -1) {
+		window.top.document.getElementById("<?php echo $_GET['qid']; ?>q" + id).value = "-1";
 		$("#container" + id).html(container_html);
 
 		return true;

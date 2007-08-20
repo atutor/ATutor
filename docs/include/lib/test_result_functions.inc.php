@@ -12,6 +12,77 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+// if a valid user, then can come from the DB, otherwise
+// this might come from _POST or even _SESSION
+function get_test_result_id($test_id, &$max_pos) {
+	global $db;
+
+	if ($_SESSION['member_id']) {
+		$sql	= "SELECT result_id, max_pos FROM ".TABLE_PREFIX."tests_results WHERE test_id=$test_id AND member_id={$_SESSION['member_id']} AND status=0";
+	} else if ($_SESSION['test_result_id']) {
+		// guest with on-going test
+		$sql	= "SELECT result_id, max_pos FROM ".TABLE_PREFIX."tests_results WHERE test_id=$test_id AND result_id={$_SESSION['test_result_id']} AND status=0";
+	} else {
+		return 0; // new guest
+	}
+
+	$result	= mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		$max_pos = $row['max_pos'];
+		return $row['result_id'];
+	}
+
+	return 0;
+}
+
+function init_test_result_questions($test_id, $is_random, $num_questions) {
+	global $db;
+
+	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $test_id, {$_SESSION['member_id']}, NOW(), '', 0, NOW(), 0)";
+	$result = mysql_query($sql, $db);
+	$result_id = mysql_insert_id($db);
+
+	if ($is_random) {
+		// Retrieve 'num_questions' question_id randomly from those who are related to this test_id
+
+		$non_required_questions = array();
+		$required_questions     = array();
+
+		$sql    = "SELECT question_id, required FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$test_id";
+		$result	= mysql_query($sql, $db);
+	
+		while ($row = mysql_fetch_assoc($result)) {
+			if ($row['required'] == 1) {
+				$required_questions[] = $row['question_id'];
+			} else {
+				$non_required_questions[] = $row['question_id'];
+			}
+		}
+	
+		$num_required = count($required_questions);
+		if ($num_required < max(1, $num_questions)) {
+			shuffle($non_required_questions);
+			$required_questions = array_merge($required_questions, array_slice($non_required_questions, 0, $num_questions - $num_required));
+		}
+
+		$random_id_string = implode(',', $required_questions);
+
+		$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id={$_SESSION['course_id']} AND TQA.test_id=$test_id AND TQA.question_id IN ($random_id_string) ORDER BY TQ.question_id";
+	} else {
+		$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id={$_SESSION['course_id']} AND TQA.test_id=$test_id ORDER BY TQA.ordering, TQA.question_id";
+	}
+
+	// $sql either gets a random set of questions (if $test_row['random']) ordered by 'question_id'
+	// or the set of all questions for this test (sorted by 'ordering').
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_answers VALUES ($result_id, {$row['question_id']}, {$_SESSION['member_id']}, '', '', '')";
+		mysql_query($sql, $db);
+	}
+
+	return $result_id;
+}
+
 // $num_questions must be greater than or equal to $row_required['cnt'] + $row_optional['cnt']
 function get_total_weight($tid, $num_questions = null) {
 	global $db;
