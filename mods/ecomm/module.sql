@@ -122,7 +122,6 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_NOT_SAVED','Unable to save course payment settings. Contact your system administrator to report the problem',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_PAYMENT_FAILED','The payment was cancelled or  failed.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Course fees are being managed by the systems administrator.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_c_msgs','AT_INFOS_EC_PAYMENTS_TURNED_OFF','Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index.php">Payments</a> tab above, where they can be paid.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_INVOICE_NOT_FOUND','Invoice number cannot be found.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_INVOICE_APPROVED','Invoice number has already been approved.',NOW(),'');
 

@@ -4,8 +4,8 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ECOMM);
 
 if (!$_config['ec_allow_instructors']){
-	$msg->printInfos('EC_PAYMENTS_TURNED_OFF');
 	require (AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printInfos('EC_PAYMENTS_TURNED_OFF');
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
