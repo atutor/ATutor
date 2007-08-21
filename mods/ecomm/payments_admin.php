@@ -10,8 +10,8 @@ function is_enrolled($member_id, $course_id) {
 	return (boolean) mysql_fetch_assoc($result);
 }
 
-//$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."payments";
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment";
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."payments";
+//$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment";
 $result = mysql_query($sql, $db);
 if (($row = mysql_fetch_assoc($result)) && $row['cnt']) {
 	$num_results = $row['cnt'];
