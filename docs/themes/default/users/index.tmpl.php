@@ -54,7 +54,7 @@
 					<?php if ($row['tests']): ?>
 						<?php echo _AT('tests'); ?>: 
 						<?php foreach ($row['tests'] as $test): ?>
-							<a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('tools/take_test.php?tid='.$test['test_id']); ?>"><?php echo $test['title']; ?></a> 
+							<a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('tools/test_intro.php?tid='.$test['test_id']); ?>"><?php echo $test['title']; ?></a> 
 						<?php endforeach ;?>
 					<?php endif; ?>
 				</small>
