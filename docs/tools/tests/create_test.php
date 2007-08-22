@@ -34,7 +34,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['anonymous']    = intval($_POST['anonymous']);
 	$_POST['allow_guests'] = $_POST['allow_guests'] ? 1 : 0;
 	$_POST['instructions'] = $addslashes($_POST['instructions']);
-	$_POST['display']			= intval($_POST['display']);
+	$_POST['display']	   = intval($_POST['display']);
 
 	// currently these options are ignored for tests:
 	$_POST['format']       = intval($_POST['format']);

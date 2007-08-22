@@ -135,6 +135,13 @@ if ($result_id == 0) {
 		$result	= mysql_query($sql, $db);
 	}
 
+	if (isset($_POST['previous'])) {
+		$pos-=2;
+		if ($pos < 0) {
+			$pos = 0;
+		}
+	}
+
 	if ($pos >= $test_row['num_questions']) {
 		// end of the test.
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET status=1, date_taken=date_taken, end_time=NOW() WHERE result_id=$result_id";
@@ -147,15 +154,8 @@ if ($result_id == 0) {
 		}
 		header('Location: ../tools/my_tests.php');
 		exit;
-	}
+	} // else:
 	
-	if (isset($_POST['previous'])) {
-		$pos-=2;
-		if ($pos < 0) {
-			$pos = 0;
-		}
-	}
-
 	header('Location: '.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'pos='.$pos);
 	exit;
 }
