@@ -753,7 +753,7 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 		$choices = $this->getChoices($row);
 		$num_choices = count($choices);
 
-		if (empty($response)) {
+		if ($response == '') {
 			$response = -1;
 		}
 		$response = explode('|', $response);
