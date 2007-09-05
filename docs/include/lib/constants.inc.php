@@ -54,7 +54,7 @@ $_config_defaults['prof_pic_max_file_size']	   = 819200; // max size of an uploa
 $_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent inbox msgs are deleted
 $_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled/unsupported, (non-zero is the actual mysql value)
 $_config_defaults['latex_server']              = 'http://www.forkosh.dreamhost.com/mimetex.cgi?'; // the full URL to an external LaTeX parser
-
+$_config_defaults['gtype']					   = 0;	//Defaulted to be original google search, @author Harris
 $_config = $_config_defaults;
 
 
@@ -323,4 +323,8 @@ if (isset($_GET['cid'])) {
 	$cid = intval($_POST['cid']);
 }
 
+
+/* google type constants - @author Harris */
+define('GOOGLE_TYPE_SOAP',		0);		//The original soap search with key generated before Dec 2005.
+define('GOOGLE_TYPE_AJAX',		1);		//The new AJAX search by google
 ?>
