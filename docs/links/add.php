@@ -90,7 +90,7 @@ $categories = get_link_categories();
 if (empty($categories)) {
 	$msg->addInfo('NO_LINK_CATEGORIES');
 	$msg->printInfos();
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+
 } else {
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
