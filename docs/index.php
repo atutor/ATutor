@@ -34,8 +34,9 @@ require(AT_INCLUDE_PATH . 'header.inc.php');
 $home_links = get_home_navigation();
 $savant->assign('home_links', $home_links);
 
+
 /* the news announcements: */
-$news = array();
+$news = array(); 
 $num_pages = 1;
 $page = isset($_GET['p']) ? intval($_GET['p']) : 1;
 if (!$page) {
