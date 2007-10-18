@@ -30,7 +30,7 @@ global $display_name_formats, $moduleFactory;
 			<dt><?php echo _AT('web_site'); ?></dt>
 			<dd>
 				<?php if ($this->row['website']) { 
-					echo '<a href="'.$this->row['website'].'">'.AT_print($this->row['website'], 'members.website').'</a>'; 
+					echo '<a href="'.htmlentities($this->row['website']).'">'.AT_print($this->row['website'], 'members.website').'</a>'; 
 				} else {
 					echo '--';
 				} ?>

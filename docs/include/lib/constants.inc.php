@@ -285,7 +285,7 @@ $_field_formatting['instructor_approvals.notes']= AT_FORMAT_NONE;
 
 $_field_formatting['members.*']                 = AT_FORMAT_NONE; /* wildcards are okay */
 
-$_field_formatting['messages.subject']			= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES;
+$_field_formatting['messages.subject']			= AT_FORMAT_EMOTICONS + AT_FORMAT_IMAGES;
 $_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES + AT_FORMAT_ATCODES;
 
 $_field_formatting['news.title']				= AT_FORMAT_EMOTICONS | AT_FORMAT_LINKS & ~AT_FORMAT_HTML;

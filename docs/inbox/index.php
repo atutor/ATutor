@@ -75,7 +75,7 @@ if (isset($_GET['view']) && $_GET['view']) {
 		</div>
 
 		<div class="forum-post-content">
-			<h3><?php echo AT_Print($row['subject'], 'messages.subject'); ?></h3>
+			<h3><?php echo AT_Print(htmlentities($row['subject']), 'messages.subject'); ?></h3>
 			<div>
 				<div class="forum-post-ctrl">
 					<a href="inbox/send_message.php?reply=<?php echo $_GET['view']; ?>"><?php echo _AT('reply'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>"><?php echo _AT('delete'); ?></a>
@@ -84,7 +84,7 @@ if (isset($_GET['view']) && $_GET['view']) {
 			</div>
 
 			<div class="body">
-				<p><?php echo AT_print($row['body'], 'messages.body'); ?></p>
+				<p><?php echo AT_print(htmlentities($row['body']), 'messages.body'); ?></p>
 			</div>
 			<div style="clear: both; font-size: 0.1em"></div>
 		</div>

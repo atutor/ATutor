@@ -40,7 +40,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $system_courses, $_custom_css;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $this->lang_code; ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>">
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
@@ -224,7 +224,7 @@ function toggleToc(objId) {
 	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;">
 	<?php foreach ($this->path as $page): ?>
 		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo $page['title']; ?></a> &raquo; 
-	<?php endforeach; ?> <?php echo $this->page_title; ?></span>
+	<?php endforeach; ?> <?php echo htmlentities($this->page_title); ?></span>
 </div>
 
 <div class="header">
@@ -324,7 +324,7 @@ function toggleToc(objId) {
 		&nbsp;
 	</div>
 
-	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
+	<h2 class="page-title"><?php echo htmlentities($this->page_title); ?></h2>
 
 <a name="content"></a>
 <?php global $msg; $msg->printAll(); ?>
