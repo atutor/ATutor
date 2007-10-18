@@ -42,7 +42,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 
 		foreach ($words as $k => $v) {
 			$original_v = $v;
-			$v = urlencode($v);
+			$v = strtolower(urlencode($v));
 
 			if (isset($glossary_key_lower[$v]) && $glossary_key_lower[$v] != '') {
 
