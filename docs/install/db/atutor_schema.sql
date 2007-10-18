@@ -592,7 +592,7 @@ CREATE TABLE `messages_sent` (
    `body` text NOT NULL ,
    PRIMARY KEY ( `message_id` ) ,
    KEY `from_member_id` ( `from_member_id` )
-) ENGINE = MYISAM;
+) TYPE = MYISAM;
 
 # --------------------------------------------------------
 # Table structure for table `modules` (since 1.5.2)
