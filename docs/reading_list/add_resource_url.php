@@ -46,10 +46,10 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title'] = $addslashes($_POST['title']);
-		$_POST['author'] = $addslashes($_POST['author']);
+		$_POST['title'] = $addslashes(validate_length($_POST['title'], 255));
+		$_POST['author'] = $addslashes(validate_length($_POST['author'], 150));
 		$_POST['url'] = $addslashes($_POST['url']);
-		$_POST['comments'] = $addslashes($_POST['comments']);
+		$_POST['comments'] = $addslashes(validate_length($_POST['comments'], 255));
 		
 		if ($id == '0'){ // creating a new URL resource
 			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES (NULL, $_SESSION[course_id],

@@ -50,6 +50,11 @@ if (isset($_POST['submit'])) {
 			$parent_id = 0;
 		}
 
+		//Check length of the post, if it's exceeded 100 as defined in the db. 
+		if ($strlen($cat_name) > 100){
+			$cat_name = $substr($cat_name, 0, 100);
+		}
+
 		$sql = "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (NULL, $owner_type, $owner_id, '$cat_name', $parent_id)";
 		$result = mysql_query($sql, $db);
 

@@ -22,7 +22,7 @@ function score_cmp($a, $b) {
 }
 
 function get_search_result($words, $predicate, $course_id, &$num_found, &$total_score) {
-	global $addslashes, $db, $highlight_system_courses;
+	global $addslashes, $db, $highlight_system_courses, $strlen, $substr, $strtolower;
 
 	$search_results = array();
 	$lower_words    = array();
@@ -35,7 +35,7 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 	$num_words = count($words);
 	$course_score = 0;
 	for ($i=0; $i<$num_words; $i++) {
-		$lower_words[$i] = strtolower($words[$i]);
+		$lower_words[$i] = $strtolower($words[$i]);
 
 		if ($words_sql) {
 			$words_sql .= $predicate;
@@ -44,8 +44,8 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 		$words_sql .= ' (C.title LIKE "%'.$words[$i].'%" OR C.text LIKE "%'.$words[$i].'%" OR C.keywords LIKE "%'.$words[$i].'%")';
 
 		/* search through the course title and description keeping track of its total */
-		$course_score += 15 * substr_count(strtolower($highlight_system_courses[$course_id]['title']),       $lower_words[$i]);
-		$course_score += 12 * substr_count(strtolower($highlight_system_courses[$course_id]['description']), $lower_words[$i]);
+		$course_score += 15 * substr_count($strtolower($highlight_system_courses[$course_id]['title']),       $lower_words[$i]);
+		$course_score += 12 * substr_count($strtolower($highlight_system_courses[$course_id]['description']), $lower_words[$i]);
 
 		$highlight_system_courses[$course_id]['title']       = highlight($highlight_system_courses[$course_id]['title'],       $words[$i]);
 		$highlight_system_courses[$course_id]['description'] = highlight($highlight_system_courses[$course_id]['description'], $words[$i]);
@@ -56,7 +56,7 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 
 	$sql =  'SELECT C.last_modified, C.course_id, C.content_id, C.title, C.text, C.keywords FROM '.TABLE_PREFIX.'content AS C WHERE C.course_id='.$course_id;
 	$sql .= ' AND ('.$words_sql.') LIMIT 200';
-	
+
 	$result = mysql_query($sql, $db);
 	while($row = mysql_fetch_assoc($result)) {
 		$score = 0;
@@ -64,12 +64,12 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 		$row['title'] = strip_tags($row['title']);
 		$row['text']  = strip_tags($row['text']);
 
-		$lower_title     = strtolower($row['title']);
-		$lower_text		 = strtolower($row['text']);
-		$lower_keywords  = strtolower($row['keywords']);
+		$lower_title     = $strtolower($row['title']);
+		$lower_text		 = $strtolower($row['text']);
+		$lower_keywords  = $strtolower($row['keywords']);
 
-		if (strlen($row['text']) > 270) {
-			$row['text']  = substr($row['text'], 0, 268).'...';
+		if ($strlen($row['text']) > 270) {
+			$row['text']  = $substr($row['text'], 0, 268).'...';
 		}
 
 		for ($i=0; $i<$num_words; $i++) {

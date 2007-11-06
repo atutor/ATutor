@@ -514,10 +514,10 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 			<a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=0"><?php echo _AT('home'); ?></a>
 		<?php foreach ($folder_path as $folder_info): ?>
 			<?php if ($folder_info['folder_id'] == $folder_id): ?>
-				» <?php echo htmlspecialchars($folder_info['title']); ?>
+				Â» <?php echo htmlspecialchars($folder_info['title']); ?>
 				<?php $parent_folder_id = $folder_info['parent_folder_id']; ?>
 			<?php else: ?>
-				» <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a>
+				Â» <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a>
 			<?php endif; ?>
 		<?php endforeach; ?>
 	</td>

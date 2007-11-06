@@ -50,6 +50,11 @@ if (isset($_POST['cancel'])) {
 		$answer_new = array(); // stores the non-blank answers
 		$order = 0; // order count
 		for ($i=0; $i<10; $i++) {
+			/**
+			 * Db defined it to be 255 length, chop strings off it it's less than that
+			 * @harris
+			 */
+			$_POST['choice'][$i] = validate_length($_POST['choice'][$i], 255);
 			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
 
 			if ($_POST['choice'][$i] != '') {

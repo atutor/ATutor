@@ -17,6 +17,7 @@ global $contentManager;
 global $_base_path;
 global $savant;
 global $glossary;
+global $strlen, $substr, $strtolower;
 
 ob_start(); 
 $result = false;
@@ -31,7 +32,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 
 	//case-insensitive, unique array of words
 	for($i=0;$i<count($words);$i++) {
-		$words[$i] = strtolower($words[$i]);
+		$words[$i] = $strtolower($words[$i]);
 	}
 	$words = array_unique($words);
 
@@ -42,7 +43,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 
 		foreach ($words as $k => $v) {
 			$original_v = $v;
-			$v = strtolower(urlencode($v));
+			$v = $strtolower(urlencode($v));	//array_change_key_case change everything to lowercase, including encoding. 
 
 			if (isset($glossary_key_lower[$v]) && $glossary_key_lower[$v] != '') {
 
@@ -54,8 +55,8 @@ if ($result && ($row = mysql_fetch_array($result))) {
 				//echo '&#176; <a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
 
 				echo '<a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_v).'#term" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.addslashes($v_formatted).'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.addslashes($v_formatted).'\', AUTOSTATUS);" onblur="return nd();">';
-				if (strlen($original_v) > 26 ) {
-					$v_formatted = substr($v_formatted, 0, 26-4).'...';
+				if ($strlen($original_v) > 26 ) {
+					$v_formatted = $substr($v_formatted, 0, 26-4).'...';
 				}
 				echo AT_print($v_formatted, 'glossary.word').'</a>';
 				echo '<br />';

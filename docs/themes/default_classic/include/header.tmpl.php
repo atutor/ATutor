@@ -190,7 +190,7 @@ function toggleToc(objId) {
 	<?php endif; ?>
 	<?php foreach ($this->path as $page): ?>
 		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo $page['title']; ?></a> &raquo; 
-	<?php endforeach; ?> <?php echo htmlentities($this->page_title); ?></span>
+	<?php endforeach; ?> <?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?></span>
 </div>
 
 <div>
@@ -298,7 +298,7 @@ function toggleToc(objId) {
 		&nbsp;
 	</div>
 
-	<h2 class="page-title"><?php echo htmlentities($this->page_title); ?></h2>
+	<h2 class="page-title"><?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?></h2>
 
 <a name="content"></a>
 <?php global $msg; $msg->printAll(); ?>

@@ -36,6 +36,8 @@ if (isset($_POST['submit'])) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['name'] = $addslashes($_POST['name']);
+		//This will truncate the content of the length to 240 as defined in the db.
+		$_POST['name'] = validate_length($_POST['name'], 250);
 
 		$sql	= "UPDATE ".TABLE_PREFIX."faq_topics SET name='$_POST[name]' WHERE topic_id=$id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);

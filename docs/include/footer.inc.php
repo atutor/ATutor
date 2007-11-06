@@ -79,6 +79,15 @@ if ($framed || $popup) {
 	$savant->display('include/footer.tmpl.php');
 }
 
+//Harris Timer
+  $mtime = microtime(); 
+  $mtime = explode(" ", $mtime); 
+  $mtime = $mtime[1] + $mtime[0]; 
+  $endtime = $mtime; 
+  $totaltime = ($endtime - $starttime); 
+  debug ($totaltime. ' seconds.', "TIME USED"); 
+//Harris Timer Ends
+
 if (defined('AT_DEVEL') && AT_DEVEL) {
 	debug(TABLE_PREFIX, 'TABLE_PREFIX');
 	debug(DB_NAME, 'DB_NAME');

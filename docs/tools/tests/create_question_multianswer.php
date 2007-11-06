@@ -36,6 +36,11 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 		$choice_new = array(); // stores the non-blank choices
 		$answer_new = array(); // stores the associated "answer" for the choices
 		for ($i=0; $i<10; $i++) {
+			/**
+			 * Db defined it to be 255 length, chop strings off it it's less than that
+			 * @harris
+			 */
+			$_POST['choice'][$i] = validate_length($_POST['choice'][$i], 255);
 			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 

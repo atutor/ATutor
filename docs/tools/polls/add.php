@@ -32,11 +32,19 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);
+		//Check if the question has exceeded the words amount - 100, decided in the db
+		if ($strlen($_POST['question']) > 100){
+			$_POST['question'] = $substr($_POST['question'], 0, 100);
+		}
 
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
-			$choices .= "'" . $addslashes($_POST['c' . $i]) . "',0,";
+			$trimmed_word = $addslashes($_POST['c' . $i]);
+			if ($strlen($trimmed_word) > 100){
+				$trimmed_word = $substr($trimmed_word, 0, 100);
+			}
+			$choices .= "'" . $trimmed_word . "',0,";
 		}
-		$choices = substr($choices, 0, -1);
+		$choices = substr($choices, 0, -1);	//Remove the last comma.
 
 		$sql	= "INSERT INTO ".TABLE_PREFIX."polls VALUES (NULL, $_SESSION[course_id], '$_POST[question]', NOW(), 0, $choices)";
 		$result = mysql_query($sql,$db);

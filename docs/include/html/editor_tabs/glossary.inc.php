@@ -26,7 +26,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	for ($i=0; $i<$num_terms; $i++) {
 		for ($j=0;$j<$i;$j++) {
-			if (strtolower($word[$j]) == strtolower($word[$i])) {
+			if ($strtolower($word[$j]) == $strtolower($word[$i])) {
 				/* skip multiple occurances of the same word: */
 				continue 2;
 			}
@@ -53,7 +53,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				echo _AT('glossary_term'); ?>:</strong></td>
 			<td class="row1"><?php echo AT_print(urldecode($current_word), 'glossary.word'); ?></td>
 		</tr>
-		<?php if (strlen(urldecode($current_word)) > 60): ?>
+		<?php if ($strlen(urldecode($current_word)) > 60): ?>
 		<tr>
 			<td>&nbsp;</td>
 			<td><em><?php echo _AT('glossary_term_limit'); ?></em></td>

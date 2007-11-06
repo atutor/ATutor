@@ -68,7 +68,7 @@ if (isset($_GET['filter'], $_GET['search'])) {
 	$words = explode(' ', $_GET['search']);
 	foreach ($words as $key => $word) {
 		// search `term` and `text` only
-		if (strlen($word) > 1) {
+		if ($strlen($word) > 1) {
 			$word = str_replace(array('%','_'), array('\%', '\_'), $word);
 			$words[$key] = "(CAST(`term` AS CHAR) LIKE '%$word%' OR CAST(`text` AS CHAR) LIKE '%$word%')";
 		} else {
@@ -133,8 +133,8 @@ $num_results = mysql_num_rows($result);
 			<select size="<?php echo min(max($num_results,2), 25); ?>" name="terms" id="terms" onchange="javascript:showtext(this);">
 				<?php
 					while ($row = mysql_fetch_assoc($result)): 
-						if (strlen($row['text']) > 30) {
-							$row['text'] = substr($row['text'], 0, 28) . '...';
+						if ($strlen($row['text']) > 30) {
+							$row['text'] = $substr($row['text'], 0, 28) . '...';
 						}
 					?>
 						<option value="<?php echo $row['term']; ?>"><?php echo htmlspecialchars($row['text']); ?></option>

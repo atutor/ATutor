@@ -66,6 +66,9 @@ if ($_POST['edit_post']) {
 	$_POST['pid']		= intval($_POST['pid']);
 
 	$_POST['subject']  = $addslashes($_POST['subject']);
+	//If subject > 100,then chop subject
+	$_POST['subject'] = validate_length($_POST['subject'], 100);
+
 	$_POST['body']  = $addslashes($_POST['body']);
 
 	if ($_POST['subject'] == '')  {

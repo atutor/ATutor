@@ -70,6 +70,10 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 		$_POST['url'] == $addslashes($_POST['url']);
 		$_POST['description']  = $addslashes($_POST['description']);
 
+		//Check length of the post, if it's exceeded 64 as defined in the db. 
+		$_POST['title'] = validate_length($_POST['title'], 64);
+		$_POST['description'] = validate_length($_POST['description'], 250);
+		
 		$name = get_display_name($_SESSION['member_id']);
 		$email = '';
 

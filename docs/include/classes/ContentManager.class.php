@@ -565,7 +565,7 @@ class ContentManager
 	/* Access: PRIVATE */
 	function printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state) {
 		
-		global $cid, $_my_uri, $_base_path, $rtl;
+		global $cid, $_my_uri, $_base_path, $rtl, $substr, $strlen;
 		static $temp_path;
 
 		if (!isset($temp_path)) {
@@ -614,8 +614,8 @@ class ContentManager
 
 					$link .= $content['title'].'">';
 
-					if ($truncate && (strlen($content['title']) > (28-$depth*4)) ) {
-						$content['title'] = rtrim(substr($content['title'], 0, (28-$depth*4)-4)).'...';
+					if ($truncate && ($strlen($content['title']) > (28-$depth*4)) ) {
+						$content['title'] = rtrim($substr($content['title'], 0, (28-$depth*4)-4)).'...';
 					}
 					$link .= $content['title'];
 					$link .= '</a>';
@@ -624,8 +624,8 @@ class ContentManager
 					}
 				} else {
 					$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'">';
-					if ($truncate && (strlen($content['title']) > (26-$depth*4)) ) {
-						$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)).'...';
+					if ($truncate && ($strlen($content['title']) > (26-$depth*4)) ) {
+						$content['title'] = rtrim($substr($content['title'], 0, (26-$depth*4)-4)).'...';
 					}
 					$link .= trim($content['title']).'</strong>';
 					$on = true;

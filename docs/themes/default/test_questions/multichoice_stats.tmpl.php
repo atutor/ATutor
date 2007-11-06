@@ -5,14 +5,14 @@
 	<th scope="col" width="40%"><?php echo _AT('question'); ?></th>
 	<th scope="col" nowrap="nowrap"><?php echo _AT('left_blank'); ?></th>
 	<?php for ($i=0; $i<$this->num_choices; $i++): ?>
-		<?php if (strlen($this->row['choice_'.$i]) > 15) {
-			$this->row['choice_'.$i] = substr($this->row['choice_'.$i], 0, 15).'...';
+		<?php if ($strlen($this->row['choice_'.$i]) > 15) {
+			$this->row['choice_'.$i] = $substr($this->row['choice_'.$i], 0, 15).'...';
 		}
 		?>
 		<?php if ($this->row['answer_'.$i]): ?>
 			<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i]); ?><img src="images/checkmark.gif" alt="" /></th>
 		<?php else: ?>
-			<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i]); ?></th>
+			<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i], ENT_COMPAT, "UTF-8"); ?></th>
 		<?php endif; ?>
 	<?php endfor; ?>
 </tr>

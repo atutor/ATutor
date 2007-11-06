@@ -31,6 +31,7 @@ if (isset($_POST['submit'])) {
 	if ($cat_name == '') {
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
+	$cat_name = validate_length($cat_name, 100);
 
 	if ($_POST['theme_parent']) {
 		$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_parent_id";

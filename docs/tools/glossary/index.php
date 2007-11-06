@@ -91,8 +91,8 @@ if(!empty($gloss_results)) {
 			}
 		}
 
-		$def_trunc = substr($row['definition'], 0, 70);
-		if (strlen($def_trunc) < strlen($row['definition'])) {
+		$def_trunc = $substr($row['definition'], 0, 70);
+		if ($strlen($def_trunc) < $strlen($row['definition'])) {
 			$def_trunc .= ' &#8230;';
 		}
 	?>

@@ -16,6 +16,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 header('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
 
+//Harris Timer
+  $mtime = microtime(); 
+  $mtime = explode(' ', $mtime); 
+  $mtime = $mtime[1] + $mtime[0]; 
+  $starttime = $mtime; 
+//Harris Timer Ends
+
 global $myLang;
 global $savant;
 global $onload;
@@ -28,6 +35,7 @@ global $_pages;
 global $_stacks;
 global $framed, $popup;
 global $_custom_css;
+global $substr, $strlen;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 
@@ -63,7 +71,7 @@ if (isset($_custom_css)) {
 	$savant->assign('custom_css', '');
 }
 
-if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || (substr($onload, -8) != 'focus();'))) {
+if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || ($substr($onload, -8) != 'focus();'))) {
 	$savant->assign('onload', $onload);
 }
 
@@ -77,7 +85,7 @@ if (isset($_SESSION['valid_user']) && $_SESSION['valid_user'] === true) {
 	$savant->assign('user_name', _AT('guest'));
 }
 
-$current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
+$current_page = $substr($_SERVER['PHP_SELF'], $strlen($_base_path));
 
 if (!isset($_pages[$current_page])) {
 	global $msg;

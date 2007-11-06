@@ -28,6 +28,8 @@ if (isset($_POST['cancel'])) {
 
 	if ($_POST['title'] == '') {
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
+	} else {
+		$_POST['title'] = validate_length($_POST['title'], 60);
 	}
 
 	if (!$msg->containsErrors()) {

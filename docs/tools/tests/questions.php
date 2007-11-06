@@ -188,10 +188,10 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 
 		echo '<td class="row1">';
-		if (strlen($row['question']) > 45) {
-			echo htmlspecialchars(AT_print(substr($row['question'], 0, 43), 'tests_questions.question')) . '...';
+		if ($strlen($row['question']) > 45) {
+			echo htmlspecialchars(AT_print($substr($row['question'], 0, 43), 'tests_questions.question'), ENT_COMPAT, "UTF-8") . '...';
 		} else {
-			echo AT_print(htmlspecialchars($row['question']), 'tests_questions.question');
+			echo AT_print(htmlspecialchars($row['question'], ENT_COMPAT, "UTF-8"), 'tests_questions.question');
 		}
 
 		echo '</td>';

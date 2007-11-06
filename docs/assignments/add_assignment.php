@@ -117,6 +117,9 @@ else if (isset($_POST['submit'])) {
 	// ensure title is not empty
 	if (trim($title) == '') {
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
+	} else {
+		//ensure the title does not exceed db length, 60
+		$title = validate_length($title, 60);
 	}
 
 	// If due date is set and user has selected 'accept late submission until'

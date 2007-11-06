@@ -40,6 +40,8 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['body_text']  = $addslashes($_POST['body_text']);
+		//Check if the title has exceeded the DB length, 100
+		$_POST['title'] = validate_length($_POST['title'], 100);
 
 		$sql = "UPDATE ".TABLE_PREFIX."news SET title='$_POST[title]', body='$_POST[body_text]', formatting=$_POST[formatting], date=date WHERE news_id=$_POST[aid] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);

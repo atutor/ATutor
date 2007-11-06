@@ -178,7 +178,7 @@ function poptastic(url) {
 <div id="breadcrumbs">
 	<?php foreach ($this->path as $page): ?>
 		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
-	<?php endforeach; ?> <?php echo htmlentities($this->page_title); ?>
+	<?php endforeach; ?> <?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?>
 </div>
 
 <div id="contentwrapper">
@@ -222,7 +222,7 @@ function poptastic(url) {
 	</div>
 
 <!-- the page title -->
-<h2 class="page-title"><?php echo htmlentities($this->page_title); ?></h2>
+<h2 class="page-title"><?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?></h2>
 
 <a name="content"></a>
 <?php global $msg; $msg->printAll(); ?>

@@ -44,6 +44,9 @@ if (isset($_POST['cancel'])) {
 		$_POST['question'] = $addslashes($_POST['question']);
 		$_POST['answer']   = $addslashes($_POST['answer']);
 		$_POST['topic_id'] = intval($_POST['topic_id']);
+		//These will truncate the content of the length to 240 as defined in the db.
+		$_POST['question'] = validate_length($_POST['question'], 250);
+		$_POST['answer'] = validate_length($_POST['answer'], 250);
 
 		// check that this topic_id belongs to this course:
 		$sql    = "SELECT topic_id FROM ".TABLE_PREFIX."faq_topics WHERE topic_id=$_POST[topic_id] AND course_id=$_SESSION[course_id]";

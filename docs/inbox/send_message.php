@@ -195,9 +195,9 @@ if ($reply_to) {
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" id="subject" value="<?php
 			if (($subject != '') && ($_POST['subject'] == '')) {
-				if ($_GET['reply'] && !(substr($subject, 0, 2) == _AT('re'))) {
+				if ($_GET['reply'] && !($substr($subject, 0, 2) == _AT('re'))) {
 					$subject = _AT('re').' : '.$subject;
-				} else if ($_GET['forward'] && !(substr($subject, 0, 2) == _AT('fwd'))) {
+				} else if ($_GET['forward'] && !($substr($subject, 0, 2) == _AT('fwd'))) {
 					$subject = _AT('fwd').' : '.$subject;
 				}
 				echo ContentManager::cleanOutput($subject);
@@ -211,10 +211,17 @@ if ($reply_to) {
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('message'); ?></label><br />
 		<textarea name="message" id="body" rows="15" cols="55"><?php
 			if ($body != '') {
-				if (strlen($body) > 400){
-					$body = substr($body,0,400);
-					$pos = strrpos($body,' ');
-					$body = substr($body,0,$pos);
+				if ($strlen($body) > 400){
+					$body = $substr($body,0,400);
+					$pos = $strrpos($body,' ');
+					if ($pos===false){
+						/* Unicode problem, not all language has spaces in between characters
+						 * No space found, chop off right on 400.
+						 */
+						 $body = $substr($body,0,400);
+					} else {
+						$body = $substr($body,0,$pos);
+					}
 					$body .= ' ...';
 				}
 				$body  = "\n\n\n"._AT('in_reply_to').":\n".$body;

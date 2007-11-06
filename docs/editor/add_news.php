@@ -73,6 +73,9 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['body_text']  = $addslashes($_POST['body_text']);
 
+		//The following checks if title length exceed 100, defined by DB structure
+		$_POST['title'] = validate_length($_POST['title'], 100);
+
 		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body_text]')";
 		mysql_query($sql, $db);
 	

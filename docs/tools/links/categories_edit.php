@@ -45,6 +45,9 @@ if (isset($_POST['submit'])) {
 		}
 
 		$cat_name = $addslashes($_POST['cat_name']);
+		
+		//Check length of the post, if it's exceeded 100 as defined in the db. 
+		$cat_name = validate_length($cat_name, 100);
 
 		$sql = "UPDATE ".TABLE_PREFIX."links_categories SET parent_id=$parent_id, name='$cat_name', owner_type=$owner_type, owner_id=$owner_id WHERE cat_id=".$cat_id;
 

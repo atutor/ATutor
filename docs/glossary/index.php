@@ -73,11 +73,11 @@ if(mysql_num_rows($result) > 0){
 	foreach ($gloss_results as $item):
 		$item['word'] = AT_print($item['word'], 'glossary.word');
 
-		if ($current_letter != strtoupper(substr($item['word'], 0, 1))):
+		if ($current_letter != $strtoupper($substr($item['word'], 0, 1))):
 			if ($current_letter != '') {				
 				echo '</dl>';
 			} 
-			$current_letter = strtoupper(substr($item['word'], 0, 1)); ?>
+			$current_letter = $strtoupper($substr($item['word'], 0, 1)); ?>
 			<h3 style="padding-bottom:5px;"><a name="<?php echo $current_letter; ?>"></a><?php echo $current_letter; ?></h3>
 			<dl style="margin:0px;">
 		<?php endif; ?>

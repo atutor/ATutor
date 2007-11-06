@@ -296,6 +296,15 @@ $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
 $zipfile->close(); // this is optional, since send_file() closes it anyway
 
 $ims_course_title = str_replace(array(' ', ':'), '_', $ims_course_title);
+/**
+ * A problem here with the preg_replace below.
+ * Originally was designed to remove all werid symbols to avoid file corruptions.
+ * In UTF-8, all non-english chars are considered to be 'werid symbols'
+ * We can still replace it as is, or add fileid to the filename to avoid these problems
+ * Well then again people won't be able to tell what this file is about
+ * If we are going to take out the preg_replace, some OS might not be able to understand
+ * these characters and will have problems importing.
+ */
 $ims_course_title = preg_replace("{[^a-zA-Z0-9._-]}","", trim($ims_course_title));
 $zipfile->send_file($ims_course_title . '_ims');
 

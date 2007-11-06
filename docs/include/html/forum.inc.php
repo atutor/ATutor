@@ -107,8 +107,8 @@ if (!($row = mysql_fetch_assoc($result))) {
 		$row['subject'] = AT_print($row['subject'], 'forums_threads.subject');
 
 		/* crop the subject, if needed */
-		if (strlen($row['subject']) > 28) {
-			$row['subject'] = substr($row['subject'], 0, 25).'...';
+		if ($strlen($row['subject']) > 28) {
+			$row['subject'] = $substr($row['subject'], 0, 25).'...';
 		}
 		echo '<tr>';
 		echo '<td>';

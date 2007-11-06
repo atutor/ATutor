@@ -43,6 +43,9 @@ if (isset($_POST['cancel'])) {
 
 	if ($_POST['subject'] == '')  {
 		$missing_fields[] = _AT('subject');
+	} else {
+		//60 was set by db
+		$_POST['subject'] = validate_length($_POST['subject'], 60);
 	}
 
 	if ($_POST['body'] == '') {
@@ -55,8 +58,8 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		if ($_POST['replytext'] != '') {
 			$_POST['body'] .= "\n\n".'[reply][b]'._AT('in_reply_to').': [/b]'."\n";
-			if (strlen($_POST['replytext']) > 200) {
-				$_POST['body'] .= substr($_POST['replytext'], 0, 200).'...';
+			if ($strlen($_POST['replytext']) > 200) {
+				$_POST['body'] .= $substr($_POST['replytext'], 0, 200).'...';
 			} else {
 				$_POST['body'] .= $_POST['replytext'];
 			}
@@ -103,7 +106,7 @@ if (isset($_POST['cancel'])) {
 				$subscriber_list .= $row['member_id'] . ',';
 			}
 		}
-		$subscriber_list = substr($subscriber_list, 0, -1);
+		$subscriber_list = $substr($subscriber_list, 0, -1);
 
 		if ($subscriber_list != '') {
 			$sql = "SELECT first_name, second_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list) AND member_id <> $_SESSION[member_id]";

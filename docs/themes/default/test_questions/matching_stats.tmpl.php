@@ -5,11 +5,11 @@
 	<th scope="col" width="40%"><?php echo _AT('question'); ?></th>
 	<?php for ($i=0; $i< $this->num_choices; $i++): ?>
 		<?php
-		if(strlen($q['choice_'.$i]) > 15) {
-			$q['choice_'.$i] = substr($q['choice_'.$i], 0, 15).'&hellip;';
+		if($strlen($q['choice_'.$i]) > 15) {
+			$q['choice_'.$i] = $substr($q['choice_'.$i], 0, 15).'&hellip;';
 		}
 		?>
-		<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i]); ?></th>
+		<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i], ENT_COMPAT, "UTF-8"); ?></th>
 	<?php endfor; ?>
 </tr>
 </thead>

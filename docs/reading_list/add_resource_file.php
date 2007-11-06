@@ -48,11 +48,11 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title']     = $addslashes($_POST['title']);
-		$_POST['author']    = $addslashes($_POST['author']);
-		$_POST['publisher'] = $addslashes($_POST['publisher']);
+		$_POST['title'] = $addslashes(validate_length($_POST['title'], 255));
+		$_POST['author'] = $addslashes(validate_length($_POST['author'], 150));
+		$_POST['publisher'] = $addslashes(validate_length($_POST['publisher'], 150));
 		$_POST['date']      = $addslashes($_POST['date']);
-		$_POST['comments']  = $addslashes($_POST['comments']);
+		$_POST['comments'] = $addslashes(validate_length($_POST['comments'], 255));
 		$_POST['isbn']      = $addslashes($_POST['isbn']);
 		
 		if ($id == '0'){ // creating a new file resource

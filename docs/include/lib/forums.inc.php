@@ -257,7 +257,7 @@ function print_entry($row) {
 		</div>
 
 		<div class="forum-post-content">
-			<h3><?php echo AT_Print(htmlentities($row['subject']), 'forums_threads.subject'); ?></h3>
+			<h3><?php echo AT_Print(htmlspecialchars($row['subject'], ENT_COMPAT, "UTF-8"), 'forums_threads.subject'); ?></h3>
 			<div>
 				<div class="forum-post-ctrl">
 					<?php if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)): ?>
@@ -273,7 +273,7 @@ function print_entry($row) {
 			</div>
 
 			<div class="body">
-				<p><?php echo AT_print(htmlentities($row['body']), 'forums_threads.body'); ?></p>
+				<p><?php echo AT_print(htmlspecialchars($row['body'], ENT_COMPAT, "UTF-8"), 'forums_threads.body'); ?></p>
 			</div>
 		</div>
 	</li>

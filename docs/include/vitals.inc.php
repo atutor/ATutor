@@ -171,6 +171,7 @@ $_config['home_defaults'] .= (isset($_config['home_defaults_2']) ? $_config['hom
 $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['main_defaults_2'] : '');
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
+require(AT_INCLUDE_PATH.'lib/utf8.php');			//UTF-8 multibyte library
 
 if ($_config['time_zone']) {
 	$sql = "SET time_zone='{$_config['time_zone']}'";
@@ -662,6 +663,48 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes   = 'mysql_real_escape_string';
 	$stripslashes = 'my_null_slashes';
 }
+
+
+/**
+ * If MBString extension is loaded, 4.3.0+, then use it.
+ * Otherwise we will have to use include/utf8 library
+ * @author	Harris
+ * @date Oct 10, 2007
+ * @version	1.5.6
+ */
+ if (extension_loaded('mbstring')){
+	 $strtolower = 'mb_strtolower';
+	 $strtoupper = 'mb_strtoupper';
+	 $substr = 'mb_substr';
+	 $strpos = 'mb_strpos';
+	 $strrpos = 'mb_strrpos';
+	 $strlen = 'mb_strlen';
+ } else {
+ 	 $strtolower = 'utf8_stringtolower';
+	 $strtoupper = 'utf8_stringtoupper';
+	 $substr = 'utf8_substr';
+	 $strpos = 'utf8_strpos';
+	 $strrpos = 'utf8_strrpos';
+	 $strlen = 'utf8_strlen';
+ }
+
+
+/**
+* Checks if the data exceeded the database predefined length, if so,
+* truncate it.
+* @param	the mbstring that needed to be checked
+* @param	the length of what the input should be
+* @return	the mbstring safe sql entry
+* @author	Harris Wong
+*/
+function validate_length($input, $len){
+	global $strlen, $substr;
+	if ($strlen($input) > $len) {
+		return $substr($input, 0, $len);
+	}
+	return $input;
+}
+
 
 /**
 * Applies $addslashes or intval() recursively.
