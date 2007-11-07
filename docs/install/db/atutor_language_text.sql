@@ -662,7 +662,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'content_packaging_disabl
 INSERT INTO `language_text` VALUES ('en', '_template', 'content_packaging_none', 'Not available on any of the pages', '2003-10-15 10:09:27', 'option1');
 INSERT INTO `language_text` VALUES ('en', '_template', 'content_packaging_top', 'Available only for top level pages', '2003-10-15 10:09:50', 'option2');
 INSERT INTO `language_text` VALUES ('en', '_template', 'content_usage', 'Content Usage', '2005-03-03 15:09:45', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'copyright', 'Web site engine\'s code is copyright © 2001-2005 <a href="http://www.atutor.ca" target="_new" title="ATutor.ca - opens in a new browser">ATutor</a><sup>®</sup>', '2005-01-04 12:53:48', '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'copyright', 'Web site engine\'s code is copyright Â© 2001-2005 <a href="http://www.atutor.ca" target="_new" title="ATutor.ca - opens in a new browser">ATutor</a><sup>Â®</sup>', '2005-01-04 12:53:48', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'core', 'Core', '2005-08-30 10:17:41', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'correct_answer', 'Correct Answer', '2003-05-18 13:38:45', 'test manager add/edit questions');
 INSERT INTO `language_text` VALUES ('en', '_template', 'count', 'Count', '2003-05-18 13:40:35', 'tracker');
