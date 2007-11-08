@@ -11,1673 +11,1695 @@ CREATE TABLE `language_text` (
   PRIMARY KEY  (`language_code`,`variable`,`term`)
 ) TYPE=MyISAM;
 
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ADD_FEED', 'Are you sure you want to add this syndicated feed?', '2005-11-15 13:19:26', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ADD_MODULE', 'Are you sure you want to install the module in <strong><code>%s</code></strong>?', '2005-08-17 12:59:04', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ADD_TEST_QUESTIONS', 'Are you sure you want to <em>add</em> the following questions? \r\n<ul>%s</ul>', '2004-11-23 12:38:56', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ALUMNI', 'Are you sure you want to mark the following users as course alumni: <ul> %s </ul>', '2004-11-23 12:17:53', 'enrollment_manager, make students into alumi');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_BACKUP', 'Are you sure you want to delete this backup?', '2004-11-23 15:18:37', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_CATEGORY', 'Are you sure you want to delete category  <strong>%s</strong>?', '2005-02-17 14:57:18', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_CONTENT', 'Are you sure you want to delete this page?<br />', '2004-11-24 13:30:31', 'conten deletion from course');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_COURSE_1', 'Are you sure you want to <strong>Delete</strong> the course <strong><em>%s</em></strong>?', '2005-03-04 11:27:35', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_COURSE_2', 'Are you <strong>really really</strong> sure you want to <b>Delete</b> the course <strong><em>%s</em></strong>? Deleted courses can not be recovered.', '2005-03-04 11:31:35', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_FAQ_QUESTION', 'Are you sure you want to delete the question <strong>%s</strong>?', '2005-10-19 12:49:55', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_FAQ_TOPIC', 'Are you sure you want to delete the topic <strong>%s</strong> and its questions?', '2005-11-08 13:42:33', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_FEED', 'Are you sure you want to delete feed ..?', '2005-10-28 13:52:32', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_FORUM', 'Are you sure you want to delete <b>%s</b> forum? All messages posted to this forum will be erased.', '2004-12-07 11:44:39', 'deleting a forum');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_GROUP', 'Are you sure you want to delete the group: <strong>%s</strong>?', '2005-02-21 12:07:05', 'deletep enrollment group');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_LANG', 'Are you sure you want to delete the language ( <strong>%s </strong>)?', '2004-11-24 13:19:50', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_LINK', 'Are you sure you want to delete the link %s?', '2005-02-21 16:55:38', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_MESSAGE', 'Are you sure you want to delete this <strong>message</strong>. It can not be recovered once deleted.', '2004-11-24 14:24:56', 'delete message in forum');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_NEWS', 'Are you sure you want to delete %s?', '2004-11-24 13:37:55', 'news deletion in editor');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_POLL', 'Are you sure you want to delete this poll \'%s\'?  It cannot be recovered once deleted.', '2004-11-24 14:03:36', 'editor');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_TEST', 'Are you sure you want to delete the test/survey <strong><em>%s</em></strong> and any results? The questions, however, will not be deleted.', '2004-12-15 10:42:13', 'Deleting Test');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_TEST_CATEGORY', 'Are you sure you want to delete test category <strong>%s</strong>?', '2005-03-07 11:58:48', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_TEST_QUESTION', 'Are you sure you want to delete this question? It will be erased permanently.', '2004-11-23 10:26:46', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_TEST_RESULTS', 'Are you sure you want to delete this test result?', '2005-03-10 10:47:11', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_THEME', 'Are you sure you want to delete the following theme: <b> % s </b>', '2004-11-23 09:30:03', 'confirm message for delete theme');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_THREAD', 'Are you sure you want to delete this thread. It can not be recovered once deleted.', '2004-12-03 12:17:20', 'delete thread in forum');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_TRACKING', 'Are you sure your want to delete the content usage data for this course?', '2005-08-11 10:08:50', 'reset tracking session');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_TRANSCRIPT', 'Are you sure you want to delete the transcript <strong>%s</strong>?', '2005-03-30 14:21:00', 'delete chat transcript');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_USER', 'Are you sure you want to delete user <b>%s</b>?', '2004-11-24 12:57:10', 'deleting user from admin');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DIR_DELETE', 'Are you sure you want to delete the following folder(s) and all their contents? <ul><strong>%s</strong></ul>', '2004-12-15 09:59:39', 'filemanager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DIR_MOVE', 'Are you sure you want to move <strong>%1s</strong> to the folder <strong>%2s</strong>?', '2005-01-10 10:35:17', 'filemanager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ENROLL_STUDENT', 'Are you sure you want to enroll the following users: <ul> %s </ul>', '2004-11-23 12:21:00', 'enrollment manager, enroll confirm');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_FILE_DELETE', 'Are you sure you want to delete the following file(s)? <ul><strong>%s</strong></ul>', '2004-12-15 09:57:40', 'filemanager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_FILE_EXISTS', 'The file <strong>%s</strong> already exists. Do you want to overwrite the file?', '2005-03-09 16:26:11', 'filemanager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_FILE_MOVE', 'Are you sure you want to move <strong>%1s</strong> to the folder <strong>%2s</strong>?', '2005-01-10 10:33:21', 'file_manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_GLOSSARY_DELETE', 'Are you sure you want to delete this glossary term?', '2005-03-07 12:17:52', 'editor');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_GLOSSARY_REMAINS', 'Deleting a term will not remove the embedded glossary codes from your content.', '2005-02-24 10:34:33', 'content deletion');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_LIST_DELETE', 'Are you sure you want to delete <strong>%s</strong> Student ID from the master student list?', '2005-04-04 15:47:51', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_LOGIN_INSTRUCTOR', '<h3>%2$s</h3>\r\nYou will be logged in as the instructor for this course.  To return to <strong>%1$s Administration</strong>, you will need to log out as the instructor and then log in again as administrator. Are you sure you want to continue?', '2005-02-18 11:59:56', 'viewing courses from admin');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_NO_ANSWER', 'You are about to add a question with no correct choice. Continue?', '2004-12-06 14:35:10', 'adding a question without specifying answer');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_REMOVE_STUDENT', 'Are you sure you want to remove the following students: <ul> %s </ul>', '2004-11-23 12:21:12', 'removing a student');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_REMOVE_TEST_QUESTION', 'Are you sure you want to remove this question from this test? Removing the question will not delete it from the question database.', '2004-11-25 10:31:52', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_RESET_ADMIN_LOG', 'Are you sure you want to delete the Administrator Activity Log?', '2005-03-03 10:42:50', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_RESET_ERROR_LOG', 'Are you sure you want to delete all the error logs?', '2005-03-10 15:49:02', 'error log reset (delete logs folder0');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_STUDENT_GROUP', 'Are you sure you want to add the following users to group \'%s\'? <ul> %s </ul>', '2005-06-02 12:07:05', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_STUDENT_REMOVE_GROUP', 'Are you sure you want to <strong>remove</strong> the following users from group \'%s\'? <ul> %s </ul>', '2005-06-02 12:06:56', 'Enrollment');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_SUB_CONTENT_DELETE', 'This content page has sub content. If you delete this page all its sub pages will be deleted as well.<br />', '2004-11-24 13:31:34', 'content deletion');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_UNENROLL', 'Are you sure you want to un-enroll from <strong>%s</strong>?', '2005-03-24 12:43:34', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_UNENROLL_PRIV', 'Are you sure you want to un-enroll the following users (the users will have their roles and privileges removed): <ul> %s </ul>', '2004-11-23 12:23:22', 'enrollment manager, unenrolling a TA');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_UNENROLL_STUDENT', 'Are you sure you want to un-enroll the following students: <ul> %s </ul>', '2004-11-23 12:21:36', 'enrollment manager, confirm unenroll');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ACCESS_DENIED', 'You do not have permission to access this area.', '2005-06-15 15:13:59', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ACCOUNT_DISABLED', 'That account has been disabled.', '2005-04-01 10:30:12', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ALREADY_ENROLED', 'You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ALREADY_OWNED', 'You own this course, and cannot enroll.', '2004-11-26 14:30:22', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ANN_BOTH_EMPTY', 'The announcement title and body cannot both be empty.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ANN_ID_ZERO', 'Announcement ID cannot be zero/missing.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ANN_NOT_FOUND', 'Announcement cannot be found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ANSWER_EMPTY', 'Answer cannot be empty.', '2005-10-19 12:46:42', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_BACKUP_RESTORE', 'Restore failed - file is not a valid backup. Backups older than version 1.3 are not supported.', '2005-11-29 14:33:56', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_BACKUP_UNSUPPORTED_GREATER_VERSION', 'Backups created from versions of ATutor greater than this version are not supported.', '2005-05-11 15:56:50', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_BAD_DATE', 'That date is not valid.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_BAD_FILE_TYPE', 'Unsupported file type. Plain Text or HTML files only.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_BAD_FOLDER_NAME', 'The folder name contains illegal characters. You may choose from alphanumeric characters and underscores, dashes or periods.', '2005-01-10 13:13:55', 'filemanager, foilder with illegal chars');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CACHE_DIR_BAD', 'Cache dir cannot be created. Cache disabled. See the configuration options to either disable or fix the problem.', '2003-05-27 13:10:53', 'global');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_CREATE_DIR', 'Cannot create content directory.', '2003-10-15 12:20:51', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_DELETE_OWN_ACCOUNT', 'You cannot delete your own account.', '2005-03-03 10:59:44', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_OPEN_DIR', 'Unable to open content directory. You may try to <a href="tools/filemanager/index.php?create=1">create it now</a>.', '2005-01-06 09:02:34', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_OPEN_FILE', 'Cannot open the file: <b> %s </b>', '2004-10-18 14:38:00', 'Theme Manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_OVERWRITE_FILE', 'Cannot override file.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_READ_FILE', 'Cannot read from file: <b> %s </b>', '2004-11-19 13:00:03', 'admin/error_logging.php');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_RENAME', 'File or directory cannot be renamed. Either a file or directory with that name already exists, the original file or directory does not exist, or the file or directory name has not changed.', '2004-08-20 12:05:15', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_WRITE_FILE', 'Cannot write to file: <b> %s </b>', '2004-10-18 14:39:10', 'Theme Manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CAT_NOT_FOUND', 'Category not found.', '2004-11-25 16:35:46', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CAT_NO_NAME', 'You must provide a category name', '2003-09-24 18:56:00', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CHAT_TRAN_REJECTED', 'Transcript filename rejected. Please ensure that it is  alphanumeric and contains no spaces.', '2003-06-02 13:47:39', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CHOICES_EMPTY', 'Enter at least two answer choices.', '2005-03-08 15:41:49', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CONFIG_NOT_WRITEABLE', 'It is not possible to edit these settings because the configuration file is locked for security reasons. If you want to make changes, you need to unlock the config.inc.php file first by changing its permissions with the command <kbd>chmod a+rw config.inc.php</kbd>.', '2005-03-03 10:14:48', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CONFIRM_BAD', 'Your email address and account could not be confirmed.', '2005-05-31 12:55:25', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CONTACT_INFO_NOT_FOUND', 'Contact Support is not available, because an email address has not been specified.', '2005-03-17 11:33:38', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CREATE_NOPERM', 'You do not have permission to create courses.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DB_NOT_UPDATED', 'Information could not be added to the database.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DEFINITION_EMPTY', 'The definition cannot be empty.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DESCRIPTION_EMPTY', 'Description cannot be empty.', '2005-02-23 12:10:41', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DESC_REQUIRED', 'You must provide a course description, before your instructor request can be processed.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DID_NOT_SELECT_A_BACKUP', 'You did not select a file', '2004-12-09 10:07:46', 'backup manager, no backup selected error');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DIR_NOT_DELETED', 'Cannot open directory to be deleted.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DIR_NOT_EXIST', 'Directory <strong>%s</strong> does not exist. Please create it.', '2005-09-22 14:08:05', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DIR_NOT_WRITEABLE', 'Directory <strong>%s</strong> is not writeable. On Unix issue the command <kbd>chmod a+rw</kbd> on the directory.', '2005-09-22 14:22:24', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DIR_NO_PERMISSION', 'Cannot delete folder. You may not have premission, or it may not be empty.', '2003-05-22 12:20:14', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DISABLE_CORE_MODULE', 'Core modules cannot be disabled.', '2005-08-25 14:00:13', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DISABLE_MISSING_MODULE', 'You cannot disable a missing module. To continue managing this module you must first restore its directory.', '2005-10-05 16:22:01', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_DOB_INVALID', 'Date of birth has invalid format.', '2004-06-24 12:53:34', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_EMAIL_EXISTS', 'An account with that email address already exists.', '2005-03-01 11:36:57', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_EMAIL_INVALID', 'Email address was invalid.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_EMAIL_MISSING', 'You must enter an email address.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_EMAIL_NOT_FOUND', 'No account found with that email address.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_EMPTY_STUDENT_ID', 'Student ID cannot be empty.', '2005-04-04 15:31:28', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_END_DATE_INVALID', 'That end date is not valid.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FEED_NO_CONTENT', 'The feed either cannot be found at that URL or is not valid.', '2005-11-23 10:59:56', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_EMPTY', 'You did not select a file to import or the file was empty.', '2004-12-09 14:44:43', 'enrollment manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_ILLEGAL', '%s files are not allowed.', '2003-05-22 11:52:08', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_MAX_SIZE', 'The file exceeded the maximum allowable size limit of %s.', '2004-05-06 13:18:19', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_NOT_DELETED', 'Error deleting file. Cannot delete file.', '2004-11-08 16:33:12', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_NOT_EXIST', 'The selected file does not exist.', '2005-01-07 09:51:45', 'filemanager, fiule to be edited does not exist');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_NOT_SAVED', 'The file cannot be saved.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_NOT_SELECTED', 'You did not select a file to upload.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_TOO_BIG', 'The file size exceeds the limit of <strong>%s </strong>. Contact your ATutor Administrator to have this limit increased.', '2005-01-15 18:49:53', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FOLDER_NOT_CREATED', 'The folder could not be created.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FORUM_DENIED', 'You do not  have permission to post in this forum.', '2005-08-10 13:48:14', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FORUM_NOT_FOUND', 'Forum can not be found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FORUM_NO_DEL_SHARE', 'You do not have permission to delete a shared forum.', '2004-12-10 11:10:25', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FORUM_NO_EDIT_SHARE', 'You do not have permission to edit a Shared forum.', '2004-12-10 11:15:41', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FORUM_NO_SUBSCRIBE', 'Cannot subscribe to the requested thread. Only subscription to the top-level post is allowed.', '2004-12-10 13:44:57', 'forum/subscribe.php');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FORUM_TITLE_EMPTY', 'The forum title cannot be empty.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_GENERAL', 'This is a search and %s ATutor error.', '2003-05-22 11:52:28', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_GLOS_ID_MISSING', 'Glossary term ID cannot be zero/missing.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_GOOGLE_KEY_INVALID', 'Invalid key.', '2005-11-30 14:35:03', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_GOOGLE_KEY_MISSING', 'A Google Key must be entered in order for the enabled Web Search to be available in courses. Enter this key by going to Google Key under the Configuration tab.', '2005-11-30 14:40:38', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_GOOGLE_QUERY_FAILED', 'Query failed.', '2005-10-20 10:52:04', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_GROUP_NOT_FOUND', 'Group not found.', '2004-11-25 16:03:01', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ID_ZERO', 'Content ID was zero, or was missing.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_IMPORTDIR_FAILED', 'Unable to create import directory.', '2005-07-20 14:02:57', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_IMPORTDIR_IMS_NOTVALID', 'The file does not appear to be a valid ZIP file.', '2005-06-27 11:37:47', 'IMS file is not a ZIP file.');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_IMPORTFILE_EMPTY', 'The import file must not be empty.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_IMPORT_ERROR_IN_ZIP', 'Zip file could not be extraced because: <b> %s </b>', '2004-10-18 14:22:04', 'theme manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_IMPORT_FAILED', 'Import Failed', '2005-01-15 09:50:40', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_IMPORT_NOT_PROPER_FORMAT', 'The selected file does not appear to be a valid theme package.', '2004-12-09 11:34:27', 'admin/themes/import.php');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_INCOMPLETE', 'Please fill out the forms as directed below', '2004-10-18 11:14:50', 'enrollment Manager, incomplete info in create list');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_INCORRECT_FILE_FORMAT', 'Incorrect file format on line %s.', '2004-02-02 14:40:24', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_INSTRUCTOR_EMPTY', 'You must select an Instructor. Create one first if none are available.', '2005-05-18 12:42:10', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_INST_INFO_NOT_FOUND', 'Instructor information cannot be found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_INVALID_LOGIN', 'Invalid login/password combination.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_INVALID_URL', 'Localhost is not a valid URL', '2004-11-05 10:22:37', 'AChecker');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_CHARSET_MISSING', 'You must enter a character set for this language.', '2004-09-02 11:57:08', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_CODE_MISSING', 'You must enter the language code.', '2004-09-02 11:57:25', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_ENAME_MISSING', 'You must enter the language name in English.', '2004-09-02 11:54:53', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_EXISTS', 'The language pack you are trying to import already exists. Language already exists. You can edit language properties by enabling the <em>translate</em> option at the bottom of thise page.', '2005-11-30 14:52:20', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_IMPORT_FAILED', 'Language import failed.', '2003-06-06 11:23:51', 'admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_NNAME_MISSING', 'You must enter the language name in its native language.', '2004-09-02 11:56:20', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_NOT_COMPLETE', 'The language pack you are trying to import has not been marked as complete and published. To use incomplete language packs you must enable <em>translating</em> using the instructions at the bottom of this page.', '2005-11-30 14:49:00', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_REGEX_MISSING', 'You must enter the regular expression for this language.', '2004-09-02 11:56:44', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LANG_WRONG_VERSION', 'The language pack you are trying to import is not compatible with this version of ATutor. If you still want to import this language pack you must enable <em>translating</em> following the instructions at the bottom of this page.', '2005-11-30 14:50:49', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LAST_LANGUAGE', 'Cannot delete last language - system needs at least one installed.', '2005-11-30 16:55:50', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LINK_CAT_EMPTY', 'Cannot add a link because there are no categories.', '2005-03-09 13:05:25', 'adding link but no cats');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LINK_CAT_NOT_EMPTY', 'Link category cannot be deleted because it contains sub-categories and/or links.', '2005-02-22 15:22:44', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LINK_CAT_TITLE_EMPTY', 'Category Name can not be empty.', '2005-06-30 09:56:23', 'If user did not specify a link category title.');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LOGIN_CHARS', 'Your Login Name must only contain letters, numbers, or underscores (_\'s).', '2005-06-21 12:25:07', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LOGIN_ENROL', 'You must be logged in to enroll in a course.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LOGIN_EXISTS', 'That login already exists, please choose another.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LOGIN_NAME_MISSING', 'You must enter a login name.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LOGIN_TO_POST', 'You must be logged in to post.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_LOG_NOT_RESET', 'The error log could not be reset.', '2005-03-10 15:54:03', 'error logging');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_MAX_ATTEMPTS', 'The test cannot be taken.  It is not available at this time, or you have reached the maximum number of attempts for this test.', '2004-09-02 12:59:25', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_MAX_STORAGE_EXCEEDED', 'Adding this file exceeds the maximum course storage limit.', '2003-10-03 16:00:08', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_MISSING_THEMEXML', 'Cannot import. The import package is missing a vital component: themes.xml. Check that the theme package is for version 1.4.3 or above.', '2004-12-09 11:59:21', 'admin/themese/import.php');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_MODULE_INSTALL', 'The following error(s) were encountered when trying to install this module:\r\n<ul>%s</ul>', '2005-10-11 10:48:49', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_MSG_BODY_EMPTY', 'Your message body cannot be empty.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_MSG_SUBJECT_EMPTY', 'Your message subject cannot be empty.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_MSG_TO_EMPTY', 'You must select at least one recipient group.', '2005-08-11 10:06:36', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NAME_MISSING', 'You must enter a name.', '2005-08-11 13:57:51', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NEED_FILENAME', 'Filename was left empty. Need a filename to create new file.', '2004-11-09 16:19:24', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NODELETE_USER', 'Cannot delete this user because they own courses. Delete the courses first.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NOT_CONFIRMED', 'That account\'s email address has not yet been confirmed. The email address must be confirmed in order to login.', '2005-03-22 11:57:29', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NOT_OWNER', 'You do not own this course or it does not exist.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NOT_RELEASED', 'This content has not yet been released. %s', '2003-05-22 11:52:38', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_CONTENT_SPACE', 'Not enough space to import content directory. %s KB over the limit.', '2003-10-03 15:58:38', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_COURSE_FLOAT', 'Invalid Maximum Course Float value.', '2005-06-20 10:44:45', 'Admin did not specify a float for course size.');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_COURSE_SELECTED', 'Select one or more courses.', '2004-11-03 14:50:54', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_DB_CONNECT', 'Unable to connect to DB.<br />Possible causes: Incorrect user name and password; incorrect database name; or too many DB connections.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_FAQ_TOPICS', 'You must first add a topic.', '2005-10-19 12:44:36', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_FILE_SELECT', 'You did not select any files.', '2004-10-29 15:04:01', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_IMSMANIFEST', 'IMS manifest file is missing. This does not appear to be a valid IMS content package.', '2003-10-27 11:43:08', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_IMS_BACKUP', 'This file appears to be a <a href="tools/backup/">course backup</a> rather than a content package.', '2003-11-03 12:14:37', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_ITEM_SELECTED', 'You must select an item before using a button.', '2005-03-07 16:36:43', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_LANGUAGE', 'Selected language is not supported.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_LOGS_SELECTED', 'You must select at least one profile to create a bundle.', '2004-11-25 11:18:19', 'admin/error_logging_details.php');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_LOG_SELECTED', 'You did not select a log file.', '2004-11-23 15:59:57', 'admin/error_logging_details.php');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_MEMBERS', 'No users found.', '2005-05-18 12:43:40', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_PROFILE_SELECTED', 'You did not select a profile.', '2004-11-23 16:01:27', 'admin/error_logging_details.php');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_QUESTIONS', 'No questions were found for this test.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_QUESTIONS_SELECTED', 'You did not select any questions to add to this test.', '2004-11-23 11:56:45', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_RECIPIENT', 'You must choose a recipient.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_SPACE_LEFT', 'There is no more space in this course to extract this archive.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_STUDENT_SELECTED', 'You did not select any students. Use the checkboxes beside the students you want to alter.', '2004-12-02 14:11:49', 'enrollment manager, no students selected');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_SUCH_COURSE', 'No such course ID found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_SUCH_USER', 'The user you selected does not exist.', '2005-03-17 15:34:30', 'veiwing profile but no such user');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_TEST_SELECTED', 'You did not select a test', '2005-02-21 10:25:23', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_NO_TITLE', 'The title cannot be empty.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PACKAGE_DIR_FAILED', 'Problem with Package Directory.', '2005-05-17 12:02:28', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PAGE_NOT_FOUND', 'Page cannot be found.', '2005-09-19 12:18:06', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PASSWORD_MISMATCH', 'Passwords did not match.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PASSWORD_MISSING', 'You must supply a password.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_POLL_NOT_FOUND', 'Poll not found.', '2004-06-14 14:56:16', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_POLL_QUESTION_EMPTY', 'Question cannot be empty.', '2004-06-14 14:57:13', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_POLL_QUESTION_MINIMUM', 'The poll must have at least two questions.', '2005-07-20 10:12:40', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_POST_ID_ZERO', 'Post ID cannot be zero/missing.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_POST_NOT_FOUND', 'Post cannot be found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_QUESTION_EMPTY', 'Question area can not be empty.', '2004-12-14 17:55:19', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_QUESTION_NOT_FOUND', 'Question not found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_REGISTER_MASTER_USED', 'The student ID and PIN combination you provided is either being used or is incorrect.', '2005-04-04 13:01:33', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_RESTORE_MATERIAL', 'You must select material to restore.', '2004-10-14 13:48:22', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_RESTORE_TOO_BIG', 'The course is too small to restore this backup into.', '2004-10-15 16:42:23', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_RESULTS_NOT_RELEASED', 'You are not permitted to view these test results at this time.', '2004-12-15 10:13:06', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_RESULT_NOT_FOUND', 'Result not found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SCO_DIR_NOT_EXIST', 'The SCORM RTE directory does not exist. Please create a directory called <em>sco</em> in your installations top directory (example: <code>server.com/ATutor/sco</code>).', '2005-05-10 10:58:58', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SCO_DIR_NOT_WRITEABLE', 'The SCORM RTE directory is not writeable. Please execute the command <code>chmod a+rwx sco</code> while in ATutor\'s top directory.', '2005-05-10 11:00:08', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SCO_DISABLED', 'The SCORM 1.2 RTE has not been enabled by the Administrator.', '2005-05-10 11:06:09', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SEARCH_TERM_REQUIRED', 'You must specify at least one search term.', '2003-08-22 12:03:29', 'search form');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SELECT_ONE_FILE', 'You must select one file.', '2004-11-08 12:07:39', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SENDING_ERROR', 'There was an error sending the email message.', '2005-01-18 13:34:23', 'mail failed to be sent');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SEND_ENROL', 'You can only send a message to other members after you enroll in a course.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SEND_MEMBERS', 'You can only send a message to others who are enrolled in the same courses as you. Your intended recipient may be viewing the course, but not enrolled.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_SESSION_COOKIES', 'Session cookies must be enabled in your browser to login.', '2005-07-22 13:04:11', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_START_DATE_INVALID', 'That start date is not valid.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_STUD_INFO_NOT_FOUND', 'Student information cannot be found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TERM_EMPTY', 'The term cannot be empty.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TERM_EXISTS', 'The term <strong>%s</strong> already exists.', '2004-07-22 16:55:03', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TERM_NOT_FOUND', 'Glossary term cannot be found', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TEST_NOT_FOUND', 'Test not found.', '2003-05-16 13:42:17', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_THEME_NOT_DELETED', 'The theme could not be deleted because it is either the current default theme or the original default theme.', '2005-05-10 09:27:02', 'theme manager deleting theme');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_THEME_NOT_DISABLED', 'Theme cannot be disabled because it is currently the default theme.', '2005-05-09 14:27:23', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TILE_UNAVAILABLE', 'The TILE repository is unavailable.', '2005-02-21 14:40:03', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TITLE_EMPTY', 'Title cannot be empty.', '2005-02-23 12:11:05', 'course properties');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TOPIC_NOT_FOUND', 'Topic not found.', '2005-11-08 13:37:58', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TRANSCRIPT_ACTIVE', 'You may not delete an active transcript.', '2005-05-16 12:46:32', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_UNKNOWN', 'An undetermined error has occurred.', '2003-05-16 14:24:59', 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_URL_EMPTY', 'URL cannot be empty.', '2005-02-23 12:16:37', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_USER_NOT_FOUND', 'User not found.', '2005-03-09 15:56:27', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ACCOUNT_APPROVED', 'You have successfully upgraded to an instructor account.', '2004-11-05 10:25:41', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ACCOUNT_CONFIRMED', 'Account has been confirmed.', '2005-03-30 11:56:59', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ADMIN_CREATED', 'Administrator account created successfully.', '2005-03-03 16:12:49', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ADMIN_DELETED', 'Administrator account deleted successfully.', '2005-03-03 10:49:25', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ADMIN_EDITED', 'Administrator account edited successfully.', '2005-03-03 10:47:13', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ADMIN_LOG_RESET', 'Administrator Activity Log has been reset successfully.', '2005-03-03 10:43:36', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ALREADY_ENROLLED', 'The following students are already enrolled: <ul> %s </ul>', '2005-06-23 12:50:58', 'enrollment manager, students added were alread enrolled');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ALREADY_REQUESTED', 'You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.', '2005-03-17 12:55:24', 'private enroll, already requested approval once');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_APPROVAL_PENDING', 'Your request has been made. You will be notifed when your request has been approved.', '2005-03-29 12:11:35', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ARCHIVE_EXTRACTED', 'Archive has been extracted successfully.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ATUTOR_UPDATE_AVAILABLE', 'An updated version of ATutor is available! View the <a href="http://atutor.ca/atutor/change_log.php">Change Log</a> for details.', '2005-11-21 12:36:30', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_AUTO_DISABLED', 'Auto-Login has been disabled', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_AUTO_ENABLED', 'Auto-Login has been enabled. Next time you enter ATutor using this computer, you will bypass the login screen. ', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_BACKUP_CREATED', 'Course backup created successfully.', '2004-10-19 12:11:14', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_BACKUP_DELETED', 'Backup deleted successfully.', '2004-10-18 14:36:58', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_BACKUP_EDIT', 'Backup description edited successfully.', '2004-10-19 12:49:15', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_BACKUP_UPLOADED', 'Backup uploaded successfully.', '2004-10-19 12:50:32', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CANCELLED', 'Successfully cancelled without any changes.', '2003-12-10 10:40:21', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CAT_ADDED', 'Category was successfully added.', '2003-09-25 17:03:31', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CAT_DELETED', 'Category was successfully deleted.', '2003-09-24 19:15:53', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CAT_UPDATE_SUCCESSFUL', 'Category was successfully updated.', '2003-09-24 20:11:44', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CLOSED', 'Successfully closed', '2004-05-03 11:26:52', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COMPLETED', 'Erollment list was successfully imported.', '2004-12-04 15:50:30', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONFIG_SAVED', 'System preferences have been saved successfully. A backup of the old configuration file was created and saved as %s (it\'s in your content directory).', '2005-03-29 15:22:14', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONFIRMATION_SENT', 'An email confirmation message has been sent.', '2005-03-22 12:07:10', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONFIRM_EMAIL', 'An email message has been sent to the new email address you specified. You must follow the instructions in that email for the changes to take affect.', '2005-03-22 12:38:09', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONFIRM_GOOD', 'Your email address has been confirmed successfully.', '2005-04-11 10:29:29', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONTENT_DELETED', 'Content was successfully deleted', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONTENT_DIR_CREATED', 'Content directory created successfully.', '2003-10-15 12:20:11', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONTENT_UPDATED', 'Content was successfully updated', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_CREATED', 'Course was successfully created!', '2004-12-16 19:12:38', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_DEFAULT_FSIZE', 'The \'Max File Size\' was set to \'Default\' as the entered file size was either empty or negative.', '2003-10-14 16:13:40', 'course properites: file size was set to default');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_DELETED', 'Course has been successfully deleted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_PREFS_SAVED', 'Course preferences were saved', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_PROPERTIES', 'Course properties were successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_REMOVED', 'Course was removed successfully.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_DIRS_MOVED', 'Directories successfully moved.', '2004-11-10 14:12:11', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_DIR_DELETED', 'Folder was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ENROLLED', 'The following unique accounts were successfully added to the course list: <ul> %s </ul>', '2005-06-23 12:51:35', 'enrollment manager, confirm enrollmnet');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ERROR_LOG_RESET', 'The error log was reset successfully.', '2005-03-10 15:53:27', 'error logging');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_EXPORT_CANCELLED', 'Export cancelled successfully.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FEED_DELETED', 'Feed deleted successfully.', '2005-10-28 13:53:56', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FEED_SAVED', 'Feed saved successfully.', '2005-10-28 12:23:22', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FILE_DELETED', 'File was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FILE_EXISTS', 'The file <strong>%1$s</strong> already exists. The newly uploaded file was saved as <strong>%2$s</strong>. <a href="tools/filemanager/index.php?overwrite=%2$s%5$spathext=%3$s%5$spopup=%4$s">Overwrite</a> the old existing file with the newer one.', '2005-01-06 14:38:40', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FILE_OVERWRITE', 'File overwrite successful.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FILE_PASTED', 'The file was successfully pasted into the textarea below. <strong><em>Save to apply changes</em></strong>, or Cancel to return to the previously saved content.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FILE_SAVED', 'The file was successfully saved as <strong>%s</strong>', '2005-01-10 09:35:48', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FILE_UPLOADED', 'File was successfully uploaded.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FILE_UPLOADED_ZIP', 'File was successfully uploaded. You may now <a href="tools/filemanager/zip.php?pathext=%1$s%4$sfile=%2$s%4$spopup=%3$s">extract</a> the file.', '2005-01-06 15:26:58', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FOLDER_CREATED', 'New folder created successfully.', '2005-01-10 12:33:31', 'filemanager, created new folder');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FORUM_ADDED', 'Forum has been created successfully.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FORUM_DELETED', 'Forum was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FORUM_POSTING', 'To post messages to the new forum, log into ATutor as regular users or instructor.', '2004-11-21 10:08:55', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FORUM_SUBSCRIBED', 'You have successfully subscribed to the <strong>%s</strong> forum. Messages posted to this forum will be delivered to your registered email address. View your profile to modify your email address.', '2004-12-02 15:04:51', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FORUM_UNSUBSCRIBED', 'You have successfully unsubscribed from the <strong>%s</strong> forum. Messages posted to this forum will no longer be delivered to your email address.', '2004-12-03 17:25:43', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_FORUM_UPDATED', 'Forum was successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_GLOSSARY_DELETE2', 'Glossary item successfully deleted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_GLOS_UPDATED', 'Glossary was successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_GOOGLE_KEY_SAVED', 'Google key saved successfully.', '2005-10-20 11:07:29', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_GROUP_ADDED', 'Group successfully added.', '2005-07-05 14:30:34', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_GROUP_DELETED', 'Group deleted.', '2004-11-25 15:48:40', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_GROUP_UPDATED', 'Group updated successfully.', '2004-11-25 15:49:09', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_IMPORT_CANCELLED', 'Import cancelled successfully.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_IMPORT_LANG_SUCCESS', 'New language was successfully imported. You may view and modify the new language by choosing it from the selection menu below.', '2003-06-05 19:38:41', 'admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_IMPORT_SUCCESS', 'Course content was successfully restored.', '2004-12-10 10:21:20', 'feedback msg admin restore backup');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_IMS_IMPORT_SUCCESS', 'Course content was successfully added.', '2005-06-27 11:42:52', 'IMS content package successfully imported.');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LANG_ADDED', 'New language was successfully created. Use the language selector to choose the new language, then beginning adding translated terms. Translation tools are enabled in include/vitals.inc.php', '2004-11-20 20:14:55', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LANG_DELETED', 'Language was successfully removed.', '2003-06-05 19:38:01', 'admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LANG_UPDATED', 'Language successfully updated.', '2005-04-26 16:04:36', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LINK_ADDED', 'Link added successfully.  Link will become visible if approved.', '2005-02-23 12:07:59', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LINK_DELETED', 'Link was successfully deleted.', '2005-02-21 16:59:09', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LINK_UPDATED', 'Link updated successfully.', '2005-02-22 15:14:14', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LIST_DELETED', 'Student ID deleted successfully.', '2005-04-04 15:48:41', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LIST_UPDATED', 'List updated successfully.', '2005-04-04 15:36:11', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LOGIN_SUCCESS', 'You have logged in successfully. Welcome back!', '2005-02-15 17:07:45', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LOGOUT', 'You have successfully been logged out.', '2003-10-29 10:00:12', 'after logging out');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LOGS_DELETED', 'Successfully deleted the profile and its associated error logs.', '2004-11-25 12:57:27', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MASTER_LIST_NO_CHANGES', 'No changes were done to the Master Student List.', '2005-06-16 12:32:19', 'When action to master list yields no changes');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MASTER_LIST_UPLOADED', 'Master Student List has been updated successfully.', '2005-04-04 16:12:52', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MEMBERS_ALUMNI', 'Student has been assigned alumni status.', '2004-12-02 11:42:06', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MEMBERS_ENROLLED', 'The selected students were successfully enrolled in the course.', '2004-12-02 11:42:37', 'enrollment manager, confirm enrollment');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MEMBERS_REMOVED', 'The selected users were successfully removed from the course', '2004-10-18 10:58:17', 'enrollment manager, confirm removal');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MEMBERS_UNENROLLED', 'The selected users were successfully un-enrolled from the course', '2004-10-18 10:59:09', 'enrollemnt manager, confrm unenrollment');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MESSAGE_DELETED', 'Message was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MOD_DISABLED', 'Module successfully disabled.', '2005-08-17 11:08:15', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MOD_ENABLED', 'Module successfully enabled.', '2005-08-17 11:07:50', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MOD_INSTALLED', 'Module successfully installed.', '2005-08-16 16:15:49', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MOVED_FILES', 'Files successfully moved.', '2004-11-10 14:11:19', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MSG_DELETED', 'Message was deleted successfully ', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MSG_SENT', 'Message has been sent successfully.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_NEWS_ADDED', 'Announcement was successfully created', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_NEWS_DELETED', 'Announcement was successfully deleted', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_NEWS_UPDATED', 'Announcement was successfully updated', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_NOT_ENROLLED', 'The following students were not enrolled: <ul> %s </ul>', '2005-06-23 12:50:31', 'When a student was not enrolled when imported/created.');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_NOW_ENROLLED', 'You are now enrolled in the %s course. You may enter the course at any time. To un-enroll, select "Un-Enroll" next to the course listing in My Courses..', '2005-06-06 10:04:55', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PACKAGES_IMPORT_SUCCESS', 'The packages<ol> %s </ol>were imported successfully.', '2005-05-17 12:03:34', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PACKAGE_IMPORT_SUCCESS', 'The package &quot;%s&quot; was imported successfully.', '2005-05-17 12:03:10', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PASSWORD_SUCCESS', 'Your login and password have been successfully emailed.', '2005-01-18 14:29:55', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_POLL_ADDED', 'Poll successfully added.', '2004-06-14 15:00:29', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_POLL_DELETED', 'Poll has been deleted successfully.', '2004-07-05 14:04:05', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_POLL_UPDATED', 'Poll successfully updated.', '2004-06-14 15:00:12', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_POST_EDITED', 'Message was successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PREFS_LOGIN', 'You cannot save these preferences because you are not logged in.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PREFS_SAVED2', 'Your preferences have been saved successfully.', '2004-04-16 15:47:09', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PRIVS_CHANGED', 'Privileges updated successfully.', '2005-08-24 11:21:49', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PROFILE_CREATED_ADMIN', 'User account created successfully.', '2005-03-29 15:19:07', 'admin create user');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PROFILE_UPDATED', 'Your Profile was successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PROFILE_UPDATED_ADMIN', 'The user profile was successfully updated', '2004-12-17 11:47:52', 'change user profile from admin area');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_QUESTION_ADDED', 'Question was successfully added.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_QUESTION_DELETED', 'Question was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_QUESTION_REMOVED', 'Question was successfully removed from test/survey.', '2004-11-24 10:03:12', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_QUESTION_UPDATED', 'Question was successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_QUESTION_WEIGHT_UPDATED', 'The question weights and total test weight have been updated.', '2004-11-24 17:01:43', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_REG_THANKS', 'Thank you for registering, please <a href="login.php">login</a>.', '2003-09-25 14:39:50', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_REG_THANKS_CONFIRM', 'Thank-you for registering. Please follow the instructions in the email we sent you on how to confirm your account. You will need to confirm your account before you can login.', '2005-03-22 11:29:22', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_RENAMED', 'File or directory has been successfully renamed.', '2004-08-11 13:59:32', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_RESULTS_UPDATED', 'Result was successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_RESULT_DELETED', 'Result was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_SECTIONS_SAVED', 'The section preferences have been saved successfully.', '2005-09-14 16:11:14', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_STICKY_UPDATED', 'Thread stickyness was updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_STUDENT_ADDED_GROUP', 'Students added to group.', '2004-12-02 11:43:48', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_STUDENT_REMOVE_GROUP', 'Students removed from group.', '2005-05-16 14:23:43', 'Enrollment');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_SYSTEM_PREFS_SAVED', 'System preferences saved successfully.', '2005-09-29 13:19:36', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TEST_ADDED', 'Your test/survey was created successfully.', '2004-12-07 21:53:37', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TEST_DELETED', 'The test/survey has been successfully deleted.', '2004-08-25 14:10:38', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TEST_SAVED', 'Your test/survey results have been saved and appear below.', '2005-06-21 10:39:53', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TEST_UPDATED', 'Test was successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THEME_DEFAULT', 'The theme, <b>%s</b>, is now the default theme.', '2004-10-18 15:17:47', 'Theme Manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THEME_DELETED', 'Theme was deleted successfully', '2005-05-17 15:54:33', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THEME_DISABLED', 'The theme, <b> %s</b>, has been disabled successfully <b>(users currently using the theme will still be able to use the theme until it is deleted)</b>', '2004-10-19 16:55:20', 'theme manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THEME_ENABLED', 'The theme, <b> %s</b>, has been enabled successfully.', '2004-10-18 14:57:16', 'theme manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THEME_IMPORT_SUCCESS', 'The theme was successfully imported', '2004-10-18 12:32:01', 'Theme Manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THREAD_DELETED', 'Thread has been deleted successfully.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THREAD_LOCKED', 'Thread has been successfully <strong><em>locked</em></strong>.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THREAD_REPLY', 'Reply was successfully posted.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THREAD_STARTED', 'Thread was successfully started.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THREAD_SUBSCRIBED', 'You have successfully subscribed to the <strong>%s</strong> thread. Messages posted to this thread will be forwarded to your registered email address. View your profile to modify your email address.', '2004-12-02 16:21:03', 'forum threads');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THREAD_UNLOCKED', 'Thread has been successfully <strong><em>unlocked</em></strong>.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_THREAD_UNSUBSCRIBED', 'You have successfully unsubscribed from the <strong>%s</strong> thread. Messages will no longer be sent to your email address.', '2004-12-02 16:34:13', 'forum threads');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TOPIC_ADDED', 'Topic added successfully.', '2005-10-19 12:45:03', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TOPIC_DELETED', 'Topic deleted successfully.', '2005-11-09 13:47:55', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TOPIC_UPDATED', 'Topic edited successfully.', '2005-11-08 13:38:16', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TRACKING_DELETED', 'Course tracking data was successfully deleted for this course.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_TRAN_DELETED', 'Transcript was successfully deleted', '2003-05-28 09:31:34', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_USER_DELETED', 'User deleted successfully.', '2003-05-16 13:47:01', 'feedback msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_404_BLURB', 'The page you are trying to access <i>%s</i> does not exist, or has been moved. Try using the <a href="sitemap.php">SiteMap</a> to find it.', '2005-03-03 14:48:24', '/404.php');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_ACCOUNT_APPROVED', 'You have successfully upgraded to an instructor account.', '2004-02-12 12:52:57', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_ALREADY_ENROLLED', 'You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.', '2004-11-05 10:29:01', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_APPROVAL_PENDING', 'Your request has been made. You will be notifed when your request has been approved.<br /><br />Return to <a href="users/index.php">My Courses</a>.', '2004-05-06 14:15:28', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_DECISION_NOT_REVERSED', 'Decisions could not be reversed.', '2004-08-18 12:08:25', 'AChecker - can\'t reverse decision');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_DECISION_NOT_SAVED', 'Decisions could not be saved.', '2004-08-18 12:09:38', 'AChecker - can\'t save decision');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_DECISION_REVERSED', 'Decision reversed successfully.', '2004-08-18 12:07:27', 'AChecker - reverse decision');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_GLOSSARY_REMAINS', 'Note that removing a linked glossary term from your content will <strong>not</strong> delete the term from the glossary.', '2003-05-16 13:45:50', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_INVALID_URL', 'Localhost is not a valid URL', '2004-08-18 12:03:14', 'Used when AChecker reading URL');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_INVALID_USER', 'You must <a href="login.php?course=%s">login</a> to use this section.', '2004-04-15 13:52:32', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_LOGIN_TO_POST', 'You must be logged in to post.', '2004-11-05 10:29:51', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_MASTER_LIST_DISABLED', 'The master list has been disabled.  To enable this functionality go to <a href="admin/config_edit.php">System Preferences</a>.', '2005-05-10 15:16:13', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_MSG_SEND_LOGIN', 'You must be logged in to send messages.', '2003-05-16 13:42:17', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NOT_ENROLLED', 'You need to be enrolled in this course to access this area.', '2004-05-12 11:35:43', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NOT_RELEASED', 'This content has not yet been released. It is scheduled to be released on %s.', '2005-11-22 15:21:27', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_ACOLLAB', 'ACollab is not available.', '2004-11-01 12:45:53', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_CONTENT', 'This course has no content yet.', '2003-05-16 13:45:50', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_LINK_CATEGORIES', 'There are currently no link categories.  A link may not be suggested until link categories have been created.', '2005-03-16 16:47:22', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_PACKAGES', 'No packages found.', '2005-05-17 12:03:52', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_PAGE_CONTENT', 'There is no content on this page.', '2003-05-16 13:45:50', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_PERMISSION', 'You do not have permission to access this page.', '2003-05-16 13:45:50', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_POLLS', 'No polls are available right now.', '2005-03-22 10:52:43', 'no active polls');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_POSTS_FOUND', 'There are no posts in this forum.', '2003-05-16 13:45:50', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_SEARCH_RESULTS', 'No search results.', '2003-08-22 11:31:53', 'search page');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_NO_STUDENTS', 'There are no students enrolled in this course.', '2005-03-22 11:09:35', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_OVER_QUOTA', 'You have reached or passed your maximum quota for this course. You will have to delete some files before you will be able to upload again.', '2003-10-07 15:06:28', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_PRIVATE_ENROL', 'The course you are trying to access is <strong>private</strong>. Enrollment in this course requires instructor approval.<br />', '2003-10-24 15:31:11', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_SAVE_CONTENT', 'Content must be saved before it can be evaluated.', '2004-08-18 12:06:23', 'AChecker requirement in ATutor content');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_SERVICE_UNAVAILABLE', 'Service currently unavailable.', '2004-08-18 12:00:53', 'Used for AChecker');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_TRACKING_NO_INST', 'You have chosen your own ID number. Tracking information is not recorded for course instructors. Choose another user.', '2003-10-24 15:31:44', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_TRACKING_NO_INST1', 'Tracking information is not recorded for course instructors. See the <a href="tools/course_tracker.php">Course Tracker</a> for a record of course activity.', '2003-10-24 15:31:52', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_TRACKING_OFFIN', 'Tracking is not enabled for this course. Contact your system administrator to have it turned on.', '2003-05-16 13:45:50', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_TRACKING_OFFST', 'Tracking is not enabled for this course.', '2003-05-16 13:45:50', 'info msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_WARNING_CHAT_TRAN_EXISTS', 'A transcript with the name %s already exits. Either delete the original transcript, then resubmit, or rename your new transcript.', '2003-06-02 14:05:26', 'achat instructor transcript tool');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_WARNING_DELETE_CATEGORY', 'Are you sure you want to delete this category with all its links?', '2003-05-16 13:46:16', 'warning msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_WARNING_LANG_EXISTS', 'The language you are uploading is already installed on this system. Delete the existing language first by selecting the "<strong>Remove</strong>" link next to its listing below.', '2003-06-06 09:40:14', 'admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_WARNING_QUESTION_WEIGHT', 'One or more of the questions on this test do not have a weight associated with them.  Ensure that this is correct, or enter values for questions that do not have weights.', '2004-12-14 18:23:57', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_WARNING_SAVE_YOUR_WORK', 'Save your work before opening or closing the File Manager.', '2003-05-16 13:46:16', 'warning msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_WARNING_THEME_VERSION_DIFF', 'The theme, <b>%s</b>, may not be compatible with this version of Atutor.', '2004-10-19 14:34:35', 'Theme Manager');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_WARNING_TRANSLATE_ON', 'You are currently in Translation Mode. Any user can access the translation page at this time. To turn off the Translate mode please set AT_DEVEL_TRANSLATE in /include/vitals.inc.php to zero.', '2004-12-09 10:53:02', 'admin index and admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_template', '15_max_chars', '15 characters maximum', '2004-06-21 16:26:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', '20_max_chars', '20 character maximum', '2003-06-04 14:52:27', 'login name registration screen');
-INSERT INTO `language_text` VALUES ('en', '_template', '404', 'Error: Missing Page', '2004-03-10 11:24:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'about_atutor', 'About ATutor', '2004-01-14 10:25:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'about_atutor_help_text', 'Learn about various sources of ATutor help, and the help display options available.', '2004-05-19 10:40:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'about_private', 'Available only to users with an ATutor System Account, and Instructor approved enrollment. Login required. Enrollment is required.', '2004-01-22 14:54:29', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'about_protected', 'Available only to users with an ATutor System Account. Login required. Enrollment is optional.', '2004-02-05 09:43:13', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'about_public', 'Available to all users with or without an ATutor System Account. Login not required. Enrollment is optional.', '2004-02-05 09:42:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'access', 'Access', '2003-05-18 09:03:07', 'create a new course');
-INSERT INTO `language_text` VALUES ('en', '_template', 'accessibility', 'Accessibility', '2003-05-21 13:56:28', 'help page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'accessibility_features', 'Accessibility Features', '2003-05-21 14:28:03', 'help');
-INSERT INTO `language_text` VALUES ('en', '_template', 'accessibility_features_text', 'Using ATutor with assistive technology and other accessibility features.', '2003-05-21 14:00:59', 'help');
-INSERT INTO `language_text` VALUES ('en', '_template', 'access_credit', 'Accessibility report provided by <a title="ATRC Web Accessibility Checker (link opens in a new window)" target="_new" href="http://checker.atrc.utoronto.ca?lang=eng">ATRC Web Accessibility Checker</a>.', '2004-08-18 11:28:42', 'include/html/editor_tabs/accessibility.inc.php');
-INSERT INTO `language_text` VALUES ('en', '_template', 'access_method', 'Access Method', '2003-05-18 09:07:28', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'access_stats', 'Access Method Statistics for', '2005-02-07 16:22:32', 'context (?)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'account_authorization', 'Account Creation Authorization', '2005-05-27 13:33:38', 'registration page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'account_information', 'Account Information', '2003-05-18 09:14:11', 'control centre/registration');
-INSERT INTO `language_text` VALUES ('en', '_template', 'account_status', 'Account Status', '2005-04-14 11:09:36', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'acollab', 'ACollab', '2004-05-06 11:00:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'acollab_frame', 'ACollab Frame', '2005-04-18 15:24:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'acollab_own_window', 'Open ACollab in its own window.', '2004-10-28 14:32:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'action', 'Action', '2004-10-14 14:10:28', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'active_admin', 'Active Administrator', '2005-03-03 11:00:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'ac_access_groups', 'Access Groups', '2004-03-09 14:22:58', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add', 'Add', '2004-11-24 14:28:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_announcement', 'Add Announcement', '2003-05-18 09:17:38', 'course announcments/home page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_a_new_language', 'Add a new language.', '2004-10-28 13:05:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_code', 'Add Code', '2004-05-06 12:22:57', 'Title for code tags in code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_content', 'Create Content', '2005-04-18 11:40:53', 'heading/submit button on Add Content screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_glossary', 'Add Glossary Term', '2005-03-07 11:42:42', 'glossary screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_language', 'Add Language', '2004-09-01 15:42:32', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_link', 'Add Link', '2005-02-22 10:13:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_more', 'Add More Students', '2004-10-15 14:10:59', 'create student list manually in enrollment manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_poll', 'Add Poll', '2004-06-14 14:41:26', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_question', 'Add Question', '2005-10-19 12:44:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_questions', 'Add Questions', '2003-05-18 10:27:45', 'test manager add questions screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_sibling_page', 'Add Sibling Page', '2005-07-21 10:18:21', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_sub_page', 'Add Sub Page', '2005-03-31 14:17:33', 'content page shortcuts');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_term', 'Add Term', '2003-05-18 10:28:38', 'glossary');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_topic', 'Add Topic', '2005-10-19 12:43:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_top_page', 'Add Top Page', '2005-07-21 10:18:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'add_to_test_survey', 'Add to Test/Survey', '2004-11-22 16:38:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'administration', 'Administration', '2003-06-04 10:51:48', 'admin home page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'administrators', 'Administrators', '2005-03-03 10:40:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'admin_bundle_instructions', 'Please select the profile(s) you wish to bundle and send via e-mail. All error logs coupled with these profiles will also be included.', '2005-03-10 15:29:13', 'admin error reporting');
-INSERT INTO `language_text` VALUES ('en', '_template', 'admin_email', 'Email Users', '2005-01-06 14:57:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'admin_log', 'Administrator Activity Log', '2005-03-03 10:40:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'admin_new_account', 'A user account has been created for you at %1s. To access this account, please log into the site. It is strongly suggested you change your password upon logging in.', '2005-06-21 16:38:21', 'Admin creates a new user account.');
-INSERT INTO `language_text` VALUES ('en', '_template', 'admin_new_account_confirm', 'An account has been created for you at %1s. To access your account, you must first confirm your email by using the following link: %2s. It is strongly suggested you change your password upon logging in.', '2005-06-21 16:37:44', 'Admin creates a new user and confirm is ON');
-INSERT INTO `language_text` VALUES ('en', '_template', 'affected_entries', 'Affected Entries', '2005-03-03 12:14:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'after_topic', 'After: %s', '2004-01-16 13:19:46', 'content editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'age', 'Age', '2003-05-18 10:38:32', 'registration, profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'all', 'All', '2003-05-18 11:35:37', 'glossary');
-INSERT INTO `language_text` VALUES ('en', '_template', 'allow_instructor_requests', 'Allow Instructor Requests', '2005-03-03 10:51:13', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'all_available_courses', 'All available courses', '2004-08-18 12:03:26', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'all_courses', 'All Courses', '2005-04-01 14:08:29', 'forums');
-INSERT INTO `language_text` VALUES ('en', '_template', 'all_label', 'All (%s)', '2005-05-12 10:26:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'all_users', 'All Users', '2005-03-10 15:24:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'alternate_text', 'Alternate Text', '2004-12-08 12:39:27', 'filemanager, image inset alt field');
-INSERT INTO `language_text` VALUES ('en', '_template', 'alumni', 'Alumni', '2004-10-22 15:56:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'announcements', 'Announcements', '2003-05-18 11:36:24', 'course home page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'announcement_date_format', '%%l %%F %%j, %%Y', '2003-05-20 12:38:32', 'course home page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'anonymous', 'Anonymous', '2004-08-26 13:24:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'anonymous_test', 'Anonymous', '2004-08-26 12:31:05', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'answer', 'Answer', '2003-05-18 11:38:10', 'test question add/edit screens');
-INSERT INTO `language_text` VALUES ('en', '_template', 'answer_size', 'Answer Size', '2003-05-18 11:38:55', 'add/edit open ended question');
-INSERT INTO `language_text` VALUES ('en', '_template', 'append_content', 'Append selected material', '2004-10-15 14:18:20', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'apply', 'Apply', '2005-02-10 11:25:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'apply_theme_subcategories', 'Apply theme to subcategories.', '2004-08-04 11:35:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'approve', 'Approve', '2003-05-18 11:41:29', 'enrol administration');
-INSERT INTO `language_text` VALUES ('en', '_template', 'approved', 'Approved', '2005-02-23 12:17:50', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'archive_total', 'Archive Total', '2003-05-18 11:42:55', 'file manager zip tool');
-INSERT INTO `language_text` VALUES ('en', '_template', 'assigned_to', 'Assigned To', '2005-06-02 12:18:18', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'assistants', 'Assistants', '2004-10-15 11:45:31', 'Assistants tab in enrollment manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'as_individual_content', 'As individual content pages', '2004-08-18 12:04:21', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'at', 'at', '2003-05-18 11:44:08', 'release date tool/links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'attempts', 'Attempts', '2004-08-30 11:31:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_accessibility_text', '<p>ATutor includes a variety of features designed to ensure that content is accessible to all potential users, including those with slow Internet connections, older Web browsers, and people with disabilities using assistive technologies to access the Web. These features are described in detail below. Depending on the theme being used, ATutor may include all or some of the features listed here. The default theme includes them all.</p>\r\n\r\n<ol>\r\n<li><strong>ByPass Links:</strong> In the top left corner of ATutor is a  hidden bypass link that allows assistive technology users to skip over the navigation elements and jump directly to an anchor at the top of the content being displayed. Press the Tab key once after a page has finished loading to advance to the first bypass link then press Enter to reposition the content to the top of your screen. The content anchor can also be accessed with an accesskey [Alt-c], so it is possible to jump to the top of the content area no matter where the cursor might be located on the screen.<br /><br />\r\n\r\nOther bypass links include: "jump past table" so users can skip over various data table to quickly access content that may appear after the table; "jump past codes", so users can skip over the emoticon codes near the bottom of message posting form in the Forums.<br /><br /></li>\r\n\r\n<li><strong>Accesskeys:</strong> Keyboard accessibility has been added to many ATutor features. To activate accesskeys, press Alt plus the assigned number, letter, or character. Accesskeys are assigned dynamically to the tabs in the Main Navigation. The first tab will be assigned [Alt-1], the second tab will be assigned [Alt-2], and so on.  Note that not all browsers support accesskeys.<br /><br />\r\n\r\nGeneral AccessKeys\r\n<ul>\r\n<li>[Alt-1 to Alt-0] Main Navigation Tabs</li>\r\n<li>[Alt-,] Previous topic (i.e. Left angle bracket <)</li>\r\n<li>[Alt-.] Next topic (i.e. Right angle bracket > )</li>\r\n<li>[Alt-.] Resume (i.e. Right angle bracket > while outside the course content)</li>\r\n<li>[Alt-j] Jump Menu</li>\r\n<li>[Alt-s] Submit (active on many form pages)</li>\r\n<li>[Alt-c] Jump to content top (top and navigation bypass link)</li>\r\n</ul>\r\n\r\nContent Editor AccessKeys\r\n<ul>\r\n<li>[Alt-n] Content Tab</li>\r\n<li>[Alt-p] Properties Tab</li>\r\n<li>[Alt-g] Glossary Tab</li>\r\n<li>[Alt-r] Preview Tab</li>\r\n<li>[Alt-a] Accessibility Tab</li>\r\n<li>[Alt-s] Save</li>\r\n</ul>\r\n\r\nChat AccessKeys\r\n<ul>\r\n<li>[Alt-c] Jump to Compose Message field</li>\r\n<li>[Alt-r] Refresh Messages</li>\r\n<li>[Alt-m] Jump to Message List</li>\r\n<li>[Alt-q] Quit Chat</li>\r\n</ul>\r\n\r\nInbox AccessKeys\r\n<ul>\r\n<li>[Alt-r] Reply to Messages</li>\r\n</ul>\r\n<br />\r\n</li>\r\n\r\n<li><strong>Accessibility Verifier: </strong>While using the ATutor Content Editor, instructors can check the accessibility of their content to be sure it can accessed by all students, including those using assistive technologies, or older technologies. While using the Content Editor, select [Alt-a] to open the accessibility verifier.</li>\r\n\r\n<li><strong>Alternative Text: </strong>All meaningful images in ATutor include a text alternative that describes the image or its function. Where images are not meaningful the Alt attribute is left empty so assistive technologies  will ignore the image.</li>\r\n\r\n<li><strong>Alternative Navigation: </strong>Global, hierarchical, and sequential navigation tools are available so users can view or structure content in a manner that suits their style of learning.  The ATutor SiteMap provides a full list of all content and tools available, so all features in a course can be accessed from a single location.</li>\r\n\r\n<li><strong>Resume/Continue: </strong>ATutor remembers the last page accessed when users leave the course content, to go to the Forums for instance, so they can quickly find their way back to where they left off. The content location is also remembered between sessions, so when returning to ATutor, users can simply choose the Resume link in the course listing on My Courses, or select the the resume link in the breadcrumbs at the top of the screen once in a course. Using the [Alt-.] accesskey will also return a user to the last content page they were viewing after they have entered into a course.</li>\r\n\r\n<li><strong>Hide Menus:</strong> For users of older assistive technologies that do not support columnar text laid out in tables, it is possible to hide ATutor\'s content navigation menu so that content will be displayed in a linear presentation. Hiding the content menu also conserves space for users viewing ATutor on smaller screens.</li>\r\n\r\n<li><strong>Search and Sort:</strong> Most data tables are accompanied by a search tool, or filter, so specific records can be displayed in the table, reducing the amount of data displayed at any given time. Most data tables can also be sorted by selecting the column header label, again allowing users to narrow down the data display.</li>\r\n\r\n<li><strong>Table  Header Associations: </strong>All data tables are marked up with the TH element and the scope attribute to ensure that screen reader users are able to navigate through data displays and understand what each data cell represents.</li>\r\n\r\n<li><strong>Form Labels: </strong>All form fields throughout ATutor are marked up using the LABEL element to ensure that they are properly described for assistive technology users. Explicit labeling in this manner also makes it possible to click on a form field\'s label to activate the field. This provides a larger target area for those people who have difficulty positioning a mouse pointer on a small form field such as a radio button or a checkbox.</li>\r\n\r\n<li><strong>Style Sheets: </strong>Wherever possible, the presentation of content in ATutor is controlled by style sheet elements. This allows users to override ATutor\'s default appearance and apply their own preferred presentation styles (i.e. increased font sizes, different font styles, colours, etc.)</li>\r\n\r\n<li><strong>Form Field Focus: </strong>For pages where the primary content is a form, the cursor will automatically be placed in the first field so that after a form page loads, users can begin typing into the form.  Users may choose to disable form focus in their preference settings if it interferes with their use of form screens.</li>\r\n\r\n<li><strong>Relative Sizing of Images: </strong>With browsers that support resizing of images, ATutor icons can be magnified for users with low vision, making them more easily visible. (e.g. Netscape 7 press Alt +) . Wherever possible relative measures have also been used for other feature within ATutor so when the interface is magnified or reduced, all features resize relative to each other, maintaining the screen\'s symmetry.</li>\r\n\r\n</ol>', '2005-07-22 11:30:03', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_handbook', 'Official ATutor Handbook', '2005-07-12 10:42:58', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_home', 'ATutor home', '2003-05-18 11:49:37', 'mail response link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_is', '<strong><em>ATutor</em></strong> is an Open Source Web-based <strong>Learning Content Management System (LCMS)</strong> designed with accessibility and adaptability in mind. Administrators can install or update ATutor in minutes. Educators can quickly assemble, package, and redistribute instructional content, and conduct their courses online. Students learn in an adaptive learning environment.', '2004-02-13 14:33:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_links', '<p>Learn more about <a href="http://atutor.ca/index.php">ATutor</a> by browsing the following links:</p>\r\n\r\n<ul>\r\n<li><a href="http://atutor.ca/atutor/docs/index.php">FAQs</a> - Frequently asked questions with answers</li>\r\n<li><a href="http://atutor.ca/forums/index.php">Support Forums</a> - Post to the user forums</li>\r\n<li><a href="http://atutor.ca/services/index.php">Support Services</a> - If you need our help, support is available</li>		\r\n<li><a href="http://atutor.ca/atutor/translate/index.php">Translation</a> - Download language packs, become a translator</li>\r\n<li><a href="http://atutor.ca/services/licensing.php">Licensing</a> - ATutor software is available for free under certain terms</li>\r\n<li><a href="http://atutor.ca/atutor/download.php">Download ATutor</a> - All of the system software required to run ATutor can be downloaded here</li>\r\n</ul>', '2005-11-22 14:17:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_version', 'ATutor Version', '2005-03-10 11:21:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_version_text', 'You are currently using ATutor version <strong>%s</strong>. To check if a newer version is available use the button below. View the <a href="http://atutor.ca/atutor/change_log.php">Change Log</a> for this version.', '2005-03-10 11:24:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'at_tools', 'ATutor Tools', '2003-05-18 11:51:40', 'tracker column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'auto_approve_instructors', 'Auto Approve Instructor Requests', '2005-03-03 10:51:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'auto_check_new_version', 'Check for ATutor Updates Automatically', '2005-11-21 12:37:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'auto_login1', 'Auto-Login', '2003-05-18 11:53:47', 'control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'availability', 'Availablity', '2003-05-18 11:55:45', 'test manager column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'available_on_my_courses', 'Link From The <em>My Courses</em> Page', '2005-05-02 12:12:35', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'average', 'Average', '2003-05-18 11:56:58', 'test results / tracker courses statistics');
-INSERT INTO `language_text` VALUES ('en', '_template', 'avg_duration', 'Avg. Duration', '2005-03-01 12:40:29', 'tracker column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'back', 'Back', '2003-05-18 12:02:02', 'file manager back up to previous directory');
-INSERT INTO `language_text` VALUES ('en', '_template', 'backups', 'Backups', '2004-10-15 11:40:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'backup_manager', 'Backup Manager', '2004-10-14 13:59:50', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'back_to', 'Back To:', '2005-03-22 16:08:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'back_to_main', 'Back to Main', '2004-12-06 12:07:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'back_to_profile', 'Back to Profile', '2004-12-06 12:09:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'back_to_summary', 'Back to Summary', '2003-05-18 12:05:32', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'before_topic', 'Before: %s', '2004-01-16 13:19:20', 'content editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'blue', 'Blue', '2003-05-18 12:09:34', 'global code picker tool');
-INSERT INTO `language_text` VALUES ('en', '_template', 'blue_guests', 'Blue = Guests', '2003-05-18 12:10:38', 'instructor course statistics');
-INSERT INTO `language_text` VALUES ('en', '_template', 'body', 'Body', '2003-05-18 12:11:16', 'add/edit forms for body field label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'bold', 'Bold', '2003-05-18 12:11:41', 'global code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'bottom', 'Bottom', '2003-05-23 16:58:31', 'preference settings option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'browse_courses', 'Browse Courses', '2003-05-18 12:13:27', 'control centre, about, login screens');
-INSERT INTO `language_text` VALUES ('en', '_template', 'bug_count', 'Bug Count', '2004-12-06 12:23:46', 'admin/error_logging.php');
-INSERT INTO `language_text` VALUES ('en', '_template', 'bug_identifier', 'Bug Identifier', '2004-12-06 12:05:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'bytes', 'Bytes', '2003-05-18 12:15:45', 'admin course size quote, course properties screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cache_directory', 'Cache Directory', '2005-03-03 10:52:26', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cancel', 'Cancel', '2003-05-18 12:16:07', 'global cancel button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cannot_find_remote_languages', 'ATutor was unable to connect to the ATutor.ca website to retrieve the list of available languages.', '2004-10-18 14:28:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'categories', 'Categories', '2005-02-22 10:12:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'category', 'Category', '2003-05-18 12:16:54', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cats_all', 'All Categories', '2005-02-23 10:22:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cats_categories', 'Categories', '2003-09-24 18:21:26', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cats_category_name', 'Category Name', '2003-09-24 18:03:23', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cats_none', 'None', '2003-09-24 18:13:50', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cats_no_categories', 'No Categories', '2003-09-24 18:28:32', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cats_parent_category', 'Parent Category', '2003-09-24 18:04:38', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cats_uncategorized', 'Uncategorized', '2003-09-24 18:17:50', 'admin course categories');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cats_view_links', 'Show Links by Category', '2005-03-29 14:08:08', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cat_theme', 'Category Theme', '2004-08-04 11:34:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'center', 'Center', '2003-05-18 12:20:08', 'global code picker option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'charset', 'Character Set', '2004-11-20 19:36:01', 'admin new language');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat', 'Chat', '2003-05-18 12:20:29', 'global chat label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_altc', 'Alt + C: Jump to Compose Message', '2003-05-30 12:41:06', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_altm', 'Alt + M: Jump to Messages', '2004-08-18 10:58:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_altq', 'Alt + Q:  Quit Chat', '2005-05-30 15:04:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_altr', 'Alt + R: Refresh Messages', '2004-08-18 10:58:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_auto180_checking', 'Automatic (180 second interval)', '2003-05-15 14:23:13', 'chat message checking preference');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_auto20_checking', 'Automatic (20 second interval)', '2003-05-15 14:22:22', 'chat message checking preference');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_auto5_checking', 'Automatic (5 second interval)', '2003-05-27 09:09:57', 'chat message checking preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_auto60_checking', 'Automatic (60 second interval)', '2003-05-15 14:22:53', 'chat message checking preference');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_chime_help', 'Set to "Yes" to recieve an audio tone when new messsages are posted. Does not work in all Web browsers.', '2003-05-15 19:33:11', 'chat message checking preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_chime_no', 'No', '2003-05-15 14:44:29', 'chat message checking preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_chime_yes', 'Yes', '2003-05-15 14:46:09', 'chat message checking preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_compose_message', 'Compose Message', '2003-05-15 13:12:38', 'chat message compose frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_currently_active', 'Currently active', '2003-05-15 12:40:47', 'chat hompage transcript activated');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_current_tran', 'A transcript is already being recorded.  You may view the current transcript at', '2005-03-30 14:04:45', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_date', 'Date', '2003-05-15 12:13:46', 'chat homepage sorting');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_delete_transcript', 'Delete Transcript', '2003-06-30 17:53:55', 'chat home page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_edit_prefs', 'Edit Preferences', '2003-05-15 13:47:05', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_enter', 'Enter Chat', '2003-05-15 14:50:48', 'chat preferences pages');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_exit', 'Exit Chat', '2003-05-15 13:48:43', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_full_history', 'Full History', '2003-05-15 14:00:02', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_display_blurb', '<p>Note: <em>Jump To</em> links and the <em>Quick Key</em> list only appear if you have turned on <em>Navigation Aids</em> in you preferences.</p>\r\n \r\n<ul>\r\n	<li>The <em>Jump to Quick Keys</em> link at the top takes you to a list of quick keys for the Chat. </li>\r\n	<li>The <em>Message Area</em> displays the most recent messages (up to ten). </li>\r\n    <li>The <em>Jump to Messages</em> links take you to the beginning of the list of messages. (Alt+M) </li>\r\n    <li>The <em>Refresh Messages</em> link lets you check for new messages (Alt+R). </li>\r\n    <li>The <em>Compose Message</em> Field and <em>Send Button</em> let you enter and send messages (Alt+C to enter the Compose Field, Enter to send a completed message). </li>\r\n</ul>', '2004-08-18 11:00:36', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_display_frame', 'Display Frame Help (top left)', '2003-05-15 15:24:02', 'chat help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_display_jump', 'Jump to Display Frame Help', '2003-05-27 09:14:57', 'chat help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_history_blurb', 'The <em>User List</em> shows the Chat IDs of all the users in the chat. Click on a Chat ID to see the messages sent by that participant, along with your own messages. Click on <em>All Users</em> to see the messages sent by all participants.', '2003-05-15 15:34:10', 'chat help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_history_frame', 'User List and History Help', '2003-05-15 15:32:14', 'chat help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_history_jump', 'Jump to User List and History Help', '2003-05-15 15:22:23', 'chat help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_jump_top', 'Jump to Top', '2003-05-15 15:25:48', 'chat_help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_options_blurb', '<ul>\r\n	<li>The <em>Edit Preferences</em> link opens the preferences so you can modify your control and display settings. </li>\r\n    <li>The <em>Exit Chat</em> link ends your chat session.</li>\r\n    <li>The <em>Help</em> link brings you to this screen. (Alt+Q)</li>\r\n</ul>', '2004-08-18 11:01:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_options_frame', 'Options Help (top right)', '2003-05-15 15:24:50', 'chat help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_options_jump', 'Jump to Options Help', '2003-05-27 09:15:04', 'chat help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_help_screen', 'Help Screen', '2003-05-15 15:19:33', 'chat help');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_history_messages', 'History - Messages %s to %s of %s', '2003-05-15 15:59:13', 'chat full history screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_inactive', 'Inactive', '2005-03-30 14:47:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_jump_to_message', 'Jump to Message Area', '2003-05-15 13:14:01', 'chat display frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_keep_tran', 'This section allows you to keep a transcript of the chat in progress.', '2003-05-28 11:10:47', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_layout_prefs', 'Preferences: Layout Settings', '2003-05-15 14:53:04', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_list_and_history', 'User List and History', '2003-05-15 13:49:37', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_logged_out', 'User %s has logged out.', '2003-05-15 16:01:51', 'logout');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_manual_checking', 'Manual Refresh', '2003-05-15 14:23:42', 'chat message checking preference');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_messages', 'Messages', '2003-05-15 13:05:28', 'chat message display frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_message_checking', 'Message Checking:', '2003-05-15 14:19:45', 'chat message checking preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_message_check_help', 'Select the interval rate at which new messages are retrieved from the server. Screen reader users set this option to Manual Refresh.', '2003-05-15 14:39:17', 'chat message checking preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_message_chime', 'New Message Chime:', '2003-05-15 14:43:05', 'chat message checking preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_message_new_help', 'Screen reader users choose "Yes", along with the Manual Refresh setting.', '2003-05-15 15:05:32', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_message_order_help', 'Select New to Old to display new messages at the top of the screen, and Old to New to display new messages at the bottom of the screen.', '2003-05-15 14:58:48', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_newmsg_no', 'No', '2003-05-15 15:01:55', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_newmsg_prefs', 'Show Only New Messages?', '2003-05-15 15:00:44', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_newmsg_yes', 'Yes', '2003-05-15 15:02:22', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_newold_prefs', 'New to Old', '2003-05-15 14:55:15', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_next', 'Next', '2003-05-15 14:50:25', 'chat preferences pages');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_none_found', 'No transcripts found.', '2005-03-31 11:32:44', 'chat home page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_no_new_messages', 'No new messages.', '2003-05-15 13:09:01', 'chat display frames');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_oldnew_prefs', 'Old to New', '2003-05-15 14:54:48', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_options', 'Options', '2003-05-15 13:45:35', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_order_prefs', 'Order of Messages:', '2003-05-15 14:53:59', 'chat layout preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_post', 'Enter: Post a completed message', '2003-05-15 14:07:17', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_prefs_checking', 'Preferences: Message Checking Settings', '2003-05-15 14:18:37', 'chat checking preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_previous', 'Previous', '2003-05-15 15:06:39', 'chat preferences previous button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_quick_keys', 'Quick Keys', '2003-05-15 14:03:24', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_refresh_message', 'Refresh Messages', '2003-05-15 13:16:05', 'chat display frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_refresh_user_list', 'Refresh User List', '2003-05-15 14:01:12', 'chat options frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_return', 'Return to Chat', '2003-05-15 15:20:17', 'chat help screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_send', 'Send', '2003-05-15 13:19:41', 'chat send button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_start_tran', 'Start keeping a transcript', '2003-05-28 11:20:12', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_start_transcript', 'Start/Stop Transcript', '2005-05-16 10:55:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_stop_tran', 'Stop keeping transcript.', '2003-05-28 12:48:38', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_system', 'system', '2003-05-15 13:07:42', 'chat display frame system message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_transcript', 'Transcript', '2003-05-30 11:27:26', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_transcript_end', 'Transcript End:', '2003-05-30 11:30:10', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_transcript_start', 'Transcript Start:', '2003-05-30 11:29:26', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_tran_file_name', 'Transcript name (alphanumeric, no spaces):', '2003-05-28 18:36:35', 'achat');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_user_logged_in', 'User %s has logged in.', '2003-05-15 16:02:29', 'chat display system login message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_user_logged_out', 'User %s has been logged out due to inactivity.', '2003-05-15 16:02:16', 'chat logout system message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'chat_you', 'you', '2003-05-15 13:53:10', 'chat users online list');
-INSERT INTO `language_text` VALUES ('en', '_template', 'child_of', 'Child of: %s', '2004-01-16 13:21:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'choice', 'Choice', '2003-05-18 12:25:24', 'test manager, multiple choice question editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'cid', 'CID', '2003-05-18 13:17:08', 'global code picker url content id indentifier');
-INSERT INTO `language_text` VALUES ('en', '_template', 'city', 'City', '2003-05-18 13:17:52', 'registration, edit profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'click_code', 'Click on the code or emoticon you want to use.', '2003-05-22 15:42:52', 'global code picker instructions');
-INSERT INTO `language_text` VALUES ('en', '_template', 'close', 'Close', '2005-08-10 16:13:36', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'close_after_saving', 'Close after saving', '2004-05-11 11:01:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'close_file_manager', 'Close File Manager', '2004-11-25 17:34:52', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'close_help_window', 'Close Help Window', '2003-05-18 13:21:37', 'close help window link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'close_menus', 'Menus', '2005-03-05 18:29:54', 'Menus');
-INSERT INTO `language_text` VALUES ('en', '_template', 'close_related_topics', 'Related Topics', '2005-03-05 18:30:15', 'Menus');
-INSERT INTO `language_text` VALUES ('en', '_template', 'close_window', 'Close Window', '2004-12-08 12:04:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'code', 'Language Code', '2005-01-21 18:25:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'codes', 'Codes', '2003-05-18 13:23:57', 'global code picker label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'collapse', 'Collapse', '2003-05-18 13:24:36', 'Menus');
-INSERT INTO `language_text` VALUES ('en', '_template', 'colors', 'Colours', '2003-05-18 13:25:02', 'global code picker label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'combination', 'Use a combination of letters, numbers and symbols', '2004-06-21 16:26:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'completed_tests', 'Your Submissions', '2005-05-11 11:19:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'configuration', 'Configuration', '2005-02-07 16:04:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'confirm', 'Confirm', '2004-10-18 11:50:20', 'enrollment manager, confirm action');
-INSERT INTO `language_text` VALUES ('en', '_template', 'confirm_account_text', 'If you have already created an account, you will have to <a href="confirm.php">confirm your email address</a>.', '2005-07-27 15:05:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'confirm_admin_create', 'Are you sure you want to create a Super Administrator account?', '2005-03-03 10:34:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'confirm_deny_instructor', 'You are about to deny the instructor request of the following user:', '2005-07-21 16:16:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'confirm_password', 'Confirm Password', '2005-03-03 10:47:28', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'contact_email', 'Contact Email', '2005-03-03 10:50:32', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'contact_instructor', 'Contact Course Instructor', '2003-05-18 13:29:00', 'student contact instructor form');
-INSERT INTO `language_text` VALUES ('en', '_template', 'contact_name', 'Contact Name', '2003-05-18 13:30:04', 'student contact instructor form');
-INSERT INTO `language_text` VALUES ('en', '_template', 'contact_support', 'Contact Support', '2005-07-19 10:27:52', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'contain_only', 'May contain only letters, numbers, or underscores.', '2003-05-18 13:31:29', 'registration login name format');
-INSERT INTO `language_text` VALUES ('en', '_template', 'content', 'Content', '2003-05-18 13:32:22', 'sitemap/delete course');
-INSERT INTO `language_text` VALUES ('en', '_template', 'contents', 'Contents', '2003-05-18 13:35:43', 'content page table of content menu heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'content_navigation', 'Content Navigation', '2005-03-29 12:18:45', 'menu content nav drop down');
-INSERT INTO `language_text` VALUES ('en', '_template', 'content_packaging', 'Import/Export Content', '2005-04-18 11:39:46', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'content_packaging_all', 'Available on every page', '2003-10-15 10:10:17', 'option3');
-INSERT INTO `language_text` VALUES ('en', '_template', 'content_packaging_disabled', 'Content packaging has been disabled for this course.', '2003-10-15 11:52:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'content_packaging_none', 'Not available on any of the pages', '2003-10-15 10:09:27', 'option1');
-INSERT INTO `language_text` VALUES ('en', '_template', 'content_packaging_top', 'Available only for top level pages', '2003-10-15 10:09:50', 'option2');
-INSERT INTO `language_text` VALUES ('en', '_template', 'content_usage', 'Content Usage', '2005-03-03 15:09:45', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'copyright', 'Web site engine\'s code is copyright © 2001-2005 <a href="http://www.atutor.ca" target="_new" title="ATutor.ca - opens in a new browser">ATutor</a><sup>®</sup>', '2005-01-04 12:53:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'core', 'Core', '2005-08-30 10:17:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'correct_answer', 'Correct Answer', '2003-05-18 13:38:45', 'test manager add/edit questions');
-INSERT INTO `language_text` VALUES ('en', '_template', 'count', 'Count', '2003-05-18 13:40:35', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'country', 'Country', '2003-05-18 13:41:28', 'registration / profile edit');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course', 'Course', '2003-05-18 13:42:31', 'delete course warning screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'courses', 'Courses', '2003-05-18 13:43:44', 'admin users/courses manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'courses_below', 'Courses Below', '2003-05-18 13:44:41', 'jump menu divider');
-INSERT INTO `language_text` VALUES ('en', '_template', 'courses_for_login', 'Courses for instructor %s', '2004-08-11 12:05:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_available', 'Course Available', '2003-05-18 13:46:03', 'file manager, server space available');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_available_zip1', 'Course Available (before extraction)', '2003-05-18 13:46:37', 'file manager zip tool');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_available_zip2', 'Course Available (after extraction)', '2003-05-18 13:47:06', 'file manager zip tool');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_backups', 'Course Backups', '2005-03-03 10:21:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_copyright', 'Optional Copyright Notice', '2003-05-18 13:47:33', 'course copyright label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_email', 'Course Email', '2003-05-18 13:51:48', 'taught courses table in instructor control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_enrolment', 'Enrollment Manager', '2003-10-01 18:54:09', 'instructor - course enrollment (previously ATutor Course Enrollment)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_forums', 'Course Forums', '2004-11-13 19:55:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_id', 'Course ID', '2003-05-18 13:54:57', 'admin course manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_instructor', 'Course Instructor', '2003-05-18 13:57:00', 'student contact instructor form');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_list', 'Course List', '2005-03-23 15:17:14', 'enrollment manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_properties', 'Course Properties', '2003-05-18 14:00:23', 'course properties, admin course manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_quota', 'Course Quota', '2003-05-18 14:01:10', 'course properties, admin course manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_stats', 'Course Statistics', '2003-05-18 14:01:59', 'delete course');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_summaries', 'Course Summaries', '2004-08-20 15:08:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_total', 'Course Total', '2003-05-18 14:03:39', 'file manager, zip tool');
-INSERT INTO `language_text` VALUES ('en', '_template', 'course_total_zip', 'Course Total (before extraction)', '2003-05-18 14:04:10', 'file manager zip tool');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create', 'Create', '2003-05-18 14:06:29', 'links database submit button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'created', 'Created', '2003-05-18 14:07:28', 'browse courses, control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'created_date', 'Created', '2003-05-18 14:09:05', 'admin course managers, profile editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_admin', 'Create Administrator Account', '2005-03-03 10:40:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_backup', 'Create Backup', '2004-10-15 14:19:55', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_backup_about', '<p>Creating a backup of this course will archive all available material into a single compressed ZIP file. Once the backup file is created, it will be available through the Backup Manager for download and safe-keeping, or available to be restored back into this or any other course.</p>\r\n\r\n<p>Depending on the course size and available server resources, the time needed to backup this course may take  some time.</p>\r\n		\r\n<p>Note: You are currently restricted to %s backups per course.</p>', '2005-05-30 15:04:45', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_basic', 'Create basic announcement, content, and forum.', '2004-10-20 14:28:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_category', 'Create Category', '2005-02-18 10:28:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_course', 'Create Course', '2005-02-15 13:16:16', 'instructor control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_folder', 'Create Folder', '2003-05-18 14:12:40', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_forum', 'Create Forum', '2005-02-16 12:23:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_group', 'Create Group', '2005-02-22 16:51:56', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_module', 'Create Module', '2005-08-17 13:06:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_new_file', 'Create New File', '2005-02-22 15:33:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_new_question', 'Create New Question', '2005-03-07 16:42:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_test', 'Create Test/Survey', '2004-11-24 10:00:42', 'instructor test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'create_user', 'Create User Account', '2005-03-10 15:12:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'current_course_size', 'Current course size', '2003-10-07 15:41:36', 'admin course info');
-INSERT INTO `language_text` VALUES ('en', '_template', 'current_location', '(Current location)', '2004-01-16 13:22:03', 'content editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'current_path', 'Path to Current Directory:', '2003-05-18 14:13:52', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'curren_tests_surveys', 'Ongoing Tests & Surveys', '2005-01-03 09:57:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'database_table', 'Database Table', '2005-03-03 12:14:20', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date', 'Date', '2003-05-19 17:44:42', 'global date label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_apr', 'Apr', '2003-05-20 12:32:27', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_april', 'April', '2003-05-20 12:28:03', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_aug', 'Aug', '2003-05-20 12:33:34', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_august', 'August', '2003-05-20 12:29:12', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_created', 'Date Created', '2003-05-19 17:45:18', 'view profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_dec', 'Dec', '2003-05-20 12:34:03', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_december', 'December', '2003-05-20 12:30:35', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_feb', 'Feb', '2003-05-20 12:32:12', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_february', 'February', '2003-05-20 12:27:33', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_fri', 'Fri', '2003-05-20 12:26:47', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_friday', 'Friday', '2003-05-20 12:24:40', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_jan', 'Jan', '2003-05-20 12:32:05', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_january', 'January', '2003-05-20 12:27:11', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_jul', 'Jul', '2003-05-20 12:33:27', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_july', 'July', '2003-05-20 12:28:56', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_jun', 'Jun', '2003-05-20 12:33:21', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_june', 'June', '2003-05-20 12:28:41', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_mar', 'Mar', '2003-05-20 12:32:22', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_march', 'March', '2003-05-20 12:27:48', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_may', 'May', '2003-05-20 12:28:20', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_may_short', 'May', '2003-05-20 12:33:14', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_mon', 'Mon', '2003-05-20 12:26:18', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_monday', 'Monday', '2003-05-20 12:24:00', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_nov', 'Nov', '2003-05-20 12:33:56', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_november', 'November', '2003-05-20 12:30:20', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_oct', 'Oct', '2003-05-20 12:33:49', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_october', 'October', '2003-05-20 12:30:02', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_of_birth', 'Date of birth', '2004-06-24 12:31:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_sat', 'Sat', '2003-05-20 12:26:55', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_saturday', 'Saturday', '2003-05-20 12:24:48', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_sep', 'Sep', '2003-05-20 12:33:42', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_september', 'September', '2003-05-20 12:29:44', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_sun', 'Sun', '2003-05-20 12:26:09', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_sunday', 'Sunday', '2003-05-20 12:23:52', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_taken', 'Date Taken', '2003-05-19 17:46:06', 'My Tests');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_thu', 'Thu', '2003-05-20 12:26:40', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_thursday', 'Thursday', '2003-05-20 12:24:32', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_tue', 'Tue', '2003-05-20 12:26:24', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_tuesday', 'Tuesday', '2003-05-20 12:24:12', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_wed', 'Wed', '2003-05-20 12:26:32', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'date_wednesday', 'Wednesday', '2003-05-20 12:24:21', 'date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'day', 'Day', '2004-06-24 15:45:56', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'default', 'Default', '2003-05-19 17:47:07', 'edit header/admin course manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'default_announcement', 'This is a welcome announcement. You can access additional help by using the Help link available throughout ATutor.', '2005-05-11 14:52:19', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'default_language', 'Default Language', '2005-03-03 10:50:22', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'default_modules', 'Default Student Tools', '2005-10-04 11:33:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'default_preferences', 'Default Preferences', '2005-10-05 12:19:22', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'default_side_menu', 'Default Side Menu', '2005-10-04 11:33:36', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete', 'Delete', '2003-05-19 18:25:41', 'global delete label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'deleted', 'Deleted', '2003-05-19 18:26:45', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_admin', 'Delete Administrator Account', '2005-03-03 10:48:32', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_announcement', 'Delete Announcement', '2003-05-19 18:27:52', 'delete news screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_category', 'Delete Category', '2003-05-19 18:28:24', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_content', 'Delete Content', '2003-05-19 18:29:01', 'delete content screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_course', 'Delete Course', '2003-05-19 18:29:37', 'delete course screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_forum', 'Delete Forum', '2003-05-19 18:30:40', 'instructor delete forum screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_from', 'Delete From', '2005-03-03 12:16:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_glossary', 'Delete Glossary Term', '2005-03-07 11:33:35', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_group', 'Delete Group', '2005-01-15 16:01:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_language', 'Delete Language', '2003-06-05 18:59:51', 'admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_link', 'Delete Link', '2005-03-29 14:09:36', 'links manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_package', 'Delete Package', '2005-05-17 12:06:21', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_poll', 'Delete Poll', '2004-06-14 16:16:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_profile', 'Delete Profile', '2004-12-06 11:53:06', 'admin/error_logging.php');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_results', 'Delete Test Results', '2003-05-19 18:31:51', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_selected_package_s', 'Delete selected packages', '2005-07-19 09:54:28', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_test', 'Delete Test/Survey', '2004-08-25 14:09:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_this_page', 'Delete This Page', '2005-03-31 14:18:22', 'content page shortcuts');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_thread', 'Delete Thread', '2003-05-19 18:35:27', 'forums');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_user', 'Delete User', '2003-05-19 18:35:55', 'admin user manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'deny', 'Deny', '2005-03-30 15:26:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'deny_instructor_request', 'Deny Instructor Request', '2005-07-21 16:17:35', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'depth_reached', 'Directory depth limit has been reached.', '2003-05-19 18:36:54', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'description', 'Description', '2003-05-19 18:37:34', 'global description label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'details', 'Details', '2003-05-19 18:38:03', 'instructor taught course table of the control panel');
-INSERT INTO `language_text` VALUES ('en', '_template', 'direction', 'Direction', '2004-11-20 19:36:34', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'directory', 'Directory', '2005-03-09 15:28:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'directory_name', 'Directory Name', '2003-05-19 18:38:42', 'file manager zip utility');
-INSERT INTO `language_text` VALUES ('en', '_template', 'directory_total', 'Directory Total', '2003-05-19 18:39:15', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'disable', 'Disable', '2004-10-15 15:46:20', 'to disable a theme in theme manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'disabled', 'Disabled', '2005-04-01 10:39:58', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'disable_syndicate', 'Disable Announcements syndication', '2005-01-04 09:48:31', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'discussions', 'Discussions', '2003-05-19 18:43:39', 'global text for discussions label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'display', 'Display', '2004-08-18 12:03:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'done', 'Done', '2003-05-19 18:44:34', 'enrolment manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'download', 'Download', '2004-04-30 15:35:13', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'download_file', 'Download File', '2005-01-10 15:40:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'download_test_csv', 'Download CSV of Results', '2005-05-30 14:32:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'duration', 'Total Duration', '2005-03-01 12:40:00', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'duration_sec', 'Duration (sec)', '2003-05-19 18:45:37', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit', 'Edit', '2004-05-26 18:31:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'editor', 'Editor', '2003-10-22 15:01:19', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'editor_on', 'Editor', '2003-09-30 11:43:16', 'editor icon alt text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'editor_properties_instructions', 'Use the %1$s and %2$s buttons to place this topic after or before the selected location, respectively. Use the %3$s button to add this topic as a child of the selected location.', '2004-02-11 12:22:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'editor_properties_insturctions_related', 'Add Related Topics by selecting the topic from the list.', '2004-02-11 12:33:28', 'editor properties instructions');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_admin', 'Edit Administrator Account', '2005-03-03 11:06:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_after_upload', ' After uploaded use the fields below to edit the content.', '2003-05-19 18:47:10', 'cotent editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_announcement', 'Edit Announcement', '2003-05-19 18:47:32', 'instructor announcement editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_backup', 'Edit - %s', '2004-10-19 12:46:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_category', 'Edit Category', '2003-05-19 18:49:44', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_content', 'Edit Content', '2003-05-19 18:50:07', 'instructor content editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_forum', 'Edit Forum', '2003-05-19 18:50:54', 'instructor forum editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_glossary', 'Edit Glossary Term', '2003-05-19 18:54:15', 'instructor edit glossary term screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_language', 'Edit Language', '2005-01-21 18:24:19', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_link', 'Edit Link', '2003-05-19 18:54:44', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_poll', 'Edit Poll', '2004-06-14 14:53:54', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_post', 'Edit Post', '2003-09-25 12:54:59', 'instructor edit forum post');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_question', 'Edit Question', '2004-12-14 17:58:58', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_test', 'Edit Test/Survey', '2004-08-25 14:08:30', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_this_page', 'Edit This Page', '2005-03-31 14:16:42', 'content page shortcuts');
-INSERT INTO `language_text` VALUES ('en', '_template', 'edit_user', 'Edit Member', '2004-03-29 11:49:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'email', 'Email', '2003-05-19 19:07:59', 'global email label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'email_address', 'Email Address', '2003-05-19 19:09:06', 'profile, password reminder');
-INSERT INTO `language_text` VALUES ('en', '_template', 'email_approvals', 'Email me when new enrollments require approval.', '2004-01-22 14:57:19', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'email_confirmation_message', 'You have registered for an account on %1s. Please finish the registration process by confirming your email address by using the following link: %2s .', '2005-06-24 15:32:49', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'email_confirmation_subject', 'Email Confirmation', '2005-03-22 11:35:30', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'email_reminder', 'Email Reminder', '2005-07-27 15:09:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'emoticons', 'Emoticons', '2003-05-22 15:43:20', 'code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'empty', 'empty', '2003-05-19 19:10:56', 'prefs page, menu options');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enable', 'Enable', '2004-10-15 15:52:29', 'enable button in theme');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enabled', 'Enabled', '2005-05-06 12:49:07', 'theme');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enable_sco_rte', 'Enable the SCORM 1.2 RTE', '2005-05-10 10:52:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enable_syndicate', 'Enable Announcements syndication via <acronym title="Rich Site Summary">RSS</acronym>', '2005-01-04 10:27:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'end_date', 'End Date', '2003-05-19 19:13:46', 'mytests');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enroll', 'Enroll', '2003-05-19 19:16:50', 'link text for enroll function');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrolled', 'Enrolled', '2003-05-19 19:18:28', 'control centre, delete course, admin course manager, text label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrolled_list_includes_assistants', 'Enrolled Students (includes Assistants)', '2004-10-15 11:56:23', 'enrolled students list in list exporter in enrollement manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrolled_privileges', 'Enrolled With Privileges', '2005-06-10 10:58:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enroll_me', 'Enroll Me', '2005-04-14 13:15:58', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enroll_to_post', 'You must be enrolled to post to the forums.', '2004-12-09 11:07:43', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrolment', 'Enrollment', '2003-06-04 08:30:26', 'instructor control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrol_login', 'You must login to your course to approve the new enrollment request using the Enrollment section.', '2005-07-05 12:15:39', 'instructor enrolment screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrol_message3', 'ATutor Course Enrollment', '2003-04-21 15:03:49', 'context');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrol_messagenew', 'An enrollment request was made for the ATutor course %s. Log into your course at %s , go to Manage and then to the unenrolled tab in the Enrollment Manager.', '2005-03-29 12:23:47', 'instructor enrolment email notice');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrol_message_approved', 'Your enrollment request for the course %1s has been approved.\r\nLog into ATutor, then select the course from My Courses or use the login link below:\r\n\r\n%2s', '2005-03-30 11:49:50', 'email message sent to enrollee once approved');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrol_message_subject', 'Course enrollment approved', '2003-05-20 11:18:15', 'enroll email approval');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enrol_msg', 'A new enrollment request has been made for your course %s.', '2005-07-05 12:15:49', 'instructor email enrollment notification message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enter_chat', 'Enter the Chat', '2003-05-27 14:20:24', 'achat entry page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'enter_course', 'Enter Course', '2005-03-14 15:15:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'error', 'Error', '2003-05-19 20:20:07', 'global error label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'error_logging', 'Error Logging', '2005-02-07 16:11:55', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'everyone', 'Everyone', '2004-12-07 17:54:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'expand', 'Expand', '2003-05-19 20:20:35', 'menu toggle alt text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'expired', 'Expired', '2003-05-19 20:21:08', 'mytests');
-INSERT INTO `language_text` VALUES ('en', '_template', 'export', 'Export', '2003-05-19 20:21:32', 'instructor control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'export_content', 'Export Content', '2003-10-03 11:00:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'export_content_info', 'Export content as an IMS 1.1.3/SCORM 1.2 conformant content package of the selected topics in a single archive file. Download then unzipped the file to view it offline, by opening the <kbd>index.html</kbd> file within the package. Import the zipped package into ATutor, or into another conformant learning content management system.', '2005-02-21 13:17:46', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'export_content_package_what', 'What to export', '2003-10-14 11:11:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'export_entire_course_or_chap', 'Entire course, or select a chapter below', '2003-10-07 15:14:52', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'external_help', 'External Help', '2005-03-17 10:31:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'extra', 'Extra', '2005-09-21 13:35:05', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'extract', 'Extract', '2003-05-19 20:23:33', 'file manager zip utility');
-INSERT INTO `language_text` VALUES ('en', '_template', 'extract_archive', 'Extract Archive', '2003-05-19 20:23:58', 'file manager zip utility');
-INSERT INTO `language_text` VALUES ('en', '_template', 'extract_tip', 'Tip: Use an empty directory name to extract the contents into the current directory.', '2003-05-19 20:24:27', 'file manager zip utility');
-INSERT INTO `language_text` VALUES ('en', '_template', 'false', 'False', '2003-05-20 08:52:19', 'textmanager, mytests t/f label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'faq', 'Frequently Asked Questions (FAQ)', '2005-10-19 12:41:54', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'feedback', 'Feedback', '2003-05-20 09:09:40', 'global feedback label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'female', 'Female', '2003-05-20 09:18:03', 'registration, profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'file', 'File', '2003-05-20 09:18:31', 'file manager, zip tool');
-INSERT INTO `language_text` VALUES ('en', '_template', 'filemanager_date_format', '%%Y-%%m-%%d %%h:%%i', '2003-05-25 13:42:59', 'file manager date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'files', 'Files', '2005-08-16 15:27:36', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'file_manager', 'File Manager', '2003-05-20 09:27:19', 'global file manager label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'file_manager_frame', 'File Manager Frame', '2005-01-31 11:14:37', 'viewing files in filemanger frame');
-INSERT INTO `language_text` VALUES ('en', '_template', 'file_manager_new', 'Create a New File', '2004-10-29 14:53:13', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'file_name', 'File Name', '2004-10-15 12:08:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'file_size', 'File Size', '2004-10-14 13:57:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'filter', 'Filter', '2005-03-30 14:52:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'find_results_in', 'Find results in', '2004-08-18 12:02:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'first_name', 'First Name', '2003-05-20 09:58:26', 'registration, profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'fix_content_ordering', 'Fix Content Ordering', '2004-10-18 14:03:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'fix_content_ordering_text', 'Occasionally, content pages can get disordered due to miscalculation. This is an ongoing issue that will be resolved in an upcoming version of ATutor but until then, we have made a patch available that can be used to fix the issue. If you are experiencing this problem, please use the button below.', '2005-03-10 11:19:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'folder', 'Folder', '2003-05-20 10:05:51', 'file manager, zip utility');
-INSERT INTO `language_text` VALUES ('en', '_template', 'formatting', 'Formatting', '2003-05-20 10:07:25', 'add/ edit content, news, export');
-INSERT INTO `language_text` VALUES ('en', '_template', 'form_editor', 'Atutor Form Editor', '2005-03-11 10:31:45', 'Form editor for test questions');
-INSERT INTO `language_text` VALUES ('en', '_template', 'form_focus', 'Form Focus On Page Load', '2005-03-29 12:38:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum', 'Forum', '2004-04-16 10:54:23', 'Forum list header');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forums', 'Forums', '2003-05-20 10:08:05', 'global forums label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum_date_format', '%%D %%M %%j %%H:%%i', '2004-05-26 15:18:29', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum_email_links', 'All email addresses are made into links.', '2003-05-20 10:11:14', 'forums email address links instruction');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum_general_discussion', 'General Discussion', '2004-12-16 11:07:19', 'default forum in forum list');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum_html_disabled', 'HTML is disabled.', '2003-05-20 10:11:42', 'forum compose message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum_links', 'All words starting with http:// are made into links.', '2003-05-20 10:12:23', 'forum compose link creation instruction');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum_new_submsg', 'A discussion thread in the ATutor course "%s" has recieved a reply. Login to access the "%s" forum and view the "%s" thread. Login at: %s', '2003-05-25 11:33:36', 'forum email message to thread subscribers');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum_posts', 'Forum Posts', '2005-03-16 14:59:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'forum_reply_to', 'Replying To', '2003-05-20 10:12:48', 'forum reply to label for quoted messages');
-INSERT INTO `language_text` VALUES ('en', '_template', 'from', 'From', '2003-05-20 10:17:19', 'global from label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'from_atutor', 'This message was sent through the ATutor system from course %s.', '2003-05-20 10:19:30', 'instructor/admin contact for email message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'from_email', 'From Email', '2003-05-20 10:21:35', 'instructor/admin contact form');
-INSERT INTO `language_text` VALUES ('en', '_template', 'from_name', 'From Name', '2003-05-20 10:22:02', 'instrcutor/admin contact from');
-INSERT INTO `language_text` VALUES ('en', '_template', 'gender', 'Sex', '2003-05-20 10:22:19', 'registration, profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'general_help', 'For guidance on using ATutor see the official <a href="%1$s" onclick="poptastic(\'%1$s\'); return false;" target="_new"><em>ATutor Handbook</em></a>.', '2005-07-05 14:07:32', 'atutor default footer');
-INSERT INTO `language_text` VALUES ('en', '_template', 'give_description', 'Brief description of your proposed course(s)', '2005-03-09 12:19:48', 'control centre request instructor account form');
-INSERT INTO `language_text` VALUES ('en', '_template', 'glossary', 'Glossary', '2003-05-20 10:24:33', 'global glossary label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'glossary_definition', 'Definition', '2003-05-20 10:25:13', 'glossary add/edit term');
-INSERT INTO `language_text` VALUES ('en', '_template', 'glossary_related', 'Related Term', '2003-05-20 10:26:35', 'add/edit glossary term');
-INSERT INTO `language_text` VALUES ('en', '_template', 'glossary_term', 'Term', '2003-05-20 10:27:01', 'add/edit glossary term');
-INSERT INTO `language_text` VALUES ('en', '_template', 'glossary_terms', 'Glossary Terms', '2003-05-20 10:27:47', 'delete course feedback for terms deleted');
-INSERT INTO `language_text` VALUES ('en', '_template', 'google_key', 'Google Key', '2005-10-20 11:02:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'google_key_txt', 'To access the Google search as an <em>embeded service</em>, you must first create an account and obtain a license key at <a href="http://www.google.com/apis/" target="_new">google.com/apis</a> and enter it below.\r\n<br /><br />\r\nThe search can be used as an external service by clearing the key field below.', '2005-11-30 16:25:50', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'google_new_window', 'Search opens in a new window.', '2005-11-30 16:45:26', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'google_search', 'Web Search', '2005-10-20 10:35:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'google_search_txt', 'To search for specific words within a website, enter them below then use the \'Search\' button.  If you wish to search course content, use the <a href="search.php">content search</a>.', '2005-10-20 11:02:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'goto_content', 'Go to content', '2004-05-11 15:18:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'goto_top', 'Go to Top', '2003-05-20 10:34:03', 'bypass link text in ATutor header');
-INSERT INTO `language_text` VALUES ('en', '_template', 'graph', 'Graph', '2003-05-20 10:36:18', 'instructor course details graph label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'gray', 'Gray', '2003-05-20 10:36:32', 'global code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'green', 'Green', '2003-05-20 10:36:45', 'global code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'group', 'Group', '2005-05-03 15:42:38', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'grouped_by_course', 'Grouped by course', '2004-08-18 12:04:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'groups', 'Groups', '2004-11-25 15:45:26', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'group_members', 'Group Members', '2005-06-10 10:34:56', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'guest', 'Guest', '2003-05-20 10:37:10', 'name assigned to non-registered users');
-INSERT INTO `language_text` VALUES ('en', '_template', 'guests', 'Guests', '2003-05-20 10:38:19', 'instructor course stats/details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'guests_not_listed', 'Guests are not listed', '2003-05-20 10:38:32', 'who\'s on menu');
-INSERT INTO `language_text` VALUES ('en', '_template', 'help', 'Help', '2003-05-20 10:41:08', 'global help label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'hidden', 'Hidden', '2003-05-20 10:42:27', 'instructor/admin contact form');
-INSERT INTO `language_text` VALUES ('en', '_template', 'hide', 'Hide', '2005-03-15 11:37:50', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'hide_course', 'Hide this course from the Browse Courses list', '2003-05-20 10:42:41', 'create course screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'history', 'History', '2003-05-25 08:36:00', 'context (removed after v1.1)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'hits', 'Hits', '2003-05-20 10:44:14', 'links database link hit count');
-INSERT INTO `language_text` VALUES ('en', '_template', 'hit_count', 'Hit Count', '2003-05-20 10:45:17', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'home', 'Home', '2005-06-16 14:21:43', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'home_url', 'Home URL', '2005-03-03 10:50:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'horizontal', 'Horizontal', '2004-12-01 13:35:05', 'edit/create option test questions');
-INSERT INTO `language_text` VALUES ('en', '_template', 'hot', 'Hot!', '2003-05-20 10:47:10', '(not used)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'hot_thread', 'Hot very active thread!', '2003-05-20 10:47:30', 'forum message for busy thread');
-INSERT INTO `language_text` VALUES ('en', '_template', 'hours_24', '24hr', '2003-05-20 10:48:10', 'release date picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'howto_course', '<a href="http://atutor.ca/atutor/docs/index.php">ATutor Documentation</a>', '2005-06-01 12:32:03', 'help');
-INSERT INTO `language_text` VALUES ('en', '_template', 'howto_course_text', 'In addition to the <a href="documentation/" onclick="poptastic(\'documentation/\'); return false;" target="_new"><em>ATutor Handbook</em></a> bundled with ATutor, other documentation sources are available through the <a href="http://atutor.ca/atutor/docs/index.php">ATutor Documentation</a> site.', '2005-07-06 10:04:29', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'html', 'HTML', '2003-05-20 10:48:48', 'global HTML label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'html_only', ' Plain Text or HTML files only.', '2003-05-20 10:49:49', 'add/edit content, header');
-INSERT INTO `language_text` VALUES ('en', '_template', 'icon', 'Icon', '2005-03-03 11:19:49', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'id', 'ID', '2003-05-20 10:50:57', 'global ID (identification number) label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'illegal_file', 'Illegal File Type', '2003-05-20 10:52:36', 'zip utility when archive contain illegal extension');
-INSERT INTO `language_text` VALUES ('en', '_template', 'illegal_file_extensions', 'Illegal File Extensions', '2005-03-03 10:52:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'image', 'Image', '2003-05-20 10:53:28', 'global code picker image code link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import', 'Import', '2003-05-20 11:56:51', 'instructor import/export screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_a_new_lang', 'Import a New Language', '2003-06-04 15:34:43', 'admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_content', 'Import Content', '2005-02-18 14:05:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_content_info', 'Import a conformant content package created by ATutor, or another learning content management system. A content package can be appended to the end of the course, after which it can be moved, or it can be added as a sub topic to an existing topic. If you have the Web address directly to a content package, enter it into the URL field to import it directly from the Web.', '2005-02-21 13:20:30', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_content_package', 'Import Content Package', '2003-10-03 13:07:38', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_content_package_bottom_subcontent', 'As top level content, or as subcontent selected below', '2003-10-20 13:36:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_content_package_where', 'Import into', '2003-10-14 12:24:03', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_course_list', 'Import Course List', '2003-10-21 12:06:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_err_email_exists', 'Account exists.', '2004-01-30 15:38:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_err_email_invalid', 'Email invalid.', '2004-01-30 13:28:32', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_err_email_missing', 'Email missing.', '2004-01-30 13:28:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_err_username_exists', 'Username already taken.', '2004-01-30 13:28:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_err_username_invalid', 'Username contains invalid characters.', '2004-01-30 13:28:56', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_lang_howto', 'You may import additional languages into this installation of ATutor by downloading the language pack from the ATutor.ca website then uploading it using the form below, or if the drop down below is able to detect the available languages remotely then it may be used as well.', '2004-10-18 14:25:21', 'admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_package', 'Import Package', '2005-05-17 12:06:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_remote_language', 'Or, import a language directly from the ATutor.ca website.', '2004-10-18 14:27:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_sep_txt', 'For auto-generated usernames, separate first and last names with:', '2004-06-22 12:07:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'import_theme', 'Import Theme', '2004-10-15 15:47:13', 'import theme button in theme manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'inactive_admin', 'Inactive Administrator', '2005-03-03 11:00:55', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'inbox', 'Inbox', '2003-05-20 11:59:47', 'global Inbox label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'inbox_date_format', '%%l %%M %%j, %%Y - %%H:%%i', '2003-05-20 12:00:47', 'inbox screen (see www.php.net/date for codes)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'inbox_notification', 'Inbox Notification', '2005-03-16 14:40:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'info', 'Course Info', '2005-04-01 15:09:41', 'global info message box label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'initial_content', 'Initial Content', '2004-10-15 15:45:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'insert', 'Insert', '2003-05-20 12:02:16', 'instructor add content screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'insert_into', 'Insert Into', '2005-03-03 12:15:49', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'install', 'Install', '2005-08-16 15:51:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'install_modules', 'Install Modules', '2005-08-16 16:17:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'install_module_text', 'To install a new module it must first be extracted into the <code>%s</code> directory for it to appear in the list below.', '2005-08-17 13:47:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructions', 'Instructions', '2005-04-05 14:25:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor', 'Instructor', '2003-05-20 12:02:59', 'global instructor label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructors', 'Instructors', '2003-05-20 12:03:37', 'admin general statistics label for number of instructors');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_contact_form', 'Instructor Contact Form', '2003-05-20 12:12:32', 'instructor contact form heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request', 'ATutor Instructor Request', '2003-05-25 08:37:50', 'subject line in email to admin when instructor request is made');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_requests', 'Instructor Requests', '2003-05-20 12:19:52', 'admin home page heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_requests_text', 'There are <strong>%s</strong> instructor requests pending approval.', '2005-03-30 15:30:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request_deny', 'Your ATutor instructor request has been denied.', '2003-10-06 15:14:48', 'email message to denied instructor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request_denymsg1', 'Registration information is incomplete.', '2003-10-06 15:55:47', 'reason why denied');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request_denymsg2', 'Inappropriate subject matter.', '2003-10-06 16:01:26', 'reason why denied');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request_denymsg3', 'The course description requires more detail.', '2003-10-07 15:47:33', 'deny instructor request');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request_denymsg4', 'You have requested enrollment with the wrong form.', '2003-10-07 15:52:12', 'admin deny instructor request');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request_email_notification', 'Instructor Request Email Notification', '2005-03-03 10:51:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request_enterdenymsg', 'Choose a message explaining why the user\'s request was denied or enter your own.', '2003-10-06 15:19:05', 'Header text for deny message text area');
-INSERT INTO `language_text` VALUES ('en', '_template', 'instructor_request_reply', 'Your ATutor instructor request has been approved. Go to %s to login to My Courses, then select "Create Course".', '2005-05-27 13:53:06', 'email in reply to instructor account approval');
-INSERT INTO `language_text` VALUES ('en', '_template', 'invalid_session', 'Not a Valid Session', '2003-05-20 12:26:29', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'in_reply_to', 'In reply to', '2003-05-20 12:27:21', 'replyto label for quoted forum or inbox message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'italic', 'Italic', '2003-05-20 12:27:44', 'global code picker link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'jump', 'Jump', '2003-05-20 12:28:03', 'jump menu submit button text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'jump_codes', 'Jump over the code picker', '2003-05-20 12:29:53', 'alt text for bypass link to jump over the code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'jump_redirect', 'Direct Jump', '2004-11-30 10:03:55', 'preferecnes');
-INSERT INTO `language_text` VALUES ('en', '_template', 'keep_it_short', 'Tip: Keep it short, no spaces.', '2003-05-20 12:31:53', 'file manager suggestion for folder creation');
-INSERT INTO `language_text` VALUES ('en', '_template', 'keywords', 'Keywords', '2003-09-28 10:22:10', 'content add/edit');
-INSERT INTO `language_text` VALUES ('en', '_template', 'language', 'Language', '2003-05-20 12:32:05', 'profile, registration');
-INSERT INTO `language_text` VALUES ('en', '_template', 'languages', 'Languages', '2005-03-03 11:07:50', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lang_code', 'Language code', '2004-11-20 19:33:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'last_accessed', 'Last Accessed', '2005-03-01 12:52:16', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'last_comment', 'Last Comment', '2003-05-20 12:33:10', 'forums, thread view column label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'last_login', 'Last Login', '2005-03-03 11:03:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'last_modified', 'Last Modified', '2003-05-20 12:36:35', 'instructor content editor link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'last_name', 'Last Name', '2003-05-20 12:37:39', 'registration, profile, admin user manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'last_post', 'Last Post', '2004-04-16 11:24:59', 'Refers to date of last post in forum');
-INSERT INTO `language_text` VALUES ('en', '_template', 'leave_blank', 'Leave blank', '2003-05-20 12:39:07', 'mytest/test manager question option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'leave_unchanged', 'Leave unchanged', '2005-05-10 16:04:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'left', 'Left', '2004-04-27 11:00:35', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'left_blank', 'Left blank', '2003-05-20 12:40:14', 'mytests/test manager question result text for unanswerd question');
-INSERT INTO `language_text` VALUES ('en', '_template', 'legend', 'Legend', '2003-05-20 12:41:00', 'instructor course statistics/details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'license', 'License', '2005-08-16 15:27:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'limit_to_group', 'Assign To Groups', '2004-12-10 14:39:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'link', 'Link', '2003-05-20 12:41:18', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'links', 'Links', '2005-02-09 13:25:20', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'list_add_course_list', 'Add to Course List', '2004-10-19 14:39:08', 'Enrollment manager, add students manually button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'list_add_enrolled_list', 'Add to Enrolled List', '2004-10-19 14:51:02', 'enrollment manager, add to enrolled students list button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'list_add_unenrolled_list', 'Add to Un-enrolled List', '2004-10-19 14:47:31', 'enrollment manager, add to unenrolled students list button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'list_create_course_list', 'Create Course List', '2004-10-15 12:04:06', 'create list of students function in enrollement manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'list_export_course_list', 'Export Course List', '2003-09-16 10:15:29', 'enrol admin');
-INSERT INTO `language_text` VALUES ('en', '_template', 'list_import_course_list', 'Import Course List', '2003-09-16 09:35:35', 'import course list');
-INSERT INTO `language_text` VALUES ('en', '_template', 'list_import_howto', 'A course enrollment list may be imported into ATutor. Create the course list in a comma separated values (CSV) format as follows: <code>"firstname", "lastname", "email"</code> with one student per line.  New students will receive their access instructions by email.', '2004-02-05 10:22:29', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_agree', 'Agree', '2004-08-12 15:45:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_always', 'Always', '2004-08-26 12:23:31', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_disagree', 'Disagree', '2004-08-12 15:46:29', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_excellent', 'Excellent', '2004-08-12 15:42:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_fair', 'Fair', '2004-08-12 15:43:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_good', 'Good', '2004-08-12 15:42:50', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_important', 'Important', '2004-08-26 12:26:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_little_importance', 'Of Little Importance', '2004-08-26 12:26:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_mod_important', 'Moderately Important', '2004-08-26 12:26:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_never', 'Never', '2004-08-26 12:25:30', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_occasionally', 'Occasionally', '2004-08-26 12:24:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_poor', 'Poor', '2004-08-12 15:43:18', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_rarely', 'Rarely', '2004-08-26 12:24:21', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_strongly_agree', 'Strongly Agree', '2004-08-12 15:45:38', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_strongly_disagree', 'Strongly Disagree', '2004-08-12 15:46:46', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_undecided', 'Undecided', '2004-08-26 11:46:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_unimportant', 'Unimportant', '2004-08-26 12:27:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_very_frequently', 'Very Frequently', '2004-08-26 12:23:46', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_very_good', 'Very Good', '2004-08-12 15:42:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_very_important', 'Very Important', '2004-08-26 12:25:52', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_very_poor', 'Very Poor', '2004-08-12 15:43:37', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lk_very_rarely', 'Very Rarely', '2004-08-26 12:24:38', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'locale', 'Locale', '2004-11-20 19:35:20', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'location', 'Location', '2005-03-04 14:06:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lock_no_post', 'No posting, but allow reading.', '2003-05-20 12:46:36', 'forum instructor lock text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lock_no_post1', 'This thread is locked from posting.', '2003-05-20 12:46:45', 'forum instructor lock text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lock_no_read', 'No posting and no reading.', '2003-05-20 12:46:56', 'context');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lock_no_read1', 'This thread is locked from reading and posting.', '2003-05-20 12:47:24', 'forum thread display lock message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lock_submit', 'Apply Lock', '2003-05-20 12:47:50', 'text for instructor forum lock button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'lock_thread', 'Lock Thread', '2003-05-20 12:48:14', 'Alt text for forum instructor lock icon');
-INSERT INTO `language_text` VALUES ('en', '_template', 'login', 'Login', '2005-06-28 16:37:35', 'global login label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'login_into_atutor', 'Log into your ATutor Account', '2003-05-20 12:51:48', 'login after enrollment message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'login_name', 'Login Name', '2003-05-20 12:52:32', 'control centre account information label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'login_statistics', '%s login statistics for  %s', '2003-05-31 14:49:29', 'course login details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'login_text', 'Enter the Login Name and Password you chose when you first registered with the system.', '2005-07-27 15:11:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'logout', 'Log-out', '2003-05-20 12:53:44', 'global logout link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'log_file_bundle', 'Log File Bundle', '2005-03-10 16:36:31', 'error logging - email subject');
-INSERT INTO `language_text` VALUES ('en', '_template', 'ltr', 'Left to Right', '2004-11-20 19:37:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'maintainers', 'Maintainers', '2005-08-16 15:26:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'main_navigation', 'Main Navigation', '2005-03-07 12:09:31', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'male', 'Male', '2003-05-20 12:55:53', 'registration, profile, admin user manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'manage', 'Manage', '2005-02-23 12:05:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'manage_languages', 'Manage Existing Languages', '2004-09-23 16:30:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'manage_lang_howto', 'Below are all the languages currently available in this installation of ATutor. You may export the language as an ATutor language pack or delete it from the installation.', '2004-10-18 14:23:43', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'mark', 'Mark', '2003-05-20 12:56:19', 'mytests/test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'marked_label', 'Marked (%s)', '2005-05-12 10:25:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'marks', 'marks', '2003-05-20 12:56:34', 'mytests/test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'mark_alumni', 'Mark Alumni', '2004-10-25 12:24:38', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'mark_statistics', 'Submission Statistics', '2004-08-26 13:27:13', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'master_list_authentication', 'Authenticate Against A Master Student List', '2005-03-31 13:54:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'master_not_in_list', 'If existing user not in new list', '2005-05-10 16:04:31', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'master_student_list', 'Master Student List', '2005-04-04 10:39:26', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material', 'Material', '2004-10-14 14:10:13', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_announcements', 'Announcements (%s)', '2004-10-14 14:14:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_content_pages', 'Content Pages (%s)', '2004-10-14 14:12:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_files', 'Files (%s)', '2004-10-14 14:22:54', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_glossary', 'Glossary (%s)', '2004-10-14 14:22:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_groups', 'Groups (%s)', '2004-11-25 15:43:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_links', 'Links (%1$s categories,  %2$s links)', '2004-10-14 14:18:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_polls', 'Polls (%s)', '2004-10-14 14:21:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_select_all', 'Select All', '2004-10-14 14:11:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_stats', 'Statistics (%s days)', '2004-10-14 14:23:22', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'material_tests', 'Tests (%1$s tests, %2$s questions, %3$s categories)', '2004-11-17 13:24:35', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'maximum', 'Maximum', '2003-05-20 12:59:01', 'instructor course statistics/details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'maximum_course_float', 'Maximum Course Float', '2005-03-03 10:52:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'maximum_course_size', 'Maximum Course Size', '2005-03-03 10:51:52', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'maximum_file_size', 'Maximum File Size', '2005-03-03 10:51:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'max_backups_reached', 'You have reached the maximum number of backups allowed.', '2004-10-15 14:16:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'max_file_size', 'Max File Size', '2003-05-20 12:59:52', 'admin course manager properties');
-INSERT INTO `language_text` VALUES ('en', '_template', 'max_file_size_system', 'Maximum system allows', '2003-10-14 14:32:52', 'php\'s max file size');
-INSERT INTO `language_text` VALUES ('en', '_template', 'members', 'Members', '2003-05-20 13:00:39', 'instructor course statistics/details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'member_id', 'Member ID', '2003-05-20 13:01:18', 'admin user manager column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'member_stats', 'Student Specific Usage', '2005-03-03 15:25:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'menu', 'Menu', '2003-05-20 13:02:17', 'preferences option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'menu_menu', 'Content Navigation', '2005-03-30 10:13:27', 'context (?)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'message', 'Message', '2003-05-20 13:06:56', 'inbox send message screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'message_notification', 'Message Notification', '2005-03-14 15:31:15', 'preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'minimum', 'Minimum', '2003-05-20 13:08:57', 'instructor course statistics/details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'missing', 'Missing', '2005-10-05 14:02:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'missing_content', 'Missing Content', '2005-03-07 15:25:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'missing_info', 'Missing Info', '2005-08-17 13:23:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'modules', 'Modules', '2005-08-16 13:40:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'module_install_directory', 'The following directory must be created for this module to install and function: <kbd>%s</kbd>.', '2005-09-22 14:14:34', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'module_name', 'Module Name', '2005-08-17 13:11:29', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'month', 'Month', '2004-06-24 15:45:43', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'move', 'Move', '2004-01-15 13:31:18', 'editing content');
-INSERT INTO `language_text` VALUES ('en', '_template', 'move_down', 'Move Down', '2005-03-30 15:54:20', 'modules');
-INSERT INTO `language_text` VALUES ('en', '_template', 'move_up', 'Move Up', '2005-08-02 15:44:46', 'modules');
-INSERT INTO `language_text` VALUES ('en', '_template', 'my_account', 'My Account', '2005-03-28 14:04:37', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'my_courses', 'My Courses', '2004-04-15 12:05:31', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'my_enrolled_courses', 'My enrolled courses', '2004-08-18 12:03:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'my_start_page', 'My Start Page', '2005-02-08 10:58:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'my_tests', 'Tests &amp; Surveys', '2005-03-09 14:52:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'my_tracker', 'My Tracker', '2003-05-20 13:12:27', 'global my tracker  heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'na', 'N/A', '2003-05-20 13:12:48', 'short form for "not applicable"');
-INSERT INTO `language_text` VALUES ('en', '_template', 'name', 'Name', '2003-05-20 13:31:04', 'file manager, zip utility column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'name_in_english', 'Language name in English', '2004-11-20 19:41:16', 'admin add language');
-INSERT INTO `language_text` VALUES ('en', '_template', 'name_in_language', 'Language name translated', '2004-11-20 19:39:49', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'nav_path', 'Navigation Path for User', '2003-05-20 13:31:22', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'nav_tendencies', 'Navigation Tendencies for User', '2003-05-20 13:32:03', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'never', 'Never', '2005-03-03 11:03:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'new', 'New!', '2003-05-20 13:32:52', 'forum/inbox new message indicator');
-INSERT INTO `language_text` VALUES ('en', '_template', 'new_account_enroll', 'A user account has been created for you at %1s and you have been enrolled into the course %2s. To access this course, please log into the site. It is strongly suggested you change your password upon logging in.', '2005-06-24 15:33:45', 'Message emailed to new users as a result of enrollment.');
-INSERT INTO `language_text` VALUES ('en', '_template', 'new_account_enroll_confirm', 'You have been enrolled into the course %1s. To access this course, you must first confirm your account by using the following link: %2s. It is strongly suggested you change your password upon logging in.', '2005-06-24 15:33:17', 'If new user created during enrollment and needs confirmation.');
-INSERT INTO `language_text` VALUES ('en', '_template', 'new_name', 'New Name', '2005-03-07 13:26:12', 'filemanager rename file');
-INSERT INTO `language_text` VALUES ('en', '_template', 'new_thread', 'New Thread', '2003-05-20 13:37:34', 'forum');
-INSERT INTO `language_text` VALUES ('en', '_template', 'new_user', 'New User', '2005-07-27 15:06:36', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'new_window', 'Links open in a new window.', '2005-10-28 12:24:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'next', 'Next', '2003-05-20 13:38:07', 'sequence arrow link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'next_topic', 'Next Topic', '2003-05-20 13:38:42', 'sequence arrow link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no', 'No', '2005-03-03 10:18:39', 'the word no, preferences, admin course manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no1', 'No', '2003-09-16 11:49:02', 'enrol admin');
-INSERT INTO `language_text` VALUES ('en', '_template', 'none', 'None', '2003-05-20 13:40:59', 'global message when no results were retrieved');
-INSERT INTO `language_text` VALUES ('en', '_template', 'none_available', 'None available.', '2003-05-20 13:41:46', 'instructor add/edit content, glossary');
-INSERT INTO `language_text` VALUES ('en', '_template', 'none_found', 'None Found.', '2005-05-18 13:12:47', 'glossary, related topis, users online');
-INSERT INTO `language_text` VALUES ('en', '_template', 'non_group_members', 'Non-Group Members', '2005-06-10 10:51:55', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'notes', 'Notes', '2003-05-20 13:43:39', 'admin hime, instructor request notes column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'notification_new_inbox', 'You have received a new message from %s. Login to access your inbox and view the message. Login at: %s', '2005-05-17 14:20:35', 'notification message for new mail in inbox');
-INSERT INTO `language_text` VALUES ('en', '_template', 'notify', 'Notify', '2003-05-20 13:45:17', 'admin course properties');
-INSERT INTO `language_text` VALUES ('en', '_template', 'not_created', 'Not Created', '2005-05-10 15:23:30', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'not_enrolled', 'Not Enrolled', '2005-03-23 14:23:18', 'user status on my courses page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'not_specified', 'Not specified', '2003-05-12 15:26:26', 'registration gender selection');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_announcements', 'No Announcements Found', '2003-05-20 13:55:19', 'course homepage when no announcments exist');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_cancel', 'No / Cancel', '2003-05-20 13:56:02', 'global delete functions cancel operation');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_content_avail', 'No content available.', '2005-10-20 11:00:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_courses', 'There are no available courses.', '2003-05-20 13:57:26', 'browse message when no courses exist');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_courses_found', 'No courses found.', '2003-05-20 13:58:31', 'message when query resuylt in no courses found, admin course manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_course_found', 'Course not found.', '2003-10-15 14:31:39', 'course not found');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_description', 'No description available.', '2004-08-20 15:00:55', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_forums', 'No Forums Found', '2003-05-20 13:59:58', 'discussions message when no forums exist');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_glossary_items', 'No glossary terms found.', '2005-03-07 10:52:11', 'edit glossary');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_icon', 'No Icon', '2005-03-03 11:20:05', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_month_data', 'There is no data for this month.', '2003-05-20 14:01:42', 'instructor course statistics when nonne exist');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_post', 'No post found.', '2003-05-20 14:02:44', 'forums message when attempting to view a post that no longer exists');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_questions', 'No questions found.', '2003-05-20 14:04:01', 'test manager message when no questions exist for a test.');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_results_available', 'No Results Available', '2003-05-20 14:07:22', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_results_yet', 'No Results Yet', '2003-05-20 14:07:32', 'my tests');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_terms_found', 'There are no glossary terms being used in this content page.', '2004-01-16 10:52:51', 'content editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_tests', 'No Tests or Surveys Available', '2004-08-25 14:04:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_title', 'No title.', '2005-10-20 11:00:45', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'no_user_found', 'No user found', '2003-05-20 14:09:41', 'admin user amanager, profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'num', 'No.', '2003-05-20 14:10:36', 'short form for the word number, test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'num_pages', '# pages', '2005-03-16 13:54:47', 'content manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'num_posts', 'Number of Posts', '2005-04-14 11:07:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'num_questions_per_test', 'questions per test.', '2004-08-23 16:13:24', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'num_takes_test', 'Attempts Allowed', '2004-08-26 10:34:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'num_threads', 'Number of Threads', '2005-04-14 11:07:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'ok', 'OK', '2004-01-30 11:54:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'on', 'on', '2003-05-20 14:11:28', 'admin course manager properties tracking option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'one_page', 'One Page', '2003-05-20 14:12:22', 'test manager open ended question type');
-INSERT INTO `language_text` VALUES ('en', '_template', 'one_sentence', 'One Sentence', '2003-05-20 14:12:46', 'test manager open ended question type');
-INSERT INTO `language_text` VALUES ('en', '_template', 'one_word', 'One Word', '2003-05-20 14:12:53', 'test manager open ended question type');
-INSERT INTO `language_text` VALUES ('en', '_template', 'ongoing', 'On Going!', '2003-05-20 14:13:23', 'mytest currently running test indicator');
-INSERT INTO `language_text` VALUES ('en', '_template', 'online_status', 'Online Status', '2005-03-11 16:18:30', 'directory');
-INSERT INTO `language_text` VALUES ('en', '_template', 'open_file_manager', 'Open File Manager', '2004-11-25 17:31:08', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'optional', 'Optional', '2003-05-20 14:40:09', 'registration screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'optional_description', 'Optional Description', '2004-10-27 15:31:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'optional_feedback', 'Optional Feedback', '2004-11-24 14:33:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'option_alignment', 'Alignment', '2004-12-01 13:36:36', 'edit/create option in test questions');
-INSERT INTO `language_text` VALUES ('en', '_template', 'or', 'Or', '2003-05-20 14:40:26', 'global word or');
-INSERT INTO `language_text` VALUES ('en', '_template', 'orange', 'Orange', '2003-05-20 14:40:40', 'global code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'order', 'Order', '2005-03-04 14:07:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'origin_page', 'Originating Page', '2003-05-20 14:40:57', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'other', 'Other', '2005-03-03 12:17:32', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'out_of', 'Out of', '2003-05-20 14:42:22', 'mytests, score out of ...');
-INSERT INTO `language_text` VALUES ('en', '_template', 'override', 'Override selections with this course\'s custom Colour & Font theme.  <small class="spacer">( If available. )</small>', '2003-05-20 14:42:37', 'preferences page');
-INSERT INTO `language_text` VALUES ('en', '_template', 'overwite_content', 'Overwrite existing material with those selected', '2004-10-15 14:18:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'overwrite', 'Overwrite', '2004-11-09 15:24:23', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'packaged_in', 'Content Package', '2003-10-07 18:21:34', 'apckage label in edit content');
-INSERT INTO `language_text` VALUES ('en', '_template', 'packages', 'Packages', '2005-05-17 12:09:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'packages_auto_advance', 'Automatically start next Learning Object', '2005-05-17 12:10:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'package_preferences', 'Preferences', '2005-05-17 12:09:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'package_settings', 'Package Settings', '2005-05-17 12:06:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'package_type', 'Package Type', '2005-05-17 12:09:36', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'package_type_info', 'Please select the type of package you wish to upload.', '2005-05-17 12:07:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'package_upload_file', 'Package File', '2005-05-17 12:07:32', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'package_upload_file_info', 'Select the package file from your computer', '2005-05-17 12:07:20', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'package_upload_url', 'Package URL', '2005-05-17 12:06:58', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'package_upload_url_info', 'or specify the URL to your web accessible package file', '2005-05-17 12:06:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'page', 'Page', '2003-05-20 14:43:17', 'forum thread pages menu, tracker pages menu');
-INSERT INTO `language_text` VALUES ('en', '_template', 'pages_found', '%s pages found', '2004-08-20 15:09:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'pages_stats', 'Page Tracking Statistics for %s.', '2003-06-08 09:20:38', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'page_error', 'An error occured while generating the paginator', '2003-05-20 14:44:01', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'page_info', 'Last Modified: %s.  Revision: %s.  Release Date: %s.', '2004-02-12 11:27:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'page_stats', 'Content Tracking Summary', '2003-05-20 14:44:48', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'page_title', 'Page Title', '2003-05-20 14:45:16', 'tracker column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'page_viewed', 'Page Viewed', '2003-05-20 14:45:44', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'parent', 'Parent', '2005-03-29 13:04:13', 'categories');
-INSERT INTO `language_text` VALUES ('en', '_template', 'password', 'Password', '2003-05-20 14:45:56', 'global password word');
-INSERT INTO `language_text` VALUES ('en', '_template', 'password_again', 'Password Again', '2003-05-20 14:46:52', 'registration, edit profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'password_blurb', 'Enter your email address below and your login and password will be sent to you. The email address must be the same as the one you used for <a href="registration.php">registration</a>.', '2004-02-09 14:40:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'password_changed', 'Password Change', '2005-11-30 13:54:49', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'password_change_msg', 'Your password has been altered. Please use the information below.', '2005-11-30 13:55:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'password_reminder', 'Password Reminder', '2003-05-20 14:48:26', 'password reminder screen heading, public login header');
-INSERT INTO `language_text` VALUES ('en', '_template', 'password_reminder_text', 'If you have forgotten your login name and/or password, use the Password and Login Reminder to have it emailed to you.', '2005-07-27 15:12:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'password_request2', 'You have requested a password reminder for your user account on %s. Use the following information to login.', '2005-06-24 15:24:40', 'password reminder');
-INSERT INTO `language_text` VALUES ('en', '_template', 'paste', 'Paste', '2004-12-03 10:30:28', 'form_editor in create question');
-INSERT INTO `language_text` VALUES ('en', '_template', 'paste_file', 'Paste From File', '2003-05-20 14:49:35', 'instructor content editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'pending', 'Pending', '2003-05-20 14:50:41', 'mytests, control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'pending_approval', '(pending approval)', '2003-05-20 14:51:49', 'control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'pending_enrollment', 'Pending Enrollment', '2005-06-10 10:14:46', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'period', 'Period', '2004-06-22 12:09:54', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'personal_information', 'Personal Information', '2003-05-20 14:53:12', 'registration, profile edit');
-INSERT INTO `language_text` VALUES ('en', '_template', 'per_day', 'per day', '2003-05-20 14:54:04', 'instructor course statistics, details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'phone', 'Area Code and Phone Number', '2003-05-20 14:54:21', 'global phone number field label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'plain_text', 'plain text', '2003-05-20 14:55:04', 'instructor content editor, news, inbox, forum message format');
-INSERT INTO `language_text` VALUES ('en', '_template', 'poll', 'Poll', '2004-06-25 13:17:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'polls', 'Polls', '2004-06-14 13:55:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'post', 'Post', '2003-05-20 14:56:13', 'forum new thread post button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'postal_code', 'Postal/Zip Code', '2003-05-20 14:56:34', 'global postal code filed labal');
-INSERT INTO `language_text` VALUES ('en', '_template', 'posted_by', 'By', '2003-05-20 14:57:31', 'forum message submitter');
-INSERT INTO `language_text` VALUES ('en', '_template', 'posted_on', 'on', '2003-05-20 14:58:10', 'forum message post date, inbox');
-INSERT INTO `language_text` VALUES ('en', '_template', 'posts', 'Forum Threads', '2005-03-07 13:37:56', 'Header for posts in Forum List');
-INSERT INTO `language_text` VALUES ('en', '_template', 'post_lock', 'Locked from posting', '2003-05-20 14:58:32', 'forum lock thread message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'powered_by_google', 'Results by <a href="http://www.google.com">Google</a>.', '2005-10-20 10:52:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'preferences', 'Preferences', '2003-05-20 14:59:08', 'global preferences word');
-INSERT INTO `language_text` VALUES ('en', '_template', 'presets', 'Presets', '2004-08-24 11:56:35', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'preset_scales', 'Preset &amp; Previously Used Scales', '2004-08-24 13:48:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'preview', 'Preview', '2003-05-20 14:59:52', 'test manager preview test');
-INSERT INTO `language_text` VALUES ('en', '_template', 'preview_questions', 'Preview Questions', '2005-06-21 14:06:13', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'previous', 'Previous', '2003-05-20 15:01:31', 'global sequence arrow alt/link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'previous_topic', 'Previous Topic', '2003-05-20 15:02:06', 'global sequence arrow alt/link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'prev_used', 'Previously Used', '2004-08-13 13:29:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'primary_language', 'Primary Language', '2004-07-05 15:12:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'private', 'Private', '2003-05-20 15:03:14', 'global private course indicator');
-INSERT INTO `language_text` VALUES ('en', '_template', 'private_enroll', 'The course you are trying to access is <strong>private</strong>. Enrollment in this course requires instructor approval.<br />', '2005-03-17 11:51:06', 'requesting enrollment in private course');
-INSERT INTO `language_text` VALUES ('en', '_template', 'privileges', 'Privileges', '2004-03-05 12:29:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_ac_access_all', 'ACollab: Access all Groups', '2005-08-10 15:21:20', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_ac_create', 'ACollab: Create Group', '2005-08-10 15:20:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_admin_backups', 'Backups', '2005-03-03 10:37:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_admin_categories', 'Categories', '2005-03-03 10:37:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_admin_courses', 'Courses', '2005-03-03 10:37:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_admin_forums', 'Forums', '2005-03-03 10:37:34', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_admin_languages', 'Languages', '2005-03-03 10:37:56', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_admin_super', 'Super Administrator', '2005-03-03 10:36:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_admin_themes', 'Themes', '2005-03-03 10:38:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_admin_users', 'Users', '2005-03-03 10:37:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_announcements', 'Announcements', '2005-08-10 15:19:37', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_content', 'Content', '2005-08-10 15:21:32', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_course_email', 'Course Email', '2005-08-10 15:19:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_enrollment', 'Enrollment', '2005-08-10 15:21:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_files', 'File Manager', '2005-08-10 15:19:58', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_forums', 'Forums & Chat', '2004-03-08 10:04:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_glossary', 'Glossary', '2005-08-10 15:20:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_links', 'Links', '2005-08-10 15:21:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_polls', 'Polls', '2005-08-10 15:20:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_styles', 'Student Tools', '2005-08-10 15:22:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_test_create', 'Test Creation', '2005-08-10 15:20:29', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'priv_test_mark', 'Test Marking', '2005-08-10 15:22:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'profile', 'Profile', '2003-05-20 16:24:30', 'control centre heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'profile_bundle_select', 'Profile Bundle Selection', '2004-12-06 12:13:34', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'profile_student_information', 'Student Information', '2003-09-16 11:49:35', 'view profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'properties', 'Properties', '2003-05-21 12:15:58', 'instructor control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'protected', 'Protected', '2003-05-21 12:16:46', 'browse, create coruse, control centre, course properties');
-INSERT INTO `language_text` VALUES ('en', '_template', 'province', 'Province/State', '2003-05-21 12:17:22', 'registration, profile editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'public', 'Public', '2003-05-21 12:18:37', 'browse courses, create course, course properties, control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'purple', 'Purple', '2003-05-21 12:18:50', 'global code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'put_link', 'put link name here', '2004-12-08 12:38:42', 'filemanager, isert text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'question', 'Question', '2003-05-21 12:30:21', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'questions', 'Questions', '2003-05-21 12:30:40', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'questions_for', 'Questions for', '2003-05-21 12:30:50', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'question_categories', 'Question Categories', '2005-02-22 14:17:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'question_database', 'Question Database', '2004-11-24 10:14:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'question_statistics', 'Question Statistics', '2004-08-26 13:26:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'quote', 'Quote', '2003-05-21 12:31:19', 'code picker alt text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'randomize_questions', 'Randomize Questions', '2004-05-18 10:44:48', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'raw', 'Raw', '2003-09-13 09:25:20', 'course tracker member picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'raw_data', 'Raw Data', '2003-05-21 12:31:48', 'instructor course statistics/details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'read_lock', 'Locked from posting & reading', '2003-05-21 12:32:39', 'forum lock message in thread list');
-INSERT INTO `language_text` VALUES ('en', '_template', 'real_name', 'Real Name', '2003-10-20 11:33:14', 'course properties');
-INSERT INTO `language_text` VALUES ('en', '_template', 'recipient_address', 'Recipient Address', '2004-12-06 12:20:03', 'admin/error_logging_bundle.php');
-INSERT INTO `language_text` VALUES ('en', '_template', 'red', 'Red', '2003-05-21 12:32:57', 'global code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'red_members', 'Red = Members', '2003-05-21 12:33:55', 'instructor course statistics/details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'register', 'Register', '2003-11-26 15:09:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'register_an_account', 'Register an ATutor System Account', '2003-05-21 12:36:01', 'private course enrolment screen, login screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'registration_text', 'If you do not have an account on this system,  please create a new account by clicking on the Register Button below.', '2005-07-27 15:11:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'reg_exp', 'Regular Expression', '2004-11-20 19:38:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'related_topics', 'Related Topics', '2003-05-21 12:38:26', 'context(?)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'release_date', 'Release Date', '2003-05-21 12:39:24', 'instructor add/edit content, control centre');
-INSERT INTO `language_text` VALUES ('en', '_template', 'release_immediate', 'Once quiz has been submitted', '2004-12-13 13:55:49', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'release_marked', 'Once quiz has been submitted and all questions have been marked', '2004-12-13 13:55:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'release_never', 'Do not release results', '2004-12-13 14:02:13', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'remove', 'Remove', '2003-05-21 12:40:11', 'control centre, admin user manager, instructor enrolment manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'removed', 'Removed', '2004-02-03 09:36:19', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'remove_frame', 'Remove Frame', '2005-01-10 14:31:34', 'filemanager preview');
-INSERT INTO `language_text` VALUES ('en', '_template', 'remove_question', 'Remove Question', '2004-11-25 10:30:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'rename', 'Rename', '2004-08-11 14:00:49', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'replace_into', 'INSERT INTO', '2005-03-03 12:16:28', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'replied', 'Replied', '2003-05-21 12:40:35', 'inbox message status label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'replies', 'Replies', '2003-05-21 12:40:50', 'forum');
-INSERT INTO `language_text` VALUES ('en', '_template', 'reply', 'Reply', '2003-05-21 12:41:20', 'forum, inbox');
-INSERT INTO `language_text` VALUES ('en', '_template', 'report_errors', 'Report Errors', '2004-12-06 12:08:05', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'request_enrollment', 'Request Enrollment', '2003-10-21 13:04:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'request_instructor', 'You do not yet have permission to create courses. If you would like an instructor account, enter the required description of the course you wish to create.', '2005-03-09 12:22:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'request_instructor_account', 'Request Instructor Account', '2003-05-21 12:43:12', 'control centre non-instructor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'request_instructor_pending', 'Your instructor account request has been made. You will be notifed by email when your request has been approved.', '2005-03-09 12:35:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'required', 'Required', '2003-05-21 12:43:54', 'registration, export course, test manager question editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'required_field', 'Required Field', '2005-03-04 12:52:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'required_information', 'Required Information', '2005-03-04 14:08:38', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'require_email_confirmation', 'Require Email Confirmation Upon Registration', '2005-03-22 10:55:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'req_message9', 'ATutor Instructor Request', '2003-05-21 18:52:38', 'email message subject line from control centre instructor request');
-INSERT INTO `language_text` VALUES ('en', '_template', 'req_message_instructor', 'A new Instructor account request has been made by: %s.\r\n\r\nCourse Description: %s\r\n\r\nYou must login as the administrator at %s to approve or reject this request.', '2004-02-16 16:38:30', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'reset', 'Reset', '2003-05-21 18:53:27', 'global text for reset buttons');
-INSERT INTO `language_text` VALUES ('en', '_template', 'reset_filter', 'Reset Filter', '2005-03-30 14:52:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'reset_log', 'Reset Log', '2005-03-03 10:42:24', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'resource_categories', 'Resource Categories', '2003-05-21 18:57:43', 'instructor export course feedback');
-INSERT INTO `language_text` VALUES ('en', '_template', 'resource_links', 'Resource Links', '2003-05-21 18:58:34', 'instructor export course feedback');
-INSERT INTO `language_text` VALUES ('en', '_template', 'response_text', 'The following answers were given in response to:', '2004-08-25 12:20:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'restore', 'Restore', '2003-05-21 18:59:34', 'preferences page (removed 1.2)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'restore_backup_about', 'Choose the checkboxes next to the content to be restored, select course into which to restore the content, then choose to append the content to the course, or replace the content in the course.', '2004-12-10 09:53:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'restore_upload', 'To upload a backup file, enter a description of the backup, choose a file to upload, and use the "Upload" button. Only backups created using ATutor 1.3 and later are supported. Depending on the size of the course and your Internet connection speed,  uploading a backup may take a long time.', '2004-12-10 18:06:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'resubmit', 'Resubmit', '2004-01-30 16:34:56', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'result', 'Result', '2004-08-12 15:22:08', 'single result in search engine');
-INSERT INTO `language_text` VALUES ('en', '_template', 'results', 'Results', '2003-05-21 19:00:51', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'results_found', 'Results Found: %s', '2005-04-14 11:01:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'results_from', 'Results from %s', '2004-08-18 12:05:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'result_release', 'Release Results', '2004-12-13 13:57:31', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'resume', 'Resume', '2003-05-21 19:01:48', 'alt/link text for the resume arrow');
-INSERT INTO `language_text` VALUES ('en', '_template', 'return', 'Return', '2003-05-21 19:02:25', 'escape from delete course function');
-INSERT INTO `language_text` VALUES ('en', '_template', 'return_file_manager', 'Return to the File Manager', '2004-11-05 11:20:30', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'revision', 'Revision', '2003-05-21 19:04:01', 'instructor content editor statistics below embedded links');
-INSERT INTO `language_text` VALUES ('en', '_template', 'right', 'Right', '2004-04-27 11:00:46', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'role', 'Role', '2004-03-05 12:26:47', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'rss_feeds', 'Syndicated Feeds', '2005-10-28 11:07:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'rtl', 'Right to Left', '2004-11-20 19:37:58', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'same_course_users', 'Only users in the same courses as you are listed.', '2003-05-21 19:05:32', 'inbox send message form');
-INSERT INTO `language_text` VALUES ('en', '_template', 'save', 'Save', '2004-10-29 14:57:46', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'save_changes', 'Save Changes', '2004-05-11 10:48:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'save_changes_saved', 'All changes have been saved.', '2004-02-16 14:06:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'save_changes_unsaved', 'Unsaved changes have been made.', '2004-02-16 14:04:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'search', 'Search', '2003-05-21 19:19:30', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'search_all_words', 'All words', '2003-08-11 11:22:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'search_any_word', 'Any word', '2003-08-11 11:22:14', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'search_in', 'Search in', '2004-04-30 10:51:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'search_match', 'Match', '2003-08-11 11:21:50', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'search_results', 'Search Results', '2003-05-21 19:21:29', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'search_site', 'Only search within <strong>%s</strong>.', '2005-10-20 10:53:28', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'search_words', 'Words', '2003-08-11 11:21:36', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'section', 'Section', '2005-03-04 14:06:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'see', 'See', '2003-05-21 19:24:22', 'glossary - "see" related terms');
-INSERT INTO `language_text` VALUES ('en', '_template', 'see_attached', 'See attached.', '2005-03-10 16:37:04', 'error logging - email body');
-INSERT INTO `language_text` VALUES ('en', '_template', 'select_all', 'select/unselect all', '2004-10-29 13:25:57', 'file manager and enrollment manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'select_cat', 'Select Category', '2005-02-23 12:23:56', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'select_directory', 'Please choose the folder you want to move the selected files to:', '2004-11-30 11:40:08', 'Filamanger, moving a file');
-INSERT INTO `language_text` VALUES ('en', '_template', 'select_member', 'Select a Member to View', '2003-05-21 19:29:27', 'instructor course tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'select_parent_topic', 'Select parent topic', '2005-03-16 13:37:00', 'content manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'send', 'Send', '2003-05-21 19:31:57', 'global message send button text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'send_bundle', 'Send Bundle', '2004-12-06 12:16:19', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'send_confirmation', 'Enter your email address below and the account confirmation message will be resent.', '2005-03-24 09:57:32', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'send_delete', 'Send & Delete', '2003-05-21 19:32:55', 'send a message from the inbox and delete the original');
-INSERT INTO `language_text` VALUES ('en', '_template', 'send_message', 'Send Message', '2003-05-21 19:34:13', 'inbox send message button text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'sent_via_atutor', 'Sent via an ATutor system at %s', '2003-05-21 20:04:50', 'global email message footer');
-INSERT INTO `language_text` VALUES ('en', '_template', 'sequence', 'Sequence', '2003-05-21 20:05:50', 'context (removed 1.2)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'session_end', 'and ended on', '2003-05-21 20:12:12', 'tracker - to be updated ( started on [date] and ended on [date])');
-INSERT INTO `language_text` VALUES ('en', '_template', 'session_start', 'Session above started on', '2003-05-21 20:11:35', 'tracker (to be updated)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'set', 'Set', '2003-06-30 17:02:05', 'admin language manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'set_default', 'Set as Default', '2004-10-15 15:48:04', 'set as default button in theme manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'set_preset', 'Apply Preset', '2003-05-24 10:52:43', 'preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'shared_forums', 'Shared Forums', '2004-11-03 11:18:31', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'shortcuts', 'Shortcuts', '2004-04-27 14:57:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'short_paragraph', 'Short Paragraph', '2003-05-21 20:13:03', 'test manager test type');
-INSERT INTO `language_text` VALUES ('en', '_template', 'show', 'Show', '2005-03-15 11:37:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'show_numbers', 'Topic Numbering', '2005-02-09 10:20:54', 'preference option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'show_raw_tracking', 'Show raw tracking', '2003-11-26 15:19:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'show_summary_tracking', 'Show summary tracking', '2003-11-26 15:18:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'side_menu', 'Side Menu', '2005-03-04 14:37:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'side_menu_text', 'Choose which menu items you would like displayed at the side.', '2005-03-04 15:17:16', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'sitemap', 'Site-map', '2003-05-21 20:17:21', 'global site-map text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'site_name', 'Site Name', '2005-03-03 10:49:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'size', 'Size', '2003-05-22 13:01:20', 'file manager, zip tool');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_angry', 'angry', '2004-02-12 12:20:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_confused', 'confused', '2004-02-12 12:21:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_crazy', 'crazy', '2004-02-12 12:20:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_evil', 'evil', '2004-02-12 12:20:37', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_frown', 'frown', '2004-02-12 12:20:14', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_lol', 'laughing out loud', '2004-02-12 12:20:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_muah', 'muah', '2004-02-12 12:21:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_oh_well', 'oh well', '2004-02-12 12:20:21', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_smile', 'smile', '2004-02-12 12:20:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_tired', 'tired', '2004-02-12 12:21:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_tongue', 'tongue', '2004-02-12 12:20:27', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'smile_wink', 'wink', '2004-02-12 12:20:08', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'specify_url_to_content_package', 'Or, Specify a URL to a Content Package', '2004-04-30 15:33:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'specify_url_to_theme_package', 'Or, Specify a URL to a Theme', '2004-10-18 15:10:35', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'standard', 'Standard', '2005-09-21 13:35:25', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'started_by', 'Started By', '2003-05-22 13:02:38', 'forums thread display table column header');
-INSERT INTO `language_text` VALUES ('en', '_template', 'start_date', 'Start Date', '2003-05-22 13:03:05', 'mytests, test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'state', 'State', '2005-08-16 15:27:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'statement', 'Statement', '2003-05-22 13:07:22', 'test manager add/edit questions');
-INSERT INTO `language_text` VALUES ('en', '_template', 'statistics', 'Statistics', '2003-05-22 13:08:06', 'instructor course statistics/details');
-INSERT INTO `language_text` VALUES ('en', '_template', 'status', 'Status', '2003-05-22 13:09:29', 'test manager, control center, profile, admin user manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'sticky_thread', 'Sticky Thread - always at the top', '2003-05-22 13:10:18', 'instructor forum option alt text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'street_address', 'Street Address', '2003-05-22 13:10:43', 'registration, profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'student', 'Student', '2003-10-27 11:44:47', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'student1', 'Student', '2003-05-22 13:11:42', 'admin user manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'students', 'Students', '2003-05-21 20:01:44', 'course email (removed 1.2)');
-INSERT INTO `language_text` VALUES ('en', '_template', 'student_id', 'Student ID', '2003-05-22 13:12:40', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'student_pin', 'Student PIN', '2005-05-27 13:35:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'student_tools', 'Student Tools', '2005-04-28 12:15:39', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'style_editor', 'Stylesheet Editor', '2003-05-22 13:13:22', 'tool page/ stylesheet editor heading text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'subject', 'Subject', '2003-05-22 13:14:21', 'global message subject label');
-INSERT INTO `language_text` VALUES ('en', '_template', 'submission', 'Submission', '2005-05-11 11:29:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'submissions', 'Submissions', '2003-05-22 13:14:47', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'submit', 'Submit', '2003-05-22 13:15:05', 'global submit button text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'submitted_by', 'Submitted By', '2005-02-23 12:23:06', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'submit_no', 'No', '2004-11-22 16:23:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'submit_yes', 'Yes', '2004-11-22 16:23:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'subscribe', 'Subscribe to this thread to receive notification via email of new replies.', '2003-11-06 13:47:10', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'subscribe1', 'Subscribe', '2004-12-02 15:32:01', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'sub_topics', 'Subtopics', '2005-03-16 13:55:12', 'content manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'suggest_link', 'Suggest Link', '2005-02-23 12:10:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'summary', 'Summary', '2003-09-13 09:24:55', 'course tracker member picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'switch_text', 'Switch to text editor', '2004-05-27 10:50:47', 'Content editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'switch_visual', 'Switch to visual editor', '2004-05-27 10:52:19', 'Used in content editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'syndicate_announcements', 'Syndicate Announcements', '2005-01-04 09:46:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'system_preferences', 'System Preferences', '2005-03-03 10:49:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'table_of_contents', 'Table of Contents', '2003-05-22 13:53:36', 'preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'take_test', 'Take Test', '2003-05-22 13:54:16', 'MyTests');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tech_support_forum', 'Technical Support Forum', '2003-05-21 15:16:00', 'help');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tech_support_forum_text', 'Support questions should be of a technical nature.', '2005-07-05 14:13:20', 'help');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tests', 'Tests &amp; Surveys', '2004-08-25 14:13:43', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'test_anonymous', 'This test/survey is anonymous.', '2004-09-02 13:42:31', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'test_lk', 'Likert', '2004-08-12 15:55:22', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'test_manager', 'Tests &amp; Surveys', '2005-03-08 15:39:14', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'test_mc', 'Multiple Choice', '2003-05-22 14:03:29', 'test manager question type');
-INSERT INTO `language_text` VALUES ('en', '_template', 'test_open', 'Open Ended', '2003-05-22 14:03:45', 'test manager question type');
-INSERT INTO `language_text` VALUES ('en', '_template', 'test_tf', 'True or False', '2003-05-22 14:09:05', 'test manager question type');
-INSERT INTO `language_text` VALUES ('en', '_template', 'text', 'Text', '2004-04-20 16:40:07', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'theme', 'Theme', '2004-04-23 15:26:57', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'themes', 'Themes', '2003-05-22 14:10:24', 'preferences');
-INSERT INTO `language_text` VALUES ('en', '_template', 'themes_disabled', 'The personal theme preference has been disabled in favour of theme specific categories.', '2004-08-04 11:58:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'theme_screenshot', 'Screenshot', '2005-05-06 14:18:00', 'theme manager, screentshot alt/title');
-INSERT INTO `language_text` VALUES ('en', '_template', 'theme_specific_categories', 'Theme Specific Categories', '2005-03-31 13:49:53', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'the_follow_errors_occurred', 'The following errors occurred:', '2005-03-07 12:41:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'this_course_only', 'This course only', '2004-08-18 12:02:37', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'this_is_content', 'This is just a blank content page. Use the Edit Content link to edit this page. You can manage this course by accessing the Manage section.', '2005-05-11 14:52:47', 'default content insert when a new course is created');
-INSERT INTO `language_text` VALUES ('en', '_template', 'thread_already_subscribed', 'You are already subscribed to this thread.', '2003-05-22 14:11:25', 'forum view thread subscribe feedback');
-INSERT INTO `language_text` VALUES ('en', '_template', 'thread_locked', 'Thread Locked', '2003-05-22 14:11:58', 'forum thread view thread lock message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'thread_notify1', 'Thread Subscription', '2005-01-08 09:18:48', 'Thread email notify subject');
-INSERT INTO `language_text` VALUES ('en', '_template', 'thread_subscribe', 'Subscribe to this thread to receive notification via email of replies.', '2003-05-22 14:42:57', 'forum thread subscribe description');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_any_field', 'Any Field', '2004-05-03 13:14:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_author', 'Author', '2004-05-03 13:14:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_description', 'Description', '2004-05-03 13:14:43', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_export', 'Export content to the TILE repository. A valid TILE account is required.', '2004-05-20 11:00:26', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_import_content_package_about', 'Import the content directly into this course.', '2004-05-03 13:15:54', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_keyword', 'Keyword', '2004-05-03 13:14:23', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_progress', 'TILE Importing in Progress...', '2004-05-05 16:03:44', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_search', 'TILE Repository Search', '2004-03-25 09:48:17', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_technical_format', 'Technical Format', '2004-05-03 13:14:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tile_title', 'Title', '2004-05-03 13:14:11', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'timestamp', 'Timestamp', '2004-12-06 12:04:30', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'title', 'Title', '2003-05-22 14:43:54', 'admin course manager column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'to', 'To', '2003-05-22 14:45:14', 'inbox send message "to" a user');
-INSERT INTO `language_text` VALUES ('en', '_template', 'to1', 'to', '2003-05-22 14:48:13', 'login form header row login -to- some place');
-INSERT INTO `language_text` VALUES ('en', '_template', 'toggle_disabled', 'Toggle Disabled', '2003-05-22 15:10:01', 'alt text for menu toggle');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tools_details', 'Details for Tool Usage', '2003-05-22 15:11:15', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tool_summary', 'Tools Usage Summary', '2003-05-22 15:11:26', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'top', 'Top', '2003-05-22 15:11:53', 'global alt text for jump to top link/icon');
-INSERT INTO `language_text` VALUES ('en', '_template', 'topic', 'Topic', '2003-05-22 15:12:45', 'forum thread list column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'top_20', 'Only the top 20 results have been displayed.', '2005-10-20 10:50:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'top_level', 'Top Level', '2005-03-16 13:36:35', 'content manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'total', 'Total', '2003-05-22 15:14:13', 'instructor course statistic/details, test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'total_votes', 'Total Votes', '2005-03-11 15:51:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'to_2', 'to', '2003-05-22 15:15:16', 'test manager date');
-INSERT INTO `language_text` VALUES ('en', '_template', 'to_email', 'To Email', '2003-05-22 15:17:02', 'help admin/instructor contact forms');
-INSERT INTO `language_text` VALUES ('en', '_template', 'to_name', 'To Name', '2003-05-22 15:17:20', 'help admin/instructor contact forms');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tracker', 'Content Tracker', '2005-11-25 18:36:21', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tracker_none_viewed', 'No content pages have been viewed in this course yet.', '2003-09-15 11:53:06', 'mytracker summary view');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tracker_not_viewed', 'Jump to pages not yet viewed.', '2003-09-13 12:16:10', 'mytracker bypass to not viewed alt text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tracker_pages_total', 'Total pages in this course %s (pages visited: %s.)', '2003-09-13 09:11:43', 'tracker summary pages read');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tracker_percent_read', 'Percentage of pages viewed %s.', '2003-09-13 12:09:57', 'tracker pages read');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tracker_summary_read', 'Summary of pages viewed by user %s.', '2003-09-13 12:30:44', 'tracker summary read');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tracking', 'Tracking', '2003-05-22 15:18:11', 'admin course manager ');
-INSERT INTO `language_text` VALUES ('en', '_template', 'tracking_all_page_viewed', 'All pages in this course have been viewed.', '2003-09-13 12:37:23', 'mytracker page not viewed');
-INSERT INTO `language_text` VALUES ('en', '_template', 'translate', 'Translate', '2004-12-07 13:59:44', 'language manager translate button');
-INSERT INTO `language_text` VALUES ('en', '_template', 'translate_lang_howto', 'In order to translate a language you must : <br />\r\n1. Set the AT_DEVEL_TRANSLATE constant in /include/vitals.inc.php to \'1\' <br />\r\n2. Make sure that you have added the new language to the database<br />\r\n3. Select  the new language as the one you want to translate from the \'translate to:\' option at the bottom of the page<br />\r\n4. Use the translate button and translate the new language in a new window<br />', '2004-12-10 16:29:48', 'Language Manager, translation message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'translate_to', 'Translate to:', '2003-05-22 15:19:14', 'footer');
-INSERT INTO `language_text` VALUES ('en', '_template', 'true', 'True', '2003-05-22 15:19:50', 'test manager question answer option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'type', 'Type', '2003-05-22 15:20:30', 'test manager questions column heading');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unconfirmed', 'Unconfirmed', '2005-04-01 10:39:51', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'underline', 'Underline', '2003-05-22 15:21:31', 'global code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'underscore', 'Underscore', '2004-06-22 12:09:46', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unenroll', 'Un-enroll', '2004-10-15 11:51:25', 'unenroll button in enrollment manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unenrolled', 'Un-enrolled', '2004-10-15 11:50:06', 'unenrolled tab in enrollement manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unique_visits', 'Unique Visits', '2005-03-01 12:41:13', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unknown', 'Unknown', '2003-06-06 10:41:35', 'links database , file upload progress window');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unknown_error', 'An unknown error occured', '2003-05-22 15:22:55', 'general catch all error message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unlimited', 'Unlimited', '2005-03-01 11:22:02', 'admin course properties & file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unlock', 'Unlock', '2003-05-22 15:24:39', 'forums instructor lock screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unlock_thread', 'Unlock Thread', '2003-05-22 15:24:58', 'forum instructor lock screen');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unmarked', 'Unmarked', '2003-05-22 15:25:33', 'mytests, test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unmarked_label', 'Unmarked (%s)', '2005-05-12 10:25:56', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unreleased', 'Unreleased', '2005-05-04 13:59:37', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unshared_forums', 'Unshared Forums', '2004-11-05 10:50:02', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unsubscribe', 'UnSubscribe from this thread to cancel receiving notifications via email of new replies.', '2003-11-06 13:47:20', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unsubscribe1', 'Unsubscribe', '2004-12-02 15:32:28', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'unvisited_pages', 'You have not viewed the following pages:', '2003-09-13 11:56:50', 'mytracker summary');
-INSERT INTO `language_text` VALUES ('en', '_template', 'update', 'Update', '2004-11-24 14:28:45', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'updated', 'Updated', '2003-05-22 15:33:15', 'admin course manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'update_list', 'Update List', '2005-05-10 14:31:59', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'update_to', 'Update To', '2005-03-03 12:16:15', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'upload', 'Upload', '2003-05-22 15:56:16', 'global upload button/link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'upload_content_package', 'Upload a Content Package', '2004-04-30 15:33:40', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'upload_progress', 'File Upload in Progress...', '2003-06-06 10:36:38', 'file upload progress window');
-INSERT INTO `language_text` VALUES ('en', '_template', 'upload_theme_package', 'Upload a Theme', '2004-10-18 15:09:32', 'Theme Manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'url', 'URL', '2003-05-22 15:56:36', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'usage', 'Usage', '2005-03-16 13:55:31', 'content manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'usaved_changes_made', 'Unsaved changes made', '2004-01-15 13:30:06', 'editing content');
-INSERT INTO `language_text` VALUES ('en', '_template', 'user', 'User', '2003-05-22 15:59:34', 'links database');
-INSERT INTO `language_text` VALUES ('en', '_template', 'username', 'Username', '2003-05-22 16:00:31', 'global username label/link text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'users', 'Users', '2003-05-22 16:02:26', 'forum, admin user manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'users_online', 'Users Online', '2003-05-22 16:03:00', 'discussions page text');
-INSERT INTO `language_text` VALUES ('en', '_template', 'user_contributed_notes', 'User Contributed Handbook Notes', '2005-07-27 12:01:52', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'user_offline', 'Offline', '2005-03-11 16:19:14', 'directory');
-INSERT INTO `language_text` VALUES ('en', '_template', 'user_online', 'Online', '2005-03-11 16:19:28', 'directory');
-INSERT INTO `language_text` VALUES ('en', '_template', 'user_privileges', 'Privileges', '2004-03-01 16:19:21', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'use_enrol_button', 'Use the button below to enroll in this course.', '2003-05-22 16:03:37', 'enrol screen instruction');
-INSERT INTO `language_text` VALUES ('en', '_template', 'use_parent_theme', 'Use parent category\'s theme.', '2004-08-04 11:34:41', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'use_visual_editor', '<small style="text-decoration:underline;">(Editor)</small>', '2004-12-08 12:15:36', 'form editor in create test question');
-INSERT INTO `language_text` VALUES ('en', '_template', 'version', 'Version', '2003-05-22 16:04:54', 'copyright notice in footer');
-INSERT INTO `language_text` VALUES ('en', '_template', 'vertical', 'Vertical', '2004-12-01 13:34:28', 'create/edit test question option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view', 'View', '2004-02-16 15:23:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'viewing_errors', 'Viewing Error(s)', '2004-12-06 12:10:05', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'viewing_profile_bugs', 'Viewing Profile Bugs', '2004-12-06 12:03:33', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_all', 'View All', '2005-08-04 09:54:04', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_details', 'View Details', '2005-03-11 11:27:43', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_entire_post', 'View Entire Post', '2003-05-22 16:07:57', 'forum message view');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_log', 'View Activity Log', '2005-03-03 10:44:12', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_mark_test', 'View & Mark Test', '2003-05-22 16:08:11', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_message', 'View Message', '2005-03-14 11:48:21', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_profile_bugs', 'View Profile Bugs', '2004-12-06 11:51:58', 'admin/error_logging.php');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_responses', 'View Responses', '2004-08-25 11:53:13', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_results', 'View Results', '2003-05-22 16:09:09', 'mytests, test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_selected_bugs', 'View Selected Bugs', '2004-12-06 12:06:26', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_sub_topics', 'View subtopics', '2005-03-16 13:35:47', 'content manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'view_tracking', 'View Tracking', '2003-05-22 16:09:31', 'tracker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'visits', 'Visits', '2003-09-13 09:19:09', 'tracker summary read');
-INSERT INTO `language_text` VALUES ('en', '_template', 'vote_to_see_results', 'Vote to see results.', '2004-06-21 16:55:42', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'warning', 'Warning', '2003-05-22 16:09:47', 'text for warning message');
-INSERT INTO `language_text` VALUES ('en', '_template', 'web_site', 'Web Site', '2003-05-22 16:10:20', 'registration, profile');
-INSERT INTO `language_text` VALUES ('en', '_template', 'weight', 'Weight', '2003-05-22 16:10:31', 'test manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'welcome_to_atutor', 'Welcome To ATutor', '2003-05-31 15:30:38', 'announcement default heading for new course');
-INSERT INTO `language_text` VALUES ('en', '_template', 'window_auto_close', 'This window will close automatically.', '2003-06-06 10:37:43', 'file upload progress window');
-INSERT INTO `language_text` VALUES ('en', '_template', 'wrong_answer', 'Wrong Answer', '2003-05-22 16:11:51', 'test manager question editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'year', 'Year', '2004-06-24 15:45:35', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'yes', 'Yes', '2005-03-03 10:18:48', 'preferences, admin course manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'yes1', 'Yes', '2003-05-22 16:14:00', 'test manager question editor');
-INSERT INTO `language_text` VALUES ('en', '_template', 'yes_delete', 'Yes / Delete', '2003-05-22 16:14:23', 'global delete response option');
-INSERT INTO `language_text` VALUES ('en', '_template', 'you_are_here', 'You are here', '2003-10-02 16:46:28', 'ALT text Global/Local Navigation link to self');
-INSERT INTO `language_text` VALUES ('en', '_template', 'zip_archive', 'Zip Archive', '2003-05-22 16:20:01', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'zip_file_manager', 'Zip File Manager', '2003-05-22 16:20:14', 'file manager');
-INSERT INTO `language_text` VALUES ('en', '_template', 'zip_illegal_contents', 'The contents of this archive are listed below. Illegal file types will not be extracted, and file names containing illegal characters will be translated.', '2004-08-10 15:10:04', '');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_RL_DELETE_RESOURCE','Do you wish to delete this resource: <strong>%s</strong>?<br/>Note: Any readings that use this resource will also be deleted.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_RL_DELETE_READING','Do you wish to delete this reading: <strong>%s</strong>?',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RL_URL_EMPTY','URL field is empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RL_READING_NOT_FOUND','Reading not found.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RL_RESOURCE_NOT_FOUND','Resource not found.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RL_AUTHOR_EMPTY','Author cannot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_RL_NO_CATEGORIES','No Categories',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RL_AV_ADDED','AV Resource Added',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RL_URL_ADDED','URL Added',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RL_HANDOUT_ADDED','Handout Resource Added',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RL_RESOURCE_UPDATED','Resource Updated',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RL_READING_DELETED','Reading Deleted',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RL_DELETE_RESOURCE','Reading Deleted',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_RL_RESOURCE_DELETED','Reading Deleted',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_date_format','%%M %%d',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_reading_list','Reading List',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_name_reading','Name Of Reading',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_category','Category',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_name_reading','Name Of Reading',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_author','Author',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_required_reading','Required Reading',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_optional_reading','Optional Reading',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_required','Required',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_optional','Optional',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_pages','Pages',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_availability','Availability',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_comment','Comment',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_resource_av','Edit Resource',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_year_written','Year Written',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_publisher','Publisher',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_resource_book','Edit Resource Book',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_resource_file','Edit Resource File',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_resource_handout','Edit Resource Handout',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_resource_url','Edit Resource URL',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_isbn_number','ISBN',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_book','book',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_url','URL',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_handout','handout',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_av','AV',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_file','file',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_type_of_resource','Type Of Resource',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_select_av','Select AV',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_select_book','Select Book',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_select_file','Select File',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_select_handout','Select Handout',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_select_url','Select URL',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_no_read_by_date','No Read By Date',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_reading_date','Reading Date',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_start_date','Start Date',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_end_date','End Date',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_start','Start',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_end','End',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_view_resource_details','View Resource Details',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_add_resource_url','Add Resource URL',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_add_resource_book','Add Resource Book',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_add_resource_handout','Add Resource Handout',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_add_resource_av','Add Resource AV',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_add_resource_file','Add Resource File',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_reading_book','Edit Reading Book',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_reading_url','Edit Reading URL',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_reading_handout','Edit Reading Handout',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_reading_file','Edit Reading File',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_edit_reading_av','Edit Reading AV',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_delete_reading','Delete Reading',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_new_reading_book','New Reading Book',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_new_reading_url','New Reading URL',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_new_reading_av','New Reading AV',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_new_reading_handout','New Reading Handout',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_new_reading_file','New Reading File',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_display_resources','Resources',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_display_resource','Display Resource',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_delete_resource','Delete Resource',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_or','or',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_book_to_read','Book To Read',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_create_new_av','Create New AV',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_create_new_file','Create New File',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_create_new_book','Create New Book',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_create_new_handout','Create New Handout',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_create_new_url','Create New URL',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_read_by_date','Read By Date',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_av_material_to_view','AV Material To View',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_add_av_material_to_resources','Add AV Material To Resources',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_view','view',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_goto_url','view page',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','rl_type_of_reading','Type Of Reading',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_DELETE_ASSIGNMENT','Do you wish to delete this assignment: <strong>%s</strong>?',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_DUE_DATE_EMPTY','Due date is not set.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ASSIGNMENT_NOT_FOUND','Assignment not found.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ASSIGNMENT_DELETED','Assignment Deleted',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ASSIGNMENT_UPDATED','Assignment Updated',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','assignments','Assignments',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','add_assignment','Add Assignment',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','edit_assignment','Edit Assignment',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','delete_assignment','Delete Assignment',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','due_date','Due Date',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','accept_late_submissions','Accept Late Submissions',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','allow_re_submissions','Allow Re-Submissions',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','assign_to','Assign To',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','time','Time',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','always','Always',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','until','Until',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','all_students','Everyone',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','options','Options',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','specific_groups','Specific Groups',NOW(),'');
-    
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ADD_FEED', 'Are you sure you want to add this syndicated feed?', '2005-11-15 13:19:26', ''),
+('en', '_msgs', 'AT_CONFIRM_ADD_MODULE', 'Are you sure you want to install the module in <strong><code>%s</code></strong>?', '2005-08-17 12:59:04', ''),
+('en', '_msgs', 'AT_CONFIRM_ADD_TEST_QUESTIONS', 'Are you sure you want to <em>add</em> the following questions? \r\n<ul>%s</ul>', '2004-11-23 12:38:56', ''),
+('en', '_msgs', 'AT_CONFIRM_ALUMNI', 'Are you sure you want to mark the following users as course alumni: <ul> %s </ul>', '2004-11-23 12:17:53', 'enrollment_manager, make students into alumi'),
+('en', '_msgs', 'AT_CONFIRM_DELETE', 'Are you sure you want to delete this item?', '2006-10-03 14:12:34', 'generic delete confirmation msg'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_ASSIGNMENT', 'Are you sure you want to delete assignment <em>%s</em>?', '2006-05-23 13:10:30', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_CATEGORY', 'Are you sure you want to delete category  <strong>%s</strong>?', '2005-02-17 14:57:18', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_COURSE_1', 'Are you sure you want to <strong>Delete</strong> the course <strong><em>%s</em></strong>?', '2005-03-04 11:27:35', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_COURSE_2', 'Are you <strong>really really</strong> sure you want to <b>Delete</b> the course <strong><em>%s</em></strong>? Deleted courses can not be recovered.', '2005-03-04 11:31:35', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_FAQ_QUESTION', 'Are you sure you want to delete the question <strong>%s</strong>?', '2005-10-19 12:49:55', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_FAQ_TOPIC', 'Are you sure you want to delete the topic <strong>%s</strong> and its questions?', '2005-11-08 13:42:33', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_FEED', 'Are you sure you want to delete feed <strong>%s</strong>.?', '2005-12-07 09:36:25', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_FORUM', 'Are you sure you want to delete <strong>%s</strong> forum? All messages posted to this forum will be erased.', '2005-12-07 09:36:15', 'deleting a forum'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_GROUP', 'Are you sure you want to delete the group: <strong>%s</strong>?', '2005-02-21 12:07:05', 'deletep enrollment group'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_GROUP_TYPE', 'Are you sure you want to delete group type <em>%s</em> and all its groups?', '2006-03-23 11:27:52', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_LANG', 'Are you sure you want to delete the language ( <strong>%s </strong>)?', '2004-11-24 13:19:50', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_LINK', 'Are you sure you want to delete the link %s?', '2005-02-21 16:55:38', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_MSGS', 'Are you sure you want to delete the selected messages?', '2007-02-22 13:09:14', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_NEWS', 'Are you sure you want to delete %s?', '2004-11-24 13:37:55', 'news deletion in editor'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_POLL', 'Are you sure you want to delete this poll \'%s\'?  It cannot be recovered once deleted.', '2004-11-24 14:03:36', 'editor'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_TEST', 'Are you sure you want to delete the test/survey <strong><em>%s</em></strong> and any results? The questions, however, will not be deleted.', '2004-12-15 10:42:13', 'Deleting Test'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_TEST_CATEGORY', 'Are you sure you want to delete test category <strong>%s</strong>?', '2005-03-07 11:58:48', ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_THEME', 'Are you sure you want to delete the following theme: <b> % s </b>', '2004-11-23 09:30:03', 'confirm message for delete theme'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_TRACKING', 'Are you sure your want to delete the content usage data for this course?', '2005-08-11 10:08:50', 'reset tracking session'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_TRANSCRIPT', 'Are you sure you want to delete the transcript <strong>%s</strong>?', '2005-03-30 14:21:00', 'delete chat transcript'),
+('en', '_msgs', 'AT_CONFIRM_DELETE_USER', 'Are you sure you want to delete the following users? Selected instructors who own courses will not be deleted.<strong>%s</strong>', '2007-02-19 11:44:45', 'deleting user from admin'),
+('en', '_msgs', 'AT_CONFIRM_DIR_DELETE', 'Are you sure you want to delete the following folder(s) and all their contents? <ul><strong>%s</strong></ul>', '2004-12-15 09:59:39', 'filemanager'),
+('en', '_msgs', 'AT_CONFIRM_DIR_MOVE', 'Are you sure you want to move <strong>%1s</strong> to the folder <strong>%2s</strong>?', '2005-01-10 10:35:17', 'filemanager'),
+('en', '_msgs', 'AT_CONFIRM_EDIT_STATUS', 'Are you sure you want to change the following users\' status to  <strong>%s</strong>? Status of selected instructors who own courses will not be changed. %s', '2007-02-19 11:43:37', ''),
+('en', '_msgs', 'AT_CONFIRM_ENROLL_STUDENT', 'Are you sure you want to enroll the following users: <ul> %s </ul>', '2004-11-23 12:21:00', 'enrollment manager, enroll confirm'),
+('en', '_msgs', 'AT_CONFIRM_FILE_DELETE', 'Are you sure you want to delete the following file(s)? <ul>%s</ul>', '2006-07-05 11:44:15', 'filemanager'),
+('en', '_msgs', 'AT_CONFIRM_FILE_EXISTS', 'The file <strong>%s</strong> already exists. Do you want to overwrite the file?', '2005-03-09 16:26:11', 'filemanager'),
+('en', '_msgs', 'AT_CONFIRM_FILE_MOVE', 'Are you sure you want to move <strong>%1s</strong> to the folder <strong>%2s</strong>?', '2005-01-10 10:33:21', 'file_manager'),
+('en', '_msgs', 'AT_CONFIRM_GLOSSARY_REMAINS', 'Deleting a term will not remove the embedded glossary codes from your content.', '2005-02-24 10:34:33', 'content deletion'),
+('en', '_msgs', 'AT_CONFIRM_LIST_DELETE', 'Are you sure you want to delete <strong>%s</strong> Student ID from the master student list?', '2005-04-04 15:47:51', ''),
+('en', '_msgs', 'AT_CONFIRM_LOGIN_INSTRUCTOR', '<h3>%2$s</h3>\r\nYou will be logged in as the instructor for this course.  Are you sure you want to continue?', '2006-04-10 13:12:29', 'viewing courses from admin'),
+('en', '_msgs', 'AT_CONFIRM_NO_ANSWER', 'You are about to add a question with no correct choice. Continue?', '2004-12-06 14:35:10', 'adding a question without specifying answer'),
+('en', '_msgs', 'AT_CONFIRM_REMOVE_STUDENT', 'Are you sure you want to remove the following students: <ul> %s </ul>', '2004-11-23 12:21:12', 'removing a student'),
+('en', '_msgs', 'AT_CONFIRM_REMOVE_TEST_QUESTION', 'Are you sure you want to remove this question from this test? Removing the question will not delete it from the question database.', '2004-11-25 10:31:52', ''),
+('en', '_msgs', 'AT_CONFIRM_RESET_ADMIN_LOG', 'Are you sure you want to delete the Administrator Activity Log?', '2005-03-03 10:42:50', ''),
+('en', '_msgs', 'AT_CONFIRM_RESET_ERROR_LOG', 'Are you sure you want to delete all the error logs?', '2005-03-10 15:49:02', 'error log reset (delete logs folder0'),
+('en', '_msgs', 'AT_CONFIRM_RL_DELETE_READING', 'Are you sure you want to delete this reading: <strong>%s</strong>?', '2006-10-04 10:48:51', ''),
+('en', '_msgs', 'AT_CONFIRM_RL_DELETE_RESOURCE', 'Are you sure you want to delete this resource: <strong>%s</strong>?<br/>Note: Any readings that use this resource will also be deleted.', '2006-10-04 10:48:36', ''),
+('en', '_msgs', 'AT_CONFIRM_STUDENT_GROUP', 'Are you sure you want to add the following users to group \'%s\'? <ul> %s </ul>', '2005-06-02 12:07:05', ''),
+('en', '_msgs', 'AT_CONFIRM_STUDENT_REMOVE_GROUP', 'Are you sure you want to <strong>remove</strong> the following users from group \'%s\'? <ul> %s </ul>', '2005-06-02 12:06:56', 'Enrollment'),
+('en', '_msgs', 'AT_CONFIRM_SUB_CONTENT_DELETE', 'This content page has sub content. If you delete this page all its sub pages will be deleted as well.<br />', '2004-11-24 13:31:34', 'content deletion'),
+('en', '_msgs', 'AT_CONFIRM_UNENROLL', 'Are you sure you want to un-enroll from <strong>%s</strong>?', '2005-03-24 12:43:34', ''),
+('en', '_msgs', 'AT_CONFIRM_UNENROLL_PRIV', 'Are you sure you want to un-enroll the following users (the users will have their roles and privileges removed): <ul> %s </ul>', '2004-11-23 12:23:22', 'enrollment manager, unenrolling a TA'),
+('en', '_msgs', 'AT_CONFIRM_UNENROLL_STUDENT', 'Are you sure you want to un-enroll the following students: <ul> %s </ul>', '2004-11-23 12:21:36', 'enrollment manager, confirm unenroll'),
+('en', '_msgs', 'AT_ERROR_ACCESS_DENIED', 'You do not have permission to access this area.', '2005-06-15 15:13:59', 'error msg'),
+('en', '_msgs', 'AT_ERROR_ACCOUNT_DISABLED', 'That account has been disabled.', '2005-04-01 10:30:12', ''),
+('en', '_msgs', 'AT_ERROR_ADMIN_EDIT_OWN_ACCOUNT', 'To edit your own account use the <a href=\"admin/admins/my_edit.php\">My Account</a> page.', '2006-06-14 13:58:22', ''),
+('en', '_msgs', 'AT_ERROR_ALREADY_ENROLED', 'You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_ALREADY_OWNED', 'You own this course, and cannot enroll.', '2004-11-26 14:30:22', 'error msg'),
+('en', '_msgs', 'AT_ERROR_ASSIGNMENT_CUTOFF', 'The assignment cut-off date has past. Submissions are no longer accepted.', '2006-03-20 14:41:46', ''),
+('en', '_msgs', 'AT_ERROR_BACKUP_RESTORE', 'Restore failed - file is not a valid backup. Backups older than version 1.3 are not supported.', '2005-11-29 14:33:56', ''),
+('en', '_msgs', 'AT_ERROR_BACKUP_UNSUPPORTED_GREATER_VERSION', 'Backups created from versions of ATutor greater than this version are not supported.', '2005-05-11 15:56:50', ''),
+('en', '_msgs', 'AT_ERROR_BAD_DATE', 'That date is not valid.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_BAD_FILE_TYPE', 'Unsupported file type. Plain Text or HTML files only.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_BAD_FOLDER_NAME', 'The folder name contains illegal characters. You may choose from alphanumeric characters and underscores, dashes or periods.', '2005-01-10 13:13:55', 'filemanager, foilder with illegal chars'),
+('en', '_msgs', 'AT_ERROR_CACHE_DIR_BAD', 'Cache dir cannot be created. Cache disabled. See the configuration options to either disable or fix the problem.', '2003-05-27 13:10:53', 'global'),
+('en', '_msgs', 'AT_ERROR_CANNOT_CREATE_DIR', 'Cannot create content directory.', '2003-10-15 12:20:51', ''),
+('en', '_msgs', 'AT_ERROR_CANNOT_DELETE_OWN_ACCOUNT', 'You cannot delete your own account.', '2005-03-03 10:59:44', ''),
+('en', '_msgs', 'AT_ERROR_CANNOT_OPEN_DIR', 'Unable to open content directory. You may try to <a href=\"tools/filemanager/new.php\">create it now</a>.', '2007-10-12 11:30:32', 'error msg'),
+('en', '_msgs', 'AT_ERROR_CANNOT_OPEN_FILE', 'Cannot open the file: <b> %s </b>', '2004-10-18 14:38:00', 'Theme Manager'),
+('en', '_msgs', 'AT_ERROR_CANNOT_OVERWRITE_FILE', 'Cannot override file.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_CANNOT_READ_FILE', 'Cannot read from file: <b> %s </b>', '2004-11-19 13:00:03', 'admin/error_logging.php'),
+('en', '_msgs', 'AT_ERROR_CANNOT_RENAME', 'File or directory cannot be renamed. Either a file or directory with that name already exists, the original file or directory does not exist, or the file or directory name has not changed.', '2004-08-20 12:05:15', ''),
+('en', '_msgs', 'AT_ERROR_CANNOT_WRITE_FILE', 'Cannot write to file: <b> %s </b>', '2004-10-18 14:39:10', 'Theme Manager'),
+('en', '_msgs', 'AT_ERROR_CHAT_TRAN_REJECTED', 'Transcript filename rejected. Please ensure that it is  alphanumeric and contains no spaces.', '2003-06-02 13:47:39', 'achat'),
+('en', '_msgs', 'AT_ERROR_CHOICES_EMPTY', 'Enter at least two answer choices.', '2005-03-08 15:41:49', ''),
+('en', '_msgs', 'AT_ERROR_CONFIG_NOT_WRITEABLE', 'It is not possible to edit these settings because the configuration file is locked for security reasons. If you want to make changes, you need to unlock the config.inc.php file first by changing its permissions with the command <kbd>chmod a+rw config.inc.php</kbd>.', '2005-03-03 10:14:48', ''),
+('en', '_msgs', 'AT_ERROR_CONFIRM_BAD', 'Your email address and account could not be confirmed.', '2005-05-31 12:55:25', ''),
+('en', '_msgs', 'AT_ERROR_CONTACT_INFO_NOT_FOUND', 'Contact Support is not available, because an email address has not been specified.', '2005-03-17 11:33:38', ''),
+('en', '_msgs', 'AT_ERROR_COURSE_ENDED', 'This course ended on %s.', '2007-07-16 11:53:27', ''),
+('en', '_msgs', 'AT_ERROR_COURSE_NOT_RELEASED', 'This course can only be accessed on %s.', '2006-04-10 14:28:27', ''),
+('en', '_msgs', 'AT_ERROR_CREATE_MASTER_USED', 'The Student ID you have entered already belongs to another user. If you wish to over-write this association with the new account, use the over-write checkbox.', '2006-06-12 15:39:43', ''),
+('en', '_msgs', 'AT_ERROR_CREATE_NOPERM', 'You do not have permission to create courses.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_DB_NOT_UPDATED', 'Information could not be added to the database.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_DIR_NOT_DELETED', 'Cannot open directory to be deleted.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_DIR_NOT_EXIST', 'Directory <strong>%s</strong> does not exist. Please create it.', '2005-09-22 14:08:05', 'file manager'),
+('en', '_msgs', 'AT_ERROR_DIR_NOT_WRITEABLE', 'Directory <strong>%s</strong> is not writeable. On Unix issue the command <kbd>chmod a+rw</kbd> on the directory.', '2005-09-22 14:22:24', ''),
+('en', '_msgs', 'AT_ERROR_DIR_NO_PERMISSION', 'Cannot delete folder. You may not have premission, or it may not be empty.', '2003-05-22 12:20:14', 'error msg'),
+('en', '_msgs', 'AT_ERROR_DISABLE_CORE_MODULE', 'Core modules cannot be disabled.', '2005-08-25 14:00:13', ''),
+('en', '_msgs', 'AT_ERROR_DISABLE_MISSING_MODULE', 'You cannot disable a missing module. To continue managing this module you must first restore its directory.', '2005-10-05 16:22:01', ''),
+('en', '_msgs', 'AT_ERROR_DOB_INVALID', 'Date of birth has invalid format.', '2004-06-24 12:53:34', ''),
+('en', '_msgs', 'AT_ERROR_EMAIL_EXISTS', 'An account with that email address already exists.', '2005-03-01 11:36:57', 'error msg'),
+('en', '_msgs', 'AT_ERROR_EMAIL_INVALID', 'Email address was invalid.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_EMAIL_NOT_FOUND', 'No account found with that email address.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_EMPTY_FIELDS', 'The following required field(s) are empty:<br />\r\n%s.', '2006-10-05 15:51:52', ''),
+('en', '_msgs', 'AT_ERROR_END_DATE_INVALID', 'That end date is not valid.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_ENROLLMENT_NONE_FOUND', 'There is no one to export.', '2006-06-27 11:53:26', ''),
+('en', '_msgs', 'AT_ERROR_FEED_NO_CONTENT', 'The feed either cannot be found at that URL or is not valid.', '2005-11-23 10:59:56', ''),
+('en', '_msgs', 'AT_ERROR_FILE_EMPTY', 'You did not select a file to import or the file was empty.', '2004-12-09 14:44:43', 'enrollment manager'),
+('en', '_msgs', 'AT_ERROR_FILE_ILLEGAL', '%s files are not allowed.', '2003-05-22 11:52:08', 'error msg'),
+('en', '_msgs', 'AT_ERROR_FILE_MAX_SIZE', 'The file exceeded the maximum allowable size limit of %s.', '2004-05-06 13:18:19', ''),
+('en', '_msgs', 'AT_ERROR_FILE_NOT_DELETED', 'Error deleting file. Cannot delete file.', '2004-11-08 16:33:12', 'file manager'),
+('en', '_msgs', 'AT_ERROR_FILE_NOT_EXIST', 'The selected file does not exist.', '2005-01-07 09:51:45', 'filemanager, fiule to be edited does not exist'),
+('en', '_msgs', 'AT_ERROR_FILE_NOT_FOUND', 'File not found.', '2006-03-20 14:45:12', ''),
+('en', '_msgs', 'AT_ERROR_FILE_NOT_SAVED', 'The file cannot be saved.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_FILE_NOT_SELECTED', 'You did not select a file to upload.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_FILE_TOO_BIG', 'The file size exceeds the limit of <strong>%s </strong>. Contact your ATutor Administrator to have this limit increased.', '2005-01-15 18:49:53', 'error msg'),
+('en', '_msgs', 'AT_ERROR_FIRST_LAST_NAME_UNIQUE', 'First, second, and last names combination must be unique.', '2006-03-27 14:55:34', ''),
+('en', '_msgs', 'AT_ERROR_FOLDER_NOT_CREATED', 'The folder \" %s \" could not be created.', '2006-06-02 13:43:53', 'error msg'),
+('en', '_msgs', 'AT_ERROR_FOLDER_NOT_EXIST', 'Folder not found.', '2006-03-20 15:37:24', ''),
+('en', '_msgs', 'AT_ERROR_FORUM_DENIED', 'You do not  have permission to post in this forum.', '2005-08-10 13:48:14', ''),
+('en', '_msgs', 'AT_ERROR_FORUM_NOT_FOUND', 'Forum can not be found.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_FORUM_NO_DEL_SHARE', 'You do not have permission to delete a shared forum.', '2004-12-10 11:10:25', ''),
+('en', '_msgs', 'AT_ERROR_FORUM_NO_EDIT_SHARE', 'You do not have permission to edit a Shared forum.', '2004-12-10 11:15:41', ''),
+('en', '_msgs', 'AT_ERROR_FORUM_NO_SUBSCRIBE', 'Cannot subscribe to the requested thread. Only subscription to the top-level post is allowed.', '2004-12-10 13:44:57', 'forum/subscribe.php'),
+('en', '_msgs', 'AT_ERROR_GENERAL', 'This is a search and %s ATutor error.', '2003-05-22 11:52:28', 'error msg'),
+('en', '_msgs', 'AT_ERROR_GOOGLE_KEY_INVALID', 'Invalid key.', '2005-11-30 14:35:03', ''),
+('en', '_msgs', 'AT_ERROR_GOOGLE_KEY_MISSING', 'A Google Key must be entered in order for the enabled Web Search to be available in courses. Enter this key by going to Google Key under the Configuration tab.', '2005-11-30 14:40:38', ''),
+('en', '_msgs', 'AT_ERROR_GOOGLE_QUERY_FAILED', 'Query failed.', '2005-10-20 10:52:04', ''),
+('en', '_msgs', 'AT_ERROR_GROUP_NOT_FOUND', 'Group not found.', '2004-11-25 16:03:01', ''),
+('en', '_msgs', 'AT_ERROR_GROUP_NO_STUDENTS', 'There are no students to create groups for.', '2006-03-22 13:33:24', ''),
+('en', '_msgs', 'AT_ERROR_HAND_IN_FOLDER', 'Folders cannot be handed in.', '2006-03-20 15:43:06', ''),
+('en', '_msgs', 'AT_ERROR_ID_ZERO', 'Content ID was zero, or was missing.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_IMPORTDIR_FAILED', 'Unable to create import directory.', '2005-07-20 14:02:57', 'error msg'),
+('en', '_msgs', 'AT_ERROR_IMPORTDIR_IMS_NOTVALID', 'The file does not appear to be a valid ZIP file.', '2005-06-27 11:37:47', 'IMS file is not a ZIP file.'),
+('en', '_msgs', 'AT_ERROR_IMPORTFILE_EMPTY', 'The import file must not be empty.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_IMPORT_ERROR_IN_ZIP', 'Zip file could not be extracted because: <b> %s </b>', '2006-06-28 10:30:50', 'theme manager'),
+('en', '_msgs', 'AT_ERROR_IMPORT_FAILED', 'Import Failed', '2005-01-15 09:50:40', ''),
+('en', '_msgs', 'AT_ERROR_IMPORT_NOT_PROPER_FORMAT', 'The selected file does not appear to be a valid theme package.', '2004-12-09 11:34:27', 'admin/themes/import.php'),
+('en', '_msgs', 'AT_ERROR_INCOMPLETE', 'Please fill out the forms as directed below', '2004-10-18 11:14:50', 'enrollment Manager, incomplete info in create list'),
+('en', '_msgs', 'AT_ERROR_INCORRECT_FILE_FORMAT', 'File is in the incorrect format. Review line %s of your course list file and make sure it follows format guidelines.', '2006-06-28 10:43:48', ''),
+('en', '_msgs', 'AT_ERROR_INST_INFO_NOT_FOUND', 'Instructor information cannot be found.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_INVALID_LINK', 'The link is either invalid or expired.', '2006-05-10 09:08:50', ''),
+('en', '_msgs', 'AT_ERROR_INVALID_LOGIN', 'Invalid login/password combination.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_INVALID_URL', 'Localhost is not a valid URL', '2004-11-05 10:22:37', 'AChecker'),
+('en', '_msgs', 'AT_ERROR_ITEM_NOT_FOUND', 'Item not found.', '2006-10-04 10:52:48', 'generic something not found msg.'),
+('en', '_msgs', 'AT_ERROR_LANG_EXISTS', 'The language pack you are trying to import already exists. Language already exists. You can edit language properties by following the <em>translate</em> in the sub menu above.', '2007-02-06 15:44:17', ''),
+('en', '_msgs', 'AT_ERROR_LANG_IMPORT_FAILED', 'Language import failed.', '2003-06-06 11:23:51', 'admin language manager'),
+('en', '_msgs', 'AT_ERROR_LANG_NOT_COMPLETE', 'The language pack you are trying to import has not been marked as complete and published. To use incomplete language packs you must enable <em>translating</em> using the instructions at the bottom of this page.', '2005-11-30 14:49:00', ''),
+('en', '_msgs', 'AT_ERROR_LANG_WRONG_VERSION', 'The language pack you are trying to import is not compatible with this version of ATutor. If you still want to import this language pack you must enable <em>translating</em> following the instructions at the bottom of this page.', '2005-11-30 14:50:49', ''),
+('en', '_msgs', 'AT_ERROR_LAST_LANGUAGE', 'Cannot delete the last language. At least one language must be available.', '2006-06-29 16:50:59', ''),
+('en', '_msgs', 'AT_ERROR_LINK_CAT_EMPTY', 'Cannot add a link because there are no categories.', '2005-03-09 13:05:25', 'adding link but no cats'),
+('en', '_msgs', 'AT_ERROR_LINK_CAT_NOT_EMPTY', 'Link category cannot be deleted because it contains sub-categories and/or links.', '2005-02-22 15:22:44', 'error msg'),
+('en', '_msgs', 'AT_ERROR_LOGIN_CHARS', 'Your Login Name must only contain letters, numbers, periods, or underscores (_\'s).', '2006-07-11 10:40:57', 'error msg'),
+('en', '_msgs', 'AT_ERROR_LOGIN_ENROL', 'You must be logged in to enroll in a course.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_LOGIN_EXISTS', 'That login already exists, please choose another.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_LOGIN_TO_POST', 'You must be logged in to post.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_LOG_NOT_RESET', 'The error log could not be reset.', '2005-03-10 15:54:03', 'error logging'),
+('en', '_msgs', 'AT_ERROR_MAX_ATTEMPTS', 'The test cannot be taken.  It is not available at this time, or you have reached the maximum number of attempts for this test.', '2004-09-02 12:59:25', ''),
+('en', '_msgs', 'AT_ERROR_MAX_STORAGE_EXCEEDED', 'Adding this file exceeds the maximum course storage limit.', '2003-10-03 16:00:08', 'error msg'),
+('en', '_msgs', 'AT_ERROR_MISSING_THEMEXML', 'Cannot import. The import package is missing a vital component: themes.xml. Check that the theme package is for version 1.4.3 or above.', '2004-12-09 11:59:21', 'admin/themese/import.php'),
+('en', '_msgs', 'AT_ERROR_MODULE_INSTALL', 'The following error(s) were encountered when trying to install this module:\r\n<ul>%s</ul>', '2005-10-11 10:48:49', ''),
+('en', '_msgs', 'AT_ERROR_NEED_FILENAME', 'Filename was left empty. Need a filename to create new file.', '2004-11-09 16:19:24', 'file manager'),
+('en', '_msgs', 'AT_ERROR_NODELETE_USER', 'Cannot delete this user because they own courses. Delete the courses first.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_NOT_CONFIRMED', 'Your account\'s email address has not yet been confirmed.  Please check your email account for a confirmation message.  Please contact us if you do not receive it.', '2006-06-21 10:59:56', ''),
+('en', '_msgs', 'AT_ERROR_NOT_IN_ANY_GROUPS', 'You are not in any groups.', '2006-04-11 13:34:20', ''),
+('en', '_msgs', 'AT_ERROR_NOT_OWNER', 'You do not own this course or it does not exist.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_NOT_RELEASED', 'This content has not yet been released. %s', '2003-05-22 11:52:38', 'error msg'),
+('en', '_msgs', 'AT_ERROR_NO_ACTION_SELECTED', 'No action selected.', '2007-02-21 14:12:39', ''),
+('en', '_msgs', 'AT_ERROR_NO_ASSIGNMENTS_FOUND', 'No due assignments are due in this workspace. You might try another workspace.', '2006-06-29 14:47:15', ''),
+('en', '_msgs', 'AT_ERROR_NO_CONTENT_SPACE', 'Not enough space to import content directory. %s KB over the limit.', '2003-10-03 15:58:38', 'error msg'),
+('en', '_msgs', 'AT_ERROR_NO_COURSE_FLOAT', 'Invalid Maximum Course Float value.', '2005-06-20 10:44:45', 'Admin did not specify a float for course size.'),
+('en', '_msgs', 'AT_ERROR_NO_FAQ_TOPICS', 'You must first add a topic.', '2005-10-19 12:44:36', ''),
+('en', '_msgs', 'AT_ERROR_NO_IMSMANIFEST', 'IMS manifest file is missing. This does not appear to be a valid IMS content package.', '2003-10-27 11:43:08', ''),
+('en', '_msgs', 'AT_ERROR_NO_IMS_BACKUP', 'This file appears to be a <a href=\"tools/backup/\">course backup</a> rather than a content package.', '2003-11-03 12:14:37', ''),
+('en', '_msgs', 'AT_ERROR_NO_ITEM_SELECTED', 'You must select an item before using a button.', '2005-03-07 16:36:43', ''),
+('en', '_msgs', 'AT_ERROR_NO_LANGUAGE', 'Selected language is not supported.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_NO_LOGS_SELECTED', 'You must select at least one profile to create a bundle.', '2004-11-25 11:18:19', 'admin/error_logging_details.php'),
+('en', '_msgs', 'AT_ERROR_NO_LOG_SELECTED', 'You did not select a log file.', '2004-11-23 15:59:57', 'admin/error_logging_details.php'),
+('en', '_msgs', 'AT_ERROR_NO_MEMBERS', 'No users found.', '2005-05-18 12:43:40', ''),
+('en', '_msgs', 'AT_ERROR_NO_PROFILE_SELECTED', 'You did not select a profile.', '2004-11-23 16:01:27', 'admin/error_logging_details.php'),
+('en', '_msgs', 'AT_ERROR_NO_QUESTIONS', 'No questions were found for this test.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_NO_QUESTIONS_SELECTED', 'You did not select any questions to add to this test.', '2004-11-23 11:56:45', ''),
+('en', '_msgs', 'AT_ERROR_NO_SPACE_LEFT', 'There is no more space in this course to extract this archive.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_NO_STUDENT_SELECTED', 'You did not select any students.', '2006-06-27 12:18:13', 'enrollment manager, no students selected'),
+('en', '_msgs', 'AT_ERROR_NO_SUCH_USER', 'The user you selected does not exist.', '2005-03-17 15:34:30', 'veiwing profile but no such user'),
+('en', '_msgs', 'AT_ERROR_PACKAGE_DIR_FAILED', 'Problem with Package Directory.', '2005-05-17 12:02:28', ''),
+('en', '_msgs', 'AT_ERROR_PAGE_NOT_FOUND', 'Page cannot be found.', '2005-09-19 12:18:06', 'error msg'),
+('en', '_msgs', 'AT_ERROR_PASSWORD_CHARS', 'The password must contain letters, numbers, and symbols.', '2006-03-28 15:09:40', ''),
+('en', '_msgs', 'AT_ERROR_PASSWORD_LENGTH', 'Password must be at least 8 characters long.', '2006-04-10 11:43:46', ''),
+('en', '_msgs', 'AT_ERROR_PASSWORD_MISMATCH', 'Passwords did not match.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_POLL_QUESTION_MINIMUM', 'The poll must have at least two questions.', '2005-07-20 10:12:40', ''),
+('en', '_msgs', 'AT_ERROR_RAND_TEST_Q_WEIGHT', 'The non-required questions must all have the same weight.', '2007-07-09 15:03:55', ''),
+('en', '_msgs', 'AT_ERROR_REGISTER_MASTER_USED', 'The student ID and PIN combination you provided is either being used or is incorrect.', '2005-04-04 13:01:33', ''),
+('en', '_msgs', 'AT_ERROR_RESTORE_TOO_BIG', 'The course is too small to restore this backup into.', '2004-10-15 16:42:23', ''),
+('en', '_msgs', 'AT_ERROR_RESULTS_NOT_RELEASED', 'You are not permitted to view these test results at this time.', '2004-12-15 10:13:06', ''),
+('en', '_msgs', 'AT_ERROR_SCO_DIR_NOT_EXIST', 'The SCORM RTE directory does not exist. Please create a directory called <em>sco</em> in your installations top directory (example: <code>server.com/ATutor/sco</code>).', '2005-05-10 10:58:58', ''),
+('en', '_msgs', 'AT_ERROR_SCO_DIR_NOT_WRITEABLE', 'The SCORM RTE directory is not writeable. Please execute the command <code>chmod a+rwx sco</code> while in ATutor\'s top directory.', '2005-05-10 11:00:08', ''),
+('en', '_msgs', 'AT_ERROR_SCO_DISABLED', 'The SCORM 1.2 RTE has not been enabled by the Administrator.', '2005-05-10 11:06:09', ''),
+('en', '_msgs', 'AT_ERROR_SEARCH_TERM_REQUIRED', 'You must specify at least one search term.', '2003-08-22 12:03:29', 'search form'),
+('en', '_msgs', 'AT_ERROR_SELECT_ONE_ITEM', 'Only <em>one</em> item must be selected.', '2007-02-21 14:07:53', ''),
+('en', '_msgs', 'AT_ERROR_SENDING_ERROR', 'There was an error sending the email message.', '2005-01-18 13:34:23', 'mail failed to be sent'),
+('en', '_msgs', 'AT_ERROR_SEND_ENROL', 'You can only send a message to other members after you enroll in a course.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_SEND_MEMBERS', 'You can only send a message to others who are enrolled in the same courses as you. Your intended recipient may be viewing the course, but not enrolled.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_SESSION_COOKIES', 'Session cookies must be enabled in your browser to login.', '2005-07-22 13:04:11', ''),
+('en', '_msgs', 'AT_ERROR_START_DATE_INVALID', 'That start date is not valid.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_STUD_INFO_NOT_FOUND', 'Student information cannot be found.', '2003-05-16 13:42:17', 'error msg'),
+('en', '_msgs', 'AT_ERROR_TERM_EXISTS', 'The term <strong>%s</strong> already exists.', '2004-07-22 16:55:03', ''),
+('en', '_msgs', 'AT_ERROR_THEME_NOT_DELETED', 'The theme could not be deleted because it is either the current default theme or the original default theme.', '2005-05-10 09:27:02', 'theme manager deleting theme'),
+('en', '_msgs', 'AT_ERROR_THEME_NOT_DISABLED', 'Theme cannot be disabled because it is currently the default theme.', '2005-05-09 14:27:23', ''),
+('en', '_msgs', 'AT_ERROR_TILE_UNAVAILABLE', 'The TILE repository is unavailable.', '2005-02-21 14:40:03', ''),
+('en', '_msgs', 'AT_ERROR_TRANSCRIPT_ACTIVE', 'You may not delete an active transcript.', '2005-05-16 12:46:32', ''),
+('en', '_msgs', 'AT_ERROR_UNKNOWN', 'An undetermined error has occurred.', '2003-05-16 14:24:59', 'error msg'),
+('en', '_msgs', 'AT_ERROR_USER_NOT_FOUND', 'User not found.', '2005-03-09 15:56:27', ''),
+('en', '_msgs', 'AT_ERROR_WRONG_PASSWORD', 'Incorrect password.', '2006-05-11 11:34:11', ''),
+('en', '_msgs', 'AT_FEEDBACK_ACCOUNT_APPROVED', 'You have successfully upgraded to an instructor account.', '2004-11-05 10:25:41', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_ACCOUNT_CONFIRMED', 'Account has been confirmed.', '2005-03-30 11:56:59', ''),
+('en', '_msgs', 'AT_FEEDBACK_ACTION_COMPLETED_SUCCESSFULLY', 'Action completed successfully.', '2006-09-28 11:26:07', ''),
+('en', '_msgs', 'AT_FEEDBACK_ADMIN_CREATED', 'Administrator account created successfully.', '2005-03-03 16:12:49', ''),
+('en', '_msgs', 'AT_FEEDBACK_ADMIN_DELETED', 'Administrator account deleted successfully.', '2005-03-03 10:49:25', ''),
+('en', '_msgs', 'AT_FEEDBACK_ADMIN_LOG_RESET', 'Administrator Activity Log has been reset successfully.', '2005-03-03 10:43:36', ''),
+('en', '_msgs', 'AT_FEEDBACK_ALREADY_ENROLLED', 'The following students are already enrolled: <ul> %s </ul>', '2005-06-23 12:50:58', 'enrollment manager, students added were alread enrolled'),
+('en', '_msgs', 'AT_FEEDBACK_ALREADY_REQUESTED', 'You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.', '2005-03-17 12:55:24', 'private enroll, already requested approval once'),
+('en', '_msgs', 'AT_FEEDBACK_APPROVAL_PENDING', 'Your request has been made. You will be notifed when your request has been approved.', '2005-03-29 12:11:35', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_ARCHIVE_EXTRACTED', 'Archive has been extracted successfully.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_ASSIGNMENT_ADDED', 'Assignment was successfully added.', '2006-04-20 14:42:13', ''),
+('en', '_msgs', 'AT_FEEDBACK_ASSIGNMENT_HANDED_IN', 'Assignment files submitted successfully.', '2006-03-20 14:35:53', ''),
+('en', '_msgs', 'AT_FEEDBACK_ATUTOR_UPDATE_AVAILABLE', 'An updated version of ATutor is available! View the <a href=\"http://atutor.ca/atutor/change_log.php\">Change Log</a> for details.', '2005-11-21 12:36:30', ''),
+('en', '_msgs', 'AT_FEEDBACK_AUTO_DISABLED', 'Auto-Login has been disabled', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_AUTO_ENABLED', 'Auto-Login has been enabled. Next time you enter ATutor using this computer, you will bypass the login screen. ', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_CANCELLED', 'Successfully cancelled without any changes.', '2003-12-10 10:40:21', ''),
+('en', '_msgs', 'AT_FEEDBACK_CLOSED', 'Successfully closed', '2004-05-03 11:26:52', ''),
+('en', '_msgs', 'AT_FEEDBACK_CONFIG_SAVED', 'System preferences have been saved successfully. A backup of the old configuration file was created and saved as %s (it\'s in your content directory).', '2005-03-29 15:22:14', ''),
+('en', '_msgs', 'AT_FEEDBACK_CONFIRMATION_SENT', 'An email confirmation message has been sent.', '2005-03-22 12:07:10', ''),
+('en', '_msgs', 'AT_FEEDBACK_CONFIRM_EMAIL', 'An email message has been sent to the new email address you specified. You must follow the instructions in that email for the changes to take effect.', '2006-05-11 15:55:32', ''),
+('en', '_msgs', 'AT_FEEDBACK_CONFIRM_EMAIL2', 'An email with instructions on retrieving your password has been sent.', '2006-05-10 10:23:41', ''),
+('en', '_msgs', 'AT_FEEDBACK_CONFIRM_GOOD', 'Your email address has been confirmed successfully.', '2005-04-11 10:29:29', ''),
+('en', '_msgs', 'AT_FEEDBACK_CONTENT_DELETED', 'Content was successfully deleted', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_CONTENT_DIR_CREATED', 'Content directory created successfully.', '2003-10-15 12:20:11', ''),
+('en', '_msgs', 'AT_FEEDBACK_COURSE_DEFAULT_FSIZE', 'The \'Max File Size\' was set to \'Default\' as the entered file size was either empty or negative.', '2003-10-14 16:13:40', 'course properites: file size was set to default'),
+('en', '_msgs', 'AT_FEEDBACK_COURSE_PREFS_SAVED', 'Course preferences were saved', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_COURSE_PROPERTIES', 'Course properties were successfully updated.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_COURSE_REMOVED', 'Course was removed successfully.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_DIRS_MOVED', 'Directories successfully moved.', '2004-11-10 14:12:11', 'file manager'),
+('en', '_msgs', 'AT_FEEDBACK_DIR_DELETED', 'Folder was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_ENROLLED', 'The following unique accounts were successfully added to the course list: <ul> %s </ul>', '2005-06-23 12:51:35', 'enrollment manager, confirm enrollmnet'),
+('en', '_msgs', 'AT_FEEDBACK_ERROR_LOG_RESET', 'The error log was reset successfully.', '2005-03-10 15:53:27', 'error logging'),
+('en', '_msgs', 'AT_FEEDBACK_EXPORT_CANCELLED', 'Export cancelled successfully.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_FILES_MOVED', 'Files moved successfully.', '2006-03-20 16:10:58', ''),
+('en', '_msgs', 'AT_FEEDBACK_FILE_EDITED', 'File successfully edited.', '2006-08-29 11:07:02', ''),
+('en', '_msgs', 'AT_FEEDBACK_FILE_EDITED_SUCCESSFULLY', 'File edited successfully.', '2006-03-20 15:05:28', ''),
+('en', '_msgs', 'AT_FEEDBACK_FILE_EXISTS', 'The file <strong>%1$s</strong> already exists. The newly uploaded file was saved as <strong>%2$s</strong>. <a href=\"tools/filemanager/index.php?overwrite=%2$s%5$spathext=%3$s%5$spopup=%4$s\">Overwrite</a> the old existing file with the newer one.', '2005-01-06 14:38:40', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_FILE_OVERWRITE', 'File overwrite successful.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_FILE_PASTED', 'The file was successfully pasted into the textarea below. <strong><em>Save to apply changes</em></strong>, or Cancel to return to the previously saved content.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_FILE_SAVED', 'The file was successfully saved as <strong>%s</strong>', '2005-01-10 09:35:48', 'file manager'),
+('en', '_msgs', 'AT_FEEDBACK_FILE_UPLOADED', 'File was successfully uploaded.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_FILE_UPLOADED_ZIP', 'File was successfully uploaded. You may now <a href=\"tools/filemanager/zip.php?pathext=%1$s%4$sfile=%2$s%4$spopup=%3$s\">extract</a> the file.', '2005-01-06 15:26:58', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_FOLDER_EDITED_SUCCESSFULLY', 'Folder edited successfully.', '2006-03-20 15:42:30', ''),
+('en', '_msgs', 'AT_FEEDBACK_FORUM_POSTING', 'To post messages to the new forum, log into ATutor as regular users or instructor.', '2004-11-21 10:08:55', ''),
+('en', '_msgs', 'AT_FEEDBACK_FORUM_SUBSCRIBED', 'You have successfully subscribed to the <strong>%s</strong> forum. Messages posted to this forum will be delivered to your registered email address. View your profile to modify your email address.', '2004-12-02 15:04:51', ''),
+('en', '_msgs', 'AT_FEEDBACK_FORUM_UNSUBSCRIBED', 'You have successfully unsubscribed from the <strong>%s</strong> forum. Messages posted to this forum will no longer be delivered to your email address.', '2004-12-03 17:25:43', ''),
+('en', '_msgs', 'AT_FEEDBACK_GOOGLE_KEY_SAVED', 'Google key saved successfully.', '2005-10-20 11:07:29', ''),
+('en', '_msgs', 'AT_FEEDBACK_GROUP_DELETED', 'Group deleted.', '2004-11-25 15:48:40', ''),
+('en', '_msgs', 'AT_FEEDBACK_GROUP_EDITED_SUCCESSFULLY', 'Group edited successfully.', '2006-03-23 11:09:18', ''),
+('en', '_msgs', 'AT_FEEDBACK_GROUP_MEMBERS_SAVED', 'Group members saved successfully.', '2006-04-17 11:43:39', ''),
+('en', '_msgs', 'AT_FEEDBACK_GROUP_TYPE_DELETED', 'Group was successsfully deleted.', '2006-05-23 15:33:56', ''),
+('en', '_msgs', 'AT_FEEDBACK_GROUP_TYPE_EDITED_SUCCESSFULLY', 'Group type edited successfully.', '2006-03-23 11:18:02', ''),
+('en', '_msgs', 'AT_FEEDBACK_GROUP_UPDATED', 'Group updated successfully.', '2004-11-25 15:49:09', ''),
+('en', '_msgs', 'AT_FEEDBACK_IMPORT_CANCELLED', 'Import cancelled successfully.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_IMPORT_LANG_SUCCESS', 'New language was successfully imported. You may view and modify the new language by choosing it from the selection menu below.', '2003-06-05 19:38:41', 'admin language manager'),
+('en', '_msgs', 'AT_FEEDBACK_LANG_ADDED', 'New language was successfully created. Use the language selector to choose the new language, then beginning adding translated terms. Translation tools are enabled in include/vitals.inc.php', '2004-11-20 20:14:55', ''),
+('en', '_msgs', 'AT_FEEDBACK_LANG_DELETED', 'Language was successfully removed.', '2003-06-05 19:38:01', 'admin language manager'),
+('en', '_msgs', 'AT_FEEDBACK_LANG_UPDATED', 'Language successfully updated.', '2005-04-26 16:04:36', ''),
+('en', '_msgs', 'AT_FEEDBACK_LINK_ADDED', 'Link added successfully.  Link will become visible if approved.', '2005-02-23 12:07:59', ''),
+('en', '_msgs', 'AT_FEEDBACK_LOGIN_SUCCESS', 'You have logged in successfully. Welcome back!', '2005-02-15 17:07:45', ''),
+('en', '_msgs', 'AT_FEEDBACK_LOGOUT', 'You have successfully been logged out.', '2003-10-29 10:00:12', 'after logging out'),
+('en', '_msgs', 'AT_FEEDBACK_MASTER_LIST_NO_CHANGES', 'No changes were done to the Master Student List.', '2005-06-16 12:32:19', 'When action to master list yields no changes'),
+('en', '_msgs', 'AT_FEEDBACK_MASTER_LIST_UPLOADED', 'Master Student List has been updated successfully.', '2005-04-04 16:12:52', ''),
+('en', '_msgs', 'AT_FEEDBACK_MEMBERS_ALUMNI', 'Student has been assigned alumni status.', '2004-12-02 11:42:06', ''),
+('en', '_msgs', 'AT_FEEDBACK_MEMBERS_ENROLLED', 'The selected students were successfully enrolled in the course.', '2004-12-02 11:42:37', 'enrollment manager, confirm enrollment'),
+('en', '_msgs', 'AT_FEEDBACK_MEMBERS_REMOVED', 'The selected users were successfully removed from the course', '2004-10-18 10:58:17', 'enrollment manager, confirm removal'),
+('en', '_msgs', 'AT_FEEDBACK_MEMBERS_UNENROLLED', 'The selected users were successfully un-enrolled from the course', '2004-10-18 10:59:09', 'enrollemnt manager, confrm unenrollment'),
+('en', '_msgs', 'AT_FEEDBACK_MOD_INSTALLED', 'Module successfully installed.', '2005-08-16 16:15:49', ''),
+('en', '_msgs', 'AT_FEEDBACK_MOVED_FILES', 'Files successfully moved.', '2004-11-10 14:11:19', 'file manager'),
+('en', '_msgs', 'AT_FEEDBACK_NOT_ENROLLED', 'The following students were not enrolled: <ul> %s </ul>', '2005-06-23 12:50:31', 'When a student was not enrolled when imported/created.'),
+('en', '_msgs', 'AT_FEEDBACK_NOW_ENROLLED', 'You are now enrolled in the %s course. You may enter the course at any time. To un-enroll, select \"Un-Enroll\" next to the course listing in My Courses..', '2005-06-06 10:04:55', ''),
+('en', '_msgs', 'AT_FEEDBACK_PACKAGES_IMPORT_SUCCESS', 'The packages<ol> %s </ol>were imported successfully.', '2005-05-17 12:03:34', ''),
+('en', '_msgs', 'AT_FEEDBACK_PACKAGE_IMPORT_SUCCESS', 'The package &quot;%s&quot; was imported successfully.', '2005-05-17 12:03:10', ''),
+('en', '_msgs', 'AT_FEEDBACK_PASSWORD_CHANGED', 'Password changed successfully. You may now login using the new password.', '2006-05-09 14:22:35', ''),
+('en', '_msgs', 'AT_FEEDBACK_PASSWORD_SUCCESS', 'Your login and password have been successfully emailed.', '2005-01-18 14:29:55', ''),
+('en', '_msgs', 'AT_FEEDBACK_POST_ADDED_SUCCESSFULLY', 'Blog message was successfully posted.', '2006-05-22 12:35:15', ''),
+('en', '_msgs', 'AT_FEEDBACK_PREFS_LOGIN', 'You cannot save these preferences because you are not logged in.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_PRIVS_CHANGED', 'Privileges updated successfully.', '2005-08-24 11:21:49', ''),
+('en', '_msgs', 'AT_FEEDBACK_PROFILE_CREATED_ADMIN', 'User account created successfully.', '2005-03-29 15:19:07', 'admin create user'),
+('en', '_msgs', 'AT_FEEDBACK_PROFILE_UPDATED', 'Your Profile was successfully updated.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_PROFILE_UPDATED_ADMIN', 'The user profile was successfully updated', '2004-12-17 11:47:52', 'change user profile from admin area'),
+('en', '_msgs', 'AT_FEEDBACK_QUESTION_DELETED', 'Question was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_QUESTION_REMOVED', 'Question was successfully removed from test/survey.', '2004-11-24 10:03:12', ''),
+('en', '_msgs', 'AT_FEEDBACK_QUESTION_UPDATED', 'Question was successfully updated.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_REG_THANKS', 'Thank you for registering, please <a href=\"login.php\">login</a>.', '2003-09-25 14:39:50', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_REG_THANKS_CONFIRM', 'Thank-you for registering. Please follow the instructions in the email we sent you on how to confirm your account. You will need to confirm your account before you can login.', '2005-03-22 11:29:22', ''),
+('en', '_msgs', 'AT_FEEDBACK_RESULTS_UPDATED', 'Result was successfully updated.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_RESULT_DELETED', 'Result was successfully deleted.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_THEME_DEFAULT', 'The theme, <b>%s</b>, is now the default theme.', '2004-10-18 15:17:47', 'Theme Manager'),
+('en', '_msgs', 'AT_FEEDBACK_THEME_DISABLED', 'The theme, <b> %s</b>, has been disabled successfully <b>(users currently using the theme will still be able to use the theme until it is deleted)</b>', '2004-10-19 16:55:20', 'theme manager'),
+('en', '_msgs', 'AT_FEEDBACK_THREAD_LOCKED', 'Thread has been successfully <strong><em>locked</em></strong>.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_THREAD_SUBSCRIBED', 'You have successfully subscribed to the <strong>%s</strong> thread. Messages posted to this thread will be forwarded to your registered email address. View your profile to modify your email address.', '2004-12-02 16:21:03', 'forum threads'),
+('en', '_msgs', 'AT_FEEDBACK_THREAD_UNLOCKED', 'Thread has been successfully <strong><em>unlocked</em></strong>.', '2003-05-16 13:47:01', 'feedback msg'),
+('en', '_msgs', 'AT_FEEDBACK_THREAD_UNSUBSCRIBED', 'You have successfully unsubscribed from the <strong>%s</strong> thread. Messages will no longer be sent to your email address.', '2004-12-02 16:34:13', 'forum threads'),
+('en', '_msgs', 'AT_INFOS_404_BLURB', 'The page you are trying to access <i>%s</i> does not exist, or has been moved. Try using the <a href=\"sitemap.php\">SiteMap</a> to find it.', '2005-03-03 14:48:24', '/404.php'),
+('en', '_msgs', 'AT_INFOS_ACCESS_PUBLIC', 'This feature is only available for protected or private courses.', '2007-02-13 15:55:47', ''),
+('en', '_msgs', 'AT_INFOS_ACCOUNT_APPROVED', 'You have successfully upgraded to an instructor account.', '2004-02-12 12:52:57', ''),
+('en', '_msgs', 'AT_INFOS_ALREADY_ENROLLED', 'You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.', '2004-11-05 10:29:01', ''),
+('en', '_msgs', 'AT_INFOS_APPROVAL_PENDING', 'Your request has been made. You will be notifed when your request has been approved.<br /><br />Return to <a href=\"users/index.php\">My Courses</a>.', '2004-05-06 14:15:28', ''),
+('en', '_msgs', 'AT_INFOS_ASSIGNMENT_FS_SUBMISSIONS', 'Assignments are submitted using the group File Storage tool. Assign to all students, or create a group and enable File Storage for that group, to add an assignment drop-box.', '2006-06-29 14:50:22', ''),
+('en', '_msgs', 'AT_INFOS_COURSE_ENDED', 'This course has ended on %s.', '2007-07-16 11:56:16', ''),
+('en', '_msgs', 'AT_INFOS_COURSE_RELEASE', 'This course has not yet been released. It is scheduled to be released on %s.', '2006-04-11 12:36:49', ''),
+('en', '_msgs', 'AT_INFOS_DECISION_NOT_REVERSED', 'Decisions could not be reversed.', '2004-08-18 12:08:25', 'AChecker - can\'t reverse decision'),
+('en', '_msgs', 'AT_INFOS_DECISION_NOT_SAVED', 'Decisions could not be saved.', '2004-08-18 12:09:38', 'AChecker - can\'t save decision'),
+('en', '_msgs', 'AT_INFOS_DECISION_REVERSED', 'Decision reversed successfully.', '2004-08-18 12:07:27', 'AChecker - reverse decision'),
+('en', '_msgs', 'AT_INFOS_FEATURE_NOT_AVAILABLE', 'This feature is not available.', '2007-02-26 11:12:45', ''),
+('en', '_msgs', 'AT_INFOS_GLOSSARY_REMAINS', 'Note that removing a linked glossary term from your content will <strong>not</strong> delete the term from the glossary.', '2003-05-16 13:45:50', 'info msg'),
+('en', '_msgs', 'AT_INFOS_INBOX_SENT_MSGS_TTL', 'Sent messages are automatically deleted every %s days.', '2007-02-20 14:19:34', ''),
+('en', '_msgs', 'AT_INFOS_INVALID_URL', 'Localhost is not a valid URL', '2004-08-18 12:03:14', 'Used when AChecker reading URL'),
+('en', '_msgs', 'AT_INFOS_INVALID_USER', 'You must <a href=\"login.php?course=%s\">login</a> to use this section.', '2004-04-15 13:52:32', ''),
+('en', '_msgs', 'AT_INFOS_LOGIN_TO_POST', 'You must be logged in to post.', '2004-11-05 10:29:51', 'info msg'),
+('en', '_msgs', 'AT_INFOS_MASTER_LIST_DISABLED', 'The master list has been disabled.  To enable this functionality go to <a href=\"admin/config_edit.php\">System Preferences</a>.', '2005-05-10 15:16:13', ''),
+('en', '_msgs', 'AT_INFOS_MSG_SEND_LOGIN', 'You must be logged in to send messages.', '2003-05-16 13:42:17', 'info msg'),
+('en', '_msgs', 'AT_INFOS_NOT_ENROLLED', 'You need to be enrolled in this course to access this area.', '2004-05-12 11:35:43', ''),
+('en', '_msgs', 'AT_INFOS_NOT_RELEASED', 'This content has not yet been released. It is scheduled to be released on %s.', '2005-11-22 15:21:27', 'info msg'),
+('en', '_msgs', 'AT_INFOS_NO_CONTENT', 'This course has no content yet.', '2003-05-16 13:45:50', 'info msg'),
+('en', '_msgs', 'AT_INFOS_NO_COURSES', 'No courses found. <a href=\"./users/browse.php\">Browse</a> existing courses.', '2006-11-24 15:24:59', ''),
+('en', '_msgs', 'AT_INFOS_NO_COURSES_INST', 'No courses found. <a href=\"./users/browse.php\">Browse</a> existing courses or <a href=\"./users/create_course.php\">create</a> a new one.', '2006-11-24 15:26:19', ''),
+('en', '_msgs', 'AT_INFOS_NO_LINK_CATEGORIES', 'There are currently no link categories.  A link may not be suggested until link categories have been created.', '2005-03-16 16:47:22', ''),
+('en', '_msgs', 'AT_INFOS_NO_PACKAGES', 'No packages found.', '2005-05-17 12:03:52', ''),
+('en', '_msgs', 'AT_INFOS_NO_PAGE_CONTENT', 'There is no content on this page.', '2003-05-16 13:45:50', 'info msg'),
+('en', '_msgs', 'AT_INFOS_NO_PERMISSION', 'You do not have permission to access this page.', '2003-05-16 13:45:50', 'info msg'),
+('en', '_msgs', 'AT_INFOS_NO_POLLS', 'No polls are available right now.', '2005-03-22 10:52:43', 'no active polls'),
+('en', '_msgs', 'AT_INFOS_NO_POSTS_FOUND', 'There are no posts in this forum.', '2003-05-16 13:45:50', 'info msg'),
+('en', '_msgs', 'AT_INFOS_NO_SEARCH_RESULTS', 'No search results.', '2003-08-22 11:31:53', 'search page'),
+('en', '_msgs', 'AT_INFOS_NO_STUDENTS', 'There are no students enrolled in this course.', '2005-03-22 11:09:35', ''),
+('en', '_msgs', 'AT_INFOS_OVER_QUOTA', 'You have reached or passed your maximum quota for this course. You will have to delete some files before you will be able to upload again.', '2003-10-07 15:06:28', ''),
+('en', '_msgs', 'AT_INFOS_PRIVATE_ENROL', 'The course you are trying to access is <strong>private</strong>. Enrollment in this course requires instructor approval.<br />', '2003-10-24 15:31:11', 'info msg'),
+('en', '_msgs', 'AT_INFOS_SAVE_CONTENT', 'Content must be saved before it can be evaluated.', '2004-08-18 12:06:23', 'AChecker requirement in ATutor content'),
+('en', '_msgs', 'AT_INFOS_SERVICE_UNAVAILABLE', 'Service currently unavailable.', '2004-08-18 12:00:53', 'Used for AChecker'),
+('en', '_msgs', 'AT_INFOS_TRACKING_NO_INST', 'You have chosen your own ID number. Tracking information is not recorded for course instructors. Choose another user.', '2003-10-24 15:31:44', 'info msg'),
+('en', '_msgs', 'AT_INFOS_TRACKING_NO_INST1', 'Tracking information is not recorded for course instructors. See the <a href=\"tools/course_tracker.php\">Course Tracker</a> for a record of course activity.', '2003-10-24 15:31:52', 'info msg'),
+('en', '_msgs', 'AT_INFOS_TRACKING_OFFIN', 'Tracking is not enabled for this course. Contact your system administrator to have it turned on.', '2003-05-16 13:45:50', 'info msg'),
+('en', '_msgs', 'AT_INFOS_TRACKING_OFFST', 'Tracking is not enabled for this course.', '2003-05-16 13:45:50', 'info msg'),
+('en', '_msgs', 'AT_WARNING_CHAT_TRAN_EXISTS', 'A transcript with the name %s already exits. Either delete the original transcript, then resubmit, or rename your new transcript.', '2003-06-02 14:05:26', 'achat instructor transcript tool'),
+('en', '_msgs', 'AT_WARNING_DELETE_CATEGORY', 'Are you sure you want to delete this category with all its links?', '2003-05-16 13:46:16', 'warning msg'),
+('en', '_msgs', 'AT_WARNING_LANG_EXISTS', 'The language you are uploading is already installed on this system. Delete the existing language first by selecting the \"<strong>Remove</strong>\" link next to its listing below.', '2003-06-06 09:40:14', 'admin language manager'),
+('en', '_msgs', 'AT_WARNING_QUESTION_WEIGHT', 'One or more of the questions on this test do not have points associated with them.  Ensure that this is correct, or enter values for questions that do not have points.', '2007-03-05 15:52:54', ''),
+('en', '_msgs', 'AT_WARNING_SAVE_YOUR_WORK', 'Save your work before opening or closing the File Manager.', '2003-05-16 13:46:16', 'warning msg'),
+('en', '_msgs', 'AT_WARNING_THEME_VERSION_DIFF', 'The theme, <b>%s</b>, may not be compatible with this version of Atutor.', '2004-10-19 14:34:35', 'Theme Manager'),
+('en', '_msgs', 'AT_WARNING_TRANSLATE_ON', 'You are currently in Translation Mode. Any user can access the translation page at this time. To turn off the Translate mode please set AT_DEVEL_TRANSLATE in /include/vitals.inc.php to zero.', '2004-12-09 10:53:02', 'admin index and admin language manager'),
+('en', '_template', '15_max_chars', '8 characters minimum, 15 characters maximum', '2006-07-17 12:03:40', ''),
+('en', '_template', '20_max_chars', '20 character maximum', '2003-06-04 14:52:27', 'login name registration screen'),
+('en', '_template', '404', 'Error: Missing Page', '2004-03-10 11:24:10', ''),
+('en', '_template', 'a', 'A', '2007-01-10 13:47:54', ''),
+('en', '_template', 'about_atutor', 'About ATutor', '2004-01-14 10:25:40', ''),
+('en', '_template', 'about_atutor_help_text', 'Learn about various sources of ATutor help, and the help display options available.', '2004-05-19 10:40:00', ''),
+('en', '_template', 'about_private', 'Available only to users with an ATutor System Account, and Instructor approved enrollment. Login required. Enrollment is required.', '2004-01-22 14:54:29', ''),
+('en', '_template', 'about_protected', 'Available only to users with an ATutor System Account. Login required. Enrollment is optional.', '2004-02-05 09:43:13', ''),
+('en', '_template', 'about_public', 'Available to all users with or without an ATutor System Account. Login not required. Enrollment is optional.', '2004-02-05 09:42:59', ''),
+('en', '_template', 'accept_late_submissions', 'Accept Late Submissions', '2006-03-23 11:38:02', ''),
+('en', '_template', 'access', 'Access', '2007-01-27 13:45:44', 'create a new course'),
+('en', '_template', 'accessibility', 'Accessibility', '2003-05-21 13:56:28', 'help page'),
+('en', '_template', 'accessibility_features', 'Accessibility Features', '2003-05-21 14:28:03', 'help'),
+('en', '_template', 'accessibility_features_text', 'Using ATutor with assistive technology and other accessibility features.', '2003-05-21 14:00:59', 'help'),
+('en', '_template', 'access_credit', 'Accessibility report provided by <a title=\"ATRC Web Accessibility Checker (link opens in a new window)\" target=\"_new\" href=\"http://checker.atrc.utoronto.ca?lang=eng\">ATRC Web Accessibility Checker</a>.', '2004-08-18 11:28:42', 'include/html/editor_tabs/accessibility.inc.php'),
+('en', '_template', 'access_method', 'Access Method', '2003-05-18 09:07:28', 'tracker'),
+('en', '_template', 'access_stats', 'Access Method Statistics for', '2005-02-07 16:22:32', 'context (?)'),
+('en', '_template', 'account_authorization', 'Account Creation Authorization', '2005-05-27 13:33:38', 'registration page'),
+('en', '_template', 'account_information', 'Account Information', '2003-05-18 09:14:11', 'control centre/registration'),
+('en', '_template', 'account_status', 'Account Status', '2005-04-14 11:09:36', ''),
+('en', '_template', 'action', 'Action', '2004-10-14 14:10:28', ''),
+('en', '_template', 'active_admin', 'Active Administrator', '2005-03-03 11:00:47', ''),
+('en', '_template', 'ac_access_groups', 'Access Groups', '2004-03-09 14:22:58', ''),
+('en', '_template', 'add', 'Add', '2004-11-24 14:28:53', ''),
+('en', '_template', 'add_announcement', 'Add Announcement', '2003-05-18 09:17:38', 'course announcments/home page'),
+('en', '_template', 'add_assignment', 'Add Assignment', '2006-03-23 11:36:30', ''),
+('en', '_template', 'add_a_new_language', 'Add a new language.', '2004-10-28 13:05:59', ''),
+('en', '_template', 'add_code', 'Add Code', '2004-05-06 12:22:57', 'Title for code tags in code picker'),
+('en', '_template', 'add_content', 'Create Content', '2005-04-18 11:40:53', 'heading/submit button on Add Content screen'),
+('en', '_template', 'add_glossary', 'Add Glossary Term', '2005-03-07 11:42:42', 'glossary screen'),
+('en', '_template', 'add_language', 'Add Language', '2004-09-01 15:42:32', ''),
+('en', '_template', 'add_link', 'Add Link', '2005-02-22 10:13:06', ''),
+('en', '_template', 'add_more', 'Add More Students', '2004-10-15 14:10:59', 'create student list manually in enrollment manager'),
+('en', '_template', 'add_poll', 'Add Poll', '2004-06-14 14:41:26', ''),
+('en', '_template', 'add_question', 'Add Question', '2005-10-19 12:44:11', ''),
+('en', '_template', 'add_questions', 'Add Questions', '2003-05-18 10:27:45', 'test manager add questions screen'),
+('en', '_template', 'add_sibling_page', 'Add Sibling Page', '2005-07-21 10:18:21', ''),
+('en', '_template', 'add_sub_page', 'Add Sub Page', '2005-03-31 14:17:33', 'content page shortcuts'),
+('en', '_template', 'add_term', 'Add Term', '2003-05-18 10:28:38', 'glossary'),
+('en', '_template', 'add_topic', 'Add Topic', '2005-10-19 12:43:01', ''),
+('en', '_template', 'add_top_page', 'Add Top Page', '2005-07-21 10:18:06', ''),
+('en', '_template', 'add_to_test_survey', 'Add to Test/Survey', '2004-11-22 16:38:53', ''),
+('en', '_template', 'administration', 'Administration', '2003-06-04 10:51:48', 'admin home page'),
+('en', '_template', 'administrators', 'Administrators', '2005-03-03 10:40:40', ''),
+('en', '_template', 'admin_bundle_instructions', 'Please select the profile(s) you wish to bundle and send via e-mail. All error logs coupled with these profiles will also be included.', '2005-03-10 15:29:13', 'admin error reporting'),
+('en', '_template', 'admin_email', 'Email Users', '2005-01-06 14:57:16', ''),
+('en', '_template', 'admin_log', 'Administrator Activity Log', '2005-03-03 10:40:27', ''),
+('en', '_template', 'admin_new_account', 'A user account has been created for you at %1s. To access this account, please log into the site. It is strongly suggested you change your password upon logging in.', '2005-06-21 16:38:21', 'Admin creates a new user account.'),
+('en', '_template', 'admin_new_account_confirm', 'An account has been created for you at %1s. To access your account, you must first confirm your email by using the following link: %2s. It is strongly suggested you change your password upon logging in.', '2005-06-21 16:37:44', 'Admin creates a new user and confirm is ON'),
+('en', '_template', 'affected_entries', 'Affected Entries', '2005-03-03 12:14:33', ''),
+('en', '_template', 'after_topic', 'After: %s', '2004-01-16 13:19:46', 'content editor'),
+('en', '_template', 'age', 'Age', '2003-05-18 10:38:32', 'registration, profile'),
+('en', '_template', 'all', 'All', '2003-05-18 11:35:37', 'glossary'),
+('en', '_template', 'allow_editing', 'Allow Editing', '2007-02-20 10:30:01', ''),
+('en', '_template', 'allow_guests', 'Allow Guests', '2007-03-06 14:44:45', ''),
+('en', '_template', 'allow_instructor_requests', 'Allow Instructor Requests', '2005-03-03 10:51:13', ''),
+('en', '_template', 'all_available_courses', 'All available courses', '2004-08-18 12:03:26', ''),
+('en', '_template', 'all_courses', 'All Courses', '2005-04-01 14:08:29', 'forums'),
+('en', '_template', 'all_forums', 'Share with all courses, or', '2006-06-01 14:31:37', 'admin create shared forum'),
+('en', '_template', 'all_label', 'All (%s)', '2005-05-12 10:26:10', ''),
+('en', '_template', 'all_questions_on_page', 'All questions on one page', '2007-08-20 15:46:22', 'create/edit test'),
+('en', '_template', 'all_students', 'All Students', '2006-03-23 13:39:11', ''),
+('en', '_template', 'all_users', 'All Users', '2005-03-10 15:24:33', ''),
+('en', '_template', 'alternate_text', 'Alternate Text', '2004-12-08 12:39:27', 'filemanager, image inset alt field'),
+('en', '_template', 'alumni', 'Alumni', '2004-10-22 15:56:39', ''),
+('en', '_template', 'always', 'Always', '2006-03-23 11:38:33', ''),
+('en', '_template', 'announcements', 'Announcements', '2003-05-18 11:36:24', 'course home page'),
+('en', '_template', 'announcement_date_format', '%%l %%F %%j, %%Y - %%H:%%i', '2006-04-11 14:10:57', 'course home page'),
+('en', '_template', 'anonymous', 'Anonymous', '2004-08-26 13:24:12', ''),
+('en', '_template', 'anonymous_test', 'Anonymous', '2004-08-26 12:31:05', ''),
+('en', '_template', 'answer', 'Answer', '2003-05-18 11:38:10', 'test question add/edit screens'),
+('en', '_template', 'answers', 'Answers', '2007-01-10 13:47:41', ''),
+('en', '_template', 'answer_size', 'Answer Size', '2003-05-18 11:38:55', 'add/edit open ended question'),
+('en', '_template', 'append_content', 'Append selected material', '2004-10-15 14:18:20', ''),
+('en', '_template', 'applies_to_all_sub_pages', 'Applies to all sub pages.', '2007-03-01 10:23:22', 'edit/create content page. release date.'),
+('en', '_template', 'apply', 'Apply', '2005-02-10 11:25:17', ''),
+('en', '_template', 'apply_theme_subcategories', 'Apply theme to subcategories.', '2004-08-04 11:35:11', ''),
+('en', '_template', 'apply_to_all_results', 'Apply to all results', '2007-02-21 11:49:40', ''),
+('en', '_template', 'approve', 'Approve', '2003-05-18 11:41:29', 'enrol administration'),
+('en', '_template', 'approved', 'Approved', '2005-02-23 12:17:50', ''),
+('en', '_template', 'archive_total', 'Archive Total', '2003-05-18 11:42:55', 'file manager zip tool'),
+('en', '_template', 'assigned_to', 'Assigned To', '2005-06-02 12:18:18', ''),
+('en', '_template', 'assignment', 'Assignment', '2006-03-20 14:38:37', ''),
+('en', '_template', 'assignments', 'Assignments', '2006-03-20 14:40:50', ''),
+('en', '_template', 'assign_to', 'Assign To', '2006-03-23 11:37:44', ''),
+('en', '_template', 'assign_unassigned', 'Assign Unassigned', '2006-03-23 11:07:42', ''),
+('en', '_template', 'assistant', 'Assistant', '2006-05-23 15:24:15', ''),
+('en', '_template', 'assistants', 'Assistants', '2004-10-15 11:45:31', 'Assistants tab in enrollment manager'),
+('en', '_template', 'as_individual_content', 'As individual content pages', '2004-08-18 12:04:21', ''),
+('en', '_template', 'at', 'at', '2003-05-18 11:44:08', 'release date tool/links database'),
+('en', '_template', 'attempts', 'Attempts', '2004-08-30 11:31:40', ''),
+('en', '_template', 'atutor_accessibility_text', '<p>ATutor includes a variety of features designed to ensure that content is accessible to all potential users, including those with slow Internet connections, older Web browsers, and people with disabilities using assistive technologies to access the Web. These features are described in detail below. Depending on the theme being used, ATutor may include all or some of the features listed here. The default theme includes them all.</p>\r\n\r\n<ol>\r\n<li><strong>ByPass Links:</strong> In the top left corner of ATutor is a  hidden bypass link that allows assistive technology users to skip over the navigation elements and jump directly to an anchor at the top of the content being displayed. Press the Tab key once after a page has finished loading to advance to the first bypass link then press Enter to reposition the content to the top of your screen. The content anchor can also be accessed with an accesskey [Alt-c], so it is possible to jump to the top of the content area no matter where the cursor might be located on the screen.<br /><br />\r\n\r\nOther bypass links include: \"jump past table\" so users can skip over various data table to quickly access content that may appear after the table; \"jump past codes\", so users can skip over the emoticon codes near the bottom of message posting form in the Forums.<br /><br /></li>\r\n\r\n<li><strong>Accesskeys:</strong> Keyboard accessibility has been added to many ATutor features. To activate accesskeys, press Alt plus the assigned number, letter, or character. Accesskeys are assigned dynamically to the tabs in the Main Navigation. The first tab will be assigned [Alt-1], the second tab will be assigned [Alt-2], and so on.  Note that not all browsers support accesskeys.<br /><br />\r\n\r\nGeneral AccessKeys\r\n<ul>\r\n<li>[Alt-1 to Alt-0] Main Navigation Tabs</li>\r\n<li>[Alt-,] Previous topic (i.e. Left angle bracket <)</li>\r\n<li>[Alt-.] Next topic (i.e. Right angle bracket > )</li>\r\n<li>[Alt-.] Resume (i.e. Right angle bracket > while outside the course content)</li>\r\n<li>[Alt-j] Jump Menu</li>\r\n<li>[Alt-s] Submit (active on many form pages)</li>\r\n<li>[Alt-c] Jump to content top (top and navigation bypass link)</li>\r\n</ul>\r\n\r\nContent Editor AccessKeys\r\n<ul>\r\n<li>[Alt-n] Content Tab</li>\r\n<li>[Alt-p] Properties Tab</li>\r\n<li>[Alt-g] Glossary Tab</li>\r\n<li>[Alt-r] Preview Tab</li>\r\n<li>[Alt-a] Accessibility Tab</li>\r\n<li>[Alt-s] Save</li>\r\n</ul>\r\n\r\nChat AccessKeys\r\n<ul>\r\n<li>[Alt-c] Jump to Compose Message field</li>\r\n<li>[Alt-r] Refresh Messages</li>\r\n<li>[Alt-m] Jump to Message List</li>\r\n<li>[Alt-q] Quit Chat</li>\r\n</ul>\r\n\r\nInbox AccessKeys\r\n<ul>\r\n<li>[Alt-r] Reply to Messages</li>\r\n</ul>\r\n<br />\r\n\r\nVisual Editor AccessKeys\r\n<ul>\r\n<li>[Alt-q] jump to button bar</li>\r\n<li>[Alt-z] jump to content area of editor</li>\r\n<li>[Alt-x] jump to element path (bottm)</li>\r\n</ul>\r\n</li>\r\n\r\n<li><strong>Accessibility Verifier: </strong>While using the ATutor Content Editor, instructors can check the accessibility of their content to be sure it can accessed by all students, including those using assistive technologies, or older technologies. While using the Content Editor, select [Alt-a] to open the accessibility verifier.</li>\r\n\r\n<li><strong>Alternative Text: </strong>All meaningful images in ATutor include a text alternative that describes the image or its function. Where images are not meaningful the Alt attribute is left empty so assistive technologies  will ignore the image.</li>\r\n\r\n<li><strong>Alternative Navigation: </strong>Global, hierarchical, and sequential navigation tools are available so users can view or structure content in a manner that suits their style of learning.  The ATutor SiteMap provides a full list of all content and tools available, so all features in a course can be accessed from a single location.</li>\r\n\r\n<li><strong>Resume/Continue: </strong>ATutor remembers the last page accessed when users leave the course content, to go to the Forums for instance, so they can quickly find their way back to where they left off. The content location is also remembered between sessions, so when returning to ATutor, users can simply choose the Resume link in the course listing on My Courses, or select the the resume link in the breadcrumbs at the top of the screen once in a course. Using the [Alt-.] accesskey will also return a user to the last content page they were viewing after they have entered into a course.</li>\r\n\r\n<li><strong>Hide Menus:</strong> For users of older assistive technologies that do not support columnar text laid out in tables, it is possible to hide ATutor\'s content navigation menu so that content will be displayed in a linear presentation. Hiding the content menu also conserves space for users viewing ATutor on smaller screens.</li>\r\n\r\n<li><strong>Search and Sort:</strong> Most data tables are accompanied by a search tool, or filter, so specific records can be displayed in the table, reducing the amount of data displayed at any given time. Most data tables can also be sorted by selecting the column header label, again allowing users to narrow down the data display.</li>\r\n\r\n<li><strong>Table  Header Associations: </strong>All data tables are marked up with the TH element and the scope attribute to ensure that screen reader users are able to navigate through data displays and understand what each data cell represents.</li>\r\n\r\n<li><strong>Form Labels: </strong>All form fields throughout ATutor are marked up using the LABEL element to ensure that they are properly described for assistive technology users. Explicit labeling in this manner also makes it possible to click on a form field\'s label to activate the field. This provides a larger target area for those people who have difficulty positioning a mouse pointer on a small form field such as a radio button or a checkbox.</li>\r\n\r\n<li><strong>Style Sheets: </strong>Wherever possible, the presentation of content in ATutor is controlled by style sheet elements. This allows users to override ATutor\'s default appearance and apply their own preferred presentation styles (i.e. increased font sizes, different font styles, colours, etc.)</li>\r\n\r\n<li><strong>Form Field Focus: </strong>For pages where the primary content is a form, the cursor will automatically be placed in the first field so that after a form page loads, users can begin typing into the form.  Users may choose to disable form focus in their preference settings if it interferes with their use of form screens.</li>\r\n\r\n<li><strong>Relative Sizing of Images: </strong>With browsers that support resizing of images, ATutor icons can be magnified for users with low vision, making them more easily visible. (e.g. Netscape 7 press Alt +) . Wherever possible relative measures have also been used for other feature within ATutor so when the interface is magnified or reduced, all features resize relative to each other, maintaining the screen\'s symmetry.</li>\r\n\r\n</ol>', '2005-12-06 14:38:20', ''),
+('en', '_template', 'atutor_handbook', 'Official ATutor Handbook', '2005-07-12 10:42:58', ''),
+('en', '_template', 'atutor_home', 'ATutor home', '2003-05-18 11:49:37', 'mail response link text'),
+('en', '_template', 'atutor_is', '<strong><em>ATutor</em></strong> is an Open Source Web-based <strong>Learning Content Management System (LCMS)</strong> designed with accessibility and adaptability in mind. Administrators can install or update ATutor in minutes. Educators can quickly assemble, package, and redistribute instructional content, and conduct their courses online. Students learn in an adaptive learning environment.', '2004-02-13 14:33:27', ''),
+('en', '_template', 'atutor_links', '<p>Learn more about <a href=\"http://atutor.ca/index.php\">ATutor</a> by browsing the following links:</p>\r\n\r\n<ul>\r\n<li><a href=\"http://atutor.ca/atutor/docs/index.php\">FAQs</a> - Frequently asked questions with answers</li>\r\n<li><a href=\"http://atutor.ca/forums/index.php\">Support Forums</a> - Post to the user forums</li>\r\n<li><a href=\"http://atutor.ca/services/index.php\">Support Services</a> - If you need our help, support is available</li>		\r\n<li><a href=\"http://atutor.ca/atutor/translate/index.php\">Translation</a> - Download language packs, become a translator</li>\r\n<li><a href=\"http://atutor.ca/services/licensing.php\">Licensing</a> - ATutor software is available for free under certain terms</li>\r\n<li><a href=\"http://atutor.ca/atutor/download.php\">Download ATutor</a> - All of the system software required to run ATutor can be downloaded here</li>\r\n</ul>', '2005-11-22 14:17:17', ''),
+('en', '_template', 'atutor_version', 'ATutor Version', '2005-03-10 11:21:25', ''),
+('en', '_template', 'atutor_version_text', '%s. <a href=\"http://atutor.ca/check_atutor_version.php?v=%s\">Check Latest Version</a>.', '2007-07-26 13:52:25', ''),
+('en', '_template', 'at_tools', 'ATutor Tools', '2003-05-18 11:51:40', 'tracker column heading'),
+('en', '_template', 'authenticated_access', 'Authenticated Access', '2007-02-13 15:37:33', ''),
+('en', '_template', 'author', 'Author', '2006-03-20 14:36:23', ''),
+('en', '_template', 'auth_access_text', 'Give this link to those you wish to have limited access to your protected or private course.', '2007-02-13 15:54:02', ''),
+('en', '_template', 'auto_approve_instructors', 'Auto Approve Instructor Requests', '2005-03-03 10:51:27', ''),
+('en', '_template', 'auto_check_new_version', 'Check for ATutor Updates Automatically', '2005-11-21 12:37:42', ''),
+('en', '_template', 'auto_install_languages', 'Automatically Install New Language Packs', '2006-07-26 12:08:03', ''),
+('en', '_template', 'auto_install_languages_cron', 'You must set-up the <a href=\"admin/cron_config.php\">cron</a> to use this feature.', '2006-07-26 12:08:37', ''),
+('en', '_template', 'auto_login1', 'Auto-Login', '2003-05-18 11:53:47', 'control centre'),
+('en', '_template', 'availability', 'Availability', '2007-03-06 14:24:05', ''),
+('en', '_template', 'available_immediately', 'Release immediately', '2006-04-10 14:37:47', ''),
+('en', '_template', 'available_on_my_courses', 'Link From The <em>My Courses</em> Page', '2005-05-02 12:12:35', ''),
+('en', '_template', 'average', 'Average', '2003-05-18 11:56:58', 'test results / tracker courses statistics'),
+('en', '_template', 'avg_duration', 'Avg. Duration', '2005-03-01 12:40:29', 'tracker column heading'),
+('en', '_template', 'b', 'B', '2007-01-10 13:47:58', ''),
+('en', '_template', 'back', 'Back', '2003-05-18 12:02:02', 'file manager back up to previous directory'),
+('en', '_template', 'backups', 'Backups', '2004-10-15 11:40:09', ''),
+('en', '_template', 'backup_manager', 'Backup Manager', '2004-10-14 13:59:50', ''),
+('en', '_template', 'back_to', 'Back To:', '2005-03-22 16:08:47', ''),
+('en', '_template', 'back_to_main', 'Back to Main', '2004-12-06 12:07:06', ''),
+('en', '_template', 'back_to_profile', 'Back to Profile', '2004-12-06 12:09:00', ''),
+('en', '_template', 'back_to_summary', 'Back to Summary', '2003-05-18 12:05:32', 'tracker'),
+('en', '_template', 'banner', 'Banner', '2006-03-28 14:32:22', ''),
+('en', '_template', 'before_topic', 'Before: %s', '2004-01-16 13:19:20', 'content editor'),
+('en', '_template', 'blogs', 'Blogs', '2006-05-22 12:10:42', ''),
+('en', '_template', 'blue', 'Blue', '2003-05-18 12:09:34', 'global code picker tool'),
+('en', '_template', 'blue_guests', 'Blue = Guests', '2003-05-18 12:10:38', 'instructor course statistics'),
+('en', '_template', 'body', 'Body', '2003-05-18 12:11:16', 'add/edit forms for body field label'),
+('en', '_template', 'bold', 'Bold', '2003-05-18 12:11:41', 'global code picker'),
+('en', '_template', 'bottom', 'Bottom', '2003-05-23 16:58:31', 'preference settings option'),
+('en', '_template', 'browse_courses', 'Browse Courses', '2003-05-18 12:13:27', 'control centre, about, login screens'),
+('en', '_template', 'bug_count', 'Bug Count', '2004-12-06 12:23:46', 'admin/error_logging.php'),
+('en', '_template', 'bug_identifier', 'Bug Identifier', '2004-12-06 12:05:07', ''),
+('en', '_template', 'bytes', 'Bytes', '2003-05-18 12:15:45', 'admin course size quote, course properties screen'),
+('en', '_template', 'c', 'C', '2007-01-10 13:48:02', ''),
+('en', '_template', 'cache_directory', 'Cache Directory', '2005-03-03 10:52:26', ''),
+('en', '_template', 'cancel', 'Cancel', '2003-05-18 12:16:07', 'global cancel button'),
+('en', '_template', 'cannot_find_remote_languages', 'ATutor was unable to connect to the ATutor.ca website to retrieve the list of available languages.', '2004-10-18 14:28:15', ''),
+('en', '_template', 'categories', 'Categories', '2005-02-22 10:12:23', ''),
+('en', '_template', 'category', 'Category', '2003-05-18 12:16:54', 'links database'),
+('en', '_template', 'cats_all', 'All Categories', '2005-02-23 10:22:07', ''),
+('en', '_template', 'cats_categories', 'Categories', '2003-09-24 18:21:26', 'admin course categories'),
+('en', '_template', 'cats_none', 'None', '2003-09-24 18:13:50', 'admin course categories'),
+('en', '_template', 'cats_no_categories', 'No Categories', '2003-09-24 18:28:32', 'admin course categories'),
+('en', '_template', 'cats_parent_category', 'Parent Category', '2003-09-24 18:04:38', 'admin course categories'),
+('en', '_template', 'cats_uncategorized', 'Uncategorized', '2003-09-24 18:17:50', 'admin course categories'),
+('en', '_template', 'cats_view_links', 'Show Links by Category', '2005-03-29 14:08:08', ''),
+('en', '_template', 'cat_theme', 'Category Theme', '2004-08-04 11:34:15', ''),
+('en', '_template', 'center', 'Center', '2003-05-18 12:20:08', 'global code picker option'),
+('en', '_template', 'change_email', 'Change Email', '2006-05-10 11:11:26', ''),
+('en', '_template', 'change_password', 'Change Password', '2006-05-10 11:11:41', ''),
+('en', '_template', 'charset', 'Character Set', '2004-11-20 19:36:01', 'admin new language'),
+('en', '_template', 'chat', 'Chat', '2003-05-18 12:20:29', 'global chat label'),
+('en', '_template', 'chat_altc', 'Alt + C: Jump to Compose Message', '2003-05-30 12:41:06', 'chat options frame'),
+('en', '_template', 'chat_altm', 'Alt + M: Jump to Messages', '2004-08-18 10:58:16', ''),
+('en', '_template', 'chat_altq', 'Alt + Q:  Quit Chat', '2005-05-30 15:04:01', ''),
+('en', '_template', 'chat_altr', 'Alt + R: Refresh Messages', '2004-08-18 10:58:42', ''),
+('en', '_template', 'chat_auto180_checking', 'Automatic (180 second interval)', '2003-05-15 14:23:13', 'chat message checking preference'),
+('en', '_template', 'chat_auto20_checking', 'Automatic (20 second interval)', '2003-05-15 14:22:22', 'chat message checking preference'),
+('en', '_template', 'chat_auto5_checking', 'Automatic (5 second interval)', '2003-05-27 09:09:57', 'chat message checking preferences'),
+('en', '_template', 'chat_auto60_checking', 'Automatic (60 second interval)', '2003-05-15 14:22:53', 'chat message checking preference'),
+('en', '_template', 'chat_chime_help', 'Set to \"Yes\" to recieve an audio tone when new messsages are posted. Does not work in all Web browsers.', '2003-05-15 19:33:11', 'chat message checking preferences'),
+('en', '_template', 'chat_compose_message', 'Compose Message', '2003-05-15 13:12:38', 'chat message compose frame'),
+('en', '_template', 'chat_currently_active', 'Currently active', '2003-05-15 12:40:47', 'chat hompage transcript activated'),
+('en', '_template', 'chat_current_tran', 'A transcript is already being recorded.  You may view the current transcript at', '2005-03-30 14:04:45', 'achat'),
+('en', '_template', 'chat_delete_transcript', 'Delete Transcript', '2003-06-30 17:53:55', 'chat home page'),
+('en', '_template', 'chat_edit_prefs', 'Edit Preferences', '2003-05-15 13:47:05', 'chat options frame'),
+('en', '_template', 'chat_enter', 'Enter Chat', '2003-05-15 14:50:48', 'chat preferences pages'),
+('en', '_template', 'chat_exit', 'Exit Chat', '2003-05-15 13:48:43', 'chat options frame'),
+('en', '_template', 'chat_full_history', 'Full History', '2003-05-15 14:00:02', 'chat options frame'),
+('en', '_template', 'chat_help_display_blurb', '<p>Note: <em>Jump To</em> links and the <em>Quick Key</em> list only appear if you have turned on <em>Navigation Aids</em> in you preferences.</p>\r\n \r\n<ul>\r\n	<li>The <em>Jump to Quick Keys</em> link at the top takes you to a list of quick keys for the Chat. </li>\r\n	<li>The <em>Message Area</em> displays the most recent messages (up to ten). </li>\r\n    <li>The <em>Jump to Messages</em> links take you to the beginning of the list of messages. (Alt+M) </li>\r\n    <li>The <em>Refresh Messages</em> link lets you check for new messages (Alt+R). </li>\r\n    <li>The <em>Compose Message</em> Field and <em>Send Button</em> let you enter and send messages (Alt+C to enter the Compose Field, Enter to send a completed message). </li>\r\n</ul>', '2004-08-18 11:00:36', ''),
+('en', '_template', 'chat_help_display_frame', 'Display Frame Help (top left)', '2003-05-15 15:24:02', 'chat help screen'),
+('en', '_template', 'chat_help_display_jump', 'Jump to Display Frame Help', '2003-05-27 09:14:57', 'chat help screen'),
+('en', '_template', 'chat_help_history_blurb', 'The <em>User List</em> shows the Chat IDs of all the users in the chat. Click on a Chat ID to see the messages sent by that participant, along with your own messages. Click on <em>All Users</em> to see the messages sent by all participants.', '2003-05-15 15:34:10', 'chat help screen'),
+('en', '_template', 'chat_help_history_frame', 'User List and History Help', '2003-05-15 15:32:14', 'chat help screen'),
+('en', '_template', 'chat_help_history_jump', 'Jump to User List and History Help', '2003-05-15 15:22:23', 'chat help screen'),
+('en', '_template', 'chat_help_jump_top', 'Jump to Top', '2003-05-15 15:25:48', 'chat_help screen'),
+('en', '_template', 'chat_help_options_blurb', '<ul>\r\n	<li>The <em>Edit Preferences</em> link opens the preferences so you can modify your control and display settings. </li>\r\n    <li>The <em>Exit Chat</em> link ends your chat session.</li>\r\n    <li>The <em>Help</em> link brings you to this screen. (Alt+Q)</li>\r\n</ul>', '2004-08-18 11:01:04', ''),
+('en', '_template', 'chat_help_options_frame', 'Options Help (top right)', '2003-05-15 15:24:50', 'chat help screen'),
+('en', '_template', 'chat_help_options_jump', 'Jump to Options Help', '2003-05-27 09:15:04', 'chat help screen'),
+('en', '_template', 'chat_help_screen', 'Help Screen', '2003-05-15 15:19:33', 'chat help'),
+('en', '_template', 'chat_history_messages', 'History - Messages %s to %s of %s', '2003-05-15 15:59:13', 'chat full history screen'),
+('en', '_template', 'chat_inactive', 'Inactive', '2005-03-30 14:47:25', ''),
+('en', '_template', 'chat_jump_to_message', 'Jump to Message Area', '2003-05-15 13:14:01', 'chat display frame'),
+('en', '_template', 'chat_keep_tran', 'This section allows you to keep a transcript of the chat in progress.', '2003-05-28 11:10:47', 'achat'),
+('en', '_template', 'chat_layout_prefs', 'Preferences: Layout Settings', '2003-05-15 14:53:04', 'chat layout preferences'),
+('en', '_template', 'chat_list_and_history', 'User List and History', '2003-05-15 13:49:37', 'chat options frame'),
+('en', '_template', 'chat_logged_out', 'User %s has logged out.', '2003-05-15 16:01:51', 'logout'),
+('en', '_template', 'chat_manual_checking', 'Manual Refresh', '2003-05-15 14:23:42', 'chat message checking preference'),
+('en', '_template', 'chat_messages', 'Messages', '2003-05-15 13:05:28', 'chat message display frame'),
+('en', '_template', 'chat_message_checking', 'Message Checking:', '2003-05-15 14:19:45', 'chat message checking preferences'),
+('en', '_template', 'chat_message_check_help', 'Select the interval rate at which new messages are retrieved from the server. Screen reader users set this option to Manual Refresh.', '2003-05-15 14:39:17', 'chat message checking preferences'),
+('en', '_template', 'chat_message_chime', 'New Message Chime:', '2003-05-15 14:43:05', 'chat message checking preferences'),
+('en', '_template', 'chat_message_new_help', 'Screen reader users choose \"Yes\", along with the Manual Refresh setting.', '2003-05-15 15:05:32', 'chat layout preferences'),
+('en', '_template', 'chat_message_order_help', 'Select New to Old to display new messages at the top of the screen, and Old to New to display new messages at the bottom of the screen.', '2003-05-15 14:58:48', 'chat layout preferences'),
+('en', '_template', 'chat_newmsg_prefs', 'Show Only New Messages?', '2003-05-15 15:00:44', 'chat layout preferences'),
+('en', '_template', 'chat_newold_prefs', 'New to Old', '2003-05-15 14:55:15', 'chat layout preferences'),
+('en', '_template', 'chat_none_found', 'No transcripts found.', '2005-03-31 11:32:44', 'chat home page'),
+('en', '_template', 'chat_no_new_messages', 'No new messages.', '2003-05-15 13:09:01', 'chat display frames'),
+('en', '_template', 'chat_oldnew_prefs', 'Old to New', '2003-05-15 14:54:48', 'chat layout preferences'),
+('en', '_template', 'chat_options', 'Options', '2003-05-15 13:45:35', 'chat options frame'),
+('en', '_template', 'chat_order_prefs', 'Order of Messages:', '2003-05-15 14:53:59', 'chat layout preferences'),
+('en', '_template', 'chat_post', 'Enter: Post a completed message', '2003-05-15 14:07:17', 'chat options frame'),
+('en', '_template', 'chat_prefs_checking', 'Preferences: Message Checking Settings', '2003-05-15 14:18:37', 'chat checking preferences'),
+('en', '_template', 'chat_quick_keys', 'Quick Keys', '2003-05-15 14:03:24', 'chat options frame'),
+('en', '_template', 'chat_refresh_message', 'Refresh Messages', '2003-05-15 13:16:05', 'chat display frame'),
+('en', '_template', 'chat_refresh_user_list', 'Refresh User List', '2003-05-15 14:01:12', 'chat options frame'),
+('en', '_template', 'chat_return', 'Return to Chat', '2003-05-15 15:20:17', 'chat help screen'),
+('en', '_template', 'chat_start_tran', 'Start keeping a transcript', '2003-05-28 11:20:12', 'achat'),
+('en', '_template', 'chat_start_transcript', 'Start/Stop Transcript', '2005-05-16 10:55:23', ''),
+('en', '_template', 'chat_stop_tran', 'Stop keeping transcript.', '2003-05-28 12:48:38', 'achat'),
+('en', '_template', 'chat_system', 'system', '2003-05-15 13:07:42', 'chat display frame system message'),
+('en', '_template', 'chat_transcript', 'Transcript', '2003-05-30 11:27:26', 'achat'),
+('en', '_template', 'chat_transcript_end', 'Transcript End:', '2003-05-30 11:30:10', 'achat'),
+('en', '_template', 'chat_transcript_start', 'Transcript Start:', '2003-05-30 11:29:26', 'achat'),
+('en', '_template', 'chat_tran_file_name', 'Transcript name (alphanumeric, no spaces):', '2003-05-28 18:36:35', 'achat'),
+('en', '_template', 'chat_user_logged_in', 'User %s has logged in.', '2003-05-15 16:02:29', 'chat display system login message'),
+('en', '_template', 'chat_user_logged_out', 'User %s has been logged out due to inactivity.', '2003-05-15 16:02:16', 'chat logout system message'),
+('en', '_template', 'chat_you', 'you', '2003-05-15 13:53:10', 'chat users online list'),
+('en', '_template', 'checked', 'Checked', '2006-06-26 14:55:53', ''),
+('en', '_template', 'child_of', 'Child of: %s', '2004-01-16 13:21:25', ''),
+('en', '_template', 'choice', 'Choice', '2003-05-18 12:25:24', 'test manager, multiple choice question editor'),
+('en', '_template', 'cid', 'CID', '2003-05-18 13:17:08', 'global code picker url content id indentifier'),
+('en', '_template', 'city', 'City', '2003-05-18 13:17:52', 'registration, edit profile'),
+('en', '_template', 'click_code', 'Click on the code or emoticon you want to use.', '2003-05-22 15:42:52', 'global code picker instructions'),
+('en', '_template', 'close', 'Close', '2005-08-10 16:13:36', ''),
+('en', '_template', 'close_after_saving', 'Close after saving', '2004-05-11 11:01:40', ''),
+('en', '_template', 'close_file_manager', 'Close File Manager', '2004-11-25 17:34:52', ''),
+('en', '_template', 'close_help_window', 'Close Help Window', '2003-05-18 13:21:37', 'close help window link text'),
+('en', '_template', 'close_menus', 'Menus', '2005-03-05 18:29:54', 'Menus'),
+('en', '_template', 'close_related_topics', 'Related Topics', '2005-03-05 18:30:15', 'Menus'),
+('en', '_template', 'close_window', 'Close Window', '2004-12-08 12:04:59', ''),
+('en', '_template', 'codes', 'Codes', '2003-05-18 13:23:57', 'global code picker label'),
+('en', '_template', 'collapse', 'Collapse', '2003-05-18 13:24:36', 'Menus'),
+('en', '_template', 'colors', 'Colours', '2003-05-18 13:25:02', 'global code picker label'),
+('en', '_template', 'combination', 'Use a combination of letters, numbers and symbols', '2004-06-21 16:26:17', ''),
+('en', '_template', 'comment', 'Comment', '2006-03-20 14:42:32', ''),
+('en', '_template', 'comments', 'Comments', '2006-03-20 14:36:45', ''),
+('en', '_template', 'comments_num', '%s Comment(s)', '2006-05-25 14:01:48', ''),
+('en', '_template', 'completed_tests', 'Your Submissions', '2005-05-11 11:19:25', ''),
+('en', '_template', 'configuration', 'Configuration', '2005-02-07 16:04:01', ''),
+('en', '_template', 'confirm', 'Confirm', '2004-10-18 11:50:20', 'enrollment manager, confirm action'),
+('en', '_template', 'confirm_account_text', 'If you have already created an account, you will have to <a href=\"confirm.php\">confirm your email address</a>.', '2005-07-27 15:05:53', ''),
+('en', '_template', 'confirm_admin_create', 'Are you sure you want to create a Super Administrator account?', '2005-03-03 10:34:16', ''),
+('en', '_template', 'confirm_deny_instructor', 'You are about to deny the instructor request of the following user:', '2005-07-21 16:16:48', ''),
+('en', '_template', 'confirm_password', 'Confirm Password', '2005-03-03 10:47:28', ''),
+('en', '_template', 'contact_email', 'Contact Email', '2005-03-03 10:50:32', ''),
+('en', '_template', 'contact_instructor', 'Contact Course Instructor', '2003-05-18 13:29:00', 'student contact instructor form'),
+('en', '_template', 'contact_name', 'Contact Name', '2003-05-18 13:30:04', 'student contact instructor form'),
+('en', '_template', 'contact_support', 'Contact Support', '2005-07-19 10:27:52', ''),
+('en', '_template', 'contain_only', 'May contain only letters, numbers, underscores, hyphens or periods.', '2006-07-17 11:01:46', 'registration login name format'),
+('en', '_template', 'content', 'Content', '2003-05-18 13:32:22', 'sitemap/delete course'),
+('en', '_template', 'contents', 'Contents', '2003-05-18 13:35:43', 'content page table of content menu heading'),
+('en', '_template', 'content_editor', 'Content Editor', '2006-11-23 13:17:41', 'user prefs'),
+('en', '_template', 'content_navigation', 'Content Navigation', '2005-03-29 12:18:45', 'menu content nav drop down'),
+('en', '_template', 'content_packaging', 'Import/Export Content', '2005-04-18 11:39:46', ''),
+('en', '_template', 'content_packaging_all', 'Available on every page', '2003-10-15 10:10:17', 'option3'),
+('en', '_template', 'content_packaging_disabled', 'Content packaging has been disabled for this course.', '2003-10-15 11:52:51', ''),
+('en', '_template', 'content_packaging_none', 'Not available on any of the pages', '2003-10-15 10:09:27', 'option1'),
+('en', '_template', 'content_packaging_top', 'Available only for top level pages', '2003-10-15 10:09:50', 'option2'),
+('en', '_template', 'content_usage', 'Content Usage', '2005-03-03 15:09:45', ''),
+('en', '_template', 'continue', 'Continue', '2006-03-21 16:22:28', ''),
+('en', '_template', 'copyright', 'Web site engine\'s code is copyright © 2001-2007 <a href=\"http://www.atutor.ca\" target=\"_new\" title=\"ATutor.ca - opens in a new browser\">ATutor</a><sup>®</sup>', '2006-11-21 15:20:13', ''),
+('en', '_template', 'core', 'Core', '2005-08-30 10:17:41', ''),
+('en', '_template', 'correct_answer', 'Correct Answer', '2003-05-18 13:38:45', 'test manager add/edit questions'),
+('en', '_template', 'count', 'Count', '2003-05-18 13:40:35', 'tracker'),
+('en', '_template', 'country', 'Country', '2003-05-18 13:41:28', 'registration / profile edit'),
+('en', '_template', 'course', 'Course', '2003-05-18 13:42:31', 'delete course warning screen'),
+('en', '_template', 'courses', 'Courses', '2003-05-18 13:43:44', 'admin users/courses manager'),
+('en', '_template', 'courses_below', 'Courses Below', '2003-05-18 13:44:41', 'jump menu divider'),
+('en', '_template', 'course_available', 'Course Available', '2003-05-18 13:46:03', 'file manager, server space available'),
+('en', '_template', 'course_available_zip1', 'Course Available (before extraction)', '2003-05-18 13:46:37', 'file manager zip tool'),
+('en', '_template', 'course_available_zip2', 'Course Available (after extraction)', '2003-05-18 13:47:06', 'file manager zip tool'),
+('en', '_template', 'course_backups', 'Course Backups', '2005-03-03 10:21:39', ''),
+('en', '_template', 'course_copyright', 'Optional Copyright Notice', '2003-05-18 13:47:33', 'course copyright label'),
+('en', '_template', 'course_email', 'Course Email', '2003-05-18 13:51:48', 'taught courses table in instructor control centre'),
+('en', '_template', 'course_enrolment', 'Enrollment Manager', '2003-10-01 18:54:09', 'instructor - course enrollment (previously ATutor Course Enrollment)'),
+('en', '_template', 'course_files', 'Course Files', '2006-03-20 14:40:32', ''),
+('en', '_template', 'course_forums', 'Course Forums', '2004-11-13 19:55:06', ''),
+('en', '_template', 'course_id', 'Course ID', '2003-05-18 13:54:57', 'admin course manager'),
+('en', '_template', 'course_instructor', 'Course Instructor', '2003-05-18 13:57:00', 'student contact instructor form'),
+('en', '_template', 'course_list', 'Course List', '2005-03-23 15:17:14', 'enrollment manager'),
+('en', '_template', 'course_properties', 'Course Properties', '2003-05-18 14:00:23', 'course properties, admin course manager'),
+('en', '_template', 'course_quota', 'Course Quota', '2003-05-18 14:01:10', 'course properties, admin course manager'),
+('en', '_template', 'course_stats', 'Course Statistics', '2003-05-18 14:01:59', 'delete course'),
+('en', '_template', 'course_summaries', 'Course Summaries', '2004-08-20 15:08:40', ''),
+('en', '_template', 'course_total', 'Course Total', '2003-05-18 14:03:39', 'file manager, zip tool'),
+('en', '_template', 'course_total_zip', 'Course Total (before extraction)', '2003-05-18 14:04:10', 'file manager zip tool'),
+('en', '_template', 'create', 'Create', '2003-05-18 14:06:29', 'links database submit button'),
+('en', '_template', 'created', 'Created', '2003-05-18 14:07:28', 'browse courses, control centre'),
+('en', '_template', 'created_date', 'Created', '2003-05-18 14:09:05', 'admin course managers, profile editor'),
+('en', '_template', 'create_admin', 'Create Administrator Account', '2005-03-03 10:40:10', ''),
+('en', '_template', 'create_backup', 'Create Backup', '2004-10-15 14:19:55', ''),
+('en', '_template', 'create_backup_about', '<p>Creating a backup of this course will archive all available material into a single compressed ZIP file. Once the backup file is created, it will be available through the Backup Manager for download and safe-keeping, or available to be restored back into this or any other course.</p>\r\n\r\n<p>Depending on the course size and available server resources, the time needed to backup this course may take  some time.</p>\r\n		\r\n<p>Note: You are currently restricted to %s backups per course.</p>', '2005-05-30 15:04:45', ''),
+('en', '_template', 'create_basic', 'Create basic announcement, content, and forum.', '2004-10-20 14:28:44', ''),
+('en', '_template', 'create_category', 'Create Category', '2005-02-18 10:28:39', ''),
+('en', '_template', 'create_course', 'Create Course', '2005-02-15 13:16:16', 'instructor control centre'),
+('en', '_template', 'create_folder', 'Create Folder', '2003-05-18 14:12:40', 'file manager'),
+('en', '_template', 'create_forum', 'Create Forum', '2005-02-16 12:23:16', ''),
+('en', '_template', 'create_group', 'Create Group', '2005-02-22 16:51:56', ''),
+('en', '_template', 'create_groups', 'Create Groups', '2006-03-21 14:57:08', ''),
+('en', '_template', 'create_module', 'Create Module', '2005-08-17 13:06:07', ''),
+('en', '_template', 'create_new_file', 'Create New File', '2005-02-22 15:33:12', ''),
+('en', '_template', 'create_new_question', 'Create New Question', '2005-03-07 16:42:11', ''),
+('en', '_template', 'create_test', 'Create Test/Survey', '2004-11-24 10:00:42', 'instructor test manager'),
+('en', '_template', 'create_user', 'Create User Account', '2005-03-10 15:12:12', ''),
+('en', '_template', 'cron', 'Cron', '2006-03-31 15:42:46', ''),
+('en', '_template', 'cron_config', 'Cron Set-up', '2006-04-03 14:22:14', ''),
+('en', '_template', 'cron_url', 'The URL to your cron service is:', '2006-06-14 12:47:32', ''),
+('en', '_template', 'cron_url_usage', 'The URL below must be used when setting-up the cron service. See the <em>Cron Set-Up</em> section in the <em>ATutor Handbook</em> for instructions.', '2006-06-14 12:49:11', ''),
+('en', '_template', 'current_course_size', 'Current course size', '2003-10-07 15:41:36', 'admin course info'),
+('en', '_template', 'current_location', '(Current location)', '2004-01-16 13:22:03', 'content editor'),
+('en', '_template', 'current_path', 'Path to Current Directory:', '2003-05-18 14:13:52', 'file manager'),
+('en', '_template', 'curren_tests_surveys', 'Ongoing Tests & Surveys', '2005-01-03 09:57:07', ''),
+('en', '_template', 'd', 'D', '2007-01-10 13:48:05', ''),
+('en', '_template', 'database', 'Database', '2007-07-26 13:39:36', ''),
+('en', '_template', 'database_table', 'Database Table', '2005-03-03 12:14:20', ''),
+('en', '_template', 'date', 'Date', '2003-05-19 17:44:42', 'global date label'),
+('en', '_template', 'date_apr', 'Apr', '2003-05-20 12:32:27', 'date'),
+('en', '_template', 'date_april', 'April', '2003-05-20 12:28:03', 'date'),
+('en', '_template', 'date_aug', 'Aug', '2003-05-20 12:33:34', 'date'),
+('en', '_template', 'date_august', 'August', '2003-05-20 12:29:12', 'date'),
+('en', '_template', 'date_created', 'Date Created', '2003-05-19 17:45:18', 'view profile'),
+('en', '_template', 'date_dec', 'Dec', '2003-05-20 12:34:03', 'date'),
+('en', '_template', 'date_december', 'December', '2003-05-20 12:30:35', 'date'),
+('en', '_template', 'date_feb', 'Feb', '2003-05-20 12:32:12', 'date'),
+('en', '_template', 'date_february', 'February', '2003-05-20 12:27:33', 'date'),
+('en', '_template', 'date_fri', 'Fri', '2003-05-20 12:26:47', 'date'),
+('en', '_template', 'date_friday', 'Friday', '2003-05-20 12:24:40', 'date'),
+('en', '_template', 'date_jan', 'Jan', '2003-05-20 12:32:05', 'date'),
+('en', '_template', 'date_january', 'January', '2003-05-20 12:27:11', 'date'),
+('en', '_template', 'date_jul', 'Jul', '2003-05-20 12:33:27', 'date'),
+('en', '_template', 'date_july', 'July', '2003-05-20 12:28:56', 'date'),
+('en', '_template', 'date_jun', 'Jun', '2003-05-20 12:33:21', 'date'),
+('en', '_template', 'date_june', 'June', '2003-05-20 12:28:41', 'date'),
+('en', '_template', 'date_mar', 'Mar', '2003-05-20 12:32:22', 'date'),
+('en', '_template', 'date_march', 'March', '2003-05-20 12:27:48', 'date'),
+('en', '_template', 'date_may', 'May', '2003-05-20 12:28:20', 'date'),
+('en', '_template', 'date_may_short', 'May', '2003-05-20 12:33:14', 'date'),
+('en', '_template', 'date_mon', 'Mon', '2003-05-20 12:26:18', 'date'),
+('en', '_template', 'date_monday', 'Monday', '2003-05-20 12:24:00', 'date'),
+('en', '_template', 'date_nov', 'Nov', '2003-05-20 12:33:56', 'date'),
+('en', '_template', 'date_november', 'November', '2003-05-20 12:30:20', 'date'),
+('en', '_template', 'date_oct', 'Oct', '2003-05-20 12:33:49', 'date'),
+('en', '_template', 'date_october', 'October', '2003-05-20 12:30:02', 'date'),
+('en', '_template', 'date_of_birth', 'Date of birth', '2004-06-24 12:31:02', ''),
+('en', '_template', 'date_sat', 'Sat', '2003-05-20 12:26:55', 'date'),
+('en', '_template', 'date_saturday', 'Saturday', '2003-05-20 12:24:48', 'date'),
+('en', '_template', 'date_sep', 'Sep', '2003-05-20 12:33:42', 'date'),
+('en', '_template', 'date_september', 'September', '2003-05-20 12:29:44', 'date'),
+('en', '_template', 'date_sun', 'Sun', '2003-05-20 12:26:09', 'date'),
+('en', '_template', 'date_sunday', 'Sunday', '2003-05-20 12:23:52', 'date'),
+('en', '_template', 'date_taken', 'Date Taken', '2003-05-19 17:46:06', 'My Tests'),
+('en', '_template', 'date_thu', 'Thu', '2003-05-20 12:26:40', 'date'),
+('en', '_template', 'date_thursday', 'Thursday', '2003-05-20 12:24:32', 'date'),
+('en', '_template', 'date_tue', 'Tue', '2003-05-20 12:26:24', 'date'),
+('en', '_template', 'date_tuesday', 'Tuesday', '2003-05-20 12:24:12', 'date'),
+('en', '_template', 'date_wed', 'Wed', '2003-05-20 12:26:32', 'date'),
+('en', '_template', 'date_wednesday', 'Wednesday', '2003-05-20 12:24:21', 'date'),
+('en', '_template', 'day', 'Day', '2004-06-24 15:45:56', ''),
+('en', '_template', 'days', 'days', '2007-02-21 14:04:48', ''),
+('en', '_template', 'default', 'Default', '2003-05-19 17:47:07', 'edit header/admin course manager'),
+('en', '_template', 'default_announcement', 'This is a welcome announcement. You can access additional help by using the Help link available throughout ATutor.', '2005-05-11 14:52:19', ''),
+('en', '_template', 'default_description', 'Default Description', '2006-03-22 11:47:28', ''),
+('en', '_template', 'default_language', 'Default Language', '2005-03-03 10:50:22', ''),
+('en', '_template', 'default_modules', 'Default Student Tools', '2005-10-04 11:33:16', ''),
+('en', '_template', 'default_preferences', 'Default Preferences', '2005-10-05 12:19:22', ''),
+('en', '_template', 'default_side_menu', 'Default Side Menu', '2005-10-04 11:33:36', ''),
+('en', '_template', 'delete', 'Delete', '2003-05-19 18:25:41', 'global delete label'),
+('en', '_template', 'deleted', 'Deleted', '2003-05-19 18:26:45', 'links database'),
+('en', '_template', 'delete_admin', 'Delete Administrator Account', '2005-03-03 10:48:32', ''),
+('en', '_template', 'delete_announcement', 'Delete Announcement', '2003-05-19 18:27:52', 'delete news screen'),
+('en', '_template', 'delete_category', 'Delete Category', '2003-05-19 18:28:24', 'links database'),
+('en', '_template', 'delete_content', 'Delete Content', '2003-05-19 18:29:01', 'delete content screen'),
+('en', '_template', 'delete_course', 'Delete Course', '2003-05-19 18:29:37', 'delete course screen'),
+('en', '_template', 'delete_forum', 'Delete Forum', '2003-05-19 18:30:40', 'instructor delete forum screen'),
+('en', '_template', 'delete_from', 'Delete From', '2005-03-03 12:16:04', ''),
+('en', '_template', 'delete_glossary', 'Delete Glossary Term', '2005-03-07 11:33:35', ''),
+('en', '_template', 'delete_group', 'Delete Group', '2005-01-15 16:01:10', ''),
+('en', '_template', 'delete_language', 'Delete Language', '2003-06-05 18:59:51', 'admin language manager'),
+('en', '_template', 'delete_link', 'Delete Link', '2005-03-29 14:09:36', 'links manager'),
+('en', '_template', 'delete_package', 'Delete Package', '2005-05-17 12:06:21', ''),
+('en', '_template', 'delete_poll', 'Delete Poll', '2004-06-14 16:16:15', ''),
+('en', '_template', 'delete_post', 'Delete Post', '2006-06-14 11:53:29', ''),
+('en', '_template', 'delete_profile', 'Delete Profile', '2004-12-06 11:53:06', 'admin/error_logging.php'),
+('en', '_template', 'delete_results', 'Delete Test Results', '2003-05-19 18:31:51', 'test manager'),
+('en', '_template', 'delete_selected_package_s', 'Delete selected packages', '2005-07-19 09:54:28', ''),
+('en', '_template', 'delete_test', 'Delete Test/Survey', '2004-08-25 14:09:40', ''),
+('en', '_template', 'delete_this_page', 'Delete This Page', '2005-03-31 14:18:22', 'content page shortcuts'),
+('en', '_template', 'delete_thread', 'Delete Thread', '2003-05-19 18:35:27', 'forums'),
+('en', '_template', 'delete_user', 'Delete User', '2003-05-19 18:35:55', 'admin user manager'),
+('en', '_template', 'deny', 'Deny', '2005-03-30 15:26:27', ''),
+('en', '_template', 'deny_instructor_request', 'Deny Instructor Request', '2005-07-21 16:17:35', ''),
+('en', '_template', 'depth_reached', 'Directory depth limit has been reached.', '2003-05-19 18:36:54', 'file manager'),
+('en', '_template', 'description', 'Description', '2003-05-19 18:37:34', 'global description label'),
+('en', '_template', 'details', 'Details', '2003-05-19 18:38:03', 'instructor taught course table of the control panel'),
+('en', '_template', 'direction', 'Direction', '2004-11-20 19:36:34', ''),
+('en', '_template', 'directory', 'Directory', '2005-03-09 15:28:11', ''),
+('en', '_template', 'directory_name', 'Directory Name', '2003-05-19 18:38:42', 'file manager zip utility'),
+('en', '_template', 'directory_total', 'Directory Total', '2003-05-19 18:39:15', 'file manager'),
+('en', '_template', 'disable', 'Disable', '2004-10-15 15:46:20', 'to disable a theme in theme manager'),
+('en', '_template', 'disabled', 'Disabled', '2005-04-01 10:39:58', ''),
+('en', '_template', 'disable_syndicate', 'Disable Announcements syndication', '2005-01-04 09:48:31', ''),
+('en', '_template', 'discussions', 'Discussions', '2003-05-19 18:43:39', 'global text for discussions label'),
+('en', '_template', 'disk_usage', 'Disk Usage', '2007-07-26 17:02:11', ''),
+('en', '_template', 'display', 'Display', '2004-08-18 12:03:48', ''),
+('en', '_template', 'display_name_format', 'Display Name Format', '2006-09-07 10:21:44', ''),
+('en', '_template', 'display_name_format_fl', '%2$s (%1$s)', '2006-08-21 15:29:17', ''),
+('en', '_template', 'display_name_format_fst', '%2$s %3$s %4$s', '2006-08-21 15:27:41', ''),
+('en', '_template', 'display_name_format_fstl', '%2$s %3$s %4$s (%1$s)', '2006-08-21 15:28:21', ''),
+('en', '_template', 'display_name_format_l', '%s', '2006-08-21 15:25:55', ''),
+('en', '_template', 'display_name_format_lf', '%1$s (%2$s)', '2006-08-21 15:29:46', ''),
+('en', '_template', 'display_name_format_lfst', '%1$s (%2$s %3$s %4$s)', '2006-08-21 15:30:22', ''),
+('en', '_template', 'done', 'Done', '2003-05-19 18:44:34', 'enrolment manager'),
+('en', '_template', 'download', 'Download', '2004-04-30 15:35:13', ''),
+('en', '_template', 'download_file', 'Download File', '2005-01-10 15:40:00', ''),
+('en', '_template', 'download_test_csv', 'Download CSV of Results', '2005-05-30 14:32:27', ''),
+('en', '_template', 'due', 'Due', '2006-03-20 14:38:46', ''),
+('en', '_template', 'due_date', 'Due Date', '2006-03-23 11:36:41', ''),
+('en', '_template', 'duration', 'Total Duration', '2005-03-01 12:40:00', 'tracker'),
+('en', '_template', 'duration_sec', 'Duration (sec)', '2003-05-19 18:45:37', 'tracker'),
+('en', '_template', 'e', 'E', '2007-01-10 13:48:09', ''),
+('en', '_template', 'edit', 'Edit', '2004-05-26 18:31:10', ''),
+('en', '_template', 'editor', 'Editor', '2003-10-22 15:01:19', ''),
+('en', '_template', 'editor_properties_instructions', 'Use the %1$s and %2$s buttons to place this topic after or before the selected location, respectively. Use the %3$s button to add this topic as a child of the selected location.', '2004-02-11 12:22:15', ''),
+('en', '_template', 'editor_properties_insturctions_related', 'Add Related Topics by selecting the topic from the list.', '2004-02-11 12:33:28', 'editor properties instructions'),
+('en', '_template', 'edit_admin', 'Edit Administrator Account', '2005-03-03 11:06:16', ''),
+('en', '_template', 'edit_after_upload', ' After uploaded use the fields below to edit the content.', '2003-05-19 18:47:10', 'cotent editor'),
+('en', '_template', 'edit_announcement', 'Edit Announcement', '2003-05-19 18:47:32', 'instructor announcement editor'),
+('en', '_template', 'edit_backup', 'Edit - %s', '2004-10-19 12:46:00', ''),
+('en', '_template', 'edit_category', 'Edit Category', '2003-05-19 18:49:44', 'links database'),
+('en', '_template', 'edit_content', 'Edit Content', '2003-05-19 18:50:07', 'instructor content editor'),
+('en', '_template', 'edit_forum', 'Edit Forum', '2003-05-19 18:50:54', 'instructor forum editor'),
+('en', '_template', 'edit_for_minutes', 'for another %s minutes', '2007-02-23 11:53:28', ''),
+('en', '_template', 'edit_glossary', 'Edit Glossary Term', '2003-05-19 18:54:15', 'instructor edit glossary term screen'),
+('en', '_template', 'edit_language', 'Edit Language', '2005-01-21 18:24:19', ''),
+('en', '_template', 'edit_link', 'Edit Link', '2003-05-19 18:54:44', 'links database'),
+('en', '_template', 'edit_poll', 'Edit Poll', '2004-06-14 14:53:54', ''),
+('en', '_template', 'edit_post', 'Edit Post', '2003-09-25 12:54:59', 'instructor edit forum post'),
+('en', '_template', 'edit_question', 'Edit Question', '2004-12-14 17:58:58', ''),
+('en', '_template', 'edit_test', 'Edit Test/Survey', '2004-08-25 14:08:30', ''),
+('en', '_template', 'edit_this_page', 'Edit This Page', '2005-03-31 14:16:42', 'content page shortcuts'),
+('en', '_template', 'edit_user', 'Edit Member', '2004-03-29 11:49:10', ''),
+('en', '_template', 'email', 'Email', '2003-05-19 19:07:59', 'global email label'),
+('en', '_template', 'email_address', 'Email Address', '2003-05-19 19:09:06', 'profile, password reminder'),
+('en', '_template', 'email_approvals', 'Email me when new enrollments require approval.', '2004-01-22 14:57:19', ''),
+('en', '_template', 'email_confirmation_message', 'You have registered for an account on %1s. Please finish the registration process by confirming your email address by using the following link: %2s .', '2005-06-24 15:32:49', ''),
+('en', '_template', 'email_confirmation_message2', 'To finish changing your account\'s email address on %1s, please confirm your email address by using the following link: %2s .', '2006-05-11 16:08:25', ''),
+('en', '_template', 'email_confirmation_subject', 'Email Confirmation', '2005-03-22 11:35:30', ''),
+('en', '_template', 'emoticons', 'Emoticons', '2003-05-22 15:43:20', 'code picker'),
+('en', '_template', 'empty', 'empty', '2003-05-19 19:10:56', 'prefs page, menu options'),
+('en', '_template', 'enable', 'Enable', '2004-10-15 15:52:29', 'enable button in theme'),
+('en', '_template', 'enabled', 'Enabled', '2005-05-06 12:49:07', 'theme'),
+('en', '_template', 'enable_mail_queue', 'Enable Mail Queue', '2006-04-03 14:21:43', ''),
+('en', '_template', 'enable_sco_rte', 'Enable the SCORM 1.2 RTE', '2005-05-10 10:52:42', ''),
+('en', '_template', 'enable_syndicate', 'Enable Announcements syndication via <acronym title=\"Rich Site Summary\">RSS</acronym>', '2005-01-04 10:27:41', ''),
+('en', '_template', 'end_date', 'End Date', '2003-05-19 19:13:46', 'mytests'),
+('en', '_template', 'end_on', 'End on', '2007-07-16 14:26:34', ''),
+('en', '_template', 'enroll', 'Enroll', '2003-05-19 19:16:50', 'link text for enroll function'),
+('en', '_template', 'enrolled', 'Enrolled', '2003-05-19 19:18:28', 'control centre, delete course, admin course manager, text label'),
+('en', '_template', 'enrolled_list_includes_assistants', 'Enrolled Students (includes Assistants)', '2004-10-15 11:56:23', 'enrolled students list in list exporter in enrollement manager'),
+('en', '_template', 'enrolled_privileges', 'Enrolled With Privileges', '2005-06-10 10:58:01', ''),
+('en', '_template', 'enrollment', 'Enrollment', '2005-12-07 11:19:38', ''),
+('en', '_template', 'enroll_me', 'Enroll Me', '2005-04-14 13:15:58', ''),
+('en', '_template', 'enroll_to_post', 'You must be enrolled to post to the forums.', '2004-12-09 11:07:43', ''),
+('en', '_template', 'enrolment', 'Enrollment', '2006-10-18 11:47:33', ''),
+('en', '_template', 'enrol_login', 'You must login to your course to approve the new enrollment request using the Enrollment section.', '2005-07-05 12:15:39', 'instructor enrolment screen'),
+('en', '_template', 'enrol_message3', 'ATutor Course Enrollment', '2003-04-21 15:03:49', 'context'),
+('en', '_template', 'enrol_messagenew', 'An enrollment request was made for the ATutor course %s. Log into your course at %s , go to Manage and then to the unenrolled tab in the Enrollment Manager.', '2005-03-29 12:23:47', 'instructor enrolment email notice'),
+('en', '_template', 'enrol_message_approved', 'Your enrollment request for the course %1s has been approved.\r\nLog into ATutor, then select the course from My Courses or use the login link below:\r\n\r\n%2s', '2005-03-30 11:49:50', 'email message sent to enrollee once approved'),
+('en', '_template', 'enrol_message_subject', 'Course enrollment approved', '2003-05-20 11:18:15', 'enroll email approval'),
+('en', '_template', 'enrol_msg', 'A new enrollment request has been made for your course %s.', '2005-07-05 12:15:49', 'instructor email enrollment notification message'),
+('en', '_template', 'enter_chat', 'Enter the Chat', '2003-05-27 14:20:24', 'achat entry page'),
+('en', '_template', 'enter_course', 'Enter Course', '2005-03-14 15:15:57', ''),
+('en', '_template', 'entire_course', 'Entire Course', '2006-07-24 10:44:01', ''),
+('en', '_template', 'error', 'Error', '2003-05-19 20:20:07', 'global error label'),
+('en', '_template', 'error_logging', 'Error Logging', '2005-02-07 16:11:55', ''),
+('en', '_template', 'everyone', 'Everyone', '2004-12-07 17:54:16', ''),
+('en', '_template', 'existing_type', 'Existing Type:', '2006-03-22 15:11:15', ''),
+('en', '_template', 'expand', 'Expand', '2003-05-19 20:20:35', 'menu toggle alt text'),
+('en', '_template', 'expired', 'Expired', '2003-05-19 20:21:08', 'mytests'),
+('en', '_template', 'expire_never', 'Never expire', '2007-02-13 15:38:14', ''),
+('en', '_template', 'expire_on', 'Expire on', '2007-02-13 15:38:24', ''),
+('en', '_template', 'expiry_date', 'Expiry Date', '2007-02-13 15:37:50', ''),
+('en', '_template', 'export', 'Export', '2003-05-19 20:21:32', 'instructor control centre'),
+('en', '_template', 'export_content', 'Export Content', '2003-10-03 11:00:51', ''),
+('en', '_template', 'export_content_info', 'Export content as an IMS 1.1.3/SCORM 1.2 conformant content package of the selected topics in a single archive file. Download then unzipped the file to view it offline, by opening the <kbd>index.html</kbd> file within the package. Import the zipped package into ATutor, or into another conformant learning content management system.', '2005-02-21 13:17:46', ''),
+('en', '_template', 'export_content_package_what', 'What to export', '2003-10-14 11:11:11', ''),
+('en', '_template', 'export_entire_course_or_chap', 'Entire course, or select a chapter below', '2003-10-07 15:14:52', ''),
+('en', '_template', 'external_help', 'External Help', '2005-03-17 10:31:39', ''),
+('en', '_template', 'extra', 'Extra', '2005-09-21 13:35:05', ''),
+('en', '_template', 'extract', 'Extract', '2003-05-19 20:23:33', 'file manager zip utility'),
+('en', '_template', 'extract_archive', 'Extract Archive', '2003-05-19 20:23:58', 'file manager zip utility'),
+('en', '_template', 'extract_tip', 'Tip: Use an empty directory name to extract the contents into the current directory.', '2003-05-19 20:24:27', 'file manager zip utility'),
+('en', '_template', 'f', 'F', '2007-01-10 13:48:14', ''),
+('en', '_template', 'false', 'False', '2003-05-20 08:52:19', 'textmanager, mytests t/f label'),
+('en', '_template', 'faq', 'Frequently Asked Questions (FAQ)', '2005-10-19 12:41:54', ''),
+('en', '_template', 'feedback', 'Feedback', '2003-05-20 09:09:40', 'global feedback label'),
+('en', '_template', 'female', 'Female', '2003-05-20 09:18:03', 'registration, profile'),
+('en', '_template', 'file', 'File', '2003-05-20 09:18:31', 'file manager, zip tool'),
+('en', '_template', 'filemanager_date_format', '%%Y-%%m-%%d %%h:%%i', '2003-05-25 13:42:59', 'file manager date'),
+('en', '_template', 'files', 'Files', '2005-08-16 15:27:36', ''),
+('en', '_template', 'file_manager', 'File Manager', '2003-05-20 09:27:19', 'global file manager label'),
+('en', '_template', 'file_manager_frame', 'File Manager Frame', '2005-01-31 11:14:37', 'viewing files in filemanger frame'),
+('en', '_template', 'file_manager_new', 'Create a New File', '2004-10-29 14:53:13', 'file manager'),
+('en', '_template', 'file_name', 'File Name', '2004-10-15 12:08:25', ''),
+('en', '_template', 'file_size', 'File Size', '2004-10-14 13:57:59', ''),
+('en', '_template', 'file_storage', 'File Storage', '2006-03-20 14:36:04', ''),
+('en', '_template', 'file_storage_version_control', 'Maintain File Storage Version Control', '2006-03-29 12:43:11', ''),
+('en', '_template', 'file_to_read', 'File To Read', '2006-04-13 11:03:16', ''),
+('en', '_template', 'fill_groups', 'Fill Groups', '2006-03-22 11:52:47', ''),
+('en', '_template', 'fill_groups_randomly', 'Fill groups randomly upon creation.', '2006-03-22 11:53:14', ''),
+('en', '_template', 'filter', 'Filter', '2005-03-30 14:52:33', ''),
+('en', '_template', 'final_score', 'Final Score', '2007-03-16 14:10:05', ''),
+('en', '_template', 'find_results_in', 'Find results in', '2004-08-18 12:02:16', ''),
+('en', '_template', 'first_name', 'First Name', '2003-05-20 09:58:26', 'registration, profile'),
+('en', '_template', 'fix_content_ordering', 'Fix Content Ordering', '2004-10-18 14:03:47', ''),
+('en', '_template', 'fix_content_ordering_text', 'Occasionally, content pages can get disordered due to miscalculation. This is an ongoing issue that will be resolved in an upcoming version of ATutor but until then, we have made a patch available that can be used to fix the issue. If you are experiencing this problem, please use the button below.', '2005-03-10 11:19:41', ''),
+('en', '_template', 'folder', 'Folder', '2003-05-20 10:05:51', 'file manager, zip utility'),
+('en', '_template', 'formatting', 'Formatting', '2003-05-20 10:07:25', 'add/ edit content, news, export'),
+('en', '_template', 'form_editor', 'Atutor Form Editor', '2005-03-11 10:31:45', 'Form editor for test questions'),
+('en', '_template', 'form_focus', 'Form Focus On Page Load', '2005-03-29 12:38:11', ''),
+('en', '_template', 'forum', 'Forum', '2004-04-16 10:54:23', 'Forum list header'),
+('en', '_template', 'forums', 'Forums', '2003-05-20 10:08:05', 'global forums label'),
+('en', '_template', 'forum_date_format', '%%D %%M %%j %%H:%%i', '2004-05-26 15:18:29', ''),
+('en', '_template', 'forum_email_links', 'All email addresses are made into links.', '2003-05-20 10:11:14', 'forums email address links instruction'),
+('en', '_template', 'forum_general_discussion', 'General Discussion', '2004-12-16 11:07:19', 'default forum in forum list'),
+('en', '_template', 'forum_html_disabled', 'HTML is disabled.', '2003-05-20 10:11:42', 'forum compose message'),
+('en', '_template', 'forum_links', 'All words starting with http:// are made into links.', '2003-05-20 10:12:23', 'forum compose link creation instruction'),
+('en', '_template', 'forum_new_submsg', '*DO NOT REPLY TO THIS MESSAGE*\r\nA discussion thread in the ATutor course \"%s\" has recieved a reply. Login to access the \"%s\" forum and view the \"%s\" thread. Login at: %s', '2007-03-30 08:26:03', 'forum email message to thread subscribers'),
+('en', '_template', 'forum_posts', 'Forum Posts', '2005-03-16 14:59:41', ''),
+('en', '_template', 'forum_reply_to', 'Replying To', '2003-05-20 10:12:48', 'forum reply to label for quoted messages'),
+('en', '_template', 'forward', 'Forward', '2007-02-20 16:21:52', ''),
+('en', '_template', 'from', 'From', '2003-05-20 10:17:19', 'global from label'),
+('en', '_template', 'from_atutor', 'This message was sent through the ATutor system from course %s.', '2003-05-20 10:19:30', 'instructor/admin contact for email message'),
+('en', '_template', 'from_email', 'From Email', '2003-05-20 10:21:35', 'instructor/admin contact form'),
+('en', '_template', 'from_name', 'From Name', '2003-05-20 10:22:02', 'instrcutor/admin contact from'),
+('en', '_template', 'fs_comment', '%s Comment', '2006-06-29 10:09:37', ''),
+('en', '_template', 'fs_comments', '%s Comments', '2006-06-29 09:55:11', ''),
+('en', '_template', 'fs_revision', '%s Revision', '2006-06-29 10:05:39', ''),
+('en', '_template', 'fs_revisions', '%s Revisions', '2006-06-29 09:52:36', ''),
+('en', '_template', 'full_name', 'Full Name', '2006-03-27 15:55:44', ''),
+('en', '_template', 'fwd', 'Fwd', '2007-02-20 16:20:07', ''),
+('en', '_template', 'g', 'G', '2007-01-10 13:48:18', ''),
+('en', '_template', 'gender', 'Sex', '2003-05-20 10:22:19', 'registration, profile'),
+('en', '_template', 'general_help', 'For guidance on using ATutor see the official <a href=\"%1$s\" onclick=\"poptastic(\'%1$s\'); return false;\" target=\"_new\"><em>ATutor Handbook</em></a>.', '2005-07-05 14:07:32', 'atutor default footer'),
+('en', '_template', 'give_description', 'Brief description of your proposed course(s)', '2005-03-09 12:19:48', 'control centre request instructor account form'),
+('en', '_template', 'global_more_than_10_pages', 'Global: More than 10 pages.', '2006-09-27 12:42:43', ''),
+('en', '_template', 'glossary', 'Glossary', '2003-05-20 10:24:33', 'global glossary label'),
+('en', '_template', 'glossary_definition', 'Definition', '2003-05-20 10:25:13', 'glossary add/edit term'),
+('en', '_template', 'glossary_related', 'Related Term', '2003-05-20 10:26:35', 'add/edit glossary term'),
+('en', '_template', 'glossary_term', 'Term', '2003-05-20 10:27:01', 'add/edit glossary term'),
+('en', '_template', 'glossary_terms', 'Glossary Terms', '2003-05-20 10:27:47', 'delete course feedback for terms deleted'),
+('en', '_template', 'glossary_term_limit', 'This term exceeds the 60 character limit and cannot be added.', '2005-12-12 11:39:08', ''),
+('en', '_template', 'go', 'Go!', '2006-04-26 13:47:29', ''),
+('en', '_template', 'google_key', 'Google Key', '2005-10-20 11:02:40', ''),
+('en', '_template', 'google_key_txt', 'To access the Google search as an <em>embedded service</em>, you must first create an account and obtain a license key at <a href=\"http://code.google.com/apis/ajaxsearch/signup.html\" target=\"_new\">google.com/apis</a> and enter it below.\r\n<br /><br />\r\nThe search can be used as an external service by clearing the key field below.', '2007-09-04 15:14:30', ''),
+('en', '_template', 'google_new_window', 'Search opens in a new window.', '2005-11-30 16:45:26', ''),
+('en', '_template', 'google_search', 'Web Search', '2005-10-20 10:35:41', ''),
+('en', '_template', 'google_search_ajax', 'Google AJAX Search <em>(requires license key <b>after</b> Dec 5th, 2006)</em>', '2007-08-31 14:55:58', 'Google search'),
+('en', '_template', 'google_search_attn', 'Please note that the old Google search is only applicable to those who have obtained a license key before Dec 5th, 2006; any new license key obtained after December 5th, 2006 is only applicable to the new Google AJAX search.', '2007-09-04 14:55:56', 'Google search'),
+('en', '_template', 'google_search_books', 'Books', '2007-08-31 11:25:12', 'Google search'),
+('en', '_template', 'google_search_images', 'Images', '2007-08-31 11:22:38', 'Google search'),
+('en', '_template', 'google_search_local', 'Local', '2007-08-31 11:57:07', 'Google search'),
+('en', '_template', 'google_search_news', 'News', '2007-08-31 11:23:30', 'Google search'),
+('en', '_template', 'google_search_soap', 'Old Google Search <em>(requires license key <b>before</b> Dec 5th, 2006)</em>', '2007-08-31 14:54:58', 'Google search'),
+('en', '_template', 'google_search_txt', 'To search for specific words within a website, enter them below then use the \'Search\' button.  If you wish to search course content, use the <a href=\"search.php\">content search</a>.', '2005-10-20 11:02:02', ''),
+('en', '_template', 'google_search_type_txt', 'Please select one of the Google search interfaces.', '2007-08-31 14:36:30', 'Google search'),
+('en', '_template', 'google_search_videos', 'Videos', '2007-08-31 11:22:53', 'Google search'),
+('en', '_template', 'goto_content', 'Go to content', '2004-05-11 15:18:23', ''),
+('en', '_template', 'goto_menu', 'Go to Menu', '2006-07-14 10:14:57', '2nd invisible link on the page'),
+('en', '_template', 'goto_top', 'Go to Top', '2003-05-20 10:34:03', 'bypass link text in ATutor header'),
+('en', '_template', 'graph', 'Graph', '2003-05-20 10:36:18', 'instructor course details graph label'),
+('en', '_template', 'gray', 'Gray', '2003-05-20 10:36:32', 'global code picker'),
+('en', '_template', 'green', 'Green', '2003-05-20 10:36:45', 'global code picker'),
+('en', '_template', 'group', 'Group', '2005-05-03 15:42:38', ''),
+('en', '_template', 'grouped_by_course', 'Grouped by course', '2004-08-18 12:04:40', ''),
+('en', '_template', 'groups', 'Groups', '2004-11-25 15:45:26', ''),
+('en', '_template', 'groups_create_automatic', 'Create multiple groups automatically', '2006-03-21 15:36:08', ''),
+('en', '_template', 'groups_create_manual', 'Create a single group manually', '2006-03-21 15:36:58', ''),
+('en', '_template', 'groups_type', 'Groups Type', '2006-03-22 11:16:01', ''),
+('en', '_template', 'group_forums', 'Group Forums', '2006-05-24 08:48:58', ''),
+('en', '_template', 'group_members', 'Group Members', '2005-06-10 10:34:56', ''),
+('en', '_template', 'group_prefix', 'Group Prefix', '2006-03-22 11:17:12', ''),
+('en', '_template', 'guest', 'Guest', '2003-05-20 10:37:10', 'name assigned to non-registered users'),
+('en', '_template', 'guests', 'Guests', '2003-05-20 10:38:19', 'instructor course stats/details'),
+('en', '_template', 'guests_not_listed', 'Guests are not listed', '2003-05-20 10:38:32', 'who\'s on menu'),
+('en', '_template', 'h', 'H', '2007-01-10 13:48:22', ''),
+('en', '_template', 'handout_to_read', 'Handout to Read', '2006-04-13 11:58:39', ''),
+('en', '_template', 'hand_in', 'Hand In', '2006-03-20 14:36:56', ''),
+('en', '_template', 'have', 'Have', '2007-02-21 13:22:47', ''),
+('en', '_template', 'have_not', 'Have not', '2007-02-21 14:06:25', ''),
+('en', '_template', 'help', 'Help', '2003-05-20 10:41:08', 'global help label'),
+('en', '_template', 'hidden', 'Hidden', '2003-05-20 10:42:27', 'instructor/admin contact form'),
+('en', '_template', 'hide', 'Hide', '2005-03-15 11:37:50', ''),
+('en', '_template', 'hide_course', 'Hide this course from the Browse Courses list', '2003-05-20 10:42:41', 'create course screen'),
+('en', '_template', 'history', 'History', '2003-05-25 08:36:00', 'context (removed after v1.1)'),
+('en', '_template', 'hits', 'Hits', '2003-05-20 10:44:14', 'links database link hit count'),
+('en', '_template', 'hit_count', 'Hit Count', '2003-05-20 10:45:17', 'tracker'),
+('en', '_template', 'home', 'Home', '2006-05-31 11:12:30', ''),
+('en', '_template', 'home_url', 'Home URL', '2005-03-03 10:50:09', ''),
+('en', '_template', 'horizontal', 'Horizontal', '2004-12-01 13:35:05', 'edit/create option test questions'),
+('en', '_template', 'hot', 'Hot!', '2003-05-20 10:47:10', '(not used)'),
+('en', '_template', 'hot_thread', 'Hot very active thread!', '2003-05-20 10:47:30', 'forum message for busy thread'),
+('en', '_template', 'hours_24', '24hr', '2003-05-20 10:48:10', 'release date picker'),
+('en', '_template', 'hour_short', 'h', '2007-07-09 12:31:21', ''),
+('en', '_template', 'howto_course', '<a href=\"http://atutor.ca/atutor/docs/index.php\">ATutor Documentation</a>', '2005-06-01 12:32:03', 'help'),
+('en', '_template', 'howto_course_text', 'In addition to the <a href=\"documentation/\" onclick=\"poptastic(\'documentation/\'); return false;\" target=\"_new\"><em>ATutor Handbook</em></a> bundled with ATutor, other documentation sources are available through the <a href=\"http://atutor.ca/atutor/docs/index.php\">ATutor Documentation</a> site.', '2005-07-06 10:04:29', ''),
+('en', '_template', 'html', 'HTML', '2003-05-20 10:48:48', 'global HTML label'),
+('en', '_template', 'html_only', ' Plain Text or HTML files only.', '2003-05-20 10:49:49', 'add/edit content, header'),
+('en', '_template', 'i', 'I', '2007-01-10 13:48:26', ''),
+('en', '_template', 'icon', 'Icon', '2005-03-03 11:19:49', ''),
+('en', '_template', 'id', 'ID', '2003-05-20 10:50:57', 'global ID (identification number) label'),
+('en', '_template', 'illegal_file', 'Illegal File Type', '2003-05-20 10:52:36', 'zip utility when archive contain illegal extension'),
+('en', '_template', 'illegal_file_extensions', 'Illegal File Extensions', '2005-03-03 10:52:15', ''),
+('en', '_template', 'image', 'Image', '2003-05-20 10:53:28', 'global code picker image code link text'),
+('en', '_template', 'import', 'Import', '2003-05-20 11:56:51', 'instructor import/export screen'),
+('en', '_template', 'import_a_new_lang', 'Import a New Language', '2003-06-04 15:34:43', 'admin language manager'),
+('en', '_template', 'import_content', 'Import Content', '2005-02-18 14:05:57', ''),
+('en', '_template', 'import_content_info', 'Import a conformant content package created by ATutor, or another learning content management system. A content package can be appended to the end of the course, after which it can be moved, or it can be added as a sub topic to an existing topic. If you have the Web address directly to a content package, enter it into the URL field to import it directly from the Web.', '2005-02-21 13:20:30', ''),
+('en', '_template', 'import_content_package', 'Import Content Package', '2003-10-03 13:07:38', ''),
+('en', '_template', 'import_content_package_bottom_subcontent', 'As top level content, or as subcontent selected below', '2003-10-20 13:36:27', ''),
+('en', '_template', 'import_content_package_where', 'Import into', '2003-10-14 12:24:03', ''),
+('en', '_template', 'import_err_email_exists', 'Account exists.', '2004-01-30 15:38:42', ''),
+('en', '_template', 'import_err_email_invalid', 'Email invalid.', '2004-01-30 13:28:32', ''),
+('en', '_template', 'import_err_email_missing', 'Email missing.', '2004-01-30 13:28:40', ''),
+('en', '_template', 'import_err_full_name_exists', 'First and Last name exist.', '2006-03-28 10:40:02', ''),
+('en', '_template', 'import_err_username_exists', 'Username already taken.', '2004-01-30 13:28:48', ''),
+('en', '_template', 'import_err_username_invalid', 'Username contains invalid characters.', '2004-01-30 13:28:56', ''),
+('en', '_template', 'import_lang_howto', 'You may import additional languages into this installation of ATutor by downloading the language pack from the ATutor.ca website then uploading it using the form below, or if the drop down below is able to detect the available languages remotely then it may be used as well.', '2004-10-18 14:25:21', 'admin language manager'),
+('en', '_template', 'import_package', 'Import Package', '2005-05-17 12:06:10', ''),
+('en', '_template', 'import_remote_language', 'Or, import a language directly from the ATutor.ca website.', '2004-10-18 14:27:11', ''),
+('en', '_template', 'import_sep_txt', 'For auto-generated usernames, separate first and last names with:', '2004-06-22 12:07:48', ''),
+('en', '_template', 'import_theme', 'Import Theme', '2004-10-15 15:47:13', 'import theme button in theme manager'),
+('en', '_template', 'inactive_admin', 'Inactive Administrator', '2005-03-03 11:00:55', ''),
+('en', '_template', 'inbox', 'Inbox', '2003-05-20 11:59:47', 'global Inbox label'),
+('en', '_template', 'inbox_date_format', '%%l %%M %%j, %%Y - %%H:%%i', '2003-05-20 12:00:47', 'inbox screen (see www.php.net/date for codes)'),
+('en', '_template', 'inbox_notification', 'Inbox Notification', '2005-03-16 14:40:07', ''),
+('en', '_template', 'info', 'Course Info', '2005-04-01 15:09:41', 'global info message box label'),
+('en', '_template', 'initial_content', 'Initial Content', '2004-10-15 15:45:10', ''),
+('en', '_template', 'insert', 'Insert', '2003-05-20 12:02:16', 'instructor add content screen'),
+('en', '_template', 'insert_into', 'Insert Into', '2005-03-03 12:15:49', ''),
+('en', '_template', 'install', 'Install', '2005-08-16 15:51:57', ''),
+('en', '_template', 'install_modules', 'Install Modules', '2005-08-16 16:17:09', ''),
+('en', '_template', 'install_module_text', 'To install a new module it must first be extracted into the <code>%s</code> directory for it to appear in the list below.', '2005-08-17 13:47:02', ''),
+('en', '_template', 'install_themes_text', 'To install new themes the <code>%s</code> directory must be set to writeable. Use the command <kbd>chmod a+w themes</kbd> on Unix machines, while on Windows the web server must have write permissions on that directory.', '2005-12-14 12:36:08', ''),
+('en', '_template', 'instructions', 'Instructions', '2005-04-05 14:25:07', ''),
+('en', '_template', 'instructor', 'Instructor', '2003-05-20 12:02:59', 'global instructor label'),
+('en', '_template', 'instructors', 'Instructors', '2003-05-20 12:03:37', 'admin general statistics label for number of instructors'),
+('en', '_template', 'instructor_contact_form', 'Instructor Contact Form', '2003-05-20 12:12:32', 'instructor contact form heading'),
+('en', '_template', 'instructor_request', 'ATutor Instructor Request', '2003-05-25 08:37:50', 'subject line in email to admin when instructor request is made'),
+('en', '_template', 'instructor_requests', 'Instructor Requests', '2003-05-20 12:19:52', 'admin home page heading'),
+('en', '_template', 'instructor_requests_text', 'There are <strong>%s</strong> instructor requests pending approval.', '2005-03-30 15:30:02', ''),
+('en', '_template', 'instructor_request_deny', 'Your ATutor instructor request has been denied.', '2003-10-06 15:14:48', 'email message to denied instructor'),
+('en', '_template', 'instructor_request_denymsg1', 'Registration information is incomplete.', '2003-10-06 15:55:47', 'reason why denied'),
+('en', '_template', 'instructor_request_denymsg2', 'Inappropriate subject matter.', '2003-10-06 16:01:26', 'reason why denied'),
+('en', '_template', 'instructor_request_denymsg3', 'The course description requires more detail.', '2003-10-07 15:47:33', 'deny instructor request'),
+('en', '_template', 'instructor_request_denymsg4', 'You have requested enrollment with the wrong form.', '2003-10-07 15:52:12', 'admin deny instructor request'),
+('en', '_template', 'instructor_request_email_notification', 'Instructor Request Email Notification', '2005-03-03 10:51:01', ''),
+('en', '_template', 'instructor_request_enterdenymsg', 'Choose a message explaining why the user\'s request was denied or enter your own.', '2003-10-06 15:19:05', 'Header text for deny message text area'),
+('en', '_template', 'instructor_request_reply', 'Your ATutor instructor request has been approved. Go to %s to login to My Courses, then select \"Create Course\".', '2005-05-27 13:53:06', 'email in reply to instructor account approval'),
+('en', '_template', 'invalid_session', 'Not a Valid Session', '2003-05-20 12:26:29', 'tracker'),
+('en', '_template', 'in_minutes', 'Minutes', '2007-02-20 10:30:20', ''),
+('en', '_template', 'in_reply_to', 'In reply to', '2003-05-20 12:27:21', 'replyto label for quoted forum or inbox message'),
+('en', '_template', 'italic', 'Italic', '2003-05-20 12:27:44', 'global code picker link text'),
+('en', '_template', 'item', 'Item', '2007-01-10 13:46:39', ''),
+('en', '_template', 'j', 'J', '2007-01-10 13:48:30', ''),
+('en', '_template', 'jump', 'Jump', '2003-05-20 12:28:03', 'jump menu submit button text'),
+('en', '_template', 'jump_codes', 'Jump over the code picker', '2003-05-20 12:29:53', 'alt text for bypass link to jump over the code picker'),
+('en', '_template', 'jump_redirect', 'Direct Jump', '2004-11-30 10:03:55', 'preferecnes'),
+('en', '_template', 'keep_email_private', 'Keep email hidden from others.', '2006-03-28 11:29:07', ''),
+('en', '_template', 'keep_it_short', 'Tip: Keep it short, no spaces.', '2003-05-20 12:31:53', 'file manager suggestion for folder creation'),
+('en', '_template', 'keywords', 'Keywords', '2003-09-28 10:22:10', 'content add/edit'),
+('en', '_template', 'language', 'Language', '2003-05-20 12:32:05', 'profile, registration'),
+('en', '_template', 'languages', 'Languages', '2005-03-03 11:07:50', ''),
+('en', '_template', 'lang_code', 'Language Code', '2006-09-27 14:12:11', ''),
+('en', '_template', 'last_accessed', 'Last Accessed', '2005-03-01 12:52:16', 'tracker'),
+('en', '_template', 'last_comment', 'Last Comment', '2003-05-20 12:33:10', 'forums, thread view column label'),
+('en', '_template', 'last_login', 'Last Login', '2005-03-03 11:03:12', ''),
+('en', '_template', 'last_modified', 'Last Modified', '2003-05-20 12:36:35', 'instructor content editor link text'),
+('en', '_template', 'last_name', 'Last Name', '2003-05-20 12:37:39', 'registration, profile, admin user manager'),
+('en', '_template', 'last_post', 'Last Post', '2004-04-16 11:24:59', 'Refers to date of last post in forum'),
+('en', '_template', 'last_updated', 'Last updated: %s', '2006-05-19 14:54:08', ''),
+('en', '_template', 'leave_blank', 'Leave blank', '2003-05-20 12:39:07', 'mytest/test manager question option'),
+('en', '_template', 'leave_unchanged', 'Leave unchanged', '2005-05-10 16:04:07', ''),
+('en', '_template', 'left', 'Left', '2004-04-27 11:00:35', ''),
+('en', '_template', 'left_blank', 'Left blank', '2003-05-20 12:40:14', 'mytests/test manager question result text for unanswerd question'),
+('en', '_template', 'legend', 'Legend', '2003-05-20 12:41:00', 'instructor course statistics/details'),
+('en', '_template', 'license', 'License', '2005-08-16 15:27:07', ''),
+('en', '_template', 'limit_to_group', 'Assign To Groups', '2004-12-10 14:39:53', ''),
+('en', '_template', 'link', 'Link', '2003-05-20 12:41:18', 'links database'),
+('en', '_template', 'links', 'Links', '2005-02-09 13:25:20', ''),
+('en', '_template', 'list_add_course_list', 'Add to Course List', '2004-10-19 14:39:08', 'Enrollment manager, add students manually button'),
+('en', '_template', 'list_add_enrolled_list', 'Add to Enrolled List', '2004-10-19 14:51:02', 'enrollment manager, add to enrolled students list button'),
+('en', '_template', 'list_add_unenrolled_list', 'Add to Un-enrolled List', '2004-10-19 14:47:31', 'enrollment manager, add to unenrolled students list button'),
+('en', '_template', 'list_create_course_list', 'Create Course List', '2004-10-15 12:04:06', 'create list of students function in enrollement manager'),
+('en', '_template', 'list_export_course_list', 'Export Course List', '2003-09-16 10:15:29', 'enrol admin'),
+('en', '_template', 'list_import_course_list', 'Import Course List', '2003-09-16 09:35:35', 'import course list'),
+('en', '_template', 'list_import_howto', 'A course enrollment list may be imported into ATutor. Create the course list in a comma separated values (CSV) format as follows: <code>\"firstname\", \"lastname\", \"email\"</code> with one student per line.  New students will receive their access instructions by email.', '2004-02-05 10:22:29', ''),
+('en', '_template', 'lk_agree', 'Agree', '2004-08-12 15:45:53', ''),
+('en', '_template', 'lk_always', 'Always', '2004-08-26 12:23:31', ''),
+('en', '_template', 'lk_disagree', 'Disagree', '2004-08-12 15:46:29', ''),
+('en', '_template', 'lk_excellent', 'Excellent', '2004-08-12 15:42:09', ''),
+('en', '_template', 'lk_fair', 'Fair', '2004-08-12 15:43:07', ''),
+('en', '_template', 'lk_good', 'Good', '2004-08-12 15:42:50', ''),
+('en', '_template', 'lk_important', 'Important', '2004-08-26 12:26:09', ''),
+('en', '_template', 'lk_little_importance', 'Of Little Importance', '2004-08-26 12:26:41', ''),
+('en', '_template', 'lk_mod_important', 'Moderately Important', '2004-08-26 12:26:23', ''),
+('en', '_template', 'lk_never', 'Never', '2004-08-26 12:25:30', ''),
+('en', '_template', 'lk_occasionally', 'Occasionally', '2004-08-26 12:24:04', ''),
+('en', '_template', 'lk_poor', 'Poor', '2004-08-12 15:43:18', ''),
+('en', '_template', 'lk_rarely', 'Rarely', '2004-08-26 12:24:21', ''),
+('en', '_template', 'lk_strongly_agree', 'Strongly Agree', '2004-08-12 15:45:38', ''),
+('en', '_template', 'lk_strongly_disagree', 'Strongly Disagree', '2004-08-12 15:46:46', ''),
+('en', '_template', 'lk_undecided', 'Undecided', '2004-08-26 11:46:00', ''),
+('en', '_template', 'lk_unimportant', 'Unimportant', '2004-08-26 12:27:06', ''),
+('en', '_template', 'lk_very_frequently', 'Very Frequently', '2004-08-26 12:23:46', ''),
+('en', '_template', 'lk_very_good', 'Very Good', '2004-08-12 15:42:33', ''),
+('en', '_template', 'lk_very_important', 'Very Important', '2004-08-26 12:25:52', ''),
+('en', '_template', 'lk_very_poor', 'Very Poor', '2004-08-12 15:43:37', ''),
+('en', '_template', 'lk_very_rarely', 'Very Rarely', '2004-08-26 12:24:38', ''),
+('en', '_template', 'locale', 'Locale', '2004-11-20 19:35:20', ''),
+('en', '_template', 'location', 'Location', '2005-03-04 14:06:25', ''),
+('en', '_template', 'lock_no_post', 'No posting, but allow reading.', '2003-05-20 12:46:36', 'forum instructor lock text'),
+('en', '_template', 'lock_no_post1', 'This thread is locked from posting.', '2003-05-20 12:46:45', 'forum instructor lock text'),
+('en', '_template', 'lock_no_read', 'No posting and no reading.', '2003-05-20 12:46:56', 'context'),
+('en', '_template', 'lock_no_read1', 'This thread is locked from reading and posting.', '2003-05-20 12:47:24', 'forum thread display lock message'),
+('en', '_template', 'lock_submit', 'Apply Lock', '2003-05-20 12:47:50', 'text for instructor forum lock button'),
+('en', '_template', 'lock_thread', 'Lock Thread', '2003-05-20 12:48:14', 'Alt text for forum instructor lock icon'),
+('en', '_template', 'logged_in_within', 'logged in within', '2007-02-21 13:37:39', ''),
+('en', '_template', 'login', 'Login', '2006-07-27 17:35:30', 'global login label'),
+('en', '_template', 'login_into_atutor', 'Log into your ATutor Account', '2003-05-20 12:51:48', 'login after enrollment message'),
+('en', '_template', 'login_name', 'Login Name', '2003-05-20 12:52:32', 'control centre account information label'),
+('en', '_template', 'login_name_or_email', 'Login Name or Email', '2006-03-28 14:21:34', ''),
+('en', '_template', 'login_statistics', '%s login statistics for  %s', '2003-05-31 14:49:29', 'course login details'),
+('en', '_template', 'login_text', 'Enter the Login Name and Password you chose when you first registered with the system.', '2005-07-27 15:11:33', ''),
+('en', '_template', 'logout', 'Log-out', '2003-05-20 12:53:44', 'global logout link text'),
+('en', '_template', 'log_file_bundle', 'Log File Bundle', '2005-03-10 16:36:31', 'error logging - email subject'),
+('en', '_template', 'ltr', 'Left to Right', '2004-11-20 19:37:04', ''),
+('en', '_template', 'mail_queue_cron', 'You must set-up the <a href=\"admin/cron_config.php\">cron</a> to use this feature.', '2006-04-03 14:21:30', ''),
+('en', '_template', 'maintainers', 'Maintainers', '2005-08-16 15:26:57', ''),
+('en', '_template', 'main_navigation', 'Main Navigation', '2005-03-07 12:09:31', ''),
+('en', '_template', 'male', 'Male', '2003-05-20 12:55:53', 'registration, profile, admin user manager'),
+('en', '_template', 'manage', 'Manage', '2005-02-23 12:05:42', ''),
+('en', '_template', 'manage_languages', 'Manage Existing Languages', '2004-09-23 16:30:59', ''),
+('en', '_template', 'manage_lang_howto', 'Below are all the languages currently available in this installation of ATutor. You may export the language as an ATutor language pack or delete it from the installation.', '2004-10-18 14:23:43', ''),
+('en', '_template', 'manage_links', 'Manage Links', '2006-05-24 11:24:51', ''),
+('en', '_template', 'mark', 'Mark', '2003-05-20 12:56:19', 'mytests/test manager'),
+('en', '_template', 'marked_label', 'Marked (%s)', '2005-05-12 10:25:44', ''),
+('en', '_template', 'marks', 'marks', '2003-05-20 12:56:34', 'mytests/test manager'),
+('en', '_template', 'mark_alumni', 'Mark Alumni', '2004-10-25 12:24:38', ''),
+('en', '_template', 'mark_statistics', 'Submission Statistics', '2004-08-26 13:27:13', ''),
+('en', '_template', 'master_list_authentication', 'Authenticate Against A Master Student List', '2005-03-31 13:54:01', ''),
+('en', '_template', 'master_not_in_list', 'If existing user not in new list', '2005-05-10 16:04:31', ''),
+('en', '_template', 'master_student_list', 'Master Student List', '2005-04-04 10:39:26', ''),
+('en', '_template', 'material', 'Material', '2004-10-14 14:10:13', ''),
+('en', '_template', 'material_announcements', 'Announcements (%s)', '2004-10-14 14:14:23', ''),
+('en', '_template', 'material_content_pages', 'Content Pages (%s)', '2004-10-14 14:12:47', ''),
+('en', '_template', 'material_files', 'Files (%s)', '2004-10-14 14:22:54', ''),
+('en', '_template', 'material_glossary', 'Glossary (%s)', '2004-10-14 14:22:17', ''),
+('en', '_template', 'material_groups', 'Groups (%s)', '2004-11-25 15:43:53', ''),
+('en', '_template', 'material_links', 'Links (%1$s categories,  %2$s links)', '2004-10-14 14:18:25', ''),
+('en', '_template', 'material_polls', 'Polls (%s)', '2004-10-14 14:21:41', ''),
+('en', '_template', 'material_select_all', 'Select All', '2004-10-14 14:11:39', ''),
+('en', '_template', 'material_stats', 'Statistics (%s days)', '2004-10-14 14:23:22', ''),
+('en', '_template', 'maximum', 'Maximum', '2003-05-20 12:59:01', 'instructor course statistics/details'),
+('en', '_template', 'maximum_course_float', 'Maximum Course Float', '2005-03-03 10:52:04', ''),
+('en', '_template', 'maximum_course_size', 'Maximum Course Size', '2005-03-03 10:51:52', ''),
+('en', '_template', 'maximum_file_size', 'Maximum File Size', '2005-03-03 10:51:39', ''),
+('en', '_template', 'max_backups_reached', 'You have reached the maximum number of backups allowed.', '2004-10-15 14:16:57', ''),
+('en', '_template', 'max_file_size', 'Max File Size', '2003-05-20 12:59:52', 'admin course manager properties'),
+('en', '_template', 'max_file_size_system', 'Maximum system allows', '2003-10-14 14:32:52', 'php\'s max file size'),
+('en', '_template', 'mb', '<acronym title=\"Megabyte\">MB</acronym>', '2007-07-26 14:05:45', 'short for MB (megabytes)'),
+('en', '_template', 'media', 'Media', '2007-06-15 14:41:08', ''),
+('en', '_template', 'members', 'Members', '2003-05-20 13:00:39', 'instructor course statistics/details'),
+('en', '_template', 'member_id', 'Member ID', '2003-05-20 13:01:18', 'admin user manager column heading'),
+('en', '_template', 'member_stats', 'Student Specific Usage', '2005-03-03 15:25:57', ''),
+('en', '_template', 'menu', 'Menu', '2003-05-20 13:02:17', 'preferences option'),
+('en', '_template', 'menu_menu', 'Content Navigation', '2005-03-30 10:13:27', 'context (?)'),
+('en', '_template', 'message', 'Message', '2003-05-20 13:06:56', 'inbox send message screen'),
+('en', '_template', 'message_notification', 'Message Notification', '2005-03-14 15:31:15', 'preferences'),
+('en', '_template', 'minimum', 'Minimum', '2003-05-20 13:08:57', 'instructor course statistics/details'),
+('en', '_template', 'minutes', '%s min.', '2006-03-31 15:41:57', ''),
+('en', '_template', 'minute_short', 'm', '2007-07-09 12:31:14', ''),
+('en', '_template', 'missing', 'Missing', '2005-10-05 14:02:53', ''),
+('en', '_template', 'missing_content', 'Missing Content', '2005-03-07 15:25:10', ''),
+('en', '_template', 'missing_info', 'Missing Info', '2005-08-17 13:23:48', ''),
+('en', '_template', 'modules', 'Modules', '2005-08-16 13:40:42', ''),
+('en', '_template', 'module_install_directory', 'The following directory must be created for this module to install and function: <kbd>%s</kbd>.', '2005-09-22 14:14:34', ''),
+('en', '_template', 'module_name', 'Module Name', '2005-08-17 13:11:29', ''),
+('en', '_template', 'month', 'Month', '2004-06-24 15:45:43', ''),
+('en', '_template', 'more_options', 'More options...', '2007-02-21 11:48:54', ''),
+('en', '_template', 'move', 'Move', '2004-01-15 13:31:18', 'editing content'),
+('en', '_template', 'move_down', 'Move Down', '2005-03-30 15:54:20', 'modules'),
+('en', '_template', 'move_thread', 'Move Thread', '2006-09-06 13:14:56', ''),
+('en', '_template', 'move_thread_to', 'Move thread to:', '2006-09-06 13:15:17', ''),
+('en', '_template', 'move_to_inbox', 'Move to Inbox', '2007-02-22 13:09:26', ''),
+('en', '_template', 'move_up', 'Move Up', '2005-08-02 15:44:46', 'modules'),
+('en', '_template', 'mysql_version', 'MySQL Version', '2007-07-26 13:40:50', ''),
+('en', '_template', 'my_account', 'My Account', '2005-03-28 14:04:37', ''),
+('en', '_template', 'my_courses', 'My Courses', '2004-04-15 12:05:31', ''),
+('en', '_template', 'my_enrolled_courses', 'My enrolled courses', '2004-08-18 12:03:04', ''),
+('en', '_template', 'my_files', 'My Files', '2006-03-20 14:40:42', ''),
+('en', '_template', 'my_start_page', 'My Start Page', '2005-02-08 10:58:06', ''),
+('en', '_template', 'my_tests', 'Tests &amp; Surveys', '2005-03-09 14:52:51', ''),
+('en', '_template', 'my_tracker', 'My Tracker', '2003-05-20 13:12:27', 'global my tracker  heading'),
+('en', '_template', 'na', 'N/A', '2003-05-20 13:12:48', 'short form for \"not applicable\"'),
+('en', '_template', 'name', 'Name', '2003-05-20 13:31:04', 'file manager, zip utility column heading'),
+('en', '_template', 'name_in_english', 'Language name in English', '2004-11-20 19:41:16', 'admin add language'),
+('en', '_template', 'name_in_language', 'Language name translated', '2004-11-20 19:39:49', ''),
+('en', '_template', 'nav_path', 'Navigation Path for User', '2003-05-20 13:31:22', 'tracker'),
+('en', '_template', 'nav_tendencies', 'Navigation Tendencies for User', '2003-05-20 13:32:03', 'tracker'),
+('en', '_template', 'never', 'Never', '2005-03-03 11:03:01', ''),
+('en', '_template', 'new', 'New!', '2003-05-20 13:32:52', 'forum/inbox new message indicator'),
+('en', '_template', 'new_account_enroll', 'A user account has been created for you at %1s and you have been enrolled into the course %2s. To access this course, please log into the site. It is strongly suggested you change your password upon logging in.', '2005-06-24 15:33:45', 'Message emailed to new users as a result of enrollment.'),
+('en', '_template', 'new_account_enroll_confirm', 'You have been enrolled into the course %1s. To access this course, you must first confirm your account by using the following link: %2s. It is strongly suggested you change your password upon logging in.', '2005-06-24 15:33:17', 'If new user created during enrollment and needs confirmation.'),
+('en', '_template', 'new_file', 'New File', '2006-03-20 14:36:14', ''),
+('en', '_template', 'new_name', 'New Name', '2005-03-07 13:26:12', 'filemanager rename file'),
+('en', '_template', 'new_thread', 'New Thread', '2003-05-20 13:37:34', 'forum'),
+('en', '_template', 'new_type', 'New Type:', '2006-03-22 15:11:48', ''),
+('en', '_template', 'new_user', 'New User', '2005-07-27 15:06:36', ''),
+('en', '_template', 'new_window', 'Links open in a new window.', '2005-10-28 12:24:51', ''),
+('en', '_template', 'next', 'Next', '2003-05-20 13:38:07', 'sequence arrow link text'),
+('en', '_template', 'next_topic', 'Next Topic', '2003-05-20 13:38:42', 'sequence arrow link text'),
+('en', '_template', 'no', 'No', '2005-03-03 10:18:39', 'the word no, preferences, admin course manager'),
+('en', '_template', 'none', 'None', '2003-05-20 13:40:59', 'global message when no results were retrieved'),
+('en', '_template', 'none_available', 'None available.', '2003-05-20 13:41:46', 'instructor add/edit content, glossary'),
+('en', '_template', 'none_found', 'None Found.', '2005-05-18 13:12:47', 'glossary, related topis, users online'),
+('en', '_template', 'non_group_members', 'Non-Group Members', '2005-06-10 10:51:55', ''),
+('en', '_template', 'notes', 'Notes', '2003-05-20 13:43:39', 'admin hime, instructor request notes column heading'),
+('en', '_template', 'notification_new_inbox', 'You have received a new message from %s. Login to access your inbox and view the message. Login at: %s', '2005-05-17 14:20:35', 'notification message for new mail in inbox'),
+('en', '_template', 'notify', 'Notify', '2003-05-20 13:45:17', 'admin course properties'),
+('en', '_template', 'not_created', 'Not Created', '2005-05-10 15:23:30', ''),
+('en', '_template', 'not_editable', 'Not editable.', '2006-03-20 15:17:50', ''),
+('en', '_template', 'not_enrolled', 'Not Enrolled', '2005-03-23 14:23:18', 'user status on my courses page'),
+('en', '_template', 'not_specified', 'Not specified', '2003-05-12 15:26:26', 'registration gender selection'),
+('en', '_template', 'no_announcements', 'No Announcements Found', '2003-05-20 13:55:19', 'course homepage when no announcments exist'),
+('en', '_template', 'no_content_avail', 'No content available.', '2005-10-20 11:00:59', ''),
+('en', '_template', 'no_courses', 'There are no available courses.', '2003-05-20 13:57:26', 'browse message when no courses exist'),
+('en', '_template', 'no_courses_found', 'No courses found.', '2003-05-20 13:58:31', 'message when query resuylt in no courses found, admin course manager'),
+('en', '_template', 'no_course_found', 'Course not found.', '2003-10-15 14:31:39', 'course not found'),
+('en', '_template', 'no_description', 'No description available.', '2004-08-20 15:00:55', ''),
+('en', '_template', 'no_due_date', 'No due date', '2006-05-30 12:37:39', ''),
+('en', '_template', 'no_end_date', 'No end date', '2007-07-16 14:27:07', ''),
+('en', '_template', 'no_forums', 'No Forums Found', '2003-05-20 13:59:58', 'discussions message when no forums exist'),
+('en', '_template', 'no_glossary_items', 'No glossary terms found.', '2005-03-07 10:52:11', 'edit glossary'),
+('en', '_template', 'no_icon', 'No Icon', '2005-03-03 11:20:05', ''),
+('en', '_template', 'no_month_data', 'There is no data for this month.', '2003-05-20 14:01:42', 'instructor course statistics when nonne exist'),
+('en', '_template', 'no_post', 'No post found.', '2003-05-20 14:02:44', 'forums message when attempting to view a post that no longer exists'),
+('en', '_template', 'no_questions', 'No questions found.', '2003-05-20 14:04:01', 'test manager message when no questions exist for a test.'),
+('en', '_template', 'no_results_available', 'No Results Available', '2003-05-20 14:07:22', 'test manager'),
+('en', '_template', 'no_results_yet', 'No Results Yet', '2003-05-20 14:07:32', 'my tests'),
+('en', '_template', 'no_terms_found', 'There are no glossary terms being used in this content page.', '2004-01-16 10:52:51', 'content editor'),
+('en', '_template', 'no_tests', 'No Tests or Surveys Available', '2004-08-25 14:04:15', ''),
+('en', '_template', 'no_title', 'No title.', '2005-10-20 11:00:45', ''),
+('en', '_template', 'no_user_found', 'No user found', '2003-05-20 14:09:41', 'admin user amanager, profile'),
+('en', '_template', 'num', 'No.', '2003-05-20 14:10:36', 'short form for the word number, test manager'),
+('en', '_template', 'number_of_groups', 'Number of Groups', '2006-03-22 11:48:03', ''),
+('en', '_template', 'number_of_students_per_group', 'Number of Students per Group', '2006-03-22 11:52:10', ''),
+('en', '_template', 'num_pages', '# pages', '2005-03-16 13:54:47', 'content manager'),
+('en', '_template', 'num_posts', 'Number of Posts', '2005-04-14 11:07:00', ''),
+('en', '_template', 'num_questions_per_test', 'questions per test.', '2004-08-23 16:13:24', ''),
+('en', '_template', 'num_students_currently_enrolled', 'There are <em>%s</em> students currently enrolled in this course.', '2006-03-22 13:02:01', ''),
+('en', '_template', 'num_takes_test', 'Attempts Allowed', '2004-08-26 10:34:04', ''),
+('en', '_template', 'num_threads', 'Number of Threads', '2005-04-14 11:07:33', ''),
+('en', '_template', 'ok', 'OK', '2004-01-30 11:54:41', ''),
+('en', '_template', 'on', 'on', '2003-05-20 14:11:28', 'admin course manager properties tracking option'),
+('en', '_template', 'one_page', 'One Page', '2003-05-20 14:12:22', 'test manager open ended question type'),
+('en', '_template', 'one_question_per_page', 'One question per page', '2007-08-20 15:46:36', 'edit/create test'),
+('en', '_template', 'one_sentence', 'One Sentence', '2003-05-20 14:12:46', 'test manager open ended question type'),
+('en', '_template', 'one_word', 'One Word', '2003-05-20 14:12:53', 'test manager open ended question type'),
+('en', '_template', 'ongoing', 'On Going!', '2003-05-20 14:13:23', 'mytest currently running test indicator'),
+('en', '_template', 'online_status', 'Online Status', '2005-03-11 16:18:30', 'directory'),
+('en', '_template', 'only_show_edited_terms', 'Only show edit terms.', '2006-09-25 13:08:06', 'language editor filter form'),
+('en', '_template', 'open_file_manager', 'Open File Manager', '2004-11-25 17:31:08', ''),
+('en', '_template', 'optional', 'Optional', '2003-05-20 14:40:09', 'registration screen'),
+('en', '_template', 'optional_description', 'Optional Description', '2004-10-27 15:31:07', ''),
+('en', '_template', 'optional_feedback', 'Optional Feedback', '2004-11-24 14:33:15', ''),
+('en', '_template', 'option_alignment', 'Alignment', '2004-12-01 13:36:36', 'edit/create option in test questions'),
+('en', '_template', 'or', 'Or', '2003-05-20 14:40:26', 'global word or'),
+('en', '_template', 'orange', 'Orange', '2003-05-20 14:40:40', 'global code picker'),
+('en', '_template', 'order', 'Order', '2005-03-04 14:07:25', ''),
+('en', '_template', 'original_term', 'Original term', '2006-09-25 13:09:48', ''),
+('en', '_template', 'origin_page', 'Originating Page', '2003-05-20 14:40:57', 'tracker'),
+('en', '_template', 'or_groups', 'Or, Groups:', '2006-08-28 15:58:14', ''),
+('en', '_template', 'os', '<acronym title=\"Operating System\">OS</acronym>', '2007-07-26 14:04:11', ''),
+('en', '_template', 'other', 'Other', '2005-03-03 12:17:32', ''),
+('en', '_template', 'out_of', 'Out of', '2003-05-20 14:42:22', 'mytests, score out of ...'),
+('en', '_template', 'override', 'Override selections with this course\'s custom Colour & Font theme.  <small class=\"spacer\">( If available. )</small>', '2003-05-20 14:42:37', 'preferences page'),
+('en', '_template', 'overwite_content', 'Overwrite existing material with those selected', '2004-10-15 14:18:47', ''),
+('en', '_template', 'overwrite', 'Overwrite', '2004-11-09 15:24:23', 'file manager'),
+('en', '_template', 'overwrite_master', 'If an existing account is using this Student ID, overwrite association with new account.', '2006-06-12 13:58:31', ''),
+('en', '_template', 'packaged_in', 'Content Package', '2003-10-07 18:21:34', 'apckage label in edit content'),
+('en', '_template', 'packages', 'Packages', '2005-05-17 12:09:25', ''),
+('en', '_template', 'packages_auto_advance', 'Automatically start next Learning Object', '2005-05-17 12:10:27', ''),
+('en', '_template', 'package_settings', 'Package Settings', '2005-05-17 12:06:33', ''),
+('en', '_template', 'package_type', 'Package Type', '2005-05-17 12:09:36', ''),
+('en', '_template', 'package_type_info', 'Please select the type of package you wish to upload.', '2005-05-17 12:07:10', ''),
+('en', '_template', 'package_upload_file', 'Package File', '2005-05-17 12:07:32', ''),
+('en', '_template', 'package_upload_file_info', 'Select the package file from your computer', '2005-05-17 12:07:20', ''),
+('en', '_template', 'package_upload_url', 'Package URL', '2005-05-17 12:06:58', ''),
+('en', '_template', 'package_upload_url_info', 'or specify the URL to your web accessible package file', '2005-05-17 12:06:47', ''),
+('en', '_template', 'page', 'Page', '2003-05-20 14:43:17', 'forum thread pages menu, tracker pages menu'),
+('en', '_template', 'pages_found', '%s pages found', '2004-08-20 15:09:44', ''),
+('en', '_template', 'pages_stats', 'Page Tracking Statistics for %s.', '2003-06-08 09:20:38', 'tracker'),
+('en', '_template', 'page_error', 'An error occured while generating the paginator', '2003-05-20 14:44:01', 'tracker'),
+('en', '_template', 'page_info', 'Last Modified: %s.  Revision: %s.  Release Date: %s.', '2004-02-12 11:27:02', ''),
+('en', '_template', 'page_stats', 'Content Tracking Summary', '2003-05-20 14:44:48', 'tracker'),
+('en', '_template', 'page_title', 'Page Title', '2003-05-20 14:45:16', 'tracker column heading'),
+('en', '_template', 'page_viewed', 'Page Viewed', '2003-05-20 14:45:44', 'tracker'),
+('en', '_template', 'parent', 'Parent', '2005-03-29 13:04:13', 'categories'),
+('en', '_template', 'password', 'Password', '2003-05-20 14:45:56', 'global password word'),
+('en', '_template', 'password_again', 'Password Again', '2003-05-20 14:46:52', 'registration, edit profile'),
+('en', '_template', 'password_blurb', 'Enter your account\'s email address below and an email with instructions on retrieving your password will be sent to you. The email address must be the same as the one you used for\r\nregistration.', '2006-06-08 11:20:16', ''),
+('en', '_template', 'password_changed', 'Password Change', '2005-11-30 13:54:49', ''),
+('en', '_template', 'password_change_confirm', 'Your password on %s has been changed successfully. Go to %s to login.', '2006-05-09 15:28:37', ''),
+('en', '_template', 'password_change_msg', 'Your password has been altered. Please use the information below.', '2005-11-30 13:55:47', ''),
+('en', '_template', 'password_forgot', 'Forgot Password', '2006-05-09 15:00:16', ''),
+('en', '_template', 'password_new_blurb', 'Enter a new password for your account.', '2006-05-09 15:54:44', ''),
+('en', '_template', 'password_old', 'Old Password', '2006-05-11 11:34:39', ''),
+('en', '_template', 'password_reminder', 'Forgot your password?', '2006-05-09 14:29:49', 'password reminder screen heading, public login header'),
+('en', '_template', 'password_reminder_text', 'If you have lost your password, use the forgotten password feature to regain access to your account.', '2006-05-09 14:56:46', ''),
+('en', '_template', 'password_request2', 'Dear %1$s,\r\n\r\nYour login name is %1$s.\r\n\r\nTo regain access to your ATutor account on %2$s, follow the link below. The link will become invalid after %3$s days.\r\n\r\n%4$s\r\n(If this link does not take you to the site, copy and paste it into the addres bar of your internet browser)', '2006-06-21 10:38:52', 'password reminder'),
+('en', '_template', 'paste', 'Paste', '2004-12-03 10:30:28', 'form_editor in create question'),
+('en', '_template', 'paste_file', 'Paste From File', '2003-05-20 14:49:35', 'instructor content editor'),
+('en', '_template', 'pending', 'Pending', '2003-05-20 14:50:41', 'mytests, control centre'),
+('en', '_template', 'pending_approval', '(pending approval)', '2003-05-20 14:51:49', 'control centre'),
+('en', '_template', 'pending_enrollment', 'Pending Enrollment', '2005-06-10 10:14:46', ''),
+('en', '_template', 'period', 'Period', '2004-06-22 12:09:54', ''),
+('en', '_template', 'personal_information', 'Personal Information', '2003-05-20 14:53:12', 'registration, profile edit'),
+('en', '_template', 'per_day', 'per day', '2003-05-20 14:54:04', 'instructor course statistics, details'),
+('en', '_template', 'phone', 'Telephone Number', '2006-11-23 11:33:30', 'global phone number field label'),
+('en', '_template', 'php_version', 'PHP Version', '2007-07-26 13:40:22', ''),
+('en', '_template', 'picture', 'Picture', '2007-02-26 17:22:49', ''),
+('en', '_template', 'plain_text', 'Plain Text', '2006-11-23 13:16:30', 'instructor content editor, news, inbox, forum message format'),
+('en', '_template', 'points', 'Points', '2007-03-05 15:51:38', ''),
+('en', '_template', 'poll', 'Poll', '2004-06-25 13:17:51', ''),
+('en', '_template', 'polls', 'Polls', '2004-06-14 13:55:42', ''),
+('en', '_template', 'post', 'Post', '2003-05-20 14:56:13', 'forum new thread post button'),
+('en', '_template', 'postal_code', 'Postal/Zip Code', '2003-05-20 14:56:34', 'global postal code filed labal'),
+('en', '_template', 'posted_by', 'By', '2003-05-20 14:57:31', 'forum message submitter'),
+('en', '_template', 'posted_on', 'on', '2003-05-20 14:58:10', 'forum message post date, inbox'),
+('en', '_template', 'posts', 'Forum Threads', '2005-03-07 13:37:56', 'Header for posts in Forum List'),
+('en', '_template', 'post_lock', 'Locked from posting', '2003-05-20 14:58:32', 'forum lock thread message'),
+('en', '_template', 'powered_by_google', 'Results by <a href=\"http://www.google.com\">Google</a>.', '2005-10-20 10:52:51', ''),
+('en', '_template', 'preferences', 'Preferences', '2003-05-20 14:59:08', 'global preferences word'),
+('en', '_template', 'presets', 'Presets', '2004-08-24 11:56:35', ''),
+('en', '_template', 'preset_scales', 'Preset &amp; Previously Used Scales', '2004-08-24 13:48:44', ''),
+('en', '_template', 'preview', 'Preview', '2003-05-20 14:59:52', 'test manager preview test'),
+('en', '_template', 'preview_questions', 'Preview Questions', '2005-06-21 14:06:13', ''),
+('en', '_template', 'previous', 'Previous', '2003-05-20 15:01:31', 'global sequence arrow alt/link text'),
+('en', '_template', 'previous_posts', 'Previous Posts', '2006-06-14 10:47:00', ''),
+('en', '_template', 'previous_topic', 'Previous Topic', '2003-05-20 15:02:06', 'global sequence arrow alt/link text'),
+('en', '_template', 'prev_used', 'Previously Used', '2004-08-13 13:29:47', ''),
+('en', '_template', 'primary_language', 'Primary Language', '2004-07-05 15:12:57', ''),
+('en', '_template', 'private', 'Private', '2003-05-20 15:03:14', 'global private course indicator'),
+('en', '_template', 'private_enroll', 'The course you are trying to access is <strong>private</strong>. Enrollment in this course requires instructor approval.<br />', '2005-03-17 11:51:06', 'requesting enrollment in private course'),
+('en', '_template', 'privileges', 'Privileges', '2004-03-05 12:29:02', ''),
+('en', '_template', 'priv_ac_access_all', 'ACollab: Access all Groups', '2005-08-10 15:21:20', ''),
+('en', '_template', 'priv_ac_create', 'ACollab: Create Group', '2005-08-10 15:20:47', ''),
+('en', '_template', 'priv_admin_super', 'Super Administrator', '2005-03-03 10:36:48', ''),
+('en', '_template', 'priv_admin_themes', 'Themes', '2005-03-03 10:38:07', ''),
+('en', '_template', 'priv_forums', 'Forums & Chat', '2004-03-08 10:04:06', ''),
+('en', '_template', 'priv_test_create', 'Test Creation', '2005-08-10 15:20:29', ''),
+('en', '_template', 'priv_test_mark', 'Test Marking', '2005-08-10 15:22:12', ''),
+('en', '_template', 'profile', 'Profile', '2003-05-20 16:24:30', 'control centre heading'),
+('en', '_template', 'profile_bundle_select', 'Profile Bundle Selection', '2004-12-06 12:13:34', ''),
+('en', '_template', 'profile_pictures', 'Profile Pictures', '2007-02-27 13:43:00', ''),
+('en', '_template', 'profile_student_information', 'Student Information', '2003-09-16 11:49:35', 'view profile'),
+('en', '_template', 'properties', 'Properties', '2003-05-21 12:15:58', 'instructor control centre'),
+('en', '_template', 'protected', 'Protected', '2003-05-21 12:16:46', 'browse, create coruse, control centre, course properties'),
+('en', '_template', 'province', 'Province/State', '2003-05-21 12:17:22', 'registration, profile editor'),
+('en', '_template', 'public', 'Public', '2003-05-21 12:18:37', 'browse courses, create course, course properties, control centre'),
+('en', '_template', 'purple', 'Purple', '2003-05-21 12:18:50', 'global code picker'),
+('en', '_template', 'put_link', 'put link name here', '2004-12-08 12:38:42', 'filemanager, isert text'),
+('en', '_template', 'question', 'Question', '2003-05-21 12:30:21', 'test manager'),
+('en', '_template', 'questions', 'Questions', '2003-05-21 12:30:40', 'test manager'),
+('en', '_template', 'questions_for', 'Questions for', '2003-05-21 12:30:50', 'test manager'),
+('en', '_template', 'question_categories', 'Question Categories', '2005-02-22 14:17:33', ''),
+('en', '_template', 'question_database', 'Question Database', '2004-11-24 10:14:16', ''),
+('en', '_template', 'question_statistics', 'Question Statistics', '2004-08-26 13:26:17', ''),
+('en', '_template', 'quote', 'Quote', '2003-05-21 12:31:19', 'code picker alt text'),
+('en', '_template', 'randomize_questions', 'Randomize Questions', '2004-05-18 10:44:48', ''),
+('en', '_template', 'raw', 'Raw', '2003-09-13 09:25:20', 'course tracker member picker'),
+('en', '_template', 'raw_data', 'Raw Data', '2003-05-21 12:31:48', 'instructor course statistics/details'),
+('en', '_template', 're', 'Re', '2007-02-20 16:20:00', ''),
+('en', '_template', 'reading_list', 'Reading List', '2006-05-09 14:19:55', ''),
+('en', '_template', 'read_lock', 'Locked from posting & reading', '2003-05-21 12:32:39', 'forum lock message in thread list'),
+('en', '_template', 'real_name', 'Real Name', '2003-10-20 11:33:14', 'course properties'),
+('en', '_template', 'recipient_address', 'Recipient Address', '2004-12-06 12:20:03', 'admin/error_logging_bundle.php'),
+('en', '_template', 'red', 'Red', '2003-05-21 12:32:57', 'global code picker'),
+('en', '_template', 'red_members', 'Red = Members', '2003-05-21 12:33:55', 'instructor course statistics/details'),
+('en', '_template', 'regenerate', 'Regenerate', '2007-02-16 14:00:06', ''),
+('en', '_template', 'register', 'Register', '2003-11-26 15:09:00', ''),
+('en', '_template', 'register_an_account', 'Register an ATutor System Account', '2003-05-21 12:36:01', 'private course enrolment screen, login screen'),
+('en', '_template', 'registration_text', 'If you do not have an account on this system,  please create a new account by clicking on the Register Button below.', '2005-07-27 15:11:59', ''),
+('en', '_template', 'reg_exp', 'Regular Expression', '2004-11-20 19:38:23', ''),
+('en', '_template', 'related_topics', 'Related Topics', '2003-05-21 12:38:26', 'context(?)'),
+('en', '_template', 'release_date', 'Release Date', '2003-05-21 12:39:24', 'instructor add/edit content, control centre'),
+('en', '_template', 'release_immediate', 'Once quiz has been submitted', '2004-12-13 13:55:49', ''),
+('en', '_template', 'release_marked', 'Once quiz has been submitted and all questions have been marked', '2004-12-13 13:55:57', ''),
+('en', '_template', 'release_never', 'Do not release results', '2004-12-13 14:02:13', ''),
+('en', '_template', 'release_on', 'Release on', '2006-04-10 14:37:58', ''),
+('en', '_template', 'remove', 'Remove', '2003-05-21 12:40:11', 'control centre, admin user manager, instructor enrolment manager'),
+('en', '_template', 'removed', 'Removed', '2004-02-03 09:36:19', ''),
+('en', '_template', 'remove_frame', 'Remove Frame', '2005-01-10 14:31:34', 'filemanager preview'),
+('en', '_template', 'remove_question', 'Remove Question', '2004-11-25 10:30:59', ''),
+('en', '_template', 'rename', 'Rename', '2004-08-11 14:00:49', ''),
+('en', '_template', 'replace_into', 'Replace Into', '2005-03-03 12:16:28', ''),
+('en', '_template', 'replied', 'Replied', '2003-05-21 12:40:35', 'inbox message status label'),
+('en', '_template', 'replies', 'Replies', '2003-05-21 12:40:50', 'forum'),
+('en', '_template', 'reply', 'Reply', '2003-05-21 12:41:20', 'forum, inbox'),
+('en', '_template', 'report_errors', 'Report Errors', '2004-12-06 12:08:05', ''),
+('en', '_template', 'request_enrollment', 'Request Enrollment', '2003-10-21 13:04:17', ''),
+('en', '_template', 'request_instructor', 'You do not yet have permission to create courses. If you would like an instructor account, enter the required description of the course you wish to create.', '2005-03-09 12:22:12', ''),
+('en', '_template', 'request_instructor_account', 'Request Instructor Account', '2003-05-21 12:43:12', 'control centre non-instructor'),
+('en', '_template', 'request_instructor_pending', 'Your instructor account request has been made. You will be notifed by email when your request has been approved.', '2005-03-09 12:35:15', ''),
+('en', '_template', 'required', 'Required', '2003-05-21 12:43:54', 'registration, export course, test manager question editor'),
+('en', '_template', 'required_field', 'Required Field', '2005-03-04 12:52:17', ''),
+('en', '_template', 'required_information', 'Required Information', '2005-03-04 14:08:38', ''),
+('en', '_template', 'require_email_confirmation', 'Require Email Confirmation Upon Registration', '2005-03-22 10:55:04', ''),
+('en', '_template', 'req_message9', 'ATutor Instructor Request', '2003-05-21 18:52:38', 'email message subject line from control centre instructor request'),
+('en', '_template', 'req_message_instructor', 'A new Instructor account request has been made by: %s.\r\n\r\nCourse Description: %s\r\n\r\nYou must login as the administrator at %s to approve or reject this request.', '2004-02-16 16:38:30', ''),
+('en', '_template', 'reset', 'Reset', '2003-05-21 18:53:27', 'global text for reset buttons'),
+('en', '_template', 'reset_filter', 'Reset Filter', '2005-03-30 14:52:42', ''),
+('en', '_template', 'reset_log', 'Reset Log', '2005-03-03 10:42:24', ''),
+('en', '_template', 'resource_categories', 'Resource Categories', '2003-05-21 18:57:43', 'instructor export course feedback'),
+('en', '_template', 'resource_links', 'Resource Links', '2003-05-21 18:58:34', 'instructor export course feedback'),
+('en', '_template', 'response_text', 'The following answers were given in response to:', '2004-08-25 12:20:59', ''),
+('en', '_template', 'restore', 'Restore', '2003-05-21 18:59:34', 'preferences page (removed 1.2)'),
+('en', '_template', 'restore_backup_about', 'Choose the checkboxes next to the content to be restored, select course into which to restore the content, then choose to append the content to the course, or replace the content in the course.', '2004-12-10 09:53:40', ''),
+('en', '_template', 'restore_upload', 'To upload a backup file, enter a description of the backup, choose a file to upload, and use the \"Upload\" button. Only backups created using ATutor 1.3 and later are supported. Depending on the size of the course and your Internet connection speed,  uploading a backup may take a long time.', '2004-12-10 18:06:04', ''),
+('en', '_template', 'resubmit', 'Resubmit', '2004-01-30 16:34:56', ''),
+('en', '_template', 'result', 'Result', '2004-08-12 15:22:08', 'single result in search engine'),
+('en', '_template', 'results', 'Results', '2003-05-21 19:00:51', 'test manager'),
+('en', '_template', 'results_found', 'Results Found: %s', '2005-04-14 11:01:25', ''),
+('en', '_template', 'results_from', 'Results from %s', '2004-08-18 12:05:27', ''),
+('en', '_template', 'result_release', 'Release Results', '2004-12-13 13:57:31', ''),
+('en', '_template', 'resume', 'Resume', '2003-05-21 19:01:48', 'alt/link text for the resume arrow'),
+('en', '_template', 'return', 'Return', '2003-05-21 19:02:25', 'escape from delete course function'),
+('en', '_template', 'return_file_manager', 'Return to the File Manager', '2004-11-05 11:20:30', 'file manager'),
+('en', '_template', 'return_to_admin_area', 'Return to Admin Area', '2006-03-28 12:31:38', ''),
+('en', '_template', 'revision', 'Revision', '2003-05-21 19:04:01', 'instructor content editor statistics below embedded links'),
+('en', '_template', 'revisions', 'Revisions', '2006-03-20 14:36:35', ''),
+('en', '_template', 'revision_comment', 'Revisions Comment', '2006-03-20 14:37:58', ''),
+('en', '_template', 'right', 'Right', '2004-04-27 11:00:46', ''),
+('en', '_template', 'rl_add_av_material_to_resources', 'Add AV Material To Resources', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_add_resource_av', 'Add Resource AV', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_add_resource_book', 'Add Resource Book', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_add_resource_file', 'Add Resource File', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_add_resource_handout', 'Add Resource Handout', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_add_resource_url', 'Add Resource URL', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_av', 'AV', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_av_material_to_view', 'AV Material to View', '2006-04-13 12:18:36', ''),
+('en', '_template', 'rl_book', 'book', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_book_to_read', 'Book To Read', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_create_new_av', 'Create New AV', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_create_new_book', 'Create New Book', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_create_new_file', 'Create New File', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_create_new_handout', 'Create New Handout', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_create_new_url', 'Create New URL', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_date_format', '%%M %%d, %%Y', '2006-06-26 16:10:05', ''),
+('en', '_template', 'rl_delete_reading', 'Delete Reading', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_delete_resource', 'Delete Resource', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_display_resource', 'Display Resource', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_display_resources', 'Resources', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_reading_av', 'Edit Reading AV', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_reading_book', 'Edit Reading Book', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_reading_file', 'Edit Reading File', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_reading_handout', 'Edit Reading Handout', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_reading_url', 'Edit Reading URL', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_resource_av', 'Edit Resource', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_resource_book', 'Edit Resource Book', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_resource_file', 'Edit Resource File', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_resource_handout', 'Edit Resource Handout', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_edit_resource_url', 'Edit Resource URL', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_end', 'End', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_file', 'file', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_goto_url', 'view page', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_handout', 'handout', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_isbn_number', 'ISBN', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_name_reading', 'Name Of Reading', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_new_reading_av', 'New Reading AV', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_new_reading_book', 'New Reading Book', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_new_reading_file', 'New Reading File', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_new_reading_handout', 'New Reading Handout', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_new_reading_url', 'New Reading URL', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_no_read_by_date', 'No Read By Date', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_optional_reading', 'Optional Reading', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_or', 'or', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_pages', 'Pages', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_publisher', 'Publisher', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_reading_date', 'Reading Date', '2006-02-23 09:18:51', ''),
+('en', '_template', 'rl_read_by_date', 'Read by Date', '2006-04-13 10:58:30', ''),
+('en', '_template', 'rl_select_book', 'Select Book', '2006-07-25 09:08:20', ''),
+('en', '_template', 'rl_select_file', 'Select File', '2006-07-25 09:15:44', ''),
+('en', '_template', 'rl_select_handout', 'Select Handout', '2006-07-25 09:13:13', ''),
+('en', '_template', 'rl_select_url', 'Select URL', '2006-07-25 09:12:21', ''),
+('en', '_template', 'rl_start', 'Start', '2006-06-21 08:53:43', ''),
+('en', '_template', 'rl_type_of_reading', 'Type of Reading', '2006-07-31 15:23:22', ''),
+('en', '_template', 'rl_type_of_resource', 'Type of Resource', '2006-07-14 10:24:21', ''),
+('en', '_template', 'rl_url', 'URL', '2007-08-02 10:46:30', 'resource type picker'),
+('en', '_template', 'rl_year_written', 'Year Written', '2006-06-21 08:55:34', ''),
+('en', '_template', 'role', 'Role', '2004-03-05 12:26:47', ''),
+('en', '_template', 'rss_feeds', 'Syndicated Feeds', '2005-10-28 11:07:06', ''),
+('en', '_template', 'rtl', 'Right to Left', '2004-11-20 19:37:58', ''),
+('en', '_template', 'same_course_users', 'Only users in the same courses as you are listed.', '2003-05-21 19:05:32', 'inbox send message form'),
+('en', '_template', 'save', 'Save', '2004-10-29 14:57:46', 'file manager'),
+('en', '_template', 'save_changes', 'Save Changes', '2004-05-11 10:48:01', ''),
+('en', '_template', 'save_changes_saved', 'All changes have been saved.', '2004-02-16 14:06:16', ''),
+('en', '_template', 'save_changes_unsaved', 'Unsaved changes have been made.', '2004-02-16 14:04:25', ''),
+('en', '_template', 'search', 'Search', '2003-05-21 19:19:30', 'links database'),
+('en', '_template', 'search_all_words', 'All words', '2003-08-11 11:22:04', ''),
+('en', '_template', 'search_any_word', 'Any word', '2003-08-11 11:22:14', ''),
+('en', '_template', 'search_in', 'Search in', '2004-04-30 10:51:57', ''),
+('en', '_template', 'search_match', 'Match', '2003-08-11 11:21:50', ''),
+('en', '_template', 'search_results', 'Search Results', '2003-05-21 19:21:29', 'links database'),
+('en', '_template', 'search_site', 'Only search within <strong>%s</strong>.', '2005-10-20 10:53:28', ''),
+('en', '_template', 'search_words', 'Words', '2003-08-11 11:21:36', ''),
+('en', '_template', 'second_name', 'Second Name', '2006-03-27 14:53:50', ''),
+('en', '_template', 'second_short', 's', '2007-07-09 12:31:07', ''),
+('en', '_template', 'section', 'Section', '2005-03-04 14:06:06', ''),
+('en', '_template', 'see', 'See', '2003-05-21 19:24:22', 'glossary - \"see\" related terms'),
+('en', '_template', 'see_attached', 'See attached.', '2005-03-10 16:37:04', 'error logging - email body'),
+('en', '_template', 'select', 'Select', '2007-02-21 13:22:15', ''),
+('en', '_template', 'select_all', 'select/unselect all', '2004-10-29 13:25:57', 'file manager and enrollment manager'),
+('en', '_template', 'select_av', 'Select Audio/Visual', '2006-07-25 09:14:57', ''),
+('en', '_template', 'select_cat', 'Select Category', '2005-02-23 12:23:56', ''),
+('en', '_template', 'select_directory', 'Please choose the folder you want to move the selected files to:', '2004-11-30 11:40:08', 'Filamanger, moving a file'),
+('en', '_template', 'select_member', 'Select a Member to View', '2003-05-21 19:29:27', 'instructor course tracker'),
+('en', '_template', 'select_parent_topic', 'Select parent topic', '2005-03-16 13:37:00', 'content manager'),
+('en', '_template', 'select_term_to_edit', 'Select term to edit.', '2006-09-25 13:08:38', ''),
+('en', '_template', 'send', 'Send', '2003-05-21 19:31:57', 'global message send button text'),
+('en', '_template', 'send_bundle', 'Send Bundle', '2004-12-06 12:16:19', ''),
+('en', '_template', 'send_confirmation', 'Enter your email address below and the account confirmation message will be resent.', '2005-03-24 09:57:32', ''),
+('en', '_template', 'send_delete', 'Send & Delete', '2003-05-21 19:32:55', 'send a message from the inbox and delete the original'),
+('en', '_template', 'send_message', 'Send Message', '2003-05-21 19:34:13', 'inbox send message button text'),
+('en', '_template', 'sent_messages', 'Sent Messages', '2007-02-20 16:21:09', ''),
+('en', '_template', 'sent_msgs_ttl_text', 'Number of Days to Keep Copied Sent Messages for', '2007-02-20 14:00:45', ''),
+('en', '_template', 'sent_via_atutor', 'Sent via an ATutor system at %s', '2003-05-21 20:04:50', 'global email message footer'),
+('en', '_template', 'sequence', 'Sequence', '2003-05-21 20:05:50', 'context (removed 1.2)'),
+('en', '_template', 'session_end', 'and ended on', '2003-05-21 20:12:12', 'tracker - to be updated ( started on [date] and ended on [date])'),
+('en', '_template', 'session_start', 'Session above started on', '2003-05-21 20:11:35', 'tracker (to be updated)'),
+('en', '_template', 'set', 'Set', '2003-06-30 17:02:05', 'admin language manager'),
+('en', '_template', 'set_default', 'Set as Default', '2004-10-15 15:48:04', 'set as default button in theme manager'),
+('en', '_template', 'set_preset', 'Apply Preset', '2003-05-24 10:52:43', 'preferences'),
+('en', '_template', 'shared_forums', 'Shared Forums', '2004-11-03 11:18:31', ''),
+('en', '_template', 'shortcuts', 'Shortcuts', '2004-04-27 14:57:01', ''),
+('en', '_template', 'short_paragraph', 'Short Paragraph', '2003-05-21 20:13:03', 'test manager test type'),
+('en', '_template', 'show', 'Show', '2005-03-15 11:37:59', ''),
+('en', '_template', 'show_numbers', 'Topic Numbering', '2005-02-09 10:20:54', 'preference option'),
+('en', '_template', 'show_raw_tracking', 'Show raw tracking', '2003-11-26 15:19:12', ''),
+('en', '_template', 'show_summary_tracking', 'Show summary tracking', '2003-11-26 15:18:39', ''),
+('en', '_template', 'side_menu', 'Side Menu', '2005-03-04 14:37:00', ''),
+('en', '_template', 'side_menu_text', 'Choose which menu items you would like displayed at the side.', '2005-03-04 15:17:16', ''),
+('en', '_template', 'sitemap', 'Site-map', '2003-05-21 20:17:21', 'global site-map text'),
+('en', '_template', 'site_name', 'Site Name', '2005-03-03 10:49:59', ''),
+('en', '_template', 'size', 'Size', '2003-05-22 13:01:20', 'file manager, zip tool'),
+('en', '_template', 'smile_angry', 'angry', '2004-02-12 12:20:44', ''),
+('en', '_template', 'smile_confused', 'confused', '2004-02-12 12:21:15', ''),
+('en', '_template', 'smile_crazy', 'crazy', '2004-02-12 12:20:59', ''),
+('en', '_template', 'smile_evil', 'evil', '2004-02-12 12:20:37', ''),
+('en', '_template', 'smile_frown', 'frown', '2004-02-12 12:20:14', ''),
+('en', '_template', 'smile_lol', 'laughing out loud', '2004-02-12 12:20:53', ''),
+('en', '_template', 'smile_muah', 'muah', '2004-02-12 12:21:23', ''),
+('en', '_template', 'smile_oh_well', 'oh well', '2004-02-12 12:20:21', ''),
+('en', '_template', 'smile_smile', 'smile', '2004-02-12 12:20:02', ''),
+('en', '_template', 'smile_tired', 'tired', '2004-02-12 12:21:06', ''),
+('en', '_template', 'smile_tongue', 'tongue', '2004-02-12 12:20:27', ''),
+('en', '_template', 'smile_wink', 'wink', '2004-02-12 12:20:08', ''),
+('en', '_template', 'specific_groups', 'Specific Groups', '2006-03-23 13:39:26', ''),
+('en', '_template', 'specify_url_to_content_package', 'Or, Specify a URL to a Content Package', '2004-04-30 15:33:57', ''),
+('en', '_template', 'specify_url_to_theme_package', 'Or, Specify a URL to a Theme', '2004-10-18 15:10:35', ''),
+('en', '_template', 'standard', 'Standard', '2005-09-21 13:35:25', ''),
+('en', '_template', 'started_by', 'Started By', '2003-05-22 13:02:38', 'forums thread display table column header'),
+('en', '_template', 'start_date', 'Start Date', '2003-05-22 13:03:05', 'mytests, test manager'),
+('en', '_template', 'state', 'State', '2005-08-16 15:27:15', ''),
+('en', '_template', 'statement', 'Statement', '2003-05-22 13:07:22', 'test manager add/edit questions'),
+('en', '_template', 'statistics', 'Statistics', '2003-05-22 13:08:06', 'instructor course statistics/details'),
+('en', '_template', 'statistics_information', 'Statistics &amp; Information', '2007-07-26 13:39:49', ''),
+('en', '_template', 'status', 'Status', '2003-05-22 13:09:29', 'test manager, control center, profile, admin user manager'),
+('en', '_template', 'sticky_thread', 'Sticky Thread - always at the top', '2003-05-22 13:10:18', 'instructor forum option alt text'),
+('en', '_template', 'street_address', 'Street Address', '2003-05-22 13:10:43', 'registration, profile'),
+('en', '_template', 'student', 'Student', '2003-10-27 11:44:47', 'tracker'),
+('en', '_template', 'student1', 'Student', '2003-05-22 13:11:42', 'admin user manager'),
+('en', '_template', 'students', 'Students', '2003-05-21 20:01:44', 'course email (removed 1.2)'),
+('en', '_template', 'student_id', 'Student ID', '2003-05-22 13:12:40', 'tracker'),
+('en', '_template', 'student_pin', 'Student PIN', '2005-05-27 13:35:11', ''),
+('en', '_template', 'student_tools', 'Student Tools', '2005-04-28 12:15:39', ''),
+('en', '_template', 'style_editor', 'Stylesheet Editor', '2003-05-22 13:13:22', 'tool page/ stylesheet editor heading text'),
+('en', '_template', 'subject', 'Subject', '2003-05-22 13:14:21', 'global message subject label'),
+('en', '_template', 'submission', 'Submission', '2005-05-11 11:29:07', ''),
+('en', '_template', 'submissions', 'Submissions', '2003-05-22 13:14:47', 'links database'),
+('en', '_template', 'submit', 'Submit', '2003-05-22 13:15:05', 'global submit button text'),
+('en', '_template', 'submitted_by', 'Submitted By', '2005-02-23 12:23:06', ''),
+('en', '_template', 'submit_no', 'No', '2004-11-22 16:23:09', ''),
+('en', '_template', 'submit_yes', 'Yes', '2004-11-22 16:23:00', ''),
+('en', '_template', 'subscribe', 'Subscribe to this thread to receive notification via email of new replies.', '2003-11-06 13:47:10', ''),
+('en', '_template', 'subscribe1', 'Subscribe', '2004-12-02 15:32:01', ''),
+('en', '_template', 'sub_topics', 'Subtopics', '2005-03-16 13:55:12', 'content manager'),
+('en', '_template', 'suggest_link', 'Suggest Course Link', '2006-05-25 11:40:32', ''),
+('en', '_template', 'summary', 'Summary', '2003-09-13 09:24:55', 'course tracker member picker'),
+('en', '_template', 'switch_text', 'Switch to text editor', '2004-05-27 10:50:47', 'Content editor'),
+('en', '_template', 'switch_visual', 'Switch to visual editor', '2004-05-27 10:52:19', 'Used in content editor'),
+('en', '_template', 'syndicate_announcements', 'Syndicate Announcements', '2005-01-04 09:46:15', ''),
+('en', '_template', 'system_preferences', 'System Preferences', '2005-03-03 10:49:44', ''),
+('en', '_template', 'table_of_contents', 'Table of Contents', '2003-05-22 13:53:36', 'preferences'),
+('en', '_template', 'take_test', 'Take Test', '2003-05-22 13:54:16', 'MyTests'),
+('en', '_template', 'tech_support_forum', 'Technical Support Forum', '2003-05-21 15:16:00', 'help'),
+('en', '_template', 'tech_support_forum_text', 'Support questions should be of a technical nature.', '2005-07-05 14:13:20', 'help'),
+('en', '_template', 'template', 'Template', '2006-09-25 13:07:42', ''),
+('en', '_template', 'tests', 'Tests &amp; Surveys', '2004-08-25 14:13:43', ''),
+('en', '_template', 'test_anonymous', 'This test/survey is anonymous.', '2004-09-02 13:42:31', ''),
+('en', '_template', 'test_lk', 'Likert', '2004-08-12 15:55:22', ''),
+('en', '_template', 'test_ma', 'Multiple Answer', '2007-02-01 15:49:57', ''),
+('en', '_template', 'test_matching', 'Matching (Simple)', '2007-02-01 16:20:41', ''),
+('en', '_template', 'test_matchingdd', 'Matching (Graphical)', '2007-02-01 16:20:28', ''),
+('en', '_template', 'test_mc', 'Multiple Choice', '2003-05-22 14:03:29', 'test manager question type'),
+('en', '_template', 'test_open', 'Open Ended', '2003-05-22 14:03:45', 'test manager question type'),
+('en', '_template', 'test_ordering', 'Ordering', '2007-01-10 13:45:26', ''),
+('en', '_template', 'test_tf', 'True or False', '2003-05-22 14:09:05', 'test manager question type'),
+('en', '_template', 'text', 'Text', '2004-04-20 16:40:07', ''),
+('en', '_template', 'theme', 'Theme', '2004-04-23 15:26:57', ''),
+('en', '_template', 'themes', 'Themes', '2003-05-22 14:10:24', 'preferences'),
+('en', '_template', 'themes_disabled', 'The personal theme preference has been disabled in favour of theme specific categories.', '2004-08-04 11:58:33', ''),
+('en', '_template', 'theme_screenshot', 'Screenshot', '2005-05-06 14:18:00', 'theme manager, screentshot alt/title'),
+('en', '_template', 'theme_specific_categories', 'Theme Specific Categories', '2005-03-31 13:49:53', ''),
+('en', '_template', 'the_follow_errors_occurred', 'The following errors occurred:', '2005-03-07 12:41:09', ''),
+('en', '_template', 'this_course_only', 'This course only', '2004-08-18 12:02:37', ''),
+('en', '_template', 'this_is_content', 'This is just a blank content page. Use the Edit Content link to edit this page. You can manage this course by accessing the Manage section.', '2005-05-11 14:52:47', 'default content insert when a new course is created'),
+('en', '_template', 'thread_already_subscribed', 'You are already subscribed to this thread.', '2003-05-22 14:11:25', 'forum view thread subscribe feedback'),
+('en', '_template', 'thread_locked', 'Thread Locked', '2003-05-22 14:11:58', 'forum thread view thread lock message'),
+('en', '_template', 'thread_notify1', 'Thread Subscription', '2005-01-08 09:18:48', 'Thread email notify subject'),
+('en', '_template', 'thread_subscribe', 'Subscribe to this thread to receive notification via email of replies.', '2003-05-22 14:42:57', 'forum thread subscribe description'),
+('en', '_template', 'tile_any_field', 'Any Field', '2004-05-03 13:14:02', ''),
+('en', '_template', 'tile_author', 'Author', '2004-05-03 13:14:17', ''),
+('en', '_template', 'tile_export', 'Export content to the TILE repository. A valid TILE account is required.', '2004-05-20 11:00:26', ''),
+('en', '_template', 'tile_import_content_package_about', 'Import the content directly into this course.', '2004-05-03 13:15:54', ''),
+('en', '_template', 'tile_keyword', 'Keyword', '2004-05-03 13:14:23', ''),
+('en', '_template', 'tile_progress', 'TILE Importing in Progress...', '2004-05-05 16:03:44', ''),
+('en', '_template', 'tile_search', 'TILE Repository Search', '2004-03-25 09:48:17', ''),
+('en', '_template', 'tile_technical_format', 'Technical Format', '2004-05-03 13:14:51', ''),
+('en', '_template', 'timestamp', 'Timestamp', '2004-12-06 12:04:30', ''),
+('en', '_template', 'time_spent', 'Time Spent', '2007-07-09 12:32:33', ''),
+('en', '_template', 'time_zone', 'Time Zone', '2006-11-01 13:02:56', 'appears on the config page'),
+('en', '_template', 'time_zones_not_supported', 'Your server is not set-up to support time zones. See the Handbook for more details.', '2006-11-01 13:06:40', ''),
+('en', '_template', 'title', 'Title', '2003-05-22 14:43:54', 'admin course manager column heading'),
+('en', '_template', 'to', 'To', '2003-05-22 14:45:14', 'inbox send message \"to\" a user'),
+('en', '_template', 'to1', 'to', '2003-05-22 14:48:13', 'login form header row login -to- some place'),
+('en', '_template', 'toggle_disabled', 'Toggle Disabled', '2003-05-22 15:10:01', 'alt text for menu toggle'),
+('en', '_template', 'tools', 'Tools', '2006-03-22 12:52:10', ''),
+('en', '_template', 'tools_details', 'Details for Tool Usage', '2003-05-22 15:11:15', 'tracker'),
+('en', '_template', 'tool_summary', 'Tools Usage Summary', '2003-05-22 15:11:26', 'tracker'),
+('en', '_template', 'top', 'Top', '2003-05-22 15:11:53', 'global alt text for jump to top link/icon'),
+('en', '_template', 'topic', 'Topic', '2003-05-22 15:12:45', 'forum thread list column heading'),
+('en', '_template', 'top_20', 'Only the top 20 results have been displayed.', '2005-10-20 10:50:41', ''),
+('en', '_template', 'top_level', 'Top Level', '2005-03-16 13:36:35', 'content manager'),
+('en', '_template', 'total', 'Total', '2003-05-22 15:14:13', 'instructor course statistic/details, test manager'),
+('en', '_template', 'total_votes', 'Total Votes', '2005-03-11 15:51:33', ''),
+('en', '_template', 'to_2', 'to', '2003-05-22 15:15:16', 'test manager date'),
+('en', '_template', 'to_email', 'To Email', '2003-05-22 15:17:02', 'help admin/instructor contact forms'),
+('en', '_template', 'to_name', 'To Name', '2003-05-22 15:17:20', 'help admin/instructor contact forms'),
+('en', '_template', 'tracker', 'Content Tracker', '2005-11-25 18:36:21', ''),
+('en', '_template', 'tracker_none_viewed', 'No content pages have been viewed in this course yet.', '2003-09-15 11:53:06', 'mytracker summary view'),
+('en', '_template', 'tracker_not_viewed', 'Jump to pages not yet viewed.', '2003-09-13 12:16:10', 'mytracker bypass to not viewed alt text'),
+('en', '_template', 'tracker_pages_total', 'Total pages in this course %s (pages visited: %s.)', '2003-09-13 09:11:43', 'tracker summary pages read'),
+('en', '_template', 'tracker_percent_read', 'Percentage of pages viewed %s.', '2003-09-13 12:09:57', 'tracker pages read'),
+('en', '_template', 'tracker_summary_read', 'Summary of pages viewed by user %s.', '2003-09-13 12:30:44', 'tracker summary read'),
+('en', '_template', 'tracking', 'Tracking', '2003-05-22 15:18:11', 'admin course manager '),
+('en', '_template', 'tracking_all_page_viewed', 'All pages in this course have been viewed.', '2003-09-13 12:37:23', 'mytracker page not viewed'),
+('en', '_template', 'translate', 'Translate', '2004-12-07 13:59:44', 'language manager translate button'),
+('en', '_template', 'translate_lang_howto', 'In order to translate a language you must : <br />\r\n1. Set the AT_DEVEL_TRANSLATE constant in /include/vitals.inc.php to \'1\' <br />\r\n2. Make sure that you have added the new language to the database<br />\r\n3. Select  the new language as the one you want to translate from the \'translate to:\' option at the bottom of the page<br />\r\n4. Use the translate button and translate the new language in a new window<br />', '2004-12-10 16:29:48', 'Language Manager, translation message'),
+('en', '_template', 'translate_to', 'Translate to:', '2003-05-22 15:19:14', 'footer'),
+('en', '_template', 'true', 'True', '2003-05-22 15:19:50', 'test manager question answer option'),
+('en', '_template', 'type', 'Type', '2003-05-22 15:20:30', 'test manager questions column heading'),
+('en', '_template', 'unchecked', 'Un-checked', '2006-06-26 14:56:06', ''),
+('en', '_template', 'unconfirmed', 'Unconfirmed', '2005-04-01 10:39:51', ''),
+('en', '_template', 'underline', 'Underline', '2003-05-22 15:21:31', 'global code picker'),
+('en', '_template', 'underscore', 'Underscore', '2004-06-22 12:09:46', ''),
+('en', '_template', 'unenroll', 'Un-enroll', '2004-10-15 11:51:25', 'unenroll button in enrollment manager'),
+('en', '_template', 'unenrolled', 'Un-enrolled', '2004-10-15 11:50:06', 'unenrolled tab in enrollement manager'),
+('en', '_template', 'unique_visits', 'Unique Visits', '2005-03-01 12:41:13', 'tracker'),
+('en', '_template', 'unknown', 'Unknown', '2003-06-06 10:41:35', 'links database , file upload progress window'),
+('en', '_template', 'unknown_error', 'An unknown error occured', '2003-05-22 15:22:55', 'general catch all error message'),
+('en', '_template', 'unlimited', 'Unlimited', '2005-03-01 11:22:02', 'admin course properties & file manager'),
+('en', '_template', 'unlock_thread', 'Unlock Thread', '2003-05-22 15:24:58', 'forum instructor lock screen'),
+('en', '_template', 'unmarked', 'Unmarked', '2003-05-22 15:25:33', 'mytests, test manager'),
+('en', '_template', 'unmarked_label', 'Unmarked (%s)', '2005-05-12 10:25:56', ''),
+('en', '_template', 'unreleased', 'Unreleased', '2005-05-04 13:59:37', ''),
+('en', '_template', 'unshared_forums', 'Unshared Forums', '2004-11-05 10:50:02', ''),
+('en', '_template', 'unsubscribe', 'UnSubscribe from this thread to cancel receiving notifications via email of new replies.', '2003-11-06 13:47:20', ''),
+('en', '_template', 'unsubscribe1', 'Unsubscribe', '2004-12-02 15:32:28', ''),
+('en', '_template', 'until', 'Until', '2006-03-23 11:38:49', ''),
+('en', '_template', 'unvisited_pages', 'You have not viewed the following pages:', '2003-09-13 11:56:50', 'mytracker summary'),
+('en', '_template', 'update', 'Update', '2004-11-24 14:28:45', ''),
+('en', '_template', 'updated', 'Updated', '2003-05-22 15:33:15', 'admin course manager'),
+('en', '_template', 'update_list', 'Update List', '2005-05-10 14:31:59', ''),
+('en', '_template', 'update_to', 'Update To', '2005-03-03 12:16:15', ''),
+('en', '_template', 'upload', 'Upload', '2003-05-22 15:56:16', 'global upload button/link text'),
+('en', '_template', 'upload_content_package', 'Upload a Content Package', '2004-04-30 15:33:40', ''),
+('en', '_template', 'upload_file', 'Upload File', '2006-03-20 14:37:46', ''),
+('en', '_template', 'upload_new_picture', 'Upload new picture', '2007-02-26 17:23:08', ''),
+('en', '_template', 'upload_progress', 'File Upload in Progress...', '2003-06-06 10:36:38', 'file upload progress window'),
+('en', '_template', 'upload_theme_package', 'Upload a Theme', '2004-10-18 15:09:32', 'Theme Manager'),
+('en', '_template', 'url', 'URL', '2003-05-22 15:56:36', 'links database'),
+('en', '_template', 'url_to_read', 'URL To Read', '2006-04-13 12:01:15', ''),
+('en', '_template', 'usage', 'Usage', '2005-03-16 13:55:31', 'content manager'),
+('en', '_template', 'usaved_changes_made', 'Unsaved changes made', '2004-01-15 13:30:06', 'editing content'),
+('en', '_template', 'user', 'User', '2003-05-22 15:59:34', 'links database'),
+('en', '_template', 'username', 'Username', '2003-05-22 16:00:31', 'global username label/link text'),
+('en', '_template', 'users', 'Users', '2003-05-22 16:02:26', 'forum, admin user manager'),
+('en', '_template', 'users_online', 'Users Online', '2003-05-22 16:03:00', 'discussions page text'),
+('en', '_template', 'user_contributed_notes', 'User Contributed Handbook Notes', '2005-07-27 12:01:52', ''),
+('en', '_template', 'user_offline', 'Offline', '2005-03-11 16:19:14', 'directory'),
+('en', '_template', 'user_online', 'Online', '2005-03-11 16:19:28', 'directory'),
+('en', '_template', 'use_enrol_button', 'Use the button below to enroll in this course.', '2003-05-22 16:03:37', 'enrol screen instruction'),
+('en', '_template', 'use_parent_theme', 'Use parent category\'s theme.', '2004-08-04 11:34:41', ''),
+('en', '_template', 'use_system_time', 'Use the system\'s time', '2006-11-01 13:06:01', ''),
+('en', '_template', 'use_visual_editor', '<small style=\"text-decoration:underline;\">(Editor)</small>', '2004-12-08 12:15:36', 'form editor in create test question'),
+('en', '_template', 'version', 'Version', '2003-05-22 16:04:54', 'copyright notice in footer'),
+('en', '_template', 'vertical', 'Vertical', '2004-12-01 13:34:28', 'create/edit test question option'),
+('en', '_template', 'view', 'View', '2004-02-16 15:23:09', ''),
+('en', '_template', 'viewing_errors', 'Viewing Error(s)', '2004-12-06 12:10:05', ''),
+('en', '_template', 'viewing_profile_bugs', 'Viewing Profile Bugs', '2004-12-06 12:03:33', ''),
+('en', '_template', 'view_all', 'View All', '2005-08-04 09:54:04', ''),
+('en', '_template', 'view_details', 'View Details', '2005-03-11 11:27:43', ''),
+('en', '_template', 'view_entire_post', 'View Entire Post', '2003-05-22 16:07:57', 'forum message view'),
+('en', '_template', 'view_log', 'View Activity Log', '2005-03-03 10:44:12', ''),
+('en', '_template', 'view_mark_test', 'View & Mark Test', '2003-05-22 16:08:11', 'test manager'),
+('en', '_template', 'view_message', 'View Message', '2005-03-14 11:48:21', ''),
+('en', '_template', 'view_profile_bugs', 'View Profile Bugs', '2004-12-06 11:51:58', 'admin/error_logging.php'),
+('en', '_template', 'view_responses', 'View Responses', '2004-08-25 11:53:13', ''),
+('en', '_template', 'view_results', 'View Results', '2003-05-22 16:09:09', 'mytests, test manager'),
+('en', '_template', 'view_selected_bugs', 'View Selected Bugs', '2004-12-06 12:06:26', ''),
+('en', '_template', 'view_sub_topics', 'View subtopics', '2005-03-16 13:35:47', 'content manager'),
+('en', '_template', 'view_tracking', 'View Tracking', '2003-05-22 16:09:31', 'tracker'),
+('en', '_template', 'visits', 'Visits', '2003-09-13 09:19:09', 'tracker summary read'),
+('en', '_template', 'visual_editor', 'Visual Editor', '2006-11-23 13:31:56', ''),
+('en', '_template', 'vote_to_see_results', 'Vote to see results.', '2004-06-21 16:55:42', ''),
+('en', '_template', 'warning', 'Warning', '2003-05-22 16:09:47', 'text for warning message'),
+('en', '_template', 'web_site', 'Web Site', '2003-05-22 16:10:20', 'registration, profile'),
+('en', '_template', 'weight', 'Weight', '2003-05-22 16:10:31', 'test manager'),
+('en', '_template', 'welcome_to_atutor', 'Welcome To ATutor', '2003-05-31 15:30:38', 'announcement default heading for new course'),
+('en', '_template', 'window_auto_close', 'This window will close automatically.', '2003-06-06 10:37:43', 'file upload progress window'),
+('en', '_template', 'workspace', 'Workspace', '2006-03-20 14:38:08', ''),
+('en', '_template', 'wrong_answer', 'Wrong Answer', '2003-05-22 16:11:51', 'test manager question editor'),
+('en', '_template', 'year', 'Year', '2004-06-24 15:45:35', ''),
+('en', '_template', 'yes', 'Yes', '2005-03-03 10:18:48', 'preferences, admin course manager'),
+('en', '_template', 'yes_delete', 'Yes / Delete', '2003-05-22 16:14:23', 'global delete response option'),
+('en', '_template', 'you_are_here', 'You are here', '2003-10-02 16:46:28', 'ALT text Global/Local Navigation link to self'),
+('en', '_template', 'zip_archive', 'Zip Archive', '2003-05-22 16:20:01', 'file manager'),
+('en', '_template', 'zip_file_manager', 'Zip File Manager', '2003-05-22 16:20:14', 'file manager'),
+('en', '_template', 'zip_illegal_contents', 'The contents of this archive are listed below. Illegal file types will not be extracted, and file names containing illegal characters will be translated.', '2004-08-10 15:10:04', '');
