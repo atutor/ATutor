@@ -250,7 +250,7 @@ $no_good = FALSE;
 			<th scope="col">Status</th>
 		</tr>
 		<tr>
-			<td>MySQL 4.0.2+</td>
+			<td>MySQL 4.1.10+</td>
 			<td><?php if (defined('MYSQL_NUM')) {
 						echo 'Found Unknown Version</td><td align="center">';
 						echo $good;
