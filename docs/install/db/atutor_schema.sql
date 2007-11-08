@@ -451,12 +451,12 @@ CREATE TABLE `instructor_approvals` (
 
 
 CREATE TABLE `languages` (
-  `language_code` varchar(5) NOT NULL default '',
-  `char_set` varchar(20) NOT NULL default '',
-  `direction` varchar(4) NOT NULL default '',
-  `reg_exp` varchar(31) NOT NULL default '',
-  `native_name` varchar(20) NOT NULL default '',
-  `english_name` varchar(20) NOT NULL default '',
+  `language_code` varchar(20) NOT NULL default '',
+  `char_set` varchar(80) NOT NULL default '',
+  `direction` varchar(16) NOT NULL default '',
+  `reg_exp` varchar(124) NOT NULL default '',
+  `native_name` varchar(80) NOT NULL default '',
+  `english_name` varchar(80) NOT NULL default '',
   `status` TINYINT UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY  (`language_code`,`char_set`)
 ) TYPE=MyISAM;
