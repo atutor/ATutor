@@ -130,7 +130,7 @@ print_progress($step);
 <br />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1" colspan="2">Would you like to send the following information to the atutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community.</td>
+		<td class="row1" colspan="2">The following information to the atutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community. You may optionally choose to send the URL of your ATutor installation.</td>
 	</tr>
 	<tr>
 		<td class="row1" width="20%"><b>ATutor Version:</b></td>
@@ -169,13 +169,17 @@ print_progress($step);
 		<td class="row1"><?php
 			$url = 'http' . ((isset($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) == 'on') ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php'));
 			echo $url; ?><input type="hidden" name="log_url" value="<?php echo $url; ?>" /><br />
-		<input type="checkbox" name="log_url_yes" value="1" id="url_yes" /><label for="url_yes">Include this URL as well.</label></td>
+		<input type="checkbox" name="log_url_yes" value="1" id="url_yes" checked="checked"/><label for="url_yes">Include this URL as well.</label></td>
 	</tr>
-	<tr>
-		<td class="row1" colspan="2"><div class="optional" title="Optional Field">?</div><input type="checkbox" name="log_yes" value="1" checked="checked" id="yes_send" /><label for="yes_send">Yes, send this information to atutor.ca.</label></td>
-	</tr>
-	</table>
+	<!--tr>
+		<td class="row1" colspan="2">
 
+<div class="optional" title="Optional Field">?</div><input type="checkbox" name="log_yes" value="1" checked="checked" id="yes_send" /><label for="yes_send">Yes, send this information to atutor.ca.</label>
+<input type="hidden" name="log_yes" value="1" />
+</td>
+	</tr -->
+	</table>
+<input type="hidden" name="log_yes" value="1" />
 <br />
 <p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" />
 
