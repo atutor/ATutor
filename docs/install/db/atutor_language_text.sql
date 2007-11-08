@@ -2,9 +2,9 @@
 #
 
 CREATE TABLE `language_text` (
-  `language_code` varchar(5) NOT NULL default '',
-  `variable` varchar(30) NOT NULL default '',
-  `term` varchar(50) NOT NULL default '',
+  `language_code` varchar(20) NOT NULL default '',
+  `variable` varchar(120) NOT NULL default '',
+  `term` varchar(180) NOT NULL default '',
   `text` text NOT NULL,
   `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `context` text NOT NULL,
