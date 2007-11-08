@@ -252,7 +252,8 @@ $no_good = FALSE;
 		<tr>
 			<td>MySQL 4.1.10+</td>
 			<td><?php if (defined('MYSQL_NUM')) {
-						echo 'Found Unknown Version</td><td align="center">';
+						$mysql_version = mysql_get_client_info();
+						echo 'Found  Version '.$mysql_version.'</td><td align="center">';
 						echo $good;
 					} else {
 						echo 'Not Found</td><td align="center">';
