@@ -8,6 +8,7 @@
 set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor_$now"
 set bundle = "ATutor"
+set svndir = "http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk/docs/"
 
 echo "\033[1mATutor Bundle Script [for CVS 1.3.1+] \033[0m"
 echo "--------------------"
@@ -43,9 +44,11 @@ if (-e $atutor_dir) then
 endif
 sleep 1
 
-echo "\nCopying docs/ to $atutor_dir"
+echo "\nExporting from SVN/ to $atutor_dir"
 mkdir $atutor_dir
-cp -R docs $atutor_dir/ATutor
+#cp -R docs $atutor_dir/ATutor
+/usr/bin/svn --force export $svndir
+mv 'docs' $atutor_dir/ATutor
 sleep 1
 
 echo "\nDumping language_text"
