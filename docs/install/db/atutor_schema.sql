@@ -465,7 +465,7 @@ CREATE TABLE `languages` (
 # Dumping data for table `languages`
 #
 
-INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
+INSERT INTO `languages` VALUES ('en', 'utf-8', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
     
 
 # Table structure for table `links_categories`
