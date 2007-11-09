@@ -32,7 +32,15 @@
 						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" alt="" />
 				<?php else: ?>
 					<?php echo $link; ?>
-					<img src="images/courses/<?php echo $row['icon']; ?>" class="icon" border="0" alt="" />
+                    <?php  // Added by Martin Turlej -- for custom course icons
+                        $path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
+                        if (file_exists($path.$row['icon'])) {
+                            $dir = "content/".$row['course_id']."/custom_icons/";
+                        } else {
+                            $dir = "images/courses/";
+                        }
+                    ?>
+					<img src="<?php echo $dir.$row['icon']; ?>" class="icon" border="0" alt="" />
 					<?php echo $link2; ?>
 				<?php endif; ?>
 
