@@ -16,6 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 
 authenticate(AT_PRIV_ADMIN);
 
@@ -28,6 +29,56 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 
+// added by Martin - for custom course icons
+}else if($_FILES['customicon']['tmp_name'] != ''){
+    
+	$_POST['comments'] = trim($_POST['comments']);
+
+    $owner_id = $_SESSION['course_id'];
+    $owner_type = "1";
+        
+	if ($_FILES['customicon']['error'] == UPLOAD_ERR_INI_SIZE) {
+		$msg->addError(array('FILE_TOO_BIG', get_human_size(megabytes_to_bytes(substr(ini_get('upload_max_filesize'), 0, -1)))));
+
+	} else if (!isset($_FILES['customicon']['name']) || ($_FILES['customicon']['error'] == UPLOAD_ERR_NO_FILE) || ($_FILES['customicon']['size'] == 0)) {
+		$msg->addError('FILE_NOT_SELECTED');
+
+	} else if ($_FILES['customicon']['error'] || !is_uploaded_file($_FILES['customicon']['tmp_name'])) {
+		$msg->addError('FILE_NOT_SAVED');
+	}
+
+	
+	if (!$msg->containsErrors()) {
+		$_POST['description'] = $addslashes(trim($_POST['description']));
+		$_FILES['customicon']['name'] = addslashes($_FILES['customicon']['name']);
+
+		if ($_POST['comments']) {
+			$num_comments = 1;
+		} else {
+			$num_comments = 0;
+		}
+
+		
+        $path = AT_CONTENT_DIR.$owner_id."/custom_icons/";
+        if (!is_dir($path)) {
+            @mkdir($path);
+        }
+        if (!move_uploaded_file($_FILES['customicon']['tmp_name'], $path . $_FILES['customicon']['name'])) {
+            $msg->addError('FILE_NOT_SAVED');
+        } else {
+		    $msg->addFeedback('FILE_UPLOADED');
+        }
+	
+    } else {
+        $msg->addError('FILE_NOT_SAVED');
+		
+	}
+	//header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
+	//exit;
+    
+
+
+//----------------------------------------
 }else if($_POST['submit']){
 
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
@@ -65,5 +116,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
+
 
 ?>
