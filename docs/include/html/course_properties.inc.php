@@ -478,7 +478,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 <input type="file" name="customicon" id="customicon">
             </div>
             <div class="buttons">
-                <input type="submit" value="Upload">
+                <input type="submit" value="<?php echo _AT('upload'); ?>">
             </div>
         </div>
     </div>
@@ -486,8 +486,16 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
     
 
 	<div class="row" style="width: 48%">
-		<?php if ($row['icon'] != ''): ?>
-			<img id="i0" src="images/courses/<?php echo $row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
+		<?php 
+            if ($row['icon'] != ''): 
+                $path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
+                if (file_exists($path.$row['icon'])) {
+                    $dir = "content/".$_SESSION['course_id']."/custom_icons/";
+                } else {
+                    $dir = "images/courses/";
+                }
+        ?>
+			<img id="i0" src="<?php echo $dir.$row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
 		<?php else: ?>
 			<img id="i0" src="images/clr.gif" alt="" style="float: left; margin: 2px;" border="1" height="79" width="79"  />
 		<?php endif; ?>
@@ -495,25 +503,32 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<label for="icons"><?php echo _AT('icon'); ?></label><br />
 		<select name="icon" id="icons" onchange="SelectImg()">
 			<option value=""><?php echo _AT('no_icon'); ?></option>
-            <?php // custom course icons
+            <?php // ------------- custom course icons
                 $path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
                 $boolCustom = false;
+                $optCount = 0;
 
                 if (is_dir($path)) {
-                    $boolCustom = true;
+                    $boolCustom = true;  // true if custom icons are uploaded, otherwise false
+                    
                     $files = scandir($path);
                     echo "<optgroup label='Custom Icons'>";
                     foreach($files as $val) {
                         if (substr($val, -3) == "jpg") {
-                            echo "<option value='".$val."'>".$val."</option>";
+                            $optCount++;
+                            echo "<option value='".$val."'";
+                            if ($val == $row['icon']) {
+                                echo 'selected="selected"';
+                            }
+                            echo ">".$val."</option>";
                         }
                     }
                     echo "</optgroup>";
-                    
                 }
                 
             ?>
-			<?php // other icons
+			<?php // ------------- other icons
+
 				$course_imgs = array();
 				if ($dir = opendir('../images/courses/')) {
 					while (false !== ($file = readdir($dir)) ) {
@@ -540,7 +555,11 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 }
 			?>
 		</select>
-		<br style="clear: left;" />
+        <?php
+            echo "<input type='hidden' name='custOptCount' id='custOptCount' value='".$optCount."'>";
+            echo "<input type='hidden' name='courseId' id='courseId' value='".$_SESSION['course_id']."'>";
+		?>
+        <br style="clear: left;" />
 
 	</div>
 
@@ -601,12 +620,24 @@ function disableRelease() {
 }
 
 function SelectImg() {
+    // UPDATED by Martin Turlej - for custom course icon
+
 	if (document.course_form.icon.options[document.course_form.icon.selectedIndex].value == "") {
 		document.getElementById('i0').src = "images/clr.gif";
 		document.getElementById('i0').alt = "";
 	} else {
-		document.getElementById('i0').src = "images/courses/" + document.course_form.icon.options[document.course_form.icon.selectedIndex].value;
-		document.getElementById('i0').alt = document.course_form.icon.options[document.course_form.icon.selectedIndex].value;
+        var iconIndx = document.course_form.icon.selectedIndex;
+        var custIndx = document.getElementById('custOptCount').value;
+        var courseId = document.getElementById('courseId').value;
+
+        // if icon is part of custom icons choose corresponding directory
+        if (iconIndx <= custIndx) {
+            var dir = "content/"+courseId+"/custom_icons/";
+        } else {
+            var dir = "images/courses/";
+        }
+		document.getElementById('i0').src = dir + document.course_form.icon.options[iconIndx].value;
+		document.getElementById('i0').alt = document.course_form.icon.options[iconIndx].value;
 	}
 }
 
