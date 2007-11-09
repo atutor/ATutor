@@ -149,7 +149,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form" enctype="multipart/form-data">
 	<input type="hidden" name="form_course" value="true" />
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
 	<input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
@@ -466,7 +466,26 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<textarea name="copyright" rows="2" cols="65" id="copyright"><?php echo $row['copyright']; ?></textarea>
 	</div>
 
-	<div class="row">
+    <div class="input-form" id="uploadform" style="float: right; width: 45%; margin-right: 15px;">
+        <div class="row">
+            <h3><a onclick="toggleFrm('upload'); return false;"><?php echo _AT('upload_icon'); ?></a></h3>
+        </div>
+        <div id="upload" style="display: none">
+            <div class="row">
+                <p><?php echo _AT('upload_icon_text'); ?></p>
+            </div>
+            <div class="row">
+                <input type="file" name="customicon" id="customicon">
+            </div>
+            <div class="buttons">
+                <input type="submit" value="Upload">
+            </div>
+        </div>
+    </div>
+
+    
+
+	<div class="row" style="width: 48%">
 		<?php if ($row['icon'] != ''): ?>
 			<img id="i0" src="images/courses/<?php echo $row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
 		<?php else: ?>
@@ -476,7 +495,25 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<label for="icons"><?php echo _AT('icon'); ?></label><br />
 		<select name="icon" id="icons" onchange="SelectImg()">
 			<option value=""><?php echo _AT('no_icon'); ?></option>
-			<?php
+            <?php // custom course icons
+                $path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
+                $boolCustom = false;
+
+                if (is_dir($path)) {
+                    $boolCustom = true;
+                    $files = scandir($path);
+                    echo "<optgroup label='Custom Icons'>";
+                    foreach($files as $val) {
+                        if (substr($val, -3) == "jpg") {
+                            echo "<option value='".$val."'>".$val."</option>";
+                        }
+                    }
+                    echo "</optgroup>";
+                    
+                }
+                
+            ?>
+			<?php // other icons
 				$course_imgs = array();
 				if ($dir = opendir('../images/courses/')) {
 					while (false !== ($file = readdir($dir)) ) {
@@ -488,6 +525,9 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 					closedir($dir);	
 				}
 				sort($course_imgs);
+                if ($boolCustom == true) {
+                    echo "<optgroup label='Other Icons'>";
+                }
 				foreach ($course_imgs as $file) {
 					echo '<option value="' . $file . '" ';
 					if ($file == $row['icon']) { 
@@ -495,19 +535,38 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 					}
 					echo ' >' . $file . '</option>';	
 				}
+                if ($boolCustom == true) {
+                    echo "</optgroup>";
+                }
 			?>
 		</select>
 		<br style="clear: left;" />
 
 	</div>
+
+    <div style="clear: both;"></div>
+
+    
+
 	<div class="buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /> 
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" />
 	</div>
+    
 </div>
 
-</form>
 
+<?php
+//debug($_FILES['customicon']);
+?>
+
+
+</form>
+<?php
+if ($_POST['customicon']) {
+    echo "<script language='javascript' type='text/javascript'>document.getElementById('uploadform').focus();</script>";
+}
+?>
 
 <script language="javascript" type="text/javascript">
 <!--
@@ -551,5 +610,21 @@ function SelectImg() {
 	}
 }
 
+function toggleFrm(id) {
+    if (document.getElementById(id).style.display == "none") {
+		//show
+		document.getElementById(id).style.display='';	
+
+		if (id == "c_folder") {
+			document.form0.new_folder_name.focus();
+		} else if (id == "upload") {
+			document.form0.file.focus();
+		}
+
+	} else {
+		//hide
+		document.getElementById(id).style.display='none';
+	}
+}
 // -->
 </script>
