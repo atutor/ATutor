@@ -120,7 +120,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		// Get the sender.		
-		$result = mysql_query("SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
+		$result = mysql_query("SELECT email, first_name, last_name, gender,login,password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
 		$row	= mysql_fetch_assoc($result);
 		$mail_list[] = $row['email'];
 
