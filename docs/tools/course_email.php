@@ -120,7 +120,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		// Get the sender.		
-		$result = mysql_query("SELECT email, first_name, last_name, gender,login,password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
+		$result = mysql_query("SELECT email, first_name, last_name,login,password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
 		$row	= mysql_fetch_assoc($result);
 		$mail_list[] = $row['email'];
 
@@ -135,7 +135,6 @@ if (isset($_POST['cancel'])) {
 		$_POST['body'] = str_replace('{AT_FNAME}', $row['first_name'],$_POST['body']);
 		$_POST['body'] = str_replace('{AT_LNAME}', $row['last_name'],$_POST['body']);
 		$_POST['body'] = str_replace('{AT_EMAIL}', $row['email'],$_POST['body']);
-		$_POST['body'] = str_replace('{AT_GENDER}', $row['gender'],$_POST['body']);
 		$_POST['body'] = str_replace('{AT_USER}', $row['login'],$_POST['body']);
 		$_POST['body'] = str_replace('{AT_PASSWORD}', $row['password'],$_POST['body']);
 		$mail->Body    = $_POST['body'];
