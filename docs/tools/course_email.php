@@ -130,6 +130,14 @@ if (isset($_POST['cancel'])) {
 		$mail->FromName = $row['first_name'] . ' ' . $row['last_name'];
 		$mail->AddAddress($row['email']);
 		$mail->Subject = $_POST['subject'];
+		// set some user specific variables for the body (
+		// Added by Thomas Taennier (ipool)
+		$_POST['body'] = str_replace('{AT_FNAME}', $row['first_name'],$_POST['body']);
+		$_POST['body'] = str_replace('{AT_LNAME}', $row['last_name'],$_POST['body']);
+		$_POST['body'] = str_replace('{AT_EMAIL}', $row['email'],$_POST['body']);
+		$_POST['body'] = str_replace('{AT_GENDER}', $row['gender'],$_POST['body']);
+		$_POST['body'] = str_replace('{AT_USER}', $row['login'],$_POST['body']);
+		$_POST['body'] = str_replace('{AT_PASSWORD}', $row['password'],$_POST['body']);
 		$mail->Body    = $_POST['body'];
 		foreach ($mail_list as $recip) {
 			$mail->AddBCC($recip);
