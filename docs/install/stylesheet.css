@@ -94,6 +94,9 @@ li {
 	margin-top: 0px;
 	margin-right: 0px;
 }
+li.important{
+	color: red;
+}
 
 /* link attributes */
 a:link {
@@ -449,6 +452,11 @@ div.install h3 {
 }
 div.install p {
 	font-size: small;
+}
+div.suggested {
+	font-weight: bold;
+	color: blue;
+	border: 1px solid #e3e3e3;
 }
 
 /* for data tables */

@@ -96,7 +96,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 				print_feedback($progress);
 
 				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
-				<input type="hidden" name="step" value="3" />
+				<input type="hidden" name="step" value="4" />
 				<input type="hidden" name="upgrade_action" value="true" />';
 				print_hidden(3);
 				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';
@@ -118,7 +118,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 
 
 	echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
-	<input type="hidden" name="step" value="2" />';
+	<input type="hidden" name="step" value="3" />';
 	store_steps(1);
 	print_hidden(2);
 	
