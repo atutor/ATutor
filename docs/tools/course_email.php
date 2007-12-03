@@ -130,6 +130,8 @@ if (isset($_POST['cancel'])) {
 		$mail->FromName = $row['first_name'] . ' ' . $row['last_name'];
 		$mail->AddAddress($row['email']);
 		$mail->Subject = $_POST['subject'];
+		$_POST['subject'] = str_replace('{AT_FNAME}', $row['first_name'],$_POST['subject']);
+		$_POST['subject'] = str_replace('{AT_LNAME}', $row['last_name'],$_POST['subject']);
 		// set some user specific variables for the body (
 		// Added by Thomas Taennier (ipool)
 		$_POST['body'] = str_replace('{AT_FNAME}', $row['first_name'],$_POST['body']);
