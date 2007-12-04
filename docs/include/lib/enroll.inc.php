@@ -122,14 +122,12 @@ function add_users($user_list, $enroll, $course) {
 
 	foreach ($user_list as $student) {
 		if (!$student['remove'])  {
-
-			if (!$student['exists']) {
 				$student['uname'] = $addslashes($student['uname']);
 				$student['email'] = $addslashes($student['email']);
 				$student['fname'] = $addslashes($student['fname']);
 				$student['lname'] = $addslashes($student['lname']);
 				$student['fname'] = $addslashes($student['fname']);
-		
+			if (!$student['exists']) {
 				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '0000-00-00', 'n', '','','','','', '', $status, '$_config[pref_defaults]', NOW(),'$_config[default_language]', $_config[pref_inbox_notify], 1, '0000-00-00 00:00:00')";
 
 				$result = mysql_query($sql, $db);
@@ -195,7 +193,25 @@ function add_users($user_list, $enroll, $course) {
 						$result = mysql_query($sql,$db);
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 					}
+				$subject = $_config['site_name'].': '._AT('email_confirmation_subject');
+				$body = _AT(array('enrol_message_approved',$_SESSION['course_title'],AT_BASE_HREF))."\n\n";
+				$body .= _AT('web_site') .' : '.AT_BASE_HREF."\n";
+				$body .= _AT('login_name') .' : '.$student['uname'] . "\n";
+				$mail = new ATutorMailer;
+				$mail->From     = $_config['contact_email'];
+				$mail->AddAddress($student['email']);
+				$mail->Subject = $subject;
+				$mail->Body    = $body;
+				$mail->Send();
+
+				unset($mail);
+
+
 				}
+
+
+
+
 			} else if ($student['err_disabled']) {
 				$not_enrolled_list .= '<li>' . $student['uname'] . '</li>';
 			}
