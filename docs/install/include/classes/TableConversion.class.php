@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+
 /**
 * This class will handle utf8 conversion on all tables associated with a specific course.
 * This class can be potentially upgraded to a automated table parser to optimize codes, instead of having 
@@ -116,7 +117,7 @@ class ATutorTable{
 		} else {
 			$sql .= " WHERE $primary_key_col=$primary_key";
 		}
-		echo "<hr/>";
+//		echo "<hr/>";
 		return $sql;
 	}
 }
@@ -135,7 +136,7 @@ class AssignmentsTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo (mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]))) ;
+			//echo (mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]))) ;
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -158,7 +159,7 @@ class BackupsTable extends ATutorTable{
 			$value_array['file_name'] = mb_convert_encoding($row['file_name'], $this->to_encoding, $this->from_encoding);
 			$value_array['contents'] = mb_convert_encoding($row['contents'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -182,7 +183,7 @@ class BlogPostsTable extends ATutorTable{
 			$commentPosts =& new BlogPostsCommentsTable($this->table_prefix.'blog_posts_comments', $this->from_encoding, $row[$key_col]);
 			$result &= $commentPosts->convert();
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -214,7 +215,7 @@ class BlogPostsCommentsTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['text'] = mb_convert_encoding($row['text'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -236,7 +237,7 @@ class ContentTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['text'] = mb_convert_encoding($row['text'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -258,7 +259,7 @@ class CoursesTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -280,7 +281,7 @@ class CourseEnrollmentTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['role'] = mb_convert_encoding($row['role'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, array($key_col, $key_col2), array($row[$key_col], $row[$key_col2]));
+			//echo $this->generate_sql($value_array, array($key_col, $key_col2), array($row[$key_col], $row[$key_col2]));
 			$result &= mysql_query($this->generate_sql($value_array, array($key_col, $key_col2), array($row[$key_col], $row[$key_col2])));
 		}
 		return $result;
@@ -303,7 +304,7 @@ class ExternalResourcesTable extends ATutorTable{
 			$value_array['publisher'] = mb_convert_encoding($row['publisher'], $this->to_encoding, $this->from_encoding);
 			$value_array['comments'] = mb_convert_encoding($row['comments'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -327,7 +328,7 @@ class FaqTopicsTable extends ATutorTable{
 			$faqEntries =& new FaqEntriesTable($this->table_prefix, 'faq_entries', $this->from_encoding, $row[$key_col]);
 			$faqEntries->convert();
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -350,7 +351,7 @@ class FaqEntriesTable extends ATutorTable{
 			$value_array['question'] = mb_convert_encoding($row['question'], $this->to_encoding, $this->from_encoding);
 			$value_array['answer'] = mb_convert_encoding($row['answer'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -366,7 +367,6 @@ class ForumsTable extends ATutorTable{
 	function getContent(){
 		$sql = 'SELECT this_forum.* FROM `'.$this->table_prefix.$this->table.'` this_forum NATURAL JOIN `'.$this->table_prefix.'forums_courses` this_course WHERE this_course.course_id='.$this->foreign_ID;
 		$result = mysql_query($sql);
-		debug($sql);
 		if ($result && mysql_num_rows($result)>0){
 			return $result;
 		}
@@ -386,7 +386,7 @@ class ForumsTable extends ATutorTable{
 			$forumThread=& new ForumsThreadsTable($this->table_prefix, 'forums_threads', $this->from_encoding, $row[$key_col]);
 			$result &= $forumThread->convert();
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result = mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -404,7 +404,6 @@ class ForumsThreadsTable extends ATutorTable{
 	function getContent(){
 		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE forum_id='.$this->foreign_ID;
 		$result = mysql_query($sql);
-		debug ($sql);
 		if ($result && mysql_num_rows($result)>0){
 			return $result;
 		}
@@ -421,7 +420,7 @@ class ForumsThreadsTable extends ATutorTable{
 			$value_array['subject'] = mb_convert_encoding($row['subject'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -443,7 +442,7 @@ class GlossaryTable extends ATutorTable{
 			$value_array['word'] = mb_convert_encoding($row['word'], $this->to_encoding, $this->from_encoding);
 			$value_array['definition'] = mb_convert_encoding($row['definition'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -467,7 +466,7 @@ class GroupsTypesTable extends ATutorTable{
 			$groups =& new GroupsTable($this->table_prefix, 'groups', $this->from_encoding, $row[$key_col]);
 			$result &= $groups->convert();
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -500,7 +499,7 @@ class GroupsTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $reuslt;
@@ -523,7 +522,7 @@ class MessagesSentTable extends ATutorTable{
 			$value_array['subject'] = mb_convert_encoding($row['subject'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -545,7 +544,7 @@ class NewsTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -573,7 +572,7 @@ class PollsTable extends ATutorTable{
 			$value_array['choice6'] = mb_convert_encoding($row['choice6'], $this->to_encoding, $this->from_encoding);
 			$value_array['choice7'] = mb_convert_encoding($row['choice7'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -593,7 +592,7 @@ class ReadingListTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['comment'] = mb_convert_encoding($row['comment'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -615,7 +614,7 @@ class TestsTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['instructions'] = mb_convert_encoding($row['instructions'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -658,7 +657,7 @@ class TestQuestionsTable extends ATutorTable{
 			$value_array['option_8'] = mb_convert_encoding($row['option_8'], $this->to_encoding, $this->from_encoding);
 			$value_array['option_9'] = mb_convert_encoding($row['option_9'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -679,7 +678,7 @@ class TestsQuestionsCategoriesTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;

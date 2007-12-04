@@ -93,6 +93,17 @@ $no_good = FALSE;
 					} ?></td>
 		</tr>
 		<tr>
+			<td><kbd>mbstring</kbd></td>
+			<td><?php if (extension_loaded('mbstring')) {
+						echo 'Enabled</td><td align="center">';
+						echo $good;
+					} else {
+						echo 'Disabled</td><td align="center">';
+						echo $bad;
+						$no_good = TRUE;
+					} ?></td>
+		</tr>
+		<tr>
 			<td><kbd>mysql</kbd></td>
 			<td><?php if (extension_loaded('mysql')) {
 						echo 'Enabled</td><td align="center">';

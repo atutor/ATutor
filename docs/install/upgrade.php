@@ -31,7 +31,7 @@ if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
 	header('Location: index.php');
 	exit;
 }
-
+session_start();
 require('include/upgrade_header.php');
 
 if ($step == 1) {
@@ -45,14 +45,14 @@ if ($step == 1) {
 	require('include/ustep1.php');
 }
 if ($step == 2) {
-	// in:  database info
-	// out: convert database from <encoding> to UTF-8
-	require('include/ustep9.php');
-}
-if ($step == 3) {
 	// in:  update database
 	// out: -
 	require('include/ustep2.php');
+}
+if ($step == 3) {
+	// in:  database info
+	// out: convert database from <encoding> to UTF-8
+	require('include/ustep9.php');
 }
 if ($step == 4) {
 	// in:  display version specific notices
@@ -82,6 +82,5 @@ if ($step == 8) {
 if ($step == 9) {
 	require('include/ustep6.php');
 }
-
 require('include/footer.php');
 ?>
