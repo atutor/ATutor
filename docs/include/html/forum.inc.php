@@ -107,6 +107,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		$row['subject'] = AT_print($row['subject'], 'forums_threads.subject');
 
 		/* crop the subject, if needed */
+		$full_subject = $row['subject'];	//save a copy before croping
 		if ($strlen($row['subject']) > 28) {
 			$row['subject'] = $substr($row['subject'], 0, 25).'...';
 		}
@@ -132,7 +133,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		
 		if ($row['locked'] != 1) {
-			echo '<a href="forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id'].'">'.$row['subject'].'</a>';
+			echo '<a href="forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id'].'" title="'.$full_subject.'">'.$row['subject'].'</a>';
 
 			if ($row['locked'] == 2) {
 				echo ' <i class="spacer">('._AT('post_lock').')</i>';
@@ -147,7 +148,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		if ($num_pages_2 > 1) {
 			echo ' <small class="spacer">( Page: ';
 			for ($i=2; $i<=$num_pages_2; $i++) {
-				echo '<a href="forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id'].SEP.'page='.$i.'">'.$i.'</a>';
+				echo '<a href="forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id'].SEP.'page='.$i.'" title="'.$full_subject.'">'.$i.'</a>';
 
 				if ($i<$num_pages_2){
 					echo ' | ';
