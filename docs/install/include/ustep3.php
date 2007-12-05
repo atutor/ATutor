@@ -15,7 +15,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $_POST['db_login']    = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
-unset($_SESSION['conversion_completed']);
+/* Destory session */
+session_unset();
+$_SESSION= array();
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);
 	$db = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));

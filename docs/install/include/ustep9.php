@@ -19,8 +19,8 @@ require('classes/TableConversion.class.php');
 $_POST['db_login'] = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
 unset($errors);
-//check DB & table connection
 
+//check DB & table connection
 $db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
 
 if (!$db) {
@@ -44,6 +44,20 @@ if (!$db) {
 
 	if (!$errors) {
 		print_progress($step);
+
+		/* 
+		 * Check if version is > 1.6, if so, this entire step can be skipped
+		 */
+		if (version_compare($_POST['step1']['old_version'], '1.6', '>') === TRUE) {
+			$progress[] = 'Version <kbd><b>'.$_POST['step1']['old_version'].'</b></kbd> found.';
+			$progress[] = 'UTF-8 Conversion is not needed, skipping.';
+			print_feedback($progress);
+			echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
+			<input type="hidden" name="step" value="4" />';
+			print_hidden(2);
+			echo '<p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p></form>';
+			return;
+		}
 
 		unset($_POST['submit']);
 		if (isset($progress)) {
@@ -81,9 +95,9 @@ if (!$db) {
 				$suggestion_skip="";
 				$suggestion_all="";
 				$suggestion_courses=""; 
-				echo '<div><p>You have selected a different conversion option from the recommanded one.  Please verify your option and click "Next" to continue.</p><p>Please be aware that invalid conversion may lose your data.</p></div>';
+				echo '<div><p>You have selected a different conversion option from the recommanded one.  Please verify your option and click "Yes, please continue." to continue.</p><p>Please be aware that invalid conversion may lose your data.</p></div>';
 				generateCourseLangTable($_POST['tb_prefix'], $_SESSION['course_info']);
-				//Print the selected options
+				//Print the selected options from the previous user option.
 				switch($convert_type){
 					case "all": 
 						$suggestion_all[1] =& $suggestion[1] ;
@@ -139,7 +153,7 @@ if (!$db) {
 				}
 				echo "</select></div>";
 			} elseif ($convert_type=='courses'){
-				echo "<div><p>You have chosen the conversion by course.  Each of the following course's content will be converted to UTF-8 with respect to its Course Primary Language. </p></div>";
+				echo "<div><p>You have chosen the conversion by course.  Each of the following courses' content will be converted to UTF-8 with respect to its Course Primary Language. </p></div>";
 				echo '<div><p>Notes:</p><ul>';
 				echo '<li class="important">Please backup your ATutor database before clicking next.</li>';
 				echo '<li>This conversion will convert only course related tables, other tables will be converted from the ATutor default (ISO-8859-1) to UTF-8.</li>';
@@ -147,6 +161,18 @@ if (!$db) {
 				echo '</ul></div>';
 				generateCourseLangTable($_POST['tb_prefix'], $_SESSION['course_info']);
 			} elseif ($convert_type=='skip'){
+				//When 'skip' has been chosen, check if version# < 1.6, if so, convert database structure(not content); o/w skip to next step.
+				if (version_compare($_POST['step1']['old_version'], '1.6', '<') === TRUE) {
+					unset($progress);
+					$progress[] = "Will not be converting database content.";
+					$progress[] = "Will be converting database table column structure (charset, collation) to UTF-8.";
+					print_feedback($progress);
+					print_post_for_step9($_POST);
+					echo '<input type="hidden" name="step" value="3" />'; 
+					echo '<input type="hidden" name="con_step" value="3" />';
+					echo '<p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p></form>';
+					return;
+				}
 				echo "<div><p>Skipping UTF-8 Conversion.</p><p>No content will be converted.</p></div>";
 				echo '<input type="hidden" name="step" value="4" />'; //skip to next step
 				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p></form>';
@@ -187,7 +213,25 @@ if (!$db) {
 					return false;
 				}				
 			} else {
-				return;	//should never be able to get pass here.
+				//'Skip' was selected, convert table structure only				
+				queryFromFile('db/atutor_convert_db_to_utf8.sql');
+				$progress[] = 'Database table structure has been converted to UTF-8.';
+				print_feedback($progress);
+				if (isset($errors)){
+					print_errors($errors);
+					echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
+					<input type="hidden" name="step" value="3" />';
+					print_hidden(2);
+					print_post_for_step9($_POST);
+					echo '<p align="center"><input type="submit" class="button" value=" Retry " name="submit" /></p></form>';
+					return;
+				}
+				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
+					<input type="hidden" name="step" value="4" />';
+				print_hidden(2);
+				print_post_for_step9($_POST);
+				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';				
+				return;		
 			}
 			while ($row = mysql_fetch_assoc($result)){
 				$course_id = $row['course_id'];
@@ -304,12 +348,13 @@ if (!$db) {
 			if (isset($_SESSION['conversion_completed'])){
 				unset($_SESSION['conversion_completed']);
 			}
+
 			echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
 			<input type="hidden" name="step" value="3" />';
 //			store_steps(1);
 			print_hidden(2);
 
-			echo '<div><p>Upgrading requires you to convert ATutor content to UTF-8.  The courses are listed below with their associated primary language.  </p><p>Please choose one of the conversion options listed below, the recommanded option(in blue) is already selected for you.</p><p>For a more detailed description for each of these conversions, please visit our <a href="http://wiki.atutor.ca/display/atutorwiki/UTF-8+Conversion">ATutor Wiki page</a></p></div>';
+			echo '<div><p>ATutor 1.6 upgrade requires you to convert ATutor content to UTF-8.  The courses are listed below with their associated primary language.  </p><p>Please choose one of the conversion options listed below, the recommanded option(in blue) is already selected for you.</p><p>For a more detailed description for each of these conversions, please visit our <a href="http://wiki.atutor.ca/display/atutorwiki/UTF-8+Conversion" target="blank">ATutor Wiki page</a></p></div>';
 
 			//The html fragment that sets the suggested conversion type on bold 
 			$suggestion = array('class="suggested"', 'checked="checked"');	
@@ -348,19 +393,20 @@ if (!$db) {
 				if (strtolower($prev_language)=="utf8" || strtolower($prev_language)=="utf-8" ){
 					$suggestion_skip =& $suggestion;
 					$recommanded_conversion = "skip";
+				} else {
+					$suggestion_all =& $suggestion;
+					$recommanded_conversion = "all";
+					echo '<input type="hidden" name="conv_all_char_set" value="'.$prev_language.'" />';
 				}
-				$suggestion_all =& $suggestion;
-				$recommanded_conversion = "all";
-				echo '<input type="hidden" name="conv_all_char_set" value="'.$prev_language.'" />';
 			} else {
 				$suggestion_courses =& $suggestion;
 				$recommanded_conversion = "courses";
 			}
 			echo '</table><br/>';
 
-			echo '<div><p><strong>Convert all content:</strong> Use this option if you are using just <i><u>one</u></i> non-UTF-8 language in your ATutor.</p>';
-			echo '<p><strong>Convert content by courses:</strong> Use this option when you are using <i><u>more than one</u></i> UTF-8 or non-UTF-8 languages in your ATutor.</p>';
-			echo '<p><strong>Skip conversion:</strong> Use this option when you have <i><u>only UTF-8</u></i> content in your ATutor.</p>';
+			echo '<div><p><strong>Convert all content:</strong> Use this option if you are using just <i><u>one</u></i> non-UTF-8 language pack in your ATutor.</p>';
+			echo '<p><strong>Convert content by courses:</strong> Use this option when you are using <i><u>more than one</u></i> UTF-8 or non-UTF-8 language pack in your ATutor.</p>';
+			echo '<p><strong>Skip conversion:</strong> Use this option when you have <i><u>only UTF-8</u></i> language packs in your ATutor.</p>';
 			echo '</div>';
 
 			echo '<div '.$suggestion_all[0].'><input type="radio" id="convert_all" name="convert_type" value="all" '.$suggestion_all[1].'/>';

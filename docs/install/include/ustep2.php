@@ -28,6 +28,8 @@ $_POST['db_login'] = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
 
 	unset($errors);
+	session_unset();	//clear session before using it
+	$_SESSION = array();	
 	//check DB & table connection
 
 	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
