@@ -1,3 +1,9 @@
+html,body{
+
+height:100%;
+}
+
+
 /* main body attributes */
 body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
@@ -42,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
     font-size: 160%;
 	color: #FFF;
-	background-color: #595241;
+	background-color: black;
 }
 
 h2 {
@@ -870,10 +876,10 @@ form {
 #jump-button {
     padding-left: 9px;
 	padding-right: 2px;
-	background-color: White url('images/linkTransparent.gif') 3px 2px no-repeat;
+	background-color: white url('images/linkTransparent.gif') 3px 2px no-repeat;
 	border: 1px solid #B8AE9C;
 	cursor: pointer;
-	color: white;
+	color: black;
 }
 #jumpmenu {
 	/*font-size: small;*/
@@ -919,7 +925,7 @@ div.paging li a:hover, div.paging li a.current {
 
 /*plone*/
 #header{
-	background-color: #595241;
+	background-color: #000000;
 	background-image: url(images/pencil_top.gif);
 	background-position: right top;
 	background-repeat: no-repeat;
@@ -1345,15 +1351,15 @@ dl#public-profile dd {
 #forum-thread li.even { background-color: #F7F3ED; border-top: none; }
 #forum-thread li.odd { background-color: #fff; }
 div.forum-post-author { float:left; width:150px; padding:8px 10px; }
-div.forum-post-author a.title {	font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; }	
-div.forum-post-author img.profile-picture { border: 2px solid #F7F3ED; }
-div.forum-post-content { margin-left: 150px; padding: 5px 0px 18px 18px; }
-div.forum-post-content h3 { font-weight: 500; }
-div.forum-post-ctrl { float: right; padding-right: 5px; color: #a1a1a1; }
+div.forum-post-author a.title {font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; }	
+div.forum-post-author img.profile-picture { border: 2px solid #F7F3ED; text-align:right;}
+div.forum-post-content { margin-left: 150px; padding: 5px 0px 18px 18px;}
+div.forum-post-content h3 { font-weight: 500; float:left top;clear:right; }
+div.forum-post-ctrl { float: right; padding-right: 5px; color: #a1a1a1;}
 div.forum-post-ctrl a { text-decoration: none; }
 div.forum-post-ctrl span { color: black; background-color: #fefdc2; padding: 3px; }
 div.forum-post-content p.date { color: #a1a1a1; border-bottom: 1px solid #F7F3ED; }
-div.forum-post-content div.body p { margin-bottom:20px; }
+div.forum-post-content div.body p { margin-bottom:1em; }
 
 /** inbox stuff - reuses some of the forum layout **/
 #inbox-msg li { clear:left; border:1px solid #eee; border-bottom: 1px solid #F7F3ED; width: 98%; list-style: none; }
@@ -1361,7 +1367,7 @@ div.forum-post-content div.body p { margin-bottom:20px; }
 
 div#topnavlistcontainer {
     /* Navigational Plone Tabs(tm), implemented by customizing the a tag - they are surprisingly elegant. The power of CSS runs strong in these :) */
-    background-color: #595241;
+    background-color: black;
 	background-image: url(images/pencil_bottom.gif);
 	background-position: right top;
 	background-repeat: no-repeat;
@@ -1462,6 +1468,7 @@ li.child-tool {
 }
 
 /* to modify  tool icons on the course home page */
+/*
 #icon-color-filter{
 	width:3.9em;
 	height:3.85em;
@@ -1477,7 +1484,7 @@ li.child-tool {
 	height:3.85em;
 	width:3.9em;
 }
-
+*/
 /* browse courses */
 dl.browse-course {
 	width: 100%;

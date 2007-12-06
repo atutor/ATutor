@@ -187,7 +187,6 @@ function toggleToc(objId) {
 		- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 	<?php endif; ?></h1>
 </div>
-<div id="tl_corner"></div>
 <!-- top help/search/login links -->
 <div align="right" id="top-links">
 <!-- back to start page -->
