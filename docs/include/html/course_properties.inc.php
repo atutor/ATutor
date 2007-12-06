@@ -477,9 +477,6 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
             <div class="row">
                 <input type="file" name="customicon" id="customicon">
             </div>
-            <div class="buttons">
-                <input type="submit" value="<?php echo _AT('upload'); ?>">
-            </div>
         </div>
     </div>
 
@@ -489,13 +486,25 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<?php 
             if ($row['icon'] != ''): 
                 $path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
+                
                 if (file_exists($path.$row['icon'])) {
-                    $dir = "content/".$_SESSION['course_id']."/custom_icons/";
+                    if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+                        $_base_href = 'get.php/custom_icons/';
+                    } else {
+                        $_base_href = 'content/' . $_SESSION['course_id'] . '/';
+                    }
                 } else {
-                    $dir = "images/courses/";
+                    $_base_href = "images/courses/";
                 }
+            
+            $force_get = (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) ? true : false;
+            echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get'>";
         ?>
-			<img id="i0" src="<?php echo $dir.$row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
+        
+
+
+
+			<img id="i0" src="<?php echo $_base_href.$row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
 		<?php else: ?>
 			<img id="i0" src="images/clr.gif" alt="" style="float: left; margin: 2px;" border="1" height="79" width="79"  />
 		<?php endif; ?>
@@ -574,12 +583,6 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
     
 </div>
 
-
-<?php
-//debug($_FILES['customicon']);
-?>
-
-
 </form>
 <?php
 if ($_POST['customicon']) {
@@ -622,6 +625,8 @@ function disableRelease() {
 function SelectImg() {
     // UPDATED by Martin Turlej - for custom course icon
 
+    var boolForce = document.getElementById('boolForce').value;
+
 	if (document.course_form.icon.options[document.course_form.icon.selectedIndex].value == "") {
 		document.getElementById('i0').src = "images/clr.gif";
 		document.getElementById('i0').alt = "";
@@ -632,7 +637,7 @@ function SelectImg() {
 
         // if icon is part of custom icons choose corresponding directory
         if (iconIndx <= custIndx) {
-            var dir = "content/"+courseId+"/custom_icons/";
+            var dir = (boolForce == 1) ? "/get.php/custom_icons/" : "/content/"+courseId+"/custom_icons/";
         } else {
             var dir = "images/courses/";
         }
