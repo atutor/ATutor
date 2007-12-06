@@ -905,11 +905,11 @@ CREATE TABLE `themes` (
 ) TYPE = MYISAM;
 
 # insert the default theme
-INSERT INTO `themes` VALUES ('Atutor', '1.5.6', 'default', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
-INSERT INTO `themes` VALUES ('Atutor Classic', '1.5.6', 'default_classic', NOW(), 'This is the ATutor Classic theme which makes use of the custom Header and logo images. To customize those images you must edit the <code>theme.cfg.php</code> in this theme\'s directory.', 1);
-INSERT INTO `themes` VALUES ('Blumin', '1.5.6', 'blumin', NOW(), 'This is the plone look-alike theme.', 1);
-INSERT INTO `themes` VALUES ('Greenmin', '1.5.6', 'greenmin', NOW(), 'This is the plone look-alike theme in green.', 1);
-
+INSERT INTO `themes` VALUES ('ATutor', '1.6', 'default', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
+INSERT INTO `themes` VALUES ('ATutor Classic', '1.6', 'default_classic', NOW(), 'This is the ATutor Classic theme which makes use of the custom Header and logo images. To customize those images you must edit the <code>theme.cfg.php</code> in this theme\'s directory.', 1);
+INSERT INTO `themes` VALUES ('Blumin', '1.6', 'blumin', NOW(), 'This is the plone look-alike theme.', 1);
+INSERT INTO `themes` VALUES ('Greenmin', '1.6', 'greenmin', NOW(), 'This is the plone look-alike theme in green.', 1);
+INSERT INTO `themes` VALUES ('ATutor 1.5', '1.6', 'default15', NOW(), 'This is the 1.5 series default theme.', 1);
 
 
 # --------------------------------------------------------
