@@ -13,5 +13,5 @@ CREATE TABLE `handbook_notes` (
 PRIMARY KEY ( `note_id` )
 );
 
-
-ALTER TABLE `admins` ADD  `language` varchar(5) default '' NOT NULL AFTER `email` ;
+#Dec 6, 2007 - duplicated column name
+#ALTER TABLE `admins` ADD  `language` varchar(5) default '' NOT NULL AFTER `email` ;
