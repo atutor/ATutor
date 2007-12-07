@@ -11,6 +11,10 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+/* Constances, refer to /include/lib/constants.inc.php */
+define('LINK_CAT_COURSE',	1);
+define('LINK_CAT_GROUP',	2);
+define('LINK_CAT_SELF',		3);
 
 /**
 * This class will handle utf8 conversion on all tables associated with a specific course.
@@ -19,7 +23,7 @@
 * Note: Keeping in mind that this class will not be used a lot after 1.6 conversion.  
 * @access			public
 * @author			Harris Wong
-* @precondition		MySQL connected
+* @precondition		MySQL connected, mbstring lib enabled.
 * @date				Nov 28, 2007
 */
 class ATutorTable{
@@ -47,6 +51,7 @@ class ATutorTable{
 		 if (!extension_loaded('mbstring')){
 			 die("Please have mbstring library enabled");
 		 }
+		
 		//Alter table
 		$this->alterTable();
 	}
@@ -65,11 +70,16 @@ class ATutorTable{
 	/**
 	 * getContent
 	 * This method will get all the contents from this table with the given courseID.
+	 * @param courseDependent = false when this table isn't related to course encoding, true if it is related (default)
 	 * @return	result set, and null on failure or 0 rows
 	 */
-	function getContent(){
-		$sql = "SELECT * FROM `".$this->table_prefix.$this->table."` WHERE course_id=".$this->foreign_ID;
-			$result = mysql_query($sql);
+	function getContent($courseDependent = true){
+		if ($courseDependent) {
+			$sql = "SELECT * FROM `".$this->table_prefix.$this->table."` WHERE course_id=".$this->foreign_ID;
+		} else {
+			$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table;
+		}
+		$result = mysql_query($sql);
 		if ($result && mysql_num_rows($result)>0){
 			return $result;
 		}
@@ -288,6 +298,32 @@ class CourseEnrollmentTable extends ATutorTable{
 	}
 }
 
+
+/**
+ * Class for Course Categories
+ * Course Categories are created by admins, the language encoding should be based on
+ * the admin's language setting for >= 1.5.1
+ * Otherwise, default it to iso-8859-1.
+ * Note: This class is independent from courses
+ */
+class CourseCategoriesTable extends ATutorTable{
+	function convert(){
+		$rs = $this->getContent(false);
+		$result = true;
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col = 'cat_id';
+			//Convert all neccessary entries
+			$value_array['cat_name'] = mb_convert_encoding($row['cat_name'], $this->to_encoding, $this->from_encoding);
+			//Generate SQL
+			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
+		}
+		return $reuslt;
+	}
+}
+
+
 /**
  * Class for External resources
  */
@@ -429,6 +465,102 @@ class ForumsThreadsTable extends ATutorTable{
 
 
 /**
+ * Class for Folders
+ * Associated with Groups, Links
+ */
+ class FoldersTable extends ATutorTable{
+	/*
+	 * Overrider
+	 * owner_id means category_id, owner_type refers to the different link type defined in the constants.inc.php.
+	 */
+	function getContent(){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.LINK_CAT_COURSE.' AND owner_id='.$this->foreign_ID;
+		$result = mysql_query($sql);
+		if ($result && mysql_num_rows($result)>0){
+			return $result;
+		}
+		return false;
+	}
+
+	function convert(){
+		$rs = $this->getContent();
+		$result = true;
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col = 'folder_id';
+			//Convert all neccessary entries
+			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
+			//Generate SQL
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
+		}
+		return $result;
+	}
+ }
+
+/**
+ * Class for Files
+ * Associated with Groups, Links
+ */
+ class FilesTable extends ATutorTable{
+	/*
+	 * Overrider
+	 * owner_id means category_id, owner_type refers to the different link type defined in the constants.inc.php.
+	 */
+	function getContent(){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.LINK_CAT_COURSE.' AND owner_id='.$this->foreign_ID;
+		$result = mysql_query($sql);
+		if ($result && mysql_num_rows($result)>0){
+			return $result;
+		}
+		return false;
+	}
+
+	function convert(){
+		$rs = $this->getContent();
+		$result = true;
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col = 'file_id';
+			//Convert all neccessary entries
+			$value_array['file_name'] = mb_convert_encoding($row['file_name'], $this->to_encoding, $this->from_encoding);
+			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
+			//Convert faq entries
+			$forumThread=& new FilesCommentsTable($this->table_prefix, 'files_comments', $this->from_encoding, $row[$key_col]);
+			$result &= $forumThread->convert();
+			//Generate SQL
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
+		}
+		return $result;
+	}
+ }
+
+
+/**
+ * Class for Files comments 
+ * Used only by FilesTable
+ * Foreign key = file_id
+ */
+class FilesCommentsTable extends ATutorTable{
+	function convert(){
+		$rs = $this->getContent();
+		$result = true;
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col = 'commend_id';
+			//Convert all neccessary entries
+			$value_array['comment'] = mb_convert_encoding($row['comment'], $this->to_encoding, $this->from_encoding);
+			//Generate SQL
+			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
+		}
+		return $result;
+	}
+}
+
+
+/**
  * Class for Glossary 
  */
 class GlossaryTable extends ATutorTable{
@@ -506,6 +638,94 @@ class GroupsTable extends ATutorTable{
 	}
 }
 
+
+/**
+ * Class for Links Categories
+ * Associated with Folders, Groups
+ */
+class LinksCategoriesTable extends ATutorTable{
+	/*
+	 * Overrider
+	 * owner_id means category_id, owner_type refers to the different link type defined in the constants.inc.php.
+	 */
+	function getContent(){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.LINK_CAT_COURSE.' AND owner_id='.$this->foreign_ID;
+		$result = mysql_query($sql);
+		if ($result && mysql_num_rows($result)>0){
+			return $result;
+		}
+		return false;
+	}
+
+	function convert(){
+		$rs = $this->getContent();
+		$result = true;
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col = 'cat_id';
+			//Convert all neccessary entries
+			$value_array['name'] = mb_convert_encoding($row['name'], $this->to_encoding, $this->from_encoding);
+			//Convert links table
+			$groups =& new LinksTable($this->table_prefix, 'links', $this->from_encoding, $row[$key_col]);
+			$result &= $groups->convert();
+			//Generate SQL
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
+		}
+		return $result;
+	}
+}
+
+/**
+ * Class for Links
+ * Used only by LinksCategoriesTable
+ * Foreign key = cat_id
+ */
+ class LinksTable extends ATutorTable{
+	function convert(){
+		$rs = $this->getContent();
+		$result = true;
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col = 'link_id';
+			//Convert all neccessary entries
+			$value_array['LinkName'] = mb_convert_encoding($row['LinkName'], $this->to_encoding, $this->from_encoding);
+			$value_array['Description'] = mb_convert_encoding($row['Description'], $this->to_encoding, $this->from_encoding);
+			$value_array['SubmitName'] = mb_convert_encoding($row['SubmitName'], $this->to_encoding, $this->from_encoding);
+			//Generate SQL
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
+		}
+		return $result;
+	}
+ }
+
+
+/**
+ * Class for Members 
+ * Note: This class is independent from courses
+ */
+class MembersTable extends ATutorTable{
+	function convert(){
+		$rs = $this->getContent(false);
+		$result = true;
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col = 'member_id';
+			//Convert all neccessary entries
+			$value_array['first_name'] = mb_convert_encoding($row['first_name'], $this->to_encoding, $this->from_encoding);
+			$value_array['second_name'] = mb_convert_encoding($row['second_name'], $this->to_encoding, $this->from_encoding);
+			$value_array['last_name'] = mb_convert_encoding($row['last_name'], $this->to_encoding, $this->from_encoding);
+			$value_array['address'] = mb_convert_encoding($row['address'], $this->to_encoding, $this->from_encoding);
+			$value_array['city'] = mb_convert_encoding($row['city'], $this->to_encoding, $this->from_encoding);
+			$value_array['province'] = mb_convert_encoding($row['province'], $this->to_encoding, $this->from_encoding);
+			//Generate SQL
+			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
+		}
+		return $reuslt;
+	}
+}
 
 
 /**
@@ -692,6 +912,19 @@ mysql_select_db('atutor_155', $db);
 $_POST['tb_prefix'] = 'at_';
 $char_set  = 'BIG-5';
 $course_id = '5';
+$cat_id = '2';
+			$temp_table =& new CourseCategoriesTable($_POST['tb_prefix'], 'course_cats', 'ISO-8859-1', $cat_id);
+			$temp_table->convert();
+			echo "<hr/>";			
+			$temp_table =& new LinksCategoriesTable($_POST['tb_prefix'], 'links_categories', $char_set, $course_id);
+			$temp_table->convert();
+			echo "<hr/>";			
+			$temp_table =& new FoldersTable($_POST['tb_prefix'], 'folders', $char_set, $course_id);
+			$temp_table->convert();
+			echo "<hr/>";			
+			$temp_table =& new FilesTable($_POST['tb_prefix'], 'files', $char_set, $course_id);
+			$temp_table->convert();
+			echo "<hr/>";			
 			$temp_table =& new AssignmentsTable($_POST['tb_prefix'], 'assignments', $char_set, $course_id);
 			$temp_table->convert();
 			echo "<hr/>";
