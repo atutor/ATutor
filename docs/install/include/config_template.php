@@ -41,7 +41,7 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step1']['header_img'])),
 					addslashes(urldecode($_POST['step1']['header_logo'])),
 					$comments,
-					addslashes(urldecode($_POST['step4']['content_dir'])),
+					addslashes(urldecode($_POST['step5']['content_dir'])),
 					$_POST['step1']['smtp'],
 					$_POST['step1']['get_file']
 				);
