@@ -501,12 +501,14 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
             echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get'>";
         ?>
         
+		<img id="i0" src="<?php echo $_base_href.$row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
 
-
-
-			<img id="i0" src="<?php echo $_base_href.$row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
 		<?php else: ?>
 			<img id="i0" src="images/clr.gif" alt="" style="float: left; margin: 2px;" border="1" height="79" width="79"  />
+			<?	// temp hack fix, boolForce was not declared if custom icon folder isn't cound
+				// @harris
+				?>
+			<input type='hidden' name='boolForce' id='boolForce' value=''>
 		<?php endif; ?>
 
 		<label for="icons"><?php echo _AT('icon'); ?></label><br />
@@ -626,7 +628,6 @@ function SelectImg() {
     // UPDATED by Martin Turlej - for custom course icon
 
     var boolForce = document.getElementById('boolForce').value;
-
 	if (document.course_form.icon.options[document.course_form.icon.selectedIndex].value == "") {
 		document.getElementById('i0').src = "images/clr.gif";
 		document.getElementById('i0').alt = "";
@@ -636,8 +637,8 @@ function SelectImg() {
         var courseId = document.getElementById('courseId').value;
 
         // if icon is part of custom icons choose corresponding directory
-        if (iconIndx <= custIndx) {
-            var dir = (boolForce == 1) ? "/get.php/custom_icons/" : "/content/"+courseId+"/custom_icons/";
+        if (iconIndx <= custIndx && boolForce != '') {
+            var dir = (boolForce == 1) ? "get.php/custom_icons/" : "/content/"+courseId+"/custom_icons/";
         } else {
             var dir = "images/courses/";
         }
