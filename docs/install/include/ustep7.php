@@ -140,8 +140,8 @@ if (!$db) {
 			}
 
 			if ($convert_type=='all'){
-				echo "<div><p>You have chosen the <strong>Convert all content</strong> option.  All the ATutor's content will be converted to UTF-8 from the encoding listed below. .</p></div>";
-				echo "<div><p>Note: This might take up to several minutes depends on the size of the database.</p></div><br/>";
+				echo "<div><p>You have chosen the <strong>Convert all content</strong> option.  All ATutor's content will be converted to UTF-8 from the encoding listed below.</p></div>";
+				echo "<div><p>Note: This might take up to several minutes, please be patient while you wait.</p></div><br/>";
 
 				echo "<div><label>Convert From: </label><select name='encoding_code'>";
 				foreach ($char_encodings as $index=>$encoding){

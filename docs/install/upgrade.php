@@ -52,7 +52,7 @@ if ($step == 2) {
 if ($step == 3) {
 	// in:  database info
 	// out: convert database from <encoding> to UTF-8
-	require('include/ustep9.php');
+	require('include/ustep7.php');
 }
 if ($step == 4) {
 	// in:  display version specific notices
