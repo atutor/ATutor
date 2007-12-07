@@ -275,7 +275,7 @@ if (!$db) {
 				$temp_table =& new CourseEnrollmentTable($_POST['tb_prefix'], 'course_enrollment', $char_set, $course_id);
 				if (!$temp_table->convert())
 					$errors[]= $row['title'].': '.$_POST['tb_prefix'].'course_enrollment was not converted.';
-				
+
 				$temp_table =& new ExternalResourcesTable($_POST['tb_prefix'], 'external_resources', $char_set, $course_id);
 				if (!$temp_table->convert())
 					$errors[]= $row['title'].': '.$_POST['tb_prefix'].'external_resources was not converted.';
@@ -283,6 +283,14 @@ if (!$db) {
 				$temp_table =& new FaqTopicsTable($_POST['tb_prefix'], 'faq_topics', $char_set, $course_id);
 				if (!$temp_table->convert())
 					$errors[]= $row['title'].': '.$_POST['tb_prefix'].'faq_topics was not converted.';
+				
+				$temp_table =& new FoldersTable($_POST['tb_prefix'], 'folders', $char_set, $course_id);
+				if (!$temp_table->convert())
+					$errors[]= $row['title'].': '.$_POST['tb_prefix'].'folders was not converted.';
+
+				$temp_table =& new FilesTable($_POST['tb_prefix'], 'files', $char_set, $course_id);
+				if (!$temp_table->convert())
+					$errors[]= $row['title'].': '.$_POST['tb_prefix'].'files was not converted.';
 				
 				$temp_table =& new ForumsTable($_POST['tb_prefix'], 'forums', $char_set, $course_id);
 				if (!$temp_table->convert())
@@ -295,6 +303,10 @@ if (!$db) {
 				$temp_table =& new GroupsTypesTable($_POST['tb_prefix'], 'groups_types', $char_set, $course_id);
 				if (!$temp_table->convert())
 					$errors[]= $row['title'].': '.$_POST['tb_prefix'].'groups_types was not converted.';
+
+				$temp_table =& new LinksCategoriesTable($_POST['tb_prefix'], 'links_categories', $char_set, $course_id);
+				if (!$temp_table->convert())
+					$errors[]= $row['title'].': '.$_POST['tb_prefix'].'links_categories was not converted.';
 
 				$temp_table =& new MessagesSentTable($_POST['tb_prefix'], 'messages_sent', $char_set, $course_id);
 				if (!$temp_table->convert())
