@@ -189,30 +189,30 @@ ALTER TABLE `members` CHANGE `gender` `gender` ENUM( 'm', 'f', 'n' ) DEFAULT 'n'
 
 ## link table updates
 # Dec,6, 2007 duplicated column name
-# ALTER TABLE `resource_categories` RENAME `links_categories` ;
+ ALTER TABLE `resource_categories` RENAME `links_categories` ;
 # Dec,6, 2007 duplicated column name
-# ALTER TABLE `links_categories` 
-#	CHANGE `CatID` `cat_id` mediumint(8) unsigned NOT NULL auto_increment , 
-#	CHANGE `course_id` `owner_id` mediumint(8) unsigned NOT NULL default '0' , 
-#	CHANGE `CatName` `name` varchar(100) NOT NULL default '' , 
-#	CHANGE `CatParent` `parent_id` mediumint(8) unsigned default NULL , 
-#	ADD `owner_type` tinyint(4) NOT NULL default '0' AFTER `cat_id` ;
+ ALTER TABLE `links_categories` 
+	CHANGE `CatID` `cat_id` mediumint(8) unsigned NOT NULL auto_increment , 
+	CHANGE `course_id` `owner_id` mediumint(8) unsigned NOT NULL default '0' , 
+	CHANGE `CatName` `name` varchar(100) NOT NULL default '' , 
+	CHANGE `CatParent` `parent_id` mediumint(8) unsigned default NULL , 
+	ADD `owner_type` tinyint(4) NOT NULL default '0' AFTER `cat_id` ;
 
 # Dec,6, 2007 duplicated column name
-#ALTER TABLE `links_categories` 
-#	DROP INDEX `course_id` ,
-#	ADD INDEX `owner_id` ( `owner_id` );
+ALTER TABLE `links_categories` 
+	DROP INDEX `course_id` ,
+	ADD INDEX `owner_id` ( `owner_id` );
 
 UPDATE `links_categories` SET owner_type=1 WHERE owner_type=0 ;
 
 # Dec,6, 2007 duplicated column name
-#ALTER TABLE `resource_links` RENAME `links` ;
-#ALTER TABLE `links` 
-#	CHANGE `LinkID` `link_id` mediumint(8) unsigned NOT NULL auto_increment , 
-#	CHANGE `CatID` `cat_id` mediumint(8) unsigned NOT NULL default '0' ;
+ALTER TABLE `resource_links` RENAME `links` ;
+ALTER TABLE `links` 
+	CHANGE `LinkID` `link_id` mediumint(8) unsigned NOT NULL auto_increment , 
+        CHANGE `CatID` `cat_id` mediumint(8) unsigned NOT NULL default '0' ;
 
 
 ALTER TABLE `members` CHANGE `gender` `gender` ENUM( 'm', 'f', 'n' ) DEFAULT 'n' NOT NULL;
 
 # Dec,6, 2007 duplicated column name
-#ALTER TABLE `handbook_notes` ADD `approved` TINYINT DEFAULT '0' NOT NULL AFTER `page` ;
+ALTER TABLE `handbook_notes` ADD `approved` TINYINT DEFAULT '0' NOT NULL AFTER `page` ;
