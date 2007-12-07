@@ -20,7 +20,7 @@ INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0);
 
 # cron support for modules
 #Dec 6, 2007 - duplicated column name
-#ALTER TABLE `modules` ADD `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL , ADD `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL ;
+ALTER TABLE `modules` ADD `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL , ADD `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL ;
 
 
 # forum groups table
