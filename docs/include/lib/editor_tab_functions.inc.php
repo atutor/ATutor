@@ -67,7 +67,7 @@ function output_tabs($current_tab, $changes) {
 				<td class="tab-spacer">&nbsp;</td>
 			<?php endif; ?>
 		<?php endfor; ?>
-		<td style="border-bottom: 1px solid #9DAB9A;">&nbsp;</td>
+		<td >&nbsp;</td>
 	</tr>
 	</table>
 <?php }

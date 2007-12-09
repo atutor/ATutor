@@ -225,7 +225,7 @@ function _AT() {
 			$args[0] = $addslashes($args[0]);
 					
 			/* get $_msgs_new from the DB */
-			$sql	= 'SELECT text FROM '.TABLE_PREFIX.'language_text WHERE term="' . $args[0] . '" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="'.$_SESSION['lang'].'" ORDER BY variable ASC';
+			$sql	= 'SELECT text FROM '.TABLE_PREFIX.'language_text WHERE term="' . $args[0] . '" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="'.$_SESSION['lang'].'" ORDER BY variable ASC LIMIT 1';
 
 			$result	= @mysql_query($sql, $db);
 			$i = 1;
