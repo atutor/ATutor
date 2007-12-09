@@ -82,11 +82,25 @@ $guest_text = '- '._AT('guest').' -';
 $sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.status=1 AND R.test_id=$tid AND R.final_score<>'' ORDER BY M.login, R.date_taken";
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
+
+
+
+
+
 if ($row = mysql_fetch_array($result)) {
+	$sql2	= "SELECT anonymous FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+	$result2	= mysql_query($sql2, $db);
+	while($row2 =mysql_fetch_array($result2)){
+			$anonymous = $row2['anonymous'];
+	}
+
 	do {
 		$row['login']     = $row['login']     ? $row['login']     : $guest_text;
-
-		echo quote_csv($row['login']).', ';
+		if($anonymous ==1){
+				echo quote_csv(_AT('anonymous')).', ';
+		}else{
+				echo quote_csv($row['login']).', ';
+		}
 		echo quote_csv($row['date_taken']).', ';
 
 		if ($random) {

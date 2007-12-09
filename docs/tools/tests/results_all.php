@@ -95,11 +95,23 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '</tr>';
 	echo '</thead>';
 	echo '<tbody>';
+	
+		$sql2	= "SELECT anonymous FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+		$result2	= mysql_query($sql2, $db);
+		while($row2 =mysql_fetch_array($result2)){
+				$anonymous = $row2['anonymous'];
+		}
 
 	do {
 		$row['login']     = $row['login']     ? $row['login']     : $guest_text;
 		echo '<tr>';
-		echo '<td align="center">'.$row['login'].'</td>';
+			
+		if($anonymous == 1){
+				echo '<td align="center">'._AT('anonymous').'</td>';
+		}else{
+				echo '<td align="center">'.$row['login'].'</td>';
+		}
+
 		echo '<td align="center">'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
 		if ($random) {
 			$total_weight = get_random_outof($row['test_id'], $row['result_id']);
