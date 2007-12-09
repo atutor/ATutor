@@ -162,6 +162,8 @@ if (isset($_POST['cancel'])) {
 	} else if ($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) {
 		$my_MaxCourseSize = $MaxCourseSize;
 		$total_after = get_human_size($my_MaxCourseSize-$course_total-$totalBytes);
+	}else{
+		$total_after = get_human_size($my_MaxCourseSize - $course_total - $totalBytes);
 	}
 
 	// if $total_after < 0: redirect with error msg
