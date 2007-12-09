@@ -33,11 +33,12 @@ $_GET['id'] = intval($_GET['id']);
 		<select name="id" id="id">
 			<?php
 				while ($row = mysql_fetch_assoc($result)) {
+					$sender = get_display_name($row['member_id']);
 					echo '<option value="'.$row['member_id'].'"';
 					if ($row['member_id'] == $_GET['id']) {
 						echo ' selected="selected"';
 					}
-					echo '>'.$row['login'].' - '.$row['full_name'].'</option>';
+					echo '>'.$sender.'</option>';
 				}
 			?>
 		</select>
