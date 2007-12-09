@@ -109,13 +109,15 @@ if (isset($_POST['cancel'])) {
 		$subscriber_list = $substr($subscriber_list, 0, -1);
 
 		if ($subscriber_list != '') {
-			$sql = "SELECT first_name, second_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list) AND member_id <> $_SESSION[member_id]";
+			//$sql = "SELECT first_name, second_name, last_name, email, member_id FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list) AND member_id <> $_SESSION[member_id]";
+			$sql = "SELECT first_name, second_name, last_name, email, member_id FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list)";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
-				$subscriber_email_list[] = array('email'=> $row['email'], 'full_name' => $row['first_name'] . ' '. $row['second_name'] . ' ' . $row['last_name']);
+				$subscriber_email_list[] = array('email'=> $row['email'], 'full_name' => $row['first_name'] . ' '. $row['second_name'] . ' ' . $row['last_name'], 'member_id'=>$row['member_id']);
 			}
 		}
-
+//debug($subscriber_email_list);
+//exit;
 		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now', date=date WHERE post_id=$_POST[parent_id]";
 		$result = mysql_query($sql, $db);
 
@@ -126,11 +128,12 @@ if (isset($_POST['cancel'])) {
 				$_POST['parent_name'] = $_POST['subject'];
 			}
 			$_POST['parent_name'] = urldecode($_POST['parent_name']);
-
+//debug(get_display_name($subscriber['member_id']));
+//exit;
 			foreach ($subscriber_email_list as $subscriber){
 				$mail = new ATutorMailer;
-				$mail->AddAddress($subscriber['email'], $subscriber['full_name']);
-
+			//	$mail->AddAddress($subscriber['email'], $subscriber['full_name']);
+				$mail->AddAddress($subscriber['email'], get_display_name($subscriber['member_id']));
 				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  AT_BASE_HREF.'bounce.php?course='.$_SESSION['course_id']);
 				$body .= "\n----------------------------------------------\n";
 				$body .= _AT('posted_by').": ".get_display_name($_SESSION['member_id'])."\n";
