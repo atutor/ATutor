@@ -51,7 +51,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 	echo _AT('no_user_found');
 } else {
 	$hidden_vars['login'] = $_GET['login'];
-	$confirm = array('DELETE_USER', $row['login']);
+	$confirm = array('DELETE_ADMIN', $row['login']);
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 }
