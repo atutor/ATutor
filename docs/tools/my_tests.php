@@ -62,9 +62,11 @@ while ($row = mysql_fetch_assoc($result)) {
 	} else if ($row['us'] > time() ) {
 		echo '<em>'._AT('pending').'</em>';
 	}
+	
+	$startend_date_long_format=_AT('startend_date_long_format');
 	echo '</td>';
-	echo '<td>'.substr($row['start_date'], 0, -3).'</td>';
-	echo '<td>'.substr($row['end_date'], 0, -3).'</td>';
+	echo '<td>'.AT_date( $startend_date_long_format, $row['start']).'</td>';
+	echo '<td>'.AT_date( $startend_date_long_format, $row['end_date']).'</td>';
 
 	if ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) {
 		echo '<td>'.$takes['cnt'].'/'._AT('unlimited').'</td>';

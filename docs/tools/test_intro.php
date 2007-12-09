@@ -109,7 +109,7 @@ if (!$test_row['random']) {
 	<?php endif; ?>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('continue'); ?>"/>
+		<input type="submit" name="submit" value="<?php echo _AT('start_test'); ?>"/>
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"/>
 	</div>
 </div>

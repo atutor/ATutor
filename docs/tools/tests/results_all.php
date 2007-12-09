@@ -112,8 +112,8 @@ if ($row = mysql_fetch_assoc($result)) {
 		}else{
 				echo '<td align="center">'.$row['login'].'</td>';
 		}
-
-		echo '<td align="center">'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
+		$startend_date_format=_AT('startend_date_format');
+		echo '<td align="center">'.AT_date( $startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
 		if ($random) {
 			$total_weight = get_random_outof($row['test_id'], $row['result_id']);
 		}

@@ -101,8 +101,8 @@ $cols=6;
 				} else if ($row['us'] > time() ) {
 					echo '<em>'._AT('pending').'</em>';
 				} ?></td>
-			<td><?php echo AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
-				echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
+			<td><?php $startend_date_format=_AT('startend_date_format'); echo AT_date( $startend_date_format, $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
+				echo AT_date($startend_date_format, $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 
 			<td><?php
 				if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
