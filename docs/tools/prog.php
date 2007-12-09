@@ -73,12 +73,12 @@ if (!$_GET['frame']) {  ?>
 		$filedata = stat($tmp_dir . $_GET['t']);
 		$size = $filedata['size'] / AT_KBYTE_SIZE;
 	}
-
+	// not sure where these are displayed in the progress popup
 	echo '<small>';
 	if ($size == '') {
-		echo '<em>'._AT('unknown').'</em> KB';
+		echo '<em>'._AT('unknown').' </em>  '._AT('kb');
 	} else {
-		echo number_format($size, 2).' KB';
+		echo number_format($size, 2).' '._AT('kb');
 	}
 	echo '</small>';
 } ?></td>
