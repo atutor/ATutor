@@ -227,7 +227,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	if ($random) {
 		echo 7;
 	} else {
-		echo 5;
+		echo 6;
 	}
 
 	echo '" align="left" nowrap="nowrap">';
