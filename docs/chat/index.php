@@ -116,7 +116,11 @@ if (count($tran_files) == 0) {
 				}?>
 			</td>
 	
-			<td><?php echo date('Y-m-d h:i:s', $date); ?></td>
+			<td><?php 
+						//echo $date;
+			$startend_date_longs_format=_AT('startend_date_longs_format');
+			echo AT_date($startend_date_longs_format, $date, AT_DATE_UNIX_TIMESTAMP);
+			?></td>
 		</tr>
 	<?php } ?>
 	</tbody>
