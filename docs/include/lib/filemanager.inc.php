@@ -190,13 +190,13 @@ function get_human_size($num_bytes) {
 	$abs_num_bytes = abs($num_bytes);
 
 	if ($abs_num_bytes >= AT_KBYTE_SIZE * AT_KBYTE_SIZE) {
-		return round(bytes_to_megabytes($num_bytes), 2) . ' MB';
+		return round(bytes_to_megabytes($num_bytes), 2) .' '. _AT('mb');
 	} else if ($abs_num_bytes >= AT_KBYTE_SIZE) {
-		return round(bytes_to_kilobytes($num_bytes), 2) . ' KB';
+		return round(bytes_to_kilobytes($num_bytes), 2) .' '._AT('kb') ;
 	}
 	// else:
 
-	return $num_bytes . ' B';
+	return $num_bytes . ' '._AT('b');
 }
 
 /**
