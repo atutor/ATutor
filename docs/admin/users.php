@@ -365,7 +365,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					<?php if ($row['last_login'] == 0): ?>
 						<?php echo _AT('never'); ?>
 					<?php else: ?>
-						<?php echo AT_Date('%d/%m/%y - %H:%i', $row['last_login'], AT_DATE_MYSQL_TIMESTAMP_14); ?>
+						<?php 
+						
+						$startend_date_longs_format=_AT('startend_date_longs_format');
+						//echo AT_date('%d/%m/%y - %H:%i', $row['last_login'], AT_DATE_MYSQL_TIMESTAMP_14);
+						echo AT_date($startend_date_longs_format, $row['last_login'], AT_DATE_MYSQL_TIMESTAMP_14); 
+					?>
 					<?php endif; ?>
 				</td>
 			</tr>
