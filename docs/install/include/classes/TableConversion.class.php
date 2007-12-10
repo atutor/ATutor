@@ -634,7 +634,7 @@ class GroupsTable extends ATutorTable{
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
-		return $reuslt;
+		return $result;
 	}
 }
 
