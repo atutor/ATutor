@@ -28,8 +28,7 @@ $_POST['db_login'] = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
 
 	unset($errors);
-	session_unset();	//clear session before using it
-	$_SESSION = array();	
+
 	//check DB & table connection
 
 	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
@@ -57,13 +56,17 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			unset($errors);
 
-			//Backup language for step 3 to use.
-			$sql = "SELECT a.course_id, a.title, l.language_code, l.char_set FROM ".$_POST['tb_prefix']."courses a left join ".$_POST['tb_prefix']."languages l ON l.language_code = a.primary_language";
-			$result = @mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)){
-				$_SESSION['course_info'][$row['course_id']] = array('char_set'=>$row['char_set'], 'language_code'=>$row['language_code']);
+			//Save all the course primary language into session variables iff it has not been set. 
+			if (!isset($_SESSION['course_info'])){
+				$sql = "SELECT a.course_id, a.title, l.language_code, l.char_set FROM ".$_POST['tb_prefix']."courses a left join ".$_POST['tb_prefix']."languages l ON l.language_code = a.primary_language";
+				$result = mysql_query($sql, $db);
+				echo mysql_error();
+				while ($row = mysql_fetch_assoc($result)){
+					debug($row, 'Row Information');
+					$_SESSION['course_info'][$row['course_id']] = array('char_set'=>$row['char_set'], 'language_code'=>$row['language_code']);
+				}
 			}
-			
+
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text WHERE `variable`<>'_c_template' AND `variable`<>'_c_msgs'";
 			@mysql_query($sql, $db);
 
