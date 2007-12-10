@@ -177,7 +177,7 @@ function poptastic(url) {
 <!-- the bread crumbs -->
 <div id="breadcrumbs">
 	<?php foreach ($this->path as $page): ?>
-		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
+		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> Â» 
 	<?php endforeach; ?> <?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?>
 </div>
 
