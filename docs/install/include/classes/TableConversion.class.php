@@ -268,6 +268,15 @@ class CoursesTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
+			$value_array['preferences'] = mb_convert_encoding($row['preferences'], $this->to_encoding, $this->from_encoding);
+			$value_array['copyright'] = mb_convert_encoding($row['copyright'], $this->to_encoding, $this->from_encoding);
+			$value_array['banner'] = mb_convert_encoding($row['banner'], $this->to_encoding, $this->from_encoding);
+			/* The following should not needed to be converted after they are deprecated */
+			$value_array['header'] = mb_convert_encoding($row['header'], $this->to_encoding, $this->from_encoding);
+			$value_array['footer'] = mb_convert_encoding($row['footer'], $this->to_encoding, $this->from_encoding);			
+			$value_array['banner_text'] = mb_convert_encoding($row['banner_text'], $this->to_encoding, $this->from_encoding);
+			$value_array['banner_styles'] = mb_convert_encoding($row['banner_styles'], $this->to_encoding, $this->from_encoding);			
+
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
