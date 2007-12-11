@@ -69,10 +69,11 @@ if (!$db) {
 
 		//Conversion type set
 		if ($_POST['con_step']=='2'){
-			//Get list of encoding, skip utf8
+			//Get list of unqiue encoding; skip utf8
 			$char_encodings = array();
 			foreach($_SESSION['course_info'] AS $course_id=>$temp){
-				if (strtolower($temp['char_set'])!='utf-8' && strtolower($temp['char_set'])!='utf8' ){
+				if (strtolower($temp['char_set'])!='utf-8' && strtolower($temp['char_set'])!='utf8' 
+					&& !in_array($temp['char_set'], $char_encodings)){
 					$char_encodings[] = $temp['char_set'];
 				}
 			}
@@ -142,8 +143,8 @@ if (!$db) {
 			if ($convert_type=='all'){
 				echo "<div><p>You have chosen the <strong>Convert all content</strong> option.  All ATutor's content will be converted to UTF-8 from the encoding listed below.</p></div>";
 				echo "<div><p>Note: This might take up to several minutes, please be patient while you wait.</p></div><br/>";
-
 				echo "<div><label>Convert From: </label><select name='encoding_code'>";
+			
 				foreach ($char_encodings as $index=>$encoding){
 					$selected='';
 					if ($encoding==$_POST['conv_all_char_set']){
@@ -242,7 +243,6 @@ if (!$db) {
 				unset($errors);
 				foreach($_SESSION['redo_conversion'] as $course_title=>$class_obj){
 					foreach($class_obj as $class_name=>$class_param){
-						//debug($_SESSION[redo_conversion]);
 						$temp_table =& new $class_name ($class_param[0], $class_param[1], $class_param[2], $class_param[3]);
 						if (!$temp_table->convert()){
 							$errors[]= $course_title.': '.$class_param[0].$class_param[1].' was not converted.';
