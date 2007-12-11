@@ -5,8 +5,7 @@
 	<th scope="col" width="40%"><?php echo _AT('question'); ?></th>
 	<?php for ($i=0; $i< $this->num_choices; $i++): ?>
 		<?php
-		echo $q['choice_'.$i]."sssss";
-		if($strlen($q['choice_'.$i]) > "15") {
+		if($strlen($q['choice_'.$i]) > 15) {
 			$q['choice_'.$i] = $substr($q['choice_'.$i], 0, 15).'&hellip;';
 		}
 		?>

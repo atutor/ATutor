@@ -5,11 +5,7 @@
 	<th scope="col" width="40%"><?php echo _AT('question'); ?></th>
 	<th scope="col" nowrap="nowrap"><?php echo _AT('left_blank'); ?></th>
 	<?php for ($i=0; $i<$this->num_choices; $i++): ?>
-		<?php 
-		
-		echo $this->row['choice_'.$i];
-		
-			if ($strlen($this->row['choice_'.$i]) > 15) {
+		<?php if ($strlen($this->row['choice_'.$i]) > 15) {
 			$this->row['choice_'.$i] = $substr($this->row['choice_'.$i], 0, 15).'...';
 		}
 		?>
