@@ -16,6 +16,7 @@ define('LINK_CAT_COURSE',	1);
 define('LINK_CAT_GROUP',	2);
 define('LINK_CAT_SELF',		3);
 
+
 /**
 * This class will handle utf8 conversion on all tables associated with a specific course.
 * This class can be potentially upgraded to a automated table parser to optimize codes, instead of having 
@@ -39,7 +40,8 @@ class ATutorTable{
 	 * @param	table prefix
 	 * @param	table is the table name of which we want to covert
 	 * @param	from_encoding to convert the content from this encoding.
-	 * @param	courseID is the course ID of the course we are trying to convert.
+	 * @param	foreign_ID is the primary key/foreign key of the table.  The input will be primary key when
+	 *			the table has a "course_id" column, foreign key when it doesn't.
 	 */
 	function ATutorTable($table_prefix, $table, $from_encoding, $foreign_ID){
 		$this->table_prefix = $table_prefix;

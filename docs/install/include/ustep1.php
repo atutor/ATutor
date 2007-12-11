@@ -12,7 +12,8 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
+session_unset();	//clear session before using it
+$_SESSION = array();
 print_progress($step);
 
 if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
