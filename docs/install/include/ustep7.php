@@ -242,7 +242,7 @@ if (!$db) {
 				unset($errors);
 				foreach($_SESSION['redo_conversion'] as $course_title=>$class_obj){
 					foreach($class_obj as $class_name=>$class_param){
-						debug($_SESSION[redo_conversion]);
+						//debug($_SESSION[redo_conversion]);
 						$temp_table =& new $class_name ($class_param[0], $class_param[1], $class_param[2], $class_param[3]);
 						if (!$temp_table->convert()){
 							$errors[]= $course_title.': '.$class_param[0].$class_param[1].' was not converted.';
