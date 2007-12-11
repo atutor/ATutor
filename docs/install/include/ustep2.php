@@ -62,7 +62,6 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 				$result = mysql_query($sql, $db);
 				echo mysql_error();
 				while ($row = mysql_fetch_assoc($result)){
-					debug($row, 'Row Information');
 					$_SESSION['course_info'][$row['course_id']] = array('char_set'=>$row['char_set'], 'language_code'=>$row['language_code']);
 				}
 			}
