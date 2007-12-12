@@ -31,14 +31,25 @@ if(isset($_POST['submit'])) {
 			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.1.10 or later.';
 		}
 
-		if (!isset($errors) && !mysql_select_db($_POST['db_name'], $db)) {
-			$sql = "CREATE DATABASE $_POST[db_name]";
-			$result = mysql_query($sql, $db);
-			if (!$result) {
-				$errors[] = 'Unable to select or create database <b>'.$_POST['db_name'].'</b>.';
+		if (!isset($errors)){
+			if (!mysql_select_db($_POST['db_name'], $db)) {
+				$sql = "CREATE DATABASE $_POST[db_name] CHARACTER SET utf8 COLLATE utf8_general_ci";
+				$result = mysql_query($sql, $db);
+				if (!$result) {
+					$errors[] = 'Unable to select or create database <b>'.$_POST['db_name'].'</b>.';
+				} else {
+					$progress[] = 'Database <b>'.$_POST['db_name'].'</b> created successfully.';
+					mysql_select_db($_POST['db_name'], $db);
+				}
 			} else {
-				$progress[] = 'Database <b>'.$_POST['db_name'].'</b> created successfully.';
-				mysql_select_db($_POST['db_name'], $db);
+				/* Check if the database that existed is in UTF-8, if not, ask for retry */
+				$sql = "SHOW CREATE DATABASE $_POST[db_name]";
+				$result = mysql_query($sql, $db);
+				$row = mysql_fetch_assoc($result);
+				
+				if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
+					$errors[] = 'Database <b>'.$_POST['db_name'].'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing.';
+				}
 			}
 		}
 
