@@ -176,7 +176,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
+		header('Location: view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id'].SEP.'page='.$_POST['page']);
 		exit;
 	}
 }
