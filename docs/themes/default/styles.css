@@ -1360,7 +1360,8 @@ div.forum-post-ctrl a { text-decoration: none; }
 div.forum-post-ctrl span { color: black; background-color: #fefdc2; padding: 3px; }
 div.forum-post-content p.date { color: #a1a1a1; border-bottom: 1px solid #F7F3ED; }
 div.forum-post-content div.body p { margin-bottom:1em; }
-
+div.forum-paginator{border:thin #cccccc solid; padding:.3em; width:95%;margin:auto;margin-top:5em;background-color:#F7F3ED;clear:left;}
+span.forum-paginator-active{font-weight:700;text-decoration:underline;}
 /** inbox stuff - reuses some of the forum layout **/
 #inbox-msg li { clear:left; border:1px solid #eee; border-bottom: 1px solid #F7F3ED; width: 98%; list-style: none; }
 
