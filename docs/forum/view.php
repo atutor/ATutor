@@ -103,11 +103,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$parent_name = $post_row['subject'];
 
-	echo '<div>';
+	echo '<div class="forum-paginator">';
 	echo _AT('page').': ';
 	for ($i=1; $i<=$num_pages; $i++) {
 		if ($i == $page) {
-			echo $i;
+			echo '<span class="forum-paginator-active">'.$i.'</span>';
 		} else {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i.'">'.$i.'</a>';
 		}
@@ -140,12 +140,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		}
 	}
 	echo '</ul>';
-
-	echo '<div style="margin-top: 20px; clear: both;">';
+	
+	echo '<div  class="forum-paginator">';
 	echo _AT('page').': ';
 	for ($i=1; $i<=$num_pages; $i++) {
 		if ($i == $page) {
-			echo $i;
+			echo '<span class="forum-paginator-active">'.$i.'<span>';
 		} else {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i.'">'.$i.'</a>';
 		}
