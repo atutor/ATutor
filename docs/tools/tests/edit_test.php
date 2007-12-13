@@ -128,6 +128,8 @@ if (isset($_POST['cancel'])) {
 			} else {
 				$total_weight = get_total_weight($tid);
 			}
+			//If title exceeded database defined length, truncate it.
+			$_POST['title'] = validate_length($_POST['title'], 100);
 
 			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  result_release=$_POST[result_release], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous], guests=$_POST[allow_guests], out_of=$total_weight, display=$_POST[display] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql, $db);
