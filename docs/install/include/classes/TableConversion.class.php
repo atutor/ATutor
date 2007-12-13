@@ -12,9 +12,192 @@
 /************************************************************************/
 
 /* Constances, refer to /include/lib/constants.inc.php */
+/* files */
+define('WORKSPACE_COURSE',     1); // aka Course Files
+define('WORKSPACE_PERSONAL',   2); // aka My Files
+define('WORKSPACE_ASSIGNMENT', 3);
+define('WORKSPACE_GROUP',      4);
+/* links */
 define('LINK_CAT_COURSE',	1);
 define('LINK_CAT_GROUP',	2);
 define('LINK_CAT_SELF',		3);
+
+/**
+ * This class handles different types of conversions for the ATutor tables.
+ * Table entries based on the course's Primary Language will be converted by convertTableByClass($,$)
+ * Table entries based on the System Defualt Language will be converted by convertTableBySysDefualt()
+ * @access			public
+ * @author			Harris Wong
+ * @precondition	MySQL connected, mbstring lib enabled.
+ * @date			Dec 12, 2007
+ */
+ class ConversionDriver{
+	 /** variable */
+	var $sys_default_lang;
+	var $table_prefix;
+
+	 /** 
+	  * Constructor
+	  * @param	table_prefix
+	  */
+	 function ConversionDriver($table_prefix){
+		 $this->sys_default_lang = 'iso-8859-1';
+		 $this->table_prefix = $table_prefix;
+	 }
+
+	 /**
+	  * This function runs all the table that uses the system default language
+	  */
+	 function convertTableBySysDefault(){
+		global $errors;
+
+		$temp_table =& new CourseCategoriesTable($this->table_prefix, 'course_cats', $this->sys_default_lang);
+		if (!$temp_table->convert()){
+			$errors[]= $this->table_prefix.'course_cats was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['CourseCategoriesTable'] = array($this->table_prefix, 'course_cats', $char_set, $course_id);
+		}
+
+		$temp_table =& new MembersTable($this->table_prefix, 'members', $this->sys_default_lang);
+		if (!$temp_table->convert()){
+			$errors[]= $this->table_prefix.'members was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['MembersTable'] = array($this->table_prefix, 'members', $char_set, $course_id);
+		}
+	 }
+
+	 /**
+	  * This function runs through all the table that are class dependent.
+	  */
+	 function convertTableByClass($course_title, $char_set, $course_id){
+		 global $errors;
+		//Run through all ATutor table and convert only those rows with the above courses.
+		//todo: implement a driver class inside the TableConversion class.
+		$temp_table =& new AssignmentsTable($this->table_prefix, 'assignments', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'assignments was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['AssignmentsTable'] = array($this->table_prefix, 'assignments', $char_set, $course_id);
+		}
+
+		$temp_table =& new BackupsTable($this->table_prefix, 'backups', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'backups was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['BackupsTable'] = array($this->table_prefix, 'backups', $char_set, $course_id);
+		}
+
+		$temp_table =& new BlogPostsTable($this->table_prefix, 'blog_posts', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'blog_posts was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['BlogPostsTable'] = array($this->table_prefix, 'blog_posts', $char_set, $course_id);
+		}
+		
+		$temp_table =& new ContentTable($this->table_prefix, 'content', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'content was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['ContentTable'] = array($this->table_prefix, 'content', $char_set, $course_id);
+		}
+		
+		$temp_table =& new CoursesTable($this->table_prefix, 'courses', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'courses was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['CoursesTable'] = array($this->table_prefix, 'courses', $char_set, $course_id);
+		}
+		
+		$temp_table =& new CourseEnrollmentTable($this->table_prefix, 'course_enrollment', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'course_enrollment was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['CourseEnrollmentTable'] = array($this->table_prefix, 'course_enrollment', $char_set, $course_id);
+		}
+
+		$temp_table =& new ExternalResourcesTable($this->table_prefix, 'external_resources', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'external_resources was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['ExternalResourcesTable'] = array($this->table_prefix, 'external_resources', $char_set, $course_id);
+		}
+
+		$temp_table =& new FaqTopicsTable($this->table_prefix, 'faq_topics', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'faq_topics was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['FaqTopicsTable'] = array($this->table_prefix, 'faq_topics', $char_set, $course_id);
+		}
+		
+		$temp_table =& new FoldersTable($this->table_prefix, 'folders', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'folders was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['FoldersTable'] = array($this->table_prefix, 'folders', $char_set, $course_id);
+		}
+
+		$temp_table =& new FilesTable($this->table_prefix, 'files', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'files was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['FilesTable'] = array($this->table_prefix, 'files', $char_set, $course_id);
+		}
+		
+		$temp_table =& new ForumsTable($this->table_prefix, 'forums', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'forums was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['ForumsTable'] = array($this->table_prefix, 'forums', $char_set, $course_id);
+		}
+
+		$temp_table =& new GlossaryTable($this->table_prefix, 'glossary', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'glossary was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['GlossaryTable'] = array($this->table_prefix, 'glossary', $char_set, $course_id);
+		}
+
+		$temp_table =& new GroupsTypesTable($this->table_prefix, 'groups_types', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'groups_types was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['GroupsTypesTable'] = array($this->table_prefix, 'groups_types', $char_set, $course_id);
+		}
+
+		$temp_table =& new LinksCategoriesTable($this->table_prefix, 'links_categories', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'links_categories was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['LinksCategoriesTable'] = array($this->table_prefix, 'links_categories', $char_set, $course_id);
+		}
+
+		$temp_table =& new MessagesSentTable($this->table_prefix, 'messages_sent', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'messages_sent was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['MessagesSentTable'] = array($this->table_prefix, 'messages_sent', $char_set, $course_id);
+		}
+
+		$temp_table =& new NewsTable($this->table_prefix, 'news', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'news was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['NewsTable'] = array($this->table_prefix, 'news', $char_set, $course_id);
+		}
+
+		$temp_table =& new PollsTable($this->table_prefix, 'polls', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'polls was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['PollsTable'] = array($this->table_prefix, 'polls', $char_set, $course_id);
+		}
+
+		$temp_table =& new ReadingListTable($this->table_prefix, 'reading_list', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'reading_list was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['ReadingListTable'] = array($this->table_prefix, 'reading_list', $char_set, $course_id);
+		}
+
+		$temp_table =& new TestsTable($this->table_prefix, 'tests', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'tests was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['TestsTable'] = array($this->table_prefix, 'tests', $char_set, $course_id);
+		}
+
+		$temp_table =& new TestQuestionsTable($this->table_prefix, 'tests_questions', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'tests_questions was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['TestQuestionsTable'] = array($this->table_prefix, 'tests_questions', $char_set, $course_id);
+		}
+
+		$temp_table =& new TestsQuestionsCategoriesTable($this->table_prefix, 'tests_questions_categories', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'tests_questions_categories was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['TestsQuestionsCategoriesTable'] = array($this->table_prefix, 'tests_questions_categories', $char_set, $course_id);
+		}
+	 }
+ }
 
 
 /**
@@ -28,7 +211,7 @@ define('LINK_CAT_SELF',		3);
 * @date				Nov 28, 2007
 */
 class ATutorTable{
-	/** Global variables */
+	/** variables */
 	var $table;
 	var $table_prefix;
 	var $from_encoding;
@@ -39,11 +222,13 @@ class ATutorTable{
 	 * Constructor
 	 * @param	table prefix
 	 * @param	table is the table name of which we want to covert
-	 * @param	from_encoding to convert the content from this encoding.
-	 * @param	foreign_ID is the primary key/foreign key of the table.  The input will be primary key when
-	 *			the table has a "course_id" column, foreign key when it doesn't.
+	 * @param	from_encoding is the encoding which the content will be converted from.
+	 * @param	foreign_ID is the primary key/foreign key of the table.  $foreign_ID will be the primary key when
+	 *			the table has a "course_id" column, foreign key when it doesn't.  
+	 *			foreign_ID is an empty string if this table does not depend on courses, such as members, 
+	 *			course categories tables.
 	 */
-	function ATutorTable($table_prefix, $table, $from_encoding, $foreign_ID){
+	function ATutorTable($table_prefix, $table, $from_encoding, $foreign_ID=''){
 		$this->table_prefix = $table_prefix;
 		$this->table = $table;
 		$this->from_encoding = $from_encoding;
@@ -147,6 +332,14 @@ class AssignmentsTable extends ATutorTable{
 			$key_col = 'assignment_id';
 			//Convert all neccessary entries
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
+
+			//Convert Folders table, that is related to assignments.
+			$folders =& new FoldersTable($this->table_prefix.'folders', $this->from_encoding, $row[$key_col]);
+			$result &= $folders->convert(WORKSPACE_ASSIGNMENT);
+			//Convert Files table, that is related to assignments.
+			$files_table =& new FilesTable($this->table_prefix.'files', $this->from_encoding, $row[$key_col]);
+			$result &= $files_table->convert(WORKSPACE_ASSIGNMENT);
+
 			//Generate SQL
 			//echo (mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]))) ;
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
@@ -327,7 +520,7 @@ class CourseCategoriesTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['cat_name'] = mb_convert_encoding($row['cat_name'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -388,6 +581,16 @@ class FaqTopicsTable extends ATutorTable{
  * Foreign key = topic_id
  */
 class FaqEntriesTable extends ATutorTable{
+	//Overrider
+	function getContent(){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE topic_id='.$this->foreign_ID;
+		$result = mysql_query($sql);
+		if ($result && mysql_num_rows($result)>0){
+			return $result;
+		}
+		return false;
+	}
+
 	function convert(){
 		$rs = $this->getContent();
 		$result = true;
@@ -483,9 +686,10 @@ class ForumsThreadsTable extends ATutorTable{
 	/*
 	 * Overrider
 	 * owner_id means category_id, owner_type refers to the different link type defined in the constants.inc.php.
+	 * @param	$owner_type are defined by the constances, which are course, groups, self
 	 */
-	function getContent(){
-		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.LINK_CAT_COURSE.' AND owner_id='.$this->foreign_ID;
+	function getContent($owner_type){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.$owner_type.' AND owner_id='.$this->foreign_ID;
 		$result = mysql_query($sql);
 		if ($result && mysql_num_rows($result)>0){
 			return $result;
@@ -493,8 +697,11 @@ class ForumsThreadsTable extends ATutorTable{
 		return false;
 	}
 
-	function convert(){
-		$rs = $this->getContent();
+	/*
+	 * @param	$owner_type are defined by the constances, which are course, groups, self; defaulted to be WORKSPACE_COURSE
+	 */
+	function convert($owner_type=WORKSPACE_COURSE){
+		$rs = $this->getContent($owner_type);
 		$result = true;
 		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
 			//Store the key for updating purposes.
@@ -517,9 +724,10 @@ class ForumsThreadsTable extends ATutorTable{
 	/*
 	 * Overrider
 	 * owner_id means category_id, owner_type refers to the different link type defined in the constants.inc.php.
+	 * @param	$owner_type are defined by the constances, which are course, groups, self
 	 */
-	function getContent(){
-		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.LINK_CAT_COURSE.' AND owner_id='.$this->foreign_ID;
+	function getContent($owner_type){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.$owner_type.' AND owner_id='.$this->foreign_ID;
 		$result = mysql_query($sql);
 		if ($result && mysql_num_rows($result)>0){
 			return $result;
@@ -527,8 +735,11 @@ class ForumsThreadsTable extends ATutorTable{
 		return false;
 	}
 
-	function convert(){
-		$rs = $this->getContent();
+	/*
+	 * @param	$owner_type are defined by the constances, which are course, groups, self; defaulted to be WORKSPACE_COURSE
+	 */
+	function convert($owner_type=WORKSPACE_COURSE){
+		$rs = $this->getContent($owner_type);
 		$result = true;
 		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
 			//Store the key for updating purposes.
@@ -537,8 +748,8 @@ class ForumsThreadsTable extends ATutorTable{
 			$value_array['file_name'] = mb_convert_encoding($row['file_name'], $this->to_encoding, $this->from_encoding);
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
 			//Convert faq entries
-			$forumThread=& new FilesCommentsTable($this->table_prefix, 'files_comments', $this->from_encoding, $row[$key_col]);
-			$result &= $forumThread->convert();
+			$filesComments=& new FilesCommentsTable($this->table_prefix, 'files_comments', $this->from_encoding, $row[$key_col]);
+			$result &= $filesComments->convert();
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
@@ -554,16 +765,26 @@ class ForumsThreadsTable extends ATutorTable{
  * Foreign key = file_id
  */
 class FilesCommentsTable extends ATutorTable{
+	//Overrider
+	function getContent(){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE file_id='.$this->foreign_ID;
+		$result = mysql_query($sql);
+		if ($result && mysql_num_rows($result)>0){
+			return $result;
+		}
+		return false;
+	}
+
 	function convert(){
 		$rs = $this->getContent();
 		$result = true;
 		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
 			//Store the key for updating purposes.
-			$key_col = 'commend_id';
+			$key_col = 'comment_id';
 			//Convert all neccessary entries
 			$value_array['comment'] = mb_convert_encoding($row['comment'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -605,9 +826,20 @@ class GroupsTypesTable extends ATutorTable{
 			$key_col = 'type_id';
 			//Convert all neccessary entries
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
+			
 			//Convert group table
 			$groups =& new GroupsTable($this->table_prefix, 'groups', $this->from_encoding, $row[$key_col]);
 			$result &= $groups->convert();
+			//Convert links table, that has owner_type=group
+			$linkscats =& new LinksCategoriesTable($this->table_prefix, 'links_categories', $this->from_encoding, $row[$key_col]);
+			$result &= $linkscats->convert(LINK_CAT_GROUP);
+			//Convert folder tables, that has owner_type=group
+			$folders =& new FoldersTable($this->table_prefix, 'folders', $this->from_encoding, $row[$key_col]);
+			$result &= $folders->convert(WORKSPACE_GROUP);
+			//Convert file tables, that has owner_type=group
+			$files_table =& new FilesTable($this->table_prefix, 'files', $this->from_encoding, $row[$key_col]);
+			$result &= $files_table->convert(WORKSPACE_GROUP);
+
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
@@ -652,15 +884,16 @@ class GroupsTable extends ATutorTable{
 
 /**
  * Class for Links Categories
- * Associated with Folders, Groups
+ * Links' owner_id can be of courses, groups, self.
  */
 class LinksCategoriesTable extends ATutorTable{
 	/*
 	 * Overrider
 	 * owner_id means category_id, owner_type refers to the different link type defined in the constants.inc.php.
+	 * @param	$owner_type are defined by the constances
 	 */
-	function getContent(){
-		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.LINK_CAT_COURSE.' AND owner_id='.$this->foreign_ID;
+	function getContent($owner_type){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE owner_type='.$owner_type.' AND owner_id='.$this->foreign_ID;
 		$result = mysql_query($sql);
 		if ($result && mysql_num_rows($result)>0){
 			return $result;
@@ -668,8 +901,11 @@ class LinksCategoriesTable extends ATutorTable{
 		return false;
 	}
 
-	function convert(){
-		$rs = $this->getContent();
+	/*
+	 * @param	$owner_type are defined by the constances, which are course, groups, self; defaulted to be LINK_CAT_COURSE
+	 */
+	function convert($owner_type=LINK_CAT_COURSE){
+		$rs = $this->getContent($owner_type);
 		$result = true;
 		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
 			//Store the key for updating purposes.
@@ -677,8 +913,8 @@ class LinksCategoriesTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['name'] = mb_convert_encoding($row['name'], $this->to_encoding, $this->from_encoding);
 			//Convert links table
-			$groups =& new LinksTable($this->table_prefix, 'links', $this->from_encoding, $row[$key_col]);
-			$result &= $groups->convert();
+			$linkscats =& new LinksTable($this->table_prefix, 'links', $this->from_encoding, $row[$key_col]);
+			$result &= $linkscats->convert();
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
@@ -693,6 +929,16 @@ class LinksCategoriesTable extends ATutorTable{
  * Foreign key = cat_id
  */
  class LinksTable extends ATutorTable{
+	//Overrider
+	function getContent(){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE cat_id='.$this->foreign_ID;
+		$result = mysql_query($sql);
+		if ($result && mysql_num_rows($result)>0){
+			return $result;
+		}
+		return false;
+	}
+
 	function convert(){
 		$rs = $this->getContent();
 		$result = true;
@@ -731,7 +977,29 @@ class MembersTable extends ATutorTable{
 			$value_array['city'] = mb_convert_encoding($row['city'], $this->to_encoding, $this->from_encoding);
 			$value_array['province'] = mb_convert_encoding($row['province'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
-			echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
+		}
+		return $result;
+	}
+}
+
+
+/**
+ * Class for Messages Sent
+ */
+class MessagesTable extends ATutorTable{
+	function convert(){
+		$rs = $this->getContent();
+		$result = true; 
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col = 'message_id';
+			//Convert all neccessary entries
+			$value_array['subject'] = mb_convert_encoding($row['subject'], $this->to_encoding, $this->from_encoding);
+			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
+			//Generate SQL
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
 		}
 		return $result;
@@ -887,6 +1155,11 @@ class TestQuestionsTable extends ATutorTable{
 			$value_array['option_7'] = mb_convert_encoding($row['option_7'], $this->to_encoding, $this->from_encoding);
 			$value_array['option_8'] = mb_convert_encoding($row['option_8'], $this->to_encoding, $this->from_encoding);
 			$value_array['option_9'] = mb_convert_encoding($row['option_9'], $this->to_encoding, $this->from_encoding);
+
+			//Convert links table
+			$tests_answers =& new TestsAnswersTable($this->table_prefix, 'tests_answers', $this->from_encoding, $row[$key_col]);
+			$result &= $tests_answers->convert();
+
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
@@ -894,6 +1167,43 @@ class TestQuestionsTable extends ATutorTable{
 		return $result;
 	}
 }
+
+
+/**
+ * Class for Test answers
+ * Used only by TestQuestionTable
+ * Foreign key = question_id, since question is one-to-many answers mapping.
+ */
+ class TestsAnswersTable extends ATutorTable{
+	//Overrider
+	function getContent(){
+		$sql = 'SELECT * FROM `'.$this->table_prefix.$this->table.'` WHERE question_id='.$this->foreign_ID;
+		$result = mysql_query($sql);
+		if ($result && mysql_num_rows($result)>0){
+			return $result;
+		}
+		return false;
+	}
+
+	function convert(){
+		$rs = $this->getContent();
+		$result = true;
+		while ($rs!=false && $row = mysql_fetch_assoc($rs)){
+			//Store the key for updating purposes.
+			$key_col1 = 'question_id';
+			$key_col2 = 'result_id';
+			$key_col3 = 'member_id';
+			//Convert all neccessary entries
+			$value_array['answer'] = mb_convert_encoding($row['answer'], $this->to_encoding, $this->from_encoding);
+			$value_array['notes'] = mb_convert_encoding($row['notes'], $this->to_encoding, $this->from_encoding);
+			//Generate SQL
+			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
+			$result &= mysql_query($this->generate_sql($value_array, array($key_col1, $key_col2, $key_col3), 
+				array($row[$key_col1], $row[$key_col2], $row[$key_col3])));
+		}
+		return $result;
+	}
+ }
 
 
 /**
@@ -922,7 +1232,7 @@ $db = @mysql_connect('localhost' . ':' . '3306', 'atutor', 'atutor');
 mysql_select_db('atutor_155', $db);
 $_POST['tb_prefix'] = 'at_';
 $char_set  = 'BIG-5';
-$course_id = '5';
+$course_id = '2';
 $cat_id = '2';
 			$temp_table =& new CourseCategoriesTable($_POST['tb_prefix'], 'course_cats', 'ISO-8859-1', $cat_id);
 			$temp_table->convert();
@@ -935,7 +1245,7 @@ $cat_id = '2';
 			echo "<hr/>";			
 			$temp_table =& new FilesTable($_POST['tb_prefix'], 'files', $char_set, $course_id);
 			$temp_table->convert();
-			echo "<hr/>";			
+			echo "<hr/>";	
 			$temp_table =& new AssignmentsTable($_POST['tb_prefix'], 'assignments', $char_set, $course_id);
 			$temp_table->convert();
 			echo "<hr/>";
@@ -966,6 +1276,7 @@ $cat_id = '2';
 			$temp_table =& new GlossaryTable($_POST['tb_prefix'], 'glossary', $char_set, $course_id);
 			$temp_table->convert();
 			echo "<hr/>";
+			debug("GROUPS");
 			$temp_table =& new GroupsTypesTable($_POST['tb_prefix'], 'groups_types', $char_set, $course_id);
 			$temp_table->convert();
 			echo "<hr/>";
@@ -985,13 +1296,14 @@ $cat_id = '2';
 			$temp_table->convert();
 			echo "<hr/>";
 			$temp_table =& new TestQuestionsTable($_POST['tb_prefix'], 'tests_questions', $char_set, $course_id);
-			$temp_table->convert();
-			
+			$temp_table->convert();			
 			echo "<hr/>";
 			$temp_table =& new TestsQuestionsCategoriesTable($_POST['tb_prefix'], 'tests_questions_categories', $char_set, $course_id);
 			$temp_table->convert();
 			echo "<hr/>";
+
 */
+
 
 /**
  * This function is used for printing variables for debugging.

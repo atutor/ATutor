@@ -67,6 +67,13 @@ if (!$db) {
 		$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 		unset($errors);
 
+		//If this is a Retry on step3 failure, load step2 post values back to jump right back to where it left off.
+		if (isset($_POST['step2'])){
+			$temp = $_POST;
+			$_POST = $_POST['step2'];
+			$_POST['step1'] = $temp['step1'];
+		}
+
 		//Conversion type set
 		if ($_POST['con_step']=='2'){
 			//Get list of unqiue encoding; skip utf8
@@ -253,9 +260,12 @@ if (!$db) {
 					}
 				}
 			} else {
-				/* Convert course independent materials such as user information, categories */
-				//TODO
-
+				/* 
+				 * Convert course independent materials such as user information, categories 
+				 * Decide which language to use
+				 */
+				$conversionDriver =& new ConversionDriver($_POST['tb_prefix']);
+				$conversionDriver->convertTableBySysDefault();				
 
 				/* Loop through all the courses, and convert all the course's content */
 				while ($row = mysql_fetch_assoc($result)){
@@ -277,91 +287,7 @@ if (!$db) {
 
 					//Run through all ATutor table and convert only those rows with the above courses.
 					//todo: implement a driver class inside the TableConversion class.
-					$temp_table =& new AssignmentsTable($_POST['tb_prefix'], 'assignments', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'assignments was not converted.';
-
-					$temp_table =& new BackupsTable($_POST['tb_prefix'], 'backups', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'backups was not converted.';
-
-					$temp_table =& new BlogPostsTable($_POST['tb_prefix'], 'blog_posts', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'blog_posts was not converted.';
-					
-					$temp_table =& new ContentTable($_POST['tb_prefix'], 'content', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'content was not converted.';
-					
-					$temp_table =& new CoursesTable($_POST['tb_prefix'], 'courses', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'courses was not converted.';
-					
-					$temp_table =& new CourseEnrollmentTable($_POST['tb_prefix'], 'course_enrollment', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'course_enrollment was not converted.';
-
-					$temp_table =& new ExternalResourcesTable($_POST['tb_prefix'], 'external_resources', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'external_resources was not converted.';
-
-					$temp_table =& new FaqTopicsTable($_POST['tb_prefix'], 'faq_topics', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'faq_topics was not converted.';
-					
-					$temp_table =& new FoldersTable($_POST['tb_prefix'], 'folders', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'folders was not converted.';
-
-					$temp_table =& new FilesTable($_POST['tb_prefix'], 'files', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'files was not converted.';
-					
-					$temp_table =& new ForumsTable($_POST['tb_prefix'], 'forums', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'forums was not converted.';
-
-					$temp_table =& new GlossaryTable($_POST['tb_prefix'], 'glossary', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'glossary was not converted.';
-
-					$temp_table =& new GroupsTypesTable($_POST['tb_prefix'], 'groups_types', $char_set, $course_id);
-					if (!$temp_table->convert()){
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'groups_types was not converted.';
-						$_SESSION['redo_conversion'][$row['title']]['GroupsTypesTable'] = array($_POST['tb_prefix'], 'groups_types', $char_set, $course_id);
-					}
-
-					$temp_table =& new LinksCategoriesTable($_POST['tb_prefix'], 'links_categories', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'links_categories was not converted.';
-
-					$temp_table =& new MessagesSentTable($_POST['tb_prefix'], 'messages_sent', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'messages_sent was not converted.';
-
-					$temp_table =& new NewsTable($_POST['tb_prefix'], 'news', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'news was not converted.';
-
-					$temp_table =& new PollsTable($_POST['tb_prefix'], 'polls', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'polls was not converted.';
-
-					$temp_table =& new ReadingListTable($_POST['tb_prefix'], 'reading_list', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'reading_list was not converted.';
-
-					$temp_table =& new TestsTable($_POST['tb_prefix'], 'tests', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'tests was not converted.';
-
-					$temp_table =& new TestQuestionsTable($_POST['tb_prefix'], 'tests_questions', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'tests_questions was not converted.';
-
-					$temp_table =& new TestsQuestionsCategoriesTable($_POST['tb_prefix'], 'tests_questions_categories', $char_set, $course_id);
-					if (!$temp_table->convert())
-						$errors[]= $row['title'].': '.$_POST['tb_prefix'].'tests_questions_categories was not converted.';
+					$conversionDriver->convertTableByClass($row['title'], $char_set, $course_id);
 				}
 			}
 			//Check if there are any errors, if not, jump to next step
@@ -475,8 +401,8 @@ if (!$db) {
 
 	echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
 	<input type="hidden" name="step" value="3" />';
-//	store_steps(1);
-	print_hidden(2);
+	store_steps(2);
+	print_hidden(3);
 	print_post_for_step9($_POST);
 	echo '<p align="center"><input type="submit" class="button" value=" Retry " name="submit" /></p></form>';
 	return;
