@@ -14,10 +14,45 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+if (isset($_GET['reset_filter'])) {
+	unset($_GET['category_id']);
+}
+if (!isset($_GET['category_id'])) {
+	// Suppress warnings
+	$_GET['category_id'] = -1;
+}
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+?>
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+	<div class="input-form">
+		<div class="row">
+			<label for="cats"><?php echo _AT('category'); ?></label><br />
+			<select name="category_id" id="cats">
+				<option value="-1"><?php echo _AT('cats_all'); ?></option>
+				<?php print_question_cats($_GET['category_id']); ?>
+			</select>
+		</div>
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</div>
+</form>
+<?php
+
 $cats = array();
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
+if ($_GET['category_id'] >= 0) {
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=$_GET[category_id] ORDER BY title";
+} else {
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
+}
+
 $result	= mysql_query($sql, $db);
-$cats[] = array('title' => _AT('cats_uncategorized'), 'category_id' => 0);
+if ($_GET['category_id'] <= 0) {
+	$cats[] = array('title' => _AT('cats_uncategorized'), 'category_id' => 0);
+}
+
 while ($row = mysql_fetch_assoc($result)) {
 	$cats[] = $row;
 }
