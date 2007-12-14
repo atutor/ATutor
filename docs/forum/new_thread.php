@@ -92,7 +92,14 @@ if (isset($_POST['cancel'])) {
 		// If there are subscribers to this forum, send them an email notification
 		$subscriber_email_list = array(); // list of subscribers array('email', 'full_name')
 		$subscriber_list       = '';
-
+		$enrolled = array();
+		//get list of student enrolled in this course
+		// This needs to be replaced with a tool to clean forum subscriptions when unenrolling
+		$sql = "SELECT member_id from ".TABLE_PREFIX."course_enrollment WHERE course_id = '$_SESSION[course_id]' AND approved = 'y'";
+		$result1 = mysql_query($sql, $db);
+		while($row = mysql_fetch_assoc($result1)){
+			$enrolled[] = $row['member_id'];
+		}
 		//get a list of users subscribed to this forum
 		$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$fid";
 		$result = mysql_query($sql, $db);
@@ -103,21 +110,20 @@ if (isset($_POST['cancel'])) {
 			$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$_POST[parent_id] AND subscribe=1";
 			$result = mysql_query($sql, $db);
 			while($row = mysql_fetch_assoc($result)){
-				$subscriber_list .= $row['member_id'] . ',';
+				if(in_array($row['member_id'], $enrolled)){
+					$subscriber_list .= $row['member_id'] . ',';
+				}
 			}
 		}
 		$subscriber_list = $substr($subscriber_list, 0, -1);
 
 		if ($subscriber_list != '') {
-			//$sql = "SELECT first_name, second_name, last_name, email, member_id FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list) AND member_id <> $_SESSION[member_id]";
 			$sql = "SELECT first_name, second_name, last_name, email, member_id FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list)";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
 				$subscriber_email_list[] = array('email'=> $row['email'], 'full_name' => $row['first_name'] . ' '. $row['second_name'] . ' ' . $row['last_name'], 'member_id'=>$row['member_id']);
 			}
 		}
-//debug($subscriber_email_list);
-//exit;
 		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now', date=date WHERE post_id=$_POST[parent_id]";
 		$result = mysql_query($sql, $db);
 
@@ -128,11 +134,8 @@ if (isset($_POST['cancel'])) {
 				$_POST['parent_name'] = $_POST['subject'];
 			}
 			$_POST['parent_name'] = urldecode($_POST['parent_name']);
-//debug(get_display_name($subscriber['member_id']));
-//exit;
 			foreach ($subscriber_email_list as $subscriber){
 				$mail = new ATutorMailer;
-			//	$mail->AddAddress($subscriber['email'], $subscriber['full_name']);
 				$mail->AddAddress($subscriber['email'], get_display_name($subscriber['member_id']));
 				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  AT_BASE_HREF.'bounce.php?course='.$_SESSION['course_id']);
 				$body .= "\n----------------------------------------------\n";
