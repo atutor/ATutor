@@ -60,7 +60,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$email_sql	= "SELECT email FROM ".TABLE_PREFIX."course_enrollment C INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE C.course_id=$course AND (";
+		$email_sql	= "SELECT email, first_name, last_name, login, password  FROM ".TABLE_PREFIX."course_enrollment C INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE C.course_id=$course AND (";
 		
 		if ($_POST['to_unenrolled']) {
 			// choose all unenrolled
@@ -104,6 +104,10 @@ if (isset($_POST['cancel'])) {
 		$mail_list = array();
 		while ($row = mysql_fetch_assoc($result)) {
 			$mail_list[]=$row['email'];
+			$fname_list[$row['email']] = $row['first_name'];
+			$lname_list[$row['email']] = $row['last_name'];
+			$pass_list[$row['email']] = $row['password'];
+			$login_list[$row['email']] = $row['login'];
 		}
 
 		// Get instructor ID.
@@ -113,6 +117,7 @@ if (isset($_POST['cancel'])) {
 
 		// Add instructor to email list if he is not the one sending email.
 		if ($instructor_id != $_SESSION['member_id']) {
+			//$sql = "SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
 			$sql = "SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
@@ -123,33 +128,36 @@ if (isset($_POST['cancel'])) {
 		$result = mysql_query("SELECT email, first_name, last_name,login,password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
 		$row	= mysql_fetch_assoc($result);
 		$mail_list[] = $row['email'];
-
-		// Prep the mailer.
-		$mail = new ATutorMailer;
-		$mail->From     = $row['email'];
-		$mail->FromName = $row['first_name'] . ' ' . $row['last_name'];
-		$mail->AddAddress($row['email']);
-		$_POST['subject'] = str_replace('{AT_FNAME}', $row['first_name'],$_POST['subject']);
-		$_POST['subject'] = str_replace('{AT_LNAME}', $row['last_name'],$_POST['subject']);
-		$mail->Subject = $_POST['subject'];
-
+	// Prep the mailer.
 		// set some user specific variables for the body (
 		// Added by Thomas Taennier (ipool)
-		$_POST['body'] = str_replace('{AT_FNAME}', $row['first_name'],$_POST['body']);
-		$_POST['body'] = str_replace('{AT_LNAME}', $row['last_name'],$_POST['body']);
-		$_POST['body'] = str_replace('{AT_EMAIL}', $row['email'],$_POST['body']);
-		$_POST['body'] = str_replace('{AT_USER}', $row['login'],$_POST['body']);
-		$_POST['body'] = str_replace('{AT_PASSWORD}', $row['password'],$_POST['body']);
-		$mail->Body    = $_POST['body'];
 		foreach ($mail_list as $recip) {
-			$mail->AddBCC($recip);
+			$subject = $_POST['subject'];
+			$body = $_POST['body'];
+			$mail = new ATutorMailer;
+			$mail->From     = $row['email'];
+			$mail->FromName = $row['first_name'] . ' ' . $row['last_name'];
+			$subject = str_replace('{AT_FNAME}', $fname_list[$recip],$subject);
+			$subject = str_replace('{AT_LNAME}', $lname_list[$recip],$subject);
+			$body = str_replace('{AT_FNAME}', $fname_list[$recip],$body);
+			$body = str_replace('{AT_LNAME}', $lname_list[$recip],$body);
+			$body = str_replace('{AT_EMAIL}', $recip,$body);
+			$body = str_replace('{AT_USER}', $login_list[$recip],$body);
+			$body = str_replace('{AT_PASSWORD}', $pass_list[$recip],$body);
+
+
+			$mail->Subject = $subject;
+			$mail->AddAddress($recip);
+			$mail->Body    = $body;
+			if(!$mail->Send()) {
+		   		$msg->printErrors('SENDING_ERROR');
+		  		 exit;
+			}
+			unset($mail);
 		}
-		if(!$mail->Send()) {
-		   //echo 'There was an error sending the message';
-		   $msg->printErrors('SENDING_ERROR');
-		   exit;
-		}
-		unset($mail);
+
+		
+
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
