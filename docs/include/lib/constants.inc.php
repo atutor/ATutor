@@ -327,4 +327,7 @@ if (isset($_GET['cid'])) {
 /* google type constants - @author Harris */
 define('GOOGLE_TYPE_SOAP',		0);		//The original soap search with key generated before Dec 2005.
 define('GOOGLE_TYPE_AJAX',		1);		//The new AJAX search by google
+
+/* flags for validate_length in vitals. - @author Harris*/
+define('VALIDATE_LENGTH_FOR_DISPLAY',	1);	
 ?>

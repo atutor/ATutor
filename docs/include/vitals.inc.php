@@ -692,14 +692,23 @@ if ( get_magic_quotes_gpc() == 1 ) {
 /**
 * Checks if the data exceeded the database predefined length, if so,
 * truncate it.
+* This is used on data that are being inserted into the database.
+* If this function is used for display purposes, you may want to add the '...' 
+*  at the end of the string by setting the $forDisplay=1
 * @param	the mbstring that needed to be checked
 * @param	the length of what the input should be
+* @param	(OPTIONAL)
+*			append '...' at the end of the string.  Should not use this when 
+*			dealing with database.  This should only be set for display purposes.
 * @return	the mbstring safe sql entry
 * @author	Harris Wong
 */
-function validate_length($input, $len){
+function validate_length($input, $len, $forDisplay=0){
 	global $strlen, $substr;
 	if ($strlen($input) > $len) {
+		if ($forDisplay===1){
+			return $substr($input, 0, $len).'...';
+		}
 		return $substr($input, 0, $len);
 	}
 	return $input;

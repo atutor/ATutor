@@ -147,7 +147,8 @@ if (isset($_pages[$current_page]['title'])) {
 
 /* calculate the section_title: */
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
-	$section_title = $_SESSION['course_title'];
+	//Truncate course title if it's > 45.
+	$section_title = validate_length($_SESSION['course_title'], 45, VALIDATE_LENGTH_FOR_DISPLAY);
 } else if (!isset($_SESSION['valid_user']) || !$_SESSION['valid_user']) {
 	$section_title = SITE_NAME;
 	if (defined('HOME_URL') && HOME_URL) {
@@ -185,7 +186,8 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 
 		$nav_courses = array(); /* the list of courses we're enrolled in or own */
 		while ($row = @mysql_fetch_assoc($result)) {
-			$nav_courses[$row['course_id']] = $system_courses[$row['course_id']]['title'];
+			//Truncate course title if it's > 45.
+			$nav_courses[$row['course_id']] = validate_length($system_courses[$row['course_id']]['title'], 45, VALIDATE_LENGTH_FOR_DISPLAY);
 		}
 
 		natcasesort($nav_courses);
