@@ -16,7 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
-require_once(AT_INCLUDE_PATH.'lib/course_icon.inc.php');
+//require_once(AT_INCLUDE_PATH.'lib/course_icon.inc.php');
 
 $_GET['show_courses'] = $addslashes(intval($_GET['show_courses']));
 $_GET['current_cat'] = $addslashes(intval($_GET['current_cat']));
@@ -479,14 +479,14 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                         $_base_href = 'content/' . $_SESSION['course_id'] . '/';
                     }
                 } else {
-                    //$_base_href = "images/courses/";
-                                            $_base_href = 'get_course_icon.php/?id='.$row['course_id'];
+                    $_base_href = "images/courses/";
+                                            //$_base_href = 'get_course_icon.php/?id='.$row['course_id'];
                 }
             
             $force_get = (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) ? true : false;
             echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get'>";
         
-        include(AT_INCLUDE_PATH.'html/course_icon.inc.php');
+       //include(AT_INCLUDE_PATH.'html/course_icon.inc.php');
         
         
         ?>
@@ -562,7 +562,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 <small><?php echo _AT('upload_icon_text'); ?></small>
             </div -->
 
-        <?php require_once(AT_INCLUDE_PATH.'html/course_icon.inc.php'); ?>
+        <?php // require_once(AT_INCLUDE_PATH.'html/course_icon.inc.php'); ?>
 
         <br style="clear: left;" />
 
@@ -586,7 +586,6 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 
 </form>
 <?php
-debug($_POST);
 
 if ($_POST['customicon']) {
     echo "<script language='javascript' type='text/javascript'>document.getElementById('uploadform').focus();</script>";
