@@ -33,14 +33,27 @@
 				<?php else: ?>
 					<?php echo $link; ?>
                     <?php  // Added by Martin Turlej -- for custom course icons
-                        $path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
-                        if (file_exists($path.$row['icon'])) {
-                            $dir = "content/".$row['course_id']."/custom_icons/";
-                        } else {
-                            $dir = "images/courses/";
-                        }
-                    ?>
-					<img src="<?php echo $dir.$row['icon']; ?>" class="icon" border="0" alt="" />
+                   // Modified by Greg Gay
+              	$sql2="SELECT icon from ".TABLE_PREFIX."courses WHERE course_id='$row[course_id]'";
+		$result2 = mysql_query($sql2, $db);
+		
+		while($row2=mysql_fetch_assoc($result2)){
+			$filename = $row2['icon'];
+		}
+		
+                $path = AT_CONTENT_DIR .$row['course_id'].'/custom_icons/'.$filename;
+                
+                if (file_exists($path)) {
+                    if (defined('AT_FORCE_GET_FILE')) {
+                        $dir = 'get_course_icon.php?id='.$row['course_id'];
+                    } else {
+                        $dir = 'content/' . $_SESSION['course_id'] . '/'.$row['icon'];
+                    }
+                } else {
+                    	$dir = "images/courses/".$row['icon'];
+                }
+                ?>
+				<img src="<?php echo $dir; ?>" class="icon" border="0" alt="" />
 					<?php echo $link2; ?>
 				<?php endif; ?>
 

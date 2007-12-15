@@ -183,7 +183,50 @@ function toggleToc(objId) {
 <div id="header">
 
 <!-- section title -->
-<div id="tl_corner"><a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a><h1 id="section-title"><?php echo $this->section_title; ?><?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
+<div>
+
+<?php
+              	$sql_icon="SELECT icon from ".TABLE_PREFIX."courses WHERE course_id='$_SESSION[course_id]' ";
+              			echo $sql_icon;
+		if($result2 = mysql_query($sql_icon, $db)){
+
+		echo "true";
+		
+		}else{
+		
+		echo "false";
+		
+		}
+		while($row2 = mysql_fetch_assoc($result2)){
+			$filename = $row2['icon'];
+		}
+                $path = AT_CONTENT_DIR .$_SESSION['course_id'].'/custom_icons/'.$filename;
+                echo $path;
+                if (file_exists($path)) {
+                    if (defined('AT_FORCE_GET_FILE')) {
+                        $dir = $this->base_href.'get_course_icon.php?id='.$_SESSION['course_id'];
+                    } else {
+                        $dir = $this->base_href.'content/' . $_SESSION['course_id'] . '/'.$row2['icon'];
+                    }
+                } else {
+                    	$dir = $this->base_href.'images/courses/'.$row2['icon'];
+                }
+                ?>
+<!--  // Custom course icon -->
+	<a href="index.php"><img src="<?php echo $dir; ?>" class="headicon" alt="" align="left" border="0"/></a>
+				
+				
+<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
+<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+
+<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+
+
+<?php
+
+
+?>
+<h1 id="section-title"><?php echo $this->section_title; ?><?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
 		- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 	<?php endif; ?></h1>
 </div>

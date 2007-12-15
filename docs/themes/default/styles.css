@@ -540,7 +540,9 @@ div#toctoggle {
 
 h1#section-title {
 	float: left;
-	margin-left: 5px;
+	white-space:nowrap;
+	margin-left:4em;
+	margin-top:-3.5em
 }
 
 div#top-links {
@@ -554,7 +556,7 @@ div#top-links {
 	font-size:1em;
 	white-space:nowrap;
 }
-div..top-links a{
+div.top-links a{
 	background-color:black;
 }
 
@@ -657,6 +659,7 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 	padding: 5px;
 	background-image: none;
 	padding-left: 0px;
+
 }
 
 /*buttons*/
@@ -1009,7 +1012,7 @@ div.box {
 	border-right: 1px solid #B8AE9C;
 	border-bottom: 1px solid #B8AE9C;
 	font-weight: normal;
-	font-size:  1em;
+	font-size:  .9em;
 }
 
 h5.box { 
@@ -1129,7 +1132,13 @@ div.course img.icon	{
 	height:6.8em;
 	width:6.8em;
 }
-
+img.headicon	{
+	float: top left;
+	margin-top: -1em;
+	height:6.1em;
+	width:5.9em;
+	vertical-align:top;
+}
 div.course div.shortcuts {
 	text-align: right;
 	clear: left;
@@ -1322,7 +1331,7 @@ dl#public-profile dd {
 	padding-right: 5px;
 }
 #contentcolumn_shiftright {
-	margin-left: 210px;
+	margin-left: 215px;
 	padding-right: 5px;
 }
 #rightcolumn{
