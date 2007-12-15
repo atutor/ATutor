@@ -16,6 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(AT_INCLUDE_PATH.'lib/course_icon.inc.php');
 
 $_GET['show_courses'] = $addslashes(intval($_GET['show_courses']));
 $_GET['current_cat'] = $addslashes(intval($_GET['current_cat']));
@@ -151,6 +152,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form" enctype="multipart/form-data">
 	<input type="hidden" name="form_course" value="true" />
+	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $_config['prof_pic_max_file_size']; ?>" />
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
 	<input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
 	<input type="hidden" name="created_date" value="<?php echo $row['created_date']; ?>" />
@@ -465,23 +467,6 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<label for="copyright"><?php echo _AT('course_copyright'); ?></label><br />
 		<textarea name="copyright" rows="2" cols="65" id="copyright"><?php echo $row['copyright']; ?></textarea>
 	</div>
-
-    <div class="input-form" id="uploadform" style="float: right; width: 45%; margin-right: 15px;">
-        <div class="row">
-            <h3><a onclick="toggleFrm('upload'); return false;"><?php echo _AT('upload_icon'); ?></a></h3>
-        </div>
-        <div id="upload" style="display: none">
-            <div class="row">
-                <p><?php echo _AT('upload_icon_text'); ?></p>
-            </div>
-            <div class="row">
-                <input type="file" name="customicon" id="customicon">
-            </div>
-        </div>
-    </div>
-
-    
-
 	<div class="row">
 		<?php 
             if ($row['icon'] != ''): 
@@ -489,18 +474,22 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 
                 if (file_exists($path.$row['icon'])) {
                     if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-                        $_base_href = 'get.php/custom_icons/';
+                        $_base_href = 'get_course_icon.php/?id='.$row['course_id'];
                     } else {
                         $_base_href = 'content/' . $_SESSION['course_id'] . '/';
                     }
                 } else {
-                    $_base_href = "images/courses/";
+                    //$_base_href = "images/courses/";
+                                            $_base_href = 'get_course_icon.php/?id='.$row['course_id'];
                 }
             
             $force_get = (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) ? true : false;
             echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get'>";
-        ?>
         
+        include(AT_INCLUDE_PATH.'html/course_icon.inc.php');
+        
+        
+        ?>
 		<img id="i0" src="<?php echo $_base_href.$row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
 
 		<?php else: ?>
@@ -510,7 +499,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 				?>
 			<input type='hidden' name='boolForce' id='boolForce' value=''>
 		<?php endif; ?>
-
+		<div style="width:40%; float:left;">
 		<label for="icons"><?php echo _AT('icon'); ?></label><br />
 		<select name="icon" id="icons" onchange="SelectImg()">
 			<option value=""><?php echo _AT('no_icon'); ?></option>
@@ -565,11 +554,16 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                     echo "</optgroup>";
                 }
 			?>
-		</select>
-        <?php
-            echo "<input type='hidden' name='custOptCount' id='custOptCount' value='".$optCount."'>";
-            echo "<input type='hidden' name='courseId' id='courseId' value='".$_SESSION['course_id']."'>";
-		?>
+		</select><?php echo "&nbsp;&nbsp;&nbsp; "._AT('or'); ?>
+	</div>
+            <!-- div class="row" style="float:right;width:40%;">
+            <?php echo _AT('upload_icon'); ?><br />
+                <input type="file" name="customicon" id="customicon" value="<?php echo $_POST['customicon']; ?>"/><br />
+                <small><?php echo _AT('upload_icon_text'); ?></small>
+            </div -->
+
+        <?php require_once(AT_INCLUDE_PATH.'html/course_icon.inc.php'); ?>
+
         <br style="clear: left;" />
 
 	</div>
@@ -579,6 +573,11 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
     
 
 	<div class="buttons">
+	        <?php
+            echo "<input type='hidden' name='custOptCount' id='custOptCount' value='".$optCount."' />";
+            echo "<input type='hidden' name='courseId' id='courseId' value='".$_SESSION['course_id']."' />";
+		?>
+
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /> 
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" />
 	</div>
@@ -587,6 +586,8 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 
 </form>
 <?php
+debug($_POST);
+
 if ($_POST['customicon']) {
     echo "<script language='javascript' type='text/javascript'>document.getElementById('uploadform').focus();</script>";
 }
