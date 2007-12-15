@@ -41,33 +41,49 @@ if ($_POST['submit']) {
 
 		// send the email - if needed
 		if ($system_courses[$course]['notify'] == 1) {
+			$mail_list = array();	//initialize an array to store all the pending emails
 
+			//Get the list of students with enrollment privilege
+			$module =& $moduleFactory->getModule('_core/enrolment');
+			$sql	= "SELECT email, first_name, last_name, privileges FROM ".TABLE_PREFIX."members m INNER JOIN ".TABLE_PREFIX."course_enrollment ce ON m.member_id=ce.member_id WHERE ce.privileges > 0 AND ce.course_id=$course";
+			$result = mysql_query($sql, $db);
+			while ($row	= mysql_fetch_assoc($result)){
+				if (query_bit($row['privileges'], $module->getPrivilege())){
+					unset($row['privileges']);	//we don't need the privilege to flow around
+					$mail_list[] = $row;
+				}
+			}
+			
+			//Get instructor information
 			$ins_id = $system_courses[$course]['member_id'];
 			$sql	= "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$ins_id";
 			$result = mysql_query($sql, $db);
 			$row	= mysql_fetch_assoc($result);
+			$mail_list[] = $row;
 
-			$to_email = $row['email'];
-			$tmp_message  = $row['first_name']  .' ' . $row['last_name']."\n\n";
-			$tmp_message .= _AT('enrol_messagenew', $system_courses[$course]['title'], AT_BASE_HREF );
+			//Send email notification to both assistants with privileges & Instructor
+			foreach ($mail_list as $row){
+				$to_email = $row['email'];
+				$tmp_message  = $row['first_name']  .' ' . $row['last_name']."\n\n";
+				$tmp_message .= _AT('enrol_messagenew', $system_courses[$course]['title'], AT_BASE_HREF );
+				if ($to_email != '') {
+					require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
-			if ($to_email != '') {
-				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+					$mail = new ATutorMailer;
+					$mail->From     = $_config['contact_email'];
+					$mail->FromName = $_config['site_name'];
+					$mail->AddAddress($to_email);
+					$mail->Subject = _AT('enrol_message3');
+					$mail->Body    = $tmp_message;
 
-				$mail = new ATutorMailer;
-				$mail->From     = $_config['contact_email'];
-				$mail->FromName = $_config['site_name'];
-				$mail->AddAddress($to_email);
-				$mail->Subject = _AT('enrol_message3');
-				$mail->Body    = $tmp_message;
-
-				if (!$mail->Send()) {
-				   require(AT_INCLUDE_PATH.'header.inc.php');
-				   $msg->printErrors('SENDING_ERROR');
-				   require(AT_INCLUDE_PATH.'footer.inc.php');
-				   exit;
+					if (!$mail->Send()) {
+					   require(AT_INCLUDE_PATH.'header.inc.php');
+					   $msg->printErrors('SENDING_ERROR');
+					   require(AT_INCLUDE_PATH.'footer.inc.php');
+					   exit;
+					}
+					unset($mail);
 				}
-				unset($mail);
 			}
 		}
 		require(AT_INCLUDE_PATH.'header.inc.php');
