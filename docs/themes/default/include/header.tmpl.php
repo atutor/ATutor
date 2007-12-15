@@ -48,7 +48,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  */
 
 // will have to be moved to the header.inc.php
-global $system_courses, $_custom_css;
+global $system_courses, $_custom_css,$db;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -187,35 +187,29 @@ function toggleToc(objId) {
 
 <?php
               	$sql_icon="SELECT icon from ".TABLE_PREFIX."courses WHERE course_id='$_SESSION[course_id]' ";
-              			echo $sql_icon;
-		if($result2 = mysql_query($sql_icon, $db)){
-
-		echo "true";
-		
-		}else{
-		
-		echo "false";
-		
-		}
+		$result2 = mysql_query($sql_icon, $db);
+		// how to get this query to run?
 		while($row2 = mysql_fetch_assoc($result2)){
 			$filename = $row2['icon'];
 		}
                 $path = AT_CONTENT_DIR .$_SESSION['course_id'].'/custom_icons/'.$filename;
-                echo $path;
                 if (file_exists($path)) {
                     if (defined('AT_FORCE_GET_FILE')) {
                         $dir = $this->base_href.'get_course_icon.php?id='.$_SESSION['course_id'];
                     } else {
-                        $dir = $this->base_href.'content/' . $_SESSION['course_id'] . '/'.$row2['icon'];
+                        $dir = $this->base_href.'content/' . $_SESSION['course_id'] . '/'.$filename;
                     }
                 } else {
-                    	$dir = $this->base_href.'images/courses/'.$row2['icon'];
+                    	$dir = $this->base_href.'images/courses/'.$filename;
                 }
                 ?>
 <!--  // Custom course icon -->
+<?php
+if($filename){
+?>
 	<a href="index.php"><img src="<?php echo $dir; ?>" class="headicon" alt="" align="left" border="0"/></a>
 				
-				
+<?php } ?>
 <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
