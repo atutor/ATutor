@@ -20,6 +20,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * $this->content_base_href	the <base href> to use for this page
  * $this->base_path			the absolute path to this atutor installation
  * $this->rtl_css			if set, the path to the RTL style sheet
+ * $this->icon			the path to a course icon
  * $this->banner_style		-deprecated-
  * $this->theme				the directory name of the current theme
  * $this->base_href			the full url to this atutor installation
@@ -186,28 +187,10 @@ function toggleToc(objId) {
 <div>
 
 <?php
-              	$sql_icon="SELECT icon from ".TABLE_PREFIX."courses WHERE course_id='$_SESSION[course_id]' ";
-		$result2 = mysql_query($sql_icon, $db);
-		// how to get this query to run?
-		while($row2 = mysql_fetch_assoc($result2)){
-			$filename = $row2['icon'];
-		}
-                $path = AT_CONTENT_DIR .$_SESSION['course_id'].'/custom_icons/'.$filename;
-                if (file_exists($path)) {
-                    if (defined('AT_FORCE_GET_FILE')) {
-                        $dir = $this->base_href.'get_course_icon.php?id='.$_SESSION['course_id'];
-                    } else {
-                        $dir = $this->base_href.'content/' . $_SESSION['course_id'] . '/'.$filename;
-                    }
-                } else {
-                    	$dir = $this->base_href.'images/courses/'.$filename;
-                }
-                ?>
-<!--  // Custom course icon -->
-<?php
-if($filename){
+if($this->icon){
+// if a course icon is available, display it here. 
 ?>
-	<a href="index.php"><img src="<?php echo $dir; ?>" class="headicon" alt="" align="left" border="0"/></a>
+	<a href="index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="" align="left" border="0"/></a>
 				
 <?php } ?>
 <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
@@ -217,8 +200,14 @@ if($filename){
 
 
 <?php
+// If there is a custom course banner in the file manager called banner.html, display it here
+@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.html'); 
 
+/*
+and example banner.html file might look like:
+<div style="width: 760px; height: 42px; background: white;"><img src="http://[mysite]/atutor15rc3/banners/kart-camb.jpg"></div>
 
+*/
 ?>
 <h1 id="section-title"><?php echo $this->section_title; ?><?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
 		- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
