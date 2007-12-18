@@ -22,7 +22,7 @@ function load_editor($name = FALSE) {
 		$course_base_href = 'content/' . $_SESSION['course_id'] . '/'; 
 	}
 
-	echo '<script language="javascript" type="text/javascript" src="'.$_base_path.'jscripts/tiny_mce/tiny_mce.js"></script>';
+	echo '<script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.'jscripts/tiny_mce/tiny_mce.js"></script>';
 	echo '<script language="javascript" type="text/javascript">';
 	echo '	tinyMCE.init({ ';
 	if ($name) {
