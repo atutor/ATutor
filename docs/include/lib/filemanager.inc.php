@@ -196,7 +196,7 @@ function get_human_size($num_bytes) {
 	}
 	// else:
 
-	return $num_bytes . ' '._AT('b');
+	return $num_bytes . ' '._AT('bt');
 }
 
 /**
