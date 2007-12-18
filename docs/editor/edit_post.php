@@ -134,8 +134,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 	
 	<div class="row">
-		<small class="spacer">&middot;<?php echo _AT('forum_links'); ?>
-		&middot; <?php echo _AT('forum_email_links'); ?>
+		<small class="spacer"><br />&middot; <?php echo _AT('forum_links'); ?><br />
+		&middot; <?php echo _AT('forum_email_links'); ?><br />
 		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
 	</div>
 
