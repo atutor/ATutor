@@ -33,7 +33,7 @@ $file = AT_CONTENT_DIR .$id.'/custom_icons/'.$filename;
 
 $extensions = array('gif', 'jpg', 'png');
 $pathinfo = pathinfo($file);
-$ext = $pathinfo['extension'];
+$ext = strtolower($pathinfo['extension']);
 if ($ext == '') {
 	$ext = 'application/octet-stream';
 } else {

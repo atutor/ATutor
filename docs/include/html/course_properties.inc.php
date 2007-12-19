@@ -494,9 +494,6 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 
 		<?php else: ?>
 			<img id="i0" src="images/clr.gif" alt="" style="float: left; margin: 2px;" border="1" height="79" width="79"  />
-			<?	// temp hack fix, boolForce was not declared if custom icon folder isn't cound
-				// @harris
-				?>
 			<input type='hidden' name='boolForce' id='boolForce' value=''>
 		<?php endif; ?>
 		<div style="width:40%; float:left;">
@@ -514,7 +511,8 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                     $files = scandir($path);
                     echo "<optgroup label='Custom Icons'>";
                     foreach($files as $val) {
-                        if (substr($val, -3) == "jpg") {
+						$file_ext = substr(strtolower($val), -3);
+                        if ($file_ext == "jpg" || $file_ext == "png" || $file_ext == "gif") {
                             $optCount++;
                             echo "<option value='".$val."'";
                             if ($val == $row['icon']) {
@@ -562,7 +560,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 <small><?php echo _AT('upload_icon_text'); ?></small>
             </div -->
 
-        <?php // require_once(AT_INCLUDE_PATH.'html/course_icon.inc.php'); ?>
+        <?php  require_once(AT_INCLUDE_PATH.'html/course_icon.inc.php'); ?>
 
         <br style="clear: left;" />
 
