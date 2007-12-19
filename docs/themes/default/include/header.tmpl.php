@@ -182,74 +182,66 @@ function toggleToc(objId) {
 </script>
 
 <div id="header">
+	<!-- section title -->
+	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
+		<a href="index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="COURSE ICON" /></a>	
+	<?php } ?>
 
-<!-- section title -->
-<div>
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
+	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
-<?php
-if($this->icon){
-// if a course icon is available, display it here. 
-?>
-	<a href="index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="" align="left" border="0"/></a>
-				
-<?php } ?>
-<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
-<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
 
-<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+	<?php
+	// If there is a custom course banner in the file manager called banner.html, display it here
+	@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.html'); 
 
+	/*
+	and example banner.html file might look like:
+	<div style="width: 760px; height: 42px; background: white;"><img src="http://[mysite]/atutor15rc3/banners/kart-camb.jpg"></div>
+	*/
 
-<?php
-// If there is a custom course banner in the file manager called banner.html, display it here
-@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.html'); 
-
-/*
-and example banner.html file might look like:
-<div style="width: 760px; height: 42px; background: white;"><img src="http://[mysite]/atutor15rc3/banners/kart-camb.jpg"></div>
-
-*/
-?>
-<h1 id="section-title"><?php echo $this->section_title; ?><?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
-		- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
-	<?php endif; ?></h1>
-</div>
-<!-- top help/search/login links -->
-<div align="right" id="top-links">
-<!-- back to start page -->
-	<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
-		<!-- start the jump menu -->
-		<?php if (empty($_GET)): ?>
-			<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
-		<?php else: ?>
-			<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
+	?>
+	<h1 id="section-title"><?php echo $this->section_title; ?>
+		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
+			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
-		<label for="jumpmenu" accesskey="j"></label>
-			<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
-				<option value="0"><?php echo _AT('my_start_page'); ?></option>
-				<optgroup label="<?php echo _AT('courses_below'); ?>">
-					<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
-						<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
-					<?php endforeach; ?>
-				</optgroup>
-			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /> &nbsp; </form>
-		<!-- /end the jump menu -->
-		<?php if ($_SESSION['is_super_admin']): ?>
-			<img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
-		<?php endif; ?>
+	</h1>
 
-		<?php if ($_SESSION['course_id'] > -1): ?>
-			<?php if (get_num_new_messages()): ?>
-				<img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a>
+	<div id="top-links"> <!-- top help/search/login links -->
+		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
+			<!-- start the jump menu -->
+			<?php if (empty($_GET)): ?>
+				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
 			<?php else: ?>
-				<img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a>
+				<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
+			<?php endif; ?>
+			<label for="jumpmenu" accesskey="j"></label>
+				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
+					<option value="0"><?php echo _AT('my_start_page'); ?></option>
+					<optgroup label="<?php echo _AT('courses_below'); ?>">
+						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
+							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
+						<?php endforeach; ?>
+					</optgroup>
+				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" class="button" /> </form>
+			<!-- /end the jump menu -->
+			<?php if ($_SESSION['is_super_admin']): ?>
+				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
+			<?php endif; ?>
+
+			<?php if ($_SESSION['course_id'] > -1): ?>
+				<?php if (get_num_new_messages()): ?>
+					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a> 
+				<?php else: ?>
+					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a>
+				<?php endif; ?>
 			<?php endif; ?>
 		<?php endif; ?>
-	<?php endif; ?>
-
-	<img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> <img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> <a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+	</div>
 </div>
 
-<br />
 <div id="topnavlistcontainer">
 <!-- the main navigation. in our case, tabs -->
 	<ul id="topnavlist">
@@ -267,95 +259,117 @@ and example banner.html file might look like:
 	</ul>
 </div>
 
+<div style="background-color:#efefef; font-size:0.85em; padding-top: 5px; border-bottom:1px solid black; height:2em;">
+	<!-- the sub navigation -->
+	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
+		<?php if ($_SESSION['valid_user']): ?>					
+			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+		<?php else: ?>
+			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
+		<?php endif; ?>
+	</div>
 
-</div>
-<!-- the sub navigation -->
-<div style="float: right; padding-top: 5px; padding-right: 5px; font-size:0.85em; text-transform: lowercase;" id="suv-nav-logout">
-	<?php if ($_SESSION['valid_user']): ?>					
-		<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> &nbsp;&nbsp;<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+	<?php if ($this->sub_level_pages): ?>
+		<div id="sub-navigation">
+			<?php if (isset($this->back_to_page)): ?>
+				<a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo _AT('back_to').' '.$this->back_to_page['title']; ?></a> | 
+			<?php endif; ?>
+
+			<?php $num_pages = count($this->sub_level_pages); ?>
+			<?php for ($i=0; $i<$num_pages; $i++): ?>
+				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
+					<strong><?php echo $this->sub_level_pages[$i]['title']; ?></strong>
+				<?php else: ?>
+					<a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a>
+				<?php endif; ?>
+				<?php if ($i < $num_pages-1): ?>
+					|
+				<?php endif; ?>
+			<?php endfor; ?>
+		</div>
 	<?php else: ?>
-		 <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
+		<div id="sub-navigation">
+			&nbsp;
+		</div>
 	<?php endif; ?>
 </div>
 
-<?php if ($this->sub_level_pages): ?>
-	<div id="sub-navigation">
-		<?php if (isset($this->back_to_page)): ?>
-			<a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo _AT('back_to').' '.$this->back_to_page['title']; ?></a> | 
-		<?php endif; ?>
-
-		<?php $num_pages = count($this->sub_level_pages); ?>
-		<?php for ($i=0; $i<$num_pages; $i++): ?>
-			<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-				<strong><?php echo $this->sub_level_pages[$i]['title']; ?></strong>
-			<?php else: ?>
-				<a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a>
-			<?php endif; ?>
-			<?php if ($i < $num_pages-1): ?>
-				|
-			<?php endif; ?>
-		<?php endfor; ?>
+<div style="padding:3px;">
+	<!-- the bread crumbs -->
+	<div id="breadcrumbs">
+		<?php foreach ($this->path as $page): ?>
+			<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> > 
+		<?php endforeach; ?> <?php echo $this->page_title; ?>
 	</div>
-<?php else: ?>
-	<div id="sub-navigation">
-		&nbsp;
-	</div>
-<?php endif; ?>
-
-<!-- the bread crumbs -->
-<div id="breadcrumbs">
-	<?php foreach ($this->path as $page): ?>
-		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> > 
-	<?php endforeach; ?> <?php echo $this->page_title; ?>
+	<?php if ($this->guide): ?>
+		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+	<?php endif; ?>
 </div>
-
-<!-- Extra div tag for IE fix in dealing with position:absolute (used by side menu)-->
-<div>
 
 <div id="contentwrapper">
-<div id="contentcolumn"
-	<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu): ?>
-		style="margin-right:0px;width:99%;"
-	<?php endif; ?>
-	>
-
-<!-- the page title -->
-	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: left; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
-		<?php if ($this->guide): ?>
-			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
-		<?php endif; ?>
-		<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
-			<script type="text/javascript" language="javascript">
+	<?php if (($_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
+		<div id="leftcolumn">
+			<script type="text/javascript">
 			//<![CDATA[
 			var state = getcookie("side-menu");
 			if (state && (state == 'none')) {
-				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
+				document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu">');
 			} else {
-				document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
+				document.writeln('<a name="menu"></a><div style="" id="side-menu">');
 			}
 			//]]>
 			</script>
-		<?php endif; ?>
-	</div>
 
-	<div style="float:right;padding-top:7px;" id="sequence-links">
-		<?php if ($this->sequence_links['resume']): ?>
-				<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
-		<?php else:
-			if ($this->sequence_links['previous']): ?>
-				<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->img; ?>previous.gif" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
-			<?php endif;
-			if ($this->sequence_links['next']): ?>
-				<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->img; ?>next.gif" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+			<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
+
+			<script type="text/javascript">
+			//<![CDATA[
+				document.writeln('</div>');
+			//]]>
+			</script>
+		</div>
+	<?php endif; ?>
+
+	<div id="contentcolumn"
+		<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu): ?>
+			style="margin-left:0px;width:99%;"
+		<?php endif; ?>
+		>
+
+		<?php if ($_SESSION['course_id'] > 0): ?>
+		<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: left; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
+
+			<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
+				<script type="text/javascript" language="javascript">
+				//<![CDATA[
+				var state = getcookie("side-menu");
+				if (state && (state == 'none')) {
+					showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
+				} else {
+					document.getElementById('contentcolumn').id="contentcolumn_shiftright";
+					showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
+				}
+				//]]>
+				</script>
 			<?php endif; ?>
+		</div>
+		<div id="sequence-links">
+			<?php if ($this->sequence_links['resume']): ?>
+					<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+			<?php else:
+				if ($this->sequence_links['previous']): ?>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->img; ?>previous.gif" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
+				<?php endif;
+				if ($this->sequence_links['next']): ?>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->img; ?>next.gif" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+				<?php endif; ?>
+			<?php endif; ?>
+			&nbsp;
+		</div>
 		<?php endif; ?>
-		&nbsp;
-	</div>
 
+	<!-- the page title -->
+	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 
-<!-- the page title -->
-<h2 class="page-title"><?php echo $this->page_title; ?></h2>
-
-<a name="content"></a>
-<?php global $msg; $msg->printAll(); ?>
+	<a name="content"></a>
+	<?php global $msg; $msg->printAll(); ?>
