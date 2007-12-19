@@ -127,13 +127,13 @@ if (isset($_POST['cancel'])) {
 			$original_img	= $_FILES['customicon']['tmp_name'];
 			$thumbnail_img	= $path . $_FILES['customicon']['name'];
 
-			if ($width > $height && $width>100) {
-				$thumbnail_height = intval(100 * $height / $width);
-				$thumbnail_width  = 100;
+			if ($width > $height && $width>79) {
+				$thumbnail_height = intval(79 * $height / $width);
+				$thumbnail_width  = 79;
 				if (!resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension)){
 					$msg->addError('FILE_NOT_SAVED');
 				}
-			} else if ($width <= $height && $height > 100) {
+			} else if ($width <= $height && $height > 79) {
 				$thumbnail_height= 100;
 				$thumbnail_width = intval(100 * $width / $height);
 				if (!resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension)){

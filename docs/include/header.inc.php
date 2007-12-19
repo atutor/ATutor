@@ -149,6 +149,25 @@ if (isset($_pages[$current_page]['title'])) {
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	//Truncate course title if it's > 45.
 	$section_title = validate_length($_SESSION['course_title'], 45, VALIDATE_LENGTH_FOR_DISPLAY);
+	// If there is an icon, display it on the header
+	$sql = 'SELECT icon FROM '.TABLE_PREFIX.'courses WHERE course_id='.$_SESSION['course_id'];
+	$result =  mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	if (!empty($row['icon'])){
+		//Check if this is a custom icon, if so, use get_course_icon.php to get it
+		//Otherwise, simply link it from the images/
+		$path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
+		if (file_exists($path.$row['icon'])) {
+			if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+				$course_icon = $_base_href.'get_course_icon.php/?id='.$_SESSION['course_id'];
+			} else {
+				$course_icon = $_base_href.'content/' . $_SESSION['course_id'] . '/';
+			}
+		} else {
+			$course_icon = $_base_href.'images/courses/'.$row['icon'];
+		}
+		$savant->assign('icon', $course_icon);
+	}
 } else if (!isset($_SESSION['valid_user']) || !$_SESSION['valid_user']) {
 	$section_title = SITE_NAME;
 	if (defined('HOME_URL') && HOME_URL) {

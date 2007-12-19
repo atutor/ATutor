@@ -148,7 +148,27 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<?php while ($row = mysql_fetch_assoc($courses_result)): ?>
 		<li style="list-style: none; width: 80%">
 			<dl class="browse-course">
-				<dd><h3><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></h3></dd>
+				<dt>
+					<?php if ($row['icon']) { // if a course icon is available, display it here.  
+						$style_for_title = 'style="height: 79px;"'; 
+
+						//Check if this is a custom icon, if so, use get_course_icon.php to get it
+						//Otherwise, simply link it from the images/
+						$path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
+		                if (file_exists($path.$row['icon'])) {
+							if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+								$course_icon = 'get_course_icon.php/?id='.$row['course_id'];
+							} else {
+								$course_icon = 'content/' . $row['course_id'] . '/';
+							}
+						} else {
+							$course_icon = 'images/courses/'.$row['icon'];
+						}
+					?>
+						<a href="bounce.php?course=<?php echo $row['course_id']; ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="" /></a>	
+					<?php } ?>
+				</dt>
+				<dd><h3 <?php echo $style_for_title; ?>><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></h3></dd>
 				
 			<?php if ($row['description']): ?>
 				<dt><?php echo _AT('description'); ?></dt>
