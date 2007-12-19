@@ -64,13 +64,7 @@ h5 {
     font-size: 100%;
 }
 
-textarea {
-    border: 1px solid #ACCFCC;  
-    color: #1D2326;
-    background-color: #E9F4F3;
-    width: 88%;
-    padding: 0.1em;
-}
+
 
 /*  Table of content attributes*/
 p.toc{
@@ -194,7 +188,6 @@ hr {
 
 select.dropdown {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
-   	 background-color: #ACCFCC;
 }
 
 .highlight, a.highlight {
@@ -214,8 +207,7 @@ a .highlight{
 
 /* edit content tabs */
 .buttontab {
-	font-family: Helvetica, Arial, Helvetica, sans-serif;
-	background-color: #6F7172;
+	background-color: #E6E6E6;
 	font-weight: 500;
 	border:0;
 	padding-left: 3px;
@@ -226,7 +218,7 @@ a .highlight{
 
 .tab {
 	color: black;
-	background-color: #6F7172;
+	background-color: #E6E6E6;
 	border-top: 1px #B8AE9C solid;
 	border-left: 1px #B8AE9C solid;
 	border-right: 1px #B8AE9C solid;
@@ -282,7 +274,6 @@ td.selected{
 .unsaved {
 	color: red;
 	background-color: #FFFDE0;
-	margin: 10px;
 	font-weight: bold;
 }
 .saved {
@@ -555,16 +546,15 @@ a#editor-link.on {
 
 /* for data tables */
 table.data {
+	clear:right;
 	border: 1px solid #B8AE9C;
-	width: 80%; 
+	width: 90%; 
 	margin-left: auto; 
 	margin-right: auto;
-	border-spacing: 0px;
-	/*border-collapse: collapse;*/
 } 
 
 table.data th {
-	background-color: #B8AE9C;
+	background-color: #F6EAD6;
 	padding: 3px;
 	white-space: nowrap;
 }
@@ -579,7 +569,6 @@ table.data th a {
 }
 
 table.data tbody {
-	background-color: #F7F3ED;
 	border-top: 1px solid #B8AE9C;
 	border-bottom: 1px solid #B8AE9C;
 }
@@ -595,7 +584,7 @@ table.data td {
 }
 
 table.data tbody tr:hover {
-	background-color: #6F7172;
+	background-color: #efefef;
 	cursor: pointer;
 }
 
@@ -628,19 +617,11 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 
 /*buttons*/
 table.data tfoot input {
-	border: 1px solid #ACCFCC;
-	background-color: #E9F4F3;
-	color: #024C41;
-	padding-left: 1em;
-	padding-right: 1em;
-	max-width: 60%;
-	margin-left: 5px;
+	background-color: #efefef;
+	font-weight: normal;
+	border:  #AAA  solid 1px;
 }
 
-table.data tfoot input[type=submit]:hover {
-	background-color: #5B8E88;
-	color: white;
-}
 
 
 /* used for static tables with no form elements: */
@@ -735,7 +716,7 @@ div#info {
 	margin-bottom: 15px;
 	border: 1px solid #B8AE9C;
 	padding: 5px;
-	background-color: #6F7172;
+	background-color: #EFE6FF;
 	color: #595241;
 	font-weight: bold;
 }
@@ -841,17 +822,7 @@ form {
 	clear: none;
 	display:inline;
 }
-#jump-button {
-    padding-left: 9px;
-	padding-right: 2px;
-	background-color: white;
-	border: 1px solid #B8AE9C;
-	cursor: pointer;
-	color: black;
-}
-#jumpmenu {
-	/*font-size: small;*/
-}
+
 
 optgroup {
 	/*font-size: small;*/
@@ -968,7 +939,7 @@ h4.box {
 
 div.box {
 	padding: 2px;
-	background-color: #efefef;
+	background-color: #F5F5F5;
 	color: black;
 	border: 1px solid #B8AE9C;
 
@@ -1034,9 +1005,6 @@ div.box .odd {
     background-color: transparent;
 }
 
-div.box input {
-    font-size: 100%;
-}
 
 /* users/index.php */
 
@@ -1334,7 +1302,7 @@ ul#topnavlist li {
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
-    background-color: #efefef;
+    background-color: #E6E6E6;
     color: black;
 	text-decoration:none;
 }
@@ -1357,7 +1325,7 @@ ul#topnavlist li a.selected {
 
 ol#tools>li:hover {
 	border: 1px solid #e0e0e0;
-	background-color: #6F7172; /* #f5f5ff; */
+	background-color: #efefef; 
 }
 
 /*  tool list on admin home and manage screens  */

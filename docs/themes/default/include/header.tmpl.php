@@ -259,7 +259,7 @@ function toggleToc(objId) {
 	</ul>
 </div>
 
-<div style="background-color:#efefef; font-size:0.85em; padding-top: 5px; border-bottom:1px solid black; height:2em;">
+<div style="background-color:#E6E6E6; font-size:0.85em; padding-top: 5px; border-bottom:1px solid black; height:2em;">
 	<!-- the sub navigation -->
 	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
 		<?php if ($_SESSION['valid_user']): ?>					
@@ -332,7 +332,7 @@ function toggleToc(objId) {
 
 	<div id="contentcolumn"
 		<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu): ?>
-			style="margin-left:0px;width:99%;"
+			style="margin-left:0.5em;width:99%;"
 		<?php endif; ?>
 		>
 

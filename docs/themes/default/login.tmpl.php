@@ -22,7 +22,7 @@
 		<h3><?php echo _AT('login'); ?></h3>
 		<div class="insidecol">
 			<p><?php echo _AT('login_text') ;?></p>
-			<div class="input-form">
+			<div class="input-form" style="background-color:white;">
 
 				<?php if ($_GET['course']): ?>
 					<div class="row">
