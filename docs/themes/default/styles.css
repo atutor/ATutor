@@ -812,7 +812,15 @@ div.dropdown {
 	font-weight: normal;
 }
 
-
+div.dropdown-heading {
+	background-color: #ACCFCC;
+	color: #595241;
+	border-left: 1px solid #ECFEEA;
+	border-right: 1px solid #ECFEEA;
+	border-top: 1px solid #ECFEEA;
+	font-weight: bold;
+	padding: 2px;
+}
 
 div.required {
 	font-weight: bold;

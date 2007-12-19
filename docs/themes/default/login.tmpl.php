@@ -19,9 +19,10 @@
 		<input type="hidden" name="form_course_id" value="<?php echo $this->course_id; ?>" />
 		<input type="hidden" name="form_password_hidden" value="" />
 
-		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('login'); ?></h3>
-		<div class="insidecol"><p><?php echo _AT('login_text') ;?></p>
-			<div class="input-form" style="border:0px; margin-bottom: 10px; width: 90%; text-align: center; line-height:180%;">
+		<h3><?php echo _AT('login'); ?></h3>
+		<div class="insidecol">
+			<p><?php echo _AT('login_text') ;?></p>
+			<div class="input-form">
 
 				<?php if ($_GET['course']): ?>
 					<div class="row">
@@ -35,24 +36,25 @@
 				<label for="pass"><?php echo _AT('password'); ?></label><br />
 				<input type="password" class="formfield" name="form_password" style="max-width: 100%; width: 100%;" id="pass" />
 			</div>
+
 		</div>
-		<div style="background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0; ">
-			<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return crypt_sha1();" />
-		</div>
+			<div style="text-align:right; padding:5px;">
+				<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return crypt_sha1();" />
+			</div>
 		</form>
 	</div>
 		
 	<div class="column">
 		<form action="registration.php" method="get">
-		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('new_user');?></h3>
-		<div class="insidecol"><p><?php echo _AT('registration_text'); ?></p>
+		<h3><?php echo _AT('new_user');?></h3>
+		<div class="insidecol">
+			<p><?php echo _AT('registration_text'); ?></p>
 
-		<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>
-			<p><?php echo _AT('confirm_account_text'); ?></p>
-		<?php endif; ?>
+			<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>
+				<p><?php echo _AT('confirm_account_text'); ?></p>
+			<?php endif; ?>
 		</div>
-
-		<div style="background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0;">
+		<div style="text-align:right; padding:5px;">
 			<input type="submit" name="register" value="<?php echo _AT('register'); ?>" class="button" />
 		</div>
 		</form>

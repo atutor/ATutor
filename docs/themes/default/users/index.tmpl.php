@@ -30,16 +30,15 @@
 			<div class="body">
 				<?php if ($row['icon'] == ''): ?>
 						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" alt="" />
-				<?php else: ?>
-					<?php echo $link; ?>
-                    <?php  // Added by Martin Turlej -- for custom course icons
-                   // Modified by Greg Gay
+				<?php else: 
+						echo $link;  
+
               	$sql2="SELECT icon from ".TABLE_PREFIX."courses WHERE course_id='$row[course_id]'";
-		$result2 = mysql_query($sql2, $db);
-		
-		while($row2=mysql_fetch_assoc($result2)){
-			$filename = $row2['icon'];
-		}
+				$result2 = mysql_query($sql2, $db);
+				
+				while($row2=mysql_fetch_assoc($result2)){
+					$filename = $row2['icon'];
+				}
 		
                 $path = AT_CONTENT_DIR .$row['course_id'].'/custom_icons/'.$filename;
                 
@@ -57,10 +56,9 @@
 					<?php echo $link2; ?>
 				<?php endif; ?>
 
-				<strong><?php echo $link; ?><?php echo $row['title']; ?><?php echo $link2; ?></strong>
+				<strong><?php echo $link.$row['title'].$link2; ?></strong>
 
 				<?php if ($row['member_id'] != $_SESSION['member_id']): ?>
-
 					- <a href="users/remove_course.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('unenroll_me'); ?></a>
 				<?php endif; ?>
 

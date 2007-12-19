@@ -21,3 +21,7 @@ label {
 table.data tfoot input {
 	min-width:0px;
 }
+
+#topnavlistcontainer {
+	margin-bottom:-1px;
+}
