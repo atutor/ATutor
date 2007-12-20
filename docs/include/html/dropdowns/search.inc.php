@@ -42,9 +42,10 @@ if (!isset($_GET['words'])) {
 
 	<input type="radio" name="include" value="one" id="one2"<?php echo $include_one; ?> /><label for="one2"><?php echo _AT('search_any_word'); ?></label><br />
 </small>
+</fieldset>
 <input type="submit" name="submit" value="<?php echo _AT('search'); ?>" class="button" />
 </form>
-</fieldset>
+
 <?php
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
