@@ -51,7 +51,9 @@ h1 {
 h2 {
     font-size: 150%;
 }
-
+h2.sidebox{
+    font-size: 110%;
+}
 h3 {
     font-size: 130%;
 }
@@ -59,6 +61,7 @@ h3 {
 h4 {
     font-size: 120%;
 }
+
 
 h5 {
     font-size: 100%;
@@ -1045,9 +1048,12 @@ div.course img.icon	{
 }
 img.headicon	{
 	float:  left;
+	margin-top:1.2em;
+	margin-right:.5em;
 	height:6.45em;
 	width:6.45em;
 	vertical-align:top;
+	border:1px solid white;
 }
 div.course div.shortcuts {
 	text-align: right;
@@ -1208,8 +1214,9 @@ ul#home-links li a img {
 .img-size-tree {
 	vertical-align: middle;
 	margin-top: 0px;
-	height:1.25em;
-	width:1.25em;
+padding:0;
+	height:1.45em;
+	width:1.5em;
 }
 /* profile page */
 dl#public-profile {
@@ -1378,11 +1385,12 @@ li.child-tool {
 	margin-left:1.90em;
 
 }
+*/
 .img-size-home {
 	height:3.85em;
 	width:3.9em;
 }
-*/
+
 /* browse courses */
 dl.browse-course {
 	width: 100%;

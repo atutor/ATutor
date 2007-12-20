@@ -184,7 +184,7 @@ function toggleToc(objId) {
 <div id="header">
 	<!-- section title -->
 	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
-		<a href="<?php echo $this->base_path; ?>index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="" /></a>	
+		<a href="<?php echo $this->base_path; ?>index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
 	<?php } ?>
 
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
