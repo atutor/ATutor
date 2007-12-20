@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php 3825 2005-03-11 15:35:51Z joel $
+// $Id: header.tmpl.php 3825 2005-03-11 15:35:51 joel $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 /* available header.tmpl.php variables:
  * $this->lang_code			the ISO language code

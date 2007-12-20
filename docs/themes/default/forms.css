@@ -53,7 +53,6 @@ div.input-form input[type=text], div.input-form input[type=password] {
 div.input-form input:focus {
 	border: 1px solid #A50707;
 	background-color: white;
-	padding: 2px
 }
 
 div.input-form div.buttons {
