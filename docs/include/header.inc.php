@@ -156,8 +156,8 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	if (!empty($row['icon'])){
 		//Check if this is a custom icon, if so, use get_course_icon.php to get it
 		//Otherwise, simply link it from the images/
-		$path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
-		if (file_exists($path.$row['icon'])) {
+		$custom_icon_path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
+		if (file_exists($custom_icon_path.$row['icon'])) {
 			if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 				$course_icon = $_base_href.'get_course_icon.php/?id='.$_SESSION['course_id'];
 			} else {
