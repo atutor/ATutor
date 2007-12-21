@@ -194,7 +194,7 @@ function toggleToc(objId) {
 
 	<?php
 	// If there is a custom course banner in the file manager called banner.html, display it here
-	@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.html'); 
+	@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.txt'); 
 
 	/*
 	and example banner.html file might look like:
