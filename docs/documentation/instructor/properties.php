@@ -26,7 +26,7 @@
     <dd>The date the course can be accessed by students.</dd>
 
     <dt>Banner</dt>
-    <dd>HTML formatted content that appears at the top of the course home page. Create splash screen, or a customized course front page.</dd>
+    <dd>HTML formatted content that appears at the top of the course home page. Create splash screen, or a customized course front page. It is also possible to create a file called banner.txt, and place it in the top directory of a course file manager, that contains HTML to modify the top header area.</dd>
 
     <dt>Copyright Notice</dt>
     <dd>Appears in addition to the ATutor copyright notice, to signify the copyright of the content being displayed. Use <code>& copy;</code> (without the space) to create a copyright symbol</dd>
