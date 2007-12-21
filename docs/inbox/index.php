@@ -86,11 +86,10 @@ if (isset($_GET['view']) && $_GET['view']) {
 			<div class="body">
 				<p><?php echo AT_print(htmlspecialchars($row['body'], ENT_COMPAT, "UTF-8"), 'messages.body'); ?></p>
 			</div>
-			<div style="clear: both; font-size: 0.1em"></div>
 		</div>
-	</div>
+
 	</li>
-	</ul>
+	</ul><br /><br />
 	<?php
 	}
 } else if (isset($_POST['delete'], $_POST['id'])) {
@@ -104,7 +103,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[memb
 $result = mysql_query($sql,$db);
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data static" summary="" rules="rows">
+<table class="data static" summary="" rules="rows" width="55%">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

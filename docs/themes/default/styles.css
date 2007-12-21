@@ -1284,8 +1284,11 @@ div.forum-post-content p.date { color: #a1a1a1; border-bottom: 1px solid #F7F3ED
 div.forum-post-content div.body p { margin-bottom:1em; }
 div.forum-paginator{border:thin #cccccc solid; padding:.3em; width:95%;margin:auto;background-color:#F7F3ED;}
 span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2em;}
+
+
+
 /** inbox stuff - reuses some of the forum layout **/
-#inbox-msg li { clear:left; border:1px solid #eee; border-bottom: 1px solid #F7F3ED; width: 98%; list-style: none; }
+#inbox-msg li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; width: 95%; list-style: none; min-height: 11em;}
 
 
 
