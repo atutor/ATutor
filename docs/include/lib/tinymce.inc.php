@@ -36,6 +36,7 @@ function load_editor($name = FALSE) {
 	convert_urls : true,
 	convert_fonts_to_spans : true,
 	accessibility_warnings : true,
+	entity_encoding : "raw",
 	accessibility_focus : true,
 	plugins : "table,acheck,advhr,advimage,advlink,emotions,iespell,preview,zoom,flash,print,contextmenu",
 	theme_advanced_buttons1_add : "fontselect,fontsizeselect",
