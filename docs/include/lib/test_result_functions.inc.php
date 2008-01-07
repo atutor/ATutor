@@ -145,16 +145,21 @@ function print_question_cats($cat_id = 0) {
 
 	global $db;
 
-	echo '<option value="0">'._AT('cats_uncategorized').'</option>';
+	echo '<option value="0"';
+	if ($cat_id == 0) {
+		echo ' selected="selected"';
+	}
+	echo '>'._AT('cats_uncategorized').'</option>' . "\n";
+
 	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'tests_questions_categories WHERE course_id='.$_SESSION['course_id'].' ORDER BY title';
 	$result	= mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_array($result)) {
 		echo '<option value="'.$row['category_id'].'"';
 		if ($row['category_id'] == $cat_id) {
-			echo 'selected="selected" ';
+			echo ' selected="selected"';
 		}
-		echo '>'.$row['title'].'</option>';
+		echo '>'.$row['title'].'</option>\n';
 	}
 }
 
