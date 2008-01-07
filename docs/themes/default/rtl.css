@@ -3,12 +3,14 @@ html, body {
 	direction: rtl;
 }
 
-/* required for mozilla browsers*/
 .img-size-tree {
 	vertical-align: middle;
 	margin-top: 0px;
 	height:1.45em;
 	width:1.45em;
-	text-align: right.;
 	float: right;
+}
+
+div.box {
+	line-height:150%;
 }
