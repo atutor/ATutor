@@ -269,9 +269,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				$result = mysql_query($sql, $db);
 				while ($courses_row = mysql_fetch_assoc($result)) {
 					if ($courses_row['course_id'] == $course_id) {
-						echo '<option value="'.$courses_row['course_id'].'" selected="selected">'.$courses_row['title'].'</option>';
+						echo '<option value="'.$courses_row['course_id'].'" selected="selected">'.validate_length($courses_row['title'], 45,VALIDATE_LENGTH_FOR_DISPLAY).'</option>';
 					} else {
-						echo '<option value="'.$courses_row['course_id'].'">'.$courses_row['title'].'</option>';
+						echo '<option value="'.$courses_row['course_id'].'">'.validate_length($courses_row['title'],45,VALIDATE_LENGTH_FOR_DISPLAY).'</option>';
 					}
 				}
 				?></select>
