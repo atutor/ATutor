@@ -73,7 +73,7 @@ function select_categories($categories, $cat_id, $current_cat_id, $exclude, $dep
 		}
 		echo '>';
 		echo str_repeat("&nbsp;", $depth*4);
-		echo $categories[$cat_id]['cat_name'].'</option>';
+		echo validate_length($categories[$cat_id]['cat_name'], 45, VALIDATE_LENGTH_FOR_DISPLAY).'</option>';
 
 		if (is_array($categories[$cat_id]['children'])) {
 			foreach($categories[$cat_id]['children'] as $child_cat_id) {

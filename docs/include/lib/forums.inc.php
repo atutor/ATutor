@@ -268,7 +268,7 @@ function print_entry($row) {
 						<?php echo $reply_link; ?>
 					<?php endif; ?>
 				</div>
-				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></p>
+				<p class="date">&nbsp;&nbsp;<?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></p>
 
 			</div>
 
