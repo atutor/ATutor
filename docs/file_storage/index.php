@@ -17,6 +17,26 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); // for get_human_size()
 require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 
+// check folders and files id
+if (isset($_GET['folders'])){
+	if (is_array($_GET['folders'])){
+		foreach($_GET['folders'] as $k=>$v){
+			$_GET['folders'][$k] = abs($_GET['folders'][$k]);
+		}
+	} else {
+		$_GET['folders']= abs($_GET['folders']);
+	} 
+}
+if (isset($_GET['files'])){
+	if (is_array($_GET['files'])){
+		foreach($_GET['files'] as $k=>$v){
+			$_GET['files'][$k] = abs($_GET['files'][$k]);
+		}
+	} else {
+		$_GET['files']= abs($_GET['files']);
+	} 
+}
+
 if (isset($_GET['submit_workspace'])) {
 	unset($_GET['folder']);
 
