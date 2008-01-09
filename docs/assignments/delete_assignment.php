@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2006                                      */
+/* Copyright (c) 2002-2008                                      */
 /* Written by Greg Gay & Joel Kronenberg & Chris Ridpath        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/

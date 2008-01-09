@@ -612,7 +612,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ADD_FEED', 'Are y
 ('en', '_template', 'content_packaging_top', 'Available only for top level pages', '2003-10-15 10:09:50', 'option2'),
 ('en', '_template', 'content_usage', 'Content Usage', '2005-03-03 15:09:45', ''),
 ('en', '_template', 'continue', 'Continue', '2006-03-21 16:22:28', ''),
-('en', '_template', 'copyright', 'Web site engine\'s code is copyright © 2001-2007 <a href=\"http://www.atutor.ca\" target=\"_new\" title=\"ATutor.ca - opens in a new browser\">ATutor</a><sup>®</sup>', '2006-11-21 15:20:13', ''),
+('en', '_template', 'copyright', 'Web site engine\'s code is copyright © 2001-2008 <a href=\"http://www.atutor.ca\" target=\"_new\" title=\"ATutor.ca - opens in a new browser\">ATutor</a><sup>®</sup>', '2006-11-21 15:20:13', ''),
 ('en', '_template', 'core', 'Core', '2005-08-30 10:17:41', ''),
 ('en', '_template', 'correct_answer', 'Correct Answer', '2003-05-18 13:38:45', 'test manager add/edit questions'),
 ('en', '_template', 'count', 'Count', '2003-05-18 13:40:35', 'tracker'),

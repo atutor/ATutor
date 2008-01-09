@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor														        */
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
+/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
 /* Adaptive Technology Resource Centre / University of Toronto          */
 /* http://atutor.ca												        */
 /*                                                                      */

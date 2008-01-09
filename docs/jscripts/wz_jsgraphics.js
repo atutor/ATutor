@@ -6,7 +6,7 @@ http://www.walterzorn.com
 or http://www.devira.com
 or http://www.walterzorn.de
 
-Copyright (c) 2002-2004 Walter Zorn. All rights reserved.
+Copyright (c) 2002-2008 Walter Zorn. All rights reserved.
 Created 3. 11. 2002 by Walter Zorn (Web: http://www.walterzorn.com )
 Last modified: 21. 6. 2006
 

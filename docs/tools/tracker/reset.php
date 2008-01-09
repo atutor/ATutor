@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor								*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto		*/
 /* http://atutor.ca							*/
 /*									*/

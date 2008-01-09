@@ -2,7 +2,7 @@
  * $Id: editor_plugin_src.js 205 2007-02-12 18:58:29Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
  */
 
 var TinyMCE_NonEditablePlugin = {

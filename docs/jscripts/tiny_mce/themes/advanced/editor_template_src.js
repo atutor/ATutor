@@ -2,7 +2,7 @@
  * $Id: editor_template_src.js 256 2007-04-24 09:03:20Z spocke $
  *
  * @author Moxiecode
- * @copyright Copyright © 2004-2007, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
  */
 
 /* Import theme specific language pack */

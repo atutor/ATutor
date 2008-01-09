@@ -1,5 +1,5 @@
 // Canadian French lang variables by Virtuelcom
-// Modify by Laurent Dran 13-02-2006
+// Modify by Laurent Dran 13-02-2008
 // Modifié par Normand Lamoureux le 2005-11-12
 
 tinyMCE.addToLang('',{
