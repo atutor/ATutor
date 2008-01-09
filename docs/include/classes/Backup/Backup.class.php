@@ -137,7 +137,7 @@ class Backup {
 
 	// public
 	function upload($_FILES, $description) {
-		global $msg;
+		global $addslashes, $msg;
 	
 		$ext = pathinfo($_FILES['file']['name']);
 		$ext = $ext['extension'];
@@ -160,11 +160,11 @@ class Backup {
 		}
 
 		$row = array();
-		$row['description'] = $description;
+		$row['description'] = $addslashes($description);
 		$row['system_file_name'] =  md5(time());
 		$row['contents'] = '';
 		$row['file_size'] = $_FILES['file']['size'];
-		$row['file_name'] = $_FILES['file']['name'];
+		$row['file_name'] = $addslashes($_FILES['file']['name']);
 
 		if (!is_dir(AT_BACKUP_DIR)) {
 			@mkdir(AT_BACKUP_DIR);
@@ -273,6 +273,12 @@ class Backup {
 
 	// public
 	function edit($backup_id, $description) {
+		global $addslashes;
+
+		// sql safe input
+		$backup_id		= intval($backup_id);
+		$description	= $addslashes($description);
+
 		// update description in the table:
 		$sql	= "UPDATE ".TABLE_PREFIX."backups SET description='$description', date=date WHERE backup_id=$backup_id AND course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
@@ -281,6 +287,10 @@ class Backup {
 
 	// public
 	function getRow($backup_id, $course_id = 0) {
+		// sql safe input
+		$backup_id	= intval($backup_id);
+		$course_id	= intval($course_id);
+
 		if ($course_id) {
 			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$course_id";
 		} else {
