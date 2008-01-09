@@ -203,7 +203,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 function _AT() {
 	global $_cache_template, $lang_et, $_rel_url;
 	static $_template;
-
+	
 	$args = func_get_args();
 	
 	// a feedback msg
@@ -259,6 +259,13 @@ function _AT() {
 			$sql = "SELECT L.* FROM ".TABLE_PREFIX."language_text L, ".TABLE_PREFIX."language_pages P WHERE L.language_code='{$_SESSION['lang']}' AND L.variable<>'_msgs' AND L.term=P.term AND P.page='$_rel_url' ORDER BY L.variable ASC";
 			$result	= mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
+				//Do not overwrite the variable that existed in the cache_template already.
+				//The edited terms (_c_template) will always be at the top of the resultset
+				//0003279
+				if (isset($_cache_template[$row['term']])){
+					continue;
+				}
+
 				// saves us from doing an ORDER BY
 				if ($row['language_code'] == $_SESSION['lang']) {
 					$_cache_template[$row['term']] = stripslashes($row['text']);
@@ -299,7 +306,6 @@ function _AT() {
 
 	if (empty($outString)) {
 		global $db;
-
 		$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'language_text L WHERE L.language_code="'.$_SESSION['lang'].'" AND L.variable<>"_msgs" AND L.term="'.$format.'"';
 
 		$result	= mysql_query($sql, $db);
