@@ -56,10 +56,9 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	$used_cookie	= false;
 }
 
-//if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
-//	$msg->addError('SESSION_COOKIES');
-//} else 
-if (isset($this_login, $this_password)) {
+if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
+	$msg->addError('SESSION_COOKIES');
+} else if (isset($this_login, $this_password)) {
 	if (version_compare(PHP_VERSION, '5.1.0', '>=')) {
 		session_regenerate_id(TRUE);
 	}
@@ -75,9 +74,15 @@ if (isset($this_login, $this_password)) {
 
 	if ($used_cookie) {
 		// check if that cookie is valid
+		//$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
+//echo DB_PASSWORD;
+//exit;
 		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
 
 	} else {
+
+//echo DB_PASSWORD;
+//exit;
 		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
 	}
 	$result = mysql_query($sql, $db);
