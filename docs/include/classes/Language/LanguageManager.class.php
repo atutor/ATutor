@@ -49,7 +49,8 @@ class LanguageManager {
 	* @access private
 	* @var string
 	*/
-	var $default_charset = 'iso-8859-1';
+//	var $default_charset = 'iso-8859-1';
+	var $default_charset = 'utf-8';
 
 	/**
 	* The number of languages that are available. Does not include
@@ -324,19 +325,6 @@ class LanguageManager {
 			echo 'DB connection established, but database "dev_atutor_langs" cannot be selected.';
 			exit;
 		}
-
-/*
-
-		$sql = "SET NAMES utf8";
-		$result = mysql_query($sql, $tmp_lang_db);
-		$sql = "show variables like 'character%'";
-		$result = mysql_query($sql, $tmp_lang_db);
-		while ($row = mysql_fetch_assoc($result)) {
-			debug($row);
-		}
-		exit;
-		, convert(native_name USING latin1) as native_name
-*/
 
 		$sql = "SELECT * FROM languages_SVN WHERE language_code='$language_code'";
 		$result = mysql_query($sql, $tmp_lang_db);
