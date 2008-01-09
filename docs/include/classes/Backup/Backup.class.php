@@ -276,7 +276,7 @@ class Backup {
 		global $addslashes;
 
 		// sql safe input
-		$backup_id		= intval($backup_id);
+		$backup_id		= abs($backup_id);
 		$description	= $addslashes($description);
 
 		// update description in the table:
@@ -288,8 +288,8 @@ class Backup {
 	// public
 	function getRow($backup_id, $course_id = 0) {
 		// sql safe input
-		$backup_id	= intval($backup_id);
-		$course_id	= intval($course_id);
+		$backup_id	= abs($backup_id);
+		$course_id	= abs($course_id);
 
 		if ($course_id) {
 			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$course_id";
