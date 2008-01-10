@@ -128,11 +128,19 @@ class Language {
 		$_SESSION['lang'] = $this->code;
 	}
 
-	// public
-	function saveToPreferences($id) {
+	/* 
+	 * public
+	 * @param	member_id or login for members and admin respectively
+	 * @param	1 for admin, 0 for members, all other integers are ignored. 
+	 */
+	function saveToPreferences($id, $is_admin) {
 		global $db;
 		if ($id) {
-			$sql = "UPDATE ".TABLE_PREFIX."members SET language='".$this->code."', creation_date=creation_date, last_login=last_login WHERE member_id=$id";
+			if ($is_admin === 0) {
+				$sql = "UPDATE ".TABLE_PREFIX."members SET language='".$this->code."', creation_date=creation_date, last_login=last_login WHERE member_id=$id";
+			} elseif ($is_admin === 1) {
+				$sql = "UPDATE ".TABLE_PREFIX."admins SET language='".$this->code."', last_login=last_login WHERE login='$id'";
+			}
 			mysql_query($sql,$db);
 		}
 	}
