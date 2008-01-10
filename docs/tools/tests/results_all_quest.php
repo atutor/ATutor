@@ -67,7 +67,7 @@ $sql = "SELECT count(*), A.question_id, A.answer, A.score
 		ORDER BY A.question_id, A.answer";
 $result = mysql_query($sql, $db);
 
-echo '<img src="images/checkmark.gif" alt="Correct checkmark" />- '._AT('correct_answer').'<br /></p>';
+echo '<img src="images/checkmark.gif" alt="'._AT('correct_answer').'" />- '._AT('correct_answer').'<br /></p>';
 
 $ans = array();	
 while ($row = mysql_fetch_assoc($result)) {
