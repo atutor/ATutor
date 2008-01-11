@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 		$sql	= "SELECT password FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql,$db);
 		if ($row = mysql_fetch_assoc($result)) {
-			if ($row['password'] != trim($_POST['old_password'])) {
+			if ($row['password'] != sha1(trim($_POST['old_password']))) {
 				$msg->addError('WRONG_PASSWORD');
 				Header('Location: my_password.php');
 				exit;
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 	}
 		
 	if (!$msg->containsErrors()) {			
-		$_POST['password']   = $addslashes($_POST['password']);
+		$_POST['password']   = sha1($addslashes($_POST['password']));
 
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', last_login=last_login WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql, $db);

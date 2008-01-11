@@ -196,3 +196,13 @@ function binb2b64(binarray)
   }
   return str;
 }
+
+
+/* 
+ * Encrypt login passwords with a token
+ */
+function crypt_sha1(session_token) {
+	document.form.form_password_hidden.value = hex_sha1(hex_sha1(document.form.form_password.value) + session_token);
+	document.form.form_password.value = "";
+	return true;
+}

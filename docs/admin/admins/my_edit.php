@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['password']  = $addslashes($_POST['password']);
+//		$_POST['password']  = $addslashes($_POST['password']);
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
@@ -68,7 +68,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 }
 if (!isset($_POST['submit'])) {
 	$_POST = $row;
-	$_POST['confirm_password'] = $_POST['password'];
+//	$_POST['confirm_password'] = $_POST['password'];
 }
 
 ?>

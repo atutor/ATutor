@@ -10,3 +10,6 @@ INSERT INTO `themes` VALUES ('Greenmin', '1.6', 'greenmin', NOW(), 'This is the 
 INSERT INTO `themes` VALUES ('ATutor 1.5', '1.6', 'default15', NOW(), 'This is the 1.5 series default theme.', 1);
  
 UPDATE  `languages` SET char_set='utf-8' WHERE language_code = 'en';
+
+# Support SHA1 encryption for admins table
+ALTER TABLE `admins` MODIFY COLUMN `password` VARCHAR(40) NOT NULL;

@@ -77,13 +77,13 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 		//$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
 //echo DB_PASSWORD;
 //exit;
-		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND SHA1(CONCAT(password, '-', '".DB_PASSWORD."'))='$this_password'";
+		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, SHA1(CONCAT(SHA1(password), '-', '".DB_PASSWORD."')) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND SHA1(CONCAT(SHA1(password), '-', '".DB_PASSWORD."'))='$this_password'";
 
 	} else {
 
 //echo DB_PASSWORD;
 //exit;
-		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, SHA1(CONCAT(password, '-', '".DB_PASSWORD."')) AS pass FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
+		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, SHA1(CONCAT(SHA1(password), '-', '".DB_PASSWORD."')) AS pass FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(SHA1(password), '$_SESSION[token]'))='$this_password'";
 	}
 	$result = mysql_query($sql, $db);
 

@@ -160,6 +160,11 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."tests_results SET status=1, date_taken=date_taken, end_time=date_taken";
 		mysql_query($sql, $db);
 	}
+	if (version_compare($_POST['step1']['old_version'], '1.6', '<')){
+		//Perform SHA1 encrpytion on all admins' password
+		$sql = "UPDATE at_admins SET password = SHA1(password)";
+		mysql_query($sql, $db);
+	}
 
 	/* deal with the extra modules: */
 	/* for each module in the modules table check if that module still exists in the mod directory. */
