@@ -177,9 +177,9 @@ pre.code {
 
 <a href="#top" class="top">top</a>
 <h2><a name="introduction"></a>1. Introduction</h2>
-	<p>ATutor, as an open source project, encourages PHP developers to contribute new features. To ensure that newly contributed code is easy to accept and maintain, we must urge you to follow the guidelines we outline below. These rules and recommendations were created to ease the distributed development process.</p>
+	<p>ATutor, as an open source project, encourages PHP developers to develop their own custom features, and potentially contribute those features so they become a permanent part of ATutor. To ensure that  code is easy to  maintain, we urge developers to follow the guidelines outlined below. These rules and recommendations were created to standardize the distributed development process.</p>
 
-	<p>The latest version of this document can always be found at <a href="http://atutor.ca">ATutor.ca</a>.</p>
+	<p>The latest version of this document can always be found at <a href="http://www.atutor.ca/atutor/docs/">ATutor.ca</a>.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="conventions"></a>2. Conventions Used in This Document</h2>
@@ -254,11 +254,11 @@ register_argc_argv   = Off</pre></p>
 	<h3><a name="svn-install"></a>4.1 Installing an SVN Client &amp; Checking-Out</h3>
 		<p>To obtain a working copy of ATutor, you need to install an SVN client and do a <kbd>checkout</kbd> from our repository of the latest ATutor source code. Checking out the repository creates a copy of it on your local machine with the necessary version control information. The location of the copied files should be web accessible, i.e. a directory under your web server's path. </p>
 
-		<p>For windows users, we recommend using <a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, which is a feature-rich SVN extension for Windows that supports many of the options of other SVN clients (file browser and filters not being one of them). Once TortoiseSVN has been successfully installed and you've rebooted your computer, go to a working directory where you wish to <kbd>checkout</kbd> the ATutor source code. Right-click to pop-up the context menu and select the command "Checkout...".</p>
+		<p>For windows users, we recommend using <a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, which is a feature-rich SVN extension for Windows that supports many of the options of other SVN clients (file browser and filters not being one of them). Once TortoiseSVN has been successfully installed and you've rebooted your computer, go to a working directory where you wish to <kbd>checkout</kbd> the ATutor source code. Right-click to pop-up the context menu and select the command "Checkout...". </p>
 
 		<p>For repository URL, enter <kbd>http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk</kbd>. If you enter a folder name that does not yet exist, a directory with that name will be created. Press "OK", and the source will be downloaded to your computer.</p>
 
-		<p>For non-Windows users, download an appropriate SVN package from the <a href="http://subversion.tigris.org/project_packages.html" title="Subversion packages">Subversion homepage</a> and follow the installation instructions. These packages use the command-line client. Checking out the most recent ATutor source code can be done with the following command: <kbd>svn checkout http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk</kbd>.</p>
+		<p>For non-Windows users, download an appropriate SVN package from the <a href="http://subversion.tigris.org/project_packages.html" title="Subversion packages">Subversion homepage</a> and follow the installation instructions. These packages use the command-line client. Checking out the most recent ATutor source code can be done with the following command: <kbd>svn checkout http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk</kbd>. Unix users also have available a GUI tool called <a href="http://rapidsvn.tigris.org/">RapidSVN</a></p>
 		<p>The checkout includes:</p>
 		<ul>
 			<li><kbd>bundle.sh</kbd> - Execute this shell script to generate an installable bundle of the ATutor.</li>
@@ -270,7 +270,7 @@ register_argc_argv   = Off</pre></p>
 		<p>Before starting the installation process you should create an empty <kbd>`config.inc.php`</kbd> file in the <kbd>`include/`</kbd> directory: use <kbd>touch config.inc.php</kbd> on UNIX. Browse to the location of your checked out files in a web browser and proceed with the ATutor installation instructions. This will set up the database and user accounts for your ATutor system. The resulting ATutor installation will be your development environment.</p>
 
 	<h3><a name="svn-update"></a>4.3 Updating ATutor From SVN</h3>
-		<p>You should periodically perform updates from the repository to make sure you are working with the developers' latest files. To do this with TortoiseSVN, right click on the working folder and select "Update" from the context menu. For command-line svn clients, use: <kbd>svn update</kbd>.</p>
+		<p>You should regularly perform updates from the repository to make sure you are working with the developers' latest files. To do this with TortoiseSVN, right click on the working folder and select "Update" from the context menu. For command-line svn clients, use: <kbd>svn update</kbd>.</p>
 
 		<p>Always review the latest SVN SQL upgrade file to ensure your database structure is up-to-date. The file will contain schema changes of the current pre-released source. Example: If the current working source will be version 1.9, then the upgrade file to keep track of will be named <kbd>atutor_upgrade_<em>x.y.z</em>_to_1.9.sql</kbd>, where <kbd><em>x.y.z</em></kbd> is the version of the currently available stable release.</p>
 
@@ -525,7 +525,7 @@ if (condition) {
 
 <a href="#top" class="top">top</a>
 <h2><a name="directory-structure"></a>13. Directory Structure</h2>
-	The following is a short explanation of the important components of the ATutor directory structure.
+	<p>The following is a short explanation of the important components of the ATutor directory structure.</p>
 
 	<h3><a name="directories"></a>13.1 Directories</h3>
 	<dl>
@@ -558,9 +558,14 @@ if (condition) {
 
 		<dt><kbd>`themes/`</kbd></dt>
 			<dd>This directory contains the different themes installed on an ATutor system, each with its own subdirectory.</dd>
+		
+		<dt><kbd>`mods/`</kbd></dt>
+			<dd>This directory contains the module installed in an ATutor system.</dd>
+
 	</dl>
 
 	<h3><a name="files"></a>13.2 Files</h3>
+	<p>The following is a description of some of the important files.</p>
 	<dl>
 		<dt><kbd>`include/config.inc.php`</kbd></dt>
 			<dd>This file is created during installation and contains specific configuration information for an ATutor system.</dd>
@@ -568,17 +573,14 @@ if (condition) {
 		<dt><a name="files-vitals"></a><kbd>`include/vitals.inc.php`</kbd></dt>
 			<dd>This file is included by every directly accessible page.  It connects to the database, initiates the user session, includes common libraries and constants, and defines frequently used functions.</dd>
 
-		<dt><kbd>`include/cvs_development.inc.php`</kbd></dt>
-			<dd>This file is used to connect to the development language database.  Renaming the file will force your system to use the languages available locally.</dd>
-
 		<dt><kbd>`themes/themes_readme.txt`</kbd></dt>
 			<dd>This file contains detailed information on how to create and install a theme.</dd>
 
 		<dt><a name="files-header"></a><kbd>`include/header.inc.php`</kbd></dt>
 			<dd>This file outputs the page's header using the correct template and theme.</dd>
 
-		<dt><a name="files-feedback"></a><kbd>`include/html/feedback.inc.php`</kbd></dt>
-			<dd>This file outputs a feedback, error, help, or informative message from the given set variables. See <a href="#error-feedback-messages">Error and Feedback Messages</a>.</dd>
+		<dt><a name="files-output"></a><kbd>`include/lib/output.inc.php`</kbd></dt>
+			<dd>Most output formatting is done in this file, including things such as language, dates, a paginator, and content formatting, among other things .</dd>
 
 		<dt><a name="files-footer"></a><kbd>`include/html/footer.inc.php`</kbd></dt>
 			<dd>This file outputs the page's footer using the correct template and theme.</dd>
