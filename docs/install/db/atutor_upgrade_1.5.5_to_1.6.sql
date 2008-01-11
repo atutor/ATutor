@@ -13,3 +13,4 @@ UPDATE  `languages` SET char_set='utf-8' WHERE language_code = 'en';
 
 # Support SHA1 encryption for admins table
 ALTER TABLE `admins` MODIFY COLUMN `password` VARCHAR(40) NOT NULL;
+UPDATE `admins` SET password = SHA1(password);
