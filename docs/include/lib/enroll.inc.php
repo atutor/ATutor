@@ -71,6 +71,8 @@ function checkUserInfo($record) {
 	}
 
 	$record['uname'] = $addslashes($record['uname']);
+	$record['fname'] = $addslashes($record['fname']);
+	$record['lname'] = $addslashes($record['lname']);
 
 	$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE login='$record[uname]'";
 	$result = mysql_query($sql,$db);
@@ -126,7 +128,7 @@ function add_users($user_list, $enroll, $course) {
 				$student['email'] = $addslashes($student['email']);
 				$student['fname'] = $addslashes($student['fname']);
 				$student['lname'] = $addslashes($student['lname']);
-				$student['fname'] = $addslashes($student['fname']);
+
 			if (!$student['exists']) {
 				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '0000-00-00', 'n', '','','','','', '', $status, '$_config[pref_defaults]', NOW(),'$_config[default_language]', $_config[pref_inbox_notify], 1, '0000-00-00 00:00:00')";
 
