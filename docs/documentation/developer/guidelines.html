@@ -1,5 +1,6 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <!-- $Id: guidelines.html 3071 2005-01-12 21:53:13Z joel $ -->
+
 <html>
 <head>
 	<title>ATutor Developer Documentation</title>
@@ -126,7 +127,8 @@ pre.code {
 		<ul>
 			<li>16.1 <a href="#error-feedback-internals">Internals</a></li>
 			<li>16.2 <a href="#error-feedback-adding">Adding Messages</a></li>
-			<li>16.3 <a href="#error-feedback-printing">Printing Messages</a></li>
+			<li>16.3 <a href="#error-feedback-printing">Printing Messages</a></li>			
+			<li>16.4 <a href="#mbstring-support">UTF-8 and Multibyte language</a></li>
 		</ul>
 	</li>
 	<li>17. <a href="#useful-variables">Useful Variables</a>
@@ -287,11 +289,11 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="patches"></a>6. Patches</h2>
-	<p>Patches should be applied using the UNIX <kbd>patch</kbd> command. Make sure your <kbd>`.patch`</kbd> or <kbd>`.diff`</kbd> files will be compatible or send explicit instructions on how to apply your changes. Always specify what release or source date you are patching against. We prefer unified diffs. Diffs can be posted as attachment to the atutor.ca <a href="http://www.atutor.ca/forum/12/1.html">Development Forum </a>.</p>
+	<p>Patches should be applied using the UNIX <kbd>patch</kbd> command. Make sure your <kbd>`.patch`</kbd> or <kbd>`.diff`</kbd> files will be compatible or include explicit instructions on how to apply your changes. Always specify what release or source date you are patching against. We prefer unified diffs. Diffs can be posted as attachment to the atutor.ca <a href="http://www.atutor.ca/forum/12/1.html">Development Forum </a>.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="editor-tips"></a>7. Editor Tips</h2>
-	<p>We use <a href="http://editplus.com">EditPlus</a>, but you can use whichever editor and settings you feel comfortable with. The most important part when editing is to ensure that tabs meet the coding guidelines on <a href="#indentation">indentation</a>.</p>
+	<p>We use <a href="http://editplus.com">EditPlus</a>, but you can use whichever editor and settings you feel comfortable with. The most important part when editing is to ensure that tabs meet the coding guidelines on <a href="#indentation">indentation</a>. Unix KDE users might use Kate as their text editor.</p>
 
 	<p>A few desirable features for a good text editor are listed below:
 	<ul>
@@ -311,11 +313,11 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="bug-tracking"></a>9. Bug Tracking</h2>
-	<p>Please report bugs to the <a href="http://atutor.ca/forum/3/1.html" title="ATutor.ca - Bug Forum">ATutor Bug Reports</a> forum. Be sure to indicate the code version being used, such as a release candidate, stable release, nightly build, or SVN checkout, etc. Also be sure to describe the details of the system that ATutor is being developed or tested on, such as the operating system, web server and version, PHP version, etc. Browse the <a href="http://www.atutor.ca/development/bugs/">Current Bug Summary</a> for a list of active big fixing.</p>
+	<p>Please report bugs to the <a href="http://atutor.ca/forum/3/1.html" title="ATutor.ca - Bug Forum">ATutor Bug Reports</a> forum, or directly to the <a href="http://www.atutor.ca/atutor/mantis">Mantis Bug Tracker</a>. Be sure to indicate the code version being used, such as a release candidate, stable release, nightly build, or SVN checkout, etc. Also be sure to describe the details of the system that ATutor is being developed or tested on, such as the operating system, web server and version, PHP version, etc. Browse the <a href="http://www.atutor.ca/development/bugs/">Current Bug Summary</a> for a list of active bug fixing.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="creating-bundles"></a>10. Creating Bundles</h2>
-	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will retrieve the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
+	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will retrieve the latest version of the language from the database, disables debugging, creates an empty config.inc.php filr, and lastly create a <kbd>.tar.gz</kbd> file. Note, by default this script will generate a bundle from the atutorsvn source code repository. You may change this path near the top of the file to point to a local version of the ATutor source code, if for instance you have your own customizations you'd like to build into an installable bundle. Usage:
 		
 		<dl>
 			<dt><kbd>./bundle.sh [version_number]</kbd><dt>
@@ -334,7 +336,7 @@ register_argc_argv   = Off</pre></p>
 	<p>This section should help those who would like to modify or add code. Anyone who wishes to contribute code must adhere to these guidelines or the code may not be accepted. Please try to write code that is easy to read and maintain with appropriate comments as needed. Correctness and efficiency are easier to certify if code is simple to read and understand.</p>
 
 	<h3><a name="indentation"></a>12.1 Indentation</h3>
-		<p>The importance of indentation for code organization cannot be exaggerated enough. Although indentation is not mandatory in PHP, it is a powerful visual organization tool that should consistently be applied to code.</p>
+		<p>The importance of indentation for code organization cannot be overstated. Although indentation is not mandatory in PHP, it is a powerful visual organization tool that should consistently be applied to code.</p>
 		<ul>
 			<li>Indent using 4 spaces for each level.</li>
 			<li>Think carefully about when too many nested levels has been reached. (Usually 4-5 is a good limit).</li>
@@ -462,7 +464,7 @@ if (condition) {
 ...
 // this is a single line comment
 </pre></p>
-	<p>Please, document while you code. See <a href="http://phpdocu.sourceforge.net/howto.php">phpdoc</a>, like <a href="http://java.sun.com/docs/books/jls/first_edition/html/18.doc.html">javadoc</a>, for how to document functions, classes, methods, and variables. Coding is often hurried, but it will save a lot of time in the end to do this type of documenting! It looks like this:
+	<p>Please, document while your code. See <a href="http://phpdocu.sourceforge.net/howto.php">phpdoc</a>, like <a href="http://java.sun.com/docs/books/jls/first_edition/html/18.doc.html">javadoc</a>, for details how to document functions, classes, methods, and variables. Coding is often hurried, but it will save a lot of time in the end to do this type of documenting! It looks like this:
    <pre class="code">
    /**
    * what the function does in one line.
@@ -573,23 +575,23 @@ if (condition) {
 		<dt><a name="files-vitals"></a><kbd>`include/vitals.inc.php`</kbd></dt>
 			<dd>This file is included by every directly accessible page.  It connects to the database, initiates the user session, includes common libraries and constants, and defines frequently used functions.</dd>
 
-		<dt><kbd>`themes/themes_readme.txt`</kbd></dt>
+		<dt><a name="them-readme"></a><kbd>`themes/themes_readme.txt`</kbd></dt>
 			<dd>This file contains detailed information on how to create and install a theme.</dd>
 
 		<dt><a name="files-header"></a><kbd>`include/header.inc.php`</kbd></dt>
 			<dd>This file outputs the page's header using the correct template and theme.</dd>
 
-		<dt><a name="files-output"></a><kbd>`include/lib/output.inc.php`</kbd></dt>
-			<dd>Most output formatting is done in this file, including things such as language, dates, a paginator, and content formatting, among other things .</dd>
-
 		<dt><a name="files-footer"></a><kbd>`include/html/footer.inc.php`</kbd></dt>
 			<dd>This file outputs the page's footer using the correct template and theme.</dd>
+
+		<dt><a name="files-output"></a><kbd>`include/lib/output.inc.php`</kbd></dt>
+			<dd>Most output formatting is done in this file, including things such as language, dates, a paginator, and content formatting, among other things .</dd>
 	</dl>
 
 
 <a href="#top" class="top">top</a>
 <h2><a name="database-structure"></a>14. Database Structure</h2>
-	<p>A <a href="database.gif">database model diagram</a> (153 KB GIF) created from the ATutor 1.4.1 database schema is available.</p>
+	<p>A <a href="database.gif">database model diagram</a> (153 KB GIF) created from the ATutor 1.4.1 database schema is available. (somewhat outdated)</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="localisation"></a>15. Localisation</h2>
@@ -607,7 +609,7 @@ if (condition) {
 		</dl></p>
 
 	<h3><a name="adding-language"></a>15.1 Adding &amp; Editing Language</h3>
-		<p>Please see the <a href="http://atutor.ca/atutor/docs/howto.php">HowTo Course</a> for more details on translating a language within ATutor.</p>
+		<p>Please see the <a href="http://www.atutor.ca/atutor/docs/translate.php">Translator Documentation</a> for more details on translating a language within ATutor.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="error-feedback-messages"></a>16. Error and Feedback Messages</h2>
@@ -762,7 +764,7 @@ if (condition) {
 		<dt><kbd>$feedback=array('FORUM_ADDED', 'ac_access_groups');</kbd></dt>
 		<dt><kbd>$msg->addFeedback($feedback);</kbd></dt><br/>
 
-		<dt><kbd>// Before we print lets another another one to the same code</kbd></dt>
+		<dt><kbd>// Before we print lets addr another one to the same code</kbd></dt>
 		<dt><kbd>$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');</kbd></dt>
 		<dt><kbd>$msg->addFeedback($feedback2);</kbd></dt><br/>
 
@@ -806,10 +808,10 @@ if (condition) {
 <p>Each will dump all the corresponding tracked messages of that type onto
 the page at that given line with appropriate graphics defined by its templates file.<p>
 
-<p><kbd>printAll()</kbd> allows all Messages of all types to be dumped immediatley.</p>
+<p><kbd>printAll()</kbd> allows all Messages of all types to be dumped immediately.</p>
 
 <p>One thing to remember is that once a type of Message is printed
-all tracked data relating to that type is gone. There is no need to worry
+all tracked data relating to that type are gone. There is no need to worry
 about purging messages from <kbd>$_SESSION</kbd>. The class manages this.</p>
 
 <p><b>Notice</b> <kbd>$optional</kbd> as the argument to this function. This allows you
@@ -846,7 +848,7 @@ when to print a Message or not. Otherwise returns false.</p>
 
 <h4><a name="Boolean"></a>Manually Deleting a specific Message from storage</h4>
 
-<kbd>delete{Error|Warning|Feedback|Help|Info}($code);</kbd><br/><br/>
+<kbd>delete{Error|Warning|Feedback|Help|Info}($codcuee);</kbd><br/><br/>
 
 <p>Will delete anything related to <kbd>$code</kbd> from <kbd>$_SESSION</kbd></p>
 <dt>Example:</dt>
@@ -981,6 +983,28 @@ $msg->printAll();
  
  ...
 </pre>
+<a href="#top" class="top">top</a>
+<h2><a name="mbstring-support"></a>16.4 UTF-8 and Multibyte language</h2>
+	<p>As of ATutor 1.6, string parsing is done with multibtyle string functions, either the <kbd>mbstring</kbd> function in PHP itself, or the multibyte string functions in the UTF-8 library included with ATutor. By default ATutor will attempt to use the PHP <kbd>mbstring</kbd> functions, and will fall back on the ATutor library if this fails. In order to support both methods of string processing, a set of custom string parsing functions have been created. The only time the ATutor functions will be used is when the mbstring check during the installation or upgrade process has been disabled. The functions mirror the standard string parsing function in PHP, but with the <kbd>$</kbd> prepended. So, where ever you would normally use a PHP function like <kbd>substr() </kbd>, instead use <kbd>$substr()</kbd>. These functions are located in the vital.inc.php
+<pre class="code">
+ if (extension_loaded('mbstring')){
+	 $strtolower = 'mb_strtolower';
+	 $strtoupper = 'mb_strtoupper';
+	 $substr = 'mb_substr';
+	 $strpos = 'mb_strpos';
+	 $strrpos = 'mb_strrpos';
+	 $strlen = 'mb_strlen';
+ } else {
+ 	 $strtolower = 'utf8_stringtolower';
+	 $strtoupper = 'utf8_stringtoupper';
+	 $substr = 'utf8_substr';
+	 $strpos = 'utf8_strpos';
+	 $strrpos = 'utf8_strrpos';
+	 $strlen = 'utf8_strlen';
+ }
+
+</pre>
+
 
 
 <a href="#top" class="top">top</a>
@@ -1060,6 +1084,7 @@ $msg->printAll();
 			<kbd>`include/classes/ContentManager.class.php`</kbd></p>
 
 	<h3><a name="var-section"></a>17.9 $_section</h3>
+		<p><strong>Deprecated in ATutor 1.5</strong></p>
 		<h4>Description</h4>
 		<p><kbd>array $_section</kbd></p>
 
