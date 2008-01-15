@@ -17,7 +17,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);
 
 	$_POST['admin_username'] = trim($_POST['admin_username']);
-	$_POST['admin_password'] = trim($_POST['admin_password']);
+	$_POST['admin_password'] = trim($_POST['form_admin_password_hidden']);
 	$_POST['admin_email']    = trim($_POST['admin_email']);
 	$_POST['site_name']      = trim($_POST['site_name']);
 	$_POST['home_url']	     = trim($_POST['home_url']);
@@ -92,7 +92,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 		$status = 3; // for instructor account
 
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', SHA1('$_POST[admin_password]'), '', '$_POST[admin_email]', 'en', 1, NOW())";
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 'en', 1, NOW())";
 		$result= mysql_query($sql, $db);
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (NULL,'$_POST[account_username]','$_POST[account_password]','$_POST[account_email]','','$_POST[account_fname]','','$_POST[account_lname]','0000-00-00','n', '','','','','', '',$status,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";
@@ -151,9 +151,21 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 }
 
 ?>
+<script language="JavaScript" src="<?php echo AT_INCLUDE_PATH; ?>../../sha-1factory.js" type="text/javascript"></script>
+<script language="JavaScript">
+/* 
+ * Encrypt passwords
+ */
+function crypt_sha1_pwd() {
+	document.form.form_admin_password_hidden.value = hex_sha1(document.form.admin_password.value);
+	document.form.admin_password.value = "";
+	return true;
+}
+</script>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="action" value="process" />
+	<input type="hidden" name="form_admin_password_hidden" value="" />
 	<input type="hidden" name="step" value="<?php echo $step; ?>" />
 	<?php print_hidden($step); ?>
 
@@ -244,5 +256,5 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		</table>
 	<br />
 	<br />
-	<div align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></div>
+	<div align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" onclick="return crypt_sha1_pwd();" /></div>
 </form>

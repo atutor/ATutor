@@ -44,6 +44,11 @@ if (isset($_POST['cancel'])) {
 	}
 
 	/* password validation */
+	$_POST['password']	= $_POST['form_password_hidden'];
+	$_POST['confirm_password']	= $_POST['form_confirm_password_hidden'];
+	unset($_POST['form_password_hidden']);
+	unset($_POST['form_confirm_password_hidden']);
+
 	if ($_POST['password'] == '') { 
 		$missing_fields[] = _AT('password');
 	} else {
@@ -89,7 +94,7 @@ if (isset($_POST['cancel'])) {
 
 		$admin_lang = $_config['default_language']; 
 
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', sha1('$_POST[password]'), '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
+		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '$_POST[password]', '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
 		$result = mysql_query($sql, $db);
 
 		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '*****', '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
@@ -107,9 +112,12 @@ if (isset($_POST['cancel'])) {
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-
 ?>
+<script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<input type="hidden" name="form_password_hidden" value="" />
+<input type="hidden" name="form_confirm_password_hidden" value="" />
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
@@ -162,6 +170,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <script language="javascript">
 
 function checkAdmin() {
+	// Encrypt passwords
+	document.form.form_password_hidden.value = hex_sha1(document.form.password.value);
+	document.form.form_confirm_password_hidden.value = hex_sha1(document.form.confirm_password.value);
+	document.form.password.value = "";
+	document.form.confirm_password.value = "";
 	if (document.form.priv_admin.checked == true) {
 		return confirm('<?php echo _AT('confirm_admin_create'); ?>');
 	} else {

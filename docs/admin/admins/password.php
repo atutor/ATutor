@@ -20,6 +20,12 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.AT_BASE_HREF.'admin/admins/index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	// Use encrypted passwords instead.
+	$_POST['password']	= $_POST['form_password_hidden'];
+	$_POST['password2']	= $_POST['form_password_hidden2'];
+	unset($_POST['form_password_hidden']);
+	unset($_POST['form_password_hidden2']);
+
 	if ($_POST['password'] == '') { 
 		$msg->addError(array('EMPTY_FIELDS', _AT('password')));
 	} else {
@@ -30,7 +36,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['password']     = sha1($addslashes($_POST['password']));
+		$_POST['password']     = $addslashes($_POST['password']);
 
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', last_login=last_login WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
@@ -68,8 +74,24 @@ if (!isset($_POST['submit'])) {
 }
 
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
+<script language="JavaScript">
+/* 
+ * Encrypt passwords
+ */
+function crypt_sha1_pwd() {
+	document.form.form_password_hidden.value = hex_sha1(document.form.password.value);
+	document.form.form_password_hidden2.value = hex_sha1(document.form.password2.value);
+	document.form.password.value = "";
+	document.form.password2.value = "";
+	return true;
+}
+</script>
+
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 	<input type="hidden" name="login" value="<?php echo $row['login']; ?>" />
+	<input type="hidden" name="form_password_hidden" value="" />
+	<input type="hidden" name="form_password_hidden2" value="" />
 	<div class="input-form">
 		<div class="row">
 			<h3><?php echo htmlspecialchars($row['login']); ?></h3>
@@ -86,7 +108,7 @@ if (!isset($_POST['submit'])) {
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" accesskey="s" />
+			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" accesskey="s" onclick="return crypt_sha1_pwd();" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	</div>
