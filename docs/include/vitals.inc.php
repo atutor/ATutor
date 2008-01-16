@@ -198,9 +198,9 @@ if ($_config['time_zone']) {
 	$myLang->saveToSession();
 	if (isset($_GET['lang']) && $_SESSION['valid_user']) {
 		if ($_SESSION['course_id'] == -1) {
-			$myLang->saveToPreferences($_SESSION['member_id'], 0);	//0 for non-admin
+			$myLang->saveToPreferences($_SESSION['login'], 1);	//1 for admin			
 		} else {
-			$myLang->saveToPreferences($_SESSION['login'], 1);	//1 for admin
+			$myLang->saveToPreferences($_SESSION['member_id'], 0);	//0 for non-admin
 		}
 	}
 	$myLang->sendContentTypeHeader();
