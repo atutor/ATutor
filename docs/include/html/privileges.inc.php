@@ -56,7 +56,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	//loop through all the students
 for ($k = 0; $k < $j; $k++) {
-	$mem_id = $_GET['mid'.$k];
+	$mem_id = intval($_GET['mid'.$k]);
 
 	//NO!!! extra check to ensure that user doesnt send in instructor for change privs
 	$sql = "SELECT CE.privileges, M.login FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE M.member_id=$mem_id AND CE.course_id=$course_id AND CE.approved='y'";

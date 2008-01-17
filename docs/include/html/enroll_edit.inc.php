@@ -25,6 +25,7 @@ function get_usernames ($member_ids) {
 	global $db;
 
 	$sql    = "SELECT login FROM ".TABLE_PREFIX."members WHERE `member_id` IN ($member_ids)";
+
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)) {
@@ -199,6 +200,7 @@ function alumni ($list) {
 	}
 	
 	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id=$course_id AND ($members)";
+	debug($sql);exit;
 	$result = mysql_query($sql, $db);
 }
 
@@ -268,6 +270,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 //Store id's into a hidden element for use by functions
 $j = 0;
 while ($_GET['id'.$j]) {
+	$_GET['id'.$j] = abs($_GET['id'.$j]);
 	if ($_GET['id'.$j] == $owner) {
 		//do nothing
 	} else {
@@ -280,7 +283,7 @@ $member_ids = substr($member_ids, 0, -2);
 
 $hidden_vars['func']     = $_GET['func'];
 $hidden_vars['current_tab'] = $_GET['current_tab'];
-$hidden_vars['gid']		 = $_GET['gid'];
+$hidden_vars['gid']		 = abs($_GET['gid']);
 $hidden_vars['course_id'] = $course_id;
 //get usernames of users about to be edited
 $str = get_usernames($member_ids);
@@ -304,14 +307,14 @@ if ($_GET['func'] == 'remove') {
 	$confirm = array('ALUMNI',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'group') {
-	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$_GET['gid'];
+	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$hidden_vars['gid'];
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
 	$confirm = array('STUDENT_GROUP', $row['title'], $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'group_remove') {
-	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$_GET['gid'];
+	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$hidden_vars['gid'];
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
