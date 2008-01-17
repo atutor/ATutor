@@ -153,6 +153,7 @@ pre.code {
 			<li>18.6 <a href="#fn-debug">debug()</a></li>
 			<li>18.7 <a href="#fn-get_login">get_login()</a></li>
 			<li>18.8 <a href="#fn-urlencode_feedback">urlencode_feedback()</a></li>
+			<li>18.9 <a href="#fn-string_functions">String functions</a></li>
 		</ul></li>
 	<li>19. <a href="#useful-constants">Useful Constants</a>
 		<ul>
@@ -1308,7 +1309,7 @@ The second month in French is: &lt;?php echo AT_date('%F', 2, AT_DATE_INDEX_VALU
 
 		<p>Result:
 <pre class="code">
-The second month in French is: f�vrier
+The second month in French is: f憝rier
 </pre></p>
 
 	<h3><a name="fn-addslashes"></a>18.5 $addslashes()</h3>
@@ -1416,6 +1417,45 @@ $f[] = array(AT_FEEDBACK_FILE_UPLOADED_ZIP, $file_name);
 header('Location: file_manager.php?f='.urlencode_feedback($f));
 exit;
 </pre></p>
+
+
+--
+	<h3><a name="fn-string_functions"></a>18.9 String functions </h3>
+		<p><ul>
+			<li><kbd>string <strong>$strtolower</strong>(string $str)</kbd> -- UTF-8 aware strtolower function.  Make a string lowercase </li>
+			<li><kbd>string <strong>$strtoupper</strong>(string $str)</kbd> -- UTF-8 aware strtolower function.  Make a string uppercase </li>
+			<li><kbd>int <strong>$strpos</strong>(string $haystack  , string $needle  )</kbd> -- UTF-8 aware strpos function.  Find position of first occurrence of string in a string </li>
+			<li><kbd>int <strong>$strrpos</strong>(string $haystack , string $needle  )</kbd> -- UTF-8 aware strrpos function.  Find position of last occurrence of a string in a string </li>
+			<li><kbd>int <strong>$strlen</strong>(string $str)</kbd> -- UTF-8 aware strlen function.  Get string length </li>
+		</ul></p>
+
+		<h4>Description</h4>
+			<p>Starting from 1.6, the above string functions will replace the original string functions when dealing with strings in order to adapt the utf-8 environment.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+		
+		<h4>Example 1</h4>
+		<p>To alter a text to lowercase:
+		<pre class="code">
+		$str = 'Αρχαίο Πνεύμα';
+		echo $strtolower($str);
+		</pre></p>
+
+		<h4>Example 2</h4>
+		<p>To alter a text to uppercase:
+		<pre class="code">
+		$str = 'Αρχαίο Πνεύμα';
+		echo $strtoupper($str);
+		</pre></p>
+
+		<h4>Example 3</h4>
+		<p>To find the middle character of a string:
+		<pre class="code">
+		$str = 'Αρχαίο Πνεύμα';
+		$mid = $strlen;
+		echo $strpos($mid, $str);
+		</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="useful-constants"></a>19. Useful Constants</h2>
