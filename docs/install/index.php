@@ -34,6 +34,7 @@ $bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="Bad" t
 $good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="Good" title="Good" />';
 
 $no_good = FALSE;
+$not_as_good = FALSE;
 ?>
 <h3>Welcome to the ATutor Installation</h3>
 <p>This process will step you through your ATutor installation or upgrade.</p>
@@ -100,7 +101,7 @@ $no_good = FALSE;
 					} else {
 						echo 'Disabled</td><td align="center">';
 						echo $bad;
-						$no_good = TRUE;
+						$not_as_good = TRUE;
 					} ?></td>
 		</tr>
 		<tr>
@@ -281,6 +282,44 @@ $no_good = FALSE;
 	<tr>
 		<td class="row1"><strong>Your server does not meet the minimum requirements!<br />
 						Please correct the above errors to continue.</strong></td>
+	</tr>
+	</table>
+<?php elseif ($not_as_good): ?>
+	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+	<tr>
+		<td class="row1"><strong>ATutor has indicated that the 'mbstring' library is missing from the PHP.  <br />
+						We strongly encourage you to install the 'mbstring' library before continuing, however, if you choose not to install the library from PHP, a third party library within ATutor will be used.  <br/><br/>
+						For production systems, we strongly encourage you to install the PHP with <a href="http://ca.php.net/manual/en/ref.mbstring.php" target="php_site">mbstring</a> support.  <br/><br/>
+						You may choose to by pass the mbstring check for the installation at your own risk by clicking <a href="javascript:void(0);" onclick="javascript:document.form.next.disabled=false;">continue</a>.</strong></td>
+		<td class="row1"></td>
+	</tr>
+	<tr>
+		<td align="right" class="row1" nowrap="nowrap"><strong>New Installation &raquo;</strong></td>
+		<td class="row1" width="150" align="center">
+		<div id=''>
+			<form action="install.php" method="post" name="form">
+			<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
+			<input type="submit" class="button" value="  Install  " name="next" disabled="true" />
+			</form>
+		</div>
+		</td>
+	</tr>
+	</table>
+	<table cellspacing="0" cellpadding="10" align="center" width="45%">
+	<tr>
+		<td align="center"><b>Or</b></td>
+	</tr>
+	</table>
+	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+	<tr>
+		<td class="row1"><strong>Upgrading from previous ATutor must have mbstring library installed.</strong></td>
+		<td class="row1"></td>
+	</tr>
+	<tr>
+		<td align="right" class="row1" nowrap="nowrap"><strong>Upgrade an Existing Installation &raquo;</strong></td>
+		<td class="row1" width="150" align="center">
+		<input type="button" class="button" value="Upgrade" name="next" disabled="true"/>
+		</form></td>
 	</tr>
 	</table>
 <?php else: ?>
