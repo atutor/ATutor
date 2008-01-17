@@ -4,7 +4,7 @@
 <tr>
 	<th scope="col" width="40%"><?php echo _AT('question'); ?></th>
 	<?php for ($i=0; $i<$this->num_choices; $i++): ?>
-		<?php if ($strlen($this->row['choice_'.$i]) > 15) { $this->row['choice_'.$i] = $substr($this->row['choice_'.$i], 0, 15).'...'; } ?>
+		<?php $this->row['choice_'.$i] = validate_length($this->row['choice_'.$i], 15, VALIDATE_LENGTH_FOR_DISPLAY); ?>
 		<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i], ENT_COMPAT, "UTF-8"); ?></th>
 	<?php endfor; ?>
 </tr>
