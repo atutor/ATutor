@@ -484,7 +484,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 }
             
             $force_get = (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) ? true : false;
-            echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get'>";
+            echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get' />";
         
        //include(AT_INCLUDE_PATH.'html/course_icon.inc.php');
         
@@ -494,7 +494,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 
 		<?php else: ?>
 			<img id="i0" src="images/clr.gif" alt="" style="float: left; margin: 2px;" border="1" height="79" width="79"  />
-			<input type='hidden' name='boolForce' id='boolForce' value=''>
+			<input type='hidden' name='boolForce' id='boolForce' value='' />
 		<?php endif; ?>
 		<div style="width:40%; float:left;">
 		<label for="icons"><?php echo _AT('icon'); ?></label><br />
