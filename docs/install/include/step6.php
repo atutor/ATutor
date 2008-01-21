@@ -102,7 +102,7 @@ if (isset($errors)) {
 
 		print_feedback($progress);
 
-		echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" />';
+		echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p>';
 		
 	}
 }

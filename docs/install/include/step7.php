@@ -181,6 +181,6 @@ print_progress($step);
 	</table>
 <input type="hidden" name="log_yes" value="1" />
 <br />
-<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" />
+<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p>
 
 </form>

@@ -152,7 +152,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 
 ?>
 <script language="JavaScript" src="<?php echo AT_INCLUDE_PATH; ?>../../sha-1factory.js" type="text/javascript"></script>
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 /* 
  * Encrypt passwords
  */
@@ -181,7 +181,7 @@ function crypt_sha1_pwd() {
 		<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 		<tr>
 			<th colspan="2">Super Administrator Account</th>
-		<tr>
+		</tr>
 		<tr>
 			<td colspan="2" class="row1">The Super Administrator account is used for managing ATutor. The Super Administrator can also create additional Administrators each with their own privileges and roles. Administrator accounts cannot enroll in courses.</td>
 		</tr>
@@ -207,7 +207,7 @@ function crypt_sha1_pwd() {
 			<th colspan="2">System Preferences</th>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="sitename">Site Name:</b><br />
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="sitename">Site Name:</label></b><br />
 			The name of your course server website.<br />Default: <kbd><?php echo $defaults['site_name']; ?></kbd></td>
 			<td class="row1"><input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" class="formfield" /></td>
 		</tr>
@@ -217,7 +217,7 @@ function crypt_sha1_pwd() {
 			<td class="row1"><input type="text" name="email" id="cemail" size="40" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="optional" title="Optional Field">?</div><b><label for="home_url">Optional 'Home' URL:</b><br />
+			<td class="row1"><div class="optional" title="Optional Field">?</div><b><label for="home_url">Optional 'Home' URL:</label></b><br />
 			This will be the URL for the 'Home' link in the Public Area. Leave empty to have this link not appear. <br /></td>
 			<td class="row1"><input type="text" name="home_url" size="28" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $defaults['home_url']; } ?>" class="formfield" /></td>
 		</tr>
