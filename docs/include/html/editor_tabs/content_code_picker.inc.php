@@ -43,7 +43,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<script type="text/javascript">
 	//<!--
 	function smilie(thesmilie, extra) {
-		tinyMCE.execCommand("mceInsertContent", false, thesmilie + extra);
+		if (!extra) {
+			tinyMCE.execCommand("mceInsertContent", false, thesmilie);
+		} else {
+			tinyMCE.execCommand("mceInsertContent", false, thesmilie + extra);
+		}
 	}
 	//--></script>
 <?php else: ?>
