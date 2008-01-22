@@ -32,7 +32,7 @@ $install_steps[6] = array('name' => 'Anonymous Usage Collection');
 $install_steps[7] = array('name' => 'Done!');
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="utf-8"> 
 <head>
 	<title>ATutor Installation</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
