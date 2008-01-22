@@ -46,7 +46,8 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	/* form post login */
 
 	if (strlen($_POST['form_password_hidden']) < 40) { // <noscript> on client end
-		$this_password = sha1($_POST['form_password'] . $_SESSION['token']);
+		//@harris, sha1 on POST to mimic the login page.
+		$this_password = sha1(sha1($_POST['form_password']) . $_SESSION['token']);
 	} else { // sha1 ok
 		$this_password = $_POST['form_password_hidden'];
 	}
@@ -56,9 +57,10 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	$used_cookie	= false;
 }
 
-if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
-	$msg->addError('SESSION_COOKIES');
-} else if (isset($this_login, $this_password)) {
+//if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
+//	$msg->addError('SESSION_COOKIES');
+//} else 
+if (isset($this_login, $this_password)) {
 	if (version_compare(PHP_VERSION, '5.1.0', '>=')) {
 		session_regenerate_id(TRUE);
 	}
