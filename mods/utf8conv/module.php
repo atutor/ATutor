@@ -1,5 +1,4 @@
 <?php
-// test
 /*******
  * doesn't allow this file to be loaded with a browser.
  */
@@ -27,7 +26,7 @@ define('AT_ADMIN_PRIV_UTF8CONV', $this->getAdminPrivilege());
  * if this module is to be made available to students on the Home or Main Navigation.
  */
 //$_group_tool = $_student_tool = 'mods/utf8conv/index.php';
-$_student_tool = 'mods/utf8conv/index.php';
+//$_student_tool = 'mods/utf8conv/index.php';
 
 /*******
  * add the admin pages when needed.
@@ -50,8 +49,8 @@ $this->_pages['mods/utf8conv/index_instructor.php']['parent']   = 'tools/index.p
 /*******
  * student page.
  */
-$this->_pages['mods/utf8conv/index.php']['title_var'] = 'utf8conv';
-$this->_pages['mods/utf8conv/index.php']['img']       = 'mods/utf8conv/utf8conv.jpg';
+//$this->_pages['mods/utf8conv/index.php']['title_var'] = 'utf8conv';
+//$this->_pages['mods/utf8conv/index.php']['img']       = 'mods/utf8conv/utf8conv.jpg';
 
 
 /* public pages */
