@@ -37,22 +37,37 @@ function convert_charset($path, $filename)
 			return;
 		}
 		
-		// Find old charset to convert file
-		$pattern = '/<meta.*charset=(.*) /i';
-		preg_match($pattern, $content, $matches);
+		// Find old charset in html files
+		if (preg_match("/\.html$/i", $path)) 
+		{ 
+			$pattern = '/<meta.*charset=(.*) /i';
+			preg_match($pattern, $content, $matches);
+			
+			// remove quote signs in the match
+			$charset_in = preg_replace('/(\'|\")/', '', $matches[1]);
+		}
 		
-		// remove quote signs in the match
-		$charset_in = preg_replace('/(\'|\")/', '', $matches[1]);
-		
-		// replace old charset in <meta> tag to new charset
-		$content = str_ireplace($charset_in,$charset_to,$content);
+		if (preg_match("/\.xml$/i", $path)) 
+		{ 
+			if (preg_match("#<charset>(.*)</charset>#i", $content, $matches)) 
+			{
+				$charset_in  = $matches[1];
+			}
+		}
 
-		// convert file from old charset to new charset
-		$content = iconv($charset_in, $charset_to. '//IGNORE', $content);
-
-		$fp = fopen($path,'w');
-		fwrite($fp,$content);
-		fclose($fp);
+		// convert file
+		if (strlen($charset_in) > 0)
+		{
+			// replace old charset in <meta> tag to new charset
+			$content = str_ireplace($charset_in,$charset_to,$content);
+	
+			// convert file from old charset to new charset
+			$content = iconv($charset_in, $charset_to. '//IGNORE', $content);
+	
+			$fp = fopen($path,'w');
+			fwrite($fp,$content);
+			fclose($fp);
+		}
 	}  
 }
 
@@ -100,7 +115,8 @@ if (isset($_POST['submit']))
 
 	if ($archive->extract(PCLZIP_OPT_PATH, $module_content_folder) == 0)
 	{
-    die("Error : ".$archive->errorInfo(true));
+    clear_dir($module_content_folder);
+    die("Cannot unzip file " . $_FILES['userfile']['tmp_name'] . "<br>Error : ".$archive->errorInfo(true));
   }
   
   // Read content folder recursively to convert.
@@ -111,6 +127,7 @@ if (isset($_POST['submit']))
 	// set the directory to read
 	if (!$dir->setPath( $module_content_folder )) 
 	{ 
+		clear_dir($module_content_folder);
 		die($dir->error());
 	} 
 	
@@ -120,12 +137,14 @@ if (isset($_POST['submit']))
 	// set a function to call when a new file is read
 	if (!$dir->setEvent( 'readDir_file', 'convert_charset' )) 
 	{ 
+		clear_dir($module_content_folder);
 		die($dir->error());
 	} 
 	
 	// read the dir
 	if ( !$dir->read() ) 
 	{ 
+		clear_dir($module_content_folder);
 		die($dir->error());
 	}  
 
@@ -135,7 +154,8 @@ if (isset($_POST['submit']))
   $archive = new PclZip($zip_filename);
 
   if ($archive->create($module_content_folder, PCLZIP_OPT_REMOVE_PATH, $module_content_folder) == 0) {
-    die("Error : ".$archive->errorInfo(true));
+    clear_dir($module_content_folder);
+    die("Cannot zip converted files. <br>Error : ".$archive->errorInfo(true));
   }
 
 	// force zipped converted file to download
