@@ -63,7 +63,7 @@ $out_of = $row['out_of'];
 $sql	= "SELECT question_id FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$rid";
 $result	= mysql_query($sql, $db); 
 $row = mysql_fetch_array($result);
-$random_id_string = $row[question_id];
+$random_id_string = $row['question_id'];
 $row = mysql_fetch_array($result);	
 while ($row['question_id'] != '') {
 	$random_id_string = $random_id_string.','.$row['question_id'];
