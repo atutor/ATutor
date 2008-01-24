@@ -34,7 +34,7 @@ $result	= mysql_query($sql, $db);
 <tbody>
 
 <?php
-$count = 10;
+$count = 0;
 while ($row = mysql_fetch_assoc($result)) {
 	// this code hides tests from the user if they are not enrolled.
 	if (!$row['guests'] && !authenticate_test($row['test_id'])) {
