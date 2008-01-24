@@ -182,7 +182,6 @@ function toggleToc(objId) {
 </script>
 
 <div id="header">
-	<!-- section title -->
 	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
 		<a href="<?php echo $this->base_path; ?>index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
 	<?php } ?>
@@ -202,6 +201,12 @@ function toggleToc(objId) {
 	*/
 
 	?>
+	<!-- section title -->
+	<?php if ($_SESSION['valid_user']): 
+		echo '<h1 style="font-size:small;font-weight:bold;padding-left:1em;">'.stripslashes(SITE_NAME).'</h1>'; 
+	else:
+		echo '<br />';	
+	endif; ?>
 	<h1 id="section-title"><?php echo $this->section_title; ?>
 		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
