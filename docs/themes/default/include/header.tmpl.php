@@ -203,7 +203,7 @@ function toggleToc(objId) {
 	?>
 	<!-- section title -->
 	<?php if ($_SESSION['valid_user']): 
-		echo '<h1 style="font-size:small;font-weight:bold;padding-left:1em;">'.stripslashes(SITE_NAME).'</h1>'; 
+		echo '<div style="font-size:small;font-weight:bold;padding-left:1em;color:white;">'.stripslashes(SITE_NAME).'</div>'; 
 	else:
 		echo '<br />';	
 	endif; ?>
