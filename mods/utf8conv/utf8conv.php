@@ -44,11 +44,11 @@ $filetypes = ARRAY('html', 'xml', 'csv', 'txt', 'sql');
 $filetypes = array_change_key_case($filetypes);   // use lower case
 
 $default_charsets = ARRAY(
-'BIG5','EUC-JP','GB2312','ISO-8859-1','ISO-8859-2','ISO-8859-3','ISO-8859-4','ISO-8859-5',
-'ISO-8859-6','ISO-8859-7','ISO-8859-8','ISO-8859-9','ISO-8859-10','ISO-8859-11','ISO-8859-13',
-'ISO-8859-14','ISO-8859-15','ISO-8859-16','US-ASCII','WINDOWS-874','WINDOWS-936','WINDOWS-1250',
-'WINDOWS-1251','WINDOWS-1252','WINDOWS-1253','WINDOWS-1254','WINDOWS-1255','WINDOWS-1256',
-'WINDOWS-1257','WINDOWS-1258');
+'ISO-8859-1','ISO-8859-2','ISO-8859-3','ISO-8859-4','ISO-8859-5','ISO-8859-6','ISO-8859-7',
+'ISO-8859-8','ISO-8859-9','ISO-8859-10','ISO-8859-11','ISO-8859-13','ISO-8859-14',
+'ISO-8859-15','ISO-8859-16','BIG5','EUC-JP','GB2312','US-ASCII','WINDOWS-874','WINDOWS-936',
+'WINDOWS-1250','WINDOWS-1251','WINDOWS-1252','WINDOWS-1253','WINDOWS-1254','WINDOWS-1255',
+'WINDOWS-1256','WINDOWS-1257','WINDOWS-1258');
 
 $charsets = array();
 
@@ -158,7 +158,7 @@ function display_options($charsets_array)
 
 // This function deletes $dir recrusively without deleting given dir itself.
 function clear_dir($dir) {
-	require(AT_INCLUDE_PATH . '/lib/filemanager.inc.php');
+	include_once(AT_INCLUDE_PATH . '/lib/filemanager.inc.php');
 	
 	if(!$opendir = @opendir($dir)) {
 		return false;
@@ -189,14 +189,14 @@ function clear_dir($dir) {
 }
 
 // Main Convert process
-if (isset($_POST['Convert']) || isset($_POST['Go']))
-{
-	$module_content_folder = AT_CONTENT_DIR . "utf8conv";
+$module_content_folder = AT_CONTENT_DIR . "utf8conv";
 	
+include_once(AT_INCLUDE_PATH . '/classes/pclzip.lib.php');
+	
+if (isset($_POST['Convert']))
+{
 	// clean up module content folder
 	clear_dir($module_content_folder);
-	
-	require(AT_INCLUDE_PATH . '/classes/pclzip.lib.php');
 	
 	// 1. unzip uploaded file to module's content directory
 	$archive = new PclZip($_FILES['userfile']['tmp_name']);
@@ -206,9 +206,12 @@ if (isset($_POST['Convert']) || isset($_POST['Go']))
     clear_dir($module_content_folder);
     die("Cannot unzip file " . $_FILES['userfile']['tmp_name'] . "<br>Error : ".$archive->errorInfo(true));
   }
-  
+}
+
+if (isset($_POST['Convert']) || $_POST['Go'])
+{
   // 2. Read content folder recursively to convert.
-  require("readDir.php");
+  include_once("readDir.php");
   
 	$dir = new readDir();
 	// set the directory to read
@@ -243,8 +246,8 @@ if (isset($_POST['Convert']) || isset($_POST['Go']))
 			$charset_from = $charsets[0];
 		elseif (count($charsets) != 1 && $_POST['Go'])
 			$charset_from = $_POST['charfrom'];
-		
 
+		// Real conversion
 		$dir = new readDir();
 		$dir->setPath( $module_content_folder );
 		$dir->readRecursive(true); 
@@ -252,12 +255,15 @@ if (isset($_POST['Convert']) || isset($_POST['Go']))
 		$dir->read();
 	
 	  // 3. ZIP converted files
-	  $zip_filename = AT_CONTENT_DIR . "/" . str_replace('.zip','_'.$charset_to . '.zip', $_FILES['userfile']['name']);
+	  if ($_POST['Convert'])  $orig_filename=$_FILES['userfile']['name'];
+	  elseif ($_POST['Go'])   $orig_filename=$_POST['filename'];
+	  
+	  $zip_filename = AT_CONTENT_DIR . "/" . str_replace('.zip','_'.$charset_to . '.zip', $orig_filename);
 	
 	  $archive = new PclZip($zip_filename);
 	
 	  if ($archive->create($module_content_folder, PCLZIP_OPT_REMOVE_PATH, $module_content_folder) == 0) {
-	    clear_dir($module_content_folder);
+//	    clear_dir($module_content_folder);
 	    die("Cannot zip converted files. <br>Error : ".$archive->errorInfo(true));
 	  }
 	
@@ -281,14 +287,13 @@ if (isset($_POST['Convert']) || isset($_POST['Go']))
 }
 // End of main convert process
 
-require (AT_INCLUDE_PATH.'header.inc.php');
+include_once (AT_INCLUDE_PATH.'header.inc.php');
 
 // Check ICONV library is installed and enabled
 if (!extension_loaded('iconv') || !function_exists('iconv'))
 {
-	die ('Warning: This utility is not available as PHP ICONV module is not installed or not enabled.');
+	die ('<font color="red">Warning: This utility is not available as PHP ICONV module is not installed or not enabled.</font>');
 }
-
 ?>
 
 <HTML>
@@ -301,19 +306,15 @@ String.prototype.trim = function() {
 }
 
 // This function validates if and only if a zip file is given
-function SubmitFile() {
+function validate_filename() {
   // check file type
   var file = document.frm_upload.userfile.value;
   if (!file || file.trim()=='') {
     alert('Please give a zip file!');
-    return;
+    return false;
   }
   
-  while (file.indexOf("\\") != -1)
-      file = file.slice(file.indexOf("\\") + 1);
-  
-  var ext = file.slice(file.lastIndexOf(".")).toLowerCase();
-  if(ext != '.zip') {
+  if(file.slice(file.lastIndexOf(".")).toLowerCase() != '.zip') {
     alert('Please upload ZIP file only!');
     return false;
   }
@@ -324,33 +325,29 @@ function SubmitFile() {
 </script>
 
 <BODY>
-  <FORM NAME="frm_upload" ENCTYPE="multipart/form-data" METHOD=POST ACTION="<?php echo $_SERVER['PHP_SELF']; ?>" onsubmit="return SubmitFile()">
+  <FORM NAME="frm_upload" ENCTYPE="multipart/form-data" METHOD=POST ACTION="<?php echo $_SERVER['PHP_SELF']; ?>" >
 
   <TABLE>	
 		<TR>
-      <TD colspan="3"><strong>Upload a zip file to convert the character set to UTF-8</strong><br /></TD>
+      <TD colspan="1">Upload a zip file to convert the character set to UTF-8:</TD>
 		</TR>
 
 		<TR>
 			<INPUT TYPE="hidden" name="MAX_FILE_SIZE" VALUE="52428800">
 			<TD><INPUT TYPE="file" NAME="userfile" SIZE=50></td>
-			<TD><INPUT TYPE="submit" name="Convert" value="Convert" class="submit" /></TD>
+			<TD><INPUT TYPE="submit" name="Convert" value="Convert" onClick="javascript: return validate_filename(); " class="submit" /></TD>
+			<TD><INPUT TYPE="hidden" name="filename"></TD>
 		</TR>
 <?php
 if ($_POST["Convert"] && count($charsets) != 1)
 {
 ?>
 		<TR>
-      <TD colspan="3"><strong>Multiple character sets are defined in html & xml files, please select one to convert from:</strong><br /></TD>
-		</TR>
-		<TR>
-			<TD>
 <?php
 	if (count($charsets) > 1)
 	{
 ?>
-		<TR>
-      <TD colspan="3"><strong>Multiple character sets are defined in html & xml files, please select one to convert from:</strong><br /></TD>
+      <TD colspan="2"><font color="red">Multiple character sets are found, please select one to convert from:</font></TD>
 		</TR>
 		<TR>
 			<TD>
@@ -360,8 +357,7 @@ if ($_POST["Convert"] && count($charsets) != 1)
 	else
 	{
 ?>
-		<TR>
-      <TD colspan="3"><strong>No character set is found, please select one to convert from:</strong><br /></TD>
+      <TD colspan="1"><font color="red">No character set is found, please select one to convert from:</font></TD>
 		</TR>
 		<TR>
 			<TD>
@@ -369,8 +365,7 @@ if ($_POST["Convert"] && count($charsets) != 1)
 		display_options($default_charsets);
 	}
 ?>
-		</TD>
-			<TD><INPUT TYPE="submit" name="Go" value="Go" class="submit" /></TD>
+			<INPUT TYPE="submit" name="Go" value="Go" class="submit" /></TD>
 		</TR>
 
 <?php
@@ -382,5 +377,21 @@ if ($_POST["Convert"] && count($charsets) != 1)
 </BODY>	
 </HTML>
 
+<SCRIPT LANGUAGE="JavaScript">
+<!--
 
-<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php
+// store the upload zip file name in a hidden field for the future use for charsets selection
+if ($_POST['Convert'])
+{
+?>
+document.frm_upload.filename.value = '<?php echo $_FILES['userfile']['name']; ?>';
+<?php
+}
+?>
+
+//  End -->
+//-->
+</script>
+
+<?php include_once (AT_INCLUDE_PATH.'footer.inc.php'); ?>
