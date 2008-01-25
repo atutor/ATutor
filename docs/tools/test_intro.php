@@ -35,6 +35,7 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 	exit;
 }
 
+// checks one/all questions per page, and forward user to the correct one
 if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: my_tests.php');

@@ -36,6 +36,11 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 	exit;
 }
 
+// checks one/all questions per page, and forward user to the correct one
+if (!$test_row['display']) {
+	header('Location: take_test.php?tid='.$tid);
+}
+
 $out_of = $test_row['out_of'];
 if (!$test_row['random']) {
 	$sql	= "SELECT COUNT(*) AS num_questions FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
