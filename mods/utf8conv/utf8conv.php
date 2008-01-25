@@ -261,9 +261,9 @@ if (isset($_POST['Convert']) || $_POST['Go'])
 	  $zip_filename = AT_CONTENT_DIR . "/" . str_replace('.zip','_'.$charset_to . '.zip', $orig_filename);
 	
 	  $archive = new PclZip($zip_filename);
-	
-	  if ($archive->create($module_content_folder, PCLZIP_OPT_REMOVE_PATH, $module_content_folder) == 0) {
-//	    clear_dir($module_content_folder);
+	  
+	  if ($archive->add($module_content_folder, PCLZIP_OPT_REMOVE_PATH, $module_content_folder) == 0) {
+	    clear_dir($module_content_folder);
 	    die("Cannot zip converted files. <br>Error : ".$archive->errorInfo(true));
 	  }
 	
@@ -276,7 +276,6 @@ if (isset($_POST['Convert']) || $_POST['Go'])
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
-		header('Content-Length: '.filesize($zip_filename));
 	
 		readfile($zip_filename);
 	
