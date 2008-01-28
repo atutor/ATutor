@@ -21,14 +21,20 @@
  * structure of this document (in order):
  * 
  * 1. Unzip uploaded file to module's content directory
- * 2. Read content folder recursively to convert
- *    Read thru all html and xml file to find all character sets
- *    definitions. If number of character sets are:
- *    1) 1: perfect scenario, convert all given file types to it
- *    2) 0: display default charsets for user to choose one of them
- *          and convert all given file types, except html, xml, to it
- *    3) More than 1: display them for user to choose one and 
- *          convert all given file types, except html, xml, to it
+ * 2. Read content folder recursively and search through all html and xml files 
+ *    to find "charset" defined in html "meta" tag and "charset" defined in xml files. 
+ *    If:
+ *    (1) Only 1 character set found:
+ *    		The module converts the files with file types to convert from found charset 
+ *        to UTF-8.
+ *    (2) More than 1 character set found:
+ *        The module displays a drop-down listbox with all found character sets. User 
+ *        selects one and clicks "Go" button. The module will do the conversion from 
+ *        the selcted character set to UTF-8.
+ *    (3) No character set found:
+ *        The module displays a drop-down listbox with default character sets. User 
+ *        selects one and clicks "Go" button. The module will do the conversion from 
+ *        the selcted character set to UTF-8.
  * 3. Zip converted files
  * 4. force zipped converted file to download
  * 5. clear all temp files
@@ -52,7 +58,13 @@ $default_charsets = ARRAY(
 
 $charsets = array();
 
-// This function finds charset definition from html & xml files
+/**
+* This function finds charset definition from html & xml files
+* @access  public
+* @param   string $filename	The name of the file to find charset definition
+*          output of readDir
+* @author  Cindy Qi Li
+*/
 function find_charset($filename)
 {
 	if (preg_match("/\.html$/i", $filename)) 
@@ -75,7 +87,14 @@ function find_charset($filename)
 	return $charset;
 }
 
-// This function finds all charsets defined in all html & xml files in the given zip
+/**
+* This function finds all charsets defined in all html & xml files in the given zip
+* and save the charsets in global variable $charsets
+* @access  public
+* @param   string $path	The full path and name of the files to find charset definition
+*          output of readDir
+* @author  Cindy Qi Li
+*/
 function find_all_charsets($path, $filename)
 {
 	global $charsets;
@@ -88,11 +107,15 @@ function find_all_charsets($path, $filename)
 	}
 }
 
-// This function does:
-// 1. Find all "charset=XXX" in html <meta> tag and replace the tag 
-//    value to "UTF-8"
-// 2. Convert the file from old charset "XXX" to new charset "UTF-8"
-// 3. Only process html and xml files
+/**
+* This function:
+* 1. replaces the charset strings defined in html "meta" tag and "charset" tag in xml files to "UTF-8";
+* 2. convert files from old character set to UTF-8.
+* @access  public
+* @param   string $path	The full path and name of the files to find charset definition
+*          output of readDir
+* @author  Cindy Qi Li
+*/
 function convert($path, $filename)
 {
 	global $charset_from, $charset_to;
@@ -139,7 +162,12 @@ function convert($path, $filename)
 	}
 }
 
-// This function display a drop-down box with all options as values in $charsets_array
+/**
+* This function displays all values in $charsets_array in a drop-down box 
+* @access  public
+* @param   array $charsets_array	The options to display
+* @author  Cindy Qi Li
+*/
 function display_options($charsets_array)
 {
 ?>
@@ -156,7 +184,12 @@ function display_options($charsets_array)
 <?php
 }
 
-// This function deletes $dir recrusively without deleting given dir itself.
+/**
+* This function deletes $dir recrusively without deleting $dir itself.
+* @access  public
+* @param   string $charsets_array	The name of the directory where all files and folders under needs to be deleted
+* @author  Cindy Qi Li
+*/
 function clear_dir($dir) {
 	include_once(AT_INCLUDE_PATH . '/lib/filemanager.inc.php');
 	
@@ -188,7 +221,16 @@ function clear_dir($dir) {
 	return true;
 }
 
-// Main Convert process
+/**
+* Main convert process:
+* 1. Unzip uploaded file to module's content directory
+* 2. Convert unzipped files with file types to convert
+* 3. Zip converted files
+* 4. force zipped converted file to download
+* 5. clear all temp files
+* @access  public
+* @author  Cindy Qi Li
+*/
 $module_content_folder = AT_CONTENT_DIR . "utf8conv";
 	
 include_once(AT_INCLUDE_PATH . '/classes/pclzip.lib.php');
@@ -325,52 +367,56 @@ function validate_filename() {
 
 <BODY>
   <FORM NAME="frm_upload" ENCTYPE="multipart/form-data" METHOD=POST ACTION="<?php echo $_SERVER['PHP_SELF']; ?>" >
+	
+	<div class="input-form">
 
-  <TABLE>	
-		<TR>
-      <TD colspan="1">Upload a zip file to convert the character set to UTF-8:</TD>
-		</TR>
+		<div class="row">
+      Upload a zip file to convert the character set to UTF-8:
+		</div>
 
-		<TR>
+		<div class="row">
 			<INPUT TYPE="hidden" name="MAX_FILE_SIZE" VALUE="52428800">
-			<TD><INPUT TYPE="file" NAME="userfile" SIZE=50></td>
-			<TD><INPUT TYPE="submit" name="Convert" value="Convert" onClick="javascript: return validate_filename(); " class="submit" /></TD>
-			<TD><INPUT TYPE="hidden" name="filename"></TD>
-		</TR>
+			<INPUT TYPE="file" NAME="userfile" SIZE=50>
+		</div>
+		
+		<div class="row buttons">
+			<INPUT TYPE="submit" name="Convert" value="Convert" onClick="javascript: return validate_filename(); " class="submit" />
+			<INPUT TYPE="hidden" name="filename">
+		</div>
 <?php
 if ($_POST["Convert"] && count($charsets) != 1)
 {
 ?>
-		<TR>
 <?php
 	if (count($charsets) > 1)
 	{
 ?>
-      <TD colspan="2"><font color="red">Multiple character sets are found, please select one to convert from:</font></TD>
-		</TR>
-		<TR>
-			<TD>
+    <div class="row">
+      <font color="red">Multiple character sets are found, please select one to convert from:</font>
+		</div>
 <?php
 		display_options($charsets);
 	}
 	else
 	{
 ?>
-      <TD colspan="1"><font color="red">No character set is found, please select one to convert from:</font></TD>
-		</TR>
-		<TR>
-			<TD>
+    <div class="row">
+      <font color="red">No character set found in zip file, please choose one character set to convert from:</font>
+		</div>
+
 <?php
 		display_options($default_charsets);
 	}
 ?>
-			<INPUT TYPE="submit" name="Go" value="Go" class="submit" /></TD>
-		</TR>
+		<div class="row buttons">
+			<INPUT TYPE="submit" name="Go" value="Go" class="submit" />
+		</div>
 
 <?php
 }
 ?>
-  </TABLE>
+	</div>
+	
 	</FORM>
   <hr/>  
 </BODY>	
