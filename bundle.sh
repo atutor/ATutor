@@ -9,7 +9,7 @@ set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor_$now"
 set bundle = "ATutor"
 set svndir = "http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk/docs/"
-set svnexec = "/usr/bin/svn"
+set svnexec = "svn"
 
 echo "\033[1mATutor Bundle Script [for CVS 1.3.1+] \033[0m"
 echo "--------------------"
