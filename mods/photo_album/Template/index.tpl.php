@@ -49,8 +49,7 @@
 				<!-- BEGIN IMAGE_ADD_BUTTON -->
 				<div class="row buttons" style="clear:both;">
 					<!-- form name="{FORM_NAME}" method="post" action="{ACTION}" -->
-					<input type="submit" name="save" value="save image order{SAVE_STRING}" />
-					<input type="button" name="harris" value="save order" onclick="reordering_pa('save_form');" />
+					<input type="submit" name="save" value="save image order{SAVE_STRING}" onclick="reordering_pa('save_form');" />
 					<input type="hidden" name="mode" value="save" />
 					</form>	
 

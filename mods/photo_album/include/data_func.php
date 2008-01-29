@@ -53,15 +53,15 @@ function get_image_array($state, $course_id, $image_status, $start_page, $displa
 		 case MY_PIC:
 		 	//$query="SELECT * FROM ".$table." WHERE course_id=".$course_id."  AND status=".$image_status." AND login='{$login}' ORDER BY image_id DESC LIMIT ".$start.", ".$display_limit;
 		// changes sorting to order from image_id
-		$query="SELECT * FROM ".$table." WHERE course_id=".$course_id."  AND status=".$image_status." AND login='{$login}' ORDER BY 'order' ASC LIMIT ".$start.", ".$display_limit;
+		$query="SELECT * FROM ".$table." WHERE course_id=".$course_id."  AND status=".$image_status." AND login='{$login}' ORDER BY `order` ASC LIMIT ".$start.", ".$display_limit;
 		 break;
 		default:
 		 	//$query="SELECT * FROM ".$table." WHERE course_id=".$course_id."  AND status=".$image_status." ORDER BY image_id DESC LIMIT ".$start.", ".$display_limit;
 		// changes sorting to order from image_id
-	 	$query="SELECT * FROM ".$table." WHERE course_id=".$course_id."  AND status=".$image_status." ORDER BY 'order' ASC LIMIT ".$start.", ".$display_limit;
+	 	$query="SELECT * FROM ".$table." WHERE course_id=".$course_id."  AND status=".$image_status." ORDER BY `order` ASC LIMIT ".$start.", ".$display_limit;
 	 	break;
 	 }
-	
+
 	 $result=mysql_query($query, $db);
 	 while ($row=mysql_fetch_array($result)){
 		$array[$i]['title']=$row['title'];
