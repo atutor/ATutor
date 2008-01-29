@@ -44,12 +44,20 @@ require_once (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <? $FLUID_URL = 'mods/photo_album/fluid/component-templates'; ?>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery/jquery-1.2.1.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.tabindex/jquery.tabindex.js" rsf:id="scr=contribute-script"></script>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.ui-1.0/ui.mouse.js" rsf:id="scr=contribute-script"></script>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.ui-1.0/ui.draggable.js" rsf:id="scr=contribute-script"></script>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.ui-1.0/ui.droppable.js" rsf:id="scr=contribute-script"></script>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/fluid/Fluid.js" rsf:id="scr=contribute-script"></script>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/fluid/Reorderer.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/fluid/Lightbox.js" rsf:id="scr=contribute-script"></script>
 
+
+<script type="text/javascript" language="javascript" rsf:id="scr=contribute-script">
+	jQuery.noConflict();
+</script>
+
+<!--	<script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.tabindex/jquery.tabindex.js" rsf:id="scr=contribute-script"></script> -->
 <?php
 /* This file is used to display the index page of photo album for everyone */
 require_once ('define.php');

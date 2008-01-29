@@ -12,18 +12,20 @@
 			</ul>
 		</div>	
 		
-		<div class="input-form" style="width:95%;border:thin black solid;">
+		<div name="form1" id="form1" class="input-form" style="width:95%;border:thin black solid;">
 
+			
+			<form name="{SAVE_FORM_NAME}" method="post" action="{SAVE_ACTION}" id="reorder-form">			
+			
+			<!-- IMAGE CONTAINER -->
 			<div rsf:id="lightbox-temp-container:" id="gallery:::gallery-thumbs:::" tabindex="0" class="image-container"
 			xhtml10:role="wairole:grid"
 			aaa:multiselectable="false"
 			aaa:readonly="false"
 			aaa:activedescendent="gallery:::gallery-thumbs:::lightbox-cell:0:"
 				aaa:disabled="false">
-					<form name="{SAVE_FORM_NAME}" method="post" action="{SAVE_ACTION}" id="reorder-form">
-<!-- 		<form id="reorder-form"> -->
-			<!-- BEGIN IMAGE_DISPLAY -->
 
+				<!-- BEGIN IMAGE_DISPLAY -->
 				<div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:{TABINDEX}:"
 						role="wairole:gridcell"
 						aaa:selected="true"
