@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="1.0"> 
+    <name lang="en">Photo Album</name> 
+    <description lang="en">The Photo Album module allows instructors to add a class photo album to their courses. Students can share photographs and comment on their classmate's digital images.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Dylan Cheon (Canassist)</name> 
+            <email>dcheon@uvic.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://www.canassist.ca/</url> 
+    <license>GNU public license</license> 
+	<release> 
+        <version>1.0beta3</version> 
+        <date>2006-05-29</date> 
+        <state>Stable</state> 
+        <notes>Your server must have the GD Library version 2.0 or later to manipulate graphics files. This module will not install without it. More information at: http://www.boutell.com/gd/</notes> 
+    </release> 
+</module>

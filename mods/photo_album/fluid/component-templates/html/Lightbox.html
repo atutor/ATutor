@@ -1,0 +1,383 @@
+<!DOCTYPE html      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--  This is a multi purpose file used for:
+        1. running jsUnit tests
+        2. as a stand alone example of the Lightbox 
+        3. as the RSF template for the image gallery tool 
+      Note that the RSF ids throughout this template are used by the gallery tool and are only necessary when using RSF.-->
+      
+<html xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:wairole="http://www.w3.org/2005/01/wai-rdf/GUIRoleTaxonomy#"
+  xmlns:aaa="http://www.w3.org/2005/07/aaa"
+  xmlns:rsf="http://ponder.org.uk/rsf">
+  
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Fluid Lightbox</title>
+    <link href="../css/Lightbox.css" rsf:id="scr=contribute-style" type="text/css" rel="stylesheet" media="all" />
+    
+    <!--  These are the required javascript modules for the Lightbox 
+          eventually to be replaced with a single build generated file -->
+    <script type="text/javascript" src="../js/jquery/jquery-1.2.1.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="../js/jquery.tabindex/jquery.tabindex.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="../js/jquery.ui-1.0/ui.mouse.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="../js/jquery.ui-1.0/ui.draggable.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="../js/jquery.ui-1.0/ui.droppable.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="../js/fluid/Fluid.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="../js/fluid/Reorderer.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="../js/fluid/Lightbox.js" rsf:id="scr=contribute-script"></script>
+    
+    <!--  These are test-time dependencies and will be removed at render time by RSF. -->
+    <link href="../test/tests/TestStyles.css" type="text/css" rel="stylesheet" media="all" />
+    <script type="text/javascript" src="../test/jsunit/app/jsUnitCore.js"></script>
+    <script type="text/javascript" src="../test/tests/LightboxTestConstants.js"></script>
+    <script type="text/javascript" src="../test/tests/TestUtils.js"></script>
+  
+    <!--  These are the jsUnit tests -->
+    <script type="text/javascript" src="../test/tests/ItemInfosTests.js"></script>
+    <script type="text/javascript" src="../test/tests/GridLayoutHandlerTests.js"></script>
+    <script type="text/javascript" src="../test/tests/LightboxTests.js"></script> 
+    <script type="text/javascript" src="../test/tests/LightboxPersistenceTests.js"></script> 
+
+    <!--  Ensure jQuery plays nice with other toolkits - must be called after all the javascript is loaded. --> 
+    <script type="text/javascript" rsf:id="scr=contribute-script">
+      jQuery.noConflict();
+    </script> 
+  </head>
+  <body>
+    <p id="para1">This is the Lightbox demo page.</p>
+
+    <!--  
+      The Lightbox uses hidden inputs as the strategy for posting the item order back 
+      to the server, therefore the orderables need to be enclosed in a form.
+    -->
+    <form id="reorder-form">
+
+      <!-- lightbox-parent is used for testing setup and teardown -->
+      <div rsf:id="lightbox:" id="lightbox-parent" >
+      
+        <!--
+          Declare the thumbnails as an ARIA grid, that is single-selectable, writeable, and, when
+          first receives focus, has the first thumbnail focussed.  The ARIA state 'aaa:activedescendent'
+          declares the id of the active thumbnail, and is provided here for documentation.  The
+          actual value is set by the JavaScript as the user navigates among the thumbnails.
+        -->
+        <div rsf:id="lightbox-temp-container:" id="gallery:::gallery-thumbs:::" tabindex="0" class="image-container"
+          role="wairole:grid"
+          aaa:multiselectable="false"
+          aaa:readonly="false"
+          aaa:activedescendent="gallery:::gallery-thumbs:::lightbox-cell:0:"
+          aaa:disabled="false">
+         
+          <!--  
+            Orderable items are divs denoted by ids in the following form.
+            [lightbox-container-id] + lightbox-cell: + [index] + :  
+            The initLightbox() function expects this format when attaching the javascript behaviour of the Lightbox. 
+          -->
+          <div rsf:id="lightbox-cell:" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:0:" 
+            role="wairole:gridcell"
+            aaa:selected="true"
+            aaa:readonly="false"
+            aaa:disabled="false"
+            aaa:grab="supported"
+            aaa:dropeffect="move">
+        
+            <div rsf:id="lightbox-client-cell:">
+            
+              <!--  The RSF gallery contains the markup for this inner div in another template. -->
+              <div class="image-inner-container">
+              
+                <a id="focus-element1" href="../images/Dragonfruit.jpg">
+                  <img id="fluid.img.first" src="../images/Dragonfruit.jpg" border="0" alt="Dragonfruit"/>
+                </a>
+              </div>
+              <div class="caption image-title">
+                <a href="../images/Dragonfruit.jpg" >Dragonfruit</a>
+              </div>
+            </div>
+          
+            <!--  
+              This input is used for posting the new order back to the server.
+              The value is the index of the thumbnail in a virtual array of thumbnails.
+              That is, 'value="0"' denotes the 0'th thumbnail; 'value="1"' the 1st,
+              and so on.
+            -->
+            <input rsf:id="reorder-index" id="gallery:::gallery-thumbs:::lightbox-cell:0:reorder-index" value="0" type="hidden"/>
+          </div>
+    
+          <!--  The remainder of the lightbox cells are used for the stand alone lightbox and the tests, not the RSF gallery -->
+          <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:1:"
+            role="wairole:gridcell"
+            aaa:selected="true"
+            aaa:readonly="false"
+            aaa:disabled="false"
+            aaa:grab="supported"
+            aaa:dropeffect="move">
+            <div>
+              <div class="image-inner-container">
+                <a href="../images/Kiwano.jpg" >
+                  <img id="fluid.img.second" src="../images/Kiwano.jpg" border="0" alt="Kiwano"/>
+                </a>
+              </div>
+              <div class="caption image-title">
+                <a href="../images/Kiwano.jpg" >Kiwano</a>
+              </div>
+            </div>
+            <input id="gallery:::gallery-thumbs:::lightbox-cell:1:reorder-index" value="1" type="hidden"/>      
+          </div>
+              
+          <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:2:"
+              role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Blackberry.jpg" >
+		              <img id="fluid.img.3" src="../images/Blackberry.jpg" border="0" alt="Blackberry"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Blackberry.jpg" >Blackberry</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:2:reorder-index" value="2" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:3:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+	          <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Cherry.jpg">
+		              <img id="fluid.img.4" src="../images/Cherry.jpg" border="0" alt="Cherry"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Cherry.jpg" >Cherry</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:3:reorder-index" value="3" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:4:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"           aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Fig.jpg">
+		              <img id="fluid.img.5" src="../images/Fig.jpg" border="0" alt="Fig"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Fig.jpg" >Fig</a>
+		          </div>
+		        </div>
+	          <input id="gallery:::gallery-thumbs:::lightbox-cell:4:reorder-index" value="4" type="hidden"/>        
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:5:"
+   	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Grapes.jpg">
+		              <img id="fluid.img.6" src="../images/Grapes.jpg" border="0" alt="Grapes"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Grapes.jpg" >Grapes</a>
+		          </div>
+		        </div>
+	          <input id="gallery:::gallery-thumbs:::lightbox-cell:5:reorder-index" value="5" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:6:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Kiwi.jpg" >
+		              <img id="fluid.img.7" src="../images/Kiwi.jpg" border="0" alt="Kiwi"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Kiwi.jpg" >Kiwi</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:6:reorder-index" value="6" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:7:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Kumquat.jpg">
+		              <img id="fluid.img.8" src="../images/Kumquat.jpg" border="0" alt="Kumquat"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Kumquat.jpg" >Kumquat</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:7:reorder-index" value="7" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:8:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Lemon.jpg">
+		              <img id="fluid.img.9" src="../images/Lemon.jpg" border="0" alt="Lemon"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Lemon.jpg" >Lemon</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:8:reorder-index" value="8" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:9:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Orange.jpg">
+		              <img id="fluid.img.10" src="../images/Orange.jpg" border="0" alt="Orange"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Orange.jpg" >Orange</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:9:reorder-index" value="9" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:10:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/RedApple.jpg">
+		              <img id="fluid.img.11" src="../images/RedApple.jpg" border="0" alt="RedApple"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/RedApple.jpg" >RedApple</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:10:reorder-index" value="10" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:11:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Tamarillo.jpg">
+		              <img id="fluid.img.12" src="../images/Tamarillo.jpg" border="0" alt="Tamarillo"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Tamarillo.jpg" >Tamarillo</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:11:reorder-index" value="11" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:12:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"           aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Mangosteen.jpg">
+		              <img id="fluid.img.secondLast" src="../images/Mangosteen.jpg" border="0" alt="Mangosteen"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Mangosteen.jpg" >Mangosteen</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:12:reorder-index" value="12" type="hidden"/>
+		      </div>
+      
+		      <div rsf:id="scr=ignore" class="float orderable-default orderable" id="gallery:::gallery-thumbs:::lightbox-cell:13:"
+	          role="wairole:gridcell"
+	          aaa:selected="true"
+	          aaa:readonly="false"
+	          aaa:disabled="false"
+	          aaa:grab="supported"
+	          aaa:dropeffect="move">
+		        <div>
+		          <div class="image-inner-container">
+		            <a href="../images/Banana.jpg">
+		              <img id="fluid.img.last" src="../images/Banana.jpg" border="0" alt="Banana"/>
+		            </a>
+		          </div>
+		          <div class="caption image-title">
+		            <a href="../images/Banana.jpg" >Banana</a>
+		          </div>
+		        </div>
+		        <input id="gallery:::gallery-thumbs:::lightbox-cell:13:reorder-index" value="13" type="hidden"/>
+		      </div>
+		    </div>
+        
+        <!--  Attach the javascript functionality to the markup by using initLightbox() -->
+        <script type="text/javascript"  rsf:id="init-script">
+          fluid.initLightbox ("gallery:::gallery-thumbs:::", "message-bundle:");
+        </script>
+      </div>
+      
+      <!-- Sample instruction message. In the RSF gallery, this is supplied by the server. -->
+      <div id="message-bundle:" class="lightbox-instructions">
+        <div class="lightbox-downarrow"></div><div id="message-bundle:thumbnailInstructions">
+          View an image by pressing Enter. Move an image using CTRL+Arrow Key.
+        </div>
+      </div>
+    </form>
+  </body>
+</html>
