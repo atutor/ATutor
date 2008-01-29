@@ -188,9 +188,9 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 			<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><?php 
 				if ($anonymous == 1){
-					echo AT_print($guest_text, 'tests_results.full_name');
+					echo AT_print($guest_text, 'members.full_name');
 				} else {
-					echo AT_print(get_display_name($row['member_id']), 'tests_results.full_name'); /*$row['full_name'] */ 
+					echo AT_print(get_display_name($row['member_id']), 'members.full_name'); /*$row['full_name'] */ 
 				}
 				?></td>
 			<td><?php $startend_date_format=_AT('startend_date_format'); echo AT_date( $startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME); ?></td>

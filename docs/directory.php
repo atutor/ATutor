@@ -150,7 +150,7 @@ if ($final) {
 		echo '<td><a href="profile.php?id='.$user_id.'" '.$type.'>'.AT_print($attrs['login'], 'members.login') . '</a></td>';
 
 		//echo '<td>'.AT_print($attrs['first_name'] .' '. $attrs['second_name'] .' '. $attrs['last_name'],'members.first_name').'</td>';
-		echo '<td>'.AT_print(get_display_name($user_id)).'</td>';	
+		echo '<td>'.AT_print(get_display_name($user_id), 'members.full_name').'</td>';	
 		
 		if ($attrs['privileges'] != 0) {
 			echo '<td>'._AT('assistant').'</td>';

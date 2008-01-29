@@ -121,7 +121,7 @@ if (isset($_GET['assignment']) && (isset($_GET['files']) || isset($_GET['folders
 // action - View Revisions
 else if (isset($_GET['revisions'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
-		$file_id = intval(current($_GET['files']));
+		$file_id = current($_GET['files']);
 		header('Location: revisions.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	}
@@ -129,7 +129,7 @@ else if (isset($_GET['revisions'], $_GET['files'])) {
 // action - View Comments
 else if (isset($_GET['comments'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
-		$file_id = intval(current($_GET['files']));
+		$file_id = current($_GET['files']);
 		header('Location: comments.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	}
@@ -137,11 +137,11 @@ else if (isset($_GET['comments'], $_GET['files'])) {
 // action - Edit File/Folder
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['edit']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
-		$file_id = abs(current($_GET['files']));
+		$file_id = current($_GET['files']);
 		header('Location: edit.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	} else if (is_array($_GET['folders']) && (count($_GET['folders']) == 1) && empty($_GET['files'])) {
-		$folder_id = abs(current($_GET['folders']));
+		$folder_id = current($_GET['folders']);
 		header('Location: edit_folder.php'.$owner_arg_prefix.'id='.$folder_id);
 		exit;
 	}
@@ -154,7 +154,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['move']) 
 // action - Download Files/Folders
 else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
-		$file_id = abs(current($_GET['files']));
+		$file_id = current($_GET['files']);
 		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
