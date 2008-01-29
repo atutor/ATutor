@@ -27,39 +27,29 @@ require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 $_custom_css = $_base_path . 'mods/photo_album/module.css'; // use a custom stylesheet
 $movedarray = array();
 if($_POST['submit'] = "save"){
-	foreach($_POST as $image_id => $_image_order){
-	$movedarray[$image_id] =  $_image_order;
-	$image_order = intval($image_order);
-	$image_id = intval($image_id);
-	
-	if ($image_id > 0) {
-		$o++;
-		$sql = "UPDATE ".TABLE_PREFIX."pa_image set `order`='$o' WHERE `image_id` = $image_id";
-		if($result = mysql_query($sql, $db)){
-			$msg->addFeedback('IMAGE_ORDER_SAVED');
-		}
-	}
-//debug($sql);	
+	foreach($_POST as $image_id => $image_order){
+		$image_order = intval($image_order);
+		$image_id = intval($image_id);
 
-	//$sql = "UPDATE ".TABLE_PREFIX."pa_image set `order`='$_image_order' WHERE `image_id` = $image_id";
+		//If this is an image
+		if ($image_id > 0) {
+			$sql = "UPDATE ".TABLE_PREFIX."pa_image set `order`=$image_order WHERE `image_id` = $image_id";
+			if($result = mysql_query($sql, $db)){
+				$msg->addFeedback('IMAGE_ORDER_SAVED');
+			}
+		}
 	}
 }
 require_once (AT_INCLUDE_PATH.'header.inc.php');
 ?>
+<? $FLUID_URL = 'mods/photo_album/fluid/component-templates'; ?>
+    <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery/jquery-1.2.1.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.ui-1.0/ui.mouse.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.ui-1.0/ui.draggable.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.ui-1.0/ui.droppable.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/fluid/Fluid.js" rsf:id="scr=contribute-script"></script>
+    <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/fluid/Reorderer.js" rsf:id="scr=contribute-script"></script>
 
-    <script type="text/javascript" src="<?php echo FLUID_URL; ?>/js/jquery/jquery-1.2.1.js" rsf:id="scr=contribute-script"></script>
-    <script type="text/javascript" src="<?php echo FLUID_URL; ?>/js/jquery.ui-1.0/ui.mouse.js" rsf:id="scr=contribute-script"></script>
-    <script type="text/javascript" src="<?php echo FLUID_URL; ?>/js/jquery.ui-1.0/ui.draggable.js" rsf:id="scr=contribute-script"></script>
-    <script type="text/javascript" src="<?php echo FLUID_URL; ?>/js/jquery.ui-1.0/ui.droppable.js" rsf:id="scr=contribute-script"></script>
-    <script type="text/javascript" src="<?php echo FLUID_URL; ?>/js/fluid/Fluid.js" rsf:id="scr=contribute-script"></script>
-    <script type="text/javascript" src="<?php echo FLUID_URL; ?>/js/fluid/Reorderer.js" rsf:id="scr=contribute-script"></script>
-<script>
-imgMoved(){
-int i = document.getElementById('<?php imgID?>');
-
-}
-
-</script>
 <?php
 /* This file is used to display the index page of photo album for everyone */
 require_once ('define.php');
@@ -175,6 +165,40 @@ $template->setVariable("MOVED_IMG", $movedarray[$i]);
         <script type="text/javascript"  rsf:id="init-script">
           fluid.initLightbox ("gallery:::gallery-thumbs:::", "message-bundle:");
         </script>
+
+
+<!-- HARRIS STARTS -->
+<script language="javascript" type="text/javascript">
+	/** 
+	  * We know the form, but things got reorganized, one thing we are certained is the DOM subtree ordering.
+	  * use that for our advantage.
+	  * @param	the name of the form, that contains all these photos
+	  */
+	function reordering_pa(form_name){
+		//Quit if form_name isn't specified
+		if (form_name==""){
+			return;
+		}
+
+		//get form name
+		var myForm = document.forms[form_name];
+
+		//keep track of DOM order
+		var count = 1;
+
+		//loop through the new DOM tree and updates its associated values
+		for (var i=0; i < myForm.elements.length; i++){
+			// reassign values by DOM elements
+			// TODO, maps the ID instead? 
+			var inputs = myForm.elements[i];
+			if (inputs.id.indexOf('gallery:::gallery-thumbs:::lightbox-cell:') > -1){				
+				inputs.value = count;
+				count++;
+			}
+		}
+	}
+</script>
+<!-- HARRIS ENDS -->
 
 
 <?php 
