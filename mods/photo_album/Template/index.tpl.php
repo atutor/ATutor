@@ -14,9 +14,9 @@
 		
 		<div name="form1" id="form1" class="input-form" style="width:95%;border:thin black solid;">
 
-			
+				<!-- the following block is a Fluid image container, replacing the orginal, beginning with 
+					a form named reorder-form, -->		
 			<form name="{SAVE_FORM_NAME}" method="post" action="{SAVE_ACTION}" id="reorder-form">			
-			
 			<!-- IMAGE CONTAINER -->
 			<div rsf:id="lightbox-temp-container:" id="gallery:::gallery-thumbs:::" tabindex="0" class="image-container"
 			xhtml10:role="wairole:grid"
@@ -51,7 +51,7 @@
 				<!-- BEGIN IMAGE_ADD_BUTTON -->
 				<div class="row buttons" style="clear:both;">
 					<!-- form name="{FORM_NAME}" method="post" action="{ACTION}" -->
-					<input type="submit" name="save" value="save image order{SAVE_STRING}" onclick="reordering_pa('save_form');" />
+					<input type="submit" name="save" value="{SAVE_STRING}" onclick="reordering_pa('save_form');" />
 					<input type="hidden" name="mode" value="save" />
 					</form>	
 

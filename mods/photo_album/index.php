@@ -23,26 +23,27 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require_once(AT_INCLUDE_PATH.'vitals.inc.php');
-//$_custom_css = $_base_path . 'mods/photo_album/module.css'; // use a custom stylesheet
 $_custom_css = $_base_path . 'mods/photo_album/module.css'; // use a custom stylesheet
-$movedarray = array();
+
+// Save the order the images appear in GG
 if($_POST['submit'] = "save"){
 	foreach($_POST as $image_id => $image_order){
 		$image_order = intval($image_order);
 		$image_id = intval($image_id);
 
-		//If this is an image
+		//If this is an image, update its order in the database
 		if ($image_id > 0) {
 			$sql = "UPDATE ".TABLE_PREFIX."pa_image set `order`=$image_order WHERE `image_id` = $image_id";
 			if($result = mysql_query($sql, $db)){
-				$msg->addFeedback('IMAGE_ORDER_SAVED');
+				$msg->addFeedback('PA_IMAGE_ORDER_SAVED');
 			}
 		}
 	}
 }
 require_once (AT_INCLUDE_PATH.'header.inc.php');
-?>
-<? $FLUID_URL = 'mods/photo_album/fluid/component-templates'; ?>
+
+// Set the path to Fluid, and call in the Fluid scripts. This path may change when/if the Fluid libraries become a part of the ATutor base code GG
+$FLUID_URL = 'mods/photo_album/fluid/component-templates'; ?>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery/jquery-1.2.1.js" rsf:id="scr=contribute-script"></script>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.tabindex/jquery.tabindex.js" rsf:id="scr=contribute-script"></script>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.ui-1.0/ui.mouse.js" rsf:id="scr=contribute-script"></script>
@@ -52,21 +53,16 @@ require_once (AT_INCLUDE_PATH.'header.inc.php');
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/fluid/Reorderer.js" rsf:id="scr=contribute-script"></script>
     <script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/fluid/Lightbox.js" rsf:id="scr=contribute-script"></script>
 
-
 <script type="text/javascript" language="javascript" rsf:id="scr=contribute-script">
 	jQuery.noConflict();
 </script>
 
-<!--	<script type="text/javascript" src="<?php echo $FLUID_URL; ?>/js/jquery.tabindex/jquery.tabindex.js" rsf:id="scr=contribute-script"></script> -->
 <?php
 /* This file is used to display the index page of photo album for everyone */
 require_once ('define.php');
 require_once ('classes/pa_index.class.php');
 require_once ('HTML/Template/ITX.php');
 clear_temp_folder();
-
-
-
 
 $index=new Pa_Index();
 unset($_SESSION['pa']);
@@ -97,9 +93,8 @@ if ($index->isError()!=true){	//if there is no error in index object, display th
 		$template->setCurrentBlock("IMAGE_DISPLAY");
 		$template->setVariable("IMAGE_ID",$image_array[$i]['image_id']);
 		
-
-$template->setVariable("TABINDEX", $image_array[$i]['order']);
-$template->setVariable("MOVED_IMG", $movedarray[$i]);
+	// the TABINDEX value is used to assign a unique value to each id when looping through each and rendering their presentation GG
+	$template->setVariable("TABINDEX", $image_array[$i]['order']);
 		$template->setVariable("LINK", $image_array[$i]['link']);
 		$count=get_total_comment_number(STUDENT, $index->getVariable('course_id'), APPROVED, $image_array[$i]['image_id']);
 		if ($count >0 ){
@@ -119,6 +114,8 @@ $template->setVariable("MOVED_IMG", $movedarray[$i]);
 		$template->setVariable("ACTION", UPLOAD_ACTION);
 		$template->setVariable("SAVE_ACTION", $_SERVER['PHP_SELF']);
 		$template->setVariable("ADD_STRING", _AT('pa_button_add_image'));
+		//set the text for the save order button GG
+		$template->setVariable("SAVE_STRING", _AT('pa_button_save_image_order'));
 		$template->setVariable("CHOOSE_VALUE", IMAGE);
 		$template->parseCurrentBlock("IMAGE_ADD_BUTTON");
 	}
@@ -170,6 +167,7 @@ $template->setVariable("MOVED_IMG", $movedarray[$i]);
 }
 
 ?>
+	<!-- Init the Fluid lightbox -->
         <script type="text/javascript"  rsf:id="init-script">
           fluid.initLightbox ("gallery:::gallery-thumbs:::", "message-bundle:");
         </script>
@@ -210,6 +208,4 @@ $template->setVariable("MOVED_IMG", $movedarray[$i]);
 
 
 <?php 
-debug($movedarray);
-debug($_POST);
 require_once(AT_INCLUDE_PATH.'footer.inc.php'); ?>

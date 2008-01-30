@@ -1,6 +1,8 @@
 # sql file for the photo album module
 # this file loads the text used in the photo album module into the database
 
+# added the order column to the pa_image table to keep track of image location when moved via the Fluid Lightbox GG
+
 CREATE TABLE `pa_image` (
 	`course_id` mediumint(8) NOT NULL,
 	`image_id` mediumint(8) NOT NULL auto_increment,
@@ -13,6 +15,7 @@ CREATE TABLE `pa_image` (
 	`thumb_image_name` varchar(255) NOT NULL,
 	`alt` varchar(30) NOT NULL,
 	`status` mediumint(1) NOT NULL,
+  	`order` tinyint(4) NOT NULL,
 	PRIMARY KEY (`image_id`)
 );
 
@@ -97,7 +100,6 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'pa_title_view', 'View pi
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_title_file_upload', 'Upload a picture', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_title_delete_image', 'Delete a picture', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_title_add_image', 'Add a picture', NOW(), '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'pa_title_save_image_order', 'Save image order', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_title_edit_image', 'Edit a picture', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_title_delete_comment', 'Delete comment', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_title_add_comment', 'Add comment', NOW(), '');
@@ -144,6 +146,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'pa_button_set_new_commen
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_button_set_approved_comment', 'Set comment as approved', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_button_set_disapproved_comment', 'Set comment as disapproved', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_button_add_image', 'Add a new picture', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'pa_button_save_image_order', 'Save image order', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_button_edit_image', 'Edit this picture', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_button_del_image', 'Delete this picture', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_button_add_comment', 'Add a new comment', NOW(), '');
@@ -171,8 +174,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PA_EDIT_COMMENT_
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PA_EDIT_COMMENT_SUCCESS_CONFIG_DISABLED', 'Your edit has been made successfully', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PA_DELETE_IMAGE_SUCCESS', 'Your picture was deleted successfully', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PA_DELETE_COMMENT_SUCCESS', 'Your comment was deleted successfully', NOW(), '');
-
-
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PA_IMAGE_ORDER_SAVED', 'Image order was saved successfully', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PA_USER_FILE_TYPE', 'Your picture is not a valid picture file. Only jpeg, bmp, gif or png  picture files can be shared. Please try uploading a different picture or try converting your picture into a suitable format', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PA_USER_FILE_SIZE', 'Your picture is larger than the maximum file size allowed by the web site. Please choose a smaller picture', NOW(), '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PA_USER_FILE_EMPTY', 'You must find a picture to upload. Please use the "Browse" button to find a picture to upload', NOW(), '');
