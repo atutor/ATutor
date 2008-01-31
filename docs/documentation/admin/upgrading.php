@@ -21,7 +21,9 @@
 <ol>
 	<li><strong>Locate Old Version</strong><br />
 	Specify the directory name of the old ATutor installation you wish to upgrade (e.g. ATutor_old). The new and old ATutor directories must be at the same directory level.</li>
-
+	 <li><strong>UTF-8 Conversion (1.6+)</strong><br />
+	If you have not already, you are strongly advised to backup you database before completing this step.
+	If ATutor is being upgraded from a previous version that was not using UTF-8 language packs, options will be provided to convert the database to UTF-8 all-at-once, used for single language ATutor installations, or to convert on a course-by-course basis, used if courses in different languages are present on the system. If the system is already setup with UTF-8, you'll skip this step. NOTE: This step can take a very long time for installations with many courses</li>
 	<li><strong>Database</strong><br />
 	The upgrade will use the old version's settings to connect to the database and then update the old database tables with any changes to bring them up to date with the new version.</li>
 
