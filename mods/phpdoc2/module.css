@@ -1,0 +1,53 @@
+div#phpdoc2_installer {
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #f8f8f8;
+	color: #444;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+div#api_process_box {
+	overflow: auto;
+	height: 300px;
+	margin-left: 1em;
+}
+
+input.buttons {
+	background-color: #efefef;
+	font-weight: normal;
+	border: 1px solid #aaa;
+}
+
+p.message{
+	border: 1px solid black;
+	background-color: white;
+	padding:1em; 
+}
+div.license{
+	font-size: 0.85em;
+	color: #797979;
+}
+div.license a {
+	color: #515151;
+}
+
+table#api_legend_outter {
+	border: 1px solid green;
+	width: 100%;
+	padding-bottom: 1em;
+}
+table#api_legend_outter td{
+	vertical-align: top;
+}
+table#api_legend_outter th{
+	text-decoration: underline;
+}
+
+
+table#api_legend_outter td{
+	padding-left: 0.5em;
+}
