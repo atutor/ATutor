@@ -37,7 +37,7 @@ $_admin_privilege  = TRUE; // possible values: FALSE | TRUE
  * the following code is used for creating a module-specific directory.
  * it generates appropriate error messages to aid in its creation.
  */
-$directory = AT_INCLUDE_PATH .'../mods/phpdoc2/PhpDocumentor/apidoc';
+$directory = AT_INCLUDE_PATH .'../mods/phpdoc2/apidoc';
 
 // check if the directory is writeable
 /*

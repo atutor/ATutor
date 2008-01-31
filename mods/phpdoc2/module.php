@@ -12,8 +12,8 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 /*******
  * assign the instructor and admin privileges to the constants.
  */
-define('AT_PRIV_PHPDOC',       $this->getPrivilege());
-define('AT_ADMIN_PRIV_PHPDOC', $this->getAdminPrivilege());
+define('AT_PRIV_PHPDOC2',       $this->getPrivilege());
+define('AT_ADMIN_PRIV_PHPDOC2', $this->getAdminPrivilege());
 
 /*******
  * create a side menu box/stack.
@@ -30,7 +30,7 @@ define('AT_ADMIN_PRIV_PHPDOC', $this->getAdminPrivilege());
 /*******
  * add the admin pages when needed.
  */
-if (admin_authenticate(AT_ADMIN_PRIV_PHPDOC, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+if (admin_authenticate(AT_ADMIN_PRIV_PHPDOC2, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages[AT_NAV_ADMIN] = array('mods/phpdoc2/index_admin.php');
 	$this->_pages['mods/phpdoc2/index_admin.php']['title_var'] = 'phpdoc2';
 	$this->_pages['mods/phpdoc2/index_admin.php']['parent']    = AT_NAV_ADMIN;
