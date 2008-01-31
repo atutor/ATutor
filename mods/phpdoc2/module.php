@@ -16,18 +16,6 @@ define('AT_PRIV_PHPDOC2',       $this->getPrivilege());
 define('AT_ADMIN_PRIV_PHPDOC2', $this->getAdminPrivilege());
 
 /*******
- * create a side menu box/stack.
- */
-//$this->_stacks['phpdoc'] = array('title_var'=>'phpdoc', 'file'=>'mods/phpdoc/side_menu.inc.php');
-// ** possible alternative: **
-// $this->addStack('phpdoc', array('title_var' => 'phpdoc', 'file' => './side_menu.inc.php');
-
-/*******
- * if this module is to be made available to students on the Home or Main Navigation.
- */
-//$_group_tool = $_student_tool = 'mods/phpdoc/index.php';
-
-/*******
  * add the admin pages when needed.
  */
 if (admin_authenticate(AT_ADMIN_PRIV_PHPDOC2, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
@@ -37,37 +25,5 @@ if (admin_authenticate(AT_ADMIN_PRIV_PHPDOC2, TRUE) || admin_authenticate(AT_ADM
 
 	$this->_pages['mods/phpdoc2/api_install.php']['title_var'] = 'phpdoc2';
 	$this->_pages['mods/phpdoc2/api_install.php']['parent'] = 'mods/phpdoc2/index_admin.php';
-
-
 }
-
-/*******
- * instructor Manage section:
- */
-//$this->_pages['mods/phpdoc/index_instructor.php']['title_var'] = 'phpdoc';
-//$this->_pages['mods/phpdoc/index_instructor.php']['parent']   = 'tools/index.php';
-// ** possible alternative: **
-// $this->pages['./index_instructor.php']['title_var'] = 'phpdoc';
-// $this->pages['./index_instructor.php']['parent']    = 'tools/index.php';
-
-/*******
- * student page.
- */
-//$this->_pages['mods/phpdoc/index.php']['title_var'] = 'phpdoc';
-//$this->_pages['mods/phpdoc/index.php']['img']       = 'mods/phpdoc/phpdoc.jpg';
-
-
-/* public pages */
-//$this->_pages[AT_NAV_PUBLIC] = array('mods/phpdoc/index_public.php');
-//$this->_pages['mods/phpdoc/index_public.php']['title_var'] = 'phpdoc';
-//$this->_pages['mods/phpdoc/index_public.php']['parent'] = AT_NAV_PUBLIC;
-
-/* my start page pages */
-//$this->_pages[AT_NAV_START]  = array('mods/phpdoc/index_mystart.php');
-//$this->_pages['mods/phpdoc/index_mystart.php']['title_var'] = 'phpdoc';
-//$this->_pages['mods/phpdoc/index_mystart.php']['parent'] = AT_NAV_START;
-
-//function phpdoc_get_group_url($group_id) {
-//	return 'mods/phpdoc/index.php';
-//}
 ?>

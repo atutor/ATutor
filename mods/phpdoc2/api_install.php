@@ -23,7 +23,7 @@ if (isset($_GET['dataform']) && empty($_REQUEST['altuserdir'])) {
 	//ATutor presets
 	$_GET['setting']['output']				= 'HTML:frames:DOM/earthli';		//Theme
 	$_GET['setting']['directory']			= AT_INCLUDE_PATH;					//Source codes location, use "include/"
-	$_GET['setting']['defaultpackagename']	= 'ATutor '.VERSION;	//ATutor package
+	$_GET['setting']['defaultpackagename']	= 'ATutor '.VERSION;				//ATutor package
 
 	//Check if the directory is writable, if not, halt.
 	if (!(is_dir($_GET['setting']['target']) && is_writable($_GET['setting']['target']))) {

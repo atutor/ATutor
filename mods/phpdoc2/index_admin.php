@@ -18,7 +18,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 </div>
 
 <div id="phpdoc2_installer">
-<h3>Legend</h3><br/>
+<h3><?php echo _AT('Legend'); ?></h3><br/>
 <?php
 $imageTableObj = new Phpdoc_images();
 echo $imageTableObj->printImageTable($_base_path . 'mods/phpdoc2/PhpDocumentor/media/images/earthli/');

@@ -38,22 +38,13 @@ $_admin_privilege  = TRUE; // possible values: FALSE | TRUE
  * it generates appropriate error messages to aid in its creation.
  */
 $directory = AT_INCLUDE_PATH .'../mods/phpdoc2/apidoc';
+$directory_path = '/mods/phpdoc2/apidoc';
 
-// check if the directory is writeable
-/*
 if (!is_dir($directory) && !@mkdir($directory)) {
-	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' does not exist. Please create it.</li>'));
-} else if (!is_writable($directory) && @chmod($directory, 0666)) {
-	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' is not writeable. On Unix issue the command <kbd>chmod -R a+rw</kbd>.</li>'));
-}
-*/
-if (!is_dir($directory) && !@mkdir($directory)) {
-	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' does not exist. Please create it.</li>'));
+	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory_path.' does not exist. Please create it.</li>'));
 } else if (!is_writable($directory) && !@chmod($directory, 0777)) {
-	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' is not writeable. On Unix issue the command <kbd>chmod -R a+rw</kbd>.</li>'));
+	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory_path.' is not writeable. On Unix issue the command <kbd>chmod -R a+rw</kbd>.</li>'));
 }
-
-
 
 /******
  * the following code checks if there are any errors (generated previously)
