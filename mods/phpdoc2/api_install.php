@@ -30,6 +30,11 @@ if (isset($_GET['dataform']) && empty($_REQUEST['altuserdir'])) {
 		$msg->addError(array('API_DIRECTORY_NOT_WRITABLE', $_GET['setting']['target']));
 		header("Location: api_install.php");
 		exit;
+	} elseif(!(is_dir($_GET['setting']['target'].'/index.html') && is_writable($_GET['setting']['target'].'/index.html'))) {
+		//Check if the index.html file is writable
+		$msg->addError(array('API_DIRECTORY_NOT_WRITABLE', $_GET['setting']['target'].'/index.html'));
+		header("Location: api_install.php");
+		exit;
 	} else {
 		//Output api convertion steps
 		require (AT_INCLUDE_PATH.'header.inc.php'); 		
