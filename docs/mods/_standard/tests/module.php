@@ -36,6 +36,7 @@ $this->_pages['tools/tests/question_cats_delete.php']['parent']    = 'tools/test
 
 $this->_pages['tools/tests/edit_test.php']['title_var'] = 'edit_test';
 $this->_pages['tools/tests/edit_test.php']['parent']    = 'tools/tests/index.php';
+$this->_pages['tools/tests/edit_test.php']['guide']     = 'instructor/?p=creating_tests_surveys.php';
 
 $this->_pages['tools/tests/preview.php']['title_var'] = 'preview_questions';
 $this->_pages['tools/tests/preview.php']['parent']    = 'tools/tests/index.php';

@@ -1,6 +1,6 @@
 <?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
-<h2>Creating Tests &amp; Surveys</h2>
+<h2>Creating/Editing Tests &amp; Surveys</h2>
 	<p>To begin creating a test, use the <em>Create Test/Survey</em> link. Filling out the information on the Create Test/Survey page will address all the administrative options for a test. Actual questions are added to the test in a separate step.</p>
 
 	<p>Test properties include:</p>
@@ -14,6 +14,7 @@
 	
 		<dt>Anonymous</dt>
 		<dd>Set this to No in most cases, or set it to Yes if you are creating a survey or poll.</dd>
+		<dd><strong>Note: </strong>Please be aware that the instructor can not modify the anonymous option when submissions have been made on a test.</dd>
 
 		<dt>Allow Guest</dt>
 		<dd>Set this if you wish to allow users who are not logged into a course to take the test. In Release Results, set to "Once quiz has been submitted" to allow guest users to see the results of the test after they have completed it. Also see <a href="authenticated_access.php">Authenticated Access</a> for information about guest access to protected and private courses.</dd>

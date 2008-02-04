@@ -264,6 +264,11 @@ $msg->printErrors();
 		?>
 		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> <?php echo $anonymous_disabled; ?> /><label for="anonN"><?php echo _AT('no'); ?></label>
 		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> <?php echo $anonymous_disabled; ?> /><label for="anonY"><?php echo _AT('yes'); ?></label>
+		<?php
+			if ($anonymous_disabled != ""){
+				echo '('._AT('disabled').')';
+			}
+		?>
 	</div>
 
 	<div class="row">
