@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 				$missing_fields[] = _AT('glossary_term');
 			} else{
 				//60 is defined by the sql
-				$_POST['word'] = validate_length($_POST['word'], 60);
+				$_POST['word'][$i] = validate_length($_POST['word'][$i], 60);
 			}
 			
 
