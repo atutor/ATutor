@@ -291,8 +291,11 @@ if (!$db) {
 
 					//Run through all ATutor table and convert only those rows with the above courses.
 					//todo: implement a driver class inside the TableConversion class.
+					ob_start();
 					echo "Converting $row[title]...<br/>";
+					ob_flush();
 					flush();
+					ob_end_flush();
 					$conversionDriver->convertTableByClass($row['title'], $char_set, $course_id);
 				}
 				echo '</div>';
