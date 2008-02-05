@@ -60,7 +60,6 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			if (!isset($_SESSION['course_info'])){
 				$sql = "SELECT a.course_id, a.title, l.language_code, l.char_set FROM ".$_POST['tb_prefix']."courses a left join ".$_POST['tb_prefix']."languages l ON l.language_code = a.primary_language";
 				$result = mysql_query($sql, $db);
-				echo mysql_error();
 				while ($row = mysql_fetch_assoc($result)){
 					$_SESSION['course_info'][$row['course_id']] = array('char_set'=>$row['char_set'], 'language_code'=>$row['language_code']);
 				}

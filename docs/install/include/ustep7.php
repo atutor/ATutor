@@ -267,7 +267,11 @@ if (!$db) {
 				$conversionDriver =& new ConversionDriver($_POST['tb_prefix']);
 				$conversionDriver->convertTableBySysDefault();				
 
-				/* Loop through all the courses, and convert all the course's content */
+				/* 
+				 * Loop through all the courses, and convert all the course's content 
+				 * Flush out the process in the mean time.
+				 */	
+				echo '<div style="padding-left:1em; margin-top: 0.5em; margin-left:1em; overflow:auto; height:100px; border:1px solid #30b626;;">';
 				while ($row = mysql_fetch_assoc($result)){
 					$course_id = $row['course_id'];
 					//Get charset
@@ -287,8 +291,11 @@ if (!$db) {
 
 					//Run through all ATutor table and convert only those rows with the above courses.
 					//todo: implement a driver class inside the TableConversion class.
+					echo "Converting $row[title]...<br/>";
+					flush();
 					$conversionDriver->convertTableByClass($row['title'], $char_set, $course_id);
 				}
+				echo '</div>';
 			}
 			//Check if there are any errors, if not, jump to next step
 			if (!$errors) {
@@ -315,12 +322,11 @@ if (!$db) {
 				unset($_SESSION['conversion_completed']);
 			}
 
-			echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
+			$html = '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
 			<input type="hidden" name="step" value="3" />';
 //			store_steps(1);
-			print_hidden(2);
 
-			echo '<div><p>ATutor 1.6 upgrade requires you to convert ATutor content to UTF-8.  The courses are listed below with their associated primary language.  </p><p>Please choose one of the conversion options listed below, the recommanded option(in blue) is already selected for you.</p><p>For a more detailed description for each of these conversions, please visit our <a href="http://wiki.atutor.ca/display/atutorwiki/UTF-8+Conversion" target="blank">ATutor Wiki page</a></p></div>';
+			$html .= '<div><p>ATutor 1.6 upgrade requires you to convert ATutor content to UTF-8.  The courses are listed below with their associated primary language.  </p><p>Please choose one of the conversion options listed below, the recommanded option(in blue) is already selected for you.</p><p>For a more detailed description for each of these conversions, please visit our <a href="http://wiki.atutor.ca/display/atutorwiki/UTF-8+Conversion" target="blank">ATutor Wiki page</a></p></div>';
 
 			//The html fragment that sets the suggested conversion type on bold 
 			$suggestion = array('class="suggested"', 'checked="checked"');	
@@ -329,8 +335,8 @@ if (!$db) {
 			$suggestion_courses=""; 
 			$recommanded_conversion = "";
 
-			echo '<table class="data">';
-			echo '<tr><th>Course Title</th><th>Course Primary Language</th></tr>';
+			$html .= '<table class="data">';
+			$html .= '<tr><th>Course Title</th><th>Course Primary Language</th></tr>';
 
 			//Get all courses and their associated language from $_POST
 			$prev_language = "";  //Keep tracks of the course primary language in each loop.
@@ -345,13 +351,19 @@ if (!$db) {
 						}
 					}
 					//Get title
-					$query = 'SELECT title FROM '.$_POST['tb_prefix'].'courses WHERE course_id='.$course_id;
+					$query = 'SELECT title, primary_language FROM '.$_POST['tb_prefix'].'courses WHERE course_id='.$course_id;
 					$result = mysql_query($query);
 					if ($result && mysql_numrows($result) > 0){
 						$rs_row = mysql_fetch_assoc($result);
-						echo '<tr><td>';
-						echo @mb_convert_encoding($rs_row['title'], "UTF-8", $row['char_set']);
-						echo '</td><td>'.$row['char_set'].'</td></tr>';
+						//if the char_set of the course is not defined, the array will be emptied.
+						$html .= '<tr><td>';
+						$html .= @mb_convert_encoding($rs_row['title'], "UTF-8", $row['char_set']);
+						$html .= '</td><td>'.$row['char_set'];
+						if ($row['char_set']==''){
+							$errors[] = "<strong>$rs_row[title]</strong> has a primary language that does not appear to be installed on the system.  Before continuing, either set the primary language to one that is installed, or install the missing language pack.";
+							$html .= ' <strong style="color:red;">Missing "'.$rs_row['primary_language'].'"</strong>';
+						} 
+						$html .= '</td></tr>';
 					}
 				}
 			}
@@ -362,33 +374,41 @@ if (!$db) {
 				} else {
 					$suggestion_all =& $suggestion;
 					$recommanded_conversion = "all";
-					echo '<input type="hidden" name="conv_all_char_set" value="'.$prev_language.'" />';
+					$html .= '<input type="hidden" name="conv_all_char_set" value="'.$prev_language.'" />';
 				}
 			} else {
 				$suggestion_courses =& $suggestion;
 				$recommanded_conversion = "courses";
 			}
-			echo '</table><br/>';
+			$html .= '</table><br/>';
 
-			echo '<div><p><strong>Convert all content:</strong> Use this option if you are using just <i><u>one</u></i> non-UTF-8 language pack in your ATutor.</p>';
-			echo '<p><strong>Convert content by courses:</strong> Use this option when you are using <i><u>more than one</u></i> UTF-8 or non-UTF-8 language pack in your ATutor.</p>';
-			echo '<p><strong>Skip conversion:</strong> Use this option when you have <i><u>only UTF-8</u></i> language packs in your ATutor.</p>';
-			echo '</div>';
+			$html .= '<div><p><strong>Convert all content:</strong> Use this option if you are using just <i><u>one</u></i> non-UTF-8 language pack in your ATutor.</p>';
+			$html .= '<p><strong>Convert content by courses:</strong> Use this option when you are using <i><u>more than one</u></i> UTF-8 or non-UTF-8 language pack in your ATutor.</p>';
+			$html .= '<p><strong>Skip conversion:</strong> Use this option when you have <i><u>only UTF-8</u></i> language packs in your ATutor.</p>';
+			$html .= '</div>';
 
-			echo '<div '.$suggestion_all[0].'><input type="radio" id="convert_all" name="convert_type" value="all" '.$suggestion_all[1].'/>';
-			echo '<label for="convert_all">Convert all content</label></div>';
+			$html .= '<div '.$suggestion_all[0].'><input type="radio" id="convert_all" name="convert_type" value="all" '.$suggestion_all[1].'/>';
+			$html .= '<label for="convert_all">Convert all content</label></div>';
 
-			echo '<div '.$suggestion_courses[0].'><input type="radio" id="convert_courses" name="convert_type" value="courses" '.$suggestion_courses[1].'/>';
-			echo '<label for="convert_courses">Convert content by courses</label></div>';
+			$html .= '<div '.$suggestion_courses[0].'><input type="radio" id="convert_courses" name="convert_type" value="courses" '.$suggestion_courses[1].'/>';
+			$html .= '<label for="convert_courses">Convert content by courses</label></div>';
 
-			echo '<div '.$suggestion_skip[0].'><input type="radio" id="convert_skip" name="convert_type" value="skip" '.$suggestion_skip[1].'/>';
-			echo '<label for="convert_skip">Skip conversion</label></div>';
+			$html .= '<div '.$suggestion_skip[0].'><input type="radio" id="convert_skip" name="convert_type" value="skip" '.$suggestion_skip[1].'/>';
+			$html .= '<label for="convert_skip">Skip conversion</label></div>';
 	
-			print_post_for_step9($_POST);
 			//States flags for ustep9
-			echo '<input type="hidden" name="con_step" value="2" />';
-			echo '<input type="hidden" name="recommanded_conversion" value="'.$recommanded_conversion.'" />';
-			echo '<p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p></form>';
+			$html .= '<input type="hidden" name="con_step" value="2" />';
+			$html .= '<input type="hidden" name="recommanded_conversion" value="'.$recommanded_conversion.'" />';
+			if (isset($errors)){
+				print_errors($errors);
+				$html .= '<p align="center"><input type="submit" class="button" value=" Retry " name="submit" /></p>';
+			} else {
+				$html .= '<p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p>';
+			}
+			echo $html;
+			print_hidden(2);
+			print_post_for_step9($_POST);
+			echo '</form>';			
 			return;
 		}
 	}
