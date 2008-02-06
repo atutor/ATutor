@@ -27,12 +27,12 @@ if (isset($_GET['dataform']) && empty($_REQUEST['altuserdir'])) {
 
 	//Check if the directory is writable, if not, halt.
 	if (!(is_dir($_GET['setting']['target']) && is_writable($_GET['setting']['target']))) {
-		$msg->addError(array('API_DIRECTORY_NOT_WRITABLE', $_GET['setting']['target']));
+		$msg->addError(array('API_NOT_WRITABLE', $_GET['setting']['target']), "directory");
 		header("Location: api_install.php");
 		exit;
-	} elseif(!(is_dir($_GET['setting']['target'].'/index.html') && is_writable($_GET['setting']['target'].'/index.html'))) {
+	} elseif(!(is_file($_GET['setting']['target'].'/index.html') && is_writable($_GET['setting']['target'].'/index.html'))) {
 		//Check if the index.html file is writable
-		$msg->addError(array('API_DIRECTORY_NOT_WRITABLE', $_GET['setting']['target'].'/index.html'));
+		$msg->addError(array('API_NOT_WRITABLE', $_GET['setting']['target'].'/index.html'), "file");
 		header("Location: api_install.php");
 		exit;
 	} else {
