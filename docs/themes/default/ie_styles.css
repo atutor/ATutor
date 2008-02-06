@@ -25,3 +25,7 @@ table.data tfoot input {
 #topnavlistcontainer {
 	margin-bottom:-1px;
 }
+
+#header{
+	height: 7.2em;
+}

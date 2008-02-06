@@ -504,13 +504,14 @@ h1#section-title {
 	float: left;
 	white-space:nowrap;
 	margin-left:1em;
+	margin-bottom: -0.5em;
 }
 
 div#top-links {
 	float:right;
 	padding-right: 5px;
 	margin-right:205px;
-margin-top:1em;
+	margin-top:1em;
 	white-space:nowrap;
 }
 
