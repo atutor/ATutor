@@ -205,7 +205,7 @@ function fs_get_folder_by_pid($parent_folder_id, $owner_type, $owner_id) {
 }
 
 /**
- * outputs the folders as a <ul> list.
+ * outputs the folders as a  list.
  *
  * $current_folder_id the current folder id, used for pre-selecting the radio button
  * $parent_folder_id the folder id to display children of
