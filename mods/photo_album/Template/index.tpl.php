@@ -53,6 +53,7 @@
 					<!-- form name="{FORM_NAME}" method="post" action="{ACTION}" -->
 					<input type="submit" name="save" value="{SAVE_STRING}" onclick="reordering_pa('save_form');" />
 					<input type="hidden" name="mode" value="save" />
+					<input type="hidden" name="current_page_num" value="{CURRENT_PAGE_NUM}" />
 					</form>	
 
 					<form name="{FORM_NAME}" method="post" action="{ACTION}">

@@ -26,16 +26,30 @@ require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 $_custom_css = $_base_path . 'mods/photo_album/module.css'; // use a custom stylesheet
 
 // Save the order the images appear in GG
-if($_POST['submit'] = "save"){
+if(isset($_POST['save']) && $_POST['save']!=''){
+	if ($_REQUEST['current_page_num'] == ''){
+		$current_page = 1;
+	} else {
+		$current_page = intval($_REQUEST['current_page_num']);
+	}
+
 	foreach($_POST as $image_id => $image_order){
 		$image_order = intval($image_order);
+
 		$image_id = intval($image_id);
+
+		//calculate the new image_order associated w/ the page
+		$image_order = ($current_page - 1) * 10 + $image_order;	//+1 because value starts from 0.
+
 
 		//If this is an image, update its order in the database
 		if ($image_id > 0) {
 			$sql = "UPDATE ".TABLE_PREFIX."pa_image set `order`=$image_order WHERE `image_id` = $image_id";
 			if($result = mysql_query($sql, $db)){
 				$msg->addFeedback('PA_IMAGE_ORDER_SAVED');
+				if ($current_page > 0){
+					$_GET['current_page'] = $current_page;
+				}
 			}
 		}
 	}
@@ -86,6 +100,8 @@ if ($index->isError()!=true){	//if there is no error in index object, display th
 	
 	$template->setVariable("MY_COMMENT_URL", BASE_PATH.'my_comment.php');
 	$template->setVariable("MY_COMMENT_TITLE", _AT('pa_tag_my_comment_alt'));
+
+	$template->setVariable("CURRENT_PAGE_NUM", $index->getVariable('current_page'));
 	
 	
 	$image_array=$index->getVariable('image_array');
