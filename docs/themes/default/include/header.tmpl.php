@@ -73,6 +73,7 @@ global $system_courses, $_custom_css,$db;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 	<?php echo $this->custom_css; ?>
+
 </head>
 <body onload="<?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $this->base_path; ?>overlib.js" type="text/javascript"></script>
@@ -182,37 +183,6 @@ function toggleToc(objId) {
 </script>
 
 <div id="header">
-	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
-		<a href="<?php echo $this->base_path; ?>index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
-	<?php } ?>
-
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
-	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
-
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
-
-	<?php
-	// If there is a custom course banner in the file manager called banner.html, display it here
-	@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.txt'); 
-
-	/*
-	and example banner.html file might look like:
-	<div style="width: 760px; height: 42px; background: white;"><img src="http://[mysite]/atutor15rc3/banners/kart-camb.jpg"></div>
-	*/
-
-	?>
-	<!-- section title -->
-	<?php if ($_SESSION['valid_user']): 
-		echo '<div style="font-size:small;font-weight:bold;padding-left:1em;color:white;">'.stripslashes(SITE_NAME).'</div>'; 
-	else:
-		echo '<br />';	
-	endif; ?>
-	<h1 id="section-title"><?php echo $this->section_title; ?>
-		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
-			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
-		<?php endif; ?>
-	</h1>
-
 	<div id="top-links"> <!-- top help/search/login links -->
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<!-- start the jump menu -->
@@ -245,6 +215,38 @@ function toggleToc(objId) {
 		<?php endif; ?>
 		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> <a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	</div>
+	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
+		<a href="<?php echo $this->base_path; ?>index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
+	<?php } ?>
+
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
+	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+
+	<?php
+	// If there is a custom course banner in the file manager called banner.html, display it here
+	@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.txt'); 
+
+	/*
+	and example banner.html file might look like:
+	<div style="width: 760px; height: 42px; background: white;"><img src="http://[mysite]/atutor15rc3/banners/kart-camb.jpg"></div>
+	*/
+
+	?>
+	<!-- section title -->
+	<?php if ($_SESSION['valid_user']): 
+		echo '<div style="font-size:small;font-weight:bold;padding-left:1em;color:white;">'.stripslashes(SITE_NAME).'</div>'; 
+	else:
+		echo '<br />';	
+	endif; ?>
+	<h1 id="section-title"><?php echo $this->section_title; ?>
+		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
+			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+		<?php endif; ?>
+	</h1>
+
+
 </div>
 
 <div id="topnavlistcontainer">
@@ -342,7 +344,7 @@ function toggleToc(objId) {
 		>
 
 		<?php if ($_SESSION['course_id'] > 0): ?>
-		<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: left; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
+		<div id="menutoggle">
 
 			<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
 				<script type="text/javascript" language="javascript">

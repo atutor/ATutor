@@ -21,7 +21,7 @@
 
 
 <?php
-debug($_POST,"get");
+debug($_rel_url,"get");
 
 ?>
 </body>

@@ -520,7 +520,10 @@ div#top-links a:link, div#top-links a:visited {
 	margin-left:10px;
 }
 
+#jumpmenu{
 
+
+}
 a#editor-link {
 	background-color: #F7F3ED;
 	padding-top: 1px;
@@ -1126,6 +1129,17 @@ div#container {
 	width: 95%;
 }
 
+div#menutoggle{
+	text-align: right; 
+	padding-bottom: 10px; 
+	padding-right: 10px; 
+	float: left; 
+	margin-top: 10px; 
+	padding-right: 5px; 
+	font-size:0.95em;
+}
+
+
 /* login page */
 div.column {
 	border: 1px solid #6F7172;
@@ -1425,3 +1439,42 @@ dl.browse-course dd {
 	margin-left: 26%;
 
 }
+
+/* file storage */
+
+#fsfloat1{
+	float:right;
+}
+#fsfloat2{
+	float:right;
+	width:48%;
+}
+
+/* menu align right layout, uncomment to enable */
+
+
+h2.page-title {
+    clear:left
+}
+h2, h3, h4, h5, h6 {
+        clear: left;
+}
+#contentcolumn_shiftright {
+    margin-right: 17em;
+margin-left:1em;
+margin-top:1em;
+}
+#leftcolumn{
+    float: right;
+}
+table.data {
+	clear:left;
+}
+div#menutoggle{
+	float: right; 
+}
+#fsfloat2{
+	float:left;
+	width:48%;
+}
+
