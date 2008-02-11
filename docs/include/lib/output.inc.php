@@ -609,8 +609,7 @@ function fix_quotes($text){
 
 function embed_media($text) {
 	// youtube videos
-	$text = preg_replace("#http://(www.)?youtube.com/watch\?v=([a-z0-9_-]+)#i", '<object width="425" height="350"><param name="movie" value="http://www.youtube.com/v/\\2"></param><embed src="http://www.youtube.com/v/\\2" type="application/x-shockwave-flash" width="425" height="350"></embed></object>', $text);
-
+	$text = preg_replace("#\[media\]http://(www.)?youtube.com/watch\?v=([a-z0-9_-]+)\[/media\]#i", '<object width="425" height="350"><param name="movie" value="http://www.youtube.com/v/\\2"></param><embed src="http://www.youtube.com/v/\\2" type="application/x-shockwave-flash" width="425" height="350"></embed></object>', $text);
 
 	if (strpos($text, '[media]') === FALSE) {
 		return $text;
