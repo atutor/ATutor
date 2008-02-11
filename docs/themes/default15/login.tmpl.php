@@ -2,16 +2,6 @@
 
 <script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
 
-<script language="JavaScript" type="text/javascript">
-//<!--
-  function crypt_sha1() {
-  	document.form.form_password_hidden.value = hex_sha1(document.form.form_password.value + "<?php echo $_SESSION['token']; ?>");
-  	document.form.form_password.value = "";
-  	return true;
-  }
- //-->
-</script>
-
 <div id="container">
 	<div class="column">
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -37,7 +27,7 @@
 			</div>
 		</div>
 		<div style="background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0; ">
-			<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return crypt_sha1();" />
+			<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return crypt_sha1('<?php echo $_SESSION['token']; ?>');" />
 		</div>
 		</form>
 	</div>
