@@ -1,1 +1,0 @@
-<?php require('matching_qti_2p1.tmpl.php'); ?>

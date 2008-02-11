@@ -1,1 +1,0 @@
-<?php require('multichoice_stats.tmpl.php'); ?>
