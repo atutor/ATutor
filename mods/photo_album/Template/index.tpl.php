@@ -18,7 +18,7 @@
 					a form named reorder-form, -->		
 			<form name="{SAVE_FORM_NAME}" method="post" action="{SAVE_ACTION}" id="reorder-form">			
 			<!-- IMAGE CONTAINER -->
-			<div rsf:id="lightbox-temp-container:" id="gallery:::gallery-thumbs:::" tabindex="0" class="image-container"
+			<div  id="gallery:::gallery-thumbs:::" tabindex="0" class="image-container"
 			xhtml10:role="wairole:grid"
 			aaa:multiselectable="false"
 			aaa:readonly="false"
@@ -26,7 +26,7 @@
 				aaa:disabled="false">
 
 				<!-- BEGIN IMAGE_DISPLAY -->
-				<div rsf:id="scr=ignore" class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:{TABINDEX}:"
+				<div  class="float orderable-default" id="gallery:::gallery-thumbs:::lightbox-cell:{TABINDEX}:"
 						role="wairole:gridcell"
 						aaa:selected="true"
 						aaa:readonly="false"
@@ -51,7 +51,7 @@
 				<!-- BEGIN IMAGE_ADD_BUTTON -->
 				<div class="row buttons" style="clear:both;">
 					<!-- form name="{FORM_NAME}" method="post" action="{ACTION}" -->
-					<input type="submit" name="save" value="{SAVE_STRING}" onclick="reordering_pa('save_form');" />
+					<input type="submit" name="save" value="{SAVE_STRING}" onsubmit="reordering_pa('save_form');" />
 					<input type="hidden" name="mode" value="save" />
 					<input type="hidden" name="current_page_num" value="{CURRENT_PAGE_NUM}" />
 					</form>	
