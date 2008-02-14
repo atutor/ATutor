@@ -26,6 +26,14 @@ require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 $_custom_css = $_base_path . 'mods/photo_album/module.css'; // use a custom stylesheet
 
 // Save the order the images appear in GG
+//
+// If you want to have the image order saved each time an image is moved
+// replace use the POST['submit'] line in place of the POST['save'] line below
+// Note that using the POST['submit']  has the potential to increase network traffic
+// where the photo album is being used by many at the same time.
+ 
+//if(isset($_POST['submit'])){
+
 if(isset($_POST['save']) && $_POST['save']!=''){
 	if ($_REQUEST['current_page_num'] == ''){
 		$current_page = 1;
