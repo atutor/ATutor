@@ -1,0 +1,27 @@
+Userplane WebChat for ATutor ReadMe
+
+This module can be installed with ATutor to install the patches available at update.atutor.ca.
+
+1. Copy the downloaded file into the ATutor mods/ directory and unzip it there. 
+
+On Windows systems use and application like WinZip the extract the file into the mods/ directory
+
+On Unix/Linux systems use the command:
+
+tar xzvf atutor_userplane.tar.gz
+
+2. Login to ATutor as the administrator and run Install Module under the Modules tab, Select the Userplane module, which should be listed as available to be installed when the module has been unzipped into the modes directory
+
+3. Once the module has been installed, and enabled, click on the administrator's Patcher Tab to install the patches available at update.atutor.ca
+
+By default, the Patcher tab displays all patches available to public for your ATutor version. If you are given a name to install a special patch desigened for you. Enter the given name in "Name" input box, click "Get My Patch" button, the page will list the patches available for the given name. Select the patch you want to install and click "Install" button.
+
+If there are multiple patches available for your ATutor version, the patches have to be installed in sequence. Only the radio button of the patch with the lowest sequence number is enabled to be selected to install. Once it's installed, the radio button of the patch with the next lowest sequence number is enabled.
+
+* Installation process:
+1. Check files/folder priviledge: 
+   If the write priviledge is not given to the script on the files/folders that will be modified or overwritten, a message will be prompted to grant priviledge
+2. Compare files with SVN
+   The files that are to be modified or overwritten will be compared with ATutor SVN, if the local copy of user's file is customized, a warning will be prompted to let user decide if they want to proceed with installation. If yes is chosen, the user has to take responsibility that the installation may break their customization.
+3. Backup files
+   The files that are modified or overwritten during the installation will have a backup on the original copy. At the end of the installation, the list of all the backup files are displayed. Users are strongly recommended to fully test ATutor after the patch installation. If users are not happy with the result, they can always revert back the old ATutor by copying back the backup files. If users are happy with the result, it's also recommended to remove the backup files since they occupy hard disk space.
