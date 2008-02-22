@@ -79,6 +79,9 @@ if (!$test_row['random']) {
 
 	<div class="row">
 		<dl class="col-list">
+			<dt><?php echo _AT('test_description'); ?></dt>
+			<dd><?php echo $test_row['description']; ?></dd>
+
 			<dt><?php echo _AT('questions'); ?></dt>
 			<dd><?php echo $test_row['num_questions']; ?></dd>
 
