@@ -6,6 +6,12 @@
 	<p>Test properties include:</p>
 
 	<dl>
+		<dt>Title (Mandatory field)</dt>
+		<dd>Test title </dd>
+	
+		<dt>Description</dt>
+		<dd>Test description </dd>
+	
 		<dt>Attempts Allowed</dt>
 		<dd>Tests used for evaluation could be set to 1 attempt, while self=tests may be set to Unlimited attempts </dd>
 	
@@ -21,6 +27,15 @@
 		
 		<dt>Display</dt>
 		<dd>Controls how test questions are displayed: Either all on one page, or one at a time.</dd>
+
+		<dt>Pass Score</dt>
+		<dd>Define the pass score by points or percentage or no pass score. If the pass score/percentage is define, the pass/fail feedback is displayed on student's test result page and instructor can filter by passed/failed students in test submission statistics page. </dd>
+
+		<dt>Pass feedback</dt>
+		<dd>Displayed in test result page for passed student.</dd>
+
+		<dt>Fail feedback</dt>
+		<dd>Displayed in test result page for failed student.</dd>
 
 		<dt>Release Results</dt>
 		<dd>Defines the availability of test results to students, either once the test has been submitted, once submitted and completely marked, or not at all. In the latter case, the Release Results property can later be changed to <em>Once quiz has been submitted</em> to make results available to students once all submissions have been marked.</dd>
