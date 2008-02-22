@@ -28,10 +28,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $tid = intval($_GET['tid']);
 $rid = intval($_GET['rid']);
 
-$sql	= "SELECT title, random FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$sql	= "SELECT title, random, passfeedback, failfeedback, passscore, passpercent FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $test_title	= $row['title'];
+$passfeedback	= $row['passfeedback'];
+$failfeedback	= $row['failfeedback'];
+$passscore	= $row['passscore'];
+$passpercent	= $row['passpercent'];
 $is_random  = $row['random'];
 
 $mark_right = ' <img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" title="'._AT('correct_answer').'" />';
@@ -63,7 +67,7 @@ $out_of = $row['out_of'];
 $sql	= "SELECT question_id FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$rid";
 $result	= mysql_query($sql, $db); 
 $row = mysql_fetch_array($result);
-$random_id_string = $row['question_id'];
+$random_id_string = $row[question_id];
 $row = mysql_fetch_array($result);	
 while ($row['question_id'] != '') {
 	$random_id_string = $random_id_string.','.$row['question_id'];
@@ -86,11 +90,42 @@ if (mysql_num_rows($result) == 0) {
 	exit;
 }
 
+// calculate test/my total score to display pass/fail feedback
+$sql_test_total = "SELECT sum(TQA.weight) test_total_score FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQA.test_id=$tid AND TQ.question_id IN ($random_id_string)";
+$result_test_total	= mysql_query($sql_test_total, $db);
+$row_test_total = mysql_fetch_array($result_test_total);
+$test_total_score = $row_test_total["test_total_score"];
+
+while ($row = mysql_fetch_assoc($result)) {
+	$sql_this_score = "SELECT * FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$rid AND question_id=$row[question_id] AND member_id=$_SESSION[member_id]";
+	$result_this_score	= mysql_query($sql_this_score, $db); 
+	$this_score = mysql_fetch_assoc($result_this_score);
+
+	$my_score+=$this_score['score'];
+	$this_total += $row['weight'];
+}
 ?>
 <form method="get" action="<?php echo AT_BASE_HREF; ?>tools/my_tests.php">
 <div class="input-form">
 	<div class="row">
 		<h2><?php echo AT_print($test_title, 'tests.title'); ?></h2>
+	</div>
+
+	<div class="row">
+		<h3 align="center">
+			<?php 
+				// don't display any feedback if test is created as "no pass score"
+				if ($passscore == 0 && $passpercent == 0)
+					echo '';
+				// display pass feedback for passed students
+				elseif (($passscore<>0 && $my_score>=$passscore) ||
+				    ($passpercent<>0 && ($my_score/$this_total*100)>=$passpercent))
+					echo '<font color="green">' . $passfeedback . '</font>';
+				// otherwise, display fail feedback
+				else
+					echo '<font color="red">' . $failfeedback . '</font>'; 
+			?>
+		</h3>
 	</div>
 
 	<?php if ($row['instructions'] != ''): ?>
@@ -101,6 +136,9 @@ if (mysql_num_rows($result) == 0) {
 	<?php endif; ?>
 
 	<?php
+	// reset the result cursor to beginning
+	mysql_data_seek ($result, 0);
+	
 	while ($row = mysql_fetch_assoc($result)) {
 		$sql		= "SELECT * FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$rid AND question_id=$row[question_id] AND member_id=$_SESSION[member_id]";
 		$result_a	= mysql_query($sql, $db); 
@@ -108,9 +146,6 @@ if (mysql_num_rows($result) == 0) {
 
 		$obj = TestQuestions::getQuestion($row['type']);
 		$obj->displayResult($row, $answer_row);
-
-		$my_score=($my_score+$answer_row['score']);
-		$this_total += $row['weight'];
 
 		if ($row['feedback']) {
 			echo '<div class="row"><p><strong>'._AT('feedback').':</strong> ';
