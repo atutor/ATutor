@@ -27,9 +27,14 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$missing_fields        = array();
 	$_POST['title']        = $addslashes(trim($_POST['title']));
+	$_POST['description']  = $addslashes(trim($_POST['description']));
 	$_POST['num_questions']	= intval($_POST['num_questions']);
 	$_POST['num_takes']	   = intval($_POST['num_takes']);
 	$_POST['content_id']   = intval($_POST['content_id']);
+	$_POST['passpercent']	= intval($_POST['passpercent']);
+	$_POST['passscore']	= intval($_POST['passscore']);
+	$_POST['passfeedback']  = $addslashes(trim($_POST['passfeedback']));
+	$_POST['failfeedback']  = $addslashes(trim($_POST['failfeedback']));
 	$_POST['num_takes']    = intval($_POST['num_takes']);
 	$_POST['anonymous']    = intval($_POST['anonymous']);
 	$_POST['allow_guests'] = $_POST['allow_guests'] ? 1 : 0;
@@ -47,6 +52,14 @@ if (isset($_POST['cancel'])) {
 
 	if ($_POST['random'] && !$_POST['num_questions']) {
 		$missing_fields[] = _AT('num_questions_per_test');
+	}
+
+	if ($_POST['pass_score']==1 && !$_POST['passpercent']) {
+		$missing_fields[] = _AT('percentage_score');
+	}
+
+	if ($_POST['pass_score']==2 && !$_POST['passscore']) {
+		$missing_fields[] = _AT('points_score');
 	}
 
 	if ($missing_fields) {
@@ -112,7 +125,54 @@ if (isset($_POST['cancel'])) {
 		//If title exceeded database defined length, truncate it.
 		$_POST['title'] = validate_length($_POST['title'], 100);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (NULL, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num_questions], '$_POST[instructions]', $_POST[content_id], $_POST[result_release], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '', $_POST[allow_guests], $_POST[display])";
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests " .
+		       "(test_id,
+             course_id,
+             title,
+             description,
+             format,
+             start_date,
+             end_date,
+             randomize_order,
+             num_questions,
+             instructions,
+             content_id,
+             passscore,
+             passpercent,
+             passfeedback,
+             failfeedback,
+             result_release,
+             random,
+             difficulty,
+             num_takes,
+             anonymous,
+             out_of,
+             guests,
+             display)" .
+		       "VALUES 
+		        (NULL, 
+		         $_SESSION[course_id], 
+		         '$_POST[title]', 
+		         '$_POST[description]', 
+		         $_POST[format], 
+		         '$start_date', 
+		         '$end_date', 
+		         $_POST[order], 
+		         $_POST[num_questions], 
+		         '$_POST[instructions]', 
+		         $_POST[content_id], 
+		         $_POST[passscore], 
+		         $_POST[passpercent], 
+		         '$_POST[passfeedback]', 
+		         '$_POST[failfeedback]', 
+		         $_POST[result_release], 
+		         $_POST[random], 
+		         $_POST[difficulty], 
+		         $_POST[num_takes], 
+		         $_POST[anonymous], 
+		         '', 
+		         $_POST[allow_guests], 
+		         $_POST[display])";
 
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);
@@ -144,12 +204,41 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printErrors();
 
 ?>
+<script language="javascript" type="text/javascript">
+function disable_texts (name) {
+	if (name == 'both')
+	{
+		document.form['passpercent'].disabled=true;
+		document.form['passscore'].disabled=true;
+		document.form['passpercent'].value=0;
+		document.form['passscore'].value=0;
+	}
+	else if (name == 'percentage')
+	{
+		document.form['passpercent'].disabled=true;
+		document.form['passpercent'].value=0;
+		document.form['passscore'].disabled=false;
+	}
+	else if (name == 'points')
+	{
+		document.form['passpercent'].disabled=false;
+		document.form['passscore'].disabled=true;
+		document.form['passscore'].value=0;
+	}
+}
+</script>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="test_type" value="<?php echo $test_type; ?>" />
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" size="30" value="<?php echo $_POST['title']; ?>" />
+	</div>
+
+	<div class="row">
+		<label for="description"><?php echo _AT('test_description'); ?></label><br />
+		<textarea name="description" cols="35" rows="3" id="description"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -233,6 +322,38 @@ $msg->printErrors();
 
 		<input type="radio" name="display" id="displayN" value="0" <?php echo $n; ?> /><label for="displayN"><?php echo _AT('all_questions_on_page'); ?></label> 
 		<input type="radio" name="display" id="displayY" value="1" <?php echo $y; ?> /><label for="displayY"><?php echo _AT('one_question_per_page'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('pass_score'); ?><br />
+		<input type="radio" name="pass_score" value="0" id="no" <?php if ($_POST['passpercent'] == 0 && $_POST['passscore'] == 0){echo 'checked="true"';} ?> 
+		 onfocus="disable_texts('both');" />
+
+		<label for="no" title="<?php echo _AT('pass_score'). ': '. _AT('no_pass_score');  ?>"><?php echo _AT('no_pass_score'); ?></label><br />
+
+		<input type="radio" name="pass_score" value="1" id="percentage"  <?php if ($_POST['passpercent'] <> 0){echo 'checked="true"';} ?>
+		 onfocus="disable_texts('points');" />
+
+		<input type="text" name="passpercent" id="passpercent" size="2" value="<?php echo $_POST['passpercent']; ?>" 
+		 <?php if ($_POST['passpercent'] == 0){echo 'disabled="true"';} ?> /> 
+		<label for="percentage" title="<?php echo _AT('pass_score'). ': '. _AT('percentage_score');  ?>"><?php  echo '% ' . _AT('percentage_score'); ?></label><br />
+
+		<input type="radio" name="pass_score" value="2" id="points"  <?php if ($_POST['passscore'] <> 0){echo 'checked="true"';} ?>
+		 onfocus="disable_texts('percentage');" />
+
+		<input type="text" name="passscore" id="passscore" size="2" value="<?php echo $_POST['passscore']; ?>" 
+		 <?php if ($_POST['passscore'] == 0){echo 'disabled="true"';} ?>/> 
+		<label for="points" title="<?php echo _AT('pass_score'). ': '. _AT('points_score');  ?>"><?php  echo _AT('points_score'); ?></label>
+	</div>
+
+	<div class="row">
+		<label for="passfeedback"><?php echo _AT('pass_feedback'); ?></label><br />
+		<textarea name="passfeedback" cols="35" rows="1" id="passfeedback"><?php echo htmlspecialchars($_POST['passfeedback']); ?></textarea>
+	</div>
+
+	<div class="row">
+		<label for="failfeedback"><?php echo _AT('fail_feedback'); ?></label><br />
+		<textarea name="failfeedback" cols="35" rows="1" id="failfeedback"><?php echo htmlspecialchars($_POST['failfeedback']); ?></textarea>
 	</div>
 
 	<div class="row">

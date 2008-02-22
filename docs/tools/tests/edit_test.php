@@ -28,9 +28,14 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$missing_fields             = array();
 	$_POST['title']				= $addslashes(trim($_POST['title']));
+	$_POST['description']  = $addslashes(trim($_POST['description']));
 	$_POST['format']			= intval($_POST['format']);
 	$_POST['randomize_order']	= intval($_POST['randomize_order']);
 	$_POST['num_questions']		= intval($_POST['num_questions']);
+	$_POST['passpercent']	= intval($_POST['passpercent']);
+	$_POST['passscore']	= intval($_POST['passscore']);
+	$_POST['passfeedback']  = $addslashes(trim($_POST['passfeedback']));
+	$_POST['failfeedback']  = $addslashes(trim($_POST['failfeedback']));
 	$_POST['num_takes']			= intval($_POST['num_takes']);
 	$_POST['anonymous']			= intval($_POST['anonymous']);
 	$_POST['display']			= intval($_POST['display']);
@@ -59,17 +64,12 @@ if (isset($_POST['cancel'])) {
 		$missing_fields[] = 'num_questions_per_test';
 	}
 
-	/* 
-	 * If test is anonymous and have submissions, then we don't permit changes.
-	 * This addresses the following issue: http://www.atutor.ca/atutor/mantis/view.php?id=3268
-	 * TODO:	Add an extra column in test_results to remember the state of anonymous submissions.
-	 *			make changes accordingly on line 255 as well.
-	 */
-	$sql = "SELECT t.test_id, anonymous FROM ".TABLE_PREFIX."tests_results r NATURAL JOIN ".TABLE_PREFIX."tests t WHERE r.test_id = t.test_id AND r.test_id=$tid";
-	$result	= mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		//If there are submission(s) for this test, anonymous field will not be altered.
-		$_POST['anonymous'] = $row['anonymous'];
+	if ($_POST['pass_score']==1 && !$_POST['passpercent']) {
+		$missing_fields[] = _AT('percentage_score');
+	}
+
+	if ($_POST['pass_score']==2 && !$_POST['passscore']) {
+		$missing_fields[] = _AT('points_score');
 	}
 
 	if ($missing_fields) {
@@ -144,7 +144,31 @@ if (isset($_POST['cancel'])) {
 			//If title exceeded database defined length, truncate it.
 			$_POST['title'] = validate_length($_POST['title'], 100);
 
-			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  result_release=$_POST[result_release], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous], guests=$_POST[allow_guests], out_of=$total_weight, display=$_POST[display] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."tests " . 
+			       "SET title='$_POST[title]', 
+			            description='$_POST[description]', 
+			            format=$_POST[format], 
+			            start_date='$start_date', 
+			            end_date='$end_date', 
+			            randomize_order=$_POST[randomize_order], 
+			            num_questions=$_POST[num_questions], 
+			            instructions='$_POST[instructions]', 
+			            content_id=$_POST[content_id],  
+			            passscore=$_POST[passscore], 
+		              passpercent=$_POST[passpercent], 
+		              passfeedback='$_POST[passfeedback]', 
+		              failfeedback='$_POST[failfeedback]', 
+			            result_release=$_POST[result_release], 
+			            random=$_POST[random], 
+			            difficulty=$_POST[difficulty], 
+			            num_takes=$_POST[num_takes], 
+			            anonymous=$_POST[anonymous], 
+			            guests=$_POST[allow_guests], 
+			            out_of=$total_weight, 
+			            display=$_POST[display] 
+			        WHERE test_id=$tid 
+			        AND course_id=$_SESSION[course_id]";
+			        
 			$result = mysql_query($sql, $db);
 
 			$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
@@ -193,6 +217,30 @@ $msg->printErrors();
 
 ?>
 
+<script language="javascript" type="text/javascript">
+function disable_texts (name) {
+	if (name == 'both')
+	{
+		document.form['passpercent'].disabled=true;
+		document.form['passscore'].disabled=true;
+		document.form['passpercent'].value=0;
+		document.form['passscore'].value=0;
+	}
+	else if (name == 'percentage')
+	{
+		document.form['passpercent'].disabled=true;
+		document.form['passpercent'].value=0;
+		document.form['passscore'].disabled=false;
+	}
+	else if (name == 'points')
+	{
+		document.form['passpercent'].disabled=false;
+		document.form['passscore'].disabled=true;
+		document.form['passscore'].value=0;
+	}
+}
+</script>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="randomize_order" value="1" />
@@ -205,6 +253,11 @@ $msg->printErrors();
 		<input type="text" name="title" id="title" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['title'])); ?>" />
 	</div>
 	
+	<div class="row">
+		<label for="description"><?php echo _AT('test_description'); ?></label><br />
+		<textarea name="description" cols="35" rows="3" id="description"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
+	</div>
+
 	<div class="row">	
 		<label for="num_t"><?php echo _AT('num_takes_test'); ?></label><br />
 		<select name="num_takes" id="num_t">
@@ -251,24 +304,8 @@ $msg->printErrors();
 				$n = 'checked="checked"';
 			}
 		?>
-		<?php
-			// This addresses the following issue: http://www.atutor.ca/atutor/mantis/view.php?id=3268
-			// Ref: line 64
-			$sql = "SELECT t.test_id, anonymous FROM ".TABLE_PREFIX."tests_results r NATURAL JOIN ".TABLE_PREFIX."tests t WHERE r.test_id = t.test_id AND r.test_id=$tid";
-			$result	= mysql_query($sql, $db);
-			$anonymous_disabled = '';
-			if ($row = mysql_fetch_assoc($result)) {
-				//If there are submission(s) for this test, anonymous field will not be altered.
-				$anonymous_disabled = 'disabled';
-			}
-		?>
-		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> <?php echo $anonymous_disabled; ?> /><label for="anonN"><?php echo _AT('no'); ?></label>
-		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> <?php echo $anonymous_disabled; ?> /><label for="anonY"><?php echo _AT('yes'); ?></label>
-		<?php
-			if ($anonymous_disabled != ""){
-				echo '('._AT('disabled').')';
-			}
-		?>
+		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no'); ?></label>
+		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes'); ?></label>
 	</div>
 
 	<div class="row">
@@ -301,6 +338,38 @@ $msg->printErrors();
 
 		<input type="radio" name="display" id="displayN" value="0" <?php echo $n; ?> /><label for="displayN"><?php echo _AT('all_questions_on_page'); ?></label> 
 		<input type="radio" name="display" id="displayY" value="1" <?php echo $y; ?> /><label for="displayY"><?php echo _AT('one_question_per_page'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('pass_score'); ?><br />
+		<input type="radio" name="pass_score" value="0" id="no" <?php if ($_POST['passpercent'] == 0 && $_POST['passscore'] == 0){echo 'checked="true"';} ?> 
+		 onfocus="disable_texts('both');" />
+
+		<label for="no" title="<?php echo _AT('pass_score'). ': '. _AT('no_pass_score');  ?>"><?php echo _AT('no_pass_score'); ?></label><br />
+
+		<input type="radio" name="pass_score" value="1" id="percentage"  <?php if ($_POST['passpercent'] <> 0){echo 'checked="true"';} ?>
+		 onfocus="disable_texts('points');" />
+
+		<input type="text" name="passpercent" id="passpercent" size="2" value="<?php echo $_POST['passpercent']; ?>" 
+		 <?php if ($_POST['passpercent'] == 0){echo 'disabled="true"';} ?> /> 
+		<label for="percentage" title="<?php echo _AT('pass_score'). ': '. _AT('percentage_score');  ?>"><?php  echo '% ' . _AT('percentage_score'); ?></label><br />
+
+		<input type="radio" name="pass_score" value="2" id="points"  <?php if ($_POST['passscore'] <> 0){echo 'checked="true"';} ?>
+		 onfocus="disable_texts('percentage');" />
+
+		<input type="text" name="passscore" id="passscore" size="2" value="<?php echo $_POST['passscore']; ?>" 
+		 <?php if ($_POST['passscore'] == 0){echo 'disabled="true"';} ?>/> 
+		<label for="points" title="<?php echo _AT('pass_score'). ': '. _AT('points_score');  ?>"><?php  echo _AT('points_score'); ?></label>
+	</div>
+
+	<div class="row">
+		<label for="passfeedback"><?php echo _AT('pass_feedback'); ?></label><br />
+		<textarea name="passfeedback" cols="35" rows="1" id="passfeedback"><?php echo htmlspecialchars($_POST['passfeedback']); ?></textarea>
+	</div>
+
+	<div class="row">
+		<label for="failfeedback"><?php echo _AT('fail_feedback'); ?></label><br />
+		<textarea name="failfeedback" cols="35" rows="1" id="failfeedback"><?php echo htmlspecialchars($_POST['failfeedback']); ?></textarea>
 	</div>
 
 	<div class="row">

@@ -11,113 +11,57 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-$page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-
 authenticate(AT_PRIV_TESTS);
 
-$tid = intval($_REQUEST['tid']);
+// Validate date
+function isValidDate($date)
+{
+    if (preg_match("/^(\d{4})-(\d{2})-(\d{2})$/", $date, $matches)) 
+    {
+        if (checkdate($matches[2], $matches[3], $matches[1])) {
+            return true;
+        }
+    }
 
-$_pages['tools/tests/results_all.php']['title_var']  = 'mark_statistics';
-$_pages['tools/tests/results_all.php']['parent'] = 'tools/tests/results_all_quest.php?tid='.$tid;
-
-$_pages['tools/tests/results_all_quest.php?tid='.$tid]['title_var'] = 'question_statistics';
-$_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
-$_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tools/tests/results_all.php');
-
-if ($_POST['download']){
-	$_POST['test_id']=intval($_POST['test_id']);
-	header('Location: results_all_csv.php?tid='.$_POST['test_id']);
+    return false;
 }
 
-require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-$sql	= "SELECT title, out_of, result_release, randomize_order FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result	= mysql_query($sql, $db);
-$row = mysql_fetch_array($result);
-$out_of = $row['out_of'];
-$random = $row['randomize_order'];
-
-echo '<h3>'.$row['title'].'</h3><br />';
-?>
-
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<div class="input-form">
-	<div class="row">
-		<h3><?php echo _AT('download_test_csv'); ?></h3>
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<input type="hidden" name="test_id" value="<?php echo $tid; ?>" />
-	</div>
-</div>
-</form>
-
-<?php
-$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
-
-//$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
-$result	= mysql_query($sql, $db);
-$questions = array();
-$total_weight = 0;
-$i = 0;
-while ($row = mysql_fetch_assoc($result)) {
-	$row['score']	= 0;
-	$questions[$i]	= $row;
-	$questions[$i]['count'] = 0;
-	$q_sql .= $row['question_id'].',';
-	$total_weight += $row['weight'];
-	$i++;
-}
-$q_sql = substr($q_sql, 0, -1);
-$num_questions = count($questions);
-
-//get all the marked tests for this test
-$guest_text = '- '._AT('guest').' -';
-$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.status=1 AND R.test_id=$tid AND R.final_score<>'' ORDER BY M.login, R.date_taken";
-$result = mysql_query($sql, $db);
-$num_results = mysql_num_rows($result);
-if ($row = mysql_fetch_assoc($result)) {
-	$total_score = 0;
-
-	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
-	echo '<thead>';
-	echo '<tr>';
-	echo '<th scope="col">'._AT('login_name').'</th>';
-	echo '<th scope="col">'._AT('date_taken').'</th>';
-	echo '<th scope="col">'._AT('mark').'</th>';
-	for($i = 0; $i< $num_questions; $i++) {
-		echo '<th scope="col">Q'.($i+1).' /'.$questions[$i]['weight'].'</th>';
-	}
-	echo '</tr>';
-	echo '</thead>';
-	echo '<tbody>';
-	
-		$sql2	= "SELECT anonymous FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-		$result2	= mysql_query($sql2, $db);
-		while($row2 =mysql_fetch_array($result2)){
-				$anonymous = $row2['anonymous'];
-		}
-
-	do {
-		$row['login']     = $row['login']     ? $row['login']     : $guest_text;
-		echo '<tr>';
+function display_test_info($row)
+{
+		global $random, $num_questions, $total_weight, $questions, $total_score, $table_content, $csv_content;
+		global $passscore, $passpercent;
+		global $q_sql, $db;
+		
+		$row['login'] = $row['login'] ? $row['login'] : '- '._AT('guest').' -';
+		$table_content .= '<tr>';
 			
 		if($anonymous == 1){
-				echo '<td align="center">'._AT('anonymous').'</td>';
+				$table_content .= '<td align="center">'._AT('anonymous').'</td>';
+				$csv_content .= quote_csv(_AT('anonymous')).', ';
 		}else{
-				echo '<td align="center">'.$row['login'].'</td>';
+				$table_content .= '<td align="center">'.$row['login'].'</td>';
+				$csv_content .= quote_csv($row['login']).', ';
 		}
 		$startend_date_format=_AT('startend_date_format');
-		echo '<td align="center">'.AT_date( $startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
-		if ($random) {
-			$total_weight = get_random_outof($row['test_id'], $row['result_id']);
+		$table_content .= '<td align="center">'.AT_date( $startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
+		$csv_content .= quote_csv($row['date_taken']).', ';
+
+		if ($passscore <> 0)
+		{
+			$table_content .= '<td align="center">'.$passscore.'</td>';
+			$csv_content .= $passscore.', ';
 		}
-		echo '<td align="center">'.$row['final_score'].'/'.$total_weight.'</td>';
+		elseif ($passpercent <> 0)
+		{
+			$table_content .= '<td align="center">'.$passpercent.'%</td>';
+			$csv_content .= $passpercent . '%, ';
+		}
+
+		$table_content .= '<td align="center">'.$row['final_score'].'/'.$total_weight.'</td>';
+		$csv_content .= $row['final_score'].'/'.$total_weight;
 
 		$total_score += $row['final_score'];
 
@@ -133,70 +77,286 @@ if ($row = mysql_fetch_assoc($result)) {
 		//print answers out for each question
 		for($i = 0; $i < $num_questions; $i++) {
 			$questions[$i]['score'] += $answers[$questions[$i]['question_id']];
-			echo '<td align="center">';
+			$table_content .= '<td align="center">';
 			if ($answers[$questions[$i]['question_id']] == '') {
-				echo '<span style="color:#ccc;">-</span>';
+				$table_content .= '<span style="color:#ccc;">-</span>';
+				$csv_content .= ', -';
 			} else {
-				echo $answers[$questions[$i]['question_id']];
+				$table_content .= $answers[$questions[$i]['question_id']];
+				$csv_content .= ', '.$answers[$questions[$i]['question_id']];
+				
 				if ($random) {
 					$questions[$i]['count']++;
 				}
 			}
-			echo '</td>';
+			$table_content .= '</td>';
 		}
 
-		echo '</tr>';
+		$table_content .= '</tr>';
+		$csv_content .= "\n";
+}
+
+function quote_csv($line) {
+	$line = str_replace('"', '""', $line);
+	$line = str_replace("\n", '\n', $line);
+	$line = str_replace("\r", '\r', $line);
+	$line = str_replace("\x00", '\0', $line);
+
+	return '"'.$line.'"';
+}
+
+$tid = intval($_REQUEST['tid']);
+
+$_pages['tools/tests/results_all.php']['title_var']  = 'mark_statistics';
+$_pages['tools/tests/results_all.php']['parent'] = 'tools/tests/results_all_quest.php?tid='.$tid;
+
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['title_var'] = 'question_statistics';
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tools/tests/results_all.php');
+
+if (isset($_POST['reset_filter'])) {
+	unset($_POST['start_date']);
+	unset($_POST['end_date']);
+	unset($_POST['student_type']);
+}
+
+if (!isset($_POST['student_type'])) {
+	$_POST['student_type'] = 'all';
+}
+
+if (isset($_POST["start_date"])) $start_date = trim($_POST["start_date"]);
+if (isset($_POST["end_date"]))$end_date = trim($_POST["end_date"]);
+
+if ($start_date != "" && !isValidDate($start_date)) {
+	$msg->addError('START_DATE_INVALID');
+}
+
+if ($end_date != "" && !isValidDate($end_date)) {
+	$msg->addError('END_DATE_INVALID');
+}
+
+$table_content = "";
+$csv_content = "";
+
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+
+$sql	= "SELECT title, out_of, result_release, randomize_order, passscore, passpercent FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+$result	= mysql_query($sql, $db);
+$row = mysql_fetch_array($result);
+$out_of = $row['out_of'];
+$random = $row['randomize_order'];
+$passscore = $row['passscore'];
+$passpercent = $row['passpercent'];
+$test_title = str_replace (' ', '_', str_replace(array('"', '<', '>'), '', $row['title']));
+
+$table_content .= '<h3>'.$row['title'].'</h3><br />';
+
+$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
+
+//$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
+$result	= mysql_query($sql, $db);
+$questions = array();
+$total_weight = 0;
+$i = 0;
+
+while ($row = mysql_fetch_assoc($result)) {
+	$row['score']	= 0;
+	$questions[$i]	= $row;
+	$questions[$i]['count'] = 0;
+	$q_sql .= $row['question_id'].',';
+	$total_weight += $row['weight'];
+	$i++;
+}
+$q_sql = substr($q_sql, 0, -1);
+$num_questions = count($questions);
+
+//get all the marked tests for this test
+$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.status=1 AND R.test_id=$tid AND R.final_score<>'' ";
+
+if ($start_date)     $sql .= " AND R.date_taken >= '" . $start_date . "'";
+if ($end_date)     $sql .= " AND R.date_taken <= '" . $end_date . "'";
+
+$sql .= " ORDER BY M.login, R.date_taken";
+
+$result = mysql_query($sql, $db);
+$num_results = mysql_num_rows($result);
+if ($row = mysql_fetch_assoc($result)) {
+	$total_score = 0;
+
+	// generate table/csv header line
+	$table_content .= '<table class="data static" summary="" style="width: 90%" rules="cols">';
+	$table_content .= '<thead>';
+	$table_content .= '<tr>';
+	$table_content .= '<th scope="col">'._AT('login_name').'</th>';
+	$table_content .= '<th scope="col">'._AT('date_taken').'</th>';
+	$table_content .= '<th scope="col">'._AT('pass_score').'</th>';
+	$table_content .= '<th scope="col">'._AT('mark').'</th>';
+
+	$csv_content .= quote_csv(_AT('login_name')).', ';
+	$csv_content .= quote_csv(_AT('date_taken')).', ';
+	$csv_content .= quote_csv(_AT('pass_score')).', ';
+	$csv_content .= quote_csv(_AT('mark'));
+
+	for($i = 0; $i< $num_questions; $i++) {
+		$table_content .= '<th scope="col">Q'.($i+1).' /'.$questions[$i]['weight'].'</th>';
+
+		$csv_content .= ', '.quote_csv('Q'.($i+1).'/'.$questions[$i]['weight']);
+	}
+	$table_content .= '</tr>';
+	$table_content .= '</thead>';
+	$table_content .= '<tbody>';
+	
+	$csv_content .= "\n";
+	
+	$sql2	= "SELECT anonymous FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+	$result2	= mysql_query($sql2, $db);
+	while($row2 =mysql_fetch_array($result2)){
+			$anonymous = $row2['anonymous'];
+	}
+
+	do {
+		if ($random) {
+			$total_weight = get_random_outof($row['test_id'], $row['result_id']);
+		}
+		
+		// display passed student
+		if ($_POST['student_type'] == 'all' ||
+		    $_POST['student_type'] == 'passed' &&
+		    (($passscore<>0 && $row['final_score']>=$passscore) ||
+			   ($passpercent<>0 && ($row['final_score']/$total_weight*100)>=$passpercent)))
+			display_test_info($row);
+		elseif ($_POST['student_type'] == 'all' ||
+		        $_POST['student_type'] == 'failed' &&
+		        (($passscore<>0 && $row['final_score']<$passscore) ||
+			       ($passpercent<>0 && ($row['final_score']/$total_weight*100)<$passpercent)))
+			display_test_info($row);
+		elseif ($_POST['student_type'] == 'all')
+			display_test_info($row);
+
 	} while ($row = mysql_fetch_assoc($result));
-	echo '</tbody>';
+	$table_content .= '</tbody>';
 
-	echo '<tfoot>';
-	echo '<tr>';
-	echo '<td colspan="2" align="right"><strong>'._AT('average').':</strong></td>';
-	echo '<td align="center"><strong>'.number_format($total_score/$num_results, 1).'</strong></td>';
+	$table_content .= '<tfoot>';
+	$table_content .= '<tr>';
+	$table_content .= '<td colspan="3" align="right"><strong>'._AT('average').':</strong></td>';
+	$table_content .= '<td align="center"><strong>'.number_format($total_score/$num_results, 1).'</strong></td>';
 
 	for($i = 0; $i < $num_questions; $i++) {
-		echo '<td class="row1" align="center"><strong>';
+		$table_content .= '<td class="row1" align="center"><strong>';
 			if ($random) {
 				$count = $questions[$i]['count'];
 			}
 			if ($questions[$i]['weight'] && $count) {
-					echo number_format($questions[$i]['score']/$count, 1);
+					$table_content .= number_format($questions[$i]['score']/$count, 1);
 			} else {
-				echo '0.0';
+				$table_content .= '0.0';
 			}
-			echo '</strong></td>';
+			$table_content .= '</strong></td>';
 	}
-	echo '</tr>';
+	$table_content .= '</tr>';
 
-	echo '<tr>';
-	echo '<td colspan="2">&nbsp;</td>';
-	echo '<td align="center"><strong>';
+	$table_content .= '<tr>';
+	$table_content .= '<td colspan="3">&nbsp;</td>';
+	$table_content .= '<td align="center"><strong>';
 	if ($total_weight) {
-		echo number_format($total_score/$num_results/$total_weight*100, 1).'%';
+		$table_content .= number_format($total_score/$num_results/$total_weight*100, 1).'%';
 	}
-	echo '</strong></td>';
+	$table_content .= '</strong></td>';
 
 	for($i = 0; $i < $num_questions; $i++) {
-		echo '<td align="center"><strong>';
+		$table_content .= '<td align="center"><strong>';
 			if ($random) {
 				$count = $questions[$i]['count'];
 			}
 
 			if ($questions[$i]['weight'] && $count) {
-				echo number_format($questions[$i]['score']/$count/$questions[$i]['weight']*100, 1).'%';
+				$table_content .= number_format($questions[$i]['score']/$count/$questions[$i]['weight']*100, 1).'%';
 			} else {
-				echo '00.0%';
+				$table_content .= '00.0%';
 			}
-		echo '</strong></td>';
+		$table_content .= '</strong></td>';
 	}
-	echo '</tr>';
-	echo '</tfoot>';
+	$table_content .= '</tr>';
+	$table_content .= '</tfoot>';
 } else {
-	echo '<em>'._AT('no_results_available').'</em>';
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	$table_content .= '<em>'._AT('no_results_available').'</em>';
+	$no_result_found = true;
+}
+
+// header info has to be in front of any other output, so download
+// before display page
+if ($_POST['download']){
+	if ($no_result_found)
+	{
+		require (AT_INCLUDE_PATH.'header.inc.php');
+		$msg->printErrors('ITEM_NOT_FOUND');
+		require (AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+
+	header('Content-Type: application/x-excel');
+	header('Content-Disposition: inline; filename="'.$test_title.'.csv"');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	
+	echo $csv_content;
 	exit;
 }
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+$msg->printErrors();
+
 ?>
+<script type='text/javascript' src='calendar.js'></script>
+
+<div class="input-form">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?tid='.$tid; ?>">
+	<div class="row">
+		<label for="start_date"><?php echo _AT('start_date'); ?>(YYYY-MM-DD)</label>
+		<input id='start_date' name='start_date' type='text' value='<?php echo $start_date?>' />
+		<img src='images/calendar.gif' style="vertical-align: middle; cursor: pointer;" onclick="scwShow(scwID('start_date'),event);" />
+
+		<label for="end_date"><?php echo _AT('end_date'); ?>(YYYY-MM-DD)</label>
+		<input id='end_date' name='end_date' type='text' value='<?php echo $end_date?>' />
+		<img src='images/calendar.gif' style="vertical-align: middle; cursor: pointer;" onclick="scwShow(scwID('end_date'),event);" />
+	</div>
+
+<?php
+// display options for passed/failed students when pass score/percentage is defined
+if ($passscore <> 0 || $passpercent <> 0)
+{
+?>
+	<div class="row">
+		<?php echo _AT('students'); ?><br />
+		<input type="radio" name="student_type" value="all" id="all" <?php if ($_POST['student_type'] == 'all'){echo 'checked="true"';} ?> />
+		<label for="all" title="<?php echo _AT('all_students');  ?>"><?php echo _AT('all_students'); ?></label>
+
+		<input type="radio" name="student_type" value="passed" id="passed" <?php if ($_POST['student_type'] == 'passed'){echo 'checked="true"';} ?> />
+		<label for="passed" title="<?php echo _AT('all_passed_students');  ?>"><?php echo _AT('all_passed_students'); ?></label>
+
+		<input type="radio" name="student_type" value="failed" id="failed" <?php if ($_POST['student_type'] == 'failed'){echo 'checked="true"';} ?> />
+		<label for="failed" title="<?php echo _AT('all_failed_students');  ?>"><?php echo _AT('all_failed_students'); ?></label>
+	</div>
+<?php
+}
+?>
+
+	<div class="row buttons">
+		<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+		<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		<input type="submit" name="download" value="<?php echo _AT('download_test_csv'); ?>" />
+		<input type="hidden" name="test_id" value="<?php echo $tid; ?>" />
+	</div>
+</form>
+</div>
+
+
+<?php 
+echo $table_content;
+?>
+
 </table>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
