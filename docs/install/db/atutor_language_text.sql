@@ -1702,4 +1702,14 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ADD_FEED', 'Are y
 ('en', '_template', 'you_are_here', 'You are here', '2003-10-02 16:46:28', 'ALT text Global/Local Navigation link to self'),
 ('en', '_template', 'zip_archive', 'Zip Archive', '2003-05-22 16:20:01', 'file manager'),
 ('en', '_template', 'zip_file_manager', 'Zip File Manager', '2003-05-22 16:20:14', 'file manager'),
-('en', '_template', 'zip_illegal_contents', 'The contents of this archive are listed below. Illegal file types will not be extracted, and file names containing illegal characters will be translated.', '2004-08-10 15:10:04', '');
+('en', '_template', 'zip_illegal_contents', 'The contents of this archive are listed below. Illegal file types will not be extracted, and file names containing illegal characters will be translated.', '2004-08-10 15:10:04', ''),
+('en', '_template', 'pass_score', 'Pass Score', now(), ''),
+('en', '_template', 'pass_feedback', 'Pass Feedback', now(), ''),
+('en', '_template', 'fail_feedback', 'Fail Feedback', now(), ''),
+('en', '_template', 'test_description', 'Test Description', now(), ''),
+('en', '_template', 'no_pass_score', 'No pass score', now(), ''),
+('en', '_template', 'percentage_score', 'percentage score', now(), ''),
+('en', '_template', 'points_score', 'points score', now(), ''),
+('en', '_template', 'all_passed_students', 'All Passed Students', now(), ''),
+('en', '_template', 'all_failed_students', 'All Failed Students', now(), '')
+;
