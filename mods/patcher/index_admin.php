@@ -4,11 +4,28 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_HELLO_WORLD);
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-function printNoAvailablePatchMsg()
+/**
+ * Check if the patch has been installed
+ */
+function is_patch_installed($patch_id)
 {
-	print ("<font color='red'><b>No available patch need to be installed.</b></font>");
+	global $db;
+	
+	// Only displays the patches that are not installed
+	$sql = "select count(*) num_of_installed from ".TABLE_PREFIX."patches " .
+	       "where atutor_patch_id = '" . $patch_id ."'".
+	       " and status like '%Installed'";
+
+	$result = mysql_query($sql, $db) or die(mysql_error());
+	$row = mysql_fetch_assoc($result);
+	
+	if ($row["num_of_installed"] > 0) return true;
+	else return false;
 }
 
+/**
+ * Generate html of each patch row at main patch page
+ */
 function print_patch_row($patch_row, $id, $enable_radiotton)
 {
 ?>
@@ -19,8 +36,23 @@ function print_patch_row($patch_row, $id, $enable_radiotton)
 		<td><?php echo $patch_row["description"]; ?></td>
 		<td><?php if (!isset($patch_row['status'])) echo "Uninstalled"; else echo $patch_row["status"]; ?></td>
 		<td><?php echo $patch_row["available_to"]; ?></td>
+		<td>
+		<?php 
+		if (preg_match('/Installed/', $patch_row["status"]) > 0 && ($patch_row["remove_permission_files"]<> "" || $patch_row["backup_files"]<>""))
+			echo '
+		  <div class="row buttons">
+				<input type="button" align="center" name="info" value="'._AT('view_message').'" onClick="location.href=\''. $_SERVER['PHP_SELF'] .'?patch_id='.$id.'\'" />
+			</div>';
+		?>
+		</td>
 	</tr>
 <?php
+}
+
+// split a string by given delimiter and return an array
+function get_array_by_delimiter($subject, $delimiter)
+{
+	return preg_split('/'.preg_quote($delimiter).'/', $subject, -1, PREG_SPLIT_NO_EMPTY);
 }
 
 $skipFilesModified = false;
@@ -50,18 +82,12 @@ else
 // Installation process
 if ($_POST['install'] || $_POST['yes'])
 {
+//	unset($_SESSION['remove_permission']);
+
 	if ($_POST['install']) $id=$_POST['id'];
 	else $id = $_REQUEST['id'];
 	
-	// Only displays the patches that are not installed
-	$sql = "select count(*) num_of_installed from ".TABLE_PREFIX."patches " .
-	       "where atutor_patch_id = " . $id .
-	       " and status = 'Installed'";
-
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
-	
-	if ($row["num_of_installed"] == 1)
+	if (is_patch_installed($id))
 	{
 		$msg->addError('PATCH_ALREADY_INSTALLED');
 	}
@@ -84,7 +110,112 @@ if ($_POST['install'] || $_POST['yes'])
 
 			$patch = & new Patch($patchParser->getParsedArray(), $patch_list_array[$id], $skipFilesModified);
 			
-			$patch->applyPatch();
+			if ($patch->applyPatch())  $patch_id = $patch->getPatchID();
+		}
+	}
+}
+// end of patch installation
+
+require_once('common.inc.php');
+
+// display permission and backup files message
+if (isSet($_REQUEST['patch_id']))  $patch_id = $_REQUEST['patch_id'];
+elseif ($_POST['patch_id']) $patch_id=$_POST['patch_id'];
+
+if ($patch_id > 0)
+{
+	// clicking on button "Done" at displaying remove permission info page
+	if ($_POST['done'])
+	{
+		$permission_files = array();
+		
+		if (is_array($_SESSION['remove_permission']))
+		{
+			foreach ($_SESSION['remove_permission'] as $file)
+			{
+				if (is_writable($file))  $permission_files[] = $file;
+			}
+		}
+		
+		if (count($permission_files) == 0)
+		{
+			$updateInfo = array("remove_permission_files"=>"", "status"=>"Installed");
+		
+			updatePatchesRecord($patch_id, $updateInfo);
+		}
+		else
+		{
+			foreach($permission_files as $permission_file)
+				$remove_permission_files .= $permission_file. '|';
+		
+			$updateInfo = array("remove_permission_files"=>preg_quote($remove_permission_files), "status"=>"Partly Installed");
+			
+			updatePatchesRecord($patch_id, $updateInfo);
+		}
+	
+	}
+	
+	// display remove permission info
+	unset($_SESSION['remove_permission']);
+
+	$sql = "SELECT * FROM ".TABLE_PREFIX."patches 
+	         WHERE patches_id = " . $patch_id;
+
+	$result = mysql_query($sql, $db) or die(mysql_error());
+	$row = mysql_fetch_assoc($result);
+	
+	if ($row["remove_permission_files"]<> "")
+	{
+		$remove_permission_files = $_SESSION['remove_permission'] = get_array_by_delimiter($row["remove_permission_files"], "|");
+
+		if (count($_SESSION['remove_permission']) > 0)
+		{
+			$feedbacks[] = _AT('remove_write_permission');
+			
+			foreach($remove_permission_files as $remove_permission_file)
+				if ($remove_permission_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $remove_permission_file . "</strong><br>";
+
+			$notes = '<form action="'. $_SERVER['PHP_SELF'].'?patch_id='.$patch_id.'" method="post" name="remove_permission">
+		  <div class="row buttons">
+				<input type="hidden" name="patch_id" value="'.$patch_id.'" />
+				<input type="submit" name="done" value="'._AT('done').'" accesskey="d" />
+			</div>
+			</form>';
+		}
+
+		print_errors($feedbacks, $notes);
+	}
+
+	// display backup file info after remove permission step
+	if ($row["remove_permission_files"] == "")
+	{
+		if ($row["backup_files"]<> "")
+		{
+			$backup_files = get_array_by_delimiter($row["backup_files"], "|");
+	
+			if (count($backup_files) > 0)
+			{
+				$feedbacks[] = _AT('patcher_show_backup_files');
+				
+				foreach($backup_files as $backup_file)
+					if ($backup_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $backup_file . "</strong><br>";
+			}
+					
+			$patch_files = get_array_by_delimiter($row["patch_files"], "|");
+	
+			if (count($patch_files) > 0)
+			{
+				$feedbacks[] = _AT('patcher_show_patch_files');
+				
+				foreach($patch_files as $patch_file)
+					if ($patch_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $patch_file . "</strong><br>";
+					
+			}
+			
+			if (count($feedbacks)> 0)
+				print_feedback($feedbacks);
+			else
+				print_feedback(array());
 		}
 	}
 }
@@ -118,6 +249,7 @@ $msg->printErrors();
 		<th scope="col"><?php echo _AT('description');?></th>
 		<th scope="col"><?php echo _AT('status');?></th>
 		<th scope="col"><?php echo _AT('available_to');?></th>
+		<th scope="col"><?php echo _AT('view_message');?></th>
 	</tr>
 </thead>
 	
@@ -141,30 +273,15 @@ else
 {
 	while ($row = mysql_fetch_assoc($result))
 	{
-			if ($row['status'] == 'Reverted')
-			{
-				print_patch_row($row, $row['patches_id'], true);
-				
-				$is_first_uninstalled = false;
-			}
-			else
-				print_patch_row($row, $row['patches_id'], false);
+			print_patch_row($row, $row['atutor_patch_id'], false);
 	}
 	
+	$array_id = 0;
 	// display un-installed patches
 	foreach ($patch_list_array as $row_num => $new_patch)
 	{
-		// Only displays the patches that are not installed
-		$sql = "select count(*) num_of_installed from ".TABLE_PREFIX."patches " .
-		       "where atutor_patch_id = " . $new_patch['atutor_patch_id'] .
-		       " and status = 'Installed'";
-	
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		
-		if ($row["num_of_installed"] == 0)
+		if (!is_patch_installed($new_patch['atutor_patch_id']))
 		{
-			$array_id = 0;
 			if ($is_first_uninstalled)
 			{
 				print_patch_row($new_patch, $array_id++, true);
@@ -174,13 +291,15 @@ else
 			else
 				print_patch_row($new_patch, $array_id++, false);
 		}
+		else
+			$array_id++;
 	}
 
 ?>
 </tbody>
 <tfoot>
 <tr>
-	<td colspan="6">
+	<td colspan="7">
 		<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
 	</td>
 </tr>

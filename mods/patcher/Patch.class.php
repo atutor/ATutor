@@ -29,12 +29,12 @@ class Patch {
 	var $patch_id;                        // current patches.patches_id
 	var $patch_file_id;                   // current patches_files.patches_files_id
 	
-	var $backup_files = array();          // names of all the backup files created in the script
 	var $need_access_to_folders = array();// folders that need to have write permission
 	var $need_access_to_files = array();  // files that need to have write permission
+	var $backup_files = array();          // backup files
+	var $patch_files = array();           // patch files
 
 	var $errors = array();                // error messages
-	var $feedbacks = array();             // feedback messages, displayed after patch installation
 	var $baseURL;                         // patch folder at update.atutor.ca
 	var $backup_suffix;                   // suffix appended for backup files
 	var $patch_suffix;                    // suffix appended for patch files copied from update.atutor.ca
@@ -56,7 +56,7 @@ class Patch {
 	*/
 	function Patch($patch_array, $patch_summary_array, $skipFilesModified) 
 	{
-		// get rid of the current folder of 'mods/patcher'
+		// add relative path to move to ATutor root folder
 		for ($i = 0; $i < count($patch_array[files]); $i++)
 		{
 			$patch_array[files][$i]['location'] = $this->relative_to_atutor_root . $patch_array[files][$i]['location'];
@@ -73,6 +73,9 @@ class Patch {
 		$this->module_content_dir = AT_CONTENT_DIR . "patcher";
 
 		session_start();
+		
+		if (!is_array($_SESSION['remove_permission'])) $_SESSION['remove_permission']=array();
+		
 	}
 
 	/**
@@ -121,47 +124,64 @@ class Patch {
 				$this->overwriteFile($row_num);
 			}
 		}
-
+		
+		// if only has backup files info, patch is considered successfully installed
+		// if has permission to remove, considered partly installed
 		if (count($this->backup_files) > 0)
 		{
-			$this->feedbacks[] = 'Below is the list of the backup files created by patch installation. 
-														After ensuring ATutor works properly with the patch, you may want to 
-														delete these files. If the ATutor does not work properly with the patch,
-														you can always revert back to old ATutor by renaming the backup files 
-														to original files. The renaming is to remove the suffix .'. 
-														$this->backup_suffix.'<br>';
-			
 			foreach($this->backup_files as $backup_file)
-				$this->feedbacks[count($this->feedbacks)-1] .= $backup_file . "<br>";
-		}
+				$backup_files .= $backup_file. '|';
 		
-		if (strlen($_SESSION['permission_msg']) > 0)
-		{
-			$this->feedbacks[] = 'Please <strong>REMOVE</strong> write permission on the listed folders and files for your security:<br>' . $_SESSION['permission_msg'];
-			
-			$notes = '<p><strong>Note:</strong> To remove permissions on Unix use <kbd>chmod 755</kbd> then the file name.</p>';
-			
-			unset($_SESSION['permission_msg']);
+			$updateInfo = array("backup_files"=>preg_quote($backup_files));
 		}
-
-		print_feedback($this->feedbacks, $notes);
 	
-		unset($this->feedbacks);
+		if (count($this->patch_files) > 0)
+		{
+			foreach($this->patch_files as $patch_file)
+				$patch_files .= $patch_file. '|';
 		
-		return true;
+			$updateInfo = array_merge($updateInfo, array("patch_files"=>preg_quote($patch_files)));
+		}
+	
+		if (is_array($_SESSION['remove_permission']) && count($_SESSION['remove_permission']))
+		{
+			foreach($_SESSION['remove_permission'] as $remove_permission_file)
+				$remove_permission_files .= $remove_permission_file. '|';
 
+			$updateInfo = array_merge($updateInfo, array("remove_permission_files"=>preg_quote($remove_permission_files), "status"=>"Partly Installed"));
+		}
+		else
+		{
+			$updateInfo = array_merge($updateInfo, array("status"=>"Installed"));
+		} 
+
+		updatePatchesRecord($this->patch_id, $updateInfo);
+		
+		unset($_SESSION['remove_permission']);
+
+		return true;
 	}
 
 	/**
 	* return patch array
 	* @access  public
-	* @return  true  if there are files or folders that script has no permission
-	*          false if permissions are in place
+	* @return  patch array
 	* @author  Cindy Qi Li
 	*/
 	function getPatchArray() 
 	{
 		return $this->patch_array;
+	}
+	
+	/**
+	* return patch id processed by this object
+	* @access  public
+	* @return  patch id
+	* @author  Cindy Qi Li
+	*/
+	function getPatchID() 
+	{
+		return $this->patch_id;
 	}
 	
 	/**
@@ -178,9 +198,14 @@ class Patch {
 		
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
-			if (!is_writable($patch_file['location']) && !in_array(realpath($patch_file['location']), $this->need_access_to_folders))
-				$this->need_access_to_folders[] = realpath($patch_file['location']);
-			
+			$real_location = realpath($patch_file['location']);
+			if (!is_writable($patch_file['location']) && !in_array($real_location, $this->need_access_to_folders))
+			{
+				$this->need_access_to_folders[] = $real_location;
+
+				if (!in_array($real_location, $_SESSION['remove_permission']))
+					$_SESSION['remove_permission'][] = $real_location;
+			}
 
 			if ($patch_file['action'] == 'alter' || $patch_file['action'] == 'delete' || $patch_file['action'] == 'overwrite')
 			{
@@ -188,29 +213,32 @@ class Patch {
 
 				if (file_exists($file))     @chmod($file, 0666);
 
-				if (file_exists($file) && !is_writable($file) && !in_array(realpath($file), $this->need_access_to_files))
-					$this->need_access_to_files[] = realpath($file);
+				$real_file = realpath($file);
+				if (file_exists($file) && !is_writable($file) && !in_array($real_file, $this->need_access_to_files))
+				{
+					$this->need_access_to_files[] = $real_file;
+
+					if (!in_array($real_file, $_SESSION['remove_permission']))
+						$_SESSION['remove_permission'][] = $real_file;
+				}
 			}
 		}
 		
 		if (count($this->need_access_to_folders) > 0 || count($this->need_access_to_files) > 0)
 		{
-			$this->errors[] = 'Please give <strong>write</strong> permission to listed folders and files:<br>';
+			$this->errors[] = _AT('grant_write_permission');
 			
 			foreach($this->need_access_to_folders as $folder)
 			{
 				$this->errors[0] .= '<strong>'. $folder . "</strong><br>";
-				$_SESSION['permission_msg'] .= '<strong>'. $folder . "</strong><br>";
 			}
 
 			foreach($this->need_access_to_files as $file)
 			{
 				$this->errors[0] .= '<strong>'. $file . "</strong><br>";
-				$_SESSION['permission_msg'] .= '<strong>'. $file . "</strong><br>";
 			}
 
-			$notes = '<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>'.
-		  '<form action="'. $_SERVER['PHP_SELF'].'?id='.$id.'&who='. $who .'" method="post" name="skip_files_modified">
+			$notes = '<form action="'. $_SERVER['PHP_SELF'].'?id='.$id.'&who='. $who .'" method="post" name="skip_files_modified">
 		  <div class="row buttons">
 				<input type="submit" name="yes" value="'._AT('continue').'" accesskey="y" />
 				<input type="submit" name="no" value="'. _AT('cancel'). '" />
@@ -236,6 +264,9 @@ class Patch {
 	*/
 	function hasFilesModified()
 	{
+		$overwrite_modified_files = false;
+		$alter_modified_files = false;
+		
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
 			if ($patch_file["action"]=='alter' || $patch_file["action"]=='overwrite')
@@ -243,21 +274,21 @@ class Patch {
 				if ($this->isFileModified($patch_file['location'], $patch_file['name']))
 				{
 					if ($patch_file['action']=='overwrite')
-						$this->errors[] = '<strong>'. realpath($patch_file['location'] . $patch_file['name']) . 
-						                  '</strong> is modified locally. If you choose to proceed with the installation, 
-						                  the new file '.realpath($patch_file['location'] . $patch_file['name'].'.'.$this->patch_suffix) .
-						                  ' will be copied to your local machine. You have to manually merge this file and your local copy.';
+					{
+						$overwrite_files .= realpath($patch_file['location'] . $patch_file['name']) . '<br>';
+						$overwrite_modified_files = true;
+					}
 					if ($patch_file['action']=='alter')
-						$this->errors[] = '<strong>'. realpath($patch_file['location'] . $patch_file['name']) . 
-						                  '</strong> is modified locally. If you choose to proceed with the installation, 
-						                  your local file will be modified by installation process. A backup on your original
-						                  file will be created before the modification. The backup file will be ' .
-						                  realpath($patch_file['location'] . $patch_file['name'].'.'.$this->backup_suffix) .
-						                  '. Please note that the modification on your customized code may break your customization.';
+					{
+						$alter_files .= realpath($patch_file['location'] . $patch_file['name']) . '<br>';
+						$alter_modified_files = true;
+					}
 				}
 			}
 		}
 
+		if ($overwrite_modified_files)    $this->errors[] = _AT('patcher_overwrite_modified_files') . $overwrite_files;
+		if ($alter_modified_files)    $this->errors[] = _AT('patcher_alter_modified_files') . $alter_files;
 		if (count($this->errors) > 0)
 		{
 			$notes = '
@@ -267,7 +298,7 @@ class Patch {
 				<input type="submit" name="no" value="'. _AT('no'). '" />
 			</div>
 			</form>';
-			
+
 			print_errors($this->errors, $notes);
 		
 			unset($this->errors);
@@ -368,7 +399,7 @@ class Patch {
 		{
 			// move file to backup
 			$this->copyFile($local_file, $backup_file);
-			$this->backup_files[] = $backup_file;
+			$this->backup_files[] = realpath($backup_file);
 			@unlink($local_file);
 		}
 		
@@ -391,13 +422,7 @@ class Patch {
 		// backup user's file
 		$backup_file = $local_file . "." . $this->backup_suffix;
 		$this->copyFile($local_file, $backup_file);
-		$this->backup_files[] = $backup_file;
-		
-		if ($this->skipFilesModified && $this->isFileModified($this->patch_array['files'][$row_num]['location'], $this->patch_array['files'][$row_num]['name']))
-		{
-			$this->feedbacks[] = '<strong>'.$local_file . '</strong> file has been customized by user. The installation may break your customization. Please test this file. 
-			                      The file before the installation is backup to <strong>' . $backup_file . '</strong>';
-		}
+		$this->backup_files[] = realpath($backup_file);
 		
 		$local_file_content = file_get_contents($local_file);
 
@@ -405,10 +430,12 @@ class Patch {
 		foreach ($this->patch_array['files'][$row_num]['action_detail'] as $garbage => $alter_file_action)
 		{
 			if ($alter_file_action['type'] == 'delete')
-				$local_file_content = preg_replace('/'. preg_quote($alter_file_action['code_from'], '/') .'/', '', $local_file_content);
+			{
+				$local_file_content = $this->strReplace($alter_file_action['code_from'], '', $local_file_content);
+			}
 
 			if ($alter_file_action['type'] == 'replace')
-				$local_file_content = preg_replace('/'. preg_quote($alter_file_action['code_from'], '/') .'/', $alter_file_action['code_to'], $local_file_content);
+				$local_file_content = $this->strReplace($alter_file_action['code_from'], $alter_file_action['code_to'], $local_file_content);
 
 			$this->createPatchesFilesActionsRecord($alter_file_action);
 		}
@@ -417,8 +444,6 @@ class Patch {
 		fwrite($fp, $local_file_content);
 		fclose($fp);
 
-		// if file is modified and user agrees to proceed with applying patch,
-		// copy the new file to user's local for them to merge manually
 		return true;
 	}
 	
@@ -443,9 +468,7 @@ class Patch {
 
 			$this->copyFile($patch_file, $local_patch_file);
 			
-			$this->feedbacks[] = '<strong>'.$local_file . '</strong> file has been customized by user. The new file <strong>'.
-			                     $local_patch_file .'</strong> has been copied to your computer. Please manually merge the change 
-			                     between the new file and your local copy.';
+			$this->patch_files[] = realpath($local_patch_file);
 		}
 		else
 		{
@@ -453,7 +476,7 @@ class Patch {
 			
 			// backup user's file
 			$this->copyFile($local_file, $backup_file);
-			$this->backup_files[] = $backup_file;
+			$this->backup_files[] = realpath($backup_file);
 			
 			// overwrite user's file
 			$this->copyFile($patch_file, $local_file);
@@ -497,6 +520,37 @@ class Patch {
 		$dest_content = preg_replace($pattern, '', file_get_contents($dest));
 		
 		return strcasecmp($src_content, $dest_content);
+	}
+	
+	/**
+	* Replace single/multiple lines of string. 
+	* This function handles different new line character at windows/unix platform
+	* @access  private
+	* @param   $search	String to replace from
+	*          $replace	String to replace to
+	*          $subject Subject to be handled  
+	* @return  return replaced string, if nothing is replaced, return original subject
+	* @author  Cindy Qi Li
+	*/
+	function strReplace($search, $replace, $subject)
+	{
+		$new_line_array = array("\n", "\r", "\n\r", "\r\n");
+		
+		foreach ($new_line_array as $new_line)
+		{
+			if (preg_match('/'.preg_quote($new_line).'/', $search) > 0)   $search_new_line = $new_line;
+			if (preg_match('/'.preg_quote($new_line).'/', $replace) > 0)   $replace_new_line = $new_line;
+			if (preg_match('/'.preg_quote($new_line).'/', $subject) > 0)   $subject_new_line = $new_line;
+		}
+
+		// replace new line chars in $search & $replace to new line in $subject
+		if ($search_new_line <> "" && $search_new_line <> $subject_new_line) 
+			$search = preg_replace('/'.preg_quote($search_new_line).'/', $subject_new_line, $search);
+		
+		if ($replace_new_line <> "" && $replace_new_line <> $subject_new_line) 
+			$replace = preg_replace('/'.preg_quote($replace_new_line).'/', $subject_new_line, $replace);
+		
+		return preg_replace('/'. preg_quote($search, '/') .'/', $replace, $subject);
 	}
 	
 	/**
@@ -544,7 +598,7 @@ class Patch {
 					   '".$patch_summary_array["description"]."',
 					   '".$patch_summary_array["available_to"]."',
 					   '',
-					   'Installed'
+					   '".$patch_summary_array["status"]."'
 					   )";
 
 		$result = mysql_query($sql, $db) or die(mysql_error());
@@ -609,7 +663,6 @@ class Patch {
 		
 		return true;
 	}
-
 }
 
 ?>

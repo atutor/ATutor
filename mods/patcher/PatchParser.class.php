@@ -114,7 +114,8 @@ class PatchParser {
 	}
 
 	// private
-   	function characterData($parser, $data){
+  function characterData($parser, $data)
+  {
 		$this->character_data .= $data;
 	}
 
