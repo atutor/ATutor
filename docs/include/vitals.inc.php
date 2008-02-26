@@ -73,7 +73,7 @@ function unregister_GLOBALS() {
 	}
 
 	@set_time_limit(0);
-	@ini_set('session.gc_maxlifetime', '5'); /* 10 hours */
+	@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 	@session_cache_limiter('private, must-revalidate');
 
 	session_name('ATutorID');
