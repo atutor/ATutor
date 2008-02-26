@@ -151,7 +151,7 @@ function convert($path, $filename)
 		fwrite($fp,$content);
 		fclose($fp);
 	}
-	elseif (in_array(strtolower(substr($path, (strripos($path, '.')+1))),$filetypes))
+	elseif (in_array(strtolower(substr($path, (strrpos($path, '.')+1))),$filetypes))
 	{
 		$content = file_get_contents($path);
 		$content = iconv($charset_from, $charset_to. '//IGNORE', $content);
