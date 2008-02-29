@@ -8,7 +8,6 @@ CREATE TABLE `patches` (
 	`patches_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`atutor_patch_id` VARCHAR(20) NOT NULL default '',
 	`applied_version` VARCHAR(10) NOT NULL default '',
-	`sequence` MEDIUMINT UNSIGNED default 0,
 	`patch_folder` VARCHAR(250) NOT NULL default '',
   `description` TEXT NOT NULL,
 	`available_to` VARCHAR(250) NOT NULL default '',
@@ -61,6 +60,8 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_XML_NOT_FOUND
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_overwrite_modified_files', 
 'The listed files are modified locally. If you choose to proceed, the patch file will be copied to your local machine. 
 You have to manually merge this file and your local copy.<br>', now(), 'patcher');
+INSERT INTO `language_text` VALUES ('en', '_template', 'patch_local_file_not_exist', 
+'Cannot proceed. The listed files are not exist in your local machine. If you renamed them to your copy, in order to proceed, please rename back.<br>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_alter_modified_files', 
 'The listed files are modified locally. If you choose to proceed, your local file will be modified. The original
 file will be backup before the modification. Please note that the modification on your customized code may break your customization.<br>', now(), 'patcher');
@@ -75,4 +76,6 @@ to original files. <br>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_show_patch_files', 
 'Below is the list of the patch files copied to your computer. 
 Please manually merge the change between the patch files and your local copy. <br>', now(), 'patcher');
+INSERT INTO `language_text` VALUES ('en', '_template', 'patch_dependent_patch_not_installed', 
+'<br><font color="red">Waring: Due to patch dependency, please install the listed patches first: </font><br>', now(), 'patcher');
 

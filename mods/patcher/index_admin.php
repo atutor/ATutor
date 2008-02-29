@@ -1,8 +1,10 @@
 <?php
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-admin_authenticate(AT_ADMIN_PRIV_HELLO_WORLD);
+admin_authenticate(AT_ADMIN_PRIV_PATCHER);
 require (AT_INCLUDE_PATH.'header.inc.php');
+
+set_time_limit(0);
 
 /**
  * Check if the patch has been installed
@@ -28,12 +30,17 @@ function is_patch_installed($patch_id)
  */
 function print_patch_row($patch_row, $id, $enable_radiotton)
 {
+	global $dependent_patches;
+
+	if ($dependent_patches =="")
+		$description = $patch_row["description"];
+	else
+		$description = $patch_row["description"] . _AT('patch_dependent_patch_not_installed') . "<font color='red'>" . $dependent_patches . "</font>";
 ?>
 	<tr>
-		<td><input type="radio" name="id" value="<?php echo $id; ?>" id="<?php echo $id; ?>" <?php if ($enable_radiotton) echo 'checked="true"'; else echo 'disabled="true"'; ?> /></td>
+		<td><input type="radio" name="id" value="<?php echo $id; ?>" id="<?php echo $id; ?>" <?php if (!$enable_radiotton) echo 'disabled="true"'; ?> /></td>
 		<td><?php echo $patch_row["atutor_patch_id"]; ?></td>
-		<td><?php echo $patch_row["sequence"]; ?></td>
-		<td><?php echo $patch_row["description"]; ?></td>
+		<td><?php echo $description; ?></td>
 		<td><?php if (!isset($patch_row['status'])) echo "Uninstalled"; else echo $patch_row["status"]; ?></td>
 		<td><?php echo $patch_row["available_to"]; ?></td>
 		<td>
@@ -65,7 +72,19 @@ if (trim($_POST['who']) != '') $who = trim($_POST['who']);
 elseif (trim($_REQUEST['who']) != '') $who = trim($_REQUEST['who']);
 else $who = "public";
 
-$patch_folder = 'http://update.atutor.ca/patch/' . str_replace('.', '_', VERSION) . '/';
+// check the connection to server update.atutor.ca
+$update_server = "update.atutor.ca"; 
+
+$file = fsockopen ($update_server, 80, $errno, $errstr, 15);
+
+if (!$file) 
+{
+	print "<font color='red'><b>Error: Cannot connect to patch server: ". $update_server . "</b></font>";
+	exit;
+}
+
+// get patch list
+$patch_folder = "http://" . $update_server . '/patch/' . str_replace('.', '_', VERSION) . '/';
 
 $patch_list_xml = @file_get_contents($patch_folder . 'patch_list.xml');
 
@@ -77,8 +96,10 @@ else
 {
 	$patchListParser =& new PatchListParser();
 	$patchListParser->parse($patch_list_xml);
-	$patch_list_array = $patchListParser->getMySortedParsedArrayForVersion($who, VERSION);
+	$patch_list_array = $patchListParser->getMyParsedArrayForVersion($who, VERSION);
 }
+// end of get patch list
+
 // Installation process
 if ($_POST['install'] || $_POST['yes'])
 {
@@ -240,12 +261,11 @@ $msg->printErrors();
 
 <?php 
 ?>
-<table class="data" summary="" style="width: 90%" rules="cols">
+<table class="data" summary="" style="width: 100%" rules="cols">
 <thead>
 	<tr>
 		<th scope="col">&nbsp;</th>
 		<th scope="col"><?php echo _AT('atutor_patch_id');?></th>
-		<th scope="col"><?php echo _AT('sequence');?></th>
 		<th scope="col"><?php echo _AT('description');?></th>
 		<th scope="col"><?php echo _AT('status');?></th>
 		<th scope="col"><?php echo _AT('available_to');?></th>
@@ -255,12 +275,10 @@ $msg->printErrors();
 	
 <tbody>
 <?php 
-$is_first_uninstalled = true;
-
 // display installed patches
 $sql = "select * from ".TABLE_PREFIX."patches " .
        "where applied_version = '" . VERSION . "' ".
-       "order by sequence";
+       "order by atutor_patch_id";
 
 $result = mysql_query($sql, $db);
 $num_of_patches = mysql_num_rows($result) + count($patch_list_array);
@@ -282,14 +300,30 @@ else
 	{
 		if (!is_patch_installed($new_patch['atutor_patch_id']))
 		{
-			if ($is_first_uninstalled)
+			$dependent_patches_installed = true;
+		
+			// check if the dependent patches are installed
+			if (is_array($new_patch["dependent_patches"]))
 			{
-				print_patch_row($new_patch, $array_id++, true);
-				
-				$is_first_uninstalled = false;
+				$dependent_patches = "";
+				foreach ($new_patch["dependent_patches"] as $num => $dependent_patch)
+				{
+					if (!is_patch_installed($dependent_patch))
+					{
+						$dependent_patches_installed = false;
+						$dependent_patches .= $dependent_patch. "<br>";
+					}
+				}
 			}
+
+			// display patch row
+			if ($dependent_patches_installed)
+				print_patch_row($new_patch, $array_id++, true);
 			else
+			{
 				print_patch_row($new_patch, $array_id++, false);
+				$dependent_patches_installed = true;
+			}
 		}
 		else
 			$array_id++;

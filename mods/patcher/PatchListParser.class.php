@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: PatchListParser.class.php 7208 2008-02-08 16:07:24Z greg $
+// $Id: PatchListParser.class.php 7208 2008-02-08 16:07:24Z cindy $
 
 /**
 * PatchListParser
@@ -27,6 +27,7 @@ class PatchListParser {
 	var $character_data; // tmp variable for storing the data
 	var $element_path; // array of element paths (basically a stack)
 	var $row_num;
+	var $dependent_patches_num;
 
 	function PatchListParser() {
 		$this->parser = xml_parser_create(''); 
@@ -64,10 +65,6 @@ class PatchListParser {
 		{
 			$this->patch_rows[$this->row_num]['applied_version'] = trim($this->character_data);
 		} 
-		else if ($this->element_path === array('patch_list', 'patch', 'sequence')) 
-		{
-			$this->patch_rows[$this->row_num]['sequence'] = trim($this->character_data);
-		} 
 		else if ($this->element_path === array('patch_list', 'patch', 'patch_folder')) 
 		{
 			$this->patch_rows[$this->row_num]['patch_folder'] = trim($this->character_data);
@@ -80,9 +77,14 @@ class PatchListParser {
 		{
 			$this->patch_rows[$this->row_num]['available_to'] = trim($this->character_data);
 		} 
+		else if ($this->element_path === array('patch_list', 'patch', 'dependent_patches', 'dependent_patch')) 
+		{
+			$this->patch_rows[$this->row_num]['dependent_patches'][$this->dependent_patches_num++] = trim($this->character_data);
+		}
 		else if ($this->element_path === array('patch_list', 'patch')) 
 		{
 			$this->row_num++;
+			$this->dependent_patches_num = 0;
 		}
 
 		array_pop($this->element_path);
@@ -107,29 +109,20 @@ class PatchListParser {
 	}
 
 	// public
-	// return parsed array only for given version 
-	// and the array is sorted by sequence
-	function getMySortedParsedArrayForVersion($who, $version) 
+	// return parsed array only for given name & version
+	function getMyParsedArrayForVersion($who, $version) 
 	{
-		$sorted_parsed_array = array();
-		$sequence = array();
+		$my_array = array();
 
 		// filter out the patch for given version
 		foreach ($this->patch_rows as $key => $row) 
 		{
 	    if ($row['applied_version'] == $version && $row['available_to']==$who)
-	    {
-	    	array_push($sorted_parsed_array, $row);
-	    	array_push($sequence, $row['sequence']);
-	    }
+	    	array_push($my_array, $row);
 		}
-		// sort array by patch sequence
-		array_multisort($sequence, SORT_ASC, $sorted_parsed_array);
 		
-		return $sorted_parsed_array;
+		return $my_array;
 	}
 }
-
-
 
 ?>

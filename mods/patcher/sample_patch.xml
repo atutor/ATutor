@@ -2,7 +2,6 @@
 <patch>
 	<atutor_patch_id>00001</atutor_patch_id>
 	<applied_version>1.6</applied_version>
-	<sequence>1</sequence>
 	<description>Sample patch XML</description>
 	
 	<sql>

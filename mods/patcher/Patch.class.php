@@ -266,12 +266,18 @@ class Patch {
 	{
 		$overwrite_modified_files = false;
 		$alter_modified_files = false;
+		$has_not_exist_files = false;
 		
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
 			if ($patch_file["action"]=='alter' || $patch_file["action"]=='overwrite')
 			{
-				if ($this->isFileModified($patch_file['location'], $patch_file['name']))
+				if (!file_exists($patch_file['location'] . $patch_file['name']))
+				{
+					$not_exist_files .= $patch_file['location'] . $patch_file['name'] . '<br>';
+					$has_not_exist_files = true;
+				}
+				else if ($this->isFileModified($patch_file['location'], $patch_file['name']))
 				{
 					if ($patch_file['action']=='overwrite')
 					{
@@ -287,17 +293,21 @@ class Patch {
 			}
 		}
 
+		if ($has_not_exist_files) $this->errors[] = _AT('patch_local_file_not_exist'). $not_exist_files;
 		if ($overwrite_modified_files)    $this->errors[] = _AT('patcher_overwrite_modified_files') . $overwrite_files;
 		if ($alter_modified_files)    $this->errors[] = _AT('patcher_alter_modified_files') . $alter_files;
 		if (count($this->errors) > 0)
 		{
-			$notes = '
-		  <form action="'. $_SERVER['PHP_SELF'].'?id='.$_POST['id'].'&who='. $_POST['who'] .'" method="post" name="skip_files_modified">
-		  <div class="row buttons">
-				<input type="submit" name="yes" value="'._AT('yes').'" accesskey="y" />
-				<input type="submit" name="no" value="'. _AT('no'). '" />
-			</div>
-			</form>';
+			if ($has_not_exist_files)
+				$notes = '';
+			else
+				$notes = '
+			  <form action="'. $_SERVER['PHP_SELF'].'?id='.$_POST['id'].'&who='. $_POST['who'] .'" method="post" name="skip_files_modified">
+			  <div class="row buttons">
+					<input type="submit" name="yes" value="'._AT('yes').'" accesskey="y" />
+					<input type="submit" name="no" value="'. _AT('no'). '" />
+				</div>
+				</form>';
 
 			print_errors($this->errors, $notes);
 		
@@ -584,7 +594,6 @@ class Patch {
 		$sql = "INSERT INTO " . TABLE_PREFIX. "patches " .
 					 "(atutor_patch_id, 
 					   applied_version,
-					   sequence,
 					   patch_folder,
 					   description,
 					   available_to,
@@ -593,7 +602,6 @@ class Patch {
 					  VALUES
 					  ('".$patch_summary_array["atutor_patch_id"]."',
 					   '".$patch_summary_array["applied_version"]."',
-					   ".$patch_summary_array["sequence"].",
 					   '".$patch_summary_array["patch_folder"]."',
 					   '".$patch_summary_array["description"]."',
 					   '".$patch_summary_array["available_to"]."',
