@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
     <name lang="en">Patcher</name> 
-    <description lang="en">This is a module that used by administrator to apply patches available at update.atutor.ca. Please refer to README for detail usage.</description> 
+    <description lang="en">This module is used by the ATutor administrator to apply patches, either uploaded locally, or imported from update.atutor.ca. Please refer to README for detail usage.</description> 
     <maintainers>
         <maintainer> 
             <name>ATutor Team</name> 
@@ -13,7 +13,7 @@
 	<release> 
         <version>0.1</version> 
         <date>2008-02-08</date> 
-        <state>stable</state> 
+        <state>beta</state> 
         <notes></notes> 
     </release> 
 </module>

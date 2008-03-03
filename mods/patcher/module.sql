@@ -52,7 +52,7 @@ CREATE TABLE `patches_files_actions` (
 
 INSERT INTO `language_text` VALUES ('en', '_module','patcher','Patcher',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_template', 'get_my_patch', 'Get My Patch', now(), '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_patch_id', 'Atutor Patch ID', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_patch_id', 'ATutor Patch ID', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'revert', 'Revert', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_to', 'Available To', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_ALREADY_INSTALLED', 'The selected patch is already installed.', now(), 'error msg');
@@ -66,13 +66,13 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_alter_modified_f
 'The listed files are modified locally. If you choose to proceed, your local file will be modified. The original
 file will be backup before the modification. Please note that the modification on your customized code may break your customization.<br>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'grant_write_permission', 
-'Please grant <strong>write</strong> permission to listed folders and files:<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>', now(), 'patcher');
+'Please grant <strong>write</strong> permission to folders and files listed below:<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'remove_write_permission', 
 'Please <strong>REMOVE</strong> write permission on the listed folders and files for your security:<p><strong>Note:</strong> To remove permissions on Unix use <kbd>chmod 755</kbd> then the file name..</p>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_show_backup_files', 
 'Below is the list of the backup files created by patch installation. After ensuring ATutor works properly with the patch, you may want to 
-delete these files. If the ATutor does not work properly with the patch, you can always revert back to old ATutor by renaming the backup files 
-to original files. <br>', now(), 'patcher');
+delete these files. If  ATutor does not work properly with the patch, you can always revert back to the old files by renaming the backup files 
+to the original file names,  removing the [patch_id].old portion of the file name. <br>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_show_patch_files', 
 'Below is the list of the patch files copied to your computer. 
 Please manually merge the change between the patch files and your local copy. <br>', now(), 'patcher');
