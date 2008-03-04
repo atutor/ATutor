@@ -53,10 +53,12 @@ CREATE TABLE `patches_files_actions` (
 INSERT INTO `language_text` VALUES ('en', '_module','patcher','Patcher',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_template', 'get_my_patch', 'Get My Patch', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_patch_id', 'ATutor Patch ID', now(), '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'revert', 'Revert', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_to', 'Available To', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_ALREADY_INSTALLED', 'The selected patch is already installed.', now(), 'error msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CHOOSE_UNINSTALLED_PATCH', 'Please choose an uninstalled patch.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_XML_NOT_FOUND', 'Patch XML file is not found.', now(), 'error msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_REMOVE_WRITE_PERMISSION', 'Please remove write permission from the listed files.', now(), 'error msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PATCH_INSTALLED_SUCCESSFULLY', 'The patch has been installed successfully.', now(), 'feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_overwrite_modified_files', 
 'The listed files are modified locally. If you choose to proceed, the patch file will be copied to your local machine. 
 You have to manually merge this file and your local copy.<br>', now(), 'patcher');
