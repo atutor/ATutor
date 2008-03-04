@@ -28,8 +28,9 @@ function is_patch_installed($patch_id)
 /**
  * Generate html of each patch row at main patch page
  */
-function print_patch_row($patch_row, $id, $enable_radiotton)
+function print_patch_row($patch_row, $row_id, $enable_radiotton)
 {
+	global $id, $patch_id;   // current selected patch
 	global $dependent_patches;
 
 	if ($dependent_patches =="")
@@ -37,9 +38,9 @@ function print_patch_row($patch_row, $id, $enable_radiotton)
 	else
 		$description = $patch_row["description"] . _AT('patch_dependent_patch_not_installed') . "<font color='red'>" . $dependent_patches . "</font>";
 ?>
-	<tr>
-		<td><input type="radio" name="id" value="<?php echo $id; ?>" id="<?php echo $id; ?>" <?php if (!$enable_radiotton) echo 'disabled="true"'; ?> /></td>
-		<td><?php echo $patch_row["atutor_patch_id"]; ?></td>
+	<tr <?php if ($enable_radiotton) echo 'onmousedown="document.form[\'m'. $row_id.'\'].checked = true; rowselect(this);"'; ?> id="r_<?php echo $row_id; ?>">
+		<td><input type="radio" name="id" value="<?php echo $row_id; ?>" id="m<?php echo $row_id; ?>" <?php if (!$enable_radiotton) echo "disabled "; if (strcmp($row_id, $id) == 0 || strcmp($patch_row["atutor_patch_id"], $patch_id) == 0) echo "checked "?> /></td>
+		<td><label for="m<?php echo $row_id; ?>"><?php echo $patch_row["atutor_patch_id"]; ?></label></td>
 		<td><?php echo $description; ?></td>
 		<td><?php if (!isset($patch_row['status'])) echo "Uninstalled"; else echo $patch_row["status"]; ?></td>
 		<td><?php echo $patch_row["available_to"]; ?></td>
@@ -48,7 +49,7 @@ function print_patch_row($patch_row, $id, $enable_radiotton)
 		if (preg_match('/Installed/', $patch_row["status"]) > 0 && ($patch_row["remove_permission_files"]<> "" || $patch_row["backup_files"]<>""))
 			echo '
 		  <div class="row buttons">
-				<input type="button" align="center" name="info" value="'._AT('view_message').'" onClick="location.href=\''. $_SERVER['PHP_SELF'] .'?patch_id='.$id.'\'" />
+				<input type="button" align="center" name="info" value="'._AT('view_message').'" onClick="location.href=\''. $_SERVER['PHP_SELF'] .'?patch_id='.$row_id.'\'" />
 			</div>';
 		?>
 		</td>
@@ -105,12 +106,13 @@ if ($_POST['install'] || $_POST['yes'])
 {
 //	unset($_SESSION['remove_permission']);
 
+//	phpinfo();
 	if ($_POST['install']) $id=$_POST['id'];
 	else $id = $_REQUEST['id'];
 	
-	if (is_patch_installed($id))
+	if ($id == "")
 	{
-		$msg->addError('PATCH_ALREADY_INSTALLED');
+		$msg->addError('CHOOSE_UNINSTALLED_PATCH');
 	}
 	else
 	{
@@ -191,6 +193,9 @@ if ($patch_id > 0)
 
 		if (count($_SESSION['remove_permission']) > 0)
 		{
+			if ($_POST['done']) $msg->printErrors('REMOVE_WRITE_PERMISSION');
+			else $msg->printFeedbacks('PATCH_INSTALLED_SUCCESSFULLY');
+			
 			$feedbacks[] = _AT('remove_write_permission');
 			
 			foreach($remove_permission_files as $remove_permission_file)
@@ -210,6 +215,8 @@ if ($patch_id > 0)
 	// display backup file info after remove permission step
 	if ($row["remove_permission_files"] == "")
 	{
+		$msg->printFeedbacks('PATCH_INSTALLED_SUCCESSFULLY');
+		
 		if ($row["backup_files"]<> "")
 		{
 			$backup_files = get_array_by_delimiter($row["backup_files"], "|");
@@ -245,7 +252,7 @@ $msg->printErrors();
 
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="get_patch_form">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">
 	<div class="row">
 		<label for="who"><?php echo _AT('name'); ?></label>
