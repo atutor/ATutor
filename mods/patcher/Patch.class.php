@@ -522,9 +522,11 @@ class Patch {
 	*/
 	function compareFiles($src, $dest)
 	{
-		// use preg_replace to delete the line starting with // $Id:
-		// This line is created by SVN. It could be different in different copies of the same file.
-		$pattern = '/\/\/ \$Id.*\$/';
+		// use preg_replace to delete 
+		// 1. the line starting with // $Id:
+		// 2. the line starting with $lm = '$LastChangedDate, ending with ;
+		// These lines are created by SVN. It could be different in different copies of the same file.
+		$pattern = '/\/\/ \$Id.*\$|\$lm = \'\$LastChangedDate.*;/';
 		
 		$src_content = preg_replace($pattern, '', file_get_contents($src));
 		$dest_content = preg_replace($pattern, '', file_get_contents($dest));
