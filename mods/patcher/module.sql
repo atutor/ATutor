@@ -58,6 +58,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_ALREADY_INSTA
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CHOOSE_UNINSTALLED_PATCH', 'Please choose an uninstalled patch.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_XML_NOT_FOUND', 'Patch XML file is not found.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_REMOVE_WRITE_PERMISSION', 'Please remove write permission from the listed files.', now(), 'error msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_UNZIP', 'Can NOT unzip the uploaded file.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PATCH_INSTALLED_SUCCESSFULLY', 'The patch has been installed successfully.', now(), 'feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_overwrite_modified_files', 
 'The listed files are modified locally. If you choose to proceed, the patch file will be copied to your local machine. 
@@ -79,5 +80,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_show_patch_files
 'Below is the list of the patch files copied to your computer. 
 Please manually merge the change between the patch files and your local copy. <br>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patch_dependent_patch_not_installed', 
-'<br><font color="red">Waring: Due to patch dependency, please install the listed patches first: </font><br>', now(), 'patcher');
+'<br><span style="color: red">Waring: Due to patch dependency, please install the listed patches first: </span><br>', now(), 'patcher');
+INSERT INTO `language_text` VALUES ('en', '_template', 'upload_patch', 
+'Upload a zip file to install patch:', now(), 'patcher');
 

@@ -72,6 +72,10 @@ class PatchParser {
 		{
 			$this->patch_row['sequence'] = trim($this->character_data);
 		}
+		if ($this->element_path == array('patch', 'description')) 
+		{
+			$this->patch_row['description'] = trim($this->character_data);
+		}
 		if ($this->element_path == array('patch', 'sql')) 
 		{
 			$this->patch_row['sql'] = trim($this->character_data);

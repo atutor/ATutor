@@ -4,6 +4,8 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
 require (AT_INCLUDE_PATH.'header.inc.php');
 
+require_once('common.inc.php');
+
 set_time_limit(0);
 
 /**
@@ -39,7 +41,7 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 		$description = $patch_row["description"] . _AT('patch_dependent_patch_not_installed') . "<font color='red'>" . $dependent_patches . "</font>";
 ?>
 	<tr <?php if ($enable_radiotton) echo 'onmousedown="document.form[\'m'. $row_id.'\'].checked = true; rowselect(this);"'; ?> id="r_<?php echo $row_id; ?>">
-		<td><input type="radio" name="id" value="<?php echo $row_id; ?>" id="m<?php echo $row_id; ?>" <?php if (!$enable_radiotton) echo "disabled "; if (strcmp($row_id, $id) == 0 || strcmp($patch_row["atutor_patch_id"], $patch_id) == 0) echo "checked "?> /></td>
+		<td><input type="radio" name="id" value="<?php echo $row_id; ?>" id="m<?php echo $row_id; ?>" <?php if (!$enable_radiotton) echo "disabled "; if (strcmp($row_id, $id) == 0 || strcmp($row_id, $patch_id) == 0) echo "checked "?> /></td>
 		<td><label for="m<?php echo $row_id; ?>"><?php echo $patch_row["atutor_patch_id"]; ?></label></td>
 		<td><?php echo $description; ?></td>
 		<td><?php if (!isset($patch_row['status'])) echo "Uninstalled"; else echo $patch_row["status"]; ?></td>
@@ -101,22 +103,47 @@ else
 }
 // end of get patch list
 
-// Installation process
-if ($_POST['install'] || $_POST['yes'])
+$module_content_folder = AT_CONTENT_DIR . "patcher";
+		
+if ($_POST['install_upload'] && $_POST['uploading'])
 {
-//	unset($_SESSION['remove_permission']);
-
-//	phpinfo();
-	if ($_POST['install']) $id=$_POST['id'];
-	else $id = $_REQUEST['id'];
+	include_once(AT_INCLUDE_PATH . '/classes/pclzip.lib.php');
 	
-	if ($id == "")
+	// clean up module content folder
+	clear_dir($module_content_folder);
+	
+	// 1. unzip uploaded file to module's content directory
+	$archive = new PclZip($_FILES['patchfile']['tmp_name']);
+
+	if ($archive->extract(PCLZIP_OPT_PATH, $module_content_folder) == 0)
+	{
+    clear_dir($module_content_folder);
+    $msg->addError('CANNOT_UNZIP');
+  }
+}
+
+// Installation process
+if ($_POST['install'] || $_POST['install_upload'])
+{
+	
+	if (isset($_POST['id'])) $id=$_POST['id'];
+	else $id = $_REQUEST['id'];
+
+	if ($_POST['install'] && $id == "")
 	{
 		$msg->addError('CHOOSE_UNINSTALLED_PATCH');
 	}
 	else
 	{
-		$patchURL = $patch_folder . $patch_list_array[$id][patch_folder] . "/";
+		if ($_POST['install'])
+		{
+			$patchURL = $patch_folder . $patch_list_array[$id][patch_folder] . "/";
+		}
+		else if ($_POST['install_upload'])
+		{
+			$patchURL = $module_content_folder . "/";
+		}
+			
 		$patch_xml = @file_get_contents($patchURL . 'patch.xml');
 		
 		if ($patch_xml === FALSE) 
@@ -130,16 +157,35 @@ if ($_POST['install'] || $_POST['yes'])
 			
 			$patchParser =& new PatchParser();
 			$patchParser->parse($patch_xml);
-
-			$patch = & new Patch($patchParser->getParsedArray(), $patch_list_array[$id], $skipFilesModified);
 			
-			if ($patch->applyPatch())  $patch_id = $patch->getPatchID();
+			$patch_array = $patchParser->getParsedArray();
+
+			if ($_POST["install_upload"])
+			{
+				$current_patch_list = array('atutor_patch_id' => $patch_array['atutor_patch_id'],
+																		'applied_version' => $patch_array['applied_version'],
+																		'patch_folder' => $patchURL,
+																		'available_to' => 'private',
+																		'description' => $patch_array['description']);
+			}
+
+			if ($_POST["install"])
+			{
+				$current_patch_list = $patch_list_array[$id];
+			}
+
+			if ($_POST["install_upload"] && is_patch_installed($patch_array["atutor_patch_id"]))
+				$msg->addError('PATCH_ALREADY_INSTALLED');
+			else
+			{
+				$patch = & new Patch($patch_array, $current_patch_list, $skipFilesModified, $patchURL);
+			
+				if ($patch->applyPatch())  $patch_id = $patch->getPatchID();
+			}
 		}
 	}
 }
 // end of patch installation
-
-require_once('common.inc.php');
 
 // display permission and backup files message
 if (isSet($_REQUEST['patch_id']))  $patch_id = $_REQUEST['patch_id'];
@@ -254,17 +300,6 @@ $msg->printErrors();
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">
-	<div class="row">
-		<label for="who"><?php echo _AT('name'); ?></label>
-		<input type="text" name="who" id="who" size="80" value="<?php echo $who; ?>" />
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" value="<?php echo _AT('get_my_patch'); ?>" name="get_my_patch" />
-	</div>
-</div>
-
-<div class="input-form">
 
 <?php 
 ?>
@@ -298,7 +333,7 @@ else
 {
 	while ($row = mysql_fetch_assoc($result))
 	{
-			print_patch_row($row, $row['atutor_patch_id'], false);
+			print_patch_row($row, $row['patches_id'], false);
 	}
 	
 	$array_id = 0;
@@ -353,5 +388,49 @@ else
 
 </div>
 </form>
+
+<FORM NAME="frm_upload" ENCTYPE="multipart/form-data" METHOD=POST ACTION="<?php echo $_SERVER['PHP_SELF']; ?>" >
+	
+<div class="input-form">
+		<div class="row"><?php echo _AT("upload_patch"); ?></div>
+
+		<div class="row">
+			<INPUT TYPE="hidden" name="MAX_FILE_SIZE" VALUE="52428800">
+			<INPUT TYPE="file" NAME="patchfile"  SIZE=50>
+		</div>
+		
+		<div class="row buttons">
+			<INPUT TYPE="submit" name="install_upload" value="Install" onClick="javascript: return validate_filename(); " class="submit" />
+			<INPUT TYPE="hidden" name="uploading" value="1">
+		</div>
+</div>
+
+</form>
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+
+String.prototype.trim = function() {
+	return this.replace(/^\s+|\s+$/g,"");
+}
+
+// This function validates if and only if a zip file is given
+function validate_filename() {
+  // check file type
+  var file = document.frm_upload.patchfile.value;
+  if (!file || file.trim()=='') {
+    alert('Please give a zip file!');
+    return false;
+  }
+  
+  if(file.slice(file.lastIndexOf(".")).toLowerCase() != '.zip') {
+    alert('Please upload ZIP file only!');
+    return false;
+  }
+}
+
+//  End -->
+//-->
+</script>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -19,7 +19,7 @@
 * @author	Cindy Qi Li
 * @package	Patch
 */
-require('common.inc.php');
+require_once('common.inc.php');
 
 class Patch {
 
@@ -54,7 +54,7 @@ class Patch {
 	*          $skipFilesModified
 	* @author  Cindy Qi Li
 	*/
-	function Patch($patch_array, $patch_summary_array, $skipFilesModified) 
+	function Patch($patch_array, $patch_summary_array, $skipFilesModified, $patch_folder) 
 	{
 		// add relative path to move to ATutor root folder
 		for ($i = 0; $i < count($patch_array[files]); $i++)
@@ -65,7 +65,7 @@ class Patch {
 		$this->patch_array = $patch_array; 
 		$this->patch_summary_array = $patch_summary_array;
 		
-		$this->baseURL = 'http://update.atutor.ca/patch/' . str_replace('.', '_', VERSION) . '/' . $patch_summary_array['patch_folder']."/";
+		$this->baseURL = $patch_folder;
 		$this ->backup_suffix = $patch_array['atutor_patch_id'] . ".old";
 		$this ->patch_suffix = $patch_array['atutor_patch_id'];
 		$this->skipFilesModified = $skipFilesModified;
@@ -242,6 +242,8 @@ class Patch {
 		  <div class="row buttons">
 				<input type="submit" name="yes" value="'._AT('continue').'" accesskey="y" />
 				<input type="submit" name="no" value="'. _AT('cancel'). '" />
+				<input type="hidden" name="install" value="' . $_POST['install'] . '" />
+				<input type="hidden" name="install_upload" value="' . $_POST['install_upload'] . '" />
 			</div>
 			</form>';
 			
@@ -306,6 +308,8 @@ class Patch {
 			  <div class="row buttons">
 					<input type="submit" name="yes" value="'._AT('yes').'" accesskey="y" />
 					<input type="submit" name="no" value="'. _AT('no'). '" />
+					<input type="hidden" name="install" value="' . $_POST['install'] . '" />
+					<input type="hidden" name="install_upload" value="' . $_POST['install_upload'] . '" />
 				</div>
 				</form>';
 
@@ -604,8 +608,8 @@ class Patch {
 					  VALUES
 					  ('".$patch_summary_array["atutor_patch_id"]."',
 					   '".$patch_summary_array["applied_version"]."',
-					   '".$patch_summary_array["patch_folder"]."',
-					   '".$patch_summary_array["description"]."',
+					   '".preg_quote($patch_summary_array["patch_folder"])."',
+					   '".preg_quote($patch_summary_array["description"])."',
 					   '".$patch_summary_array["available_to"]."',
 					   '',
 					   '".$patch_summary_array["status"]."'
@@ -636,8 +640,8 @@ class Patch {
 					  VALUES
 					  (".$this->patch_id.",
 					   '".$patch_files_array['action']."',
-					   '".$patch_files_array['name']."',
-					   '".$patch_files_array['location']."'
+					   '".preg_quote($patch_files_array['name'])."',
+					   '".preg_quote($patch_files_array['location'])."'
 					   )";
 
 		$result = mysql_query($sql, $db) or die(mysql_error());

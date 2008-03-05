@@ -50,27 +50,64 @@ function print_feedback( $feedback, $notes='' ) {
 }
 
 
-	/**
-	* update patches.remove_permission_files & patches.backup_files
-	* @access  private
-	* @author  Cindy Qi Li
-	*/
-	function updatePatchesRecord($patch_id, $updateInfo)
+/**
+* update patches.remove_permission_files & patches.backup_files
+* @access  private
+* @author  Cindy Qi Li
+*/
+function updatePatchesRecord($patch_id, $updateInfo)
+{
+	global $db;
+	
+	$sql_prefix = "Update ". TABLE_PREFIX. "patches set ";
+	
+	foreach ($updateInfo as $key => $value)
 	{
-		global $db;
-		
-		$sql_prefix = "Update ". TABLE_PREFIX. "patches set ";
-		
-		foreach ($updateInfo as $key => $value)
-		{
-			$sql_middle .= $key . "='" . $value . "', ";
-		}
-		
-		$sql = substr($sql_prefix . $sql_middle, 0, -2) . " where patches_id = " . $patch_id;
-
-		$result = mysql_query($sql, $db) or die(mysql_error());
-		
-		return true;
+		$sql_middle .= $key . "='" . $value . "', ";
 	}
+	
+	$sql = substr($sql_prefix . $sql_middle, 0, -2) . " where patches_id = " . $patch_id;
+
+	$result = mysql_query($sql, $db) or die(mysql_error());
+	
+	return true;
+}
+
+/**
+* This function deletes $dir recrusively without deleting $dir itself.
+* @access  public
+* @param   string $charsets_array	The name of the directory where all files and folders under needs to be deleted
+* @author  Cindy Qi Li
+*/
+function clear_dir($dir) {
+	include_once(AT_INCLUDE_PATH . '/lib/filemanager.inc.php');
+	
+	if(!$opendir = @opendir($dir)) {
+		return false;
+	}
+	
+	while(($readdir=readdir($opendir)) !== false) {
+		if (($readdir !== '..') && ($readdir !== '.')) {
+			$readdir = trim($readdir);
+
+			clearstatcache(); /* especially needed for Windows machines: */
+
+			if (is_file($dir.'/'.$readdir)) {
+				if(!@unlink($dir.'/'.$readdir)) {
+					return false;
+				}
+			} else if (is_dir($dir.'/'.$readdir)) {
+				/* calls lib function to clear subdirectories recrusively */
+				if(!clr_dir($dir.'/'.$readdir)) {
+					return false;
+				}
+			}
+		}
+	} /* end while */
+
+	@closedir($opendir);
+	
+	return true;
+}
 
 ?>
