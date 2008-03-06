@@ -54,6 +54,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','patcher','Patcher',NOW(),''
 INSERT INTO `language_text` VALUES ('en', '_template', 'get_my_patch', 'Get My Patch', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_patch_id', 'ATutor Patch ID', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_to', 'Available To', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'available_patches', 'Available Patches', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'available_patches_text', 'There are <strong>%s</strong> patches available to install.', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_ALREADY_INSTALLED', 'The selected patch is already installed.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CHOOSE_UNINSTALLED_PATCH', 'Please choose an uninstalled patch.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_XML_NOT_FOUND', 'Patch XML file is not found.', now(), 'error msg');
