@@ -52,6 +52,63 @@ if ($_config['check_version']) {
 	</div>
 	<?php endif; ?>
 
+	<?php 
+/****************************************************************************************************
+** Uncomment when Patcher is a standard/core module 
+** and modify the path for PatchListParser.class.php & index_admin.php if necessary
+
+	$update_server = "update.atutor.ca"; 
+
+	$file = fsockopen ($update_server, 80, $errno, $errstr, 15);
+	
+	if ($file) 
+	{
+		// get patch list
+		$patch_folder = "http://" . $update_server . '/patch/' . str_replace('.', '_', VERSION) . '/';
+
+		$patch_list_xml = @file_get_contents($patch_folder . 'patch_list.xml');
+		
+		if ($patch_list_xml) 
+		{
+			require_once('../mods/patcher/PatchListParser.class.php');
+			$patchListParser =& new PatchListParser();
+			$patchListParser->parse($patch_list_xml);
+			$patch_list_array = $patchListParser->getMyParsedArrayForVersion(VERSION);
+			
+			foreach ($patch_list_array as $row_num => $patch)
+				$patch_ids .= '\'' . $patch['atutor_patch_id'] . '\', ';
+				
+			$sql = "select count(*) cnt_installed_patches from ".TABLE_PREFIX."patches " .
+			       "where atutor_patch_id in (" . substr($patch_ids, 0, -2) .")".
+			       " and status like '%Installed'";
+		
+			$result = mysql_query($sql, $db) or die(mysql_error());
+			$row = mysql_fetch_assoc($result);
+			
+			$cnt = count($patch_list_array) - $row['cnt_installed_patches'];
+			
+			if ($cnt > 0)
+			{
+		?>
+	<div class="input-form" style="width: 98%;">
+		<form method="get" action="mods/patcher/index_admin.php">
+			<div class="row">
+				<h3><?php echo _AT('available_patches'); ?></h3>
+				<p><?php echo _AT('available_patches_text', $cnt); ?></p>
+			</div>
+
+			<div class="row buttons">
+				<input type="submit" name="submit" value="<?php echo _AT('view'); ?>" />
+			</div>
+		</form>
+	</div>
+	<?php 
+			}
+		}
+	} 
+****************************************************************************************************/
+	?>
+
 	<div class="input-form" style="width: 98%">
 		<?php
 			if (!isset($_config['db_size']) || ($_config['db_size_ttl'] < time())) {
