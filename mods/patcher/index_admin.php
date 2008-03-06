@@ -82,7 +82,7 @@ $file = fsockopen ($update_server, 80, $errno, $errstr, 15);
 
 if (!$file) 
 {
-	print "<font color='red'><b>Error: Cannot connect to patch server: ". $update_server . "</b></font>";
+	print '<span style="color: red"><b>Error: Cannot connect to patch server: '. $update_server . '</b></span>';
 	exit;
 }
 
@@ -99,7 +99,7 @@ else
 {
 	$patchListParser =& new PatchListParser();
 	$patchListParser->parse($patch_list_xml);
-	$patch_list_array = $patchListParser->getMyParsedArrayForVersion($who, VERSION);
+	$patch_list_array = $patchListParser->getMyParsedArrayForVersion(VERSION);
 }
 // end of get patch list
 

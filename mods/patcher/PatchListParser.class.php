@@ -110,7 +110,7 @@ class PatchListParser {
 
 	// public
 	// return parsed array only for given name & version
-	function getMyParsedArrayForVersion($who, $version) 
+	function getMyParsedArrayForVersion($version, $who='public') 
 	{
 		$my_array = array();
 
