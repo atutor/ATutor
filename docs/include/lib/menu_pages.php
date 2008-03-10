@@ -135,6 +135,19 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 		$_pages['admin/cron_config.php']['parent']    = 'admin/config_edit.php';
 		$_pages['admin/cron_config.php']['guide']     = 'admin/?p=cron_setup.php';
 		$_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/cron_config.php'));
+
+		$_pages['admin/auto_enroll.php']['title_var'] = 'auto_enroll';
+		$_pages['admin/auto_enroll.php']['parent']    = 'admin/config_edit.php';
+		$_pages['admin/auto_enroll.php']['guide']     = 'admin/?p=auto_enroll.php';
+		$_pages['admin/auto_enroll.php']['children']  = array_merge(array('admin/auto_enroll_edit.php'));
+		$_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/auto_enroll.php'));
+
+		$_pages['admin/auto_enroll_edit.php']['title_var'] = 'auto_enroll_edit';
+		$_pages['admin/auto_enroll_edit.php']['parent']    = 'admin/auto_enroll.php';
+	
+		$_pages['admin/auto_enroll_delete.php']['title_var'] = 'auto_enroll_delete';
+		$_pages['admin/auto_enroll_delete.php']['parent']    = 'admin/auto_enroll.php';
+	
 	}
 }
 
