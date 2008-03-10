@@ -1,6 +1,8 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+<?php 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<form method="post" action="<?php if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "") $getvars = '?en_id='. $_REQUEST["en_id"]; echo $_SERVER['PHP_SELF'] . $getvars; ?>" name="form">
 <?php global $languageManager, $_config, $moduleFactory; ?>
 <input name="ml" type="hidden" value="<?php echo $this->ml; ?>" />
 <div class="input-form">
@@ -21,6 +23,16 @@
 		</div>
 	<?php endif; ?>
 
+	<?php 
+		$table_title="
+		<div class=\"row\">
+			<h3>" . _AT('course_to_auto_enroll'). "</h3>
+			<small>&middot; " ._AT('auto_enroll_msg')."</small>
+		</div>";
+		
+		require(AT_INCLUDE_PATH.'html/auto_enroll_list_courses.inc.php'); 
+	?>
+	
 	<div class="row">
 		<h3><?php echo _AT('required_information'); ?></h3>
 	</div>
