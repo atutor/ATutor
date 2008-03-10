@@ -65,10 +65,35 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 			}
 			$result = mysql_query($sql, $db);
 
-			$msg->addFeedback('CONFIRM_GOOD');
+			if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
+			{
+				$msg->addFeedback('CONFIRM_GOOD');
 
-			header('Location: '.$_base_href.'login.php');
-			exit;
+				$member_id	= $id;
+				require (AT_INCLUDE_PATH.'html/auto_enroll_courses.inc.php');
+				unset($_SESSION['valid_user']);
+				unset($_SESSION['member_id']);
+				
+				$table_title="
+				<div class=\"row\">
+					<h3>" . _AT('auto_enrolled_msg'). "<br /></h3>
+				</div>";
+		
+				require(AT_INCLUDE_PATH.'header.inc.php');
+				echo "<div class=\"input-form\">";
+				require(AT_INCLUDE_PATH.'html/auto_enroll_list_courses.inc.php');
+				echo '<p style="text-align:center"><a href="'. $_SERVER['PHP_SELF'] . '?auto_login=1&member_id='. $id .'">' . _AT("go_to_my_start_page") . '</a></p>';
+				echo "</div>";
+				require(AT_INCLUDE_PATH.'footer.inc.php');
+				exit;
+			}
+			else
+			{
+				$msg->addFeedback('CONFIRM_GOOD');
+	
+				header('Location: '.$_base_href.'login.php');
+				exit;
+			}
 		} else {
 			$msg->addError('CONFIRM_BAD');
 		}
@@ -85,7 +110,11 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 
 		if ($row['status'] == AT_STATUS_UNCONFIRMED) {
 			$code = substr(md5($row['email'] . $row['creation_date']. $row['member_id']), 0, 10);
-			$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code;
+			
+			if ($_POST["en_id"] <> "")
+				$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code.'&en_id='.$_POST["en_id"];
+			else
+				$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code;
 
 			/* send the email confirmation message: */
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -109,6 +138,27 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 	}
 }
 
+if (isset($_REQUEST['auto_login']))
+{
+	
+	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM ".TABLE_PREFIX."members M WHERE M.member_id=".$_REQUEST["member_id"];
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) 
+	{
+		$_SESSION['valid_user'] = true;
+		$_SESSION['member_id']	= $_REQUEST["member_id"];
+		$_SESSION['course_id']  = 0;
+		$_SESSION['login']		= $row[login];
+		assign_session_prefs(unserialize(stripslashes($row['preferences'])));
+		$_SESSION['is_guest']	= 0;
+		$_SESSION['lang']		= $row[lang];
+		session_write_close();
+
+		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_POST['course']);
+		exit;
+	}
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -121,6 +171,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email'); ?></label><br />
 		<input type="text" name="email" id="email" size="50" />
+		<input type="hidden" name="en_id" id="en_id" value="<?php echo $_REQUEST['en_id']; ?>" size="50" />
 	</div>
 
 	<div class="row buttons">

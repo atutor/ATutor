@@ -209,7 +209,11 @@ if (isset($_POST['cancel'])) {
 			$msg->addFeedback('REG_THANKS_CONFIRM');
 
 			$code = substr(md5($_POST['email'] . $now . $m_id), 0, 10);
-			$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
+			
+			if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
+				$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code.SEP.'en_id='.$_REQUEST["en_id"];
+			else
+				$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 
 			/* send the email confirmation message: */
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -222,8 +226,30 @@ if (isset($_POST['cancel'])) {
 
 			$mail->Send();
 
-		} else {
-			$msg->addFeedback('REG_THANKS');
+		} 
+		else 
+		{
+			// if en_id is set, automatically enroll into courses that links with en_id and go to "My Start Page"
+			if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
+			{
+				$member_id	= $m_id;
+
+				require (AT_INCLUDE_PATH.'html/auto_enroll_courses.inc.php');
+				
+				// auto login
+				$_SESSION['valid_user'] = true;
+				$_SESSION['member_id']	= $m_id;
+				$_SESSION['course_id']  = 0;
+				$_SESSION['login']		= $_POST[login];
+				assign_session_prefs(unserialize(stripslashes($_config[pref_defaults])));
+				$_SESSION['is_guest']	= 0;
+				$_SESSION['lang']		= $_SESSION[lang];
+				session_write_close();
+
+				header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_POST['course']);
+			}
+			else
+				$msg->addFeedback('REG_THANKS');
 		}
 
 		require(AT_INCLUDE_PATH.'header.inc.php');
