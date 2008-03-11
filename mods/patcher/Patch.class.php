@@ -127,6 +127,8 @@ class Patch {
 		
 		// if only has backup files info, patch is considered successfully installed
 		// if has permission to remove, considered partly installed
+		$updateInfo = array();
+
 		if (count($this->backup_files) > 0)
 		{
 			foreach($this->backup_files as $backup_file)

@@ -48,7 +48,7 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 		<td><?php echo $patch_row["available_to"]; ?></td>
 		<td>
 		<?php 
-		if (preg_match('/Installed/', $patch_row["status"]) > 0 && ($patch_row["remove_permission_files"]<> "" || $patch_row["backup_files"]<>""))
+		if (preg_match('/Installed/', $patch_row["status"]) > 0 && ($patch_row["remove_permission_files"]<> "" || $patch_row["backup_files"]<>"" || $patch_row["patch_files"]<> ""))
 			echo '
 		  <div class="row buttons">
 				<input type="button" align="center" name="info" value="'._AT('view_message').'" onClick="location.href=\''. $_SERVER['PHP_SELF'] .'?patch_id='.$row_id.'\'" />
@@ -274,7 +274,10 @@ if ($patch_id > 0)
 				foreach($backup_files as $backup_file)
 					if ($backup_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $backup_file . "</strong><br>";
 			}
-					
+		}
+
+		if ($row["patch_files"]<> "")
+		{
 			$patch_files = get_array_by_delimiter($row["patch_files"], "|");
 	
 			if (count($patch_files) > 0)
@@ -285,12 +288,12 @@ if ($patch_id > 0)
 					if ($patch_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $patch_file . "</strong><br>";
 					
 			}
-			
-			if (count($feedbacks)> 0)
-				print_feedback($feedbacks);
-			else
-				print_feedback(array());
 		}
+		
+		if (count($feedbacks)> 0)
+			print_feedback($feedbacks);
+		else
+			print_feedback(array());
 	}
 }
 
