@@ -44,13 +44,9 @@ if (isset($_POST['save']) || isset($_POST['add']))
 
 	$name  = $addslashes($name);
 
-	if (trim($name) == '') {
-		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
-	}
 	$name = validate_length($name, 50);
 
-	if (isset($_POST['add']))
-		if (!$_POST['add_ids'])
+	if (isset($_POST['add']) && !$_POST['add_ids'])
 			$msg->addError('NO_ITEM_SELECTED');
 			
 	if (!$msg->containsErrors()) 
@@ -151,18 +147,106 @@ if ($auto_enroll_id > 0)
 
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 		<h4><label for="name"><?php echo _AT('title'); ?></label><br /></h4>
 		<input type="text" id="name" name="name" size="30" value="<?php echo htmlspecialchars($row['name']); ?>" />
 	</div>
 
-<? require("auto_enroll_add_courses.php"); ?>
+<?php
+$existing_courses = array();
 
+$cats	= array();
+$cats[0] = _AT('cats_uncategorized');
+
+$sql = "SELECT cat_id, cat_name FROM ".TABLE_PREFIX."course_cats";
+$result = mysql_query($sql,$db);
+while($row = mysql_fetch_array($result)) {
+	$cats[$row['cat_id']] = $row['cat_name'];
+}
+
+// display existing courses if auto_enroll_id is given
+// don't display this section when creating new record
+?>
+	<div class="row">
+		<h4><label for="courses_table"><?php echo _AT('course_to_auto_enroll'); ?></label><br /></h4>
+	</div>
+
+	<div class="row">
+		<table summary="" class="data" rules="cols" align="left" style="width: 95%;">
+		
+		<thead>
+		<tr>
+			<th scope="col"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all_delete" title="<?php echo _AT('select_all'); ?>" name="selectall_delete" onclick="CheckAll('delete_ids[]', 'selectall_delete');" /></th>
+			<th scope="col"><?php echo _AT('title'); ?></th>
+			<th scope="col"><?php echo _AT('category'); ?></th>
+		</tr>
+		</thead>
+
+		<tfoot>
+		<tr>
+			<td colspan="4">
+				<div class="buttons" style="float:left">
+				<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
+				</div>
+			</td>
+		</tr>
+		</tfoot>
+
+		<tbody>
+<?php
+$num_of_rows = 0;
+
+if ($auto_enroll_id > 0)
+{
+	$sql_courses = "SELECT auto_enroll_courses.auto_enroll_courses_id auto_enroll_courses_id, 
+	                       auto_enroll_courses.course_id,
+	                       courses.cat_id,
+	                       courses.title title
+	                  FROM " . TABLE_PREFIX."auto_enroll_courses auto_enroll_courses, " . TABLE_PREFIX ."courses courses 
+	                 where auto_enroll_courses.auto_enroll_id=".$auto_enroll_id .
+	               "   and auto_enroll_courses.course_id = courses.course_id";
+
+	$result_courses = mysql_query($sql_courses, $db) or die(mysql_error());
+	
+	$num_of_rows = mysql_num_rows($result_courses);
+	
+	if ($row_courses = mysql_fetch_assoc($result_courses))
+	do {
+		$existing_courses[] = $row_courses["course_id"];
+	?>
+			<tr onmousedown="document.form['m<?php echo $row_courses['auto_enroll_courses_id']; ?>'].checked = !document.form['m<?php echo $row_courses['auto_enroll_courses_id']; ?>'].checked; togglerowhighlight(this, 'm<?php echo $row_courses['auto_enroll_courses_id']; ?>');" id="rm<?php echo $row_courses['auto_enroll_courses_id']; ?>">
+				<td width="10"><label for="m<?php echo $row_courses['title']; ?>"><input type="checkbox" name="delete_ids[]" value="<?php echo $row_courses['auto_enroll_courses_id']; ?>" id="m<?php echo $row_courses['auto_enroll_courses_id']; ?>" onmouseup="this.checked=!this.checked" /></label></td>
+				<td><?php echo $row_courses['title']; ?></td>
+				<td><?php echo $cats[$row_courses['cat_id']]; ?></td>
+			</tr>
+	<?php } while ($row_courses = mysql_fetch_assoc($result_courses)); ?>
+<?php 
+}
+
+if ($num_of_rows == 0 || !isset($auto_enroll_id))
+{ 
+?>
+			<tr>
+				<td colspan="3"><?php echo _AT('none_found'); ?></td>
+			</tr>
+<?php 
+}
+?>
+		</tbody>
+	</table>
+	</div>
+
+	<div class="row">
+		&nbsp;
+	</div>
+	
 	<div class="row buttons">
 		<input type="submit" name="save" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
 	</div>
 </div>
+
+<? require("auto_enroll_filter_courses.php"); ?>
+
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

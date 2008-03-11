@@ -72,14 +72,14 @@ if ($row = mysql_fetch_assoc($result)): ?>
 	?>
 		<tr onmousedown="document.form['m<?php echo $row['auto_enroll_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['auto_enroll_id']; ?>">
 			<td width="10"><input type="radio" name="auto_enroll_id" value="<?php echo $row['auto_enroll_id']; ?>" id="m<?php echo $row['auto_enroll_id']; ?>" /></td>
-			<td><label for="m<?php echo $row['auto_enroll_id']; ?>"><?php echo $row['name']; ?></label></td>
+			<td><label for="m<?php echo $row['auto_enroll_id']; ?>"><?php if ($row['name']=="") echo _AT('na'); else echo $row['name']; ?></label></td>
 			<td><?php echo $courses; ?></td>
 			<td nowrap><?php echo $_base_href. "registration.php?en_id=". $row['associate_string']; ?></td>
 		</tr>
 	<?php } while ($row = mysql_fetch_assoc($result)); ?>
 <?php else: ?>
 	<tr>
-		<td colspan="3"><?php echo _AT('none_found'); ?></td>
+		<td colspan="4"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>
