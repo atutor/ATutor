@@ -90,9 +90,10 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 			else
 			{
 				$msg->addFeedback('CONFIRM_GOOD');
-	
-				header('Location: '.$_base_href.'login.php');
-				exit;
+				
+				// enable auto login student into "my start page"
+				$_REQUEST["auto_login"] = 1;
+				$_REQUEST["member_id"] = $id;
 			}
 		} else {
 			$msg->addError('CONFIRM_BAD');
