@@ -174,8 +174,8 @@ else if ($row = mysql_fetch_assoc($courses_result))
 		{
 	?>
 		<tr onmousedown="document.form['a<?php echo $row['course_id']; ?>'].checked = !document.form['a<?php echo $row['course_id']; ?>'].checked; togglerowhighlight(this, 'a<?php echo $row['course_id']; ?>');" id="ra<?php echo $row['course_id']; ?>">
-			<td width="10"><label for="a<?php echo $row['title']; ?>"><input type="checkbox" name="add_ids[]" value="<?php echo $row['course_id']; ?>" id="a<?php echo $row['course_id']; ?>" onmouseup="this.checked=!this.checked" /></label></td>
-			<td><?php echo $row['title']; ?></td>
+			<td width="10"><label for="ta<?php echo $row['course_id']; ?>"><input type="checkbox" name="add_ids[]" value="<?php echo $row['course_id']; ?>" id="a<?php echo $row['course_id']; ?>" onmouseup="this.checked=!this.checked" /></label></td>
+			<td id="ta<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></td>
 			<td><?php echo $cats[$row['cat_id']]; ?></td>
 		</tr>
 	<?php 

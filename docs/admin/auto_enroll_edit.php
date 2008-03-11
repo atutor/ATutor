@@ -167,7 +167,7 @@ while($row = mysql_fetch_array($result)) {
 // don't display this section when creating new record
 ?>
 	<div class="row">
-		<h4><label for="courses_table"><?php echo _AT('course_to_auto_enroll'); ?></label><br /></h4>
+		<h4><?php echo _AT('course_to_auto_enroll'); ?><br /></h4>
 	</div>
 
 	<div class="row">
@@ -214,8 +214,8 @@ if ($auto_enroll_id > 0)
 		$existing_courses[] = $row_courses["course_id"];
 	?>
 			<tr onmousedown="document.form['m<?php echo $row_courses['auto_enroll_courses_id']; ?>'].checked = !document.form['m<?php echo $row_courses['auto_enroll_courses_id']; ?>'].checked; togglerowhighlight(this, 'm<?php echo $row_courses['auto_enroll_courses_id']; ?>');" id="rm<?php echo $row_courses['auto_enroll_courses_id']; ?>">
-				<td width="10"><label for="m<?php echo $row_courses['title']; ?>"><input type="checkbox" name="delete_ids[]" value="<?php echo $row_courses['auto_enroll_courses_id']; ?>" id="m<?php echo $row_courses['auto_enroll_courses_id']; ?>" onmouseup="this.checked=!this.checked" /></label></td>
-				<td><?php echo $row_courses['title']; ?></td>
+				<td width="10"><label for="tm<?php echo $row_courses['auto_enroll_courses_id']; ?>"><input type="checkbox" name="delete_ids[]" value="<?php echo $row_courses['auto_enroll_courses_id']; ?>" id="m<?php echo $row_courses['auto_enroll_courses_id']; ?>" onmouseup="this.checked=!this.checked" /></label></td>
+				<td id="tm<?php echo $row_courses['auto_enroll_courses_id']; ?>"><?php echo $row_courses['title']; ?></td>
 				<td><?php echo $cats[$row_courses['cat_id']]; ?></td>
 			</tr>
 	<?php } while ($row_courses = mysql_fetch_assoc($result_courses)); ?>
