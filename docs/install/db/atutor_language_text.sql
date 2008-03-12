@@ -1711,5 +1711,13 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_ADD_FEED', 'Are y
 ('en', '_template', 'percentage_score', 'percentage score', now(), ''),
 ('en', '_template', 'points_score', 'points score', now(), ''),
 ('en', '_template', 'all_passed_students', 'All Passed Students', now(), ''),
-('en', '_template', 'all_failed_students', 'All Failed Students', now(), '')
+('en', '_template', 'all_failed_students', 'All Failed Students', now(), ''),
+('en', '_template', 'auto_enroll', 'Auto Enrollment At Registration', now(), ''),
+('en', '_msgs', 'AT_CONFIRM_DELETE_AUTO_ENROLL', 'Are you sure you want to <strong>delete</strong> auto enrollment for <strong>%s</strong>', now(), ''),
+('en', '_template', 'course_to_auto_enroll', 'Courses to Enroll', now(), ''),
+('en', '_template', 'auto_enroll_delete', 'Delete Auto Enrollment', now(), 'links database'),
+('en', '_template', 'auto_enroll_edit', 'Create/Edit Auto Enrollment', now(), ''),
+('en', '_template', 'auto_enroll_msg', 'You will be enrolled into these courses.', now(), ''),
+('en', '_template', 'auto_enrolled_msg', 'You have been enrolled into these courses:', now(), ''),
+('en', '_template', 'go_to_my_start_page', 'Go To My Start Page', now(), '')
 ;
