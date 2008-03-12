@@ -5,7 +5,7 @@
 		<applied_version>1.6</applied_version>
 		<patch_folder>1_6-1</patch_folder>
 		<description>Patch No. 1 for ATutor 1.6</description>
-		<available_to>Royal Danish Defence College</available_to>
+		<available_to>public</available_to>
 		<dependent_patches></dependent_patches>
 	</patch>
 	
