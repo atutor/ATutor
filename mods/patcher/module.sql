@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-# Table structure for table `assignments`
+# Table structure for table `patches`
 # since 1.6.1
 
 DROP TABLE `patches`;
@@ -21,7 +21,7 @@ CREATE TABLE `patches` (
 
 
 # --------------------------------------------------------
-# Table structure for table `assignments`
+# Table structure for table `patches_files`
 # since 1.6.1
 
 DROP TABLE `patches_files`;
@@ -36,7 +36,7 @@ CREATE TABLE `patches_files` (
 );
 
 # --------------------------------------------------------
-# Table structure for table `assignments`
+# Table structure for table `patches_files_actions`
 # since 1.6.1
 
 DROP TABLE `patches_files_actions`;
@@ -49,6 +49,10 @@ CREATE TABLE `patches_files_actions` (
 	`code_to` TEXT NOT NULL,
 	PRIMARY KEY  (`patches_files_actions_id`)
 );
+
+# --------------------------------------------------------
+# New records for table `language_text`
+# since 1.6.1
 
 INSERT INTO `language_text` VALUES ('en', '_module','patcher','Patcher',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_template', 'get_my_patch', 'Get My Patch', now(), '');

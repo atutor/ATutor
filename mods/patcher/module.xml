@@ -13,7 +13,7 @@
 	<release> 
         <version>0.1</version> 
         <date>2008-02-08</date> 
-        <state>beta</state> 
+        <state>stable</state> 
         <notes></notes> 
     </release> 
 </module>
