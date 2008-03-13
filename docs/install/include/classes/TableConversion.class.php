@@ -312,7 +312,7 @@ class ATutorTable{
 				$j++;
 			}
 		} else {
-			$sql .= " WHERE $primary_key_col=$primary_key";
+			$sql .= " WHERE `$primary_key_col`=$primary_key";
 		}
 //		echo "<hr/>";
 		return $sql;
@@ -359,6 +359,7 @@ class BackupsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'backup_id';
 			//Convert all neccessary entries
+			$value_array['date'] = $row['date'];
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
 			$value_array['system_file_name'] = mb_convert_encoding($row['system_file_name'], $this->to_encoding, $this->from_encoding);
 			$value_array['file_name'] = mb_convert_encoding($row['file_name'], $this->to_encoding, $this->from_encoding);
@@ -382,6 +383,7 @@ class BlogPostsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'post_id';
 			//Convert all neccessary entries
+			$value_array['date'] = $row['date'];
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Convert sub post comment.
@@ -418,6 +420,7 @@ class BlogPostsCommentsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'comment_id';
 			//Convert all neccessary entries
+			$value_array['date'] = $row['date'];
 			$value_array['text'] = mb_convert_encoding($row['text'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
@@ -438,6 +441,7 @@ class ContentTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'content_id';
 			//Convert all neccessary entries
+			$value_array['last_modified'] = $row['last_modified'];
 			$value_array['keywords'] = mb_convert_encoding($row['keywords'], $this->to_encoding, $this->from_encoding);
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['text'] = mb_convert_encoding($row['text'], $this->to_encoding, $this->from_encoding);
@@ -598,6 +602,7 @@ class FaqEntriesTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'entry_id';
 			//Convert all neccessary entries
+			$value_array['revised_date'] = $row['revised_date'];
 			$value_array['question'] = mb_convert_encoding($row['question'], $this->to_encoding, $this->from_encoding);
 			$value_array['answer'] = mb_convert_encoding($row['answer'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
@@ -630,6 +635,7 @@ class ForumsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'forum_id';
 			//Convert all neccessary entries
+			$value_array['last_post'] = $row['last_post'];
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
 			//Convert faq entries
@@ -667,6 +673,7 @@ class ForumsThreadsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'post_id';
 			//Convert all neccessary entries
+			$value_array['last_comment'] = $row['last_comment'];
 			$value_array['subject'] = mb_convert_encoding($row['subject'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
@@ -745,6 +752,7 @@ class ForumsThreadsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'file_id';
 			//Convert all neccessary entries
+			$value_array['date'] = $row['date'];
 			$value_array['file_name'] = mb_convert_encoding($row['file_name'], $this->to_encoding, $this->from_encoding);
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
 			//Convert faq entries
@@ -782,6 +790,7 @@ class FilesCommentsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'comment_id';
 			//Convert all neccessary entries
+			$value_array['date'] = $row['date'];
 			$value_array['comment'] = mb_convert_encoding($row['comment'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
@@ -976,6 +985,7 @@ class MembersTable extends ATutorTable{
 			$value_array['address'] = mb_convert_encoding($row['address'], $this->to_encoding, $this->from_encoding);
 			$value_array['city'] = mb_convert_encoding($row['city'], $this->to_encoding, $this->from_encoding);
 			$value_array['province'] = mb_convert_encoding($row['province'], $this->to_encoding, $this->from_encoding);
+			$value_array['creation_date'] = $row['creation_date'];
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
 			$result &= mysql_query($this->generate_sql($value_array, $key_col, $row[$key_col]));
@@ -996,6 +1006,7 @@ class MessagesTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'message_id';
 			//Convert all neccessary entries
+			$value_array['date_sent'] = $row['date_sent'];
 			$value_array['subject'] = mb_convert_encoding($row['subject'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
@@ -1018,6 +1029,7 @@ class MessagesSentTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'message_id';
 			//Convert all neccessary entries
+			$value_array['date_sent'] = $row['date_sent'];
 			$value_array['subject'] = mb_convert_encoding($row['subject'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
@@ -1040,6 +1052,7 @@ class NewsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'news_id';
 			//Convert all neccessary entries
+			$value_array['date'] = $row['date'];
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Generate SQL
@@ -1062,6 +1075,7 @@ class PollsTable extends ATutorTable{
 			//Store the key for updating purposes.
 			$key_col = 'poll_id';
 			//Convert all neccessary entries
+			$value_array['created_date'] = $row['created_date'];
 			$value_array['question'] = mb_convert_encoding($row['question'], $this->to_encoding, $this->from_encoding);
 			$value_array['choice1'] = mb_convert_encoding($row['choice1'], $this->to_encoding, $this->from_encoding);
 			$value_array['choice2'] = mb_convert_encoding($row['choice2'], $this->to_encoding, $this->from_encoding);
