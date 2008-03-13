@@ -220,7 +220,7 @@ class Patch {
 				{
 					$this->need_access_to_files[] = $real_file;
 
-					if (!in_array($real_file, $_SESSION['remove_permission']))
+					if (!in_array($real_file, $_SESSION['remove_permission']) && $patch_file['action'] <> 'delete')
 						$_SESSION['remove_permission'][] = $real_file;
 				}
 			}
