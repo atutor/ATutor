@@ -155,6 +155,12 @@ define('LINK_CAT_SELF',		3);
 			$_SESSION['redo_conversion'][$course_title]['LinksCategoriesTable'] = array($this->table_prefix, 'links_categories', $char_set, $course_id);
 		}
 
+		$temp_table =& new MessagesTable($this->table_prefix, 'messages', $char_set, $course_id);
+		if (!$temp_table->convert()){
+			$errors[]= $course_title.': '.$this->table_prefix.'messages was not converted.';
+			$_SESSION['redo_conversion'][$course_title]['MessagesTable'] = array($this->table_prefix, 'messages', $char_set, $course_id);
+		}
+
 		$temp_table =& new MessagesSentTable($this->table_prefix, 'messages_sent', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'messages_sent was not converted.';
