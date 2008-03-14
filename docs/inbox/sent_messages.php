@@ -91,7 +91,7 @@ if (isset($_GET['view']) && $_GET['view']) {
 				<div class="forum-post-ctrl">
 					<a href="inbox/send_message.php?forward=<?php echo $_GET['view']; ?>"><?php echo _AT('forward'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>"><?php echo _AT('delete'); ?></a>
 				</div>
-				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></p>
+				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME); ?></p>
 			</div>
 
 			<div class="body">
