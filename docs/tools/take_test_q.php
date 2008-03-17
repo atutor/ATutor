@@ -153,7 +153,7 @@ if ($result_id == 0) {
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		if (!$_SESSION['enroll']) {
+		if (!$_SESSION['enroll'] || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
 			header('Location: ../tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id);		
 			exit;
 		}
@@ -219,6 +219,7 @@ if (!$result || !$question_row) {
 
 	?>
 	<div class="row buttons">
+		 <div style="display:none"><input type="submit" value="<?php echo _AT('next'); ?>" name="next"/></div>
 		<?php if ($pos > 0): ?>
 			<input type="submit" name="previous" value="<?php echo _AT('previous'); ?>" />
 		<?php endif; ?>

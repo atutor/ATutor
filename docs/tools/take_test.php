@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	if (!$_SESSION['enroll']) {
+	if (!$_SESSION['enroll'] || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
 		header('Location: ../tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id);		
 		exit;
 	}
