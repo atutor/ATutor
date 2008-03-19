@@ -43,9 +43,9 @@ if (isset($_POST['cancel'])) {
 	$_POST['category_id']  = intval($_POST['category_id']);
 
 	for ($i = 0 ; $i < 10; $i++) {
-		$_POST['question'][$i]        = trim($_POST['question'][$i]);
+		$_POST['question'][$i]        = $addslashes(trim($_POST['question'][$i]));
 		$_POST['question_answer'][$i] = (int) $_POST['question_answer'][$i];
-		$_POST['answer'][$i]          = trim($_POST['answer'][$i]);
+		$_POST['answer'][$i]          = $addslashes(trim($_POST['answer'][$i]));
 	}
 
 	if (!$_POST['question'][0] 
