@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Certificate</name> 
+    <description lang="en">This is a module to define tests' certificates by instructor. Students can view or print the certificates via "Certificate" link. This module includes one default certificate PDF template at module content folder as part of the module, that an ATutor system administrator can replace it via FTP. Please refer to "README" for detail usage.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2008-03-17</date> 
+        <state>stable</state> 
+        <notes></notes> 
+    </release> 
+</module>
