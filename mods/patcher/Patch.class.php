@@ -280,6 +280,9 @@ class Patch {
 		
 		$dependent_patches_installed = true;
 		
+		// if no dependent patch defined, return true
+		if (!is_array($this->patch_summary_array["dependent_patches"])) return true;
+		
 		foreach($this->patch_summary_array["dependent_patches"] as $num => $dependent_patch)
 		{
 			if (!is_patch_installed($dependent_patch))
