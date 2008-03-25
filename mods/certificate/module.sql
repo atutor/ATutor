@@ -37,8 +37,8 @@ INSERT INTO `language_text` VALUES
 ('en', '_template', 'define_pass_score', 'Please define pass score <a href="%s" target="_blank">here</a> and save again', now(), ''),
 ('en', '_msgs', 'AT_CONFIRM_DELETE_CERTIFICATE', 'Are you sure you want to <strong>delete</strong> certificate for <strong>%s</strong>', now(), ''),
 ('en', '_template', 'certificate_tokens', '<strong>Certificate Tokens</strong><br>[TNAME]: Test Title<br>
-[FNAME]: Firstname<br>
-[LNAME]: Lastname<br>
+[FNAME]: First Name<br>
+[LNAME]: Last Name<br>
 [CNAME]: Course Name<br>
 [USERMAIL]: Email Address<br>
 [USCORE]: Users test score<br>
