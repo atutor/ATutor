@@ -28,6 +28,7 @@ class PatchParser {
 	var $element_path; // array of element paths (basically a stack)
 	var $file_num;
 	var $action_detail_num;
+	var $dependent_patches_num;
 
 	function PatchParser() {
 		$this->parser = xml_parser_create(''); 
@@ -45,6 +46,7 @@ class PatchParser {
 		$this->character_data = '';
 		$this->file_num = 0;
 		$this->action_detail_num = 0;
+		$this->dependent_patches_num = 0;
 		
 		xml_parse($this->parser, $xml_data, TRUE);
 	}
@@ -75,6 +77,10 @@ class PatchParser {
 		if ($this->element_path == array('patch', 'description')) 
 		{
 			$this->patch_row['description'] = trim($this->character_data);
+		}
+		if ($this->element_path === array('patch', 'dependent_patches', 'dependent_patch')) 
+		{
+			$this->patch_row['dependent_patches'][$this->dependent_patches_num++] = trim($this->character_data);
 		}
 		if ($this->element_path == array('patch', 'sql')) 
 		{

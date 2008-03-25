@@ -91,18 +91,24 @@ class Patch {
 		// 1. if svn server is up
 		// 2. if the local file is customized by user
 		// 3. if script has write priviledge on local file/folder
+		// 4. if dependent patches have been installed
 		if (!$this->pingDomain($this->svn_tag_folder)) return false;
 		
+		if (!$this->checkDependentPatches()) return false;
+
 		if (!$this->skipFilesModified && $this->hasFilesModified()) return false;
 		
 		if (!$this->checkPriviledge()) return false;
 		// End of check
 
 		if (strlen(trim($this->patch_array['sql'])) > 0) $this->runSQL();
-		
+
 		// Start applying patch
 		$this->createPatchesRecord($this->patch_summary_array);
 
+		// if no file action defined, return true
+		if (!is_array($this->patch_array[files])) return true;
+		
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
 			$this->createPatchesFilesRecord($this->patch_array['files'][$row_num]);
@@ -198,6 +204,9 @@ class Patch {
 	{
 		global $id, $who;
 		
+		// no file action is defined, return true;
+		if (!is_array($this->patch_array[files])) return true;
+		
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
 			$real_location = realpath($patch_file['location']);
@@ -259,6 +268,38 @@ class Patch {
 	}
 	
 	/**
+	* Check if all the dependent patches have been installed.
+	* @access  private
+	* @return  true  if all the dependent patches have been installed
+	*          false if any dependent patch has not been installed.
+	* @author  Cindy Qi Li
+	*/
+	function checkDependentPatches()
+	{
+		global $msg;
+		
+		$dependent_patches_installed = true;
+		
+		foreach($this->patch_summary_array["dependent_patches"] as $num => $dependent_patch)
+		{
+			if (!is_patch_installed($dependent_patch))
+			{
+				$dependent_patches_installed = false;
+				$dependent_patches .= $dependent_patch. ", ";
+			}
+		}
+		
+		if (!$dependent_patches_installed)
+		{
+			$errors = array('PATCH_DEPENDENCY', substr($dependent_patches, 0, -2));
+			$msg->addError($errors);
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
 	* Loop thru all the patch files that will be overwitten or altered, 
 	* to find out if they are modified by user. If it's modified, warn user.
 	* @access  private
@@ -271,6 +312,9 @@ class Patch {
 		$overwrite_modified_files = false;
 		$alter_modified_files = false;
 		$has_not_exist_files = false;
+		
+		// no file action is defined, return nothing is modified (false)
+		if (!is_array($this->patch_array[files])) return false;
 		
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{

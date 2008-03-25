@@ -3,6 +3,10 @@
 	<atutor_patch_id>00001</atutor_patch_id>
 	<applied_version>1.6</applied_version>
 	<description>Sample patch XML</description>
+	<dependent_patches>
+		<dependent_patch>00002</dependent_patch>
+		<dependent_patch>00003</dependent_patch>
+	</dependent_patches>
 	
 	<sql>
 		ALTER TABLE `tests` ADD `description` TEXT NOT NULL AFTER `title`;

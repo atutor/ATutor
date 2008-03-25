@@ -17,6 +17,7 @@
 		<available_to>public</available_to>
 		<dependent_patches>
 			<dependent_patch>00001</dependent_patch>
+			<dependent_patch>00003</dependent_patch>
 		</dependent_patches>
 	</patch>
 </patch_list> 

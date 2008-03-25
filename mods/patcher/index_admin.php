@@ -9,25 +9,6 @@ require_once('common.inc.php');
 set_time_limit(0);
 
 /**
- * Check if the patch has been installed
- */
-function is_patch_installed($patch_id)
-{
-	global $db;
-	
-	// Only displays the patches that are not installed
-	$sql = "select count(*) num_of_installed from ".TABLE_PREFIX."patches " .
-	       "where atutor_patch_id = '" . $patch_id ."'".
-	       " and status like '%Installed'";
-
-	$result = mysql_query($sql, $db) or die(mysql_error());
-	$row = mysql_fetch_assoc($result);
-	
-	if ($row["num_of_installed"] > 0) return true;
-	else return false;
-}
-
-/**
  * Generate html of each patch row at main patch page
  */
 function print_patch_row($patch_row, $row_id, $enable_radiotton)
@@ -38,7 +19,7 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 	if ($dependent_patches =="")
 		$description = $patch_row["description"];
 	else
-		$description = $patch_row["description"] . _AT('patch_dependent_patch_not_installed') . "<font color='red'>" . $dependent_patches . "</font>";
+		$description = $patch_row["description"] . _AT('patch_dependent_patch_not_installed') . "<span style='color: red'>" . $dependent_patches . "</span>";
 ?>
 	<tr <?php if ($enable_radiotton) echo 'onmousedown="document.form[\'m'. $row_id.'\'].checked = true; rowselect(this);"'; ?> id="r_<?php echo $row_id; ?>">
 		<td><input type="radio" name="id" value="<?php echo $row_id; ?>" id="m<?php echo $row_id; ?>" <?php if (!$enable_radiotton) echo "disabled "; if (strcmp($row_id, $id) == 0 || strcmp($row_id, $patch_id) == 0) echo "checked "?> /></td>
@@ -166,7 +147,8 @@ if ($_POST['install'] || $_POST['install_upload'])
 																		'applied_version' => $patch_array['applied_version'],
 																		'patch_folder' => $patchURL,
 																		'available_to' => 'private',
-																		'description' => $patch_array['description']);
+																		'description' => $patch_array['description'],
+																		'dependent_patches' => $patch_array['dependent_patches']);
 			}
 
 			if ($_POST["install"])
@@ -356,9 +338,12 @@ else
 					if (!is_patch_installed($dependent_patch))
 					{
 						$dependent_patches_installed = false;
-						$dependent_patches .= $dependent_patch. "<br>";
+						$dependent_patches .= $dependent_patch. ", ";
 					}
 				}
+				
+				// remove the last ,
+				if ($dependent_patches <> "") $dependent_patches = substr($dependent_patches, 0, -2);
 			}
 
 			// display patch row

@@ -110,4 +110,23 @@ function clear_dir($dir) {
 	return true;
 }
 
+/**
+ * Check if the patch has been installed
+ */
+function is_patch_installed($patch_id)
+{
+	global $db;
+	
+	// Only displays the patches that are not installed
+	$sql = "select count(*) num_of_installed from ".TABLE_PREFIX."patches " .
+	       "where atutor_patch_id = '" . $patch_id ."'".
+	       " and status like '%Installed'";
+
+	$result = mysql_query($sql, $db) or die(mysql_error());
+	$row = mysql_fetch_assoc($result);
+	
+	if ($row["num_of_installed"] > 0) return true;
+	else return false;
+}
+
 ?>
