@@ -37,9 +37,9 @@ while ($row = mysql_fetch_assoc($result))
 {
   $key = addcslashes($row["field_name"], "\n\r\t\\()");
   if ($_REQUEST["result_id"] > 0)
-  	$value = addcslashes(replace_tokens($row["field_value"], $tokens), "\n\r\t\\()");
+  	$value = $addslashes(replace_tokens($row["field_value"], $tokens), "\n\r\t\\()");
   else
-  	$value = addcslashes($row["field_value"], "\n\r\t\\()");
+  	$value = $addslashes($row["field_value"], "\n\r\t\\()");
 
   $fdf .= "<< /T ($key) /V ($value) >> \n";
 }
