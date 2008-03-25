@@ -35,6 +35,7 @@ INSERT INTO `language_text` VALUES
 ('en', '_template', 'enable_download_certificate', 'Enable Download Certificate', now(), ''),
 ('en', '_template', 'issue_certificate', 'Issue certificate if test is passed', now(), ''),
 ('en', '_template', 'define_pass_score', 'Please define pass score <a href="%s" target="_blank">here</a> and save again', now(), ''),
+('en', '_template', 'require_acrobat', 'In order to %s certificate, you will require Adobe Acrobat Reader.<a href="http://www.adobe.com/products/acrobat/readstep2.html" target="_blank"><img src="mods/certificate/get_adobe_reader.gif" style="border-width: 0px;"></a>', now(), ''),
 ('en', '_msgs', 'AT_CONFIRM_DELETE_CERTIFICATE', 'Are you sure you want to <strong>delete</strong> certificate for <strong>%s</strong>', now(), ''),
 ('en', '_template', 'certificate_tokens', '<strong>Certificate Tokens</strong><br>[TNAME]: Test Title<br>
 [FNAME]: First Name<br>

@@ -78,6 +78,8 @@ while ($row = mysql_fetch_assoc($result))
 }
 
 ?>
+&middot; <?php echo _AT("require_acrobat", "download"); ?><br><br>
+
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table summary="" class="data" rules="cols" align="center" style="width: 70%;">
 

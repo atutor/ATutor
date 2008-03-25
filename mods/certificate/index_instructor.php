@@ -34,6 +34,7 @@ else if (!empty($_POST) && !isset($_POST['certificate_id'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 ?>
+&middot; <?php echo _AT("require_acrobat", "preview"); ?><br><br>
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table summary="" class="data" rules="cols" align="center" style="width: 70%;">
 
@@ -55,6 +56,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" name="remove" value="<?php echo _AT('remove'); ?>" /> 
 		</div>
 	</td>
+</tr>
+<tr>
+	<td colspan="5"></td>
 </tr>
 </tfoot>
 <tbody>
