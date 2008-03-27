@@ -222,7 +222,7 @@ if ($patch_id > 0)
 		if (count($_SESSION['remove_permission']) > 0)
 		{
 			if ($_POST['done']) $msg->printErrors('REMOVE_WRITE_PERMISSION');
-			else $msg->printFeedbacks('PATCH_INSTALLED_SUCCESSFULLY');
+			else $msg->printInfos('PATCH_INSTALLED_AND_REMOVE_PERMISSION');
 			
 			$feedbacks[] = _AT('remove_write_permission');
 			
@@ -342,7 +342,7 @@ else
 					}
 				}
 				
-				// remove the last ,
+				// remove the last comma in the string
 				if ($dependent_patches <> "") $dependent_patches = substr($dependent_patches, 0, -2);
 			}
 
