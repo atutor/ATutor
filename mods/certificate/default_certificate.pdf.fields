@@ -1,21 +1,18 @@
 ---
-FieldName: title
-FieldValue: Certificate of Completion
----
-FieldName: test_name
-FieldValue: [TNAME]
----
-FieldName: for
-FieldValue: This certifies that:
----
-FieldName: user_mail
-FieldValue: [USERMAIL]
+FieldName: course_name
+FieldValue: [CNAME]
 ---
 FieldName: full_name
 FieldValue: [FNAME] [LNAME]
 ---
-FieldName: certificate_text
-FieldValue: has completed the final quiz for [CNAME] with a score of [USCORE] / [OSCORE] on [SYSDATE].
+FieldName: email
+FieldValue: [USERMAIL]
 ---
-FieldName: signature
-FieldValue: Signature
+FieldName: test_name
+FieldValue: [TNAME]
+---
+FieldName: score
+FieldValue: with a score of [USCORE] out of [OSCORE].
+---
+FieldName: issued_date
+FieldValue: [SYSDATE]
