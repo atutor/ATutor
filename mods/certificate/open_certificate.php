@@ -28,7 +28,7 @@ if ($_REQUEST["result_id"] > 0) $tokens = initialize_tokens($_REQUEST['result_id
 $sql = "select * from ".TABLE_PREFIX."certificate_text where certificate_id=".$_REQUEST["certificate_id"];
 $result	= mysql_query($sql, $db) or die(mysql_error());
 
-$url="http://" . $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']). "/default_certificate.pdf";
+$url=AT_BASE_HREF . "mods/certificate/default_certificate.pdf";
 
 $fdf = "%FDF-1.2\n%¡¦¡§&&Mac178;\n";
 $fdf .= "1 0 obj \n<< /FDF << /Fields [\n";
