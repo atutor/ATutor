@@ -35,11 +35,11 @@ $fdf .= "1 0 obj \n<< /FDF << /Fields [\n";
 
 while ($row = mysql_fetch_assoc($result))
 {
-  $key = addcslashes($row["field_name"], "\n\r\t\\()");
+  $key = $row["field_name"];
   if ($_REQUEST["result_id"] > 0)
-  	$value = $addslashes(replace_tokens($row["field_value"], $tokens), "\n\r\t\\()");
+  	$value = replace_tokens($row["field_value"], $tokens);
   else
-  	$value = $addslashes($row["field_value"], "\n\r\t\\()");
+  	$value = $row["field_value"];
 
   $fdf .= "<< /T ($key) /V ($value) >> \n";
 }
