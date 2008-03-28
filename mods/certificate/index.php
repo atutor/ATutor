@@ -22,7 +22,7 @@ require("common.inc.php");
 
 $sql	= "SELECT T.*, R.*, C.certificate_id, C.enable_download
 				   FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."certificate C 
-				  WHERE R.status=1 
+				  WHERE R.final_score > 0
 				    AND R.member_id=$_SESSION[member_id] 
 				    AND R.test_id=T.test_id 
 				    AND T.course_id=$_SESSION[course_id] 
