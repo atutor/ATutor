@@ -79,7 +79,7 @@ file will be backup before the modification. Please note that the modification o
 INSERT INTO `language_text` VALUES ('en', '_template', 'grant_write_permission', 
 'Please grant <strong>write</strong> permission to folders and files listed below:<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'remove_write_permission', 
-'<span style="color:red">Please <strong>REMOVE</strong> write permission on the listed folders and files for your security:<p><strong>Note:</strong> To remove permissions on Unix use <kbd>chmod 755</kbd> then the file name..</p>', now(), 'patcher');
+'<span style="color:red">Please <strong>REMOVE</strong> write permission on the listed folders and files for your security:</span><p><strong>Note:</strong> To remove permissions on Unix use <kbd>chmod 755</kbd> then the file name..</p>', now(), 'patcher');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_show_backup_files', 
 'Below is the list of the backup files created by patch installation. After ensuring ATutor works properly with the patch, you may want to 
 delete these files. If  ATutor does not work properly with the patch, you can always revert back to the old files by renaming the backup files 
