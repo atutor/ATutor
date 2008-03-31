@@ -179,7 +179,7 @@ if (!$is_passscore_in_basetable)
 		<input type="radio" name="enable_download" value="0" id="no"  <?php if ($_POST['enable_download'] == 0){echo 'checked="true"';} ?> />
 		<label for="no"><?php  echo _AT('no'); ?></label><br />
 
-		<input type="radio" name="enable_download" value="1" id="ok"  <?php if ($_POST['enable_download'] == 1){echo 'checked="true"';} ?> />
+		<input type="radio" name="enable_download" value="1" id="ok"  <?php if ($_POST['enable_download'] == 1 || !isset($_POST['enable_download'])){echo 'checked="true"';} ?> />
 		<label for="ok"><?php  echo _AT('issue_certificate'); ?></label><br />
 	</div>
 
