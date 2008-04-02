@@ -78,24 +78,10 @@ function initialize_tokens($result_id)
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 	
-//	if (!is_pass_score_defined_in_base_table())
-//	{
-//		$sql = "select passscore, passpercent from ".TABLE_PREFIX."certificate where test_id=".$row["test_id"];
-//		$result_certificate	= mysql_query($sql, $db) or die(mysql_error());
-//		$row_certificate = mysql_fetch_assoc($result_certificate);
-//		
-//		$row["passscore"] = $row_certificate["passscore"];
-//		$row["passpercent"] = $row_certificate["passpercent"];
-//	}
-//
-//	if ($row["passpercent"] <> 0 & ($row["final_score"]/$out_of*100) >= $row["passpercent"])
-//		$uscore = ($row["final_score"]/$out_of*100) . '%';
-//	if ($row["passscore"] <> 0 & $row["final_score"] >= $row["passscore"])
-//		$uscore = $row["passscore"];
-
 	$tokens[] = array("name"=>"[TNAME]", "value"=>$row["title"]);
 	$tokens[] = array("name"=>"[USCORE]", "value"=>$row["final_score"]);
 	$tokens[] = array("name"=>"[OSCORE]", "value"=>$row["out_of"]);
+	$tokens[] = array("name"=>"[PSCORE]", "value"=>($row["final_score"]/$row["out_of"]*100).'%');
 	$tokens[] = array("name"=>"[SYSDATE]", "value"=>$row["date_taken"]);
 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."courses c where c.course_id=".$_SESSION["course_id"] ;
@@ -112,7 +98,7 @@ function initialize_tokens($result_id)
 	$tokens[] = array("name"=>"[USERMAIL]", "value"=>$row["email"]);
 	$tokens[] = array("name"=>"[FNAME]", "value"=>$row["first_name"]);
 	$tokens[] = array("name"=>"[LNAME]", "value"=>$row["last_name"]);
-	
+
 	return $tokens;
 }
 

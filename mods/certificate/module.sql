@@ -44,6 +44,7 @@ INSERT INTO `language_text` VALUES
 [USERMAIL]: Email Address<br>
 [USCORE]: Users test score<br>
 [OSCORE]: Out of test score<br>
+[PSCORE]: Test score in percentage<br>
 [SYSDATE]: Date time of last attempt at passed test<br>
 [USERID]: ATutor Member ID', now(), '')
 ;
