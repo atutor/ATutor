@@ -222,8 +222,6 @@ class Patch {
 			{
 				$file = $patch_file['location'] . "/" . $patch_file['name'];
 
-				if (file_exists($file))     @chmod($file, 0666);
-
 				$real_file = realpath($file);
 				if (file_exists($file) && !is_writable($file) && !in_array($real_file, $this->need_access_to_files))
 				{
