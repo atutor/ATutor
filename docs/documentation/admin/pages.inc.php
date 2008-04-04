@@ -34,5 +34,7 @@
 	$_pages['forums.php']                        = 'Forums';
 	$_pages['categories.php']                    = 'Course Categories';
 	$_pages['modules.php']                       = 'Modules';
+	$_pages['patcher.php']                       = 'Patcher';
+	$_pages['create_patches.php']                = 'Create Patches';
 	$_pages['troubleshooting.php']               = 'Troubleshooting';
 ?>
