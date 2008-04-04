@@ -37,5 +37,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_PATCHER, TRUE) || admin_authenticate(AT_ADM
 	$this->_pages['mods/patcher/patch_delete.php']['title_var'] = 'delete_patch';
 	$this->_pages['mods/patcher/patch_delete.php']['parent']   = 'mods/patcher/myown_patches.php';
 }
+$this->_pages['mods/patcher/index_admin.php']['guide']     = 'admin/?p=patcher.php';
+$this->_pages['mods/patcher/patch_create.php']['guide']     = 'admin/?p=create_patches.php';
 
 ?>
