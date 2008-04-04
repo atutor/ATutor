@@ -2,8 +2,6 @@
 # Table structure for table `patches`
 # since 1.6.1
 
-DROP TABLE `patches`;
-
 CREATE TABLE `patches` (
 	`patches_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`atutor_patch_id` VARCHAR(20) NOT NULL default '',
@@ -24,8 +22,6 @@ CREATE TABLE `patches` (
 # Table structure for table `patches_files`
 # since 1.6.1
 
-DROP TABLE `patches_files`;
-
 CREATE TABLE `patches_files` (
 	`patches_files_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`patches_id` MEDIUMINT UNSIGNED NOT NULL default 0,
@@ -38,8 +34,6 @@ CREATE TABLE `patches_files` (
 # --------------------------------------------------------
 # Table structure for table `patches_files_actions`
 # since 1.6.1
-
-DROP TABLE `patches_files_actions`;
 
 CREATE TABLE `patches_files_actions` (
 	`patches_files_actions_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -92,3 +86,57 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'patch_dependent_patch_no
 INSERT INTO `language_text` VALUES ('en', '_template', 'upload_patch', 
 'Upload a zip file to install patch:', now(), 'patcher');
 
+# --------------------------------------------------------
+# New tables for patch creator
+# since 1.6.1
+CREATE TABLE `myown_patches` (
+	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`atutor_patch_id` VARCHAR(20) NOT NULL default '',
+	`applied_version` VARCHAR(10) NOT NULL default '',
+  `description` TEXT NOT NULL,
+  `sql_statement` text NOT NULL,
+  `status` varchar(20) NOT NULL default '',
+	PRIMARY KEY  (`myown_patch_id`)
+);
+
+CREATE TABLE `myown_patches_dependent` (
+	`myown_patches_dependent_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL,
+	`dependent_patch_id` VARCHAR(50) NOT NULL default '',
+	PRIMARY KEY  (`myown_patches_dependent_id`)
+);
+
+CREATE TABLE `myown_patches_files` (
+	`myown_patches_files_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL,
+	`action` VARCHAR(20) NOT NULL default '',
+	`name` VARCHAR(250) NOT NULL,
+	`location` VARCHAR(250) NOT NULL default '',
+	`code_from` TEXT NOT NULL,
+	`code_to` TEXT NOT NULL,
+	PRIMARY KEY  (`myown_patches_files_id`)
+);
+
+# --------------------------------------------------------
+# New records for table `language_text` (for patch creator)
+# since 1.6.1
+
+INSERT INTO `language_text` VALUES ('en', '_template', 'myown_patches', 'My Own Patches', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_patch_id', 'ATutor Patch ID', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_version_to_apply', 'ATutor Version to Apply', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'dependent_patches', 'Dependent Patches', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'dependent_patch_id', 'Dependent Patch ID', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'add_dependent_patch', 'Add A Dependent Patch', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'sql_statement', 'SQL Statement', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'relative_directory', 'Directory is relative directory to ATutor root, for example: docs/images/ or tools/tests/. Leave empty if it is ATutor root directory.', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'create_patch', 'Create Patch', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'edit_patch', 'Edit Patch', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'delete_patch', 'Delete Patch', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'add_a_file', 'Add A File', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'delete_this_file', 'Delete This File', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'alter', 'Alter', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'code_to_replace_from', 'Code To Replace From', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'code_to_replace_to', 'Code To Replace To', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CHOOSE_ACTION', 'Please choose action for file <strong>%s</strong>', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PATCH_CREATED_SUCCESSFULLY', 'The patch has been created successfully.', now(), 'feedback msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_CONFIRM_DELETE_MYOWN_PATCH', 'Are you sure you want to <strong>delete</strong> patch <strong>%s</strong>', now(), '');
