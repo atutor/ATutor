@@ -110,6 +110,9 @@ if ($section == 'admin'){
 										'categories.php'
 										),
 				'modules.php',
+				'patcher.php' => array(
+										'create_patches.php'
+										),
 				'troubleshooting.php',
 			);
 
