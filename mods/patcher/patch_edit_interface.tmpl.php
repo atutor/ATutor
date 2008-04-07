@@ -24,6 +24,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="atutor_patch_id"><?php echo _AT('atutor_patch_id'); ?></label><br />
+		<small>&middot; <?php echo _AT('contain_only'); ?></small><br />
 		<input id="atutor_patch_id" name="atutor_patch_id" type="text" maxlength="100" size="30" value="<?php echo $row_patches['atutor_patch_id']; ?>" /><br />
 	</div>
 
@@ -113,10 +114,10 @@ if ($result_patch_files)
 ?>
 <div style="border-width:thin; border-style:solid; padding: 5px 5px 5px 5px; margin:5px 5px 5px 5px">
 	<div style="float:left">Action: 
-		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="add" <?php if ($row_patch_files["action"] == "add") echo "checked" ?> onclick="show_content(event);" /><label for="add"><?php echo _AT("add"); ?></label>
-		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="alter" <?php if ($row_patch_files["action"] == "alter") echo "checked" ?> onclick="show_content(event);" /><label for="alter"><?php echo _AT("alter"); ?></label>
-		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="delete" <?php if ($row_patch_files["action"] == "delete") echo "checked" ?> onclick="show_content(event);" /><label for="delete"><?php echo _AT("delete"); ?></label>
-		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="overwrite" <?php if ($row_patch_files["action"] == "overwrite") echo "checked" ?> onclick="show_content(event);" /><label for="overwrite"><?php echo _AT("overwrite"); ?></label>
+		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="add" id="add" <?php if ($row_patch_files["action"] == "add") echo "checked" ?> onclick="show_content(event);" /><label for="add"><?php echo _AT("add"); ?></label>
+		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="alter" id="alter" <?php if ($row_patch_files["action"] == "alter") echo "checked" ?> onclick="show_content(event);" /><label for="alter"><?php echo _AT("alter"); ?></label>
+		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="delete" id="delete" <?php if ($row_patch_files["action"] == "delete") echo "checked" ?> onclick="show_content(event);" /><label for="delete"><?php echo _AT("delete"); ?></label>
+		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="overwrite" id="overwrite" <?php if ($row_patch_files["action"] == "overwrite") echo "checked" ?> onclick="show_content(event);" /><label for="overwrite"><?php echo _AT("overwrite"); ?></label>
 	</div>
 	<br /><br />
 
@@ -225,6 +226,7 @@ if ($result_patch_files)
 	
 	<div class="row buttons">
 		<input type="submit" name="submit" value=" <?php echo _AT('create_patch'); ?> " accesskey="c" />
+		<input type="button" name="cancel" value=" <?php echo _AT('cancel'); ?> " onClick="location.href='mods/patcher/myown_patches.php'" />
 	</div>
 
 </div>
@@ -294,10 +296,10 @@ function show_content(evt) {
 var ACTION_HTML_TEMPLATE = ' \
 <div style="border-width:thin; border-style:solid; padding: 5px 5px 5px 5px; margin:5px 5px 5px 5px"> \
 	<div style="float:left">Action:  \
-		<input type="radio" name="rb_action[{1}]" value="add" checked onclick="show_content(event);" /><label for="add"><?php echo _AT("add"); ?></label> \
-		<input type="radio" name="rb_action[{1}]" value="alter" onclick="show_content(event);" /><label for="alter"><?php echo _AT("alter"); ?></label> \
-		<input type="radio" name="rb_action[{1}]" value="delete" onclick="show_content(event);" /><label for="delete"><?php echo _AT("delete"); ?></label> \
-		<input type="radio" name="rb_action[{1}]" value="overwrite" onclick="show_content(event);" /><label for="overwrite"><?php echo _AT("overwrite"); ?></label> \
+		<input type="radio" name="rb_action[{1}]" value="add" id="add" checked onclick="show_content(event);" /><label for="add"><?php echo _AT("add"); ?></label> \
+		<input type="radio" name="rb_action[{1}]" value="alter" id="alter" onclick="show_content(event);" /><label for="alter"><?php echo _AT("alter"); ?></label> \
+		<input type="radio" name="rb_action[{1}]" value="delete" id="delete" onclick="show_content(event);" /><label for="delete"><?php echo _AT("delete"); ?></label> \
+		<input type="radio" name="rb_action[{1}]" value="overwrite" id="overwrite" onclick="show_content(event);" /><label for="overwrite"><?php echo _AT("overwrite"); ?></label> \
 	</div> \
 	<br /><br /> \
 	<div> \

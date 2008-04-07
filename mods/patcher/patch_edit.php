@@ -23,6 +23,8 @@ if (!isset($_REQUEST["myown_patch_id"]))
 }
 
 $myown_patch_id = $_REQUEST["myown_patch_id"];
+
+// URL called by form action
 $url = dirname($_SERVER['PHP_SELF']) . "/patch_creator.php?myown_patch_id=" . $myown_patch_id;
 
 $sql_patches = "SELECT * from ".TABLE_PREFIX."myown_patches m where myown_patch_id=". $myown_patch_id;

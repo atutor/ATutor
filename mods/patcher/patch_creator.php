@@ -48,6 +48,9 @@ if ($_POST['submit'])
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
+	if (!(eregi("^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$", $_POST['atutor_patch_id'])))
+		$msg->addError('LOGIN_CHARS');
+
 	// main process
 	if (!$msg->containsErrors()) 
 	{

@@ -87,8 +87,8 @@ class PatchCreator {
 	*/
 	function create_patch()
 	{
-		// save patch info into database;
-		$this->updateDB();
+		// save patch info into database & save uploaded files into content folder
+		$this->saveInfo();
 		
 		// create patch.xml into $this->patch_xml_file
 		$fp = fopen($this->patch_xml_file,'w');
@@ -200,11 +200,11 @@ class PatchCreator {
 	
 		$zipfile->add_file(file_get_contents($this->patch_xml_file), 'patch.xml');
 
-		if (is_array($this->patch_info_array[files]))
+		if (is_array($this->patch_info_array["files"]))
 		{
-			foreach ($this->patch_info_array[files] as $file_info)
+			foreach ($this->patch_info_array["files"] as $file_info)
 			{
-				if (isset($file_info[upload_tmp_name]))
+				if (isset($file_info["upload_tmp_name"]))
 				{
 					$file_name = preg_replace('/.php$/', '.new', $file_info['file_name']);
 					$zipfile->add_file(file_get_contents($file_info['upload_tmp_name']), $file_name);
@@ -212,7 +212,7 @@ class PatchCreator {
 			}
 		}
 
-		$zipfile->send_file('patch');
+		$zipfile->send_file($this->patch_info_array["atutor_patch_id"]);
 	}
 
 	/**
@@ -243,12 +243,12 @@ class PatchCreator {
 	}
 
 	/**
-	* Save patch info into database
+	* Save patch info into database & save uploaded files into content folder
 	* @access  private
 	* @return  xml string
 	* @author  Cindy Qi Li
 	*/
-	function updateDB() 
+	function saveInfo() 
 	{
 		global $db;
 		
@@ -312,23 +312,53 @@ class PatchCreator {
 		{
 			foreach ($this->patch_info_array["files"] as $file_info)
 			{
+				if ($file_info["upload_tmp_name"] <> "")
+					$upload_to = $this->saveFile($file_info);
+					
 				$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_files
 		               (myown_patch_id, 
 		               	action,
 		               	name,
 		               	location,
 		               	code_from,
-		                code_to)
+		                code_to,
+		                uploaded_file)
 			        VALUES ('".$this->current_patch_id."', 
 			                '".$file_info["action"]."', 
 			                '".$file_info["file_name"]."', 
 			                '".$file_info["directory"]."', 
 			                '".$file_info["code_from"]."', 
-			                '".$file_info["code_to"]."')";
+			                '".$file_info["code_to"]."',
+			                '".addslashes($upload_to)."')";
 
 				$result = mysql_query($sql, $db) or die(mysql_error());
 			}
 		}
+	}
+
+	/**
+	* Save upload file into content folder
+	* @access  private
+	* @return  xml string
+	* @author  Cindy Qi Li
+	*/
+	function saveFile($file_info) 
+	{
+		// mkdir() function cannot create folder recursively, so have to acomplish the creation of patch folder by 2 steps.
+		$version_folder = AT_CONTENT_DIR . "patcher/" . str_replace('.', '_', $this->patch_info_array["atutor_version_to_apply"]) . "/";
+		$patch_folder = $version_folder . $this->patch_info_array["atutor_patch_id"] . "/";
+		$upload_to = $patch_folder . $file_info['file_name'];
+		
+		if (!file_exists($version_folder))	mkdir($version_folder);
+		
+		// re-create patch folder to remove old data
+		include_once(AT_INCLUDE_PATH . "/lib/filemanager.inc.php");
+		clr_dir($patch_folder);
+		mkdir($patch_folder);
+		
+		move_uploaded_file($file_info["upload_tmp_name"], $upload_to);
+		
+		return realpath($upload_to);
 	}
 }
 
