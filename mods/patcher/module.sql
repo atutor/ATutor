@@ -114,6 +114,7 @@ CREATE TABLE `myown_patches_files` (
 	`location` VARCHAR(250) NOT NULL default '',
 	`code_from` TEXT NOT NULL,
 	`code_to` TEXT NOT NULL,
+	`uploaded_file` TEXT NOT NULL,
 	PRIMARY KEY  (`myown_patches_files_id`)
 );
 
