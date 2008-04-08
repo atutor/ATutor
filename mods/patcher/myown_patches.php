@@ -42,6 +42,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<th scope="col"><?php echo _AT('atutor_patch_id'); ?></th>
 	<th scope="col"><?php echo _AT('atutor_version_to_apply'); ?></th>
 	<th scope="col"><?php echo _AT('description'); ?></th>
+	<th scope="col"><?php echo _AT('last_modified'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -83,6 +84,7 @@ else
 			<td><label for="m<?php echo $row['myown_patch_id']; ?>"><?php echo $row['atutor_patch_id']; ?></label></td>
 			<td><?php echo $row['applied_version']; ?></td>
 			<td><?php echo $row['description']; ?></td>
+			<td><?php echo $row['last_modified']; ?></td>
 		</tr>
 <?php 
 	}

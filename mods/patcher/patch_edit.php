@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
-
+ 
 if (!isset($_REQUEST["myown_patch_id"]))
 {
 	$msg->addError('NO_ITEM_SELECTED');
@@ -34,7 +34,7 @@ $row_patches = mysql_fetch_assoc($result_patches);
 $sql_patch_dependent = "SELECT * from ".TABLE_PREFIX."myown_patches_dependent m where myown_patch_id=". $myown_patch_id;
 $result_patch_dependent = mysql_query($sql_patch_dependent, $db) or die(mysql_error());
 
-$sql_patch_files = "SELECT * from ".TABLE_PREFIX."myown_patches_files m where myown_patch_id=". $myown_patch_id;
+$sql_patch_files = "SELECT * from ".TABLE_PREFIX."myown_patches_files m where myown_patch_id=". $myown_patch_id . " order by myown_patches_files_id";
 $result_patch_files = mysql_query($sql_patch_files, $db) or die(mysql_error());
 
 require ('patch_edit_interface.tmpl.php');

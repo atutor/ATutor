@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require_once (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
 
-if ($_POST['submit'])
+if ($_POST['create'] || $_POST['save'])
 {
 	if (isset($_REQUEST["myown_patch_id"])) $patch_id = $_REQUEST["myown_patch_id"];
 	else $patch_id = 0;
@@ -28,15 +28,16 @@ if ($_POST['submit'])
 	if (!isset($_POST["atutor_version_to_apply"]) || trim($_POST["atutor_version_to_apply"]) == "")
 		$missing_fields[] = _AT("atutor_version_to_apply");
 
-	if (is_array($_POST['rb_action']))
+	// only check missing upload file when creating a patch. don't check when save
+	if (is_array($_POST['rb_action']) && $_POST['create'])
 	{
 		foreach ($_POST['rb_action'] as $i=>$action)
 		{
 			// must upload a file if action is add or overwrite
-			if ($action == "add" && $_FILES['add_upload_file']['name'][$i] == "")
+			if ($action == "add" && $_FILES['add_upload_file']['name'][$i] == "" && $_POST['add_uploaded_file'] == "")
 				$missing_fields[] = _AT("upload_file") . " for ". _AT("file_name") . " <strong>" . $_POST['add_filename'][$i] . "</strong>";
 	
-			if ($action == "overwrite" && $_FILES['overwrite_upload_file']['name'][$i] == "")
+			if ($action == "overwrite" && $_FILES['overwrite_upload_file']['name'][$i] == "" && $_POST['overwrite_uploaded_file'] == "")
 				$missing_fields[] = _AT("upload_file") . " for ". _AT("file_name") . " <strong>" . $_POST['overwrite_filename'][$i] . "</strong>";
 		}
 	}
@@ -75,11 +76,18 @@ if ($_POST['submit'])
 			foreach ($_POST['rb_action'] as $i=>$action)
 			{
 				if ($action == "add" && $_POST['add_filename'][$i] <> "")
+				{
+					if ($_FILES['add_upload_file']['tmp_name'][$i] <> "")
+						$upload_file = $_FILES['add_upload_file']['tmp_name'][$i];
+					else
+						$upload_file = stripslashes($_POST['add_uploaded_file'][$i]);
+					
 					$patch_info["files"][] = array("action"=>$action,
 					                             "file_name"=>$_POST['add_filename'][$i],
 				                               "directory"=>$_POST['add_dir'][$i],
-				                               "upload_tmp_name"=>$_FILES['add_upload_file']['tmp_name'][$i]);
-	
+				                               "upload_tmp_name"=>$upload_file);
+				}
+				
 				if ($action == "alter" && $_POST['alter_filename'][$i] <> "")
 					$patch_info["files"][] = array("action"=>$action,
 								                       "file_name"=>$_POST['alter_filename'][$i],
@@ -93,18 +101,31 @@ if ($_POST['submit'])
 				                               "directory"=>$_POST['delete_dir'][$i]);
 	
 				if ($action == "overwrite" && $_POST['overwrite_filename'][$i] <> "")
+				{
+					if ($_FILES['overwrite_upload_file']['tmp_name'][$i] <> "")
+						$upload_file = $_FILES['overwrite_upload_file']['tmp_name'][$i];
+					else
+						$upload_file = stripslashes($_POST['overwrite_uploaded_file'][$i]);
+					
 					$patch_info["files"][] = array("action"=>$action,
 					                             "file_name"=>$_POST['overwrite_filename'][$i],
 				                               "directory"=>$_POST['overwrite_dir'][$i],
-				                               "upload_tmp_name"=>$_FILES['overwrite_upload_file']['tmp_name'][$i]);
+				                               "upload_tmp_name"=>$upload_file);
+				}
 			}
 		}
 
-		require_once("PatchCreator.class.php");
+		require_once("classes/PatchCreator.class.php");
 		
 		$patch_creator =& new PatchCreator($patch_info, $patch_id);
 		
-		$patch_creator->create_patch();
+		if ($_POST['create'])
+			$patch_creator->create_patch();
+		else if ($_POST['save'])
+		{
+			$patch_creator->saveInfo();
+			header('Location: myown_patches.php');
+		}
 
 	}
 }

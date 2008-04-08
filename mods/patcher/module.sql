@@ -96,6 +96,7 @@ CREATE TABLE `myown_patches` (
   `description` TEXT NOT NULL,
   `sql_statement` text NOT NULL,
   `status` varchar(20) NOT NULL default '',
+  `last_modified` datetime NOT NULL,
 	PRIMARY KEY  (`myown_patch_id`)
 );
 
@@ -135,6 +136,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'edit_patch', 'Edit Patch
 INSERT INTO `language_text` VALUES ('en', '_template', 'delete_patch', 'Delete Patch', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'add_a_file', 'Add A File', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'delete_this_file', 'Delete This File', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'replace_file', 'Replace File', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'alter', 'Alter', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'code_to_replace_from', 'Code To Replace From', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'code_to_replace_to', 'Code To Replace To', now(), '');

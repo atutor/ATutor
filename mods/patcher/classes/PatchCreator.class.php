@@ -21,10 +21,10 @@
 * @package	PatchCreator
 */
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require_once (AT_INCLUDE_PATH.'vitals.inc.php');
 
-require_once("patch_xml_template.inc.php");
+require_once(AT_INCLUDE_PATH. "../mods/patcher/include/patch_xml_template.inc.php");
 
 class PatchCreator {
 
@@ -32,6 +32,8 @@ class PatchCreator {
 	var $patch_info_array = array();           // the patch info data
 	var $patch_xml_file;											 // location of patch.xml
 	var $current_patch_id;                     // current myown_patches.myown_patch_id
+	var $version_folder;											 // version folder. underneath patcher content folder, to hold all patch folders and corresponding upload files
+	var $patch_folder;											   // patch folder. underneath version folder, to hold all upload files
 
 	/**
 	* Constructor: Initialize object members
@@ -76,11 +78,14 @@ class PatchCreator {
 		$this->current_patch_id = $patch_id;
 		
 		$this->patch_xml_file = AT_CONTENT_DIR . "patcher/patch.xml";
+
+		$this->version_folder = AT_CONTENT_DIR . "patcher/" . str_replace('.', '_', $this->patch_info_array["atutor_version_to_apply"]) . "/";
+		$this->patch_folder = $this->version_folder . $this->patch_info_array["atutor_patch_id"] . "/";
 	}
 
 	/**
 	* Create Patch
-	* @access  private
+	* @access  public
 	* @return  true if created successfully
 	*          false if error happens
 	* @author  Cindy Qi Li
@@ -102,6 +107,125 @@ class PatchCreator {
 		unlink($this->patch_xml_file);
 		
 		return true;
+	}
+
+	/**
+	* Save patch info into database & save uploaded files into content folder
+	* @access  public
+	* @return  xml string
+	* @author  Cindy Qi Li
+	*/
+	function saveInfo() 
+	{
+		global $db;
+		
+		if ($this->current_patch_id == 0)
+		{
+			$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches 
+		               (atutor_patch_id, 
+		                applied_version,
+		                description,
+		                sql_statement,
+		                status,
+		                last_modified)
+			        VALUES ('".$this->patch_info_array["atutor_patch_id"]."', 
+			                '".$this->patch_info_array["atutor_version_to_apply"]."', 
+			                '".$this->patch_info_array["description"]."', 
+			                '".$this->patch_info_array["sql_statement"]."', 
+			                'Created',
+			                now())";
+		}
+		else
+		{
+			$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
+			           SET atutor_patch_id = '". $this->patch_info_array["atutor_patch_id"] ."',
+			               applied_version = '". $this->patch_info_array["atutor_version_to_apply"] ."',
+			               description = '". $this->patch_info_array["description"] ."',
+			               sql_statement = '". $this->patch_info_array["sql_statement"] ."',
+			               status = 'Created',
+			               last_modified = now()
+			         WHERE myown_patch_id = ". $this->current_patch_id;
+		}
+
+		$result = mysql_query($sql, $db) or die(mysql_error());
+		
+		if ($this->current_patch_id == 0)
+		{
+			$this->current_patch_id = mysql_insert_id();
+		}
+		else // delete records for current_patch_id in tables myown_patches_dependent & myown_patches_files
+		{
+			$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches_dependent WHERE myown_patch_id = " . $this->current_patch_id;
+			$result = mysql_query($sql, $db) or die(mysql_error());
+			
+			$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches_files WHERE myown_patch_id = " . $this->current_patch_id;
+			$result = mysql_query($sql, $db) or die(mysql_error());
+		}
+		
+		// insert records into table myown_patches_dependent
+		if (is_array($this->patch_info_array["dependent_patches"]))
+		{
+			foreach ($this->patch_info_array["dependent_patches"] as $dependent_patch)
+			{
+				$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_dependent 
+		               (myown_patch_id, 
+		                dependent_patch_id)
+			        VALUES ('".$this->current_patch_id."', 
+			                '".$dependent_patch."')";
+
+				$result = mysql_query($sql, $db) or die(mysql_error());
+			}
+		}
+		
+		// insert records into table myown_patches_files
+		if (is_array($this->patch_info_array["files"]))
+		{
+			foreach ($this->patch_info_array["files"] as $file_info)
+			{
+				if ($file_info["upload_tmp_name"] <> "")
+					$upload_to = $this->saveFile($file_info);
+				else
+					$upload_to = "";
+					
+				$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_files
+		               (myown_patch_id, 
+		               	action,
+		               	name,
+		               	location,
+		               	code_from,
+		                code_to,
+		                uploaded_file)
+			        VALUES ('".$this->current_patch_id."', 
+			                '".$file_info["action"]."', 
+			                '".$file_info["file_name"]."', 
+			                '".$file_info["directory"]."', 
+			                '".$file_info["code_from"]."', 
+			                '".$file_info["code_to"]."',
+			                '".addslashes($upload_to)."')";
+
+				$result = mysql_query($sql, $db) or die(mysql_error());
+			}
+		}
+	}
+
+	/**
+	* Save upload file into content folder
+	* @access  private
+	* @return  xml string
+	* @author  Cindy Qi Li
+	*/
+	function saveFile($file_info) 
+	{
+		// mkdir() function cannot create folder recursively, so have to acomplish the creation of patch folder by 2 steps.
+		if (!file_exists($this->version_folder))	mkdir($this->version_folder);
+		if (!file_exists($this->patch_folder))	mkdir($this->patch_folder);
+		
+		$upload_to = $this->patch_folder . $file_info['file_name'];
+		
+		// copy uploaded file into content folder
+		copy($file_info["upload_tmp_name"], $upload_to);
+		
+		return realpath($upload_to);
 	}
 
 	/**
@@ -242,124 +366,6 @@ class PatchCreator {
 			return $str;
 	}
 
-	/**
-	* Save patch info into database & save uploaded files into content folder
-	* @access  private
-	* @return  xml string
-	* @author  Cindy Qi Li
-	*/
-	function saveInfo() 
-	{
-		global $db;
-		
-		if ($this->current_patch_id == 0)
-		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches 
-		               (atutor_patch_id, 
-		                applied_version,
-		                description,
-		                sql_statement,
-		                status)
-			        VALUES ('".$this->patch_info_array["atutor_patch_id"]."', 
-			                '".$this->patch_info_array["atutor_version_to_apply"]."', 
-			                '".$this->patch_info_array["description"]."', 
-			                '".$this->patch_info_array["sql_statement"]."', 
-			                'Created')";
-		}
-		else
-		{
-			$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
-			           SET atutor_patch_id = '". $this->patch_info_array["atutor_patch_id"] ."',
-			               applied_version = '". $this->patch_info_array["atutor_version_to_apply"] ."',
-			               description = '". $this->patch_info_array["description"] ."',
-			               sql_statement = '". $this->patch_info_array["sql_statement"] ."',
-			               status = 'Created'
-			         WHERE myown_patch_id = ". $this->current_patch_id;
-		}
-
-		$result = mysql_query($sql, $db) or die(mysql_error());
-		
-		if ($this->current_patch_id == 0)
-		{
-			$this->current_patch_id = mysql_insert_id();
-		}
-		else // delete records for current_patch_id in tables myown_patches_dependent & myown_patches_files
-		{
-			$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches_dependent WHERE myown_patch_id = " . $this->current_patch_id;
-			$result = mysql_query($sql, $db) or die(mysql_error());
-			
-			$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches_files WHERE myown_patch_id = " . $this->current_patch_id;
-			$result = mysql_query($sql, $db) or die(mysql_error());
-		}
-		
-		// insert records into table myown_patches_dependent
-		if (is_array($this->patch_info_array["dependent_patches"]))
-		{
-			foreach ($this->patch_info_array["dependent_patches"] as $dependent_patch)
-			{
-				$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_dependent 
-		               (myown_patch_id, 
-		                dependent_patch_id)
-			        VALUES ('".$this->current_patch_id."', 
-			                '".$dependent_patch."')";
-
-				$result = mysql_query($sql, $db) or die(mysql_error());
-			}
-		}
-		
-		// insert records into table myown_patches_files
-		if (is_array($this->patch_info_array["files"]))
-		{
-			foreach ($this->patch_info_array["files"] as $file_info)
-			{
-				if ($file_info["upload_tmp_name"] <> "")
-					$upload_to = $this->saveFile($file_info);
-					
-				$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_files
-		               (myown_patch_id, 
-		               	action,
-		               	name,
-		               	location,
-		               	code_from,
-		                code_to,
-		                uploaded_file)
-			        VALUES ('".$this->current_patch_id."', 
-			                '".$file_info["action"]."', 
-			                '".$file_info["file_name"]."', 
-			                '".$file_info["directory"]."', 
-			                '".$file_info["code_from"]."', 
-			                '".$file_info["code_to"]."',
-			                '".addslashes($upload_to)."')";
-
-				$result = mysql_query($sql, $db) or die(mysql_error());
-			}
-		}
-	}
-
-	/**
-	* Save upload file into content folder
-	* @access  private
-	* @return  xml string
-	* @author  Cindy Qi Li
-	*/
-	function saveFile($file_info) 
-	{
-		// mkdir() function cannot create folder recursively, so have to acomplish the creation of patch folder by 2 steps.
-		$version_folder = AT_CONTENT_DIR . "patcher/" . str_replace('.', '_', $this->patch_info_array["atutor_version_to_apply"]) . "/";
-		$patch_folder = $version_folder . $this->patch_info_array["atutor_patch_id"] . "/";
-		$upload_to = $patch_folder . $file_info['file_name'];
-		
-		if (!file_exists($version_folder))	mkdir($version_folder);
-		
-		// re-create patch folder to remove old data
-		include_once(AT_INCLUDE_PATH . "/lib/filemanager.inc.php");
-		clr_dir($patch_folder);
-		mkdir($patch_folder);
-		
-		move_uploaded_file($file_info["upload_tmp_name"], $upload_to);
-		
-		return realpath($upload_to);
-	}
 }
 
 ?>

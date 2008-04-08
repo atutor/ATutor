@@ -12,6 +12,7 @@
 /************************************************************************/
 // $Id: patch_edit_interface.tmpl.php 7208 2008-03-13 16:07:24Z cindy $
 
+require ('include/json.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
@@ -103,119 +104,6 @@ if ($num_of_dependents == 0)
 	</div>
 
 	<div id="filesDiv" class="row">
-<?php
-// when edit existing patch
-$num_of_files = 0;
-
-if ($result_patch_files)  
-{
-	while ($row_patch_files = mysql_fetch_assoc($result_patch_files))
-	{
-?>
-<div style="border-width:thin; border-style:solid; padding: 5px 5px 5px 5px; margin:5px 5px 5px 5px">
-	<div style="float:left">Action: 
-		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="add" id="add" <?php if ($row_patch_files["action"] == "add") echo "checked" ?> onclick="show_content(event);" /><label for="add"><?php echo _AT("add"); ?></label>
-		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="alter" id="alter" <?php if ($row_patch_files["action"] == "alter") echo "checked" ?> onclick="show_content(event);" /><label for="alter"><?php echo _AT("alter"); ?></label>
-		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="delete" id="delete" <?php if ($row_patch_files["action"] == "delete") echo "checked" ?> onclick="show_content(event);" /><label for="delete"><?php echo _AT("delete"); ?></label>
-		<input type="radio" name="rb_action[<?php echo $num_of_files; ?>]" value="overwrite" id="overwrite" <?php if ($row_patch_files["action"] == "overwrite") echo "checked" ?> onclick="show_content(event);" /><label for="overwrite"><?php echo _AT("overwrite"); ?></label>
-	</div>
-	<br /><br />
-
-	<div>
-<?php 
-		if ($row_patch_files["action"] == "add")
-		{
-?>
-	<table width="100%">
-		<tr>
-			<td width="150px"><?php echo _AT("file_name"); ?></td>
-			<td><input name="add_filename[<?php echo $num_of_files; ?>]" value="<?php echo $row_patch_files["name"]; ?>" type="text"  /></td>
-		</tr>
-		<tr>
-			<td><?php echo _AT("directory"); ?></td>
-			<td><input name="add_dir[<?php echo $num_of_files; ?>]" value="<?php echo $row_patch_files["location"]; ?>" type="text"  /></td>
-		</tr>
-		<tr>
-			<td><?php echo _AT("upload_file"); ?></td>
-			<td><INPUT TYPE="file" NAME="add_upload_file[<?php echo $num_of_files; ?>]" SIZE="40" style="max-width:100%" /></td>
-		</tr>
-	</table>
-<?php 
-		}
-		
-		if ($row_patch_files["action"] == "alter")
-		{
-?>
-	<table width="100%">
-		<tr>
-			<td width="150px"><?php echo _AT("file_name"); ?></td>
-			<td><input name="alter_filename[<?php echo $num_of_files; ?>]" value="<?php echo $row_patch_files["name"]; ?>" type="text" maxlength="100" size="100" /></td>
-		</tr>
-		<tr>
-			<td><?php echo _AT("directory"); ?></td>
-			<td><input name="alter_dir[<?php echo $num_of_files; ?>]" value="<?php echo $row_patch_files["location"]; ?>" type="text" maxlength="100" size="100" style="max-width:100%" /></td>
-		</tr>
-		<tr>
-			<td><?php echo _AT("code_to_replace_from"); ?></td>
-			<td><textarea name="alter_code_from[<?php echo $num_of_files; ?>]" rows="5" cols="120" style="max-width:100%"><?php echo $row_patch_files["code_from"]; ?></textarea></td>
-		</tr>
-		<tr>
-			<td><?php echo _AT("code_to_replace_to"); ?></td>
-			<td><textarea name="alter_code_to[<?php echo $num_of_files; ?>]" rows="5" cols="120" style="max-width:100%"><?php echo $row_patch_files["code_to"]; ?></textarea></td>
-		</tr>
-	</table>
-<?php 
-		}
-		
-		if ($row_patch_files["action"] == "delete")
-		{
-?>
- 	<table width="100%">
- 		<tr>
- 			<td width="150px"><?php echo _AT("file_name"); ?></td>
- 			<td><input name="delete_filename[<?php echo $num_of_files; ?>]" value="<?php echo $row_patch_files["name"]; ?>" type="text" maxlength="100" size="100" /></td>
- 		</tr>
- 		<tr>
- 			<td><?php echo _AT("directory"); ?></td>
- 			<td><input name="delete_dir[<?php echo $num_of_files; ?>]" value="<?php echo $row_patch_files["location"]; ?>" type="text" maxlength="100" size="100" /></td>
- 		</tr>
- 	</table>
-<?php 
-		}
-		
-		if ($row_patch_files["action"] == "overwrite")
-		{
-?>
-	<table width="100%">
-		<tr>
-			<td width="150px"><?php echo _AT("file_name"); ?></td>
-			<td><input name="overwrite_filename[<?php echo $num_of_files; ?>]" value="<?php echo $row_patch_files["name"]; ?>" type="text" /></td>
-		</tr>
-		<tr>
-			<td><?php echo _AT("directory"); ?></td>
-			<td><input name="overwrite_dir[<?php echo $num_of_files; ?>]" value="<?php echo $row_patch_files["location"]; ?>" type="text" maxlength="100" size="100" /></td>
-		</tr>
-		<tr>
-			<td><?php echo _AT("upload_file"); ?></td>
-			<td><INPUT TYPE="file" NAME="overwrite_upload_file[<?php echo $num_of_files; ?>]" SIZE="40" style="max-width:100%" /></td>
-		</tr>
-	</table>
-<?php 
-		}
-?>
-	</div>
-	<div class="row buttons" style="float:left">
-		<input type="button" value="<?php echo _AT("delete_this_file"); ?>" onClick="del_file(event)" />
-	</div>
-	<br /><br />
-</div>
-<?php
-		
-		$num_of_files++;
-	}
-}
-?>
-
 	</div>
 
 	<div class="row buttons"  style="float:left">
@@ -225,7 +113,8 @@ if ($result_patch_files)
 	<br /><br />
 	
 	<div class="row buttons">
-		<input type="submit" name="submit" value=" <?php echo _AT('create_patch'); ?> " accesskey="c" />
+		<input type="submit" name="create" value=" <?php echo _AT('create_patch'); ?> " accesskey="c" />
+		<input type="submit" name="save" value=" <?php echo _AT('save'); ?> " accesskey="s" onClick="document.form.target=''; "/>
 		<input type="button" name="cancel" value=" <?php echo _AT('cancel'); ?> " onClick="location.href='mods/patcher/myown_patches.php'" />
 	</div>
 
@@ -234,6 +123,10 @@ if ($result_patch_files)
 
 <script language="JavaScript" type="text/javascript">
 //<!--
+
+myescape = function(/*string*/ str) {
+    return str.replace(/(['"\.*+?^${}()|[\]\/\\])/g, "\\$1").replace(/\n/g, '\\n');
+}
 
 function show_message()
 {
@@ -261,15 +154,77 @@ function add_dependent() {
     //	document.form['dependent_patch['+ pos +']'].focus();
 }
 
-num_of_files = <?php echo $num_of_files; ?>;
-
-function add_file() {
+var num_of_files = 0;
+function add_file(filedata) {
 	var newDiv = document.createElement("div");
 	
 	newDiv.innerHTML = ACTION_HTML_TEMPLATE.replace(/\{1\}/g, num_of_files);
 	document.getElementById("filesDiv").appendChild(newDiv);
 	
 	document.form['rb_action[' +num_of_files +']'][0].focus();
+	
+	if(filedata) {
+		var srcElement = null;
+
+		if(filedata.action=="add") {
+			// set focus on radio button "add"
+			document.form['rb_action[' +num_of_files +']'][0].checked = true;
+			document.form['rb_action[' +num_of_files +']'][0].focus();
+
+			// set value
+			srcElement = document.form['rb_action[' +num_of_files +']'][0];
+			document.form['add_filename[' +num_of_files +']'].value = filedata.name;
+			document.form['add_dir[' +num_of_files +']'].value = filedata.location;
+			
+			// set uploaded file
+			if (filedata.uploaded_file != "")
+			{
+				document.form['add_uploaded_file[' +num_of_files +']'].value = filedata.uploaded_file;
+				var tables = newDiv.getElementsByTagName('TABLE');
+				tables[0].rows[2].style.display='';    // display the row of uploaded file
+				tables[0].rows[2].cells[1].innerHTML=filedata.uploaded_file;    // display uploaded file name
+				tables[0].rows[3].cells[0].innerHTML='<?php echo _AT("replace_file"); ?>';    // change label from "upload file" to "replace file"
+			}
+			
+			// set uploaded file
+		} else if(filedata.action=="alter") {
+			document.form['rb_action[' +num_of_files +']'][1].checked = true;
+			document.form['rb_action[' +num_of_files +']'][1].focus();
+
+			srcElement = document.form['rb_action[' +num_of_files +']'][1];
+			document.form['alter_filename[' +num_of_files +']'].value = filedata.name;
+			document.form['alter_dir[' +num_of_files +']'].value = filedata.location;
+			document.form['alter_code_from[' +num_of_files +']'].value = filedata.code_from;
+			document.form['alter_code_to[' +num_of_files +']'].value = filedata.code_to;
+		} else if(filedata.action=="delete") {
+			document.form['rb_action[' +num_of_files +']'][2].checked = true;
+			document.form['rb_action[' +num_of_files +']'][2].focus();
+
+			srcElement = document.form['rb_action[' +num_of_files +']'][2];
+			document.form['delete_filename[' +num_of_files +']'].value = filedata.name;
+			document.form['delete_dir[' +num_of_files +']'].value = filedata.location;
+		} if(filedata.action=="overwrite") {
+			document.form['rb_action[' +num_of_files +']'][3].checked = true;
+			document.form['rb_action[' +num_of_files +']'][3].focus();
+
+			srcElement = document.form['rb_action[' +num_of_files +']'][3];
+			document.form['overwrite_filename[' +num_of_files +']'].value = filedata.name;
+			document.form['overwrite_dir[' +num_of_files +']'].value = filedata.location;
+
+			// set uploaded file
+			if (filedata.uploaded_file != "")
+			{
+				document.form['overwrite_uploaded_file[' +num_of_files +']'].value = filedata.uploaded_file;
+				var tables = newDiv.getElementsByTagName('TABLE');
+				tables[3].rows[2].style.display='';    // display the row of uploaded file
+				tables[3].rows[2].cells[1].innerHTML=filedata.uploaded_file;    // display uploaded file name
+				tables[3].rows[3].cells[0].innerHTML='<?php echo _AT("replace_file"); ?>';    // change label from "upload file" to "replace file"
+			}
+			
+		}
+		
+		show_content({srcElement:srcElement});
+	}
 
 	num_of_files++;
 }
@@ -311,6 +266,11 @@ var ACTION_HTML_TEMPLATE = ' \
 		<tr> \
 			<td><?php echo _AT("directory"); ?></td> \
 			<td><input name="add_dir[{1}]" type="text"  /></td> \
+		</tr> \
+		<tr style="display: none"> \
+			<td><?php echo _AT("file"); ?></td> \
+			<td></td> \
+			<td><INPUT TYPE="hidden" NAME="add_uploaded_file[{1}]" SIZE="40" style="max-width:100%" /></td> \
 		</tr> \
 		<tr> \
 			<td><?php echo _AT("upload_file"); ?></td> \
@@ -354,6 +314,11 @@ var ACTION_HTML_TEMPLATE = ' \
 			<td><?php echo _AT("directory"); ?></td> \
 			<td><input name="overwrite_dir[{1}]" type="text" maxlength="100" size="100" /></td> \
 		</tr> \
+		<tr id="overwrite_uploaded_file" style="display:none"> \
+			<td><?php echo _AT("file"); ?></td> \
+			<td></td> \
+			<td><INPUT type="hidden" NAME="overwrite_uploaded_file[{1}]" SIZE="40" style="max-width:100%" /></td> \
+		</tr> \
 		<tr> \
 			<td><?php echo _AT("upload_file"); ?></td> \
 			<td><INPUT TYPE="file" NAME="overwrite_upload_file[{1}]" SIZE="40" style="max-width:100%" /></td> \
@@ -370,4 +335,15 @@ var ACTION_HTML_TEMPLATE = ' \
 //-->
 </script>
 
+
+<script language="JavaScript" type="text/javascript">
+	var patch_files = <?php echo json_encode_result($result_patch_files); ?>;
+	
+	window.onload = function() {
+		for(var i=0; i<patch_files.length; i++) {
+			add_file(patch_files[i]);
+		}
+	}
+</script>
+	
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

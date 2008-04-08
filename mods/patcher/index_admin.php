@@ -4,7 +4,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-require_once('common.inc.php');
+require_once('include/common.inc.php');
 
 set_time_limit(0);
 
@@ -50,7 +50,7 @@ $skipFilesModified = false;
 
 if ($_POST['yes'])  $skipFilesModified = true;
 
-require_once('PatchListParser.class.php');
+require_once('classes/PatchListParser.class.php');
 
 if (trim($_POST['who']) != '') $who = trim($_POST['who']);
 elseif (trim($_REQUEST['who']) != '') $who = trim($_REQUEST['who']);
@@ -133,8 +133,8 @@ if ($_POST['install'] || $_POST['install_upload'])
 		}
 		else
 		{
-			require_once('PatchParser.class.php');
-			require_once('Patch.class.php');
+			require_once('classes/PatchParser.class.php');
+			require_once('classes/Patch.class.php');
 			
 			$patchParser =& new PatchParser();
 			$patchParser->parse($patch_xml);
