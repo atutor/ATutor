@@ -62,7 +62,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <?php
 $include_javascript = true;
 
-$sql = "SELECT * from ".TABLE_PREFIX."myown_patches m";
+$sql = "SELECT * from ".TABLE_PREFIX."myown_patches m order by last_modified desc";
 
 $result = mysql_query($sql, $db) or die(mysql_error());
 
