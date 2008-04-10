@@ -3,6 +3,7 @@ Patcher ReadMe
 This module can be installed with ATutor to 
 1) install the patches available at update.atutor.ca.
 2) Create your own ATutor patch for ATutor community
+3) For additional documentation see: http://wiki.atutor.ca/display/atutorwiki/Patcher+Module+Documentation
 
 * How to install Patcher
 1. Copy the downloaded file into the ATutor mods/ directory and unzip it there. 
