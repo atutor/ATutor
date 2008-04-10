@@ -19,7 +19,10 @@
 * @author	Cindy Qi Li
 * @package	Patch
 */
-require_once('common.inc.php');
+
+define('AT_INCLUDE_PATH', '../../../include/');
+
+require_once(AT_INCLUDE_PATH. "../mods/patcher/include/common.inc.php");
 
 class Patch {
 
