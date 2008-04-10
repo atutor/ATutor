@@ -41,7 +41,7 @@ if (isset($_POST['submit_no'])) {
 }
 
 $id = abs($_REQUEST['id']);
-$sql = "SELECT title, body FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id";
+$sql = "SELECT title, body FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id=$owner_id AND post_id=$id";
 $result = mysql_query($sql, $db);
 $post_row = mysql_fetch_assoc($result);
 
