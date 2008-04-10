@@ -200,7 +200,6 @@ function alumni ($list) {
 	}
 	
 	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id=$course_id AND ($members)";
-	debug($sql);exit;
 	$result = mysql_query($sql, $db);
 }
 
