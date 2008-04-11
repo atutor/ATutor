@@ -74,6 +74,21 @@ class PatchCreator {
 	
 	function PatchCreator($patch_info_array, $patch_id)
 	{
+		// add slashes if magic_quotes_gpc is off
+		if (!get_magic_quotes_gpc())
+		{
+			$patch_info_array["description"] = addslashes($patch_info_array["description"]);
+			$patch_info_array["sql_statement"] = addslashes($patch_info_array["sql_statement"]);
+			
+			for ($i = 0; $i < count($patch_info_array["files"]); $i++)
+			{
+				$patch_info_array["files"][$i]["directory"] = addslashes($patch_info_array["files"][$i]["directory"]);
+				$patch_info_array["files"][$i]["upload_tmp_name"] = addslashes($patch_info_array["files"][$i]["upload_tmp_name"]);
+				$patch_info_array["files"][$i]["code_from"] = addslashes($patch_info_array["files"][$i]["code_from"]);
+				$patch_info_array["files"][$i]["code_to"] = addslashes($patch_info_array["files"][$i]["code_to"]);
+			}
+		}
+		
 		$this->patch_info_array = $patch_info_array; 
 		$this->current_patch_id = $patch_id;
 		
