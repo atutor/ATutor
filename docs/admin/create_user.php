@@ -54,16 +54,22 @@ if (isset($_POST['submit'])) {
 	}
 
 	/* password check:	*/
-	if ($_POST['password'] == '') { 
-		$missing_fields[] = _AT('password');
-	} else {
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['password2']){
-			$valid= 'no';
-			$msg->addError('PASSWORD_MISMATCH');
+	$_POST['password'] = $_POST['form_password_hidden'];
+
+	/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
+	if ($_POST['password_error'] <> "")
+	{
+		$pwd_errors = explode(",", $_POST['password_error']);
+
+		foreach ($pwd_errors as $pwd_error)
+		{
+			if ($pwd_error == "missing_password")
+				$missing_fields[] = _AT('password');
+			else
+				$msg->addError($pwd_error);
 		}
 	}
-	
+
 	/* email check */
 	if ($_POST['email'] == '') {
 		$missing_fields[] = _AT('email');
@@ -215,7 +221,7 @@ if (isset($_POST['submit'])) {
 		}
 		$body .= _AT('web_site') .' : '.AT_BASE_HREF."\n";
 		$body .= _AT('login_name') .' : '.$_POST['login'] . "\n";
-		$body .= _AT('password') .' : '.$_POST['password'] . "\n";
+//		$body .= _AT('password') .' : '.$_POST['password'] . "\n";
 		$mail->Body    = $body;
 		$mail->Send();
 

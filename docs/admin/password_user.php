@@ -23,32 +23,35 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.AT_BASE_HREF.'admin/users.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	if ($_POST['password'] == '') { 
-		$msg->addError(array('EMPTY_FIELDS', _AT('password')));
-	} else {
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['password2']){
-			$msg->addError('PASSWORD_MISMATCH');
+	/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
+	if ($_POST['password_error'] <> "")
+	{
+		$pwd_errors = explode(",", $_POST['password_error']);
+
+		foreach ($pwd_errors as $pwd_error)
+		{
+			if ($pwd_error == "missing_password")
+				$missing_fields[] = _AT('password');
+			else
+				$msg->addError($pwd_error);
 		}
 	}
 
 	if (!$msg->containsErrors()) {
 		$_POST['id'] = intval($_POST['id']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET password= '$_POST[password]', creation_date=creation_date, last_login=last_login WHERE member_id=$_POST[id]";
+		$sql = "UPDATE ".TABLE_PREFIX."members SET password= '$_POST[form_password_hidden]', creation_date=creation_date, last_login=last_login WHERE member_id=$_POST[id]";
 		$result = mysql_query($sql, $db);
 
-		$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[id]";
+		$sql	= "SELECT login, email FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[id]";
 		$result = mysql_query($sql,$db);
 		if ($row = mysql_fetch_assoc($result)) {
 			$r_login = $row['login'];	
-			$r_passwd= $row['password'];
 			$r_email = $row['email'];
 
 			$tmp_message  = _AT('password_change_msg')."\n\n";
 			$tmp_message .= _AT('web_site').' : '.AT_BASE_HREF."\n";
 			$tmp_message .= _AT('login_name').' : '.$r_login."\n";
-			$tmp_message .= _AT('password').' : '.$r_passwd."\n";
 
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
@@ -74,6 +77,8 @@ if (isset($_POST['cancel'])) {
 }
 
 
+$onload = 'document.form.password.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = intval($_GET['id']);
@@ -88,8 +93,33 @@ if (!$row = mysql_fetch_assoc($result)) {
 }
 
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+function encrypt_password()
+{
+	document.form.password_error.value = "";
+
+	err = verify_password(document.form.password.value, document.form.password2.value);
+	
+	if (err.length > 0)
+	{
+		document.form.password_error.value = err;
+	}
+	else
+	{
+		document.form.form_password_hidden.value = hex_sha1(document.form.password.value);
+		document.form.password.value = "";
+		document.form.password2.value = "";
+	}
+}
+</script>
+
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 	<input type="hidden" name="id" value="<?php echo $id; ?>" />
+	<input type="hidden" name="form_password_hidden" value="" />
+	<input type="hidden" name="password_error" value="" />
+
 	<div class="input-form">
 		<div class="row">
 			<h3><?php echo htmlspecialchars($row['login']); ?></h3>
@@ -106,7 +136,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" />
+			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" onClick="encrypt_password()" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	</div>
