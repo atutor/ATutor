@@ -523,7 +523,7 @@ CREATE TABLE `master_list` (
 CREATE TABLE `members` (
   `member_id` mediumint(8) unsigned NOT NULL auto_increment,
   `login` varchar(20) NOT NULL default '',
-  `password` varchar(20) NOT NULL default '',
+  `password` varchar(40) NOT NULL default '',
   `email` varchar(50) NOT NULL default '',
   `website` varchar(200) NOT NULL default '',
   `first_name` VARCHAR(100) NOT NULL ,
@@ -927,3 +927,24 @@ CREATE TABLE `users_online` (
   `expiry` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`)
 ) TYPE=HEAP MAX_ROWS=500;
+
+# --------------------------------------------------------
+# Table structure for table `auto_enroll`
+
+CREATE TABLE `auto_enroll` (
+   `auto_enroll_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+   `associate_string` VARCHAR(10) NOT NULL,
+   `name` VARCHAR( 50 ) NOT NULL default '',
+   PRIMARY KEY ( `auto_enroll_id` )
+);
+
+# --------------------------------------------------------
+# Table structure for table `auto_enroll_courses`
+
+CREATE TABLE `auto_enroll_courses` (
+   `auto_enroll_courses_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+   `auto_enroll_id` MEDIUMINT UNSIGNED NOT NULL default 0,
+   `course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
+   PRIMARY KEY ( `auto_enroll_courses_id` )
+);
+
