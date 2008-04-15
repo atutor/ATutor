@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -88,7 +88,7 @@ function unregister_GLOBALS() {
 	}
 
 	ob_start();
-	//session_set_cookie_params(0, $_base_path);
+	session_set_cookie_params(0, $_base_path);
 	session_start();
 	$str = ob_get_contents();
 	ob_end_clean();
