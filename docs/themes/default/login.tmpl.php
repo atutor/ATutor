@@ -2,6 +2,18 @@
 
 <script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+/* 
+ * Encrypt login password with sha1
+ */
+function encrypt_password() {
+	document.form.form_password_hidden.value = hex_sha1(document.form.form_password.value);
+	document.form.form_password.value = "";
+	return true;
+}
+
+</script>
+
 <div id="container">
 	<div class="column">
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -29,7 +41,7 @@
 
 		</div>
 			<div style="text-align:right; padding:5px;">
-				<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return crypt_sha1('<?php echo $_SESSION['token']; ?>');" />
+				<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return encrypt_password();" />
 			</div>
 		</form>
 	</div>

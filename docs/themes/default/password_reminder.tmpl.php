@@ -1,4 +1,9 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+<?php 
+global $onload;
+$onload = 'document.form.form_email.focus();';
+
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_password_reminder" value="true" />

@@ -2,9 +2,34 @@
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
+<script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+function encrypt_password()
+{
+	document.form.password_error.value = "";
+
+	err = verify_password(document.form.form_password1.value, document.form.form_password2.value);
+	
+	if (err.length > 0)
+	{
+		document.form.password_error.value = err;
+	}
+	else
+	{
+		document.form.form_password_hidden.value = hex_sha1(document.form.form_password1.value);
+		document.form.form_password1.value = "";
+		document.form.form_password2.value = "";
+	}
+}
+</script>
+
 <form method="post" action="<?php if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "") $getvars = '?en_id='. $_REQUEST["en_id"]; echo $_SERVER['PHP_SELF'] . $getvars; ?>" name="form">
 <?php global $languageManager, $_config, $moduleFactory; ?>
 <input name="ml" type="hidden" value="<?php echo $this->ml; ?>" />
+<input name="password_error" type="hidden" />
+<input type="hidden" name="form_password_hidden" value="" />
+
 <div class="input-form">
 
 	<?php if (!$_POST['member_id'] && defined('AT_MASTER_LIST') && AT_MASTER_LIST && !admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>
@@ -52,15 +77,15 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<?php if (!admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || !$_POST['member_id']): ?>
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
-			<input id="password" name="password" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password'])); ?>" /><br />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password1"><?php echo _AT('password'); ?></label><br />
+			<input id="form_password1" name="form_password1" type="password" size="15" maxlength="15" /><br />
 			<small>&middot; <?php echo _AT('combination'); ?><br />
 				   &middot; <?php echo _AT('15_max_chars'); ?></small>
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('password_again'); ?></label><br />
-			<input id="password2" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password2'])); ?>" />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password2"><?php echo _AT('password_again'); ?></label><br />
+			<input id="form_password2" name="form_password2" type="password" size="15" maxlength="15" />
 		</div>
 	<?php endif; ?>
 
@@ -188,7 +213,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 	
 	<div class="row buttons">
-		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" />
+		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" onClick="encrypt_password()" />
 		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 	</div>
 </div>

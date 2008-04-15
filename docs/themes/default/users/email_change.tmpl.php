@@ -1,24 +1,27 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+<?php 
+global $onload;
+$onload = 'document.form.form_password.focus();';
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+?>
 
 <script language="JavaScript" type="text/javascript" src="sha-1factory.js"></script>
-<script language="JavaScript" type="text/javascript">
-//<!--
-  function crypt_sha1() {
-  	document.form.password_hidden.value = hex_sha1(document.form.password.value + "<?php echo $_SESSION['token']; ?>");
-  	document.form.password.value = "";
-  	return true;
-  }
- //-->
+
+<script type="text/javascript">
+function encrypt_password()
+{
+	document.form.form_password_hidden.value = hex_sha1(document.form.form_password.value);
+	document.form.form_password.value = "";
+}
 </script>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-	<input type="hidden" name="password_hidden" value="" />
+	<input type="hidden" name="form_password_hidden" value="" />
 
 	<div class="input-form" style="max-width: 400px;">
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
-			<input id="password" name="password" type="password" size="15" maxlength="15" value="" /><br />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password"><?php echo _AT('password'); ?></label><br />
+			<input id="form_password" name="form_password" type="password" size="15" maxlength="15" value="" /><br />
 		</div>
 
 		<div class="row">
@@ -27,7 +30,8 @@
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" /> <input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
+			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" onClick="encrypt_password()" />
+			<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 		</div>
 	</div>
 </form>

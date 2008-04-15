@@ -1,10 +1,39 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+<?php 
+global $onload;
+$onload = 'document.form.password.focus();';
+
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+?>
+
+<script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+function encrypt_password()
+{
+	document.form.password_error.value = "";
+
+	err = verify_password(document.form.password.value, document.form.password2.value);
+	
+	if (err.length > 0)
+	{
+		document.form.password_error.value = err;
+	}
+	else
+	{
+		document.form.form_password_hidden.value = hex_sha1(document.form.password.value);
+		document.form.password.value = "";
+		document.form.password2.value = "";
+	}
+}
+</script>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_change" value="true" />
 	<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
 	<input type="hidden" name="g" value="<?php echo $this->g; ?>" />
 	<input type="hidden" name="h" value="<?php echo $this->h; ?>" />
+	<input type="hidden" name="form_password_hidden" value="" />
+	<input type="hidden" name="password_error" value="" />
 
 	<div class="input-form" style="max-width: 400px;">
 		<div class="row">
@@ -24,7 +53,8 @@
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" /> <input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
+			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" onClick="encrypt_password()" />
+			<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 		</div>
 	</div>
 </form>
