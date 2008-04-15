@@ -25,3 +25,5 @@ CREATE TABLE `auto_enroll_courses` (
    PRIMARY KEY ( `auto_enroll_courses_id` )
 );
 
+# Extend members.password for encrypted password
+ALTER TABLE `members` MODIFY password VARCHAR(40);
