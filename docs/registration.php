@@ -26,7 +26,7 @@ if (isset($_POST['cancel'])) {
 	$chk_email = $addslashes($_POST['email']);
 	$chk_login = $addslashes($_POST['login']);
 
-	$_POST['password'] = trim($_POST['password']);
+	$_POST['password'] = $_POST['form_password_hidden'];
 	$_POST['first_name'] = trim($_POST['first_name']);
 	$_POST['second_name'] = trim($_POST['second_name']);
 	$_POST['last_name'] = trim($_POST['last_name']);
@@ -55,21 +55,18 @@ if (isset($_POST['cancel'])) {
 		}
 	}
 
-	/* password check:	*/
-	if ($_POST['password'] == '') { 
-		$missing_fields[] = _AT('password');
-	} else {
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['password2']){
-			$msg->addError('PASSWORD_MISMATCH');
-		}
-		if (!preg_match('/^\S{8,}$/u', $_POST['password'])) { // strlen($_POST['password']) < 8
-			$msg->addError('PASSWORD_LENGTH');
-		} 
-		if ((preg_match('/[a-z]+/i', $_POST['password']) + preg_match('/[0-9]+/i', $_POST['password']) + preg_match('/[_\-\/+!@#%^$*&)(|.]+/i', $_POST['password'])) < 2) {
-			$msg->addError('PASSWORD_CHARS');
-		}
+	/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
+	if ($_POST['password_error'] <> "")
+	{
+		$pwd_errors = explode(",", $_POST['password_error']);
 
+		foreach ($pwd_errors as $pwd_error)
+		{
+			if ($pwd_error == "missing_password")
+				$missing_fields[] = _AT('password');
+			else
+				$msg->addError($pwd_error);
+		}
 	}
 
 	if ($_POST['email'] == '') {
@@ -189,9 +186,53 @@ if (isset($_POST['cancel'])) {
 		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
 		/* insert into the db */
-		$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[second_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]', $status, '$_config[pref_defaults]', '$now','$_SESSION[lang]', $_config[pref_inbox_notify], $_POST[private_email], '0000-00-00 00:00:00')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."members 
+		              (login,
+		               password,
+		               email,
+		               website,
+		               first_name,
+		               second_name,
+		               last_name,
+		               dob,
+		               gender,
+		               address,
+		               postal,
+		               city,
+		               province,
+		               country,
+		               phone,
+		               status,
+		               preferences,
+		               creation_date,
+		               language,
+		               inbox_notify,
+		               private_email,
+		               last_login)
+		       VALUES ('$_POST[login]',
+		               '$_POST[password]',
+		               '$_POST[email]',
+		               '$_POST[website]',
+		               '$_POST[first_name]',
+		               '$_POST[second_name]',
+		               '$_POST[last_name]', 
+		               '$dob', 
+		               '$_POST[gender]', 
+		               '$_POST[address]',
+		               '$_POST[postal]',
+		               '$_POST[city]',
+		               '$_POST[province]',
+		               '$_POST[country]', 
+		               '$_POST[phone]', 
+		               $status, 
+		               '$_config[pref_defaults]', 
+		               '$now',
+		               '$_SESSION[lang]', 
+		               $_config[pref_inbox_notify], 
+		               $_POST[private_email], 
+		               '0000-00-00 00:00:00')";
 
-		$result = mysql_query($sql, $db);
+		$result = mysql_query($sql, $db) or die(mysql_error());
 		$m_id	= mysql_insert_id($db);
 		if (!$result) {
 			require(AT_INCLUDE_PATH.'header.inc.php');

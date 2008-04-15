@@ -199,10 +199,31 @@ function binb2b64(binarray)
 
 
 /* 
- * Encrypt login passwords with a token
+ * Verify passwords and its confirm
+ * password1: password
+ * password2: confirm password
  */
-function crypt_sha1(session_token) {
-	document.form.form_password_hidden.value = hex_sha1(hex_sha1(document.form.form_password.value) + session_token);
-	document.form.form_password.value = "";
-	return true;
-}
+function verify_password(password1, password2)
+{
+	
+	var err = new Array();
+
+	if (password1 == "" || password2 == "")
+	{
+		err[err.length] = "missing_password";
+	}
+	if (password1 != password2)
+	{
+		err[err.length] = "PASSWORD_MISMATCH";
+	}
+	if (password1.length < 8)
+	{
+		err[err.length] = "PASSWORD_LENGTH";
+	}
+	if (password1.search(/[a-zA-Z]+/) +  password1.search(/[0-9]+/) + password1.search(/[_\-\/+!@#%^$*&)(|.]+/) < 0)
+	{
+		err[err.length] = "PASSWORD_CHARS";
+	}
+
+	return err;
+}	

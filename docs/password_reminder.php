@@ -105,27 +105,25 @@ if (isset($_POST['cancel'])) {
 	//changing the password
 	if (isset($_POST['form_change'])) {
 
-		$_POST['password'] = trim($_POST['password']);
-		
-		/* password check */
-		if ($_POST['password'] == '') { 
-			$msg->addError(array('EMPTY_FIELDS', _AT('password')));
-		} else {
-			// check for valid passwords
-			if ($_POST['password'] != $_POST['password2']){
-				$msg->addError('PASSWORD_MISMATCH');
-			} else if (strlen($_POST['password']) < 8) {
-				$msg->addError('PASSWORD_LENGTH');
-			} else if ((preg_match('/[a-z]+/i', $_POST['password']) + preg_match('/[0-9]+/i', $_POST['password']) + preg_match('/[_\-\/+!@#%^$*&)(|.]+/i', $_POST['password'])) < 2) {
-				$msg->addError('PASSWORD_CHARS');
+		/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
+		if ($_POST['password_error'] <> "")
+		{
+			$pwd_errors = explode(",", $_POST['password_error']);
+	
+			foreach ($pwd_errors as $pwd_error)
+			{
+				if ($pwd_error == "missing_password")
+					$missing_fields[] = _AT('password');
+				else
+					$msg->addError($pwd_error);
 			}
 		}
 
 		if (!$msg->containsErrors()) {
 			//save data
-			$_POST['password']   = $addslashes($_POST['password']);
+			$password   = $addslashes($_POST['form_password_hidden']);
 
-			$sql	= "UPDATE ".TABLE_PREFIX."members SET password='".$_POST['password']."', last_login=last_login WHERE member_id=".intval($_REQUEST['id']);
+			$sql	= "UPDATE ".TABLE_PREFIX."members SET password='".$password."', last_login=last_login WHERE member_id=".intval($_REQUEST['id']);
 			$result = mysql_query($sql,$db);
 
 			//send confirmation email
@@ -150,7 +148,6 @@ if (isset($_POST['cancel'])) {
 			header('Location:index.php');
 
 		} else {
-			$onload = 'document.form.form_email.focus();';
 			$savant->assign('id', $_REQUEST['id']);
 			$savant->assign('g', $_REQUEST['g']);
 			$savant->assign('h', $_REQUEST['h']);
@@ -159,7 +156,6 @@ if (isset($_POST['cancel'])) {
 	}
 
 } else {
-	$onload = 'document.form.form_email.focus();';
 	$savant->display('password_reminder.tmpl.php');
 }
 
