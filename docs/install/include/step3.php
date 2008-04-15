@@ -17,7 +17,6 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);
 
 	$_POST['admin_username'] = trim($_POST['admin_username']);
-	$_POST['admin_password'] = trim($_POST['form_admin_password_hidden']);
 	$_POST['admin_email']    = trim($_POST['admin_email']);
 	$_POST['site_name']      = trim($_POST['site_name']);
 	$_POST['home_url']	     = trim($_POST['home_url']);
@@ -35,7 +34,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			$errors[] = 'Administrator username is not valid.';
 		}
 	}
-	if ($_POST['admin_password'] == '') {
+	if ($_POST['form_admin_password_hidden'] == '') {
 		$errors[] = 'Administrator password cannot be empty.';
 	}
 	if ($_POST['admin_email'] == '') {
@@ -67,7 +66,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			}
 		}
 	}
-	if ($_POST['account_password'] == '') {
+	if ($_POST['form_account_password_hidden'] == '') {
 		$errors[] = 'Personal Account Password cannot be empty.';
 	}
 	if ($_POST['account_email'] == '') {
@@ -92,10 +91,10 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 		$status = 3; // for instructor account
 
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 'en', 1, NOW())";
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[form_admin_password_hidden]', '', '$_POST[admin_email]', 'en', 1, NOW())";
 		$result= mysql_query($sql, $db);
 
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (NULL,'$_POST[account_username]','$_POST[account_password]','$_POST[account_email]','','$_POST[account_fname]','','$_POST[account_lname]','0000-00-00','n', '','','','','', '',$status,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (NULL,'$_POST[account_username]','$_POST[form_account_password_hidden]','$_POST[account_email]','','$_POST[account_fname]','','$_POST[account_lname]','0000-00-00','n', '','','','','', '',$status,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";
 		$result = mysql_query($sql ,$db);
 
 		$_POST['site_name'] = $addslashes($_POST['site_name']);
@@ -113,10 +112,10 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		}
 
 		unset($_POST['admin_username']);
-		unset($_POST['admin_password']);
+		unset($_POST['form_admin_password_hidden']);
 		unset($_POST['admin_email']);
 		unset($_POST['account_username']);
-		unset($_POST['account_password']);
+		unset($_POST['form_account_password_hidden']);
 		unset($_POST['account_email']);
 		unset($_POST['home_url']);
 		unset($_POST['email']);
@@ -139,7 +138,6 @@ if (isset($errors)) {
 
 if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	$defaults['admin_username'] = urldecode($_POST['step1']['admin_username']);
-	$defaults['admin_password'] = urldecode($_POST['step1']['admin_password']);
 	$defaults['admin_email']    = urldecode($_POST['step1']['admin_email']);
 
 	$defaults['site_name']   = urldecode($_POST['step1']['site_name']);
@@ -152,20 +150,21 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 
 ?>
 <script language="JavaScript" src="<?php echo AT_INCLUDE_PATH; ?>../../sha-1factory.js" type="text/javascript"></script>
-<script language="JavaScript" type="text/javascript">
-/* 
- * Encrypt passwords
- */
-function crypt_sha1_pwd() {
+
+<script type="text/javascript">
+function encrypt_password()
+{
 	document.form.form_admin_password_hidden.value = hex_sha1(document.form.admin_password.value);
+	document.form.form_account_password_hidden.value = hex_sha1(document.form.account_password.value);
 	document.form.admin_password.value = "";
-	return true;
+	document.form.account_password.value = "";
 }
 </script>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="action" value="process" />
 	<input type="hidden" name="form_admin_password_hidden" value="" />
+	<input type="hidden" name="form_account_password_hidden" value="" />
 	<input type="hidden" name="step" value="<?php echo $step; ?>" />
 	<?php print_hidden($step); ?>
 
@@ -192,7 +191,7 @@ function crypt_sha1_pwd() {
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="password">Administrator Password:</label></b></td>
-			<td class="row1"><input type="text" name="admin_password" id="password" maxlength="15" size="15" value="<?php if (!empty($_POST['admin_password'])) { echo stripslashes(htmlspecialchars($_POST['admin_password'])); } else { echo $defaults['admin_password']; } ?>" class="formfield" /></td>
+			<td class="row1"><input type="text" name="admin_password" id="password" maxlength="15" size="15" class="formfield" /></td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="email">Administrator Email:</label></b></td>
@@ -239,7 +238,7 @@ function crypt_sha1_pwd() {
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_password">Password:</label></b></td>
-			<td class="row1"><input type="text" name="account_password" id="account_password" maxlength="15" size="15" value="<?php if (!empty($_POST['account_password'])) { echo stripslashes(htmlspecialchars($_POST['account_password'])); } ?>" class="formfield" /></td>
+			<td class="row1"><input type="text" name="account_password" id="account_password" maxlength="15" size="15" class="formfield" /></td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_email">Email:</label></b></td>
@@ -256,5 +255,5 @@ function crypt_sha1_pwd() {
 		</table>
 	<br />
 	<br />
-	<div align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" onclick="return crypt_sha1_pwd();" /></div>
+	<div align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" onclick="return encrypt_password();" /></div>
 </form>
