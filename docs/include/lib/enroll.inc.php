@@ -130,7 +130,32 @@ function add_users($user_list, $enroll, $course) {
 				$student['lname'] = $addslashes($student['lname']);
 
 			if (!$student['exists']) {
-				$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$student[uname]','$student[uname]','$student[email]','','$student[fname]','', '$student[lname]', '0000-00-00', 'n', '','','','','', '', $status, '$_config[pref_defaults]', NOW(),'$_config[default_language]', $_config[pref_inbox_notify], 1, '0000-00-00 00:00:00')";
+				$sql = "INSERT INTO ".TABLE_PREFIX."members 
+				              (login,
+				               password,
+				               email,
+				               first_name,
+				               last_name,
+				               gender,
+				               status,
+				               preferences,
+				               creation_date,
+				               language,
+				               inbox_notify,
+				               private_email)
+				              VALUES 
+				              ('$student[uname]',
+				               '". sha1($student[uname]). "',
+				               '$student[email]',
+				               '$student[fname]',
+				               '$student[lname]',
+				               'n', 
+				               $status, 
+				               '$_config[pref_defaults]', 
+				               NOW(),
+				               '$_config[default_language]', 
+				               $_config[pref_inbox_notify], 
+				               1)";
 
 				$result = mysql_query($sql, $db);
 				if (mysql_affected_rows($db) == 1) {
