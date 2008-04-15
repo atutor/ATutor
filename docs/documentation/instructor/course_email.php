@@ -8,7 +8,6 @@
 <li><strong>{AT_LNAME}</strong> Replaced with recipient's last name in the body or subject line.</li>
 <li><strong>{AT_EMAIL}</strong> Replaced with recipient's email in the body.</li>
 <li><strong>{AT_USER}</strong>  Replaced with recipient's login name in the body.</li>
-<li><strong>{AT_PASSWORD}</strong>  Replaced with recipient's password in the body.</li>
 </ul>
 
 <?php require('../common/body_footer.inc.php'); ?>
