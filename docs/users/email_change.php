@@ -39,20 +39,15 @@ if (!isset($_SESSION['token']) || !$_SESSION['token']) {
 
 if (isset($_POST['submit'])) {
 
-	//get hidden password
-	if (strlen($_POST['form_password_hidden']) < 40) { // <noscript> on client end
-		$this_password = sha1($_POST['password'] . $_SESSION['token']);
-	} else { // sha1 ok
-		$this_password = $_POST['password_hidden'];
-	}
+	$this_password = $_POST['form_password_hidden'];
 
 	// password check
-	if (!empty($_POST['password'])) {
+	if (!empty($this_password)) {
 		//check if old password entered is correct
 		$sql	= "SELECT password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql,$db);
 		if ($row = mysql_fetch_assoc($result)) {
-			if (sha1($row['password']. $_SESSION['token']) != trim($this_password)) {
+			if ($row['password'] != $this_password) {
 				$msg->addError('WRONG_PASSWORD');
 				Header('Location: email_change.php');
 				exit;
@@ -129,11 +124,7 @@ if (!isset($_POST['submit'])) {
 }
 
 /* template starts here */
-
-$onload = 'document.form.password.focus();';
-
 $savant->assign('row', $row);
-$onload = 'document.form.password.focus();';
 $savant->display('users/email_change.tmpl.php');
 
 ?>
