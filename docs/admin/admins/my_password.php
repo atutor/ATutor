@@ -29,12 +29,12 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
-	if (!empty($_POST['old_password'])) {
+	if (!empty($_POST['form_old_password_hidden'])) {
 		//check if old password entered is correct
 		$sql	= "SELECT password FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql,$db);
 		if ($row = mysql_fetch_assoc($result)) {
-			if ($row['password'] != sha1(trim($_POST['old_password']))) {
+			if ($row['password'] != $_POST['form_old_password_hidden']) {
 				$msg->addError('WRONG_PASSWORD');
 				Header('Location: my_password.php');
 				exit;
@@ -47,22 +47,23 @@ if (isset($_POST['submit'])) {
 	}
 
 	// new password check
-	if ($_POST['password'] == '') { 
-		$msg->addError(array('EMPTY_FIELDS', _AT('password')));
-	} else {
-		if ($_POST['password'] != $_POST['password2']) {
-			$msg->addError('PASSWORD_MISMATCH');
-		} else if (strlen($_POST['password']) < 8) {
-			$msg->addError('PASSWORD_LENGTH');
-		} else if ((preg_match('/[a-z]+/i', $_POST['password']) + preg_match('/[0-9]+/i', $_POST['password']) + preg_match('/[_\-\/+!@#%^$*&)(|.]+/i', $_POST['password'])) < 2) {
-			$msg->addError('PASSWORD_CHARS');
+	if ($_POST['password_error'] <> "")
+	{
+		$pwd_errors = explode(",", $_POST['password_error']);
+
+		foreach ($pwd_errors as $pwd_error)
+		{
+			if ($pwd_error == "missing_password")
+				$missing_fields[] = _AT('password');
+			else
+				$msg->addError($pwd_error);
 		}
 	}
-		
-	if (!$msg->containsErrors()) {			
-		$_POST['password']   = sha1($addslashes($_POST['password']));
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', last_login=last_login WHERE login='$_SESSION[login]'";
+	if (!$msg->containsErrors()) {			
+		$password   = addslashes($_POST['form_password_hidden']);
+
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$password', last_login=last_login WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('PASSWORD_CHANGED');
@@ -72,7 +73,6 @@ if (isset($_POST['submit'])) {
 }
 
 /* template starts here */
-$onload = 'document.form.old_password.focus();';
 $savant->display('users/password_change.tmpl.php');
 
 ?>

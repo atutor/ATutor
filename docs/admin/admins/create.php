@@ -43,18 +43,17 @@ if (isset($_POST['cancel'])) {
 		}
 	}
 
-	/* password validation */
-	$_POST['password']	= $_POST['form_password_hidden'];
-	$_POST['confirm_password']	= $_POST['form_confirm_password_hidden'];
-	unset($_POST['form_password_hidden']);
-	unset($_POST['form_confirm_password_hidden']);
+	/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
+	if ($_POST['password_error'] <> "")
+	{
+		$pwd_errors = explode(",", $_POST['password_error']);
 
-	if ($_POST['password'] == '') { 
-		$missing_fields[] = _AT('password');
-	} else {
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['confirm_password']){
-			$msg->addError('PASSWORD_MISMATCH');
+		foreach ($pwd_errors as $pwd_error)
+		{
+			if ($pwd_error == "missing_password")
+				$missing_fields[] = _AT('password');
+			else
+				$msg->addError($pwd_error);
 		}
 	}
 
@@ -88,16 +87,45 @@ if (isset($_POST['cancel'])) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['login']     = $addslashes($_POST['login']);
-		$_POST['password']  = $addslashes($_POST['password']);
+		$password  = $addslashes($_POST['form_password_hidden']);
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
 		$admin_lang = $_config['default_language']; 
 
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '$_POST[password]', '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
-		$result = mysql_query($sql, $db);
+		$sql    = "INSERT INTO ".TABLE_PREFIX."admins
+		                 (login,
+		                  password,
+		                  real_name,
+		                  email,
+		                  language,
+		                  privileges,
+		                  last_login)
+		          VALUES ('$_POST[login]', 
+		                  '$password', 
+		                  '$_POST[real_name]', 
+		                  '$_POST[email]', 
+		                  '$admin_lang', 
+		                  $priv, 
+		                  0)";
+		$result = mysql_query($sql, $db) or die(mysql_error());
 
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '*****', '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
+		$sql    = "INSERT INTO ".TABLE_PREFIX."admins
+		                 (login,
+		                  password,
+		                  real_name,
+		                  email,
+		                  language,
+		                  privileges,
+		                  last_login)
+		          VALUES ('$_POST[login]', 
+		                  '********', 
+		                  '$_POST[real_name]', 
+		                  '$_POST[email]', 
+		                  '$admin_lang', 
+		                  $priv, 
+		                  0)";
+		                  
 		write_to_log(AT_ADMIN_LOG_INSERT, 'admins', mysql_affected_rows($db), $sql);
 
 		$msg->addFeedback('ADMIN_CREATED');
@@ -105,19 +133,19 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 	$_POST['login']             = $stripslashes($_POST['login']);
-	$_POST['password']          = $stripslashes($_POST['password']);
-	$_POST['confirm_password']  = $stripslashes($_POST['confirm_password']);
 	$_POST['real_name']         = $stripslashes($_POST['real_name']);
 	$_POST['email']             = $stripslashes($_POST['email']);
 } 
 
+$onload = 'document.form.login.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 <script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="form_password_hidden" value="" />
-<input type="hidden" name="form_confirm_password_hidden" value="" />
+<input type="hidden" name="password_error" value="" />
+
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
@@ -126,12 +154,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
-		<input type="password" name="password" id="password" size="25" value="<?php echo htmlspecialchars($_POST['password']); ?>" />
+		<input type="password" name="password" id="password" size="25" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('confirm_password'); ?></label><br />
-		<input type="password" name="confirm_password" id="password2" size="25" value="<?php echo htmlspecialchars($_POST['confirm_password']); ?>" />
+		<input type="password" name="confirm_password" id="password2" size="25" />
 	</div>
 
 	<div class="row">
@@ -161,27 +189,40 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" onClick="return checkAdmin();" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" onClick="return encrypt_password();" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
 </form>
 
-<script language="javascript">
+<script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
 
-function checkAdmin() {
-	// Encrypt passwords
-	document.form.form_password_hidden.value = hex_sha1(document.form.password.value);
-	document.form.form_confirm_password_hidden.value = hex_sha1(document.form.confirm_password.value);
-	document.form.password.value = "";
-	document.form.confirm_password.value = "";
-	if (document.form.priv_admin.checked == true) {
-		return confirm('<?php echo _AT('confirm_admin_create'); ?>');
-	} else {
-		return true;
+<script type="text/javascript">
+function encrypt_password()
+{
+	document.form.password_error.value = "";
+
+	err = verify_password(document.form.password.value, document.form.confirm_password.value);
+	
+	if (err.length > 0)
+	{
+		document.form.password_error.value = err;
+	}
+	else
+	{
+		document.form.form_password_hidden.value = hex_sha1(document.form.password.value);
+		document.form.password.value = "";
+		document.form.confirm_password.value = "";
+		if (document.form.priv_admin.checked == true) 
+		{
+			return confirm('<?php echo _AT('confirm_admin_create'); ?>');
+		} 
+		else 
+		{
+			return true;
+		}
 	}
 }
-
 </script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

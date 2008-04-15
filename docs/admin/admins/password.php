@@ -20,25 +20,24 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.AT_BASE_HREF.'admin/admins/index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	// Use encrypted passwords instead.
-	$_POST['password']	= $_POST['form_password_hidden'];
-	$_POST['password2']	= $_POST['form_password_hidden2'];
-	unset($_POST['form_password_hidden']);
-	unset($_POST['form_password_hidden2']);
+	/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
+	if ($_POST['password_error'] <> "")
+	{
+		$pwd_errors = explode(",", $_POST['password_error']);
 
-	if ($_POST['password'] == '') { 
-		$msg->addError(array('EMPTY_FIELDS', _AT('password')));
-	} else {
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['password2']){
-			$msg->addError('PASSWORD_MISMATCH');
+		foreach ($pwd_errors as $pwd_error)
+		{
+			if ($pwd_error == "missing_password")
+				$missing_fields[] = _AT('password');
+			else
+				$msg->addError($pwd_error);
 		}
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['password']     = $addslashes($_POST['password']);
+		$password     = $addslashes($_POST['form_password_hidden']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', last_login=last_login WHERE login='$_POST[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$password', last_login=last_login WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
 
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='********' WHERE login='$_POST[login]'";
@@ -52,8 +51,6 @@ if (isset($_POST['cancel'])) {
 }
 
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
 $_GET['login'] = $addslashes($_REQUEST['login']);
 
 $sql = "SELECT login FROM ".TABLE_PREFIX."admins WHERE login='$_GET[login]'";
@@ -66,49 +63,61 @@ if (!($row = mysql_fetch_assoc($result))) {
 }
 if (!isset($_POST['submit'])) {
 	$_POST = $row;
-	$_POST['confirm_password'] = $_POST['password'];
+
 	if (query_bit($row['privileges'], AT_ADMIN_PRIV_ADMIN)) {
 		$_POST['priv_admin'] = 1;
 	}
 	$_POST['privs'] = intval($row['privileges']);
 }
 
+$onload = 'document.form.password1.focus();';
+require(AT_INCLUDE_PATH.'header.inc.php');
+
 ?>
 <script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
-<script language="JavaScript">
-/* 
- * Encrypt passwords
- */
-function crypt_sha1_pwd() {
-	document.form.form_password_hidden.value = hex_sha1(document.form.password.value);
-	document.form.form_password_hidden2.value = hex_sha1(document.form.password2.value);
-	document.form.password.value = "";
-	document.form.password2.value = "";
-	return true;
+
+<script type="text/javascript">
+function encrypt_password()
+{
+	document.form.password_error.value = "";
+
+	err = verify_password(document.form.password1.value, document.form.confirm_password.value);
+	
+	if (err.length > 0)
+	{
+		document.form.password_error.value = err;
+	}
+	else
+	{
+		document.form.form_password_hidden.value = hex_sha1(document.form.password1.value);
+		document.form.password1.value = "";
+		document.form.confirm_password.value = "";
+	}
 }
 </script>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 	<input type="hidden" name="login" value="<?php echo $row['login']; ?>" />
 	<input type="hidden" name="form_password_hidden" value="" />
-	<input type="hidden" name="form_password_hidden2" value="" />
+	<input type="hidden" name="password_error" value="" />
+
 	<div class="input-form">
 		<div class="row">
 			<h3><?php echo htmlspecialchars($row['login']); ?></h3>
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
-			<input type="password" name="password" id="password" value="" size="30" />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password1"><?php echo _AT('password'); ?></label><br />
+			<input type="password" name="password1" id="password1" size="15" />
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('confirm_password'); ?></label><br />
-			<input type="password" name="password2" id="password2" value="" size="30" />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password2"><?php echo _AT('confirm_password'); ?></label><br />
+			<input type="password" name="confirm_password" id="confirm_password" size="15" />
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" accesskey="s" onclick="return crypt_sha1_pwd();" />
+			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" accesskey="s" onclick="encrypt_password();" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	</div>
