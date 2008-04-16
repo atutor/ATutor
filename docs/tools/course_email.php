@@ -106,7 +106,6 @@ if (isset($_POST['cancel'])) {
 			$mail_list[]=$row['email'];
 			$fname_list[$row['email']] = $row['first_name'];
 			$lname_list[$row['email']] = $row['last_name'];
-			$pass_list[$row['email']] = $row['password'];
 			$login_list[$row['email']] = $row['login'];
 		}
 
@@ -143,8 +142,6 @@ if (isset($_POST['cancel'])) {
 			$body = str_replace('{AT_LNAME}', $lname_list[$recip],$body);
 			$body = str_replace('{AT_EMAIL}', $recip,$body);
 			$body = str_replace('{AT_USER}', $login_list[$recip],$body);
-			$body = str_replace('{AT_PASSWORD}', $pass_list[$recip],$body);
-
 
 			$mail->Subject = $subject;
 			$mail->AddAddress($recip);
