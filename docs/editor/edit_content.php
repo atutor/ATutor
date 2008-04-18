@@ -142,13 +142,13 @@ if ($current_tab == 0) {
 	}
 }
 
+// initialize buttons, texts, radio buttons for editor
+$onload="body_on_load()";
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if ($current_tab == 0) {
-	//used for visual editor
-	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-		load_editor();
-	}
+if ($current_tab == 0) 
+{
+	load_editor();
 }
 
 $cid = intval($_REQUEST['cid']);
