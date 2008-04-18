@@ -950,14 +950,14 @@ h4.box {
 }
 
 div.box {
-	padding: 2px;
+	padding: 5px;
 	background-color: #F5F5F5;
 	color: black;
 	border: 1px solid #B8AE9C;
 
 	font-size:0.85em;
 	font-weight: normal;
-	padding:5px;
+	padding:2px;
 }
 
 h5.box { 
@@ -1268,12 +1268,12 @@ dl#public-profile dd {
 	padding-right: 5px;
 }
 #contentcolumn_shiftright {
-	margin-left: 17em;
+	margin-left: 18em;
 }
 
 #leftcolumn{
 	float: left;
-	width: 16em;
+	width: 17em;
 	margin-left: 5px;
 	margin-top:-10px;
 }
