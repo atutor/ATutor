@@ -28,18 +28,16 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<div class="row">
 		<?php echo _AT('formatting'); ?><br />
 
-		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=true;" />
 		<label for="text"><?php echo _AT('plain_text'); ?></label>
 
-		, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+		, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=false;"/>
 		<label for="html"><?php echo _AT('html'); ?></label>
 
-		<?php if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) : ?>
-			<input type="hidden" name="setvisual" value="<?php echo $_POST['setvisual']; ?>" />
-			<input type="submit" name="settext" value="<?php echo _AT('switch_text'); ?>" />
-		<?php else: ?>
-			<input type="submit" name="setvisual" value="<?php echo _AT('switch_visual'); ?>" <?php if ($_POST['formatting']==0) { echo 'disabled="disabled"'; } ?> />
-		<?php endif; ?>
+		<input type="hidden" name="setvisual" value="<?php if (isset($_POST['setvisual'])) echo $_POST['setvisual']; else echo '0'; ?>" />
+		<input type="hidden" name="settext" value="<?php if (isset($_POST['settext'])) echo $_POST['settext']; else echo '1'; ?>" />
+		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_editor()" />
+
 		<script type="text/javascript" language="javascript">
 		//<!--
 			document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>tools/filemanager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $content_row['content_path']; ?>','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><?php echo _AT('open_file_manager'); ?> </a>");
@@ -75,3 +73,46 @@ if ($do_check) {
 		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
 		&middot;<?php echo _AT('edit_after_upload'); ?></small>
 	</div>
+
+	<script type="text/javascript" language="javascript">
+	//<!--
+	// initialize visual / text button, radio button and editor
+	function body_on_load()
+	{
+		if (document.getElementById("text").checked)
+			document.form.setvisualbutton.disabled = true;
+			
+		if (document.form.setvisual.value==1)
+		{
+			tinyMCE.get('body_text').show();
+			document.form.formatting[0].disabled = "disabled";
+			document.form.setvisualbutton.value = "<?php echo _AT('switch_text'); ?>";
+		}
+		else
+		{
+			tinyMCE.get('body_text').hide();
+			document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
+		}
+	}
+
+	function switch_editor()
+	{
+		if (document.form.setvisualbutton.value=="<?php echo _AT('switch_visual'); ?>")
+		{
+			tinyMCE.get('body_text').show();
+			document.form.setvisual.value=1;
+			document.form.settext.value=0;
+			document.form.formatting[0].disabled = "disabled";
+			document.form.setvisualbutton.value = "<?php echo _AT('switch_text'); ?>";
+		}
+		else
+		{
+			tinyMCE.get('body_text').hide();
+			document.form.setvisual.value=0;
+			document.form.settext.value=1;
+			document.form.formatting[0].disabled = "";
+			document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
+		}
+	}
+	//-->
+	</script>
