@@ -4,7 +4,7 @@
 	<p>The Patcher was introduce in ATutor 1.6 to allow administrators to update their systems with feature adjustments, security fixes, and other ATutor code changes in between ATutor releases. The Patcher is included as a standard module with ATutor 1.6.1+, and installs as an extra module for 1.6.</p>
 <dl>
 	<dt>The Patch List</dt>
-	<dd>On the opening screen of the Patcher will appear a list of patches available for the version of ATutor you are using, along with a description of each patch.  This list is retrieved from update.atutor.ca, as are the patches themselves, so you must be connected to the Internet. Patches are retrieved from update.atutor.ca in a zip form, unzipped by ATutor and applied as necessary. </dd>
+	<dd>On the opening screen of the Patcher will appear a list of patches available for the version of ATutor you are using, along with a description of each patch.  This list is retrieved from update.atutor.ca, as are the patches themselves, so you must be connected to the Internet. Patches are retrieved from update.atutor.ca by ATutor and applied as necessary. </dd>
 	<dt>File Permissions</dt>
 	<dd>In most cases you will be asked to temporarily grant write permission to the files that need to be updated or replaced, then once the patch has been applied, you will be asked to change the permissions back to read only. It is important that you follow the instructions after patches have been applied, otherwise you run the risk of opening a security hole. 
 	</dd>
