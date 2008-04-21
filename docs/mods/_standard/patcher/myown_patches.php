@@ -12,7 +12,7 @@
 /****************************************************************************/
 // $Id: myown_patches.php 7208 2008-02-20 16:07:24Z cindy $
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
 

@@ -21,10 +21,10 @@
 * @package	PatchCreator
 */
 
-define('AT_INCLUDE_PATH', '../../../include/');
+define('AT_INCLUDE_PATH', '../../../../include/');
 require_once (AT_INCLUDE_PATH.'vitals.inc.php');
 
-require_once(AT_INCLUDE_PATH. "../mods/patcher/include/patch_xml_template.inc.php");
+require_once(AT_INCLUDE_PATH. "../mods/_standard/patcher/include/patch_xml_template.inc.php");
 
 class PatchCreator {
 
