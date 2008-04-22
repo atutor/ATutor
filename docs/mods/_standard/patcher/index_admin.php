@@ -72,7 +72,7 @@ $patch_folder = "http://" . $update_server . '/patch/' . str_replace('.', '_', V
 
 $patch_list_xml = @file_get_contents($patch_folder . 'patch_list.xml');
 
-if ($patch_list_xml === TRUE) 
+if ($patch_list_xml) 
 {
 	$patchListParser =& new PatchListParser();
 	$patchListParser->parse($patch_list_xml);
