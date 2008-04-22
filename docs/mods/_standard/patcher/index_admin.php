@@ -323,40 +323,43 @@ else
 	
 	$array_id = 0;
 	// display un-installed patches
-	foreach ($patch_list_array as $row_num => $new_patch)
+	if(is_array($patch))
 	{
-		if (!is_patch_installed($new_patch['atutor_patch_id']))
+		foreach ($patch_list_array as $row_num => $new_patch)
 		{
-			$dependent_patches_installed = true;
-		
-			// check if the dependent patches are installed
-			if (is_array($new_patch["dependent_patches"]))
+			if (!is_patch_installed($new_patch['atutor_patch_id']))
 			{
-				$dependent_patches = "";
-				foreach ($new_patch["dependent_patches"] as $num => $dependent_patch)
-				{
-					if (!is_patch_installed($dependent_patch))
-					{
-						$dependent_patches_installed = false;
-						$dependent_patches .= $dependent_patch. ", ";
-					}
-				}
-				
-				// remove the last comma in the string
-				if ($dependent_patches <> "") $dependent_patches = substr($dependent_patches, 0, -2);
-			}
-
-			// display patch row
-			if ($dependent_patches_installed)
-				print_patch_row($new_patch, $array_id++, true);
-			else
-			{
-				print_patch_row($new_patch, $array_id++, false);
 				$dependent_patches_installed = true;
+			
+				// check if the dependent patches are installed
+				if (is_array($new_patch["dependent_patches"]))
+				{
+					$dependent_patches = "";
+					foreach ($new_patch["dependent_patches"] as $num => $dependent_patch)
+					{
+						if (!is_patch_installed($dependent_patch))
+						{
+							$dependent_patches_installed = false;
+							$dependent_patches .= $dependent_patch. ", ";
+						}
+					}
+					
+					// remove the last comma in the string
+					if ($dependent_patches <> "") $dependent_patches = substr($dependent_patches, 0, -2);
+				}
+	
+				// display patch row
+				if ($dependent_patches_installed)
+					print_patch_row($new_patch, $array_id++, true);
+				else
+				{
+					print_patch_row($new_patch, $array_id++, false);
+					$dependent_patches_installed = true;
+				}
 			}
+			else
+				$array_id++;
 		}
-		else
-			$array_id++;
 	}
 
 ?>

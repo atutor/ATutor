@@ -20,7 +20,7 @@
 * @package	Patch
 */
 
-define('AT_INCLUDE_PATH', '../../../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 
 require_once(AT_INCLUDE_PATH. "../mods/_standard/patcher/include/common.inc.php");
 
@@ -389,7 +389,7 @@ class Patch {
 		global $db;
 
 		$svn_file = $this->svn_tag_folder . 'atutor_' . str_replace('.', '_', VERSION) .
-		            str_replace('../..', '', $folder) .$file;
+		            str_replace('../../..', '' , $folder) .$file;
 		$local_file = $folder.$file;
 
 		// check if the local file has been modified by user. if it is, don't overwrite
