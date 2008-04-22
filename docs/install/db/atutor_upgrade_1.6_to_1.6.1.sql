@@ -112,4 +112,7 @@ CREATE TABLE `myown_patches_files` (
 );
 
 
-INSERT INTO `modules` VALUES ('_standard/patcher', 2, 1048576, 1024, 0, 0);
+# INSERT INTO `modules` VALUES ('_standard/patcher', 2, 1048576, 1024, 0, 0);
+
+INSERT INTO `modules`
+SELECT '_standard/patcher', 2, MAX(privilege)*2, MAX(admin_privilege)*2, 0, 0 FROM `modules`;
