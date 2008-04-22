@@ -72,11 +72,7 @@ $patch_folder = "http://" . $update_server . '/patch/' . str_replace('.', '_', V
 
 $patch_list_xml = @file_get_contents($patch_folder . 'patch_list.xml');
 
-if ($patch_list_xml === FALSE) 
-{
-	echo _AT('none_found');
-}
-else
+if ($patch_list_xml === TRUE) 
 {
 	$patchListParser =& new PatchListParser();
 	$patchListParser->parse($patch_list_xml);
@@ -312,7 +308,17 @@ $num_of_patches = mysql_num_rows($result) + count($patch_list_array);
 
 if ($num_of_patches == 0)
 {
+?>
+
+<tr>
+	<td colspan="7">
+<?php 
 	echo _AT('none_found');
+?>
+	</td>
+</tr>
+
+<?php 
 }
 else
 {
@@ -323,7 +329,7 @@ else
 	
 	$array_id = 0;
 	// display un-installed patches
-	if(is_array($patch))
+	if(is_array($patch_list_array))
 	{
 		foreach ($patch_list_array as $row_num => $new_patch)
 		{
