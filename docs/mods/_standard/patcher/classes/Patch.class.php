@@ -389,7 +389,7 @@ class Patch {
 		global $db;
 
 		$svn_file = $this->svn_tag_folder . 'atutor_' . str_replace('.', '_', VERSION) .
-		            str_replace('../../..', '' , $folder) .$file;
+		            str_replace(substr($this->relative_to_atutor_root, 0, -1), '' , $folder) .$file;
 		$local_file = $folder.$file;
 
 		// check if the local file has been modified by user. if it is, don't overwrite
