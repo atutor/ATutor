@@ -53,9 +53,7 @@ if ($_config['check_version']) {
 	<?php endif; ?>
 
 	<?php 
-/****************************************************************************************************
-** Uncomment when Patcher is a standard/core module 
-** and modify the path for PatchListParser.class.php & index_admin.php if necessary
+
 
 	$update_server = "update.atutor.ca"; 
 
@@ -70,7 +68,7 @@ if ($_config['check_version']) {
 		
 		if ($patch_list_xml) 
 		{
-			require_once('../mods/patcher/PatchListParser.class.php');
+			require_once('../mods/_standard/patcher/classes/PatchListParser.class.php');
 			$patchListParser =& new PatchListParser();
 			$patchListParser->parse($patch_list_xml);
 			$patch_list_array = $patchListParser->getMyParsedArrayForVersion(VERSION);
@@ -91,7 +89,7 @@ if ($_config['check_version']) {
 			{
 		?>
 	<div class="input-form" style="width: 98%;">
-		<form method="get" action="mods/patcher/index_admin.php">
+		<form method="get" action="mods/_standard/patcher/index_admin.php">
 			<div class="row">
 				<h3><?php echo _AT('available_patches'); ?></h3>
 				<p><?php echo _AT('available_patches_text', $cnt); ?></p>
@@ -106,7 +104,7 @@ if ($_config['check_version']) {
 			}
 		}
 	} 
-****************************************************************************************************/
+
 	?>
 
 	<div class="input-form" style="width: 98%">
