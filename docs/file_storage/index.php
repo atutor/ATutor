@@ -424,42 +424,45 @@ while ($row = mysql_fetch_assoc($result)) {
 <?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>" enctype="multipart/form-data" name="form0">
 	<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
-	<div style="float:right">
-	<div style="margin: 0px auto; width: 70%;">
-		<div class="input-form" style="width: 48%; float: right;">
-			<div class="row">
-				<h3><a href="file_storage/index.php" onclick="javascript:toggleform('c_folder'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
-			</div>
-			<div  id="c_folder">
+	<div style="float:right;">
+		<div style="margin: 0px auto; width: 70%;">	
+			<div class="input-form" style="width: 48%; float: right;">
 				<div class="row">
-					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="fname"><?php echo _AT('name'); ?></label><br />
-					<input type="text" id="fname" name="new_folder_name" size="20" />
+					<h3><a href="file_storage/index.php" onclick="javascript:toggleform('c_folder'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
 				</div>
-				<div class="row buttons">
-					<input type="submit" name="create_folder" value="<?php echo _AT('create'); ?>" />
+				<div  id="c_folder">
+					<div class="row">
+						<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="fname"><?php echo _AT('name'); ?></label><br />
+						<input type="text" id="fname" name="new_folder_name" size="20" />
+					</div>
+					<div class="row buttons">
+						<input type="submit" name="create_folder" value="<?php echo _AT('create'); ?>" />
+					</div>
 				</div>
 			</div>
+	
+	
+			<div class="input-form" style="float: left; width: 48%">
+				<div class="row">
+					<h3><a href="file_storage/index.php" onclick="javascript:toggleform('upload'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
+				</div>
+				<div id="upload">
+					<div class="row">
+						<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('upload_file'); ?></label><br />
+						<input type="file" name="file" id="file" />
+						<br /><?php echo _AT('or'); ?> <a href="file_storage/new.php<?php echo $owner_arg_prefix; ?>folder=<?php echo $folder_id; ?>"><?php echo _AT('file_manager_new'); ?></a>
+					</div>
+					<div class="row">
+						<label for="description"><?php echo _AT('description'); ?></label><br />
+						<textarea name="description" id="description" rows="1" cols="20"></textarea>
+					</div>
+					<div class="row buttons">
+						<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" />
+					</div>
+				</div>
+			</div>
+	
 		</div>
-		<div class="input-form" style="float: left; width: 48%">
-			<div class="row">
-				<h3><a href="file_storage/index.php" onclick="javascript:toggleform('upload'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
-			</div>
-			<div id="upload">
-				<div class="row">
-					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('upload_file'); ?></label><br />
-					<input type="file" name="file" id="file" />
-					<br /><?php echo _AT('or'); ?> <a href="file_storage/new.php<?php echo $owner_arg_prefix; ?>folder=<?php echo $folder_id; ?>"><?php echo _AT('file_manager_new'); ?></a>
-				</div>
-				<div class="row">
-					<label for="description"><?php echo _AT('description'); ?></label><br />
-					<textarea name="description" id="description" rows="1" cols="20"></textarea>
-				</div>
-				<div class="row buttons">
-					<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" />
-				</div>
-			</div>
-		</div>
-	</div>
 	</div>
 	</form>
 
