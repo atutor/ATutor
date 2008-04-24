@@ -73,6 +73,9 @@ pre.code {
 <ul>
 	<li>0. <a href="#version">Version Considerations</a></li>
 	<li>1. <a href="#introduction">Introduction</a></li>
+		<ul>
+			<li>1.1 <a href="#introduction-api">API Documentation</a></li>
+		</ul>
 	<li>2. <a href="#conventions">Conventions Used in This Document</a>
 		<ul>
 			<li>2.1 <a href="#typographic-conventions">Typographic Conventions</a></li>
@@ -89,6 +92,7 @@ pre.code {
 			<li>4.2 <a href="#svn-installing_atutor">Installing ATutor From SVN</a></li>
 			<li>4.3 <a href="#svn-update">Updating ATutor From SVN</a></li>
 			<li>4.4 <a href="#svn-keywords">Keywords</a></li>
+
 		</ul></li>
     <li>5. <a href="#communication">Communication</a></li>
     <li>6. <a href="#patches">Patches</a></li>
@@ -182,7 +186,10 @@ pre.code {
 	<p>ATutor, as an open source project, encourages PHP developers to develop their own custom features, and potentially contribute those features so they become a permanent part of ATutor. To ensure that  code is easy to  maintain, we urge developers to follow the guidelines outlined below. These rules and recommendations were created to standardize the distributed development process.</p>
 
 	<p>The latest version of this document can always be found at <a href="http://www.atutor.ca/atutor/docs/">ATutor.ca</a>.</p>
+	<h3><a name="introduction-api"></a>1.1 API Documentation</h3>
+		<p>Detailed API documentation is distributed throughout the ATutor source code, describing functions and classes, and how they are used in developing features. API documentation can be extracted into a relatively compact form for easy scanning and searching using the <strong>phpDocumentor module</strong>. Download the module from atutor.ca, and install it like any other module, then run the application to extract the API documentation from ATutor.</p>
 
+		<p><a href="http://www.atutor.ca/atutor/modules/index.php">phpDocumentor Module</p>
 <a href="#top" class="top">top</a>
 <h2><a name="conventions"></a>2. Conventions Used in This Document</h2>
 	<p>This section covers the typographical conventions used in this document.</p>
@@ -289,7 +296,8 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="patches"></a>6. Patches</h2>
-	<p>Patches should be applied using the UNIX <kbd>patch</kbd> command. Make sure your <kbd>`.patch`</kbd> or <kbd>`.diff`</kbd> files will be compatible or include explicit instructions on how to apply your changes. Always specify what release or source date you are patching against. We prefer unified diffs. Diffs can be posted as attachment to the atutor.ca <a href="http://www.atutor.ca/forum/12/1.html">Development Forum </a>.</p>
+	<p>As of ATutor 1.6 the Patcher module is available for applying and developing patches to repair bugs, and to add or modify features. Details on creating and applying patches can be found in the ATutor Handbook for version 1.6.1+, or on the ATutor Wiki.</p>
+	<p><a href="http://wiki.atutor.ca/display/atutorwiki/Patcher+Module+Documentation">Patcher Documentation</a></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="editor-tips"></a>7. Editor Tips</h2>
