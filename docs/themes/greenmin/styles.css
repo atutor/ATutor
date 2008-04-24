@@ -550,6 +550,7 @@ a#editor-link.on {
 
 /* for data tables */
 table.data {
+	clear:right;
 	border: 1px solid #f0f0f0;
 	width: 80%; 
 	margin-left: auto; 
@@ -1262,7 +1263,7 @@ dl#public-profile dd {
 }
 #rightcolumn{
 	float: left;
-	width: 200px;
+	width: 17em;
 	margin-left: -200px;
 	overflow: hidden;
 }
@@ -1348,10 +1349,27 @@ ul#topnavlist li a {
     text-transform: lowercase;
 }
 
-ul#topnavlist li a.selected {
-    /* The selected tab. There's only one of this */
+ul#topnavlist li a.selected {    /* The selected tab. There's only one of this */
     background: #DEECE2;
+It was from me,
+
+
     border-bottom: #DEECE2 1px solid;
     color: #4F7643;
     font-weight: normal;
 }
+
+
+/* file 
+
+
+ */
+
+#fsfloat1{
+	float:left;
+}
+#fsfloat2{
+	float:right;
+	width:48%;
+}
+
