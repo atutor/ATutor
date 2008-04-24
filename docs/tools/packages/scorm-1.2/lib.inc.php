@@ -123,11 +123,11 @@ class package_handler_scorm_1_2 {
 				. '<input type="checkbox" '
 				. 'id="goners['. $i . ']" '
 				. 'name="goners[' . $i . ']" '
-			        . 'value="' . $row[org_id] . '">'
+			        . 'value="' . $row[org_id] . '" />'
 				. '<label class="scorminput" '
 			        .  'for="goners['. $i .']">' . $row['title']
-				.  '<label>'
-				. '</input>'
+				.  '</label>'
+				
 			);
 			$i++;
 		}

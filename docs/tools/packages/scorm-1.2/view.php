@@ -403,3 +403,9 @@ this.onunload=cleanup;
 	$p .= '</div>' . "\n";
 	echo utf8_decode($p); 
 ?>
+<?php
+
+
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+
+?>
