@@ -76,7 +76,7 @@ function init() {
 <?php load_editor(); ?>
 
 
-<div align="right"><a href="javascript:window.close()"><?php echo _AT('close_window'); ?></a></div>
+<div align="right"><br /><a href="javascript:window.close()"><?php echo _AT('close_window'); ?></a></div>
 <form name="form">
 	<table cellspacing="1" cellpadding="0" width="99%" border="0" class="bodyline" align="center" summary="">
 		<tr>
