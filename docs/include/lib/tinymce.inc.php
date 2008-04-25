@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-function load_editor($name = FALSE) {
+function load_editor($name = FALSE, $mode="textareas") {
 	global $_base_path, $content_base_href;
 
 	 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) { 
@@ -31,7 +31,7 @@ tinyMCE.init({
 		echo '  mode : "exact",';
 		echo '  elements : "'.$name.'",';
 	} else {
-		echo '	mode : "textareas",';
+		echo '	mode : "$mode",';
 	}	
 	echo 'theme : "advanced",
 	relative_urls : true,
