@@ -144,7 +144,7 @@ if (count($tran_files) == 0) {
 	</tr>
 	</tfoot>
 
-	</table>ASAs
+	</table>
 </form>
 <?php
 }
