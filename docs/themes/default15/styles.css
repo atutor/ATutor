@@ -518,6 +518,7 @@ a#editor-link.on {
 
 /* for data tables */
 table.data {
+	clear:right;
 	border: 1px solid #e0e0e0;
 	width: 90%; 
 	margin-left: auto; 
