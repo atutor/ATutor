@@ -34,9 +34,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=false;"/>
 		<label for="html"><?php echo _AT('html'); ?></label>
 
-		<input type="hidden" name="setvisual" value="<?php if (isset($_POST['setvisual'])) echo $_POST['setvisual']; else echo '0'; ?>" />
-		<input type="hidden" name="settext" value="<?php if (isset($_POST['settext'])) echo $_POST['settext']; else echo '1'; ?>" />
-		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_editor()" />
+		<input type="hidden" name="setvisual" value="<?php if ($_POST['setvisual']==1 || $_REQUEST['setvisual']==1 || $_GET['setvisual']==1) echo '1'; else echo '0'; ?>" />
+		<input type="hidden" name="settext" value="<?php if ($_POST['settext']==1 || $_REQUEST['settext']==1 || $_GET['settext']==1) echo '1'; else echo '0'; ?>" />
+		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_body_editor()" />
 
 		<script type="text/javascript" language="javascript">
 		//<!--
@@ -84,22 +84,22 @@ if ($do_check) {
 			
 		if (document.form.setvisual.value==1)
 		{
-			tinyMCE.get('body_text').show();
+			tinyMCE.execCommand('mceAddControl', false, 'body_text');
 			document.form.formatting[0].disabled = "disabled";
 			document.form.setvisualbutton.value = "<?php echo _AT('switch_text'); ?>";
 		}
 		else
 		{
-			tinyMCE.get('body_text').hide();
 			document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
 		}
 	}
 
-	function switch_editor()
+	// switch between text, visual editor for "body text"
+	function switch_body_editor()
 	{
 		if (document.form.setvisualbutton.value=="<?php echo _AT('switch_visual'); ?>")
 		{
-			tinyMCE.get('body_text').show();
+			tinyMCE.execCommand('mceAddControl', false, 'body_text');
 			document.form.setvisual.value=1;
 			document.form.settext.value=0;
 			document.form.formatting[0].disabled = "disabled";
@@ -107,7 +107,7 @@ if ($do_check) {
 		}
 		else
 		{
-			tinyMCE.get('body_text').hide();
+			tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
 			document.form.setvisual.value=0;
 			document.form.settext.value=1;
 			document.form.formatting[0].disabled = "";
