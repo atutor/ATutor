@@ -1351,19 +1351,11 @@ ul#topnavlist li a {
 
 ul#topnavlist li a.selected {    /* The selected tab. There's only one of this */
     background: #DEECE2;
-It was from me,
-
-
     border-bottom: #DEECE2 1px solid;
     color: #4F7643;
     font-weight: normal;
 }
 
-
-/* file 
-
-
- */
 
 #fsfloat1{
 	float:left;
