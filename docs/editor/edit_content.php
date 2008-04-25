@@ -148,7 +148,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($current_tab == 0) 
 {
-	load_editor();
+	load_editor(false, "none");
 }
 
 $cid = intval($_REQUEST['cid']);
