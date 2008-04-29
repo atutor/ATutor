@@ -25,6 +25,30 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			echo '	<div class="row">'._AT('packaged_in').'<br />'.$content_row['content_path'].'</div>';
 		}
 	?>
+
+	<div class="row">
+		<label for="head"><?php echo _AT('customized_head');  ?></label>
+		<input type="button" name="edithead" value="<?php echo _AT('edit'); ?>" onClick="switch_head_editor()" /><br />
+		<small>&middot; <?php echo _AT('customized_head_note'); ?></small>
+	</div>
+
+<?php 
+if (trim($_POST['head']) == '<br />') {
+	$_POST['head'] = '';
+}
+if ($do_check) {
+	$_POST['head'] = $stripslashes($_POST['head']);
+}
+?>
+
+	<div class="row">
+		<div id="headDiv" style="display:none">
+			<input type="checkbox" name="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
+			<label for="head"><?php echo _AT('use_customized_head'); ?></label><br />
+			<textarea name="head" id="head" cols="" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
+		</div>
+	</div>
+
 	<div class="row">
 		<?php echo _AT('formatting'); ?><br />
 
@@ -34,6 +58,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=false;"/>
 		<label for="html"><?php echo _AT('html'); ?></label>
 
+		<input type="hidden" name="displayhead" value="<?php if ($_POST['displayhead']==1 || $_REQUEST['displayhead']==1 || $_GET['displayhead']==1) echo '1'; else echo '0'; ?>" />
 		<input type="hidden" name="setvisual" value="<?php if ($_POST['setvisual']==1 || $_REQUEST['setvisual']==1 || $_GET['setvisual']==1) echo '1'; else echo '0'; ?>" />
 		<input type="hidden" name="settext" value="<?php if ($_POST['settext']==1 || $_REQUEST['settext']==1 || $_GET['settext']==1) echo '1'; else echo '0'; ?>" />
 		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_body_editor()" />
@@ -63,6 +88,7 @@ if ($do_check) {
 ?>
 		<textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']); ?></textarea>	
 	</div>
+	
 	<div class="row">
 		<?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?>
 	</div>
@@ -76,11 +102,16 @@ if ($do_check) {
 
 	<script type="text/javascript" language="javascript">
 	//<!--
-	// initialize visual / text button, radio button and editor
-	function body_on_load()
+	function on_load()
 	{
 		if (document.getElementById("text").checked)
 			document.form.setvisualbutton.disabled = true;
+			
+		if (document.form.displayhead.value==1)
+		{
+			document.getElementById("headDiv").style.display = '';
+			document.form.edithead.value = "<?php echo _AT('hide'); ?>"
+		}
 			
 		if (document.form.setvisual.value==1)
 		{
@@ -93,7 +124,24 @@ if ($do_check) {
 			document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
 		}
 	}
-
+	
+	// show/hide "cusomized head" editor
+	function switch_head_editor()
+	{
+		if (document.form.edithead.value=="<?php echo _AT('edit'); ?>")
+		{
+			document.form.edithead.value = "<?php echo _AT('hide'); ?>"
+			document.getElementById("headDiv").style.display = "";
+			document.form.displayhead.value=1;
+		}
+		else
+		{
+			document.form.edithead.value = "<?php echo _AT('edit'); ?>"
+			document.getElementById("headDiv").style.display = "none";
+			document.form.displayhead.value=0;
+		}
+	}
+	
 	// switch between text, visual editor for "body text"
 	function switch_body_editor()
 	{
