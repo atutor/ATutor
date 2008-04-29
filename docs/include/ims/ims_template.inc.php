@@ -14,6 +14,37 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+// This function gets files from html tag @import
+function get_import_files($text)
+{
+	$text = strtolower($text);
+	$tag = '@import';
+	$files = array();
+	
+	while (stripos($text, $tag) > 0)
+	{
+		$start_pos	= strpos($text, $tag);
+		if ($start_pos !== false) 
+		{
+			$text = substr($text, $start_pos);
+			$start_pos = strlen($tag);
+			$len = stripos($text, ';') - strlen($tag);
+			
+			$file = substr(trim($text), $start_pos, $len);
+			
+			// remove these characters from file name: url, (, ), ", '
+			$file = trim(preg_replace('/(\'|\"|url|\(|\))/', '', $file));
+			
+			// strip processed tag
+			$text = substr($text, $start_pos);
+			array_push($files, $file);
+		}
+	
+	}
+	
+	return $files;
+}
+	
 function print_organizations($parent_id,
 							 &$_menu, 
 							 $depth, 
@@ -21,7 +52,7 @@ function print_organizations($parent_id,
 							 $children,
 							 &$string) {
 	
-	global $html_template, $zipfile, $resources, $ims_template_xml, $parser, $my_files;
+	global $html_content_template, $default_html_style, $zipfile, $resources, $ims_template_xml, $parser, $my_files;
 	global $used_glossary_terms, $course_id, $course_language_charset, $course_language_code;
 	static $paths, $zipped_files;
 	global $glossary;
@@ -75,10 +106,27 @@ function print_organizations($parent_id,
 			$content['text'] = format_content($content['text'], $content['formatting'], $glossary, $path);
 
 			/* add HTML header and footers to the files */
+			
+			/* use default style if <style> is not in imported html head */
+			$head = '';
+			if ($content['use_customized_head'])
+			{
+				if (stripos($content['head'], '<style') > 0)
+				{
+					$head = $content['head'];
+				}
+				else
+				{
+					if (strlen($content['head']) > 0)  
+						$head = $content['head'] . $default_html_style;
+					else 
+						$head = $default_html_style;
+				}
+			}
 
-			$content['text'] = str_replace(	array('{TITLE}',	'{CONTENT}', '{KEYWORDS}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
-									array($content['title'],	$content['text'], $content['keywords'], $course_language_charset, $course_language_code),
-									$html_template);
+			$content['text'] = str_replace(	array('{TITLE}',	'{CONTENT}', '{KEYWORDS}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}', '{HEAD}'),
+									array($content['title'],	$content['text'], $content['keywords'], $course_language_charset, $course_language_code, $head),
+									$html_content_template);
 
 			/* duplicate the paths in the content_path field in the zip file */
 			if ($content['content_path']) {
@@ -96,6 +144,11 @@ function print_organizations($parent_id,
 			$content_files = "\n";
 			$parser->parse($content['text']);
 
+			/* handle @import */
+			$import_files = get_import_files($content['text']);
+			
+			if (count($import_files) > 0) $my_files = array_merge($my_files, $import_files);
+			
 			foreach ($my_files as $file) {
 				/* filter out full urls */
 				$url_parts = @parse_url($file);
@@ -293,8 +346,24 @@ $html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 <body>{CONTENT}</body>
 </html>';
 
+$html_content_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}" lang="{COURSE_PRIMARY_LANGUAGE_CODE}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset={COURSE_PRIMARY_LANGUAGE_CHARSET}" />
+	{HEAD}
+	<title>{TITLE}</title>
+	<meta name="Generator" content="ATutor">
+	<meta name="Keywords" content="{KEYWORDS}">
+</head>
+<body>{CONTENT}</body>
+</html>';
 
-
+$default_html_style = '	<style type="text/css">
+	body { font-family: Verdana, Arial, Helvetica, sans-serif;}
+	a.at-term {	font-style: italic; }
+	</style>';
+	
 //output this as header.html
 $html_mainheader = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
