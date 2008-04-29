@@ -35,6 +35,7 @@ global $_pages;
 global $_stacks;
 global $framed, $popup;
 global $_custom_css;
+global $_custom_head;
 global $substr, $strlen;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
@@ -65,11 +66,17 @@ if ($myLang->isRTL()) {
 	$savant->assign('rtl_css', '');
 }
 
+$custom_head = '';
 if (isset($_custom_css)) {
-	$savant->assign('custom_css', '<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />');
-} else {
-	$savant->assign('custom_css', '');
+	$custom_head = '<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
 }
+
+if (isset($_custom_head)) {
+	$custom_head .= '
+' . $_custom_head;
+}
+
+$savant->assign('custom_css', $custom_head);
 
 if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || ($substr($onload, -8) != 'focus();'))) {
 	$savant->assign('onload', $onload);
