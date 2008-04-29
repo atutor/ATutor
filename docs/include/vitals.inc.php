@@ -386,6 +386,52 @@ function get_html_head ($text) {
 	return $text;
 }
 
+/**
+* This function cuts out requested tag information from html head
+* @access  public
+* @param   $text  html text
+* @param   $tags  a string or an array of requested tags
+* @author  Cindy Qi Li
+*/
+function get_html_head_by_tag($text, $tags)
+{
+	$head = get_html_head($text);
+	$rtn_text = "";
+	
+	if (!is_array($tags) && strlen(trim($tags)) > 0)
+	{
+		$tags = array(trim($tags));
+	}
+	
+	foreach ($tags as $tag)
+	{
+		$tag = strtolower($tag);
+
+		/* strip everything before <{tag}> */
+		$start_pos	= strpos($head, '<'.$tag);
+
+		if ($start_pos !== false) 
+		{
+			$temp_text = substr($head, $start_pos);
+		}
+	
+		/* strip everything after </{tag}> */
+		$end_pos	= strrpos($temp_text, '</' . $tag . '>');
+
+		if ($end_pos !== false) 
+		{
+			$end_pos += strlen('</' . $tag . '>');
+			
+			// add an empty line after each tag information
+			$rtn_text .= trim(substr($temp_text, 0, $end_pos)) . '
+
+';
+		}
+	}
+	
+	return $rtn_text;
+}
+
 if (version_compare(phpversion(), '4.3.0') < 0) {
 	function file_get_contents($filename) {
 		$fd = @fopen($filename, 'rb');
