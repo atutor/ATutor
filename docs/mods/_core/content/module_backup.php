@@ -2,7 +2,7 @@
 
 $sql = array();
 
-$sql['content'] = 'SELECT content_id, content_parent_id, ordering, last_modified, revision, formatting, release_date, keywords, content_path, title, text FROM '.TABLE_PREFIX.'content WHERE course_id=? ORDER BY content_parent_id, ordering';
+$sql['content'] = 'SELECT content_id, content_parent_id, ordering, last_modified, revision, formatting, release_date, head, use_customized_head, keywords, content_path, title, text FROM '.TABLE_PREFIX.'content WHERE course_id=? ORDER BY content_parent_id, ordering';
 
 $sql['related_content'] = 'SELECT R.content_id, R.related_content_id FROM '.TABLE_PREFIX.'related_content R, '.TABLE_PREFIX.'content C WHERE C.course_id=? AND R.content_id=C.content_id ORDER BY R.content_id ASC';
 
@@ -45,9 +45,10 @@ function content_convert($row, $course_id, $table_id_map, $version) {
 	$new_row[9] = $row[8];
 	$new_row[10] = $row[9];
 	$new_row[11] = $row[10];
+	$new_row[12] = $row[11];
+	$new_row[13] = $row[12];
 
 	return $new_row;
 }
-
 
 ?>
