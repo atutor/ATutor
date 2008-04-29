@@ -80,6 +80,8 @@ function save_changes($redir) {
 	$_POST['cid']	= intval($_POST['cid']);
 
 	$_POST['title'] = trim($_POST['title']);
+	$_POST['head']	= trim($_POST['head']);
+	$_POST['use_customized_head']	= isset($_POST['use_customized_head'])?$_POST['use_customized_head']:0;
 	$_POST['body_text']	= trim($_POST['body_text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
 	$_POST['keywords']	= trim($_POST['keywords']);
@@ -98,12 +100,13 @@ function save_changes($redir) {
 
 		$_POST['title']     = $addslashes($_POST['title']);
 		$_POST['body_text'] = $addslashes($_POST['body_text']);
+		$_POST['head']  = $addslashes($_POST['head']);
 		$_POST['keywords']  = $addslashes($_POST['keywords']);
 		$_POST['keywords']  = $addslashes($_POST['keywords']);
 
 		if ($_POST['cid']) {
 			/* editing an existing page */
-			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date);
+			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date, $_POST['head'], $_POST['use_customized_head']);
 
 			unset($_POST['move']);
 			unset($_POST['new_ordering']);
@@ -119,7 +122,9 @@ function save_changes($redir) {
 												  $_POST['keywords'],
 												  $_POST['related'],
 												  $_POST['formatting'],
-												  $release_date);
+												  $release_date,
+												  $_POST['head'],
+												  $_POST['use_customized_head']);
 			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}
@@ -158,7 +163,7 @@ function save_changes($redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.basename($_SERVER['PHP_SELF']).'?cid='.$cid.SEP.'close='.$addslashes($_POST['save_n_close']).SEP.'tab='.$addslashes($_POST['current_tab']).SEP.'setvisual='.$addslashes($_POST['setvisual']));
+		header('Location: '.basename($_SERVER['PHP_SELF']).'?cid='.$cid.SEP.'close='.$addslashes($_POST['save_n_close']).SEP.'tab='.$addslashes($_POST['current_tab']).SEP.'setvisual='.$addslashes($_POST['setvisual']).SEP.'displayhead='.$addslashes($_POST['displayhead']));
 		exit;
 	} else {
 		return;
@@ -212,9 +217,20 @@ function check_for_changes($row) {
 		$changes[0] = true;
 	}
 
+	if ($row && strcmp($addslashes(trim($_POST['head'])), trim(addslashes($row['head'])))) {
+		$changes[0] = true;
+	} else if (!$row && $_POST['head']) {
+		$changes[0] = true;
+	}
+
 	if ($row && strcmp($addslashes(trim($_POST['body_text'])), trim(addslashes($row['text'])))) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['body_text']) {
+		$changes[0] = true;
+	}
+
+	/* use customized head: */
+	if ($row && isset($_POST['use_customized_head']) && ($_POST['use_customized_head'] != $row['use_customized_head'])) {
 		$changes[0] = true;
 	}
 
