@@ -81,6 +81,7 @@ CREATE TABLE `patches_files_actions` (
 # --------------------------------------------------------
 # New tables for patch creator
 # since 1.6.1
+
 CREATE TABLE `myown_patches` (
 	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`atutor_patch_id` VARCHAR(20) NOT NULL default '',
@@ -111,8 +112,18 @@ CREATE TABLE `myown_patches_files` (
 	PRIMARY KEY  (`myown_patches_files_id`)
 );
 
-
-# INSERT INTO `modules` VALUES ('_standard/patcher', 2, 1048576, 1024, 0, 0);
+# --------------------------------------------------------
+# Include Patcher as a standard module
+# since 1.6.1
 
 INSERT INTO `modules`
 SELECT '_standard/patcher', 2, MAX(privilege)*2, MAX(admin_privilege)*2, 0, 0 FROM `modules`;
+
+# --------------------------------------------------------
+# Support customized head
+# since 1.6.1
+
+ALTER TABLE `content`
+ADD head TEXT NOT NULL AFTER release_date, 
+ADD use_customized_head TINYINT(4) NOT NULL AFTER head;
+
