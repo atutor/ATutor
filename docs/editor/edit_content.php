@@ -143,7 +143,7 @@ if ($current_tab == 0) {
 }
 
 // initialize buttons, texts, radio buttons for editor
-$onload="body_on_load()";
+$onload="on_load()";
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($current_tab == 0) 
@@ -166,6 +166,8 @@ $pid = intval($_REQUEST['pid']);
 			$changes_made = array();
 
 			$_POST['formatting'] = $content_row['formatting'];
+			$_POST['head'] = $content_row['head'];
+			$_POST['use_customized_head'] = $content_row['use_customized_head'];
 			$_POST['title']      = $content_row['title'];
 			$_POST['body_text']  = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
@@ -212,6 +214,9 @@ $pid = intval($_REQUEST['pid']);
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
 	if ($current_tab != 0) {
 		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
+		echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
+		echo '<input type="hidden" name="use_customized_head" value="'.$_POST['use_customized_head'].'" />';
+		echo '<input type="hidden" name="displayhead" value="'.$_POST['displayhead'].'" />';
 		echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
 		echo '<input type="hidden" name="settext" value="'.$_POST['settext'].'" />';		
 		echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
