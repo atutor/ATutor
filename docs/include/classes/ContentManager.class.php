@@ -127,7 +127,7 @@ class ContentManager
 	}
 
 
-	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date) {
+	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $head = '', $use_customized_head = 0) {
 		
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['course_id'] != -1)) {
 			return false;
@@ -138,7 +138,33 @@ class ContentManager
 		$result = mysql_query($sql, $this->db);
 
 		/* main topics all have minor_num = 0 */
-		$sql = "INSERT INTO ".TABLE_PREFIX."content VALUES (NULL,$course_id, $content_parent_id, $ordering, NOW(), 0, $formatting, '$release_date', '$keywords', '', '$title','$text')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."content
+		               (course_id,
+		                content_parent_id,
+		                ordering,
+		                last_modified,
+		                revision,
+		                formatting,
+		                release_date,
+		                head,
+		                use_customized_head,
+		                keywords,
+		                content_path,
+		                title,
+		                text)
+		        VALUES ($course_id, 
+		                $content_parent_id, 
+		                $ordering, 
+		                NOW(), 
+		                0, 
+		                $formatting, 
+		                '$release_date', 
+		                '$head',
+		                $use_customized_head,
+		                '$keywords', 
+		                '', 
+		                '$title',
+		                '$text')";
 
 		$err = mysql_query($sql, $this->db);
 
@@ -172,7 +198,7 @@ class ContentManager
 	}
 
 
-	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date) {
+	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date, $head, $use_customized_head) {
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 			return FALSE;
 		}
@@ -196,7 +222,7 @@ class ContentManager
 		}
 
 		/* update the title, text of the newly moved (or not) content */
-		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date' WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', head='$head', use_customized_head=$use_customized_head, text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date' WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
 
 		/* update the related content */
