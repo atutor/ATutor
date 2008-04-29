@@ -24,6 +24,8 @@ authenticate(AT_PRIV_CONTENT);
 @set_time_limit(0);
 $_SESSION['done'] = 1;
 
+$html_head_tags = array("style", "script");
+
 $package_base_path = '';
 $xml_base_path = '';
 $element_path = array();
@@ -271,13 +273,12 @@ $archive = new PclZip($_FILES['file']['tmp_name']);
 if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 						PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
 	$msg->addError('IMPORT_FAILED');
-//	echo 'Error : '.$archive->errorInfo(true);
+	echo 'Error : '.$archive->errorInfo(true);
 	clr_dir($import_path);
 	header('Location: index.php');
 	exit;
 }
 error_reporting(AT_ERROR_REPORTING);
-
 
 /* get the course's max_quota */
 $sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
@@ -342,27 +343,6 @@ if ($ims_manifest_xml === false) {
 	}
 	exit;
 }
-
-
-
-// check if this is an eXe package
-// NOTE: THIS NEEDS WORK! WHAT IS THE BEST WAY TO DETERMINE IF PACKAGE IS eXe?
-// PERHAPS USE PARSER BELOW TO CHECK FOR ORGANIZATION?
-$isExeContent = false;
-$ims_organization_pos = strpos ($ims_manifest_xml, '<organization');
-if ($ims_organization_pos !== false){
-	$ims_organization_pos = strpos ($ims_manifest_xml, 'identifier', $ims_organization_pos);
-	if ($ims_organization_pos !== false){
-		$exe_pos = strpos ($ims_manifest_xml, 'eXenew', $ims_organization_pos);
-		//if ($exe_pos < ($ims_organization_pos + '50')){
-		if ($exe_pos !== false){
-			$isExeContent = true;
-		}
-	}
-}
-
-
-
 
 $xml_parser = xml_parser_create();
 
@@ -495,9 +475,29 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 			}
 
 			// get the contents of the 'head' element
-			$head = get_html_head($content);
+			$head = get_html_head_by_tag($content, $html_head_tags);
+			
+			// Specifically handle eXe package
+			// NOTE: THIS NEEDS WORK! TO FIND A WAY APPLY EXE .CSS FILES ONLY ON COURSE CONTENT PART.
+			// NOW USE OUR OWN .CSS CREATED SOLELY FOR EXE
+			$isExeContent = false;
+
+			// check xml file in eXe package
+			if (preg_match("/<organization[ ]*identifier=\"eXe*>*/", $ims_manifest_xml))
+			{
+				$isExeContent = true;
+			}
+			
+			// use ATutor's eXe style sheet as the ones from eXe conflicts with ATutor's style sheets
+			if (isExeContent)
+			{
+				$head = preg_replace ('/(<style.*>)(.*)(<\/style>)/ms', '\\1@import url('.AT_BASE_HREF.'exestyles.css);\\3', $head);
+			}
+			// end of specifically handle eXe package
+
 			$content = get_html_body($content);
-			if ($contains_glossary_terms) {
+			if ($contains_glossary_terms) 
+			{
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
 				$content = preg_replace('/<a href="([.\w\d\s]+[^"]+)" target="body" class="at-term">([.\w\d\s&;"]+)<\/a>/i', '[?]\\2[/?]', $content);
 			}
@@ -530,39 +530,40 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 			$content_info['new_path'] = $package_base_name;
 		}
 		
+		$head = addslashes($head);
 		$content_info['title'] = addslashes($content_info['title']);
 		$content = addslashes($content);
 
-		// add a 'div' around eXe content
-		if ($isExeContent == true){
-			$content = '<div class=\"execontent\">\n'.$content.'\n</div>';
-		}
+		$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
+		      . '(course_id, 
+		          content_parent_id, 
+		          ordering,
+		          last_modified, 
+		          revision, 
+		          formatting, 
+		          release_date,
+		          head,
+		          use_customized_head,
+		          keywords, 
+		          content_path, 
+		          title, 
+		          text) 
+		       VALUES 
+				     ('.$_SESSION['course_id'].','															
+				     .$content_parent_id.','		
+				     .($content_info['ordering'] + $my_offset + 1).','
+				     .'"'.$last_modified.'",													
+				      0,
+				      1,
+				      NOW(),"'
+				     . $head .'",
+				     1,
+				      "",'
+				     .'"'.$content_info['new_path'].'",'
+				     .'"'.$content_info['title'].'",'
+				     .'"'.$content.'")';
 
-		$sql= 'INSERT INTO '.TABLE_PREFIX.'content VALUES 
-				(NULL,	'
-				.$_SESSION['course_id'].','															
-				.$content_parent_id.','		
-				.($content_info['ordering'] + $my_offset + 1).','
-				.'"'.$last_modified.'",													
-				0,1,NOW(),"","'.$content_info['new_path'].'",'
-				.'"'.$content_info['title'].'",'
-				.'"'.$content.'")';
-
-		$result = mysql_query($sql, $db);
-
-		// store the contents of the 'head' section
-		/**
-		if ($result){
-			// get content ID
-			$id = mysql_insert_id($db);
-			$head = addslashes($head);
-
-			$sql = 'INSERT INTO '.TABLE_PREFIX.'head VALUES (NULL, '.$_SESSION['course_id'].','
-				.$id.','
-				.'"'.$head.'")';
-			$resultHead = mysql_query($sql, $db);
-		}
-		**/
+		$result = mysql_query($sql, $db) or die(mysql_error());
 
 		/* get the content id and update $items */
 		$items[$item_id]['real_content_id'] = mysql_insert_id($db);
