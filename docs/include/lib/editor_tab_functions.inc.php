@@ -341,6 +341,11 @@ function paste_from_file() {
 			unset($end_pos);
 
 			$_POST['head'] = get_html_head_by_tag($_POST['body_text'], array("style", "script")); 
+			if (strlen(trim($_POST['head'])) > 0)	
+				$_POST['use_customized_head'] = 1;
+			else
+				$_POST['use_customized_head'] = 0;
+			
 			$_POST['body_text'] = get_html_body($_POST['body_text']); 
 
 			$msg->addFeedback('FILE_PASTED');
