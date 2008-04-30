@@ -340,6 +340,7 @@ function paste_from_file() {
 			unset($start_pos);
 			unset($end_pos);
 
+			$_POST['head'] = get_html_head_by_tag($_POST['body_text'], array("style", "script")); 
 			$_POST['body_text'] = get_html_body($_POST['body_text']); 
 
 			$msg->addFeedback('FILE_PASTED');
