@@ -1,38 +1,36 @@
 /*
 ===========================================================================
 eXe
-Copyright 2004-2008, University of Auckland
+Copyright 2007. eXelearning.
 style sheet for default theme
+see: http://exelearning.org/Creating_a_new_Style for more info on how
+to modify this style for your needs.
 ===========================================================================
 */
 
-.execontent {
+#content-text {
    margin: 10px 20px 10px 20px;
-   padding: 0px 0px 0px 0px;
-   font-family: arial, verdana, helvetica, sans-serif;
+   padding: 10px;
    color:#4d4d4d;
-   font-size: 13px;
    background: #E0DFD8;
+   border:thin solid grey;
 }
 
-a.execontent { color: #FF6600;
-    text-decoration: none;
+
+a {
+ color: #FF6600;
 }
 
-a:hover.execontent { text-decoration: underline;
-color: #B34700;
+a:hover {
+ color: #B34700;
 }
 
-img.execontent {
-    border: 0;
-}
+/* --- Styles for the node/page titles --- */
 
 p#nodeTitle { 
    color: #4d4d4d;
    font-size: 32px;
-   font-weight: bold;
    letter-spacing: -1px;
-   display: inline;
    text-align:left;
    padding-right: 30px;
 }
@@ -48,64 +46,50 @@ div#nodeDecoration {
 
 
 .emphasis0 {
-    padding-left: 0px;
     padding-bottom: 20px;
-    margin: 0px;
 }
 
 
 .emphasis1 {
    background-color: #FFF;
    border-bottom: 1px solid #9d9d9d;
-   background-image:url(top_left_corner.gif);
+   background-image:url(top_left_corner.gif); /* The left curve */
    background-position:top left;
    background-repeat:no-repeat;
    margin-bottom: 30px;
    text-align:left;
 }
 
-.emphasis2 {
-   background-color: #E0DFD8;
-   border-bottom: 3px solid #9d9d9d;
-   background-image:url(body_top_bg.gif);
-   background-position:top left;
-   background-repeat:no-repeat;
-   margin-bottom: 10px;
-   text-align:left;
-}
 
-* html .iDevice_inner {
-   background-image:none;
-   background-position:top left;
-   background-repeat:no-repeat;
-}
-
-.iDevice p {
+.iDevice p, .iDevice div.block {
    padding-left: 0px;
-   line-height: 16px;
+   line-height: 115% 
    text-align:left;
+}
+
+
+.iDevice li {
+	list-style-position: outside;
 }
 
 .iDeviceTitle {
    color: #568D14;
    font-size: 24px;
-   font-family: Arial, Helvetica, sans-serif;
    font-weight:bold;
    letter-spacing:-1px;
-   vertical-align: top;
    background: #FFF; 
-   padding-bottom: 4px;
+   padding-bottom: 0px;
    padding-right: 10px;
    margin-bottom: 0px;
    background-image:url(top_right_corner.gif);
    background-position:top right;
    background-repeat:no-repeat;
+   top: 0;
 } 
 
 .emphasis0 .iDeviceTitle {
    color: #568D14;
    font-size: 24px;
-   font-family: Arial, Helvetica, sans-serif;
    font-weight:bold;
    letter-spacing:-1px;
    vertical-align: top;
@@ -119,26 +103,10 @@ div#nodeDecoration {
  }
 
 .iDevice_icon {
-   margin-top: -10px;
+   margin-top: 0px;
    margin-left: 10px;
    padding-right: 10px;
-}
-
-execontent.input.feedbackbutton {
-margin-top: 10px;
-margin-bottom: 10px;
-background: #DBE992;
-}
-
-p.reading_reference {
-   font-style: italic;        
-}
-
-p.reading_feedback {
-   border: 1px dashed #ADADAD;
-   margin: 20px;
-   padding: 8px;
-   background-color: #FFF;
+   top: 0;
 }
 
 .iDevice_inner {
@@ -160,6 +128,17 @@ p.reading_feedback {
    padding-top: 10px;
 }
 
+/* styles for iDevices with Feedback and form buttons */
+
+input.feedbackbutton {
+	background: #DBE992;
+}
+
+p.reading_feedback {
+   border: 1px dashed #ADADAD;
+   background-color: #FFF;
+}
+
 
 /* styles for image with text iDevice */
 
@@ -167,31 +146,18 @@ p.reading_feedback {
 	border: 1px solid #9D9D9D;
 	background: transparent;
 	padding: 4px;
-	margin: 4px;
+        margin: 0px 20px 4px 4px;
 }
 
-/* styles for 'tips for completion' and 'pedagogical help' */
+/* override definition on "fieldset#shortcuts" in themes style.css */
 
-.popupDiv {
-   background-color: #EDEFF0;
-   border: 2px solid #607489;
-   padding: 0px 4px 4px 4px;
-   margin-left: 15px;
-   text-align:left;
-   z-index:99;
-   -moz-border-radius: 3px;
+fieldset#shortcuts {
+	float: right;
+	background-color: #FEFDEF;
+	border: 1pt solid #B8AE9C;
+	margin: 0pt 20pt 5pt 5pt;
+	padding-right: 10pt;
+	padding-bottom: 5pt;
+	padding-left: 10pt;
 }
-
-.popupDivLabel {
- text-align: center;
- font: message-box;
- font-weight: bold;
- color: #fff;
- cursor:move;
- margin: 0px -4px 0px -4px;
- background-image:url(popup_bg.gif);
-}
-
-
-
 
