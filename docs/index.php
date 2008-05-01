@@ -61,7 +61,11 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 
 	$offset = ($page-1)*$results_per_page;
 
-	$sql = "SELECT N.*, DATE_FORMAT(N.date, '%Y-%m-%d %H-%i:%s') AS date FROM ".TABLE_PREFIX."news N WHERE N.course_id=$_SESSION[course_id] ORDER BY date DESC LIMIT $offset, $results_per_page";
+	$sql = "SELECT N.*, DATE_FORMAT(N.date, '%Y-%m-%d %H-%i:%s') AS date, first_name, last_name 
+	          FROM ".TABLE_PREFIX."news N, ".TABLE_PREFIX."members M 
+	         WHERE N.course_id=$_SESSION[course_id] 
+	           AND N.member_id = M.member_id
+	         ORDER BY date DESC LIMIT $offset, $results_per_page";
 	
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
@@ -71,6 +75,7 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 						'date'		=> AT_date(	_AT('announcement_date_format'), 
 												$row['date'], 
 												AT_DATE_MYSQL_DATETIME),
+					  'author'  => $row['first_name'] . ' ' . $row['last_name'],
 						'title'		=> AT_print($row['title'], 'news.title'),
 						'body'		=> format_content($row['body'], $row['formatting'], $glossary));
 
