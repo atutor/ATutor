@@ -104,6 +104,18 @@ class Backup {
 		$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';
 		$zipfile->add_file($package_identifier, 'atutor_backup_version', $timestamp);
 
+		// backup course properties. ONLY BANNER FOR NOW.
+		require_once(AT_INCLUDE_PATH . 'classes/CSVExport.class.php');
+		$CSVExport = new CSVExport();
+		$now = time();
+		
+		$sql = 'SELECT banner_text, banner_styles, banner 
+              FROM '.TABLE_PREFIX.'courses 
+             WHERE course_id='.$this->course_id;
+		$properties = $CSVExport->export($sql, $course_id);
+		$zipfile->add_file($properties, 'properties.csv', $now);
+
+		// backup modules
 		$modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_DISABLED);
 		$keys = array_keys($modules);
 		foreach($keys as $module_name) {
@@ -392,6 +404,22 @@ class Backup {
 			$_POST['material'] = $module_list;
 		}
 		foreach ($_POST['material'] as $module_name => $garbage) {
+			// restore course properties, ONLY BANNER FOR NOW.
+			if ($module_name == 'properties')
+			{
+				global $db;
+				
+				$properties_str = file_get_contents($this->import_dir . "properties.csv");
+				$banner_values = explode(',',str_replace('"', '', $properties_str));
+
+				$sql = "UPDATE ".TABLE_PREFIX."courses 
+				           SET banner_text = '". $banner_values[0]. "',
+				               banner_styles = '". $banner_values[1] . "',
+				               banner = '". $banner_values[2] . "'";
+				$result = mysql_query($sql,$db) or die(mysql_error());
+			}
+			
+			// restore modules
 			$module =& $moduleFactory->getModule($module_name);
 			$module->restore($this->course_id, $this->version, $this->import_dir);
 		}
