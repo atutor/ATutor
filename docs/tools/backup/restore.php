@@ -57,10 +57,11 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 
 		<input type="checkbox" value="1" name="all" id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 
+		<input type="checkbox" value="1" name='material[properties]' id='m0' /><label for='m0'><?php echo _AT('banner'); ?></label><br />
 		<?php
+		$i=0;
 		$modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
 		$keys = array_keys($modules);
-		$i=0;
 		?>
 		<?php foreach($keys as $module_name): ?>
 			<?php $module =& $modules[$module_name]; ?>
@@ -88,10 +89,12 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 	
 	function selectAll() {
 		if (document.form.all.checked == true) {
+			document.form.m0.checked = true;
 			<?php foreach($keys as $module_name): $module =& $modules[$module_name]; if ($module->isBackupable()): ?>
 				document.form.m<?php echo ++$i; ?>.checked = true;
 			<?php endif; endforeach; ?>
 		} else {
+			document.form.m0.checked = false;
 			<?php $i=0;?>
 			<?php foreach($keys as $module_name): $module =& $modules[$module_name]; if ($module->isBackupable()): ?>
 				document.form.m<?php echo ++$i; ?>.checked = false;
