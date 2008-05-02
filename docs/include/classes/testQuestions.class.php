@@ -206,7 +206,15 @@ function TestQuestionCounter($increment = FALSE) {
 		* we can un-randomize the order for marking.
 		* used with ordering type questions only.
 		*/
-		srand($salt + ord(DB_PASSWORD) + $_SESSION['member_id']);
+
+//		srand($salt + ord(DB_PASSWORD) + $_SESSION['member_id']);
+
+		// To fix http://www.atutor.ca/atutor/mantis/view.php?id=3167
+		// Use a more randomized seed to avoid the deterioration of the random 
+		// distribution due to a repeated initialization of the same random seed
+		list($usec, $sec) = explode(" ", microtime());
+		srand((int)($usec*10));
+
 	}
 
 	/**
