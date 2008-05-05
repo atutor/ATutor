@@ -109,7 +109,7 @@ class Backup {
 		$CSVExport = new CSVExport();
 		$now = time();
 		
-		$sql = 'SELECT banner_text, banner_styles, banner 
+		$sql = 'SELECT banner 
               FROM '.TABLE_PREFIX.'courses 
              WHERE course_id='.$this->course_id;
 		$properties = $CSVExport->export($sql, $course_id);
@@ -413,9 +413,8 @@ class Backup {
 				$banner_values = explode(',',str_replace('"', '', $properties_str));
 
 				$sql = "UPDATE ".TABLE_PREFIX."courses 
-				           SET banner_text = '". $banner_values[0]. "',
-				               banner_styles = '". $banner_values[1] . "',
-				               banner = '". $banner_values[2] . "'";
+				           SET banner = '". $banner_values[0]. "' 
+				         WHERE course_id = ".$this->course_id;
 				$result = mysql_query($sql,$db) or die(mysql_error());
 			}
 			
