@@ -1474,10 +1474,17 @@ exit;
 			<p><kbd>`include/vitals.inc.php`</kbd></p>
 		
 		<h4>Example 1</h4>
-		<p>To change a URL:
+		<p>To change an URL:
 <pre class="code">
 $url = 'forum/view.php?fid=3&pid=4';
-echo url_rewrite($url);		//output forum/view.php/fid/3/pid/4
+echo url_rewrite($url);		//output redirect.php/1/forum/view.php/fid/3/pid/4
+</pre></p>
+
+		<h4>Example 2</h4>
+		<p>To change an URL for mods:
+<pre class="code">
+$url = 'mods/hello_world/index.php';
+echo url_rewrite($url);		//output redirect.php/1/mods/hello_world/index.php
 </pre></p>
 
 
