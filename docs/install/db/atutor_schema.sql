@@ -186,7 +186,7 @@ CREATE TABLE `courses` (
   `cat_id` mediumint(8) unsigned NOT NULL default '0',
   `content_packaging` enum('none','top','all') NOT NULL default 'top',
   `access` enum('public','protected','private') NOT NULL default 'public',
-  `created_date` date NOT NULL default '0000-00-00',
+  `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `title` VARCHAR(255) NOT NULL ,
   `description` text NOT NULL ,
   `notify` tinyint(4) NOT NULL default '0',

@@ -127,3 +127,8 @@ ALTER TABLE `content`
 ADD head TEXT NOT NULL AFTER release_date, 
 ADD use_customized_head TINYINT(4) NOT NULL AFTER head;
 
+# --------------------------------------------------------
+# courses.created_date is modified to datetime
+# since 1.6.1
+
+ALTER TABLE `courses` MODIFY created_date DATETIME;
