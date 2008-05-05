@@ -206,15 +206,18 @@ function TestQuestionCounter($increment = FALSE) {
 		* we can un-randomize the order for marking.
 		* used with ordering type questions only.
 		*/
+		srand($salt + ord(DB_PASSWORD) + $_SESSION['member_id']);
+	}
 
-//		srand($salt + ord(DB_PASSWORD) + $_SESSION['member_id']);
-
+	/**
+	* Public
+	*/
+	/*final public */function unseed() {
 		// To fix http://www.atutor.ca/atutor/mantis/view.php?id=3167
-		// Use a more randomized seed to avoid the deterioration of the random 
-		// distribution due to a repeated initialization of the same random seed
+		// Disturb the seed for ordering questions after mark to avoid the deterioration  
+		// of the random distribution due to a repeated initialization of the same random seed
 		list($usec, $sec) = explode(" ", microtime());
 		srand((int)($usec*10));
-
 	}
 
 	/**
@@ -408,6 +411,10 @@ class OrderingQuestion extends AbstractTestQuestion {
 		$num_choices = count($_POST['answers'][$row['question_id']]);
 		$answers = range(0, $num_choices-1);
 		$answers = array_rand($answers, $num_choices);
+		
+		// Disturb the seed for ordering questions after mark to avoid the deterioration  
+		// of the random distribution due to a repeated initialization of the same random seed
+		$this->unseed();
 
 		$num_answer_correct = 0;
 
