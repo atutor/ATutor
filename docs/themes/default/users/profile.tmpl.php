@@ -3,7 +3,7 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php global $languageManager, $_config; ?>
 <div class="input-form">
-
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('required_information'); ?></legend>
 	<div class="row">
 		<h3><?php echo _AT('required_information'); ?></h3>
 	</div>
@@ -60,7 +60,8 @@
 				<input type="hidden" name="old_status" value="<?php echo $_POST['old_status']; ?>" />
 			</div>
 	<?php endif; ?>
-
+	</fieldset>
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('personal_information'); ?></legend>
 	<div class="row">
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
@@ -120,7 +121,7 @@
 		<label for="website"><?php echo _AT('web_site'); ?></label><br />
 		<input id="website" name="website" size="40" type="text" value="<?php if ($_POST['website'] == '') { echo 'http://'; } else { echo stripslashes(htmlspecialchars($_POST['website'])); } ?>" />
 	</div>
-	
+	</fieldset>
 	<div class="row buttons">
 		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" />
 		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />

@@ -31,7 +31,7 @@ function encrypt_password()
 <input type="hidden" name="form_password_hidden" value="" />
 
 <div class="input-form">
-
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('required_information'); ?></legend>
 	<?php if (!$_POST['member_id'] && defined('AT_MASTER_LIST') && AT_MASTER_LIST && !admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>
 		<div class="row">
 			<h3><?php echo _AT('account_authorization'); ?></h3>
@@ -58,9 +58,6 @@ function encrypt_password()
 		require(AT_INCLUDE_PATH.'html/auto_enroll_list_courses.inc.php'); 
 	?>
 	
-	<div class="row">
-		<h3><?php echo _AT('required_information'); ?></h3>
-	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
@@ -136,7 +133,8 @@ function encrypt_password()
 				<input type="hidden" name="old_status" value="<?php echo $_POST['old_status']; ?>" />
 			</div>
 	<?php endif; ?>
-
+</fieldset>
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></legend>
 	<div class="row">
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
@@ -211,10 +209,10 @@ function encrypt_password()
 		<label for="website"><?php echo _AT('web_site'); ?></label><br />
 		<input id="website" name="website" size="40" type="text" value="<?php if ($_POST['website'] == '') { echo 'http://'; } else { echo stripslashes(htmlspecialchars($_POST['website'])); } ?>" />
 	</div>
-	
+</fieldset>
 	<div class="row buttons">
-		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" onClick="encrypt_password()" />
-		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
+		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" onClick="encrypt_password()" class="button"/>
+		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> "  class="button" />
 	</div>
 </div>
 </form>

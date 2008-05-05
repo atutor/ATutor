@@ -46,6 +46,7 @@ if ($_POST['submit']) {
 <a name="post"></a>
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('post_message'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" maxlength="80" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($subject)); ?>" id="subject" />
@@ -84,7 +85,7 @@ if ($_POST['submit']) {
 			<?php echo _AT('thread_already_subscribed'); ?>
 		</div>
 	<?php endif; ?>
-
+</fieldset>
 	<div class="row buttons">
 		<input name="submit" accesskey="s" type="submit" value=" <?php echo _AT('post'); ?>" />
 		<?php if ($new_thread == TRUE) : ?>

@@ -100,6 +100,7 @@ if ($categories_select != '<option value="0"></option>') {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('filter'); ?></legend>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<div class="input-form">
 			<div class="row">
@@ -143,7 +144,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			</div>
 		</div>
 	</form>
-
+</fieldset>
 	<ul style=" padding: 0px; margin: 0px">
 	<?php while ($row = mysql_fetch_assoc($courses_result)): ?>
 		<li style="list-style: none; width: 80%">

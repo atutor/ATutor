@@ -36,6 +36,6 @@ global $system_courses;
 	<?php endif; ?>
 </head>
 <body onload="<?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<div align="right"><a href="javascript:window.close()"><?php echo _AT('close_file_manager'); ?></a></div>
+<br /><br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('close_file_manager'); ?></a></div>
 <a name="content"></a>
 <?php global $msg; $msg->printAll(); ?>

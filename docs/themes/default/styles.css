@@ -1142,7 +1142,7 @@ div#menutoggle{
 
 /* login page */
 div.column {
-	border: 1px solid #6F7172;
+	/* border: 1px solid #6F7172; */
 	float: left;
 	width: 45%;
 	margin: 5px;
@@ -1440,6 +1440,22 @@ dl.browse-course dd {
 
 }
 
+
+/*  form fields grouping */
+
+fieldset.group_form{
+	margin:2em;
+	border:thin #A50707 solid;
+   	min-height: 170px;
+}
+
+legend.group_form{
+	border:thin #A50707 solid;
+	background-color: #F6EAD6;
+	font-weight: 600;
+	color: #A50707;
+	padding:.5em;
+}
 /* file storage */
 
 #fsfloat1{
