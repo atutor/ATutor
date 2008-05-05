@@ -157,6 +157,7 @@ pre.code {
 			<li>18.6 <a href="#fn-debug">debug()</a></li>
 			<li>18.7 <a href="#fn-get_login">get_login()</a></li>
 			<li>18.8 <a href="#fn-urlencode_feedback">urlencode_feedback()</a></li>
+			<li>18.9 <a href="#fn-url_rewrite">url_rewrite()</a></li>
 		</ul></li>
 	<li>19. <a href="#useful-constants">Useful Constants</a>
 		<ul>
@@ -1459,6 +1460,24 @@ $f[] = array(AT_FEEDBACK_FILE_UPLOADED_ZIP, $file_name);
 
 header('Location: file_manager.php?f='.urlencode_feedback($f));
 exit;
+</pre></p>
+
+	<h3><a name="fn-url_rewrite"></a>18.9 url_rewrite()</h3>
+		<p><kbd>url_rewrite()</kbd> -- Change an url to a pretty url.</p>
+
+		<h4>Description</h4>
+			<p><kbd>string <strong>urlencode_rewrite</strong>( string $f )</kbd></p>
+
+			<p>This function returns a pretty URL from the given parameter. Its purpose is to change the URLs to a "prettier" format in order to extend user friendliness in the system, and to create indexes for Google search.  <kbd>$f</kbd> may be an <kbd>string</kbd> of URL, '?' and the seprators in the URL query will be replaced by slashes.</p>
+
+		<h4>Location</h4>
+			<p><kbd>`include/vitals.inc.php`</kbd></p>
+		
+		<h4>Example 1</h4>
+		<p>To change a URL:
+<pre class="code">
+$url = 'forum/view.php?fid=3&pid=4';
+echo url_rewrite($url);		//output forum/view.php/fid/3/pid/4
 </pre></p>
 
 
