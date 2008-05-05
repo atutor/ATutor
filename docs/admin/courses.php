@@ -191,7 +191,7 @@ $num_rows = mysql_num_rows($result);
 			<td><label for="m<?php echo $row['course_id']; ?>"><?php echo AT_print($row['title'], 'courses.title'); ?></label></td>
 			<td><?php echo AT_print($row['login'],'members.login'); ?></td>
 			<td><?php echo _AT($row['access']); ?></td>
-			<td><?php echo $row['created_date']; ?></td>
+			<td><?php echo AT_date($startend_date_long_format, $row['created_date'], AT_DATE_UNIX_TIMESTAMP); ?></td>
 			<td><?php echo ($row['cat_name'] ? $row['cat_name'] : '-')?></td>
 			<td><?php echo ($enrolled[$row['course_id']]['y'] ? $enrolled[$row['course_id']]['y'] : 0); ?></td>
 			<td><?php echo ($enrolled[$row['course_id']]['a'] ? $enrolled[$row['course_id']]['a'] : 0); ?></td>
