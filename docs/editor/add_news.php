@@ -106,6 +106,7 @@ $msg->printErrors();
 	<input type="hidden" name="add_news" value="true" />
 
 	<div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_announcement'); ?></legend>
 		<div class="row">
 			<label for="title"><?php echo _AT('title'); ?></label><br />
 			<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>" />
@@ -140,6 +141,7 @@ $msg->printErrors();
 			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?> " />
 		</div>
+	</fieldset>
 	</div>
 	</form>
 

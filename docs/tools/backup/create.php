@@ -38,6 +38,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_backup'); ?></legend>
 	<div class="row">
 		<?php echo _AT('create_backup_about', AT_COURSE_BACKUPS); ?>
 	</div>

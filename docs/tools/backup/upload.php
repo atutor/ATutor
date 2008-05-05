@@ -46,6 +46,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" >
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_backup'); ?></legend>
 	<div class="row">
 		<p><?php echo _AT('restore_upload'); ?></p>
 	</div>
@@ -70,6 +71,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
 	<?php endif; ?>
+	</fieldset>
 </div>
 </form>
 
