@@ -129,6 +129,8 @@ ADD use_customized_head TINYINT(4) NOT NULL AFTER head;
 
 # --------------------------------------------------------
 # courses.created_date is modified to datetime
+# remove unused fields: courses.preferences, courses.header, courses.footer, courses.banner_text, courses.banner_styles
 # since 1.6.1
 
 ALTER TABLE `courses` MODIFY created_date DATETIME;
+ALTER TABLE `courses` DROP preferences, DROP header, DROP footer, DROP banner_text, DROP banner_styles;
