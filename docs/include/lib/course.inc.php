@@ -221,7 +221,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$menu_defaults = ',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], $course_quotas primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date', preferences=preferences, header=header, footer=footer, banner_text=banner_text, banner_styles=banner_styles, end_date='$end_date' $menu_defaults";
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], $course_quotas primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date', end_date='$end_date' $menu_defaults";
 
 	$result = mysql_query($sql, $db);
 	if (!$result) {
