@@ -63,7 +63,7 @@ if (isset($_POST['form_course'])) {
 	$row['max_quota']			= $_POST['max_quota'];
 	$row['max_file_size']		= $_POST['max_file_size'];
 
-	$row['created_date']		= date('Y-m-d');
+	$row['created_date']		= date('Y-m-d H:i:s');
 	$row['primary_language']    = $_POST['pri_lang'];
 	$row['rss']                 = $_POST['rss'];
 
@@ -138,7 +138,7 @@ if (isset($_POST['form_course'])) {
 	$row['max_file_size']		= AT_FILESIZE_DEFAULT;
 
 	$row['primary_language']	= $_SESSION['lang'];
-	$row['created_date']		= date('Y-m-d');
+	$row['created_date']		= date('Y-m-d H:i:s');
 	$row['rss']                 = 0; // default to off
 	$row['release_date']		= '0';
 	$row['end_date']            = '0';
