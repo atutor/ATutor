@@ -143,7 +143,7 @@ class Patch {
 			foreach($this->backup_files as $backup_file)
 				$backup_files .= $backup_file. '|';
 		
-			$updateInfo = array("backup_files"=>preg_quote($backup_files));
+			$updateInfo = array("backup_files"=>mysql_real_escape_string($backup_files));
 		}
 	
 		if (count($this->patch_files) > 0)
@@ -151,7 +151,7 @@ class Patch {
 			foreach($this->patch_files as $patch_file)
 				$patch_files .= $patch_file. '|';
 		
-			$updateInfo = array_merge($updateInfo, array("patch_files"=>preg_quote($patch_files)));
+			$updateInfo = array_merge($updateInfo, array("patch_files"=>mysql_real_escape_string($patch_files)));
 		}
 	
 		if (is_array($_SESSION['remove_permission']) && count($_SESSION['remove_permission']))
@@ -159,7 +159,7 @@ class Patch {
 			foreach($_SESSION['remove_permission'] as $remove_permission_file)
 				$remove_permission_files .= $remove_permission_file. '|';
 
-			$updateInfo = array_merge($updateInfo, array("remove_permission_files"=>preg_quote($remove_permission_files), "status"=>"Partly Installed"));
+			$updateInfo = array_merge($updateInfo, array("remove_permission_files"=>mysql_real_escape_string($remove_permission_files), "status"=>"Partly Installed"));
 		}
 		else
 		{
@@ -658,8 +658,8 @@ class Patch {
 					  VALUES
 					  ('".$patch_summary_array["atutor_patch_id"]."',
 					   '".$patch_summary_array["applied_version"]."',
-					   '".preg_quote($patch_summary_array["patch_folder"])."',
-					   '".preg_quote($patch_summary_array["description"])."',
+					   '".mysql_real_escape_string($patch_summary_array["patch_folder"])."',
+					   '".mysql_real_escape_string($patch_summary_array["description"])."',
 					   '".$patch_summary_array["available_to"]."',
 					   '',
 					   '".$patch_summary_array["status"]."'
@@ -690,8 +690,8 @@ class Patch {
 					  VALUES
 					  (".$this->patch_id.",
 					   '".$patch_files_array['action']."',
-					   '".preg_quote($patch_files_array['name'])."',
-					   '".preg_quote($patch_files_array['location'])."'
+					   '".mysql_real_escape_string($patch_files_array['name'])."',
+					   '".mysql_real_escape_string($patch_files_array['location'])."'
 					   )";
 
 		$result = mysql_query($sql, $db) or die(mysql_error());
@@ -719,8 +719,8 @@ class Patch {
 					  VALUES
 					  (".$this->patch_file_id.",
 					   '".$patch_files_actions_array['type']."',
-					   '".preg_replace('/\'/', '\\\'', $patch_files_actions_array['code_from'])."',
-					   '".preg_replace('/\'/', '\\\'', $patch_files_actions_array['code_to'])."'
+					   '".mysql_real_escape_string($patch_files_actions_array['code_from'])."',
+					   '".mysql_real_escape_string($patch_files_actions_array['code_to'])."'
 					   )";
 
 		$result = mysql_query($sql, $db) or die(mysql_error());
