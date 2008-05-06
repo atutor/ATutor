@@ -206,7 +206,7 @@ function TestQuestionCounter($increment = FALSE) {
 		* we can un-randomize the order for marking.
 		* used with ordering type questions only.
 		*/
-		srand($salt + ord(DB_PASSWORD) + $_SESSION['member_id']);
+		srand($salt + $_SESSION['member_id']);
 	}
 
 	/**
