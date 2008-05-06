@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -409,23 +409,38 @@ function get_html_head_by_tag($text, $tags)
 
 		/* strip everything before <{tag}> */
 		$start_pos	= strpos($head, '<'.$tag);
-
-		if ($start_pos !== false) 
+		$temp_head = $head;
+		
+		while ($start_pos !== false) 
 		{
-			$temp_text = substr($head, $start_pos);
-		}
+			$temp_text = substr($temp_head, $start_pos);
 	
-		/* strip everything after </{tag}> */
-		$end_pos	= strrpos($temp_text, '</' . $tag . '>');
-
-		if ($end_pos !== false) 
-		{
-			$end_pos += strlen('</' . $tag . '>');
-			
-			// add an empty line after each tag information
-			$rtn_text .= trim(substr($temp_text, 0, $end_pos)) . '
-
+			/* strip everything after </{tag}> or />*/
+			$end_pos	= strpos($temp_text, '</' . $tag . '>');
+	
+			if ($end_pos !== false) 
+			{
+				$end_pos += strlen('</' . $tag . '>');
+				
+				// add an empty line after each tag information
+				$rtn_text .= trim(substr($temp_text, 0, $end_pos)) . '
+	
 ';
+			}
+			else  // match /> as ending tag if </tag> is not found
+			{
+				$end_pos	= strpos($temp_text, '/>');
+				$end_pos += strlen('/>');
+				
+				// add an empty line after each tag information
+				$rtn_text .= trim(substr($temp_text, 0, $end_pos)) . '
+	
+';
+			}
+			
+			// initialize vars for next round of matching
+			$temp_head = substr($temp_text, $end_pos);
+			$start_pos = strpos($temp_head, '<'.$tag);
 		}
 	}
 	
