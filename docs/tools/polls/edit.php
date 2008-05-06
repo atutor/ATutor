@@ -86,6 +86,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="poll_id" value="<?php echo $row['poll_id']; ?>" />
 
 <div class="input-form">
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit_poll'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?>:</label><br />
 		<textarea name="question" cols="55" rows="3" id="question"><?php if (isset ($_POST['question'])) { echo htmlspecialchars($_POST['question']); } else { echo htmlspecialchars($row['question']); } ?></textarea>
@@ -106,7 +107,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?> " />
 	</div>
-
+	</fieldset>
 </div>
 </form>
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

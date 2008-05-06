@@ -80,8 +80,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="id" value="<?php echo $reading_id ?>" />
 <div class="input-form">	
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('url_to_read'); ?></legend>
 
-<h3><?php echo _AT('url_to_read');?></h3>
 	<div class="row">
 		<label for="title"><?php  echo _AT('rl_select_url'); ?>:</label>
 		<select name="existing" id="title">
@@ -173,6 +173,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

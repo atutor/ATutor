@@ -101,6 +101,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 	<div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('groups_create_manual'); ?></legend>
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="type"><?php echo _AT('groups_type'); ?></label><br />
 			<?php if ($types): ?>
@@ -144,6 +145,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" accesskey="s" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</div>
+		</fieldset>
 	</div>
 </form>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

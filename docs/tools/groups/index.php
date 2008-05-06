@@ -56,7 +56,8 @@ $result = mysql_query($sql, $db);
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
-<table class="data" summary="" rules="cols" style="width: 50%">
+<fieldset class="group_form" style="width: 60%; margin:auto;"><legend class="group_form"><?php echo _AT('groups'); ?></legend>
+<table class="data" summary="" rules="cols" style="width: 80%">
 <tfoot>
 <tr>
 	<td>
@@ -106,6 +107,7 @@ $result = mysql_query($sql, $db);
 <?php endif; ?>
 </tbody>
 </table>
+</fieldset>
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

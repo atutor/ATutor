@@ -52,9 +52,12 @@ function encrypt_password() {
 			<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>
 				<p><?php echo _AT('confirm_account_text'); ?></p>
 			<?php endif; ?>
-
+			<div style="width: 20%;margin-left:auto; margin-right:auto;margin-bottom:.6em;">
+			<br /><br /><br />
 			<input type="submit" name="register" value="<?php echo _AT('register'); ?>" class="button" />
-			<br /><br /><br /><br /><br /><br /><br /><br />
+			<br /><br /><br /><br />
+
+			</div>
 		</form>
 	</fieldset>
 	</div>

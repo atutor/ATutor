@@ -231,6 +231,7 @@ function disable_texts (name) {
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="test_type" value="<?php echo $test_type; ?>" />
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_test'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" size="30" value="<?php echo $_POST['title']; ?>" />
@@ -473,6 +474,7 @@ function disable_texts (name) {
 		<input type="submit" value="<?php echo _AT('save'); ?>" name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

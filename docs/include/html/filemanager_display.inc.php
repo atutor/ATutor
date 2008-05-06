@@ -120,6 +120,7 @@ if (TRUE || $framed != TRUE) {
 	}
 	// filemanager listing table
 	// make new directory 
+	echo '<fieldset class="group_form"><legend class="group_form">'._AT('add').'</legend>';
 	echo '<table cellspacing="1" cellpadding="0" border="0" summary="" align="center">';
 	echo '<tr><td colspan="2">';
 	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP. 'popup='.$popup.'">';
@@ -155,11 +156,11 @@ if (TRUE || $framed != TRUE) {
 			echo '<input type="hidden" name="popup" value="1" />';
 		}
 		echo '</form>';
-		echo '</td></tr></table>';
+		echo '</td></tr></table></fieldset>';
 
 	} else {
 		echo '</table>';
-
+		echo '</fieldset>';
 		$msg->printInfos('OVER_QUOTA');
 	}
 	echo '<br />';

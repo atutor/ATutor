@@ -179,6 +179,7 @@ if ($row['cnt'] == 0) {
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('course_email'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 		<?php echo  _AT('to'); ?><br />
@@ -224,6 +225,7 @@ if ($row['cnt'] == 0) {
 		<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" accesskey="s" /> 
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

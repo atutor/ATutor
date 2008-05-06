@@ -98,6 +98,7 @@ $row['modules'] = explode('|', $row['modules']);
 <input type="hidden" name="type_id" value="<?php echo $row['type_id']; ?>" />
 <input type="hidden" name="old_modules" value="<?php echo $old_modules; ?>" />
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit'); ?></legend>
 	<div class="row">
 		<h3><?php echo $type_row['title']; ?></h3>
 	</div>
@@ -133,6 +134,7 @@ $row['modules'] = explode('|', $row['modules']);
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

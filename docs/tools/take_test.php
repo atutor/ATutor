@@ -187,7 +187,8 @@ if ($_SESSION['member_id'] && !$in_progress) {
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <div class="input-form" style="width:80%">
-	<div class="row"><h2><?php echo $title; ?></h2></div>
+	<fieldset class="group_form"><legend class="group_form"><?php echo $title ?></legend>
+
 
 	<?php if ($instructions!=''): ?>
 		<div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">

@@ -113,6 +113,7 @@ if ($_POST['answer'] == '') {
 <input type="hidden" name="required" value="1" />
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_tf'); ?></legend>
 	<div class="row">
 		<label for="cats"><?php echo _AT('category'); ?></label>
 		<select name="category_id" id="cats">
@@ -142,6 +143,7 @@ if ($_POST['answer'] == '') {
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s"/>
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

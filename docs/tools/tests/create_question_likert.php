@@ -129,10 +129,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="required" value="1" />
 
 <div class="input-form">
-	<div class="row">
-		<h3><?php echo _AT('preset_scales'); ?></h3>
-	</div>
-	
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('preset_scales'); ?></legend>
+
 	<div class="row">
 		<select name="preset_num">
 			<optgroup label="<?php echo _AT('presets'); ?>">
@@ -174,10 +172,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row buttons">
 		<input type="submit" name="preset" value="<?php echo _AT('set_preset'); ?>" class="button" />
 	</div>
+	</fieldset>
 </div>
 
 <br />
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('likert'); ?></legend>
 	<div class="row">
 		<label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
@@ -208,6 +208,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

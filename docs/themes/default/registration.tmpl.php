@@ -135,10 +135,6 @@ function encrypt_password()
 	<?php endif; ?>
 </fieldset>
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></legend>
-	<div class="row">
-		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
-	</div>
-
 	<?php 
 	$mod = $moduleFactory->getModule('_standard/profile_pictures');
 	if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && $_POST['member_id'] && $mod->isEnabled() === TRUE): ?>

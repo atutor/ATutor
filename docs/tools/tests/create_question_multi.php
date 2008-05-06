@@ -101,6 +101,7 @@ $msg->printConfirm();
 <form action="tools/tests/create_question_multi.php" method="post" name="form">
 <input type="hidden" name="required" value="1" />
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_mc'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
@@ -142,6 +143,7 @@ $msg->printConfirm();
 		<input type="submit" value="<?php echo _AT('save'); ?>" name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

@@ -35,6 +35,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_package'); ?></legend>
 <form name="form1" method="post"
       action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data"
       onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php');">
@@ -74,7 +75,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<input type="submit" name="cancel" onClick="setClickSource('cancel');" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 
-
+</fieldset>
 </form>
 </div>
 <script language="javascript" type="text/javascript">

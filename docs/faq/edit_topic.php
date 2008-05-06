@@ -73,6 +73,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php  echo _AT('name'); ?></label><br />
 		<input type="text" name="name" size="50" id="name" value="<?php if (isset($_POST['name'])) echo $stripslashes($_POST['name']);  ?>" />
@@ -82,7 +83,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?> " />
 	</div>
-
+	</fieldset>
 </div>
 </form>
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

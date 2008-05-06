@@ -63,7 +63,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<div class="input-form" style="width: 30%">
+<div class="input-form" style="width: 50%">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create'); ?></legend>
 	<div class="row">
 		<label for="question"><?php echo _AT('rl_type_of_reading'); ?></label><br />
 		<select name="new_reading" class="dropdown" id="type">
@@ -77,6 +78,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row buttons">
 		<input type="submit" name="create" value="<?php echo _AT('create'); ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

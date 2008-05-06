@@ -46,7 +46,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="prefs">
-<div class="input-form" style="width:50%">
+<div class="input-form" style="width:60%">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('side_menu'); ?></legend>
 	<div class="row">
 		<p><?php echo _AT('side_menu_text'); ?></p>
 	</div>
@@ -80,6 +81,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

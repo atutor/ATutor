@@ -77,9 +77,7 @@ $today = getdate();
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">	
-
-<h3><?php echo _AT('rl_book_to_read'); ?></h3>
-
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('rl_book_to_read'); ?></legend>
 	<div class="row">
 		<label for="booktitle"><?php  echo _AT('rl_select_book'); ?>:</label>
 		<select name="existingbook" id="booktitle">
@@ -173,6 +171,7 @@ $today = getdate();
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

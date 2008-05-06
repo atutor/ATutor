@@ -160,7 +160,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 	<input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
 
 <div class="input-form">
-
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('properties'); ?></legend>
 <?php if ($isadmin): ?>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="inst"><?php echo  _AT('instructor'); ?></label><br />
@@ -579,7 +579,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /> 
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" />
 	</div>
-    
+    </fieldset>
 </div>
 
 </form>

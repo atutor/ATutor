@@ -23,7 +23,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 
 <div class="input-form">
-
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import'); ?></legend>
 	<div class="row">
 		<p><?php echo _AT('list_import_howto'); ?></p>
 	</div>
@@ -44,7 +44,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('list_import_course_list');  ?>" />
 	</div>
-
+	</fieldset>
 </div>
 </form>
 

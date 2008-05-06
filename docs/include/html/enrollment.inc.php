@@ -260,6 +260,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<input type="hidden" name="tab" value="<?php echo $current_tab; ?>"/>
 	<input type="hidden" name="course_id" value="<?php echo $course_id; ?>"/>
 	<div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
 		<?php if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE)): ?>
 			<div class="row">
 				<label for="course"><?php echo _AT('course'); ?></label><br/>
@@ -290,6 +291,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 		</div>
+	</fieldset>
 	</div>
 </form>
 

@@ -59,6 +59,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="type_id" value="<?php echo $row['type_id']; ?>" />
 <div class="input-form">
+		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" value="<?php echo $row['title']; ?>" size="30" maxlength="40" />
@@ -68,6 +69,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

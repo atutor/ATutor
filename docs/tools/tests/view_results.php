@@ -98,9 +98,8 @@ if (mysql_num_rows($result) == 0) {
 <input type="hidden" name="rid" value="<?php echo $rid; ?>">
 
 <div class="input-form">
-	<div class="row">
-		<h2><?php echo AT_print($test_title, 'tests.title'); ?></h2>
-	</div>
+	<fieldset class="group_form"><legend class="group_form"><?php echo AT_print($test_title, 'tests.title'); ?></legend>
+
 	<?php while ($row = mysql_fetch_assoc($result)) {
 		/* get the results for this question */
 		$sql		= "SELECT C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id]";
@@ -124,7 +123,7 @@ if (mysql_num_rows($result) == 0) {
 		<input type="submit" value="<?php echo _AT('back'); ?>" name="back" />
 	<?php endif; ?>
 	</div>
-
+	</fieldset>
 </div>
 </form>
 

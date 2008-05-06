@@ -94,7 +94,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <form action="tools/tests/create_question_tf.php" method="post" name="form">
 <div class="input-form">
-
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_tf'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
@@ -128,6 +128,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

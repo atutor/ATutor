@@ -94,6 +94,7 @@ $msg->printErrors();
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_open'); ?></legend>
 	<div class="row">
 		<label for="cats"><?php echo _AT('category'); ?></label>
 		<select name="category_id" id="cats">
@@ -128,6 +129,7 @@ $msg->printErrors();
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>"name="cancel" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

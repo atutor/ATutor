@@ -26,6 +26,7 @@ require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 	<div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('category'); ?></legend>
 		<div class="row">
 			<label for="cats"><?php echo _AT('category'); ?></label><br />
 			<select name="category_id" id="cats">
@@ -37,6 +38,7 @@ require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 		</div>
+		</fieldset>
 	</div>
 </form>
 <?php

@@ -58,8 +58,8 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 ?>
 <form method="post" action="tools/ims/ims_export.php">
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('export_content'); ?></legend>
 	<div class="row">
-		<h3><?php echo _AT('export_content'); ?></h3>
 		<p><?php echo _AT('export_content_info'); ?></p>
 	</div>
 
@@ -86,6 +86,7 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 		<input type="submit" name="submit" value="<?php echo _AT('export'); ?>" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
+	</fieldset>
 <?php else: ?>
 	<div class="row">
 		<strong><?php echo _AT('none_found'); ?></strong>
@@ -105,8 +106,9 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 
 <form name="form1" method="post" action="tools/ims/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php');">
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_content'); ?></legend>
 	<div class="row">
-		<h3><?php echo _AT('import_content'); ?></h3>
+
 		<p><?php echo _AT('import_content_info'); ?></p>
 	</div>
 

@@ -37,6 +37,7 @@ if ($row = mysql_fetch_assoc($result)) {
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('question_categories'); ?></legend>
 <?php	do { ?>
 			<div class="row">
 				<input type="radio" id="cat_<?php echo $row['category_id']; ?>" name="category" value="<?php echo $row['category_id']; ?>" />	<label for="cat_<?php echo $row['category_id']; ?>"><?php echo AT_print($row['title'], 'tests_questions_categories.title'); ?></label>

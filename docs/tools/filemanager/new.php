@@ -169,7 +169,8 @@ if (!$_POST['extension']) {
 	<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext'] ?>" />
 	<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
 
-	<div class="input-form">
+	<div class="input-form">	
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_new_file'); ?></legend>
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('file_name');  ?></label><br />
 			<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
@@ -200,7 +201,7 @@ if (!$_POST['extension']) {
 			<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?>" accesskey="s" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />		
 		</div>
-
+	</fieldset>
 	</div>
 	</form>
 

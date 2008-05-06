@@ -98,6 +98,7 @@ if ($_POST['submit']) {
 <input type="hidden" name="gid" value="<?php echo $gid; ?>" />
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit_glossary'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('glossary_term');  ?></label><br/ >
 		<input type="text" name="word" size="40" id="title" value="<?php echo htmlspecialchars($stripslashes($row['word'])); ?>" />
@@ -142,6 +143,7 @@ if ($_POST['submit']) {
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel');  ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

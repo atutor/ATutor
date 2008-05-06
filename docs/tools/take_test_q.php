@@ -207,7 +207,9 @@ if (!$result || !$question_row) {
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?pos=<?php echo $pos; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <div class="input-form" style="width:80%">
-	<div class="row"><h2><?php echo $title; ?></h2></div>
+
+	<fieldset class="group_form"><legend class="group_form"><?php echo $title ?> (<?php echo _AT('question').' '. ($pos+1).'/'.$test_row['num_questions']; ?>)</legend>
+
 	<?php
 	// retrieve the answer to re-populate the form (so we can edit our answer)
 	$sql = "SELECT answer FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$result_id AND question_id=$question_row[question_id]";

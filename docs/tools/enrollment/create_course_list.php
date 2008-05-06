@@ -19,10 +19,11 @@ authenticate(AT_PRIV_ENROLLMENT);
 require(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printAll();
 ?>
-	
+		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('list_create_course_list'); ?></legend>
 <form action="tools/enrollment/verify_list.php" method="post">
 <input type="hidden" name="from" value="create" />
 <div class="input-form">
+
 	<div class="row">
 		<?php echo _AT('import_sep_txt'); ?><br />
 		<input type="radio" name="sep_choice" id="und" value="_" checked="checked" />
@@ -64,5 +65,5 @@ $msg->printAll();
 
 </table>
 </form>
-
+</fieldset>
 <?php	require(AT_INCLUDE_PATH.'footer.inc.php');	?>

@@ -89,7 +89,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 
-<div class="input-form" style="width: 30%">
+<div class="input-form" style="width: 40%">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
 	<div class="row">
 		<label for="question"><?php echo _AT('create_new_question'); ?></label><br />
 		<?php $questions = TestQuestions::getQuestionPrefixNames(); ?>
@@ -103,6 +104,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row buttons">
 		<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" />
 	</div>
+	</fieldset>
 </div>
 </form>
 

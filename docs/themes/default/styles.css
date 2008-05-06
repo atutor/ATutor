@@ -519,6 +519,10 @@ div#top-links a:link, div#top-links a:visited {
 	text-decoration:none;
 	margin-left:10px;
 }
+div#top-links a:focus{
+	color:black;
+	background-color:#F6EAD6;
+}
 
 #jumpmenu{
 
@@ -1224,7 +1228,7 @@ ul#home-links li a img {
 	white-space: nowrap;
 }
 
-#navlist li a:hover, #navlist li a.active {
+#navlist li a:hover, #navlist li a:active {
 	color: #000;
 	background-color: #fff;
 }
@@ -1233,7 +1237,7 @@ ul#home-links li a img {
 .img-size-tree {
 	vertical-align: middle;
 	margin-top: 0px;
-padding:0;
+        padding:0;
 	height:1.45em;
 	width:1.5em;
 }
@@ -1441,19 +1445,20 @@ dl.browse-course dd {
 }
 
 
-/*  form fields grouping */
+/*  form fields grouping for WCAG 2.0 conformance*/
 
 fieldset.group_form{
 	margin:2em;
-	border:thin #A50707 solid;
+	border:thin #6D7B8D solid;
    	min-height: 170px;
+	padding:.5em;
 }
 
 legend.group_form{
-	border:thin #A50707 solid;
-	background-color: #F6EAD6;
+	border:thin #6D7B8D solid;
+	background-color: #CCCCCC;
 	font-weight: 600;
-	color: #A50707;
+	color: black;
 	padding:.5em;
 }
 /* file storage */
@@ -1465,6 +1470,16 @@ legend.group_form{
 	float:right;
 	width:48%;
 }
+
+
+/* highlight active links for WCAG 2.0 conformance */
+a:active,a:hover,a:focus{
+
+	border:thin black solid;
+	background-color:#F6EAD6;
+	color:#000000;
+}
+
 
 /* menu align right layout, uncomment to enable */
 
@@ -1483,6 +1498,9 @@ margin-top:1em;
 #leftcolumn{
     float: right;
 }
+#home-links{
+clear:left;
+}
 table.data {
 	clear:left;
 }
@@ -1492,5 +1510,9 @@ div#menutoggle{
 #fsfloat2{
 	float:left;
 	width:48%;
+}
+
+#fsfloat1{
+	float:left;
 }
 */

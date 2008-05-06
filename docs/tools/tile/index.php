@@ -57,7 +57,8 @@ $msg->printAll();
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" method="get" name="form">
 
-<div class="input-form" style="width: 40%">
+<div class="input-form" style="width: 60%">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
 	<div class="row">
 		<label for="words2"><?php echo _AT('search_words'); ?></label><br />
 		<input type="text" name="query" size="40" id="words2" value="<?php echo stripslashes(htmlspecialchars($_GET['query'])); ?>" />

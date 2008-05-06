@@ -56,7 +56,8 @@ if ($num == 0) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
-<div class="input-form">
+<div class="input-form">	
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('delete_package'); ?></legend>
 	<form method="post" action="tools/packages/delete.php">
 		<ol>
 		<?php echo $p; ?>
@@ -65,6 +66,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<input type="submit" name="submit"  value="<?php echo _AT('delete_selected_package_s'); ?>" />
 		</div>
 	</form>
+	</fieldset>
 </div>
 
 

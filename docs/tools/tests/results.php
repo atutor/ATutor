@@ -118,6 +118,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 
 	<div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('filter'); ?></legend>
 		<div class="row">
 			<h3><?php echo _AT('results_found', $num_results); ?></h3>
 		</div>
@@ -136,6 +137,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 		</div>
+		</fieldset>
 	</div>
 </form>
 

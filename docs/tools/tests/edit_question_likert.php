@@ -143,7 +143,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
 <input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
 <input type="hidden" name="required" value="1" />
-
+	<fieldset class="group_form" style="width:88%;margin-left:auto;margin-right:auto;"><legend class="group_form"><?php echo _AT('preset_scales'); ?></legend>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th align="left"><?php echo _AT('preset_scales'); ?> </th>
@@ -189,9 +189,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</td>
 </tr>
 </table>
+</fieldset>
 <br />
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('question'); ?></legend>
 	<div class="row">
 		<label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
@@ -224,6 +226,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
+	</fieldset>
 </div>
 </form>
 
