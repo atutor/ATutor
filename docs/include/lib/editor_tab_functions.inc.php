@@ -340,7 +340,7 @@ function paste_from_file() {
 			unset($start_pos);
 			unset($end_pos);
 
-			$_POST['head'] = get_html_head_by_tag($_POST['body_text'], array("style", "script")); 
+			$_POST['head'] = get_html_head_by_tag($_POST['body_text'], array("link", "style", "script")); 
 			if (strlen(trim($_POST['head'])) > 0)	
 				$_POST['use_customized_head'] = 1;
 			else
