@@ -637,7 +637,9 @@ table.data tfoot input {
 	font-weight: normal;
 	border:  #AAA  solid 1px;
 }
-
+table.data tfoot input:focus {
+	background-color: #FFDAB9;
+}
 
 
 /* used for static tables with no form elements: */

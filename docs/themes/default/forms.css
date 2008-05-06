@@ -48,6 +48,12 @@ div.input-form textarea:focus, div.input-form  input[type=password]:focus, div.i
 	background-color: #FFDAB9;
 	padding: 2px;
 }
+
+input[type=checkbox]{
+
+	background-color: #FFDAB9;
+}
+
 div.input-form div.buttons {
 	text-align: right;
 	padding:8px;
@@ -57,3 +63,11 @@ div.input-form div.buttons input {
 	font-weight: normal;
 	border:  #AAA  solid 1px;
 }
+.formfield:focus{
+	background-color: #FFDAB9;
+}
+
+#ot:focus{
+	background-color: #FFDAB9;
+}
++
