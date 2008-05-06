@@ -139,7 +139,11 @@ a.dropdown-title {
 	font-weight: normal;
 	border:  #AAA  solid 1px;
 }
+.button:focus {
+	border:1px solid #A50707;
+	background-color: #FFDAB9;	
 
+}
 /* small submit button at top */
 .button2 {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
