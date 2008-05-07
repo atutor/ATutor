@@ -47,7 +47,7 @@ class Patch {
 	// constant, URL of user's ATutor release version in SVN 
 	var $svn_tag_folder = 'http://atutorsvn.atrc.utoronto.ca/repos/atutor/tags/';
 	var $sql_file = 'patch.sql';
-	var $relative_to_atutor_root = '../../../';   // relative path from mods/patcher to root
+	var $relative_to_atutor_root = '../../../';   // relative path from mods/_standard/patcher to root
 
 	/**
 	* Constructor: Initialize object members
