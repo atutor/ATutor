@@ -13,8 +13,8 @@
 // $Id$
 
 class CSVImport {
-	var $quote_replace = array('"',  "\n", "\r", "\x00");
-	var $quote_search  = array('""', '\n', '\r', '\0');
+	var $quote_search  = array('\\\n', '\\\r');
+	var $quote_replace = array('\n', '\r');
 
 	// constructor
 	function CSVImport() { }
@@ -67,9 +67,9 @@ class CSVImport {
 	}
 
 	function translateWhitespace($input) {
+		$input = addslashes($input);
 		$input = str_replace($this->quote_search, $this->quote_replace, $input);
 
-		$input = addslashes($input);
 		return $input;
 	}
 
@@ -135,10 +135,11 @@ class CSVImport {
 				} else if ($field_types[$id] == 'int') {
 					$field = intval($field);
 				}
-				$sql .= '"' . $field.'",';
+				$sql .= "'" . $field."',";
 			}
 			$sql = substr($sql, 0, -1);
 			$sql .= ')';
+
 			$result = mysql_query($sql, $db);
 			$i++;
 			$next_id++;
