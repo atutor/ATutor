@@ -80,7 +80,7 @@ if ($_POST['create'] || $_POST['save'])
 					if ($_FILES['add_upload_file']['tmp_name'][$i] <> "")
 						$upload_file = $_FILES['add_upload_file']['tmp_name'][$i];
 					else
-						$upload_file = stripslashes($_POST['add_uploaded_file'][$i]);
+						$upload_file = $_POST['add_uploaded_file'][$i];
 					
 					$patch_info["files"][] = array("action"=>$action,
 					                             "file_name"=>$_POST['add_filename'][$i],
@@ -105,7 +105,7 @@ if ($_POST['create'] || $_POST['save'])
 					if ($_FILES['overwrite_upload_file']['tmp_name'][$i] <> "")
 						$upload_file = $_FILES['overwrite_upload_file']['tmp_name'][$i];
 					else
-						$upload_file = stripslashes($_POST['overwrite_uploaded_file'][$i]);
+						$upload_file = $_POST['overwrite_uploaded_file'][$i];
 					
 					$patch_info["files"][] = array("action"=>$action,
 					                             "file_name"=>$_POST['overwrite_filename'][$i],
