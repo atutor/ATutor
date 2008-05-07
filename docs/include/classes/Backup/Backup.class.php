@@ -405,7 +405,7 @@ class Backup {
 		}
 		foreach ($_POST['material'] as $module_name => $garbage) {
 			// restore course properties, ONLY BANNER FOR NOW.
-			if ($module_name == 'properties')
+			if ($module_name == 'properties' && file_exists($this->import_dir . "properties.csv"))
 			{
 				global $db;
 				
