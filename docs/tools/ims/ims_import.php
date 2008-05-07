@@ -487,12 +487,13 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 			{
 				$isExeContent = true;
 			}
-			
+
 			// use ATutor's eXe style sheet as the ones from eXe conflicts with ATutor's style sheets
-			if (isExeContent)
+			if ($isExeContent)
 			{
 				$head = preg_replace ('/(<style.*>)(.*)(<\/style>)/ms', '\\1@import url('.AT_BASE_HREF.'exestyles.css);\\3', $head);
 			}
+
 			// end of specifically handle eXe package
 
 			$content = get_html_body($content);
