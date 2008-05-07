@@ -343,7 +343,7 @@ class PatchCreator {
 		{
 			foreach ($this->patch_info_array["files"] as $file_info)
 			{
-				if (isset($file_info["upload_tmp_name"]))
+				if ($file_info["upload_tmp_name"] <> '')
 				{
 					$file_name = preg_replace('/.php$/', '.new', $file_info['file_name']);
 					$zipfile->add_file(file_get_contents($file_info['upload_tmp_name']), $file_name);
