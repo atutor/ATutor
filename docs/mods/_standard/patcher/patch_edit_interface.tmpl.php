@@ -115,7 +115,7 @@ if ($num_of_dependents == 0)
 	<div class="row buttons">
 		<input type="submit" name="create" value=" <?php echo _AT('create_patch'); ?> " accesskey="c" />
 		<input type="submit" name="save" value=" <?php echo _AT('save'); ?> " accesskey="s" onClick="document.form.target=''; "/>
-		<input type="button" name="cancel" value=" <?php echo _AT('cancel'); ?> " onClick="location.href='mods/patcher/myown_patches.php'" />
+		<input type="button" name="cancel" value=" <?php echo _AT('cancel'); ?> " onClick="location.href='mods/_standard/patcher/myown_patches.php'" />
 	</div>
 
 </div>
