@@ -116,12 +116,12 @@ CREATE TABLE `content` (
   `revision` tinyint(3) unsigned NOT NULL default '0',
   `formatting` tinyint(4) NOT NULL default '0',
   `release_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `head` TEXT NOT NULL,
-  `use_customized_head` TINYINT(4) NOT NULL,
   `keywords` TEXT NOT NULL ,
   `content_path` TEXT NOT NULL ,
   `title` VARCHAR(255) NOT NULL ,
   `text` text NOT NULL ,
+  `head` TEXT NOT NULL,
+  `use_customized_head` TINYINT(4) NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM ;
