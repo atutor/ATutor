@@ -31,7 +31,7 @@ tinyMCE.init({
 		echo '  mode : "exact",';
 		echo '  elements : "'.$name.'",';
 	} else {
-		echo '	mode : "$mode",';
+		echo '	mode : "'.$mode.'",';
 	}	
 	echo 'theme : "advanced",
 	relative_urls : true,
