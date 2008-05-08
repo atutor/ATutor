@@ -82,6 +82,7 @@ if ($section == 'admin'){
 				'system_preferences.php' => array(
 												'default_preferences.php',
 												'languages.php',
+												'auto_enroll.php',
 												'themes.php' => array(
 																		'importing_themes.php',
 																		'managing_existing_themes.php',
@@ -103,7 +104,6 @@ if ($section == 'admin'){
 										),
 				'courses.php' => array(
 										'forums.php',
-										'auto_enroll.php',
 										'creating_courses.php',
 										'default_student_tools.php',
 										'default_side_menu.php',
