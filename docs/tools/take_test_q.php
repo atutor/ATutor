@@ -51,7 +51,7 @@ if (!$test_row['random']) {
 }	
 
 $sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id=".$_SESSION['member_id'];
-$takes_result= mysql_query($sql, $db);
+$takes_result= mysql_query($sql, $db) or die(mysql_error());
 $takes = mysql_fetch_assoc($takes_result);	
 
 if ( (($test_row['start_date'] > time()) || ($test_row['end_date'] < time())) || 
@@ -73,6 +73,16 @@ $max_pos = 0;
 // get and check for a valid result_id. if there is none then get all the questions and insert them as in progress.
 // note: for guests the result_id is stored in session, but no need to really know that here.
 $result_id = get_test_result_id($tid, $max_pos);
+
+// set position to allow users to return to a test they have partially completed, and continue from where they left of.
+if ($pos == 0 && $result_id > 0)
+{
+	$sql = "SELECT COUNT(*) pos FROM ".TABLE_PREFIX."tests_answers WHERE answer <> ''";
+	$answer_result = mysql_query($sql, $db) or die(mysql_error());
+	$answer = mysql_fetch_assoc($answer_result);
+	
+	$pos = $answer['pos'];
+}
 
 if ($result_id == 0) {
 	// there is no test in progress, yet.
