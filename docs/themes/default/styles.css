@@ -138,15 +138,19 @@ a.dropdown-title {
 	background-color: #efefef;
 	font-weight: normal;
 	border:  #AAA  solid 1px;
+
 }
 .button:focus {
 	border:1px solid #A50707;
-	background-color: #FFDAB9;	
-
+	background-color:  #FFDAB9;	
 }
 /* small submit button at top */
 .button2 {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
+	background-color: #E9F4F3;
+
+}
+.button2:focus {
 	background-color: #E9F4F3;
 	border:  #ACCFCC  solid 1px;
 }
@@ -528,9 +532,8 @@ div#top-links a:focus{
 	background-color:#F6EAD6;
 }
 
-#jumpmenu{
-
-
+#jumpmenu:focus{
+	background-color:#F6EAD6;
 }
 a#editor-link {
 	background-color: #F7F3ED;
@@ -639,6 +642,7 @@ table.data tfoot input {
 }
 table.data tfoot input:focus {
 	background-color: #FFDAB9;
+	border:  #AAA  solid 1px;
 }
 
 
@@ -1480,8 +1484,6 @@ legend.group_form{
 
 /* highlight active links for WCAG 2.0 conformance */
 a:active,a:hover,a:focus{
-
-	border:thin black solid;
 	background-color:#F6EAD6;
 	color:#000000;
 }

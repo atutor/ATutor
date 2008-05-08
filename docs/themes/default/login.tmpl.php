@@ -20,10 +20,11 @@ function encrypt_password() {
 		<input type="hidden" name="form_login_action" value="true" />
 		<input type="hidden" name="form_course_id" value="<?php echo $this->course_id; ?>" />
 		<input type="hidden" name="form_password_hidden" value="" />
-		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
-			<p><?php echo _AT('login_text') ;?></p>
-			<div class="input-form" style="background-color:white;">
 
+
+			<div class="input-form" style="background-color:white;">
+			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
+			<p><?php echo _AT('login_text') ;?></p>
 				<?php if ($_GET['course']): ?>
 					<div class="row">
 						<h3><?php echo _AT('login'). ' ' . $this->title; ?></h3>
@@ -37,28 +38,30 @@ function encrypt_password() {
 				<input type="password" class="formfield" name="form_password" style="max-width: 100%; width: 100%;" id="pass" />
 				<br /><br />
 				<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return encrypt_password();" />
-			</div>
+			</fieldset>			
+		</div>
 		</form>
-	</fieldset>
+
 	</div>
 
 
 	<div class="column">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('new_user') ;?></legend>
-		<form action="registration.php" method="get">
 
+		<form action="registration.php" method="get">
+			<div class="input-form" style="background-color:white;">
+			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('new_user') ;?></legend>
 			<p><?php echo _AT('registration_text'); ?></p>
 
 			<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>
 				<p><?php echo _AT('confirm_account_text'); ?></p>
 			<?php endif; ?>
-			<div style="width: 20%;margin-left:auto; margin-right:auto;margin-bottom:.6em;">
+			<div style="width: 20%;margin-left:auto; margin-right:auto;margin-bottom:.6em;padding:.5em;">
 			<br /><br /><br />
 			<input type="submit" name="register" value="<?php echo _AT('register'); ?>" class="button" />
-			<br /><br /><br /><br />
 
+			</fieldset>
 			</div>
 		</form>
-	</fieldset>
+
 	</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
