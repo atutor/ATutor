@@ -73,9 +73,8 @@ if (!$test_row['random']) {
 <input type="hidden" name="tid" value="<?php echo $tid; ?>"/>
 
 <div class="input-form">
-	<div class="row">
-		<h2><?php echo $test_row['title']; ?></h2>
-	</div>
+		<fieldset class="group_form"><legend class="group_form"><?php echo $test_row['title']; ?></legend><div class="row">
+
 
 	<div class="row">
 		<dl class="col-list">
@@ -112,9 +111,11 @@ if (!$test_row['random']) {
 	</div>
 	<?php endif; ?>
 
-	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('start_test'); ?>"/>
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"/>
+	<div>
+		<input type="submit" name="submit" value="<?php echo _AT('start_test'); ?>"  class="button" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
+	</div>
+	</fieldset>
 	</div>
 </div>
 </form>
