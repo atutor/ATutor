@@ -42,9 +42,16 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-unset($hidden_vars);
-$hidden_vars['qid'] = htmlspecialchars($_GET['qid']);
-$msg->addConfirm('DELETE', $hidden_vars);
+$these_questions= split(",", $_REQUEST['qid']);
+
+foreach($these_questions as $this_question){
+	$sql = "SELECT question FROM ".TABLE_PREFIX."tests_questions WHERE question_id = '$this_question' ";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	$confirm .= "<li>".$row['question']."</li>";
+}
+
+$msg->addConfirm(array('DELETE', $confirm));
 
 $msg->printConfirm();
 
