@@ -32,6 +32,7 @@
 	$_pages['default_side_menu.php']			 = 'Default Side Menu';
 	$_pages['backups.php']                       = 'Backups';
 	$_pages['forums.php']                        = 'Forums';
+	$_pages['auto_enroll.php']                        = 'Auto-Enroll at Registration';
 	$_pages['categories.php']                    = 'Course Categories';
 	$_pages['modules.php']                       = 'Modules';
 	$_pages['patcher.php']                       = 'Patcher';

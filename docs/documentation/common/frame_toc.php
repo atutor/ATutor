@@ -103,6 +103,7 @@ if ($section == 'admin'){
 										),
 				'courses.php' => array(
 										'forums.php',
+										'auto_enroll.php',
 										'creating_courses.php',
 										'default_student_tools.php',
 										'default_side_menu.php',
