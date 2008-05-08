@@ -41,7 +41,7 @@
 		<dd>Defines the availability of test results to students, either once the test has been submitted, once submitted and completely marked, or not at all. In the latter case, the Release Results property can later be changed to <em>Once quiz has been submitted</em> to make results available to students once all submissions have been marked.</dd>
 
 		<dt>Randomized Questions</dt>
-		<dd>Will display the number of questions specified, chosen randomly from the pool of available questions for that test.</dd>
+		<dd>Will display the number of questions specified, chosen randomly from the pool of available questions for that test. It is important that either all questions be assigned the same point value, or that those questions with different point values from the others be included as required questions, otherwise tests' "out scores" will differ from student to student. If including Likert questions in a randomized test, they must be included as required questions.</dd>
 	
 		<dt>Start &amp; End Dates</dt>
 		<dd>Define the window of time in which the test will be available to students.  It is possible to define the start date to be in the future, meaning the test will not be available until that date is reached.</dd>

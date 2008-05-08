@@ -5,7 +5,7 @@
 	
 	<dl>
 		<dt>Likert</dt>
-		<dd>Likert questions require the respondent to specify their choice based on the scale provided.</dd>
+		<dd>Likert questions require the respondent to specify their choice based on the scale provided. Keep in mind that Likert questions are not assigned a point value, so if they are included in a randomized test with other questions that do have a point value, they must be included as required question, otherwise test statistics will not be accurate. </dd>
 
 		<dt>Matching (Graphical)</dt>
 		<dd>Matching questions require the respondent to match value pairs. The graphical version creates coloured lines when pairs are created and allows for drag-and-drop interaction.</dd>
