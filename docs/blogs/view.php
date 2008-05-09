@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id$
 define('AT_INCLUDE_PATH', '../include/');
-require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once (AT_INCLUDE_PATH.'vitals.inc.php');
 
 $owner_type = intval($_REQUEST['ot']);
 $owner_id   = intval($_REQUEST['oid']);
@@ -69,7 +69,7 @@ $result = mysql_query($sql, $db);
 <?php if (mysql_num_rows($result)): ?>
 	<?php while (($row = mysql_fetch_assoc($result)) && ($count < $num_posts_per_page)): $count++; ?>
 		<div class="entry">
-			<h2><a href="blogs/post.php?ot=<?php echo BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']; ?>"><?php echo AT_PRINT($row['title'], 'blog_posts.title'); ?></a>
+			<h2><a href="<?php echo url_rewrite('blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']); ?>"><?php echo AT_PRINT($row['title'], 'blog_posts.title'); ?></a>
 			<?php if ($row['private']): ?>
 				- <?php echo _AT('private'); ?>
 			<?php endif; ?></h2>
@@ -77,7 +77,7 @@ $result = mysql_query($sql, $db);
 
 			<p><?php echo AT_PRINT($row['body'], 'blog_posts.body'); ?></p>
 
-			<p><a href="blogs/post.php?ot=<?php echo BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']; ?>#comments"><?php echo _AT('comments_num', $row['num_comments']); ?></a></p>
+			<p><a href="<?php echo url_rewrite('blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']); ?>#comments"><?php echo _AT('comments_num', $row['num_comments']); ?></a></p>
 			<hr />
 		</div>
 	<?php endwhile; ?>

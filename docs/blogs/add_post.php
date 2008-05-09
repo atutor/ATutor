@@ -26,7 +26,7 @@ if (!($owner_status = blogs_authenticate($owner_type, $owner_id)) || !query_bit(
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid']);
+	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid']));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['title'] = $addslashes(trim($_POST['title']));
@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 
 		$msg->addFeedback('POST_ADDED_SUCCESSFULLY');
 
-		header('Location: view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid']);
+		header('Location: '.AT_BASE_HREF.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid']));
 		exit;
 	}
 }

@@ -58,7 +58,7 @@ $result = mysql_query($sql, $db);
 				}?>
 				</td>
 
-				<td><a href="reading_list/display_resource.php?id=<?php echo $id ?>" title="<?php echo _AT('rl_view_resource_details')?>" ><?php echo $resource_row['title']; ?></a>		
+				<td><a href="<?php echo url_rewrite('reading_list/display_resource.php?id='.$id); ?>" title="<?php echo _AT('rl_view_resource_details')?>" ><?php echo $resource_row['title']; ?></a>		
 				</td>
 				<td><?php echo _AT ($row['required']); ?></td>
 				<td><?php echo $row['comment']; ?></td>

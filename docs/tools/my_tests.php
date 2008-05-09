@@ -50,7 +50,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$takes = mysql_fetch_assoc($takes_result);
 	if ( ($row['us'] <= time() && $row['ue'] >= time()) && 
 	   ( ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] < $row['num_takes']) )  ) {
-		echo '<strong><a href="tools/test_intro.php?tid='.$row['test_id'].'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
+		echo '<strong><a href="'.url_rewrite('tools/test_intro.php?tid='.$row['test_id']).'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
 	} else {
 		echo '<small class="bigspacer">'.AT_print($row['title'], 'tests.title').'';
 	}

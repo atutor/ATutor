@@ -161,9 +161,9 @@ $num_results = mysql_num_rows($result);
 </colgroup>
 <thead>
 <tr>
-	<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=LinkName<?php echo $page_string; ?>"><?php echo _AT('title');          ?></a></th>
-	<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=name<?php echo $page_string; ?>"><?php echo _AT('category');           ?></a></th>
-	<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=description<?php echo $page_string; ?>"><?php echo _AT('description'); ?></a></th>
+	<th scope="col"><a href="<?php echo url_rewrite('links/index.php?'.$orders[$order].'=LinkName'.$page_string); ?>"><?php echo _AT('title');          ?></a></th>
+	<th scope="col"><a href="<?php echo url_rewrite('links/index.php?'.$orders[$order].'=name'.$page_string); ?>"><?php echo _AT('category');           ?></a></th>
+	<th scope="col"><a href="<?php echo url_rewrite('links/index.php?'.$orders[$order].'=description'.$page_string); ?>"><?php echo _AT('description'); ?></a></th>
 </tr>
 </thead>
 <tbody>
@@ -172,7 +172,7 @@ $num_results = mysql_num_rows($result);
 	do {
 		?>
 		<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;">
-			<td><a href="links/index.php?view=<?php echo $row['link_id']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'links.LinkName'); ?></a></td>
+			<td><a href="<?php echo url_rewrite('links/index.php?view='.$row['link_id']); ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'links.LinkName'); ?></a></td>
 			<td><?php 
 				if (empty($row['name'])) {
 					$row['name'] = get_group_name($row['owner_id']);

@@ -405,6 +405,37 @@ function utf8_strpos($haystack, $needle, $offset=0){
 
 
 /**
+ * This is an Unicode aware replacement for strrpos.
+ * Based on utf8_strpos written by Leo
+ *
+ * @author Harris Wong <harris.wong@utoronto.ca>
+ * @see    strrpos()
+ * @param  string
+ * @param  string
+ * @param  integer
+ * @return integer
+ */
+function utf8_strrpos($haystack, $needle, $offset=0){
+    $comp = 0;
+    $length = null;
+
+    while (is_null($length) || $length < $offset) {
+        $pos = strrpos($haystack, $needle, $offset + $comp);
+
+        if ($pos === false)
+            return false;
+
+        $length = utf8_strlen(substr($haystack, 0, $pos));
+
+        if ($length < $offset)
+            $comp = $pos - $length;
+    }
+
+    return $length;
+}
+
+
+/**
  * Encodes UTF-8 characters to HTML entities
  *
  * @author Tom N Harris <tnharris@whoopdedo.org>

@@ -25,7 +25,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-require ('../tools/packages/lib.inc.php');
+require(AT_INCLUDE_PATH.'../tools/packages/lib.inc.php');
 
 $pkgs = getPackagesLearnerLinkList();
 

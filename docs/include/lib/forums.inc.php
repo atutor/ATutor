@@ -135,11 +135,13 @@ function valid_forum_user($forum_id) {
 
 	if (empty($row)) {
 		// not a course forum, let's check group:
-		$groups = implode(',', $_SESSION['groups']);
-		$sql	= "SELECT forum_id FROM ".TABLE_PREFIX."forums_groups WHERE group_id IN ($groups) AND forum_id=$forum_id";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
-			return TRUE;
+		if (!empty($_SESSION['groups'])){
+			$groups = implode(',', $_SESSION['groups']);
+			$sql	= "SELECT forum_id FROM ".TABLE_PREFIX."forums_groups WHERE group_id IN ($groups) AND forum_id=$forum_id";
+			$result = mysql_query($sql, $db);
+			if ($row = mysql_fetch_assoc($result)) {
+				return TRUE;
+			}
 		}
 
 		return FALSE;

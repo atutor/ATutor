@@ -85,9 +85,9 @@ if (count($tran_files) == 0) {
 	</colgroup>
 	<thead>
 	<tr>
-		<th scope="col"><a href="chat/index.php?<?php echo $orders[$order]; ?>=name"><?php echo _AT('chat_transcript');?></a></th>
+		<th scope="col"><a href="<?php echo url_rewrite('chat/index.php?'.$orders[$order].'=name'); ?>"><?php echo _AT('chat_transcript');?></a></th>
 		<th scope="col"><?php echo _AT('status'); ?></th>
-		<th scope="col"><a href="chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th> 
+		<th scope="col"><a href="<?php echo url_rewrite('chat/index.php?'.$orders[$order].'=date'); ?>"><?php echo _AT('date'); ?></a></th> 
 	</tr>
 	</thead>
 	<?php
@@ -107,7 +107,7 @@ if (count($tran_files) == 0) {
 	<tbody>
 	<?php foreach ($tran_files as $file => $date) { ?>
 		<tr onmousedown="document.location='<?php echo AT_BASE_HREF; ?>chat/view_transcript.php?t=<?php echo $file; ?>'">
-			<td><a href="chat/view_transcript.php?t=<?php echo $file; ?>"><?php echo $file; ?></a></td>
+			<td><a href="<?php echo url_rewrite('chat/view_transcript.php?t='.$file); ?>"><?php echo $file; ?></a></td>
 			<td>
 				<?php if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) { 
 					echo _AT('chat_currently_active');

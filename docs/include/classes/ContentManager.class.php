@@ -490,7 +490,7 @@ class ContentManager
 			$first['title'] = $this->getNumbering($first['content_id']).' '.$first['title'];
 		}
 		if ($first) {
-			$first['url'] = $_base_path.'content.php?cid='.$first['content_id'];
+			$first['url'] = $_base_path.url_rewrite('content.php?cid='.$first['content_id']);
 			$sequence_links['first'] = $first;
 		}
 
@@ -501,7 +501,7 @@ class ContentManager
 				$resume['title'] = $this->getNumbering($_SESSION['s_cid']).' ' . $resume['title'];
 			}
 
-			$resume['url'] = $_base_path.'content.php?cid='.$_SESSION['s_cid'];
+			$resume['url'] = $_base_path.url_rewrite('content.php?cid='.$_SESSION['s_cid']);
 
 			$sequence_links['resume'] = $resume;
 		} else {
@@ -515,9 +515,9 @@ class ContentManager
 				$next['title'] = $this->getNumbering($next['content_id']).' '.$next['title'];
 			}
 
-			$next['url'] = $_base_path.'content.php?cid='.$next['content_id'];
+			$next['url'] = $_base_path.url_rewrite('content.php?cid='.$next['content_id']);
 			if (isset($previous['content_id'])) {
-				$previous['url'] = $_base_path.'content.php?cid='.$previous['content_id'];
+				$previous['url'] = $_base_path.url_rewrite('content.php?cid='.$previous['content_id']);
 			}
 			
 			if (isset($previous['content_id'])) {
@@ -633,7 +633,7 @@ class ContentManager
 						$on = true;
 					}
 
-					$link .= ' <a href="'.$_base_path.'content.php?cid='.$content['content_id'].'" title="';
+					$link .= ' <a href="'.$_base_path.url_rewrite('content.php?cid='.$content['content_id']).'" title="';
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
 						$link .= $path.$counter.' ';
 					}

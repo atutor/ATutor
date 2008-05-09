@@ -21,20 +21,20 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!fs_authenticate($owner_type, $owner_id)) { 
 	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
 	exit;
 }
 
 if (isset($_GET['done'])) {
-	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder']));
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder'])));
 	exit;
 } else if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder']));
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder'])));
 	exit;
 } else if (isset($_POST['edit_cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['id']);
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['id']));
 	exit;
 } else if (isset($_POST['edit_submit'])) {
 	$_POST['comment'] = trim($_POST['comment']);
@@ -50,12 +50,12 @@ if (isset($_GET['done'])) {
 		$sql = "UPDATE ".TABLE_PREFIX."files_comments SET comment='$_POST[edit_comment]', date=date WHERE member_id=$_SESSION[member_id] AND comment_id=$_POST[comment_id]";
 		mysql_query($sql, $db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['id']);
+		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['id']));
 		exit;
 	}
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['folder']);
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['folder']));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['comment'] = trim($_POST['comment']);
@@ -75,7 +75,7 @@ if (isset($_GET['done'])) {
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: comments.php'.$owner_arg_prefix.'id='.$_POST['id']);
+		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_POST['id']));
 		exit;
 	}
 	$_GET['id'] = $_POST['id'];
@@ -98,7 +98,8 @@ if (!$files) {
 ?>
 
 <?php if ($_config['fs_versioning']): ?>
-	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<form method="get" action="<?php echo 'file_storage/comments.php'
+	//@harris echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
 	<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 	<div class="input-form" style="width: 50%">
@@ -161,7 +162,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 					<p><?php echo nl2br(htmlspecialchars($row['comment'])); ?></p>
 						<?php if ($row['member_id'] == $_SESSION['member_id']): ?>
 							<div style="text-align:right; font-size: smaller">
-								<a href="file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id.SEP.'comment_id='.$row['comment_id']; ?>#c<?php echo $row['comment_id']; ?>"><?php echo _AT('edit'); ?></a> | <a href="file_storage/delete_comment.php<?php echo $owner_arg_prefix . 'file_id='.$id.SEP; ?>id=<?php echo $row['comment_id']; ?>"><?php echo _AT('delete'); ?></a>
+								<a href="<?php echo url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$id.SEP.'comment_id='.$row['comment_id'].'#c'.$row['comment_id']); ?>"><?php echo _AT('edit'); ?></a> | <a href="file_storage/delete_comment.php<?php echo $owner_arg_prefix . 'file_id='.$id.SEP; ?>id=<?php echo $row['comment_id']; ?>"><?php echo _AT('delete'); ?></a>
 							</div>
 						<?php endif; ?>
 				</div>

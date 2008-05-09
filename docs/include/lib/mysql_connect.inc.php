@@ -11,24 +11,21 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-define('AT_INCLUDE_PATH', '../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-if (isset($_GET['back'])) {
-	header('Location:index.php');
-	exit;
+if (AT_INCLUDE_PATH !== 'NULL') {
+	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+	if (!$db) {
+		/* AT_ERROR_NO_DB_CONNECT */
+		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+		$err =& new ErrorHandler();
+		trigger_error('VITAL#Unable to connect to db.', E_USER_ERROR);
+		exit;
+	}
+	if (!@mysql_select_db(DB_NAME, $db)) {
+		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+		$err =& new ErrorHandler();
+		trigger_error('VITAL#DB connection established, but database "'.DB_NAME.'" cannot be selected.',
+						E_USER_ERROR);
+		exit;
+	}
 }
-
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-@readfile(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html');
 ?>
-
-</table>
-<br />
-
-<form method="get" action="chat/view_transcript.php">
-	<input type="submit" value="<?php echo _AT('back'); ?>" name="back" class="button" />
-</form>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

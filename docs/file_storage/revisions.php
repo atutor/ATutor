@@ -22,21 +22,21 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id))) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
 	exit;
 }
 
 if (isset($_GET['download'], $_GET['revision'])) {
-	header('Location: index.php'.$owner_arg_prefix.'download=1'.SEP.'files'.urlencode('[]').'='.$_GET['revision']);
+	header('Location: '.AT_BASE_HREF.'file_storage/index.php'.$owner_arg_prefix.'download=1'.SEP.'files'.urlencode('[]').'='.$_GET['revision']);
 	exit;
 } else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete'], $_GET['revision'])) {
-	header('Location: delete_revision.php'.$owner_arg_prefix.'id='.$_GET['revision']);
+	header('Location: '.AT_BASE_HREF.'file_storage/delete_revision.php'.$owner_arg_prefix.'id='.$_GET['revision']);
 	exit;
 } else if (isset($_GET['cancel'])) {
-	header('Location: index.php'.$owner_arg_prefix.'folder='.$_GET['folder']);
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_GET['folder']));
 	exit;
 } else if (isset($_GET['comments'])) {
-	header('Location: comments.php'.$owner_arg_prefix.'id='.$_GET['revision']);
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['revision']));
 	exit;
 }
 
@@ -130,7 +130,7 @@ usort($files, 'fs_revisions_sort_compare');
 		</td>
 		<td valign="top"><?php echo AT_date(_AT('filemanager_date_format'), $file['date'], AT_DATE_MYSQL_DATETIME); ?></td>
 		<td valign="top"><?php echo get_display_name($file['member_id']); ?></td>
-		<td valign="top"><a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file['file_id']; ?>"><?php echo $file['num_comments']; ?></a></td>
+		<td valign="top"><a href="<?php echo url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$file['file_id']); ?>"><?php echo $file['num_comments']; ?></a></td>
 		<td valign="top"><?php echo get_human_size($file['file_size']); ?></td>
 	</tr>
 <?php endforeach; ?>

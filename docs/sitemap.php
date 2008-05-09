@@ -44,7 +44,7 @@ foreach ($_current_modules as $module) {
 						echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" />';
 					}
 					echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="img-size-tree" />';
-					echo ' <a href="forum/index.php?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
+					echo ' <a href="'.url_rewrite('forum/index.php?fid='.$row['forum_id']).'">'.AT_print($row['title'], 'forums.title').'</a>';
 				}
 			} 
 		} else {

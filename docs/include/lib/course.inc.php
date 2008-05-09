@@ -73,15 +73,16 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
-	$_POST['access']      = $addslashes($_POST['access']);
-	$_POST['title']       = $addslashes($_POST['title']);
-	$_POST['description'] = $addslashes($_POST['description']);
-	$_POST['hide']        = $addslashes($_POST['hide']);
-	$_POST['pri_lang']	  = $addslashes($_POST['pri_lang']);
-	$_POST['created_date']= $addslashes($_POST['created_date']);
-	$_POST['copyright']	  = $addslashes($_POST['copyright']);
-	$_POST['icon']		  = $addslashes($_POST['icon']);
-	$_POST['banner']      = $addslashes($_POST['banner']);
+	$_POST['access']		  = $addslashes($_POST['access']);
+	$_POST['title']			  = $addslashes($_POST['title']);
+	$_POST['description']	  = $addslashes($_POST['description']);
+	$_POST['hide']			  = $addslashes($_POST['hide']);
+	$_POST['pri_lang']		  = $addslashes($_POST['pri_lang']);
+	$_POST['created_date']	  = $addslashes($_POST['created_date']);
+	$_POST['copyright']		  = $addslashes($_POST['copyright']);
+	$_POST['icon']			  = $addslashes($_POST['icon']);
+	$_POST['banner']		  = $addslashes($_POST['banner']);
+	$_POST['course_dir_name'] = $addslashes($_POST['course_dir_name']);
 
 	$_POST['course']	= intval($_POST['course']);
 	$_POST['notify']	= intval($_POST['notify']);
@@ -89,6 +90,22 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$_POST['instructor']= intval($_POST['instructor']);
 	$_POST['category_parent']	= intval($_POST['category_parent']);
 	$_POST['rss']       = intval($_POST['rss']);
+
+	// Course directory name (aka course slug)
+	if ($_POST['course_dir_name'] != ''){
+		//validate the course_dir_name, allow only alphanumeric, dash, underscore.
+		if (preg_match('/^[\w][\w\d\-\_]+$/', $_POST['course_dir_name'])==0){
+			$msg->addError('COURSE_DIR_NAME_INVALID');
+		}
+
+		//check if the course_dir_name is already being used
+		$sql = 'SELECT COUNT(course_id) as cnt FROM '.TABLE_PREFIX."courses WHERE course_id!=$_POST[course] AND course_dir_name='$_POST[course_dir_name]'";
+		$result = mysql_query($sql);
+		$num_of_dir = mysql_fetch_assoc($result);
+		if (intval($num_of_dir['cnt']) > 0){
+			$msg->addError('COURSE_DIR_NAME_IN_USE');
+		}		
+	}
 
 	// Custom icon
 	if ($_FILES['customicon']['name'] != ''){
@@ -221,7 +238,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$menu_defaults = ',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], $course_quotas primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date', end_date='$end_date' $menu_defaults";
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', course_dir_name='$_POST[course_dir_name]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], $course_quotas primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date', end_date='$end_date' $menu_defaults";
 
 	$result = mysql_query($sql, $db);
 	if (!$result) {

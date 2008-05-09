@@ -54,6 +54,7 @@ if (isset($_POST['form_course'])) {
 	$row['primary_language']	= $_POST['primary_language'];
 	$row['member_id']			= $_POST['member_id'];
 	$row['description']			= $_POST['description'];
+	$row['course_dir_name']		= $_POST['course_dir_name'];
 	$row['cat_id']				= $_POST['cat_id'];
 	$row['content_packaging']	= $_POST['content_packaging'];
 
@@ -199,6 +200,13 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<label for="description"><?php echo _AT('description'); ?></label><br />
 		<textarea id="description" cols="45" rows="2" name="description"><?php echo $row['description']; ?></textarea>
 	</div>
+
+	<?php if ($_config['course_dir_name']): ?>
+	<div class="row">
+		<label for="course_dir_name"><?php echo _AT('course_dir_name'); ?></label><br />
+		<input type="text" id="course_dir_name" name="course_dir_name" size="40" value="<?php echo htmlspecialchars($row['course_dir_name']); ?>" />
+	</div>
+	<?php endif; ?>
 
 	<?php $categories = get_categories(); ?>
 	<?php if (is_array($categories)): ?>

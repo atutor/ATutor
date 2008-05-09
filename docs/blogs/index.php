@@ -32,7 +32,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			$last_updated = '';
 		}
 
-		echo '<li class="top-tool"><a href="blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id'].'">'.$row['title'].$last_updated.'</a></li>';
+		echo '<li class="top-tool"><a href="'.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id']).'">'.$row['title'].$last_updated.'</a></li>';
 		$blogs = true;
 	}
 }

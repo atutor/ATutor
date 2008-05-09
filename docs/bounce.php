@@ -122,13 +122,20 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 	}
 }
 
-if (!empty($_REQUEST['p'])) {
-	$page = urldecode($_REQUEST['p']);
-	if (substr($page, 0, 1) == '/') {
-		$page = substr($page, 1);
+if (!empty($_REQUEST['pu'])) {
+	//for pretty url iff mod_rewrite is not on
+	if (AT_PRETTY_URL_MOD_LOADED===true){
+		$page = $_REQUEST['pu'];
+	} else {
+		$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'];
 	}
+} elseif (!empty($_REQUEST['p'])) {
+	$page = urldecode($_REQUEST['p']);
 } else {
 	$page = 'index.php';
+}
+if (substr($page, 0, 1) == '/') {
+	$page = substr($page, 1);
 }
 
 $_SESSION['enroll']		= AT_ENROLL_NO;

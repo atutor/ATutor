@@ -14,7 +14,6 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 $fid = intval($_GET['fid']);
 
 if (!isset($_GET['fid']) || !$fid) {

@@ -50,6 +50,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['fs_versioning']             = $_POST['fs_versioning'] ? 1 : 0;
 	$_POST['enable_mail_queue']         = $_POST['enable_mail_queue'] ? 1 : 0;
 	$_POST['display_name_format']       = intval($_POST['display_name_format']);
+	$_POST['pretty_url']				= intval($_POST['pretty_url']);
 
 	if (!isset($display_name_formats[$_POST['display_name_format']])) {
 		$_POST['display_name_format'] = $_config_defaults['display_name_format'];
@@ -284,6 +285,27 @@ if (!isset($_POST['submit'])) {
 			<input type="radio" name="auto_install_languages" value="1" disabled="disabled" /><?php echo _AT('enable'); ?> <input type="radio" name="auto_install_languages" value="0" id="ai_n" checked="checked" /><label for="ai_n"><?php echo _AT('disable'); ?></label>
 		<?php else: ?>
 			<input type="radio" name="auto_install_languages" value="1" id="ai_y" <?php if($_config['auto_install_languages']) { echo 'checked="checked"'; }?>  /><label for="ai_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="auto_install_languages" value="0" id="ai_n" <?php if(!$_config['auto_install_languages']) { echo 'checked="checked"'; }?>  /><label for="ai_n"><?php echo _AT('disable'); ?></label>
+		<?php endif; ?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('pretty_url'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['pretty_url'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="pretty_url" value="1" id="pu_y" <?php if($_config['pretty_url']) { echo 'checked="checked"'; }?> /><label for="pu_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="pretty_url" value="0" id="pu_n" <?php if(!$_config['pretty_url']) { echo 'checked="checked"'; }?> /><label for="pu_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('course_dir_name'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['course_dir_name'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="course_dir_name" value="1" id="cdn_y" <?php if($_config['course_dir_name']) { echo 'checked="checked"'; }?> /><label for="cdn_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="course_dir_name" value="0" id="cdn_n" <?php if(!$_config['course_dir_name']) { echo 'checked="checked"'; }?>  /><label for="cdn_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('apache_mod_rewrite'); ?><br />
+		<?php if (in_array('mod_rewrite', apache_get_modules())): ?>
+			<?php echo _AT('mod_rewrite'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['apache_mod_rewrite'] ? _AT('enable') : _AT('disable')); ?>)<br />
+			<input type="radio" name="apache_mod_rewrite" value="1" id="mr_y" <?php if($_config['apache_mod_rewrite']) { echo 'checked="checked"'; }?> /><label for="mr_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="apache_mod_rewrite" value="0" id="mr_n" <?php if(!$_config['apache_mod_rewrite']) { echo 'checked="checked"'; }?>  /><label for="mr_n"><?php echo _AT('disable'); ?></label>
+		<?php else: ?>
+			<?php echo _AT('mod_rewrite'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['apache_mod_rewrite'] ? _AT('enable') : _AT('disable')); ?>)<br />
+			<input type="radio" name="apache_mod_rewrite" value="1" id="mr_y" disabled="disabled" /><label for="mr_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="apache_mod_rewrite" value="0" id="mr_n" checked="checked" /><label for="mr_n"><?php echo _AT('disable'); ?></label>
 		<?php endif; ?>
 	</div>
 

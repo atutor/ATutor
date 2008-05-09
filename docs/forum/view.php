@@ -32,14 +32,14 @@ if (!valid_forum_user($fid)) {
 
 $forum_info = get_forum($fid);
 
-$_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
-$_pages['forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
-$_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php?fid='.$fid);
+$_pages[url_rewrite('forum/index.php?fid='.$fid)]['title']    = get_forum_name($fid);
+$_pages[url_rewrite('forum/index.php?fid='.$fid)]['parent']   = 'forum/list.php';
+$_pages[url_rewrite('forum/index.php?fid='.$fid)]['children'] = array(url_rewrite('forum/new_thread.php?fid='.$fid));
 
-$_pages['forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
-$_pages['forum/new_thread.php?fid='.$fid]['parent']    = 'forum/index.php?fid='.$fid;
+$_pages[url_rewrite('forum/new_thread.php?fid='.$fid)]['title_var'] = 'new_thread';
+$_pages[url_rewrite('forum/new_thread.php?fid='.$fid)]['parent']    = url_rewrite('forum/index.php?fid='.$fid);
 
-$_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
+$_pages['forum/view.php']['parent'] = url_rewrite('forum/index.php?fid='.$fid);
 
 
 if ($_REQUEST['reply']) {
@@ -52,7 +52,7 @@ $num_per_page = 10;
 if (!$_GET['page']) {
 	$page = 1;
 } else {
-	$page = intval($_GET['page']);
+	$page = (intval($_GET['page'])>0)?(intval($_GET['page'])):1;
 }
 $start = ($page-1)*$num_per_page;
 	
@@ -109,7 +109,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if ($i == $page) {
 			echo '<span class="forum-paginator-active">'.$i.'</span>';
 		} else {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i.'">'.$i.'</a>';
+			echo '<a href="'.url_rewrite($_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i).'">'.$i.'</a>';
 		}
 
 		if ($i<$num_pages){
@@ -147,7 +147,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if ($i == $page) {
 			echo '<span class="forum-paginator-active">'.$i.'</span>';
 		} else {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i.'">'.$i.'</a>';
+			echo '<a href="'.url_rewrite($_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i).'">'.$i.'</a>';
 		}
 
 		if ($i<$num_pages){

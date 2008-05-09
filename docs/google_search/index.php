@@ -1,7 +1,7 @@
 <?php
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require('../mods/_standard/google_search/SOAP_Google.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/google_search/SOAP_Google.php');
 $_custom_css = $_base_path . 'mods/_standard/google_search/module.css'; // use a custom stylesheet
 $search_key = $_config['gsearch'];
 

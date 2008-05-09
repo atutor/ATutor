@@ -29,7 +29,7 @@ if ($forum_list != 0) {
 
 	if (mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
-			echo '&#176; <a href="' . $_base_path.'forum/view.php?fid=' . $row['forum_id'] . SEP . 'pid=' . $row['post_id'] . '" title="' . $row['subject'] . ': ' . htmlspecialchars(get_display_name($row['member_id'])) . '">' . AT_print($row['subject'], 'forums_threads.subject') . '</a><br />';
+			echo '&#176; <a href="' . $_base_path.url_rewrite('forum/view.php?fid=' . $row['forum_id'] . SEP . 'pid=' . $row['post_id']) . '" title="' . $row['subject'] . ': ' . htmlspecialchars(get_display_name($row['member_id'])) . '">' . AT_print($row['subject'], 'forums_threads.subject') . '</a><br />';
 		}
 	} else {
 		echo '<em>'._AT('none_found').'</em>';

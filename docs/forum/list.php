@@ -15,7 +15,7 @@ define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-require_once(AT_INCLUDE_PATH.'lib/forums.inc.php');
+require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <table class="data static" summary="" rules="rows">
@@ -56,7 +56,7 @@ if ($num_shared || $num_nonshared || $num_groups) {
 
 		foreach ($forums as $row) : ?>
 			<tr>
-				<td><a href="forum/index.php?fid=<?php echo $row['forum_id']; ?>"><?php echo $row['title']; ?></a> <?php
+				<td><a href="<?php echo url_rewrite('forum/index.php?fid='.$row['forum_id']); ?>"><?php echo $row['title']; ?></a> <?php
 
 					if ($_SESSION['enroll']) {
 						$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";

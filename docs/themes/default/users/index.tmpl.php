@@ -9,7 +9,7 @@
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">
 		<div style="font-size:smaller;" align="right"><?php
-			$link  = '<a href="bounce.php?course=' . $row['course_id'] . '">';
+			$link  = '<a href="'.url_rewrite('bounce.php?course=' . $row['course_id']) . '">';
 			$link2 = '</a>';
 
 			if ($_SESSION['member_id'] == $row['member_id']) {

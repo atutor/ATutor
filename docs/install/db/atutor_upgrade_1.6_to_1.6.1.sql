@@ -25,10 +25,11 @@ CREATE TABLE `auto_enroll_courses` (
    PRIMARY KEY ( `auto_enroll_courses_id` )
 );
 
+# course directory name
+ALTER TABLE `courses` ADD COLUMN `course_dir_name` VARCHAR(255) NOT NULL AFTER `description`;
+
 # Extend members.password for encrypted password
 ALTER TABLE `members` MODIFY password VARCHAR(40);
-
-
 
 # --------------------------------------------------------
 # Table structure for table `patches`

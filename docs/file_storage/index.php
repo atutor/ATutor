@@ -95,7 +95,7 @@ if (!isset($owner_id)) {
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id))) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
 	exit;
 }
 $_SESSION['fs_owner_type'] = $owner_type;
@@ -103,7 +103,7 @@ $_SESSION['fs_owner_id']   = $owner_id;
 $_SESSION['fs_folder_id']  = $folder_id;
 
 if (isset($_GET['submit_workspace'])) {
-	header('Location: index.php'.$owner_arg_prefix);
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix));
 	exit;
 }
 
@@ -114,7 +114,7 @@ if (isset($_GET['assignment']) && (isset($_GET['files']) || isset($_GET['folders
 	} else if (!isset($_GET['files'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 	} else {
-		header('Location: assignment.php?'.$_SERVER['QUERY_STRING']);
+		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/assignment.php?'.$_SERVER['QUERY_STRING']));
 		exit;
 	}
 }
@@ -122,7 +122,7 @@ if (isset($_GET['assignment']) && (isset($_GET['files']) || isset($_GET['folders
 else if (isset($_GET['revisions'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = current($_GET['files']);
-		header('Location: revisions.php'.$owner_arg_prefix.'id='.$file_id);
+		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_id));
 		exit;
 	}
 }
@@ -130,7 +130,7 @@ else if (isset($_GET['revisions'], $_GET['files'])) {
 else if (isset($_GET['comments'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = current($_GET['files']);
-		header('Location: comments.php'.$owner_arg_prefix.'id='.$file_id);
+		header('Location: '.AT_BASE_HREF.url_rewrite('comments.php'.$owner_arg_prefix.'id='.$file_id));
 		exit;
 	}
 }
@@ -138,17 +138,17 @@ else if (isset($_GET['comments'], $_GET['files'])) {
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['edit']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = current($_GET['files']);
-		header('Location: edit.php'.$owner_arg_prefix.'id='.$file_id);
+		header('Location: '.AT_BASE_HREF.'file_storage/edit.php'.$owner_arg_prefix.'id='.$file_id);
 		exit;
 	} else if (is_array($_GET['folders']) && (count($_GET['folders']) == 1) && empty($_GET['files'])) {
 		$folder_id = current($_GET['folders']);
-		header('Location: edit_folder.php'.$owner_arg_prefix.'id='.$folder_id);
+		header('Location: '.AT_BASE_HREF.'file_storage/edit_folder.php'.$owner_arg_prefix.'id='.$folder_id);
 		exit;
 	}
 }
 // action - Move Files/Folders
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['move']) && (isset($_GET['folders']) || isset($_GET['files']))) {
-	header('Location: move.php'.$owner_arg_prefix.$_SERVER['QUERY_STRING']);
+	header('Location: '.AT_BASE_HREF.'file_storage/move.php'.$owner_arg_prefix.$_SERVER['QUERY_STRING']);
 	exit;
 }
 // action - Download Files/Folders
@@ -285,13 +285,13 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 		$msg->addFeedback('DIR_DELETED');
 	}
 
-	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder'])));
 	exit;
 }
 // action - Cancel Delete
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder'])));
 	exit;
 
 // action - Create Folder
@@ -311,7 +311,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (NULL, $parent_folder_id, $owner_type, $owner_id, '$_POST[new_folder_name]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
+		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder_id));
 		exit;
 	}
 }
@@ -338,7 +338,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 		$result = mysql_query($sql, $db);
 		if (!$row = mysql_fetch_assoc($result)) {
 			$msg->addError('ACCESS_DENIED');
-			header('Location: index.php');
+			header('Location: '.AT_BASE_HREF.'file_storage/index.php');
 			exit;
 		}
 	}
@@ -380,7 +380,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 			$msg->addError('FILE_NOT_SAVED');
 		}
 	}
-	header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder_id));
 	exit;
 } else if ((isset($_GET['delete']) || isset($_GET['download']) || isset($_GET['move']) || isset($_GET['edit']) || isset($_GET['assignment'])) && !isset($_GET['files']) && !isset($_GET['folders'])) {
 	$msg->addError('NO_ITEM_SELECTED');
@@ -535,13 +535,14 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 
 		<br />
 		<?php echo _AT('current_path'); ?>
-			<a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=0"><?php echo _AT('home'); ?></a>
+			<a href="<?php 
+			echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder=0'); ?>"><?php echo _AT('home'); ?></a>
 		<?php foreach ($folder_path as $folder_info): ?>
 			<?php if ($folder_info['folder_id'] == $folder_id): ?>
 				» <?php echo htmlspecialchars($folder_info['title']); ?>
 				<?php $parent_folder_id = $folder_info['parent_folder_id']; ?>
 			<?php else: ?>
-				» <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a>
+				» <a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.$folder_info['folder_id']); ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a>
 			<?php endif; ?>
 		<?php endforeach; ?>
 	</td>
@@ -549,12 +550,12 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 <tr>
 
 	<th align="left" width="10"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=file_name"><?php echo _AT('file');      ?></a></th>
+	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order].'=file_name'); ?>"><?php echo _AT('file');      ?></a></th>
 	<th scope="col"><?php echo _AT('author');    ?></th>
 	<th scope="col"><?php if ($_config['fs_versioning']): ?><?php echo _AT('revisions'); ?><?php endif; ?></th>
 	<th scope="col"><?php echo _AT('comments');  ?></th>
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=file_size"><?php echo _AT('size'); ?></a></th>
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th>
+	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order].'=file_size'); ?>"><?php echo _AT('size'); ?></a></th>
+	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order].'=date'); ?>"><?php echo _AT('date'); ?></a></th>
 </tr>
 
 </thead>
@@ -576,14 +577,15 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 <tbody>
 <?php if ($folder_id): ?>
 	<tr>
-		<td colspan="7"><a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.intval($folder_path[count($folder_path)-1]['parent_folder_id']); ?>"><img src="images/arrowicon.gif" border="0" height="" width="" alt="" /> <?php echo _AT('back'); ?></a></td>
+		<td colspan="7"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.intval($folder_path[count($folder_path)-1]['parent_folder_id'])); ?>"><img src="images/arrowicon.gif" border="0" height="" width="" alt="" /> <?php echo _AT('back'); ?></a></td>
 	</tr>
 <?php endif; ?>
 <?php if ($folders || $files): ?>
 	<?php foreach ($folders as $folder_info): ?>
 		<tr onmousedown="document.form['f<?php echo $folder_info['folder_id']; ?>'].checked = !document.form['f<?php echo $folder_info['folder_id']; ?>'].checked; rowselectbox(this, document.form['f<?php echo $folder_info['folder_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $folder_info['folder_id']; ?>_1">
 			<td width="10"><input type="checkbox" name="folders[]" value="<?php echo $folder_info['folder_id']; ?>" id="f<?php echo $folder_info['folder_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
-			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <a href="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>folder=<?php echo $folder_info['folder_id']; ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a></td>
+			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.
+			$folder_info['folder_id']); ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -611,7 +613,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 						}
 						?>
 						
-						<a href="<?php echo 'file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo _AT($lang_var, $file_info['num_revisions']); ?></a>
+						<a href="<?php echo url_rewrite('file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_info['file_id']); ?>"><?php echo _AT($lang_var, $file_info['num_revisions']); ?></a>
 					<?php else: ?>
 						-
 					<?php endif; ?>
@@ -625,7 +627,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 				$lang_var = 'fs_comments';
 			}
 			?>
-			<a href="<?php echo 'file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']; ?>"><?php echo _AT($lang_var, $file_info['num_comments']); ?></a></td>
+			<a href="<?php echo url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']); ?>"><?php echo _AT($lang_var, $file_info['num_comments']); ?></a></td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
 			<td align="right" valign="top"><?php echo AT_date(_AT('filemanager_date_format'), $file_info['date'], AT_DATE_MYSQL_DATETIME); ?></td>
 		</tr>

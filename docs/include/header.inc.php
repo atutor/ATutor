@@ -39,10 +39,10 @@ global $_custom_head;
 global $substr, $strlen;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
-
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
 $savant->assign('base_path', $_base_path);
+$savant->assign('base_tmpl_path', $_SERVER['HTTP_HOST']);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 $savant->assign('current_date', AT_date(_AT('announcement_date_format')));
 
@@ -59,6 +59,11 @@ if (isset($course_base_href) || isset($content_base_href)) {
 
 $savant->assign('content_base_href', $_tmp_base_href);
 $savant->assign('base_href', AT_BASE_HREF);
+
+//Handle pretty url pages
+if ((($_config['course_dir_name'] + $_config['pretty_url']) > 0) && ($temp = strpos($_SERVER['PHP_SELF'], AT_PRETTY_URL_HANDLER)) > 0){
+	$current_page = $pretty_current_page; //this is set in AT_PRETTY_URL_HANDLER
+}
 
 if ($myLang->isRTL()) {
 	$savant->assign('rtl_css', '<link rel="stylesheet" href="'.$_base_path.'themes/'.$_SESSION['prefs']['PREF_THEME'].'/rtl.css" type="text/css" />');
@@ -91,8 +96,6 @@ if (isset($_SESSION['valid_user']) && $_SESSION['valid_user'] === true) {
 } else {
 	$savant->assign('user_name', _AT('guest'));
 }
-
-$current_page = $substr($_SERVER['PHP_SELF'], $strlen($_base_path));
 
 if (!isset($_pages[$current_page])) {
 	global $msg;
@@ -166,12 +169,12 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 		$custom_icon_path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
 		if (file_exists($custom_icon_path.$row['icon'])) {
 			if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-				$course_icon = $_base_href.'get_course_icon.php/?id='.$_SESSION['course_id'];
+				$course_icon = $_base_path.'get_course_icon.php/?id='.$_SESSION['course_id'];
 			} else {
-				$course_icon = $_base_href.'content/' . $_SESSION['course_id'] . '/';
+				$course_icon = $_base_path.'content/' . $_SESSION['course_id'] . '/';
 			}
 		} else {
-			$course_icon = $_base_href.'images/courses/'.$row['icon'];
+			$course_icon = $_base_path.'images/courses/'.$row['icon'];
 		}
 		$savant->assign('icon', $course_icon);
 	}
@@ -258,5 +261,4 @@ if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['pop
 } else {
 	$savant->display('include/header.tmpl.php');
 }
-
 ?>

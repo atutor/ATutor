@@ -69,7 +69,7 @@ if (!$test_row['random']) {
 }	
 ?>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="get" action="tools/test_intro.php">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>"/>
 
 <div class="input-form">

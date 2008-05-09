@@ -297,7 +297,7 @@ function get_main_navigation($current_page) {
 					$_page_title = _AT($_pages[$page]['title_var']);
 				}
 				
-				$_top_level_pages[] = array('url' => $_base_path . $page, 'title' => $_page_title);
+				$_top_level_pages[] = array('url' => $_base_path . url_rewrite($page), 'title' => $_page_title);
 			}
 		}
 	} else if (isset($parent_page)) {
@@ -313,7 +313,7 @@ function get_current_main_page($current_page) {
 	$parent_page = $_pages[$current_page]['parent'];
 
 	if (isset($parent_page) && defined($parent_page)) {
-		return $_base_path . $current_page;
+		return $_base_path . url_rewrite($current_page);
 	} else if (isset($parent_page)) {
 		return get_current_main_page($parent_page);
 	}
@@ -400,7 +400,7 @@ function get_home_navigation() {
 			} else {
 				$title = _AT($_pages[$child]['title_var']);
 			}
-			$home_links[] = array('url' => $_base_path . $child, 'title' => $title, 'img' => $_base_path.$_pages[$child]['img']);
+			$home_links[] = array('url' => $_base_path . url_rewrite($child), 'title' => $title, 'img' => $_base_path.$_pages[$child]['img']);
 		}
 	}
 

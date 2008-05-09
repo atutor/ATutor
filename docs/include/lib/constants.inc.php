@@ -55,6 +55,9 @@ $_config_defaults['sent_msgs_ttl']             = 120; // number of days till sav
 $_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled/unsupported, (non-zero is the actual mysql value)
 $_config_defaults['latex_server']              = 'http://www.forkosh.dreamhost.com/mimetex.cgi?'; // the full URL to an external LaTeX parser
 $_config_defaults['gtype']					   = 0;	//Defaulted to be original google search, @author Harris
+$_config_defaults['pretty_url']				   = 0;	//pretty url, disabled
+$_config_defaults['course_dir_name']		   = 0;	//course dir name (course slug), disabled
+$_config_defaults['apache_mod_rewrite']		   = 0;	//apache mod_rewrite extension, disabled by default.
 $_config = $_config_defaults;
 
 
@@ -169,11 +172,26 @@ if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
 	$server_protocol = 'http://';
 }
 
+/* Handles pretty url - @author Harris */
+define('AT_PRETTY_URL_HANDLER', 'go.php');	
+if ($_config['apache_mod_rewrite'] > 0) {
+	define('AT_PRETTY_URL_MOD_LOADED', true);
+} else {
+	define('AT_PRETTY_URL_MOD_LOADED', false);
+}
 
 $dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
 $url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 $_base_href	 = array_slice($url_parts, 0, count($url_parts) - $dir_deep-1);
 $_base_href	 = $server_protocol . implode('/', $_base_href).'/';
+
+if (($temp = strpos($_base_href, AT_PRETTY_URL_HANDLER)) > 0){
+	$endpos = $temp;
+} else {
+	$endpos = strlen($_base_href); 
+
+}
+$_base_href	 = substr($_base_href, 0, $endpos);
 $_base_path  = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST']));
 
 define('AT_BASE_HREF', $_base_href);

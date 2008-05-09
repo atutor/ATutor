@@ -21,13 +21,13 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
 	exit;
 }
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?folder='.abs($_POST['parent_folder']));
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php?folder='.abs($_POST['parent_folder'])));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['id'] = abs($_POST['id']);
@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 		mysql_query($sql, $db);
 
 		$msg->addFeedback('FOLDER_EDITED_SUCCESSFULLY');
-		header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder);
+		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder));
 		exit;
 	}
 

@@ -73,6 +73,12 @@
 
 			<dt>Automatically Install New Language Packs</dt>
 			<dd>If enabled, and if the <a href="cron_setup.php">cron job</a> (automated event scheduler) has been set up, new language packs published on atutor.ca will be imported automatically This option is available in ATutor 1.5.3.2+.</dd>
+
+			<dt>Pretty URL</dt>
+			<dd>If enabled, all the public accessible pages will automatically converts their URLs to "pretty url".  Pretty URL will remove the traditional URL query stirngs, and replace them with slashes (/).  This option is available in ATutor 1.6.1+.</dd>
+
+			<dt>Course Directory Name</dt>
+			<dd>If enabled, and only if the Pretty URL is enabled.  The course id in the pretty URL will be replaced by a custom course directory name.  This name can be setup individually and uniquely in the course property.  This option is available in ATutor 1.6.1+.</dd>
 		</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>

@@ -1466,9 +1466,9 @@ exit;
 		<p><kbd>url_rewrite()</kbd> -- Change an url to a pretty url.</p>
 
 		<h4>Description</h4>
-			<p><kbd>string <strong>urlencode_rewrite</strong>( string $f )</kbd></p>
+			<p><kbd>string <strong>url_rewrite</strong>( string $f, boolean $g)</kbd></p>
 
-			<p>This function returns a pretty URL from the given parameter. Its purpose is to change the URLs to a "prettier" format in order to extend user friendliness in the system, and to create indexes for Google search.  <kbd>$f</kbd> may be an <kbd>string</kbd> of URL, '?' and the seprators in the URL query will be replaced by slashes.</p>
+			<p>This function returns a pretty URL from the given parameter. Its purpose is to change the URLs to a "prettier" format in order to extend user friendliness in the system, and to create indexes for Google search.  This function will authenticate itself towards the current pages.  In our definition, admins, login, registration pages should not have pretty url applied.  However, if one want to use url_rewrite on these pages, please force it by using the second parameter, <kbd>$g</kbd>.  Please note that the system preference will overwrite the force effect.  <kbd>$f</kbd> may be an <kbd>string</kbd> of URL, '?' and the seprators in the URL query will be replaced by slashes.</p>
 
 		<h4>Location</h4>
 			<p><kbd>`include/vitals.inc.php`</kbd></p>
@@ -1484,7 +1484,7 @@ echo url_rewrite($url);		//output redirect.php/1/forum/view.php/fid/3/pid/4
 		<p>To change an URL for mods:
 <pre class="code">
 $url = 'mods/hello_world/index.php';
-echo url_rewrite($url);		//output redirect.php/1/mods/hello_world/index.php
+echo url_rewrite($url, true);		//output redirect.php/1/mods/hello_world/index.php
 </pre></p>
 
 

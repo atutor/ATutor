@@ -36,7 +36,7 @@ if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?fid='.$fid);
+	header('Location: '.AT_BASE_HREF.url_rewrite('forum/index.php?fid='.$fid));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
@@ -179,7 +179,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id'].SEP.'page='.$_POST['page']);
+		header('Location: '.AT_BASE_HREF.url_rewrite('forum/view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id'].SEP.'page='.$_POST['page']));
 		exit;
 	}
 }

@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id$
 define('AT_INCLUDE_PATH', '../include/');
-require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once (AT_INCLUDE_PATH.'vitals.inc.php');
 
 // authenticate ot+oid..
 $owner_type = abs($_REQUEST['ot']);
@@ -51,13 +51,13 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
-		header('Location: post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id);
+		header('Location: '.AT_BASE_HREF.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id));
 		exit;
 	}
 }
 
 if (!$post_row = mysql_fetch_assoc($result)) {
-	header('Location: view.php?ot='.$owner_type.SEP.'oid='.$owner_id);
+	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id));
 	exit;
 }
 
