@@ -23,9 +23,9 @@
 	<td align="center" valign="top"><?php echo $this->num_false; ?> / <?php echo $this->num_results; ?></td>
 </tr>
 <tr>
-	<td align="center" valign="top"><?php echo $this->num_results ? round($this->num_blanks/$this->num_results*100) : 0; ?>%</td>
-	<td align="center" valign="top"><?php echo $this->num_results ? round($this->num_true/$this->num_results*100) : 0; ?>%</td>
-	<td align="center" valign="top"><?php echo $this->num_results ? round($this->num_false/$this->num_results*100) : 0; ?>%</td>
+	<td align="center" valign="top"><div class="qstat_bar-border"><div class="qstat_bar-bar"><div class="qstat_bar-fill" style="height:<?php echo 100-($this->num_results ? round($this->num_blanks/$this->num_results*100) : 0); ?>%;"></div></div></div><?php echo $this->num_results ? round($this->num_blanks/$this->num_results*100) : 0; ?>%</td>
+	<td align="center" valign="top"><div class="qstat_bar-border"><div class="qstat_bar-bar"><div class="qstat_bar-fill" style="height:<?php echo 100-($this->num_results ? round($this->num_true/$this->num_results*100) : 0); ?>%;"></div></div></div><?php echo $this->num_results ? round($this->num_true/$this->num_results*100) : 0; ?>%</td>
+  <td align="center" valign="top"><div class="qstat_bar-border"><div class="qstat_bar-bar"><div class="qstat_bar-fill" style="height:<?php echo 100-($this->num_results ? round($this->num_false/$this->num_results*100) : 0); ?>%;"></div></div></div><?php echo $this->num_results ? round($this->num_false/$this->num_results*100) : 0; ?>%</td>
 </tr>
 </table>
 
