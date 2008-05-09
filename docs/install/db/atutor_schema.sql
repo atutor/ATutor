@@ -189,6 +189,7 @@ CREATE TABLE `courses` (
   `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `title` VARCHAR(255) NOT NULL ,
   `description` text NOT NULL ,
+  `course_dir_name` VARCHAR(255) NOT NULL,
   `notify` tinyint(4) NOT NULL default '0',
   `max_quota` varchar(30) NOT NULL default '',
   `max_file_size` varchar(30) NOT NULL default '',
@@ -758,7 +759,6 @@ CREATE TABLE `tests` (
   `test_id` mediumint(8) unsigned NOT NULL auto_increment,
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `title` VARCHAR(255) NOT NULL ,
-  `description` TEXT NOT NULL,
   `format` tinyint(4) NOT NULL default '0',
   `start_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `end_date` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -766,10 +766,6 @@ CREATE TABLE `tests` (
   `num_questions` tinyint(3) unsigned NOT NULL default '0',
   `instructions` text NOT NULL ,
   `content_id` mediumint(8) NOT NULL default '0',
-  `passscore` MEDIUMINT NOT NULL default '0',
-  `passpercent` MEDIUMINT NOT NULL default '0',
-  `passfeedback` TEXT NOT NULL,
-  `failfeedback` TEXT NOT NULL,
   `result_release` tinyint(4) unsigned NOT NULL default '0',
   `random` tinyint(4) unsigned NOT NULL default '0',
   `difficulty` tinyint(4) unsigned NOT NULL default '0',
@@ -778,6 +774,11 @@ CREATE TABLE `tests` (
   `out_of` varchar(4) NOT NULL default '',
   `guests` TINYINT NOT NULL DEFAULT '0',
   `display` TINYINT NOT NULL DEFAULT '0',
+  `description` TEXT NOT NULL,
+  `passscore` MEDIUMINT NOT NULL default '0',
+  `passpercent` MEDIUMINT NOT NULL default '0',
+  `passfeedback` TEXT NOT NULL,
+  `failfeedback` TEXT NOT NULL,
   PRIMARY KEY  (`test_id`)
 ) TYPE=MyISAM;
 

@@ -4,11 +4,11 @@
 
 # support new changes for Test/Survey
 ALTER TABLE `tests`
-ADD `description` TEXT NOT NULL AFTER `title` , 
-ADD `passscore` MEDIUMINT NOT NULL AFTER `content_id` , 
-ADD `passpercent` MEDIUMINT NOT NULL AFTER `passscore` ,
-ADD `passfeedback` TEXT NOT NULL AFTER `passpercent` , 
-ADD `failfeedback` TEXT NOT NULL AFTER `passfeedback` ;
+ADD `description` TEXT NOT NULL, 
+ADD `passscore` MEDIUMINT NOT NULL, 
+ADD `passpercent` MEDIUMINT NOT NULL,
+ADD `passfeedback` TEXT NOT NULL, 
+ADD `failfeedback` TEXT NOT NULL;
 
 # support auto enrollment at registration
 CREATE TABLE `auto_enroll` (
