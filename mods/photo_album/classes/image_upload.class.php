@@ -101,8 +101,8 @@ class IMAGE_UPLOAD extends PA{
 	function checkValidSize($file){
 		$max_size=get_max_file_size(PA::getVariable('course_id'));
 		if ($max_size==-1){
-			global $_config_defaults;
-			$max_size=$_config_defaults['max_file_size'];
+			global $_config;
+			$max_size=$_config['max_file_size'];
 		} 
 		if ($file > $max_size){
 			$this->storeUserError('file_size');
