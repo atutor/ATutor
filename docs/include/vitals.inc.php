@@ -823,7 +823,6 @@ function url_rewrite($url, $force=false){
 		} elseif (preg_match('/bounce.php\?course=([\d]+)$/', $url, $matches) == 1){
 			$course_id = $url_parser->getCourseDirName($matches[1]);
 		}
-
 		$url = $pathinfo[1]->convertToPrettyUrl($course_id, $url);
 	}
 		

@@ -177,7 +177,7 @@ class UrlRewrite  {
 		}
 
 		//if mod_rewrite is switched on, defined in constants.inc.php
-		if (AT_PRETTY_URL_MOD_LOADED===true){
+		if ($_config['apache_mod_rewrite'] > 0){
 			return $pretty_url;
 		}
 

@@ -124,7 +124,7 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 
 if (!empty($_REQUEST['pu'])) {
 	//for pretty url iff mod_rewrite is not on
-	if (AT_PRETTY_URL_MOD_LOADED===true){
+	if ($_config['apache_mod_rewrite'] > 0){
 		$page = $_REQUEST['pu'];
 	} else {
 		$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'];
