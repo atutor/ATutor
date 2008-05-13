@@ -60,8 +60,9 @@ if (!$obj->isEmpty()){
 		exit;
 	} 
 } elseif ($_pretty_url_course_id==0) {
-	header('location: '.AT_BASE_HREF.'bounce.php?course=0');
-	exit;
+	return;
+//	header('location: '.AT_BASE_HREF.'bounce.php?course=0');
+//	exit;
 } elseif ($_pretty_url_course_id != ''){
 	header('location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id);
 	exit;
