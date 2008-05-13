@@ -113,8 +113,12 @@ class UrlRewrite  {
 		}
 
 		$pretty_url = '';		//init url
-		$query_parts = explode(SEP, $query);		
+		$query_parts = explode(SEP, $query);
 		foreach ($query_parts as $index=>$attributes){
+			if(empty($attributes)){
+				//skip the ones that are empty.
+				continue;
+			}
 			list($key, $value) = preg_split('/\=/', $attributes, 2);
 			$pretty_url .= $key . '/' . $value .'/';
 		}

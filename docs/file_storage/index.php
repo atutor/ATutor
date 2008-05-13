@@ -422,7 +422,7 @@ while ($row = mysql_fetch_assoc($result)) {
 ?>
 
 <?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
-	<form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>" enctype="multipart/form-data" name="form0">
+	<form method="post" action="<?php echo 'file_storage/index.php'.$owner_arg_prefix; ?>" enctype="multipart/form-data" name="form0">
 	<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 	<div style="float:right;">
 		<div style="margin: 0px auto; width: 50%;">	
@@ -489,7 +489,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 }
 ?>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<form method="get" action="file_storage/index.php" name="form">
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 <input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <table class="data">
