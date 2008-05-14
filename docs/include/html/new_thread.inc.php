@@ -26,6 +26,10 @@ if ($_POST['submit']) {
 	$body		= $_POST['body'];
 	$parent_id	= $_POST['parent_id'];
 	$parent_name	= $_POST['parent_name'];
+	//post reply is set when there is an error occuring.
+	if ($_POST['reply']!=''){
+		$saved_post['body'] = $_POST['replytext'];
+	}
 } else if ($_GET['reply'] != '') {
 	$subject = $saved_post['subject'];
 
@@ -39,7 +43,7 @@ if ($_POST['submit']) {
 <form action="forum/new_thread.php" method="post" name="form">
 <input name="parent_id" type="hidden" value="<?php echo $parent_id; ?>" />
 <input name="fid" type="hidden" value="<?php echo $fid; ?>" />
-<input name="reply" type="hidden" value="<?php echo $_GET['reply']; ?>" />
+<input name="reply" type="hidden" value="<?php echo $_REQUEST['reply']; ?>" />
 <input name="page" type="hidden" value="<?php echo $_GET['page']; ?>" />
 <input name="parent_name" type="hidden" value="<?php echo urlencode($parent_name); ?>" />
 
@@ -61,7 +65,7 @@ if ($_POST['submit']) {
 		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
 	</div>
 
-	<?php if ($_GET['reply']): ?>
+	<?php if ($_REQUEST['reply']): ?>
 		<div class="row">
 			<label for="body"><?php echo _AT('forum_reply_to'); ?></label><br />
 			<textarea cols="45" name="replytext" rows="5"><?php echo $saved_post['body']; ?></textarea>
