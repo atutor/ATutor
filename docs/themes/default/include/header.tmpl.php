@@ -77,7 +77,7 @@ global $system_courses, $_custom_css,$db;
 
 </head>
 <body onload="<?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="<?php echo $this->base_tmpl_path; ?>overlib.js" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo $this->base_path; ?>overlib.js" type="text/javascript"></script>
 <script language="javascript" type="text/javascript">
 //<!--
 var newwindow;
