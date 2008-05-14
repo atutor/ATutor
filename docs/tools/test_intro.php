@@ -20,7 +20,7 @@ $tid = intval($_GET['tid']);
 
 
 // make sure max attempts not reached, and still on going
-$sql		= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
+$sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date2, UNIX_TIMESTAMP(end_date) AS end_date2 FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
 $result = mysql_query($sql, $db);
 $test_row = mysql_fetch_assoc($result);
 /* check to make sure we can access this test: */
@@ -46,6 +46,20 @@ if (isset($_GET['cancel'])) {
 	} else {
 		header('Location: take_test.php?tid='.$tid);
 	}
+	exit;
+}
+
+/* 
+ * If max attempted reached, then stop it.
+ * @3300
+ */
+$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id=".$_SESSION['member_id'];
+if ( (($test_row['start_date2'] > time()) || ($test_row['end_date2'] < time())) || 
+   ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printErrors('MAX_ATTEMPTS');
+	
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
