@@ -169,6 +169,9 @@ class UrlRewrite  {
 		} elseif (strpos($front, $host_dir)!==FALSE){
 			//Not a relative link, it contains the full PHP_SELF path.
 			$front = substr($front, strlen($host_dir)+1);  //stripe off the slash after the host_dir as well
+		} elseif ($course_id == ''){
+			//if this is my start page
+			return $url;
 		}
 		if ($pretty_url==''){
 			$pretty_url = $course_id.'/'.$front;
