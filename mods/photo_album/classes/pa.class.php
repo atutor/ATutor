@@ -22,7 +22,11 @@
  */
  
 if (!defined('PATH')){
-	define('PATH', './');
+	if (preg_match('/'.AT_PRETTY_URL_HANDLER.'\/.*\/(mods\/.*\/)/', $_SERVER['PHP_SELF'], $matches) > 0){
+		define('PATH', $matches[1]);
+	} else {
+		define('PATH', './');
+	}
 }
 
 require_once (PATH.'define.php');
