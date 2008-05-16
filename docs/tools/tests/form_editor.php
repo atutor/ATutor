@@ -69,7 +69,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 <script type="text/javascript"><!--
 function init() {
-	tinyMCE.setContent(window.opener.document.getElementById("<?php echo $area; ?>"). value);
+	tinyMCE.activeEditor.setContent(window.opener.document.getElementById("<?php echo $area; ?>"). value);
 }
 //--></script>
 
@@ -110,7 +110,7 @@ function init() {
 <!--
 function insertTo(field) {
 		if (window.opener.document.getElementById(field)) {
-			window.opener.document.getElementById(field).value = tinyMCE.getContent('body_text');
+			window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent({format : 'raw'});
 		}
 }
 -->
