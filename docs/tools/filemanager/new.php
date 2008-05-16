@@ -129,6 +129,8 @@ if (isset($_POST['savenewfile'])) {
 	}
 }
 
+$onload="on_load()";
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 
@@ -149,9 +151,9 @@ if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
 		$_REQUEST['setvisual'] = 0;
 	}
 }
-if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
-	load_editor('body_text');
-}
+
+// load tinymce library
+load_editor(false, "none");
 
 $pathext = $_GET['pathext']; 
 $popup   = $_GET['popup'];
@@ -176,27 +178,24 @@ if (!$_POST['extension']) {
 			<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
 		</div>
 
-<div class="row">
-
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
-		<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
-		<label for="text"><?php echo _AT('plain_text'); ?></label>
-
-		, <input type="radio" name="extension" value="html" id="html" <?php if ($_POST['formatting'] ==1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
-		<label for="html"><?php echo _AT('html'); ?></label>
-
-		<?php if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) : ?>
+		<div class="row">
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
+			<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+			<label for="text"><?php echo _AT('plain_text'); ?></label>
+	
+			, <input type="radio" name="extension" value="html" id="html" <?php if ($_POST['formatting'] ==1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+			<label for="html"><?php echo _AT('html'); ?></label>
+	
 			<input type="hidden" name="setvisual" value="<?php echo $_POST['setvisual']; ?>" />
-			<input type="submit" name="settext" value="<?php echo _AT('switch_text'); ?>" />
-		<?php else: ?>
-			<input type="submit" name="setvisual" value="<?php echo _AT('switch_visual'); ?>" <?php if ($_POST['formatting']==0) { echo 'disabled="disabled"'; } ?> />
-		<?php endif; ?>
-	</div>
+			<input type="hidden" name="settext" value="<?php echo $_POST['settext']; ?>" />
+			<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_body_editor()" />
+		</div>
+	
 		<div class="row">
 			<label for="body_text"><?php echo _AT('body');  ?></label><br />
 			<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
 		</div>
-
+	
 		<div class="row buttons">
 			<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?>" accesskey="s" />
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />		
@@ -204,5 +203,47 @@ if (!$_POST['extension']) {
 	</fieldset>
 	</div>
 	</form>
+
+	<script type="text/javascript" language="javascript">
+	//<!--
+	function on_load()
+	{
+		if (document.getElementById("text").checked)
+			document.form.setvisualbutton.disabled = true;
+			
+		if (document.form.setvisual.value==1)
+		{
+			tinyMCE.execCommand('mceAddControl', false, 'body_text');
+			document.form.extension[0].disabled = "disabled";
+			document.form.setvisualbutton.value = "<?php echo _AT('switch_text'); ?>";
+		}
+		else
+		{
+			document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
+		}
+	}
+	
+	// switch between text, visual editor for "body text"
+	function switch_body_editor()
+	{
+		if (document.form.setvisualbutton.value=="<?php echo _AT('switch_visual'); ?>")
+		{
+			tinyMCE.execCommand('mceAddControl', false, 'body_text');
+			document.form.setvisual.value=1;
+			document.form.settext.value=0;
+			document.form.extension[0].disabled = "disabled";
+			document.form.setvisualbutton.value = "<?php echo _AT('switch_text'); ?>";
+		}
+		else
+		{
+			tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
+			document.form.setvisual.value=0;
+			document.form.settext.value=1;
+			document.form.extension[0].disabled = "";
+			document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
+		}
+	}
+	//-->
+	</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
