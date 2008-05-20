@@ -54,8 +54,14 @@ if ($_GET['gid'] == 0) {
 
 $hidden_vars['word'] = $_GET['t'];
 $hidden_vars['gid']  = $_GET['gid'];
+
+$sql = "SELECT * from ".TABLE_PREFIX."glossary WHERE word_id = '$hidden_vars[gid]'";
+$result = mysql_query($sql, $db);
+while ($row = mysql_fetch_assoc($result)){
+	$title = $row['word'];
+}
 		
-$msg->addConfirm('DELETE',  $hidden_vars);
+$msg->addConfirm(array('DELETE', $title),  $hidden_vars);
 $msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 	
 $msg->printConfirm();
