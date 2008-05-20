@@ -289,10 +289,10 @@ switch ($row['access']){
 		$_SESSION['groups'] = get_groups($course);
 
 		if ($_GET['f']) {
-			header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
+			header('Location: ./'.url_rewrite($page.'?f='.$addslashes($_GET['f'])));
 			exit;
 		} /* else */
-		header('Location: ./'.$page);
+		header('Location: ./'.url_rewrite($page));
 		exit;
 
 		break;
@@ -350,10 +350,10 @@ switch ($row['access']){
 		$_SESSION['groups'] = get_groups($course);
 
 		if ($_GET['f']) {
-			header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
+			header('Location: ./'.url_rewrite($page.'?f='.$addslashes($_GET['f'])));
 			exit;
 		} /* else */
-		header('Location: ./'.$addslashes($page));
+		header('Location: ./'.url_rewrite($addslashes($page)));
 		exit;
 
 		break;
@@ -387,7 +387,7 @@ switch ($row['access']){
 			$_SESSION['groups'] = get_groups($course);
 
 			if (!empty($_GET['f'])) {
-				header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
+				header('Location: ./'.url_rewrite($page.'?f='.$addslashes($_GET['f'])));
 				exit;
 			} /* else */
 			if ($row['u_release_date'] > time()) {
@@ -395,7 +395,7 @@ switch ($row['access']){
 			} else if ($row['u_end_date'] && $row['u_end_date'] < time()) {
 				$msg->addInfo(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
 			}
-			header('Location: ./'.$addslashes($page));
+			header('Location: ./'.url_rewrite($addslashes($page)));
 			exit;
 		}
 
@@ -458,10 +458,10 @@ switch ($row['access']){
 		count_login();
 
 		if($_GET['f']){
-			header('Location: '.$page.'?f='.$addslashes($_GET['f']));
+			header('Location: '.url_rewrite($page.'?f='.$addslashes($_GET['f'])));
 			exit;
 		} /* else */
-		header('Location: '.$addslashes($page));
+		header('Location: '.url_rewrite($addslashes($page)));
 		exit;
 	break;
 } // end switch

@@ -21,7 +21,7 @@ require_once(AT_INCLUDE_PATH . 'classes/UrlRewrite/UrlParser.class.php');
 include_once(AT_INCLUDE_PATH.'config.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/constants.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
-//require(AT_INCLUDE_PATH.'vitals.inc.php');
+//require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 
 //mimic config variables, vitals.inc.php 135-140
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
@@ -56,7 +56,7 @@ if (!$obj->isEmpty()){
 	$_user_location	= '';	//reset user_location so that the vital file in each page would validate
 	$pretty_current_page = $obj->getPage();
 	if (!@include($obj->getPage())){
-		header('location: '.AT_BASE_HREF.'index.php');
+		header('location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id);
 		exit;
 	} 
 } elseif ($_pretty_url_course_id==0) {
