@@ -26,7 +26,6 @@ $_section[2][0] = _AT('delete');
 
 if (isset($_POST['submit_yes'])) {
 	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-
 	$Backup =& new Backup($db, $_SESSION['course_id']);
 	$Backup->delete($_POST['backup_id']);
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -42,9 +41,16 @@ else if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	
+	$delete_backup = intval($_REQUEST['backup_id']);
+	$sql = "SELECT * from ".TABLE_PREFIX."backups WHERE backup_id = '$delete_backup'";
+	$result = mysql_query($sql, $db);
+
+
+while ($row = mysql_fetch_assoc($result)){
+	$title = $row['file_name'];
+}
 	$index['backup_id'] = $_GET['backup_id'];
-	$msg->addConfirm('DELETE', $index);
+	$msg->addConfirm(array('DELETE', $title ), $index);
 	$msg->printConfirm();
 
 require (AT_INCLUDE_PATH.'footer.inc.php');
