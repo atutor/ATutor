@@ -10,11 +10,12 @@ demo.initMyLayout = function () {
   var layoutHandler = new fluid.GridLayoutHandler (myOrderableFinder, { 
 		orderChangedCallback : function(){ 
 			//save the state to the db
-			$(this).load("save_state.php", { id : this.id })
-
+			var myDivs = jQuery ("[id^=atutor]", myLayoutContainer);
+			jQuery.post("/atutor_svn/docs/jscripts/save_state.php", { 'left':myDivs[0].id },
+                function(data) { 
+                	//alert(data);
+                });     
 		} });
-
-
 
   return new fluid.Reorderer (myLayoutContainer, myOrderableFinder, layoutHandler);
 };
