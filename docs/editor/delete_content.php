@@ -55,7 +55,13 @@ if (is_array($children) && (count($children)>0) ) {
 	$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 }
 	
-$msg->addConfirm('DELETE', $hidden_vars);
+$sql = "SELECT * from ".TABLE_PREFIX."content WHERE content_id = '$hidden_vars[cid]'";
+$result = mysql_query($sql, $db);
+while ($row = mysql_fetch_assoc($result)){
+	$title = $row['title'];
+}
+
+$msg->addConfirm(array('DELETE', $title),  $hidden_vars);
 $msg->printConfirm();
 	
 require(AT_INCLUDE_PATH.'footer.inc.php');
