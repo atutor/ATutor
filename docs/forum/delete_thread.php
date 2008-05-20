@@ -115,12 +115,19 @@ $_pages['forum/delete_thread.php']['children']  = array();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+
+$sql = "SELECT * from ".TABLE_PREFIX."forums_threads WHERE post_id = '$pid'";
+$result = mysql_query($sql, $db);
+while ($row = mysql_fetch_assoc($result)){
+	$title = $row['subject'];
+}
+
 $hidden_vars['fid']  = $_GET['fid'];
 $hidden_vars['pid']  = $_GET['pid'];
 $hidden_vars['ppid'] = $_GET['ppid'];
 $hidden_vars['nest'] = $_GET['nest'];
 
-$msg->addConfirm('DELETE', $hidden_vars);
+$msg->addConfirm(array('DELETE', $title),$hidden_vars);
 if (($ppid=='') || ($ppid =='0')) {
 	$ppid = '0';
 }
