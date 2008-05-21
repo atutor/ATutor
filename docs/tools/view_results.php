@@ -115,7 +115,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		<h3 align="center">
 			<?php 
 				// don't display any feedback if test is created as "no pass score"
-				if ($passscore == 0 && $passpercent == 0)
+				if (($passscore == 0 && $passpercent == 0) || ($passpercent <> 0 && $this_total == 0))
 					echo '';
 				// display pass feedback for passed students
 				elseif (($passscore<>0 && $my_score>=$passscore) ||
