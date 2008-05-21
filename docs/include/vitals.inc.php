@@ -812,6 +812,8 @@ function url_rewrite($url, $force=false){
 				// bounce has the highest priority, even if session is set, work on 
 				// bounce first.
 				$course_id = $url_parser->getCourseDirName($matches[1]);
+			} elseif (isset($_REQUEST['course'])){
+				$course_id = $url_parser->getCourseDirName($$_REQUEST['course']);
 			} elseif (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0){
 				$course_id = $url_parser->getCourseDirName($_SESSION['course_id']);
 			}
@@ -824,6 +826,8 @@ function url_rewrite($url, $force=false){
 			// bounce has the highest priority, even if session is set, work on 
 			// bounce first.
 			$course_id = $url_parser->getCourseDirName($matches[1]);
+		} elseif (isset($_REQUEST['course'])){
+			$course_id = $url_parser->getCourseDirName($$_REQUEST['course']);
 		} elseif (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0){
 			$course_id = $url_parser->getCourseDirName($_SESSION['course_id']);
 		} 
