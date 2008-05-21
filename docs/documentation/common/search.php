@@ -47,7 +47,13 @@ if ($_GET['query']) {
 			
 				$count = 0;
 				$filename = basename($filename);
-				$contents = strtolower(file_get_contents('../'.$section.'/'.$filename));
+				
+				if ($req_lang == 'en') {
+					$contents = strtolower(file_get_contents('../'.$section.'/'.$filename));
+				} else {
+					$contents = strtolower(file_get_contents('../'.$section. '/'.$req_lang.'/'.$filename));
+				}
+
 				foreach ($search_terms as $term) {
 					$term = trim($term);
 					if ($term) {
@@ -63,8 +69,14 @@ if ($_GET['query']) {
 		if ($results) {
 			arsort($results);
 			echo '<ol>';
-			foreach ($results as $file => $count) {
-				echo '<li><a href="../'.$section.'/'.$file.'?'.$req_lang.'" class="leaf" target="body">'.$_pages[$file].'</a></li>';
+			foreach ($results as $file => $count) 
+			{
+				if (($req_lang != 'en') && (file_exists('../'.$section.'/'.$req_lang.'/'.$file))) 
+					$full_file = '../'.$section.'/'.$req_lang.'/'.$file;
+				else
+					$full_file = '../'.$section.'/'.$file;
+
+				echo '<li><a href="'.$full_file.'?'.$req_lang.'" class="leaf" target="body">'.$_pages[$file].'</a></li>';
 			}
 			echo '</ol>';
 		} else {
