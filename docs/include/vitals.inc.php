@@ -806,14 +806,14 @@ function url_rewrite($url, $force=false){
 
 	//if we allow pretty url in the system
 	if ($_config['pretty_url'] > 0){
-		//If we allow course dir name from sys perf
+		//If we allow course dir name from sys perf		
 		if ($_config['course_dir_name'] > 0){
 			if (preg_match('/bounce.php\?course=([\d]+)$/', $url, $matches) == 1){
 				// bounce has the highest priority, even if session is set, work on 
 				// bounce first.
 				$course_id = $url_parser->getCourseDirName($matches[1]);
 			} elseif (isset($_REQUEST['course'])){
-				$course_id = $url_parser->getCourseDirName($$_REQUEST['course']);
+				$course_id = $url_parser->getCourseDirName($_REQUEST['course']);
 			} elseif (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0){
 				$course_id = $url_parser->getCourseDirName($_SESSION['course_id']);
 			}
@@ -827,7 +827,7 @@ function url_rewrite($url, $force=false){
 			// bounce first.
 			$course_id = $url_parser->getCourseDirName($matches[1]);
 		} elseif (isset($_REQUEST['course'])){
-			$course_id = $url_parser->getCourseDirName($$_REQUEST['course']);
+			$course_id = $url_parser->getCourseDirName($_REQUEST['course']);
 		} elseif (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0){
 			$course_id = $url_parser->getCourseDirName($_SESSION['course_id']);
 		} 
