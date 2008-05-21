@@ -11,7 +11,7 @@ demo.initMyLayout = function (basepath) {
 		orderChangedCallback : function(){ 
 			//save the state to the db
 			var myDivs = jQuery ("[id^=atutor]", myLayoutContainer);
-			jQuery.post(basepath+"themes/default_fluid/save_state.php", { 'left':myDivs[0].id },
+			jQuery.post(basepath+"themes/fluid/save_state.php", { 'left':myDivs[0].id },
                 function(data) { 
                 	//alert(data);
                 });     
