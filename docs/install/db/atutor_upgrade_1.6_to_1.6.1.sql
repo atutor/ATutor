@@ -135,3 +135,8 @@ ADD use_customized_head TINYINT(4) NOT NULL;
 
 ALTER TABLE `courses` MODIFY created_date DATETIME;
 ALTER TABLE `courses` DROP preferences, DROP header, DROP footer, DROP banner_text, DROP banner_styles;
+
+#---------------------------------------------------------
+# Adds the fluid theme to the default theme provided in the public distribution
+INSERT INTO `themes` VALUES ('Fuild', '1.6.1', 'fuild', NOW(), 'Theme that implements the Fluid reorderer used to drag-and-drop the menu from side-to-side.', 1);
+
