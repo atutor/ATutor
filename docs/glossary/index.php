@@ -56,9 +56,9 @@ if(mysql_num_rows($result) > 0){
 		<?php for ($i=1; $i<=$num_pages; $i++): ?>
 			<li>
 				<?php if ($i == $page) : ?>
-					<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i; ?>#list"><em><?php echo $i; ?></em></a>
+					<a class="current" href="<?php echo url_rewrite('glossary/index.php?p='.$i.'#list'); ?>"><em><?php echo $i; ?></em></a>
 				<?php else: ?>
-					<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i; ?>#list"><?php echo $i; ?></a>
+					<a href="<?php echo url_rewrite('glossary/index.php?p='.$i.'#list'); ?>"><?php echo $i; ?></a>
 				<?php endif; ?>
 			</li>
 		<?php endfor; ?>
