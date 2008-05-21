@@ -130,14 +130,19 @@ if (!empty($_REQUEST['pu'])) {
 		$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'];
 	}
 } elseif (!empty($_REQUEST['p'])) {
+	//For search
 	$page = urldecode($_REQUEST['p']);
+} elseif (preg_match('/bounce.php\?course=([\d]+)$/', $_SERVER['REQUEST_URI'])==1) {
+	//for browse, and my start page url rewrite.
+	$page = url_rewrite($_SERVER['REQUEST_URI']).'/index.php';	//force overwrite
 } else {
-	$page = 'index.php';
+	$page = url_rewrite('index.php');
 }
+
 if (substr($page, 0, 1) == '/') {
 	$page = substr($page, 1);
 }
-
+//echo $page;exit;
 $_SESSION['enroll']		= AT_ENROLL_NO;
 $_SESSION['s_cid']		= 0;
 $_SESSION['privileges'] = 0;
@@ -289,10 +294,10 @@ switch ($row['access']){
 		$_SESSION['groups'] = get_groups($course);
 
 		if ($_GET['f']) {
-			header('Location: ./'.url_rewrite($page.'?f='.$addslashes($_GET['f'])));
+			header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 			exit;
 		} /* else */
-		header('Location: ./'.url_rewrite($page));
+		header('Location: ./'.$page);
 		exit;
 
 		break;
@@ -350,10 +355,10 @@ switch ($row['access']){
 		$_SESSION['groups'] = get_groups($course);
 
 		if ($_GET['f']) {
-			header('Location: ./'.url_rewrite($page.'?f='.$addslashes($_GET['f'])));
+			header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 			exit;
 		} /* else */
-		header('Location: ./'.url_rewrite($addslashes($page)));
+		header('Location: ./'.$addslashes($page));
 		exit;
 
 		break;
@@ -387,7 +392,7 @@ switch ($row['access']){
 			$_SESSION['groups'] = get_groups($course);
 
 			if (!empty($_GET['f'])) {
-				header('Location: ./'.url_rewrite($page.'?f='.$addslashes($_GET['f'])));
+				header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
 				exit;
 			} /* else */
 			if ($row['u_release_date'] > time()) {
@@ -395,7 +400,7 @@ switch ($row['access']){
 			} else if ($row['u_end_date'] && $row['u_end_date'] < time()) {
 				$msg->addInfo(array('COURSE_ENDED', AT_Date(_AT('announcement_date_format'), $row['u_end_date'], AT_DATE_UNIX_TIMESTAMP)));
 			}
-			header('Location: ./'.url_rewrite($addslashes($page)));
+			header('Location: ./'.$addslashes($page));
 			exit;
 		}
 
@@ -458,10 +463,10 @@ switch ($row['access']){
 		count_login();
 
 		if($_GET['f']){
-			header('Location: '.url_rewrite($page.'?f='.$addslashes($_GET['f'])));
+			header('Location: '.$page.'?f='.$addslashes($_GET['f']));
 			exit;
 		} /* else */
-		header('Location: '.url_rewrite($addslashes($page)));
+		header('Location: '.$addslashes($page));
 		exit;
 	break;
 } // end switch
