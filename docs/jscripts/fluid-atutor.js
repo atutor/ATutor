@@ -11,7 +11,7 @@ demo.initMyLayout = function () {
 		orderChangedCallback : function(){ 
 			//save the state to the db
 			var myDivs = jQuery ("[id^=atutor]", myLayoutContainer);
-			jQuery.post("/atutor_svn/docs/jscripts/save_state.php", { 'left':myDivs[0].id },
+			jQuery.post("/atutor/trunk/docs/themes/default_fluid/save_state.php", { 'left':myDivs[0].id },
                 function(data) { 
                 	//alert(data);
                 });     
