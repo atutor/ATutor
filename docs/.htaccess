@@ -3,6 +3,23 @@
 RewriteEngine On
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?(([0-9]+)\.html)?$ go.php/$1/forum/view.php/fid/$2/pid/$3/page/$4
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/([0-9]+)/?$ go.php/$1/forum/index.php/fid/$2/
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/([0-9]+)/([0-9+])\.html$ go.php/$1/forum/index.php/fid/$2/page/$3
+
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/?$ go.php/$1/forum/list.php
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule (.*) go.php/$1 [L]
 </IfModule>
 # END ATutor

@@ -132,9 +132,9 @@ if (!empty($_REQUEST['pu'])) {
 } elseif (!empty($_REQUEST['p'])) {
 	//For search
 	$page = urldecode($_REQUEST['p']);
-} elseif (preg_match('/bounce.php\?course=([\d]+)$/', $_SERVER['REQUEST_URI'])==1) {
-	//for browse, and my start page url rewrite.
-	$page = url_rewrite($_SERVER['REQUEST_URI']).'/index.php';	//force overwrite
+} elseif (($_config['pretty_url'] > 0) && preg_match('/bounce.php\?course=([\d]+)$/', $_SERVER['REQUEST_URI'])==1) {
+	//for browse, and my start page url rewrite.	
+	$page = url_rewrite($_SERVER['REQUEST_URI'],true).'/index.php';	//force overwrite
 } else {
 	$page = url_rewrite('index.php');
 }

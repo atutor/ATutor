@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+require_once('ForumsUrl.class.php');
+
 /**
 * UrlRewrite
 * Class for rewriting pretty urls.
@@ -173,13 +175,24 @@ class UrlRewrite  {
 			//if this is my start page
 			return $url;
 		}
+
+		//Turn querystring to pretty URL
 		if ($pretty_url==''){
 			$pretty_url = $course_id.'/'.$front;
-			if ($end != ''){
-			//if pretty url is turned off, use '?' to separate the querystring.
-			($_config['pretty_url'] == 0)? $qs_sep = '?': $qs_sep = '/';
 
-			 $pretty_url .= $qs_sep.$this->constructPrettyUrl($end);
+			//check if there are any rules overwriting the original rules
+			//TODO: have a better way to do this
+			//		extend modularity into this.
+			if (preg_match('/forum\/(index)|(view)|(list)\.php/', $front)==1 && $_config['apache_mod_rewrite'] > 0){
+				$pretty_url = $course_id.'/forum';
+				$obj =& new ForumsUrl();
+			} else  {
+				$obj =& $this;
+			}
+			if ($end != ''){
+				//if pretty url is turned off, use '?' to separate the querystring.
+				($_config['pretty_url'] == 0)? $qs_sep = '?': $qs_sep = '/';
+				 $pretty_url .= $qs_sep.$obj->constructPrettyUrl($end);
 			}
 		}
 
