@@ -143,11 +143,15 @@ if ($current_tab == 0) {
 }
 
 // initialize buttons, texts, radio buttons for editor
+if ($current_tab == 0) 
+{
+	$onload="on_load()";
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($current_tab == 0) 
 {
-	$onload="on_load()";
 	load_editor(false, "none");
 }
 
