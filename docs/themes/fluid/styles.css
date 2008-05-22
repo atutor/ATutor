@@ -1234,6 +1234,7 @@ dl#public-profile dd {
 #contentwrapper{
 	float: left;
 	width: 99%;
+	min-width:760px;
 	padding:0px;
 	margin-left:5px;
 	margin-right:5px;
@@ -1442,7 +1443,7 @@ dl.browse-course dd {
 }
 
 .side-menu {
-	width: 18%; 
+	width: 19%; 
 	/* max-width:180px; */
 	background-color:#efefef;
 	border:1px solid #8b8b8b;
@@ -1483,6 +1484,12 @@ dl.browse-course dd {
 
 .grab {
 	cursor:move;
-	padding: 0px
-	5px 0px 5px;
+	padding: 0px 5px 0px 5px;
+}
+
+.grabmenu {
+	float:right; 
+	margin-bottom:-10px; 
+	margin-top:3px; 
+	margin-right:-5px;
 }

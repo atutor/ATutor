@@ -226,13 +226,13 @@ global $system_courses, $_custom_css,$db;
 	
 	<?php if (($_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['side_menu'] && ($_SESSION['prefs']['PREF_MENU']!="right")): ?>
 		<div id="atutor.menu" class="side-menu">
-			<div id="toolbar.menu" class="grab" style="float:right; margin-bottom:-15px; margin-top:3px;"><img src="<?php echo $this->img; ?>layers.png" alt="<?php echo _AT('drag'); ?>" /></div>
+			<div id="toolbar.menu" class="grabmenu grab"><img src="<?php echo $this->img; ?>layers.png" alt="<?php echo _AT('drag'); ?>" /></div>
 			<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 		</div>
 	<?php endif; ?>
 
 	<div id="atutor.content" style="
-		<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu) { ?> width:99%; <?php } else { ?> width:78%; <?php } ?>
+		<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu) { ?> width:99%; <?php } else { ?> width:76.5%; <?php } ?>
 	">
 		<div id="breadcrumbs">
 		<div id="toolbar.content" class="grab"><img src="<?php echo $this->img; ?>layers.png" style="float:left;" alt="<?php echo _AT('drag'); ?>" /></div>
