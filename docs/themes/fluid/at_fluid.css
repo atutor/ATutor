@@ -2,17 +2,15 @@
 .orderable-default {
 	float:left;
 	margin:5px!important;
-	cursor:move;
 }
-.orderable-hover {
+/*.orderable-hover {
 	float:left;
 	margin:5px!important;
-}
+}*/
 
 .orderable-selected{
 	float:left;
 	margin:5px!important;
-	cursor:move;
 }
 
 .orderable-dragging{

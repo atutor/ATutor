@@ -434,12 +434,13 @@ a#back-to {
 
 div#breadcrumbs {
     /* The path bar, including breadcrumbs and add to favorites */
-    background-color:#cccccc;
+    background-color:#efefef;
+    border: 1px solid #8b8b8b;
     display:block;
     width:100%;
 	clear:both;
     font-size: 0.85em;
-	padding:5px 0px 5px 0px;
+	padding:3px 0px 3px 0px;
 	float:left;
 }
 h2.page-title {
@@ -855,7 +856,7 @@ div.paging li a:hover, div.paging li a.current {
 }
 
 #header{
-	background-color: #cccccc;
+	background-color: white;
 	/*background-image: url(images/pencil_top.gif);
 	background-position: right bottom;
 	background-repeat: no-repeat;*/
@@ -930,7 +931,6 @@ h4.box {
 }
 
 div.box {
-	background-color: #efefef;
 	color: black;
 
 	font-size:0.85em;
@@ -1292,7 +1292,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 
 div#topnavlistcontainer {
-    background-color: #cccccc;
+    background-color: white;
 	/*background-image: url(images/pencil_bottom.gif);
 	background-position:  top right;
 	background-repeat: no-repeat;*/
@@ -1442,18 +1442,19 @@ dl.browse-course dd {
 }
 
 .side-menu {
-	/* width: 15%;  */
-	width: 20%; 
+	width: 15%; 
 	/* max-width:180px; */
-	background-color:#cccccc;
+	background-color:#efefef;
+	border:1px solid #8b8b8b;
 	padding:0px 5px 0px 5px;
 }
 
 .side-menu h3 {
-	background-color:#efefef; 
 	color:black; 
 	font-size:smaller; 
 	padding:3px;
+	margin-left:-5px;
+	margin-right:-5px;	
 }
 
 .side-menu h2 {
@@ -1478,4 +1479,10 @@ dl.browse-course dd {
 .box .button {
 	float:right;
 	margin-top:-15px;
+}
+
+.grab {
+	cursor:move;
+	padding: 0px
+	5px 0px 5px;
 }
