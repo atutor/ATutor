@@ -8,7 +8,7 @@
 	</div>
 	<?php if ($_SESSION['course_id']>0 && $system_courses[$_SESSION['course_id']]['side_menu'] && $_SESSION['prefs']['PREF_MENU']=="right"): ?>
 		<div id="atutor.menu" class="side-menu">
-			<h3 id="toolbar.menu" class="grab">Menu</h3>
+			<div id="toolbar.menu" class="grab" style="float:right; margin-bottom:-15px; margin-top:3px;"><img src="<?php echo $this->img; ?>layers.png" /></div>
 			<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 		</div>
 	<?php endif; ?>
