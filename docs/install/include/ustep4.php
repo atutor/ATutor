@@ -63,7 +63,7 @@ if ($_POST['step4']['copy_from'] && ($_POST['step4']['copy_from'] != DIRECTORY_S
 // Create the patcher content directory
 if (!is_dir($content_dir.'/patcher')) {
 	if (!@mkdir($content_dir.'/patcher')) {
-		$errors[] = '<strong>'.$content_dir'/patcher</strong> directory does not exist and cannot be created.';  
+		$errors[] = '<strong>'.$content_dir.'/patcher</strong> directory does not exist and cannot be created.';  
 	}
 } else if (!is_writable($content_dir.'/patcher')){
 	$errors[] = '<strong>'.$content_dir.'/patcher</strong> directory is not writable.';
