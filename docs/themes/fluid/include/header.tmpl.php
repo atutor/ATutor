@@ -232,7 +232,7 @@ global $system_courses, $_custom_css,$db;
 	<?php endif; ?>
 
 	<div id="atutor.content" style="
-		<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu) { ?> width:99%; <?php } else { ?> width:81%; <?php } ?>
+		<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu) { ?> width:99%; <?php } else { ?> width:78%; <?php } ?>
 	">
 		<div id="breadcrumbs">
 		<div id="toolbar.content" class="grab"><img src="<?php echo $this->img; ?>layers.png" style="float:left;" /></div>
