@@ -8,7 +8,7 @@ body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	margin:0px;
 	padding:0px;
-	font-size: small;
+	font-size: .9em;
 	background-color: white;
 }
 
@@ -1234,7 +1234,7 @@ dl#public-profile dd {
 #contentwrapper{
 	float: left;
 	width: 99%;
-	min-width:760px;
+	min-width:53em;
 	padding:0px;
 	margin-left:5px;
 	margin-right:5px;
@@ -1443,8 +1443,10 @@ dl.browse-course dd {
 }
 
 .side-menu {
-	width: 19%; 
-	/* max-width:180px; */
+
+width: 19%;
+/*	min-width:15em;*/
+/*	max-width:18em;*/
 	background-color:#efefef;
 	border:1px solid #8b8b8b;
 	padding:0px 5px 0px 5px;
@@ -1456,11 +1458,13 @@ dl.browse-course dd {
 	padding:3px;
 	margin-left:-5px;
 	margin-right:-5px;	
+
 }
 
 .side-menu h2 {
 	font-size:95%;
 	border-bottom:1px solid #838383;	
+	
 }
 
 #gototop {

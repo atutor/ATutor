@@ -106,39 +106,11 @@ global $system_courses, $_custom_css,$db;
 	}
 //-->
 </script>
-
-<div id="header">
+<div id="top-links"> <!-- top help/search/login links -->
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
-
-	<?php
-	// If there is a custom course banner in the file manager called banner.html, display it here
-	@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.txt'); 
-
-	/*
-	and example banner.html file might look like:
-	<div style="width: 760px; height: 42px; background: white;"><img src="http://[mysite]/atutor15rc3/banners/kart-camb.jpg"></div>
-	*/
-
-	?>
-
-	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
-		<a href="<?php echo $this->base_path; ?>index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
-	<?php } ?>
-
-	<h1 id="section-title">
-		<?php if ($_SESSION['valid_user']): 
-			echo '<span style="color:black;font-size:small;font-weight:bold;">'.stripslashes(SITE_NAME).'</span><br />'; 	
-		endif; ?>	
-		<?php echo $this->section_title; ?>
-		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
-			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
-		<?php endif; ?>
-	</h1>
-	
-	<div id="top-links"> <!-- top help/search/login links -->
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<!-- start the jump menu -->
 			<?php if (empty($_GET)): ?>
@@ -170,6 +142,35 @@ global $system_courses, $_custom_css,$db;
 		<?php endif; ?>
 		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> <a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	</div>
+<div id="header">
+
+
+	<?php
+	// If there is a custom course banner in the file manager called banner.html, display it here
+	@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.txt'); 
+
+	/*
+	and example banner.html file might look like:
+	<div style="width: 760px; height: 42px; background: white;"><img src="http://[mysite]/atutor15rc3/banners/kart-camb.jpg"></div>
+	*/
+
+	?>
+
+	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
+		<a href="<?php echo $this->base_path; ?>index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
+	<?php } ?>
+
+	<h1 id="section-title">
+		<?php if ($_SESSION['valid_user']): 
+			echo '<span style="color:black;font-size:small;font-weight:bold;">'.stripslashes(SITE_NAME).'</span><br />'; 	
+		endif; ?>	
+		<?php echo $this->section_title; ?>
+		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
+			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+		<?php endif; ?>
+	</h1>
+	
+	
 </div>
 
 <div id="topnavlistcontainer">
