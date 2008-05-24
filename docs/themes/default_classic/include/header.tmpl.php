@@ -210,7 +210,7 @@ function toggleToc(objId) {
 		<?php endif; ?></h1>
 	</div>
 
-	<div style="background-image: url('<?php echo AT_HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position:left;height:60px; width:250px; vertical-align:top; text-aling:right;">&nbsp;</div>
+	<div style="background-image: url('<?php echo AT_HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position:left;height:60px; width:250px; vertical-align:top; text-align:right;">&nbsp;</div>
 
 	<div id="topnavlistcontainer">
 	<!-- the main navigation. in our case, tabs -->
