@@ -16,14 +16,14 @@ CREATE TABLE `auto_enroll` (
    `associate_string` VARCHAR(10) NOT NULL,
    `name` VARCHAR( 50 ) NOT NULL default '',
    PRIMARY KEY ( `auto_enroll_id` )
-);
+) DEFAULT CHARACTER SET = 'utf8';
 
 CREATE TABLE `auto_enroll_courses` (
    `auto_enroll_courses_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
    `auto_enroll_id` MEDIUMINT UNSIGNED NOT NULL default 0,
    `course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
    PRIMARY KEY ( `auto_enroll_courses_id` )
-);
+) DEFAULT CHARACTER SET = 'utf8';
 
 # course directory name
 ALTER TABLE `courses` ADD COLUMN `course_dir_name` VARCHAR(255) NOT NULL AFTER `description`;
@@ -49,7 +49,7 @@ CREATE TABLE `patches` (
   `backup_files` text NOT NULL,
   `patch_files` text NOT NULL,
 	PRIMARY KEY  (`patches_id`)
-);
+) DEFAULT CHARACTER SET = 'utf8';
 
 
 # --------------------------------------------------------
@@ -63,7 +63,7 @@ CREATE TABLE `patches_files` (
 	`name` TEXT NOT NULL,
 	`location` VARCHAR(250) NOT NULL default '',
 	PRIMARY KEY  (`patches_files_id`)
-);
+) DEFAULT CHARACTER SET = 'utf8';;
 
 # --------------------------------------------------------
 # Table structure for table `patches_files_actions`
@@ -76,7 +76,7 @@ CREATE TABLE `patches_files_actions` (
 	`code_from` TEXT NOT NULL,
 	`code_to` TEXT NOT NULL,
 	PRIMARY KEY  (`patches_files_actions_id`)
-);
+) DEFAULT CHARACTER SET = 'utf8';
 
 
 
@@ -93,14 +93,14 @@ CREATE TABLE `myown_patches` (
   `status` varchar(20) NOT NULL default '',
   `last_modified` datetime NOT NULL,
 	PRIMARY KEY  (`myown_patch_id`)
-);
+) DEFAULT CHARACTER SET = 'utf8';;
 
 CREATE TABLE `myown_patches_dependent` (
 	`myown_patches_dependent_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL,
 	`dependent_patch_id` VARCHAR(50) NOT NULL default '',
 	PRIMARY KEY  (`myown_patches_dependent_id`)
-);
+) DEFAULT CHARACTER SET = 'utf8';
 
 CREATE TABLE `myown_patches_files` (
 	`myown_patches_files_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -112,7 +112,7 @@ CREATE TABLE `myown_patches_files` (
 	`code_to` TEXT NOT NULL,
 	`uploaded_file` TEXT NOT NULL,
 	PRIMARY KEY  (`myown_patches_files_id`)
-);
+) DEFAULT CHARACTER SET = 'utf8';
 
 # --------------------------------------------------------
 # Include Patcher as a standard module

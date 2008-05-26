@@ -47,8 +47,10 @@ if (!$db) {
 
 		/* 
 		 * Check if version is > 1.6, if so, this entire step can be skipped
+		 * OR if db table are already all in utf8.
 		 */
-		if (version_compare($_POST['step1']['old_version'], '1.6', '>') === TRUE) {
+		if (version_compare($_POST['step1']['old_version'], '1.6.1', '>') === TRUE ||
+			 check_db_default_charset($db) === TRUE) {
 			$progress[] = 'Version <kbd><b>'.$_POST['step1']['old_version'].'</b></kbd> found.';
 			$progress[] = 'UTF-8 Conversion is not needed, skipping.';
 			print_feedback($progress);
@@ -180,6 +182,19 @@ if (!$db) {
 					echo '<input type="hidden" name="con_step" value="3" />';
 					echo '<p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p></form>';
 					return;
+				} elseif (version_compare($_POST['step1']['old_version'], '1.6.1', '<') === TRUE) {
+					//Check if version#=1.6 if so, then this 1.6 database must already been upgraded before.
+					//change all table to utf-8.
+					$conversionDriver =& new ConversionDriver($_POST['tb_prefix']);
+					$conversionDriver->alter_all_charset();
+					unset($progress);
+					$progress[] = "All tables' charset are now in UTF-8.";
+					print_feedback($progress);
+					print_post_for_step9($_POST);
+					echo '<input type="hidden" name="step" value="3" />'; 
+					echo '<input type="hidden" name="con_step" value="4" />';
+					echo '<p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p></form>';
+					return;
 				}
 				echo "<div><p>Skipping UTF-8 Conversion.</p><p>No content will be converted.</p></div>";
 				echo '<input type="hidden" name="step" value="4" />'; //skip to next step
@@ -204,7 +219,8 @@ if (!$db) {
 				$progress[] ='Database has already been converted, click next to continue.';
 				print_feedback($progress);
 				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
-				<input type="hidden" name="step" value="4" />
+				<input type="hidden" name="step" value="3" />
+				<input type="hidden" name="con_step" value="4" /> 
 				<input type="hidden" name="upgrade_action" value="true" />';
 				print_hidden(2);
 				print_post_for_step9($_POST);
@@ -235,7 +251,8 @@ if (!$db) {
 					return;
 				}
 				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
-					<input type="hidden" name="step" value="4" />';
+					<input type="hidden" name="step" value="3" />';
+				echo '<input type="hidden" name="con_step" value="4" />'; 
 				print_hidden(2);
 				print_post_for_step9($_POST);
 				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';				
@@ -265,7 +282,10 @@ if (!$db) {
 				 * Decide which language to use
 				 */
 				$conversionDriver =& new ConversionDriver($_POST['tb_prefix']);
-				$conversionDriver->convertTableBySysDefault();				
+				if (version_compare($_POST['step1']['old_version'], '1.6', '<') === TRUE) {
+					$conversionDriver->convertTableBySysDefault();
+				} 
+				$conversionDriver->convertTableBySysDefault_161();
 
 				/* 
 				 * Loop through all the courses, and convert all the course's content 
@@ -296,7 +316,10 @@ if (!$db) {
 					ob_flush();
 					flush();
 					ob_end_flush();
-					$conversionDriver->convertTableByClass($row['title'], $char_set, $course_id);
+					if (version_compare($_POST['step1']['old_version'], '1.6', '<') === TRUE) {
+						$conversionDriver->convertTableByClass($row['title'], $char_set, $course_id);
+					} 
+					$conversionDriver->convertTableByClass_161($row['title'], $char_set, $course_id);
 				}
 				echo '</div>';
 			}
@@ -309,15 +332,44 @@ if (!$db) {
 
 				print_feedback($progress);
 
+				if (isset($errors)){
+					print_errors($errors);
+					echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
+					<input type="hidden" name="step" value="3" />
+					<input type="hidden" name="con_step" value="4" />';
+					print_hidden(2);
+					print_post_for_step9($_POST);
+					echo '<p align="center"><input type="submit" class="button" value=" Retry " name="submit" /></p></form>';
+					return;
+				}
+
 				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
-				<input type="hidden" name="step" value="4" />
+				<input type="hidden" name="step" value="3" />
+				<input type="hidden" name="con_step" value="4" />
 				<input type="hidden" name="upgrade_action" value="true" />';
 				print_hidden(2);
 				print_post_for_step9($_POST);
 				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';
 				return;
 			}
-		} else{
+		} elseif ($_POST['con_step'] == '4'){
+			//Convert the database charset to UTF8.
+			if (!check_db_default_charset($db)){
+				$sql = 'ALTER DATABASE `'.$_POST['db_name'].'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
+				if (mysql_query($sql)===false){
+					//Alter failed, probably the user doesn't have permission.
+					$errors[] = 'Failed to change the database default character set to UTF-8.  Please set the database character set to UTF8 before continuing by using the following query: ALTER DATABASE `'.$_POST['db_name'].'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  To use ALTER DATABASE, you need the ALTER privilege on the database.';
+				}
+			}
+			$progress[] ='Database default charset is now in UTF-8, click next to continue.';
+			print_feedback($progress);
+			echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
+				<input type="hidden" name="step" value="4" />';
+			print_hidden(2);
+			print_post_for_step9($_POST);
+			echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';				
+			return;
+		} else {
 			/* If the installation has been stopped right after the conversion step.  The session variable
 			 * that prevents refreshes will still be set, have to unset it to carry on the installation.
 			 */
@@ -474,5 +526,21 @@ function print_post_for_step9($_POST){
 	echo '<input type="hidden" name="old_version" value="'.$_POST['old_version'].'" />';
 	echo '<input type="hidden" name="new_version" value="'.$_POST['new_version'].'" />';
 }
+
+
+/**
+ * This function checks if the database's default charset is UTF-8.
+ * @return true if db default charset is UTF-8, false otherwise.
+ */
+function check_db_default_charset($db){
+		/* Check if the database that existed is in UTF-8, if not, ask for retry */
+		$sql = "SHOW CREATE DATABASE `$_POST[db_name]`";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);		
+
+		if (preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
+			return true;
+		} 
+		return false;}
 
 ?>
