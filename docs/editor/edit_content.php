@@ -45,7 +45,7 @@ if ($_POST['close'] || $_GET['close']) {
 		header('Location: '.$_base_path.'content.php?cid='.intval($_REQUEST['new_pid']));
 		exit;
 	}
-	header('Location: '.$_base_path.'content.php?cid='.intval($_REQUEST['cid']));
+	header('Location: '.$_base_path.url_rewrite('content.php?cid='.intval($_REQUEST['cid'])));
 	exit;
 }
 	
