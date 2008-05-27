@@ -103,13 +103,12 @@ if (!($row = mysql_fetch_assoc($result))) {
 
 	$current_thread = $row['thread_id'];
 	do {
-		$row['subject'] = AT_print($row['subject'], 'forums_threads.subject');
-
 		/* crop the subject, if needed */
 		$full_subject = $row['subject'];	//save a copy before croping
 		if ($strlen($row['subject']) > 28) {
 			$row['subject'] = $substr($row['subject'], 0, 25).'...';
 		}
+		$row['subject'] = AT_print($row['subject'], 'forums_threads.subject');
 		echo '<tr>';
 		echo '<td>';
 
