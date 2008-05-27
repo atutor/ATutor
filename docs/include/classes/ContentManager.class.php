@@ -523,7 +523,7 @@ class ContentManager
 			if (isset($previous['content_id'])) {
 				$sequence_links['previous'] = $previous;
 			} else if ($cid) {
-				$previous['url']   = $_base_path . 'index.php';
+				$previous['url']   = $_base_path . url_rewrite('index.php');
 				$previous['title'] = _AT('home');
 				$sequence_links['previous'] = $previous;
 			}

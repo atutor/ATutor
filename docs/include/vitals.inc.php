@@ -822,6 +822,7 @@ function url_rewrite($url, $force=false){
 		}
 		$url = $pathinfo[1]->convertToPrettyUrl($course_id, $url);
 	} elseif ($_config['course_dir_name'] > 0) {
+		//enabled course directory name, disabled pretty url
 		if (preg_match('/bounce.php\?course=([\d]+)$/', $url, $matches) == 1){
 			// bounce has the highest priority, even if session is set, work on 
 			// bounce first.
@@ -833,7 +834,7 @@ function url_rewrite($url, $force=false){
 		} 
 		$url = $pathinfo[1]->convertToPrettyUrl($course_id, $url);
 	}
-		
+
 	return $url;
 }
 

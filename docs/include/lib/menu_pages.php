@@ -377,13 +377,13 @@ function get_path($current_page) {
 	}
 
 	if (isset($parent_page) && defined($parent_page)) {
-		$path[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
+		$path[] = array('url' => $_base_path . url_rewrite($current_page), 'title' => $_page_title);
 		return $path;
 	} else if (isset($parent_page)) {
-		$path[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
+		$path[] = array('url' => $_base_path . url_rewrite($current_page), 'title' => $_page_title);
 		$path = array_merge((array) $path, get_path($parent_page));
 	} else {
-		$path[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
+		$path[] = array('url' => $_base_path . url_rewrite($current_page), 'title' => $_page_title);
 	}
 	
 	return $path;

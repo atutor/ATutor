@@ -135,7 +135,7 @@ if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == 
 }
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
-	$_path[] = array('url' => $_base_path . 'index.php', 'title' => $_SESSION['course_title']);
+	$_path[] = array('url' => $_base_path . url_rewrite('index.php'), 'title' => $_SESSION['course_title']);
 } else if (isset($_SESSION['course_id']) && $_SESSION['course_id'] < 0) {
 	$_path[] = array('url' => $_base_path . 'admin/index.php', 'title' => _AT('administration'));
 }
