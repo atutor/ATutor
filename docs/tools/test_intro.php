@@ -38,13 +38,13 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 // checks one/all questions per page, and forward user to the correct one
 if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: my_tests.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('tools/my_tests.php'));
 	exit;
 } else if (isset($_GET['submit'])) {
 	if ($test_row['display']) {
-		header('Location: take_test_q.php?tid='.$tid);
+		header('Location: '.AT_BASE_HREF.url_rewrite('tools/take_test_q.php?tid='.$tid));
 	} else {
-		header('Location: take_test.php?tid='.$tid);
+		header('Location: '.AT_BASE_HREF.url_rewrite('tools/take_test.php?tid='.$tid));
 	}
 	exit;
 }
@@ -82,9 +82,6 @@ if (!$test_row['random']) {
 	} // else 0
 }	
 ?>
-
-<form method="get" action="tools/test_intro.php">
-<input type="hidden" name="tid" value="<?php echo $tid; ?>"/>
 
 <div class="input-form">
 		<fieldset class="group_form"><legend class="group_form"><?php echo $test_row['title']; ?></legend><div class="row">
@@ -126,12 +123,11 @@ if (!$test_row['random']) {
 	<?php endif; ?>
 
 	<div>
-		<input type="submit" name="submit" value="<?php echo _AT('start_test'); ?>"  class="button" />
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
+		<a href="<?php echo $_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'submit='._AT('start_test');?>" class="button" style="padding: 5px;"><?php echo _AT('start_test');?></a>
+		<a href="<?php echo $_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'cancel='._AT('cancel');?>" class="button" style="padding: 5px;"><?php echo _AT('cancel');?></a>
 	</div>
 	</fieldset>
 	</div>
 </div>
-</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -32,13 +32,13 @@ if (!$test_row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['e
 }
 
 if (!$test_row['guests'] && !authenticate_test($tid)) {
-	header('Location: my_tests.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('tools/my_tests.php'));
 	exit;
 }
 
 // checks one/all questions per page, and forward user to the correct one
 if ($test_row['display']) {
-	header('Location: take_test_q.php?tid='.$tid);
+	header('Location: '.AT_BASE_HREF.url_rewrite('tools/take_test_q.php?tid='.$tid));
 } 
 
 $out_of = $test_row['out_of'];
@@ -97,10 +97,10 @@ if (isset($_POST['submit'])) {
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	if (!$_SESSION['enroll'] || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
-		header('Location: ../tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id);		
+		header('Location: '.AT_BASE_HREF.url_rewrite('tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id));
 		exit;
 	}
-	header('Location: ../tools/my_tests.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('tools/my_tests.php'));
 	exit;		
 }
 
