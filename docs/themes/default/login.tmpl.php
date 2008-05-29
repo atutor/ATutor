@@ -22,7 +22,7 @@ function encrypt_password() {
 		<input type="hidden" name="form_password_hidden" value="" />
 
 
-			<div class="input-form" style="background-color:white;">
+		<div class="input-form" style="background-color:white;">
 			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
 			<p><?php echo _AT('login_text') ;?></p>
 				<?php if ($_GET['course']): ?>
@@ -32,21 +32,19 @@ function encrypt_password() {
 				<?php endif;?>
 
 				<label for="login"><?php echo _AT('login_name_or_email'); ?></label><br />
-				<input type="text" name="form_login" size="50" style="max-width: 100%; width: 100%;" id="login" /><br />
+				<input type="text" name="form_login" size="50" style="max-width: 80%; width: 80%;" id="login" /><br />
 
 				<label for="pass"><?php echo _AT('password'); ?></label><br />
-				<input type="password" class="formfield" name="form_password" style="max-width: 100%; width: 100%;" id="pass" />
+				<input type="password" class="formfield" name="form_password" style="max-width: 80%; width: 80%;" id="pass" />
 				<br /><br />
 				<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return encrypt_password();" />
 			</fieldset>			
 		</div>
 		</form>
-
 	</div>
 
 
 	<div class="column">
-
 		<form action="registration.php" method="get">
 			<div class="input-form" style="background-color:white;">
 			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('new_user') ;?></legend>
@@ -58,10 +56,11 @@ function encrypt_password() {
 			<div style="width: 20%;margin-left:auto; margin-right:auto;margin-bottom:.6em;padding:.5em;">
 			<br /><br /><br />
 			<input type="submit" name="register" value="<?php echo _AT('register'); ?>" class="button" />
-
+			</div>
 			</fieldset>
 			</div>
 		</form>
 
 	</div>
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
