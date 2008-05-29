@@ -15,19 +15,19 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
 
-if (isset($_GET['edit'], $_GET['id'])) {
-	header('Location: '.AT_BASE_HREF.'editor/edit_content.php?cid='.intval($_GET['id']));
+if (isset($_GET['edit'], $_GET['ctid'])) {
+	header('Location: '.AT_BASE_HREF.'editor/edit_content.php?cid='.intval($_GET['ctid']));
 	exit;
-} else if (isset($_GET['delete'], $_GET['id'])) {
-	header('Location: '.AT_BASE_HREF.'editor/delete_content.php?cid='.intval($_GET['id']));
+} else if (isset($_GET['delete'], $_GET['ctid'])) {
+	header('Location: '.AT_BASE_HREF.'editor/delete_content.php?cid='.intval($_GET['ctid']));
 	exit;
-} else if (isset($_GET['view'], $_GET['id'])) {
-	header('Location: '.AT_BASE_HREF.'content.php?cid='.intval($_GET['id']));
+} else if (isset($_GET['view'], $_GET['ctid'])) {
+	header('Location: '.AT_BASE_HREF.'content.php?cid='.intval($_GET['ctid']));
 	exit;
-} else if (isset($_GET['usage'], $_GET['id'])) {
-	header('Location: '.AT_BASE_HREF.'tools/tracker/page_student_stats.php?content_id='.intval($_GET['id']));
+} else if (isset($_GET['usage'], $_GET['ctid'])) {
+	header('Location: '.AT_BASE_HREF.'tools/tracker/page_student_stats.php?content_id='.intval($_GET['ctid']));
 	exit;
-} else if (!isset($_GET['id']) && !isset($_GET['sub_content']) && (isset($_GET['usage']) || isset($_GET['view']) || isset($_GET['delete']) || isset($_GET['edit']))) {
+} else if (!isset($_GET['ctid']) && !isset($_GET['sub_content']) && (isset($_GET['usage']) || isset($_GET['view']) || isset($_GET['delete']) || isset($_GET['edit']))) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -48,7 +48,7 @@ if ($_GET['order']) {
 if (!isset($_GET['sub_content'])) {
 	$parent_id = 0;	
 } else {
-	$parent_id = intval($_GET['id']);
+	$parent_id = intval($_GET['ctid']);
 }
 
 
@@ -66,7 +66,7 @@ function print_select($pid, $depth) {
 	foreach ($all_content[$pid] as $row) {
 		if (isset($all_content[$row['content_id']])) {
 			echo '<option value="'.$row['content_id'].'"';
-			if ($_GET['id'] == $row['content_id']) {
+			if ($_GET['ctid'] == $row['content_id']) {
 				echo ' selected="selected"';
 			}
 			echo '>';
@@ -82,11 +82,11 @@ function print_select($pid, $depth) {
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		<h3><label for="id"><?php echo _AT('select_parent_topic'); ?></label></h3>
+		<h3><label for="ctid"><?php echo _AT('select_parent_topic'); ?></label></h3>
 	</div>
 
 	<div class="row">
-		<select name="id" id="id">
+		<select name="ctid" id="ctid">
 			<option value="0"><?php echo _AT('top_level'); ?></option>
 			<?php
 				print_select(0, 1);
@@ -126,7 +126,7 @@ function print_select($pid, $depth) {
 	<?php if (!empty($content)): ?>
 		<?php foreach ($content as $row): ?>
 			<tr onmousedown="document.form['c<?php echo $row['content_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['content_id']; ?>">
-				<td><input type="radio" name="id" value="<?php echo $row['content_id']; ?>" id="c<?php echo $row['content_id']; ?>"></td>
+				<td><input type="radio" name="ctid" value="<?php echo $row['content_id']; ?>" id="c<?php echo $row['content_id']; ?>" /></td>
 				<td><?php echo $row['ordering']; ?></td>
 				<td><label for="c<?php echo $row['content_id']; ?>"><?php echo AT_print($row['title'], 'content.title'); ?></label></td>
 				<td><?php echo count($all_content[$row['content_id']]); ?></td>
@@ -139,5 +139,5 @@ function print_select($pid, $depth) {
 	<?php endif; ?>
 </tbody>
 </table>
-
+</form>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
