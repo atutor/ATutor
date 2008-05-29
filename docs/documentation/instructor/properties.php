@@ -13,6 +13,10 @@
     <dt>Description</dt>
     <dd>An short text description of the course, to display in the Browse Course listing for the course.</dd>
 
+    <dt>Course Directory</dt>
+    <dd>If the ATutor administrator has enabled the "Pretty URL" feature, instructors will see a field to enter a name for the course directory, which gets added to a url while in a course. The course directory may contain numbers, letters, underscores, or dashes. No spaces are allowed. If no course directory is defined, the course ID is used in its place. The Pretty URL feature is enabled to turn conventional URL variables an there values (e.g course=21&user=13) into something more readable (e.g. course/21/user/13)</dd>
+
+
     <dt>Export Content</dt>
     <dd>If enabled, students can export course materials as content packages that can be viewed offline. If set to be <code>available  only for top level pages</code>, exporting a top level page also exports all its sub-pages. </dd>
 
