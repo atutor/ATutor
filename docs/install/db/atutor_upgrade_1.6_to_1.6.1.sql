@@ -139,5 +139,5 @@ ALTER TABLE `courses` DROP preferences, DROP header, DROP footer, DROP banner_te
 
 #---------------------------------------------------------
 # Adds the fluid theme to the default theme provided in the public distribution
-INSERT INTO `themes` VALUES ('Fuild', '1.6.1', 'fuild', NOW(), 'Theme that implements the Fluid reorderer used to drag-and-drop the menu from side-to-side.', 1);
+INSERT INTO `themes` VALUES ('Fluid', '1.6.1', 'fluid', NOW(), 'Theme that implements the Fluid reorderer used to drag-and-drop the menu from side-to-side.', 1);
 
