@@ -29,3 +29,8 @@ table.data tfoot input {
 #header{
 	height: 7.2em;
 }
+
+div#top-links a:active{
+	color:black;
+	background-color:#F6EAD6;
+}

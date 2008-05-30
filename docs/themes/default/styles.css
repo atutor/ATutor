@@ -114,8 +114,11 @@ a:link, a:visited  {
 }
 a:hover {
 	color: #932318;
+color:#ffffff;
 }
-
+a:active {
+	color: #932318;
+}
 /* align text to the left */
 .left {
 	text-align: left;
