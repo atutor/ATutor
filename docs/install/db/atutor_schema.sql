@@ -197,7 +197,7 @@ CREATE TABLE `courses` (
   `copyright` text NOT NULL ,
   `primary_language` varchar(5) NOT NULL default '',
   `rss` tinyint NOT NULL default 0,
-  `icon` varchar(20) NOT NULL default '',
+  `icon` varchar(75) NOT NULL default '',
   `home_links` text NOT NULL ,
   `main_links` text NOT NULL ,
   `side_menu` VARCHAR( 255 ) NOT NULL default '',

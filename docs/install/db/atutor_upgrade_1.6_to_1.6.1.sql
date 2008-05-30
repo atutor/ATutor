@@ -141,3 +141,7 @@ ALTER TABLE `courses` DROP preferences, DROP header, DROP footer, DROP banner_te
 # Adds the fluid theme to the default theme provided in the public distribution
 INSERT INTO `themes` VALUES ('Fluid', '1.6.1', 'fluid', NOW(), 'Theme that implements the Fluid reorderer used to drag-and-drop the menu from side-to-side.', 1);
 
+# --------------------------------------------------------
+# Increase course icon filename size
+# http://www.atutor.ca/atutor/mantis/view.php?id=3319
+ALTER TABLE `courses` MODIFY COLUMN `icon` VARCHAR(75);
