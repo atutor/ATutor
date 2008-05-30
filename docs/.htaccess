@@ -1,6 +1,8 @@
 # BEGIN ATutor
 <IfModule mod_rewrite.c>
 RewriteEngine On
+
+#Forums rules
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?(([0-9]+)\.html)?$ go.php/$1/forum/view.php/fid/$2/pid/$3/page/$4
@@ -13,11 +15,37 @@ RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule (.*)/forum/([0-9]+)/([0-9+])\.html$ go.php/$1/forum/index.php/fid/$2/page/$3
 
-
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule (.*)/forum/?$ go.php/$1/forum/list.php
 
+#Content rule
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/content/([0-9]+)/?$ go.php/$1/content.php/cid/$2
+
+#File storage rule
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/?$ go.php/$1/file_storage/index.php
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/index/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/index.php/ot/$2/oid/$3/
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/index/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/index.php/ot/$2/oid/$3/folder/$4/
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/comments/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/comments.php/ot/$2/oid/$3/id/$4/
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/revisions/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/revisions.php/ot/$2/oid/$3/id/$4/
+
+#Default rule
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule (.*) go.php/$1 [L]

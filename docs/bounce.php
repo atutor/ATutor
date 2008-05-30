@@ -142,7 +142,7 @@ if (!empty($_REQUEST['pu'])) {
 if (substr($page, 0, 1) == '/') {
 	$page = substr($page, 1);
 }
-//echo $page;exit;
+
 $_SESSION['enroll']		= AT_ENROLL_NO;
 $_SESSION['s_cid']		= 0;
 $_SESSION['privileges'] = 0;

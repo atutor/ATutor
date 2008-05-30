@@ -36,13 +36,6 @@ $url_parser = new UrlParser($pathinfo);
 $path_array =  $url_parser->getPathArray();
 $_pretty_url_course_id = $path_array[0];
 $obj = $path_array[1];
-//debug($obj);exit;
-//check if we are in the requested course, if not, bounce to it.
-//if ($_SESSION['course_id'] != $course_id){
-//	debug('why am i being loaded..stop it stop it!!!!!!');exit;
-//	header('Location: '.AT_BASE_HREF.'bounce.php?course='.$course_id);
-//	exit;
-//}
 
 if (!$obj->isEmpty()){
 	/* 
@@ -50,9 +43,9 @@ if (!$obj->isEmpty()){
 	 * @refer to constants.inc.php $_rel_link
 	 */
 	$_rel_url = $obj->redirect();
-
 	$var_query = $obj->parsePrettyQuery();
 	save2Get($var_query);	//remake all the _GET and _REQUEST variables so that the vitals can use it
+
 	$_user_location	= '';	//reset user_location so that the vital file in each page would validate
 	$pretty_current_page = $obj->getPage();
 	if (!@include($obj->getPage())){
@@ -60,6 +53,8 @@ if (!$obj->isEmpty()){
 		exit;
 	} 
 } elseif ($_pretty_url_course_id==0) {
+	//TODO: $_SESSION[course_id] seems to be resetted to 0, causing vitals.inc.php line 273 to redirect incorrectly.
+	//		Need to find out where exactly the course_id is being resetted. 
 	return;
 //	header('location: '.AT_BASE_HREF.'bounce.php?course=0');
 //	exit;
@@ -74,6 +69,14 @@ function save2Get($var_query){
 	foreach($var_query as $k=>$v){
 		if ($k=='page_to_load'){
 			continue;
+		}
+
+		//If mod_rewrite is on, the page# will be shown as <page#>.html.
+		//in this case, parse the page number out.
+		if ($k=='page'){
+			if (preg_match('/(.*)\.html$/', $v, $matches)==1){
+				$v = $matches[1];
+			}
 		}
 		$_GET[$k] = $v;
 		$_REQUEST[$k] = $v;

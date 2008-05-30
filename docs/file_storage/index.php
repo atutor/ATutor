@@ -114,7 +114,7 @@ if (isset($_GET['assignment']) && (isset($_GET['files']) || isset($_GET['folders
 	} else if (!isset($_GET['files'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 	} else {
-		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/assignment.php?'.$_SERVER['QUERY_STRING']));
+		header('Location: '.AT_BASE_HREF.'file_storage/assignment.php?'.$_SERVER['QUERY_STRING']);
 		exit;
 	}
 }

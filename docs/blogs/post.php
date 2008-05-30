@@ -19,7 +19,7 @@ $owner_type = abs($_REQUEST['ot']);
 $owner_id = abs($_REQUEST['oid']);
 if (!($owner_status = blogs_authenticate($owner_type, $owner_id))) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/index.php'));
 	exit;
 }
 

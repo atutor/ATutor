@@ -40,7 +40,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			$fn = basename($module_name) . '_get_group_url';
 			$module =& $moduleFactory->getModule($module_name);
 			if ($module->isEnabled() && function_exists($fn)) {
-				echo '<li class="child-tool"><a href="'. $fn($row['group_id']) .'">'._AT($_pages[$module->getGroupTool()]['title_var']).'</a></li>';
+				echo '<li class="child-tool"><a href="'. url_rewrite($fn($row['group_id'])) .'">'._AT($_pages[$module->getGroupTool()]['title_var']).'</a></li>';
 			}
 		}
 		echo '</ul>';

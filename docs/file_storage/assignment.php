@@ -21,13 +21,13 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
 	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
 	exit;
 }
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']));
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder'])));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['assignment'] = abs($_POST['assignment']);
@@ -35,14 +35,14 @@ if (isset($_POST['cancel'])) {
 
 	if (!$assignment_row) {
 		$msg->addError('ACCESS_DENIED');
-		header('Location: index.php');
+		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
 		exit;
 	}
 
 	if (!$assignment_row['assign_to']) {
 		if (!$_SESSION['enroll']) {
 			$msg->addError('ACCESS_DENIED');
-			header('Location: index.php');
+			header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
 			exit;
 		}
 
@@ -51,14 +51,14 @@ if (isset($_POST['cancel'])) {
 		$result = mysql_query($sql, $db);
 		if (!$row = mysql_fetch_assoc($result)) {
 			$msg->addError('ACCESS_DENIED');
-			header('Location: index.php');
+			header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
 			exit;
 		}
 	}
 
 	if ($assignment_row['u_date_cutoff'] && ($assignment_row['u_date_cutoff'] < time())) {
 		$msg->addError('ASSIGNMENT_CUTOFF');
-		header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['folder']);
+		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['folder']));
 		exit;
 	}
 
@@ -68,7 +68,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	$msg->addFeedback('ASSIGNMENT_HANDED_IN');
-	header('Location: index.php'.$owner_arg_prefix.'folder='.$_POST['folder']);
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['folder']));
 	exit;
 }
 
@@ -98,7 +98,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 if (!$assignments) {
 	$msg->addError('NO_ASSIGNMENTS_FOUND');
-	header('Location: index.php'.$owner_arg_prefix.'folder='.$_GET['folder']);
+	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_GET['folder']));
 	exit;
 }
 

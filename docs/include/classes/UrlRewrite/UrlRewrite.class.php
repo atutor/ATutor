@@ -12,6 +12,8 @@
 /************************************************************************/
 
 require_once('ForumsUrl.class.php');
+require_once('ContentUrl.class.php');
+require_once('FileStorageUrl.class.php');
 
 /**
 * UrlRewrite
@@ -183,11 +185,19 @@ class UrlRewrite  {
 			//check if there are any rules overwriting the original rules
 			//TODO: have a better way to do this
 			//		extend modularity into this.
-			if (preg_match('/forum\/((index)|(view)|(list))\.php/', $front)==1 && $_config['apache_mod_rewrite'] > 0){
-				$pretty_url = $course_id.'/forum';
-				$obj =& new ForumsUrl();
-			} else  {
-				$obj =& $this;
+			$obj =& $this;  //default
+			//Overwrite the UrlRewrite obj if there are any private rules
+			if ($_config['apache_mod_rewrite'] > 0){
+				if (preg_match('/forum\/(index|view|list)\.php/', $front)==1) {
+					$pretty_url = $course_id.'/forum';
+					$obj =& new ForumsUrl();
+				} elseif (preg_match('/content\.php/', $front)==1){
+					$pretty_url = $course_id.'/content';
+					$obj =& new ContentUrl();
+				} elseif (preg_match('/file_storage\/((index|revisions|comments)\.php)?/', $front, $matches)==1){
+					$pretty_url = $course_id.'/file_storage';
+					$obj =& new FileStorageUrl($matches[1]);
+				} 
 			}
 			if ($end != ''){
 				//if pretty url is turned off, use '?' to separate the querystring.
