@@ -608,6 +608,9 @@ function fix_quotes($text){
 }
 
 function embed_media($text) {
+	if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $text)==0){
+		return $text;
+	}
 
 	if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $text, $matches))
 	{
@@ -620,13 +623,9 @@ function embed_media($text) {
 		$height = 350;
 	}
 
-
 	// youtube videos
 	$text = preg_replace("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=([a-z0-9_-]+)\[/media\]#i", '<object width="'.$width.'" height="'.$height.'"><param name="movie" value="http://\\1youtube.com/v/\\2"></param><embed src="http://\\1youtube.com/v/\\2" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed></object>', $text);
 
-	if (strpos($text, '[media]') === FALSE) {
-		return $text;
-	}
 	$text = preg_replace("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=([a-z0-9_-]+)\[/media\]#i", '<object width="'.$width.'" height="'.$height.'"><param name="movie" value="http://\\1youtube.com/v/\\2"></param><embed src="http://\\1youtube.com/v/\\2" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed></object>', $text);
 
 	// .mpg
