@@ -126,8 +126,9 @@ if (!$test_row['random']) {
 		<a href="<?php echo $_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'submit='._AT('start_test');?>" class="button" style="padding: 5px;"><?php echo _AT('start_test');?></a>
 		<a href="<?php echo $_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'cancel='._AT('cancel');?>" class="button" style="padding: 5px;"><?php echo _AT('cancel');?></a>
 	</div>
-	</fieldset>
+
 	</div>
+	</fieldset>
 </div>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
