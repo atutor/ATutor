@@ -61,8 +61,9 @@ function php2js_sqlresult($phpsql) {
 function escapeString($string) {
     $escape = array(
     "\r\n" => '\n',
-    "\r"    => '\n',
-    "\n"    => '\n'
+    "\r"   => '\n',
+    "\n"   => '\n',
+    "/"    => '\/'
     );
 
     return str_replace(array_keys($escape), array_values($escape), addslashes($string));
