@@ -4,11 +4,11 @@ demo.initMyLayout = function (basepath) {
 	var myLayoutContainer = fluid.utils.jById ("contentwrapper");
 	
 	var myOrderableFinder = function () {
-	return jQuery ("[id^=atutor]", myLayoutContainer);
+	return jQuery ("div[id^=atutor]", myLayoutContainer);
 	};
 	
 	var myGrabHandleFinder = function (item) {
-		return jQuery ("[id=toolbar." + item.id.split(".")[1] + "]");
+		return jQuery ("[id='toolbar." + item.id.split(".")[1] + "']");
 	};	
 	
 	var findItems = {movables: myOrderableFinder, 
@@ -17,7 +17,7 @@ demo.initMyLayout = function (basepath) {
 	var layoutHandler = new fluid.GridLayoutHandler (myOrderableFinder, { 
 		orderChangedCallback : function(){ 
 			//save the state to the db
-			var myDivs = jQuery ("[id^=atutor]", myLayoutContainer);
+			var myDivs = jQuery ("div[id^=atutor]", myLayoutContainer);
 			jQuery.post(basepath+"themes/fluid/save_state.php", { 'left':myDivs[0].id },
 				function(data) { 
 					//alert(data);
