@@ -94,7 +94,6 @@ if ($index->isError()!=true){	//if there is no error in index object, display th
 	
 	/* display index page from here */
 	$template=new HTML_Template_ITX("./Template");
-	$template->setRoot("./mods/photo_album/Template");
 	$template->loadTemplatefile("index.tpl.php", true, true);
 	
 	/* display images */
