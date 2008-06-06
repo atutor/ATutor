@@ -608,7 +608,7 @@ function fix_quotes($text){
 }
 
 function embed_media($text) {
-	if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $text)==0){
+	if (preg_match("/\[media(\|[0-9]+\|[0-9]+)?\]*/", $text)==0){
 		return $text;
 	}
 
