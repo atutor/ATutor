@@ -5,7 +5,11 @@ RewriteEngine On
 #Forums rules
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?(([0-9]+)\.html)?$ go.php/$1/forum/view.php/fid/$2/pid/$3/page/$4
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?$ go.php/$1/forum/view.php/fid/$2/pid/$3/
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/(([0-9]+)\.html)$ go.php/$1/forum/view.php/fid/$2/pid/$3/page/$4
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
