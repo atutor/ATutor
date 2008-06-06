@@ -1,0 +1,13 @@
++======+
+| TODO |
++======+
+
+
+June 05, 08
+------------
+- allow admin to change the room size.
+- clean room after course is deleted.
+- though these would be way easier to do it in the openmeeting's end
+- upgrade nusoup script
+- update readme, and write up something that teaches the user to setup red5
+- allow 2 modes
