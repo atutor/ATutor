@@ -478,19 +478,18 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 	<div class="row">
 		<?php 
             if ($row['icon'] != ''): 
-                $path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
-                
+                $path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
                 if (file_exists($path.$row['icon'])) {
                     if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
                         $_base_href = 'get_course_icon.php/?id='.$row['course_id'];
                     } else {
-                        $_base_href = 'content/' . $_SESSION['course_id'] . '/';
+                        $_base_href = 'content/' . $row['course_id'] . '/';
                     }
                 } else {
                     $_base_href = "images/courses/";
                                             //$_base_href = 'get_course_icon.php/?id='.$row['course_id'];
                 }
-            
+            debug($_base_href);
             $force_get = (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) ? true : false;
             echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get' />";
         
@@ -509,7 +508,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<select name="icon" id="icons" onchange="SelectImg()">
 			<option value=""><?php echo _AT('no_icon'); ?></option>
             <?php // ------------- custom course icons
-                $path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
+                $path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
                 $boolCustom = false;
                 $optCount = 0;
 
@@ -581,7 +580,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 	<div class="buttons">
 	        <?php
             echo "<input type='hidden' name='custOptCount' id='custOptCount' value='".$optCount."' />";
-            echo "<input type='hidden' name='courseId' id='courseId' value='".$_SESSION['course_id']."' />";
+            echo "<input type='hidden' name='courseId' id='courseId' value='".$row['course_id']."' />";
 		?>
 
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /> 
@@ -643,11 +642,12 @@ function SelectImg() {
         var courseId = document.getElementById('courseId').value;
 
         // if icon is part of custom icons choose corresponding directory
-        if (iconIndx <= custIndx && boolForce != '') {
-            var dir = (boolForce == 1) ? "get.php/custom_icons/" : "/content/"+courseId+"/custom_icons/";
+        if (iconIndx <= custIndx && boolForce != '') {			
+            var dir = (boolForce == 1) ? "get_course_icon.php/?id="+courseId : "/content/"+courseId+"/custom_icons/";
         } else {
             var dir = "images/courses/";
         }
+
 		document.getElementById('i0').src = dir + document.course_form.icon.options[iconIndx].value;
 		document.getElementById('i0').alt = document.course_form.icon.options[iconIndx].value;
 	}
