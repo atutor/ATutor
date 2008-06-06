@@ -139,7 +139,6 @@ class UrlRewrite  {
 	function convertToPrettyUrl($course_id, $url){
 		global $_config;
 		list($front, $end) = preg_split('/\?/', $url);
-
 		$front_array = explode('/', $front);
 
 		//find out what kind of link this is, pretty url? relative url? or PHP_SELF url?
@@ -162,10 +161,14 @@ class UrlRewrite  {
 			//ie. AT_PRETTY_URL_HANDLER/1/forum/view.php/...
 			$needle = array_search(AT_PRETTY_URL_HANDLER, $front_array);
 			$front_array = array_slice($front_array, $needle + 2);  //+2 because we want the entries after the course_slug
-			//cut off everything at the back
+			/* Overwrite pathinfo
+			 * ie. /go.php/1/forum/view.php/fid/1/pid/17/?fid=1&pid=17&page=5
+			 * In the above case, cut off the original pathinfo, and replace it with the new querystrings
+			 * If querystring is empty, then use the old one, ie. /go.php/1/forum/view.php/fid/1/pid/17/.
+			 */
 			foreach($front_array as $fk=>$fv){
 				array_push($front_result, $fv);
-				if 	(preg_match('/\.php/', $fv)==1){
+				if 	($end!='' && preg_match('/\.php/', $fv)==1){
 					break;
 				}
 			}
@@ -177,10 +180,13 @@ class UrlRewrite  {
 			//if this is my start page
 			return $url;
 		}
-
 		//Turn querystring to pretty URL
 		if ($pretty_url==''){
-			$pretty_url = $course_id.'/'.$front;
+			//Add course id in if it's not there.
+			if (preg_match('/'.$course_id.'\//', $front)==0){
+				$pretty_url = $course_id.'/';
+			}
+			$pretty_url .= $front;
 
 			//check if there are any rules overwriting the original rules
 			//TODO: have a better way to do this
