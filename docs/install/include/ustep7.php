@@ -505,8 +505,13 @@ if (!$db) {
 			return;
 		}
 		echo '<tr><td>';
-		echo mb_convert_encoding($rs_row['title'], "UTF-8", $row['char_set']);
-		echo '</td><td>'.$row['char_set'].'</td></tr>';
+		if ($row['char_set']==''){
+			echo $rs_row['title'];
+			echo '</td><td>Undefined</td></tr>';
+		} else {
+			echo mb_convert_encoding($rs_row['title'], "UTF-8", $row['char_set']);
+			echo '</td><td>'.$row['char_set'].'</td></tr>';
+		}		
 	}
 	echo '</table>';
  }
