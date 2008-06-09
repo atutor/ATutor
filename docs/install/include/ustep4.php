@@ -31,19 +31,19 @@ print_progress($step);
 /* try copying the content over from the old dir to the new one */
 require('../include/lib/filemanager.inc.php'); // for copys()
 
-$content_dir = urldecode(trim($_POST['step4']['content_dir']));
-$_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from'])) . DIRECTORY_SEPARATOR;
+$content_dir = urldecode(trim($_POST['step5']['content_dir']));
+$_POST['step5']['copy_from'] = urldecode(trim($_POST['step5']['copy_from'])) . DIRECTORY_SEPARATOR;
 
 //copy if copy_from is not empty
 
-if ($_POST['step4']['copy_from'] && ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR)) {
-	if (is_dir($_POST['step4']['copy_from'])) {
-		$files = scandir($_POST['step4']['copy_from']);
+if ($_POST['step5']['copy_from'] && ($_POST['step5']['copy_from'] != DIRECTORY_SEPARATOR)) {
+	if (is_dir($_POST['step5']['copy_from'])) {
+		$files = scandir($_POST['step5']['copy_from']);
 
 		foreach ($files as $file) {
 			if ($file == '.' || $file == '..') { continue; }
-			if (is_dir($_POST['step4']['copy_from'] . $file)) {
-				copys($_POST['step4']['copy_from'] . $file, $content_dir . $file);
+			if (is_dir($_POST['step5']['copy_from'] . $file)) {
+				copys($_POST['step5']['copy_from'] . $file, $content_dir . $file);
 				if (is_dir($content_dir.$course)) {			
 					$progress[] = 'Course content directory <b>'.$file.'</b> copied successfully.';
 				} else {
@@ -51,7 +51,7 @@ if ($_POST['step4']['copy_from'] && ($_POST['step4']['copy_from'] != DIRECTORY_S
 				}
 			} else {
 				// a regular file
-				copy($_POST['step4']['copy_from'] . $file, $content_dir  .$file);
+				copy($_POST['step5']['copy_from'] . $file, $content_dir  .$file);
 			}
 		}
 	}

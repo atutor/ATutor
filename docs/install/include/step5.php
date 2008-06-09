@@ -100,7 +100,9 @@ if (isset($_POST['submit'])) {
 		unset($_POST['submit']);
 		unset($action);
 
-		$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
+		if (substr($_POST['content_dir'], -1) !='\\'){
+			$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
+		}
 
 		// kludge to fix the missing slashes when magic_quotes_gpc is On
 		if ($addslashes != 'mysql_real_escape_string') {
