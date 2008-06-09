@@ -50,7 +50,7 @@ if (!$db) {
 		 * OR if db table are already all in utf8.
 		 */
 		if (version_compare($_POST['step1']['old_version'], '1.6.1', '>') === TRUE ||
-			 check_db_default_charset($db) === TRUE) {
+			check_db_default_charset($db) === TRUE) {
 			$progress[] = 'Version <kbd><b>'.$_POST['step1']['old_version'].'</b></kbd> found.';
 			$progress[] = 'UTF-8 Conversion is not needed, skipping.';
 			print_feedback($progress);
@@ -529,18 +529,33 @@ function print_post_for_step9($_POST){
 
 
 /**
- * This function checks if the database's default charset is UTF-8.
+ * This function checks if the database's and tbale's default charset are UTF-8.
  * @return true if db default charset is UTF-8, false otherwise.
  */
 function check_db_default_charset($db){
-		/* Check if the database that existed is in UTF-8, if not, ask for retry */
-		$sql = "SHOW CREATE DATABASE `$_POST[db_name]`";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);		
+	//Check database's default charset
+	$sql = "SHOW CREATE DATABASE `$_POST[db_name]`";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
 
-		if (preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
-			return true;
-		} 
-		return false;}
+	if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
+		return false;
+	} 
 
+	//check tables
+	$sql = "SHOW TABLES";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_row($result)){
+		$row[0];
+		$sql2 = "SHOW CREATE TABLE `$row[0]`";
+		$result2 = mysql_query($sql2, $db);
+		$row2 = mysql_fetch_row($result);
+
+		if (!preg_match('/DEFAULT CHARSET\=utf8/i', $row[1])){
+			return false;
+		} 			
+	}
+
+	return true;
+}
 ?>
