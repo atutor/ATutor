@@ -28,7 +28,10 @@ $force_download = false;
 
 //get path to file
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-	if (!empty($_SERVER['PATH_INFO'])) {
+	if ((version_compare(phpversion(), '5.2.0', '<') > 0) && !empty($_SERVER['ORIG_PATH_INFO'])){
+		//http://www.atutor.ca/atutor/mantis/view.php?id=3436
+		$current_file = $_SERVER['ORIG_PATH_INFO'];
+	} else if (!empty($_SERVER['PATH_INFO'])) {
         $current_file = $_SERVER['PATH_INFO'];
 	} else if (!empty($_SERVER['REQUEST_URI'])) {
 		$current_file = $_SERVER['REQUEST_URI'];
@@ -51,14 +54,14 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
         $current_file = $_SERVER['URL'];
 	}
 
-	if ($pos = strpos($current_file, '/get.php/') !== FALSE) {
-		$current_file = substr($current_file, $pos + strlen('/get.php/'));
+	if (($pos = strpos($current_file, '/get.php')) !== FALSE) {
+		$current_file = substr($current_file, $pos + strlen('/get.php'));
 	}
-	
 	if (substr($current_file, 0, 2) == '/@') {
 		$force_download = true;
 		$current_file = substr($current_file, 2);
 	}
+
 } else {
 	$current_file = $_GET['f'];
 
