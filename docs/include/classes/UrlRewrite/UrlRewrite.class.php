@@ -41,17 +41,6 @@ class UrlRewrite  {
 		$this->query = $query;
 	}
 
-	// public 
-	function setRule($rule) {
-		echo 'parent setting the rule';
-		$this->rule = $rule;
-	}
-
-	// protected
-	function getRule($rule_key) {
-		return 'i am the parent: '.$rule;
-	}
-
 	// public
 	//deprecated
 	function redirect(){
@@ -111,6 +100,25 @@ class UrlRewrite  {
 			return '';
 		}
 
+		//If this is already a pretty url,but without mod_apache rule
+		//unwrap it and reconstruct
+		if (is_array($query)){
+			$new_query = '';
+			foreach($query as $fk=>$fv){
+				if 	(preg_match('/\.php/', $fv)==1){
+					continue;	//skip the php file
+				}
+
+				//check if this is part of the rule, if so,add it, o/w ignore
+				if (array_search($fv, $this->rule)!==FALSE){
+					$new_query .= $fv . '=' . $query[$fk+1] . SEP;
+				} elseif (preg_match('/([0-9]+)\.html/', $fv, $matches)==1){
+					$new_query .= 'page=' . $matches[1] . SEP;
+				}
+			}
+			$query = $new_query;	//done
+		}
+
 		//do not change query if pretty url is disabled
 		if ($_config['pretty_url'] == 0){
 			return $query;
@@ -155,12 +163,21 @@ class UrlRewrite  {
 			}
 		} elseif(in_array(AT_PRETTY_URL_HANDLER, $front_array)===TRUE){
 			//The relative link is a pretty URL
-			$front_result = array();			
+			$front_result = array();
 			//spit out the URL in between AT_PRETTY_URL_HANDLER to *.php
 			//note, pretty url is defined to be AT_PRETTY_URL_HANDLER/course_slug/type/location/...
 			//ie. AT_PRETTY_URL_HANDLER/1/forum/view.php/...
-			$needle = array_search(AT_PRETTY_URL_HANDLER, $front_array);
-			$front_array = array_slice($front_array, $needle + 2);  //+2 because we want the entries after the course_slug
+			while (($needle = array_search(AT_PRETTY_URL_HANDLER, $front_array)) !== FALSE){
+				$front_array = array_slice($front_array, $needle + 1);
+			}
+			$front_array = array_slice($front_array, $needle + 1);  //+2 because we want the entries after the course_slug
+
+			//Handle url differently IF mod_rewrite is enabled, and if there are no query strings at the back,
+			//then we will have to reuse the current pathinfo to reconstruct the query.
+			if ($_config['apache_mod_rewrite'] > 0 && $end==''){
+				$end = $front_array;	//let the class handles it
+			} 
+
 			/* Overwrite pathinfo
 			 * ie. /go.php/1/forum/view.php/fid/1/pid/17/?fid=1&pid=17&page=5
 			 * In the above case, cut off the original pathinfo, and replace it with the new querystrings
@@ -168,11 +185,12 @@ class UrlRewrite  {
 			 */
 			foreach($front_array as $fk=>$fv){
 				array_push($front_result, $fv);
-				if 	($end!='' && preg_match('/\.php/', $fv)==1){
+				if 	(!empty($end) && preg_match('/\.php/', $fv)==1){
 					break;
 				}
 			}
 			$front = implode('/', $front_result);
+
 		} elseif (strpos($front, $host_dir)!==FALSE){
 			//Not a relative link, it contains the full PHP_SELF path.
 			$front = substr($front, strlen($host_dir)+1);  //stripe off the slash after the host_dir as well
@@ -180,9 +198,10 @@ class UrlRewrite  {
 			//if this is my start page
 			return $url;
 		}
+
 		//Turn querystring to pretty URL
 		if ($pretty_url==''){
-			//Add course id in if it's not there.
+			//Add course id in if it's not there
 			if (preg_match('/'.$course_id.'\//', $front)==0){
 				$pretty_url = $course_id.'/';
 			}
@@ -216,7 +235,6 @@ class UrlRewrite  {
 		if ($_config['apache_mod_rewrite'] > 0){
 			return $pretty_url;
 		}
-
 		return AT_PRETTY_URL_HANDLER.'/'.$pretty_url;
 	}
 

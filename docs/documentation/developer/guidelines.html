@@ -1468,7 +1468,7 @@ exit;
 		<h4>Description</h4>
 			<p><kbd>string <strong>url_rewrite</strong>( string $f, boolean $g)</kbd></p>
 
-			<p>This function returns a pretty URL from the given parameter. Its purpose is to change the URLs to a "prettier" format in order to extend user friendliness in the system, and to create indexes for Google search.  This function will authenticate itself towards the current pages.  In our definition, admins, login, registration pages should not have pretty url applied.  However, if one want to use url_rewrite on these pages, please force it by using the second parameter, <kbd>$g</kbd>.  Please note that the system preference will overwrite the force effect.  <kbd>$f</kbd> may be an <kbd>string</kbd> of URL, '?' and the seprators in the URL query will be replaced by slashes.</p>
+			<p>This function returns a pretty URL from the given parameter. Its purpose is to change the URLs to a "prettier" format in order to extend user friendliness in the system, and to create indexes for Google search.  This function will authenticate itself towards the current pages.  In our definition, admins, login, registration pages should not have pretty url applied.  However, if one want to use url_rewrite on these pages, please set the second parameter to TRUE, <kbd>$g</kbd>, this will force it to change the urls to pretty urls.  Please note that the admin's system preference will still overwrite the force effect.  <kbd>$f</kbd> may be an <kbd>string</kbd> of URL, '?' and the seprators in the URL query will be replaced by slashes.  Please note that the PHP_SELF variable might break some of the form action/header redirect because the Pretty URI is a virtual path.  To address this problem, absolute URL is perferred over relative URL; please look at example 3, and 4.  </p>
 
 		<h4>Location</h4>
 			<p><kbd>`include/vitals.inc.php`</kbd></p>
@@ -1487,6 +1487,17 @@ $url = 'mods/hello_world/index.php';
 echo url_rewrite($url, true);		//output redirect.php/1/mods/hello_world/index.php
 </pre></p>
 
+		<h4>Example 3</h4>
+		<p>To change an URL for forms:
+<pre class="code">
+&lt;form action=&quot;AT_BASE_HREF . url_rewrite('forum/view.php')&quot;&gt;...
+</pre></p>
+
+		<h4>Example 4</h4>
+		<p>To change an URL for header redirection:
+<pre class="code">
+header('Location: '. AT_BASE_HREF . url_rewrite('forum/index.php')); 
+</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="useful-constants"></a>19. Useful Constants</h2>

@@ -53,6 +53,23 @@ class FileStorageUrl {
 			return '';
 		}
 
+		//If this is already a pretty url,but without mod_apache rule
+		//unwrap it and reconstruct
+		if (is_array($query)){
+			$new_query = '';
+			foreach($query as $fk=>$fv){
+				if 	(preg_match('/\.php/', $fv)==1){
+					continue;	//skip the php file
+				}
+
+				//check if this is part of the rule, if so,add it, o/w ignore
+				if (array_search($fv, $this->rule)!==FALSE){
+					$new_query .= $fv . '=' . $query[$fk+1] . SEP;
+				}
+			}
+			$query = $new_query;	//done
+		}
+
 		$temp = explode(SEP, $query);
 		foreach ($temp as $index=>$attributes){
 			if(empty($attributes)){

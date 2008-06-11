@@ -489,7 +489,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                     $_base_href = "images/courses/";
                                             //$_base_href = 'get_course_icon.php/?id='.$row['course_id'];
                 }
-            debug($_base_href);
+
             $force_get = (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) ? true : false;
             echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get' />";
         

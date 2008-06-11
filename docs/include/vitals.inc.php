@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -49,7 +49,7 @@ function unregister_GLOBALS() {
 
 /**** 0. start system configuration options block ****/
 	error_reporting(0);
-	if (!defined(AT_REDIRECT_LOADED)){
+	if (!defined('AT_REDIRECT_LOADED')){
 		include_once(AT_INCLUDE_PATH.'config.inc.php');
 	}
 	error_reporting(AT_ERROR_REPORTING);
@@ -65,7 +65,7 @@ function unregister_GLOBALS() {
 /*** end system config block ****/
 
 /*** 1. constants ***/
-	if (!defined(AT_REDIRECT_LOADED)){
+	if (!defined('AT_REDIRECT_LOADED')){
 		require_once(AT_INCLUDE_PATH.'lib/constants.inc.php');
 	}
 
@@ -96,7 +96,6 @@ function unregister_GLOBALS() {
 	session_start();
 	$str = ob_get_contents();
 	ob_end_clean();
-
 	unregister_GLOBALS();
 
 	if ($str) {
@@ -128,7 +127,7 @@ if ((@ini_get('output_handler') == '') && (@ini_get('zlib.output_handler') == ''
 }
 
 /* 5. database connection */
-if (!defined(AT_REDIRECT_LOADED)){
+if (!defined('AT_REDIRECT_LOADED')){
 	require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 }
 
@@ -205,7 +204,7 @@ if ($_config['time_zone']) {
 /* 8. load common libraries */
 	require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 	require_once(AT_INCLUDE_PATH.'lib/output.inc.php');           /* output functions */
-	if (!(defined(AT_REDIRECT_LOADED))){
+	if (!(defined('AT_REDIRECT_LOADED'))){
 		require_once(AT_INCLUDE_PATH . 'classes/UrlRewrite/UrlParser.class.php');	/* pretty url tool */
 	}
 	require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme and template management */
@@ -267,7 +266,7 @@ if ((!isset($_SESSION['course_id']) || $_SESSION['course_id'] == 0) && ($_user_l
 }
 /* check if we are in the requested course, if not, bounce to it.
  * @author harris, for pretty url, read AT_PRETTY_URL_HANDLER
- */
+ */ 
 if (isset($_pretty_url_course_id) && $_SESSION['course_id'] != $_pretty_url_course_id){
 	if($_config['pretty_url'] == 0){
 		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id.SEP.'pu='.$_SERVER['PATH_INFO'].urlencode('?'.$_SERVER['QUERY_STRING']));
@@ -797,10 +796,18 @@ function url_rewrite($url, $force=false){
 	$url_parser = new UrlParser();
 	$pathinfo = $url_parser->getPathArray();
 
-	//If this is an admin (of any kind), don't prettify the url
-	if ($force || $_SESSION['course_id']>0) {
-	} elseif ((admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) || admin_authenticate($_SESSION['privileges'], AT_PRIV_RETURN)) 
-		|| $_SESSION['valid_user']=='') {
+	/* If this is any kind of admins, don't prettify the url
+	 * $_SESSION['is_guest'] is used to check against login/register/browse page, the links on this page will 
+	 * only be prettified when a user has logged in.
+	 * Had used $_SESSION[valid_user] before but it created this problem: 
+	 * http://www.atutor.ca/atutor/mantis/view.php?id=3426
+	 */
+	if ($force || $_SESSION['course_id'] > 0) {
+		//if course id is defined, apply pretty url.
+	} 
+	//if this is something that is displayed on the login page, don't modify the urls.
+	else if ((admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) || admin_authenticate($_SESSION['privileges'], AT_PRIV_RETURN))
+		|| (isset($_SESSION['is_guest']) && $_SESSION['is_guest']==1)){
 		return $url;
 	} 
 
@@ -1111,5 +1118,5 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 		$result = mysql_query($sql, $db);
 	}
 }
-
+//debug($_SESSION);
 ?>

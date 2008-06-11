@@ -125,7 +125,9 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 if (!empty($_REQUEST['pu'])) {
 	//for pretty url iff mod_rewrite is not on
 	if ($_config['apache_mod_rewrite'] > 0){
-		$page = $_REQUEST['pu'];
+		//URL are in pretty format, but not in .htaccess RewriteRule format
+		//http://www.atutor.ca/atutor/mantis/view.php?id=3426
+		$page = url_rewrite($_REQUEST['pu'], true);
 	} else {
 		$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'];
 	}
