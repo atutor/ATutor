@@ -128,7 +128,22 @@ class SOAP_openmeetings {
           )
         );
 	}
-	
+
+
+	/**
+	 * Delete room
+	 */
+	function deleteRoom($parameters = array()){
+		return $this->_performAPICall(
+			"deleteRoom",
+			array(
+				"SID"		=> $parameters["SID"],
+				"rooms_id"	=> $parameters["rooms_id"]
+			)
+		);
+	}
+
+
 	/**
 	 * return the session id.
 	 */

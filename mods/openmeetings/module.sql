@@ -2,9 +2,17 @@
 
 # Table for openmeetings
 CREATE TABLE `openmeetings_rooms` (
+   `om_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
    `course_id` mediumint(8) unsigned NOT NULL,
+   `owner_id` mediumint(8) unsigned NOT NULL,
    `rooms_id` bigint( 20 ) NOT NULL ,
-   PRIMARY KEY ( `course_id` )
+   PRIMARY KEY ( `om_id` )
+);
+
+CREATE TABLE `openmeetings_groups` (
+   `om_id` mediumint(8) unsigned NOT NULL,
+   `group_id` mediumint(8) unsigned NOT NULL,
+   PRIMARY KEY ( `om_id`, `group_id` )
 );
 
 INSERT INTO `language_text` VALUES ('en', '_module', 'openmeetings_missing_url', 'You must supply the URL to your Openmeetings installation in the field below.', NOW(), '');

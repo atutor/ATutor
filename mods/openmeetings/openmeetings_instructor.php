@@ -2,14 +2,25 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_OPENMEETINGS);
-require ('openmeetings.inc.php');
+require ('openmeetings.class.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 //local variables
 $course_id = $_SESSION['course_id'];
 
-//if submit, create room.
-if (isset($_POST['submit'])){
+//Initiate Openmeeting
+$om_obj = new Openmeetings($course_id, $_SESSION['member_id']);
+
+//Login
+$om_obj->om_login();
+
+//Handle form action
+if (isset($_POST['submit']) && isset($_POST['room_id'])) {
+	//delete course
+	$_POST['room_id'] = intval($_POST['room_id']);
+	$om_obj->om_deleteRoom($_POST['room_id']);
+
+} elseif (isset($_POST['submit'])){
 	//mysql escape
 	$_POST['openmeetings_num_of_participants']	= intval($_POST['openmeetings_num_of_participants']);
 	$_POST['openmeetings_ispublic']				= intval($_POST['openmeetings_ispublic']);
@@ -21,26 +32,20 @@ if (isset($_POST['submit'])){
 	$_POST['openmeetings_show_fp']				= intval($_POST['openmeetings_show_fp']);
 	$_POST['openmeetings_fp_w']					= intval($_POST['openmeetings_fp_w']);
 	$_POST['openmeetings_fp_h']					= intval($_POST['openmeetings_fp_h']);
+} 
 
-	//Initiate Openmeeting
-	$om_obj = new Openmeetings($course_id);
-
-	//Login
-	$om_obj->om_login();
-
-	//Get the room id
-	//TODO: Course title added/removed after creation.  Affects the algo here.
-	if (isset($_SESSION['course_title']) && $_SESSION['course_title']!=''){
-		$room_name = $_SESSION['course_title'];
-	} else {
-		$room_name = 'course_'.$course_id;
-	}
-
-	//Log into the room
-	$room_id = $om_obj->om_getRoom($room_name);
-	debug($room_id, 'You have a room'); 
+//Get the room id
+//TODO: Course title added/removed after creation.  Affects the algo here.
+if (isset($_SESSION['course_title']) && $_SESSION['course_title']!=''){
+	$room_name = $_SESSION['course_title'];
+} else {
+	$room_name = 'course_'.$course_id;
 }
 
+//Log into the room
+$room_id = $om_obj->om_getRoom($room_name);
+debug($room_id, 'You have a room'); 
+if ($room_id == false):
 ?>
 
 <?php
@@ -69,7 +74,7 @@ if (isset($_POST['submit'])){
 *			'filesPanelWidth'			=> 270
 */
 ?>
-<form action="<?php  $_SERVER['PHP_SELF']; ?>" method="post">
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
 	<div class="input-form">
 		<div class="row">
 			<p><label for="openmeetings_num_of_participants"><?php echo _AT('openmeetings_num_of_participants'); ?></label></p>	
@@ -126,6 +131,22 @@ if (isset($_POST['submit'])){
 		</div>
 	</div>
 </form>
-
+<?php
+else: 
+?>
+<form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
+<div class="input-form">
+	<div class="row">You already have started a room, would you like to close the current one and start a new one?</div>
+	<div class="row">(Note, once the room is closed, all chat logs and associated room materials will be deleted.)</div>
+	<div class="row buttons">
+		<input type="hidden" name="room_id" value="<?php echo $room_id?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('yes'); ?>"  />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
+	</div>
+</div>
+</form>
+<?php
+endif;
+?>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
