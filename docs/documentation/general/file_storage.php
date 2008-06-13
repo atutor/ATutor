@@ -7,7 +7,7 @@
 		<li><em>Course Files</em> - The default workspace. Managed by the instructor, or assistants with file storage privileges, course resource files are made available for download by course members.</li>
 		<li><em>My Files</em> - Private files only the user can access and manage.</li>
 		<li><em>Groups</em> - Shared files managed by group members, and accessible to instructors and assistants with group privileges.</li>
-		<li><em>Assignments</em> - Students can submit assignments to these workspaces, and instructors or assistants with assignment privileges can manage submissions.</li>
+		<li><em>Assignments</em> - Students can submit assignments from these workspaces, and instructors or assistants with assignment privileges can manage submissions from the File Storage utiilty. To submit an assignment, upload a file to <em>MyFiles</em>, or to a group workspace, then select the file you wish to hand in and press  the <em>Handin</em> button to view a list is assignments. Choose the assignment for which you are hinding in the file, then press <em>Submit</em></li>
 
 	</ul>
 
