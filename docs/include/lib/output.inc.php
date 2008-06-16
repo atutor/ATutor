@@ -612,51 +612,86 @@ function embed_media($text) {
 		return $text;
 	}
 
-	if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $text, $matches))
-	{
-		$width = $matches[1];
-		$height = $matches[2];
-	}
-	else
-	{
-		$width = 425;
-		$height = 350;
-	}
-
+	$media_matches = Array();
+	
+	/*
+		First, we search though the text for all different kinds of media defined by media tags and store the results in $media_matches.
+		
+		Then the different replacements for the different media tags are stored in $media_replace.
+		
+		Lastly, we loop through all $media_matches / $media_replaces. (We choose $media_replace as index because $media_matches is multi-dimensioned.) It is important that for each $media_matches there is a $media_replace with the same index. For each media match we check the width/height, or we use the default value of 425x350. We then replace the height/width/media1/media2 parameter placeholders in $media_replace with the correct ones, before running a str_replace on $text, replacing the given media with its correct replacement.
+		
+	*/
+	
 	// youtube videos
-	$text = preg_replace("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=([a-z0-9_-]+)\[/media\]#i", '<object width="'.$width.'" height="'.$height.'"><param name="movie" value="http://\\1youtube.com/v/\\2"></param><embed src="http://\\1youtube.com/v/\\2" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed></object>', $text);
-
-	$text = preg_replace("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=([a-z0-9_-]+)\[/media\]#i", '<object width="'.$width.'" height="'.$height.'"><param name="movie" value="http://\\1youtube.com/v/\\2"></param><embed src="http://\\1youtube.com/v/\\2" type="application/x-shockwave-flash" width="'.$width.'" height="'.$height.'"></embed></object>', $text);
-
+	preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=([a-z0-9_-]+)\[/media\]#i",$text,$media_matches[1],PREG_SET_ORDER);
+	$media_replace[1] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="http://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="http://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
+		
 	// .mpg
-	$text = preg_replace("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mpg\[/media\]#i", "<object data=\"\\1.mpg\" type=\"video/mpeg\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.mpg\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.mpg\">\\1.mpg</a></object>", $text);
-
-
+	preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mpg\[/media\]#i",$text,$media_matches[2],PREG_SET_ORDER);
+	$media_replace[2] = "<object data=\"##MEDIA1##.mpg\" type=\"video/mpeg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mpg\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.mpg\">##MEDIA1##.mpg</a></object>";
+	
 	// .avi
-	$text = preg_replace("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).avi\[/media\]#i", "<object data=\"\\1.avi\" type=\"video/x-msvideo\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.avi\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.avi\">\\1.avi</a></object>", $text);
-
+	preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).avi\[/media\]#i",$text,$media_matches[3],PREG_SET_ORDER);
+	$media_replace[3] = "<object data=\"##MEDIA1##.avi\" type=\"video/x-msvideo\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.avi\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.avi\">##MEDIA1##.avi</a></object>";
+	
 	// .wmv
-
-	$text = preg_replace("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).wmv\[/media\]#i", "<object data=\"\\1.wmv\" type=\"video/x-ms-wmv\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.wmv\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.wmv\">\\1.wmv</a></object>", $text);
-
+	preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).wmv\[/media\]#i",$text,$media_matches[4],PREG_SET_ORDER);
+	$media_replace[4] = "<object data=\"##MEDIA1##.wmv\" type=\"video/x-ms-wmv\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wmv\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wmv\">##MEDIA1##.wmv</a></object>";
+	
 	// .mov
-	$text = preg_replace("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mov\[/media\]#i", "<object classid=\"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B\" codebase=\"http://www.apple.com/qtactivex/qtplugin.cab\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.mov\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><!--[if gte IE 7]> <!--><object type=\"video/quicktime\" data=\"\\1.mov\" width=\"".$width."\" height=\"".$height."\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><a href=\"\\1.mov\">\\1.mov</a></object><!--<![endif]--><!--[if lt IE 7]><a href=\"\\1.mov\">\\1.mov</a><![endif]--></object>", $text);
+	preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mov\[/media\]#i",$text,$media_matches[5],PREG_SET_ORDER);
+	$media_replace[5] = "<object classid=\"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B\" codebase=\"http://www.apple.com/qtactivex/qtplugin.cab\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mov\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><!--[if gte IE 7]> <!--><object type=\"video/quicktime\" data=\"##MEDIA1##.mov\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><a href=\"##MEDIA1##.mov\">##MEDIA1##.mov</a></object><!--<![endif]--><!--[if lt IE 7]><a href=\"##MEDIA1##.mov\">##MEDIA1##.mov</a><![endif]--></object>";
 	
 	// .swf
-	$text = preg_replace("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).swf\[/media\]#i", "<object type=\"application/x-shockwave-flash\" data=\"\\1.swf\" width=\"".$width."\" height=\"".$height."\">  <param name=\"movie\" value=\"\\1.swf\"><param name=\"loop\" value=\"false\"><a href=\"\\1.swf\">\\1.swf</a></object>", $text);
+	preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).swf\[/media\]#i",$text,$media_matches[6],PREG_SET_ORDER);
+	$media_replace[6] = "<object type=\"application/x-shockwave-flash\" data=\"##MEDIA1##.swf\" width=\"##WIDTH##\" height=\"##HEIGHT##\">  <param name=\"movie\" value=\"##MEDIA1##.swf\"><param name=\"loop\" value=\"false\"><a href=\"##MEDIA1##.swf\">##MEDIA1##.swf</a></object>";
 	
 	// .mp3
-	$text = preg_replace("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mp3\[/media\]#i", "<object type=\"audio/mpeg\" data=\"\\1.mp3\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.mp3\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.mp3\">\\1.mp3</a></object>", $text);
-
+	preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mp3\[/media\]#i",$text,$media_matches[7],PREG_SET_ORDER);
+	$media_replace[7] = "<object type=\"audio/mpeg\" data=\"##MEDIA1##.mp3\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mp3\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.mp3\">##MEDIA1##.mp3</a></object>";
+	
 	// .wav
-	$text = preg_replace("#\[media[0-9a-z\|]*\](.+[^\s\"]+).wav\[/media\]#i", "<object type=\"audio/x-wav\" data=\"\\1.wav\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.wav\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"\\1.wav\">\\1.wav</a></object>", $text);
-
+	preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).wav\[/media\]#i",$text,$media_matches[8],PREG_SET_ORDER);
+	$media_replace[8] ="<object type=\"audio/x-wav\" data=\"##MEDIA1##.wav\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wav\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wav\">##MEDIA1##.wav</a></object>";
+	
 	// .ogg
-	$text = preg_replace("#\[media[0-9a-z\|]*\](.+[^\s\"]+).ogg\[/media\]#i", "<object type=\"application/ogg\" data=\"\\1.ogg\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.ogg\"><a href=\"\\1.ogg\">\\1.ogg</a></object>", $text);
-
+	preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).ogg\[/media\]#i",$text,$media_matches[9],PREG_SET_ORDER);
+	$media_replace[9] ="<object type=\"application/ogg\" data=\"##MEDIA1##.ogg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.ogg\"><a href=\"##MEDIA1##.ogg\">##MEDIA1##.ogg</a></object>";
+	
 	// .mid
+	preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i",$text,$media_matches[10],PREG_SET_ORDER);
+	$media_replace[10] ="<object type=\"application/x-midi\" data=\"##MEDIA1##.mid\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mid\"><a href=\"##MEDIA1##.mid\">##MEDIA1##.mid</a></object>";
+	
 	$text = preg_replace("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i", "<object type=\"application/x-midi\" data=\"\\1.mid\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.mid\"><a href=\"\\1.mid\">\\1.mid</a></object>", $text);
 
+	// Executing the replace
+	for ($i=1;$i<=count($media_replace);$i++){
+		foreach($media_matches[$i] as $media)
+		{
+			
+			//find width and height for each matched media
+			if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches)) 
+			{
+				$width = $matches[1];
+				$height = $matches[2];
+			}
+			else
+			{
+				$width = 425;
+				$height = 350;
+			}
+			
+			//replace media tags with embedded media for each media tag
+			$media_input = $media_replace[$i];
+			$media_input = str_replace("##WIDTH##","$width",$media_input);
+			$media_input = str_replace("##HEIGHT##","$height",$media_input);
+			$media_input = str_replace("##MEDIA1##","$media[1]",$media_input);
+			$media_input = str_replace("##MEDIA2##","$media[2]",$media_input);
+			$text = str_replace($media[0],$media_input,$text);
+		}
+	}
+		
 	return $text;
 }
 
