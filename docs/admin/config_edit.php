@@ -51,6 +51,14 @@ if (isset($_POST['cancel'])) {
 	$_POST['enable_mail_queue']         = $_POST['enable_mail_queue'] ? 1 : 0;
 	$_POST['display_name_format']       = intval($_POST['display_name_format']);
 	$_POST['pretty_url']				= intval($_POST['pretty_url']);
+	$_POST['course_dir_name']			= intval($_POST['course_dir_name']);
+	
+	//apache_mod_rewrite can only be enabled if pretty_url is.
+	if ($_POST['pretty_url']==1){
+		$_POST['apache_mod_rewrite']		= intval($_POST['apache_mod_rewrite']);
+	} else {
+		$_POST['apache_mod_rewrite'] = 0;
+	}
 
 	if (!isset($display_name_formats[$_POST['display_name_format']])) {
 		$_POST['display_name_format'] = $_config_defaults['display_name_format'];
@@ -290,7 +298,7 @@ if (!isset($_POST['submit'])) {
 
 	<div class="row">
 		<?php echo _AT('pretty_url'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['pretty_url'] ? _AT('enable') : _AT('disable')); ?>)<br />
-		<input type="radio" name="pretty_url" value="1" id="pu_y" <?php if($_config['pretty_url']) { echo 'checked="checked"'; }?> /><label for="pu_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="pretty_url" value="0" id="pu_n" <?php if(!$_config['pretty_url']) { echo 'checked="checked"'; }?> /><label for="pu_n"><?php echo _AT('disable'); ?></label>
+		<input type="radio" name="pretty_url" value="1" id="pu_y" <?php if($_config['pretty_url']) { echo 'checked="checked"'; }?> onclick="apache_mod_rewrite_toggler(true);"/><label for="pu_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="pretty_url" value="0" id="pu_n" <?php if(!$_config['pretty_url']) { echo 'checked="checked"'; }?> onclick="apache_mod_rewrite_toggler(false);"/><label for="pu_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row">
@@ -315,5 +323,20 @@ if (!isset($_POST['submit'])) {
 	</div>
 </div>
 </form>
+
+
+<script type="text/javascript">
+	function apache_mod_rewrite_toggler(enabled){
+		var obj_y = document.getElementById('mr_y');
+		var obj_n = document.getElementById('mr_n');
+		if(enabled==true) {
+			obj_y.disabled = "";	
+		} else if (enabled==false){
+			obj_y.disabled = "disabled";
+			obj_n.checked = "checked";
+		}
+	}
+</script>
+
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
