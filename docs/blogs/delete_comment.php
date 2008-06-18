@@ -37,7 +37,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id));
+	header('Location: '.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id, AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 
@@ -49,7 +49,7 @@ if (isset($_POST['submit_no'])) {
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id));
+	header('Location: '.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id, AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 

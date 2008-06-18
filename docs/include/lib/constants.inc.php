@@ -173,7 +173,9 @@ if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
 }
 
 /* Handles pretty url - @author Harris */
-define('AT_PRETTY_URL_HANDLER', 'go.php');	
+define('AT_PRETTY_URL_HANDLER',		'go.php');	
+define('AT_PRETTY_URL_NOT_HEADER',	false);
+define('AT_PRETTY_URL_IS_HEADER',	true);
 
 $dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
 $url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);

@@ -34,7 +34,7 @@ $sql = "SELECT *, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_thre
 $result = mysql_query($sql,$db);
 if (!($post_row = mysql_fetch_assoc($result))) {
 	$msg->addError('ITEM_NOT_FOUND');
-	header('Location: '.AT_BASE_HREF.url_rewrite('forum/list.php'));
+	header('Location: '.url_rewrite('forum/list.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -48,13 +48,13 @@ if (!(     authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)
 	  ) 
    ) {
 	$msg->addError('POST_EDIT_EXPIRE');
-	header('Location: '.AT_BASE_HREF.url_rewrite('/forum/list.php'));
+	header('Location: '.url_rewrite('/forum/list.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
 if ($_POST['cancel']) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: '.AT_BASE_HREF.url_rewrite('/forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid']));
+	Header('Location: '.url_rewrite('/forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -90,7 +90,7 @@ if ($_POST['edit_post']) {
 		if ($_POST['ppid'] == 0) {
 			$_POST['ppid'] = $_POST['pid'];
 		}
-		header('Location: '.AT_BASE_HREF.url_rewrite('forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['ppid']));
+		header('Location: '.url_rewrite('forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['ppid'], AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }

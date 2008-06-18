@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
+// $Id: UrlRewrite.class.php 7603 2008-06-11 14:59:33Z hwong $
 require_once('ForumsUrl.class.php');
 require_once('ContentUrl.class.php');
 require_once('FileStorageUrl.class.php');
@@ -145,7 +145,7 @@ class UrlRewrite  {
 	 * @return	pretty url
 	 */
 	function convertToPrettyUrl($course_id, $url){
-		global $_config;
+		global $_config, $db;
 		list($front, $end) = preg_split('/\?/', $url);
 		$front_array = explode('/', $front);
 
@@ -153,7 +153,6 @@ class UrlRewrite  {
 		$dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
 		$url_parts	 = explode('/', $_SERVER['PHP_SELF']);
 		$host_dir	 = implode('/', array_slice($url_parts, 0, count($url_parts) - $dir_deep-1));
-
 		//The link is a bounce link
 		if(preg_match('/bounce.php\?course=([\d]+)$/', $url, $matches)==1){
 			if (!empty($course_id)) {
@@ -190,7 +189,6 @@ class UrlRewrite  {
 				}
 			}
 			$front = implode('/', $front_result);
-
 		} elseif (strpos($front, $host_dir)!==FALSE){
 			//Not a relative link, it contains the full PHP_SELF path.
 			$front = substr($front, strlen($host_dir)+1);  //stripe off the slash after the host_dir as well
@@ -198,15 +196,21 @@ class UrlRewrite  {
 			//if this is my start page
 			return $url;
 		}
-
 		//Turn querystring to pretty URL
 		if ($pretty_url==''){
-			//Add course id in if it's not there
-			if (preg_match('/'.$course_id.'\//', $front)==0){
+			//Get the original course id back
+			$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE course_dir_name='$course_id'";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			if ($row['course_id']!=''){
+				$course_orig = $row['course_id'];
+			} 
+
+			//Add course id in if both course_id or course_dir_name are not there
+			if (preg_match('/^\/?['.$course_id.'|'.$course_orig.']\//', $front)==0){
 				$pretty_url = $course_id.'/';
 			}
 			$pretty_url .= $front;
-
 			//check if there are any rules overwriting the original rules
 			//TODO: have a better way to do this
 			//		extend modularity into this.
@@ -224,6 +228,7 @@ class UrlRewrite  {
 					$obj =& new FileStorageUrl($matches[1]);
 				} 
 			}
+
 			if ($end != ''){
 				//if pretty url is turned off, use '?' to separate the querystring.
 				($_config['pretty_url'] == 0)? $qs_sep = '?': $qs_sep = '/';

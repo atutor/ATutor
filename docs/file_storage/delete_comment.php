@@ -21,7 +21,7 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
+	header('Location: '.url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -33,7 +33,7 @@ $id = abs($_REQUEST['id']);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_POST['file_id']));
+	header('Location: '.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_POST['file_id'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['file_id'] = abs($_POST['file_id']);
@@ -47,7 +47,7 @@ if (isset($_POST['submit_no'])) {
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_POST['file_id']));
+	header('Location: '.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_POST['file_id'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 

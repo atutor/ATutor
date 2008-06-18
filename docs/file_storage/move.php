@@ -21,13 +21,13 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
+	header('Location: '.url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder'])));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']), AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['new_folder'] = abs($_POST['new_folder']);
@@ -35,7 +35,7 @@ if (isset($_POST['cancel'])) {
 	if ($_POST['folder'] == $_POST['new_folder']) {
 		// src = dest
 		$msg->addFeedback('CANCELLED');
-		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['new_folder']));
+		header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['new_folder'], AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 
@@ -67,7 +67,7 @@ if (isset($_POST['cancel'])) {
 		}
 		$msg->addFeedback('DIRS_MOVED');
 	}
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['new_folder']));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['new_folder'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 

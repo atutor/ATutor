@@ -84,7 +84,7 @@ $result = mysql_query($sql, $db);
 	<?php
 		if (mysql_num_rows($result) > $num_posts_per_page) {
 
-			echo '<a href="blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'p='.(++$page).'">'._AT('previous_posts').'</a>';
+			echo '<a href="'.url_rewrite('blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'p='.(++$page)).'">'._AT('previous_posts').'</a>';
 		}
 	?>
 <?php else: ?>

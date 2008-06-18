@@ -19,7 +19,7 @@ $owner_type = abs($_REQUEST['ot']);
 $owner_id = abs($_REQUEST['oid']);
 if (!($owner_status = blogs_authenticate($owner_type, $owner_id))) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/index.php'));
+	header('Location: '.url_rewrite('blogs/index.php'));
 	exit;
 }
 
@@ -51,13 +51,13 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
-		header('Location: '.AT_BASE_HREF.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id));
+		header('Location: '.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id));
 		exit;
 	}
 }
 
 if (!$post_row = mysql_fetch_assoc($result)) {
-	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id));
+	header('Location: '.url_rewrite('blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id));
 	exit;
 }
 

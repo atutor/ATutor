@@ -48,15 +48,26 @@ class UrlParser {
 		global $db;
 		$pathinfo = strtolower($pathinfo);
 
+		//remove AT_PRETTY_URL_HANDLER from the path info.
+		if (($pos=strpos($pathinfo, AT_PRETTY_URL_HANDLER))!==FALSE){
+			$pathinfo = substr($pathinfo, $pos);
+		}
+
 		/* 
 		 * matches[1] = course slug/id
 		 * matches[2] = path
-		 * matches[3] = filename
-		 * matches[4] = query string in pretty format
+		 * matches[3] = useless, just a place holder
+		 * matches[4] = filename
+		 * matches[5] = query string in pretty format
 		 * @http://ca3.php.net/preg_match
 		 */
-		preg_match('/^\/[\w\-]+\/?$|(\/[\w]+)([\/\w]*)\/([\w\_\.]+\.php)([\/\w\W]*)/', $pathinfo, $matches);
-
+		if (strpos($pathinfo, 'mods')!==FALSE){
+			//If this is a mod, its file name will be longer with mods/ infront
+			preg_match('/^\/[\w\-]+\/?$|(\/[\w]+)(\/mods(\/[\w]+)+)\/([\w\_\.]+\.php)([\/\w\W]*)/', $pathinfo, $matches);			
+		} else {
+			preg_match('/^\/[\w\-]+\/?$|(\/[\w]+)(([\/\w]*))\/([\w\_\.]+\.php)([\/\w\W]*)/', $pathinfo, $matches);
+		}
+//debug($matches, $pathinfo);
 		if (empty($matches)){
 			//no matches.
 			$matches[1] = 0;
@@ -87,12 +98,12 @@ class UrlParser {
 //		} 		
 
 		//Check if the query string is pretty, if not, find it.
-		if ($matches[4] == ''){
-			$matches[4] = $_SERVER['QUERY_STRING'];
+		if ($matches[5] == ''){
+			$matches[5] = $_SERVER['QUERY_STRING'];
 		}
 
 		//Check which tool type this is from
-		$url_obj = new UrlRewrite($matches[2], $matches[3], $matches[4]);
+		$url_obj = new UrlRewrite($matches[2], $matches[4], $matches[5]);
 
 		$this->path_array = array($course_id, $url_obj);
 	}

@@ -31,7 +31,7 @@ if (isset($_POST['submit_no'])) {
 	$first = current($path);
 
 	$msg->addFeedback('CANCELLED');
-	header('Location: revisions.php'.$owner_arg_prefix.'id='.$first['file_id']);
+	header('Location: '.url_rewrite('file_storage/revisions.php'.$owner_arg_prefix.'id='.$first['file_id'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$path = fs_get_revisions($id, $owner_type, $owner_id);
@@ -68,9 +68,9 @@ if (isset($_POST['submit_no'])) {
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	if ($back_id) {
-		header('Location: revisions.php'.$owner_arg_prefix.'id='.$back_id);
+		header('Location: '.url_rewrite('file_storage/revisions.php'.$owner_arg_prefix.'id='.$back_id, AT_PRETTY_URL_IS_HEADER));
 	} else {
-		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix));
+		header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix, AT_PRETTY_URL_IS_HEADER));
 	}
 	exit;
 }

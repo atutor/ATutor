@@ -19,14 +19,14 @@ $owner_type = abs($_REQUEST['ot']);
 $owner_id = abs($_REQUEST['oid']);
 if (!($owner_status = blogs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/index.php'));
+	header('Location: '.url_rewrite('blogs/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid']));
+	header('Location: '.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['title'] = $addslashes(trim($_POST['title']));
@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 
 		$msg->addFeedback('POST_ADDED_SUCCESSFULLY');
 
-		header('Location: '.AT_BASE_HREF.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid']));
+		header('Location: '.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid'], AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }

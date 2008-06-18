@@ -95,7 +95,7 @@ if (!isset($owner_id)) {
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id))) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
+	header('Location: '.url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 $_SESSION['fs_owner_type'] = $owner_type;
@@ -103,7 +103,7 @@ $_SESSION['fs_owner_id']   = $owner_id;
 $_SESSION['fs_folder_id']  = $folder_id;
 
 if (isset($_GET['submit_workspace'])) {
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix, AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -122,7 +122,7 @@ if (isset($_GET['assignment']) && (isset($_GET['files']) || isset($_GET['folders
 else if (isset($_GET['revisions'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = current($_GET['files']);
-		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_id));
+		header('Location: '.url_rewrite('file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_id, AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }
@@ -130,7 +130,7 @@ else if (isset($_GET['revisions'], $_GET['files'])) {
 else if (isset($_GET['comments'], $_GET['files'])) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = current($_GET['files']);
-		header('Location: '.AT_BASE_HREF.url_rewrite('comments.php'.$owner_arg_prefix.'id='.$file_id));
+		header('Location: '.url_rewrite('comments.php'.$owner_arg_prefix.'id='.$file_id, AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }
@@ -285,13 +285,13 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 		$msg->addFeedback('DIR_DELETED');
 	}
 
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder'])));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']), AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 // action - Cancel Delete
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder'])));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_POST['folder']), AT_PRETTY_URL_IS_HEADER));
 	exit;
 
 // action - Create Folder
@@ -380,7 +380,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 			$msg->addError('FILE_NOT_SAVED');
 		}
 	}
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder_id));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder_id, AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if ((isset($_GET['delete']) || isset($_GET['download']) || isset($_GET['move']) || isset($_GET['edit']) || isset($_GET['assignment'])) && !isset($_GET['files']) && !isset($_GET['folders'])) {
 	$msg->addError('NO_ITEM_SELECTED');

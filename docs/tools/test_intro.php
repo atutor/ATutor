@@ -38,13 +38,13 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 // checks one/all questions per page, and forward user to the correct one
 if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('tools/my_tests.php'));
+	header('Location: '.url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_GET['submit'])) {
 	if ($test_row['display']) {
-		header('Location: '.AT_BASE_HREF.url_rewrite('tools/take_test_q.php?tid='.$tid));
+		header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid, AT_PRETTY_URL_IS_HEADER));
 	} else {
-		header('Location: '.AT_BASE_HREF.url_rewrite('tools/take_test.php?tid='.$tid));
+		header('Location: '.url_rewrite('tools/take_test.php?tid='.$tid, AT_PRETTY_URL_IS_HEADER));
 	}
 	exit;
 }

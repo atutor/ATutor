@@ -134,7 +134,7 @@ if(mysql_num_rows($result) > 0){
 
 		if ($_GET['g_cid']) {
 			$path	= $contentManager->getContentPath(intval($_GET['g_cid']));
-			echo ' | '._AT('back_to').' <a href="content.php?cid='.intval($_GET['g_cid']).'">'.$path[0]['title'].'</a>';
+			echo ' | '._AT('back_to').' <a href="'.url_rewrite('content.php?cid='.intval($_GET['g_cid'])).'">'.$path[0]['title'].'</a>';
 		}
 	}
 	

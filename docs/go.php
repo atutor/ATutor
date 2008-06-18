@@ -48,7 +48,7 @@ if (!$obj->isEmpty()){
 
 	$_user_location	= '';	//reset user_location so that the vital file in each page would validate
 	$pretty_current_page = $obj->getPage();
-	if (!@include($obj->getPage())){
+	if (!include($obj->getPage())){
 		header('location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id);
 		exit;
 	} 

@@ -21,20 +21,20 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!fs_authenticate($owner_type, $owner_id)) { 
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
+	header('Location: '.url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
 if (isset($_GET['done'])) {
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder'])));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder']), AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_GET['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder'])));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.abs($_GET['folder']), AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_POST['edit_cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['id']));
+	header('Location: '.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['id'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_POST['edit_submit'])) {
 	$_POST['comment'] = trim($_POST['comment']);
@@ -50,12 +50,12 @@ if (isset($_GET['done'])) {
 		$sql = "UPDATE ".TABLE_PREFIX."files_comments SET comment='$_POST[edit_comment]', date=date WHERE member_id=$_SESSION[member_id] AND comment_id=$_POST[comment_id]";
 		mysql_query($sql, $db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['id']));
+		header('Location: '.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['id'], AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['folder']));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_POST['folder'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['comment'] = trim($_POST['comment']);
@@ -75,7 +75,7 @@ if (isset($_GET['done'])) {
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_POST['id']));
+		header('Location: '.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_POST['id'], AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 	$_GET['id'] = $_POST['id'];

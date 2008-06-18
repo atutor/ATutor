@@ -22,7 +22,7 @@ $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
 if (!($owner_status = fs_authenticate($owner_type, $owner_id))) {
 	$msg->addError('ACCESS_DENIED');
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'));
+	header('Location: '.url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -33,10 +33,10 @@ if (isset($_GET['download'], $_GET['revision'])) {
 	header('Location: '.AT_BASE_HREF.'file_storage/delete_revision.php'.$owner_arg_prefix.'id='.$_GET['revision']);
 	exit;
 } else if (isset($_GET['cancel'])) {
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_GET['folder']));
+	header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$_GET['folder'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 } else if (isset($_GET['comments'])) {
-	header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['revision']));
+	header('Location: '.url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['revision'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 

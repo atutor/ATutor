@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_GET['submit'])) { // was the 'back' button pressed?
-	header('Location: '.AT_BASE_HREF.url_rewrite('reading_list/index.php'));
+	header('Location: '.url_rewrite('reading_list/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -33,7 +33,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 	exit;
 }
 ?>
-<form action="reading_list/display_resource.php" method="get" name="form">
+<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="get" name="form">
 <div class="input-form">
 
 	<?php if ($row['type'] == RL_TYPE_BOOK): ?>

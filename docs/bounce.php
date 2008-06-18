@@ -127,7 +127,7 @@ if (!empty($_REQUEST['pu'])) {
 	if ($_config['apache_mod_rewrite'] > 0){
 		//URL are in pretty format, but not in .htaccess RewriteRule format
 		//http://www.atutor.ca/atutor/mantis/view.php?id=3426
-		$page = url_rewrite($_REQUEST['pu'], true);
+		$page = url_rewrite($_REQUEST['pu'], AT_PRETTY_URL_NOT_HEADER, true);
 	} else {
 		$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'];
 	}
@@ -136,8 +136,12 @@ if (!empty($_REQUEST['pu'])) {
 	$page = urldecode($_REQUEST['p']);
 } elseif (($_config['pretty_url'] > 0) && preg_match('/bounce.php\?course=([\d]+)$/', $_SERVER['REQUEST_URI'])==1) {
 	//for browse, and my start page url rewrite.	
-	$page = url_rewrite($_SERVER['REQUEST_URI'],true).'/index.php';	//force overwrite
+	$page = url_rewrite($_SERVER['REQUEST_URI'], AT_PRETTY_URL_NOT_HEADER, true).'/index.php';	//force overwrite
 } else {
+	//handles jump menu
+	if (isset($_POST['jump']) && abs($_POST['course']) > 0){
+		$_SESSION['course_id'] = abs($_POST['course']);
+	}
 	$page = url_rewrite('index.php');
 }
 

@@ -268,6 +268,7 @@ if ((!isset($_SESSION['course_id']) || $_SESSION['course_id'] == 0) && ($_user_l
  * @author harris, for pretty url, read AT_PRETTY_URL_HANDLER
  */ 
 if (isset($_pretty_url_course_id) && $_SESSION['course_id'] != $_pretty_url_course_id){
+//	$_SESSION['course_id'] = $_pretty_url_course_id;
 	if($_config['pretty_url'] == 0){
 		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id.SEP.'pu='.$_SERVER['PATH_INFO'].urlencode('?'.$_SERVER['QUERY_STRING']));
 	} else {
@@ -788,10 +789,12 @@ function validate_length($input, $len, $forDisplay=0){
  * Note: If system config turned off this feature, force will have no effect.
  * @param	string	the Url should be a relative link, have to improve this later on, to check if 
  *					it's a relative link, if not, truncate it.
+ * @param	boolean	Available values are AT_PRETTY_URL_IS_HEADER, AT_PRETTY_URL_NOT_HEADER(default)
+ *			use AT_PRETTY_URL_IS_HEADER if url_rewrite is used on php header('Location:..'), absolute path is needed for this.
  * @param	boolean	true to force the url_rewrite, false otheriwse.  False is the default.
  * @author	Harris Wong
  */
-function url_rewrite($url, $force=false){
+function url_rewrite($url, $is_rewriting_header=AT_PRETTY_URL_NOT_HEADER, $force=false){
 	global $_config, $db;
 	$url_parser = new UrlParser();
 	$pathinfo = $url_parser->getPathArray();
@@ -820,6 +823,7 @@ function url_rewrite($url, $force=false){
 				// bounce first.
 				$course_id = $url_parser->getCourseDirName($matches[1]);
 			} elseif (isset($_REQUEST['course'])){
+				//jump menu
 				$course_id = $url_parser->getCourseDirName($_REQUEST['course']);
 			} elseif (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0){
 				$course_id = $url_parser->getCourseDirName($_SESSION['course_id']);
@@ -842,6 +846,13 @@ function url_rewrite($url, $force=false){
 		$url = $pathinfo[1]->convertToPrettyUrl($course_id, $url);
 	}
 
+	//instead of putting AT_BASE_HREF in all the headers location, we will put it here.
+	//Abs paths are required for pretty url because otherwise the url location will be appeneded.
+	//ie.	ATutor_161/blogs/CoURSe_rOAd/blogs/view.php/ot/1/oid/1/ instead of 
+	//		ATutor_161/CoURSe_rOAd/blogs/view.php/ot/1/oid/1/
+	if ($is_rewriting_header==true){
+		return AT_BASE_HREF.$url;
+	} 
 	return $url;
 }
 
