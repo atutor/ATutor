@@ -99,6 +99,8 @@ class Patch {
 		
 		if (!$this->checkDependentPatches()) return false;
 
+		if (!$this->checkAppliedVersion()) return false;
+
 		if (!$this->skipFilesModified && $this->hasFilesModified()) return false;
 		
 		if (!$this->checkPriviledge()) return false;
@@ -109,8 +111,14 @@ class Patch {
 		// Start applying patch
 		$this->createPatchesRecord($this->patch_summary_array);
 
-		// if no file action defined, return true
-		if (!is_array($this->patch_array[files])) return true;
+		// if no file action defined, update database and return true
+		if (!is_array($this->patch_array[files])) 
+		{
+			$updateInfo = array("status"=>"Installed");
+			updatePatchesRecord($this->patch_id, $updateInfo);
+	
+			return true;
+		}
 		
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
@@ -268,6 +276,41 @@ class Patch {
 		return true;
 	}
 	
+	/**
+	* Check if ATutor version is same as "applied version" defined in the patch.
+	* @access  private
+	* @return  true  if versions match
+	*          false if versions don't match
+	* @author  Cindy Qi Li
+	*/
+	function checkAppliedVersion()
+	{
+		global $msg;
+		
+		if ($this->patch_summary_array["applied_version"] <> VERSION)
+		{
+				$this->errors[] = _AT("version_not_match", $this->patch_summary_array["applied_version"]);
+				
+				$notes = '
+			  <form action="'. $_SERVER['PHP_SELF'].'?id='.$_POST['id'].'&who='. $_POST['who'] .'" method="post" name="skip_files_modified">
+			  <div class="row buttons">
+					<input type="submit" name="ignore_version" value="'._AT('yes').'" accesskey="y" />
+					<input type="submit" name="not_ignore_version" value="'. _AT('no'). '" />
+					<input type="hidden" name="install" value="' . $_POST['install'] . '" />
+					<input type="hidden" name="install_upload" value="' . $_POST['install_upload'] . '" />
+				</div>
+				</form>';
+
+			print_errors($this->errors, $notes);
+		
+			unset($this->errors);
+			
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	* Check if all the dependent patches have been installed.
 	* @access  private

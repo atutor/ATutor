@@ -100,7 +100,7 @@ if ($_POST['install_upload'] && $_POST['uploading'])
 }
 
 // Installation process
-if ($_POST['install'] || $_POST['install_upload'])
+if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_version"]))
 {
 	
 	if (isset($_POST['id'])) $id=$_POST['id'];
@@ -137,6 +137,8 @@ if ($_POST['install'] || $_POST['install_upload'])
 			
 			$patch_array = $patchParser->getParsedArray();
 
+			if ($_POST["ignore_version"]) $patch_array["applied_version"] = VERSION;
+			
 			if ($_POST["install_upload"])
 			{
 				$current_patch_list = array('atutor_patch_id' => $patch_array['atutor_patch_id'],

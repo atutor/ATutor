@@ -54,13 +54,14 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_patch_id', 'ATuto
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_to', 'Available To', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_patches', 'Available Patches', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_patches_text', 'There are <strong>%s</strong> patches available to install.', now(), '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'version_not_match', 'This patch is for ATutor version %s. Does not match with your current ATutor version. The installation of it may break ATutor. Are you sure you want to proceed?', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_ALREADY_INSTALLED', 'The selected patch is already installed.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CHOOSE_UNINSTALLED_PATCH', 'Please choose an uninstalled patch.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_XML_NOT_FOUND', 'Patch XML file is not found.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_REMOVE_WRITE_PERMISSION', 'Please remove write permission from the listed files.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CANNOT_UNZIP', 'Can NOT unzip the uploaded file.', now(), 'error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PATCH_INSTALLED_SUCCESSFULLY', 'The patch has been installed successfully.', now(), 'feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_DEPENDENCY', 'Due to patch dependency, please install the listed patches before installing this patch: %s', now(), 'error msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_PATCH_INSTALLED_SUCCESSFULLY', 'The patch has been installed successfully.', now(), 'feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_INFOS_PATCH_INSTALLED_AND_REMOVE_PERMISSION', 'The patch has been installed. Please remove write permission as instruction.', now(), 'info msg');
 INSERT INTO `language_text` VALUES ('en', '_template', 'patcher_overwrite_modified_files', 
 'The listed files are modified locally. If you choose to proceed, the patch file will be copied to your local machine. 
