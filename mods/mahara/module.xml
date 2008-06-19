@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Mahara</name> 
+    <description lang="en">Mahara is an open source e-portfolio, weblog, resume builder and social networking system, connecting users and creating online learner communities. Mahara is designed to provide users with the tools to demonstrate their life-long learning, skills and development over time to selected audiences. </description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://www.mahara.org</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2008-06-11</date> 
+        <state>stable</state> 
+        <notes>This module requires Mahara to be installed first on the same server as ATutor.  Refer to the README file included with the Mahara module source code for more details.</notes> 
+    </release> 
+</module>
