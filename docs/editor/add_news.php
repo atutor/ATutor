@@ -29,24 +29,6 @@ if (isset($_POST['cancel'])) {
 	exit;
 } 
 
-if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
-	if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) {
-		$_POST['formatting'] = 1;
-		$_REQUEST['settext'] = 0;
-		$_REQUEST['setvisual'] = 0;
-
-	} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) {
-		$_POST['formatting'] = 1;
-		$_POST['settext'] = 0;
-		$_POST['setvisual'] = 1;
-
-	} else { // else if == 0
-		$_POST['formatting'] = 0;
-		$_REQUEST['settext'] = 0;
-		$_REQUEST['setvisual'] = 0;
-	}
-}
-
 if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
 	$onload = 'document.form.title.focus();';
 }
@@ -69,7 +51,7 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 
 	if (!$msg->containsErrors() && (!isset($_POST['setvisual']) || isset($_POST['submit']))) {
 
-		$_POST['formatting']  = $addslashes($_POST['formatting']);
+		$_POST['formatting']  = intval($_POST['formatting']);
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['body_text']  = $addslashes($_POST['body_text']);
 
@@ -91,6 +73,24 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 
 		header('Location: '.AT_BASE_HREF.'tools/news/index.php');
 		exit;
+	}
+}
+
+if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
+	if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) {
+		$_POST['formatting'] = 1;
+		$_REQUEST['settext'] = 0;
+		$_REQUEST['setvisual'] = 0;
+
+	} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) {
+		$_POST['formatting'] = 1;
+		$_POST['settext'] = 0;
+		$_POST['setvisual'] = 1;
+
+	} else { // else if == 0
+		$_POST['formatting'] = 0;
+		$_REQUEST['settext'] = 0;
+		$_REQUEST['setvisual'] = 0;
 	}
 }
 
