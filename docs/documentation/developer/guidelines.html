@@ -1466,9 +1466,18 @@ exit;
 		<p><kbd>url_rewrite()</kbd> -- Change an url to a pretty url.</p>
 
 		<h4>Description</h4>
-			<p><kbd>string <strong>url_rewrite</strong>( string $f, boolean $g)</kbd></p>
+			<p><kbd>string <strong>url_rewrite</strong>( string $url, boolean $is_rewriting_header, boolean $force)</kbd></p>
 
-			<p>This function returns a pretty URL from the given parameter. Its purpose is to change the URLs to a "prettier" format in order to extend user friendliness in the system, and to create indexes for Google search.  This function will authenticate itself towards the current pages.  In our definition, admins, login, registration pages should not have pretty url applied.  However, if one want to use url_rewrite on these pages, please set the second parameter to TRUE, <kbd>$g</kbd>, this will force it to change the urls to pretty urls.  Please note that the admin's system preference will still overwrite the force effect.  <kbd>$f</kbd> may be an <kbd>string</kbd> of URL, '?' and the seprators in the URL query will be replaced by slashes.  Please note that the PHP_SELF variable might break some of the form action/header redirect because the Pretty URI is a virtual path.  To address this problem, absolute URL is perferred over relative URL; please look at example 3, and 4.  </p>
+			<dt><kbd>$url</kbd></dt>
+			<dd><p>the Url should be a relative link to the file.</p></dd>
+
+			<dt><kbd>$is_rewriting_header</kbd></dt>
+			<dd><p>Determine if url_rewrite is rewriting a header (location: ..) path or not.  Available values are AT_PRETTY_URL_IS_HEADER, AT_PRETTY_URL_NOT_HEADER(default).  Use AT_PRETTY_URL_IS_HEADER if url_rewrite is being called inside header(Location:...)</p></dd>
+
+			<dt><kbd>$force</kbd></dt>
+			<dd><p>Apply url_rewrite forcefully if it is true, default value is false.</p></dd>
+
+			<p>This function returns a pretty URL from the given parameter. Its purpose is to change the URLs to a "prettier" format in order to extend user friendliness in the system, and to create indexes for Google search.  This function will authenticate itself towards the current pages.  In our definition, admins, login, registration pages should not have pretty url applied.  However, if one want to use url_rewrite on these pages, please set <kbd>$force</kbd> to TRUE, this will force it to change the urls to pretty urls.  Please note that the admin's system preference will still overwrite the force effect.  <kbd>$url</kbd> may be an <kbd>string</kbd> of URL, '?' and the seprators in the URL query will be replaced by slashes.  Please note that the PHP_SELF variable might break some of the form action/header redirect because the Pretty URI is a virtual path.  To address this problem, set $is_rewriting_header to AT_PRETTY_URL_IS_HEADER, as demonstrated in example 3.  </p>
 
 		<h4>Location</h4>
 			<p><kbd>`include/vitals.inc.php`</kbd></p>
@@ -1477,26 +1486,20 @@ exit;
 		<p>To change an URL:
 <pre class="code">
 $url = 'forum/view.php?fid=3&pid=4';
-echo url_rewrite($url);		//output redirect.php/1/forum/view.php/fid/3/pid/4
+echo url_rewrite($url);		//output go.php/1/forum/view.php/fid/3/pid/4
 </pre></p>
 
 		<h4>Example 2</h4>
 		<p>To change an URL for mods:
 <pre class="code">
 $url = 'mods/hello_world/index.php';
-echo url_rewrite($url, true);		//output redirect.php/1/mods/hello_world/index.php
+echo url_rewrite($url, true);		//output go.php/1/mods/hello_world/index.php
 </pre></p>
 
 		<h4>Example 3</h4>
-		<p>To change an URL for forms:
-<pre class="code">
-&lt;form action=&quot;AT_BASE_HREF . url_rewrite('forum/view.php')&quot;&gt;...
-</pre></p>
-
-		<h4>Example 4</h4>
 		<p>To change an URL for header redirection:
 <pre class="code">
-header('Location: '. AT_BASE_HREF . url_rewrite('forum/index.php')); 
+header('Location: '. url_rewrite('forum/index.php', AT_PRETTY_URL_IS_HEADER)); 
 </pre></p>
 
 <a href="#top" class="top">top</a>
