@@ -54,7 +54,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'atutor_patch_id', 'ATuto
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_to', 'Available To', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_patches', 'Available Patches', now(), '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'available_patches_text', 'There are <strong>%s</strong> patches available to install.', now(), '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'version_not_match', 'This patch is for ATutor version %s. Does not match with your current ATutor version. The installation of it may break ATutor. Are you sure you want to proceed?', now(), 'error msg');
+INSERT INTO `language_text` VALUES ('en', '_template', 'version_not_match', 'This patch is for ATutor version %s. Does not match with your current ATutor version. The installation of it may break ATutor. Are you sure you want to proceed?', now(), 'warning msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_ALREADY_INSTALLED', 'The selected patch is already installed.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_CHOOSE_UNINSTALLED_PATCH', 'Please choose an uninstalled patch.', now(), 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_PATCH_XML_NOT_FOUND', 'Patch XML file is not found.', now(), 'error msg');
