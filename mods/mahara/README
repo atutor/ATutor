@@ -50,6 +50,15 @@ will appear on the page in ATutor as an embedded iframe.  The user
 has the option of clicking on a button, which closes the iframe and
 opens the ePortfolio in a new window/tab of the browser.
 
+If a user's account on ATutor is deleted, the user's ePortfolio
+account on Mahara still remains active.  If the user wishes to
+continue accessing Mahara, the user should be able to retrieve
+the password by entering his/her E-mail (the same E-mail that was
+registered in ATutor) through the "Password Reminder" feature of
+Mahara.  Note that the "Password Reminder" feature is provided
+by Mahara 1.0.2 and is external to this module.
+
+
 
 Developer's Note
 ----------------
