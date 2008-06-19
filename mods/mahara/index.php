@@ -84,7 +84,7 @@ if (!($row = @mysql_fetch_array($result))) {
         }
         </script>
         <div align="center">
-            <input type="button" name="new_win" id="new_win" value= "<?=_AT('mahara_new_win')?>" onClick="stopFrame('<?php echo $url_cookie_forward;?>', 'ATutorMahara', 'new_win')" /><br /><br />
+            <input type="button" name="new_win" id="new_win" value= "<?=_AT('mahara_new_win')?>" onClick="stopFrame('<?php echo $url_cookie_forward;?>', 'ATutorMahara', 'new_win')" class="button" /><br /><br />
         </div>
         <iframe onload='iFrameHeight()' id='ATutorMahara' name='ATutorMahara'
           src='<?=$url?>' width='100%' height='500' scrolling='auto' align='top' frameborder='0'>
