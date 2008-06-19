@@ -179,10 +179,11 @@ if (!($row = @mysql_fetch_array($result))) {
             // login
             login_submit(null, $values);
         }
-        $pagename = 'home';
-        $smarty = smarty();
-        $smarty->assign('page_content', get_site_page_content($pagename));
-        $smarty->display('index.tpl');
+
+        /* Logged in session should be created.  Now redirect to the Mahara page
+           and it should read from this session
+         */
+        header('Location: '.get_config('wwwroot'));
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     } else {
         echo 'You have incorrect config settings for the Mahara module.';
