@@ -2,6 +2,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require ('openmeetings.class.php');
+require ('openmeetings.inc.php');
 
 //Validate 
 if (isset($_GET['group_id'])){
@@ -33,8 +34,42 @@ if ($_row['title']!=''){
 	$room_name = 'group_'.$group_id;
 }
 
-//Log into the room
-$room_id = $om_obj->om_getRoom($room_name);
+//Form action
+//Handle form action
+if (isset($_POST['submit']) && isset($_POST['room_id'])) {
+	//delete course
+	$_POST['room_id'] = intval($_POST['room_id']);
+	$om_obj->om_deleteRoom($_POST['room_id']);
 
-header('Location: view_meetings.php?room_id='.$room_id.SEP.'sid='.$om_obj->getSid());
+} elseif (isset($_POST['submit'])){
+	//mysql escape
+	$_POST['openmeetings_num_of_participants']	= intval($_POST['openmeetings_num_of_participants']);
+	(intval($_POST['openmeetings_ispublic']) == 1)?$_POST['openmeetings_ispublic']='true':$_POST['openmeetings_ispublic']='false';
+	$_POST['openmeetings_vid_w']				= intval($_POST['openmeetings_vid_w']);
+	$_POST['openmeetings_vid_h']				= intval($_POST['openmeetings_vid_h']);
+	(intval($_POST['openmeetings_show_wb']) == 1)?$_POST['openmeetings_show_wb']='true':$_POST['openmeetings_show_wb']='false';
+	$_POST['openmeetings_wb_w']					= intval($_POST['openmeetings_wb_w']);
+	$_POST['openmeetings_wb_h']					= intval($_POST['openmeetings_wb_h']);
+	(intval($_POST['openmeetings_show_fp']) == 1)?$_POST['openmeetings_show_fp']='true':$_POST['openmeetings_show_fp']='false';
+	$_POST['openmeetings_fp_w']					= intval($_POST['openmeetings_fp_w']);
+	$_POST['openmeetings_fp_h']					= intval($_POST['openmeetings_fp_h']);
+
+	//add the room with the given parameters.
+	$om_obj->om_addRoom($room_name, $_POST);
+} elseif (isset($_POST['cancel'])){
+	header('Location: index.php');
+} elseif (isset($_GET['action']) && $_GET['action'] == 'view'){
+	$room_id = intval($_GET['room_id']);
+	$sid	 = $addslashes($_GET['sid']);
+	header('Location: view_meetings.php?room_id='.$room_id.SEP.'sid='.$sid);
+	exit;
+}
+
+$room_id = $om_obj->om_getRoom();
+debug($room_id, 'You have a room'); 
+
+require (AT_INCLUDE_PATH.'header.inc.php');
+include ('html/create_room.inc.php');
+require (AT_INCLUDE_PATH.'footer.inc.php'); 
+
 ?>

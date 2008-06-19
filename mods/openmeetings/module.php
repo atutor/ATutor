@@ -18,7 +18,7 @@ define('AT_ADMIN_PRIV_OPENMEETINGS', $this->getAdminPrivilege());
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_student_tool = 'mods/openmeetings/index.php';
+$_group_tool = $_student_tool = 'mods/openmeetings/index.php';
 
 /*******
  * add the admin pages when needed.
@@ -32,7 +32,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_OPENMEETINGS, TRUE) || admin_authenticate(A
 /*******
  * instructor Manage section:
  */
-$this->_pages['mods/openmeetings/openmeetings_instructor.php']['title_var'] = 'Openmeetings';
+$this->_pages['mods/openmeetings/openmeetings_instructor.php']['title_var'] = 'openmeetings_course_meetings';
 $this->_pages['mods/openmeetings/openmeetings_instructor.php']['parent']   = 'tools/index.php';
 
 /*******
@@ -41,6 +41,16 @@ $this->_pages['mods/openmeetings/openmeetings_instructor.php']['parent']   = 'to
 $this->_pages['mods/openmeetings/index.php']['title_var'] = 'openmeetings';
 //$this->_pages['mods/openmeetings/index.php']['img']       = 'mods/openmeetings/openmeetings_logo.jpg';
 
-$this->_pages['mods/openmeetings/view_meetings.php']['title_var'] = 'Openmeetings';
+$this->_pages['mods/openmeetings/view_meetings.php']['title_var'] = 'openmeetings_view_meetings';
 $this->_pages['mods/openmeetings/view_meetings.php']['parent'] = 'mods/openmeetings/index.php';
+$this->_pages['mods/openmeetings/add_group_meetings.php']['title'] = 'openmeetings_grp_meetings';
+$this->_pages['mods/openmeetings/add_group_meetings.php']['parent'] = 'mods/openmeetings/index.php';
+
+
+/*******
+ * Group functions
+ */
+function openmeetings_get_group_url($group_id) {
+	return 'mods/openmeetings/index.php';
+}
 ?>

@@ -21,3 +21,9 @@ June 11, 08
 - Instructor should probably be capable to adjust their own meeting size in their own config.
 - Research on how recorded video works, see if we can remove meetings as well.
 - admin/openmeetings, check if there is a slash at the end.
+
+
+June 19, 08
+------------
+- Allow users to retrieve the recordings.  
+- Make the index page a bit more pretty.

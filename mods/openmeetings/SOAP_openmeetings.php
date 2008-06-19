@@ -108,23 +108,23 @@ class SOAP_openmeetings {
 			'name'						=> $parameters["name"],
 			'roomtypes_id'				=> 1,
 			'comment'					=> 'Room created by ATutor',
-			'numberOfPartizipants'		=> 16,
-			'ispublic'					=> true,
-			'videoPodWidth'				=> 270, 
-			'videoPodHeight'			=> 280,
+			'numberOfPartizipants'		=> $parameters["numberOfPartizipants"],
+			'ispublic'					=> $parameters["ispublic"],
+			'videoPodWidth'				=> $parameters["videoPodWidth"],
+			'videoPodHeight'			=> $parameters["videoPodHeight"],
 			'videoPodXPosition'			=> 2, 
 			'videoPodYPosition'			=> 2, 
 			'moderationPanelXPosition'	=> 400, 
-			'showWhiteBoard'			=> true, 
+			'showWhiteBoard'			=> $parameters["showWhiteBoard"],
 			'whiteBoardPanelXPosition'	=> 276, 
 			'whiteBoardPanelYPosition'	=> 2, 
-			'whiteBoardPanelHeight'		=> 592, 
-			'whiteBoardPanelWidth'		=> 660, 
-			'showFilesPanel'			=> true, 
+			'whiteBoardPanelHeight'		=> $parameters["whiteBoardPanelHeight"],
+			'whiteBoardPanelWidth'		=> $parameters["whiteBoardPanelWidth"],
+			'showFilesPanel'			=> $parameters["showFilesPanel"], 
 			'filesPanelXPosition'		=> 2, 
 			'filesPanelYPosition'		=> 284, 
-			'filesPanelHeight'			=> 310, 
-			'filesPanelWidth'			=> 270
+			'filesPanelHeight'			=> $parameters["filesPanelHeight"], 
+			'filesPanelWidth'			=> $parameters["filesPanelWidth"]
           )
         );
 	}
@@ -173,7 +173,7 @@ class SOAP_openmeetings {
 		}
 
 		// if (!PEAR::isError($result)) {
-		debug($result, $apiCall . ' ' . $this->_sid);
+//		debug($result, $apiCall . ' ' . $this->_sid);
 		if (is_array($result)) {
             return $result;
         } else {

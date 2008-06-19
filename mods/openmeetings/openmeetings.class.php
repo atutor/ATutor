@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: openmeetings.inc.php 7575 2008-06-04 18:17:14Z hwong $
+// $Id: openmeetings.class.php 7575 2008-06-04 18:17:14Z hwong $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include('SOAP_openmeetings.php');
 
@@ -71,30 +71,39 @@ class Openmeetings {
 
 	/**
 	 * Add a room to the db iff it has not been created.  Each course should only have one room to it.
-	 * @param sid is the auth session id that was logged in into openmeetings.
+	 * @param int		sid is the auth session id that was logged in into openmeetings.
+	 * @param array		the specification for openmeetings 
 	 * @return room # of the created room, or the room # of the existed room
 	 */
-	function om_getRoom( $room_name){
-		global $_config; 
+	function om_addRoom($room_name, $om_param=array()){
+		global $_config;
 
 		if ($this->_course_id < 0){
 			return false;
 		}
 
 		//Check if the room has already been created for this
-		if (($room_id = $this->isRoomOpen()) !=false){
+		if (($room_id = $this->om_getRoom()) !=false){
 			//instead of returning room id, we might have to delete it and carry on.
 			return $room_id;
 		}
 
-
 		//Add this room
 		$om = new SOAP_openmeetings($_config['openmeetings_location'].'/services/RoomService?wsdl');
 		$param = array (	
-					'SID'			=> $this->_sid,
-					'name'			=> $room_name				
+					'SID'					=> $this->_sid,
+					'name'					=> $room_name,
+					'numberOfPartizipants'	=> $om_param['openmeetings_num_of_participants'],
+					'ispublic'				=> $om_param['openmeetings_ispublic'],
+					'videoPodWidth'			=> $om_param['openmeetings_vid_w'],
+					'videoPodHeight'		=> $om_param['openmeetings_vid_h'],
+					'showWhiteBoard'		=> $om_param['openmeetings_show_wb'],
+					'whiteBoardPanelWidth'	=> $om_param['openmeetings_wb_w'],
+					'whiteBoardPanelHeight'	=> $om_param['openmeetings_wb_h'],
+					'showFilesPanel'		=> $om_param['openmeetings_show_fp'],
+					'filesPanelHeight'		=> $om_param['openmeetings_fp_h'],
+					'filesPanelWidth'		=> $om_param['openmeetings_fp_w']
 					);
-
 		$result = $om->addRoom($param);
 		//TODO: Check for error, and handles success/failure
 		if ($result){
@@ -112,10 +121,10 @@ class Openmeetings {
 			if ($rs){
 				return $result['return'];
 			}
-
-		} 
-		return false;	
+		}
+		return false;
 	}
+
 
 	/**
 	 * Retrieve Session id
@@ -130,13 +139,13 @@ class Openmeetings {
 	 * @param	course id
 	 * @return	the room id if there is a room already assigned to this course; false otherwise
 	 */
-	function isRoomOpen(){
+	function om_getRoom(){
 //		$sql = 'SELECT rooms_id FROM '.TABLE_PREFIX.'openmeetings_rooms INNER JOIN '.TABLE_PREFIX."openmeetings_groups WHERE 
 //				course_id = $this->_course_id AND owner_id = $this->_member_id AND group_id = $this->_group_id";
 		$sql = 'SELECT rooms_id FROM '.TABLE_PREFIX.'openmeetings_rooms r NATURAL JOIN '.TABLE_PREFIX."openmeetings_groups g WHERE 
 				course_id = $this->_course_id AND group_id = $this->_group_id";
 		$result = mysql_query($sql);
-		debug($sql);
+//		debug($sql);
 		if (mysql_numrows($result) > 0){
 			$row = mysql_fetch_assoc($result);
 			//instead of returning room id, we might have to delete it and carry on.

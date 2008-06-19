@@ -52,7 +52,7 @@ if (isset($_GET['delete']) && $_GET['room_id']){
 }
 
 //Check if the room is open, if not.  Print error msg to user.
-if (!$om_obj->isRoomOpen()):
+if (!$om_obj->om_getRoom()):
 	echo '<div>There are no meetings at the moment.  The next scheduled course meeting is : &lt;lalalalala&gt;</div>';
 else:
 	//Get the room id
@@ -64,20 +64,25 @@ else:
 	}
 
 	//Log into the room
-	$room_id = $om_obj->om_getRoom($room_name);
+	$room_id = $om_obj->om_addRoom($room_name);
 ?>
 	<div>
-		<a href="mods/openmeetings/view_meetings.php?room_id=<?php echo $room_id . SEP; ?>sid=<?php echo $om_obj->getSid(); ?>">Course conference</a>
-	</div>
+		Course conference:
+		<ul>
+		<li><a href="mods/openmeetings/view_meetings.php?room_id=<?php echo $room_id . SEP; ?>sid=<?php echo $om_obj->getSid(); ?>"><?php echo $_SESSION['course_title']; ?></a></li>
+		</ul>
+	</div><br/>
 <?php 
 endif;
 
 if (empty($_SESSION['groups'])) {
 	echo '<div> No groups assigned, thus no meetings </div>';
 } else {
-echo '<div>Your groups:</div>';
+	echo '<div>Your groups:</div>';
 	$group_list = implode(',', $_SESSION['groups']);
 	$sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE group_id IN ($group_list) ORDER BY title";
+//	debug($sql);
+	//TODO: Check group permission from group table.
 	$result = mysql_query($sql, $db);
 
 	echo '<ul>';
@@ -85,9 +90,9 @@ echo '<div>Your groups:</div>';
 	while ($row = mysql_fetch_assoc($result)) {
 		//Check in the db and see if this group has a meeting alrdy, create on if not.
 		$om_obj->setGid($row['group_id']);
-		if ($om_obj->isRoomOpen()){
+		if ($om_obj->om_getRoom()){
 			//Log into the room
-			$room_id = $om_obj->om_getRoom($room_name);
+			$room_id = $om_obj->om_addRoom($room_name);
 			echo '<li>'.$row['title'].'<a href="mods/openmeetings/view_meetings.php?room_id='.$room_id.SEP.'sid='.$om_obj->getSid().'"> Room-id: '.$room_id.'</a>';
 			if ($om_obj->isMine($room_id)) {
 				//if 'I' created this room, then I will have the permission to remove it from the database.
