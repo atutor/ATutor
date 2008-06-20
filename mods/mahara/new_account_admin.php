@@ -165,6 +165,19 @@ $registration->expiry       = NULL;
 
 check_create_admin();
 
+
+ /**
+ * Uses global variable $registration and checks if the user
+ * is registered in Mahara as an admin.  If so, the record is
+ * updated.  If not, a new Mahara is created using the login name
+ * or the login name appended by random characters (if the username
+ * exists in Mahara but not as an admin).  This function recursively
+ * calls itself until a Mahara account is created/updated.
+ * @param   void
+ * @access  private
+ * @return  void
+ * @author  Boon-Hau Teh
+ */
 function check_create_admin() {
     global $registration;
 
