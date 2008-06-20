@@ -29,7 +29,7 @@ function add_ending_slash($path){
 
 
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['uri'])) {
 	$mahara_path = add_ending_slash(trim($_POST['uri']));
 	if (!$mahara_path){
 		$msg->addError('MAHARA_MINURL_ADD_EMPTY');
@@ -40,8 +40,8 @@ if (isset($_POST['submit'])) {
         if (!get_magic_quotes_gpc())
             $mahara_path = addslashes($mahara_path);
 
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('mahara', '$mahara_path')";
-		mysql_query($sql, $db);
+        $sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('mahara', '$mahara_path')";
+        mysql_query($sql, $db);
 		$msg->addFeedback('MAHARA_MINURL_ADD_SAVED');
 
 		header('Location: '.$_SERVER['PHP_SELF']);
