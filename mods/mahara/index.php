@@ -22,10 +22,13 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 
 // Read login info for Mahara
-$sql    = "SELECT username, SHA1(password) FROM ".TABLE_PREFIX."mahara WHERE member_id=".$_SESSION['member_id'];
+$sql    = "SELECT username, SHA1(password) FROM ".TABLE_PREFIX."mahara WHERE username='".$_SESSION['login']."'";
 $result = mysql_query($sql, $db);
 
+
 if (!($row = @mysql_fetch_array($result))) {
+    define('new_account', 1);
+
     // if not configured with ATutor, automatically register for account now
     require('new_account.php');
 
@@ -35,13 +38,11 @@ if (!($row = @mysql_fetch_array($result))) {
 } else {
     $username = $row[0];
     $password = $row[1];
-    $member_id = $_SESSION['member_id']
 
     // Login
     ?>
 
     <?php
-    setcookie("ATutor_Mahara[member_id]", $member_id, time()+1200); 
     setcookie("ATutor_Mahara[username]", $username, time()+1200); 
     setcookie("ATutor_Mahara[password]", $password, time()+1200); 
 

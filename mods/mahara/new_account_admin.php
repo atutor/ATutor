@@ -1,31 +1,41 @@
 <?php
 
 /*
-    This belongs to the ATutor+Mahara module. It is called from index.php when
-    the user does not have a Mahara account associated with ATutor.  This script
-    automatically creates a new Mahara account for the user and saves the login
-    information with ATutor.  If the user already has a Mahara account, the script
+    This belongs to the ATutor+Mahara module. It is called from index_admin.php when
+    the admin user does not have a Mahara account associated with ATutor.  This script
+    automatically creates a new Mahara admin account for the user and saves the login
+    information with ATutor.  If the user already has an admin Mahara account, the script
     simply adds the login information to ATutor and reassigns an automatically
     generated password for Mahara.
 
     Most of the necessary code is copied and modified from init.php and
     register.php of Mahara.
 
+    This script very similar to new_account.php except it deals with admin only
+    (ie. authenticates session for admin, reads from 'admins' table, and sets
+         'admin' value to 1 in the 'usr' table of Mahara)
+
     by: Boon-Hau Teh
 */
 
-if (!defined('new_account')) { exit; }
+if (!defined('new_admin_account')) { exit; }
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!function_exists('admin_authenticate')) { exit; }
+
+admin_authenticate(AT_ADMIN_PRIV_MAHARA);
 
 $_user_location	= 'public';
 
-$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE login="'.$_SESSION['login'].'"';
+$sql = 'SELECT * FROM '.TABLE_PREFIX.'admins WHERE login="'.$_SESSION['login'].'"';
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
 $registration->username     = $row['login'];
-$registration->firstname    = $row['first_name'];
-$registration->lastname     = $row['last_name'];
+if (isset($row['real_name']) && $row['real_name'] != '')
+    $registration->firstname    = $row['real_name'];
+else
+    $registration->firstname    = $row['login'];
+$registration->lastname     = ' ';           // mahara also requires lastname so enter a space char.
 $registration->password     = $row['password'];
 $registration->email        = $row['email'];
 
@@ -153,12 +163,25 @@ $registration->expiry       = NULL;
 /*-----------------------------------*/
 
 
-// Check if user already exists in Mahara
-if ($data_record = get_record('usr', 'username', $registration->username)) {
-    $registration -> id = $data_record -> id;
-    update_record('usr', $registration, 'username');
-} else {
-    create_registered_user();   // Send register info to create a new account
+check_create_admin();
+
+function check_create_admin() {
+    global $registration;
+
+    // Check if user already exists in Mahara
+    if ($data_record = get_record('usr', 'username', $registration->username)) {
+        // Check if user is an admin on Mahara as well
+        if ($data_record -> admin == 1) {
+            $registration -> id = $data_record -> id;
+            update_record('usr', $registration, 'username');
+        } else {
+            // create a new admin account with a different name
+            $registration->username = $_SESSION['login'].substr(md5(rand(100, 999)), 2, 5);
+            check_create_admin();   // Send register info to create a new account
+        }
+    } else {
+        create_admin_user();   // Send register info to create a new account
+    }
 }
 
 // Reconnect to ATutor Database
@@ -184,12 +207,12 @@ $result = mysql_query($sql, $db_atutor);
 
 
 /**
- * This function is copied and modified from register.php of Mahara
+ * This function is copied and modified from register.php of Mahara to create an admin account
  *
  * @param array profilefields    Array of values from registration form. In this module, we're not using a form so we don't pass anything
  * @return boolean               Returns true if function exits without any problems
  */
-function create_registered_user($profilefields=array()) {
+function create_admin_user($profilefields=array()) {
     global $registration, $USER;
 
     db_begin();
@@ -213,6 +236,7 @@ function create_registered_user($profilefields=array()) {
     $user->firstname        = $registration->firstname;
     $user->lastname         = $registration->lastname;
     $user->email            = $registration->email;
+    $user->admin            = 1;
     $user->commit();
 
     $registration->id = $user->id;

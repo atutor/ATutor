@@ -112,7 +112,7 @@ if (isset($_COOKIE['ATutor_Mahara'])) {
 }
 
 // Get password from ATutor's database
-$sql    = "SELECT password FROM ".TABLE_PREFIX."mahara WHERE member_id=".$usr["member_id"]." AND username='".$usr["username"]."' AND SHA1(password)='".$usr["password"]."'";
+$sql    = "SELECT password FROM ".TABLE_PREFIX."mahara WHERE username='".$usr["username"]."' AND SHA1(password)='".$usr["password"]."'";
 $result = mysql_query($sql, $db);
 if (!($row = @mysql_fetch_array($result))) {
     echo 'Incorrect login information. Please check with course instructor or administrator.';
@@ -132,7 +132,7 @@ if (!($row = @mysql_fetch_array($result))) {
 
         // Check if user exists in Mahara
         if (!(record_exists('usr', 'username', $usr["username"]))) {
-            // Reconnect to ATutor Database
+            // Reconnect to ATutor Database and remove the record from the mahara table
             $db_atutor = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
             if (!$db_atutor) {
                 /* AT_ERROR_NO_DB_CONNECT */
@@ -150,7 +150,7 @@ if (!($row = @mysql_fetch_array($result))) {
             }
 
             // Delete record from ATutor database since it should not be there
-            $sql = "DELETE FROM ".TABLE_PREFIX."mahara WHERE member_id=".$usr["member_id"]." AND username='".$usr["username"]."'";
+            $sql = "DELETE FROM ".TABLE_PREFIX."mahara WHERE username='".$usr["username"]."'";
 
             $result = mysql_query($sql, $db_atutor);
 
@@ -178,12 +178,14 @@ if (!($row = @mysql_fetch_array($result))) {
 
             // login
             login_submit(null, $values);
+
+            $adminpage = ($USER->get('admin')) ? 'admin/' : '';
         }
 
         /* Logged in session should be created.  Now redirect to the Mahara page
            and it should read from this session
          */
-        header('Location: '.get_config('wwwroot'));
+        header('Location: '.get_config('wwwroot').$adminpage);
         /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
     } else {
         echo 'You have incorrect config settings for the Mahara module.';
