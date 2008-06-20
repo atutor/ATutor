@@ -18,13 +18,13 @@
     by: Boon-Hau Teh
 */
 
+$_user_location	= 'public';
+
 if (!defined('new_admin_account')) { exit; }
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (!function_exists('admin_authenticate')) { exit; }
 
 admin_authenticate(AT_ADMIN_PRIV_MAHARA);
-
-$_user_location	= 'public';
 
 $sql = 'SELECT * FROM '.TABLE_PREFIX.'admins WHERE login="'.$_SESSION['login'].'"';
 $result = mysql_query($sql, $db);

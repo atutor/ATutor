@@ -14,10 +14,10 @@
     by: Boon-Hau Teh
 */
 
+$_user_location	= 'public';
+
 if (!defined('new_account')) { exit; }
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
-$_user_location	= 'public';
 
 $sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id="'.$_SESSION['member_id'].'"';
 $result = mysql_query($sql, $db);
