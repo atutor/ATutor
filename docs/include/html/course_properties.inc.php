@@ -70,7 +70,7 @@ if (isset($_POST['form_course'])) {
 
 	$row['copyright']			= $_POST['copyright'];
 	$row['icon']				= $_POST['icon'];
-	$row['banner']              = $_POST['banner'];
+	$row['banner']              = stripcslashes($_POST['banner']);
 
 	if (intval($_POST['release_date'])) {
 		$day_release	= intval($_POST['day_release']);
@@ -515,7 +515,15 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 if (is_dir($path)) {
                     $boolCustom = true;  // true if custom icons are uploaded, otherwise false
                     
-                    $files = scandir($path);
+                    /*$files = scandir($path);  //SCANDIR STOPS ATUTOR WHEN RUN AS INSTRUCTOR, BUT NOT AS ADMIN. WHY? -Gorzan */
+                    
+                    /* PHP 4 REPLACEMENT FOR SCANDIR */
+					$dh  = opendir($path);
+					while (false !== ($filename = readdir($dh))) {
+						$files[] = $filename;
+					}
+
+					/*END PHP 4 REPLACEMENT FOR SCANDIR*/
                     echo "<optgroup label='Custom Icons'>";
                     foreach($files as $val) {
 						$file_ext = substr(strtolower($val), -3);
