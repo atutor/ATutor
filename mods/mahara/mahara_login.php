@@ -1,13 +1,15 @@
 <?php
 
 /*
-This belongs to the ATutor Mahara module page. It is called within an iframe or 
-a new window from index.php and allows a user to access
-his/her ePortfolio account on Mahara through their account on ATutor.
+    This belongs to the ATutor Mahara module page. It is called within an iframe or 
+    a new window from index.php and allows a user to access
+    his/her ePortfolio account on Mahara through their account on ATutor.
 
-Login information for Mahara is passed using cookies (password encrypted in SHA1).
-This is to avoid conflicting sessions between ATutor and Mahara from within
-the same script.
+    Login information for Mahara is passed using cookies (password encrypted in SHA1).
+    This is to avoid conflicting sessions between ATutor and Mahara from within
+    the same script.
+
+    by: Boon-Hau Teh
 */
 
 $_user_location	= 'public';
