@@ -18,7 +18,8 @@ function delete_mahara() {
     // Also remove added language stuff
 	$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE "
         . "term='mahara' OR term='mahara_location' OR term='mahara_new_win' OR term='mahara_opened' "
-        . "OR term='AT_MAHARA_MINURL_ADD_SAVED' OR term='AT_MAHARA_MINURL_ADD_EMPTY' OR term='AT_MAHARA_ERROR_INSTALL' ";
+        . "OR term='AT_MAHARA_MINURL_ADD_SAVED' OR term='AT_MAHARA_MINURL_ADD_EMPTY' OR term='AT_MAHARA_ERROR_INSTALL' "
+        . "OR term='AT_ERROR_MAHARA_ERROR_PATH' ";
 	if (!(mysql_query($sql, $db))) echo "Error delete rows from ".TABLE_PREFIX."language_text. ";
 
 
