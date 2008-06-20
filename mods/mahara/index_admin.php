@@ -1,4 +1,17 @@
 <?php
+/*
+    This is the main page for the ATutor+Mahara module accessed by ATutor admins.
+    It checks if the current admin is registered with Mahara by checking
+    ATutor's 'mahara' table.  If registered, an iframe is created to display
+    the Mahara page ('mahara_login.php', a login script to the page also gets called).
+    If not registered, 'new_account_admin.php' is called which automatically sets up an
+    admin account with Mahara and saves the user information in ATutor's mahara table.
+    The page then automatically gets refreshed.
+
+    by: Boon-Hau Teh
+*/
+
+
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
