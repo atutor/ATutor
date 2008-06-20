@@ -12,7 +12,7 @@
     by: Boon-Hau Teh
 */
 
-$_user_location	= 'public';
+$_user_location = 'public';
 
 define('AT_INCLUDE_PATH', '../../include/');
 
