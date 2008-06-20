@@ -203,7 +203,8 @@ if (!@mysql_select_db(DB_NAME, $db_atutor)) {
 
 // Store data into ATutor Databse
 $sql = "INSERT INTO ".TABLE_PREFIX."mahara SET at_login='".$_SESSION['login']."', username='".$registration->username."', password='".$random_password."'";
-$result = mysql_query($sql, $db_atutor);
+if (!mysql_query($sql, $db_atutor))
+    exit;                    // in case there's some external error; prevent being caught in an infinite loop
 
 
 /**
