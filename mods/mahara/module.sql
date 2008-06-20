@@ -1,9 +1,10 @@
 # sql file for mahara module
 
 CREATE TABLE `mahara` (
+  `at_login` varchar(20) NOT NULL default '',
   `username` varchar(30) character set latin1 collate latin1_general_ci NOT NULL,
   `password` varchar(40) character set latin1 collate latin1_general_ci NOT NULL,
-  PRIMARY KEY  (`username`)
+  PRIMARY KEY  (`at_login`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 

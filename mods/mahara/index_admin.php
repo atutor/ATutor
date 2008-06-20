@@ -86,7 +86,7 @@ if (isset($_config['mahara'])) {
         // Now check for existing account on Mahara and if it's admin
 
         // Read login info for Mahara
-        $sql    = "SELECT username, SHA1(password) FROM ".TABLE_PREFIX."mahara WHERE username='".$_SESSION['login']."'";
+        $sql    = "SELECT username, SHA1(password) FROM ".TABLE_PREFIX."mahara WHERE at_login='".$_SESSION['login']."'";
         $result = mysql_query($sql, $db);
 
         if (!($row = @mysql_fetch_array($result))) {
@@ -106,6 +106,7 @@ if (isset($_config['mahara'])) {
             ?>
 
             <?php
+            setcookie("ATutor_Mahara[at_login]", $_SESSION['login'], time()+1200); 
             setcookie("ATutor_Mahara[username]", $username, time()+1200); 
             setcookie("ATutor_Mahara[password]", $password, time()+1200); 
 

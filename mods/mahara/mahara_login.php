@@ -112,7 +112,7 @@ if (isset($_COOKIE['ATutor_Mahara'])) {
 }
 
 // Get password from ATutor's database
-$sql    = "SELECT password FROM ".TABLE_PREFIX."mahara WHERE username='".$usr["username"]."' AND SHA1(password)='".$usr["password"]."'";
+$sql    = "SELECT password FROM ".TABLE_PREFIX."mahara WHERE at_login='".$usr["at_login"]."' AND username='".$usr["username"]."' AND SHA1(password)='".$usr["password"]."'";
 $result = mysql_query($sql, $db);
 if (!($row = @mysql_fetch_array($result))) {
     echo 'Incorrect login information. Please check with course instructor or administrator.';
@@ -150,7 +150,7 @@ if (!($row = @mysql_fetch_array($result))) {
             }
 
             // Delete record from ATutor database since it should not be there
-            $sql = "DELETE FROM ".TABLE_PREFIX."mahara WHERE username='".$usr["username"]."'";
+            $sql = "DELETE FROM ".TABLE_PREFIX."mahara WHERE at_login='".$usr["at_login"]."'";
 
             $result = mysql_query($sql, $db_atutor);
 

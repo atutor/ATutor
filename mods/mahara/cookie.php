@@ -17,10 +17,11 @@ define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 // Read login info for Mahara
-$sql    = "SELECT username, SHA1(password) FROM ".TABLE_PREFIX."mahara WHERE username='".$_SESSION['login']."'";
+$sql    = "SELECT username, SHA1(password) FROM ".TABLE_PREFIX."mahara WHERE at_login='".$_SESSION['login']."'";
 $result = mysql_query($sql, $db);
 
 if ($row = @mysql_fetch_array($result)) {
+    setcookie("ATutor_Mahara[at_login]", $_SESSION['login'], time()+1200); 
     setcookie("ATutor_Mahara[username]", $row[0], time()+1200); 
     setcookie("ATutor_Mahara[password]", $row[1], time()+1200); 
 

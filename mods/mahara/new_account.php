@@ -19,7 +19,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $_user_location	= 'public';
 
-$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE login="'.$_SESSION['login'].'"';
+$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id="'.$_SESSION['member_id'].'"';
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
@@ -179,7 +179,7 @@ if (!@mysql_select_db(DB_NAME, $db_atutor)) {
 }
 
 // Store data into ATutor Databse
-$sql = "INSERT INTO ".TABLE_PREFIX."mahara SET username='".$registration->username."', password='".$random_password."'";
+$sql = "INSERT INTO ".TABLE_PREFIX."mahara SET at_login='".$_SESSION['login']."', username='".$registration->username."', password='".$random_password."'";
 $result = mysql_query($sql, $db_atutor);
 
 
