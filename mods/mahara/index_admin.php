@@ -50,12 +50,11 @@ if (isset($_POST['uri'])) {
 }
 
 if (isset($_config['mahara'])) {
-    @include ($_config['mahara'].'config.php');
-    if (!isset($cfg))
+    if (!file_exists($_config['mahara'].'config.php'))
         $msg->addError ("MAHARA_ERROR_PATH");
+}
 
 require (AT_INCLUDE_PATH.'header.inc.php');
-}
 
 ?>
 
