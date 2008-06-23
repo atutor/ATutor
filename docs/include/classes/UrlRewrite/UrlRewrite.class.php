@@ -207,7 +207,7 @@ class UrlRewrite  {
 			} 
 
 			//Add course id in if both course_id or course_dir_name are not there
-			if (preg_match('/^\/?['.$course_id.'|'.$course_orig.']\//', $front)==0){
+			if (preg_match('/^\/?('.$course_id.'|'.$course_orig.')\//', $front)==0){
 				$pretty_url = $course_id.'/';
 			}
 			$pretty_url .= $front;
