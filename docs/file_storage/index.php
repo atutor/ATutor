@@ -311,7 +311,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (NULL, $parent_folder_id, $owner_type, $owner_id, '$_POST[new_folder_name]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.AT_BASE_HREF.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder_id));
+		header('Location: '.url_rewrite('file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder_id, AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }

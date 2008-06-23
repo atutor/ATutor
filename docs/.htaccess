@@ -5,49 +5,72 @@ RewriteEngine On
 #Forums rules
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?$ go.php/$1/forum/view.php/fid/$2/pid/$3/
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?$ go.php/$1/forum/view.php/fid/$2/pid/$3/ [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/(([0-9]+)\.html)$ go.php/$1/forum/view.php/fid/$2/pid/$3/page/$4
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/(([0-9]+)\.html)$ go.php/$1/forum/view.php/fid/$2/pid/$3/page/$4 [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/?$ go.php/$1/forum/index.php/fid/$2/
+RewriteRule (.*)/forum/([0-9]+)/?$ go.php/$1/forum/index.php/fid/$2/ [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/([0-9+])\.html$ go.php/$1/forum/index.php/fid/$2/page/$3
+RewriteRule (.*)/forum/([0-9]+)/([0-9+])\.html$ go.php/$1/forum/index.php/fid/$2/page/$3 [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/?$ go.php/$1/forum/list.php
+RewriteRule (.*)/forum/?$ go.php/$1/forum/list.php [L]
 
 #Content rule
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/content/([0-9]+)/?$ go.php/$1/content.php/cid/$2
+RewriteRule (.*)/content/([0-9]+)/?$ go.php/$1/content.php/cid/$2 [L]
 
 #File storage rule
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/file_storage/?$ go.php/$1/file_storage/index.php
+RewriteRule (.*)/file_storage/?$ go.php/$1/file_storage/index.php [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/file_storage/index/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/index.php/ot/$2/oid/$3/
+RewriteRule (.*)/file_storage/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/index.php/ot/$2/oid/$3/ [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/file_storage/index/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/index.php/ot/$2/oid/$3/folder/$4/
+RewriteRule (.*)/file_storage/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/index.php/ot/$2/oid/$3/folder/$4/ [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/file_storage/comments/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/comments.php/ot/$2/oid/$3/id/$4/
+RewriteRule (.*)/file_storage/comments/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/comments.php/ot/$2/oid/$3/id/$4/ [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/file_storage/revisions/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/revisions.php/ot/$2/oid/$3/id/$4/
+RewriteRule (.*)/file_storage/revisions/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/revisions.php/ot/$2/oid/$3/id/$4/ [L]
+
+#Tests and Survey
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/tests_surveys/([0-9]+)/?$ go.php/$1/tools/test_intro.php/tid/$2/ [L]
+
+#Glossary
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/glossary/?$ go.php/$1/glossary/index.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/glossary/(.*)/?$ go.php/$1/glossary/index.php/p/$2/ [L]
+
+#Handles the removal of .php
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]*)/([^/^.]*)/([^/^.]*)/?$ go.php/$1/$2/$3.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]*)/([^/^.]*)/([^/^.]*)/([^\.]*)$ go.php/$1/$2/$3.php/$4 [L]
 
 #Default rule
 RewriteCond     %{REQUEST_FILENAME}     !-f

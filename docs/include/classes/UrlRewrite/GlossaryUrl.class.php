@@ -10,45 +10,29 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: FileStorageUrl.class.php 7603 2008-06-11 14:59:33Z hwong $
+// $Id: TestsUrl.class.php 7603 2008-06-11 14:59:33Z hwong $
 /**
-* FileStorageUrl
-* Class for rewriting pretty urls in tests
+* UrlParser
+* Class for rewriting pretty urls on forums.
 * @access	public
 * @author	Harris Wong
 * @package	UrlParser
 */
-class FileStorageUrl {
+class GlossaryUrl {
 	// local variables
-	var $rule;		//an array that maps [lvl->query parts]
+//	var $rule;		//an array that maps [lvl->query parts]
+//	var $className;	//the name of this class
 
 	// constructor
-	// @param the filename that was being called, this can be index.php, comments.php, revisions.php
-	function FileStorageUrl($filename) {
-		if ($filename == ''){
-			$filename = 'index.php';
-		}
-		$this->rule = array(0=>'action', 1=>'ot', 2=>'oid', 3=>'folder');	//default 3=folder, but it can be id as well for comment
-		$this->filename = $filename;
-//		parent::setClassName('file_storage');	//set class name
+	function GlossaryUrl() {
+		$this->rule = array(0=>'p');
 	}
 
-	//
-	function setRule($id, $ruleName){
-		$this->rule[$id] = $ruleName;
-	}
 
 	/**
 	 * Construct pretty url by the given query string.
-	 * Note:	This method will be a bit different from ForumsUrl, TestsUrl, ContentUrl because it has browse/comment in the rule which 
-	 *			doesn't exist in the actual query.
-	 * @param	string	the query string of the url
-	 * @param	string	filename of the request, this consists of revisions.php, index.php, comments.php
 	 */
 	function constructPrettyUrl($query){
-//		$url = $this->getClassName();
-//		$query_parts = parent::parseQuery($query);
-
 		if (empty($query)){
 			return '';
 		}
@@ -65,6 +49,8 @@ class FileStorageUrl {
 				//check if this is part of the rule, if so,add it, o/w ignore
 				if (array_search($fv, $this->rule)!==FALSE){
 					$new_query .= $fv . '=' . $query[$fk+1] . SEP;
+				} elseif (preg_match('/([0-9]+)\.html/', $fv, $matches)==1){
+					$new_query .= 'page=' . $matches[1] . SEP;
 				}
 			}
 			$query = $new_query;	//done
@@ -81,20 +67,12 @@ class FileStorageUrl {
 		}
 
 		$query_string = '';
-		//determine if this uses 'browse' or 'comment'
-		$prefix = $this->configRule($this->filename);
-		if ($prefix != '') {
-			$url .=	$prefix.'/' ;	//add either index, revision or comment to the url
-		}
 
 		//construct pretty url on mapping
 		foreach ($this->rule as $key=>$value){
 
-			//if this is action, skip it.
-			if ($value == 'action'){
-				continue;
-			} elseif ($query_parts[$value] ==''){
-				//if this value is empty, the url construction should quit.
+			//if this value is empty, the url construction should quit.
+			if ($query_parts[$value] ==''){
 				break;
 			}
 			$url .= $query_parts[$value].'/';
@@ -118,7 +96,7 @@ class FileStorageUrl {
 
 		//handle paginators
 		if ($query_parts['page']!=''){
-			$url .= '/'.$query_parts['page'].'.html';
+			$url .= $query_parts['page'].'.html';
 		}
 
 		//append query string at the back
@@ -128,30 +106,5 @@ class FileStorageUrl {
 
 		return $url;
 	}
-
-
-	/**
-	 * A helper method for constructPrettyUrl
-	 * @param	string	filename
-	 */
-	function configRule($filename){
-		//run through the query once, extract if it uses id or folder.
-		//if 'id', it is comments.php
-		//if 'folder', it is index.php
-		if ($filename=='comments.php'){
-			$this->setRule(3, 'id');
-			return 'comments';
-		} elseif ($filename=='revisions.php'){
-			$this->setRule(3, 'id');
-			return 'revisions';
-		} else {
-			$this->setRule(3, 'folder');
-//			return 'index';
-			return '';
-		}
-
-	}
-
-
 }
 ?>

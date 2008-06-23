@@ -14,6 +14,8 @@
 require_once('ForumsUrl.class.php');
 require_once('ContentUrl.class.php');
 require_once('FileStorageUrl.class.php');
+require_once('TestsUrl.class.php');
+require_once('GlossaryUrl.class.php');
 
 /**
 * UrlRewrite
@@ -210,7 +212,13 @@ class UrlRewrite  {
 			if (preg_match('/^\/?('.$course_id.'|'.$course_orig.')\//', $front)==0){
 				$pretty_url = $course_id.'/';
 			}
-			$pretty_url .= $front;
+			//take out '.php' if any exists.
+			if ($_config['apache_mod_rewrite'] > 0 && $end != ''){
+				$pretty_url .= preg_replace('/\.php/', '', $front);
+			} else {
+				$pretty_url .= $front;
+			}
+
 			//check if there are any rules overwriting the original rules
 			//TODO: have a better way to do this
 			//		extend modularity into this.
@@ -226,7 +234,13 @@ class UrlRewrite  {
 				} elseif (preg_match('/file_storage\/((index|revisions|comments)\.php)?/', $front, $matches)==1){
 					$pretty_url = $course_id.'/file_storage';
 					$obj =& new FileStorageUrl($matches[1]);
-				} 
+				} elseif (preg_match('/tools\/test_intro\.php/', $front)==1){
+					$pretty_url = $course_id.'/tests_surveys';
+					$obj =& new TestsUrl();
+				} elseif (preg_match('/glossary\/index\.php/', $front)==1){
+					$pretty_url = $course_id.'/glossary';
+					$obj =& new GlossaryUrl();
+				}
 			}
 
 			if ($end != ''){
