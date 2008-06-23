@@ -71,7 +71,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 	if ($_POST['account_email'] == '') {
 		$errors[] = 'Personal Account email cannot be empty.';
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['account_email'])) {
 		$errors[] = 'Invalid Personal Account email is not valid.';
 	}
 
