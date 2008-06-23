@@ -39,6 +39,12 @@ class ContentUrl {
 			return '';
 		}
 
+		//Take out bookmark
+		if (($pos = strpos($query, '#'))!==FALSE){
+			$bookmark = substr($query, $pos);
+			$query = substr($query, 0, $pos);
+		}
+
 		//If this is already a pretty url,but without mod_apache rule
 		//unwrap it and reconstruct
 		if (is_array($query)){
@@ -100,6 +106,11 @@ class ContentUrl {
 		//append query string at the back
 		if ($query_string!=''){
 			$url .= '?'.$query_string;
+		}
+
+		//finally, append bookmark if not emptied
+		if ($bookmark!=''){
+			$url .= $bookmark;
 		}
 
 		return $url;

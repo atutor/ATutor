@@ -102,6 +102,12 @@ class UrlRewrite  {
 			return '';
 		}
 
+		//Take out bookmark
+		if (($pos = strpos($query, '#'))!==FALSE){
+			$bookmark = substr($query, $pos);
+			$query = substr($query, 0, $pos);
+		}
+
 		//If this is already a pretty url,but without mod_apache rule
 		//unwrap it and reconstruct
 		if (is_array($query)){
@@ -136,6 +142,12 @@ class UrlRewrite  {
 			list($key, $value) = preg_split('/\=/', $attributes, 2);
 			$pretty_url .= $key . '/' . $value .'/';
 		}
+
+		//finally, append bookmark if not emptied
+		if ($bookmark!=''){
+			$pretty_url .= $bookmark;
+		}
+
 		return $pretty_url;
 	}
 
