@@ -26,7 +26,7 @@ $_current_modules = array_merge((array) $_current_modules, array_diff($_pages[AT
 
 foreach ($_current_modules as $module) {
 	echo '<br />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" />  <a href="'.$module.'">' . _AT($_pages[$module]['title_var']) . '</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" />  <a href="'.url_rewrite($module).'">' . _AT($_pages[$module]['title_var']) . '</a>';
 
 	if ($module == 'forum/list.php') {
 		$forums = get_forums($_SESSION['course_id']);
