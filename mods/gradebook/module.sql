@@ -98,6 +98,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','combine','Combine',NOW(),
 INSERT INTO `language_text` VALUES ('en', '_template','combine_into','Combine Into',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','combine_from','Combine From',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','combine_tests_info','Before combining tests, please run section above to update marks of "Combine Into Test/Survey."',NOW(),'gradebook');
+INSERT INTO `language_text` VALUES ('en', '_template','grade_info','Note: "Grade" field can be grade defined in "Grade Scale" or percentage like 50%%.',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_DELETE_GRADE_SCALE','Are you sure you want to <strong>delete</strong> grade scale <strong>%s</strong>?',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_DELETE_TEST_FROM_GRADEBOOK','Are you sure you want to <strong>delete</strong> test <strong>%s</strong> from gradebook?',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_ADD_TEST_INTO_GRADEBOOK', '"<strong>%1$s</strong>" cannot be added into gradebook because the following students have taken it more than once:<br />\r\n%2$s.',NOW(),'gradebook');

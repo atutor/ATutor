@@ -94,6 +94,12 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) {
 ?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<div class="input-form">
+		<div class="row">
+			<p><?php echo _AT('grade_info'); ?></p>
+		</div>
+	</div>
+
 	<input type="hidden" name="verify" value="1" />
 	<input type="hidden" name="gradebook_test_id" value="<?php echo $_POST["gradebook_test_id"]; ?>" />
 	<input type="hidden" name="solve_conflict" value="<?php echo $_POST["solve_conflict"]; ?>" />
