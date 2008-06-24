@@ -12,7 +12,8 @@ CREATE TABLE `grade_scales_detail` (
    `grade_scale_id` mediumint(8) unsigned NOT NULL,
    `scale_value` VARCHAR(50) NOT NULL ,
    `percentage_from` MEDIUMINT NOT NULL default '0',
-   `percentage_to` MEDIUMINT NOT NULL default '0'
+   `percentage_to` MEDIUMINT NOT NULL default '0',
+   PRIMARY KEY (`grade_scale_id`, `scale_value`)
 );
 
 CREATE TABLE `gradebook_tests` (
@@ -30,12 +31,12 @@ CREATE TABLE `gradebook_detail` (
    `gradebook_test_id` mediumint(8) unsigned NOT NULL,
    `member_id` mediumint(8) unsigned NOT NULL default '0',
    `grade` VARCHAR(255) NOT NULL,
-   UNIQUE INDEX (`gradebook_test_id`, `member_id`)
+   PRIMARY KEY (`gradebook_test_id`, `member_id`)
 );
 
-INSERT INTO `grade_scales` (member_id, scale_name, created_date) values (0, 'Letter Grade', now());
-INSERT INTO `grade_scales` (member_id, scale_name, created_date) values (0, 'Competency 1', now());
-INSERT INTO `grade_scales` (member_id, scale_name, created_date) values (0, 'Competency 2', now());
+INSERT INTO `grade_scales` (grade_scale_id, member_id, scale_name, created_date) values (1, 0, 'Letter Grade', now());
+INSERT INTO `grade_scales` (grade_scale_id, member_id, scale_name, created_date) values (2, 0, 'Competency 1', now());
+INSERT INTO `grade_scales` (grade_scale_id, member_id, scale_name, created_date) values (3, 0, 'Competency 2', now());
 
 INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (1, 'A+', 90, 100);
 INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (1, 'A', 80, 89);
