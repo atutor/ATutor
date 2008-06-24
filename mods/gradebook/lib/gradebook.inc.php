@@ -22,6 +22,11 @@
 //    [3] => Excellent - Inadequate
 //    [grade_scale_id] => scale_value_max - scale_value_min     (Value Explanation)
 //)
+define ('USE_HIGHER_GRADE', 1);
+define ('USE_LOWER_GRADE', 2);
+define ('NOT_OVERWRITE', 3);
+define ('OVERWRITE', 4);
+
 function get_grade_scales_array($member_id = 0)
 {
 	global $db;
@@ -51,10 +56,10 @@ function get_grade_scales_array($member_id = 0)
 // generate html of dropdown list box on preset grade scales and grade scales created by current member Id
 // parameter: $selected_grade_scale_id: the grade_scale_id that need to set to be selected.
 // return: html text
-function print_grade_scale_selectbox($selected_grade_scale_id = 0)
+function print_grade_scale_selectbox($selected_grade_scale_id = 0, $id_name="selected_grade_scale_id")
 {
 ?>
-		<select name="selected_grade_scale_id" id="selected_grade_scale_id">
+		<select name="selected_grade_scale_id" id="<?php echo $id_name; ?>">
 			<option value="0" <?php if ($selected_grade_scale_id  == 0) { echo 'selected="selected"'; } ?>><?php echo _AT('none'); ?></option>
 		<?php
 			// preset grade scales
@@ -94,6 +99,7 @@ function print_grade_scale_selectbox($selected_grade_scale_id = 0)
 
 <?php
 }
+
 // This function returns grade based on grade scale
 // Note: $score can be one of: grade itself, percentage, raw final score. 
 // If $score is raw final score, $out_of has to be provided, otherwise,
@@ -107,7 +113,7 @@ function get_mark_by_grade($grade_scale_id, $score, $out_of='')
 	
 	if ($out_of == '') $default_mark = $score;
 	else $default_mark = $score ." / " . $out_of;
-	
+
 	// if $grade_scale_id is 0 or not given, return $score itself.
 	if ($grade_scale_id == 0 || $grade_scale_id == '')
 		$mark = $default_mark;
@@ -146,6 +152,32 @@ function get_mark_by_grade($grade_scale_id, $score, $out_of='')
 	return $mark;
 }
 
+function get_member_grade($test_id, $member_id, $grade_scale_id)
+{
+	global $db;
+
+	require_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+	
+	$grade = "";
+	
+	// find out final_score, out_of
+	$sql = "SELECT t.random, t.out_of, r.result_id, r.final_score FROM ".TABLE_PREFIX."tests t, ".TABLE_PREFIX."tests_results r WHERE t.test_id=".$test_id." AND t.test_id=r.test_id AND r.member_id=".$member_id;
+	$result = mysql_query($sql, $db) or die(mysql_error());
+	$row = mysql_fetch_assoc($result);
+
+	if (mysql_num_rows($result) > 0 && $row["final_score"] <> "")
+	{
+		if ($row['random']) {
+			$out_of = get_random_outof($test_id, $row['result_id']);
+		} else {
+			$out_of = $row['out_of'];
+		}
+		$grade = get_mark_by_grade($grade_scale_id, $row["final_score"], $out_of);
+	}
+	
+	return $grade;
+}
+
 // Return array of students in the given course who take the given test more than once
 // Parameter: $member_id, $test_id
 // Return: an empty array or 
@@ -170,12 +202,104 @@ function get_studs_take_more_than_once($course_id, $test_id)
 	return $rtn_array;
 }
 
+// compare grades
+// parameters: 2 grades to compare, grade_scale_id, "higher"/"lower": return higher or lower grade
+//             grade can be percentage like 70% or grade defined in grade_scale_id, like "A", "B"...
+// return: higher or lower grade depending on 4th parameter
+//         or, -1 if grades are comparable
+function compare_grades($grade1, $grade2, $gradebook_test_id, $mode = "higher")
+{
+	global $db;
+	
+	// get grade scale id
+	$sql = "SELECT grade_scale_id FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id = ".$gradebook_test_id;
+	$result	= mysql_query($sql, $db) or die(mysql_error());
+	$row = mysql_fetch_assoc($result);
+	$grade_scale_id = $row["grade_scale_id"];
+	
+	if ($grade_scale_id == 0) // compare raw scores
+	{
+		// retrieve raw score
+		$grade1 = trim(str_replace("%", "", $grade1));
+		$grade2 = trim(str_replace("%", "", $grade2));
+		
+		if ($grade1 > $grade2) return 1;
+		else if ($grade1 < $grade2) return -1;
+		else return 0;
+	}
+	else
+	{
+		$grade1 = get_mark_by_grade($grade_scale_id, $grade1);
+		$grade2 = get_mark_by_grade($grade_scale_id, $grade2);
+
+		$grades = array();
+	
+		$sql_grade = "SELECT scale_value from ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id = ". $grade_scale_id. " ORDER BY percentage_to DESC";
+		$result_grade	= mysql_query($sql_grade, $db) or die(mysql_error());
+		while ($row_grade = mysql_fetch_assoc($result_grade))
+		{
+			$grades[] = $row_grade["scale_value"];
+		}
+
+		if (!in_array($grade1, $grades) || !in_array($grade2, $grades))
+			return -1; // uncomparable
+		else
+		{
+			$grade1_key = array_search($grade1, $grades);
+			$grade2_key = array_search($grade2, $grades);
+
+			if ($grade1_key > $grade2_key)
+			{
+				$higher_grade = $grade2;
+				$lower_grade = $grade1;
+			}
+			else if ($grade1_key < $grade2_key)
+			{
+				$higher_grade = $grade1;
+				$lower_grade = $grade2;
+			}
+			else $higher_grade = $lower_grade = $grade1;
+		}
+	}
+	
+	if ($mode == "higher") return $higher_grade;
+	else return $lower_grade;
+}
+
+// check imported students and grades:
+// 1. if the student exists in the class, if not, report error
+// 2. if the grade already exists, if it is, report conflict
+// parameter: an array of student/grade info
+// Array
+//(
+//    [member_id] => 1
+//    [fname] => angelo  (could be empty if [member_id] is given)
+//    [lname] => yuan    (could be empty if [member_id] is given)
+//    [email] => angelo@hotmail.com   (could be empty if [member_id] is given)
+//    [grade] => 70%
+//    [gradebook_test_id] => 4
+//    [solve_conflict] => 0
+//)
+// return: an array of processed student/grade/error info
+// Array
+//(
+//    [member_id] => 1
+//    [fname] => angelo  (could be empty if [member_id] is given)
+//    [lname] => yuan    (could be empty if [member_id] is given)
+//    [email] => angelo@hotmail.com  (could be empty if [member_id] is given)
+//    [grade] => 70%
+//    [gradebook_test_id] => 4
+//    [solve_conflict] => 0
+//    [error] => "Student not exists"
+//    [has_conflict] => 1
+//)
 function check_user_info($record)
 {
 	global $db;
 
 	$record['fname'] = htmlspecialchars(stripslashes(trim($record['fname'])));
 	$record['lname'] = htmlspecialchars(stripslashes(trim($record['lname'])));
+	$record['member_id'] = htmlspecialchars(stripslashes(trim($record['member_id'])));
 	$record['email'] = htmlspecialchars(stripslashes(trim($record['email'])));
 	$record['grade'] = htmlspecialchars(stripslashes(trim($record['grade'])));
 
@@ -183,10 +307,57 @@ function check_user_info($record)
 		$record['remove'] = FALSE;			
 	}
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e WHERE m.first_name='".$record['fname']."' AND m.last_name='".$record['lname']."' AND m.email='".$record['email']."' AND m.member_id = e.member_id AND e.course_id=".$_SESSION["course_id"]." AND e.approved='y' AND e.role<>'Instructor'";
-	$result = mysql_query($sql, $db) or die(mysql_error());
+	if ($record['member_id'] == '')
+	{
+		$sql = "SELECT * FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e WHERE m.first_name='".$record['fname']."' AND m.last_name='".$record['lname']."' AND m.email='".$record['email']."' AND m.member_id = e.member_id AND e.course_id=".$_SESSION["course_id"]." AND e.approved='y' AND e.role<>'Instructor'";
+		$result = mysql_query($sql, $db) or die(mysql_error());
+		
+		if (mysql_num_rows($result) == 0) 
+			$record['error'] = _AT("student_not_exists");
+		else
+		{
+			$row = mysql_fetch_assoc($result);
+			$record['member_id'] = $row["member_id"];
+		}
+	}
 	
-	if (mysql_num_rows($result) == 0) $record['error'] = _AT("student_not_exists");
+	if ($record['error'] == "" && $record['member_id'] > 0)
+	{
+		$sql = "SELECT grade FROM ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id=".$record['gradebook_test_id']. " AND member_id=".$record["member_id"];
+		$result = mysql_query($sql, $db) or die(mysql_error());
+		
+		if (mysql_num_rows($result) > 0 && $record['solve_conflict'] == 0) 
+		{
+			$row = mysql_fetch_assoc($result);
+			$record['error'] = _AT("grade_already_exists", $row["grade"]);
+			$record['conflict'] = 1;
+		}
+		
+		if (mysql_num_rows($result) > 0 && $record['solve_conflict'] > 0) 
+		{
+			$row = mysql_fetch_assoc($result);
+			
+			if ($record['solve_conflict'] == USE_HIGHER_GRADE || $record['solve_conflict'] == USE_LOWER_GRADE) 
+			{
+				if ($record['solve_conflict'] == USE_HIGHER_GRADE)
+					$grade = compare_grades($record['grade'], $row['grade'], $record['gradebook_test_id'], "higher");
+
+				if ($record['solve_conflict'] == USE_LOWER_GRADE)
+					$grade = compare_grades($record['grade'], $row['grade'], $record['gradebook_test_id'], "lower");
+				
+				if ($grade == -1)
+				{
+					$record["error"] = _AT("grades_uncomparable");
+					$record['conflict'] = 1;
+				}
+				else
+					$record['grade'] = $grade;
+			}
+			
+			if ($record['solve_conflict'] == NOT_OVERWRITE) $record['grade'] = $row['grade'];
+			if ($record['solve_conflict'] == OVERWRITE) $record['grade'] = $record['grade'];
+		}
+	}
 	
 	if ($record['remove']) {
 		//unset errors 
@@ -259,18 +430,18 @@ function get_class_avg($gradebook_test_id)
 	$result = mysql_query($sql, $db) or die(mysql_error());
 	$row = mysql_fetch_assoc($result);
 	
-	if ($row["test_id"]<>0)  // internal atutor test
+	if ($row["id"]<>0)  // internal atutor test
 	{
 		require_once (AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-		$sql_test = "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=".$row["test_id"];
+		$sql_test = "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=".$row["id"];
 		$result_test = mysql_query($sql_test, $db) or die(mysql_error());
 		$row_test = mysql_fetch_assoc($result_test);
 
 		if ($row_test['out_of'] == 0 || $row_test['result_release']==AT_RELEASE_NEVER)
 			return _AT("na");
 		
-		$sql_marks = "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row["test_id"]. " AND status=1";
+		$sql_marks = "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row["id"]. " AND status=1";
 		$result_marks = mysql_query($sql_marks, $db) or die(mysql_error());
 		
 		$num_students = 0;
@@ -291,7 +462,10 @@ function get_class_avg($gradebook_test_id)
 		$avg_final_score = round($total_final_score / $num_students);
 		$avg_out_of = round($total_out_of / $num_students);
 		
-		$avg_grade = get_mark_by_grade($row["grade_scale_id"], $avg_final_score, $avg_out_of);
+		if ($avg_final_score <> "") 
+			$avg_grade = get_mark_by_grade($row["grade_scale_id"], $avg_final_score, $avg_out_of);
+		else
+			$avg_grade = "";
 	}
 	else  // external test
 	{

@@ -44,17 +44,17 @@ else if (isset($_POST['submit']))
 	$empty_fields = array();
 	if ($_POST['scale_value'][0] == '') 
 	{
-		$empty_fields[] = _AT('scale_value').' 1';
+		$empty_fields[] = _AT('scale_value').' at line 1';
 	}
 
 	if ($_POST['percentage_from'][0] == '') 
 	{
-		$empty_fields[] = _AT('percentage_from').' 1';
+		$empty_fields[] = _AT('percentage_from').' at line 1';
 	}
 
 	if ($_POST['percentage_to'][0] == '') 
 	{
-		$empty_fields[] = _AT('percentage_to').' 1';
+		$empty_fields[] = _AT('percentage_to').' at line 1';
 	}
 
 	if (!empty($empty_fields)) 
@@ -113,16 +113,16 @@ else if (isset($_POST['submit']))
 } 
 else if (isset($_POST['preset']) || ($action == 'edit' && isset($_REQUEST['grade_scale_id']))) 
 {
-	if (isset($_POST['selected_grade_scale_id']) && $_POST['selected_grade_scale_id'] == 0)
-		$msg->addError('NO_ITEM_SELECTED');
-
-	if (!$msg->containsErrors() && $_POST['selected_grade_scale_id'] > 0) 
+	if (isset($_POST['selected_grade_scale_id']))
 	{
 		// clean up values preset previously
 		unset($_POST["scale_value"]);
 		unset($_POST["percentage_from"]);
 		unset($_POST["percentage_to"]);
-	
+	}
+
+	if (!$msg->containsErrors() && $_POST['selected_grade_scale_id'] > 0) 
+	{
 		// load preset
 		$_POST['selected_grade_scale_id'] = intval($_POST['selected_grade_scale_id']);
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."grade_scales_detail d, ".TABLE_PREFIX."grade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND d.grade_scale_id=".$_POST[selected_grade_scale_id]." ORDER BY percentage_to DESC";
@@ -174,8 +174,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('grade_scale'); ?></legend>
 	
 	<div class="row">
-		<label for="scale_name">
-		<?php echo _AT('name'); ?></label><br />
+		<label for="scale_name"><?php echo _AT('name'); ?></label><br />
 		<input type="text" id="scale_name" size="40" name="scale_name" value="<?php echo htmlspecialchars(stripslashes($_POST['scale_name'])); ?>" />
 	</div>
 
@@ -184,29 +183,31 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <?php for ($i=0; $i<10; $i++) { ?>
 		<tr>
 			<td>
+			</td>
+			<td>
 			<?php if ($i==0) { ?>
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php } ?>
-			<label for="scale<?php echo $i; ?>">
-			<?php echo _AT('scale_value'); ?> <?php echo ($i+1); ?></label>
+			<?php echo _AT('scale_value'); ?>
 			</td>
 
 			<td>
 			<?php if ($i==0) { ?>
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php } ?>
-			<?php echo _AT('percentage_from'); ?></label>
+			<?php echo _AT('percentage_from'); ?>
 			</td>
 
 			<td>
 			<?php if ($i==0) { ?>
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<?php } ?>
-			<?php echo _AT('percentage_to'); ?></label>
+			<?php echo _AT('percentage_to'); ?>
 			</td>
 		</tr>
 
 		<tr>
+			<td><?php echo $i+1; ?></td>
 			<td><input type="text" id="scale_value_<?php echo $i; ?>" size="40" name="scale_value[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['scale_value'][$i])); ?>" /></td>
 			<td><input type="text" id="percentage_from_<?php echo $i; ?>" size="40" name="percentage_from[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['percentage_from'][$i])); ?>" />%</td>
 			<td><input type="text" id="percentage_to_<?php echo $i; ?>" size="40" name="percentage_to[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['percentage_to'][$i])); ?>" />%</td>

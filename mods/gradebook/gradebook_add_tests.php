@@ -22,9 +22,9 @@ require_once("lib/gradebook.inc.php");
 
 // Checks if the given test has students taken it more than once, if has, don't add
 // print feedback, otherwise, add this test into gradebook.
-function add_test($test_id)
+function add_test($test_id, $title)
 {
-	global $db;
+	global $db, $msg;
 	
 	$no_error = true;
 	
@@ -32,20 +32,33 @@ function add_test($test_id)
 	
 	foreach ($studs_take_num as $student => $num)
 	{
-			if ($no_error) $no_error = false;
-			
-			$f = array('ADD_TEST_INTO_GRADEBOOK',
-							$row['title'], 
-							$student . ": " . $num . " times");
-			$msg->addFeedback($f);
+		if ($no_error) $no_error = false;
+		$error_msg .= $student . ": " . $num . " times<br>";
 	}
 	
+	if (!$no_error)
+	{
+		$f = array('ADD_TEST_INTO_GRADEBOOK',
+						$title, 
+						$error_msg);
+		$msg->addFeedback($f);
+	}
+
 	if ($no_error)  // add into gradebook
 	{
-		$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (test_id, grade_scale_id)
-		               VALUES (". $test_id. ", ".$_POST["selected_grade_scale_id"].")";
+		$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (id, type, grade_scale_id)
+		               VALUES (". $test_id. ", 'ATutor Test', ".$_POST["selected_grade_scale_id"].")";
 		$result_insert = mysql_query($sql_insert, $db) or die(mysql_error());
 	}
+}
+
+function add_assignment($assignment_id)
+{
+	global $db;
+	
+	$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (id, type, grade_scale_id)
+	               VALUES (". $assignment_id. ", 'ATutor Assignment', ".$_POST["selected_grade_scale_id"].")";
+	$result_insert = mysql_query($sql_insert, $db) or die(mysql_error());
 }
 
 if (isset($_POST['cancel'])) 
@@ -56,23 +69,55 @@ if (isset($_POST['cancel']))
 } 
 else if (isset($_POST['addATutorTest'])) 
 {
-	if ($_POST['test_id'] == -1)
+	if (preg_match('/^at_(.*)$/', $_POST["id"], $matches) > 0) // add atutor test
 	{
-		$msg->addError('NO_ITEM_SELECTED');
-	}
-	else if ($_POST['test_id'] == 0) // add all applicable tests
-	{
-		$sql = "SELECT * FROM ".TABLE_PREFIX."tests t WHERE course_id=".$_SESSION["course_id"]." AND num_takes = 1 AND NOT EXISTS (SELECT 1 FROM ".TABLE_PREFIX."gradebook_tests g WHERE g.test_id = t.test_id)";
-		$result	= mysql_query($sql, $db) or die(mysql_error());
-		
-		while ($row = mysql_fetch_assoc($result))
+		if ($matches[1] == 0) // add all applicable tests
 		{
-			add_test($row["test_id"]);
+			$sql = "SELECT * FROM ".TABLE_PREFIX."tests t".
+							" WHERE course_id=".$_SESSION["course_id"].
+							" AND num_takes = 1".
+							" AND NOT EXISTS (SELECT 1".
+															" FROM ".TABLE_PREFIX."gradebook_tests g".
+															" WHERE g.id = t.test_id".
+															" AND g.type='ATutor Test')";
+			$result	= mysql_query($sql, $db) or die(mysql_error());
+			
+			while ($row = mysql_fetch_assoc($result))
+			{
+				add_test($row["test_id"], $row["title"]);
+			}
+		}
+		else // add one atutor test
+		{
+			$sql = "SELECT * FROM ".TABLE_PREFIX."tests t".
+							" WHERE test_id=".$matches[1];
+			$result	= mysql_query($sql, $db) or die(mysql_error());
+			$row = mysql_fetch_assoc($result);
+			
+			add_test($matches[1], $row["title"]);
 		}
 	}
-	else // add one test_id
+	else if (preg_match('/^aa_(.*)$/', $_POST["id"], $matches) > 0) // add atutor test
 	{
-		add_test($_POST["test_id"]);
+		if ($matches[1] == 0) // add all applicable tests
+		{
+			$sql = "SELECT * FROM ".TABLE_PREFIX."assignments a".
+							" WHERE course_id=".$_SESSION["course_id"].
+							" AND NOT EXISTS (SELECT 1".
+															" FROM ".TABLE_PREFIX."gradebook_tests g".
+															" WHERE g.id = a.assignment_id".
+															" AND g.type='ATutor Assignment')";
+			$result	= mysql_query($sql, $db) or die(mysql_error());
+			
+			while ($row = mysql_fetch_assoc($result))
+			{
+				add_assignment($row["assignment_id"]);
+			}
+		}
+		else // add one test_id
+		{
+			add_assignment($matches[1]);
+		}
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -94,8 +139,11 @@ else if (isset($_POST['addExternalTest']))
 
 	if (!$msg->containsErrors()) 
 	{
-		$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (course_id, title, due_date, grade_scale_id)
-		               VALUES (".$_SESSION["course_id"].", '". $_POST["title"]. "', '".$_POST["due_date"] . "', ".$_POST["selected_grade_scale_id"].")";
+		if ($_POST["has_due_date"] == 'true')
+			$date_due = $_POST["year_due"]. '-' .str_pad ($_POST["month_due"], 2, "0", STR_PAD_LEFT). '-' .str_pad ($_POST["day_due"], 2, "0", STR_PAD_LEFT). ' '.str_pad ($_POST["hour_due"], 2, "0", STR_PAD_LEFT). ':' .str_pad ($_POST["min_due"], 2, "0", STR_PAD_LEFT) . ':00';
+
+		$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (course_id, type, title, due_date, grade_scale_id)
+		               VALUES (".$_SESSION["course_id"].", 'External', '". $_POST["title"]. "', '".$date_due . "', ".$_POST["selected_grade_scale_id"].")";
 		$result_insert = mysql_query($sql_insert, $db) or die(mysql_error());
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -104,11 +152,10 @@ else if (isset($_POST['addExternalTest']))
 	}
 }
 
+$onload .= ' disable_dates (true, \'_due\');';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<script type='text/javascript' src='calendar.js'></script>
-
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_atutor_test'); ?></legend>
@@ -118,10 +165,26 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 <?php
-$sql = "SELECT * FROM ".TABLE_PREFIX."tests t WHERE course_id=".$_SESSION["course_id"]." AND num_takes = 1 AND NOT EXISTS (SELECT 1 FROM ".TABLE_PREFIX."gradebook_tests g WHERE g.test_id = t.test_id)";
-$result	= mysql_query($sql, $db) or die(mysql_error());
+$sql_at = "SELECT * FROM ".TABLE_PREFIX."tests t".
+				" WHERE course_id=".$_SESSION["course_id"].
+				" AND num_takes = 1".
+				" AND NOT EXISTS (SELECT 1".
+												" FROM ".TABLE_PREFIX."gradebook_tests g".
+												" WHERE g.id = t.test_id".
+												" AND g.type='ATutor Test')".
+				" ORDER BY title";
+$result_at = mysql_query($sql_at, $db) or die(mysql_error());
 
-if (mysql_num_rows($result) == 0)
+$sql_aa = "SELECT * FROM ".TABLE_PREFIX."assignments a".
+				" WHERE course_id=".$_SESSION["course_id"].
+				" AND NOT EXISTS (SELECT 1".
+												" FROM ".TABLE_PREFIX."gradebook_tests g".
+												" WHERE g.id = a.assignment_id".
+												" AND g.type='ATutor Assignment')".
+				" ORDER BY title";
+$result_aa = mysql_query($sql_aa, $db) or die(mysql_error());
+
+if (mysql_num_rows($result_at) == 0 && mysql_num_rows($result_aa) == 0)
 {
 	 echo _AT('none_found');
 }
@@ -129,14 +192,32 @@ else
 {
 	echo '	<div class="row">'."\n\r";
 	echo '		<label for="select_tid">'. _AT("name") .'</label><br />'."\n\r";
-	echo '		<select name="test_id" id="select_tid">'."\n\r";
-	echo '			<option value="0">'. _AT('all_atutor_tests') .'</option>'."\n\r";
-	echo '			<option value="-1"></option>."\n\r"';
-
-	while ($row = mysql_fetch_assoc($result))
+	echo '		<select name="id" id="select_tid">'."\n\r";
+	
+	if (mysql_num_rows($result_aa) > 0)
 	{
-		echo '			<option value="'.$row[test_id].'">'.$row[title].'</option>'."\n\r";
+		echo '			<optgroup label="'. _AT('assignments') .'">'."\n\r";
+		echo '				<option value="aa_0">'._AT('all_atutor_assignments').'</option>'."\n\r";
+	
+		while ($row_aa = mysql_fetch_assoc($result_aa))
+		{
+			echo '			<option value="aa_'.$row_aa[assignement_id].'">'.$row_aa[title].'</option>'."\n\r";
+		}
+		echo '			</optgroup>'."\n\r";
 	}
+
+	if (mysql_num_rows($result_at) > 0)
+	{
+		echo '			<optgroup label="'. _AT('tests') .'">'."\n\r";
+		echo '				<option value="at_0">'._AT('all_atutor_tests').'</option>'."\n\r";
+	
+		while ($row_at = mysql_fetch_assoc($result_at))
+		{
+			echo '			<option value="at_'.$row_at[test_id].'">'.$row_at[title].'</option>'."\n\r";
+		}
+		echo '			</optgroup>'."\n\r";
+	}
+
 	echo '		</select>'."\n\r";
 	echo '	</div>'."\n\r";
 
@@ -158,7 +239,7 @@ else
 </div>
 </form>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" name="form" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_external_test'); ?></legend>
 
@@ -168,14 +249,30 @@ else
 	</div>
 
 	<div class="row">
-		<label for="selected_grade_scale_id"><?php echo _AT('grade_scale'); ?></label><br />
-		<?php print_grade_scale_selectbox($_POST["selected_grade_scale_id"]); ?>
+		<label for="selected_grade_scale_id1"><?php echo _AT('grade_scale'); ?></label><br />
+		<?php print_grade_scale_selectbox($_POST["selected_grade_scale_id"], "selected_grade_scale_id1"); ?>
 	</div>
 
 	<div class="row">
-		<label for="due_date"><?php echo _AT('due_date'); ?>(YYYY-MM-DD)</label><br />
-		<input id='due_date' name='due_date' type='text' value='<?php echo $_POST[due_date]; ?>' />
-		<img src='images/calendar.gif' style="vertical-align: middle; cursor: pointer;" onclick="scwShow(scwID('due_date'),event);" />
+		<?php  echo _AT('due_date'); ?><br />
+		<input type="radio" name="has_due_date" value="false" id="noduedate" checked="checked"
+		onfocus="disable_dates (true, '_due');" />
+		<label for="noduedate" title="<?php echo _AT('due_date'). ': '. _AT('none');  ?>"><?php echo _AT('none'); ?></label><br />
+
+		<input type="radio" name="has_due_date" value="true" id="hasduedate" onfocus="disable_dates (false, '_due');" />
+		<label for="hasduedate"  title="<?php echo _AT('due_date') ?>"><?php  echo _AT('date'); ?></label>
+
+		<?php
+		$today = getdate();
+		$today_day		= $today['mday'];
+		$today_mon	= $today['mon'];
+		$today_year	= $today['year'];
+		$today_hour	= '12';
+		$today_min	= '0';
+	
+		$name = '_due';
+		require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+		?>
 	</div>
 
 	<div class="row buttons">
@@ -187,5 +284,15 @@ else
 
 </div>
 </form>
+
+<script language="javascript" type="text/javascript">
+function disable_dates (state, name) {
+	document.form['day' + name].disabled=state;
+	document.form['month' + name].disabled=state;
+	document.form['year' + name].disabled=state;
+	document.form['hour' + name].disabled=state;
+	document.form['min' + name].disabled=state;
+}
+</script>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>

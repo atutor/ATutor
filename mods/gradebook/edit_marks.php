@@ -35,7 +35,7 @@ else if (isset($_GET['save']))
 			$result	= mysql_query($sql, $db) or die(mysql_error());
 			$row = mysql_fetch_assoc($result);
 
-			$sql = "UPDATE ".TABLE_PREFIX."gradebook_detail SET grade='".get_mark_by_grade($row["grade_scale_id"], $value)."' WHERE gradebook_test_id = ". $matches[1]." AND member_id=". $matches[2];
+			$sql = "REPLACE ".TABLE_PREFIX."gradebook_detail SET gradebook_test_id = ". $matches[1].", member_id=". $matches[2].", grade='".get_mark_by_grade($row["grade_scale_id"], $value)."'";
 			$result	= mysql_query($sql, $db) or die(mysql_error());
 		}
 	}
@@ -66,24 +66,41 @@ $all_tests = array();
 $all_students = array();
 
 // generate test array
-$sql = "(SELECT g.gradebook_test_id, t.test_id, t.title, 1 is_atutor_test from ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t WHERE g.test_id = t.test_id AND t.course_id=".$_SESSION["course_id"]." ORDER BY t.title) UNION (SELECT gradebook_test_id, test_id, title, 0 is_atutor_test FROM ".TABLE_PREFIX."gradebook_tests WHERE course_id=".$_SESSION["course_id"]." ORDER BY title)";
+$sql = "(SELECT g.gradebook_test_id, g.id, g.type, t.title".
+				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t".
+				" WHERE g.type='ATutor Test'".
+				" AND g.id = t.test_id".
+				" AND t.course_id=".$_SESSION["course_id"]." ORDER BY title)".
+				" UNION (SELECT g.gradebook_test_id, g.id, g.type, a.title".
+				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."assignments a".
+				" WHERE g.type='ATutor Assignment'".
+				" AND g.id = a.assignment_id".
+				" AND a.course_id=".$_SESSION["course_id"]." ORDER BY title)".
+				" UNION (SELECT gradebook_test_id, id, type, title".
+				" FROM ".TABLE_PREFIX."gradebook_tests".
+				" WHERE course_id=".$_SESSION["course_id"]." ORDER BY title)";
 $result	= mysql_query($sql, $db) or die(mysql_error());
+
 while ($row = mysql_fetch_assoc($result))
 {
 	$no_error = true;
 	
-	if($row["is_atutor_test"])
+	if($row["type"]=="ATutor Test")
 	{
-		$studs_take_num = get_studs_take_more_than_once($_SESSION["course_id"], $row["test_id"]);
+		$studs_take_num = get_studs_take_more_than_once($_SESSION["course_id"], $row["id"]);
 		
 		foreach ($studs_take_num as $student => $num)
 		{
-				if ($no_error) $no_error = false;
+			if ($no_error) $no_error = false;
+			$error_msg .= $student . ": " . $num . " times<br>";
+		}
 				
-				$f = array('ADD_TEST_INTO_GRADEBOOK',
-								$row['title'], 
-								$student . ": " . $num . " times");
-				$msg->addFeedback($f);
+		if (!$no_error)
+		{
+			$f = array('ADD_TEST_INTO_GRADEBOOK',
+							$row['title'], 
+							$error_msg);
+			$msg->addFeedback($f);
 		}
 	}
 	
@@ -91,7 +108,7 @@ while ($row = mysql_fetch_assoc($result))
 }
 
 // generate students array
-$sql_students = "SELECT m.first_name, m.last_name, e.member_id FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e WHERE m.member_id = e.member_id AND e.course_id=".$_SESSION["course_id"]." AND e.approved='y' AND e.role<>'Instructor'";
+$sql_students = "SELECT m.first_name, m.last_name, e.member_id FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e WHERE m.member_id = e.member_id AND e.course_id=".$_SESSION["course_id"]." AND e.approved='y' AND e.role!='Instructor'";
 if ($order_col == "name")
 {
 	$sql_students .= " ORDER BY m.first_name ".$order.",m.last_name ".$order;
@@ -108,7 +125,7 @@ $selected_students = array();
 $grades = array();
 
 // generate test array
-if ($_GET["filter"] && $_GET["gradebook_test_id"]<>0)
+if (($_GET["filter"] || $_GET["download"]) && $_GET["gradebook_test_id"]<>0)
 {
 	foreach ($all_tests as $test)
 	{
@@ -116,7 +133,7 @@ if ($_GET["filter"] && $_GET["gradebook_test_id"]<>0)
 		{
 			$selected_tests[0]["gradebook_test_id"] = $test["gradebook_test_id"];
 			$selected_tests[0]["title"] = $test["title"];
-			$selected_tests[0]["is_atutor_test"] = $test["is_atutor_test"];
+			$selected_tests[0]["type"] = $test["type"];
 		}
 	}
 }
@@ -124,7 +141,7 @@ else
 	$selected_tests = $all_tests;
 
 // generate students array
-if ($_GET["filter"] && $_GET["member_id"]<>0)
+if (($_GET["filter"] || $_GET["download"]) && $_GET["member_id"]<>0)
 {
 	foreach ($all_students as $student)
 	{
@@ -166,6 +183,7 @@ if ((isset($_GET["asc"]) || isset($_GET["desc"])) && $order_col <> "name")
 	eval($sort);
 }
 // end of initialization
+
 $num_students = count($selected_students);
 $results_per_page = 50;
 $num_pages = max(ceil($num_students / $results_per_page), 1);
@@ -176,6 +194,127 @@ if (!$page) {
 }	
 $count  = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
+
+// generate table & csv head
+$table_head = "<thead>\n\r";
+$table_head .= "<tr>\n\r";
+
+if ($_GET[filter] <> "")
+	$query_str = '&amp;filter='.$_GET[filter];
+
+if ($_GET[member_id] <> "")
+	$query_str .= '&amp;member_id='.$_GET[member_id];
+
+if ($_GET[gradebook_test_id] <> "")
+	$query_str .= '&amp;gradebook_test_id='.$_GET[gradebook_test_id];
+
+$table_head .= "	<th scope='col'><a href='". $_SERVER['PHP_SELF'] .'?'.$orders[$order].'=name'.$query_str."'>". _AT('name')."</a></th>\n\r";
+
+$csv_content = _AT('name');
+
+foreach ($selected_tests as $selected_test)
+{
+	$table_head .= "	<th scope='col'><a href='". $_SERVER['PHP_SELF'] ."?".$orders[$order]."=".$selected_test[gradebook_test_id].$query_str."'>". $selected_test[title]."</a></th>\n\r";
+	$csv_content .= ",".$selected_test[title];
+}
+$table_head .= "	<th scope='col'></th>\n\r";
+$table_head .= "</tr>\n\r";
+
+$csv_content .= "\n";
+
+$table_head .= "<tr>\n\r";
+$table_head .= "	<td></td>\n\r";
+
+$has_edit_button = false;
+foreach ($selected_tests as $selected_test)
+{
+	if ($selected_test["type"] == "External" || $selected_test["type"] == "ATutor Assignment")
+	{
+		$has_edit_button = true;
+		$table_head .= "	<td style='text-align:center'><a href='". $_SERVER['PHP_SELF']. '?edit=c_'.$selected_test['gradebook_test_id'].$query_str."'>". _AT("edit")."</a></td>\n\r";
+	}
+	else
+	{
+		$table_head .= "	<td></td>\n\r";
+	}
+}
+if ($has_edit_button) $table_head .= "	<td></td>";
+$table_head .= "</tr>\n\r";
+$table_head .= "</thead>\n\r";
+
+// generate table & csv content
+if ($num_students > 0)
+{
+	$table_content = "	<tbody>\n\r";
+	if ($offset + $results_per_page > $num_students) $end_pos = $num_students;
+	else $end_pos = $offset + $results_per_page;
+	
+	$tabindex_input = 1;
+	$tabindex_edit = 2;
+	
+	for ($i=$offset; $i < $end_pos; $i++)
+	{
+		$table_content .= "		<tr>\n\r";
+		$table_content .= "			<td>".$selected_students[$i]["first_name"]." " . $selected_students[$i]["last_name"]."</td>\n\r";
+
+		$csv_content .= $selected_students[$i]["first_name"]." " . $selected_students[$i]["last_name"];
+
+		foreach ($selected_tests as $selected_test)
+		{
+			$sql = "SELECT grade FROM ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id=".$selected_test["gradebook_test_id"]." AND member_id=".$selected_students[$i]["member_id"];
+			$result = mysql_query($sql, $db) or die(mysql_error());
+			$row = mysql_fetch_assoc($result);
+			
+			if ($_GET["edit"]=="c_".$selected_test["gradebook_test_id"] || $_GET["edit"]=="r_".$selected_students[$i]["member_id"] && ($selected_test["type"]=="External" || $selected_test["type"]=="ATutor Assignment"))
+			{
+				$table_content .= "			<td><input type='text' name='grade_".$selected_test["gradebook_test_id"]."_".$selected_students[$i]["member_id"]."' value='".$row["grade"]."' tabindex='".$tabindex_input."' /></td>\n\r";
+				$csv_content .= ",".$row["grade"];
+			}
+			else
+			{
+				if ($row["grade"]=="")
+				{
+					$table_content .= "			<td style='text-align:center'>"._AT("na")."</td>\n\r";
+					$csv_content .= ",". _AT("na");
+				}
+				else
+				{
+					$table_content .= "			<td style='text-align:center'>".$row["grade"]."</td>\n\r";
+					$csv_content .= ",".$row["grade"];
+				}
+			}
+		}
+		
+		if ($has_edit_button)
+			$table_content .= "			<td style='text-align:center'><a href=\"". $_SERVER['PHP_SELF']. "?edit=r_".$selected_students[$i]['member_id'].$query_str."\" tabindex='".$tabindex_edit."'>". _AT("edit") ."</a></td>\n\r";
+
+		$table_content .= "		</tr>\n\r";
+		$csv_content .= "\n";
+	}
+	
+	$table_content .= "	</tbody>\n\r";
+}
+
+// download csv file
+if ($_GET['download'])
+{
+	if ($num_students == 0)
+	{
+		require (AT_INCLUDE_PATH.'header.inc.php');
+		$msg->printErrors('ITEM_NOT_FOUND');
+		require (AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+
+	header('Content-Type: application/x-excel');
+	header('Content-Disposition: inline; filename="grades.csv"');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	
+	echo $csv_content;
+	exit;
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -191,11 +330,11 @@ if (count($selected_tests)==0)
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
 	
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
 		<div class="row">
 		<label for="select_gid"><?php echo _AT("name") ?></label><br />
 			<select name="gradebook_test_id" id="select_gid">
 				<option value="0"><?php echo _AT('all') ?></option>
-				<option value="-1"></option>
 <?php
 	foreach($all_tests as $test)
 	{
@@ -213,7 +352,6 @@ if (count($selected_tests)==0)
 			<label for="select_mid"><?php echo _AT("students") ?></label><br />
 			<select name="member_id" id="select_mid">
 				<option value="0"><?php echo _AT('all') ?></option>
-				<option value="-1"></option>
 <?php
 	foreach($all_students as $student)
 	{
@@ -229,56 +367,26 @@ if (count($selected_tests)==0)
 		<div class="row buttons">
 			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+			<input type="submit" name="download" value="<?php echo _AT('download_test_csv'); ?>" />
 		</div>
+	</fieldset>
 	</div>
+
 </form>
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="filter" value="<?php echo $_GET[filter]?>">
-<input type="hidden" name="gradebook_test_id" value="<?php echo $_GET[gradebook_test_id]?>">
-<input type="hidden" name="member_id" value="<?php echo $_GET[member_id]?>">
+<input type="hidden" name="filter" value="<?php echo $_GET[filter]?>" />
+<input type="hidden" name="gradebook_test_id" value="<?php echo $_GET[gradebook_test_id]?>" />
+<input type="hidden" name="member_id" value="<?php echo $_GET[member_id]?>" />
 
 
 <?php print_paginator($page, $num_students, $sql_students, $results_per_page); ?>
 
-<table summary="" class="data" rules="rows">
+<table summary="" class="data" rules="all">
 
-<thead>
-<tr>
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] .'?'.$orders[$order].'=name&filter='.$_GET[filter].'&member_id='.$_GET[member_id].'&gradebook_test_id='.$_GET[gradebook_test_id]; ?>"><?php echo _AT('name'); ?></a></th>
 <?php 
-foreach ($selected_tests as $selected_test)
-{
+echo $table_head;
 ?>
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF'] .'?'.$orders[$order].'='.$selected_test[gradebook_test_id].'&filter='.$_GET[filter].'&member_id='.$_GET[member_id].'&gradebook_test_id='.$_GET[gradebook_test_id]; ?>"><?php echo $selected_test[title]; ?></a></th>
-<?php 
-}
-?>
-	<th scope="col"></th>
-</tr>
-
-<tr>
-	<td></td>
-<?php 
-$has_edit_button = false;
-foreach ($selected_tests as $selected_test)
-{
-	if (!$selected_test["is_atutor_test"])
-	{
-		$has_edit_button = true;
-?>
-	<td style="text-align:center"><a href="<?php echo $_SERVER['PHP_SELF']. '?edit=c_'.$selected_test['gradebook_test_id'].'&filter='.$_GET["filter"].'&member_id='.$_GET["member_id"].'&gradebook_test_id='.$_GET["gradebook_test_id"]; ?>"><?php echo _AT("edit"); ?></a></td>
-<?php 
-	}
-	else
-	{
-		echo "	<td></td>";
-	}
-}
-if ($has_edit_button) echo "	<td></td>";
-?>
-</tr>
-</thead>
 <tfoot>
 <tr>
 	<td colspan="<?php echo count($selected_tests)+2; ?>">
@@ -300,41 +408,7 @@ if ($num_students == 0)
 }
 else
 {
-	echo "	<tbody>\n\r";
-	if ($offset + $results_per_page > $num_students) $end_pos = $num_students;
-	else $end_pos = $offset + $results_per_page;
-	
-	$tabindex_input = 1;
-	$tabindex_edit = 2;
-	for ($i=$offset; $i < $end_pos; $i++)
-	{
-		echo "		<tr>\n\r";
-		echo "			<td>".$selected_students[$i]["first_name"]." " . $selected_students[$i]["last_name"]."</td>\n\r";
-
-		foreach ($selected_tests as $selected_test)
-		{
-			$sql = "SELECT grade FROM ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id=".$selected_test["gradebook_test_id"]." AND member_id=".$selected_students[$i]["member_id"];
-			$result = mysql_query($sql, $db) or die(mysql_error());
-			$row = mysql_fetch_assoc($result);
-			
-			if ($_GET["edit"]=="c_".$selected_test["gradebook_test_id"] || $_GET["edit"]=="r_".$selected_students[$i]["member_id"] && !$selected_test["is_atutor_test"])
-			{
-				echo "			<td><input type='text' name='grade_".$selected_test["gradebook_test_id"]."_".$selected_students[$i]["member_id"]."' value='".$row["grade"]."' tabindex='".$tabindex_input."'></td>\n\r";
-			}
-			else
-			{
-				if ($row["grade"]=="")
-					echo "			<td style='text-align:center'>"._AT("na")."</td>\n\r";
-				else
-					echo "			<td style='text-align:center'>".$row["grade"]."</td>\n\r";
-			}
-		}
-		
-		if ($has_edit_button)
-			echo "			<td style='text-align:center'><a href=\"". $_SERVER['PHP_SELF']. "?edit=r_".$selected_students[$i]['member_id'].'&filter='.$_GET["filter"].'&member_id='.$_GET["member_id"].'&gradebook_test_id='.$_GET["gradebook_test_id"]."\" tabindex='".$tabindex_edit."'>". _AT("edit") ."</a></td>\n\r";
-		echo "		</tr>\n\r";
-	}
-	echo "	</tbody>\n\r";
+	echo $table_content;
 }
 ?>
 </table>

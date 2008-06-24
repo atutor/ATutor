@@ -41,7 +41,21 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $_GET['gradebook_test_id'] = intval($_GET['gradebook_test_id']); 
 
-$sql = "SELECT g.*, t.title from ".TABLE_PREFIX."gradebook_tests g LEFT JOIN ".TABLE_PREFIX."tests t ON (g.test_id = t.test_id) WHERE g.gradebook_test_id = ".$_GET['gradebook_test_id'];
+$sql = "(SELECT g.gradebook_test_id, t.title".
+				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t".
+				" WHERE g.type='ATutor Test'".
+				" AND g.id = t.test_id".
+				" AND g.gradebook_test_id=".$_GET['gradebook_test_id'].")".
+				" UNION (SELECT g.gradebook_test_id, a.title".
+				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."assignments a".
+				" WHERE g.type='ATutor Assignment'".
+				" AND g.id = a.assignment_id".
+				" AND g.gradebook_test_id=".$_GET['gradebook_test_id'].")".
+				" UNION (SELECT gradebook_test_id, title ".
+				" FROM ".TABLE_PREFIX."gradebook_tests".
+				" WHERE type='External'".
+				" AND gradebook_test_id=".$_GET['gradebook_test_id'].")";
+				
 $result = mysql_query($sql,$db) or die(mysql_error());
 
 if (mysql_num_rows($result) == 0) {
@@ -49,13 +63,10 @@ if (mysql_num_rows($result) == 0) {
 } else {
 	$row = mysql_fetch_assoc($result);
 	
-	if ($row["test_id"]<>0) $title = $row["title"];
-	else $title = $row["title"];
-	
-	$hidden_vars['title']= $title;
+	$hidden_vars['title']= $row["title"];
 	$hidden_vars['gradebook_test_id']	= $row['gradebook_test_id'];
 
-	$confirm = array('DELETE_TEST_FROM_GRADEBOOK', $title);
+	$confirm = array('DELETE_TEST_FROM_GRADEBOOK', $row["title"]);
 	$msg->addConfirm($confirm, $hidden_vars);
 	
 	$msg->printConfirm();

@@ -58,12 +58,15 @@ $this->_pages['mods/gradebook/update_gradebook.php']['title_var'] = 'update_grad
 $this->_pages['mods/gradebook/update_gradebook.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
 $this->_pages['mods/gradebook/update_gradebook.php']['guide']     = 'instructor/?p=update_gradebook.php';
 
+$this->_pages['mods/gradebook/verify_tests.php']['title_var'] = 'update_list';
+$this->_pages['mods/gradebook/verify_tests.php']['parent']    = 'mods/gradebook/update_gradebook.php';
+
 $this->_pages['mods/gradebook/import_export_external_marks.php']['title_var'] = 'import_export_external_marks';
 $this->_pages['mods/gradebook/import_export_external_marks.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
 $this->_pages['mods/gradebook/import_export_external_marks.php']['guide']     = 'instructor/?p=import_export_external_marks.php';
 
 $this->_pages['mods/gradebook/verify_list.php']['title_var'] = 'update_list';
-$this->_pages['mods/gradebook/verify_list.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
+$this->_pages['mods/gradebook/verify_list.php']['parent']    = 'mods/gradebook/import_export_external_marks.php';
 
 $this->_pages['mods/gradebook/edit_marks.php']['title_var'] = 'edit_marks';
 $this->_pages['mods/gradebook/edit_marks.php']['parent']    = 'mods/gradebook/gradebook_tests.php';

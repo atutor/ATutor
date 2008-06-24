@@ -45,7 +45,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('name'); ?></th>
 	<th scope="col"><?php echo _AT('grade_scale'); ?></th>
-	<th scope="col"><?php echo _AT('is_atutor_test'); ?></th>
+	<th scope="col"><?php echo _AT('type'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -61,7 +61,20 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tbody>
 <?php
 
-$sql = "(SELECT g.gradebook_test_id, t.title, grade_scale_id, 'Yes' is_atutor_test from ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t WHERE g.test_id = t.test_id AND t.course_id=".$_SESSION["course_id"]." ORDER BY t.title) UNION (SELECT gradebook_test_id, title, grade_scale_id, 'No' is_atutor_test FROM ".TABLE_PREFIX."gradebook_tests WHERE course_id=".$_SESSION["course_id"]." ORDER BY title)";
+$sql = "(SELECT g.gradebook_test_id, type, t.title, grade_scale_id".
+				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t".
+				" WHERE g.type='ATutor Test'".
+				" AND g.id = t.test_id".
+				" AND t.course_id=".$_SESSION["course_id"].")".
+				" UNION (SELECT g.gradebook_test_id, g.type, a.title, grade_scale_id".
+				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."assignments a".
+				" WHERE g.type='ATutor Assignment'".
+				" AND g.id = a.assignment_id".
+				" AND a.course_id=".$_SESSION["course_id"].")".
+				" UNION (SELECT gradebook_test_id, type, title, grade_scale_id".
+				" FROM ".TABLE_PREFIX."gradebook_tests".
+				" WHERE course_id=".$_SESSION["course_id"].")".
+				" ORDER BY type, title";
 $result = mysql_query($sql, $db) or die(mysql_error());
 
 if (mysql_num_rows($result) == 0)
@@ -102,7 +115,7 @@ else
 			<td width="10"><input type="radio" name="gradebook_test_id" value="<?php echo $row["gradebook_test_id"]; ?>" id="m<?php echo $row["gradebook_test_id"]; ?>" <?php if ($row["gradebook_test_id"]==$_POST['gradebook_test_id']) echo 'checked'; ?> /></td>
 			<td><label for="m<?php echo $row["gradebook_test_id"]; ?>"><?php echo $row["title"]; ?></label></td>
 			<td><?php echo $scale_content[$row["grade_scale_id"]]; ?></td>
-			<td><?php echo $row["is_atutor_test"]; ?></td>
+			<td><?php echo $row["type"]; ?></td>
 		</tr>
 <?php 
 	}
