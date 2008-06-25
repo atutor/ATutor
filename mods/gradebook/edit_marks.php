@@ -328,7 +328,7 @@ if (count($selected_tests)==0)
 }
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<div class="input-form">
+	<div class="input-form" id="jump-area">
 	
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
 		<div class="row">
