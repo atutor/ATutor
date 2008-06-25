@@ -83,11 +83,11 @@ RewriteRule ^([^/]+)/([^/^.]+)/?$ go.php/$1/$2.php [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule ^([^/]+)/([^/^.]+)/([^/^.]+)/?$ go.php/$1/$2/$3.php [L]
+RewriteRule ^([^/]+)/(((mods|tools)/[^/^.]+)|([^/^.]+))/([^/^.]+)/?$ go.php/$1/$2/$6.php [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule ^([^/]+)/([^/^.]+)/([^/^.]+)/([^\.]+)$ go.php/$1/$2/$3.php/$4 [L]
+RewriteRule ^([^/]+)/(((mods|tools)/[^/^.]+)|([^/^.]+))/([^/^.]+)/([^\.]+)$ go.php/$1/$2/$6.php/$7 [L]
 
 #Default rule
 RewriteCond     %{REQUEST_FILENAME}     !-f
