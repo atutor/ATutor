@@ -15,6 +15,6 @@
 require('../common/body_header.inc.php'); ?>
 
 <h3>Gradebook</h3>
-<p>The Gradebook can be used to manage students' marks from ATutor generated tests, from ATutor assignments, or from external tests and assignments  Multiple Test can be combined into a signle Gradebook entry. Custom scales can be defined and used across courses. Gradebook data can be exported for reporting and data analysis.</p>
+<p>The Gradebook can be used to manage students' marks from ATutor generated tests, from ATutor assignments, or from external tests and assignments. Multiple Tests can be combined into a single Gradebook entry. Custom scales can be defined and used across courses. Gradebook data can be exported for reporting and data analysis.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
