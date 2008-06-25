@@ -119,7 +119,7 @@ CREATE TABLE `myown_patches_files` (
 # since 1.6.1
 
 INSERT INTO `modules`
-SELECT '_standard/patcher', 2, MAX(privilege)*2, MAX(admin_privilege)*2, 0, 0 FROM `modules`;
+SELECT '_standard/patcher', 2, 0, MAX(admin_privilege)*2, 0, 0 FROM `modules`;
 
 # --------------------------------------------------------
 # Support customized head
