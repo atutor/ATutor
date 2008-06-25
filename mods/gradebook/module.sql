@@ -75,7 +75,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','add_atutor_test','Add ATu
 INSERT INTO `language_text` VALUES ('en', '_template','add_external_test','Add External Assignments/Tests',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','all_atutor_tests','All Applicable ATutor Tests &amp; Surveys',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','all_atutor_assignments','All ATutor Assignments',NOW(),'gradebook');
-INSERT INTO `language_text` VALUES ('en', '_template','add_atutor_test_info','Note: In order to use gradebook, test property "Attempts Allowed" can only be 1. If "Grade Scale" is set to none, raw final score is to be used in gradebook.',NOW(),'gradebook');
+INSERT INTO `language_text` VALUES ('en', '_template','add_atutor_test_info','Select from the available test and assignment titles, then optionally choose a  "Grade Scale", to add a test or assignment to the gradebook. . If "Grade Scale" is set to none, the raw final score will be used in place of a grade scale. Only tests with the test property "Attempts Allowed" set to 1 can be added to the Gradebook. Create tests using the ATutor Tests & Surveys Manager',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','raw_final_score','Raw Final Score',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','update_gradebook','Update ATutor Marks',NOW(),'gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','import_export_external_marks','External Marks',NOW(),'gradebook');

@@ -191,7 +191,7 @@ if (mysql_num_rows($result_at) == 0 && mysql_num_rows($result_aa) == 0)
 else
 {
 	echo '	<div class="row">'."\n\r";
-	echo '		<label for="select_tid">'. _AT("name") .'</label><br />'."\n\r";
+	echo '		<label for="select_tid">'. _AT("title") .'</label><br />'."\n\r";
 	echo '		<select name="id" id="select_tid">'."\n\r";
 	
 	if (mysql_num_rows($result_aa) > 0)
