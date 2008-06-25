@@ -13,7 +13,8 @@
 // $Id: group_meeting.inc.php 7208 2008-01-09 16:07:24Z harrisw $
 
 if (empty($_SESSION['groups'])) {
-	echo '<div>'._AT('openmeetings_no_group_meetings').'</div>';
+	echo '<div class="openmeetings"><h5>'._AT('openmeetings_group_conference').'</h5>';
+	echo _AT('openmeetings_no_group_meetings').'</div>';
 } else {
 	echo '<div class="openmeetings"><h5>'._AT('openmeetings_group_conference').'</h5>';
 	$group_list = implode(',', $_SESSION['groups']);

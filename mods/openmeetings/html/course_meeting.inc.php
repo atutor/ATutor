@@ -15,7 +15,10 @@
 //Check if the room is open, if not.  Print error msg to user.
 if (!$om_obj->om_getRoom()):
 ?>
-	<div class="openmeetings"><?php echo _AT('openmeetings_no_course_meetings'); ?></div>
+	<div class="openmeetings">
+		<h5><?php echo _AT('openmeetings_course_conference'); ?></h5>
+		<?php echo _AT('openmeetings_no_course_meetings'); ?>
+	</div>
 
 <?php
 else:
