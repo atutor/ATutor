@@ -39,7 +39,7 @@ $this->_pages['mods/openmeetings/openmeetings_instructor.php']['parent']   = 'to
  * student page.
  */
 $this->_pages['mods/openmeetings/index.php']['title_var'] = 'openmeetings';
-//$this->_pages['mods/openmeetings/index.php']['img']       = 'mods/openmeetings/openmeetings_logo.jpg';
+$this->_pages['mods/openmeetings/index.php']['img']       = 'mods/openmeetings/openmeetings_logo.png';
 
 $this->_pages['mods/openmeetings/view_meetings.php']['title_var'] = 'openmeetings_view_meetings';
 $this->_pages['mods/openmeetings/view_meetings.php']['parent'] = 'mods/openmeetings/index.php';
