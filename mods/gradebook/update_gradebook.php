@@ -241,7 +241,9 @@ else
 	echo '		</select>'."\n\r";
 	echo '	</div>'."\n\r";
 
-	// list of atutor tests that can be combined. They can only be taken once and are not in gradebook
+	// list of atutor tests that can be combined. 
+	// These tests can only be taken once and are not in gradebook yet
+	// note: surveys are excluded by checking if question weights are defined
 	$sql_at = "SELECT * FROM ".TABLE_PREFIX."tests t".
 					" WHERE course_id=".$_SESSION["course_id"].
 					" AND num_takes = 1".
@@ -249,6 +251,10 @@ else
 													" FROM ".TABLE_PREFIX."gradebook_tests g".
 													" WHERE g.id = t.test_id".
 													" AND g.type='ATutor Test')".
+				" AND test_id IN (SELECT test_id FROM ".TABLE_PREFIX."tests_questions_assoc ".
+								" WHERE weight > 0 ".
+								" GROUP BY test_id ".
+								" HAVING count(*) > 1) ".
 					" ORDER BY title";
 	$result_at = mysql_query($sql_at, $db) or die(mysql_error());
 	
