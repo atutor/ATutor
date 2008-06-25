@@ -13,7 +13,7 @@
 // $Id: SOAP_openmeetings.php 7575 2008-06-02 18:17:14Z hwong $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 //require(AT_INCLUDE_PATH . 'classes/nusoap.php');
-require('lib/nusoap.php');
+require('nusoap.php');
 
 /**
 * SOAP_openmeetings
@@ -165,11 +165,11 @@ class SOAP_openmeetings {
 			  $parameters
 			);
 		if ($this->_soapClient->fault){
-			debug($result, 'fault');
-			return $result;
+//			debug($result, 'fault');
+			return false;
 		} elseif ($this->_soapClient->getError()){
-			debug($this->_soapClient->getError(), 'getError');
-			return $result;
+//			debug($this->_soapClient->getError(), 'getError');
+			return false;
 		}
 
 		// if (!PEAR::isError($result)) {

@@ -25,5 +25,9 @@ June 11, 08
 
 June 19, 08
 ------------
-- Allow users to retrieve the recordings.  
+- Allow users to retrieve the recordings.  [June 25, 08 - milestone for version 5.3]
 - Make the index page a bit more pretty.
+
+June 25, 08
+------------
+- Admin can now delete or create group meetings

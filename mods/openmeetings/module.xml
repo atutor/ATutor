@@ -12,7 +12,7 @@
     <license>GNU</license> 
 	<release> 
         <version>0.1</version> 
-        <date>2008-06-02</date> 
+        <date>2008-06-23</date> 
         <state>stable</state> 
 	<notes>Requires Openmeetings server be installed on the user's system.  </notes> 
     </release> 

@@ -1,7 +1,7 @@
 <?php
 define('AT_INCLUDE_PATH', '../../include/');
-include('SOAP_openmeetings.php');
-include('openmeetings.inc.php');
+include('lib/SOAP_openmeetings.php');
+require('lib/openmeetings.inc.php');
 //include('openmeetingsaudience_gateway.php');
 
 

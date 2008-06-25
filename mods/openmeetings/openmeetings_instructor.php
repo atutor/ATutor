@@ -2,8 +2,8 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_OPENMEETINGS);
-require ('openmeetings.class.php');
-require ('openmeetings.inc.php');
+require ('lib/openmeetings.class.php');
+require ('lib/openmeetings.inc.php');
 
 //local variables
 $course_id = $_SESSION['course_id'];
@@ -19,7 +19,7 @@ if (isset($_POST['submit']) && isset($_POST['room_id'])) {
 	//delete course
 	$_POST['room_id'] = intval($_POST['room_id']);
 	$om_obj->om_deleteRoom($_POST['room_id']);
-	$msg->addFeedback('OPENMEETINGS_DELETED_SUCEEDED');
+	$msg->addFeedback('OPENMEETINGS_DELETE_SUCEEDED');
 } elseif (isset($_POST['submit'])){
 	//mysql escape
 	$_POST['openmeetings_num_of_participants']	= intval($_POST['openmeetings_num_of_participants']);
@@ -47,7 +47,7 @@ if (isset($_POST['submit']) && isset($_POST['room_id'])) {
 	header('Location: index.php');
 	exit;
 } elseif (isset($_POST['cancel'])){
-	$msg->addFeedback('OPENMEETINGS_CANCELLED_SUCEEDED');
+	$msg->addFeedback('OPENMEETINGS_CANCELLED');
 	header('Location: index.php');
 	exit;
 } elseif (isset($_GET['action']) && $_GET['action'] == 'view'){

@@ -11,6 +11,9 @@ admin_authenticate(AT_ADMIN_PRIV_OPENMEETINGS);
 
 if (isset($_POST['submit'])) {
 	$_POST['om_uri'] = $addslashes(trim($_POST['om_uri']));
+	if (substr($_POST['om_uri'], -1, 1) == '/') {
+		$_POST['om_uri'] = substr($_POST['om_uri'], 0, -1);
+	}
 	$_POST['om_username'] = $addslashes(trim($_POST['om_username']));
 	$_POST['om_userpass'] = $addslashes(trim($_POST['om_userpass']));
 

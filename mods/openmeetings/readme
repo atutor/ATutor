@@ -2,14 +2,14 @@
 
 Be sure Openmeetings is installed and functioning properly before attempting to install this module. 
 
-Requires Openmeetings to be installed on this server:
+Requires Openmeetings to be installed on this server, installation guide can be found at:
 http://code.google.com/p/openmeetings/
 
 Installation
 1. Unzip the module into the ATutor mods/ directory.
 2. Login to ATutor as the administrator and run the ATutor administrator's Install Module tool. Select Openmeetings to install.
 3. Once installed, on the administrator modules screen, enabled to module.
-4. Open the administrator's Openmeetings screen and enter the URL to the Openmeetings installion you will be using.
+4. Open the administrator's Openmeetings screen and enter the URL, username and password to the Openmeetings installion you will be using.  The user account must have Admin-rights.
 
 This module has been tested on the following specifications:
 Openmeetings	0.5.1 (r1406)

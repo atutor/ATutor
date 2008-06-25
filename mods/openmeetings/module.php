@@ -43,14 +43,17 @@ $this->_pages['mods/openmeetings/index.php']['title_var'] = 'openmeetings';
 
 $this->_pages['mods/openmeetings/view_meetings.php']['title_var'] = 'openmeetings_view_meetings';
 $this->_pages['mods/openmeetings/view_meetings.php']['parent'] = 'mods/openmeetings/index.php';
-$this->_pages['mods/openmeetings/add_group_meetings.php']['title'] = 'openmeetings_grp_meetings';
+$this->_pages['mods/openmeetings/add_group_meetings.php']['title_var'] = 'openmeetings_grp_meetings';
 $this->_pages['mods/openmeetings/add_group_meetings.php']['parent'] = 'mods/openmeetings/index.php';
-
+$this->_pages['mods/openmeetings/openmeetings_delete.php']['title_var'] = 'openmeetings_delete';
+$this->_pages['mods/openmeetings/openmeetings_delete.php']['parent'] = 'mods/openmeetings/index.php';
+$this->_pages['mods/openmeetings/openmeetings_group.php']['title_var'] = 'openmeetings_grp_meetings';
+$this->_pages['mods/openmeetings/openmeetings_group.php']['parent'] = 'mods/openmeetings/index.php';
 
 /*******
  * Group functions
  */
 function openmeetings_get_group_url($group_id) {
-	return 'mods/openmeetings/index.php';
+	return 'mods/openmeetings/openmeetings_group.php?gid='.$group_id;
 }
 ?>

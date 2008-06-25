@@ -79,7 +79,7 @@ $_POST = loadDefaultValues($_POST);	//openmeetings.inc.php
 			<input type="text" name="openmeetings_wb_w" value="<?php echo $_POST['openmeetings_wb_w']; ?>" id="openmeetings_wb_w" size="20" />
 		</div>
 		<div class="row">
-			<p><label for="openmeetings_vid_h"><?php echo _AT('openmeetings_vid_h'); ?></label></p>	
+			<p><label for="openmeetings_wb_h"><?php echo _AT('openmeetings_wb_h'); ?></label></p>	
 			<input type="text" name="openmeetings_wb_h" value="<?php echo $_POST['openmeetings_wb_h']; ?>" id="openmeetings_wb_h" size="20" />
 		</div>
 
@@ -102,7 +102,7 @@ $_POST = loadDefaultValues($_POST);	//openmeetings.inc.php
 		</div>
 
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('openmeetings_start'); ?>"  />
+			<input type="submit" name="submit" value="<?php echo _AT('create'); ?>"  />
 		</div>
 	</div>
 </form>
