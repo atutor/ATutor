@@ -164,7 +164,7 @@ function print_search_pages($result) {
 
 			echo '<a href="bounce.php?course='.$items['course_id'].SEP.'p='.urlencode('content.php?cid='.$items['content_id'].SEP.'words='.$_GET['words']).'">'.$items['title'].'</a> ';
 		} else {
-			echo '<a href="content.php?cid='.$items['content_id'].SEP.'words='.$_GET['words'].'">'.$items['title'].'</a> ';
+			echo '<a href="'.url_rewrite('content.php?cid='.$items['content_id'].SEP.'words='.$_GET['words']).'">'.$items['title'].'</a> ';
 		}
 		echo '</h5>'."\n";
 

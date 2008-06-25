@@ -54,6 +54,10 @@ RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule (.*)/tests_surveys/([0-9]+)/?$ go.php/$1/tools/test_intro.php/tid/$2/ [L]
 
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/tests_surveys/([0-9]+)/(begin|cancel)/?$ go.php/$1/tools/test_intro.php/tid/$2/action/$3/ [L]
+
 #Glossary
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
@@ -63,14 +67,27 @@ RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule (.*)/glossary/(.*)/?$ go.php/$1/glossary/index.php/p/$2/ [L]
 
-#Handles the removal of .php
+#Handles the removal of index.php
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule ^([^/]*)/([^/^.]*)/([^/^.]*)/?$ go.php/$1/$2/$3.php [L]
+RewriteRule ^([^/^.]+)/?$ go.php/$1/index.php [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule ^([^/]*)/([^/^.]*)/([^/^.]*)/([^\.]*)$ go.php/$1/$2/$3.php/$4 [L]
+RewriteRule ^([^/^.]+)/(([^/^.]+)|((mods|tools)/([^/^.]+)))/$ go.php/$1/$2/index.php [L]
+
+#Handles the removal of .php
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/([^/^.]+)/?$ go.php/$1/$2.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/([^/^.]+)/([^/^.]+)/?$ go.php/$1/$2/$3.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/([^/^.]+)/([^/^.]+)/([^\.]+)$ go.php/$1/$2/$3.php/$4 [L]
 
 #Default rule
 RewriteCond     %{REQUEST_FILENAME}     !-f

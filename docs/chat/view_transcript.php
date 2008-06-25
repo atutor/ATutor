@@ -15,7 +15,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_GET['back'])) {
-	header('Location:index.php');
+	header('Location: '.url_rewrite('chat/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 

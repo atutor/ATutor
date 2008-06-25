@@ -129,18 +129,18 @@ class UrlRewrite  {
 
 		//do not change query if pretty url is disabled
 		if ($_config['pretty_url'] == 0){
-			return $query;
-		}
-
-		$pretty_url = '';		//init url
-		$query_parts = explode(SEP, $query);
-		foreach ($query_parts as $index=>$attributes){
-			if(empty($attributes)){
-				//skip the ones that are empty.
-				continue;
+			$pretty_url = $query;
+		} else {
+			$pretty_url = '';		//init url
+			$query_parts = explode(SEP, $query);
+			foreach ($query_parts as $index=>$attributes){
+				if(empty($attributes)){
+					//skip the ones that are empty.
+					continue;
+				}
+				list($key, $value) = preg_split('/\=/', $attributes, 2);
+				$pretty_url .= $key . '/' . $value .'/';
 			}
-			list($key, $value) = preg_split('/\=/', $attributes, 2);
-			$pretty_url .= $key . '/' . $value .'/';
 		}
 
 		//finally, append bookmark if not emptied
@@ -225,8 +225,12 @@ class UrlRewrite  {
 				$pretty_url = $course_id.'/';
 			}
 			//take out '.php' if any exists.
-			if ($_config['apache_mod_rewrite'] > 0 && $end != ''){
-				$pretty_url .= preg_replace('/\.php/', '', $front);
+			if ($_config['apache_mod_rewrite'] > 0){
+				if ($end=='' && preg_match('/index\.php$/', $front)==1){
+					$pretty_url .= preg_replace('/index.php/', '', $front);
+				} else {
+					$pretty_url .= preg_replace('/\.php/', '', $front);
+				}
 			} else {
 				$pretty_url .= $front;
 			}
@@ -240,8 +244,13 @@ class UrlRewrite  {
 				if (preg_match('/forum\/(index|view|list)\.php/', $front)==1) {
 					$pretty_url = $course_id.'/forum';
 					$obj =& new ForumsUrl();
-				} elseif (preg_match('/content\.php/', $front)==1){
+				} elseif (preg_match('/(content\.php)(\/cid(\/\d+))?/', $front, $matches)==1){
 					$pretty_url = $course_id.'/content';
+					//if there are other pretty url queries at the back, append it
+					//Note: this is to fix the hopping content problem between diff courses
+					if ($matches[3] != ''){
+						$pretty_url .= $matches[3];
+					}
 					$obj =& new ContentUrl();
 				} elseif (preg_match('/file_storage\/((index|revisions|comments)\.php)?/', $front, $matches)==1){
 					$pretty_url = $course_id.'/file_storage';

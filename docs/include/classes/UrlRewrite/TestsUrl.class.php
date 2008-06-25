@@ -25,7 +25,7 @@ class TestsUrl {
 
 	// constructor
 	function TestsUrl() {
-		$this->rule = array(0=>'tid');
+		$this->rule = array(0=>'tid', 1=>'action');
 	}
 
 

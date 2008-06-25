@@ -57,7 +57,7 @@ foreach ($_current_modules as $module) {
 	}
 }
 
-echo '<br /><img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" /> <a href="search.php">'._AT('search').'</a><br />';
+echo '<br /><img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" /> <a href="'.url_rewrite('search.php').'">'._AT('search').'</a><br />';
 echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" /> <a href="help/">'._AT('help').'</a><br />';
 echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" /> '._AT('content').'<br />';
 

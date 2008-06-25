@@ -38,7 +38,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			}
 
 			echo '<tr>';
-			echo '<td><a href='.AT_BASE_HREF.'content.php?cid='.$row['content_id']. '>' . $contentManager->_menu_info[$row['content_id']]['title'] . '</a></td>';
+			echo '<td><a href='.AT_BASE_HREF.url_rewrite('content.php?cid='.$row['content_id']). '>' . $contentManager->_menu_info[$row['content_id']]['title'] . '</a></td>';
 			echo '<td>' . $row['total_hits'] . '</td>';
 			echo '<td>' . $row['total_duration'] . '</td>';
 			if ($row['last_accessed'] == '') {

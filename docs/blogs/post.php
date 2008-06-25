@@ -51,7 +51,7 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
-		header('Location: '.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id));
+		header('Location: '.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id, AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }

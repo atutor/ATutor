@@ -336,6 +336,15 @@ if (!isset($_POST['submit'])) {
 			obj_n.checked = "checked";
 		}
 	}
+
+	//Validate apache_mod data
+	var pu_n = document.getElementById('pu_n');
+	var obj_y = document.getElementById('mr_y');
+	var obj_n = document.getElementById('mr_n');
+	if (pu_n.checked == true){
+		obj_y.disabled = "disabled";
+		obj_n.checked = "checked";
+	}
 </script>
 
 

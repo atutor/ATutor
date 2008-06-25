@@ -36,11 +36,11 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 }
 
 // checks one/all questions per page, and forward user to the correct one
-if (isset($_GET['cancel'])) {
+if (isset($_GET['action']) && $_GET['action']=='cancel') {
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
-} else if (isset($_GET['submit'])) {
+} else if (isset($_GET['action']) && $_GET['action']=='begin') {
 	if ($test_row['display']) {
 		header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid, AT_PRETTY_URL_IS_HEADER));
 	} else {
@@ -123,8 +123,8 @@ if (!$test_row['random']) {
 	<?php endif; ?>
 
 	<div>
-		<a href="<?php echo $_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'submit='._AT('start_test');?>" class="button" style="padding: 5px;"><?php echo _AT('start_test');?></a>
-		<a href="<?php echo $_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'cancel='._AT('cancel');?>" class="button" style="padding: 5px;"><?php echo _AT('cancel');?></a>
+		<a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'action=begin'); ?>" class="button" style="padding: 5px;"><?php echo _AT('start_test');?></a>
+		<a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'action=cancel'); ?>" class="button" style="padding: 5px;"><?php echo _AT('cancel');?></a>
 	</div>
 
 	</div>

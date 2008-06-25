@@ -785,12 +785,12 @@ function validate_length($input, $len, $forDisplay=0){
  * If pretty URL within admin config is switched on.  We will apply pretty URL 
  * to all the links in ATutor.  This function will authenticate itself towards the current pages.
  * In our definition, admins, login, registration pages shouldn't have pretty url applied.  However,
- * if one want to use url_rewrite on these pages, please force it by using the second parameter.  
- * Note: If system config turned off this feature, force will have no effect.
+ * if one want to use url_rewrite on these pages, please force it by using the third parameter.  
+ * Note: If system config has turned off this feature, $force will have no effect.
  * @param	string	the Url should be a relative link, have to improve this later on, to check if 
  *					it's a relative link, if not, truncate it.
  * @param	boolean	Available values are AT_PRETTY_URL_IS_HEADER, AT_PRETTY_URL_NOT_HEADER(default)
- *			use AT_PRETTY_URL_IS_HEADER if url_rewrite is used on php header('Location:..'), absolute path is needed for this.
+ *			use AT_PRETTY_URL_IS_HEADER if url_rewrite is used in php header('Location:..'), absolute path is needed for this.
  * @param	boolean	true to force the url_rewrite, false otheriwse.  False is the default.
  * @author	Harris Wong
  */
