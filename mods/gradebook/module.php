@@ -41,12 +41,12 @@ $_group_tool = $_student_tool = 'mods/gradebook/my_gradebook.php';
  */
 $this->_pages['mods/gradebook/gradebook_tests.php']['title_var'] = 'gradebook';
 $this->_pages['mods/gradebook/gradebook_tests.php']['parent']    = 'tools/index.php';
-$this->_pages['mods/gradebook/gradebook_tests.php']['guide']     = 'instructor/?p=grade_scale.php';
+$this->_pages['mods/gradebook/gradebook_tests.php']['guide']     = 'instructor/?p=gradebook.php';
 $this->_pages['mods/gradebook/gradebook_tests.php']['children']  = array('mods/gradebook/gradebook_add_tests.php', 'mods/gradebook/update_gradebook.php', 'mods/gradebook/import_export_external_marks.php', 'mods/gradebook/edit_marks.php', 'mods/gradebook/grade_scale.php');
 
 $this->_pages['mods/gradebook/gradebook_add_tests.php']['title_var'] = 'add_tests';
 $this->_pages['mods/gradebook/gradebook_add_tests.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
-$this->_pages['mods/gradebook/gradebook_add_tests.php']['guide']     = 'instructor/?p=gradebook_add_tests.php';
+$this->_pages['mods/gradebook/gradebook_add_tests.php']['guide']     = 'instructor/?p=gradebook_add.php';
 
 $this->_pages['mods/gradebook/gradebook_edit_tests.php']['title_var'] = 'edit_tests';
 $this->_pages['mods/gradebook/gradebook_edit_tests.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
@@ -56,29 +56,30 @@ $this->_pages['mods/gradebook/gradebook_delete_tests.php']['parent']    = 'mods/
 
 $this->_pages['mods/gradebook/update_gradebook.php']['title_var'] = 'update_gradebook';
 $this->_pages['mods/gradebook/update_gradebook.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
-$this->_pages['mods/gradebook/update_gradebook.php']['guide']     = 'instructor/?p=update_gradebook.php';
+$this->_pages['mods/gradebook/update_gradebook.php']['guide']     = 'instructor/?p=gradebook_update.php';
 
 $this->_pages['mods/gradebook/verify_tests.php']['title_var'] = 'update_list';
 $this->_pages['mods/gradebook/verify_tests.php']['parent']    = 'mods/gradebook/update_gradebook.php';
 
 $this->_pages['mods/gradebook/import_export_external_marks.php']['title_var'] = 'import_export_external_marks';
 $this->_pages['mods/gradebook/import_export_external_marks.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
-$this->_pages['mods/gradebook/import_export_external_marks.php']['guide']     = 'instructor/?p=import_export_external_marks.php';
+$this->_pages['mods/gradebook/import_export_external_marks.php']['guide']     = 'instructor/?p=gradebook_external_marks.php';
 
 $this->_pages['mods/gradebook/verify_list.php']['title_var'] = 'update_list';
 $this->_pages['mods/gradebook/verify_list.php']['parent']    = 'mods/gradebook/import_export_external_marks.php';
 
 $this->_pages['mods/gradebook/edit_marks.php']['title_var'] = 'edit_marks';
 $this->_pages['mods/gradebook/edit_marks.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
+$this->_pages['mods/gradebook/edit_marks.php']['guide']     = 'instructor/?p=gradebook_edit_marks.php';
 
 $this->_pages['mods/gradebook/grade_scale.php']['title_var'] = 'grade_scale';
 $this->_pages['mods/gradebook/grade_scale.php']['parent']    = 'mods/gradebook/gradebook_tests.php';
-$this->_pages['mods/gradebook/grade_scale.php']['guide']     = 'instructor/?p=grade_scale.php';
+$this->_pages['mods/gradebook/grade_scale.php']['guide']     = 'instructor/?p=gradebook_scales.php';
 $this->_pages['mods/gradebook/grade_scale.php']['children']  = array('mods/gradebook/grade_scale_add.php');
 
 $this->_pages['mods/gradebook/grade_scale_add.php']['title_var'] = 'add_grade_scale';
 $this->_pages['mods/gradebook/grade_scale_add.php']['parent']    = 'mods/gradebook/grade_scale.php';
-$this->_pages['mods/gradebook/grade_scale_add.php']['guide']     = 'instructor/?p=grade_scale_add.php';
+$this->_pages['mods/gradebook/grade_scale_add.php']['guide']     = 'instructor/?p=gradebook_scales.php';
 
 $this->_pages['mods/gradebook/grade_scale_edit.php']['title_var'] = 'edit_grade_scale';
 $this->_pages['mods/gradebook/grade_scale_edit.php']['parent']    = 'mods/gradebook/grade_scale.php';
