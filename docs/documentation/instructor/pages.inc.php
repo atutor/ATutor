@@ -55,4 +55,12 @@
     $_pages['faq.php']							 = 'Frequently Asked Questions';
     $_pages['feeds.php']						 = 'Syndicated Feeds';
     $_pages['web_search.php']					 = 'Web Search';
+    $_pages['gradebook.php']					 = 'Gradebook';
+    $_pages['gradebook_add.php']					 = 'Add to Gradebook';
+    $_pages['gradebook_update.php']					 = 'Update Grades';
+    $_pages['gradebook_external_marks.php']					 = 'External Marks';
+    $_pages['gradebook_edit_marks.php']					 = 'Edit Marks';
+    $_pages['gradebook_scales.php']					 = 'Grade Scales';
+    $_pages['gradebook_add_scales.php']					 = 'Add Grade Scale';
+
 ?>

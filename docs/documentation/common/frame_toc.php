@@ -176,6 +176,13 @@ if ($section == 'admin'){
 											'test_statistics.php'
 											),
 			'feeds.php',
+			'gradebook.php' => array(
+							'gradebook_add.php',	
+							'gradebook_update.php',	
+							'gradebook_external_marks.php',	
+							'gradebook_edit_marks.php',	
+							'gradebook_scales.php' => array('gradebok_add_scales.php'),	
+							),
 			'web_search.php',
 			);
 	hb_print_toc($pages, 'instructor');
