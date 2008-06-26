@@ -46,7 +46,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_delete','Delet
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_confirm_delete','Are you sure you want to delete this conference room?  All the associated chats and files will be deleted.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_roomtype','Room Mode',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_conference','Conference Mode',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_confirm_audience','Audience Mode',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_audience','Audience Mode',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_OPENMEETINGS_URL_ADD_SAVED','Openmeetings configuration options were successfully saved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_OPENMEETINGS_CANCELLED','Successfully cancelled without saving any changes.',NOW(),'');
