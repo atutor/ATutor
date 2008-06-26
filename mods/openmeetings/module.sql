@@ -26,7 +26,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_grp_meetings',
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_existing_room','You already have started a <a href="%s">room</a>, would you like to close the current one and start a new one?',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_deleting_warning','(Note, once the room is closed, <strong>all chat logs and associated room materials will be deleted</strong>.)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_no_course_meetings','There is no course meeting at the moment.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_no_group_meetings','There is no meeting at the moment.  You have to be assigned to a group in order to start a group meeting.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_no_group_meetings','There is no group meeting at the moment.  You have to be assigned to a group in order to start a group meeting.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_course_conference','Course conference:',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_group_conference','Group conference(s):',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_num_of_participants','Number of participants',NOW(),'');
