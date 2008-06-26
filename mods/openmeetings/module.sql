@@ -50,6 +50,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_OPENMEETINGS_CANC
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_OPENMEETINGS_DELETE_SUCEEDED','The room has been successfully deleted.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_OPENMEETINGS_ADDED_SUCEEDED','The room has been added successfully.',NOW(),'');
 
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_OPENMEETINGS_NOT_SETUP','Openmeetings has not been setup yet, please contact your administrator.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_OPENMEETINGS_ADD_FAILED','The room cannot be created.  You must be belong to this group or you must have the permission to create a room.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_OPENMEETINGS_DELETE_FAILED','An error has occured while deleting the room, please contact the administrator.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_OPENMEETINGS_URL_ADD_EMPTY','You must enter a URL to the location of your Openmeetings installation.',NOW(),'');

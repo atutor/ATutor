@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Harris Wong								*/
+/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li, Harris Wong		*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -12,7 +12,6 @@
 /************************************************************************/
 // $Id: openmeetings.inc.php 7575 2008-06-04 18:17:14Z hwong $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
 
 /**
  * Check against the array, if the value within is empty, replace each with the
@@ -44,4 +43,18 @@ function loadDefaultValues($post){
 	return $post;
 }
 
+
+/**
+ * Check if openmeeting is being setup correctly.
+ * @param	int	the course id
+ */
+function checkAccess($course_id){
+	global $_config, $msg;
+	if (!isset($_config['openmeetings_username']) || !isset($_config['openmeetings_userpass'])){
+		include(AT_INCLUDE_PATH.'header.inc.php');
+		$msg->addError('OPENMEETINGS_NOT_SETUP');
+		include(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+}
 ?>

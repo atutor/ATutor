@@ -19,8 +19,7 @@ if (empty($_SESSION['groups'])) {
 	echo '<div class="openmeetings"><h5>'._AT('openmeetings_group_conference').'</h5>';
 	$group_list = implode(',', $_SESSION['groups']);
 	$sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE group_id IN ($group_list) ORDER BY title";
-//	debug($sql);
-	//TODO: Check group permission from group table.
+
 	$result = mysql_query($sql, $db);
 
 	echo '<ul>';
@@ -34,7 +33,6 @@ if (empty($_SESSION['groups'])) {
 			echo '<li>'.$row['title'].' <a href="mods/openmeetings/view_meetings.php?room_id='.$room_id.SEP.'sid='.$om_obj->getSid().'"> Room-id: '.$room_id.'</a>';
 			if ($om_obj->isMine($room_id) || authenticate(AT_PRIV_OPENMEETINGS, true)) {
 				//if 'I' created this room, then I will have the permission to remove it from the database.
-//				echo ' <a href="'.$_SERVER['PHP_SELF'].'?delete=delete'.SEP.'room_id='.$room_id.'">[Delete]</a>';
 				echo ' <a href="mods/openmeetings/openmeetings_delete.php?room_id='.$room_id.'">[Delete]</a>';
 			}
 			echo '</li>';

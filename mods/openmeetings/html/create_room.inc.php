@@ -12,30 +12,7 @@
 /************************************************************************/
 // $Id: create_room.inc.php 7208 2008-01-09 16:07:24Z harrisw $
 if ($room_id == false):
-/*
- * Available param to edit
-             "SID"						=> $parameters["SID"],
-			'name'						=> $parameters["name"],
-			'roomtypes_id'				=> 1,
-			'comment'					=> 'Room created by ATutor',
-*			'numberOfPartizipants'		=> 16,
-*			'ispublic'					=> true,
-*			'videoPodWidth'				=> 270, 
-*			'videoPodHeight'			=> 280,
-			'videoPodXPosition'			=> 2, 
-			'videoPodYPosition'			=> 2, 
-			'moderationPanelXPosition'	=> 400, 
-*			'showWhiteBoard'			=> true, 
-			'whiteBoardPanelXPosition'	=> 276, 
-			'whiteBoardPanelYPosition'	=> 2, 
-*			'whiteBoardPanelHeight'		=> 592, 
-*			'whiteBoardPanelWidth'		=> 660, 
-*			'showFilesPanel'			=> true, 
-			'filesPanelXPosition'		=> 2, 
-			'filesPanelYPosition'		=> 284, 
-*			'filesPanelHeight'			=> 310, 
-*			'filesPanelWidth'			=> 270
-*/
+
 //Get default values if POST is empty
 $_POST = loadDefaultValues($_POST);	//openmeetings.inc.php
 

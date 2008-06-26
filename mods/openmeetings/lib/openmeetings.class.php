@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Harris Wong								*/
+/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li, Harris Wong		*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id: openmeetings.class.php 7575 2008-06-04 18:17:14Z hwong $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-include('SOAP_openmeetings.php');
+require('SOAP_openmeetings.php');
 
 class Openmeetings {
 	var $_sid = '';		//Openmeetings session id
@@ -22,9 +22,9 @@ class Openmeetings {
 
 	//Constructor
 	function Openmeetings($course_id, $member_id, $group_id=0){
-		$this->_course_id = abs($course_id);
-		$this->_member_id = abs($member_id);
-		$this->_group_id = abs($group_id);
+		$this->_course_id	= abs($course_id);
+		$this->_member_id	= abs($member_id);
+		$this->_group_id	= abs($group_id);
 
 	}
 
@@ -145,7 +145,6 @@ class Openmeetings {
 		$sql = 'SELECT rooms_id FROM '.TABLE_PREFIX.'openmeetings_rooms r NATURAL JOIN '.TABLE_PREFIX."openmeetings_groups g WHERE 
 				course_id = $this->_course_id AND group_id = $this->_group_id";
 		$result = mysql_query($sql);
-//		debug($sql);
 		if (mysql_numrows($result) > 0){
 			$row = mysql_fetch_assoc($result);
 			//instead of returning room id, we might have to delete it and carry on.

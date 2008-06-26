@@ -1,8 +1,20 @@
 <?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li, Harris Wong		*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: openmeetings_delete.php 7575 2008-06-02 18:17:14Z hwong $
+
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require ('lib/openmeetings.class.php');
-//$_custom_css = $_base_path . 'mods/openmeetings/module.css'; // use a custom stylesheet
 
 //local variables
 $course_id = $_SESSION['course_id'];

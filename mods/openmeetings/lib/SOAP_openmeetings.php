@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Harris Wong								*/
+/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li, Harris Wong		*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -12,19 +12,23 @@
 /************************************************************************/
 // $Id: SOAP_openmeetings.php 7575 2008-06-02 18:17:14Z hwong $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 //require(AT_INCLUDE_PATH . 'classes/nusoap.php');
-require('nusoap.php');
+require('nusoap.php');  //newer version, come with the module
 
 /**
 * SOAP_openmeetings
 * Class for using the SOAP service for openmeetings
+* Please refer to the following API: 
+*	http://code.google.com/p/openmeetings/wiki/SoapMethods
+*
 * @access	public
 * @author	Harris Wong
 */
 class SOAP_openmeetings {
-	var $_sid= "";	//session id
-	var $_soapClient = NULL;	//soap connector
-	var $_wsdl;		//soap service link
+	var $_sid			= "";	//session id
+	var $_soapClient	= NULL;	//soap connector
+	var $_wsdl			= "";	//soap service link
 
 	function SOAP_openmeetings($wsdl) {
 		$this->_wsdl			= $wsdl;
@@ -32,7 +36,7 @@ class SOAP_openmeetings {
 		$getSession_obj			= $this->_performAPICall('getSession', '');	
 		//check session id
 		if (!$getSession_obj){
-			$this->_sid = session_id();
+			$this->_sid = session_id();  //openmeeting will return error code on this
 		} else {
 			$this->_sid = $getSession_obj['return']['session_id'];
 		}
@@ -165,20 +169,15 @@ class SOAP_openmeetings {
 			  $parameters
 			);
 		if ($this->_soapClient->fault){
-//			debug($result, 'fault');
 			return false;
 		} elseif ($this->_soapClient->getError()){
-//			debug($this->_soapClient->getError(), 'getError');
 			return false;
 		}
 
 		// if (!PEAR::isError($result)) {
-//		debug($result, $apiCall . ' ' . $this->_sid);
 		if (is_array($result)) {
             return $result;
         } else {
-//          return $this->_getError($result);
-//			return $result;
 			return false;
         }
     }
