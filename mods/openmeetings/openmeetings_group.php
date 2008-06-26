@@ -15,6 +15,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require ('lib/openmeetings.class.php');
+require ('lib/openmeetings.inc.php');
 //$_custom_css = $_base_path . 'mods/openmeetings/module.css'; // use a custom stylesheet
 
 //local variables
