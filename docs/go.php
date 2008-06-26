@@ -31,7 +31,12 @@ while ($row = mysql_fetch_assoc($result)) {
 	$_config[$row['name']] = $row['value'];
 }
 
-$pathinfo = $_SERVER['PATH_INFO'];
+//Handles path_info in diff versions of PHP 
+if(isset($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO']!=''){
+	$pathinfo = $_SERVER['ORIG_PATH_INFO'];	
+} else {
+	$pathinfo = $_SERVER['PATH_INFO'];	
+}
 $url_parser = new UrlParser($pathinfo);
 $path_array =  $url_parser->getPathArray();
 $_pretty_url_course_id = $path_array[0];
@@ -50,7 +55,6 @@ if (!$obj->isEmpty()){
 	$pretty_current_page = $obj->getPage();
 	//If page not found, forward back to index.php
 	if (!include($obj->getPage())){
-//		header('location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id);
 		header('Location: index.php');
 		exit;
 	} 
@@ -65,6 +69,11 @@ if (!$obj->isEmpty()){
 	exit;
 }
 
+
+/**
+ * This function will reconstruct all the $_GET variables.
+ * @param	array	consist of all the pathinfo variables in querystring format
+ */
 function save2Get($var_query){
 	if (empty($var_query) || !is_array($var_query))
 		return;
