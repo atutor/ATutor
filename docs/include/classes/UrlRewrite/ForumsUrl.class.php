@@ -19,10 +19,6 @@
 * @package	UrlParser
 */
 class ForumsUrl {
-	// local variables
-//	var $rule;		//an array that maps [lvl->query parts]
-//	var $className;	//the name of this class
-
 	// constructor
 	function ForumsUrl() {
 		$this->rule = array(0=>'fid', 1=>'pid');

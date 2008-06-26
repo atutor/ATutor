@@ -19,15 +19,10 @@
 * @package	UrlParser
 */
 class GlossaryUrl {
-	// local variables
-//	var $rule;		//an array that maps [lvl->query parts]
-//	var $className;	//the name of this class
-
 	// constructor
 	function GlossaryUrl() {
 		$this->rule = array(0=>'p');
 	}
-
 
 	/**
 	 * Construct pretty url by the given query string.

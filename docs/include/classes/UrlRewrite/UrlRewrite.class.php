@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id: UrlRewrite.class.php 7603 2008-06-11 14:59:33Z hwong $
+
+//Include all the classes for external rewrite rules
 require_once('ForumsUrl.class.php');
 require_once('ContentUrl.class.php');
 require_once('FileStorageUrl.class.php');
@@ -43,14 +45,20 @@ class UrlRewrite  {
 		$this->query = $query;
 	}
 
-	// public
-	//deprecated
+	/** 
+	 * Returns the link that points to this object as a page.
+	 * @access public
+	 */
 	function redirect(){
 		//redirect to that url.
 		return '/'.$this->getPage();
 	}
 
-	//public
+	/** 
+	 * Parser for the pathinfo, return an array with mapped key values similar to the querystring.
+	 * @access	public
+	 * @return	array	key=>value, where keys and values have the same meaning as the ones in the query strings.
+	 */
 	function parsePrettyQuery(){
 		global $_config;
 		$result = array();
@@ -72,7 +80,8 @@ class UrlRewrite  {
 			$query_parts = explode('/', $this->query);
 		}
 
-		//assign dynamic pretty url
+		//dynamically create the array
+		//assumption: pathinfo ALWAYS in the format of key1/value1/key2/value2/key3/value3/etc...
 		foreach ($query_parts as $array_index=>$key_value){
 			if($array_index%2 == 0 && $query_parts[$array_index]!=''){
 				$result[$key_value] = $query_parts[$array_index+1];
@@ -82,7 +91,15 @@ class UrlRewrite  {
 	}
 
 
-	//public
+	/**
+	 * Parser for the querystrings url
+	 * @access	public
+	 * @param	string	querystring
+	 * @return	array	an array of mapped keys and values like the querystrings.
+	 *
+	 * NOTE:	Stopped using this function since we've decided to dynamically create the URL. 
+	 *			See: parsePrettyQuery()
+	 */
 	function parseQuery($query){
 		//return empty array if query is empty
 		if (empty($query)){
@@ -94,15 +111,19 @@ class UrlRewrite  {
 	}
 
 
-	//public
-	//This method will construct a pretty url based on the given query
+	/**
+	 * Construct the pretty url based on the given query.
+	 * @access	public
+	 * @param	string	the pathinfo query
+	 * @return	string	pretty url
+	 */
 	function constructPrettyUrl($query){
 		global $_config; 
 		if (empty($query)){
 			return '';
 		}
 
-		//Take out bookmark
+		//Take out bookmark, and store it.
 		if (($pos = strpos($query, '#'))!==FALSE){
 			$bookmark = substr($query, $pos);
 			$query = substr($query, 0, $pos);
@@ -224,16 +245,6 @@ class UrlRewrite  {
 			if (preg_match('/^\/?('.$course_id.'|'.$course_orig.')\//', $front)==0){
 				$pretty_url = $course_id.'/';
 			}
-			//take out '.php' if any exists.
-			if ($_config['apache_mod_rewrite'] > 0){
-				if ($end=='' && preg_match('/index\.php$/', $front)==1){
-					$pretty_url .= preg_replace('/index.php/', '', $front);
-				} else {
-					$pretty_url .= preg_replace('/\.php/', '', $front);
-				}
-			} else {
-				$pretty_url .= $front;
-			}
 
 			//check if there are any rules overwriting the original rules
 			//TODO: have a better way to do this
@@ -241,6 +252,13 @@ class UrlRewrite  {
 			$obj =& $this;  //default
 			//Overwrite the UrlRewrite obj if there are any private rules
 			if ($_config['apache_mod_rewrite'] > 0){
+				//take out '.php' if any exists.
+				if ($end=='' && preg_match('/index\.php$/', $front)==1){
+					$pretty_url .= preg_replace('/index.php/', '', $front);
+				} else {
+					$pretty_url .= preg_replace('/\.php/', '', $front);
+				}
+
 				if (preg_match('/forum\/(index|view|list)\.php/', $front)==1) {
 					$pretty_url = $course_id.'/forum';
 					$obj =& new ForumsUrl();
@@ -262,6 +280,8 @@ class UrlRewrite  {
 					$pretty_url = $course_id.'/glossary';
 					$obj =& new GlossaryUrl();
 				}
+			} else {
+				$pretty_url .= $front;
 			}
 
 			if ($end != ''){
@@ -304,7 +324,7 @@ class UrlRewrite  {
 	}
 
 	/**
-	 * 
+	 * Return true if path, filename, and query are empty.
 	 */
 	function isEmpty(){
 		return $this->isEmpty;

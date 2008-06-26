@@ -19,10 +19,6 @@
 * @package	UrlParser
 */
 class ContentUrl {
-	// local variables
-//	var $rule;		//an array that maps [lvl->query parts]
-//	var $className;	//the name of this class
-
 	// constructor
 	function ContentUrl() {
 		$this->rule = array(0=>'cid');
@@ -32,9 +28,6 @@ class ContentUrl {
 	 * Construct pretty url by the given query string.
 	 */
 	function constructPrettyUrl($query){
-//		$url = $this->getClassName();
-//		$query_parts = parent::parseQuery($query);
-
 		if (empty($query)){
 			return '';
 		}

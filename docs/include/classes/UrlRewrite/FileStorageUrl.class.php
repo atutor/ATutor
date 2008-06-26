@@ -30,7 +30,6 @@ class FileStorageUrl {
 		}
 		$this->rule = array(0=>'action', 1=>'ot', 2=>'oid', 3=>'folder');	//default 3=folder, but it can be id as well for comment
 		$this->filename = $filename;
-//		parent::setClassName('file_storage');	//set class name
 	}
 
 	//
@@ -46,9 +45,6 @@ class FileStorageUrl {
 	 * @param	string	filename of the request, this consists of revisions.php, index.php, comments.php
 	 */
 	function constructPrettyUrl($query){
-//		$url = $this->getClassName();
-//		$query_parts = parent::parseQuery($query);
-
 		if (empty($query)){
 			return '';
 		}
