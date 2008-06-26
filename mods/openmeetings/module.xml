@@ -12,8 +12,8 @@
     <license>GNU</license> 
 	<release> 
         <version>0.1</version> 
-        <date>2008-06-23</date> 
+        <date>2008-06-26</date> 
         <state>stable</state> 
-	<notes>Requires Openmeetings server be installed on the user's system.  </notes> 
+	<notes>Requires Openmeetings server(Red5) be installed on the user's system.  Details can be found at http://code.google.com/p/openmeetings/</notes> 
     </release> 
 </module>
