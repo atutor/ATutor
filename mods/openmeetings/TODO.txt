@@ -31,3 +31,7 @@ June 19, 08
 June 25, 08
 ------------
 - Admin can now delete or create group meetings
+
+June 26, 08
+------------
+- Added the ability to create diff type of rooms: conference/audience
