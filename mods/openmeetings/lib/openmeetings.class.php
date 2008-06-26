@@ -93,6 +93,7 @@ class Openmeetings {
 		$param = array (	
 					'SID'					=> $this->_sid,
 					'name'					=> $room_name,
+					'roomtypes_id'			=> $om_param['openmeetings_roomtype'],
 					'numberOfPartizipants'	=> $om_param['openmeetings_num_of_participants'],
 					'ispublic'				=> $om_param['openmeetings_ispublic'],
 					'videoPodWidth'			=> $om_param['openmeetings_vid_w'],

@@ -110,7 +110,7 @@ class SOAP_openmeetings {
           array(
             "SID"						=> $parameters["SID"],
 			'name'						=> $parameters["name"],
-			'roomtypes_id'				=> 1,
+			'roomtypes_id'				=> $parameters["roomtypes_id"],
 			'comment'					=> 'Room created by ATutor',
 			'numberOfPartizipants'		=> $parameters["numberOfPartizipants"],
 			'ispublic'					=> $parameters["ispublic"],

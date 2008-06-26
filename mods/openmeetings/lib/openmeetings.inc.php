@@ -21,6 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  */
 function loadDefaultValues($post){
 	$_om_config = array (
+		'openmeetings_roomtype'				=> 1,	//conference
 		'openmeetings_num_of_participants'	=> 5,
 		'openmeetings_ispublic'				=> 1,	//true
 		'openmeetings_vid_w'				=> 270,

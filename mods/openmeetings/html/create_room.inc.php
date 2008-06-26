@@ -20,6 +20,14 @@ $_POST = loadDefaultValues($_POST);	//openmeetings.inc.php
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
 	<div class="input-form">
 		<div class="row">
+			<p><label for="openmeetings_roomtype"><?php echo _AT('openmeetings_roomtype'); ?></label></p>
+			<?php
+				($_POST['openmeetings_roomtype']== 1)? $om_roomtype_conference = 'checked="checked"' : $om_roomtype_audience = 'checked="checked"';
+			?>
+			<input type="radio" name="openmeetings_roomtype" id="openmeetings_roomtype_conference" value="1" <?php echo $om_roomtype_conference;?>/><label for="openmeetings_roomtype_conference"><?php echo _AT('openmeetings_conference');  ?></label> 
+			<input type="radio" name="openmeetings_roomtype" id="openmeetings_roomtype_audience" value="0" <?php echo $om_roomtype_audience;?>/><label for="openmeetings_roomtype_audience"><?php echo _AT('openmeetings_audience');  ?></label> 
+		</div>
+		<div class="row">
 			<p><label for="openmeetings_num_of_participants"><?php echo _AT('openmeetings_num_of_participants'); ?></label></p>	
 			<input type="text" name="openmeetings_num_of_participants" value="<?php echo $_POST['openmeetings_num_of_participants']; ?>" id="openmeetings_num_of_participants" size="80" style="min-width: 95%;" />
 		</div>
@@ -48,8 +56,9 @@ $_POST = loadDefaultValues($_POST);	//openmeetings.inc.php
 				($_POST['openmeetings_show_wb']== 1)? $om_show_wb_y = 'checked="checked"' : $om_show_wb_n = 'checked="checked"';
 			?>
 			<p><label for="openmeetings_show_wb"><?php echo _AT('openmeetings_show_wb'); ?></label></p>	
-			<input type="radio" name="openmeetings_show_wb" id="openmeetings_show_wb_enabled" value="1" <?php echo $om_show_wb_y;?>/><label for="openmeetings_show_wb_enabled"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name="openmeetings_show_wb" id="openmeetings_show_wb_disabled" value="0" <?php echo $om_show_wb_n;?>/><label for="openmeetings_show_wb_disabled"><?php echo _AT('disable');  ?></label> 
+			<input type="radio" name="openmeetings_show_wb" id="openmeetings_show_wb_enabled" value="1" <?php echo $om_show_wb_y;?> onclick="om_toggler('openmeetings_wb', true);"/>
+			<label for="openmeetings_show_wb_enabled"><?php echo _AT('enable');  ?></label> 
+			<input type="radio" name="openmeetings_show_wb" id="openmeetings_show_wb_disabled" value="0" <?php echo $om_show_wb_n;?> onclick="om_toggler('openmeetings_wb', false);"/><label for="openmeetings_show_wb_disabled"><?php echo _AT('disable');  ?></label> 
 		</div>
 		<div class="row">
 			<p><label for="openmeetings_wb_w"><?php echo _AT('openmeetings_wb_w'); ?></label></p>	
@@ -66,8 +75,8 @@ $_POST = loadDefaultValues($_POST);	//openmeetings.inc.php
 				($_POST['openmeetings_show_fp']== 1)? $om_show_fp_y = 'checked="checked"' : $om_show_fp_n = 'checked="checked"';
 			?>
 			<p><label for="openmeetings_show_fp"><?php echo _AT('openmeetings_show_fp'); ?></label></p>	
-			<input type="radio" name="openmeetings_show_fp" id="openmeetings_show_fp_enabled" value="1" <?php echo $om_show_fp_y;?>/><label for="openmeetings_show_fp_enabled"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name="openmeetings_show_fp" id="openmeetings_show_fp_disabled" value="0" <?php echo $om_show_fp_n;?>/><label for="openmeetings_show_fp_disabled"><?php echo _AT('disable');  ?></label> 
+			<input type="radio" name="openmeetings_show_fp" id="openmeetings_show_fp_enabled" value="1" <?php echo $om_show_fp_y;?> onclick="om_toggler('openmeetings_fp', true);"/><label for="openmeetings_show_fp_enabled"><?php echo _AT('enable');  ?></label> 
+			<input type="radio" name="openmeetings_show_fp" id="openmeetings_show_fp_disabled" value="0" <?php echo $om_show_fp_n;?> onclick="om_toggler('openmeetings_fp', false);"/><label for="openmeetings_show_fp_disabled"><?php echo _AT('disable');  ?></label> 
 		</div>
 		<div class="row">
 			<p><label for="openmeetings_fp_w"><?php echo _AT('openmeetings_fp_w'); ?></label></p>	
@@ -83,6 +92,21 @@ $_POST = loadDefaultValues($_POST);	//openmeetings.inc.php
 		</div>
 	</div>
 </form>
+
+<script type="text/javascript">
+	function om_toggler(name, enabled){
+		var obj_w = document.getElementById(name + '_w');
+		var obj_h = document.getElementById(name + '_h');
+		if(enabled==true) {
+			obj_w.disabled = "";	
+			obj_h.disabled = "";	
+		} else if (enabled==false){
+			obj_w.disabled = "disabled";
+			obj_h.disabled = "disabled";
+		}
+	}
+</script>
+
 <?php
 else: 
 ?>

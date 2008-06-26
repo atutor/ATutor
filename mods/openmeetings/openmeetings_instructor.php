@@ -35,6 +35,7 @@ if (isset($_POST['submit']) && isset($_POST['room_id'])) {
 	$msg->addFeedback('OPENMEETINGS_DELETE_SUCEEDED');
 } elseif (isset($_POST['submit'])){
 	//mysql escape
+	$_POST['openmeetings_roomtype']				= intval($_POST['openmeetings_roomtype']);
 	$_POST['openmeetings_num_of_participants']	= intval($_POST['openmeetings_num_of_participants']);
 	(intval($_POST['openmeetings_ispublic']) == 1)?$_POST['openmeetings_ispublic']='true':$_POST['openmeetings_ispublic']='false';
 	$_POST['openmeetings_vid_w']				= intval($_POST['openmeetings_vid_w']);
