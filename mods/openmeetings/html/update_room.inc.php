@@ -12,19 +12,16 @@
 /************************************************************************/
 // $Id: create_room.inc.php 7208 2008-01-09 16:07:24Z harrisw $
 
-//Get default values if POST is empty
-$_POST = loadDefaultValues($_POST);	//openmeetings.inc.php
-
 ?>
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
-	<div class="input-form">
-		<div class="row"><p><?php echo _AT('openmeetings_create_room_instr'); ?></p></div>
-	</div>
 	<div class="input-form">
 		<?php include ('create_room.tmpl.php'); ?>
 
 		<div class="row buttons">
-			<input type="submit" name="create_room" value="<?php echo _AT('openmeetings_create_room'); ?>"  />
+			<input type="hidden" name="openmeetings_room_name" value="<?php echo $_POST['openmeetings_room_name']; ?>" />
+			<input type="hidden" name="room_id" value="<?php echo $room_id; ?>"  />
+			<input type="submit" name="update_room" value="<?php echo _AT('save'); ?>"  />
+			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
 		</div>
 	</div>
 </form>

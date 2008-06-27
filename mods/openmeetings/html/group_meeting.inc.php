@@ -32,8 +32,10 @@ if (empty($_SESSION['groups'])) {
 			$room_id = $om_obj->om_addRoom($room_name);
 			echo '<li>'.$row['title'].' <a href="mods/openmeetings/view_meetings.php?room_id='.$room_id.SEP.'sid='.$om_obj->getSid().'"> Room-id: '.$room_id.'</a>';
 			if ($om_obj->isMine($room_id) || authenticate(AT_PRIV_OPENMEETINGS, true)) {
-				//if 'I' created this room, then I will have the permission to remove it from the database.
-				echo ' <a href="mods/openmeetings/openmeetings_delete.php?room_id='.$room_id.'">[Delete]</a>';
+				//if 'I' created this room, then I will have the permission to edit/delete it from the database.
+				echo ' <a href="mods/openmeetings/add_group_meetings.php?edit_room=yes&room_id='.$room_id.'">['._AT('edit').']</a>';
+				echo ' <a href="mods/openmeetings/openmeetings_delete.php?room_id='.$room_id.'">['._AT('delete').']</a>';
+				
 			}
 			echo '</li>';
 		} else {

@@ -135,6 +135,41 @@ class SOAP_openmeetings {
 
 
 	/**
+	 * Updating a room
+	 */
+	function updateRoom($parameters = array()){
+        return $this->_performAPICall(
+          "updateRoom",
+
+          array(
+            'SID'						=> $parameters["SID"],
+			'rooms_id'					=> $parameters["rooms_id"],
+			'name'						=> $parameters["name"],
+			'roomtypes_id'				=> $parameters["roomtypes_id"],
+			'comment'					=> 'Room created by ATutor',
+			'numberOfPartizipants'		=> $parameters["numberOfPartizipants"],
+			'ispublic'					=> $parameters["ispublic"],
+			'videoPodWidth'				=> $parameters["videoPodWidth"],
+			'videoPodHeight'			=> $parameters["videoPodHeight"],
+			'videoPodXPosition'			=> 2, 
+			'videoPodYPosition'			=> 2, 
+			'moderationPanelXPosition'	=> 400, 
+			'showWhiteBoard'			=> $parameters["showWhiteBoard"],
+			'whiteBoardPanelXPosition'	=> 276, 
+			'whiteBoardPanelYPosition'	=> 2, 
+			'whiteBoardPanelHeight'		=> $parameters["whiteBoardPanelHeight"],
+			'whiteBoardPanelWidth'		=> $parameters["whiteBoardPanelWidth"],
+			'showFilesPanel'			=> $parameters["showFilesPanel"], 
+			'filesPanelXPosition'		=> 2, 
+			'filesPanelYPosition'		=> 284, 
+			'filesPanelHeight'			=> $parameters["filesPanelHeight"], 
+			'filesPanelWidth'			=> $parameters["filesPanelWidth"]
+          )
+        );
+	}
+
+
+	/**
 	 * Delete room
 	 */
 	function deleteRoom($parameters = array()){
@@ -154,6 +189,19 @@ class SOAP_openmeetings {
 	function getSid(){
 		return $this->_sid;
 	}
+
+	/**
+	 * Get room by id
+	 */
+	function getRoomById($parameters = array()){
+		return $this->_performAPICall(
+			"getRoomById",
+			array(
+				"SID"		=> $parameters["SID"],
+				"rooms_id"	=> $parameters["rooms_id"]
+			)
+		);	
+	}
 	 
 
 
@@ -168,6 +216,7 @@ class SOAP_openmeetings {
 			  $apiCall,
 			  $parameters
 			);
+
 		if ($this->_soapClient->fault){
 			return false;
 		} elseif ($this->_soapClient->getError()){
