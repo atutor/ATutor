@@ -12,8 +12,8 @@ Installation
 4. Open the administrator's Openmeetings screen and enter the URL, username and password to the Openmeetings installion you will be using.  The user account must have Admin-rights.
 
 This module has been tested on the following specifications:
-Openmeetings	0.5.1 (r1406)
-Red5		0.63  (Please note that 0.7.0 doesn't work properly with Openmeetings 0.5.1)
+Openmeetings	0.5.1 (r1406) 
+Red5		0.63  (Please note that 0.7.0 doesn't work properly with Openmeetings 0.5.1) [http://osflash.org/red5]
 
 
 License: 	

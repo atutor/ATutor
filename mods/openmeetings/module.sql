@@ -25,7 +25,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_view_meetings'
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_grp_meetings','Group Openmeetings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_existing_room','You already have started a <a href="%s">room</a>, would you like to edit your room or to start a new one?',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_deleting_warning','(Note, starting a new room will close your current room.  Once the room is closed, <strong>all chat logs and associated room materials will be deleted</strong>.)',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_no_course_meetings','There is no course meeting at the moment.  Instructor will be able to add a course conference.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_no_course_meetings','There is no course meeting at the moment.  Instructor can add a course meeting.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_no_group_meetings','There is no group meeting at the moment.  You have to be assigned to a group in order to start a group meeting.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_course_conference','Course conference:',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_group_conference','Group conference(s):',NOW(),'');
@@ -47,7 +47,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_confirm_delete
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_roomtype','Room Mode',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_conference','Conference Mode',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_audience','Audience Mode',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_create_room_instr','Adjust the following settings, then click "Create" to start the conference/audience room.  For more information on the settings, please visit <a href="http://code.google.com/p/openmeetings/wiki/SoapMethods#addRoom" target="_blank">here</a>.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_create_room_instr','Adjust the following settings, then click "Create" to start the conference/audience room.  For more information on the settings, please see the <a href="http://code.google.com/p/openmeetings/wiki/SoapMethods#addRoom" target="_new">Openmeetings documentation</a>.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_edit_room','Edit room',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_create_room','Create new room',NOW(),'');
 

@@ -98,7 +98,7 @@ if (isset($_POST['create_room']) || (isset($_POST['update_room']) && isset($_POS
 	exit;
 } elseif (isset($_REQUEST['edit_room']) && isset($_POST['room_id'])){
 	//Log into the room
-	$room_id = $om_obj->om_getRoom();
+	$room_id = $_POST['room_id'];
 
 	//Get the room obj
 	$room_obj = $om_obj->om_getRoomById($room_id);
