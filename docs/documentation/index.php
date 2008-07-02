@@ -90,7 +90,7 @@ function hide() {
 
 <?php 
 if (isset($_GET['p'])) {
-	$body = $addslashes($_GET['p']);
+	$body = html_entities($_GET['p']);
 } else {
 	$body = 'introduction.php';
 } 
