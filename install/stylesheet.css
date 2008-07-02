@@ -1,0 +1,503 @@
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+/* $Id$ */
+
+/* main body attributes */
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	background-color: white;
+	background-image: url();
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	font-size: small;
+}
+
+code {
+	font-size: x-small;
+	color: black;
+}
+
+kbd {
+  padding: 0px 1px 0px 1px;
+  border-width: 1px 2px 2px 1px;
+  border-style: solid;
+  background: #faf6f6;
+  color: #000;
+  border-color:  #edd #baa #baa #eed;
+  font-size: small;
+  white-space: nowrap;
+}
+
+/* paragraph attributes */
+p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+	font-size: small;
+}
+
+p.heading {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	font-size: 1em;
+	color: black;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+}
+
+p.error {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	color: red;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+}
+
+h1#header {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: white;
+	float: left;
+	display: inline;
+	margin: 10px;
+}
+
+
+/* list attributes */
+ul {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-bottom: 5px;
+	margin-top: 0px;
+	margin-right: 0px;
+}
+
+li {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+}
+li.important{
+	color: red;
+}
+
+/* link attributes */
+a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #384F89;
+	border-bottom: 1px solid #384F89;
+	text-decoration: none;
+}
+a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #51286C;
+}
+a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+}
+
+/* formfield attributes */
+.formfield {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	border:  #003399  solid 1px;
+	padding: 2px;
+}
+
+.formfield:focus {
+	border:  #0033FF  solid 1px;
+}
+
+form {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+/* main submit button */
+.button {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F8F8F8;
+	font-weight: bold;
+	border:  #354A81  solid 1px;
+}
+.button:hover, .button:focus {
+	cursor: pointer;
+	border:  #354AFF solid 1px;
+	color:  #0000FF;
+}
+
+/* small submit button at top */
+.button2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #F8F8F8;
+	font-size: 0.7em;
+	border-top:  #354A81  solid 1px;
+	border-bottom: #354A81  solid 1px;
+	border-right: #354A81  solid 1px;
+	border-left: #354A81  solid 1px;
+}
+
+/* table border */
+.tableborder {
+	border-left: 1px #98AAB1 solid;
+	border-right: 1px #98AAB1 solid;
+	border-top: 1px #98AAB1 solid;
+}
+
+/* user menu at top */
+.topbar {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat-x;
+	background-color: #D1D7DC;
+	text-align: center;
+	padding: 3px;
+}
+
+/* breadcrumbs */
+td.breadcrumbs	{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic3.gif');
+	color: #FFFFFF;
+	background-color: #006699;
+	height: 26px;
+}
+.breadcrumbs { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color: white
+	text-decoration: none;  
+	letter-spacing: 1px; 
+}
+a.breadcrumbs { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color: #CCCCCC;
+	text-decoration: none;  
+}
+a.breadcrumbs:hover { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color: #CCCC00;
+	text-decoration: none; 
+}
+a.breadcrumbs:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color : #CCCCCC;
+	text-decoration: none; 
+}
+
+/* 
+td.rowpic {
+		background-color: #FFFFFF;
+		background-image: url('images/cellpic2.jpg');
+		background-repeat: repeat-y;
+}
+*/
+
+/* the menu */
+td.row1, table.row1 { 
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	background-color: #EFEFEF;
+	vertical-align: top;	
+	padding: 8px;
+	border-bottom: 1px #98AAB1 solid;
+}
+
+/* menu titles*/
+td.cat, th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat-x;
+	background-color:#D1D7DC; 
+	height: 25px;
+	text-align: center;
+	font-weight: bold;
+	padding-top: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	white-space: nowrap;
+}
+td.cat2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat;
+	text-align: center;
+	font-weight: bold;
+	padding: 1px;
+	border: 1px #98AAB1 solid;
+}
+td.cat2b {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat;
+	text-align: center;
+	font-weight: bold;
+	height: 27px;
+	padding: 1px;
+	border: 1px #98AAB1 solid;
+}
+td.cat2c {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat;
+	text-align: center;
+	font-weight: bold;
+	height: 27px;
+	padding: 1px;
+	border: 1px #98AAB1 solid;
+}
+td.cat2d {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat;
+	text-align: center;
+	font-weight: bold;
+	height: 27px;
+	padding: 1px;
+	border: 1px #98AAB1 solid;
+}
+td.cat2e {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat;
+	text-align: center;
+	font-weight: bold;
+	height: 27px;
+	padding: 1px;
+	border: 1px #98AAB1 solid;
+}
+table.cat2 {
+font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat-x;
+	/*Remove this attribute, to fix Opera menu display problem*/
+	/*height: 27px;*/
+	text-align: center;
+	font-weight: bold;
+	border: 1px #98AAB1 solid;
+}
+table.cat3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: ;
+}
+
+/* various line breaks */
+td.row2 { 
+	background-color: #98AAB1; 
+	font-weight: normal;
+	height: 1px;
+}
+td.row3 {
+	background-color: #006699;
+	font-weight: normal;
+	height: 1px;
+}
+td.row4 {
+	background-color: #f3f3f2;
+	font-weight: normal;
+	height: 1px;
+}
+
+/* align text to the left */
+.left {
+	text-align: left;
+}
+
+/* pipe attribute  */
+.spacer {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #006699;
+	font-size: 0.65em;
+}
+
+/* previous/next text attribute */
+.bigspacer {
+	color: #006699;
+}
+
+.bodyline { 
+	background-color: #FFFFFF; 
+	border: 1px #98AAB1 solid; 
+}
+/* date attributes */
+small.date {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #006699;	
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+	font-size: 0.7em;
+}
+
+.menuimage {
+	vertical-align: middle;
+	margin-top: 0px;
+}
+
+/* page breakline */
+hr {
+	color: #98AAB1;
+	background-color: white;
+	height: 1px;
+}
+
+/* box around a forum reply */
+.block {
+	position: relative;
+	font-size: 0.9em;
+	background-color: #FFFFFF;
+	border: 1px dotted #98AAB1;
+	padding: 5px;
+	margin-right: 5px;
+	margin-left: 15px;
+	margin-bottom: 0px;
+}
+
+
+select.dropdown {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color: #F1F3F1;                            
+}                                                             
+  
+h1, h2, h3, h4, h5, h6 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+}
+
+h3 {
+	border-bottom: 1px solid #354A81;
+}
+
+
+.content {
+	padding: 20px;
+	font-size: small;
+}
+
+/* error box */
+table.errbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #FF0000;
+	border: 2px #EEEEEE solid;
+}
+tr.errbox {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: white;
+	vertical-align:top;
+	font-size: smaller;
+}
+h3.err {
+	color: red;
+	border: 0px;
+}
+
+h3.good {
+	color: green;
+	border: 0px;
+}
+
+
+ /* feedback box */
+table.fbkbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #30B626;
+	border: 2px #EEEEEE solid;
+}
+tr.fbkbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: white;
+	vertical-align: top;
+	font-size: smaller;
+}
+img#logo {
+	padding: 10px;
+	background-color: #eeeeee;
+	border: 1px solid #cccccc;
+	margin: 10px;
+	float: right;
+}
+
+div.install {
+	border: 1px solid #354A81;
+}
+
+div.install h3 {
+	background-color: #354A81;
+	margin-left: 0px;
+	padding: 2px;
+	color: white;
+	border: 0px;
+}
+div.install p {
+	font-size: small;
+}
+div.suggested {
+	font-weight: bold;
+	color: blue;
+	border: 1px solid #e3e3e3;
+}
+
+/* for data tables */
+table.data {
+	border: 1px solid #f0f0f0;
+	width: 90%; 
+	margin-left: auto;
+	margin-right: auto;
+	border-spacing: 0px;
+	border-collapse: collapse;
+} 
+
+table.data th {
+	background-color: #fafafa;
+	border-bottom: 1px solid #f0f0f0;
+	padding: 2px;
+	white-space: nowrap;
+	border-top: 1px solid #f0f0f0;
+}
+
+table.data td {
+	padding: 3px;
+}
+
+div.required {
+	font-weight: bold;
+	color: red;
+	font-size: x-large;
+	float: left;
+	position: relative;
+	margin-top: -3px;
+	height: 15px;
+	padding-right: 0px;
+}
+div.optional {
+	font-weight: bold;
+	color: red;
+	font-size: large;
+	float: left;
+	position: relative;
+	margin-top: -3px;
+	height: 15px;
+	padding-right: 3px;
+}

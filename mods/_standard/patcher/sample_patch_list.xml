@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<patch_list>
+	<patch>
+		<atutor_patch_id>00001</atutor_patch_id>
+		<applied_version>1.6</applied_version>
+		<patch_folder>1_6-1</patch_folder>
+		<description>Patch No. 1 for ATutor 1.6</description>
+		<available_to>public</available_to>
+		<dependent_patches></dependent_patches>
+	</patch>
+	
+	<patch>
+		<atutor_patch_id>00002</atutor_patch_id>
+		<applied_version>1.6</applied_version>
+		<patch_folder>1_6-2</patch_folder>
+		<description>Patch No. 2 for ATutor 1.6</description>
+		<available_to>public</available_to>
+		<dependent_patches>
+			<dependent_patch>00001</dependent_patch>
+			<dependent_patch>00003</dependent_patch>
+		</dependent_patches>
+	</patch>
+</patch_list> 

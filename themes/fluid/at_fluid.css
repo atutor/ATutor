@@ -1,0 +1,29 @@
+
+.orderable-default {
+	float:left;
+	margin:5px!important;
+}
+/*.orderable-hover {
+	float:left;
+	margin:5px!important;
+}*/
+
+.orderable-selected{
+	float:left;
+	margin:5px!important;
+}
+
+.orderable-dragging{
+	background-color:#eee;
+	float:left;
+	margin:5px!important;
+	opacity:.2;
+	/*filter:alpha(opacity=20);*/
+}
+
+div .orderable-drop-marker{
+	height:160px!important;
+	width:4px;
+	background-color:red;
+	float:left;
+}
