@@ -119,15 +119,9 @@ foreach ($cats as $cat) {
 			echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
 			echo '<td>';
 			if ($strlen($row['question']) > 45) {
-				/*
-				 * UTF-8 should have the entities encoded in their own format, html entities is not needed.
-				 * @harris
-				 * echo AT_print($substr(htmlentities($row['question']), 0, 43), 'tests_questions.question') . '&hellip;';
-				 */
-				echo AT_print($substr($row['question'], 0, 43), 'tests_questions.question') . '&hellip;';
+				echo AT_print($substr(htmlentities($row['question']), 0, 43), 'tests_questions.question') . '&hellip;';
 			} else {
-				//echo AT_print(htmlentities($row['question']), 'tests_questions.question');
-				echo AT_print($row['question'], 'tests_questions.question');
+				echo AT_print(htmlentities($row['question']), 'tests_questions.question');
 			}
 
 			echo '</td>';
