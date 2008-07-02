@@ -25,6 +25,12 @@ if (substr($parts['dirname'], -5) == 'admin') {
 	exit;
 }
 
+if ( get_magic_quotes_gpc() == 1 ) {
+	$addslashes = 'my_add_null_slashes';
+} else {
+	$addslashes = 'addslashes';
+}
+
 $req_lang = 'en';
 if (!empty($_GET)) {
 	$req_lang = key($_GET);
@@ -84,7 +90,7 @@ function hide() {
 
 <?php 
 if (isset($_GET['p'])) {
-	$body = $_GET['p'];
+	$body = $addslashes($_GET['p']);
 } else {
 	$body = 'introduction.php';
 } 

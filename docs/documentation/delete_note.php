@@ -17,6 +17,7 @@ if ( get_magic_quotes_gpc() == 1 ) {
 
 
 $_GET['id'] = intval($_GET['id']);
+$_GET['p'] = $addslashes($_GET['p']);
 
 $config_location = '../include/config.inc.php';
 if (is_file($config_location) && is_readable($config_location)) {
