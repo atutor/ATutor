@@ -87,6 +87,10 @@ RewriteRule ^([^/]+)/(((mods)/[^/^.]+)|([^/^.]+))/([^/^.]+)/?$ go.php/$1/$2/$6.p
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/tools/tests/questions/tid/([0-9]+)/?$ go.php/$1/tools/tests/questions.php/tid/$2/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule ^([^/]+)/(((mods)/[^/^.]+)|([^/^.]+))/([^/^.]+)/([^\.]+)$ go.php/$1/$2/$6.php/$7 [L]
 
 #Default rule
