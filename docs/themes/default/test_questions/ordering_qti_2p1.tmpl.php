@@ -32,6 +32,6 @@
 		</orderInteraction>
 	</itemBody>
 	<?php if ($this->row['feedback']): ?>
-		<modalFeedback outcomeIdentifier="FEEDBACK" identifier="FEEDBACK<?php echo $this->row['question_id'];?>” showHide="hide"><?php echo $this->row['feedback']; ?></modalFeedback> 
+		<modalFeedback outcomeIdentifier="FEEDBACK" identifier="FEEDBACK<?php echo $this->row['question_id'];?>" showHide="hide"><?php echo $this->row['feedback']; ?></modalFeedback> 
 	<?php endif; ?>
 </assessmentItem>
