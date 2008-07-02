@@ -296,7 +296,7 @@ while (false !== ($file = readdir($dir)) ) {
 
 		$files[$file1] .= '&nbsp;</td>';
 
-		$files[$file1] .= '<td  align="right">';
+		$files[$file1] .= '<td  align="right" style="white-space:nowrap">';
 
 		if ($popup == TRUE) {
 			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\');" />&nbsp;';
@@ -305,7 +305,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$files[$file1] .= '&nbsp;</td>';
 		
-		$files[$file1] .= '<td  align="right">';
+		$files[$file1] .= '<td  align="right" style="white-space:nowrap">';
 		$files[$file1] .= get_human_size($filedata[7]).'</td>';
 	}
 } // end while
