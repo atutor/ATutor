@@ -54,7 +54,7 @@ if (!$obj->isEmpty()){
 	$_user_location	= '';	//reset user_location so that the vital file in each page would validate
 	$pretty_current_page = $obj->getPage();
 	//If page not found, forward back to index.php
-	if (!include($obj->getPage())){
+	if (!@include($obj->getPage())){
 		header('Location: index.php');
 		exit;
 	} 
