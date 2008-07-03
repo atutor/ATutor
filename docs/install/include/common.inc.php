@@ -92,7 +92,12 @@ if ( get_magic_quotes_gpc() == 1 ) {
                     if (mysql_query($prefixed_query[0],$db) !== false) {
 						$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
 					} else {
-						$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
+						if (mysql_errno($db) == 1060) 
+							$progress[] = 'Table <strong>'.$table . '</strong> fields already exists. Skipping.';
+						elseif (mysql_errno($db) == 1091) 
+							$progress[] = 'Table <strong>'.$table . '</strong> fields already dropped. Skipping.';
+						else
+							$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
 					}
 
                 }elseif($prefixed_query[1] == 'DROP TABLE'){
