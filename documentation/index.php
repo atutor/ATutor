@@ -90,7 +90,7 @@ function hide() {
 
 <?php 
 if (isset($_GET['p'])) {
-	$body = html_entities($_GET['p']);
+	$body = htmlentities($_GET['p']);
 } else {
 	$body = 'introduction.php';
 } 
