@@ -459,8 +459,12 @@ function get_class_avg($gradebook_test_id)
 			else
 				$total_out_of += $row_test['out_of'];
 		}
-		$avg_final_score = round($total_final_score / $num_students);
-		$avg_out_of = round($total_out_of / $num_students);
+		
+		if ($num_students > 0)
+		{
+			$avg_final_score = round($total_final_score / $num_students);
+			$avg_out_of = round($total_out_of / $num_students);
+		}
 		
 		if ($avg_final_score <> "") 
 			$avg_grade = get_mark_by_grade($row["grade_scale_id"], $avg_final_score, $avg_out_of);
