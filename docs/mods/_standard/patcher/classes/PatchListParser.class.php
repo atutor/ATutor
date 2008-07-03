@@ -110,14 +110,14 @@ class PatchListParser {
 
 	// public
 	// return parsed array only for given name & version
-	function getMyParsedArrayForVersion($version) 
+	function getMyParsedArrayForVersion($version, $who='public') 
 	{
 		$my_array = array();
 
 		// filter out the patch for given version
 		foreach ($this->patch_rows as $key => $row) 
 		{
-	    if ($row['applied_version'] == $version)
+	    if ($row['applied_version'] == $version && $row['available_to']==$who)
 	    	array_push($my_array, $row);
 		}
 		
