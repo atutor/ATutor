@@ -308,7 +308,7 @@ if (!isset($_POST['submit'])) {
 
 	<div class="row">
 		<?php echo _AT('apache_mod_rewrite'); ?><br />
-		<?php if (in_array('mod_rewrite', apache_get_modules())): ?>
+		<?php if (function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules())): ?>
 			<?php echo _AT('mod_rewrite'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['apache_mod_rewrite'] ? _AT('enable') : _AT('disable')); ?>)<br />
 			<input type="radio" name="apache_mod_rewrite" value="1" id="mr_y" <?php if($_config['apache_mod_rewrite']) { echo 'checked="checked"'; }?> /><label for="mr_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="apache_mod_rewrite" value="0" id="mr_n" <?php if(!$_config['apache_mod_rewrite']) { echo 'checked="checked"'; }?>  /><label for="mr_n"><?php echo _AT('disable'); ?></label>
 		<?php else: ?>
