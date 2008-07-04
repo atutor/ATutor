@@ -83,7 +83,7 @@ $FLUID_URL = 'mods/photo_album/fluid/component-templates'; ?>
 /* This file is used to display the index page of photo album for everyone */
 require_once ('define.php');
 require_once ('classes/pa_index.class.php');
-require_once ('HTML/Template/ITX.php');
+require_once (PATH.'HTML/Template/ITX.php');
 clear_temp_folder();
 
 $index=new Pa_Index();
@@ -93,7 +93,7 @@ if ($index->isError()!=true){	//if there is no error in index object, display th
 	$_SESSION['pa']['course_id']=$index->getVariable('course_id');
 	
 	/* display index page from here */
-	$template=new HTML_Template_ITX("./Template");
+	$template=new HTML_Template_ITX(PATH."Template");
 	$template->loadTemplatefile("index.tpl.php", true, true);
 	
 	/* display images */
