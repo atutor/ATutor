@@ -71,15 +71,21 @@ $imported_glossary = array();
 			if ($attrs['href']) {
 				$items[$attrs['identifier']]['href'] = $attrs['href'];
 
-				$temp_path = pathinfo($attrs['href']);
-				$temp_path = explode('/', $temp_path['dirname']);
-				if (!$package_base_path) {
-					$package_base_path = $temp_path;
-				} else {
-					$package_base_path = array_intersect($package_base_path, $temp_path);
+				// href points to a remote url
+				if (preg_match('/^http.*:\/\//', trim($attrs['href'])))
+					$items[$attrs['identifier']]['new_path'] = '';
+				else // href points to local file
+				{
+					$temp_path = pathinfo($attrs['href']);
+					$temp_path = explode('/', $temp_path['dirname']);
+					if (!$package_base_path) {
+						$package_base_path = $temp_path;
+					} else {
+						$package_base_path = array_intersect($package_base_path, $temp_path);
+					}
+	
+					$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 				}
-
-				$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 			}
 		}
 		array_push($element_path, $name);
@@ -358,7 +364,6 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 
 
 xml_parser_free($xml_parser);
-//debug($items);
 
 /* check if the glossary terms exist */
 if (file_exists($import_path . 'glossary.xml')){
@@ -374,7 +379,6 @@ if (file_exists($import_path . 'glossary.xml')){
 	xml_set_character_data_handler($xml_parser, 'glossaryCharacterData');
 
 	if (!xml_parse($xml_parser, $glossary_xml, true)) {
-		debug($glossary_xml);
 		die(sprintf("XML error: %s at line %d",
 					xml_error_string(xml_get_error_code($xml_parser)),
 					xml_get_current_line_number($xml_parser)));
@@ -408,10 +412,10 @@ if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
 	$package_base_name .= '_'.date('ymdHis');
 }
 
-
 if ($package_base_path) {
 	$package_base_path = implode('/', $package_base_path);
 }
+
 if ($xml_base_path) {
 	$package_base_path = $xml_base_path . $package_base_path;
 
@@ -425,8 +429,16 @@ $sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE cour
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
-	
-	foreach ($items as $item_id => $content_info) {
+
+foreach ($items as $item_id => $content_info) 
+{
+	// remote href
+	if (preg_match('/^http.*:\/\//', trim($content_info['href'])) )
+	{
+		$content = '<a href="'.$content_info['href'].'" target="_blank">'.$content_info['title'].'</a>';
+	}
+	else
+	{
 		if (isset($content_info['href'], $xml_base_path)) {
 			$content_info['href'] = $xml_base_path . $content_info['href'];
 		}
@@ -511,79 +523,80 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 			/* non text file, and can't embed (example: PDF files) */
 			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
 		}
-
-		$content_parent_id = $cid;
-		if ($content_info['parent_content_id'] !== 0) {
-			$content_parent_id = $items[$content_info['parent_content_id']]['real_content_id'];
-		}
-
-		$my_offset = 0;
-		if ($content_parent_id == $cid) {
-			$my_offset = $order_offset;
-		}
-
-		/* replace the old path greatest common denomiator with the new package path. */
-		/* we don't use str_replace, b/c there's no knowing what the paths may be	  */
-		/* we only want to replace the first part of the path.						  */
-		if ($package_base_path != '') {
-			$content_info['new_path']	= $package_base_name . substr($content_info['new_path'], strlen($package_base_path));
-		} else {
-			$content_info['new_path'] = $package_base_name;
-		}
-		
-		$head = addslashes($head);
-		$content_info['title'] = addslashes($content_info['title']);
-		$content = addslashes($content);
-
-		$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
-		      . '(course_id, 
-		          content_parent_id, 
-		          ordering,
-		          last_modified, 
-		          revision, 
-		          formatting, 
-		          release_date,
-		          head,
-		          use_customized_head,
-		          keywords, 
-		          content_path, 
-		          title, 
-		          text) 
-		       VALUES 
-				     ('.$_SESSION['course_id'].','															
-				     .$content_parent_id.','		
-				     .($content_info['ordering'] + $my_offset + 1).','
-				     .'"'.$last_modified.'",													
-				      0,
-				      1,
-				      NOW(),"'
-				     . $head .'",
-				     1,
-				      "",'
-				     .'"'.$content_info['new_path'].'",'
-				     .'"'.$content_info['title'].'",'
-				     .'"'.$content.'")';
-
-		$result = mysql_query($sql, $db) or die(mysql_error());
-
-		/* get the content id and update $items */
-		$items[$item_id]['real_content_id'] = mysql_insert_id($db);
 	}
 
-	if ($package_base_path == '.') {
-		$package_base_path = '';
+	$content_parent_id = $cid;
+	if ($content_info['parent_content_id'] !== 0) {
+		$content_parent_id = $items[$content_info['parent_content_id']]['real_content_id'];
 	}
 
-	if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
-		if (!$msg->containsErrors()) {
-			$msg->addError('IMPORT_FAILED');
-		}
+	$my_offset = 0;
+	if ($content_parent_id == $cid) {
+		$my_offset = $order_offset;
 	}
-	clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
-	if (isset($_POST['url'])) {
-		@unlink($full_filename);
+	/* replace the old path greatest common denomiator with the new package path. */
+	/* we don't use str_replace, b/c there's no knowing what the paths may be	  */
+	/* we only want to replace the first part of the path.						  */
+	if ($package_base_path != '') {
+		$content_info['new_path']	= $package_base_name . substr($content_info['new_path'], strlen($package_base_path));
+	} else {
+		$content_info['new_path'] = $package_base_name;
 	}
+	
+	$head = addslashes($head);
+	$content_info['title'] = addslashes($content_info['title']);
+	$content = addslashes($content);
+
+	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
+	      . '(course_id, 
+	          content_parent_id, 
+	          ordering,
+	          last_modified, 
+	          revision, 
+	          formatting, 
+	          release_date,
+	          head,
+	          use_customized_head,
+	          keywords, 
+	          content_path, 
+	          title, 
+	          text) 
+	       VALUES 
+			     ('.$_SESSION['course_id'].','															
+			     .$content_parent_id.','		
+			     .($content_info['ordering'] + $my_offset + 1).','
+			     .'"'.$last_modified.'",													
+			      0,
+			      1,
+			      NOW(),"'
+			     . $head .'",
+			     1,
+			      "",'
+			     .'"'.$content_info['new_path'].'",'
+			     .'"'.$content_info['title'].'",'
+			     .'"'.$content.'")';
+
+	$result = mysql_query($sql, $db) or die(mysql_error());
+
+	/* get the content id and update $items */
+	$items[$item_id]['real_content_id'] = mysql_insert_id($db);
+}
+
+if ($package_base_path == '.') {
+	$package_base_path = '';
+}
+
+if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+	if (!$msg->containsErrors()) {
+		$msg->addError('IMPORT_FAILED');
+	}
+}
+clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
+
+if (isset($_POST['url'])) {
+	@unlink($full_filename);
+}
 
 
 if ($_POST['s_cid']){
