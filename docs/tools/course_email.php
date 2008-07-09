@@ -88,8 +88,11 @@ if (isset($_POST['cancel'])) {
 				$group_members[] = $row['member_id'];
 			}
 			$group_members = implode(',', $group_members);
-
-			$email_sql .= "M.member_id IN ($group_members) OR ";
+			if (!empty($group_members)){
+				$email_sql .= "M.member_id IN ($group_members) OR ";
+			} else {
+				$email_sql .= "M.member_id IN (-1) OR ";
+			}
 		} else if ($_POST['to_enrolled']) {
 			// includes instructor
 			$email_sql 	.= "(C.approved='y' AND c.privileges=0) OR ";
@@ -147,18 +150,15 @@ if (isset($_POST['cancel'])) {
 			$mail->AddAddress($recip);
 			$mail->Body    = $body;
 			if(!$mail->Send()) {
-		   		$msg->printErrors('SENDING_ERROR');
-		  		 exit;
+		   		$msg->addError('SENDING_ERROR');
+				header('Location: index.php');
+		  		exit;
 			}
 			unset($mail);
 		}
 
-		
-
-
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 }
