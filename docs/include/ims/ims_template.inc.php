@@ -21,14 +21,14 @@ function get_import_files($text)
 	$tag = '@import';
 	$files = array();
 	
-	while (stripos($text, $tag) > 0)
+	while (strpos(strtolower($text), strtolower($tag)) > 0)
 	{
 		$start_pos	= strpos($text, $tag);
 		if ($start_pos !== false) 
 		{
 			$text = substr($text, $start_pos);
 			$start_pos = strlen($tag);
-			$len = stripos($text, ';') - strlen($tag);
+			$len = strpos($text, ';') - strlen($tag);
 			
 			$file = substr(trim($text), $start_pos, $len);
 			
@@ -111,7 +111,7 @@ function print_organizations($parent_id,
 			$head = '';
 			if ($content['use_customized_head'])
 			{
-				if (stripos($content['head'], '<style') > 0)
+				if (strpos(strtolower($content['head']), '<style') > 0)
 				{
 					$head = $content['head'];
 				}
