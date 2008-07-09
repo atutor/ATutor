@@ -409,11 +409,14 @@ class Backup {
 			{
 				global $db;
 				
-				$properties_str = file_get_contents($this->import_dir . "properties.csv");
-				$banner_values = explode(',',str_replace('"', '', $properties_str));
+				$properties_str = substr(file_get_contents($this->import_dir . "properties.csv"), 1, -2);
+				
+				require_once(AT_INCLUDE_PATH.'classes/CSVImport.class.php');
+				$CSVImport = new CSVImport();
+				$banner_values = $CSVImport->translateWhitespace($properties_str);
 
 				$sql = "UPDATE ".TABLE_PREFIX."courses 
-				           SET banner = '". $banner_values[0]. "' 
+				           SET banner = '". $banner_values. "' 
 				         WHERE course_id = ".$this->course_id;
 				$result = mysql_query($sql,$db) or die(mysql_error());
 			}
