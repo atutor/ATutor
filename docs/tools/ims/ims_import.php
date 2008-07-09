@@ -46,6 +46,8 @@ $imported_glossary = array();
 			// with the `<resource>` element.
 			// we take the `href` from the first `<file>` element.
 			if (isset($items[$current_identifier]) && ($items[$current_identifier]['href'] == '')) {
+				$attrs['href'] = urldecode($attrs['href']);
+
 				$items[$current_identifier]['href'] = $attrs['href'];
 
 				$items[$current_identifier]['href'] = $attrs['href'];
@@ -69,6 +71,8 @@ $imported_glossary = array();
 			$current_identifier = $attrs['identifier'];
 
 			if ($attrs['href']) {
+				$attrs['href'] = urldecode($attrs['href']);
+
 				$items[$attrs['identifier']]['href'] = $attrs['href'];
 
 				// href points to a remote url
