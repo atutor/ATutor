@@ -120,6 +120,7 @@ function is_patch_installed($patch_id)
 	// Only displays the patches that are not installed
 	$sql = "select count(*) num_of_installed from ".TABLE_PREFIX."patches " .
 	       "where atutor_patch_id = '" . $patch_id ."'".
+	       " and applied_version = '".VERSION."'".
 	       " and status like '%Installed'";
 
 	$result = mysql_query($sql, $db) or die(mysql_error());
