@@ -13,8 +13,8 @@
 // $Id$
 
 class CSVImport {
-	var $quote_search  = array('\\\n', '\\\r');
-	var $quote_replace = array('\n', '\r');
+	var $quote_search  = array('""', '\\\n', '\\\r');
+	var $quote_replace = array('"', '\n', '\r');
 
 	// constructor
 	function CSVImport() { }

@@ -15,8 +15,8 @@
 class CSVExport {
 //	var $quote_search  = array('"',  "\n", "\r", "\x00");
 //	var $quote_replace = array('""', '\n', '\r', '\0');
-	var $quote_search  = array("\n", "\r", "\x00");
-	var $quote_replace = array('\n', '\r', '\0');
+	var $quote_search  = array('"', "\n", "\r", "\x00");
+	var $quote_replace = array('""', '\n', '\r', '\0');
 
 	// constructor
 	function CSVExport() { }
