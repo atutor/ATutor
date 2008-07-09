@@ -186,7 +186,7 @@ class UrlRewrite  {
 
 		//find out what kind of link this is, pretty url? relative url? or PHP_SELF url?
 		$dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
-		$url_parts	 = explode('/', $_SERVER['PHP_SELF']);
+		$url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 		$host_dir	 = implode('/', array_slice($url_parts, 0, count($url_parts) - $dir_deep-1));
 		//The link is a bounce link
 		if(preg_match('/bounce.php\?course=([\d]+)$/', $url, $matches)==1){
