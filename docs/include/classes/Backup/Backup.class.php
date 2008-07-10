@@ -409,16 +409,15 @@ class Backup {
 			{
 				global $db;
 				
-				$properties_str = substr(file_get_contents($this->import_dir . "properties.csv"), 1, -2);
-				
-				require_once(AT_INCLUDE_PATH.'classes/CSVImport.class.php');
-				$CSVImport = new CSVImport();
-				$banner_values = $CSVImport->translateWhitespace($properties_str);
+				$fp = @fopen($this->import_dir . "properties.csv", 'rb');
 
-				$sql = "UPDATE ".TABLE_PREFIX."courses 
-				           SET banner = '". $banner_values. "' 
-				         WHERE course_id = ".$this->course_id;
-				$result = mysql_query($sql,$db) or die(mysql_error());
+				if (($row = @fgetcsv($fp, 70000)) !== false)
+				{
+					$sql = "UPDATE ".TABLE_PREFIX."courses 
+					           SET banner = '". $row[0]. "' 
+					         WHERE course_id = ".$this->course_id;
+					$result = mysql_query($sql,$db) or die(mysql_error());
+				}
 			}
 			
 			// restore modules
