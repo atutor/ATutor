@@ -29,6 +29,7 @@ else if (isset($_GET['save']))
 {
 	foreach($_GET as $key => $value)
 	{
+		$value = $addslashes($value);
 		if (preg_match('/^grade_(.*)_(.*)$/', $key, $matches) > 0)
 		{
 			$sql = "SELECT grade_scale_id FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id = ". $matches[1];
@@ -265,9 +266,11 @@ if ($num_students > 0)
 			$result = mysql_query($sql, $db) or die(mysql_error());
 			$row = mysql_fetch_assoc($result);
 			
+			$row["grade"] = htmlspecialchars($row["grade"]);   // handle html special chars
+			
 			if ($_GET["edit"]=="c_".$selected_test["gradebook_test_id"] || $_GET["edit"]=="r_".$selected_students[$i]["member_id"] && ($selected_test["type"]=="External" || $selected_test["type"]=="ATutor Assignment"))
 			{
-				$table_content .= "			<td><input type='text' name='grade_".$selected_test["gradebook_test_id"]."_".$selected_students[$i]["member_id"]."' value='".$row["grade"]."' tabindex='".$tabindex_input."' /></td>\n\r";
+				$table_content .= "			<td><input type='text' name='grade_".$selected_test["gradebook_test_id"]."_".$selected_students[$i]["member_id"]."' value=\"".$row["grade"]."\" tabindex='".$tabindex_input."' /></td>\n\r";
 				$csv_content .= ",".$row["grade"];
 			}
 			else
