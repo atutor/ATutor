@@ -35,8 +35,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_MAHARA, TRUE) || admin_authenticate(AT_ADMI
 /*******
  * instructor Manage section:
  */
-$this->_pages['mods/mahara/index_instructor.php']['title_var'] = 'mahara';
-$this->_pages['mods/mahara/index_instructor.php']['parent']   = 'tools/index.php';
+//$this->_pages['mods/mahara/index_instructor.php']['title_var'] = 'mahara';
+//$this->_pages['mods/mahara/index_instructor.php']['parent']   = 'tools/index.php';
 
 /*******
  * student page.

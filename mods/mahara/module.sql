@@ -15,6 +15,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','mahara_location','Enter the
 INSERT INTO `language_text` VALUES ('en', '_module','mahara_new_win','Open Mahara in a New Window',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','mahara_opened','Mahara Opened in a New Window',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_MAHARA_MINURL_ADD_SAVED','Location of Mahara was successfully saved.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_MAHARA_LOGIN','Login to ATutor to access your ePortfolio.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAHARA_MINURL_ADD_EMPTY','You must enter a path to the location of your Mahara installation.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAHARA_ERROR_INSTALL','Mahara not installed! Please create config.php from config-dist.php',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAHARA_ERROR_PATH','Unable to detect Mahara installation. Please check the path and make sure Mahara is set up correctly.',NOW(),'');
