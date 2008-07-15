@@ -219,7 +219,7 @@ $pid = intval($_REQUEST['pid']);
 	if ($current_tab != 0) {
 		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
 		echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
-		echo '<input type="hidden" name="use_customized_head" value="'.$_POST['use_customized_head'].'" />';
+		echo '<input type="hidden" name="use_customized_head" value="'.(($_POST['use_customized_head']=="") ? 0 : $_POST['use_customized_head']).'" />';
 		echo '<input type="hidden" name="displayhead" value="'.$_POST['displayhead'].'" />';
 		echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
 		echo '<input type="hidden" name="settext" value="'.$_POST['settext'].'" />';		
