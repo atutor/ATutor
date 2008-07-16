@@ -74,16 +74,16 @@ global $system_courses, $_custom_css,$db;
 	<?php endif; ?>
 	<?php echo $this->custom_css; ?>
 
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/jquery/jquery-1.2.3.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/jquery/jquery.tabindex.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/jquery/jquery.dimensions.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/jquery/ui.base.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/jquery/ui.draggable.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/jquery/ui.droppable.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/jquery/jARIA.js"></script>
+	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/jquery-1.2.3.js"></script>
+	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/jquery.keyboard-a11y.js"></script>
+	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/jquery.dimensions.js"></script>
+	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/ui.base.js"></script>
+	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/ui.draggable.js"></script>
+	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/ui.droppable.js"></script>
+	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/jARIA.js"></script>
 
-	<script language="JavaScript" src="<?php echo $this->base_path; ?>jscripts/fluid/Fluid.js" type="text/javascript"></script>
-	<script language="JavaScript" src="<?php echo $this->base_path; ?>jscripts/fluid/Reorderer.js" type="text/javascript"></script>
+	<script language="JavaScript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/fluid/Fluid.js" type="text/javascript"></script>
+	<script language="JavaScript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/fluid/Reorderer.js" type="text/javascript"></script>
 
 	<script type="text/javascript">jQuery.noConflict();</script> 
 	
