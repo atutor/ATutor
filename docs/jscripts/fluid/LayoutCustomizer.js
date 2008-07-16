@@ -1,1 +1,0 @@
-var fluid=fluid||{};(function(A){A.initLayoutCustomizer=function(C,G,J,D){var H=A.utils.jById(A.moduleLayout.containerId(C));var F=A.moduleLayout.createFindItems(C,G,J);var E;if(D){E={orderChangedCallbackUrl:D}}var I=new A.ModuleLayoutHandler(C,G,E);var B={role:A.roles.GRID,avatarCreator:function(K){return document.createElement("div")}};return new A.Reorderer(H,F,I,B)}})(fluid);
