@@ -148,11 +148,10 @@ if (TRUE || $framed != TRUE) {
 
 			<form id="single-inline-fluid-uploader" class="fluid-uploader infusion" method="get" enctype="multipart/form-data">
 				<div class="start">
-					<div>Upload files from your Computer</div>
+					<div><?php echo _AT('upload_files'); ?></div>
 					<div class="fluid-uploader-queue-wrapper">
 						<div class="fluid-scroller-table-head">
 							<table cellspacing="0" cellpadding="0">
-								<caption>File Queue:</caption>
 								<thead>
 									<tr>
 										<th scope="col" class="fileName"><?php echo _AT('file_name'); ?></th>
@@ -173,14 +172,14 @@ if (TRUE || $framed != TRUE) {
 							</div>
 						</div>
 						
-						<div class="fluid-uploader-row-placeholder"> click <em>Browse files</em> to add files to the queue </div>
+						<div class="fluid-uploader-row-placeholder"> <?php echo _AT('click_browse_files'); ?> </div>
 
 						<div class="fluid-scroller-table-foot">
 							<table cellspacing="0" cellpadding="0">
 								<tfoot>
 									<tr>
-										<td class="footer-total"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> files (<span class="fluid-uploader-totalBytes">0 KB</span>)</td>
-										<td class="footer-button" align="right" ><a class="fluid-uploader-browse" tabindex="0" >Browse files</a></td>
+										<td class="footer-total"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> <?php echo _AT('files'); ?> (<span class="fluid-uploader-totalBytes">0 <?php echo _AT('kb'); ?></span>)</td>
+										<td class="footer-button" align="right" ><a class="fluid-uploader-browse" tabindex="0" ><?php echo _AT('browse_files'); ?></a></td>
 									</tr>
 								</tfoot>
 							</table>
@@ -189,8 +188,8 @@ if (TRUE || $framed != TRUE) {
 					</div>
 					<div class="fluid-uploader-btns">
 						<button type="button" class="fluid-uploader-upload default" ><?php echo _AT('upload'); ?></button>
-						<button type="button" class="fluid-uploader-resume default" >Resume</button>
-						<button type="button" class="fluid-uploader-pause" >Pause</button>
+						<button type="button" class="fluid-uploader-resume default" ><?php echo _AT('resume'); ?></button>
+						<button type="button" class="fluid-uploader-pause" ><?php echo _AT('pause'); ?></button>
 						<button type="button" class="fluid-uploader-cancel cancel" ><?php echo _AT('cancel'); ?></button>
 						<button type="button" class="fluid-uploader-done" ><?php echo _AT('done'); ?></button>
 					</div>
@@ -201,11 +200,11 @@ if (TRUE || $framed != TRUE) {
 			<div class="fluid-templates">
 				<table id="fluid-uploader">
 					<tr id="queue-row-tmplt">
-						<th class="fileName" scope="row">File Name Placeholder</th>
-						<td class="fileSize">0 KB</td>
+						<th class="fileName" scope="row"><?php echo _AT('file_placeholder'); ?></th>
+						<td class="fileSize">0 <?php echo _AT('kb'); ?></td>
 						<td class="fileRemove">
 							<button type="button" class="removeFile" title="Remove File" tabindex="0">
-								<span class="text-description">Remove file from queue</span>
+								<span class="text-description"><?php echo _AT('remove_queued_file'); ?></span>
 							</button>
 						</td>
 					</tr>
