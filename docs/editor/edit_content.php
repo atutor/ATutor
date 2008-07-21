@@ -159,7 +159,7 @@ $cid = intval($_REQUEST['cid']);
 $pid = intval($_REQUEST['pid']);
 
 ?>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="contentForm" enctype="multipart/form-data">
 <?php
 
 	if ($cid) {

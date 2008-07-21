@@ -403,38 +403,38 @@ function insertFile(fileName, pathTo, ext) {
 		var info = "<?php echo _AT('alternate_text'); ?>";
 		var html = '<img src="' + pathTo+fileName + '" border="0" alt="' + info + '" />';
 
-		if (window.opener.document.form.setvisual.value == 1) {
+		if (window.opener.document.contentForm.setvisual.value == 1) {
 			if (window.parent.tinyMCE)
 				window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 
 			if (window.opener.tinyMCE)
 				window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 		} else {
-			insertAtCursor(window.opener.document.form.body_text, html);
+			insertAtCursor(window.opener.document.contentForm.body_text, html);
 		}
 	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid") {
 		var html = '[media]'+ pathTo + fileName + '[/media]';
-		if (window.opener.document.form.setvisual.value == 1) {
+		if (window.opener.document.contentForm.setvisual.value == 1) {
 			if (window.parent.tinyMCE)
 				window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 
 			if (window.opener.tinyMCE)
 				window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 		} else {
-			insertAtCursor(window.opener.document.form.body_text, html);
+			insertAtCursor(window.opener.document.contentForm.body_text, html);
 		}
 	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
 		var html = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 
-		if (window.opener.document.form.setvisual.value == 1) {
+		if (window.opener.document.contentForm.setvisual.value == 1) {
 			if (window.parent.tinyMCE)
 				window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 
 			if (window.opener.tinyMCE)
 				window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 		} else {
-			insertAtCursor(window.opener.document.form.body_text, html);
+			insertAtCursor(window.opener.document.contentForm.body_text, html);
 		}
 	}
 }
