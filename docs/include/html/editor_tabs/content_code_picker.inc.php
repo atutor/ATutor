@@ -55,11 +55,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	//<!--
 	function smilie(thesmilie, extra) {
 		if (!extra) {
-			document.form.body_text.value += thesmilie+" ";
-			document.form.body_text.focus();
+			document.contentForm.body_text.value += thesmilie+" ";
+			document.contentForm.body_text.focus();
 		} else {
-			document.form.body_text.value += thesmilie+extra+" ";
-			document.form.body_text.focus();
+			document.contentForm.body_text.value += thesmilie+extra+" ";
+			document.contentForm.body_text.focus();
 		}
 
 	}

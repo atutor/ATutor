@@ -138,14 +138,14 @@ if ($current_tab == 0) {
 		}
 	}
 	if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
-		$onload = ' document.form.ctitle.focus();';
+		$onload = ' document.contentForm.ctitle.focus(); ';
 	}
 }
 
 // initialize buttons, texts, radio buttons for editor
 if ($current_tab == 0) 
 {
-	$onload="on_load()";
+	$onload.="on_load();";
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
