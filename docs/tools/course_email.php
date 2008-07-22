@@ -95,7 +95,7 @@ if (isset($_POST['cancel'])) {
 			}
 		} else if ($_POST['to_enrolled']) {
 			// includes instructor
-			$email_sql 	.= "(C.approved='y' AND c.privileges=0) OR ";
+			$email_sql 	.= "(C.approved='y' AND C.privileges=0) OR ";
 		}
 
 		$email_sql = substr_replace($email_sql, '', -4). ')'; // strip off the last ' OR '
