@@ -60,14 +60,15 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 echo '<p>'._AT('current_path').' ';
 
-if ($pathext != '') {
+if (isset($pathext) && $pathext != '') {
 	echo '<a href="'.$_SERVER['PHP_SELF'].'?popup=' . $popup . SEP . 'framed=' . $framed.'">'._AT('home').'</a> ';
 }
 else {
+	$pathext = '';
 	echo _AT('home');
 }
 
-if ($pathext == '') {
+if ($pathext == '' && isset($_POST['pathext'])) {
 	$pathext = urlencode($_POST['pathext']);
 }
 
@@ -120,22 +121,28 @@ if (TRUE || $framed != TRUE) {
 	}
 	// filemanager listing table
 	// make new directory 
-	echo '<fieldset class="group_form"><legend class="group_form">'._AT('add').'</legend>'."\n";
-	echo '<table cellspacing="1" cellpadding="0" border="0" summary="" align="center">'."\n";
-	echo '<tr><td>'."\n";
-	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP. 'popup='.$popup.'">'."\n";
+	echo '<div class="input-form"><fieldset class="group_form"><legend class="group_form">'._AT('add_file_folder').'</legend>'."\n";
+	echo '	<div class="row">'."\n";
+	echo '		<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext != '') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup='.$popup.'">'."\n";
 	if( $MakeDirOn ) {
 		if ($depth < $MaxDirDepth) {
-			echo '<input type="text" name="dirname" size="20" /> '."\n";
-			echo '<input type="hidden" name="mkdir_value" value="true" /> '."\n";
-			echo '<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />'."\n";
-			echo '&nbsp;<small class="spacer">'._AT('keep_it_short').'</small>'."\n";
+			echo '		<label for="dirname">To create a folder, enter name here:</label><br />'."\n";
+			echo '		&nbsp;<small class="spacer">'._AT('keep_it_short').'</small><br />'."\n";
+			echo '		<input type="text" name="dirname" id="dirname" size="20" /> '."\n";
+			echo '		<input type="hidden" name="mkdir_value" value="true" /> '."\n";
+			echo '		<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />'."\n";
 		} else {
 			echo _AT('depth_reached')."\n";
 		}
 	}
-	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-	echo '</form></td></tr>'."\n";
+	echo '		<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+	echo '		</form>'."\n";
+	echo '	</div>'."\n";
+
+	echo '	<div class="row"><hr /></div>'."\n";
+
+	echo '	<div class="row" style="float: left;"><input type="button" class="button" name="new_file" value="' . _AT('file_manager_new') . '" onclick="window.location.href=\''.AT_BASE_HREF.'tools/filemanager/new.php?pathext=' . urlencode($pathext) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . '\'"/></div>'."\n";
+
 
 	$my_MaxCourseSize = $system_courses[$_SESSION['course_id']]['max_quota'];
 
@@ -143,94 +150,102 @@ if (TRUE || $framed != TRUE) {
 	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) 
 		|| (($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) && ($course_total < $MaxCourseSize))
 		|| ($my_MaxCourseSize-$course_total > 0)) {
-		echo '<tr><td>';
+		echo '	<div class="row" style="float: left;">'._AT('OR').'</div>'."\n".'	<div class="row" style="float: left;">'."\n";
+		if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 		?>
-
-			<form id="single-inline-fluid-uploader" class="fluid-uploader infusion" method="get" enctype="multipart/form-data">
-				<div class="start">
-					<div><?php echo _AT('upload_files'); ?></div>
-					<div class="fluid-uploader-queue-wrapper">
-						<div class="fluid-scroller-table-head">
-							<table cellspacing="0" cellpadding="0">
-								<thead>
-									<tr>
-										<th scope="col" class="fileName"><?php echo _AT('file_name'); ?></th>
-										<th scope="col" class="fileSize"><?php echo _AT('size'); ?>&nbsp;&nbsp;</th>
-										<th scope="col" class="fileRemove">&nbsp;</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-						<div class="fluid-scroller">
-							<div class="scroller-inner">
-								<table cellspacing="0" class="fluid-uploader-queue">
-									<tbody>
-										
-									</tbody>
+			<div id="uploader_link"><input type="button" class="button" name="upload_file" value="<?php echo _AT('upload_files'); ?>" onclick="javascript:toggleform('uploader', 'uploader_link'); return false;" /></div>
+			<div id="uploader" style="border-width: 1px; border-style: dashed; display: none; padding: 5px;">
+				<form id="single-inline-fluid-uploader" class="fluid-uploader infusion" method="get" enctype="multipart/form-data" action="" style="margin: 0px; padding: 0px;">
+					<div class="start">
+						<div class="fluid-uploader-queue-wrapper">
+							<div class="fluid-scroller-table-head">
+								<table cellspacing="0" cellpadding="0">
+										<tr>
+											<th scope="col" class="fileName"><?php echo _AT('file_name'); ?></th>
+											<th scope="col" class="fileSize"><?php echo _AT('size'); ?>&nbsp;&nbsp;</th>
+											<th scope="col" class="fileRemove">&nbsp;</th>
+										</tr>
 								</table>
-								<div class="file-progress"><span class="file-progress-text">76%</span></div>
+							</div>
+							<div class="fluid-scroller">
+								<div class="scroller-inner">
+									<table cellspacing="0" class="fluid-uploader-queue">
+										<tbody>
+											
+										</tbody>
+									</table>
+									<div class="file-progress"><span class="file-progress-text">76%</span></div>
+								</div>
+							</div>
+							
+							<div class="fluid-uploader-row-placeholder"> <?php echo _AT('click_browse_files'); ?> </div>
+
+							<div class="fluid-scroller-table-foot">
+								<table cellspacing="0" cellpadding="0">
+										<tr>
+											<td class="footer-total"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> <?php echo _AT('files'); ?> (<span class="fluid-uploader-totalBytes">0 <?php echo _AT('kb'); ?></span>)</td>
+											<td class="footer-button" align="right" ><a class="fluid-uploader-browse" tabindex="0" ><?php echo _AT('browse_files'); ?></a></td>
+										</tr>
+								</table>
+								<div class="total-progress">&nbsp;</div>
 							</div>
 						</div>
-						
-						<div class="fluid-uploader-row-placeholder"> <?php echo _AT('click_browse_files'); ?> </div>
-
-						<div class="fluid-scroller-table-foot">
-							<table cellspacing="0" cellpadding="0">
-								<tfoot>
-									<tr>
-										<td class="footer-total"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> <?php echo _AT('files'); ?> (<span class="fluid-uploader-totalBytes">0 <?php echo _AT('kb'); ?></span>)</td>
-										<td class="footer-button" align="right" ><a class="fluid-uploader-browse" tabindex="0" ><?php echo _AT('browse_files'); ?></a></td>
-									</tr>
-								</tfoot>
-							</table>
-							<div class="total-progress">&nbsp;</div>
+						<div class="fluid-uploader-btns">
+							<button type="button" class="fluid-uploader-upload default" ><?php echo _AT('upload'); ?></button>
+							<button type="button" class="fluid-uploader-resume default" ><?php echo _AT('resume'); ?></button>
+							<button type="button" class="fluid-uploader-pause" ><?php echo _AT('pause'); ?></button>
+							<button type="button" class="fluid-uploader-cancel cancel" ><?php echo _AT('cancel'); ?></button>
+							<button type="button" class="fluid-uploader-done" ><?php echo _AT('done'); ?></button>
 						</div>
+						
 					</div>
-					<div class="fluid-uploader-btns">
-						<button type="button" class="fluid-uploader-upload default" ><?php echo _AT('upload'); ?></button>
-						<button type="button" class="fluid-uploader-resume default" ><?php echo _AT('resume'); ?></button>
-						<button type="button" class="fluid-uploader-pause" ><?php echo _AT('pause'); ?></button>
-						<button type="button" class="fluid-uploader-cancel cancel" ><?php echo _AT('cancel'); ?></button>
-						<button type="button" class="fluid-uploader-done" ><?php echo _AT('done'); ?></button>
-					</div>
-					
+				</form>
+
+				<div class="fluid-templates">
+					<table id="fluid-uploader">
+						<tr id="queue-row-tmplt">
+							<th class="fileName" scope="row"><?php echo _AT('file_placeholder'); ?></th>
+							<td class="fileSize">0 <?php echo _AT('kb'); ?></td>
+							<td class="fileRemove">
+								<button type="button" class="removeFile" title="Remove File" tabindex="0">
+									<span class="text-description"><?php echo _AT('remove_queued_file'); ?></span>
+								</button>
+							</td>
+						</tr>
+						<tr id="queue-error-tmplt" class="queue-error-row"><td colspan="3" class="queue-error"></td></tr>
+					</table>
 				</div>
-			</form>
-
-			<div class="fluid-templates">
-				<table id="fluid-uploader">
-					<tr id="queue-row-tmplt">
-						<th class="fileName" scope="row"><?php echo _AT('file_placeholder'); ?></th>
-						<td class="fileSize">0 <?php echo _AT('kb'); ?></td>
-						<td class="fileRemove">
-							<button type="button" class="removeFile" title="Remove File" tabindex="0">
-								<span class="text-description"><?php echo _AT('remove_queued_file'); ?></span>
-							</button>
-						</td>
-					</tr>
-					<tr id="queue-error-tmplt" class="queue-error-row"><td colspan="3" class="queue-error"></td></tr>
-				</table>
 			</div>
-
-
-		</td></tr>
-		<tr><td>
-
 		<?php
-		echo _AT('or'); 
-		echo ' <a href="tools/filemanager/new.php?pathext=' . urlencode($pathext) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . '">' . _AT('file_manager_new') . '</a>';
 
-		echo '</table></fieldset>';
+		} else {
+			echo '<form onsubmit="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');" name="form1" method="post" action="tools/filemanager/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
+			echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
+			echo '<label for="uploadedfile">'._AT('upload_files').'</label><br />'."\n";
+			echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> ';
+			echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
+			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
+
+			if ($popup == TRUE) {
+				echo '<input type="hidden" name="popup" value="1" />';
+			}
+			echo '</form>';
+		}
+
+		echo '		</div>'."\n".'	</fieldset></div>';
+
 	} else {
-		echo '</table>';
-		echo '</fieldset>';
+		echo '	</fieldset></div>'."\n";
 		$msg->printInfos('OVER_QUOTA');
 	}
 	echo '<br />';
 }
+
+
+
 // Directory and File listing 
 
-echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP.'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
+echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 ?>
 <table class="data static" summary="" border="0" rules="groups" style="width: 90%">
@@ -271,7 +286,7 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 </tfoot>
 <?php if($pathext) : ?>
 	<tr>
-		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'cp='.$_GET['cp']; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
+		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'cp='.$_GET['cp']; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
 	</tr>
 <?php endif; ?>
 <?php
@@ -331,7 +346,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '&nbsp;</td>';
 
 		$dirs[$file1] .= '<td  align="right">';
-		$dirs[$file1] .= get_human_size($size).'</td>';
+		$dirs[$file1] .= get_human_size($size).'</td></tr>';
 		
 	} else {
 		$files[$file1] .= '<tr> <td  align="center">';
@@ -346,13 +361,13 @@ while (false !== ($file = readdir($dir)) ) {
 		}
 
 		if ($ext == 'zip') {
-			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext=' . urlencode($pathext) . SEP . 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">';
+			$files[$file1] .= ' <a href="tools/filemanager/zip.php?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : ''). 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">';
 			$files[$file1] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="img-size-fm3" />';
 			$files[$file1] .= '</a>';
 		}
 
 		if (in_array($ext, $editable_file_types)) {
-			$files[$file1] .= ' <a href="tools/filemanager/edit.php?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">';
+			$files[$file1] .= ' <a href="tools/filemanager/edit.php?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">';
 			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'" height="15" width="18" class="img-size-fm4" />';
 			$files[$file1] .= '</a>';
 		}
@@ -449,5 +464,25 @@ function insertAtCursor(myField, myValue) {
 		myField.focus();
 	}
 }
+
+function toggleform(id, link) {
+	var obj = document.getElementById(id);
+
+	if (obj.style.display == "none") {
+		//show
+		obj.style.display='';	
+		obj.focus();
+
+		document.getElementById(link).style.display = 'none';
+
+
+	} else {
+		//hide
+		obj.style.display='none';
+
+		document.getElementById(link).style.display = '';
+	}
+}
+
 //-->
 </script>
