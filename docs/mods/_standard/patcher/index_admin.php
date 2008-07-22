@@ -58,10 +58,10 @@ else $who = "public";
 
 // check the connection to server update.atutor.ca
 $update_server = "update.atutor.ca"; 
+$connection_test_file = "http://" . $update_server . '/index.php';
+$connection = @file_get_contents($connection_test_file);
 
-$file = fsockopen ($update_server, 80, $errno, $errstr, 15);
-
-if (!$file) 
+if (!$connection) 
 {
 	print '<span style="color: red"><b>Error: Cannot connect to patch server: '. $update_server . '</b></span>';
 	exit;
