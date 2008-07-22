@@ -25,6 +25,7 @@ unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['prefs']);
+unset($_SESSION['flash']);
 
 $msg->addFeedback('LOGOUT');
 header('Location: login.php');
