@@ -177,7 +177,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <br />
 <div class="input-form">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('likert'); ?></legend>
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_likert'); ?></legend>
 	<div class="row">
 		<label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
