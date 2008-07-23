@@ -153,7 +153,7 @@ if (TRUE || $framed != TRUE) {
 		echo '	<div class="row" style="float: left;">'._AT('OR').'</div>'."\n".'	<div class="row" style="float: left;">'."\n";
 		if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 		?>
-			<div id="uploader_link"><input type="button" class="button" name="upload_file" value="<?php echo _AT('upload_files'); ?>" onclick="javascript:toggleform('uploader', 'uploader_link'); return false;" /></div>
+			<input type="button" id="uploader_link" class="button" name="upload_file" value="<?php echo _AT('upload_files'); ?>" onclick="toggleform('uploader', 'uploader_link');" />
 			<div id="uploader" style="border-width: 1px; border-style: dashed; display: none; padding: 5px;">
 				<form id="single-inline-fluid-uploader" class="fluid-uploader infusion" method="get" enctype="multipart/form-data" action="" style="margin: 0px; padding: 0px;">
 					<div class="start">
@@ -194,7 +194,7 @@ if (TRUE || $framed != TRUE) {
 							<button type="button" class="fluid-uploader-upload default" ><?php echo _AT('upload'); ?></button>
 							<button type="button" class="fluid-uploader-resume default" ><?php echo _AT('resume'); ?></button>
 							<button type="button" class="fluid-uploader-pause" ><?php echo _AT('pause'); ?></button>
-							<button type="button" class="fluid-uploader-cancel cancel" ><?php echo _AT('cancel'); ?></button>
+							<button type="button" class="fluid-uploader-cancel cancel" onclick="toggleform('uploader', 'uploader_link');"><?php echo _AT('cancel'); ?></button>
 							<button type="button" class="fluid-uploader-done" ><?php echo _AT('done'); ?></button>
 						</div>
 						
@@ -467,20 +467,20 @@ function insertAtCursor(myField, myValue) {
 
 function toggleform(id, link) {
 	var obj = document.getElementById(id);
+	var btn = document.getElementById(link);
 
 	if (obj.style.display == "none") {
 		//show
 		obj.style.display='';	
 		obj.focus();
 
-		document.getElementById(link).style.display = 'none';
+		btn.style.display = 'none';
 
 
 	} else {
 		//hide
 		obj.style.display='none';
-
-		document.getElementById(link).style.display = '';
+		btn.style.display = '';
 	}
 }
 
