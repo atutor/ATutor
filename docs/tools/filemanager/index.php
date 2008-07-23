@@ -59,7 +59,7 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
             
             var settings =   {
                 whenDone: "'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'msg=FILEUPLOAD_DONE",
-                whenCancel: "'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'msg=FILEUPLOAD_DONE",
+                whenCancel: function(){},
                 continueAfterUpload: true,
                 debug: false
             };
