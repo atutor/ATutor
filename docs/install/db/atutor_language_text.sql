@@ -319,6 +319,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_THREAD_LOCKED','T
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_THREAD_SUBSCRIBED','You have successfully subscribed to the <strong>%s</strong> thread. Messages posted to this thread will be forwarded to your registered email address. View your profile to modify your email address.','2004-12-02 16:21:03','forum threads');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_THREAD_UNLOCKED','Thread has been successfully <strong><em>unlocked</em></strong>.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_THREAD_UNSUBSCRIBED','You have successfully unsubscribed from the <strong>%s</strong> thread. Messages will no longer be sent to your email address.','2004-12-02 16:34:13','forum threads');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_FILEUPLOAD_DONE', 'File(s) uploaded.', '2008-07-15 16:00:00', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_404_BLURB','The page you are trying to access <i>%s</i> does not exist, or has been moved. Try using the <a href=\"sitemap.php\">SiteMap</a> to find it.','2005-03-03 14:48:24','/404.php');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ACCESS_PUBLIC','This feature is only available for protected or private courses.','2007-02-13 15:55:47','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ACCOUNT_APPROVED','You have successfully upgraded to an instructor account.','2004-02-12 12:52:57','');
@@ -1790,3 +1791,10 @@ INSERT INTO `language_text` VALUES ('en', '_template','you_are_here','You are he
 INSERT INTO `language_text` VALUES ('en', '_template','zip_archive','Zip Archive','2003-05-22 16:20:01','file manager');
 INSERT INTO `language_text` VALUES ('en', '_template','zip_file_manager','Zip File Manager','2003-05-22 16:20:14','file manager');
 INSERT INTO `language_text` VALUES ('en', '_template','zip_illegal_contents','The contents of this archive are listed below. Illegal file types will not be extracted, and file names containing illegal characters will be translated.','2004-08-10 15:10:04','');
+INSERT INTO `language_text` VALUES ('en', '_template', 'pause', 'Pause', '2008-07-16 12:46:00', 'Used in file uploader.');
+INSERT INTO `language_text` VALUES ('en', '_template', 'upload_files', 'Upload files', '2008-07-16 14:40:00', 'Used in filemanager and any place that uses fluid for multiple file upload.');
+INSERT INTO `language_text` VALUES ('en', '_template', 'browse_files', 'Browse Files', '2008-07-16 14:43:00', 'For "Browse Files" button in Fluid''s multiple file uploader');
+INSERT INTO `language_text` VALUES ('em', '_template', 'click_browse_files', 'Click <em>Browse Files</em> to add files to the queue', '2008-07-16 15:00:00', 'Instructional text for using fluid''s multiple file uploader');
+INSERT INTO `language_text` VALUES ('en', '_template', 'remove_queued_file', 'Remove file from queue', '2008-07-16 15:20:00', 'Instruction to remove file in Fluid''s multiple file uploader');
+INSERT INTO `language_text` VALUES ('en', '_template', 'file_placeholder', 'File Name Placeholder', '2008-07-16 15:51:00', 'Placeholder text used in Fluid''s multiple file uploader.');
+INSERT INTO `language_text` VALUES ('en', '_template', 'add_file_folder', 'Add File or Folder', '2008-07-16 15:51:00', 'Title text used in File Manager');
