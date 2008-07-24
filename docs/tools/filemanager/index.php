@@ -30,8 +30,8 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) &&
 }
 
 
+// If Flash is detected, call the necessary css and js, and configure settings to use the Fluid Uploader
 if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
-    // Add <script> tags to header to handle fluid
     $fluid_dir = 'jscripts/fluid-components/';
     $framed = intval($_GET['framed']);
     $popup = intval($_GET['popup']);
@@ -60,6 +60,7 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
             var settings =   {
                 whenDone: "'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'msg=FILEUPLOAD_DONE",
                 whenCancel: function(){},
+                whenFileUploaded: function(fileName, serverResponse) {},
                 continueAfterUpload: true,
                 debug: false
             };
