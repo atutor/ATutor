@@ -48,8 +48,8 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 		$sql = "SELECT VERSION() AS version";
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
-		if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
-			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.1.10 or later.';
+		if (version_compare($row['version'], '4.0.2', '>=') === FALSE) {
+			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.0.2 or later.';
 		}
 
 		if (!$errors) {
