@@ -1798,3 +1798,4 @@ INSERT INTO `language_text` VALUES ('em', '_template', 'click_browse_files', 'Cl
 INSERT INTO `language_text` VALUES ('en', '_template', 'remove_queued_file', 'Remove file from queue', '2008-07-16 15:20:00', 'Instruction to remove file in Fluid''s multiple file uploader');
 INSERT INTO `language_text` VALUES ('en', '_template', 'file_placeholder', 'File Name Placeholder', '2008-07-16 15:51:00', 'Placeholder text used in Fluid''s multiple file uploader.');
 INSERT INTO `language_text` VALUES ('en', '_template', 'add_file_folder', 'Add File or Folder', '2008-07-16 15:51:00', 'Title text used in File Manager');
+INSERT INTO `language_text` VALUES ('en', '_template', 'enable_uploader', 'Enable multi-file uploader tool', '2008-07-24 16:16:00', 'Used for toggling between Fluid's Uploader and the basic uploader');
