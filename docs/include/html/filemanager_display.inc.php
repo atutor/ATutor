@@ -141,8 +141,20 @@ if (TRUE || $framed != TRUE) {
 
 	echo '	<div class="row"><hr /></div>'."\n";
 
-	echo '	<div class="row" style="float: left;"><input type="button" class="button" name="new_file" value="' . _AT('file_manager_new') . '" onclick="window.location.href=\''.AT_BASE_HREF.'tools/filemanager/new.php?pathext=' . urlencode($pathext) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . '\'"/></div>'."\n";
 
+	// If flash is available, provide the option of using Fluid's uploader or the basic uploader
+	if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
+		echo '<div class="row">'."\n";
+		if (isset($_COOKIE["fluid_on"]) && $_COOKIE["fluid_on"]=="yes")
+			$fluid_on = 'checked="checked"';
+		echo '(<input type="checkbox" id="fluid_on" name="fluid_on" onclick="toggleform(\'simple-container\', \'fluid-container\'); setCheckboxCookie(this, \'fluid_on=yes\', \'fluid_on=no\',\'December 31, 2099\');" value="yes" '.$fluid_on.' /> '."\n";
+		echo '<label for="fluid_on" >'._AT('enable_uploader').'</label>)'."\n";
+		echo '</div>'."\n";
+	}
+
+
+	// Create a new file
+	echo '	<div class="row" style="float: left;"><input type="button" class="button" name="new_file" value="' . _AT('file_manager_new') . '" onclick="window.location.href=\''.AT_BASE_HREF.'tools/filemanager/new.php?pathext=' . urlencode($pathext) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . '\'"/></div>'."\n";
 
 	$my_MaxCourseSize = $system_courses[$_SESSION['course_id']]['max_quota'];
 
@@ -153,84 +165,94 @@ if (TRUE || $framed != TRUE) {
 		echo '	<div class="row" style="float: left;">'._AT('OR').'</div>'."\n".'	<div class="row" style="float: left;">'."\n";
 		if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 		?>
-			<input type="button" id="uploader_link" class="button" name="upload_file" value="<?php echo _AT('upload_files'); ?>" onclick="toggleform('uploader', 'uploader_link');" />
-			<div id="uploader" style="border-width: 1px; border-style: dashed; display: none; padding: 5px;">
-				<form id="single-inline-fluid-uploader" class="fluid-uploader infusion" method="get" enctype="multipart/form-data" action="" style="margin: 0px; padding: 0px;">
-					<div class="start">
-						<div class="fluid-uploader-queue-wrapper">
-							<div class="fluid-scroller-table-head">
-								<table cellspacing="0" cellpadding="0">
-										<tr>
-											<th scope="col" class="fileName"><?php echo _AT('file_name'); ?></th>
-											<th scope="col" class="fileSize"><?php echo _AT('size'); ?>&nbsp;&nbsp;</th>
-											<th scope="col" class="fileRemove">&nbsp;</th>
-										</tr>
-								</table>
-							</div>
-							<div class="fluid-scroller">
-								<div class="scroller-inner">
-									<table cellspacing="0" class="fluid-uploader-queue">
-										<tbody>
-											
-										</tbody>
+			<div id="fluid-container" <?php echo (isset($_COOKIE["fluid_on"]) && $_COOKIE["fluid_on"]=="yes") ? '' : 'style="display:none;"'; ?>>
+				<input type="button" id="uploader_link" class="button" name="upload_file" value="<?php echo _AT('upload_files'); ?>" onclick="toggleform('uploader', 'uploader_link');" />
+				<div id="uploader" style="border-width: 1px; border-style: dashed; display: none; padding: 5px;">
+					<form id="single-inline-fluid-uploader" class="fluid-uploader infusion" method="get" enctype="multipart/form-data" action="" style="margin: 0px; padding: 0px;">
+						<div class="start">
+							<div class="fluid-uploader-queue-wrapper">
+								<div class="fluid-scroller-table-head">
+									<table cellspacing="0" cellpadding="0">
+											<tr>
+												<th scope="col" class="fileName"><?php echo _AT('file_name'); ?></th>
+												<th scope="col" class="fileSize"><?php echo _AT('size'); ?>&nbsp;&nbsp;</th>
+												<th scope="col" class="fileRemove">&nbsp;</th>
+											</tr>
 									</table>
-									<div class="file-progress"><span class="file-progress-text">76%</span></div>
+								</div>
+								<div class="fluid-scroller">
+									<div class="scroller-inner">
+										<table cellspacing="0" class="fluid-uploader-queue">
+											<tbody>
+												
+											</tbody>
+										</table>
+										<div class="file-progress"><span class="file-progress-text">76%</span></div>
+									</div>
+								</div>
+								
+								<div class="fluid-uploader-row-placeholder"> <?php echo _AT('click_browse_files'); ?> </div>
+
+								<div class="fluid-scroller-table-foot">
+									<table cellspacing="0" cellpadding="0">
+											<tr>
+												<td class="footer-total"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> <?php echo _AT('files'); ?> (<span class="fluid-uploader-totalBytes">0 <?php echo _AT('kb'); ?></span>)</td>
+												<td class="footer-button" align="right" ><a class="fluid-uploader-browse" tabindex="0" ><?php echo _AT('browse_files'); ?></a></td>
+											</tr>
+									</table>
+									<div class="total-progress">&nbsp;</div>
 								</div>
 							</div>
-							
-							<div class="fluid-uploader-row-placeholder"> <?php echo _AT('click_browse_files'); ?> </div>
-
-							<div class="fluid-scroller-table-foot">
-								<table cellspacing="0" cellpadding="0">
-										<tr>
-											<td class="footer-total"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> <?php echo _AT('files'); ?> (<span class="fluid-uploader-totalBytes">0 <?php echo _AT('kb'); ?></span>)</td>
-											<td class="footer-button" align="right" ><a class="fluid-uploader-browse" tabindex="0" ><?php echo _AT('browse_files'); ?></a></td>
-										</tr>
-								</table>
-								<div class="total-progress">&nbsp;</div>
+							<div class="fluid-uploader-btns">
+								<button type="button" class="fluid-uploader-upload default" ><?php echo _AT('upload'); ?></button>
+								<button type="button" class="fluid-uploader-resume default" ><?php echo _AT('resume'); ?></button>
+								<button type="button" class="fluid-uploader-pause" ><?php echo _AT('pause'); ?></button>
+								<button type="button" class="fluid-uploader-cancel cancel" onclick="toggleform('uploader', 'uploader_link');"><?php echo _AT('cancel'); ?></button>
+								<button type="button" class="fluid-uploader-done" ><?php echo _AT('done'); ?></button>
 							</div>
+							
 						</div>
-						<div class="fluid-uploader-btns">
-							<button type="button" class="fluid-uploader-upload default" ><?php echo _AT('upload'); ?></button>
-							<button type="button" class="fluid-uploader-resume default" ><?php echo _AT('resume'); ?></button>
-							<button type="button" class="fluid-uploader-pause" ><?php echo _AT('pause'); ?></button>
-							<button type="button" class="fluid-uploader-cancel cancel" onclick="toggleform('uploader', 'uploader_link');"><?php echo _AT('cancel'); ?></button>
-							<button type="button" class="fluid-uploader-done" ><?php echo _AT('done'); ?></button>
-						</div>
-						
-					</div>
-				</form>
+					</form>
 
-				<div class="fluid-templates">
-					<table id="fluid-uploader">
-						<tr id="queue-row-tmplt">
-							<th class="fileName" scope="row"><?php echo _AT('file_placeholder'); ?></th>
-							<td class="fileSize">0 <?php echo _AT('kb'); ?></td>
-							<td class="fileRemove">
-								<button type="button" class="removeFile" title="Remove File" tabindex="0">
-									<span class="text-description"><?php echo _AT('remove_queued_file'); ?></span>
-								</button>
-							</td>
-						</tr>
-						<tr id="queue-error-tmplt" class="queue-error-row"><td colspan="3" class="queue-error"></td></tr>
-					</table>
+					<div class="fluid-templates">
+						<table id="fluid-uploader">
+							<tr id="queue-row-tmplt">
+								<th class="fileName" scope="row"><?php echo _AT('file_placeholder'); ?></th>
+								<td class="fileSize">0 <?php echo _AT('kb'); ?></td>
+								<td class="fileRemove">
+									<button type="button" class="removeFile" title="Remove File" tabindex="0">
+										<span class="text-description"><?php echo _AT('remove_queued_file'); ?></span>
+									</button>
+								</td>
+							</tr>
+							<tr id="queue-error-tmplt" class="queue-error-row"><td colspan="3" class="queue-error"></td></tr>
+						</table>
+					</div>
 				</div>
 			</div>
 		<?php
-
+			if (isset($_COOKIE["fluid_on"]) && $_COOKIE["fluid_on"]=="yes")
+				echo '<div id="simple-container" style="display: none;">';
+			else
+				echo '<div id="simple-container">';
 		} else {
-			echo '<form onsubmit="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');" name="form1" method="post" action="tools/filemanager/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
-			echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
-			echo '<label for="uploadedfile">'._AT('upload_files').'</label><br />'."\n";
-			echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> ';
-			echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
-			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
-
-			if ($popup == TRUE) {
-				echo '<input type="hidden" name="popup" value="1" />';
-			}
-			echo '</form>';
+			// Display as regular if there's no Flash detected
+			echo '<div id="simple-container">'."\n";
 		}
+
+		// Simple single file uploader
+		echo '<form onsubmit="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');" name="form1" method="post" action="tools/filemanager/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
+		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
+		echo '<label for="uploadedfile">'._AT('upload_files').'</label><br />'."\n";
+		echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> ';
+		echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
+		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
+
+		if ($popup == TRUE) {
+			echo '<input type="hidden" name="popup" value="1" />';
+		}
+		echo '</form>';
+		echo '</div>';
 
 		echo '		</div>'."\n".'	</fieldset></div>';
 
@@ -484,6 +506,19 @@ function toggleform(id, link) {
 		obj.style.display='none';
 		btn.style.display = '';
 	}
+}
+
+// set a cookie
+function setCheckboxCookie(obj, value1, value2, date)
+{
+	var today = new Date();
+	var the_date = new Date(date);
+	var the_cookie_date = the_date.toGMTString();
+	if (obj.checked==true)
+		var the_cookie = value1 + ";expires=" + the_cookie_date;
+	else
+		var the_cookie = value2 + ";expires=" + the_cookie_date;
+	document.cookie = the_cookie;
 }
 <?php } ?>
 
