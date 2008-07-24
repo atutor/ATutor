@@ -264,6 +264,7 @@ class Patch {
 				<input type="submit" name="no" value="'. _AT('cancel'). '" />
 				<input type="hidden" name="install" value="' . $_POST['install'] . '" />
 				<input type="hidden" name="install_upload" value="' . $_POST['install_upload'] . '" />
+				<input type="hidden" name="ignore_version" value="' . $_POST['ignore_version'] . '" />
 			</div>
 			</form>';
 			
@@ -403,6 +404,7 @@ class Patch {
 					<input type="submit" name="no" value="'. _AT('no'). '" />
 					<input type="hidden" name="install" value="' . $_POST['install'] . '" />
 					<input type="hidden" name="install_upload" value="' . $_POST['install_upload'] . '" />
+					<input type="hidden" name="ignore_version" value="' . $_POST['ignore_version'] . '" />
 				</div>
 				</form>';
 

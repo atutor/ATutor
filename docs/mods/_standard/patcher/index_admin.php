@@ -2,9 +2,6 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
-require (AT_INCLUDE_PATH.'header.inc.php');
-
-require_once('include/common.inc.php');
 
 set_time_limit(0);
 
@@ -50,7 +47,17 @@ $skipFilesModified = false;
 
 if ($_POST['yes'])  $skipFilesModified = true;
 
+if ($_POST['no'])
+{
+	unset($_SESSION['remove_permission']);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index_admin.php');
+	exit;
+}
+
 require_once('classes/PatchListParser.class.php');
+require_once('include/common.inc.php');
+require (AT_INCLUDE_PATH.'header.inc.php');
 
 if (trim($_POST['who']) != '') $who = trim($_POST['who']);
 elseif (trim($_REQUEST['who']) != '') $who = trim($_REQUEST['who']);
