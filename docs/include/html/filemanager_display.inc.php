@@ -465,6 +465,8 @@ function insertAtCursor(myField, myValue) {
 	}
 }
 
+<?php  if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") { ?>
+// toggle the view between div object and button
 function toggleform(id, link) {
 	var obj = document.getElementById(id);
 	var btn = document.getElementById(link);
@@ -483,6 +485,7 @@ function toggleform(id, link) {
 		btn.style.display = '';
 	}
 }
+<?php } ?>
 
 //-->
 </script>
