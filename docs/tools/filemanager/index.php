@@ -41,7 +41,24 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
     $framed = intval($_GET['framed']);
     $popup = intval($_GET['popup']);
     $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
-    $pathext = urldecode($_GET['pathext']);
+
+    if ($_GET['pathext'] != '') {
+        $pathext = urldecode($_GET['pathext']);
+    } else if ($_POST['pathext'] != '') {
+        $pathext = $_POST['pathext'];
+    }
+
+    if($_GET['back'] == 1) {
+        $pathext  = substr($pathext, 0, -1);
+        $slashpos = strrpos($pathext, '/');
+        if($slashpos == 0) {
+            $pathext = '';
+        } else {
+            $pathext = substr($pathext, 0, ($slashpos+1));
+        }
+
+    }
+
     $_custom_head .= '
         <link href="'.$fluid_dir.'css/infusion-theme.css" rel="stylesheet" type="text/css" />
         <link href="'.$fluid_dir.'css/Uploader.css" rel="stylesheet" type="text/css" />
