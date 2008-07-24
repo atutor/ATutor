@@ -32,6 +32,11 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) &&
 
 // If Flash is detected, call the necessary css and js, and configure settings to use the Fluid Uploader
 if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
+    /* Provide the option of switching between Fluid Uploader and simple single file uploader
+       and save the user preference as a cookie */
+    if (!isset($_COOKIE["fluid_on"]))
+        setcookie("fluid_on", "yes", time()+1200); 
+
     $fluid_dir = 'jscripts/fluid-components/';
     $framed = intval($_GET['framed']);
     $popup = intval($_GET['popup']);
