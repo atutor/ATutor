@@ -130,7 +130,7 @@ print_progress($step);
 <br />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1" colspan="2">The following information to the atutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community. You may optionally choose to send the URL of your ATutor installation.</td>
+		<td class="row1" colspan="2">Submit the following information to the atutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community. You may optionally choose to send the URL of your ATutor installation.</td>
 	</tr>
 	<tr>
 		<td class="row1" width="20%"><b>ATutor Version:</b></td>
