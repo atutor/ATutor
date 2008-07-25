@@ -32,9 +32,7 @@ if (!$msg->containsFeedbacks()) {
 	}
 }
 
-if (!isset($_SESSION['token']) || !$_SESSION['token']) {
-	$_SESSION['token'] = sha1(mt_rand());
-}
+
 
 if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	/* auto login */
@@ -65,13 +63,9 @@ if (isset($this_login, $this_password)) {
 	$this_password = $addslashes($this_password);
 
 	if ($used_cookie) {
-		// check if that cookie is valid
-		//$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, password AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND password='$this_password'";
 		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences,password AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND password='$this_password'";
 	} else {
-//echo DB_PASSWORD;
-//exit;
-		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND password='$this_password'";
+		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
 	}
 	$result = mysql_query($sql, $db);
 
@@ -104,7 +98,7 @@ if (isset($this_login, $this_password)) {
 		exit;
 	} else {
 		// check if it's an admin login.
-		$sql = "SELECT login, `privileges`, language FROM ".TABLE_PREFIX."admins WHERE login='$this_login' AND password='$this_password' AND `privileges`>0";
+		$sql = "SELECT login, `privileges`, language FROM ".TABLE_PREFIX."admins WHERE login='$this_login' AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password' AND `privileges`>0";
 		$result = mysql_query($sql, $db);
 
 		if ($row = mysql_fetch_assoc($result)) {
@@ -143,6 +137,10 @@ unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['is_super_admin']);
+
+// For security reasons the token has to be generated anew before each login attempt.
+// The entropy of SHA-1 input should be comparable to that of its output; in other words, the more randomness you feed it the better.
+$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
 
 $_SESSION['prefs']['PREF_FORM_FOCUS'] = 1;
 
