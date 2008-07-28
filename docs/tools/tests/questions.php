@@ -59,7 +59,8 @@ if (isset($_POST['submit'])) {
 		$optional_weight = 0;
 		$count = 1;
 		foreach ($_POST['weight'] as $qid => $weight) {
-			$weight = $addslashes($weight);
+			$qid    = intval($qid);
+			$weight = intval($weight);
 			if ($_POST['required'][$qid]) {
 				$required = 1;
 			} else {
@@ -81,6 +82,10 @@ if (isset($_POST['submit'])) {
 				$orders = $_POST['ordering'];
 				asort($orders);
 				$orders = array_keys($orders);
+
+				foreach ($orders as &$id)
+					$id = intval($id);
+					
 				$orders = array_flip($orders);
 				$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=".($orders[$qid]+1)." WHERE question_id=$qid AND test_id=".$tid;
 			} else {
