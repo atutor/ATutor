@@ -26,11 +26,23 @@ require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 
 define ('PACKAGE_TYPES', 'scorm-1.2');
 
-if (isset ($_POST['type'])) {
-	require ($_POST['type'] . '/import.php');
-}
+if (isset ($_POST['type'])){
+	$_POST['type'] = $addslashes($_POST['type']);
 
+	if($_POST['type']!= PACKAGE_TYPES){
+		$error = 'IMPORT_FAILED';
+	$msg->addError($error);
+	}
+	
+	if(!$msg->containsErrors()){
+		if (isset ($_POST['type']) ) {
+			require ($_POST['type'] . '/import.php');
+		}
+	}
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+$msg->printErrors();
 
 ?>
 
