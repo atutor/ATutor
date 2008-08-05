@@ -46,6 +46,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $these_questions= split(",", $_REQUEST['qid']);
 
 foreach($these_questions as $this_question){
+	$this_question = intval($this_question);
 	$sql = "SELECT question FROM ".TABLE_PREFIX."tests_questions WHERE question_id = '$this_question' ";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
