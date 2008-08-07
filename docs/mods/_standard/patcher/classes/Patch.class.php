@@ -699,7 +699,10 @@ class Patch {
 					   description,
 					   available_to,
 					   sql_statement,
-					   status)
+					   status,
+					   remove_permission_files,
+					   backup_files,
+					   patch_files)
 					  VALUES
 					  ('".$patch_summary_array["atutor_patch_id"]."',
 					   '".$patch_summary_array["applied_version"]."',
@@ -707,8 +710,10 @@ class Patch {
 					   '".mysql_real_escape_string($patch_summary_array["description"])."',
 					   '".$patch_summary_array["available_to"]."',
 					   '',
-					   '".$patch_summary_array["status"]."'
-					   )";
+					   '".$patch_summary_array["status"]."',
+					   '',
+					   '',
+					   '')";
 
 		$result = mysql_query($sql, $db) or die(mysql_error());
 		
