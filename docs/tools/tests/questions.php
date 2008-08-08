@@ -83,8 +83,8 @@ if (isset($_POST['submit'])) {
 				asort($orders);
 				$orders = array_keys($orders);
 
-				foreach ($orders as &$id)
-					$id = intval($id);
+				foreach ($orders as $k => $id)
+					$orders[$k] = intval($id);
 					
 				$orders = array_flip($orders);
 				$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=".($orders[$qid]+1)." WHERE question_id=$qid AND test_id=".$tid;
