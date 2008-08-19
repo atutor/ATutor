@@ -66,6 +66,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL_DATETIME) {	
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
 
+	//Check if the timestamp is indeed in the valid format
+	if ($format_type == AT_DATE_MYSQL_DATETIME && strlen($timestamp)==14){
+		$format_type = AT_DATE_MYSQL_TIMESTAMP_14;
+	}
+
 	if (!isset($day_name_ext)) {
 		$day_name_ext = array(	'date_sunday', 
 								'date_monday', 
