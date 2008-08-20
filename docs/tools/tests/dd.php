@@ -19,6 +19,16 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 } else {
 	$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
 }
+// Verify that we may access this question
+if (!isset($_SESSION['dd_question_ids']) || !is_array($_SESSION['dd_question_ids']) || !isset($_SESSION['dd_question_ids'][$_GET['qid']])) {
+	// Just exit as we're in an IFRAME
+	exit;
+}
+// Clean up tidily
+unset($_SESSION['dd_question_ids'][$_GET['qid']]);
+if (count($_SESSION['dd_question_ids']) == 0) {
+	unset($_SESSION['dd_question_ids']);
+}
 session_write_close();
 $_GET['qid'] = intval($_GET['qid']);
 $sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$_GET[qid]";

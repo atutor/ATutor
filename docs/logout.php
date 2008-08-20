@@ -25,6 +25,7 @@ unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['prefs']);
+unset($_SESSION['dd_question_ids']);
 unset($_SESSION['flash']);
 
 $msg->addFeedback('LOGOUT');

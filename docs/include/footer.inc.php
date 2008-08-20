@@ -89,6 +89,7 @@ if ($framed || $popup) {
 //Harris Timer Ends
 
 if (defined('AT_DEVEL') && AT_DEVEL) {
+debug($_SESSION['prefs'][PREF_THEME]);
 	debug(TABLE_PREFIX, 'TABLE_PREFIX');
 	debug(DB_NAME, 'DB_NAME');
 	debug(VERSION, 'VERSION');

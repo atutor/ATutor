@@ -1,6 +1,7 @@
 <p><?php echo AT_print($this->row['question'], 'tests_questions.question'); ?></p>
 
 <?php $tmp_response = implode('|', $this->response); ?>
+<?php $_SESSION['dd_question_ids'][$this->row['question_id']] = 1; ?>
 
 <?php for ($i=0; $i < $this->num_choices; $i++): ?>
 	<input type="hidden" name="answers[<?php echo $this->row['question_id']; ?>][<?php echo $i; ?>]" id="<?php echo $this->row['question_id']; ?>q<?php echo $i; ?>" value="<?php echo $this->response[$i]; ?>"/>

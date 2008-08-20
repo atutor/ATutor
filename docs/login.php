@@ -137,6 +137,7 @@ unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['is_super_admin']);
+unset($_SESSION['dd_question_ids']);
 
 // For security reasons the token has to be generated anew before each login attempt.
 // The entropy of SHA-1 input should be comparable to that of its output; in other words, the more randomness you feed it the better.
