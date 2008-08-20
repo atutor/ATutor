@@ -17,14 +17,18 @@ authenticate(AT_PRIV_TESTS);
 
 $tid = intval($_REQUEST['tid']);
 
-
 if (isset($_GET['delete'], $_GET['id'])) {
-	header('Location:delete_result.php?tid='.$tid.SEP.'rid='.$_GET['id']);
+	$ids = implode(',', $_GET['id']);
+	header('Location:delete_result.php?tid='.$tid.SEP.'rid='.$ids);
 	exit;
 } else if (isset($_GET['edit'], $_GET['id'])) {
-	header('Location:view_results.php?tid='.$tid.SEP.'rid='.$_GET['id']);
-	exit;
-} else if (isset($_GET['edit']) && !$_GET['id'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {
+	if (count($_GET['id']) > 1) {
+		$msg->addError('SELECT_ONE_ITEM');
+	} else {
+		header('Location:view_results.php?tid='.$tid.SEP.'rid='.$_GET['id'][0]);
+		exit;
+	}
+} else if ((isset($_GET['edit']) || isset($_GET['delete'])) && !$_GET['id'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -73,6 +77,7 @@ if (!($row = mysql_fetch_array($result))){
 $out_of = $row['out_of'];
 $anonymous = $row['anonymous'];
 $random = $row['random'];
+$title = $row['title'];
 
 //count total
 $sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1";
@@ -82,9 +87,10 @@ $num_sub = $row['cnt'];
 
 //get results based on filtre and sorting
 if ($anonymous == 1) {
-	$sql	= "SELECT R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
+	// Keep login, full_name and fs fields even if not used: ORDER BY relies upon them
+	$sql	= "SELECT R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, '' AS login, '' AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
 } else {	
-	$sql	= "SELECT R.*, login, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, CONCAT(first_name, ' ', second_name, ' ', last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
+	$sql	= "SELECT R.*, M.login, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, CONCAT(M.first_name, ' ', M.second_name, ' ', M.last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
 }
 
 $result = mysql_query($sql, $db);
@@ -94,7 +100,6 @@ if ($anonymous == 1) {
 	$guest_text = '- '._AT('guest').' -';
 }
 while ($row = mysql_fetch_assoc($result)) {
-	$row['full_name'] = $row['full_name'] ? $row['full_name'] : $guest_text;
 	$row['login']     = $row['login']     ? $row['login']     : $guest_text;
 	$rows[$row['result_id']] = $row;
 }
@@ -112,7 +117,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 }
 
 ?>
-<h3><?php echo AT_print($row['title'], 'tests.title'); ?></h3><br />
+<h3><?php echo AT_print($title, 'tests.title'); ?></h3><br />
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
@@ -169,7 +174,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 </colgroup>
 <thead>
 <tr>
-	<th scope="col" width="1%">&nbsp;</th>
+	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('login_name'); ?></a></th>
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=full_name"><?php echo _AT('full_name'); ?></a></th>
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
@@ -185,14 +190,14 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 <tbody>
 <?php if ($rows): ?>
 	<?php foreach ($rows as $row): ?>
-		<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['result_id']; ?>">
-			<td><input type="radio" name="id" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" /></td>
-			<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
+		<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = !document.form['r<?php echo $row['result_id']; ?>'].checked; togglerowhighlight(this, 'r<?php echo $row['result_id']; ?>');" id="rr<?php echo $row['result_id']; ?>">
+			<td><input type="checkbox" name="id[]" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
+			<td><?php echo $row['login']; ?></td>
 			<td><?php 
-				if ($anonymous == 1){
-					echo AT_print($guest_text, 'members.full_name');
-				} else {
+				if ($anonymous == 0 && $row['member_id']){
 					echo AT_print(get_display_name($row['member_id']), 'members.full_name'); /*$row['full_name'] */ 
+				} else {
+					echo $guest_text; // no need in AT_print(): $guest_text is a trusted _AT() output
 				}
 				?></td>
 			<td><?php $startend_date_format=_AT('startend_date_format'); echo AT_date( $startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME); ?></td>
@@ -224,4 +229,25 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 </tbody>
 </table>
 </form>
+<script language="JavaScript" type="text/javascript">
+//<!--
+function CheckAll() {
+	for (var i=0;i<document.form.elements.length;i++)	{
+		var e = document.form.elements[i];
+		if ((e.name == 'id[]') && (e.type=='checkbox')) {
+			e.checked = document.form.selectall.checked;
+			togglerowhighlight(document.getElementById("r" + e.id), e.id);
+		}
+	}
+}
+
+function togglerowhighlight(obj, boxid) {
+	if (document.getElementById(boxid).checked) {
+		obj.className = 'selected';
+	} else {
+		obj.className = '';
+	}
+}
+//-->
+</script>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
