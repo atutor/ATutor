@@ -28,9 +28,9 @@ function get_forums($course) {
 	global $db;
 
 	if ($course) {
-		$sql	= "SELECT F.*, DATE_FORMAT(F.last_post, '%Y-%m-%d %H-%i:%s') AS last_post FROM ".TABLE_PREFIX."forums_courses FC INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) WHERE FC.course_id=$course GROUP BY FC.forum_id ORDER BY F.title";
+		$sql	= "SELECT F.*, DATE_FORMAT(F.last_post, '%Y-%m-%d %H:%i:%s') AS last_post FROM ".TABLE_PREFIX."forums_courses FC INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) WHERE FC.course_id=$course GROUP BY FC.forum_id ORDER BY F.title";
 	} else {
-		$sql	= "SELECT F.*, FC.course_id, DATE_FORMAT(F.last_post, '%Y-%m-%d %H-%i:%s') AS last_post FROM ".TABLE_PREFIX."forums_courses FC INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) GROUP BY FC.forum_id ORDER BY F.title";
+		$sql	= "SELECT F.*, FC.course_id, DATE_FORMAT(F.last_post, '%Y-%m-%d %H:%i:%s') AS last_post FROM ".TABLE_PREFIX."forums_courses FC INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) GROUP BY FC.forum_id ORDER BY F.title";
 	}
 
 	// 'nonshared' forums are always listed first:
