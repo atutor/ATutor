@@ -17,7 +17,19 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_TESTS);
 
 $tid = intval($_REQUEST['tid']);
-$rid = intval($_REQUEST['rid']);
+$rids = explode(',', $_REQUEST['rid']);
+foreach ($rids as &$id) {
+	$id = intval($id);
+}
+$rid = implode(',', $rids);
+
+// Check that the user deletes submissions in his own test; if not, exit like authenticate()
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results LEFT JOIN ".TABLE_PREFIX."tests USING (test_id) WHERE result_id IN ($rid) AND course_id = $_SESSION[course_id] AND test_id = $tid";
+$result	= mysql_query($sql, $db);
+$row = mysql_fetch_array($result);
+if ($row['cnt'] < count($rids)) {
+	exit;
+}
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
@@ -25,11 +37,10 @@ if (isset($_POST['submit_no'])) {
 	exit;
 
 } else if (isset($_POST['submit_yes'])) {
-		
-	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$rid";
+	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE result_id IN ($rid)";
 	$result	= mysql_query($sql, $db);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid";
+	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE result_id IN ($rid)";
 	$result	= mysql_query($sql, $db);
 		
 	$msg->addFeedback('RESULT_DELETED');
@@ -48,7 +59,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 unset($hidden_vars);
 $hidden_vars['tid'] = $tid;
 $hidden_vars['rid'] = $rid;
-$msg->addConfirm('DELETE', $hidden_vars);
+$msg->addConfirm(array('DELETE', _AT('submissions') .': <strong>'. count($rids) .'</strong>'), $hidden_vars);
 
 $msg->printConfirm();
 
