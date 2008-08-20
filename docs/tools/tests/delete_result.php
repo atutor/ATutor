@@ -18,8 +18,8 @@ authenticate(AT_PRIV_TESTS);
 
 $tid = intval($_REQUEST['tid']);
 $rids = explode(',', $_REQUEST['rid']);
-foreach ($rids as &$id) {
-	$id = intval($id);
+foreach ($rids as $k => $id) {
+	$rids[$k] = intval($id);
 }
 $rid = implode(',', $rids);
 
