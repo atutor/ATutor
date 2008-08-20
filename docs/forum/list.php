@@ -57,17 +57,18 @@ if ($num_shared || $num_nonshared || $num_groups) {
 		foreach ($forums as $row) : ?>
 			<tr>
 				<td><a href="<?php echo url_rewrite('forum/index.php?fid='.$row['forum_id']); ?>"><?php echo $row['title']; ?></a> <?php
-
+					// patch has added the two icons below
 					if ($_SESSION['enroll']) {
 						$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";
 						$result1 = mysql_query($sql, $db);
-						echo ' [ ';
-						if ($row1 = mysql_fetch_row($result1)) {
-							echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">'._AT('unsubscribe1').'</a>';
+					
+if ($row1 = mysql_fetch_row($result1)) {
+					echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">
+							<br /><img border="0" src="'.AT_BASE_HREF.'images/unsubscribe-envelope.png" alt="" /> '._AT('unsubscribe1').'</a>';
 						} else {
-							echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].'">'._AT('subscribe1').'</a>';
+							echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].'">
+							<br /><img border="0" src="'.AT_BASE_HREF.'images/subscribe-envelope.png" alt="" /> '._AT('subscribe1').'</a>';
 						}
-						echo ' ]';
 					} ?>
 					<p><?php echo $row['description']; ?></p>
 				</td>
