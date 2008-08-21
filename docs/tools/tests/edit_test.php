@@ -57,11 +57,11 @@ if (isset($_POST['cancel'])) {
 	$_POST['instructions'] = trim($_POST['instructions']);
 
 	if ($_POST['title'] == '') {
-		$missing_fields[] = 'title';
+		$missing_fields[] = _AT('title');
 	}
 
 	if ($_POST['random'] && !$_POST['num_questions']) {
-		$missing_fields[] = 'num_questions_per_test';
+		$missing_fields[] = _AT('num_questions_per_test');
 	}
 
 	if ($_POST['pass_score']==1 && !$_POST['passpercent']) {
