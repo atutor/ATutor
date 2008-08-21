@@ -155,11 +155,9 @@ if (!isset($_POST['submit'])) {
 			} else { 
 				$select_lang = $_config['default_language'];
 			} ?>
-		<?php if ($disabled): ?>
-			<select name="default_language" id="default_lang" disabled="disabled"><option><?php echo $select_lang; ?></option></select>
-		<?php else: ?>
+
 			<?php $languageManager->printDropdown($select_lang, 'default_language', 'default_lang'); ?>
-		<?php endif; ?>
+
 	</div>
 
 	<div class="row">
@@ -212,7 +210,7 @@ if (!isset($_POST['submit'])) {
 		<?php echo _AT('master_list_authentication'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['master_list'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="master_list" value="1" id="ml_y" <?php if ($_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_y"><?php echo _AT('enable'); ?></label> 
 
-		<input type="radio" name="master_list" value="0" id="ml_n" <?php if(!$_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_n"><?php echo $disable_on . _AT('disable') . $disable_off; ?></label>
+		<input type="radio" name="master_list" value="0" id="ml_n" <?php if(!$_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row">
