@@ -90,7 +90,9 @@ if ($anonymous == 1) {
 	// Keep login, full_name and fs fields even if not used: ORDER BY relies upon them
 	$sql	= "SELECT R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, '' AS login, '' AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
 } else {	
-	$sql	= "SELECT R.*, M.login, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, CONCAT(M.first_name, ' ', M.second_name, ' ', M.last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
+//	$sql	= "SELECT R.*, M.login, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, CONCAT(M.first_name, ' ', M.second_name, ' ', M.last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
+	//added by Indirect
+	$sql	= "SELECT R.*, login, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
 }
 
 $result = mysql_query($sql, $db);
@@ -100,6 +102,7 @@ if ($anonymous == 1) {
 	$guest_text = '- '._AT('guest').' -';
 }
 while ($row = mysql_fetch_assoc($result)) {
+	$row['full_name'] = $row['full_name'] ? $row['full_name'] : $guest_text;
 	$row['login']     = $row['login']     ? $row['login']     : $guest_text;
 	$rows[$row['result_id']] = $row;
 }
@@ -117,8 +120,8 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 }
 
 ?>
+<!--h3><?php //echo AT_print($row['title'], 'tests.title'); ?></h3><br / -->
 <h3><?php echo AT_print($title, 'tests.title'); ?></h3><br />
-
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 
