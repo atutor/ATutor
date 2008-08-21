@@ -216,7 +216,7 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<?php echo _AT('require_email_confirmation'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['require_email_confirmation'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<?php echo _AT('require_email_confirmation'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['email_confirmation'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="email_confirmation" value="1" id="ec_y" <?php if ($_config['email_confirmation']) { echo 'checked="checked"'; }?>  /><label for="ec_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="email_confirmation" value="0" id="ec_n" <?php if(!$_config['email_confirmation']) { echo 'checked="checked"'; }?>  /><label for="ec_n"><?php echo _AT('disable'); ?></label>
 	</div>
 		
