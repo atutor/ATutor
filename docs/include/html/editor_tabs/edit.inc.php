@@ -28,7 +28,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	<div class="row">
 		<label for="head"><?php echo _AT('customized_head');  ?></label>
-		<input type="button" name="edithead" value="<?php echo _AT('edit'); ?>" onClick="switch_head_editor()" /><br />
+		<input type="button" name="edithead" value="<?php echo _AT('edit'); ?>" onClick="switch_head_editor()" class="button"/><br />
 		<small>&middot; <?php echo _AT('customized_head_note'); ?></small>
 	</div>
 
@@ -61,7 +61,7 @@ if ($do_check) {
 		<input type="hidden" name="displayhead" value="<?php if ($_POST['displayhead']==1 || $_REQUEST['displayhead']==1 || $_GET['displayhead']==1) echo '1'; else echo '0'; ?>" />
 		<input type="hidden" name="setvisual" value="<?php if ($_POST['setvisual']==1 || $_REQUEST['setvisual']==1 || $_GET['setvisual']==1) echo '1'; else echo '0'; ?>" />
 		<input type="hidden" name="settext" value="<?php if ($_POST['settext']==1 || $_REQUEST['settext']==1 || $_GET['settext']==1) echo '1'; else echo '0'; ?>" />
-		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_body_editor()" />
+		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_body_editor()" class="button" />
 
 		<script type="text/javascript" language="javascript">
 		//<!--
@@ -95,7 +95,7 @@ if ($do_check) {
 
 	<div class="row">
 		<strong><?php echo _AT('or'); ?></strong> <?php echo _AT('paste_file'); ?><br />
-		<input type="file" name="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>" /><br />
+		<input type="file" name="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" /><br />
 		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
 		&middot;<?php echo _AT('edit_after_upload'); ?></small>
 	</div>
