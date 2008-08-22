@@ -163,8 +163,8 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
 require(AT_INCLUDE_PATH.'lib/utf8.php');			//UTF-8 multibyte library
 
 if ($_config['time_zone']) {
-	$sql = "SET time_zone='{$_config['time_zone']}'";
-	mysql_query($sql, $db);
+	//$sql = "SET time_zone='{$_config['time_zone']}'";
+	//mysql_query($sql, $db);
 
 	if (function_exists('date_default_timezone_set')) {
 		date_default_timezone_set($_config['time_zone']);
@@ -1182,6 +1182,27 @@ function get_human_time($seconds) {
 	}
 
 	return $out;
+}
+/**
+* at_timezone
+* converts a MYSQL timestamp into a UNIX timmestamp, adds the user's timezone offset
+* @param   date	 MYSQL timestamp.
+* @return  date timestamp plus users timezone offset.
+* @author  Greg Gay  .
+*/
+function at_timezone($timestamp){
+
+	preg_match('/(.*)-[0](.*)-(.*) (.*):(.*):(.*)/', $timestamp, $matches);
+	$timestamp = mktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
+
+	if($_SESSION['prefs']['PREF_TIMEZONE'] >= 0){
+		$timestamp = ($timestamp + ($_SESSION['prefs']['PREF_TIMEZONE']*3600));
+	}else{
+		$timestamp = ($timestamp - ($_SESSION['prefs']['PREF_TIMEZONE']*3600));
+
+	}
+	$timestamp = date("Y-m-d G:i:s", $timestamp);
+	return $timestamp;
 }
 
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
