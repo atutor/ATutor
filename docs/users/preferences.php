@@ -32,6 +32,7 @@ if (isset($_GET['submit'])) {
 
 	$temp_prefs['PREF_NUMBERING']	   = intval($_GET['numbering']);
 	$temp_prefs['PREF_THEME']	       = $addslashes($_GET['theme']);
+	$temp_prefs['PREF_TIMEZONE']	       = $addslashes($_GET['time_zone']);
 	$temp_prefs['PREF_JUMP_REDIRECT']  = intval($_GET['use_jump_redirect']);
 	$temp_prefs['PREF_FORM_FOCUS']     = intval($_GET['form_focus']);
 	$temp_prefs['PREF_CONTENT_EDITOR'] = intval($_GET['content_editor']);
