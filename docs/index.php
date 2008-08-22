@@ -29,7 +29,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 }
 
 require(AT_INCLUDE_PATH . 'header.inc.php');
-		
+
 /* the "home" links: */
 $home_links = get_home_navigation();
 $savant->assign('home_links', $home_links);
@@ -61,7 +61,7 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 
 	$offset = ($page-1)*$results_per_page;
 
-	$sql = "SELECT N.*, DATE_FORMAT(N.date, '%Y-%m-%d %H-%i:%s') AS date, first_name, last_name 
+	$sql = "SELECT N.*, DATE_FORMAT(N.date, '%Y-%m-%d %H:%i:%s') AS date, first_name, last_name 
 	          FROM ".TABLE_PREFIX."news N, ".TABLE_PREFIX."members M 
 	         WHERE N.course_id=$_SESSION[course_id] 
 	           AND N.member_id = M.member_id
@@ -73,9 +73,9 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 
 		$news[$row['news_id']] = array(
 						'date'		=> AT_date(	_AT('announcement_date_format'), 
-												$row['date'], 
-												AT_DATE_MYSQL_DATETIME),
-					  'author'  => $row['first_name'] . ' ' . $row['last_name'],
+						at_timezone($row['date']), 
+						AT_DATE_MYSQL_DATETIME),
+					  	'author'  => $row['first_name'] . ' ' . $row['last_name'],
 						'title'		=> AT_print($row['title'], 'news.title'),
 						'body'		=> format_content($row['body'], $row['formatting'], $glossary));
 
