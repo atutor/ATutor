@@ -251,6 +251,8 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 //require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 //$err =& new ErrorHandler();
 
+
+
 // if filemanager is a inside a popup or a frame
 // i don't like this code. i don't know were these two variables are coming from
 // anyone can add ?framed=1 to a URL to alter the behaviour.
