@@ -28,7 +28,12 @@
 				</select>
 		<?php endif; ?>
 	</div>
-
+	<div class="row">
+		<?php echo _AT('time_zone_offset');  ?><br />
+		<?php
+		echo '<input type="text" name="time_zone" value="'.$_SESSION['prefs']['PREF_TIMEZONE'].'"/>';
+		?>
+	</div>
 	<div class="row">
 		<?php echo _AT('inbox_notification'); ?><br />
 		<?php
@@ -42,7 +47,6 @@
 		<input type="radio" name="mnot" id="mnot_yes" value="1" <?php echo $yes; ?> /><label for="mnot_yes"><?php echo _AT('enable'); ?></label> 
 		<input type="radio" name="mnot" id="mnot_no" value="0" <?php echo $no; ?> /><label for="mnot_no"><?php echo _AT('disable'); ?></label>		
 	</div>
-
 	<div class="row">
 		<?php echo _AT('show_numbers');  ?><br />
 		<?php
