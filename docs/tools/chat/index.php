@@ -133,7 +133,7 @@ if (count($tran_files) == 0) {
 				}?>
 			</td>
 	
-			<td><?php echo date('Y-m-d h:i:s', $date); ?></td>
+			<td><?php echo at_timezone(date('Y-m-d h:i:s', $date)); ?></td>
 		</tr>
 	<?php } ?>
 	</tbody>
