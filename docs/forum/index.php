@@ -45,6 +45,7 @@ if ($_SESSION['valid_user'] && $_SESSION['enroll']) {
 		$post_id = $row['post_id'];
 		unset($row['post_id']);
 		$last_accessed[$post_id] = $row;
+
 	}
 }
 

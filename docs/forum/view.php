@@ -57,7 +57,7 @@ if (!$_GET['page']) {
 $start = ($page-1)*$num_per_page;
 	
 /* get the first thread first */
-$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
+$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H:%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
 $result	= mysql_query($sql, $db);
 
 if (!($post_row = mysql_fetch_array($result))) {
