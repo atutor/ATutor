@@ -524,7 +524,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 					}
 
 					/*END PHP 4 REPLACEMENT FOR SCANDIR*/
-                    echo "<optgroup label='Custom Icons'>";
+                    echo "<optgroup label='"._AT('custom_icons')."'>";
                     foreach($files as $val) {
 						$file_ext = substr(strtolower($val), -3);
                         if ($file_ext == "jpg" || $file_ext == "png" || $file_ext == "gif") {
@@ -554,7 +554,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 				}
 				sort($course_imgs);
                 if ($boolCustom == true) {
-                    echo "<optgroup label='Other Icons'>";
+                    echo "<optgroup label='"._AT('builtin_icons')."'>";
                 }
 				foreach ($course_imgs as $file) {
 					echo '<option value="' . $file . '" ';
