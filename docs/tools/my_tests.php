@@ -65,8 +65,9 @@ while ($row = mysql_fetch_assoc($result)) {
 	
 	$startend_date_long_format=_AT('startend_date_long_format');
 	echo '</td>';
-	echo '<td>'.AT_date( $startend_date_long_format, $row['start_date']).'</td>';
-	echo '<td>'.AT_date( $startend_date_long_format, $row['end_date']).'</td>';
+
+	echo '<td>'.AT_date( $startend_date_long_format, at_timezone($row['start_date'])).'</td>';
+	echo '<td>'.AT_date( $startend_date_long_format, at_timezone($row['end_date'])).'</td>';
 
 	if ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) {
 		echo '<td>'.$takes['cnt'].'/'._AT('unlimited').'</td>';
@@ -128,7 +129,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	do {
 		echo '<tr>';
 		echo '<td><strong>'.AT_print($row['title'], 'tests.title').'</strong></td>';
-		echo '<td>'.substr($row['date_taken'], 0, -3).'</td>';
+		echo '<td>'.substr(at_timezone($row['date_taken']), 0, -3).'</td>';
 		echo '<td>'.get_human_time($row['diff']).'</td>';
 		echo '<td>';
 
