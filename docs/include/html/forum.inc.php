@@ -42,7 +42,7 @@ if (isset($_GET['asc'])) {
 	$col   = 'last_comment';
 }
 
-$sql	= "SELECT *, last_comment + 0 AS stamp, DATE_FORMAT(last_comment, '%Y-%m-%d %H-%i:%s') AS last_comment FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
+$sql	= "SELECT *, last_comment + 0 AS stamp, DATE_FORMAT(last_comment, '%Y-%m-%d %H:%i:%s') AS last_comment FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
 $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_assoc($result))) {
@@ -168,7 +168,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo '<td width="10%"><a href="'.AT_BASE_HREF.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
 
 		echo '<td width="20%" align="right" nowrap="nowrap">';
-		echo AT_date(_AT('forum_date_format'), $row['last_comment'], AT_DATE_MYSQL_DATETIME);
+		echo AT_date(_AT('forum_date_format'),at_timezone($row['last_comment']), AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 
 		if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
