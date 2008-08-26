@@ -117,7 +117,7 @@ $result = mysql_query($sql, $db);
 		<td><?php  if ($row['date_due'] == '0000-00-00 00:00:00'){
 			echo _AT('none');
 		}else {
-			echo AT_Date(_AT('forum_date_format'), $row['date_due'], AT_DATE_MYSQL_DATETIME);
+			echo AT_Date(_AT('forum_date_format'), at_timezone($row['date_due']), AT_DATE_MYSQL_DATETIME);
 		}?></td>
 		</tr>
 	<?php } while($row = mysql_fetch_assoc($result)); ?>
