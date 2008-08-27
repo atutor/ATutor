@@ -102,10 +102,10 @@ if (!$test_row['random']) {
 			<dd><?php echo $num_takes; ?> / <?php echo ($test_row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) ? _AT('unlimited') : $test_row['num_takes']; ?></dd>
 			
 			<dt><?php echo _AT('start_date'); ?></dt>
-			<dd><?php echo AT_date(	_AT('announcement_date_format'), at_timezone($test_row['start_date']), AT_DATE_MYSQL_DATETIME); ?></dd>
+			<dd><?php echo AT_date(	_AT('startend_date_long_format'), at_timezone($test_row['start_date']), AT_DATE_MYSQL_DATETIME); ?></dd>
 
 			<dt><?php echo _AT('end_date'); ?></dt>
-			<dd><?php echo AT_date(	_AT('announcement_date_format'), at_timezone($test_row['end_date']), AT_DATE_MYSQL_DATETIME); ?></dd>
+			<dd><?php echo AT_date(	_AT('startend_date_long_format'), at_timezone($test_row['end_date']), AT_DATE_MYSQL_DATETIME); ?></dd>
 
 			<dt><?php echo _AT('anonymous'); ?></dt>
 			<dd><?php echo $test_row['anonymous'] ? _AT('yes') : _AT('no'); ?></dd>
