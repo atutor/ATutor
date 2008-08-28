@@ -980,32 +980,34 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 */
 function at_timezone($timestamp){
 	global $_config;
-
-
+	if(strlen($timestamp) <12){
+		$unixtime = TRUE;
+	}
 	// If the length is less than 12 characters, assume it is a UNIX timestamp
 	// Get the system timezone offset if it has been set
 	if(strlen($timestamp) >12){
-		preg_match('/(.*)-[0](.*)-(.*) (.*):(.*):(.*)/', $timestamp, $matches);
+		preg_match('/(.*)-(.*)-(.*) (.*):(.*):(.*)/', $timestamp, $matches);
 		$timestamp = mktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
 	}
 	if($_config['time_zone']){
 		$timestamp = ($timestamp + ($_config['time_zone']*3600));
 	}
 
-	if(strlen($timestamp) >12){
+	if(!$unixtime){
 		$timestamp = date("Y-m-d G:i:s", $timestamp);
 	}
 
 	// Get the user's timezone offset if it has been set
-	if(strlen($timestamp) >12){
-		preg_match('/(.*)-[0](.*)-(.*) (.*):(.*):(.*)/', $timestamp, $matches);
+	if(!$unixtime){
+		preg_match('/(.*)-(.*)-(.*) (.*):(.*):(.*)/', $timestamp, $matches);
 		$timestamp = mktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
 	}
 
 	if(isset($_SESSION['prefs']['PREF_TIMEZONE'])){
 		$timestamp = ($timestamp + ($_SESSION['prefs']['PREF_TIMEZONE']*3600));
 	}
-	if(strlen($timestamp) >12){
+
+	if(!$unixtime){
 		$timestamp = date("Y-m-d G:i:s", $timestamp);
 	}
 
