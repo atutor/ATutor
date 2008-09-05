@@ -14,6 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 
 authenticate(AT_PRIV_TESTS);
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
@@ -35,45 +36,14 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['feedback'] = $addslashes($_POST['feedback']);
 		$_POST['question'] = $addslashes($_POST['question']);
-	
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL,
-			$_POST[category_id],
-			$_SESSION[course_id],
-			3,
-			'$_POST[feedback]',
-			'$_POST[question]',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			0,
-			0,
-			0,
-			0,
-			0,
-			0,
-			0,
-			0,
-			0,
-			0,
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			$_POST[properties],
-			0)";
+
+		$sql_params = array(	$_POST['category_id'], 
+								$_SESSION['course_id'],
+								$_POST['feedback'], 
+								$_POST['question'], 
+								$_POST['properties']);
+
+		$sql = vsprintf(AT_SQL_QUESTION_LONG, $sql_params);	
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

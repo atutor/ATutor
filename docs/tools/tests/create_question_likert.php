@@ -15,6 +15,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/likert_presets.inc.php');
+require(AT_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 
 authenticate(AT_PRIV_TESTS);
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
@@ -57,46 +58,34 @@ if (isset($_POST['cancel'])) {
 				$_POST['answer'][$i] = 0;
 			}
 		}
+		
+		$sql_params = array(	$_POST['category_id'], 
+								$_SESSION['course_id'],
+								$_POST['feedback'], 
+								$_POST['question'], 
+								$_POST['choice'][0], 
+								$_POST['choice'][1], 
+								$_POST['choice'][2], 
+								$_POST['choice'][3], 
+								$_POST['choice'][4], 
+								$_POST['choice'][5], 
+								$_POST['choice'][6], 
+								$_POST['choice'][7], 
+								$_POST['choice'][8], 
+								$_POST['choice'][9], 
+								$_POST['answer'][0], 
+								$_POST['answer'][1], 
+								$_POST['answer'][2], 
+								$_POST['answer'][3], 
+								$_POST['answer'][4], 
+								$_POST['answer'][5], 
+								$_POST['answer'][6], 
+								$_POST['answer'][7], 
+								$_POST['answer'][8], 
+								$_POST['answer'][9]);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
-			$_POST[category_id],
-			$_SESSION[course_id],
-			4,
-			'$_POST[feedback]',
-			'$_POST[question]',
-			'{$_POST[choice][0]}',
-			'{$_POST[choice][1]}',
-			'{$_POST[choice][2]}',
-			'{$_POST[choice][3]}',
-			'{$_POST[choice][4]}',
-			'{$_POST[choice][5]}',
-			'{$_POST[choice][6]}',
-			'{$_POST[choice][7]}',
-			'{$_POST[choice][8]}',
-			'{$_POST[choice][9]}',
-			{$_POST[answer][0]},
-			{$_POST[answer][1]},
-			{$_POST[answer][2]},
-			{$_POST[answer][3]},
-			{$_POST[answer][4]},
-			{$_POST[answer][5]},
-			{$_POST[answer][6]},
-			{$_POST[answer][7]},
-			{$_POST[answer][8]},
-			{$_POST[answer][9]},
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			'',
-			0,
-			0)";
-		$result	= mysql_query($sql, $db);
+		$sql = vsprintf(AT_SQL_QUESTION_LIKERT, $sql_params);
+				$result	= mysql_query($sql, $db);
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: question_db.php');

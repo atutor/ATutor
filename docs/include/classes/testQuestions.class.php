@@ -1175,7 +1175,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 									$_POST['choice'][8], 
 									$_POST['choice'][9]);
 
-			$sql = vsprintf(AT_SQL_QUESTION_MATCHING, $sql_params);
+			$sql = vsprintf(AT_SQL_QUESTION_MATCHINGDD, $sql_params);
 
 			$result	= mysql_query($sql, $db);
 			if ($result==true){

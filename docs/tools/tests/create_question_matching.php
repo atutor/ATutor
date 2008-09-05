@@ -14,6 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 
 authenticate(AT_PRIV_TESTS);
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
@@ -45,46 +46,43 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['feedback']     = $addslashes($_POST['feedback']);
 		$_POST['instructions'] = $addslashes($_POST['instructions']);
-	
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL,
-			$_POST[category_id],
-			$_SESSION[course_id],
-			5,
-			'$_POST[feedback]',
-			'$_POST[instructions]',
-			'{$_POST[question][0]}',
-			'{$_POST[question][1]}',
-			'{$_POST[question][2]}',
-			'{$_POST[question][3]}',
-			'{$_POST[question][4]}',
-			'{$_POST[question][5]}',
-			'{$_POST[question][6]}',
-			'{$_POST[question][7]}',
-			'{$_POST[question][8]}',
-			'{$_POST[question][9]}',
-			{$_POST[question_answer][0]},
-			{$_POST[question_answer][1]},
-			{$_POST[question_answer][2]},
-			{$_POST[question_answer][3]},
-			{$_POST[question_answer][4]},
-			{$_POST[question_answer][5]},
-			{$_POST[question_answer][6]},
-			{$_POST[question_answer][7]},
-			{$_POST[question_answer][8]},
-			{$_POST[question_answer][9]},
-			'{$_POST[answer][0]}',
-			'{$_POST[answer][1]}',
-			'{$_POST[answer][2]}',
-			'{$_POST[answer][3]}',
-			'{$_POST[answer][4]}',
-			'{$_POST[answer][5]}',
-			'{$_POST[answer][6]}',
-			'{$_POST[answer][7]}',
-			'{$_POST[answer][8]}',
-			'{$_POST[answer][9]}',
-			0,
-			0)";
+		
+		$sql_params = array(	$_POST['category_id'], 
+								$_SESSION['course_id'],
+								$_POST['feedback'], 
+								$_POST['instructions'], 
+								$_POST['question'][0],
+								$_POST['question'][1],
+								$_POST['question'][2],
+								$_POST['question'][3],
+								$_POST['question'][4],
+								$_POST['question'][5],
+								$_POST['question'][6],
+								$_POST['question'][7],
+								$_POST['question'][8],
+								$_POST['question'][9],
+								$_POST['question_answer'][0], 
+								$_POST['question_answer'][1], 
+								$_POST['question_answer'][2], 
+								$_POST['question_answer'][3], 
+								$_POST['question_answer'][4], 
+								$_POST['question_answer'][5], 
+								$_POST['question_answer'][6], 
+								$_POST['question_answer'][7], 
+								$_POST['question_answer'][8], 
+								$_POST['question_answer'][9], 
+								$_POST['answer'][0], 
+								$_POST['answer'][1], 
+								$_POST['answer'][2], 
+								$_POST['answer'][3], 
+								$_POST['answer'][4], 
+								$_POST['answer'][5], 
+								$_POST['answer'][6], 
+								$_POST['answer'][7], 
+								$_POST['answer'][8], 
+								$_POST['answer'][9]);
 
+		$sql = vsprintf(AT_SQL_QUESTION_MATCHING, $sql_params);	
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

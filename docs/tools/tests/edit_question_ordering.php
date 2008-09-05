@@ -127,12 +127,12 @@ if (isset($_POST['cancel'])) {
 	$_POST['required']		= $row['required'];
 	$_POST['question']		= $row['question'];
 	$_POST['category_id']	= $row['category_id'];
+	$_POST['feedback']		= $row['feedback'];
 
 	for ($i=0; $i<10; $i++) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
 	}
 }
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
