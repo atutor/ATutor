@@ -25,7 +25,7 @@ if (isset($_POST['cancel'])) {
 
 	//get database info to create & email change-password-link
 	$_POST['form_email'] = $addslashes($_POST['form_email']);
-	$sql	= "SELECT member_id, login, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
+	$sql	= "SELECT member_id, login, first_name, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
 	$result = mysql_query($sql,$db);
 	if ($row = mysql_fetch_assoc($result)) {
 		
@@ -36,8 +36,12 @@ if (isset($_POST['cancel'])) {
 		$hash_bit = substr($hash, 5, 15);
 		
 		$change_link = $_base_href.'password_reminder.php?id='.$row['member_id'].'&g='.$gen.'&h='.$hash_bit;
-
-		$tmp_message  = _AT(array('password_request2',$row['login'], $_base_href, AT_PASSWORD_REMINDER_EXPIRY, $change_link));
+		if($row['first_name'] != ''){
+			$reply_name = $row['first_name'];
+		}else{
+			$reply_name = $row['login'];
+		}
+		$tmp_message  = _AT(array('password_request2',$reply_name, $_base_href, AT_PASSWORD_REMINDER_EXPIRY, $change_link));
 
 		//send email
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
