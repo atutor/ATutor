@@ -69,7 +69,6 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) |
 	$id  = current($_GET['questions']);
 	$ids = explode('|', $id[0], 2);
 } else if (isset($_GET['export'])) {
-
 	$ids = array();
 	foreach ($_GET['questions'] as $category_questions) {
 		$ids = array_merge($ids, $category_questions);
@@ -77,7 +76,11 @@ if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) |
 
 	array_walk($ids, 'intval_array');
 
-	test_question_qti_export($ids);
+	if ($_GET['qti_export_version']=='2.1'){
+		test_question_qti_export_v2p1($ids);
+	} else {
+		test_question_qti_export($ids);
+	}
 
 	exit;
 }
@@ -88,7 +91,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-
 <div class="input-form" style="width: 40%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
 	<div class="row">
@@ -103,6 +105,21 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row buttons">
 		<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" />
+	</div>
+	</fieldset>
+</div>
+</form>
+
+<form method="post" action="<?php echo 'tools/tests/question_import.php'; ?>" enctype="multipart/form-data" >
+<div class="input-form" style="width: 40%">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_question'); ?></legend>
+	<div class="row">
+		<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
+		<input type="file" name="file" id="to_file" />
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit_import" value="<?php echo _AT('import'); ?>" />
 	</div>
 	</fieldset>
 </div>

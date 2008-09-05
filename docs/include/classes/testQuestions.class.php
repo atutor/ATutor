@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+require(AT_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 
 /*
  * Steps to follow when adding a new question type:
@@ -47,9 +48,16 @@
  *     /themes/default/test_questions/{PREFIX}_result.tmpl.php
  *     /themes/default/test_questions/{PREFIX}_stats.tmpl.php
  *
- * 7 - Done!
+ * 7 - Add the new question type to qti import/export tools
+ *
+ *     include/classes/QTI/QTIParser.class.php
+ *	   getQuestionType()
+ *
+ *	   include/classes/QTI/QTIImport.class.php
+ *	   importQuestionType()
+ *
+ * 8 - Done!
  **/
-
 class TestQuestions {
 	// returns array of prefix => name, sorted!
 	/*static */function getQuestionPrefixNames() {
@@ -104,7 +112,11 @@ class TestQuestions {
 	}
 }
 
-function test_question_qti_export(/* array */ $question_ids) {
+/** 
+ * Export test questions
+ * @param	array	an array consist of all the ids of the questions in which we desired to export.
+ */
+function test_question_qti_export_v2p1($question_ids) {
 	require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
 	require(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
 	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	// for XML_HTMLSax
@@ -123,12 +135,12 @@ function test_question_qti_export(/* array */ $question_ids) {
 	asort($question_ids);
 
 	$question_ids_delim = implode(',',$question_ids);
+
 	$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
 	$result = mysql_query($sql, $db);
-
 	while ($row = mysql_fetch_assoc($result)) {
 		$obj = TestQuestions::getQuestion($row['type']);
-		$xml = $obj->exportQTI($row, $course_language_charset);
+		$xml = $obj->exportQTI($row, $course_language_charset, '2.1');
 		$local_dependencies = array();
 
 		$text_blob = implode(' ', $row);
@@ -137,6 +149,11 @@ function test_question_qti_export(/* array */ $question_ids) {
 
 		$resources[] = array('href'         => 'question_'.$row['question_id'].'.xml',
 							 'dependencies' => array_keys($local_dependencies));
+
+		//TODO
+		$savant->assign('xml_content', $xml);
+		$savant->assign('title', $row['question']);
+		$xml = $savant->fetch('test_questions/wrapper.tmpl.php');
 
 		$zipfile->add_file($xml, 'question_'.$row['question_id'].'.xml');
 	}
@@ -160,6 +177,158 @@ function test_question_qti_export(/* array */ $question_ids) {
 	$zipfile->send_file($filename);
 	exit;
 }
+
+
+/** 
+ * Export test questions
+ * @param	array	an array consist of all the ids of the questions in which we desired to export.
+ */
+function test_question_qti_export($question_ids) {
+	require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
+	require(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
+	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	// for XML_HTMLSax
+
+	global $savant, $db, $system_courses, $languageManager;
+
+	$course_language = $system_courses[$_SESSION['course_id']]['primary_language'];
+	$courseLanguage =& $languageManager->getLanguage($course_language);
+	$course_language_charset = $courseLanguage->getCharacterSet();
+
+	$zipfile = new zipfile();
+//	$zipfile->create_dir('resources/'); // for all the dependency files
+	$resources    = array();
+	$dependencies = array();
+
+	asort($question_ids);
+
+	$question_ids_delim = implode(',',$question_ids);
+
+	$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$obj = TestQuestions::getQuestion($row['type']);
+		$local_xml = '';
+		$local_xml = $obj->exportQTI($row, $course_language_charset, '1.2.1');
+		$local_dependencies = array();
+
+		$text_blob = implode(' ', $row);
+		$local_dependencies = get_html_resources($text_blob);
+		$dependencies = array_merge($dependencies, $local_dependencies);
+
+//		$resources[] = array('href'         => 'question_'.$row['question_id'].'.xml',
+//							 'dependencies' => array_keys($local_dependencies));
+
+		$xml = $xml . "\n\n" . $local_xml;		
+	}
+	$xml = trim($xml);
+
+	//TODO
+	$savant->assign('xml_content', $xml);
+	$savant->assign('title', $row['question']);
+	$xml = $savant->fetch('test_questions/wrapper.tmpl.php');
+
+	$xml_filename = 'atutor_questions.xml';
+	$zipfile->add_file($xml, $xml_filename);
+
+	// add any dependency files:
+	foreach ($dependencies as $resource => $resource_server_path) {
+		$zipfile->add_file(@file_get_contents($resource_server_path), $resource, filemtime($resource_server_path));
+	}
+
+	// construct the manifest xml
+//	$savant->assign('resources', $resources);
+	$savant->assign('dependencies', array_keys($dependencies));
+	$savant->assign('encoding', $course_language_charset);
+	$savant->assign('xml_filename', $xml_filename);
+//	$manifest_xml = $savant->fetch('test_questions/manifest_qti_2p1.tmpl.php');
+	$manifest_xml = $savant->fetch('test_questions/manifest_qti_1p2.tmpl.php');
+
+	$zipfile->add_file($manifest_xml, 'imsmanifest.xml');
+
+	$zipfile->close();
+
+	$filename = str_replace(array(' ', ':'), '_', $_SESSION['course_title'].'-'._AT('question_database').'-'.date('Ymd'));
+	$zipfile->send_file($filename);
+	exit;
+}
+
+
+/** 
+ * Export test 
+ * @param	array	an array consist of all the ids of the questions in which we desired to export.
+ * @param	string	the test title
+ */
+function test_qti_export($question_ids, $test_title){
+	require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
+	require(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
+	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	// for XML_HTMLSax
+
+	global $savant, $db, $system_courses, $languageManager;
+
+	$course_language = $system_courses[$_SESSION['course_id']]['primary_language'];
+	$courseLanguage =& $languageManager->getLanguage($course_language);
+	$course_language_charset = $courseLanguage->getCharacterSet();
+
+	$zipfile = new zipfile();
+//	$zipfile->create_dir('resources/'); // for all the dependency files
+	$resources    = array();
+	$dependencies = array();
+
+//	don't want to sort it, i want the same order out.
+//	asort($question_ids);
+
+	$question_ids_delim = implode(',',$question_ids);
+
+	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
+	$sql = "SELECT TQ.*, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.question_id IN($question_ids_delim) ORDER BY TQA.ordering, TQA.question_id";
+
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$obj = TestQuestions::getQuestion($row['type']);
+		$local_xml = '';
+		$local_xml = $obj->exportQTI($row, $course_language_charset, '1.2.1');
+		$local_dependencies = array();
+
+		$text_blob = implode(' ', $row);
+		$local_dependencies = get_html_resources($text_blob);
+		$dependencies = array_merge($dependencies, $local_dependencies);
+
+//		$resources[] = array('href'         => 'question_'.$row['question_id'].'.xml',
+//							 'dependencies' => array_keys($local_dependencies));
+		$xml = $xml . "\n\n" . $local_xml;
+	}
+	$xml = trim($xml);
+
+	//TODO: wrap around xml now
+	$savant->assign('xml_content', $xml);
+	$savant->assign('title', $row['title']);
+	$xml = $savant->fetch('test_questions/wrapper.tmpl.php');
+
+	$xml_filename = 'atutor_questions.xml';
+	$zipfile->add_file($xml, $xml_filename);
+
+	// add any dependency files:
+	foreach ($dependencies as $resource => $resource_server_path) {
+		$zipfile->add_file(@file_get_contents($resource_server_path), $resource, filemtime($resource_server_path));
+	}
+
+	// construct the manifest xml
+//	$savant->assign('resources', $resources);
+	$savant->assign('dependencies', array_keys($dependencies));
+	$savant->assign('encoding', $course_language_charset);
+	$savant->assign('title', $test_title);
+	$savant->assign('xml_filename', $xml_filename);
+	$manifest_xml = $savant->fetch('test_questions/manifest_qti_1p2.tmpl.php');
+
+	$zipfile->add_file($manifest_xml, 'imsmanifest.xml');
+
+	$zipfile->close();
+
+	$filename = str_replace(array(' ', ':'), '_', $_SESSION['course_title'].'-'.$test_title.'-'.date('Ymd'));
+	$zipfile->send_file($filename);
+	exit;
+}
+
 
 /**
 * keeps count of the question number (when displaying the question)
@@ -279,11 +448,18 @@ function TestQuestionCounter($increment = FALSE) {
 		$this->savant->display('test_questions/' . $this->sPrefix . '_stats.tmpl.php');
 	}
 
-	/*final public */function exportQTI($row, $encoding) {
+	/*final public */function exportQTI($row, $encoding, $version) {
 		$this->savant->assign('encoding', $encoding);
+		//Convert all row values to html entities
+		foreach ($row as $k=>$v){
+			$row[$k] = htmlentities($v, ENT_QUOTES);
+		}
 		$this->assignQTIVariables($row);
-		$xml = $this->savant->fetch('test_questions/'. $this->sPrefix . '_qti_2p1.tmpl.php');
-
+		if ($version=='2.1') {
+			$xml = $this->savant->fetch('test_questions/'. $this->sPrefix . '_qti_2p1.tmpl.php');
+		} else {	
+			$xml = $this->savant->fetch('test_questions/'. $this->sPrefix . '_qti_1p2.tmpl.php');
+		}
 		return $xml;
 	}
 
@@ -450,6 +626,84 @@ class OrderingQuestion extends AbstractTestQuestion {
 
 		return $score;
 	}
+
+	//QTI Import Ordering Question
+	function importQTI($_POST){
+		global $msg, $db, $addslashes;
+
+		if ($_POST['question'] == ''){
+			$missing_fields[] = _AT('question');
+		}
+
+		if (trim($_POST['choice'][0]) == '') {
+			$missing_fields[] = _AT('item').' 1';
+		}
+		if (trim($_POST['choice'][1]) == '') {
+			$missing_fields[] = _AT('item').' 2';
+		}
+
+		if ($missing_fields) {
+			$missing_fields = implode(', ', $missing_fields);
+			$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+		}
+
+		if (!$msg->containsErrors()) {
+			$choice_new = array(); // stores the non-blank choices
+			$answer_new = array(); // stores the non-blank answers
+			$order = 0; // order count
+			for ($i=0; $i<10; $i++) {
+				/**
+				 * Db defined it to be 255 length, chop strings off it it's less than that
+				 * @harris
+				 */
+				$_POST['choice'][$i] = validate_length($_POST['choice'][$i], 255);
+				$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+
+				if ($_POST['choice'][$i] != '') {
+					/* filter out empty choices/ remove gaps */
+					$choice_new[] = $_POST['choice'][$i];
+					$answer_new[] = $order++;
+				}
+			}
+
+			$_POST['choice']   = array_pad($choice_new, 10, '');
+			$answer_new        = array_pad($answer_new, 10, 0);
+			$_POST['feedback'] = $addslashes($_POST['feedback']);
+			$_POST['question'] = $addslashes($_POST['question']);
+		
+			$sql_params = array(	$_POST['category_id'], 
+									$_SESSION['course_id'],
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['choice'][0], 
+									$_POST['choice'][1], 
+									$_POST['choice'][2], 
+									$_POST['choice'][3], 
+									$_POST['choice'][4], 
+									$_POST['choice'][5], 
+									$_POST['choice'][6], 
+									$_POST['choice'][7], 
+									$_POST['choice'][8], 
+									$_POST['choice'][9], 
+									$answer_new[0], 
+									$answer_new[1], 
+									$answer_new[2], 
+									$answer_new[3], 
+									$answer_new[4], 
+									$answer_new[5], 
+									$answer_new[6], 
+									$answer_new[7], 
+									$answer_new[8], 
+									$answer_new[9]);
+
+			$sql = vsprintf(AT_SQL_QUESTION_ORDERING, $sql_params);
+
+			$result	= mysql_query($sql, $db);
+			if ($result==true){
+				return mysql_insert_id();
+			}			
+		}
+	}
 }
 
 /**
@@ -496,6 +750,40 @@ class TruefalseQuestion extends AbstracttestQuestion {
 			return (int) $row['weight'];
 		} // else:
 		return 0;
+	}
+
+	//QTI Import True/False Question
+	function importQTI($_POST){
+		global $msg, $db, $addslashes;
+
+		if ($_POST['question'] == ''){
+			$msg->addError(array('EMPTY_FIELDS', _AT('statement')));
+		}
+
+		//assign true answer to 1, false answer to 2, idk to 3, for ATutor
+		if  ($_POST['answer'] == 'ChoiceT'){
+			$_POST['answer'] = 1;
+		} else {
+			$_POST['answer'] = 2;	
+		}
+
+		if (!$msg->containsErrors()) {
+			$_POST['feedback'] = $addslashes($_POST['feedback']);
+			$_POST['question'] = $addslashes($_POST['question']);
+
+
+			$sql_params = array(	$_POST['category_id'], 
+									$_SESSION['course_id'],
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['answer']);
+
+			$sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);
+			$result	= mysql_query($sql, $db);
+			if ($result==true){
+				return mysql_insert_id();
+			}			
+		}
 	}
 }
 
@@ -560,6 +848,74 @@ class LikertQuestion extends AbstracttestQuestion {
 		$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
 		return 0;
 	}
+
+	//QTI Import Likert Question
+	function importQTI($_POST){
+		global $msg, $db, $addslashes;
+//		$_POST = $this->_POST; 
+
+		$empty_fields = array();
+		if ($_POST['question'] == ''){
+			$empty_fields[] = _AT('question');
+		}
+		if ($_POST['choice'][0] == '') {
+			$empty_fields[] = _AT('choice').' 1';
+		}
+
+		if ($_POST['choice'][1] == '') {
+			$empty_fields[] = _AT('choice').' 2';
+		}
+
+		if (!empty($empty_fields)) {
+//			$msg->addError(array('EMPTY_FIELDS', implode(', ', $empty_fields)));
+		}
+
+		if (!$msg->containsErrors()) {
+			$_POST['feedback']   = '';
+			$_POST['question']   = $addslashes($_POST['question']);
+
+			for ($i=0; $i<10; $i++) {
+				$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+				$_POST['answer'][$i] = intval($_POST['answer'][$i]);
+
+				if ($_POST['choice'][$i] == '') {
+					/* an empty option can't be correct */
+					$_POST['answer'][$i] = 0;
+				}
+			}
+
+			$sql_params = array(	$_POST['category_id'], 
+									$_SESSION['course_id'],
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['choice'][0], 
+									$_POST['choice'][1], 
+									$_POST['choice'][2], 
+									$_POST['choice'][3], 
+									$_POST['choice'][4], 
+									$_POST['choice'][5], 
+									$_POST['choice'][6], 
+									$_POST['choice'][7], 
+									$_POST['choice'][8], 
+									$_POST['choice'][9], 
+									$_POST['answer'][0], 
+									$_POST['answer'][1], 
+									$_POST['answer'][2], 
+									$_POST['answer'][3], 
+									$_POST['answer'][4], 
+									$_POST['answer'][5], 
+									$_POST['answer'][6], 
+									$_POST['answer'][7], 
+									$_POST['answer'][8], 
+									$_POST['answer'][9]);
+
+			$sql = vsprintf(AT_SQL_QUESTION_LIKERT, $sql_params);
+			$result	= mysql_query($sql, $db);
+			if ($result==true){
+				return mysql_insert_id();
+			}
+		}
+	}
 }
 
 /**
@@ -600,6 +956,38 @@ class LongQuestion extends AbstracttestQuestion {
 		global $addslashes;
 		$_POST['answers'][$row['question_id']] = $addslashes($_POST['answers'][$row['question_id']]);
 		return 0;
+	}
+
+	//QTI Import Open end/long Question
+	function importQTI($_POST){
+		global $msg, $db, $addslashes;
+//		$_POST = $this->_POST; 
+
+		if ($_POST['question'] == ''){
+//			$msg->addError(array('EMPTY_FIELDS', _AT('question')));
+		}
+
+		if (!$msg->containsErrors()) {
+			$_POST['feedback'] = $addslashes($_POST['feedback']);
+			$_POST['question'] = $addslashes($_POST['question']);
+
+			if ($_POST['property']==''){
+				$_POST['property'] = 4;	//essay
+			}
+
+			$sql_params = array(	$_POST['category_id'], 
+									$_SESSION['course_id'],
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['property']);
+
+			$sql = vsprintf(AT_SQL_QUESTION_LONG, $sql_params);
+
+			$result	= mysql_query($sql, $db);
+			if ($result==true){
+				return mysql_insert_id();
+			}
+		}
 	}
 }
 
@@ -725,6 +1113,76 @@ class MatchingQuestion extends AbstracttestQuestion {
 
 		return $score;
 	}
+
+	//QTI Import Matching Question
+	function importQTI($_POST){
+		global $msg, $db, $addslashes;
+//		$_POST = $this->_POST; 
+
+		ksort($_POST['answer']);	//array_pad returns an array disregard of the array keys
+		//default for matching is '-'
+		$_POST['answer']= array_pad($_POST['answer'], 10, -1);
+
+		for ($i = 0 ; $i < 10; $i++) {
+			$_POST['groups'][$i]        = $addslashes(trim($_POST['groups'][$i]));
+			$_POST['answer'][$i] = (int) $_POST['answer'][$i];
+			$_POST['choice'][$i]          = $addslashes(trim($_POST['choice'][$i]));
+		}
+
+		if (!$_POST['groups'][0] 
+			|| !$_POST['groups'][1] 
+			|| !$_POST['choice'][0] 
+			|| !$_POST['choice'][1]) {
+//			$msg->addError('QUESTION_EMPTY');
+		}
+
+		if (!$msg->containsErrors()) {
+			$_POST['feedback']     = $addslashes($_POST['feedback']);
+			$_POST['instructions'] = $addslashes($_POST['instructions']);
+		
+			$sql_params = array(	$_POST['category_id'], 
+									$_SESSION['course_id'],
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['groups'][0], 
+									$_POST['groups'][1], 
+									$_POST['groups'][2], 
+									$_POST['groups'][3], 
+									$_POST['groups'][4], 
+									$_POST['groups'][5], 
+									$_POST['groups'][6], 
+									$_POST['groups'][7], 
+									$_POST['groups'][8], 
+									$_POST['groups'][9], 
+									$_POST['answer'][0], 
+									$_POST['answer'][1], 
+									$_POST['answer'][2], 
+									$_POST['answer'][3], 
+									$_POST['answer'][4], 
+									$_POST['answer'][5], 
+									$_POST['answer'][6], 
+									$_POST['answer'][7], 
+									$_POST['answer'][8], 
+									$_POST['answer'][9],
+									$_POST['choice'][0], 
+									$_POST['choice'][1], 
+									$_POST['choice'][2], 
+									$_POST['choice'][3], 
+									$_POST['choice'][4], 
+									$_POST['choice'][5], 
+									$_POST['choice'][6], 
+									$_POST['choice'][7], 
+									$_POST['choice'][8], 
+									$_POST['choice'][9]);
+
+			$sql = vsprintf(AT_SQL_QUESTION_MATCHING, $sql_params);
+
+			$result	= mysql_query($sql, $db);
+			if ($result==true){
+				return mysql_insert_id();
+			}
+		}
+	}
 }
 
 /**
@@ -819,6 +1277,61 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 		}
 		return $score;
 	}
+
+	//QTI Import Multiple Choice Question
+	function importQTI($_POST){
+		global $msg, $db, $addslashes;
+//		$_POST = $this->_POST; 
+		if ($_POST['question'] == ''){
+			$msg->addError(array('EMPTY_FIELDS', _AT('question')));
+		}
+		
+		if (!$msg->containsErrors()) {
+			$_POST['question']   = $addslashes($_POST['question']);
+
+			for ($i=0; $i<10; $i++) {
+				$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			}
+
+			$answers = array_fill(0, 10, 0);
+			if (is_array($_POST['answer'])){
+				$answers[0] = 1;	//default the first to be the right answer. TODO, use summation of points.
+			} else {
+				$answers[$_POST['answer']] = 1;
+			}
+		
+			$sql_params = array(	$_POST['category_id'], 
+									$_SESSION['course_id'],
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['choice'][0], 
+									$_POST['choice'][1], 
+									$_POST['choice'][2], 
+									$_POST['choice'][3], 
+									$_POST['choice'][4], 
+									$_POST['choice'][5], 
+									$_POST['choice'][6], 
+									$_POST['choice'][7], 
+									$_POST['choice'][8], 
+									$_POST['choice'][9], 
+									$answers[0], 
+									$answers[1], 
+									$answers[2], 
+									$answers[3], 
+									$answers[4], 
+									$answers[5], 
+									$answers[6], 
+									$answers[7], 
+									$answers[8], 
+									$answers[9]);
+
+			$sql = vsprintf(AT_SQL_QUESTION_MULTI, $sql_params);
+			$result	= mysql_query($sql, $db);
+			if ($result==true){
+				return mysql_insert_id();
+			}
+		}
+	}
 }
 
 /**
@@ -860,5 +1373,102 @@ class MultianswerQuestion extends MultichoiceQuestion {
 		}
 		return $score;
 	}
+
+	//QTI Import multianswer Question
+	function importQTI($_POST){
+		global $msg, $db, $addslashes;
+//		$_POST = $this->_POST; 
+
+		if ($_POST['question'] == ''){
+			$msg->addError(array('EMPTY_FIELDS', _AT('question')));
+		}
+
+		//Multiple answer can have 0+ answers, in the QTIImport.class, if size(answer) < 2, answer will be came a scalar.
+		//The following code will change $_POST[answer] back to a vector.
+		$_POST['answer'] = $_POST['answers'];
+
+		if (!$msg->containsErrors()) {
+			$choice_new = array(); // stores the non-blank choices
+			$answer_new = array(); // stores the associated "answer" for the choices
+
+			foreach ($_POST['choice'] as $choiceNum=>$choiceOpt) {
+				$choiceOpt = validate_length($choiceOpt, 255);
+				$choiceOpt = $addslashes(trim($choiceOpt));
+				$_POST['answer'][$choiceNum] = intval($_POST['answer'][$choiceNum]);
+				if ($choiceOpt == '') {
+					/* an empty option can't be correct */
+					$_POST['answer'][$choiceNum] = 0;
+				} else {
+					/* filter out empty choices/ remove gaps */
+					$choice_new[] = $choiceOpt;
+					if (in_array($choiceNum, $_POST['answer'])){
+						$answer_new[] = 1;
+					} else {
+						$answer_new[] = 0;
+					}
+
+					if ($_POST['answer'][$choiceNum] != 0)
+						$has_answer = TRUE;
+				}
+			}
+
+			if ($has_answer != TRUE) {
+		
+				$hidden_vars['required']    = htmlspecialchars($_POST['required']);
+				$hidden_vars['feedback']    = htmlspecialchars($_POST['feedback']);
+				$hidden_vars['question']    = htmlspecialchars($_POST['question']);
+				$hidden_vars['category_id'] = htmlspecialchars($_POST['category_id']);
+
+				for ($i = 0; $i < count($choice_new); $i++) {
+					$hidden_vars['answer['.$i.']'] = htmlspecialchars($answer_new[$i]);
+					$hidden_vars['choice['.$i.']'] = htmlspecialchars($choice_new[$i]);
+				}
+
+				$msg->addConfirm('NO_ANSWER', $hidden_vars);
+			} else {			
+				//add slahes throughout - does that fix it?
+				$_POST['answer'] = $answer_new;
+				$_POST['choice'] = $choice_new;
+				$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
+				$_POST['choice'] = array_pad($_POST['choice'], 10, '');
+			
+				$_POST['feedback'] = $addslashes($_POST['feedback']);
+				$_POST['question'] = $addslashes($_POST['question']);
+
+				$sql_params = array(	$_POST['category_id'], 
+										$_SESSION['course_id'],
+										$_POST['feedback'], 
+										$_POST['question'], 
+										$_POST['choice'][0], 
+										$_POST['choice'][1], 
+										$_POST['choice'][2], 
+										$_POST['choice'][3], 
+										$_POST['choice'][4], 
+										$_POST['choice'][5], 
+										$_POST['choice'][6], 
+										$_POST['choice'][7], 
+										$_POST['choice'][8], 
+										$_POST['choice'][9], 
+										$_POST['answer'][0], 
+										$_POST['answer'][1], 
+										$_POST['answer'][2], 
+										$_POST['answer'][3], 
+										$_POST['answer'][4], 
+										$_POST['answer'][5], 
+										$_POST['answer'][6], 
+										$_POST['answer'][7], 
+										$_POST['answer'][8], 
+										$_POST['answer'][9]);
+
+				$sql = vsprintf(AT_SQL_QUESTION_MULTIANSWER, $sql_params);
+
+				$result	= mysql_query($sql, $db);
+				if ($result==true){
+					return mysql_insert_id();
+				}
+			}
+		}
+	}
+
 }
 ?>

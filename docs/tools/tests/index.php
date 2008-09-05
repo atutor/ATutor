@@ -35,12 +35,15 @@ if (isset($_GET['edit'], $_GET['id'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: delete_test.php?tid='.$_GET['id']);
 	exit;
+} else if (isset($_GET['export'], $_GET['id'])){
+	header('Location: export_test.php?tid='.$_GET['id']);
 } else if (isset($_GET['edit']) 
 		|| isset($_GET['preview']) 
 		|| isset($_GET['questions']) 
 		|| isset($_GET['submissions']) 
 		|| isset($_GET['statistics']) 
-		|| isset($_GET['delete'])) {
+		|| isset($_GET['delete'])
+		|| isset($_GET['export'])) {
 
 	$msg->addError('NO_ITEM_SELECTED');
 }
@@ -56,6 +59,21 @@ $num_tests = mysql_num_rows($result);
 
 $cols=6;
 ?>
+<form method="post" action="<?php echo 'tools/tests/import_test.php'; ?>" enctype="multipart/form-data" >
+<div class="input-form" style="width: 40%">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_test'); ?></legend>
+	<div class="row">
+		<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
+		<input type="file" name="file" id="to_file" />
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit_import" value="<?php echo _AT('import'); ?>" />
+	</div>
+	</fieldset>
+</div>
+</form>
+
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data" summary="" style="width: 90%" rules="cols">
 <thead>
@@ -65,8 +83,8 @@ $cols=6;
 	<th scope="col"><?php echo _AT('status');         ?></th>
 	<th scope="col"><?php echo _AT('availability');   ?></th>
 	<th scope="col"><?php echo _AT('result_release'); ?></th>
-	<th scope="col"><?php echo _AT('submissions'); ?></th>
-	<th scope="col"><?php echo _AT('assigned_to'); ?></th>
+	<th scope="col"><?php echo _AT('submissions');	  ?></th>
+	<th scope="col"><?php echo _AT('assigned_to');	  ?></th>
 </tr>
 </thead>
 
@@ -84,6 +102,7 @@ $cols=6;
 			<input type="submit" name="submissions" value="<?php echo _AT('submissions'); ?>" />
 			<input type="submit" name="statistics" value="<?php echo _AT('statistics'); ?>" />
 			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+			<input type="submit" name="export" value="<?php echo _AT('export'); ?>" />
 		</td>
 	</tr>
 	</tfoot>

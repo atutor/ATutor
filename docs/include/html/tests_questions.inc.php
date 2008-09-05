@@ -89,6 +89,10 @@ while ($row = mysql_fetch_assoc($result)) {
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
 			<input type="submit" name="preview" value="<?php echo _AT('preview'); ?>" />
 			<input type="submit" name="export" value="<?php echo _AT('export'); ?>" />
+			<select name='qti_export_version' >
+				<option selected='selected' value='1.2.1'>QTI 1.2.1</option>
+				<option value='2.1'>QTI 2.1</option>
+			</select>
 			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 		</td>
 	</tr>

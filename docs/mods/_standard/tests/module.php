@@ -16,6 +16,12 @@ $this->_pages['tools/tests/create_test.php']['title_var'] = 'create_test';
 $this->_pages['tools/tests/create_test.php']['parent']    = 'tools/tests/index.php';
 $this->_pages['tools/tests/create_test.php']['guide']     = 'instructor/?p=creating_tests_surveys.php';
 
+$this->_pages['tools/tests/import_test.php']['title_var'] = 'import_test';
+$this->_pages['tools/tests/import_test.php']['parent']    = 'tools/tests/index.php';
+
+$this->_pages['tools/tests/question_import.php']['title_var'] = 'question_test';
+$this->_pages['tools/tests/question_import.php']['parent']    = 'tools/tests/index.php';
+
 $this->_pages['tools/tests/question_db.php']['title_var'] = 'question_database';
 $this->_pages['tools/tests/question_db.php']['parent']    = 'tools/tests/index.php';
 $this->_pages['tools/tests/question_db.php']['guide']     = 'instructor/?p=question_database.php';
