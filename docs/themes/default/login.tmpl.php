@@ -37,7 +37,7 @@ function encrypt_password() {
 				<label for="pass"><?php echo _AT('password'); ?></label><br />
 				<input type="password" class="formfield" name="form_password" style="max-width: 80%; width: 80%;" id="pass" />
 				<br /><br />
-				<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return encrypt_password();" />
+				<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="return encrypt_password();" /> 
 			</fieldset>			
 		</div>
 		</form>
