@@ -94,7 +94,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['home_url']      = $addslashes($_POST['home_url']);
 		$_POST['default_language']      = $addslashes($_POST['default_language']);
 		$_POST['contact_email'] = $addslashes($_POST['contact_email']);
-		$_POST['time_zone']     = $addslashes($_POST['time_zone']);
+		$_POST['time_zone']     = floatval($_POST['time_zone']);
 
 		foreach ($_config as $name => $value) {
 			// the isset() is needed to avoid overridding settings that don't get set here (ie. modules)
@@ -155,9 +155,11 @@ if (!isset($_POST['submit'])) {
 			} else { 
 				$select_lang = $_config['default_language'];
 			} ?>
-
+		<?php if ($disabled): ?>
+			<select name="default_language" id="default_lang" disabled="disabled"><option><?php echo $select_lang; ?></option></select>
+		<?php else: ?>
 			<?php $languageManager->printDropdown($select_lang, 'default_language', 'default_lang'); ?>
-
+		<?php endif; ?>
 	</div>
 
 	<div class="row">
@@ -166,22 +168,35 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="time_zone"><?php echo _AT('time_zone'); ?></label><br />
-			<?php
-				$sql = "SELECT Name FROM mysql.time_zone_name ORDER BY Name";
-				$result = @mysql_query($sql, $db);
-			?>
-			<?php if ($result && mysql_num_rows($result)): ?>
-				<select name="time_zone" id="time_zone">
-					<option value="" <?php if (!$_config['time_zone']) { echo 'selected="selected"'; } ?>><?php echo _AT('use_system_time'); ?></option>
-					<option value=""></option>
-					<?php while ($row = mysql_fetch_assoc($result)): ?>
-						<option <?php if ($_config['time_zone'] == $row['Name']) { echo 'selected="selected"'; } ?>><?php echo $row['Name']; ?></option>
-					<?php endwhile; ?>
-				</select>
-			<?php else: ?>
-				<?php echo _AT('time_zones_not_supported'); ?>
-			<?php endif; ?>
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="time_zone"><?php echo _AT('time_zone_offset'); ?></label><br />
+
+		<?php
+		// If PHP 5+ generate a list of timezones
+		echo '<input type="text" name="time_zone" value="'.$_config['time_zone'].'" size="5" maxlength="5"/> ';
+
+
+/*
+		if(phpversion() >= 5){
+			$timezone_names = timezone_identifiers_list();
+		}else{
+		// if less than PHP version 5, read a text file to generate the menu
+			$timezone_names = file("timezones.txt");
+		}
+
+		echo '<select name="time_zone">';
+		foreach($timezone_names as $timezone_name){
+			if($timezone_name == $_config{'time_zone'}){
+				$selected = ' selected="selected"';
+			}
+			echo '<option'.$selected.'>'.$timezone_name.'</option>';
+			$selected = '';
+		}
+		echo '</select>';
+*/
+
+$server_time = date('Y-m-d G:i:s');
+echo at_timezone($server_time);
+		?>
 	</div>
 
 	<div class="row">
@@ -210,11 +225,11 @@ if (!isset($_POST['submit'])) {
 		<?php echo _AT('master_list_authentication'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['master_list'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="master_list" value="1" id="ml_y" <?php if ($_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_y"><?php echo _AT('enable'); ?></label> 
 
-		<input type="radio" name="master_list" value="0" id="ml_n" <?php if(!$_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_n"><?php echo _AT('disable'); ?></label>
+		<input type="radio" name="master_list" value="0" id="ml_n" <?php if(!$_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_n"><?php echo $disable_on . _AT('disable') . $disable_off; ?></label>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('require_email_confirmation'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['email_confirmation'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<?php echo _AT('require_email_confirmation'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['require_email_confirmation'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="email_confirmation" value="1" id="ec_y" <?php if ($_config['email_confirmation']) { echo 'checked="checked"'; }?>  /><label for="ec_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="email_confirmation" value="0" id="ec_n" <?php if(!$_config['email_confirmation']) { echo 'checked="checked"'; }?>  /><label for="ec_n"><?php echo _AT('disable'); ?></label>
 	</div>
 		
