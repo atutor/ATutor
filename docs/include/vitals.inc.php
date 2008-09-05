@@ -831,7 +831,7 @@ if (!isset($_SESSION["flash"])) {
 * If this function is used for display purposes, you may want to add the '...' 
 *  at the end of the string by setting the $forDisplay=1
 * @param	the mbstring that needed to be checked
-* @param	the length of what the input should be
+* @param	the byte length of what the input should be in the database.
 * @param	(OPTIONAL)
 *			append '...' at the end of the string.  Should not use this when 
 *			dealing with database.  This should only be set for display purposes.
@@ -840,6 +840,28 @@ if (!isset($_SESSION["flash"])) {
 */
 function validate_length($input, $len, $forDisplay=0){
 	global $strlen, $substr;
+	$input_bytes_len = strlen($input);
+	$input_len = $strlen($input);
+
+	//If the input has exceeded the db column limit
+	if ($input_bytes_len > $len){
+		//calculate where to chop off the string
+		$percentage = $input_bytes_len / $input_len;
+		//Get the suitable length that should be stored in the db
+		$suitable_len = floor($len / $percentage);
+
+		if ($forDisplay===1){
+			return $substr($input, 0, $suitable_len).'...';
+		}
+		return $substr($input, 0, $suitable_len);
+	}
+	//if valid length
+	return $input;
+
+/*
+ * Instead of blindly cutting off the input from the given param
+ * 
+	global $strlen, $substr;
 	if ($strlen($input) > $len) {
 		if ($forDisplay===1){
 			return $substr($input, 0, $len).'...';
@@ -847,6 +869,7 @@ function validate_length($input, $len, $forDisplay=0){
 		return $substr($input, 0, $len);
 	}
 	return $input;
+*/
 }
 
 /**
