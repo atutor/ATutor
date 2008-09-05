@@ -71,10 +71,10 @@ function print_organizations($parent_id,
 		$zipped_files = array();
 	}
 	if ( is_array($top_level) ) {
+		
 		$counter = 1;
 		$num_items = count($top_level);
 		foreach ($top_level as $garbage => $content) {
-
 			$link = '';
 				
 			if ($content['content_path']) {
@@ -87,7 +87,6 @@ function print_organizations($parent_id,
 			/* save the content as HTML files */
 			/* @See: include/lib/format_content.inc.php */
 			$content['text'] = str_replace('CONTENT_DIR/', '', $content['text']);
-
 			/* get all the glossary terms used */
 			$terms = find_terms($content['text']);
 			if (is_array($terms)) {
@@ -103,6 +102,7 @@ function print_organizations($parent_id,
 
 				$path .= str_repeat('../', $depth);
 			}
+			
 			$content['text'] = format_content($content['text'], $content['formatting'], $glossary, $path);
 
 			/* add HTML header and footers to the files */
@@ -127,7 +127,7 @@ function print_organizations($parent_id,
 			$content['text'] = str_replace(	array('{TITLE}',	'{CONTENT}', '{KEYWORDS}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}', '{HEAD}'),
 									array($content['title'],	$content['text'], $content['keywords'], $course_language_charset, $course_language_code, $head),
 									$html_content_template);
-
+								
 			/* duplicate the paths in the content_path field in the zip file */
 			if ($content['content_path']) {
 				if (!in_array($content['content_path'], $paths)) {

@@ -101,7 +101,7 @@ function dirsize($dir) {
 	}
 	$size = 0;
 	while (($file = readdir($dh)) !== false) {
-
+    
 		if ($file != '.' && $file != '..') {
 			$path = $dir.$file;
 			if (is_dir($path)) {
@@ -110,10 +110,13 @@ function dirsize($dir) {
 				$size += filesize($path);
 			}
 		}
-		
+		 
 	}
 	closedir($dh);
+	//	 echo 'something';
+    //  exit;
 	return $size;
+ // exit;
 }
 
 /**

@@ -1,127 +1,209 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+<?php 
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="prefs">
-<div class="input-form">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('preferences'); ?></legend>
-	<div class="row">
-		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
-			<?php echo _AT('themes_disabled'); ?>
-		<?php else: ?>
-			<label for="theme"><?php echo _AT('theme'); ?></label><br />
-				<select name="theme" id="theme"><?php
-							$_themes = get_enabled_themes();
-							
-							foreach ($_themes as $theme) {
-								if (!$theme) {
-									continue;
-								}
+$tabs = get_tabs();	
+$num_tabs = count($tabs);
 
-								$theme_fldr = get_folder($theme);
+$current_tab = 0;  // set default tab
+$switch_tab = false;
 
-								if ($theme_fldr == $_SESSION['prefs']['PREF_THEME']) {
-									echo '<option value="'.$theme_fldr.'" selected="selected">'.$theme.'</option>';
-								} else {
-									echo '<option value="'.$theme_fldr.'">'.$theme.'</option>';
-								}
-							}
-						?>
-				</select>
-		<?php endif; ?>
-	</div>
-	<div class="row">
-		<?php echo _AT('time_zone_offset');  ?><br />
-		<?php
-		echo '<input type="text" name="time_zone" value="'.$_SESSION['prefs']['PREF_TIMEZONE'].'"/>';
-		?>
-	</div>
-	<div class="row">
-		<?php echo _AT('inbox_notification'); ?><br />
-		<?php
-			$yes = $no  = '';
-			if ($this->notify == 1) {
-				$yes = ' checked="checked"';
-			} else {
-				$no  = ' checked="checked"';
-			}
-		?>
-		<input type="radio" name="mnot" id="mnot_yes" value="1" <?php echo $yes; ?> /><label for="mnot_yes"><?php echo _AT('enable'); ?></label> 
-		<input type="radio" name="mnot" id="mnot_no" value="0" <?php echo $no; ?> /><label for="mnot_no"><?php echo _AT('disable'); ?></label>		
-	</div>
-	<div class="row">
-		<?php echo _AT('show_numbers');  ?><br />
-		<?php
-			$num = $num2 = '';
-			if ($_SESSION['prefs']['PREF_NUMBERING'] == 1) {
-				$num = ' checked="checked"';
-			} else {
-				$num2 = ' checked="checked"';
-			}
-			?><input type="radio" name ="numbering" id="num_en" value="1" <?php echo $num; ?> /><label for="num_en"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name ="numbering" id="num_dis" value="0" <?php echo $num2; ?> /><label for="num_dis"><?php echo _AT('disable');  ?></label>
+for ($i=0; $i < $num_tabs; $i++) 
+{
+	if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) 
+	{ 
+		$current_tab = $i;
+		$switch_tab = true;
+		break;
+	}
+}
+
+if (!$switch_tab && isset($_POST['current_tab'])) {
+	$current_tab = intval($_POST['current_tab']);
+}
+
+if ($current_tab == 1)
+{
+	global $_custom_head, $onload;
+	
+	$_custom_head = "<script language=\"JavaScript\" src=\"jscripts/TILE.js\" type=\"text/javascript\"></script>";
+	$onload = "setPreviewFace(); setPreviewSize(); setPreviewColours();";
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+?>
+
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>"  method="post" name="form" enctype="multipart/form-data">
+
+	<div align="center" style="width:90%; margin-left:auto; margin-right:auto;">
+		<?php output_tabs($current_tab, $changes_made); ?>
 	</div>
 
-	<div class="row">
-		<?php echo _AT('jump_redirect'); ?><br />
-		<?php
-			$num = $num2 = '';
-			if ($_SESSION['prefs']['PREF_JUMP_REDIRECT'] == 1) {
-				$num = ' checked="checked"';
-			} else {
-				$num2 = ' checked="checked"';
-			}
-			?><input type="radio" name ="use_jump_redirect" id="jump_en" value="1" <?php echo $num; ?> /><label for="jump_en"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name ="use_jump_redirect" id="jump_dis" value="0" <?php echo $num2; ?> /><label for="jump_dis"><?php echo _AT('disable');  ?></label>
-	</div>
+	<div class="input-form">
+		<input type="hidden" name="current_tab" value="<?php echo $current_tab; ?>" />
+<?php
+	if ($current_tab != 0) 
+	{
+		// save selected options on tab 0 (ATutor settings)
+		if (isset($_POST['theme']))
+			echo '	<input type="hidden" name="theme" value="'.$_POST['theme'].'" />'."\n\r";
+		
+		if (isset($_POST['mnot']))
+			echo '	<input type="hidden" name="mnot" value="'.$_POST['mnot'].'" />'."\n\r";
 
-	<div class="row">
-		<?php echo _AT('auto_login1');  ?><br /><?php
-			$auto_en = $auto_dis = '';
-			if ( !empty($_COOKIE['ATLogin']) && !empty($_COOKIE['ATPass']) ) {
-				$auto_en = 'checked="checked"';
-			} else {
-				$auto_dis = 'checked="checked"';
-			}
-		?><input type="radio" name ="auto" id="auto_en" value="enable" <?php echo $auto_en; ?> /><label for="auto_en"><?php echo _AT('enable');  ?></label> 
-		<input type="radio" name ="auto" id="auto_dis" value="disable" <?php echo $auto_dis; ?> /><label for="auto_dis"><?php echo _AT('disable');  ?></label>
-	</div>
+		if (isset($_POST['timezone']))
+			echo '	<input type="hidden" name="timezone" value="'.$_POST['timezone'].'" />'."\n\r";
+		
+		if (isset($_POST['numbering']))
+			echo '	<input type="hidden" name="numbering" value="'.$_POST['numbering'].'" />'."\n\r";
+		
+		if (isset($_POST['use_jump_redirect']))
+			echo '	<input type="hidden" name="use_jump_redirect" value="'.$_POST['use_jump_redirect'].'" />'."\n\r";
+		
+		if (isset($_POST['auto']))
+			echo '	<input type="hidden" name="auto" value="'.$_POST['auto'].'" />'."\n\r";
+		
+		if (isset($_POST['form_focus']))
+			echo '	<input type="hidden" name="form_focus" value="'.$_POST['form_focus'].'" />'."\n\r";
+		
+		if (isset($_POST['content_editor']))
+			echo '	<input type="hidden" name="content_editor" value="'.$_POST['content_editor'].'" />'."\n\r";
+	}
 
-	<div class="row">
-		<?php echo _AT('form_focus');  ?><br />
-		<?php
-			$num = $num2 = '';
-			if ($_SESSION['prefs']['PREF_FORM_FOCUS'] == 1) {
-				$num = ' checked="checked"';
-			} else {
-				$num2 = ' checked="checked"';
-			}
-			?><input type="radio" name ="form_focus" id="focus_on" value="1" <?php echo $num; ?> /><label for="focus_on"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name ="form_focus" id="focus_off" value="0" <?php echo $num2; ?> /><label for="focus_off"><?php echo _AT('disable');  ?></label>
-	</div>
+	if ($current_tab != 1) 
+	{
+		// save selected options on tab 1 (display settings)
+		if (isset($_POST['fontface']))
+			echo '	<input type="hidden" name="fontface" value="'.$_POST['fontface'].'" />'."\n\r";
 
-	<div class="row">
-		<?php
-			$num0 = $num1 = $num2 = '';
-			if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) {
-				$num1 = ' checked="checked"';
-			} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) {
-				$num2 = ' checked="checked"';
-			} else {
-				$num0 = ' checked="checked"';
-			}
-		?>
-		<?php echo _AT('content_editor'); ?><br />
-		<input type="radio" name="content_editor" id="ce_0" value="0" <?php echo $num0; ?>/><label for="ce_0"><?php echo _AT('plain_text');?></label>
-		<input type="radio" name="content_editor" id="ce_1" value="1" <?php echo $num1; ?>/><label for="ce_1"><?php echo _AT('html'); ?></label>
-		<input type="radio" name="content_editor" id="ce_2" value="2" <?php echo $num2; ?>/><label for="ce_2"><?php echo _AT('html') . ' - '. _AT('visual_editor'); ?></label>
-	</div>
-</fieldset>
+		if (isset($_POST['fontsize']))
+			echo '	<input type="hidden" name="fontsize" value="'.$_POST['fontsize'].'" />'."\n\r";
 
+		if (isset($_POST['fg']))
+			echo '	<input type="hidden" name="fg" value="'.$_POST['fg'].'" />'."\n\r";
+
+		if (isset($_POST['bg']))
+			echo '	<input type="hidden" name="bg" value="'.$_POST['bg'].'" />'."\n\r";
+
+		if (isset($_POST['hl']))
+			echo '	<input type="hidden" name="hl" value="'.$_POST['hl'].'" />'."\n\r";
+
+		if (isset($_POST['invert_colour_selection']))
+			echo '	<input type="hidden" name="invert_colour_selection" value="'.$_POST['invert_colour_selection'].'" />'."\n\r";
+
+		if (isset($_POST['avoid_red']))
+			echo '	<input type="hidden" name="avoid_red" value="'.$_POST['avoid_red'].'" />'."\n\r";
+
+		if (isset($_POST['avoid_red_green']))
+			echo '	<input type="hidden" name="avoid_red_green" value="'.$_POST['avoid_red_green'].'" />'."\n\r";
+
+		if (isset($_POST['avoid_blue_yellow']))
+			echo '	<input type="hidden" name="avoid_blue_yellow" value="'.$_POST['avoid_blue_yellow'].'" />'."\n\r";
+
+		if (isset($_POST['avoid_green_yellow']))
+			echo '	<input type="hidden" name="avoid_green_yellow" value="'.$_POST['avoid_green_yellow'].'" />'."\n\r";
+
+		if (isset($_POST['use_max_contrast']))
+			echo '	<input type="hidden" name="use_max_contrast" value="'.$_POST['use_max_contrast'].'" />'."\n\r";
+	}
+		
+	if ($current_tab != 2) 
+	{
+		// save selected options on tab 2 (content settings)
+		if (isset($_POST['use_alternative_to_text']))
+			echo '	<input type="hidden" name="use_alternative_to_text" value="'.$_POST['use_alternative_to_text'].'" />'."\n\r";
+		
+		if (isset($_POST['preferred_alt_to_text']))
+			echo '	<input type="hidden" name="preferred_alt_to_text" value="'.$_POST['preferred_alt_to_text'].'" />'."\n\r";
+		
+		if (isset($_POST['alt_to_text_append_or_replace']))
+		echo '	<input type="hidden" name="alt_to_text_append_or_replace" value="'.$_POST['alt_to_text_append_or_replace'].'" />'."\n\r";
+		
+		if (isset($_POST['alt_text_prefer_lang']))
+		echo '	<input type="hidden" name="alt_text_prefer_lang" value="'.$_POST['alt_text_prefer_lang'].'" />'."\n\r";
+		
+		if (isset($_POST['use_alternative_to_audio']))
+		echo '	<input type="hidden" name="use_alternative_to_audio" value="'.$_POST['use_alternative_to_audio'].'" />'."\n\r";
+		
+		if (isset($_POST['preferred_alt_to_audio']))
+		echo '	<input type="hidden" name="preferred_alt_to_audio" value="'.$_POST['preferred_alt_to_audio'].'" />'."\n\r";
+		
+		if (isset($_POST['alt_to_audio_append_or_replace']))
+		echo '	<input type="hidden" name="alt_to_audio_append_or_replace" value="'.$_POST['alt_to_audio_append_or_replace'].'" />'."\n\r";
+		
+		if (isset($_POST['alt_audio_prefer_lang']))
+		echo '	<input type="hidden" name="alt_audio_prefer_lang" value="'.$_POST['alt_audio_prefer_lang'].'" />'."\n\r";
+		
+		if (isset($_POST['use_alternative_to_visual']))
+		echo '	<input type="hidden" name="use_alternative_to_visual" value="'.$_POST['use_alternative_to_visual'].'" />'."\n\r";
+		
+		if (isset($_POST['preferred_alt_to_visual']))
+		echo '	<input type="hidden" name="preferred_alt_to_visual" value="'.$_POST['preferred_alt_to_visual'].'" />'."\n\r";
+		
+		if (isset($_POST['alt_to_visual_append_or_replace']))
+		echo '	<input type="hidden" name="alt_to_visual_append_or_replace" value="'.$_POST['alt_to_visual_append_or_replace'].'" />'."\n\r";
+		
+		if (isset($_POST['alt_visual_prefer_lang']))
+		echo '	<input type="hidden" name="alt_visual_prefer_lang" value="'.$_POST['alt_visual_prefer_lang'].'" />'."\n\r";
+	}
+
+	if ($current_tab != 3) 
+	{
+		// save selected options on tab 3 (tool settings)
+		if (isset($_POST['dictionary_val']))
+			echo '	<input type="hidden" name="dictionary_val" value="'.$_POST['dictionary_val'].'" />'."\n\r";
+
+		if (isset($_POST['thesaurus_val']))
+			echo '	<input type="hidden" name="thesaurus_val" value="'.$_POST['thesaurus_val'].'" />'."\n\r";
+
+		if (isset($_POST['note_taking_val']))
+			echo '	<input type="hidden" name="note_taking_val" value="'.$_POST['note_taking_val'].'" />'."\n\r";
+
+		if (isset($_POST['calculator_val']))
+			echo '	<input type="hidden" name="calculator_val" value="'.$_POST['calculator_val'].'" />'."\n\r";
+
+		if (isset($_POST['peer_interaction_val']))
+			echo '	<input type="hidden" name="peer_interaction_val" value="'.$_POST['peer_interaction_val'].'" />'."\n\r";
+
+		if (isset($_POST['abacus_val']))
+			echo '	<input type="hidden" name="abacus_val" value="'.$_POST['abacus_val'].'" />'."\n\r";
+	}
+	
+	if ($current_tab != 4) 
+	{
+		// save selected options on tab 4 (control settings)
+		if (isset($_POST['show_contents']))
+			echo '	<input type="hidden" name="show_contents" value="'.$_POST['show_contents'].'" />'."\n\r";
+
+		if (isset($_POST['next_previous_buttons']))
+			echo '	<input type="hidden" name="next_previous_buttons" value="'.$_POST['next_previous_buttons'].'" />'."\n\r";
+
+		if (isset($_POST['show_notes']))
+			echo '	<input type="hidden" name="show_notes" value="'.$_POST['show_notes'].'" />'."\n\r";
+
+		if (isset($_POST['level_of_detail']))
+			echo '	<input type="hidden" name="level_of_detail" value="'.$_POST['level_of_detail'].'" />'."\n\r";
+
+		if (isset($_POST['content_views']))
+			echo '	<input type="hidden" name="content_views" value="'.$_POST['content_views'].'" />'."\n\r";
+
+		if (isset($_POST['show_separate_links']))
+			echo '	<input type="hidden" name="show_separate_links" value="'.$_POST['show_separate_links'].'" />'."\n\r";
+
+		if (isset($_POST['show_transcript']))
+			echo '	<input type="hidden" name="show_transcript" value="'.$_POST['show_transcript'].'" />'."\n\r";
+
+		if (isset($_POST['window_layout']))
+			echo '	<input type="hidden" name="window_layout" value="'.$_POST['window_layout'].'" />'."\n\r";
+	}
+
+	include(getcwd().'/'.$tabs[$current_tab][1]);
+
+?>
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />
 		<input type="reset" name="reset" value="<?php echo _AT('reset'); ?>" />
 	</div>
-	
 </div>
-</form>
+
+</form>	
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

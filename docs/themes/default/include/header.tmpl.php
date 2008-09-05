@@ -64,6 +64,7 @@ global $system_courses, $_custom_css,$db;
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/qstats_bar.css" type="text/css" />
+        <link rel="stylesheet" href="<?php echo $this->base_path; ?>TILE.css" type="text/css" />
 	<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
@@ -74,7 +75,6 @@ global $system_courses, $_custom_css,$db;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 	<?php echo $this->custom_css; ?>
-
 </head>
 <body onload="<?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 

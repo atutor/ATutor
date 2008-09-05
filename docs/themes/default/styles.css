@@ -1527,3 +1527,73 @@ div#menutoggle{
 	float:left;
 }
 */
+
+
+/*Added by Silvia */
+div.column_primary {
+	float: left;
+	width: 42%;
+	margin: 5px;
+	padding: 0px;
+	min-width: 170px;
+/*	position: relative;*/
+}
+
+div.column_equivalent{
+	float: left;
+	width: 52%;
+	margin-left: 15px;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	min-width: 170px;
+	padding: 5px;
+	border: 1px solid #EEE;
+	background-color: #FFF;
+/*	position: relative;*/
+
+}
+
+div.resource_box{
+	border: 1px solid #aaa;
+	width: 95%;
+	margin: 5px;
+	padding: 5px;
+	min-width: 150px;
+	background-color: #eee;
+/*	position: relative;*/
+}
+
+h2.alternatives_to{
+	margin-top: 12px;
+	font-size: 90%;
+	color: #A50707;
+
+/*	position: relative;*/
+}
+
+div.alternative_box{
+	border: 1px solid #ddd;
+	/*width: 90%;*/
+	margin: 5px;
+	padding: 5px;
+	min-width: 150px;
+	background-color: #fff;
+/*	position: relative;*/
+}
+
+div.alternative_box legend {
+	color: #000;
+}
+
+div.resource_box legend {
+	color: #000;
+}
+
+label.primary a{
+	color: #A50707;
+	font-weight: bolder;
+	font-size: 110%;
+	background-color: white;
+}
+	

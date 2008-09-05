@@ -15,7 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
-define('AT_DEVEL_TRANSLATE', 0);
+define('AT_DEVEL_TRANSLATE', 1);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -558,7 +558,7 @@ function get_forum_name($fid){
 }
 
 /* takes the array of valid prefs and assigns them to the current session */
-function assign_session_prefs ($prefs) {
+function assign_session_prefs($prefs) {
 	unset($_SESSION['prefs']);
 	if (is_array($prefs)) {
 		foreach($prefs as $pref_name => $value) {

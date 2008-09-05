@@ -205,6 +205,8 @@ $organizations_str = ob_get_contents();
 ob_end_clean();
 
 
+
+
 if (count($used_glossary_terms)) {
 	$used_glossary_terms = array_unique($used_glossary_terms);
 	sort($used_glossary_terms);

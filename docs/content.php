@@ -157,7 +157,14 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 		}
 
 		/* @See: include/lib/output.inc.php */
-		$savant->assign('body', format_content($content_row['text'], $content_row['formatting'], $glossary));
+		
+		//Silvia: to provide appropriated content on the basis of users' preferences
+
+		$content = provide_alternatives($cid, $content_row['text']);
+		
+		$savant->assign('body', format_content($content, $content_row['formatting'], $glossary));
+					
+				
 	}
 } else {
 	$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_UNIX_TIMESTAMP));

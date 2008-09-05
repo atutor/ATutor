@@ -69,6 +69,8 @@ else {
 }
 
 if ($pathext == '' && isset($_POST['pathext'])) {
+
+
 	$pathext = urlencode($_POST['pathext']);
 }
 
@@ -92,6 +94,8 @@ if ($pathext != '') {
 }
 echo '</p>';
 
+
+
 if ($popup == TRUE) {
 	$totalcol = 6;
 } else {
@@ -100,6 +104,7 @@ if ($popup == TRUE) {
 $labelcol = 3;
 
 if (TRUE || $framed != TRUE) {
+
 	if ($_GET['overwrite'] != '') {
 		// get file name, out of the full path
 		$path_parts = pathinfo($current_path.$_GET['overwrite']);
@@ -119,6 +124,7 @@ if (TRUE || $framed != TRUE) {
 			}
 		}
 	}
+	
 	// filemanager listing table
 	// make new directory 
 	echo '<div class="input-form"><fieldset class="group_form"><legend class="group_form">'._AT('add_file_folder').'</legend>'."\n";
@@ -267,8 +273,16 @@ if (TRUE || $framed != TRUE) {
 
 // Directory and File listing 
 
+//<<<<<<< .working
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
+//=======
+
+//echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP.'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
+//>>>>>>> .merge-right.r7847
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
+
+
+
 ?>
 <table class="data static" summary="" border="0" rules="groups" style="width: 90%">
 <thead>
@@ -286,10 +300,12 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
 		<input type="submit" name="move"   value="<?php echo _AT('move'); ?>" /></td>
 </tr>
+
 <tr>
 	<td colspan="4" align="right"><strong><?php echo _AT('directory_total'); ?>:</strong></td>
 	<td align="right">&nbsp;<strong><?php echo get_human_size(dirsize($current_path.$pathext.$file.'/')); ?></strong>&nbsp;</td>
 </tr>
+
 <tr>
 	<td colspan="4" align="right"><strong><?php echo _AT('course_total'); ?>:</strong></td>
 	<td align="right">&nbsp;<strong><?php echo get_human_size($course_total); ?></strong>&nbsp;</td>
@@ -306,13 +322,19 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 		} ?></strong>&nbsp;</td>
 </tr>
 </tfoot>
-<?php if($pathext) : ?>
+<?php
+
+
+if($pathext) : ?>
 	<tr>
 		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'cp='.$_GET['cp']; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
 	</tr>
 <?php endif; ?>
 <?php
 $totalBytes = 0;
+
+if ($dir == '')
+	$dir=opendir($current_path);
 
 // loop through folder to get files and directory listing
 while (false !== ($file = readdir($dir)) ) {
@@ -427,6 +449,9 @@ if (is_array($files)) {
 
 
 echo '</table></form>';
+
+
+
 ?>
 
 <script type="text/javascript">

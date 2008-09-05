@@ -23,6 +23,12 @@ if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 $_SESSION['done'] = 1;
 $popup = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
+$alter = $_REQUEST['alter'];
+
+//echo $_REQUEST['cid'];
+//echo $_REQUEST['tab'];
+
+//echo $alter;
 
 /* get this courses MaxQuota and MaxFileSize: */
 $sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
@@ -115,32 +121,47 @@ if (isset($_POST['submit'])) {
 										$_GET['popup'],
 										SEP);
 						$msg->addFeedback($f);
-						
-						header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
+						if ($alter)
+							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
+						else
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
 						exit;
 					} /* else */
 
 					$msg->addFeedback('FILE_UPLOADED');
 
-					header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
+					if ($alter)
+							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
+						else
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
 					exit;
 				}
 			} else {
 				$msg->addError(array('MAX_STORAGE_EXCEEDED', get_human_size($my_MaxCourseSize)));
-				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
+				if ($alter)
+							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
+						else
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
+						
 				exit;
 			}
 		} else {
 			$msg->addError(array('FILE_TOO_BIG', get_human_size($my_MaxFileSize)));
-			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
+			if ($alter)
+							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
+						else
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
+						
 			exit;
 		}
 	} else {
 		$msg->addError('FILE_NOT_SELECTED');
-		header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
+		if ($alter)
+							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
+						else
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
 		exit;
 	}
 }
-
 
 ?>
