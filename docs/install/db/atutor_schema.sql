@@ -1071,7 +1071,7 @@ CREATE TABLE `secondary_resources_types` (
   PRIMARY KEY  (`secondary_resource_id`,`type_id`)
 ) TYPE = MYISAM;
 
-INSERT INTO `AT_resource_types` VALUES
+INSERT INTO `resource_types` VALUES
 (1, 'auditory'),
 (2, 'sign_language'),
 (3, 'textual'),
