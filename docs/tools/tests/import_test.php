@@ -343,7 +343,7 @@ foreach($attributes as $resource=>$attrs){
 			$_POST['question']		= $xml->question[$loopcounter];
 			$_POST['feedback']		= $xml->feedback[$loopcounter];
 			$_POST['groups']		= $xml->groups[$loopcounter];
-			$_POST['property']		= $xml->attributes[$loopcounter]['render_fib']['property'];
+			$_POST['property']		= intval($xml->attributes[$loopcounter]['render_fib']['property']);
 			$_POST['choice']		= array();
 			$_POST['answers']		= array();
 

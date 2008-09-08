@@ -152,6 +152,8 @@ class QTIParser {
 				break;
 			case 'matapplet':
 				$this->attributes[$this->item_num][$name]['uri'] = $attributes['uri'];
+				$this->attributes[$this->item_num][$name]['width'] = intval($attributes['width']);
+				$this->attributes[$this->item_num][$name]['height'] = intval($attributes['height']);
 				break;
 			case 'setvar':
 				$this->attributes[$this->item_num][$name]['varname'] = $attributes['varname'];
@@ -190,7 +192,9 @@ class QTIParser {
 				}
 				break;
 			case 'matapplet':
-				$this->mat_content[$this->item_num] .= '<LALALALALALALA>'.$this->attributes[$this->item_num][$name]['uri'].'</LALALALALALALA>';				
+				(($this->attributes[$this->item_num][$name]['width'] != 0)? $width = $this->attributes[$this->item_num][$name]['width'] : $width = 460);
+				(($this->attributes[$this->item_num][$name]['height'] != 0)? $height = $this->attributes[$this->item_num][$name]['height'] : $height = 160);
+				$this->mat_content[$this->item_num] .= '<applet code="'.$this->attributes[$this->item_num][$name]['uri'].'" width="'.$width.'" height="'.$height.'" alt="Applet not loaded."></applet>';
 				break;
 			case 'material':
 				//check who is mattext's ancestor, started from the most known inner layer
@@ -305,8 +309,9 @@ class QTIParser {
 
 	// private	
    	function characterData($parser, $data){
+		global $addslashes;
 		if (trim($data)!=''){
-			$this->character_data .= preg_replace('/[\t\0\x0B]*/', '', $data);
+			$this->character_data .= $addslashes(preg_replace('/[\t\0\x0B(\r\n)]*/', '', $data));
 //			$this->character_data .= trim($data);
 		}
 	}

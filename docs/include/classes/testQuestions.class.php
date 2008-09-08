@@ -25,6 +25,7 @@ require(AT_INCLUDE_PATH.'lib/test_question_queries.inc.php');
  *        assignDisplayResultVariables()
  *        assignDisplayVariables()
  *        assignDisplayStatisticsVariables()
+ *		  importQti()
  *     
  *     And implement mark() which is used for marking the result.
  *
@@ -48,13 +49,11 @@ require(AT_INCLUDE_PATH.'lib/test_question_queries.inc.php');
  *     /themes/default/test_questions/{PREFIX}_result.tmpl.php
  *     /themes/default/test_questions/{PREFIX}_stats.tmpl.php
  *
- * 7 - Add the new question type to qti import/export tools
+ * 7 - Add the new question type to qti import/export tools,
+ *     Implement the following methods, which set template variables:
  *
  *     include/classes/QTI/QTIParser.class.php
  *	   getQuestionType()
- *
- *	   include/classes/QTI/QTIImport.class.php
- *	   importQuestionType()
  *
  * 8 - Done!
  **/
@@ -629,7 +628,7 @@ class OrderingQuestion extends AbstractTestQuestion {
 
 	//QTI Import Ordering Question
 	function importQTI($_POST){
-		global $msg, $db, $addslashes;
+		global $msg, $db;
 
 		if ($_POST['question'] == ''){
 			$missing_fields[] = _AT('question');
@@ -657,7 +656,7 @@ class OrderingQuestion extends AbstractTestQuestion {
 				 * @harris
 				 */
 				$_POST['choice'][$i] = validate_length($_POST['choice'][$i], 255);
-				$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 
 				if ($_POST['choice'][$i] != '') {
 					/* filter out empty choices/ remove gaps */
@@ -668,8 +667,8 @@ class OrderingQuestion extends AbstractTestQuestion {
 
 			$_POST['choice']   = array_pad($choice_new, 10, '');
 			$answer_new        = array_pad($answer_new, 10, 0);
-			$_POST['feedback'] = $addslashes($_POST['feedback']);
-			$_POST['question'] = $addslashes($_POST['question']);
+//			$_POST['feedback'] = $addslashes($_POST['feedback']);
+//			$_POST['question'] = $addslashes($_POST['question']);
 		
 			$sql_params = array(	$_POST['category_id'], 
 									$_SESSION['course_id'],
@@ -754,7 +753,7 @@ class TruefalseQuestion extends AbstracttestQuestion {
 
 	//QTI Import True/False Question
 	function importQTI($_POST){
-		global $msg, $db, $addslashes;
+		global $msg, $db;
 
 		if ($_POST['question'] == ''){
 			$msg->addError(array('EMPTY_FIELDS', _AT('statement')));
@@ -768,8 +767,8 @@ class TruefalseQuestion extends AbstracttestQuestion {
 		}
 
 		if (!$msg->containsErrors()) {
-			$_POST['feedback'] = $addslashes($_POST['feedback']);
-			$_POST['question'] = $addslashes($_POST['question']);
+//			$_POST['feedback'] = $addslashes($_POST['feedback']);
+//			$_POST['question'] = $addslashes($_POST['question']);
 
 
 			$sql_params = array(	$_POST['category_id'], 
@@ -851,7 +850,7 @@ class LikertQuestion extends AbstracttestQuestion {
 
 	//QTI Import Likert Question
 	function importQTI($_POST){
-		global $msg, $db, $addslashes;
+		global $msg, $db;
 //		$_POST = $this->_POST; 
 
 		$empty_fields = array();
@@ -872,10 +871,10 @@ class LikertQuestion extends AbstracttestQuestion {
 
 		if (!$msg->containsErrors()) {
 			$_POST['feedback']   = '';
-			$_POST['question']   = $addslashes($_POST['question']);
+//			$_POST['question']   = $addslashes($_POST['question']);
 
 			for ($i=0; $i<10; $i++) {
-				$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 				$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 				if ($_POST['choice'][$i] == '') {
@@ -960,7 +959,7 @@ class LongQuestion extends AbstracttestQuestion {
 
 	//QTI Import Open end/long Question
 	function importQTI($_POST){
-		global $msg, $db, $addslashes;
+		global $msg, $db;
 //		$_POST = $this->_POST; 
 
 		if ($_POST['question'] == ''){
@@ -968,8 +967,8 @@ class LongQuestion extends AbstracttestQuestion {
 		}
 
 		if (!$msg->containsErrors()) {
-			$_POST['feedback'] = $addslashes($_POST['feedback']);
-			$_POST['question'] = $addslashes($_POST['question']);
+//			$_POST['feedback'] = $addslashes($_POST['feedback']);
+//			$_POST['question'] = $addslashes($_POST['question']);
 
 			if ($_POST['property']==''){
 				$_POST['property'] = 4;	//essay
@@ -1116,7 +1115,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 
 	//QTI Import Matching Question
 	function importQTI($_POST){
-		global $msg, $db, $addslashes;
+		global $msg, $db;
 //		$_POST = $this->_POST; 
 
 		ksort($_POST['answer']);	//array_pad returns an array disregard of the array keys
@@ -1124,9 +1123,9 @@ class MatchingQuestion extends AbstracttestQuestion {
 		$_POST['answer']= array_pad($_POST['answer'], 10, -1);
 
 		for ($i = 0 ; $i < 10; $i++) {
-			$_POST['groups'][$i]        = $addslashes(trim($_POST['groups'][$i]));
+			$_POST['groups'][$i]        = trim($_POST['groups'][$i]);
 			$_POST['answer'][$i] = (int) $_POST['answer'][$i];
-			$_POST['choice'][$i]          = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i]          = trim($_POST['choice'][$i]);
 		}
 
 		if (!$_POST['groups'][0] 
@@ -1137,8 +1136,8 @@ class MatchingQuestion extends AbstracttestQuestion {
 		}
 
 		if (!$msg->containsErrors()) {
-			$_POST['feedback']     = $addslashes($_POST['feedback']);
-			$_POST['instructions'] = $addslashes($_POST['instructions']);
+//			$_POST['feedback']     = $addslashes($_POST['feedback']);
+//			$_POST['instructions'] = $addslashes($_POST['instructions']);
 		
 			$sql_params = array(	$_POST['category_id'], 
 									$_SESSION['course_id'],
@@ -1280,17 +1279,17 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 
 	//QTI Import Multiple Choice Question
 	function importQTI($_POST){
-		global $msg, $db, $addslashes;
+		global $msg, $db;
 //		$_POST = $this->_POST; 
 		if ($_POST['question'] == ''){
 			$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 		}
 		
 		if (!$msg->containsErrors()) {
-			$_POST['question']   = $addslashes($_POST['question']);
+//			$_POST['question']   = $addslashes($_POST['question']);
 
 			for ($i=0; $i<10; $i++) {
-				$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 			}
 
 			$answers = array_fill(0, 10, 0);
@@ -1376,7 +1375,7 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
 	//QTI Import multianswer Question
 	function importQTI($_POST){
-		global $msg, $db, $addslashes;
+		global $msg, $db;
 //		$_POST = $this->_POST; 
 
 		if ($_POST['question'] == ''){
@@ -1393,7 +1392,7 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
 			foreach ($_POST['choice'] as $choiceNum=>$choiceOpt) {
 				$choiceOpt = validate_length($choiceOpt, 255);
-				$choiceOpt = $addslashes(trim($choiceOpt));
+				$choiceOpt = trim($choiceOpt);
 				$_POST['answer'][$choiceNum] = intval($_POST['answer'][$choiceNum]);
 				if ($choiceOpt == '') {
 					/* an empty option can't be correct */
@@ -1432,8 +1431,8 @@ class MultianswerQuestion extends MultichoiceQuestion {
 				$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 				$_POST['choice'] = array_pad($_POST['choice'], 10, '');
 			
-				$_POST['feedback'] = $addslashes($_POST['feedback']);
-				$_POST['question'] = $addslashes($_POST['question']);
+//				$_POST['feedback'] = $addslashes($_POST['feedback']);
+//				$_POST['question'] = $addslashes($_POST['question']);
 
 				$sql_params = array(	$_POST['category_id'], 
 										$_SESSION['course_id'],
