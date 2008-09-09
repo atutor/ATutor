@@ -168,7 +168,7 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<label for="time_zone"><?php echo _AT('time_zone_offset'); ?></label><br />
+		<label for="time_zone"><?php echo _AT('timezone'); ?></label><br />
 
 		<?php
 		// If PHP 5+ generate a list of timezones
