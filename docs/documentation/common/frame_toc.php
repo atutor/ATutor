@@ -133,10 +133,9 @@ if ($section == 'admin'){
 			'content.php' => array(
 									'creating_editing_content.php' => array(
 																			'content_edit.php',
-																			'content_properties.php',
-																			'glossary_terms.php',
-																			'content_preview.php',
-																			'accessibility.php'
+				'content_properties.php',								'glossary_terms.php',
+				'content_preview.php',
+				'content_alternatives.php',								'accessibility.php'
 																			),
 									'content_packages.php',
 									'content_usage.php',

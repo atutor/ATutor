@@ -7,8 +7,8 @@
     <dt>Theme</dt>
     <dd>Themes are used for changing the look and feel.</dd>
 
-    <dt>Timezone Offset</dt>
-    <dd>Add or subtract hours from the times and dates displayed in ATutor, so they match your local time. Valid values range from -12 to 12. The positive sign is not required when adding hours. The minus sign is required when subtracting hours.</dd>
+    <dt>Time Zone Offset</dt>
+    <dd>Add or subtract hours from the times and dates displayed in ATutor, so they match your local time. Valid values range from -12 to 12. The positive sign is <strong>not</strong> required when adding hours. The minus sign is required when subtracting hours.</dd>
 
     <dt>Inbox Notification</dt>
     <dd>If enabled, an email notification message will be sent each time an Inbox message is received.</dd>
