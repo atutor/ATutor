@@ -31,7 +31,7 @@
 		<?php endif; ?>
 	</div>
 	<div class="row">
-		<?php echo _AT('time_zone_offset');  ?><br />
+		<?php echo _AT('time_zone');  ?><br />
 		<?php
 		echo '<input type="text" name="time_zone" value="'.$_SESSION['prefs']['PREF_TIMEZONE'].'" size="4"/>';
 		?>
