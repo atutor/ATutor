@@ -34,6 +34,8 @@ if (isset($_POST['cancel'])) {
 	$_POST['max_course_size']    = max(0, $_POST['max_course_size']);
 	$_POST['max_course_float']   = intval($_POST['max_course_float']);
 	$_POST['max_course_float']   = max(0, $_POST['max_course_float']);
+	$_POST['allow_registration']   = intval($_POST['allow_registration']);
+	$_POST['allow_unenroll']   = intval($_POST['allow_unenroll']);
 	$_POST['master_list']        = intval($_POST['master_list']);
 	$_POST['email_confirmation'] = intval($_POST['email_confirmation']);
 	$_POST['email_notification'] = intval($_POST['email_notification']);
@@ -231,6 +233,14 @@ echo at_timezone($server_time);
 
 		<input type="radio" name="master_list" value="0" id="ml_n" <?php if(!$_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_n"><?php echo $disable_on . _AT('disable') . $disable_off; ?></label>
 	</div>
+	<div class="row">
+		<?php echo _AT('allow_registration'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_registration'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="allow_registration" value="1" id="reg_y" <?php if($_config['allow_registration']) { echo 'checked="checked"'; }?>  /><label for="reg_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_registration" value="0" id="reg_n" <?php if(!$_config['allow_registration']) { echo 'checked="checked"'; }?>  /><label for="reg_n"><?php echo _AT('disable'); ?></label>
+	</div>
+	<div class="row">
+		<?php echo _AT('allow_unenroll'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_unenroll'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="allow_unenroll" value="1" id="ene_y" <?php if($_config['allow_unenroll']) { echo 'checked="checked"'; }?>  /><label for="ene_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_unenroll" value="0" id="ene_n" <?php if(!$_config['allow_unenroll']) { echo 'checked="checked"'; }?>  /><label for="ene_n"><?php echo _AT('disable'); ?></label>
+	</div>
 
 	<div class="row">
 		<?php echo _AT('require_email_confirmation'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['require_email_confirmation'] ? _AT('enable') : _AT('disable')); ?>)<br />
@@ -366,5 +376,8 @@ echo at_timezone($server_time);
 
 
 <?php 
+global $_config;
+debug($_config);
+
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

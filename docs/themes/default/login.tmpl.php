@@ -1,4 +1,7 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'header.inc.php'); 
+
+
+?>
 
 <script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
 
@@ -42,8 +45,9 @@ function encrypt_password() {
 		</div>
 		</form>
 	</div>
-
-
+<?php
+if($_config['allow_registration'] ==1){
+?>
 	<div class="column">
 		<form action="registration.php" method="get">
 			<div class="input-form" style="background-color:white;">
@@ -63,4 +67,5 @@ function encrypt_password() {
 
 	</div>
 </div>
+<?php } ?>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

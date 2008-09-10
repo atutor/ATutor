@@ -16,6 +16,14 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+if($_config['allow_registration'] != 1){
+		$msg->addInfo('REG_DISABLED');
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+}
+
+
 if (isset($_POST['cancel'])) {
 	header('Location: ./login.php');
 	exit;

@@ -58,7 +58,7 @@
 
 				<strong><?php echo $link.$row['title'].$link2; ?></strong>
 
-				<?php if ($row['member_id'] != $_SESSION['member_id']): ?>
+				<?php if ($row['member_id'] != $_SESSION['member_id']  && $_config['allow_unenroll'] == 1): ?>
 					- <a href="users/remove_course.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('unenroll_me'); ?></a>
 				<?php endif; ?>
 

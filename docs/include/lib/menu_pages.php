@@ -19,8 +19,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (isset($_pages[AT_NAV_ADMIN])) {
 	array_unshift($_pages[AT_NAV_ADMIN], 'admin/index.php', 'admin/modules/index.php');
 }
-
-$_pages[AT_NAV_PUBLIC] = array_merge(array('login.php', 'registration.php', 'browse.php'), (isset($_pages[AT_NAV_PUBLIC]) ? $_pages[AT_NAV_PUBLIC] : array()));
+global $_config;
+if($_config['allow_registration']){
+	$reg_tab = "registration.php";
+}
+$_pages[AT_NAV_PUBLIC] = array_merge(array('login.php',$reg_tab,'browse.php'), (isset($_pages[AT_NAV_PUBLIC]) ? $_pages[AT_NAV_PUBLIC] : array()));
 $_pages[AT_NAV_START]  = array_merge(array('users/index.php',  'users/profile.php', 'users/preferences.php'), (array) $_pages[AT_NAV_START]);
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();
