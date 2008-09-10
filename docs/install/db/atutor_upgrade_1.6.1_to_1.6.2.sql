@@ -43,5 +43,12 @@ INSERT INTO `resource_types` VALUES
 (3, 'textual'),
 (4, 'visual');
 
+INSERT INTO `config` (`name`, `value`) VALUES('encyclopedia', 'http://www.wikipedia.org');
+INSERT INTO `config` (`name`, `value`) VALUES('dictionary', 'http://dictionary.reference.com/');
+INSERT INTO `config` (`name`, `value`) VALUES('thesaurus', 'http://thesaurus.reference.com/');
+INSERT INTO `config` (`name`, `value`) VALUES('atlas', 'http://maps.google.ca/');
+INSERT INTO `config` (`name`, `value`) VALUES('calculator', 'http://www.calculateforfree.com/');
+INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.org/webnote/');
+INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
 
 /* End Access4All setup */
