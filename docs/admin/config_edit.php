@@ -168,10 +168,14 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<label for="time_zone"><?php echo _AT('timezone'); ?></label><br />
+		<label for="time_zone"><?php echo _AT('time_zone'); ?></label><br />
 
 		<?php
 		// If PHP 5+ generate a list of timezones
+
+
+
+
 		echo '<input type="text" name="time_zone" value="'.$_config['time_zone'].'" size="5" maxlength="5"/> ';
 
 
@@ -361,4 +365,6 @@ echo at_timezone($server_time);
 </script>
 
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php 
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
+?>
