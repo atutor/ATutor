@@ -14,7 +14,6 @@
 
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
-
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 require(AT_INCLUDE_PATH.'lib/pref_tab_functions.inc.php');
@@ -90,9 +89,11 @@ if (isset($_POST['submit'])) {
 		$temp_prefs['PREF_THESAURUS'] = intval($_POST['thesaurus_val']);
 		$temp_prefs['PREF_NOTE_TAKING'] = intval($_POST['note_taking_val']);
 		$temp_prefs['PREF_CALCULATOR'] = intval($_POST['calculator_val']);
-		$temp_prefs['PREF_PEER_INTERACTION'] = intval($_POST['peer_interaction_val']);
+		//$temp_prefs['PREF_PEER_INTERACTION'] = intval($_POST['peer_interaction_val']);
 		$temp_prefs['PREF_ABACUS'] = intval($_POST['abacus_val']);
-	
+		$temp_prefs['PREF_ATLAS'] = intval($_POST['atlas_val']);
+		$temp_prefs['PREF_ENCYCLOPEDIA'] = intval($_POST['encyclopedia_val']);	
+
 		// control settings (tab 4)
 		$temp_prefs['PREF_SHOW_CONTENTS'] = intval($_POST['show_contents']);
 		$temp_prefs['PREF_NEXT_PREVIOUS_BUTTONS'] = $addslashes($_POST['next_previous_buttons']);
