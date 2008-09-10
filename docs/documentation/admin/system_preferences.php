@@ -32,6 +32,14 @@
 			<dt>Authenticate Against A Master Student List</dt>
 			<dd>Whether or not to enable Master Student List authentication. If enabled, only new accounts that validate against the master list will be created. See the <a href="master_student_list.php">Master Student List</a> section for additional details on using this feature.</dd>
 
+			<dt>Allow Public Registration</dt>
+			<dd>If enabled, users can self-register. Disable to remove registration functions</dd>
+
+
+			<dt>Allow Students to Unenroll</dt>
+			<dd>If enabled, students can unenroll themselves from courses. If disabled, the Unenroll functions are removed.</dd>
+
+
 			<dt>Require Email Confirmation Upon Registration</dt>
 			<dd>If  email confirmation is enabled, before they can login, registrants must confirm their registration by replying to a message sent to the email address they registered with.  </dd>
 
