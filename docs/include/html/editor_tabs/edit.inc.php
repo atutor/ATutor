@@ -55,7 +55,7 @@ if ($do_check) {
 		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.contentForm.setvisualbutton.disabled=true;" />
 		<label for="text"><?php echo _AT('plain_text'); ?></label>
 
-		<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=false;"/>
+		<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.contentForm.setvisualbutton.disabled=false;"/>
 
 		<label for="html"><?php echo _AT('html'); ?></label>
 
