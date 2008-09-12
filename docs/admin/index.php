@@ -31,7 +31,16 @@ if ($_config['check_version']) {
 ?>
 
 <div style="width: 40%; float: right; padding-top: 4px; padding-left: 10px;">
+	<div class="input-form" style="width: 98%;">
+			<div class="row">
+				<h3><?php echo _AT('donate'); ?></h3>
+				<p><?php echo _AT('donate_text'); ?></p>
+			</div>
 
+			<div style="text-align:center;">
+				<a href="http://www.atutor.ca/payment/index.php?project=ATutor-Donation"><img src="<?php echo $_base_href; ?>/images/donate.gif" height="28" width="136" border="0" alt="<?php echo _AT('donate'); ?>" /></a><br /><br />
+			</div>
+	</div>
 	<?php if ($_config['allow_instructor_requests'] && admin_authenticate(AT_ADMIN_PRIV_USERS, AT_PRIV_RETURN)): ?> 
 		<?php
 			$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."instructor_approvals";
