@@ -227,7 +227,7 @@ if ($current_tab == 0) {
 		}
 	}
 	if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
-		$onload = ' document.contentForm.ctitle.focus(); ';
+		$onload = ' document.form.ctitle.focus(); ';
 	}
 }
 
@@ -248,7 +248,7 @@ $cid = intval($_REQUEST['cid']);
 $pid = intval($_REQUEST['pid']);
 
 ?>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="contentForm" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
 
 	if ($cid) {

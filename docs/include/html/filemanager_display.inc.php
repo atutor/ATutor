@@ -479,14 +479,14 @@ function insertFile(fileName, pathTo, ext) {
 
 function insertLink(html)
 {
-	if (!window.opener || window.opener.document.contentForm.setvisual.value == 1) {
+	if (!window.opener || window.opener.document.form.setvisual.value == 1) {
 		if (!window.opener && window.parent.tinyMCE)
 			window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 		else
 			if (window.opener && window.opener.tinyMCE)
 				window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 	} else {
-		insertAtCursor(window.opener.document.contentForm.body_text, html);
+		insertAtCursor(window.opener.document.form.body_text, html);
 	}
 }
 

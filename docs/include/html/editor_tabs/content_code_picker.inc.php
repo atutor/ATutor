@@ -39,29 +39,22 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </tr>
 </table>
 
-<?php if ($_POST['setvisual'] && !$_POST['settext']): ?>
-	<script type="text/javascript">
-	//<!--
-	function smilie(thesmilie, extra) {
+<script type="text/javascript">
+//<!--
+function smilie(thesmilie, extra) {
+	if (document.form.setvisual.value == 1)
 		if (!extra) {
 			tinyMCE.execCommand("mceInsertContent", false, thesmilie);
 		} else {
 			tinyMCE.execCommand("mceInsertContent", false, thesmilie + extra);
 		}
-	}
-	//--></script>
-<?php else: ?>
-	<script type="text/javascript">
-	//<!--
-	function smilie(thesmilie, extra) {
+	else
 		if (!extra) {
-			document.contentForm.body_text.value += thesmilie+" ";
-			document.contentForm.body_text.focus();
+			document.form.body_text.value += thesmilie+" ";
+			document.form.body_text.focus();
 		} else {
-			document.contentForm.body_text.value += thesmilie+extra+" ";
-			document.contentForm.body_text.focus();
+			document.form.body_text.value += thesmilie+extra+" ";
+			document.form.body_text.focus();
 		}
-
-	}
-	//--></script>
-<?php endif; ?>
+}
+//--></script>
