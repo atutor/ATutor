@@ -952,6 +952,7 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 	}
 }
 
+
 /**
 * According to user's preferences, it provides appropriated resources in the content page.
 * @access	public
@@ -1146,7 +1147,6 @@ function at_timezone($timestamp){
 	return $timestamp;
 
 }
-
 
 
 

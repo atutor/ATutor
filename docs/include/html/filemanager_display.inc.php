@@ -51,6 +51,7 @@ $course_total = dirsize($current_path);
 
 $framed = intval($_GET['framed']);
 $popup = intval($_GET['popup']);
+$tab = intval($_GET['tab']);
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$get_file = 'get.php/';
@@ -68,8 +69,8 @@ else {
 	echo _AT('home');
 }
 
-if ($pathext == '' && isset($_POST['pathext'])) {
 
+if ($pathext == '' && isset($_POST['pathext'])) {
 
 	$pathext = urlencode($_POST['pathext']);
 }
@@ -273,6 +274,7 @@ if (TRUE || $framed != TRUE) {
 
 // Directory and File listing 
 
+
 //<<<<<<< .working
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
 //=======
@@ -420,7 +422,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<td  align="right" style="white-space:nowrap">';
 
 		if ($popup == TRUE) {
-			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\');" />&nbsp;';
+			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\', \'' . $tab . '\');" />&nbsp;';
 		}
 
 		$files[$file1] .= AT_date(_AT('filemanager_date_format'), at_timezone($filedata[10]), AT_DATE_UNIX_TIMESTAMP);
@@ -456,7 +458,7 @@ echo '</table></form>';
 
 <script type="text/javascript">
 //<!--
-function insertFile(fileName, pathTo, ext) { 
+function insertFile(fileName, pathTo, ext, tab) { 
 
 	// pathTo + fileName should be relative to current path (specified by the Content Package Path)
 
@@ -464,20 +466,20 @@ function insertFile(fileName, pathTo, ext) {
 		var info = "<?php echo _AT('alternate_text'); ?>";
 		var html = '<img src="' + pathTo+fileName + '" border="0" alt="' + info + '" />';
 
-		insertLink(html);
+		insertLink(html, tab);
 	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid") {
 		var html = '[media]'+ pathTo + fileName + '[/media]';
 
-		insertLink(html);
+		insertLink(html, tab);
 	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
 		var html = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 		
-		insertLink(html);
+		insertLink(html, tab);
 	}
 }
 
-function insertLink(html)
+function insertLink(html, tab)
 {
 	if (!window.opener || window.opener.document.form.setvisual.value == 1) {
 		if (!window.opener && window.parent.tinyMCE)
@@ -486,7 +488,10 @@ function insertLink(html)
 			if (window.opener && window.opener.tinyMCE)
 				window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 	} else {
-		insertAtCursor(window.opener.document.form.body_text, html);
+		if (tab==5)
+			insertAtCursor(window.opener.document.form.body_text_alt, html);
+		else
+			insertAtCursor(window.opener.document.form.body_text, html);
 	}
 }
 

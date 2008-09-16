@@ -13,12 +13,14 @@
 // $Id: resources_parser_inc.inc.php 7208 2008-07-04 16:07:24Z silvia $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+//require(AT_INCLUDE_PATH.'lib/output.inc.php');
+
 global $db;
 
 define('AT_INCLUDE_PATH', '../include/');
 
-/* content id of an optional chapter */
-$c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
+//echo 'uffa';
+//echo $_POST['body_text'];
 
 $body_text 	= htmlspecialchars($stripslashes($_POST['body_text']));
 $body_t		= html_entity_decode($body_text);
@@ -56,7 +58,7 @@ class MyHandler {
 							'script'	=> 'src',
 							'input'		=> 'src',
 							'iframe'	=> 'src',
-							'embed'		=> 'src'
+							'embed'		=> 'src',
 							);
 
 		/* check if this attribute specifies the files in different ways: (ie. java) */
@@ -101,11 +103,15 @@ global $course_id;
 /* add the resource dependancies */
 $my_files 		= array();
 $content_files 	= "\n";
-$parser->parse($body_t);
+
+//in order to control if some [media] is in the body_text
+$body = embed_media($body_t);
+
+$parser->parse($body);
 		
 		
 /* handle @import */
-$import_files 	= get_import_files($body_t);
+$import_files 	= get_import_files($body);
 			
 if (count($import_files) > 0) $my_files = array_merge($my_files, $import_files);
 			
