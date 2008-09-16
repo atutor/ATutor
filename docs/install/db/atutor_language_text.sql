@@ -2,7 +2,7 @@ DROP TABLE AT_language_text;
 # Table structure for table 'AT_language_text'
 #
 
-CREATE TABLE `AT_language_text` (
+CREATE TABLE `language_text` (
   `language_code` varchar(5) NOT NULL default '',
   `variable` varchar(30) NOT NULL default '',
   `term` varchar(50) NOT NULL default '',
