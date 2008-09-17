@@ -28,7 +28,7 @@ global $db;
 <br/><br/>
 <?php echo '<input class="button" type="submit" name="save_types_and_language" value="'._AT('save_types_and_language').'" class="button"/>'; ?>
 
-</div>
+
 
 <div class="row_alternatives" id="nontextual_div" style="display: <?php if (($_POST['alternatives'] == 2) || ($_GET['alternatives'] == 2)) echo 'none'; else echo 'block';?>;">
 	<div class="column_primary">
@@ -145,7 +145,7 @@ global $db;
 								}
 							?>
 						</div>
-						<?php			
+						<?php	
 						}
 					}
 				}
