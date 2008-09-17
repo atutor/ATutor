@@ -75,7 +75,7 @@ tinyMCE.init({
 	theme_advanced_path_location : "bottom",
 	theme_advanced_resizing : true,
 	remove_linebreaks: false,
-	apply_source_formatting: true, //<-- not working sad
+	apply_source_formatting: true,
 
 	plugin_insertdate_dateFormat : "%Y-%m-%d",
 	plugin_insertdate_timeFormat : "%H:%M:%S",
