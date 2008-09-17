@@ -17,7 +17,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('title');  ?></label><br />
-		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" />
+		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
 	</div>
 	
 	<?php
@@ -28,7 +28,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	<div class="row">
 		<label for="head"><?php echo _AT('customized_head');  ?></label>
-		<input type="button" name="edithead" value="<?php echo _AT('edit'); ?>" onClick="switch_head_editor()" class="button"/><br />
+		<input type="button" name="edithead" value="<?php echo _AT('edit'); ?>" onclick="switch_head_editor()" class="button"/><br />
 		<small>&middot; <?php echo _AT('customized_head_note'); ?></small>
 	</div>
 
@@ -62,7 +62,7 @@ if ($do_check) {
 		<input type="hidden" name="displayhead" value="<?php if ($_POST['displayhead']==1 || $_REQUEST['displayhead']==1 || $_GET['displayhead']==1) echo '1'; else echo '0'; ?>" />
 		<input type="hidden" name="setvisual" value="<?php if ($_POST['setvisual']==1 || $_REQUEST['setvisual']==1 || $_GET['setvisual']==1) echo '1'; else echo '0'; ?>" />
 		<input type="hidden" name="settext" value="<?php if ($_POST['settext']==1 || $_REQUEST['settext']==1 || $_GET['settext']==1) echo '1'; else echo '0'; ?>" />
-		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_body_editor()" class="button" />
+		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onclick="switch_body_editor()" class="button" />
 
 		<script type="text/javascript" language="javascript">
 		//<!--
