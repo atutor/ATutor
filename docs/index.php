@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AChecker                                                             */
+/* ATutor                                                             */
 /************************************************************************/
 /* Copyright (c) 2008 by Greg Gay, Cindy Li                             */
 /* Adaptive Technology Resource Centre / University of Toronto			    */
