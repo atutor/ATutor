@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: redirect.php 7208 2008-01-09 16:07:24Z harris $
+// $Id: go.php 7208 2008-01-09 16:07:24Z harris $
 
 define('AT_INCLUDE_PATH', 'include/');
 define('AT_REDIRECT_LOADED', true);
@@ -31,12 +31,9 @@ while ($row = mysql_fetch_assoc($result)) {
 	$_config[$row['name']] = $row['value'];
 }
 
-//Handles path_info in diff versions of PHP 
-if(isset($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO']!=''){
-	$pathinfo = $_SERVER['ORIG_PATH_INFO'];	
-} else {
-	$pathinfo = $_SERVER['PATH_INFO'];	
-}
+//Get path info
+$pathinfo = getPathInfo();
+
 $url_parser = new UrlParser($pathinfo);
 $path_array =  $url_parser->getPathArray();
 $_pretty_url_course_id = $path_array[0];
@@ -91,6 +88,27 @@ function save2Get($var_query){
 		}
 		$_GET[$k] = $v;
 		$_REQUEST[$k] = $v;
+	}
+}
+
+/**
+ * Get path info
+ * @return the path info string
+ */
+function getPathInfo(){
+	//Handles path_info in diff versions of PHP 
+	if(isset($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO']!=''){
+		//if both PATH_INFO and ORIG_PATH_INFO are set, then decide which to use by str ops.
+		if (isset($_SERVER['PATH_INFO'])){
+			$pathpos = strpos($_SERVER['ORIG_PATH_INFO'], $_SERVER['SCRIPT_NAME']);
+			$pathlen = strlen($_SERVER['SCRIPT_NAME']);
+			if (substr($_SERVER['ORIG_PATH_INFO'], $pathpos + $pathlen) == $_SERVER['PATH_INFO']){
+				return $_SERVER['PATH_INFO'];
+			} 
+		}
+		return $_SERVER['ORIG_PATH_INFO'];	
+	} else {
+		return $_SERVER['PATH_INFO'];	
 	}
 }
 ?>
