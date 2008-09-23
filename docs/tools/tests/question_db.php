@@ -90,7 +90,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <div class="input-form" style="width:42em;">
-	<fieldset class="group_form" style="width:40%;float:right;height:18em;;"><legend class="group_form"><?php echo _AT('import_question'); ?></legend>
+	<fieldset class="group_form" style="width:16em;float:right;height:18em;"><legend class="group_form"><?php echo _AT('import_question'); ?></legend>
 		<form method="post" action="<?php echo 'tools/tests/question_import.php'; ?>" enctype="multipart/form-data" >	<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
 			<input type="file" name="file" id="to_file" />
 			<div class="row buttons">
@@ -98,7 +98,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			</div>
 		</form>
 	</fieldset>
-	<fieldset class="group_form" style="width:30%; min-width:170px;"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
+	<fieldset class="group_form" style="width:15em;"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
 		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 			<label for="question"><?php echo _AT('create_new_question'); ?></label><br />
