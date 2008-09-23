@@ -312,11 +312,15 @@ function toggleToc(objId) {
 			<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> > 
 		<?php endforeach; ?> <?php echo $this->page_title; ?>
 	</div>
+<?php } ?>
+<?php //if ($_SESSION["prefs"]["PREF_SHOW_GUIDE"]) { ?>
 	<?php if ($this->guide): ?>
 		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	<?php endif; ?>
+<?php //} ?>
+
 </div>
-<?php } ?>
+
 
 <div id="contentwrapper">
 	<?php if (($_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
