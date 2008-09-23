@@ -33,7 +33,7 @@ $num_tests = mysql_num_rows($result);
 
 
 <div class="row">
-	<p><?php echo _AT('Checked tests will be added to this content page'); ?></p>
+	<p><?php echo _AT('about_content_tests'); ?></p>
 </div>
 
 
