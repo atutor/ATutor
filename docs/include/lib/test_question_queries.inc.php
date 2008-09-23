@@ -61,4 +61,31 @@ define('AT_SQL_QUESTION_MATCHINGDD', "INSERT INTO ".TABLE_PREFIX."tests_question
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 0)");
 
+define('AT_SQL_TEST', "INSERT INTO ".TABLE_PREFIX."tests " .
+					   "(test_id,
+					 course_id,
+					 title,
+					 description,
+					 `format`,
+					 start_date,
+					 end_date,
+					 randomize_order,
+					 num_questions,
+					 instructions,
+					 content_id,
+					 passscore,
+					 passpercent,
+					 passfeedback,
+					 failfeedback,
+					 result_release,
+					 random,
+					 difficulty,
+					 num_takes,
+					 anonymous,
+					 out_of,
+					 guests,
+					 display) " .
+					   "VALUES 
+						(NULL, %d, '%s', '%s', %d, '%s', '%s', %d, %d, '%s', %d, %d, %d, '%s', '%s', %s, %d, %d, %d, %s, '', %d, %d)");
+
 ?>

@@ -104,6 +104,13 @@ $_pages['content.php'] = $last_page;
 reset($path);
 $first_page = current($path);
 
+/* the content test extension page */
+$content_test_ids = array();	//the html
+$content_test_rs = $contentManager->getContentTestsAssoc($cid);
+while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
+	$content_test_ids[] = $content_test_row;
+}
+
 // use any styles that were part of the imported document
 // $_custom_css = $_base_href.'headstuff.php?cid='.$cid.SEP.'path='.urlEncode($_base_href.$course_base_href.$content_base_href);
 
@@ -163,6 +170,15 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 		$content = provide_alternatives($cid, $content_row['text']);
 		
 		$savant->assign('body', format_content($content, $content_row['formatting'], $glossary));
+
+		//assign test pages if there are tests associated with this content page
+		if (!empty($content_test_ids)){
+			$savant->assign('test_message', $content_row['test_message']);
+			$savant->assign('test_ids', $content_test_ids);
+		} else {
+			$savant->assign('test_message', '');
+			$savant->assign('test_ids', array());
+		}
 					
 				
 	}

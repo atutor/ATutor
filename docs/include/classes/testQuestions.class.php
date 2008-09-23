@@ -194,7 +194,7 @@ function test_question_qti_export($question_ids) {
 	$course_language_charset = $courseLanguage->getCharacterSet();
 
 	$zipfile = new zipfile();
-//	$zipfile->create_dir('resources/'); // for all the dependency files
+	$zipfile->create_dir('resources/'); // for all the dependency files
 	$resources    = array();
 	$dependencies = array();
 
@@ -231,7 +231,7 @@ function test_question_qti_export($question_ids) {
 
 	// add any dependency files:
 	foreach ($dependencies as $resource => $resource_server_path) {
-		$zipfile->add_file(@file_get_contents($resource_server_path), $resource, filemtime($resource_server_path));
+		$zipfile->add_file(@file_get_contents($resource_server_path), 'resources/' . $resource, filemtime($resource_server_path));
 	}
 
 	// construct the manifest xml
@@ -254,29 +254,57 @@ function test_question_qti_export($question_ids) {
 
 /** 
  * Export test 
- * @param	array	an array consist of all the ids of the questions in which we desired to export.
+ * @param	int		test id
  * @param	string	the test title
+ * @param	ref		[OPTIONAL] zip object reference
+ * @param	array	[OPTIONAL] list of already added files.
  */
-function test_qti_export($question_ids, $test_title){
-	require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
-	require(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
-	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	// for XML_HTMLSax
-
-	global $savant, $db, $system_courses, $languageManager;
+function test_qti_export($tid, $test_title='', $zipfile = null){
+	require_once(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
+	require_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	// for XML_HTMLSax
+	require_once(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
+	global $savant, $db, $system_courses, $languageManager, $test_zipped_files;
+	global $course_id;
 
 	$course_language = $system_courses[$_SESSION['course_id']]['primary_language'];
 	$courseLanguage =& $languageManager->getLanguage($course_language);
 	$course_language_charset = $courseLanguage->getCharacterSet();
+	$imported_files;
+	$zipflag = false;
 
-	$zipfile = new zipfile();
-//	$zipfile->create_dir('resources/'); // for all the dependency files
+	if ($zipfile==null){
+		$zipflag = true;
+	}
+
+	if ($test_zipped_files == null){
+		$test_zipped_files = array();
+	}
+
+	if ($zipflag){
+		$zipfile = new zipfile();
+		$zipfile->create_dir('resources/'); // for all the dependency files
+	}
 	$resources    = array();
 	$dependencies = array();
 
 //	don't want to sort it, i want the same order out.
 //	asort($question_ids);
 
+	//TODO: Merge the following 2 sqls together.
+	//Randomized or not, export all the questions that are associated with it.
+	$sql	= "SELECT TQ.question_id, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
+	$result	= mysql_query($sql, $db);
+	$question_ids = array();
+
+	while (($question_row = mysql_fetch_assoc($result)) != false){
+		$question_ids[] = $question_row['question_id'];
+	}
 	$question_ids_delim = implode(',',$question_ids);
+	
+	//No questions in the test
+	if (sizeof($question_ids_delim)==0){
+		return;
+	}
 
 	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
 	$sql = "SELECT TQ.*, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.question_id IN($question_ids_delim) ORDER BY TQA.ordering, TQA.question_id";
@@ -292,40 +320,79 @@ function test_qti_export($question_ids, $test_title){
 		$local_dependencies = get_html_resources($text_blob);
 		$dependencies = array_merge($dependencies, $local_dependencies);
 
-//		$resources[] = array('href'         => 'question_'.$row['question_id'].'.xml',
-//							 'dependencies' => array_keys($local_dependencies));
 		$xml = $xml . "\n\n" . $local_xml;
 	}
+
+	$resources[] = array('href'         => 'tests_'.$tid.'.xml',
+						 'dependencies' => array_keys($dependencies));
+
 	$xml = trim($xml);
+
+	//get test title
+	$sql = "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id = $tid";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_array($result);
 
 	//TODO: wrap around xml now
 	$savant->assign('xml_content', $xml);
-	$savant->assign('title', $row['title']);
+	$savant->assign('title', htmlentities($row['title']));
 	$xml = $savant->fetch('test_questions/wrapper.tmpl.php');
 
-	$xml_filename = 'atutor_questions.xml';
+	$xml_filename = 'tests_'.$tid.'.xml';
 	$zipfile->add_file($xml, $xml_filename);
 
 	// add any dependency files:
 	foreach ($dependencies as $resource => $resource_server_path) {
-		$zipfile->add_file(@file_get_contents($resource_server_path), $resource, filemtime($resource_server_path));
+		//add this file in if it's not already in the zip package
+		if (!in_array($resource, $test_zipped_files)){
+			$zipfile->add_file(@file_get_contents($resource_server_path), 'resources/'.$resource, filemtime($resource_server_path));
+			$test_zipped_files[] = $resource;
+		}
 	}
 
-	// construct the manifest xml
-//	$savant->assign('resources', $resources);
-	$savant->assign('dependencies', array_keys($dependencies));
-	$savant->assign('encoding', $course_language_charset);
-	$savant->assign('title', $test_title);
-	$savant->assign('xml_filename', $xml_filename);
-	$manifest_xml = $savant->fetch('test_questions/manifest_qti_1p2.tmpl.php');
+	if ($zipflag){
+		// construct the manifest xml
+		$savant->assign('resources', $resources);
+		$savant->assign('dependencies', array_keys($dependencies));
+		$savant->assign('encoding', $course_language_charset);
+		$savant->assign('title', $test_title);
+		$savant->assign('xml_filename', $xml_filename);
+		
+		$manifest_xml = $savant->fetch('test_questions/manifest_qti_1p2.tmpl.php');
+		$zipfile->add_file($manifest_xml, 'imsmanifest.xml');
 
-	$zipfile->add_file($manifest_xml, 'imsmanifest.xml');
+		$zipfile->close();
 
-	$zipfile->close();
+		$filename = str_replace(array(' ', ':'), '_', $_SESSION['course_title'].'-'.$test_title.'-'.date('Ymd'));
+		$zipfile->send_file($filename);
+		exit;
+	}
+	
+	$return_array[$xml_filename] = array_keys($dependencies);
+	return $return_array;
+	//done
+}
 
-	$filename = str_replace(array(' ', ':'), '_', $_SESSION['course_title'].'-'.$test_title.'-'.date('Ymd'));
-	$zipfile->send_file($filename);
-	exit;
+
+/* 
+ * Recursively create folders
+ * For the purpose of this webapp only.  All the paths are seperated by a /
+ * And thus this function will loop through each directory and create them on the way
+ * if it doesn't exist.
+ * @author harris
+ */
+function recursive_mkdir($path, $mode = 0700) {
+    $dirs = explode(DIRECTORY_SEPARATOR , $path);
+    $count = count($dirs);
+    $path = '';
+    for ($i = 0; $i < $count; ++$i) {
+        $path .= $dirs[$i].DIRECTORY_SEPARATOR;
+		//If the directory has not been created, create it and return error on failure
+        if (!is_dir($path) && !mkdir($path, $mode)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 

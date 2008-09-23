@@ -12,6 +12,7 @@
 /****************************************************************/
 // $Id$
 define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 /* content id of an optional chapter */
 $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : 0;
@@ -168,7 +169,6 @@ while ($row = mysql_fetch_assoc($result)) {
 	}
 }
 
-
 if ($cid) {
 	/* filter out the top level sections that we don't want */
 	$top_level = $content[$top_content_parent_id];
@@ -196,16 +196,37 @@ $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
 
-/* generate the resources and save the HTML files */
+$test_ids = array();	//global array to store all the test ids
+//if ($my_files == null) 
+//$my_files = array();
 
+/* generate the IMS QTI resource and files */
+/*
+foreach ($content[0] as $content_box){
+	$content_test_rs = $contentManager->getContentTestsAssoc($content_box['content_id']);	
+	while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
+		//export
+		$test_ids[] = $content_test_row['test_id'];
+		//the 'added_files' is for adding into the manifest file in this zip
+		$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
+
+		//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
+		foreach($added_files as $filename=>$file_array){
+			$my_files[] = $filename;
+			foreach ($file_array as $garbage=>$filename2){
+				$my_files[] = $filename2;
+			}
+		}
+	}
+}
+*/
+
+/* generate the resources and save the HTML files */
 $used_glossary_terms = array();
 ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 $organizations_str = ob_get_contents();
 ob_end_clean();
-
-
-
 
 if (count($used_glossary_terms)) {
 	$used_glossary_terms = array_unique($used_glossary_terms);
@@ -215,7 +236,8 @@ if (count($used_glossary_terms)) {
 	$terms_xml = '';
 	foreach ($used_glossary_terms as $term) {
 		$term_key = urlencode($term);
-		$glossary[$term_key] = str_replace('&', '&amp;', $glossary[$term_key]);
+//		$glossary[$term_key] = str_replace('&', '&amp;', $glossary[$term_key]);
+		$glossary[$term_key] = htmlentities($glossary[$term_key], ENT_QUOTES);
 		$escaped_term = str_replace('&', '&amp;', $term);
 		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
 									array($escaped_term, $glossary[$term_key]),
@@ -260,7 +282,6 @@ $html_mainheader = str_replace(array('{COURSE_TITLE}', '{COURSE_PRIMARY_LANGUAGE
 $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURSE_TITLE}'),
 									array($organizations_str,	$resources, $ims_course_title),
 									$ims_template_xml['final']);
-
 
 /* generate the vcard for the instructor/author */
 $sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";

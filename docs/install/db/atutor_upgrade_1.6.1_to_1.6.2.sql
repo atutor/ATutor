@@ -52,3 +52,17 @@ INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.
 INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
 
 /* End Access4All setup */
+
+
+# Content Test Extension
+# @author	Harris
+# @date		Sep 08, 08 */
+CREATE TABLE `content_tests_assoc` (
+  `content_id` INTEGER UNSIGNED NOT NULL,
+  `test_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`content_id`, `test_id`)
+)
+TYPE = MyISAM;
+
+# Customized test messages associated with the content page
+ALTER TABLE `atutor_161`.`at_content` ADD COLUMN `test_message` TEXT NOT NULL AFTER `use_customized_head`;

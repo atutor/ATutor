@@ -68,9 +68,24 @@ class ContentManager
 			$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
 													'title'				=> htmlspecialchars($row['title']),
 													'ordering'			=> $row['ordering'],
-													'u_release_date'      => $row['u_release_date']);
+													'u_release_date'    => $row['u_release_date']);
 
-			if ($row['content_parent_id'] == 0){
+			/* 
+			 * add test content asscioations
+			 * find associations per content page, and add it as a sublink.
+			 * @author harris
+			 */
+			$test_rs = $this->getContentTestsAssoc($row['content_id']);
+			while ($test_row = mysql_fetch_assoc($test_rs)){
+				$_menu[$row['content_id']][] = array(	'test_id'	=> $test_row['test_id'],
+														'title'		=> htmlspecialchars($test_row['title']));
+
+				$_menu_info[$test_row['test_id']] = array(	'content_parent_id' => $row['content_id'],
+															'title'				=> htmlspecialchars($test_row['title']));				
+			}
+			/* End of add test content asscioations */
+
+			if ($row['content_parent_id'] == 0) {
 				$max_depth[$row['content_id']] = 1;
 			} else {
 				$max_depth[$row['content_id']] = $max_depth[$row['content_parent_id']]+1;
@@ -127,7 +142,7 @@ class ContentManager
 	}
 
 
-	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $head = '', $use_customized_head = 0) {
+	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $head = '', $use_customized_head = 0, $test_message = '') {
 		
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['course_id'] != -1)) {
 			return false;
@@ -151,7 +166,8 @@ class ContentManager
 		                keywords,
 		                content_path,
 		                title,
-		                text)
+		                text,
+						test_message)
 		        VALUES ($course_id, 
 		                $content_parent_id, 
 		                $ordering, 
@@ -164,7 +180,8 @@ class ContentManager
 		                '$keywords', 
 		                '', 
 		                '$title',
-		                '$text')";
+		                '$text',
+						'$test_message')";
 
 		$err = mysql_query($sql, $this->db);
 
@@ -198,7 +215,7 @@ class ContentManager
 	}
 
 
-	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date, $head, $use_customized_head) {
+	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date, $head, $use_customized_head, $test_message) {
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 			return FALSE;
 		}
@@ -222,7 +239,7 @@ class ContentManager
 		}
 
 		/* update the title, text of the newly moved (or not) content */
-		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', head='$head', use_customized_head=$use_customized_head, text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date' WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', head='$head', use_customized_head=$use_customized_head, text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date', test_message='$test_message' WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
 
 		/* update the related content */
@@ -288,6 +305,10 @@ class ContentManager
 		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
 
+		/* delete the content tests association */
+		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
+		$result = mysql_query($sql, $this->db);
+
 		/* re-order the rest of the content */
 		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $this->db);
@@ -322,6 +343,10 @@ class ContentManager
 		$result = mysql_query($sql, $this->db);
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
+		$result = mysql_query($sql, $this->db);
+
+		/* delete the content tests association */
+		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
 	}
 
@@ -358,6 +383,19 @@ class ContentManager
 		}
 
 		return $related_content;
+	}
+
+	/** 
+	 * Return a list of tests associated with the selected content
+	 * @param	int		the content id that all tests are associated with it.
+	 * @return	array	list of tests
+	 * @date	Sep 10, 2008
+	 * @author	Harris
+	 */
+	function & getContentTestsAssoc($content_id){
+		$sql	= "SELECT ct.test_id, t.title FROM (SELECT * FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id) AS ct LEFT JOIN ".TABLE_PREFIX."tests t ON ct.test_id=t.test_id";
+		$result = mysql_query($sql, $this->db);
+		return $result;
 	}
 
 
@@ -633,7 +671,14 @@ class ContentManager
 						$on = true;
 					}
 
-					$link .= ' <a href="'.$_base_path.url_rewrite('content.php?cid='.$content['content_id']).'" title="';
+					//test content edition @harris
+					//if this is a test link.
+					if (isset($content['test_id'])){
+						$in_link = 'tools/test_intro.php?tid='.$content['test_id'];
+					} else {
+						$in_link = 'content.php?cid='.$content['content_id'];
+					}
+					$link .= ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
 						$link .= $path.$counter.' ';
 					}
@@ -773,6 +818,9 @@ class ContentManager
 			$counter = 1;
 			$num_items = count($top_level);
 			foreach ($top_level as $garbage => $content) {
+				if (isset($content['test_id'])){
+					continue;
+				}
 
 				$link = ' ';
 

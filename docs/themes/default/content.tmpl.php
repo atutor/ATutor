@@ -26,6 +26,24 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 	<?php echo $this->body; ?>
 </div>
 
+<?php if (!empty($this->test_ids)): ?>
+<div id="content-test" class="input-form">
+	<ol>
+		<strong><?php echo _AT('tests') . ':' ; ?></strong>
+		<li class="top-tool"><?php echo $this->test_message; ?></li>
+		<ul class="tools">
+		<?php 
+			foreach ($this->test_ids as $id => $test_obj){
+				echo '<li><a href="'.url_rewrite('tools/test_intro.php?tid='.$test_obj['test_id'], AT_PRETTY_URL_IS_HEADER).'">'.
+					AT_print($test_obj['title'], 'tests.title').'</a><br /></li>';
+			}
+		?>
+		</ul>
+	</li></ol>
+</div>
+<?php endif; ?>
+
 <div id="content-info">
 	<?php echo $this->content_info; ?>
+
 </div>

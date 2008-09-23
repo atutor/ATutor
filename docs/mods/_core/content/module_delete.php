@@ -12,6 +12,9 @@ function content_delete($course) {
 
 		$sql3	 = "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$row[0]";
 		$result3 = mysql_query($sql3, $db);
+
+		$sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$row[0]";
+		$result = mysql_query($sql, $db);
 	}
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE course_id=$course";

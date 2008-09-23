@@ -10,13 +10,13 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: question_import.php 7482 2008-05-06 17:44:49Z harris $
+// $Id: import_test.php 7482 2008-05-06 17:44:49Z harris $
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 require(AT_INCLUDE_PATH.'lib/qti.inc.php'); 
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
-require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
+//require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 
 /* to avoid timing out on large files */
@@ -308,308 +308,33 @@ if (!$overwrite && !empty($existing_files)){
 
 //Get the XML file out and start importing them into our database.
 //TODO: See question_import.php 287-289.
-foreach($attributes as $resource=>$attrs){
-	if ($attrs['type'] != 'webcontent'){
-		//Instantiate class obj
-		$xml =& new QTIParser();
-		$xml_content = @file_get_contents($import_path . $attrs['href']);		
-		$xml->setRelativePath($package_base_name);
-		if (!$xml->parse($xml_content)){
-			$msg->addError('QTI_WRONG_PACKAGE');
-			break;
-		}
+$qti_import =& new QTIImport($import_path);
+$qids = $qti_import->importQuestions($attributes);
 
-		//import file, should we use file href? or jsut this href?
-		//Aug 25, use both, so then it can check for respondus media as well.
-		foreach($attrs['file'] as $file_id => $file_name){
-			$file_pathinfo = pathinfo($file_name);
-			if ($file_pathinfo['basename'] == $attrs['href']){
-				//This file will be parsed later
-				continue;
-			} 
-//debug($file_pathinfo);
-			if (in_array($file_pathinfo['extension'], $supported_media_type)){
-				//copy medias over.
-				copyMedia(array($file_name), $xml_items);
-			}
-		}		
+//import test
+$tid = $qti_import->importTest();
 
-		for ($loopcounter=0; $loopcounter<$xml->item_num; $loopcounter++){
-			//Create POST values.
-			unset($_POST);		//clear cache
-			$_POST['required']		= 1;
-			$_POST['preset_num']	= 0;
-			$_POST['category_id']	= 0;
-			$_POST['question']		= $xml->question[$loopcounter];
-			$_POST['feedback']		= $xml->feedback[$loopcounter];
-			$_POST['groups']		= $xml->groups[$loopcounter];
-			$_POST['property']		= intval($xml->attributes[$loopcounter]['render_fib']['property']);
-			$_POST['choice']		= array();
-			$_POST['answers']		= array();
-
-			//assign choices
-			$i = 0;
-
-			//trim values
-			if (is_array($xml->answers[$loopcounter])){
-				array_walk($xml->answers[$loopcounter], 'trim_value');
-			}
-			//TODO: The groups is 1-0+ choices.  So we should loop thru groups, not choices.
-			if (is_array($xml->choices[$loopcounter])){		
-				foreach ($xml->choices[$loopcounter] as $choiceNum=>$choiceOpt){
-					if (sizeof($_POST['groups'] )>0) {
-						foreach ($xml->answers[$loopcounter] as $ansNum=>$ansOpt){
-							if ($choiceNum == $ansOpt){
-								//Not exactly efficient, worst case N^2
-								$_POST['answers'][$ansNum] = $i;
-							}			
-						}		
-					} else {
-						//save answer(s)
-						if (is_array($xml->answers[$loopcounter]) && in_array($choiceNum, $xml->answers[$loopcounter])){
-							$_POST['answers'][] = $i;
-						}		
-					}
-					$_POST['choice'][] = $choiceOpt;
-					$i++;
-				}
-			}
-			unset($qti_import);
-			$qti_import =& new QTIImport($_POST);
-				
-			//Create questions
-			$qti_import->importQuestionType($xml->getQuestionType($loopcounter));			
-
-			//save question id 
-			$qids[] = $qti_import->qid;
-
-			//Dependency handling
-			if (!empty($attrs['dependency'])){
-				$xml_items = array_merge($xml_items, $xml->items);
-			}
-		}
-		$xml->close();
+//associate question and tests
+foreach ($qids as $order=>$qid){
+	if (isset($qti_import->weights[$order])){
+		$weight = round($qti_import->weights[$order]);
 	} else {
-		//webcontent, copy it over.
-		copyMedia($attrs['file'], $xml_items);
-/*
-		foreach($attrs['file'] as $file_num => $file_loc){
-			$new_file_loc ='';
-			foreach ($xml_items as $xk=>$xv){
-				if (strpos($file_loc, $xv)!==false){
-					$new_file_loc = $xv;
-					break;
-				} 
-			}
-			if ($new_file_loc==''){
-				$new_file_loc = $file_loc;
-			}
-debug($new_file_loc, 'NEW FILE LOC');
-			//check if new folder is there, if not, create it.
-//			createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc );
-			createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
-			
-			//copy files over
-//			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-//				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc) === false) {
-			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
-				//TODO: Print out file already exist error.
-				if (!$msg->containsErrors()) {
-					$msg->addError('IMPORT_FAILED');
-				}
-			} 
-		}
-		*/
+		$weight = 0;
 	}
-}
-
-//debug('done creating questions');
-clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
-//debug($qids);
-//debug('creating test template');
-//------------------------------------------------------------------------ test ---
-$missing_fields			= array();
-$_POST['title']			= $test_title;
-$_POST['description']	= '';
-$_POST['num_questions']	= intval($_POST['num_questions']);
-$_POST['num_takes']		= intval($_POST['num_takes']);
-$_POST['content_id']	= intval($_POST['content_id']);
-$_POST['passpercent']	= intval($_POST['passpercent']);
-$_POST['passscore']		= intval($_POST['passscore']);
-$_POST['passfeedback']  = $addslashes(trim($_POST['passfeedback']));
-$_POST['failfeedback']  = $addslashes(trim($_POST['failfeedback']));
-$_POST['num_takes']		= intval($_POST['num_takes']);
-$_POST['anonymous']		= intval($_POST['anonymous']);
-$_POST['allow_guests']	= $_POST['allow_guests'] ? 1 : 0;
-$_POST['instructions']	= $addslashes($_POST['instructions']);
-$_POST['display']		= intval($_POST['display']);
-$_POST['result_release']= 0;
-$_POST['random']		= 0;
-
-// currently these options are ignored for tests:
-$_POST['format']       = intval($_POST['format']);
-$_POST['order']	       = 1;  //intval($_POST['order']);
-$_POST['difficulty']   = 0;  //intval($_POST['difficulty']); 	/* avman */
-	
-//Title of the test is empty, could be from question database export or some other system's export.
-//Either prompt for a title, or generate a random title
-if ($_POST['title'] == '') {
-	$_POST['title'] = '[' . _AT('tests') . ' ' . _AT('title') . ']';
-	
-	//set marks to 0 if no title? 
-	$xml->weights = array();
-}
-
-/*
-if ($_POST['random'] && !$_POST['num_questions']) {
-	$missing_fields[] = _AT('num_questions_per_test');
-}
-
-if ($_POST['pass_score']==1 && !$_POST['passpercent']) {
-	$missing_fields[] = _AT('percentage_score');
-}
-
-if ($_POST['pass_score']==2 && !$_POST['passscore']) {
-	$missing_fields[] = _AT('points_score');
-}
-
-if ($missing_fields) {
-	$missing_fields = implode(', ', $missing_fields);
-	$msg->addError(array('EMPTY_FIELDS', $missing_fields));
-}
-*/
-
-$day_start	= intval(date('j'));
-$month_start= intval(date('n'));
-$year_start	= intval(date('Y'));
-$hour_start	= intval(date('G'));
-$min_start	= intval(date('i'));
-
-$day_end	= $day_start;
-$month_end	= $month_start;
-$year_end	= $year_start + 1;
-$hour_end	= $hour_start;
-$min_end	= $min_start;
-
-if (!checkdate($month_start, $day_start, $year_start)) {
-	$msg->addError('START_DATE_INVALID');
-}
-
-if (!checkdate($month_end, $day_end, $year_end)) {
-	$msg->addError('END_DATE_INVALID');
-}
-
-if (mktime($hour_end,   $min_end,   0, $month_end,   $day_end,   $year_end) < 
-	mktime($hour_start, $min_start, 0, $month_start, $day_start, $year_start)) {
-		$msg->addError('END_DATE_INVALID');
-}
-
-if (!$msg->containsErrors()) {
-	if (strlen($month_start) == 1){
-		$month_start = "0$month_start";
-	}
-	if (strlen($day_start) == 1){
-		$day_start = "0$day_start";
-	}
-	if (strlen($hour_start) == 1){
-		$hour_start = "0$hour_start";
-	}
-	if (strlen($min_start) == 1){
-		$min_start = "0$min_start";
-	}
-
-	if (strlen($month_end) == 1){
-		$month_end = "0$month_end";
-	}
-	if (strlen($day_end) == 1){
-		$day_end = "0$day_end";
-	}
-	if (strlen($hour_end) == 1){
-		$hour_end = "0$hour_end";
-	}
-	if (strlen($min_end) == 1){
-		$min_end = "0$min_end";
-	}
-
-	$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
-	$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
-
-	//If title exceeded database defined length, truncate it.
-	$_POST['title'] = validate_length($_POST['title'], 100);
-
-	$sql = "INSERT INTO ".TABLE_PREFIX."tests " .
-		   "(test_id,
-		 course_id,
-		 title,
-		 description,
-		 format,
-		 start_date,
-		 end_date,
-		 randomize_order,
-		 num_questions,
-		 instructions,
-		 content_id,
-		 passscore,
-		 passpercent,
-		 passfeedback,
-		 failfeedback,
-		 result_release,
-		 random,
-		 difficulty,
-		 num_takes,
-		 anonymous,
-		 out_of,
-		 guests,
-		 display)" .
-		   "VALUES 
-			(NULL, 
-			 $_SESSION[course_id], 
-			 '$_POST[title]', 
-			 '$_POST[description]', 
-			 $_POST[format], 
-			 '$start_date', 
-			 '$end_date', 
-			 $_POST[order], 
-			 $_POST[num_questions], 
-			 '$_POST[instructions]', 
-			 $_POST[content_id], 
-			 $_POST[passscore], 
-			 $_POST[passpercent], 
-			 '$_POST[passfeedback]', 
-			 '$_POST[failfeedback]', 
-			 $_POST[result_release], 
-			 $_POST[random], 
-			 $_POST[difficulty], 
-			 $_POST[num_takes], 
-			 $_POST[anonymous], 
-			 '', 
-			 $_POST[allow_guests], 
-			 $_POST[display])";
-
+	$new_order = $order + 1;
+	$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
+			"(test_id, question_id, weight, ordering, required) " .
+			"VALUES ($tid, $qid, $weight, $new_order, 0)";
 	$result = mysql_query($sql, $db);
-	$tid = mysql_insert_id($db);
-
-//debug($xml->weights, 'weights');
-
-	//associate question and tests
-	foreach ($qids as $order=>$qid){
-		if (isset($xml->weights[$order])){
-			$weight = round($xml->weights[$order]);
-		} else {
-			$weight = 0;
-		}
-		$new_order = $order + 1;
-		$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
-				"(test_id, question_id, weight, ordering, required) " .
-				"VALUES ($tid, $qid, $weight, $new_order, 0)";
-		$result = mysql_query($sql, $db);
-	}
 }
 //debug('imported test');
 if (!$msg->containsErrors()) {
 	$msg->addFeedback('IMPORT_SUCCEEDED');
 }
+
+//clear directory
+clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
+
 header('Location: index.php');
 exit;
 ?>

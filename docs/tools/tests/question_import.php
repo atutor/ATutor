@@ -16,7 +16,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 require(AT_INCLUDE_PATH.'lib/qti.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
-require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
+//require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 
 /* to avoid timing out on large files */
@@ -300,123 +300,10 @@ if (!$overwrite && !empty($existing_files)){
 
 //Get the XML file out and start importing them into our database.
 //TODO:	import_test.php shares approx. the same code as below, just that import_test.php has 
-//		an extra line of code that uses a stack to remember the queestion #.  Might want to 
+//		an extra line of code that uses a stack to remember the question #.  Might want to 
 //		create a function for this.
-foreach($attributes as $resource=>$attrs){
-	if ($attrs['type'] == 'imsqti_xmlv1p1' || $attrs['type'] == 'imsqti_item_xmlv2p1'){
-		//Instantiate class obj
-		$xml =& new QTIParser();
-		$xml_content = @file_get_contents($import_path . $attrs['href']);		
-		$xml->setRelativePath($package_base_name);
-		
-		if (!$xml->parse($xml_content)){
-			$msg->addError('QTI_WRONG_PACKAGE');
-			break;
-		}
-
-		//import file, should we use file href? or jsut this href?
-		//Aug 25, use both, so then it can check for respondus media as well.
-		foreach($attrs['file'] as $file_id => $file_name){
-			$file_pathinfo = pathinfo($file_name);
-			if ($file_pathinfo['basename'] == $attrs['href']){
-				//This file will be parsed later
-				continue;
-			} 
-//debug($file_pathinfo);
-			if (in_array($file_pathinfo['extension'], $supported_media_type)){
-				//copy medias over.
-				copyMedia(array($file_name), $xml_items);
-			}
-		}		
-
-		for ($loopcounter=0; $loopcounter<$xml->item_num; $loopcounter++){
-			//Create POST values.
-			unset($_POST);		//clear cache
-			$_POST['required']		= 1;
-			$_POST['preset_num']	= 0;
-			$_POST['category_id']	= 0;
-			$_POST['question']		= $xml->question[$loopcounter];
-			$_POST['feedback']		= $xml->feedback[$loopcounter];
-			$_POST['groups']		= $xml->groups[$loopcounter];
-			$_POST['property']		= intval($xml->attributes[$loopcounter]['render_fib']['property']);
-			$_POST['choice']		= array();
-			$_POST['answers']		= array();
-
-			//assign choices
-			$i = 0;
-
-			//trim values
-			if (is_array($xml->answers[$loopcounter])){
-				array_walk($xml->answers[$loopcounter], 'trim_value');
-			}
-			//TODO: The groups is 1-0+ choices.  So we should loop thru groups, not choices.
-			if (is_array($xml->choices[$loopcounter])){		
-				foreach ($xml->choices[$loopcounter] as $choiceNum=>$choiceOpt){
-					if (sizeof($_POST['groups'] )>0) {
-						foreach ($xml->answers[$loopcounter] as $ansNum=>$ansOpt){
-							if ($choiceNum == $ansOpt){
-								//Not exactly efficient, worst case N^2
-								$_POST['answers'][$ansNum] = $i;
-							}			
-						}		
-					} else {
-						//save answer(s)
-						if (is_array($xml->answers[$loopcounter]) && in_array($choiceNum, $xml->answers[$loopcounter])){
-							$_POST['answers'][] = $i;
-						}		
-					}
-					$_POST['choice'][] = $choiceOpt;
-					$i++;
-				}
-			}
-
-			unset($qti_import);
-			$qti_import =& new QTIImport($_POST);
-				
-			//Create questions
-			$qti_import->importQuestionType($xml->getQuestionType($loopcounter));			
-
-			//Dependency handling
-			if (!empty($attrs['dependency'])){
-				$xml_items = array_merge($xml_items, $xml->items);
-			}
-		}
-		$xml->close();
-	} elseif ($attrs['type'] == 'webcontent') {
-		//webcontent, copy it over.
-		copyMedia($attrs['file'], $xml_items);
-/*
-		foreach($attrs['file'] as $file_num => $file_loc){
-			$new_file_loc ='';
-			foreach ($xml_items as $xk=>$xv){
-				if (strpos($file_loc, $xv)!==false){
-					$new_file_loc = $xv;
-					break;
-				} 
-			}
-			if ($new_file_loc==''){
-				$new_file_loc = $file_loc;
-			}
-debug($new_file_loc, 'NEW FILE LOC');
-			//check if new folder is there, if not, create it.
-//			createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc );
-			createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
-			
-			//copy files over
-//			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-//				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc) === false) {
-			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
-				//TODO: Print out file already exist error.
-				if (!$msg->containsErrors()) {
-					$msg->addError('IMPORT_FAILED');
-				}
-			} 
-		}
-		*/
-	}
-}
-
+$qti_import =& new QTIImport($import_path);
+$qti_import->importQuestions($attributes);
 
 //debug('done');
 clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);

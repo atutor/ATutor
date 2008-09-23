@@ -36,6 +36,8 @@ function get_tabs() {
 	$tabs[4] = array('accessibility', 		'accessibility.inc.php', 'a');	
 	//Silvia: Added to declare alternative resources
 	$tabs[5] = array('alternative_content', 'alternatives.inc.php',  'l');	
+	//Harris: Extended test functionality into content export
+	$tabs[6] = array('tests',				'tests.inc.php',		 't');
 	
 	return $tabs;
 }
@@ -90,6 +92,8 @@ function save_changes($redir, $current_tab) {
 	$_POST['formatting'] = intval($_POST['formatting']);
 	$_POST['keywords']	= trim($_POST['keywords']);
 	$_POST['new_ordering']	= intval($_POST['new_ordering']);
+	$_POST['test_message'] = trim($_POST['test_message']);
+
 	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
 
 	if (!($release_date = generate_release_date())) {
@@ -102,15 +106,15 @@ function save_changes($redir, $current_tab) {
 		
 	if (!$msg->containsErrors()) {
 
-		$_POST['title']     = $addslashes($_POST['title']);
-		$_POST['body_text'] = $addslashes($_POST['body_text']);
-		$_POST['head']  	= $addslashes($_POST['head']);
-		$_POST['keywords']  = $addslashes($_POST['keywords']);
-		$_POST['keywords']  = $addslashes($_POST['keywords']);
+		$_POST['title']			= $addslashes($_POST['title']);
+		$_POST['body_text']		= $addslashes($_POST['body_text']);
+		$_POST['head']  		= $addslashes($_POST['head']);
+		$_POST['keywords']		= $addslashes($_POST['keywords']);
+		$_POST['test_message']	= $addslashes($_POST['test_message']);
 
 		if ($_POST['cid']) {
 			/* editing an existing page */
-			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date, $_POST['head'], $_POST['use_customized_head']);
+			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date, $_POST['head'], $_POST['use_customized_head'], $_POST['test_message']);
 
 			unset($_POST['move']);
 			unset($_POST['new_ordering']);
@@ -128,7 +132,8 @@ function save_changes($redir, $current_tab) {
 												  $_POST['formatting'],
 												  $release_date,
 												  $_POST['head'],
-												  $_POST['use_customized_head']);
+												  $_POST['use_customized_head'],
+												  $_POST['test_message']);
 			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}
@@ -167,6 +172,42 @@ function save_changes($redir, $current_tab) {
 	if (isset($_POST['current_tab'])) {
 		$current_tab = intval($_POST['current_tab']);
 	}
+
+	//Add test to this content - @harris
+	$sql = 'SELECT * FROM '.TABLE_PREFIX."content_tests_assoc WHERE content_id=$_POST[cid]";
+	$result = mysql_query($sql, $db);
+	$db_test_array = array();
+	while ($row = mysql_fetch_assoc($result)) {
+		$db_test_array[] = $row['test_id'];
+	}
+
+	if (is_array($_POST['tid']) && sizeof($_POST['tid']) > 0){
+		$toBeDeleted = array_diff($db_test_array, $_POST['tid']);
+		$toBeAdded = array_diff($_POST['tid'], $db_test_array);
+		//Delete entries
+		if (!empty($toBeDeleted)){
+			$tids = implode(",", $toBeDeleted);
+			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid] AND test_id IN ($tids)";
+			$result = mysql_query($sql, $db);
+		}
+
+		//Add entries
+		if (!empty($toBeAdded)){
+			foreach ($toBeAdded as $i => $tid){
+				$tid = intval($tid);
+				$sql = 'INSERT INTO '. TABLE_PREFIX . "content_tests_assoc SET content_id=$_POST[cid], test_id=$tid";
+				$result = mysql_query($sql, $db);
+				if ($result===false){
+					$msg->addError('MYSQL_FAILED');
+				}
+			}
+		}
+	} else {
+		//All tests has been removed.
+		$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid]";
+		$result = mysql_query($sql, $db);
+	}
+	//End Add test
 
 	/*Added by Silvia 
 	if ($current_tab == 5) {

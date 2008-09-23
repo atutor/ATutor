@@ -15,47 +15,6 @@ $supported_media_type = array(	'gif', 'jpg', 'bmp', 'png', 'jpeg',
 								'txt', 'css', 'html', 'htm', 'csv', 'asc', 'tsv', 'xml', 'xsl',
 								'wav', 'au', 'mp3', 'mov');
 
-/*
- * Match the XML files to the actual files found in the content, then copy the media 
- * over to the content folder based on the actual links.  *The XML file names might not be right.
- * @param	array	The list of file names provided by the manifest's resources
- * @param	array	The list of relative files that is used in the question contents.  Default empty.
- */
-function copyMedia($files, $xml_items = array()){
-	global $msg;
-	foreach($files as $file_num => $file_loc){
-		$new_file_loc ='';
-		foreach ($xml_items as $xk=>$xv){
-			if (strpos($file_loc, $xv)!==false){
-				$new_file_loc = $xv;
-				break;
-			} 
-		}
-		if ($new_file_loc==''){
-			$new_file_loc = $file_loc;
-		}
-
-		//check if new folder is there, if not, create it.
-		createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
-		
-		//copy files over
-//			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-//				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc) === false) {
-		//overwrite files
-		if (file_exists(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
-			unlink(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
-		}
-		if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-			AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
-			//TODO: Print out file already exist error.
-			if (!$msg->containsErrors()) {
-//				$msg->addError('FILE_EXISTED');
-			}
-		} 
-	}
-}
-
-
 /* 
  * Create directory recursively based on the path.
  * @param	string	URI of the path, separated by the directory separator.

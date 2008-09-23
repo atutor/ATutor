@@ -56,6 +56,7 @@ function print_organizations($parent_id,
 	global $used_glossary_terms, $course_id, $course_language_charset, $course_language_code;
 	static $paths, $zipped_files;
 	global $glossary;
+	global $test_zipped_files;
 
 	$space  = '    ';
 	$prefix = '                    ';
@@ -74,6 +75,7 @@ function print_organizations($parent_id,
 		
 		$counter = 1;
 		$num_items = count($top_level);
+
 		foreach ($top_level as $garbage => $content) {
 			$link = '';
 				
@@ -81,7 +83,7 @@ function print_organizations($parent_id,
 				$content['content_path'] .= '/';
 			}
 
-			$link = $prevfix.'<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'" parameters="">'."\n";
+			$link = $prevfix.'<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'" parameters="'.htmlentities($content['test_message']).'">'."\n";
 			$html_link = '<a href="resources/'.$content['content_path'].$content['content_id'].'.html" target="body">'.$content['title'].'</a>';
 			
 			/* save the content as HTML files */
@@ -140,15 +142,35 @@ function print_organizations($parent_id,
 			$content['title'] = htmlspecialchars($content['title']);
 
 			/* add the resource dependancies */
-			$my_files = array();
+			if ($my_files == null) $my_files = array();
 			$content_files = "\n";
 			$parser->parse($content['text']);
 
+			/* generate the IMS QTI resource and files */
+			global $contentManager;
+			$content_test_rs = $contentManager->getContentTestsAssoc($content['content_id']);	
+			$test_ids = array();		//reset test ids
+			$my_files = array();		//reset myfiles.
+			while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
+				//export
+				$test_ids[] = $content_test_row['test_id'];
+				//the 'added_files' is for adding into the manifest file in this zip
+				$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
+
+				//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
+				foreach($added_files as $filename=>$file_array){
+					$my_files[] = $filename;
+					foreach ($file_array as $garbage=>$filename2){
+						$my_files[] = $filename2;
+					}
+				}
+			}
+			
 			/* handle @import */
 			$import_files = get_import_files($content['text']);
-			
+
 			if (count($import_files) > 0) $my_files = array_merge($my_files, $import_files);
-			
+
 			foreach ($my_files as $file) {
 				/* filter out full urls */
 				$url_parts = @parse_url($file);
@@ -176,9 +198,20 @@ function print_organizations($parent_id,
 					}
 
 					$file_info = stat( $file_path );
-					$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
+
+					if (!in_array($file, $test_zipped_files)){
+						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
+						$test_zipped_files[] = $content['content_path'] . $file;
+					}
 
 					$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+				}
+				
+				/* check if this file is one of the test xml file, if so, we need to add the dependency
+				 * Note:  The file has already been added to the archieve before this is called.
+				 */
+				if (preg_match('/tests\_[0-9]+\.xml$/', $file)){
+					$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);					
 				}
 			}
 
@@ -252,7 +285,7 @@ function print_organizations($parent_id,
 			}
 			echo $prefix.'</item>';
 			echo "\n";
-		}
+		}  
 		$string .= '</ul>';
 		if ($depth > 0) {
 			$string .= '</li>';
@@ -266,7 +299,9 @@ function print_organizations($parent_id,
 $ims_template_xml['header'] = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
 <!--This is an ATutor SCORM 1.2 Content Package document-->
 <!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
-<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-'.md5(time()).'" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-'.md5(time()).'" 
+xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p1p4.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 http://www.imsglobal.org/xsd/imsmd_v1p2p2.xsd http://www.imsglobal.org/xsd/imsqti_item_v2p0 http://www.imsglobal.org/xsd/imsqti_item_v2p0.xsd" 
+version = "CP 1.1.4">
 	<metadata>
 		<schema>ADL SCORM</schema> 
   	    <schemaversion>1.2</schemaversion>
@@ -317,6 +352,7 @@ $ims_template_xml['resource'] = '		<resource identifier="MANIFEST01_RESOURCE{CON
 '."\n";
 
 $ims_template_xml['file'] = '			<file href="resources/{FILE}"/>'."\n";
+$ims_template_xml['xml'] = '			<file href="{FILE}"/>'."\n";
 
 $ims_template_xml['final'] = '
 	<organizations default="MANIFEST01_ORG1">

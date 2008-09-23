@@ -32,8 +32,6 @@ if ($_POST) {
 
 require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 
-	
-
 if ($_POST['close'] || $_GET['close']) {
 	if ($_GET['close']) {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -691,6 +689,9 @@ if ($current_tab == 5) {
 	
 //End Added by Silvia 
 
+//Extended Test within content functionality - Harris @Sep 9, 2008
+if ($current_tab == 6){
+}
 
 if (($current_tab == 0) || ($_current_tab == 5)) {
 	if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
@@ -758,6 +759,7 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['title']      = $content_row['title'];
 			$_POST['body_text']  = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
+			$_POST['test_message'] = $content_row['test_message'];
 
 			$_POST['day']   = substr($content_row['release_date'], 8, 2);
 			$_POST['month'] = substr($content_row['release_date'], 5, 2);
@@ -772,6 +774,7 @@ $pid = intval($_REQUEST['pid']);
 
 			$_POST['related_term'] = $glossary_ids_related;
 		}
+
 	} else {
 		$cid = 0;
 		if (!isset($_POST['current_tab'])) {
@@ -833,6 +836,7 @@ $pid = intval($_REQUEST['pid']);
 	}
 
 	echo '<input type="hidden" name="keywords" value="'.htmlspecialchars(stripslashes($_POST['keywords'])).'" />';
+	echo '<input type="hidden" name="test_message" value="'.$_POST['test_message'].'" />';
 
 	/* get glossary terms */
 	$matches = find_terms(stripslashes($_POST['body_text']));
@@ -863,6 +867,14 @@ $pid = intval($_REQUEST['pid']);
 			foreach($_POST['related_term'] as $w => $d) {
 				echo '<input type="hidden" name="related_term['.$w.']" value="'.$d.'" />';
 			}
+		}
+	}
+
+	//tests
+	if (is_array($_POST['tid']) && $current_tab != 6){
+		/* test selected */
+		foreach ($_POST['tid'] as $i=>$tid){
+			echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
 		}
 	}
 

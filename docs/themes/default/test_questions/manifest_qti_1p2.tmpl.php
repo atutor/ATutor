@@ -21,7 +21,7 @@
 			<file href="<?php echo $this->xml_filename; ?>"/>
 			<!-- dependancies go here -->
 		<?php foreach ($this->dependencies as $dependency_href): ?>
-			<file href="<?php echo $dependency_href; ?>"/>
+			<file href="resources/<?php echo $dependency_href; ?>"/>
 		<?php endforeach; ?>
 		</resource>
 	</resources>

@@ -1,16 +1,16 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: preview.php 7208 2008-01-09 16:07:24Z greg $
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2008 by Greg Gay, Harris Wong						*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: export_test.php 7208 2008-01-09 16:07:24Z harris $
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
@@ -28,15 +28,6 @@ if (!($test_row = mysql_fetch_assoc($result))) {
 	exit;
 }
 
-//Randomized or not, export all the questions that are associated with it.
-$sql	= "SELECT TQ.question_id, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
-$result	= mysql_query($sql, $db);
-$ids = array();
-
-while (($question_row = mysql_fetch_assoc($result)) != false){
-	$ids[] = $question_row['question_id'];
-}
-
 //export
-test_qti_export($ids, $test_row['title']);
+test_qti_export($tid, $test_row['title']);
 ?>

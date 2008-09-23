@@ -1131,6 +1131,27 @@ div#content-text li {
 	margin-left: 15pt;
 }
 
+div#content-test {	
+	float: left;
+	margin-top: 2em;
+	padding-right: 5pt;
+	width: 80%;
+}
+div#content-test ol{	
+	margin-right: 5pt;;	
+}
+
+div#content-test ol ul li{
+	list-style: none;
+	padding: 0px 2px 0px 15px;
+	margin-bottom: 1px; 
+	line-height: 200%; 
+	background-color: #fdfdfd; 
+	border-bottom: 1px solid #efefef; 
+	/* -moz-border-radius: 4px;  */
+	border: 1px solid #eeeeff;
+}
+
 div#content-info {
 	margin: 5pt;
 	font-size: small;

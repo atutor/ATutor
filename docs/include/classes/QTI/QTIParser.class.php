@@ -31,8 +31,8 @@ class QTIParser {
 	var $title;	//title for this question test
 	var $q_identifiers	= array();		//The identifier of the choice. This identifier must not be used by any other choice or item variable.
 	var $question = '';					//question of this QTI
-	var $response_type = array();		//detects what type of question this would be.
-	var $relative_path = '';			//the relative path to all resources in this xml.
+	var $response_type	= array();		//detects what type of question this would be.
+	var $relative_path	= '';			//the relative path to all resources in this xml.
 
 	//stacks
 	var $choices		= array();	//answers array that keep tracks of all the correct answers
@@ -88,7 +88,7 @@ class QTIParser {
 		//save attributes.
 		switch($name) {
 			case 'section':
-				$this->title[$this->item_num] = $attributes['title'];
+				$this->title = $attributes['title'];
 				break;
 			case 'response_lid':
 				if ($this->response_type[$this->item_num] <= 0) {

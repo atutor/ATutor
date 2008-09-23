@@ -16,6 +16,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+require(AT_INCLUDE_PATH.'lib/qti.inc.php'); 
+//require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
+require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 
 /* make sure we own this course that we're exporting */
 authenticate(AT_PRIV_CONTENT);
@@ -30,13 +33,17 @@ $package_base_path = '';
 $xml_base_path = '';
 $element_path = array();
 $imported_glossary = array();
+$resource_num = 0;
+$test_attributes = array();
+$character_data = '';
+$test_message = '';
 
 	/* called at the start of en element */
 	/* builds the $path array which is the path from the root to the current element */
 	function startElement($parser, $name, $attrs) {
 		global $items, $path, $package_base_path;
 		global $element_path;
-		global $xml_base_path;
+		global $xml_base_path, $test_message;
 		static $current_identifier;
 
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
@@ -62,6 +69,8 @@ $imported_glossary = array();
 				}
 
 				$items[$current_identifier]['new_path'] = implode('/', $temp_path);
+			} elseif (isset($items[$current_identifier]) && preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
+				$items[$current_identifier]['tests'][] = $attrs['href'];
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
@@ -91,9 +100,17 @@ $imported_glossary = array();
 					$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 				}
 			}
+
+			//if test custom message has not been saved
+//			if (!isset($items[$current_identifier]['test_message'])){
+//				$items[$current_identifier]['test_message'] = $test_message;
+//			}
 		}
-		array_push($element_path, $name);
-	}
+		if (($name == 'item') && ($attrs['parameters'] != '')) {
+			$items[$attrs['identifierref']]['test_message'] = $attrs['parameters'];
+		}
+	array_push($element_path, $name);
+}
 
 	/* called when an element ends */
 	/* removed the current element from the $path */
@@ -129,7 +146,7 @@ $imported_glossary = array();
 				} else {
 					$parent_item_id = 0;
 				}
-				if (is_array($items[$current_item_id])) {
+				if (isset($items[$current_item_id]['parent_content_id']) && is_array($items[$current_item_id])) {
 
 					/* this item already exists, append the title		*/
 					/* this fixes {\n, \t, `, &} characters in elements */
@@ -143,9 +160,16 @@ $imported_glossary = array();
 				} else {
 					$order[$parent_item_id] ++;
 
-					$items[$current_item_id] = array('title'			=> $data,
+					$item_tmpl = array('title'			=> $data,
 													'parent_content_id' => $parent_item_id,
 													'ordering'			=> $order[$parent_item_id]-1);
+
+					//append other array values if it exists
+					if (is_array($items[$current_item_id])){
+						$items[$current_item_id] = array_merge($items[$current_item_id], $item_tmpl);
+					} else {
+						$items[$current_item_id] = $item_tmpl;
+					}
 				}
 			}
 		}
@@ -234,7 +258,7 @@ if ($ext != 'zip') {
 } else if ($_FILES['file']['error'] == 1) {
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
 	$msg->addError($errors);
-} else if ( !$_FILES['file']['name'] || (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url'])) {
+} else if ( !$_FILES['file']['name'] || (!is_uploaded_file($_FILES['file']['tmp_name']) && !$test_obj['url'])) {
 	$msg->addError('FILE_NOT_SELECTED');
 } else if ($_FILES['file']['size'] == 0) {
 	$msg->addError('IMPORTFILE_EMPTY');
@@ -365,7 +389,6 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 				xml_error_string(xml_get_error_code($xml_parser)),
 				xml_get_current_line_number($xml_parser)));
 }
-
 
 xml_parser_free($xml_parser);
 
@@ -550,6 +573,7 @@ foreach ($items as $item_id => $content_info)
 	
 	$head = addslashes($head);
 	$content_info['title'] = addslashes($content_info['title']);
+	$content_info['test_message'] = addslashes($content_info['test_message']);
 	$content = addslashes($content);
 
 	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
@@ -565,7 +589,8 @@ foreach ($items as $item_id => $content_info)
 	          keywords, 
 	          content_path, 
 	          title, 
-	          text) 
+	          text,
+			  test_message) 
 	       VALUES 
 			     ('.$_SESSION['course_id'].','															
 			     .$content_parent_id.','		
@@ -579,19 +604,70 @@ foreach ($items as $item_id => $content_info)
 			      "",'
 			     .'"'.$content_info['new_path'].'",'
 			     .'"'.$content_info['title'].'",'
-			     .'"'.$content.'")';
+			     .'"'.$content.'",'
+				 .'"'.$content_info['test_message'].'")';
 
 	$result = mysql_query($sql, $db) or die(mysql_error());
 
 	/* get the content id and update $items */
 	$items[$item_id]['real_content_id'] = mysql_insert_id($db);
+
+	/* get the tests associated with this content */
+	if (!empty($items[$item_id]['tests'])){
+		$qti_import =& new QTIImport($import_path);
+
+		foreach ($items[$item_id]['tests'] as $array_id => $test_xml_file){
+			$tests_xml = $import_path.$test_xml_file;
+			
+			//Mimic the array for now.
+			$test_attributes['resource']['href'] = $test_xml_file;
+			$test_attributes['resource']['type'] = 'imsqti_xmlv1p1';
+			$test_attributes['resource']['file'][0] = $test_xml_file;
+
+
+			//Get the XML file out and start importing them into our database.
+			//TODO: See question_import.php 287-289.
+			$qids = $qti_import->importQuestions($test_attributes);
+
+			//import test
+			$tid = $qti_import->importTest();
+
+			//debug($qti_import->weights, 'weights');
+
+			//associate question and tests
+			foreach ($qids as $order=>$qid){
+				if (isset($qti_import->weights[$order])){
+					$weight = round($qti_import->weights[$order]);
+				} else {
+					$weight = 0;
+				}
+				$new_order = $order + 1;
+				$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
+						"(test_id, question_id, weight, ordering, required) " .
+						"VALUES ($tid, $qid, $weight, $new_order, 0)";
+				$result = mysql_query($sql, $db);
+			}
+
+			//associate content and test
+			$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
+					'(content_id, test_id) ' .
+					'VALUES (' . $items[$item_id]['real_content_id'] . ", $tid)";
+			$result = mysql_query($sql, $db);
+		
+			//debug('imported test');
+			if (!$msg->containsErrors()) {
+				$msg->addFeedback('IMPORT_SUCCEEDED');
+			}
+		}
+	}
 }
+
 
 if ($package_base_path == '.') {
 	$package_base_path = '';
 }
 
-if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
 		$msg->addError('IMPORT_FAILED');
 	}

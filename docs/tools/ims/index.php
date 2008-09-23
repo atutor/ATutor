@@ -29,6 +29,13 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 		return;
 	}
 	foreach ($my_children as $children) {
+		/* test content association, we don't want to display the test pages
+		 * as part of the menu section.  If test, skip it.
+		 */
+		if (isset($children['test_id'])){
+			continue;
+		}
+
 		echo '<option value="'.$children['content_id'].'"';
 		if ($cid == $children['content_id']) {
 			echo ' selected="selected"';
