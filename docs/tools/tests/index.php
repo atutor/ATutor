@@ -63,7 +63,7 @@ $cols=6;
 <div class="input-form" style="width: 40%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_test'); ?></legend>
 	<div class="row">
-		<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
+		<label for="to_file"><?php echo _AT('upload_test'); ?></label><br />
 		<input type="file" name="file" id="to_file" />
 	</div>
 
