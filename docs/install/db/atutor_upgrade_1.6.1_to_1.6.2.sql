@@ -65,4 +65,4 @@ CREATE TABLE `content_tests_assoc` (
 TYPE = MyISAM;
 
 # Customized test messages associated with the content page
-ALTER TABLE `atutor_161`.`at_content` ADD COLUMN `test_message` TEXT NOT NULL AFTER `use_customized_head`;
+ALTER TABLE `content` ADD COLUMN `test_message` TEXT NOT NULL AFTER `use_customized_head`;

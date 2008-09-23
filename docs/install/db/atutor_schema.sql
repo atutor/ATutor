@@ -122,10 +122,10 @@ CREATE TABLE `content` (
   `text` text NOT NULL ,
   `head` TEXT NOT NULL,
   `use_customized_head` TINYINT(4) NOT NULL,
+  `test_message` TEXT NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM ;
-
 
 # --------------------------------------------------------
 # Table structure for table `course_access`
@@ -150,6 +150,15 @@ CREATE TABLE `course_cats` (
   PRIMARY KEY  (`cat_id`)
 ) TYPE=MyISAM;
 
+# --------------------------------------------------------
+# Table structure for table `course_tests_assoc`
+# since 1.6.2
+CREATE TABLE `content_tests_assoc` (
+  `content_id` INTEGER UNSIGNED NOT NULL,
+  `test_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`content_id`, `test_id`)
+)
+TYPE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `course_enrollment`
