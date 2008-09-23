@@ -5,6 +5,7 @@ function content_delete($course) {
 
 	// related_content + content:
 	$sql	= "SELECT content_id FROM ".TABLE_PREFIX."content WHERE course_id=$course";
+
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_array($result)) {
 		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$row[0]";
@@ -14,7 +15,7 @@ function content_delete($course) {
 		$result3 = mysql_query($sql3, $db);
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$row[0]";
-		$result = mysql_query($sql, $db);
+		$result4 = mysql_query($sql, $db);
 	}
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE course_id=$course";
