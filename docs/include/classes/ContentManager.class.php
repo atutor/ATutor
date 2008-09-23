@@ -80,8 +80,8 @@ class ContentManager
 				$_menu[$row['content_id']][] = array(	'test_id'	=> $test_row['test_id'],
 														'title'		=> htmlspecialchars($test_row['title']));
 
-				$_menu_info[$test_row['test_id']] = array(	'content_parent_id' => $row['content_id'],
-															'title'				=> htmlspecialchars($test_row['title']));				
+//				$_menu_info[$test_row['test_id']] = array(	'content_parent_id' => $row['content_id'],
+//															'title'				=> htmlspecialchars($test_row['title']));				
 			}
 			/* End of add test content asscioations */
 
