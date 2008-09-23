@@ -307,8 +307,8 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	}
 
 	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
-	$sql = "SELECT TQ.*, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.question_id IN($question_ids_delim) ORDER BY TQA.ordering, TQA.question_id";
-
+	$sql = "SELECT TQ.*, TQA.weight, TQA.test_id FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQA.test_id=$tid AND TQ.question_id IN($question_ids_delim) ORDER BY TQA.ordering, TQA.question_id";
+echo $sql;exit;
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		$obj = TestQuestions::getQuestion($row['type']);
