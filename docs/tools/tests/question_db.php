@@ -89,41 +89,31 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<div class="input-form" style="width: 40%">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
-	<div class="row">
-		<label for="question"><?php echo _AT('create_new_question'); ?></label><br />
-		<?php $questions = TestQuestions::getQuestionPrefixNames(); ?>
-		<select name="question_type" class="dropdown" id="question" size="8">
+<div class="input-form" style="width:42em;">
+	<fieldset class="group_form" style="width:40%;float:right;height:18em;;"><legend class="group_form"><?php echo _AT('import_question'); ?></legend>
+		<form method="post" action="<?php echo 'tools/tests/question_import.php'; ?>" enctype="multipart/form-data" >	<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
+			<input type="file" name="file" id="to_file" />
+			<div class="row buttons">
+			<input type="submit" name="submit_import" value="<?php echo _AT('import'); ?>" />
+			</div>
+		</form>
+	</fieldset>
+	<fieldset class="group_form" style="width:30%; min-width:170px;"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
+		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+			<label for="question"><?php echo _AT('create_new_question'); ?></label><br />
+			<?php $questions = TestQuestions::getQuestionPrefixNames(); ?>
+			<select name="question_type" class="dropdown" id="question" size="8">
 			<?php foreach ($questions as $type => $name): ?>
 				<option value="<?php echo $type; ?>"><?php echo $name; ?></option>
 			<?php endforeach; ?>
-		</select>
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" />
-	</div>
+			</select>
+			<div class="row buttons">
+			<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" />
+			</div>
+		</form>
 	</fieldset>
 </div>
-</form>
-
-<form method="post" action="<?php echo 'tools/tests/question_import.php'; ?>" enctype="multipart/form-data" >
-<div class="input-form" style="width: 40%">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_question'); ?></legend>
-	<div class="row">
-		<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
-		<input type="file" name="file" id="to_file" />
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="submit_import" value="<?php echo _AT('import'); ?>" />
-	</div>
-	</fieldset>
-</div>
-</form>
 
 <?php $tid = 0; ?>
 
