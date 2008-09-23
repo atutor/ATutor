@@ -269,12 +269,15 @@ function toggleToc(objId) {
 		&nbsp;
 	</div>
 <?php endif; ?>
+
+<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 <!-- the bread crumbs -->
 <div id="breadcrumbs">
 	<?php foreach ($this->path as $page): ?>
 		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
 	<?php endforeach; ?> <?php echo $this->page_title; ?>
 </div>
+<?php } ?>
 
 <!-- Extra div tag for IE fix in dealing with position:absolute (used by side menu)-->
 <div>
@@ -311,6 +314,7 @@ function toggleToc(objId) {
 	</div>
 
 	<div  id="sequence-links">
+	<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 		<?php if ($this->sequence_links['resume']): ?>
 				<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
 		<?php else:
@@ -321,6 +325,7 @@ function toggleToc(objId) {
 				<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->img; ?>next.gif" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
 			<?php endif; ?>
 		<?php endif; ?>
+	<?php } ?>
 		&nbsp;
 	</div>
 

@@ -168,8 +168,12 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 		//Silvia: to provide appropriated content on the basis of users' preferences
 
 		$content = provide_alternatives($cid, $content_row['text']);
+		$content = format_content($content, $content_row['formatting'], $glossary);
+
+		$content_array = get_content_table($content);
 		
-		$savant->assign('body', format_content($content, $content_row['formatting'], $glossary));
+		$savant->assign('content_table', $content_array[0]);
+		$savant->assign('body', $content_array[1]);
 
 		//assign test pages if there are tests associated with this content page
 		if (!empty($content_test_ids)){

@@ -22,6 +22,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 </fieldset>
 <?php endif; ?>
 
+<?php if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") { ?>
+<div id="content-table">
+	Table of Content <br />
+	<?php echo $this->content_table; ?>
+</div>
+<?php } ?>
 
 <div id="content-text">
 	<?php echo $this->body; ?>

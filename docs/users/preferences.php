@@ -96,13 +96,14 @@ if (isset($_POST['submit'])) {
 
 		// control settings (tab 4)
 		$temp_prefs['PREF_SHOW_CONTENTS'] = intval($_POST['show_contents']);
-		$temp_prefs['PREF_NEXT_PREVIOUS_BUTTONS'] = $addslashes($_POST['next_previous_buttons']);
-		$temp_prefs['PREF_SHOW_NOTES'] = intval($_POST['show_notes']);
-		$temp_prefs['PREF_LEVEL_OF_DETAIL'] = $addslashes($_POST['level_of_detail']);
-		$temp_prefs['PREF_CONTENT_VIEWS'] = $addslashes($_POST['content_views']);
-		$temp_prefs['PREF_SHOW_SEPARATE_LINKS'] = intval($_POST['show_separate_links']);
-		$temp_prefs['PREF_SHOW_TRANSCRIPT'] = intval($_POST['show_transcript']);
-		$temp_prefs['PREF_WINDOW_LAYOUT'] = $addslashes($_POST['window_layout']);
+		$temp_prefs['PREF_SHOW_NEXT_PREVIOUS_BUTTONS'] = $addslashes($_POST['show_next_previous_buttons']);
+		$temp_prefs['PREF_SHOW_BREAD_CRUMBS'] = $addslashes($_POST['show_bread_crumbs']);
+//		$temp_prefs['PREF_SHOW_NOTES'] = intval($_POST['show_notes']);
+//		$temp_prefs['PREF_LEVEL_OF_DETAIL'] = $addslashes($_POST['level_of_detail']);
+//		$temp_prefs['PREF_CONTENT_VIEWS'] = $addslashes($_POST['content_views']);
+//		$temp_prefs['PREF_SHOW_SEPARATE_LINKS'] = intval($_POST['show_separate_links']);
+//		$temp_prefs['PREF_SHOW_TRANSCRIPT'] = intval($_POST['show_transcript']);
+//		$temp_prefs['PREF_WINDOW_LAYOUT'] = $addslashes($_POST['window_layout']);
 	
 		/* we do this instead of assigning to the $_SESSION directly, b/c	*/
 		/* assign_session_prefs functionality might change slightly.		*/

@@ -243,10 +243,3 @@
 		<input type="radio" name="use_max_contrast" id="umc_no" value="0" <?php echo $no; ?> /><label for="umc_no"><?php echo _AT('no'); ?></label>		
 	</div>
 </fieldset> 
-
-<fieldset> <legend><strong><?php echo _AT("personal_css"); ?></strong>  </legend>  
-	<div class="row">
-		<?php echo _AT('upload_personal_css'); ?><br />
-		<input id="ss" name="ssURL" size="40" type="file"  />
-	</div>
-</fieldset>

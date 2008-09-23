@@ -825,6 +825,26 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 	return $output;
 }
 
+function get_content_table($content)
+{
+	preg_match_all("/<(h[\d]+)[^>]*>(.*)<\/\\1>/i", $content, $found_headers, PREG_SET_ORDER);
+	
+	if (count($found_headers) == 0) return array("", $content);
+	else
+	{
+		$i = 0;
+		foreach ($found_headers as $one_header)
+		{
+			$div_id = "_header_" . $i++;
+			
+			$content = str_replace($one_header[0], '<div id="'.$div_id.'">'.$one_header[0].'</div>', $content);
+			$content_table .= '<a href="'.$_SERVER["REQUEST_URI"].'#'.$div_id.'">'. $one_header[2]."</a><br />\n";
+		}
+		
+		return array($content_table, $content);
+	}
+}
+
 function find_terms($find_text) {
 	preg_match_all("/(\[\?\])(.[^\?]*)(\[\/\?\])/i", $find_text, $found_terms, PREG_PATTERN_ORDER);
 	return $found_terms;
@@ -973,7 +993,7 @@ function provide_alternatives($cid, $content_page){
 		return $content;
 	}else if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==1){
 
-		$sql_primary = "SELECT * FROM ".TABLE_PREFIX."primary_resources WHERE content_id=".$cid." and resource='$content_page'";
+		$sql_primary = "SELECT * FROM ".TABLE_PREFIX."primary_resources WHERE content_id=".$cid." and resource='".mysql_real_escape_string($content_page)."'";
 
 		$result = mysql_query($sql_primary, $db);
 		if (mysql_num_rows($result) > 0) {

@@ -30,12 +30,19 @@
 				</select>
 		<?php endif; ?>
 	</div>
+	
 	<div class="row">
 		<?php echo _AT('time_zone');  ?><br />
 		<?php
-		echo '<input type="text" name="time_zone" value="'.$_SESSION['prefs']['PREF_TIMEZONE'].'" size="4"/>';
+		if (isset($_POST['time_zone']))
+			$selected_time_zone = $_POST['time_zone'];
+		else
+			$selected_time_zone = $_SESSION['prefs']['PREF_TIMEZONE'];
+
+		echo '<input type="text" name="time_zone" value="'.$selected_time_zone.'" size="4"/>';
 		?>
 	</div>
+	
 	<div class="row">
 		<?php echo _AT('inbox_notification'); ?><br />
 		<?php

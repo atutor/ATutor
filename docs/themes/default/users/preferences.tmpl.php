@@ -49,8 +49,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if (isset($_POST['mnot']))
 			echo '	<input type="hidden" name="mnot" value="'.$_POST['mnot'].'" />'."\n\r";
 
-		if (isset($_POST['timezone']))
-			echo '	<input type="hidden" name="timezone" value="'.$_POST['timezone'].'" />'."\n\r";
+		if (isset($_POST['time_zone']))
+			echo '	<input type="hidden" name="time_zone" value="'.$_POST['time_zone'].'" />'."\n\r";
 		
 		if (isset($_POST['numbering']))
 			echo '	<input type="hidden" name="numbering" value="'.$_POST['numbering'].'" />'."\n\r";
@@ -154,6 +154,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if (isset($_POST['thesaurus_val']))
 			echo '	<input type="hidden" name="thesaurus_val" value="'.$_POST['thesaurus_val'].'" />'."\n\r";
 
+		if (isset($_POST['encyclopedia_val']))
+			echo '	<input type="hidden" name="encyclopedia_val" value="'.$_POST['encyclopedia_val'].'" />'."\n\r";
+
+		if (isset($_POST['atlas_val']))
+			echo '	<input type="hidden" name="atlas_val" value="'.$_POST['atlas_val'].'" />'."\n\r";
+
 		if (isset($_POST['note_taking_val']))
 			echo '	<input type="hidden" name="note_taking_val" value="'.$_POST['note_taking_val'].'" />'."\n\r";
 
@@ -173,26 +179,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if (isset($_POST['show_contents']))
 			echo '	<input type="hidden" name="show_contents" value="'.$_POST['show_contents'].'" />'."\n\r";
 
-		if (isset($_POST['next_previous_buttons']))
-			echo '	<input type="hidden" name="next_previous_buttons" value="'.$_POST['next_previous_buttons'].'" />'."\n\r";
+		if (isset($_POST['show_next_previous_buttons']))
+			echo '	<input type="hidden" name="show_next_previous_buttons" value="'.$_POST['show_next_previous_buttons'].'" />'."\n\r";
 
-		if (isset($_POST['show_notes']))
-			echo '	<input type="hidden" name="show_notes" value="'.$_POST['show_notes'].'" />'."\n\r";
-
-		if (isset($_POST['level_of_detail']))
-			echo '	<input type="hidden" name="level_of_detail" value="'.$_POST['level_of_detail'].'" />'."\n\r";
-
-		if (isset($_POST['content_views']))
-			echo '	<input type="hidden" name="content_views" value="'.$_POST['content_views'].'" />'."\n\r";
-
-		if (isset($_POST['show_separate_links']))
-			echo '	<input type="hidden" name="show_separate_links" value="'.$_POST['show_separate_links'].'" />'."\n\r";
-
-		if (isset($_POST['show_transcript']))
-			echo '	<input type="hidden" name="show_transcript" value="'.$_POST['show_transcript'].'" />'."\n\r";
-
-		if (isset($_POST['window_layout']))
-			echo '	<input type="hidden" name="window_layout" value="'.$_POST['window_layout'].'" />'."\n\r";
+		if (isset($_POST['show_bread_crumbs']))
+			echo '	<input type="hidden" name="show_bread_crumbs" value="'.$_POST['show_bread_crumbs'].'" />'."\n\r";
 	}
 
 	include(getcwd().'/'.$tabs[$current_tab][1]);
