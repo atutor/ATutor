@@ -671,14 +671,17 @@ class ContentManager
 						$on = true;
 					}
 
-					//test content edition @harris
+					//content test extension  @harris
 					//if this is a test link.
 					if (isset($content['test_id'])){
+						$title_n_alt = _AT('tests') . ' - ' . $content['title'];
 						$in_link = 'tools/test_intro.php?tid='.$content['test_id'];
+						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$title_n_alt.'" alt="'.$title_n_alt.'" />';
 					} else {
 						$in_link = 'content.php?cid='.$content['content_id'];
+						$img_link = '';
 					}
-					$link .= ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
+					$link .= $img_link . ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
 						$link .= $path.$counter.' ';
 					}
