@@ -425,8 +425,8 @@ while ($row = mysql_fetch_assoc($result)) {
 	<form method="post" action="<?php echo 'file_storage/index.php'.$owner_arg_prefix; ?>" enctype="multipart/form-data" name="form0">
 	<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 	<div style="float:right;">
-		<div style="margin: 0px auto; width: 90%;">	
-			<div class="input-form" style="width: 23em; float: right;">
+		<div style="margin: 0px auto; width: 90%;min-width:605px;" >
+			<div class="input-form" style="width: 23em; float: right;" >
 				<div class="row">
 					<h3><a href="file_storage/index.php" onclick="javascript:toggleform('c_folder'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
 				</div>
