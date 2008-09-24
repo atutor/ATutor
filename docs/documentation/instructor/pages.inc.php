@@ -63,6 +63,5 @@
     $_pages['gradebook_external_marks.php']					 = 'External Marks';
     $_pages['gradebook_edit_marks.php']					 = 'Edit Marks';
     $_pages['gradebook_scales.php']					 = 'Grade Scales';
-    $_pages['gradebook_add_scales.php']					 = 'Add Grade Scale';
 
 ?>

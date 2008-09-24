@@ -180,7 +180,7 @@ if ($section == 'admin'){
 							'gradebook_update.php',	
 							'gradebook_external_marks.php',	
 							'gradebook_edit_marks.php',	
-							'gradebook_scales.php' => array('gradebok_add_scales.php'),	
+							'gradebook_scales.php'	
 							),
 			'web_search.php',
 			);
