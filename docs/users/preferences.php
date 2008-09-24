@@ -45,33 +45,12 @@ if (isset($_POST['submit'])) {
 		
 		// display settings (tab 1)
 		$temp_prefs['PREF_FONT_FACE']	   = $addslashes($_POST['fontface']);
-		$temp_prefs['PREF_FONT_SIZE']	   = intval($_POST['fontsize']);
+		$temp_prefs['PREF_FONT_TIMES']	   = intval($_POST['font_times']);
 		$temp_prefs['PREF_FG_COLOUR']	   = $addslashes($_POST['fg']);
 		$temp_prefs['PREF_BG_COLOUR']	   = $addslashes($_POST['bg']);
 		$temp_prefs['PREF_HL_COLOUR']	   = $addslashes($_POST['hl']);
-		$temp_prefs['PREF_INVERT_COLOUR_SELECTION'] = intval($_POST['invert_colour_selection']);
-		$temp_prefs['PREF_AVOID_RED']	         = intval($_POST['avoid_red']);
-		$temp_prefs['PREF_AVOID_RED_GREEN']	   = intval($_POST['avoid_red_green']);
-		$temp_prefs['PREF_AVOID_BLUE_YELLOW']	 = intval($_POST['avoid_blue_yellow']);
-		$temp_prefs['PREF_AVOID_GREEN_YELLOW'] = intval($_POST['avoid_green_yellow']);
-		$temp_prefs['PREF_USE_MAX_CONTRAST']	 = intval($_POST['use_max_contrast']);
 	
 		// content settings (tab 2)
-//		$temp_prefs['PREF_USE_ALTERNATE_TEXT'] = intval($_POST['use_alternate_text']);
-//		$temp_prefs['PREF_ALT_TEXT_LANG']	     = $addslashes($_POST['alt_text_lang']);
-//		$temp_prefs['PREF_LONG_DESC_LANG']	   = $addslashes($_POST['long_desc_lang']);
-//		$temp_prefs['PREF_USE_GRAPHIC_ALTERNATIVE'] = intval($_POST['use_graphic_alternative']);
-//		$temp_prefs['PREF_USE_SIGN_LANG'] = intval($_POST['use_sign_lang']);
-//		$temp_prefs['PREF_SIGN_LANG']	    = $addslashes($_POST['sign_lang']);
-//		$temp_prefs['PREF_USE_VIDEO']     = intval($_POST['use_video']);
-//		$temp_prefs['PREF_PREFER_LANG']	  = $addslashes($_POST['prefer_lang']);
-//		$temp_prefs['PREF_DESC_TYPE']	    = $addslashes($_POST['description_type']);
-//		$temp_prefs['PREF_ENABLE_CAPTIONS'] = intval($_POST['enable_captions']);
-//		$temp_prefs['PREF_CAPTION_TYPE']	  = $addslashes($_POST['caption_type']);
-//		$temp_prefs['PREF_CAPTION_LANG']	  = $addslashes($_POST['caption_lang']);
-//		$temp_prefs['PREF_ENHANCED_CAPTIONS'] = intval($_POST['enhanced_captions']);
-//		$temp_prefs['PREF_REQUEST_CAPTION_RATE'] = intval($_POST['request_caption_rate']);
-//		$temp_prefs['PREF_CAPTION_RATE']	   = intval($_POST['caption_rate']);
 		$temp_prefs['PREF_USE_ALTERNATIVE_TO_TEXT'] = intval($_POST['use_alternative_to_text']);
 		$temp_prefs['PREF_ALT_TO_TEXT'] = $addslashes($_POST['preferred_alt_to_text']);
 		$temp_prefs['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_text_append_or_replace']);

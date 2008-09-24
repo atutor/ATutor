@@ -77,8 +77,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if (isset($_POST['fontface']))
 			echo '	<input type="hidden" name="fontface" value="'.$_POST['fontface'].'" />'."\n\r";
 
-		if (isset($_POST['fontsize']))
-			echo '	<input type="hidden" name="fontsize" value="'.$_POST['fontsize'].'" />'."\n\r";
+		if (isset($_POST['font_times']))
+			echo '	<input type="hidden" name="font_times" value="'.$_POST['font_times'].'" />'."\n\r";
 
 		if (isset($_POST['fg']))
 			echo '	<input type="hidden" name="fg" value="'.$_POST['fg'].'" />'."\n\r";
@@ -88,24 +88,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		if (isset($_POST['hl']))
 			echo '	<input type="hidden" name="hl" value="'.$_POST['hl'].'" />'."\n\r";
-
-		if (isset($_POST['invert_colour_selection']))
-			echo '	<input type="hidden" name="invert_colour_selection" value="'.$_POST['invert_colour_selection'].'" />'."\n\r";
-
-		if (isset($_POST['avoid_red']))
-			echo '	<input type="hidden" name="avoid_red" value="'.$_POST['avoid_red'].'" />'."\n\r";
-
-		if (isset($_POST['avoid_red_green']))
-			echo '	<input type="hidden" name="avoid_red_green" value="'.$_POST['avoid_red_green'].'" />'."\n\r";
-
-		if (isset($_POST['avoid_blue_yellow']))
-			echo '	<input type="hidden" name="avoid_blue_yellow" value="'.$_POST['avoid_blue_yellow'].'" />'."\n\r";
-
-		if (isset($_POST['avoid_green_yellow']))
-			echo '	<input type="hidden" name="avoid_green_yellow" value="'.$_POST['avoid_green_yellow'].'" />'."\n\r";
-
-		if (isset($_POST['use_max_contrast']))
-			echo '	<input type="hidden" name="use_max_contrast" value="'.$_POST['use_max_contrast'].'" />'."\n\r";
 	}
 		
 	if ($current_tab != 2) 

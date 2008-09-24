@@ -75,14 +75,4 @@ function output_language_options($languages, $selected_lang)
 	}
 }
 
-// returns a sequence from $from to $to in html <option> tag
-function output_fontsize($from, $to, $suffix, $selected_fs)
-{
-	for ($i=$from; $i <= $to; $i++)
-	{
-?>
-		<option value="<?php echo $i ?>" <?php if ($selected_fs == $i) echo 'selected="selected"'; ?>><?php echo $i . $suffix; ?></option>
-<?php
-	}
-}
 ?>

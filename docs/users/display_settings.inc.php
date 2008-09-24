@@ -2,6 +2,7 @@
 <legend><strong><?php echo _AT("text"); ?></strong> </legend>   
 
 	<div class="row">
+		<input type="hidden" id="defaultfontface" value="Verdana">
 		<label for="fontface"><?php echo _AT('font_face'); ?></label><br />
 			<select name="fontface" id="fontface" onchange="setPreviewFace()"><?php
 				if (isset($_POST['fontface']))
@@ -9,8 +10,9 @@
 				else if (isset($_SESSION['prefs']['PREF_FONT_FACE']))
 					$selected_ff = $_SESSION['prefs']['PREF_FONT_FACE'];
 				else
-					$selected_ff = "serif";  // default
+					$selected_ff = "0";  // default
 ?>
+				<option value="0" <?php if ($selected_ff == "0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>   
 				<option value="serif" <?php if ($selected_ff == "serif") echo 'selected="selected"'; ?>><?php echo _AT('serif'); ?></option>   
 				<option value="sans-serif" <?php if ($selected_ff == "sans-serif") echo 'selected="selected"'; ?>><?php echo _AT('sans_serif'); ?></option>   
 				<option value="monospace" <?php if ($selected_ff == "monospace") echo 'selected="selected"'; ?>><?php echo _AT('monospaced'); ?></option>   
@@ -20,23 +22,29 @@
 	</div>
 
 	<div class="row">
-		<label for="fontsize"><?php echo _AT('font_size'); ?></label><br />
-			<select name="fontsize" id="fontsize" onchange="setPreviewSize()"><?php
+		<input type="hidden" id="defaultfontsize" value="12">
+		<label for="font_times"><?php echo _AT('font_size'); ?></label><br />
+			<select name="font_times" id="font_times" onchange="setPreviewSize()"><?php
 				$selected_fs = "12";
 				
-				if (isset($_POST['fontsize']))
-					$selected_fs = $_POST['fontsize'];
-				else if (isset($_SESSION['prefs']['PREF_FONT_SIZE']))
-					$selected_fs = $_SESSION['prefs']['PREF_FONT_SIZE'];
+				if (isset($_POST['font_times']))
+					$selected_fs = $_POST['font_times'];
+				else if (isset($_SESSION['prefs']['PREF_FONT_TIMES']))
+					$selected_fs = $_SESSION['prefs']['PREF_FONT_TIMES'];
 				else
-					$selected_fs = "12";   // default to 12pt
+					$selected_fs = "1";   // default
 
-				output_fontsize("10", "30", "pt", $selected_fs);
 ?>
+				<option value="1" <?php if ($selected_fs == "1") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
+				<option value="1.5" <?php if ($selected_fs == "1.5") echo 'selected="selected"'; ?>><?php echo "1.5 " . _AT('times_of_default'); ?></option>     
+				<option value="2" <?php if ($selected_fs == "2") echo 'selected="selected"'; ?>><?php echo "2 " . _AT('times_of_default'); ?></option>     
+				<option value="2.5" <?php if ($selected_fs == "2.5") echo 'selected="selected"'; ?>><?php echo "2.5 " . _AT('times_of_default'); ?></option>     
+				<option value="3" <?php if ($selected_fs == "3") echo 'selected="selected"'; ?>><?php echo "3 " . _AT('times_of_default'); ?></option>     
 			</select>
 	</div>
 
 	<div class="row">
+		<input type="hidden" id="defaultfg" value="000000">
 		<label for="fg"><?php echo _AT('fg_colour'); ?></label><br />
 			<select name="fg" id="fg" onchange="setPreviewColours()">
 <?php
@@ -45,9 +53,9 @@
 				else if (isset($_SESSION['prefs']['PREF_FG_COLOUR']))
 					$selected_fgc = $_SESSION['prefs']['PREF_FG_COLOUR'];
 				else
-					$selected_fgc = "0";  // default to black
+					$selected_fgc = "";  // default
 ?>
-				<option value="0" <?php if ($selected_fgc == "0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
+				<option value="" <?php if ($selected_fgc == "") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
 				<option value="FFFFFF" <?php if ($selected_fgc == "FFFFFF") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
 				<option value="000000" <?php if ($selected_fgc == "000000") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
 				<option value="FF0000" <?php if ($selected_fgc == "FF0000") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
@@ -64,6 +72,7 @@
 	</div>
 
 	<div class="row">
+		<input type="hidden" id="defaultbg" value="FFFFFF">
 		<label for="bg"><?php echo _AT('bg_colour'); ?></label><br />
 			<select name="bg" id="bg" onchange="setPreviewColours()">
 <?php
@@ -72,9 +81,9 @@
 				else if (isset($_SESSION['prefs']['PREF_BG_COLOUR']))
 					$selected_bgc = $_SESSION['prefs']['PREF_BG_COLOUR'];
 				else
-					$selected_bgc = "0";  // default to white
+					$selected_bgc = "";  // default
 ?>
-				<option value="0" <?php if ($selected_bgc == "0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
+				<option value="" <?php if ($selected_bgc == "") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
 				<option value="FFFFFF" <?php if ($selected_bgc == "FFFFFF") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
 				<option value="000000" <?php if ($selected_bgc == "000000") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
 				<option value="FF0000" <?php if ($selected_bgc == "FF0000") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
@@ -91,6 +100,7 @@
 	</div>
 
 	<div class="row">
+		<input type="hidden" id="defaulthl" value="E6E6E6">
 		<label for="hl"><?php echo _AT('hl_colour'); ?></label><br />
 			<select name="hl" id="hl" onchange="setPreviewColours()">
 <?php
@@ -99,9 +109,9 @@
 				else if (isset($_SESSION['prefs']['PREF_HL_COLOUR']))
 					$selected_hlc = $_SESSION['prefs']['PREF_HL_COLOUR'];
 				else
-					$selected_hlc = "0";  // default to red
+					$selected_hlc = "";  // default
 ?>
-				<option value="0" <?php if ($selected_hlc == "0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
+				<option value="" <?php if ($selected_hlc == "") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
 				<option value="FFFFFF" <?php if ($selected_hlc == "FFFFFF") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
 				<option value="000000" <?php if ($selected_hlc == "000000") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
 				<option value="FF0000" <?php if ($selected_hlc == "FF0000") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
@@ -117,132 +127,9 @@
 			</select>
 	</div>
 
-	<div class="row">
-		<?php echo _AT('invert_colour_selection'); ?><br />
-		<?php
-			$yes = $no  = '';
-			
-			if (isset($_POST["invert_colour_selection"]))
-				$selected_ics = $_POST["invert_colour_selection"];
-			else
-				$selected_ics = $_SESSION['prefs']['PREF_INVERT_COLOUR_SELECTION'];
-				
-			if ($selected_ics == 1) {
-				$yes = ' checked="checked"';
-			} else {
-				$no  = ' checked="checked"';
-			}
-?>
-		<input type="radio" name="invert_colour_selection" id="ics_yes" value="1" <?php echo $yes; ?> /><label for="ics_yes"><?php echo _AT('yes'); ?></label> 
-		<input type="radio" name="invert_colour_selection" id="ics_no" value="0" <?php echo $no; ?> /><label for="ics_no"><?php echo _AT('no'); ?></label>		
-	</div>
-
 	<div id="previewArea" style="padding: 0em; border-bottom-width: 0px; margin-left: auto; margin-right: auto; font-weight: normal; width: 80%;"> 
 		<div id="previewText" style="border: 2px solid rgb(0, 0, 0); padding: 2em; width: 80%; color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); font-family: monospace;">     Sample 
 			<span id="highlightedPreview" style="background-color: rgb(0, 255, 0); font-family: monospace;">Highlighted</span> Text  
 		</div> 
 	</div>
 </fieldset>
-
-<fieldset> <legend><strong><?php echo _AT("avoid_red"); ?></strong></legend>  
-
-	<div class="row">
-		<?php echo _AT('avoid_red'); ?><br />
-		<?php
-			$yes = $no  = '';
-			
-			if (isset($_POST["avoid_red"]))
-				$selected_ar = $_POST["avoid_red"];
-			else
-				$selected_ar = $_SESSION['prefs']['PREF_AVOID_RED'];
-				
-			if ($selected_ar == 1) {
-				$yes = ' checked="checked"';
-			} else {
-				$no  = ' checked="checked"';
-			}
-?>
-		<input type="radio" name="avoid_red" id="ar_yes" value="1" <?php echo $yes; ?> /><label for="ar_yes"><?php echo _AT('yes'); ?></label> 
-		<input type="radio" name="avoid_red" id="ar_no" value="0" <?php echo $no; ?> /><label for="ar_no"><?php echo _AT('no'); ?></label>		
-	</div>
-
-	<div class="row">
-		<?php echo _AT('avoid_red_green'); ?><br />
-		<?php
-			$yes = $no  = '';
-			
-			if (isset($_POST["avoid_red_green"]))
-				$selected_arg = $_POST["avoid_red_green"];
-			else
-				$selected_arg = $_SESSION['prefs']['PREF_AVOID_RED_GREEN'];
-				
-			if ($selected_arg == 1) {
-				$yes = ' checked="checked"';
-			} else {
-				$no  = ' checked="checked"';
-			}
-?>
-		<input type="radio" name="avoid_red_green" id="arg_yes" value="1" <?php echo $yes; ?> /><label for="arg_yes"><?php echo _AT('yes'); ?></label> 
-		<input type="radio" name="avoid_red_green" id="arg_no" value="0" <?php echo $no; ?> /><label for="arg_no"><?php echo _AT('no'); ?></label>		
-	</div>
-
-	<div class="row">
-		<?php echo _AT('avoid_blue_yellow'); ?><br />
-		<?php
-			$yes = $no  = '';
-			
-			if (isset($_POST["avoid_blue_yellow"]))
-				$selected_aby = $_POST["avoid_blue_yellow"];
-			else
-				$selected_aby = $_SESSION['prefs']['PREF_AVOID_BLUE_YELLOW'];
-				
-			if ($selected_aby == 1) {
-				$yes = ' checked="checked"';
-			} else {
-				$no  = ' checked="checked"';
-			}
-?>
-		<input type="radio" name="avoid_blue_yellow" id="aby_yes" value="1" <?php echo $yes; ?> /><label for="aby_yes"><?php echo _AT('yes'); ?></label> 
-		<input type="radio" name="avoid_blue_yellow" id="aby_no" value="0" <?php echo $no; ?> /><label for="aby_no"><?php echo _AT('no'); ?></label>		
-	</div>
-
-	<div class="row">
-		<?php echo _AT('avoid_green_yellow'); ?><br />
-		<?php
-			$yes = $no  = '';
-			
-			if (isset($_POST["avoid_green_yellow"]))
-				$selected_agy = $_POST["avoid_green_yellow"];
-			else
-				$selected_agy = $_SESSION['prefs']['PREF_AVOID_GREEN_YELLOW'];
-				
-			if ($selected_agy == 1) {
-				$yes = ' checked="checked"';
-			} else {
-				$no  = ' checked="checked"';
-			}
-?>
-		<input type="radio" name="avoid_green_yellow" id="agy_yes" value="1" <?php echo $yes; ?> /><label for="agy_yes"><?php echo _AT('yes'); ?></label> 
-		<input type="radio" name="avoid_green_yellow" id="agy_no" value="0" <?php echo $no; ?> /><label for="agy_no"><?php echo _AT('no'); ?></label>		
-	</div>
-
-	<div class="row">
-		<?php echo _AT('use_max_contrast'); ?><br />
-		<?php
-			$yes = $no  = '';
-			
-			if (isset($_POST["use_max_contrast"]))
-				$selected_umc = $_POST["use_max_contrast"];
-			else
-				$selected_umc = $_SESSION['prefs']['PREF_USE_MAX_CONTRAST'];
-				
-			if ($selected_umc == 1) {
-				$yes = ' checked="checked"';
-			} else {
-				$no  = ' checked="checked"';
-			}
-?>
-		<input type="radio" name="use_max_contrast" id="umc_yes" value="1" <?php echo $yes; ?> /><label for="umc_yes"><?php echo _AT('yes'); ?></label> 
-		<input type="radio" name="use_max_contrast" id="umc_no" value="0" <?php echo $no; ?> /><label for="umc_no"><?php echo _AT('no'); ?></label>		
-	</div>
-</fieldset> 

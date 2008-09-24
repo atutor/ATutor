@@ -39,6 +39,8 @@ global $_custom_head;
 global $substr, $strlen;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
+require(AT_INCLUDE_PATH . 'lib/pref_functions.inc.php');
+
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
 $savant->assign('base_path', $_base_path);
@@ -80,6 +82,9 @@ if (isset($_custom_head)) {
 	$custom_head .= '
 ' . $_custom_head;
 }
+
+$custom_head .= '
+' . get_user_style();
 
 $savant->assign('custom_css', $custom_head);
 

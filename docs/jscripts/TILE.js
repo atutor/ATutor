@@ -82,8 +82,7 @@ function popUp(width,height,url,wname,smallwindow) {
 }
 
 function setPreviewSize(fontVal) {
-	var fontSet = document.getElementById('fontsize');
-	var docSize = document.getElementById('fontsize').value+'pt';
+	var docSize = (document.getElementById('defaultfontsize').value * document.getElementById('font_times').value)+'pt';
 	var docBase = document.getElementById('previewText');
 	docBase.style.fontSize = docSize;
 	docBase = document.getElementById('highlightedPreview');
@@ -92,6 +91,9 @@ function setPreviewSize(fontVal) {
 function setPreviewFace() {
 	var faceSet = document.getElementById('fontface');
 	var faceVal = document.getElementById('fontface').value;
+	
+	if (faceVal == "") faceVal = document.getElementById('defaultfontface').value;;
+	
 	var docBase = document.getElementById('previewText');
 	docBase.style.fontFamily = faceVal;
 	docBase = document.getElementById('highlightedPreview');
@@ -105,9 +107,13 @@ function setPreviewColours() {
 	var hlSet = document.getElementById('hl');
 	var hlVal = document.getElementById('hl').value;
 
-        fgVal = '\#'+fgVal.substr(0,6);
-        bgVal = '\#'+bgVal.substr(0,6);
-        hlVal = '\#'+hlVal.substr(0,6);
+	if (fgVal == "") fgVal = document.getElementById('defaultfg').value;
+	if (bgVal == "") bgVal = document.getElementById('defaultbg').value;
+	if (hlVal == "") hlVal = document.getElementById('defaulthl').value;
+
+  fgVal = '\#'+fgVal.substr(0,6);
+  bgVal = '\#'+bgVal.substr(0,6);
+  hlVal = '\#'+hlVal.substr(0,6);
         
 	var docBase = document.getElementById('previewText');
 	docBase.style.color = fgVal;
