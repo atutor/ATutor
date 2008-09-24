@@ -291,7 +291,7 @@ function toggleToc(objId) {
 
 <!-- the page title -->
 
-		<?php if ($this->guide): ?>
+		<?php if ($this->guide && $_SESSION["prefs"]["PREF_SHOW_GUIDE"]): ?>
 	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float:right ; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
 			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	</div>

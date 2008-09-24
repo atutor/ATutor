@@ -37,10 +37,11 @@ if (isset($_POST['submit'])) {
 		// atutor settings (tab 0)
 		$temp_prefs['PREF_NUMBERING']      = intval($_POST['numbering']);
 		$temp_prefs['PREF_THEME']          = $addslashes($_POST['theme']);
-		$temp_prefs['PREF_TIMEZONE']	       = $addslashes($_POST['time_zone']);
+		$temp_prefs['PREF_TIMEZONE']	     = $addslashes($_POST['time_zone']);
 		$temp_prefs['PREF_JUMP_REDIRECT']  = intval($_POST['use_jump_redirect']);
 		$temp_prefs['PREF_FORM_FOCUS']     = intval($_POST['form_focus']);
 		$temp_prefs['PREF_CONTENT_EDITOR'] = intval($_POST['content_editor']);
+		$temp_prefs['PREF_SHOW_GUIDE']     = intval($_POST['show_guide']);
 		
 		// display settings (tab 1)
 		$temp_prefs['PREF_FONT_FACE']	   = $addslashes($_POST['fontface']);

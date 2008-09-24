@@ -133,6 +133,26 @@
 	</div>
 
 	<div class="row">
+		<?php echo _AT('show_guide');  ?><br />
+		<?php
+			if (isset($_POST['show_guide']))
+				$selected_show_guide = $_POST['show_guide'];
+			else if (isset($_SESSION['prefs']['PREF_SHOW_GUIDE']))
+				$selected_show_guide = $_SESSION['prefs']['PREF_SHOW_GUIDE'];
+			else
+				$selected_show_guide = 1;
+				
+			$num = $num2 = '';
+			if ($selected_show_guide == 1) {
+				$num = ' checked="checked"';
+			} else {
+				$num2 = ' checked="checked"';
+			}
+			?><input type="radio" name ="show_guide" id="show_guide_on" value="1" <?php echo $num; ?> /><label for="show_guide_on"><?php echo _AT('enable');  ?></label> 
+			<input type="radio" name ="show_guide" id="show_guide_off" value="0" <?php echo $num2; ?> /><label for="show_guide_off"><?php echo _AT('disable');  ?></label>
+	</div>
+
+	<div class="row">
 		<?php
 			if (isset($_POST['content_editor']))
 				$selected_content_editor = $_POST['content_editor'];

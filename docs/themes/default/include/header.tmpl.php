@@ -304,8 +304,8 @@ function toggleToc(objId) {
 	<?php endif; ?>
 </div>
 
-<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 <div style="padding:3px;">
+<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 	<!-- the bread crumbs -->
 	<div id="breadcrumbs">
 		<?php foreach ($this->path as $page): ?>
@@ -313,12 +313,10 @@ function toggleToc(objId) {
 		<?php endforeach; ?> <?php echo $this->page_title; ?>
 	</div>
 <?php } ?>
-<?php //if ($_SESSION["prefs"]["PREF_SHOW_GUIDE"]) { ?>
-	<?php if ($this->guide): ?>
+
+	<?php if ($this->guide && $_SESSION["prefs"]["PREF_SHOW_GUIDE"]): ?>
 		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	<?php endif; ?>
-<?php //} ?>
-
 </div>
 
 

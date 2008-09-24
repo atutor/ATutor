@@ -64,6 +64,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if (isset($_POST['form_focus']))
 			echo '	<input type="hidden" name="form_focus" value="'.$_POST['form_focus'].'" />'."\n\r";
 		
+		if (isset($_POST['show_guide']))
+			echo '	<input type="hidden" name="show_guide" value="'.$_POST['show_guide'].'" />'."\n\r";
+		
 		if (isset($_POST['content_editor']))
 			echo '	<input type="hidden" name="content_editor" value="'.$_POST['content_editor'].'" />'."\n\r";
 	}

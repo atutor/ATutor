@@ -45,20 +45,21 @@
 				else if (isset($_SESSION['prefs']['PREF_FG_COLOUR']))
 					$selected_fgc = $_SESSION['prefs']['PREF_FG_COLOUR'];
 				else
-					$selected_fgc = "000000ff";  // default to black
+					$selected_fgc = "0";  // default to black
 ?>
-				<option value="ffffffff" <?php if ($selected_fgc == "ffffffff") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
-				<option value="000000ff" <?php if ($selected_fgc == "000000ff") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
-				<option value="ff0000ff" <?php if ($selected_fgc == "ff0000ff") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
-				<option value="ffff00ff" <?php if ($selected_fgc == "ffff00ff") echo 'selected="selected"'; ?>><?php echo _AT('yellow'); ?></option>     
-				<option value="0000ffff" <?php if ($selected_fgc == "0000ffff") echo 'selected="selected"'; ?>><?php echo _AT('blue'); ?></option>     
-				<option value="00ff00ff" <?php if ($selected_fgc == "00ff00ff") echo 'selected="selected"'; ?>><?php echo _AT('green'); ?></option>     
-				<option value="999999ff" <?php if ($selected_fgc == "999999ff") echo 'selected="selected"'; ?>><?php echo _AT('gray'); ?></option>     
-				<option value="ccccccff" <?php if ($selected_fgc == "ccccccff") echo 'selected="selected"'; ?>><?php echo _AT('light_gray'); ?></option>     
-				<option value="666666ff" <?php if ($selected_fgc == "666666ff") echo 'selected="selected"'; ?>><?php echo _AT('dark_gray'); ?></option>     
-				<option value="ffccccff" <?php if ($selected_fgc == "ffccccff") echo 'selected="selected"'; ?>><?php echo _AT('pink'); ?></option>     
-				<option value="00ffffff" <?php if ($selected_fgc == "00ffffff") echo 'selected="selected"'; ?>><?php echo _AT('cyan'); ?></option>     
-				<option value="ff00ffff" <?php if ($selected_fgc == "ff00ffff") echo 'selected="selected"'; ?>><?php echo _AT('magenta'); ?></option> 
+				<option value="0" <?php if ($selected_fgc == "0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
+				<option value="FFFFFF" <?php if ($selected_fgc == "FFFFFF") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
+				<option value="000000" <?php if ($selected_fgc == "000000") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
+				<option value="FF0000" <?php if ($selected_fgc == "FF0000") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
+				<option value="FFFF00" <?php if ($selected_fgc == "FFFF00") echo 'selected="selected"'; ?>><?php echo _AT('yellow'); ?></option>     
+				<option value="0000FF" <?php if ($selected_fgc == "0000FF") echo 'selected="selected"'; ?>><?php echo _AT('blue'); ?></option>     
+				<option value="00FF00" <?php if ($selected_fgc == "00FF00") echo 'selected="selected"'; ?>><?php echo _AT('green'); ?></option>     
+				<option value="999999" <?php if ($selected_fgc == "999999") echo 'selected="selected"'; ?>><?php echo _AT('gray'); ?></option>     
+				<option value="CCCCCC" <?php if ($selected_fgc == "CCCCCC") echo 'selected="selected"'; ?>><?php echo _AT('light_gray'); ?></option>     
+				<option value="666666" <?php if ($selected_fgc == "666666") echo 'selected="selected"'; ?>><?php echo _AT('dark_gray'); ?></option>     
+				<option value="FFCCCC" <?php if ($selected_fgc == "FFCCCC") echo 'selected="selected"'; ?>><?php echo _AT('pink'); ?></option>     
+				<option value="00FFFF" <?php if ($selected_fgc == "00FFFF") echo 'selected="selected"'; ?>><?php echo _AT('cyan'); ?></option>     
+				<option value="FF00FF" <?php if ($selected_fgc == "FF00FF") echo 'selected="selected"'; ?>><?php echo _AT('magenta'); ?></option> 
 			</select>
 	</div>
 
@@ -71,20 +72,21 @@
 				else if (isset($_SESSION['prefs']['PREF_BG_COLOUR']))
 					$selected_bgc = $_SESSION['prefs']['PREF_BG_COLOUR'];
 				else
-					$selected_bgc = "ffffffff";  // default to white
+					$selected_bgc = "0";  // default to white
 ?>
-				<option value="ffffffff" <?php if ($selected_bgc == "ffffffff") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
-				<option value="000000ff" <?php if ($selected_bgc == "000000ff") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
-				<option value="ff0000ff" <?php if ($selected_bgc == "ff0000ff") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
-				<option value="ffff00ff" <?php if ($selected_bgc == "ffff00ff") echo 'selected="selected"'; ?>><?php echo _AT('yellow'); ?></option>     
-				<option value="0000ffff" <?php if ($selected_bgc == "0000ffff") echo 'selected="selected"'; ?>><?php echo _AT('blue'); ?></option>     
-				<option value="00ff00ff" <?php if ($selected_bgc == "00ff00ff") echo 'selected="selected"'; ?>><?php echo _AT('green'); ?></option>     
-				<option value="999999ff" <?php if ($selected_bgc == "999999ff") echo 'selected="selected"'; ?>><?php echo _AT('gray'); ?></option>     
-				<option value="ccccccff" <?php if ($selected_bgc == "ccccccff") echo 'selected="selected"'; ?>><?php echo _AT('light_gray'); ?></option>     
-				<option value="666666ff" <?php if ($selected_bgc == "666666ff") echo 'selected="selected"'; ?>><?php echo _AT('dark_gray'); ?></option>     
-				<option value="ffccccff" <?php if ($selected_bgc == "ffccccff") echo 'selected="selected"'; ?>><?php echo _AT('pink'); ?></option>     
-				<option value="00ffffff" <?php if ($selected_bgc == "00ffffff") echo 'selected="selected"'; ?>><?php echo _AT('cyan'); ?></option>     
-				<option value="ff00ffff" <?php if ($selected_bgc == "ff00ffff") echo 'selected="selected"'; ?>><?php echo _AT('magenta'); ?></option> 
+				<option value="0" <?php if ($selected_bgc == "0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
+				<option value="FFFFFF" <?php if ($selected_bgc == "FFFFFF") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
+				<option value="000000" <?php if ($selected_bgc == "000000") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
+				<option value="FF0000" <?php if ($selected_bgc == "FF0000") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
+				<option value="FFFF00" <?php if ($selected_bgc == "FFFF00") echo 'selected="selected"'; ?>><?php echo _AT('yellow'); ?></option>     
+				<option value="0000FF" <?php if ($selected_bgc == "0000FF") echo 'selected="selected"'; ?>><?php echo _AT('blue'); ?></option>     
+				<option value="00FF00" <?php if ($selected_bgc == "00FF00") echo 'selected="selected"'; ?>><?php echo _AT('green'); ?></option>     
+				<option value="999999" <?php if ($selected_bgc == "999999") echo 'selected="selected"'; ?>><?php echo _AT('gray'); ?></option>     
+				<option value="CCCCCC" <?php if ($selected_bgc == "CCCCCC") echo 'selected="selected"'; ?>><?php echo _AT('light_gray'); ?></option>     
+				<option value="666666" <?php if ($selected_bgc == "666666") echo 'selected="selected"'; ?>><?php echo _AT('dark_gray'); ?></option>     
+				<option value="FFCCCC" <?php if ($selected_bgc == "FFCCCC") echo 'selected="selected"'; ?>><?php echo _AT('pink'); ?></option>     
+				<option value="00FFFF" <?php if ($selected_bgc == "00FFFF") echo 'selected="selected"'; ?>><?php echo _AT('cyan'); ?></option>     
+				<option value="FF00FF" <?php if ($selected_bgc == "FF00FF") echo 'selected="selected"'; ?>><?php echo _AT('magenta'); ?></option> 
 			</select>
 	</div>
 
@@ -97,20 +99,21 @@
 				else if (isset($_SESSION['prefs']['PREF_HL_COLOUR']))
 					$selected_hlc = $_SESSION['prefs']['PREF_HL_COLOUR'];
 				else
-					$selected_hlc = "ff0000ff";  // default to red
+					$selected_hlc = "0";  // default to red
 ?>
-				<option value="ffffffff" <?php if ($selected_hlc == "ffffffff") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
-				<option value="000000ff" <?php if ($selected_hlc == "000000ff") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
-				<option value="ff0000ff" <?php if ($selected_hlc == "ff0000ff") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
-				<option value="ffff00ff" <?php if ($selected_hlc == "ffff00ff") echo 'selected="selected"'; ?>><?php echo _AT('yellow'); ?></option>     
-				<option value="0000ffff" <?php if ($selected_hlc == "0000ffff") echo 'selected="selected"'; ?>><?php echo _AT('blue'); ?></option>     
-				<option value="00ff00ff" <?php if ($selected_hlc == "00ff00ff") echo 'selected="selected"'; ?>><?php echo _AT('green'); ?></option>     
-				<option value="999999ff" <?php if ($selected_hlc == "999999ff") echo 'selected="selected"'; ?>><?php echo _AT('gray'); ?></option>     
-				<option value="ccccccff" <?php if ($selected_hlc == "ccccccff") echo 'selected="selected"'; ?>><?php echo _AT('light_gray'); ?></option>     
-				<option value="666666ff" <?php if ($selected_hlc == "666666ff") echo 'selected="selected"'; ?>><?php echo _AT('dark_gray'); ?></option>     
-				<option value="ffccccff" <?php if ($selected_hlc == "ffccccff") echo 'selected="selected"'; ?>><?php echo _AT('pink'); ?></option>     
-				<option value="00ffffff" <?php if ($selected_hlc == "00ffffff") echo 'selected="selected"'; ?>><?php echo _AT('cyan'); ?></option>     
-				<option value="ff00ffff" <?php if ($selected_hlc == "ff00ffff") echo 'selected="selected"'; ?>><?php echo _AT('magenta'); ?></option> 
+				<option value="0" <?php if ($selected_hlc == "0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
+				<option value="FFFFFF" <?php if ($selected_hlc == "FFFFFF") echo 'selected="selected"'; ?>><?php echo _AT('white'); ?></option>     
+				<option value="000000" <?php if ($selected_hlc == "000000") echo 'selected="selected"'; ?>><?php echo _AT('black'); ?></option>     
+				<option value="FF0000" <?php if ($selected_hlc == "FF0000") echo 'selected="selected"'; ?>><?php echo _AT('red'); ?></option>     
+				<option value="FFFF00" <?php if ($selected_hlc == "FFFF00") echo 'selected="selected"'; ?>><?php echo _AT('yellow'); ?></option>     
+				<option value="0000FF" <?php if ($selected_hlc == "0000FF") echo 'selected="selected"'; ?>><?php echo _AT('blue'); ?></option>     
+				<option value="00FF00" <?php if ($selected_hlc == "00FF00") echo 'selected="selected"'; ?>><?php echo _AT('green'); ?></option>     
+				<option value="999999" <?php if ($selected_hlc == "999999") echo 'selected="selected"'; ?>><?php echo _AT('gray'); ?></option>     
+				<option value="CCCCCC" <?php if ($selected_hlc == "CCCCCC") echo 'selected="selected"'; ?>><?php echo _AT('light_gray'); ?></option>     
+				<option value="666666" <?php if ($selected_hlc == "666666") echo 'selected="selected"'; ?>><?php echo _AT('dark_gray'); ?></option>     
+				<option value="FFCCCC" <?php if ($selected_hlc == "FFCCCC") echo 'selected="selected"'; ?>><?php echo _AT('pink'); ?></option>     
+				<option value="00FFFF" <?php if ($selected_hlc == "00FFFF") echo 'selected="selected"'; ?>><?php echo _AT('cyan'); ?></option>     
+				<option value="FF00FF" <?php if ($selected_hlc == "FF00FF") echo 'selected="selected"'; ?>><?php echo _AT('magenta'); ?></option> 
 			</select>
 	</div>
 
