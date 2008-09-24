@@ -5,7 +5,7 @@
 
 	<dl>
 		<dt>Import Tests &amp; Surveys</dt>
-		<dd>Complete tests including the test definition, as well as its questions, or just the questions without their test definition, can be imported from IMS QTI 1.2 test packages using the Import Test feature at the top of the Test &amp;  Surveys Manager. Note that if the test is included as part of a content package, then it should be imported using the <a href="content_packages.php">Content Import/Export</a> utility. </dd>
+		<dd>Complete tests including the test definition, as well as their questions, or just the questions without their test definition, can be imported from IMS QTI 1.2 test packages using the Import Test feature at the top of the Tests &amp; Surveys Manager. Note that if the test is included as part of a content package, then it should be imported using the <a href="content_packages.php">Content Import/Export</a> utility. </dd>
 		<dt>Export Tests &amp; Surveys</dt>
 		<dd>Choose a test from the Tests &amp; Survey Manager, then click on the Export button to package that test in an IMS QTI 1.2 test package. These packages can be imported back into ATutor, or into other QTI conformant systems. See the <a href="question_database.php">Question Database</a> for information about exporting questions without the associated test definition.</dd>
 	</dl>
