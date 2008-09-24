@@ -26,8 +26,6 @@ if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
 
-echo $_POST['pathext'];
-
 if (isset($_POST['rename'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir to rename
