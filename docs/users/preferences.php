@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 		
 		// display settings (tab 1)
 		$temp_prefs['PREF_FONT_FACE']	   = $addslashes($_POST['fontface']);
-		$temp_prefs['PREF_FONT_TIMES']	   = intval($_POST['font_times']);
+		$temp_prefs['PREF_FONT_TIMES']	   = $addslashes($_POST['font_times']);
 		$temp_prefs['PREF_FG_COLOUR']	   = $addslashes($_POST['fg']);
 		$temp_prefs['PREF_BG_COLOUR']	   = $addslashes($_POST['bg']);
 		$temp_prefs['PREF_HL_COLOUR']	   = $addslashes($_POST['hl']);
