@@ -36,10 +36,10 @@
 
 ?>
 				<option value="1" <?php if ($selected_fs == "1") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
-				<option value="1.5" <?php if ($selected_fs == "1.5") echo 'selected="selected"'; ?>><?php echo "1.5 " . _AT('times_of_default'); ?></option>     
-				<option value="2" <?php if ($selected_fs == "2") echo 'selected="selected"'; ?>><?php echo "2 " . _AT('times_of_default'); ?></option>     
-				<option value="2.5" <?php if ($selected_fs == "2.5") echo 'selected="selected"'; ?>><?php echo "2.5 " . _AT('times_of_default'); ?></option>     
-				<option value="3" <?php if ($selected_fs == "3") echo 'selected="selected"'; ?>><?php echo "3 " . _AT('times_of_default'); ?></option>     
+				<option value="1.5" <?php if ($selected_fs == "1.5") echo 'selected="selected"'; ?>>1.5X</option>     
+				<option value="2" <?php if ($selected_fs == "2") echo 'selected="selected"'; ?>>2X</option>     
+				<option value="2.5" <?php if ($selected_fs == "2.5") echo 'selected="selected"'; ?>>2.5X</option>     
+				<option value="3" <?php if ($selected_fs == "3") echo 'selected="selected"'; ?>>3X</option>     
 			</select>
 	</div>
 

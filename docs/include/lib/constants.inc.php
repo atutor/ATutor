@@ -60,6 +60,14 @@ $_config_defaults['gtype']					   = 0;	//Defaulted to be original google search,
 $_config_defaults['pretty_url']				   = 0;	//pretty url, disabled
 $_config_defaults['course_dir_name']		   = 0;	//course dir name (course slug), disabled
 $_config_defaults['apache_mod_rewrite']		   = 0;	//apache mod_rewrite extension, disabled by default.
+$_config_defaults['fontface']		   = '';	// defaulted to default font face.
+$_config_defaults['font_times']		   = 1;	// defaulted to default font face.
+$_config_defaults['fg']		   = '';	// defaulted to default foreground color.
+$_config_defaults['bf']		   = '';	// defaulted to default background color.
+$_config_defaults['hl']		   = '';	// defaulted to default highlight color.
+$_config_defaults['show_contents']		   = 1;	// "show table of content" is enabled by default.
+$_config_defaults['show_next_previous_buttons']		   = 1;	// "show next and previous buttons" is enabled by default.
+$_config_defaults['show_bread_crumbs']		   = 1;	// "show bread crumbs" is enabled by default.
 $_config = $_config_defaults;
 
 
