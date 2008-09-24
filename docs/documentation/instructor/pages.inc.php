@@ -15,8 +15,8 @@
     $_pages['content_properties.php']            = 'Content Properties';
     $_pages['glossary_terms.php']                = 'Glossary Terms';
     $_pages['content_preview.php']               = 'Preview';
-    $_pages['accessibility.php']		 = 'Accessibility';
     $_pages['content_alternatives.php']          = 'Alternate Content';
+    $_pages['accessibility.php']		 = 'Accessibility';
     $_pages['content_tests.php']		 = 'Associating Tests';
     $_pages['content_packages.php']              = 'Import/Export Content';
     $_pages['content_usage.php']                 = 'Content Usage';
