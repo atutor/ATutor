@@ -843,7 +843,7 @@ function get_content_table($content)
 				$content_table = "<div id=\"toc\">\n<strong>". _AT("table_of_contents")."</strong>\n";
 			}
 
-			$content .= str_replace($found_headers[$i][0], '<div id="'.$div_id.'">'.$found_headers[$i][0].'</div>', $content);
+			$content = str_replace($found_headers[$i][0], '<div id="'.$div_id.'">'.$found_headers[$i][0].'</div>', $content);
 			$content_table .= '<a href="'.$_SERVER["REQUEST_URI"].'#'.$div_id.'" class="'.$found_headers[$i][1].'">'. $found_headers[$i][2]."</a>\n";
 
 			if ($i == count($found_headers) - 1)
