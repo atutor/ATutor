@@ -44,7 +44,7 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 ?>
 
 <fieldset>
-	<legend><?php echo _AT('course_auto_enroll'); ?></legend>
+	<legend><?php echo _AT('course_to_auto_enroll'); ?></legend>
 		<?php echo $table_title; ?>
 	
 	<div class="row">
