@@ -690,8 +690,8 @@ if ($current_tab == 5) {
 //End Added by Silvia 
 
 //Extended Test within content functionality - Harris @Sep 9, 2008
-if ($current_tab == 6){
-}
+//if ($current_tab == 6){
+//}
 
 if (($current_tab == 0) || ($_current_tab == 5)) {
 	if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
@@ -760,6 +760,7 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['body_text']  = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
 			$_POST['test_message'] = $content_row['test_message'];
+			$_POST['allow_test_export'] = $content_row['allow_test_export'];
 
 			$_POST['day']   = substr($content_row['release_date'], 8, 2);
 			$_POST['month'] = substr($content_row['release_date'], 5, 2);
@@ -836,8 +837,10 @@ $pid = intval($_REQUEST['pid']);
 	}
 
 	echo '<input type="hidden" name="keywords" value="'.htmlspecialchars(stripslashes($_POST['keywords'])).'" />';
-	echo '<input type="hidden" name="test_message" value="'.$_POST['test_message'].'" />';
 
+	//content test association
+	echo '<input type="hidden" name="test_message" value="'.$_POST['test_message'].'" />';
+	
 	/* get glossary terms */
 	$matches = find_terms(stripslashes($_POST['body_text']));
 	$num_terms = count($matches[0]);
@@ -876,6 +879,19 @@ $pid = intval($_REQUEST['pid']);
 		foreach ($_POST['tid'] as $i=>$tid){
 			echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
 		}
+	}
+	if (!isset($_POST['allow_test_export']) && $current_tab != 6) {
+		//export flag handling.
+		$sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
+		$result2 = mysql_query($sql, $db);
+		$c_row = mysql_fetch_assoc($result2);
+		if (intval($c_row['allow_test_export'])==1){
+			echo '<input type="hidden" name="allow_test_export" value="1" />';
+		} else {
+			echo '<input type="hidden" name="allow_test_export" value="0" />';
+		}
+	} else {
+		echo '<input type="hidden" name="allow_test_export" value="'.intval($_POST['allow_test_export']).'" />';
 	}
 
 	if ($do_check) {

@@ -38,6 +38,25 @@ $num_tests = mysql_num_rows($result);
 
 
 <div class="row">
+	<?php
+	//Need radio button 'cause one checkbox makes the states indeterministic
+	//@harris
+	$test_export_y_checked = '';
+	$test_export_n_checked = '';
+	if ($_POST['allow_test_export'] == 1){
+		$test_export_y_checked = ' checked="checked"';
+	} else {
+		$test_export_n_checked = ' checked="checked"';
+	}
+	?>
+	<input type="radio" name="allow_test_export" id="allow_test_export" value="1" <?php echo $test_export_y_checked; ?>/>
+	<label for="allow_test_export"><?php echo _AT('allow_test_export'); ?></label>
+	<input type="radio" name="allow_test_export" id="disallow_test_export" value="0" <?php echo $test_export_n_checked; ?>/>
+	<label for="disallow_test_export"><?php echo _AT('disallow_test_export'); ?></label>
+</div>
+
+
+<div class="row">
 	<p><?php echo _AT('custom_test_message'); ?></p>
 	<textarea name="test_message"><?php echo $_POST['test_message']; ?></textarea>
 </div>

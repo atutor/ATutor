@@ -69,7 +69,8 @@ $test_message = '';
 				}
 
 				$items[$current_identifier]['new_path'] = implode('/', $temp_path);
-			} elseif (isset($items[$current_identifier]) && preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
+			} elseif (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
+						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
@@ -258,7 +259,7 @@ if ($ext != 'zip') {
 } else if ($_FILES['file']['error'] == 1) {
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
 	$msg->addError($errors);
-} else if ( !$_FILES['file']['name'] || (!is_uploaded_file($_FILES['file']['tmp_name']) && !$test_obj['url'])) {
+} else if ( !$_FILES['file']['name'] || (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url'])) {
 	$msg->addError('FILE_NOT_SELECTED');
 } else if ($_FILES['file']['size'] == 0) {
 	$msg->addError('IMPORTFILE_EMPTY');

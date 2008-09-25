@@ -69,3 +69,5 @@ TYPE = MyISAM;
 
 # Customized test messages associated with the content page
 ALTER TABLE `content` ADD COLUMN `test_message` TEXT NOT NULL AFTER `use_customized_head`;
+ALTER TABLE `content` ADD COLUMN `allow_test_export` TINYINT(1) UNSIGNED NOT NULL AFTER `test_message`;
+

@@ -129,6 +129,11 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 			?>
 		</select>
 	</div>
+
+	<div class="row">
+		<input type="checkbox" name="allow_test_import" id="allow_test_import" checked="checked" />
+		<label for="allow_test_import"><?php echo _AT('allow_test_import'); ?></label>		
+	</div>
 	
 	<div class="row">
 		<label for="to_file"><?php echo _AT('upload_content_package'); ?></label><br />

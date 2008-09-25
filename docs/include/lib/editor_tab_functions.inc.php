@@ -93,6 +93,7 @@ function save_changes($redir, $current_tab) {
 	$_POST['keywords']	= trim($_POST['keywords']);
 	$_POST['new_ordering']	= intval($_POST['new_ordering']);
 	$_POST['test_message'] = trim($_POST['test_message']);
+	$_POST['allow_test_export'] = intval($_POST['allow_test_export']);
 
 	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
 
@@ -110,11 +111,11 @@ function save_changes($redir, $current_tab) {
 		$_POST['body_text']		= $addslashes($_POST['body_text']);
 		$_POST['head']  		= $addslashes($_POST['head']);
 		$_POST['keywords']		= $addslashes($_POST['keywords']);
-		$_POST['test_message']	= $addslashes($_POST['test_message']);
+		$_POST['test_message']	= $addslashes($_POST['test_message']);		
 
 		if ($_POST['cid']) {
 			/* editing an existing page */
-			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date, $_POST['head'], $_POST['use_customized_head'], $_POST['test_message']);
+			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date, $_POST['head'], $_POST['use_customized_head'], $_POST['test_message'], $_POST['allow_test_export']);
 
 			unset($_POST['move']);
 			unset($_POST['new_ordering']);
@@ -133,7 +134,8 @@ function save_changes($redir, $current_tab) {
 												  $release_date,
 												  $_POST['head'],
 												  $_POST['use_customized_head'],
-												  $_POST['test_message']);
+												  $_POST['test_message'],
+												  $_POST['allow_test_export']);
 			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}
@@ -509,7 +511,16 @@ function check_for_changes($row) {
 			}
 		}
 	}
-	
+
+
+	/* test & survey */	
+	if ($row && isset($_POST['test_message']) && $_POST['test_message'] != $row['test_message']){
+		$changes[6] = true;
+	}
+	if ($row && isset($_POST['allow_test_export']) && $_POST['allow_test_export'] != $row['allow_test_export']){
+		$changes[6] = true;
+	}
+
 	return $changes;
 }
 

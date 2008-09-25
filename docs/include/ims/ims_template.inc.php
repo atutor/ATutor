@@ -148,20 +148,23 @@ function print_organizations($parent_id,
 
 			/* generate the IMS QTI resource and files */
 			global $contentManager;
-			$content_test_rs = $contentManager->getContentTestsAssoc($content['content_id']);	
-			$test_ids = array();		//reset test ids
-			$my_files = array();		//reset myfiles.
-			while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
-				//export
-				$test_ids[] = $content_test_row['test_id'];
-				//the 'added_files' is for adding into the manifest file in this zip
-				$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
+			//check if test export is allowed.
+			if ($contentManager->allowTestExport($content['content_id'])){
+				$content_test_rs = $contentManager->getContentTestsAssoc($content['content_id']);	
+				$test_ids = array();		//reset test ids
+				$my_files = array();		//reset myfiles.
+				while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
+					//export
+					$test_ids[] = $content_test_row['test_id'];
+					//the 'added_files' is for adding into the manifest file in this zip
+					$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
 
-				//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
-				foreach($added_files as $filename=>$file_array){
-					$my_files[] = $filename;
-					foreach ($file_array as $garbage=>$filename2){
-						$my_files[] = $filename2;
+					//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
+					foreach($added_files as $filename=>$file_array){
+						$my_files[] = $filename;
+						foreach ($file_array as $garbage=>$filename2){
+							$my_files[] = $filename2;
+						}
 					}
 				}
 			}

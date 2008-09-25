@@ -142,7 +142,7 @@ class ContentManager
 	}
 
 
-	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $head = '', $use_customized_head = 0, $test_message = '') {
+	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $head = '', $use_customized_head = 0, $test_message = '', $allow_test_export = 1) {
 		
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['course_id'] != -1)) {
 			return false;
@@ -167,7 +167,8 @@ class ContentManager
 		                content_path,
 		                title,
 		                text,
-						test_message)
+						test_message,
+						allow_test_export)
 		        VALUES ($course_id, 
 		                $content_parent_id, 
 		                $ordering, 
@@ -181,7 +182,8 @@ class ContentManager
 		                '', 
 		                '$title',
 		                '$text',
-						'$test_message')";
+						'$test_message',
+						$allow_test_export)";
 
 		$err = mysql_query($sql, $this->db);
 
@@ -215,7 +217,7 @@ class ContentManager
 	}
 
 
-	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date, $head, $use_customized_head, $test_message) {
+	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date, $head, $use_customized_head, $test_message, $allow_test_export) {
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 			return FALSE;
 		}
@@ -239,7 +241,7 @@ class ContentManager
 		}
 
 		/* update the title, text of the newly moved (or not) content */
-		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', head='$head', use_customized_head=$use_customized_head, text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date', test_message='$test_message' WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', head='$head', use_customized_head=$use_customized_head, text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date', test_message='$test_message', allow_test_export=$allow_test_export WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
 
 		/* update the related content */
@@ -996,6 +998,23 @@ class ContentManager
 		} else {
 			return $this->_menu_info[$cid]['u_release_date'];
 		}
+	}
+
+	/** 
+	 * Return true if this content page allows export, else false.
+	 * @param	int	content id
+	 * @return	true if 'allow_test_export'==1
+	 */
+	function allowTestExport($content_id){
+		$sql = "SELECT allow_test_export FROM ".TABLE_PREFIX."content WHERE content_id=$content_id";
+		$result = mysql_query($sql, $this->db);
+		if ($row = mysql_fetch_assoc($result)){
+			if ($row['allow_test_export'] == 1){
+				return true;
+			}
+			return false;
+		}
+		return false;
 	}
 }
 
