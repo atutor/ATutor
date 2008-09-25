@@ -45,7 +45,7 @@ if ($_POST['submit']) {
 
 			//Get the list of students with enrollment privilege
 			$module =& $moduleFactory->getModule('_core/enrolment');
-			$sql	= "SELECT email, first_name, last_name, privileges FROM ".TABLE_PREFIX."members m INNER JOIN ".TABLE_PREFIX."course_enrollment ce ON m.member_id=ce.member_id WHERE ce.privileges > 0 AND ce.course_id=$course";
+			$sql	= "SELECT email, first_name, last_name, `privileges` FROM ".TABLE_PREFIX."members m INNER JOIN ".TABLE_PREFIX."course_enrollment ce ON m.member_id=ce.member_id WHERE ce.privileges > 0 AND ce.course_id=$course";
 			$result = mysql_query($sql, $db);
 			while ($row	= mysql_fetch_assoc($result)){
 				if (query_bit($row['privileges'], $module->getPrivilege())){
