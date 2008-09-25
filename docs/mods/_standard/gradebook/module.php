@@ -25,7 +25,7 @@ define('AT_ADMIN_PRIV_GRADEBOOK', $this->getAdminPrivilege());
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_student_tool = 'mods/_standardgradebook/my_gradebook.php';
+$_student_tool = 'mods/_standard/gradebook/my_gradebook.php';
 
 /*******
  * add the admin pages when needed.
