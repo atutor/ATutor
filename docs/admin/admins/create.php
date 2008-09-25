@@ -99,7 +99,7 @@ if (isset($_POST['cancel'])) {
 		                  real_name,
 		                  email,
 		                  language,
-		                  privileges,
+		                  `privileges`,
 		                  last_login)
 		          VALUES ('$_POST[login]', 
 		                  '$password', 
@@ -116,7 +116,7 @@ if (isset($_POST['cancel'])) {
 		                  real_name,
 		                  email,
 		                  language,
-		                  privileges,
+		                  `privileges`,
 		                  last_login)
 		          VALUES ('$_POST[login]', 
 		                  '********', 
