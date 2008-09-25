@@ -71,3 +71,59 @@ TYPE = MyISAM;
 ALTER TABLE `content` ADD COLUMN `test_message` TEXT NOT NULL AFTER `use_customized_head`;
 ALTER TABLE `content` ADD COLUMN `allow_test_export` TINYINT(1) UNSIGNED NOT NULL AFTER `test_message`;
 
+# sql file for gradebook module
+
+CREATE TABLE `grade_scales` (
+   `grade_scale_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+   `member_id` mediumint(8) unsigned NOT NULL default '0',
+   `scale_name` VARCHAR(255) NOT NULL ,
+   `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
+   PRIMARY KEY ( `grade_scale_id` )
+);
+
+CREATE TABLE `grade_scales_detail` (
+   `grade_scale_id` mediumint(8) unsigned NOT NULL,
+   `scale_value` VARCHAR(50) NOT NULL ,
+   `percentage_from` MEDIUMINT NOT NULL default '0',
+   `percentage_to` MEDIUMINT NOT NULL default '0',
+   PRIMARY KEY (`grade_scale_id`, `scale_value`)
+);
+
+CREATE TABLE `gradebook_tests` (
+   `gradebook_test_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+   `id` mediumint(8) unsigned NOT NULL default '0' COMMENT 'Values: 0, tests.test_id or assignments.assignment_id. 0 for external tests/assignments. tests.test_id for ATutor tests, assignments.assignment_id for ATutor assignments.',
+   `type` VARCHAR(50) NOT NULL default '' COMMENT 'Values: ATutor Test, ATutor Assignment, External',
+   `course_id` mediumint(8) unsigned NOT NULL default '0' COMMENT 'Values: 0 or courses.course_id. Only has value for external tests/assignments. When ATutor internal assignments/tests/surveys, always 0.',
+   `title` VARCHAR(255) NOT NULL COMMENT 'Values: Null or test name. Always null if ATutor internal assignments/tests/surveys.',
+   `due_date` datetime NOT NULL default '0000-00-00 00:00:00',
+   `grade_scale_id` mediumint(8) unsigned NOT NULL default '0',
+   PRIMARY KEY ( `gradebook_test_id` )
+);
+
+CREATE TABLE `gradebook_detail` (
+   `gradebook_test_id` mediumint(8) unsigned NOT NULL,
+   `member_id` mediumint(8) unsigned NOT NULL default '0',
+   `grade` VARCHAR(255) NOT NULL,
+   PRIMARY KEY (`gradebook_test_id`, `member_id`)
+);
+
+INSERT INTO `grade_scales` (grade_scale_id, member_id, scale_name, created_date) values (1, 0, 'Letter Grade', now());
+INSERT INTO `grade_scales` (grade_scale_id, member_id, scale_name, created_date) values (2, 0, 'Competency 1', now());
+INSERT INTO `grade_scales` (grade_scale_id, member_id, scale_name, created_date) values (3, 0, 'Competency 2', now());
+
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (1, 'A+', 90, 100);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (1, 'A', 80, 89);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (1, 'B', 70, 79);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (1, 'C', 60, 69);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (1, 'D', 50, 59);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (1, 'E', 0, 49);
+
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (2, 'Pass', 75, 100);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (2, 'Fail', 0, 74);
+
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Excellent', 80, 100);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Good', 70, 79);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Adequate', 60, 69);
+INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Inadequate', 0, 59);
+
+INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) VALUES('_standard/gradebook', 2, 1048576, 4096, 0, 0);
