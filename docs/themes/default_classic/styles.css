@@ -425,7 +425,7 @@ div#breadcrumbs {
 	color: white;
 }
 div#breadcrumbs a, div#member-links a {
-	color: white;
+	color: black;
 }
 div#breadcrumbs a:hover, div#member-links a:hover{
 	text-decoration:none;

@@ -143,7 +143,7 @@ function toggleToc(objId) {
 	<?php if ($_SESSION['valid_user']): ?>
 		<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" />
 		
-		<span style="font-weight:bold; color: white;"><?php echo get_display_name($_SESSION['member_id']); ?></span>  | 
+		<span style="font-weight:bold;"><?php echo get_display_name($_SESSION['member_id']); ?></span>  | 
 
 		<?php if ($_SESSION['course_id'] > -1): ?>
 			<?php if (get_num_new_messages()): ?>
