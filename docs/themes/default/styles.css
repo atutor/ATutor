@@ -434,7 +434,10 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 	color: black;
 	text-decoration: none;
 }
-
+/* Preferences tabs */
+table.etabbed-table	{
+	width: 90%;
+}
 a#my-start-page {
 	padding: 2px;
 	padding-left: 15px;
@@ -1617,4 +1620,3 @@ label.primary a{
 	font-size: 110%;
 	background-color: white;
 }
-	
