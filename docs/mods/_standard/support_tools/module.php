@@ -20,16 +20,13 @@ define('AT_ADMIN_PRIV_SUPPORT_TOOLS', $this->getAdminPrivilege());
  */
 $this->_stacks['support_tools'] = array('title_var'=>'support_tools','file'=>AT_INCLUDE_PATH.'../mods/_standard/support_tools/side_menu.inc.php');
 
-		//$this->_pages['admin/modules/scaffolds.php']['title_var'] = 'support_tools';
-		//$this->_pages['admin/courses.php']['children'] = array('admin/modules/scaffolds.php');
 
-		//$this->_pages['admin/modules/scaffolds.php']['title_var'] = 'support_tools';
 if (admin_authenticate(AT_ADMIN_PRIV_SUPPORT_TOOLS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-		$this->_pages['admin/modules/scaffolds.php']['parent']    = 'admin/courses.php';
-		$this->_pages['admin/modules/scaffolds.php']['title_var'] = 'support_tools';
-		$this->_pages['admin/courses.php']['children'] = array('admin/modules/scaffolds.php');
-		//$this->_pages['admin/forums.php']['parent']    = 'admin/courses.php';
+		$this->_pages['mods/_standard/support_tools/scaffolds.php']['parent']    = 'admin/courses.php';
+		$this->_pages['mods/_standard/support_tools/scaffolds.php']['title_var'] = 'support_tools';
+		$this->_pages['admin/courses.php']['children'] = array('mods/_standard/support_tools/scaffolds.php');
+		$this->_pages['admin/forums.php']['parent']    = 'admin/courses.php';
 	} 
 }
 ?>
