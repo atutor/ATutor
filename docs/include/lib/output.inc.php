@@ -832,15 +832,25 @@ function get_content_table($content)
 	if (count($found_headers) == 0) return array("", $content);
 	else
 	{
-		$i = 0;
-		foreach ($found_headers as $one_header)
+		$num_of_headers = 0;
+
+		for ($i = 0; $i < count($found_headers); $i++)
 		{
-			$div_id = "_header_" . $i++;
+			$div_id = "_header_" . $num_of_headers++;
 			
-			$content = str_replace($one_header[0], '<div id="'.$div_id.'">'.$one_header[0].'</div>', $content);
-			$content_table .= '<a href="'.$_SERVER["REQUEST_URI"].'#'.$div_id.'">'. $one_header[2]."</a><br />\n";
+			if ($i == 0)
+			{
+				$content_table = "<div id=\"toc\">\n<strong>". _AT("table_of_contents")."</strong>\n";
+			}
+
+			$content .= str_replace($found_headers[$i][0], '<div id="'.$div_id.'">'.$found_headers[$i][0].'</div>', $content);
+			$content_table .= '<a href="'.$_SERVER["REQUEST_URI"].'#'.$div_id.'" class="'.$found_headers[$i][1].'">'. $found_headers[$i][2]."</a>\n";
+
+			if ($i == count($found_headers) - 1)
+			{
+				$content_table .= "</div><br />";
+			}
 		}
-		
 		return array($content_table, $content);
 	}
 }
