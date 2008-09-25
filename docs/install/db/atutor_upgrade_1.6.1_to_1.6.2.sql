@@ -51,6 +51,9 @@ INSERT INTO `config` (`name`, `value`) VALUES('calculator', 'http://www.calculat
 INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.org/webnote/');
 INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
 
+#Add the scaffold tools module 
+INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, 2048, 0, 0);
+
 /* End Access4All setup */
 
 

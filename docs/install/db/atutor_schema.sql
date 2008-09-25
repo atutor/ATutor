@@ -649,7 +649,7 @@ INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/blogs',         2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/profile_pictures', 2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/patcher', 2, 0, 1024, 0, 0);
-
+INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, 2048, 0, 0);
 # --------------------------------------------------------
 # Table structure for table `news`
 
