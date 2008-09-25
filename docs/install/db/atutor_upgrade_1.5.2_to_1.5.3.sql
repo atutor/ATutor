@@ -185,8 +185,6 @@ CREATE TABLE `blog_posts_comments` (
 ##INSERT INTO `modules` VALUES ('_standard/blogs',         2, 0, 0, 0, 0);
 
 
-ALTER TABLE `members` CHANGE `gender` `gender` ENUM( 'm', 'f', 'n' ) DEFAULT 'n' NOT NULL;
-
 ## link table updates
 # Dec,6, 2007 duplicated column name
  ALTER TABLE `resource_categories` RENAME `links_categories` ;
