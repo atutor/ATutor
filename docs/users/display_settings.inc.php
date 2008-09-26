@@ -10,9 +10,9 @@
 				else if (isset($_SESSION['prefs']['PREF_FONT_FACE']))
 					$selected_ff = $_SESSION['prefs']['PREF_FONT_FACE'];
 				else
-					$selected_ff = "0";  // default
+					$selected_ff = "";  // default
 ?>
-				<option value="0" <?php if ($selected_ff == "0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>   
+				<option value="" <?php if ($selected_ff == "") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>   
 				<option value="serif" <?php if ($selected_ff == "serif") echo 'selected="selected"'; ?>><?php echo _AT('serif'); ?></option>   
 				<option value="sans-serif" <?php if ($selected_ff == "sans-serif") echo 'selected="selected"'; ?>><?php echo _AT('sans_serif'); ?></option>   
 				<option value="monospace" <?php if ($selected_ff == "monospace") echo 'selected="selected"'; ?>><?php echo _AT('monospaced'); ?></option>   
@@ -24,9 +24,8 @@
 	<div class="row">
 		<input type="hidden" id="defaultfontsize" value="12">
 		<label for="font_times"><?php echo _AT('font_size'); ?></label><br />
-			<select name="font_times" id="font_times" onchange="setPreviewSize()"><?php
-				$selected_fs = "12";
-				
+			<select name="font_times" id="font_times" onchange="setPreviewSize()">
+<?php
 				if (isset($_POST['font_times']))
 					$selected_fs = $_POST['font_times'];
 				else if (isset($_SESSION['prefs']['PREF_FONT_TIMES']))
