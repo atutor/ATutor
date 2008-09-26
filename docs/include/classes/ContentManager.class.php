@@ -1003,9 +1003,12 @@ class ContentManager
 	/** 
 	 * Return true if this content page allows export, else false.
 	 * @param	int	content id
-	 * @return	true if 'allow_test_export'==1
+	 * @return	true if 'allow_test_export'==1 || is instructor
 	 */
 	function allowTestExport($content_id){
+		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
+			return true;
+		}
 		$sql = "SELECT allow_test_export FROM ".TABLE_PREFIX."content WHERE content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
 		if ($row = mysql_fetch_assoc($result)){
