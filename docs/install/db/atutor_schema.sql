@@ -123,6 +123,7 @@ CREATE TABLE `content` (
   `head` TEXT NOT NULL,
   `use_customized_head` TINYINT(4) NOT NULL,
   `test_message` TEXT NOT NULL,
+  `allow_test_export` TINYINT(1) UNSIGNED NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM ;
