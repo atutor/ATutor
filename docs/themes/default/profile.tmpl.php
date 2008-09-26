@@ -10,13 +10,15 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: edit.php 3111 2005-01-18 19:32:00Z joel $
+
+
 global $display_name_formats, $moduleFactory;
 
 ?>
 <div class="input-form">
 	<div class="row">
 		<p><a href="inbox/send_message.php?id=<?php echo $this->row['member_id']; ?>"><?php echo _AT('send_message'); ?></a></p>
-
 		<dl id="public-profile">
 			<dt><?php echo _AT('email'); ?></dt>
 			<dd>
@@ -44,8 +46,8 @@ global $display_name_formats, $moduleFactory;
 					echo '--';
 				}
 				?>
-			</dt>
-
+			</dd>
+			
 			<dt><?php echo _AT('status'); ?></dt>
 			<dd><?php echo $this->status; ?></dd>
 
