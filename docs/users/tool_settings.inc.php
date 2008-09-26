@@ -46,11 +46,6 @@
 				
 			if ($calc_val == 1) $calc = ' checked ';
 
-// 			if (isset($_POST["peer_interaction_val"]))
-// 				$peer_val = $_POST["peer_interaction_val"];
-// 			else
-// 				$peer_val = $_SESSION['prefs']['PREF_PEER_INTERACTION'];
-// 				
 			if ($peer_val == 1) $peer = ' checked ';
 
 			if (isset($_POST["abacus_val"]))

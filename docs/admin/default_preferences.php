@@ -14,36 +14,80 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/themes.inc.php');
+require(AT_INCLUDE_PATH.'lib/pref_tab_functions.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-if (isset($_GET['cancel'])) {
+if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: users.php');
 	exit;
 }
 
-if (isset($_GET['submit'])) {
+if (isset($_POST['submit'])) {
+//	debug($_POST);
+	/* custom prefs */
+	// atutor settings (tab 0)
+	$pref_defaults['PREF_NUMBERING']      = intval($_POST['numbering']);
+	$pref_defaults['PREF_THEME']          = $addslashes($_POST['theme']);
+	$pref_defaults['PREF_TIMEZONE']	     = $addslashes($_POST['time_zone']);
+	$pref_defaults['PREF_JUMP_REDIRECT']  = intval($_POST['use_jump_redirect']);
+	$pref_defaults['PREF_FORM_FOCUS']     = intval($_POST['form_focus']);
+	$pref_defaults['PREF_CONTENT_EDITOR'] = intval($_POST['content_editor']);
+	$pref_defaults['PREF_SHOW_GUIDE']     = intval($_POST['show_guide']);
 	
-	$_GET['mnot']              = intval($_GET['mnot']);
-	$_GET['numbering']         = intval($_GET['numbering']);
-	$_GET['use_jump_redirect'] = intval($_GET['use_jump_redirect']);
-	$_GET['form_focus']        = intval($_GET['form_focus']);
-	$_GET['content_editor']    = intval($_GET['content_editor']);
+	// display settings (tab 1)
+	$pref_defaults['PREF_FONT_FACE']	   = $addslashes($_POST['fontface']);
+	$pref_defaults['PREF_FONT_TIMES']	   = $addslashes($_POST['font_times']);
+	$pref_defaults['PREF_FG_COLOUR']	   = $addslashes($_POST['fg']);
+	$pref_defaults['PREF_BG_COLOUR']	   = $addslashes($_POST['bg']);
+	$pref_defaults['PREF_HL_COLOUR']	   = $addslashes($_POST['hl']);
 
-	$default_theme = get_default_theme();
+	// content settings (tab 2)
+	$pref_defaults['PREF_USE_ALTERNATIVE_TO_TEXT'] = intval($_POST['use_alternative_to_text']);
+	$pref_defaults['PREF_ALT_TO_TEXT'] = $addslashes($_POST['preferred_alt_to_text']);
+	$pref_defaults['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_text_append_or_replace']);
+	$pref_defaults['PREF_ALT_TEXT_PREFER_LANG'] = $addslashes($_POST['alt_text_prefer_lang']);
+	$pref_defaults['PREF_USE_ALTERNATIVE_TO_AUDIO'] = intval($_POST['use_alternative_to_audio']);
+	$pref_defaults['PREF_ALT_TO_AUDIO'] = $addslashes($_POST['preferred_alt_to_audio']);
+	$pref_defaults['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_audio_append_or_replace']);
+	$pref_defaults['PREF_ALT_AUDIO_PREFER_LANG'] = $addslashes($_POST['alt_audio_prefer_lang']);
+	$pref_defaults['PREF_USE_ALTERNATIVE_TO_VISUAL'] = intval($_POST['use_alternative_to_visual']);
+	$pref_defaults['PREF_ALT_TO_VISUAL'] = $addslashes($_POST['preferred_alt_to_visual']);
+	$pref_defaults['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_visual_append_or_replace']);
+	$pref_defaults['PREF_ALT_VISUAL_PREFER_LANG'] = $addslashes($_POST['alt_visual_prefer_lang']);
 
-	$pref_defaults = array('PREF_THEME'=>$default_theme['dir_name'], 'PREF_NUMBERING'=>$_GET['numbering'], 'PREF_JUMP_REDIRECT'=>$_GET['use_jump_redirect'], 'PREF_FORM_FOCUS'=>$_GET['form_focus'], 'PREF_CONTENT_EDITOR' => $_GET['content_editor']);
+	// tool settings (tab 3)
+	$pref_defaults['PREF_DICTIONARY'] = intval($_POST['dictionary_val']);
+	$pref_defaults['PREF_THESAURUS'] = intval($_POST['thesaurus_val']);
+	$pref_defaults['PREF_NOTE_TAKING'] = intval($_POST['note_taking_val']);
+	$pref_defaults['PREF_CALCULATOR'] = intval($_POST['calculator_val']);
+	$pref_defaults['PREF_ABACUS'] = intval($_POST['abacus_val']);
+	$pref_defaults['PREF_ATLAS'] = intval($_POST['atlas_val']);
+	$pref_defaults['PREF_ENCYCLOPEDIA'] = intval($_POST['encyclopedia_val']);	
+
+	// control settings (tab 4)
+	$pref_defaults['PREF_SHOW_CONTENTS'] = intval($_POST['show_contents']);
+	$pref_defaults['PREF_SHOW_NEXT_PREVIOUS_BUTTONS'] = intval($_POST['show_next_previous_buttons']);
+	$pref_defaults['PREF_SHOW_BREAD_CRUMBS'] = intval($_POST['show_bread_crumbs']);
+
+//	$default_theme = get_default_theme();
+//	$pref_defaults = array('PREF_THEME'=>$default_theme['dir_name'], 'PREF_NUMBERING'=>$_GET['numbering'], 'PREF_JUMP_REDIRECT'=>$_GET['use_jump_redirect'], 'PREF_FORM_FOCUS'=>$_GET['form_focus'], 'PREF_CONTENT_EDITOR' => $_GET['content_editor']);
 
 	$pref_defaults = serialize($pref_defaults);
 
-	if (!($_config_defaults['pref_defaults'] == $pref_defaults) && (strlen($pref_defaults) < 256)) {
+//	debug(strlen($pref_defaults));
+	if (!($_config_defaults['pref_defaults'] == $pref_defaults)) {
 		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_defaults','$pref_defaults')";
 	} else if ($_config_defaults['pref_defaults'] == $pref_defaults) {
 		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
 	}
 	$result = mysql_query($sql, $db);
 
-	$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_inbox_notify','$_GET[mnot]')";
+	$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_inbox_notify','".intval($_POST["mnot"])."')";
+	$result = mysql_query($sql, $db);
+
+	$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_is_auto_login','".$addslashes($_POST["auto"])."')";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -51,91 +95,28 @@ if (isset($_GET['submit'])) {
 	exit;
 }
 
-$pref_defaults = unserialize($_config['pref_defaults']);
+// set defaults with the $_config_defaults and overwrite the configs that are defined in table `config`
+$pref_defaults = unserialize($_config_defaults['pref_defaults']);
 
-require(AT_INCLUDE_PATH.'header.inc.php');
+foreach (unserialize($_config['pref_defaults']) as $name => $value)
+	$pref_defaults[$name] = $value;
+
+assign_session_prefs($pref_defaults);
+
+$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
+$result = mysql_query($sql, $db);
+$row_notify = mysql_fetch_assoc($result);
+
+$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_is_auto_login'";
+$result = mysql_query($sql, $db);
+$row_is_auto_login = mysql_fetch_assoc($result);
+
+$languages = $languageManager->getAvailableLanguages();
+
+$savant->assign('notify', $row_notify['value']);
+$savant->assign('languages', $languages);
+$savant->assign('is_auto_login', $row_is_auto_login["value"]);
+
+$savant->display('users/preferences.tmpl.php');
 
 ?>
-
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="prefs">
-<div class="input-form">
-
-	<div class="row">
-		<?php echo _AT('inbox_notification'); ?><br />
-		<?php
-			$yes = '';
-			$no  = '';
-			if ($_config['pref_inbox_notify']) {
-				$yes = ' checked="checked"';
-			} else {
-				$no  = ' checked="checked"';
-			}
-		?>
-		<input type="radio" name="mnot" id="mnot_yes" value="1" <?php echo $yes; ?> /><label for="mnot_yes"><?php echo _AT('enable'); ?></label> 
-		<input type="radio" name="mnot" id="mnot_no" value="0" <?php echo $no; ?> /><label for="mnot_no"><?php echo _AT('disable'); ?></label>		
-	</div>
-
-	<div class="row">
-		<?php echo _AT('show_numbers');  ?><br />
-		<?php
-			$num = '';  $num2 = '';
-			if ($pref_defaults['PREF_NUMBERING'] == 1) {
-				$num = ' checked="checked"';
-			} else {
-				$num2 = ' checked="checked"';
-			}
-			?><input type="radio" name ="numbering" id="num_en" value="1" <?php echo $num; ?> /><label for="num_en"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name ="numbering" id="num_dis" value="0" <?php echo $num2; ?> /><label for="num_dis"><?php echo _AT('disable');  ?></label>
-	</div>
-
-	<div class="row">
-		<?php echo _AT('jump_redirect'); ?><br />
-		<?php
-			$num = '';  $num2 = '';
-			if ($pref_defaults['PREF_JUMP_REDIRECT'] == 1) {
-				$num = ' checked="checked"';
-			} else {
-				$num2 = ' checked="checked"';
-			}
-			?><input type="radio" name ="use_jump_redirect" id="jump_en" value="1" <?php echo $num; ?> /><label for="jump_en"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name ="use_jump_redirect" id="jump_dis" value="0" <?php echo $num2; ?> /><label for="jump_dis"><?php echo _AT('disable');  ?></label>
-	</div>
-
-	<div class="row">
-		<?php echo _AT('form_focus');  ?><br />
-		<?php
-			$num = '';  $num2 = '';
-			if ($pref_defaults['PREF_FORM_FOCUS'] == 1) {
-				$num = ' checked="checked"';
-			} else {
-				$num2 = ' checked="checked"';
-			}
-			?><input type="radio" name ="form_focus" id="focus_on" value="1" <?php echo $num; ?> /><label for="focus_on"><?php echo _AT('enable');  ?></label> 
-			<input type="radio" name ="form_focus" id="focus_off" value="0" <?php echo $num2; ?> /><label for="focus_off"><?php echo _AT('disable');  ?></label>
-	</div>
-
-	<div class="row">
-		<?php
-			$num0 = $num1 = $num2 = '';
-			if ($pref_defaults['PREF_CONTENT_EDITOR'] == 1) {
-				$num1 = ' checked="checked"';
-			} else if ($pref_defaults['PREF_CONTENT_EDITOR'] == 2) {
-				$num2 = ' checked="checked"';
-			} else {
-				$num0 = ' checked="checked"';
-			}
-		?>
-		<?php echo _AT('content_editor'); ?><br />
-		<input type="radio" name="content_editor" id="ce_0" value="0" <?php echo $num0; ?>/><label for="ce_0"><?php echo _AT('plain_text');?></label>
-		<input type="radio" name="content_editor" id="ce_1" value="1" <?php echo $num1; ?>/><label for="ce_1"><?php echo _AT('html'); ?></label>
-		<input type="radio" name="content_editor" id="ce_2" value="2" <?php echo $num2; ?>/><label for="ce_2"><?php echo _AT('html') . ' - '. _AT('visual_editor'); ?></label>
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
-	</div>
-</div>
-</form>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
