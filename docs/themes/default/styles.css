@@ -1279,6 +1279,7 @@ ul#home-links li a img {
 	width:1.5em;
 }
 /* profile page */
+
 dl#public-profile {
 	width: 100%;
 }
@@ -1286,8 +1287,6 @@ dl#public-profile dt {
 	float: left;
 	font-weight: bold;
 	width: 30%;
-	text-align: right;
-	clear: left;
 	border-right: 1px solid #F7F3ED;
 	padding: 5px 5px 5px 0px;
 	vertical-align: middle;
