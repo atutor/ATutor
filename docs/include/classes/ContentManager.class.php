@@ -1006,7 +1006,7 @@ class ContentManager
 	 * @return	true if 'allow_test_export'==1 || is instructor
 	 */
 	function allowTestExport($content_id){
-		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
+		if (isset($_SESSION['is_admin'])){	
 			return true;
 		}
 		$sql = "SELECT allow_test_export FROM ".TABLE_PREFIX."content WHERE content_id=$content_id";
