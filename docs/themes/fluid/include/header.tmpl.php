@@ -348,7 +348,7 @@ function toggleToc(objId) {
 			<?php endforeach; ?> <?php echo $this->page_title; ?>
 		</div>
 	<?php } ?>
-		<?php if ($this->guide && $_SESSION["prefs"]["PREF_SHOW_GUIDE"]): ?>
+		<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
 			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 

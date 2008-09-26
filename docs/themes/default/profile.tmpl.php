@@ -62,6 +62,6 @@ global $display_name_formats, $moduleFactory;
 				</dd>
 			<?php endif; ?>
 		</dl>
-		<div style="clear: both; size: 1em"></div>
+
 	</div>
 </div>
