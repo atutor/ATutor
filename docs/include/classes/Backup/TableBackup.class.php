@@ -764,14 +764,12 @@ class NewsTable extends AbstractTable {
 		$sql .= "'".$row[2]."',";           // title
 		$sql .= "'".$row[3]."')";           // body
 
-		debug($sql);
-
 		return $sql;
 	}
 	
 }
 //---------------------------------------------------------------------
-// -- tests (`tests`, `tests_questions`, `tests_categories`, `tests_questions_assoc`)
+// -- tests (`tests`, `tests_questions`, `tests_categories`, `tests_questions_assoc`, `content_test_assco`)
 class TestsTable extends AbstractTable {
 	var $tableName = 'tests';
 	var $primaryIDField = 'test_id';
@@ -1043,6 +1041,29 @@ class ContentTable extends AbstractTable {
 	}
 }
 
+//---------------------------------------------------------------------
+class ContentTestsAssocTable extends AbstractTable {
+	var $tableName = 'content_tests_assoc';
+	var $primaryIDField = 'test_id';
+
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'content_tests_assoc VALUES ';
+		$sql .= '(' . $this->old_ids_to_new_ids['content'][$row[0]].',' . $this->old_ids_to_new_ids['tests'][$row[1]].')';
+
+		return $sql;
+	}
+}
 //---------------------------------------------------------------------
 class RelatedContentTable extends AbstractTable {
 	var $tableName = 'related_content';
