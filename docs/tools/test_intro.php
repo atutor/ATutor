@@ -18,7 +18,6 @@ require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 // test authentication
 $tid = intval($_GET['tid']);
 
-
 // make sure max attempts not reached, and still on going
 $sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date2, UNIX_TIMESTAMP(end_date) AS end_date2 FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
 $result = mysql_query($sql, $db);
@@ -37,8 +36,16 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 
 // checks one/all questions per page, and forward user to the correct one
 if (isset($_GET['action']) && $_GET['action']=='cancel') {
-	$msg->addFeedback('CANCELLED');
-	header('Location: '.url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+	//Retrieve last visited page
+	if (isset($_SESSION['last_visited_page'])){
+		$_last_visited_page = $_SESSION['last_visited_page'];
+		unset($_SESSION['last_visited_page']);
+	} else {
+		$_last_visited_page = url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER);
+	}
+
+	$msg->addFeedback('CANCELLED');	
+	header('Location: '.$_last_visited_page);
 	exit;
 } else if (isset($_GET['action']) && $_GET['action']=='begin') {
 	if ($test_row['display']) {

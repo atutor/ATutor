@@ -168,4 +168,7 @@ if ($row = mysql_fetch_assoc($result)) {
 </tbody>
 </table>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php 
+	$_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
+?>

@@ -197,5 +197,8 @@ $savant->assign('content_info', _AT('page_info', AT_date(_AT('inbox_date_format'
 
 $savant->display('content.tmpl.php');
 
+//save last visit page.
+$_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
 require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>
