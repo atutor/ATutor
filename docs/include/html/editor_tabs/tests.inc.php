@@ -48,11 +48,14 @@ $num_tests = mysql_num_rows($result);
 	} else {
 		$test_export_n_checked = ' checked="checked"';
 	}
-	?>
+	
+	echo _AT('allow_test_export');
+?>
+
 	<input type="radio" name="allow_test_export" id="allow_test_export" value="1" <?php echo $test_export_y_checked; ?>/>
-	<label for="allow_test_export"><?php echo _AT('allow_test_export'); ?></label>
+	<label for="allow_test_export"><?php echo _AT('yes'); ?></label>
 	<input type="radio" name="allow_test_export" id="disallow_test_export" value="0" <?php echo $test_export_n_checked; ?>/>
-	<label for="disallow_test_export"><?php echo _AT('disallow_test_export'); ?></label>
+	<label for="disallow_test_export"><?php echo _AT('no'); ?></label>
 </div>
 
 
