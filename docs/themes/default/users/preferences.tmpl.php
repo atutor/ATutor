@@ -245,6 +245,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 	<div class="row buttons">
+		<input type="submit" name="set_default" value="<?php echo _AT('set_default'); ?>" accesskey="d" />
 		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />
 		<input type="reset" name="reset" value="<?php echo _AT('reset'); ?>" />
 	</div>
