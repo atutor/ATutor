@@ -79,6 +79,7 @@ function remove ($list) {
 * @access  private
 * @param   array $list			the IDs of the members to be removed
 * @author  Shozub Qureshi
+* @author  Greg Gay  added Unsubscribe when unenrolling
 */
 function unenroll ($list) {
 	global $db, $system_courses, $course_id;
@@ -94,6 +95,46 @@ function unenroll ($list) {
 		$result = mysql_query($sql, $db);
 		// $groupModule->unenroll(course_id, user_id);
 		// $forumModule->unenroll(course_id, user_id);
+		
+		// remove forum subscriptions as admin else instructor 
+		if($_SESSION['course_id'] == "-1"){
+			$this_course_id = $_REQUEST['course_id'];
+		} else {
+			$this_course_id = $_SESSION['course_id'];
+		}
+		
+		// get a list for forums in this course
+		$sql = "SELECT forum_id from ".TABLE_PREFIX."forums_courses WHERE course_id = '$this_course_id'";
+		$result = mysql_query($sql, $db);
+
+		while($row = mysql_fetch_assoc($result)){
+			$this_course_forums[] = $row['forum_id'];
+		}
+		$this_forum_list = implode(',', $this_course_forums);
+
+		// delete from forum_subscription any member in $members (being unenrolled)
+		// with posts to forums in this course. 
+		foreach ($this_course_forums as $this_course_forum){
+			$sql1 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id = '$this_course_forum' AND member_id IN ($members)";
+			$result_unsub = mysql_query($sql1, $db);
+		}
+
+		// get a list of posts for forums in the current course
+		$sql = "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id IN ($this_forum_list)";
+		$result = mysql_query($sql, $db);
+		while($row = mysql_fetch_assoc($result)){
+			$this_course_posts[] = $row['post_id'];
+		}
+		$this_post_list = implode(',', $this_course_posts);
+
+		// delete from forums_accessed any post with member_id in $members being unenrolled, 
+		// and post_id in 
+		foreach($this_course_posts as $this_course_post){
+
+			$sql2	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id = '$this_course_post' AND member_id IN ($members)";
+			$result_unsub2 = mysql_query($sql2, $db);
+		}
+
 	}
 }
 
