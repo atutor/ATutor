@@ -87,12 +87,18 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 		{
 			$row_defaults = mysql_fetch_assoc($result);
 			$default = $row_defaults["value"];
+			
+			$temp_prefs = unserialize($default);
+			
+			// Many new preferences are introduced in 1.6.2 that are missing in old admin 
+			// default preference string. Solve this case by completing settings on new
+			// preferences with $_config_defaults
+			foreach (unserialize($_config_defaults['pref_defaults']) as $name => $value)
+				if (!isset($temp_prefs[$name])) $temp_prefs[$name] = $value;
 		}
 		else
-			$default = $_config_defaults['pref_defaults'];
+			$temp_prefs = unserialize($_config_defaults['pref_defaults']);
 
-		$temp_prefs = unserialize($default);
-		
 		$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
 		$result = mysql_query($sql, $db);
 		if (mysql_num_rows($result) > 0)
@@ -110,6 +116,9 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 			$row_is_auto_login = mysql_fetch_assoc($result);
 			$auto_login = $row_is_auto_login["value"];
 		}
+		else
+			$auto_login = $_config_defaults['pref_is_auto_login'];
+		
 		unset($_POST);
 	}
 
@@ -127,7 +136,8 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 		$is_cookie_paa_set = setcookie('ATPass',  '', time()-172800, $parts['path']);
 
 		// The usage of flag $is_auto_login is because the set cookies are only accessible at the next page reload
-		if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = 0;
+		if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = 'enable';
+		else $is_auto_login = 'disable';
 	} else if (isset($auto_login) && ($auto_login == 'enable')) {
 		$parts = parse_url(AT_BASE_HREF);
 		$sql	= "SELECT password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -137,7 +147,8 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 		$is_cookie_login_set = setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path']);
 		$is_cookie_pass_set = setcookie('ATPass',  $password, time()+172800, $parts['path']);
 		
-		if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = 1;
+		if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = 'enable';
+		else $is_auto_login = 'disable';
 	}
 
 	/* also update message notification pref */

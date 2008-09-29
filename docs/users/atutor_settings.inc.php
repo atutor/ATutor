@@ -105,7 +105,7 @@
 
 			// Check flag $is_auto_login instead of session vars !empty($_SESSION['ATLogin']) is because 
 			// the set cookies are only accessible at the next page reload
-			if ( $this->is_auto_login ) {
+			if ( $this->is_auto_login == "enable") {
 				$auto_en = 'checked="checked"';
 			} else {
 				$auto_dis = 'checked="checked"';
