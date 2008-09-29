@@ -221,7 +221,6 @@ class QTIParser {
 			case 'varequal':
 				//stores the answers (either correct or incorrect) into a stack
 				$this->temp_answer[$this->attributes[$this->item_num][$name]['respident']]['name'][] = $this->character_data;
-
 				//responses handling, remember to save the answers or match them up
 				if (!is_array($this->answers[$this->item_num])){
 					$this->answers[$this->item_num] = array();
@@ -282,7 +281,7 @@ class QTIParser {
 							$this->weights[$this->item_num] += floatval($current_answer);
 //							} 
 					}
-				}
+				} 
 				break;
 			case 'fieldlabel':
 				// save this variable

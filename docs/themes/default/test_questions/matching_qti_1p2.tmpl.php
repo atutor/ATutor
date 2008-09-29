@@ -15,7 +15,7 @@
 				</material>
 				<flow>
 					<?php for ($i=0; $i < $this->num_choices; $i++): ?>		
-					<response_grp ident="RESPONSE<?php echo $i; ?>" rcardinality="Multiple">
+					<response_grp ident="RESPONSE-<?php echo md5($this->row['question_id'].$i); ?>" rcardinality="Multiple">
 						<material>
 							<mattext texttype="text/html"><?php echo $this->row['choice_'.$i]; ?></mattext>
 						</material>
@@ -44,7 +44,7 @@
 				<?php if ($this->row['answer_'.$i] > -1): ?>
 				<respcondition title="CorrectResponse">
 					<conditionvar>						
-						<varequal respident="RESPONSE<?php echo $i; ?>">Option<?php echo $this->row['answer_'.$i]; ?></varequal>
+						<varequal respident="RESPONSE-<?php echo md5($this->row['question_id'].$i); ?>">Option<?php echo $this->row['answer_'.$i]; ?></varequal>
 					</conditionvar>
 					<setvar varname="Respondus_Correct" action="Add"><?php echo (isset($this->row['weight']))?$this->row['weight']:1; ?></setvar>
 				</respcondition>

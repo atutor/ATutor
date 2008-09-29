@@ -152,7 +152,7 @@ function print_organizations($parent_id,
 			if ($contentManager->allowTestExport($content['content_id'])){
 				$content_test_rs = $contentManager->getContentTestsAssoc($content['content_id']);	
 				$test_ids = array();		//reset test ids
-				$my_files = array();		//reset myfiles.
+				//$my_files = array();		//reset myfiles.
 				while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
 					//export
 					$test_ids[] = $content_test_row['test_id'];
@@ -202,7 +202,9 @@ function print_organizations($parent_id,
 
 					$file_info = stat( $file_path );
 
-					if (is_array($test_zipped_files) && !in_array($file, $test_zipped_files)){
+					//condition checks if the file has been added, so then the test won't be added to all the subchildren
+					//leads to normal iamges not capable to be extracted.
+					if (is_array($test_zipped_files) && !in_array($file, $test_zipped_files) && file_exists($file_path)){
 						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
 						$test_zipped_files[] = $content['content_path'] . $file;
 					}
@@ -213,8 +215,9 @@ function print_organizations($parent_id,
 				/* check if this file is one of the test xml file, if so, we need to add the dependency
 				 * Note:  The file has already been added to the archieve before this is called.
 				 */
-				if (preg_match('/tests\_[0-9]+\.xml$/', $file)){
+				if (preg_match('/tests\_[0-9]+\.xml$/', $file) && !in_array($file, $test_zipped_files)){
 					$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);					
+					$test_zipped_files[] = $file;
 				}
 			}
 

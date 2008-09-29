@@ -105,6 +105,7 @@ if ($cid) {
 	}
 
 	$path	= $contentManager->getContentPath($cid);
+	$content_test = $contentManager->getContentTestsAssoc($cid);
 
 	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 		$course_base_href = 'get.php/';
@@ -875,9 +876,15 @@ $pid = intval($_REQUEST['pid']);
 
 	//tests
 	if (is_array($_POST['tid']) && $current_tab != 6){
-		/* test selected */
+		/* Test & Survey --> Other tabs triggers this condition */
 		foreach ($_POST['tid'] as $i=>$tid){
 			echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
+		}
+	} elseif ($current_tab != 6){
+		/* Edit Content (On Edit content tab), without clicking Test & Survey */
+		$i = 0;
+		while ($content_test_row = mysql_fetch_assoc($content_test)){
+			echo '<input type="hidden" name="tid['.$i++.']" value="'.$content_test_row['test_id'].'" />';
 		}
 	}
 	if (!isset($_POST['allow_test_export']) && $current_tab != 6) {

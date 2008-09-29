@@ -1185,6 +1185,11 @@ class MatchingQuestion extends AbstracttestQuestion {
 		global $msg, $db;
 //		$_POST = $this->_POST; 
 
+		if (!is_array($_POST['answer'])){
+			$temp = $_POST['answer'];
+			$_POST['answer'] = array();
+			$_POST['answer'][0] = $temp;
+		}
 		ksort($_POST['answer']);	//array_pad returns an array disregard of the array keys
 		//default for matching is '-'
 		$_POST['answer']= array_pad($_POST['answer'], 10, -1);
