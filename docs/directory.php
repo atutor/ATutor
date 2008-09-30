@@ -94,6 +94,8 @@ if ($all) {
 	}
 }
 
+require(AT_INCLUDE_PATH.'header.inc.php');
+
 $savant->assign('result_groups', $result_groups);
 $savant->assign('final', $final);
 $savant->assign('base_href', $_base_href);
@@ -102,4 +104,6 @@ $savant->assign('off', $off);
 $savant->assign('all', $all);
 
 $savant->display('directory.tmpl.php');
+
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
