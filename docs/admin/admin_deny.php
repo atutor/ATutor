@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 		if ($_POST['msg_option'] == $other_option) {
 			$message.=addslashes($_POST['other_msg']);
 		} else if ($_POST['msg_option']) {
-			$message.= '\n'.$msg_options[$_POST['msg_option']];
+			$message.= "\n".$msg_options[$_POST['msg_option']];
 		}
 
 		if ($to_email != '') {
