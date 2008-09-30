@@ -27,8 +27,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	?>
 
 	<div class="row">
-		<label for="head"><?php echo _AT('customized_head');  ?></label>
-		<input type="button" name="edithead" value="<?php echo _AT('edit'); ?>" onclick="switch_head_editor()" class="button"/><br />
+		<label for="edithead"><?php echo _AT('customized_head');  ?></label>
+		<input type="button" name="edithead" id="edithead" value="<?php echo _AT('edit'); ?>" onclick="switch_head_editor()" class="button"/><br />
 		<small>&middot; <?php echo _AT('customized_head_note'); ?></small>
 	</div>
 
@@ -43,9 +43,9 @@ if ($do_check) {
 
 	<div class="row">
 		<div id="headDiv" style="display:none">
-			<input type="checkbox" name="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
-			<label for="head"><?php echo _AT('use_customized_head'); ?></label><br />
-			<textarea name="head" id="head" cols="" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
+			<input type="checkbox" name="use_customized_head" id="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
+			<label for="use_customized_head"><?php echo _AT('use_customized_head'); ?></label><br />
+			<label for="head"><?php echo _AT('customized_head'); ?></label><br /><textarea name="head" id="head" cols="" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
 		</div>
 	</div>
 
