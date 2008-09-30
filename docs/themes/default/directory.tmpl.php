@@ -11,10 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id: directory.tmpl.php 3111 2005-01-18 19:32:00Z joel $
-
-require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
-
 <form name="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
 
 <div class="input-form">
@@ -96,5 +93,3 @@ if ($this->final) {
 ?>
 </tbody>
 </table>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
