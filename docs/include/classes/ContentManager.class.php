@@ -846,7 +846,9 @@ class ContentManager
 				} else if ($_POST['new_pid'] == $content['content_id']) {
 					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/'.$img.'" alt="'.$text.'" title="'.$text.'" style="height:1.5em; width:1.9em;" /></small></td><td><small>&nbsp;</small></td><td>';
 				} else {
+
 					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/'.$img.'" alt="'.$text.'" title="'.$text.'" style="height:1.5em; width:1.9em;" /></small></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="'.$_base_path.'images/child_of.gif" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', $content['title']).'" title="'._AT('child_of', $content['title']).'" /></td><td>';
+
 				}
 
 				if (( $content['content_id'] == $cid ) || ($content['content_id'] == -1)) {
