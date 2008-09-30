@@ -510,7 +510,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 <thead>
 <tr>
 	<td colspan="7">
-		<?php echo _AT('workspace'); ?> 
+		<label for="ot"><?php echo _AT('workspace'); ?> </label>
 		<select name="ot" id="ot">
 			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>><?php echo _AT('course_files'); ?></option>
 			<?php if ($_SESSION['member_id'] && $_SESSION['enroll']): ?>
@@ -584,8 +584,8 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 	<?php foreach ($folders as $folder_info): ?>
 		<tr onmousedown="document.form['f<?php echo $folder_info['folder_id']; ?>'].checked = !document.form['f<?php echo $folder_info['folder_id']; ?>'].checked; rowselectbox(this, document.form['f<?php echo $folder_info['folder_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $folder_info['folder_id']; ?>_1">
 			<td width="10"><input type="checkbox" name="folders[]" value="<?php echo $folder_info['folder_id']; ?>" id="f<?php echo $folder_info['folder_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
-			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.
-			$folder_info['folder_id']); ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a></td>
+			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <label for="f<?php echo $folder_info['folder_id']; ?>"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.
+			$folder_info['folder_id']); ?>"><?php echo htmlspecialchars($folder_info['title']); ?></a></label></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -597,7 +597,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 		<tr onmousedown="document.form['r<?php echo $file_info['file_id']; ?>'].checked = !document.form['r<?php echo $file_info['file_id']; ?>'].checked; rowselectbox(this, document.form['r<?php echo $file_info['file_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $file_info['file_id']; ?>_0">
 			<td valign="top" width="10"><input type="checkbox" name="files[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td valign="top">
-				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo htmlspecialchars($file_info['file_name']); ?>
+				<img src="images/file_types/<?php echo fs_get_file_type_icon($file_info['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <label for="r<?php echo $file_info['file_id']; ?>"><?php echo htmlspecialchars($file_info['file_name']); ?></label>
 				<?php if ($file_info['description']): ?>
 					<p class="fm-desc"><?php echo htmlspecialchars($file_info['description']); ?></p>
 				<?php endif; ?>
