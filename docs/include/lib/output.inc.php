@@ -1139,7 +1139,7 @@ function provide_alternatives($cid, $content_page){
 	}
 }	
 /**
-* at_timezone
+* apply_timezone
 * converts a unix timestamp into another UNIX timestamp with timezone offset added up.
 * Adds the user's timezone offset, then converts back to a MYSQL timestamp
 * Available both as a system config option, and a user preference, if both are set
