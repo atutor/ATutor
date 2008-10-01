@@ -220,7 +220,7 @@ function toggleToc(objId) {
 		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> <a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	</div>
 	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
-		<a href="<?php echo $this->base_path; ?>index.php"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
+		<a href="<?php echo $this->base_path.url_rewrite('index.php'); ?>"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
 	<?php } ?>
 
 
