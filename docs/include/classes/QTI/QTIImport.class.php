@@ -102,10 +102,10 @@ class QTIImport {
 						//This file will be parsed later
 						continue;
 					} 
-		//debug($file_pathinfo);
+
 					if (in_array($file_pathinfo['extension'], $supported_media_type)){
 						//copy medias over.
-						$this->copyMedia(array($file_name), $xml_items);
+						$this->copyMedia(array($file_name), $xml->items);
 					}
 				}		
 
@@ -350,15 +350,24 @@ class QTIImport {
 			/**
 				Use the items list to handle and check which path it is from, so then it won't blindly truncate 'resource/' from the path
 				- For any x in xml_files, any y in new_file_loc, any k in the set of strings; such that k concat x = y, then use y, else use x
+				- BUG: Same filename fails.  If resource/folder1/file1.jpg, and resource/file1.jpg, both will get replaced with file1.jpg
 			*/
 			if(!empty($xml_items)){
 				foreach ($xml_items as $xk=>$xv){
-					if (strpos($file_loc, $xv)!==false){
-						$new_file_loc = $xv;
-						break;
+					if (($pos = strpos($file_loc, $xv))!==false){
+						//address the bug mentioned aboe.
+						//check if there is just one level of directory in this extra path.
+						//based on the assumption that most installation are just using 'resources/' or '{FOLDER_NAME}/'
+						$shortened = substr($file_loc, 0, $pos);
+						$num_of_occurrences = split('/', $shortened);
+						if (sizeof($num_of_occurrences) == 2){
+							$new_file_loc = $xv;
+							break;
+						}
 					} 
 				}
 			}
+
 			if ($new_file_loc==''){
 				$new_file_loc = $file_loc;
 			}

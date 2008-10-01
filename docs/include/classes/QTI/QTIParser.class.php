@@ -399,7 +399,7 @@ class QTIParser {
 	//No longer needed to reconstruct, just needed to save the path, as of Aug 25th, 08.  Decided to overwrite files if the same name exist.  
 	function reconstructRelativePath($path){
 		//match img tag, all.
-		if (preg_match_all('/\<img(\s[^\>])*\ssrc\=\"([^\"]+)\".*\/?\>/', $path, $matches) > 0){
+		if (preg_match_all('/\<img(\s[^\>])*\ssrc\=[\\\\]?\"([^\\\\^\"]+)[\\\\]?\".*\/?\>/', $path, $matches) > 0){
 			foreach ($matches[2] as $k=>$v){
 				$this->items[] = $v;	//save the url of this media.
 //				$path = str_replace($v, $this->relative_path.$v, $path);

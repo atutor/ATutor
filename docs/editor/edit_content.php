@@ -883,15 +883,19 @@ $pid = intval($_REQUEST['pid']);
 	} elseif ($current_tab != 6){
 		/* Edit Content (On Edit content tab), without clicking Test & Survey */
 		$i = 0;
-		while ($content_test_row = mysql_fetch_assoc($content_test)){
-			echo '<input type="hidden" name="tid['.$i++.']" value="'.$content_test_row['test_id'].'" />';
+		if ($content_test){
+			while ($content_test_row = mysql_fetch_assoc($content_test)){
+				echo '<input type="hidden" name="tid['.$i++.']" value="'.$content_test_row['test_id'].'" />';
+			}
 		}
 	}
 	if (!isset($_POST['allow_test_export']) && $current_tab != 6) {
 		//export flag handling.
 		$sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
 		$result2 = mysql_query($sql, $db);
-		$c_row = mysql_fetch_assoc($result2);
+		if ($result2){
+			$c_row = mysql_fetch_assoc($result2);
+		}
 		if (intval($c_row['allow_test_export'])==1){
 			echo '<input type="hidden" name="allow_test_export" value="1" />';
 		} else {

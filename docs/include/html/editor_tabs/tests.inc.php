@@ -84,9 +84,21 @@ $num_tests = mysql_num_rows($result);
 		$checkMe = ' checked="checked"';
 	} 
 ?>
-<tr>
+<script language="javascript" type="text/javascript">
+	function toggleTestSelect(r_id){
+		var row = document.getElementById(r_id);
+		var checkBox = row.cells[0].firstChild;
+
+		if (checkBox.checked == true){
+			checkBox.checked = false;
+		} else {
+			checkBox.checked = true;
+		}
+	}
+</script>
+<tr onmousedown="toggleTestSelect('r_<?php echo $row['test_id']; ?>');rowselect(this);" id="r_<?php echo $row['test_id']; ?>">
 	<td><input type="checkbox" name="tid[]" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" <?php echo $checkMe; ?>/></td>
-	<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
+	<td><?php echo $row['title']; ?></td>
 	<td><?php
 		if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
 			echo '<em>'._AT('ongoing').'</em>';
