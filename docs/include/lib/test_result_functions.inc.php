@@ -37,10 +37,10 @@ function get_test_result_id($test_id, &$max_pos) {
 	return 0;
 }
 
-function init_test_result_questions($test_id, $is_random, $num_questions) {
+function init_test_result_questions($test_id, $is_random, $num_questions, $mid) {
 	global $db;
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $test_id, {$_SESSION['member_id']}, NOW(), '', 0, NOW(), 0)";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $test_id, '".$mid."', NOW(), '', 0, NOW(), 0)";
 	$result = mysql_query($sql, $db);
 	$result_id = mysql_insert_id($db);
 
@@ -188,4 +188,15 @@ function get_random_outof($test_id, $result_id) {
 	return 0;
 }
 
+// return the next guest id
+function get_next_guest_id()
+{
+	global $db;
+	
+	$sql = "SELECT max(guest_id) max_guest_id FROM ".TABLE_PREFIX."guests";
+	$result	= mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	return "G_". (intval(substr($row["max_guest_id"], 2)) + 1);
+}
 ?>

@@ -34,7 +34,7 @@ function display_test_info($row)
 		global $random, $num_questions, $total_weight, $questions, $total_score, $table_content, $csv_content;
 		global $passscore, $passpercent;
 		global $q_sql, $db;
-		
+
 		$row['login'] = $row['login'] ? $row['login'] : '- '._AT('guest').' -';
 		$table_content .= '<tr>';
 			
@@ -46,7 +46,7 @@ function display_test_info($row)
 				$csv_content .= quote_csv($row['login']).', ';
 		}
 		$startend_date_format=_AT('startend_date_format');
-		$table_content .= '<td align="center">'.AT_date( $startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
+		$table_content .= '<td align="center">'.AT_date($startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
 		$csv_content .= quote_csv($row['date_taken']).', ';
 
 		if ($passscore <> 0)
@@ -58,6 +58,11 @@ function display_test_info($row)
 		{
 			$table_content .= '<td align="center">'.$passpercent.'%</td>';
 			$csv_content .= $passpercent . '%, ';
+		}
+		else
+		{
+			$table_content .= '<td align="center">'._AT('na').'</td>';
+			$csv_content .= _AT('na') . ', ';
 		}
 
 		$table_content .= '<td align="center">'.$row['final_score'].'/'.$total_weight.'</td>';
@@ -73,11 +78,11 @@ function display_test_info($row)
 		while ($row2 = mysql_fetch_assoc($result2)) {
 			$answers[$row2['question_id']] = $row2['score'];
 		}
-
 		//print answers out for each question
 		for($i = 0; $i < $num_questions; $i++) {
 			$questions[$i]['score'] += $answers[$questions[$i]['question_id']];
 			$table_content .= '<td align="center">';
+
 			if ($answers[$questions[$i]['question_id']] == '') {
 				$table_content .= '<span style="color:#ccc;">-</span>';
 				$csv_content .= ', -';
@@ -93,6 +98,17 @@ function display_test_info($row)
 		}
 
 		$table_content .= '</tr>';
+		
+		// append guest information into CSV content if the test is taken by a guest
+		if (substr($row['member_id'], 0, 2) == 'g_' || substr($row['member_id'], 0, 2) == 'G_')
+		{
+			$sql = "SELECT * FROM ".TABLE_PREFIX."guests WHERE guest_id='".$row['member_id']. "'";
+			$result3 = mysql_query($sql, $db);
+			$row3 = mysql_fetch_assoc($result3);
+			
+			$csv_content .= ', '.$row3['name'] . ', '.$row3['organization']. ', '.$row3['location']. ', '.$row3['role']. ', '.$row3['focus'];
+		}
+		
 		$csv_content .= "\n";
 }
 
@@ -205,6 +221,23 @@ if ($row = mysql_fetch_assoc($result)) {
 	$table_content .= '</tr>';
 	$table_content .= '</thead>';
 	$table_content .= '<tbody>';
+	
+	// if there's guest information to be exported into CSV, add header names
+	while ($row = mysql_fetch_assoc($result))
+	{
+		if (substr($row['member_id'], 0, 2) == 'g_' || substr($row['member_id'], 0, 2) == 'G_')
+		{
+			$csv_content .= ', '. quote_csv(_AT('guest_name'));
+			$csv_content .= ', '. quote_csv(_AT('organization'));
+			$csv_content .= ', '. quote_csv(_AT('location'));
+			$csv_content .= ', '. quote_csv(_AT('role'));
+			$csv_content .= ', '. quote_csv(_AT('focus'));
+			
+			break;
+		}
+	}
+	// reset $result for next loop
+	mysql_data_seek($result, 0);
 	
 	$csv_content .= "\n";
 	

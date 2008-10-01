@@ -18,6 +18,11 @@ require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 $tid = intval($_REQUEST['tid']);
 
+if (isset($_REQUEST['gid']))
+	$mid = $addslashes($_REQUEST['gid']);
+else
+	$mid = $_SESSION['member_id'];
+
 //make sure max attempts not reached, and still on going
 $sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
 $result= mysql_query($sql, $db);
@@ -50,7 +55,7 @@ if (!$test_row['random']) {
 	} // else 0
 }	
 
-$sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id=".$_SESSION['member_id'];
+$sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$mid."'";
 $takes_result= mysql_query($sql, $db) or die(mysql_error());
 $takes = mysql_fetch_assoc($takes_result);	
 
@@ -93,7 +98,7 @@ if ($result_id == 0) {
 	// basically, shouldn't be able to post to this page if there isn't a valid result_id first (how can someone post an answer
 	// to a question they haven't viewed? [unless they're trying to 'hack' something])
 
-	$result_id = init_test_result_questions($tid, (bool) $test_row['random'], $test_row['num_questions']);
+	$result_id = init_test_result_questions($tid, (bool) $test_row['random'], $test_row['num_questions'], $mid);
 
 	if (!$_SESSION['member_id']) {
 		// this is a guest, so we store the result_id in SESSION

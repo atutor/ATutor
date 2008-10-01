@@ -79,7 +79,7 @@ if ($row1 = mysql_fetch_row($result1)) {
 					if ($row['last_post'] == '0000-00-00 00:00:00') {
 						echo '<em>'._AT('na').'</em>';
 					} else {
-						echo at_timezone($row['last_post']);
+						echo AT_DATE(_AT('server_date_format'), $row['last_post'], AT_DATE_MYSQL_DATETIME);
 					} ?>
 				</td>
 			</tr><?php

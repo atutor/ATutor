@@ -109,8 +109,8 @@ $num_tests = mysql_num_rows($result);
 		} ?></td>
 	<td><?php $startend_date_format=_AT('startend_date_format'); 
 
-		echo AT_date( $startend_date_format, at_timezone($row['start_date']), AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
-		echo AT_date($startend_date_format, at_timezone($row['end_date']), AT_DATE_MYSQL_DATETIME); ?></td>
+		echo AT_date($startend_date_format, $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
+		echo AT_date($startend_date_format, $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 
 	<td><?php 
 		if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {

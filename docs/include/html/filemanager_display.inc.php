@@ -387,7 +387,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<td >&nbsp;';
 		$dirs[$file1] .= $filename.'</td>';
 		$dirs[$file1] .= '<td  align="right">&nbsp;';
-		$dirs[$file1] .= AT_date(_AT('filemanager_date_format'), at_timezone($filedata[10]), AT_DATE_UNIX_TIMESTAMP);
+		$dirs[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$dirs[$file1] .= '&nbsp;</td>';
 		$dirs[$file1] .= '<td  align="right">';
 		$dirs[$file1] .= get_human_size($size).'</td></tr>';
@@ -425,7 +425,7 @@ while (false !== ($file = readdir($dir)) ) {
 			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\', \'' . $tab . '\');" />&nbsp;';
 		}
 
-		$files[$file1] .= AT_date(_AT('filemanager_date_format'), at_timezone($filedata[10]), AT_DATE_UNIX_TIMESTAMP);
+		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$files[$file1] .= '&nbsp;</td>';
 		
 		$files[$file1] .= '<td  align="right" style="white-space:nowrap">';

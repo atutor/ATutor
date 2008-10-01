@@ -83,7 +83,7 @@ $list = $Backup->getAvailableList();
 			echo '<tr onmousedown="document.form[\'b'.$row['backup_id'].'\'].checked = true; rowselect(this);" id="r_'.$row['backup_id'].'">';
 			echo '<td class="row1"><label><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="b'.$row['backup_id'].'" />';
 			echo $row['file_name'].'</label></td>';
-			echo '<td>'.AT_date(_AT('filemanager_date_format'), at_timezone($row['date']), AT_DATE_MYSQL_DATETIME).'</td>';
+			echo '<td>'.AT_date(_AT('filemanager_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME).'</td>';
 			echo '<td align="right">'.get_human_size($row['file_size']).'</td>';
 			echo '<td>'.AT_Print($row['description'], 'backups.description').'</td>';
 			echo '</tr>';

@@ -168,7 +168,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo '<td width="10%"><a href="'.AT_BASE_HREF.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
 
 		echo '<td width="20%" align="right" nowrap="nowrap">';
-		echo AT_date(_AT('forum_date_format'),at_timezone($row['last_comment']), AT_DATE_MYSQL_DATETIME);
+		echo AT_date(_AT('forum_date_format'),$row['last_comment'], AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 
 		if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {

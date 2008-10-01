@@ -80,7 +80,7 @@ if (isset($_GET['view']) && $_GET['view']) {
 				<div class="forum-post-ctrl">
 					<a href="inbox/send_message.php?reply=<?php echo $_GET['view']; ?>"><?php echo _AT('reply'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>"><?php echo _AT('delete'); ?></a>
 				</div>
-				<p class="date"><?php echo AT_date(_AT('forum_date_format'), at_timezone($row['date_sent']), AT_DATE_MYSQL_DATETIME); ?></p>
+				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME); ?></p>
 			</div>
 
 			<div class="body">
@@ -156,7 +156,7 @@ $result = mysql_query($sql,$db);
 		echo '</td>';
 	
 		echo '<td valign="middle" align="left" nowrap="nowrap">';
-		echo AT_date(_AT('inbox_date_format'),  at_timezone($row['date_sent']), AT_DATE_MYSQL_DATETIME);
+		echo AT_date(_AT('inbox_date_format'),  $row['date_sent'], AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 		echo '</tr>';
 	} while ($row = mysql_fetch_assoc($result)); ?>

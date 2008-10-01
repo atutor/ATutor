@@ -199,10 +199,8 @@ if (!isset($_POST['submit'])) {
 		}
 		echo '</select>';
 */
-
-$server_time = date('Y-m-d G:i:s');
-echo at_timezone($server_time);
-		?>
+echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
+?>
 	</div>
 
 	<div class="row">

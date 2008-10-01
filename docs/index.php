@@ -71,7 +71,7 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 
 		$news[$row['news_id']] = array(
 						'date'		=> AT_date(	_AT('announcement_date_format'), 
-						at_timezone($row['date']), 
+						$row['date'],
 						AT_DATE_MYSQL_DATETIME),
 					  	'author'  => $row['first_name'] . ' ' . $row['last_name'],
 						'title'		=> AT_print($row['title'], 'news.title'),

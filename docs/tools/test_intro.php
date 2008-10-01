@@ -16,7 +16,10 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 // test authentication
-$tid = intval($_GET['tid']);
+if (isset($_GET['tid']))
+	$tid = intval($_GET['tid']);
+else if (isset($_POST['tid']))
+	$tid = intval($_POST['tid']);
 
 // make sure max attempts not reached, and still on going
 $sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date2, UNIX_TIMESTAMP(end_date) AS end_date2 FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
@@ -35,7 +38,8 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 }
 
 // checks one/all questions per page, and forward user to the correct one
-if (isset($_GET['action']) && $_GET['action']=='cancel') {
+if (isset($_POST['cancel'])) 
+{
 	//Retrieve last visited page
 	if (isset($_SESSION['last_visited_page'])){
 		$_last_visited_page = $_SESSION['last_visited_page'];
@@ -47,11 +51,30 @@ if (isset($_GET['action']) && $_GET['action']=='cancel') {
 	$msg->addFeedback('CANCELLED');	
 	header('Location: '.$_last_visited_page);
 	exit;
-} else if (isset($_GET['action']) && $_GET['action']=='begin') {
+} 
+else if (isset($_POST['submit'])) 
+{
+	$guest_name = $addslashes(trim($_POST["guest_name"]));
+	$organization = $addslashes(trim($_POST["organization"]));
+	$location = $addslashes(trim($_POST["location"]));
+	$role = $addslashes(trim($_POST["role"]));
+	$focus = $addslashes(trim($_POST["focus"]));
+	
+	if ($guest_name <> "" || $organization <> "" || $location <> "" || $role <> "" || $focus <> "")
+	{
+		$guest_id = get_next_guest_id();
+
+		$sql	= "INSERT INTO ".TABLE_PREFIX."guests (guest_id, name, organization, location, role, focus)
+						 VALUES ('$guest_id', '$guest_name', '$organization', '$location', '$role', '$focus')";
+		$result = mysql_query($sql, $db);
+		$result_id = mysql_insert_id($db);
+	}
+	$gid_str = (isset($guest_id)) ? SEP."gid=".$guest_id : "";
+
 	if ($test_row['display']) {
-		header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid, AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid.$gid_str, AT_PRETTY_URL_IS_HEADER));
 	} else {
-		header('Location: '.url_rewrite('tools/take_test.php?tid='.$tid, AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite('tools/take_test.php?tid='.$tid.$gid_str, AT_PRETTY_URL_IS_HEADER));
 	}
 	exit;
 }
@@ -90,10 +113,15 @@ if (!$test_row['random']) {
 }	
 ?>
 
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+
 <div class="input-form">
-		<fieldset class="group_form"><legend class="group_form"><?php echo $test_row['title']; ?></legend><div class="row">
+	<fieldset class="group_form"><legend class="group_form"><?php echo $test_row['title']; ?></legend><div class="row">
 
-
+<?php if ($test_row['guests'] && !$_SESSION['member_id']): ?>
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("test_description"); ?></legend><div class="row">
+<?php endif; ?>
 	<div class="row">
 		<dl class="col-list">
 			<dt><?php echo _AT('test_description'); ?></dt>
@@ -109,33 +137,65 @@ if (!$test_row['random']) {
 			<dd><?php echo $num_takes; ?> / <?php echo ($test_row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) ? _AT('unlimited') : $test_row['num_takes']; ?></dd>
 			
 			<dt><?php echo _AT('start_date'); ?></dt>
-			<dd><?php echo AT_date(	_AT('startend_date_long_format'), at_timezone($test_row['start_date']), AT_DATE_MYSQL_DATETIME); ?></dd>
+			<dd><?php echo AT_date(	_AT('startend_date_long_format'), $test_row['start_date'], AT_DATE_MYSQL_DATETIME); ?></dd>
 
 			<dt><?php echo _AT('end_date'); ?></dt>
-			<dd><?php echo AT_date(	_AT('startend_date_long_format'), at_timezone($test_row['end_date']), AT_DATE_MYSQL_DATETIME); ?></dd>
+			<dd><?php echo AT_date(	_AT('startend_date_long_format'), $test_row['end_date'], AT_DATE_MYSQL_DATETIME); ?></dd>
 
 			<dt><?php echo _AT('anonymous'); ?></dt>
 			<dd><?php echo $test_row['anonymous'] ? _AT('yes') : _AT('no'); ?></dd>
 
 			<dt><?php echo _AT('display'); ?></dt>
 			<dd><?php echo $test_row['display'] ? _AT('one_question_per_page') : _AT('all_questions_on_page'); ?></dd>
+
+			<dt><?php echo _AT('instructions'); ?></dt>
+			<dd><?php echo nl2br($test_row['instructions']); ?></dd>
 		</dl>
 	</div>
+<?php if ($test_row['guests'] && !$_SESSION['member_id']): ?>
+	</fieldset>
+<?php endif; ?>
 
-	<?php if ($test_row['instructions']): ?>
+<?php if (($test_row['guests']) && !$_SESSION['member_id']): ?>
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("guest_information").' ('._AT('optional').')'; ?></legend><div class="row">
+
 	<div class="row">
-		<h3><?php echo _AT('instructions'); ?></h3>
-		<p><?php echo nl2br($test_row['instructions']); ?></p>
-	</div>
-	<?php endif; ?>
-
-	<div>
-		<a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'action=begin'); ?>" class="button" style="padding: 5px;"><?php echo _AT('start_test');?></a>
-		<a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'action=cancel'); ?>" class="button" style="padding: 5px;"><?php echo _AT('cancel');?></a>
+		<label for="guest_name"><?php echo _AT('guest_name'); ?></label>
+		<input id="guest_name" name="guest_name" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['guest_name'])); ?>" />
 	</div>
 
+	<div class="row">
+		<label for="organization"><?php echo _AT('organization'); ?></label>
+		<input id="organization" name="organization" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['organization'])); ?>" />
 	</div>
+
+	<div class="row">
+		<label for="location"><?php echo _AT('location'); ?></label>
+		<input id="location" name="location" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['location'])); ?>" />
+	</div>
+
+	<div class="row">
+		<label for="role"><?php echo _AT('role'); ?></label>
+		<input id="role" name="role" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['role'])); ?>" />
+	</div>
+
+	<div class="row">
+		<label for="focus"><?php echo _AT('focus'); ?></label>
+		<input id="focus" name="focus" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['focus'])); ?>" />
+	</div>
+
+	</fieldset>
+<?php endif; ?>
+
+	
+	<div class="row buttons">
+		<input type="submit" name="submit" value=" <?php echo _AT('start_test'); ?> " accesskey="s" class="button"/>
+		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> "  class="button" />
+	</div>
+
 	</fieldset>
 </div>
+
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -27,7 +27,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		$sql = "SELECT MAX(date) AS date FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id={$row['group_id']}";
 		$date_result = mysql_query($sql, $db);
 		if (($date_row = mysql_fetch_assoc($date_result)) && $date_row['date']) {
-			$last_updated = ' - ' . _AT('last_updated', AT_date(_AT('forum_date_format'), at_timezone($date_row['date']), AT_DATE_MYSQL_DATETIME));
+			$last_updated = ' - ' . _AT('last_updated', AT_date(_AT('forum_date_format'), $date_row['date'], AT_DATE_MYSQL_DATETIME));
 		} else {
 			$last_updated = '';
 		}

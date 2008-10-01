@@ -83,7 +83,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 	<div class="entry">
-		<h3 class="date"><?php echo get_display_name($post_row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), at_timezone($post_row['date']), AT_DATE_MYSQL_DATETIME); ?></h3>
+		<h3 class="date"><?php echo get_display_name($post_row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $post_row['date'], AT_DATE_MYSQL_DATETIME); ?></h3>
 
 		<p><?php echo AT_PRINT($post_row['body'], 'blog_posts.body'); ?></p>
 	</div>
@@ -96,7 +96,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <?php while ($row = mysql_fetch_assoc($result)): ?>
 	<div class="input-form">
 		<div class="row">
-			<h4 class="date"><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), at_timezone($row['date']), AT_DATE_MYSQL_DATETIME); ?></h4>
+			<h4 class="date"><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h4>
 
 			<p><?php echo AT_print($row['comment'], 'blog_posts_comments.comment'); ?></p>
 

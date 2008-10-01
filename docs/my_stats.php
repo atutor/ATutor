@@ -44,7 +44,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			if ($row['last_accessed'] == '') {
 				echo '<td>' . _AT('na') . '</td>';
 			} else {
-				echo '<td>' . AT_date(_AT('forum_date_format'), at_timezone($row['last_accessed']), AT_DATE_MYSQL_DATETIME) . '</td>';
+				echo '<td>' . AT_date(_AT('forum_date_format'), $row['last_accessed'], AT_DATE_MYSQL_DATETIME) . '</td>';
 			}
 			echo '</tr>';
 		} //end while

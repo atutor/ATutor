@@ -73,7 +73,7 @@ $result = mysql_query($sql, $db);
 			<?php if ($row['private']): ?>
 				- <?php echo _AT('private'); ?>
 			<?php endif; ?></h2>
-			<h3 class="date"><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), at_timezone($row['date']), AT_DATE_MYSQL_DATETIME); ?></h3>
+			<h3 class="date"><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h3>
 
 			<p><?php echo AT_PRINT($row['body'], 'blog_posts.body'); ?></p>
 

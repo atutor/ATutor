@@ -65,6 +65,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 */
 function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL_DATETIME) {	
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
+	global $_config;
 
 	if (!isset($day_name_ext)) {
 		$day_name_ext = array(	'date_sunday', 
@@ -111,6 +112,9 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	}
 
 	if ($format_type == AT_DATE_INDEX_VALUE) {
+		// apply timezone offset
+		apply_timezone($timestamp);
+	
 		if ($format == '%D') {
 			return _AT($day_name_con[$timestamp-1]);
 		} else if ($format == '%l') {
@@ -146,6 +150,9 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	    $second		= substr($timestamp,12,2);
 	    $timestamp	= mktime($hour, $minute, $second, $month, $day, $year);  
 	}
+
+	// apply timezone offset
+	apply_timezone($timestamp);
 
 	/* pull out all the %X items from $format */
 	$first_token = strpos($format, '%');
@@ -1133,51 +1140,25 @@ function provide_alternatives($cid, $content_page){
 }	
 /**
 * at_timezone
-* converts a MYSQL timestamp of the form 0000-00-00 00:00:00 into a UNIX timestamp, 
-* adds the user's timezone offset, then converts back to a MYSQL timestamp
+* converts a unix timestamp into another UNIX timestamp with timezone offset added up.
+* Adds the user's timezone offset, then converts back to a MYSQL timestamp
 * Available both as a system config option, and a user preference, if both are set
 * they are added together
 * @param   date	 MYSQL timestamp.
 * @return  date  MYSQL timestamp plus user's and/or system's timezone offset.
 * @author  Greg Gay  .
 */
-function at_timezone($timestamp){
+function apply_timezone($timestamp){
 	global $_config;
-	if(strlen($timestamp) <12){
-		$unixtime = TRUE;
-	}
-	// If the length is less than 12 characters, assume it is a UNIX timestamp
-	// Get the system timezone offset if it has been set
-	if(strlen($timestamp) >12){
-		preg_match('/(.*)-(.*)-(.*) (.*):(.*):(.*)/', $timestamp, $matches);
-		$timestamp = mktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
-	}
+
 	if($_config['time_zone']){
 		$timestamp = ($timestamp + ($_config['time_zone']*3600));
-	}
-
-	if(!$unixtime){
-		$timestamp = date("Y-m-d G:i:s", $timestamp);
-	}
-
-	// Get the user's timezone offset if it has been set
-	if(!$unixtime){
-		preg_match('/(.*)-(.*)-(.*) (.*):(.*):(.*)/', $timestamp, $matches);
-		$timestamp = mktime($matches[4], $matches[5], $matches[6], $matches[2], $matches[3], $matches[1]);
 	}
 
 	if(isset($_SESSION['prefs']['PREF_TIMEZONE'])){
 		$timestamp = ($timestamp + ($_SESSION['prefs']['PREF_TIMEZONE']*3600));
 	}
 
-	if(!$unixtime){
-		$timestamp = date("Y-m-d G:i:s", $timestamp);
-	}
-
 	return $timestamp;
-
 }
-
-
-
 ?>

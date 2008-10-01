@@ -17,6 +17,7 @@ require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 $tid = intval($_REQUEST['tid']);
+if (isset($_REQUEST['gid'])) $gid = $addslashes($_REQUEST['gid']);
 
 //make sure max attempts not reached, and still on going
 $sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
@@ -64,7 +65,7 @@ if (isset($_POST['submit'])) {
 		$row    = mysql_fetch_assoc($result);
 		$result_id = $row['result_id'];
 	} else {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, 0, NOW(), '', 0, NOW(), 0)";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, '".$_POST["gid"]."', NOW(), '', 0, NOW(), 0)";
 		$result = mysql_query($sql, $db);
 		$result_id = mysql_insert_id($db);
 	}
@@ -92,7 +93,7 @@ if (isset($_POST['submit'])) {
 
 	// update the final score
 	// update status to complate to fix refresh test issue.
-	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=$result_id AND member_id=$_SESSION[member_id]";
+	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=$result_id AND member_id='$_SESSION[member_id]'";
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -179,13 +180,17 @@ if (!$result || !$questions) {
 
 // save $questions with no response, and set status to 'in progress' in test_results <---
 if ($_SESSION['member_id'] && !$in_progress) {
-	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, $_SESSION[member_id], NOW(), '', 0, NOW(), 0)";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, '$_SESSION[member_id]', NOW(), '', 0, NOW(), 0)";
 	$result = mysql_query($sql, $db);
 	$result_id = mysql_insert_id($db);
 }
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+<?php if (isset($_REQUEST['gid'])): ?>
+<input type="hidden" name="gid" value="<?php echo $gid; ?>" />
+<?php endif; ?>
+
 <div class="input-form" style="width:80%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo $title ?></legend>
 
