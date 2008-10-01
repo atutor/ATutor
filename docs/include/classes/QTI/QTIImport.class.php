@@ -88,7 +88,7 @@ class QTIImport {
 				$xml =& new QTIParser();
 				$xml_content = @file_get_contents($this->import_path . $attrs['href']);						
 				$xml->setRelativePath($package_base_name);
-				
+
 				if (!$xml->parse($xml_content)){
 					$msg->addError('QTI_WRONG_PACKAGE');
 					break;
@@ -345,6 +345,11 @@ class QTIImport {
 	function copyMedia($files, $xml_items = array()){
 		global $msg;
 		foreach($files as $file_num => $file_loc){
+			//skip test xml files
+			if (preg_match('/tests\_[0-9]+\.xml/', $file_loc)){
+				continue;
+			}
+
 			$new_file_loc ='';
 
 			/**
@@ -382,12 +387,13 @@ class QTIImport {
 			if (file_exists(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
 				unlink(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
 			}
-
-			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
-				//TODO: Print out file already exist error.
-				if (!$msg->containsErrors()) {
-	//				$msg->addError('FILE_EXISTED');
+			if (file_exists(AT_CONTENT_DIR.'import/'.$_SESSION['course_id'].'/'.$file_loc)){
+				if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
+					AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
+					//TODO: Print out file already exist error.
+					if (!$msg->containsErrors()) {
+		//				$msg->addError('FILE_EXISTED');
+					}
 				}
 			} 
 		}

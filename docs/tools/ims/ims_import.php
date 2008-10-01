@@ -110,6 +110,11 @@ $test_message = '';
 		if (($name == 'item') && ($attrs['parameters'] != '')) {
 			$items[$attrs['identifierref']]['test_message'] = $attrs['parameters'];
 		}
+		if ($name=='file'){
+			if (file_exists(AT_CONTENT_DIR .'import/'.$_SESSION['course_id'].'/'.$attrs['href'])){
+				$items[$current_identifier]['file'][] = $attrs['href'];
+			}
+		}
 	array_push($element_path, $name);
 }
 
@@ -623,11 +628,13 @@ foreach ($items as $item_id => $content_info)
 			//Mimic the array for now.
 			$test_attributes['resource']['href'] = $test_xml_file;
 			$test_attributes['resource']['type'] = 'imsqti_xmlv1p1';
-			$test_attributes['resource']['file'][0] = $test_xml_file;
+			$test_attributes['resource']['file'] = $items[$item_id]['file'];
+//			$test_attributes['resource']['file'] = array($test_xml_file);
 
 
 			//Get the XML file out and start importing them into our database.
 			//TODO: See question_import.php 287-289.
+			//BUG: No file associated.
 			$qids = $qti_import->importQuestions($test_attributes);
 
 			//import test
@@ -673,7 +680,7 @@ if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_p
 		$msg->addError('IMPORT_FAILED');
 	}
 }
-clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
+//clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
 if (isset($_POST['url'])) {
 	@unlink($full_filename);
