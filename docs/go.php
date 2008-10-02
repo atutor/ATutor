@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: go.php 7208 2008-01-09 16:07:24Z harris $
+// $Id$
 
 define('AT_INCLUDE_PATH', 'include/');
 define('AT_REDIRECT_LOADED', true);
@@ -51,7 +51,7 @@ if (!$obj->isEmpty()){
 	$_user_location	= '';	//reset user_location so that the vital file in each page would validate
 	$pretty_current_page = $obj->getPage();
 	//If page not found, forward back to index.php
-	if (!@include($obj->getPage())){
+	if (!include($obj->getPage())){
 		header('Location: index.php');
 		exit;
 	} 
