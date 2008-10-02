@@ -11,7 +11,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: QTIImport.class.php 7448 2008-07-31 13:53:20Z harris $
+// $Id: QTIImport.class.php 7448 2008-07-31 13:53:20Z hwong $
+
 define('AT_INCLUDE_PATH', '../../');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	

@@ -11,7 +11,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: QTIParser.class.php 7448 2008-07-31 19:23:20Z harris $
+// $Id: QTIParser.class.php 7448 2008-07-31 19:23:20Z hwong $
+
 //Constances
 define('AT_QTI_REPONSE_GRP',    1);
 define('AT_QTI_REPONSE_LID',    2);
