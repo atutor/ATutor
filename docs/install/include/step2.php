@@ -48,7 +48,11 @@ if(isset($_POST['submit'])) {
 				$row = mysql_fetch_assoc($result);
 				
 				if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
-					$errors[] = 'Database <b>'.$_POST['db_name'].'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing by using the following query: ALTER DATABASE `'.$_POST['db_name'].'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  To use ALTER DATABASE, you need the ALTER privilege on the database.';
+					$sql2 = 'ALTER DATABASE `'.$_POST['db_name'].'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
+					$result2 = mysql_query($sql2);
+					if (!$result2){
+						$errors[] = 'Database <b>'.$_POST['db_name'].'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing by using the following query: <br /> ALTER DATABASE `'.$_POST['db_name'].'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  <br />To use ALTER DATABASE, you need the ALTER privilege on the database.  You can also check the MySQL manual <a href="http://dev.mysql.com/doc/refman/4.1/en/alter-database.html" target="mysql_window">here</a>.';
+					}
 				}
 			}
 		}
