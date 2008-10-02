@@ -9,7 +9,10 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
+// $Id: QTIImport.class.php 8000 2008-10-02 19:23:20Z hwong 
+// $LastChangedDate: 2006-07-22 21:42:37 -0700 (Sat, 22 Jul 2006) $
+// $Rev$
+
 
 define('AT_INCLUDE_PATH', '../../');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
