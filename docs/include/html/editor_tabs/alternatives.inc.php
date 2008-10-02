@@ -191,9 +191,12 @@ global $db;
 	      		$result	= mysql_query($sql, $db);
 	      			    
 	      		if (mysql_num_rows($result) > 0) {
-	      			while ($row = mysql_fetch_assoc($result)) {
-	      				$content_id = $row[primary_resource_id];
-					}
+						// Modified by Cindy Li on Oct 2, 2008, replaced while loop with single fetch.
+						// while ($row = mysql_fetch_assoc($result)) {
+						// $content_id = $row[primary_resource_id];
+						// }
+	      		$row = mysql_fetch_assoc($result);
+	      		$content_id = $row[primary_resource_id];
 				} else {
 					$sql_ins = "INSERT INTO ".TABLE_PREFIX."primary_resources VALUES (NULL, $cid, '$cid_wholepage', 'en')";
 					$r 		 = mysql_query($sql_ins, $db);
@@ -207,9 +210,11 @@ global $db;
 	    		
 	    		$languages = $languageManager->getAvailableLanguages();
 				echo '<label for="lang_'.$content_id.'">'._AT('primary_resource_language').'</label><br />';
-				// NOTE: name is defined as "lang_1", but "editor/edit_content.php" saves on var "lang_1_primary" for 
-				// primary resource language. might be a potential bug.
-				echo '<select name="lang_'.$content_id.'" id="lang_'.$content_id.'">';
+				// Modified by Cindy Li on Oct 2, 2008
+				// Variable name is defined as "lang_1" here, but "editor/edit_content.php" saves on var "lang_1_primary" for 
+				// primary resource language. 
+				// echo '<select name="lang_'.$content_id.'" id="lang_'.$content_id.'">';
+				echo '<select name="lang_'.$content_id.'_primary" id="lang_'.$content_id.'">';
 				foreach ($languages as $codes)
 						{
 							$language = current($codes);
