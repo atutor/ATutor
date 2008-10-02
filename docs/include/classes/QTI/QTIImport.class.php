@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id: QTIImport.class.php 8002 2008-10-02 19:15:13Z hwong $
-// $Id: Module.class.php 8006 2008-10-02 19:24:20Z greg $
+
 define('AT_INCLUDE_PATH', '../../');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
