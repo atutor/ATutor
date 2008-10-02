@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: UrlParser.class.php 7208 2008-04-15 10:00:24Z harris $
+// $Id$
 
 require_once('UrlRewrite.class.php');
 

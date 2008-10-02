@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: alternatives_functions.inc.php 7208 2008-07-04 16:07:24Z silvia $
+// $Id$
 
 /**
 * It provides a link to a resource, which opens such a resource in a new window.
@@ -119,7 +119,7 @@ function delete_alternative($resource, $cid, $current_tab){
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: alternatives.inc.php 7208 2008-07-04 16:07:24Z silvia $
+// $Id$
 
 /**
 * It provides a link to a resource, which opens such a resource in a new window.

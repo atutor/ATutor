@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li, 			*/
+/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li,			*/
 /* & Harris Wong												*/
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
@@ -11,7 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: QTIParser.class.php 7448 2008-07-31 19:23:20Z hwong $
+// $Id$
 
 //Constances
 define('AT_QTI_REPONSE_GRP',    1);

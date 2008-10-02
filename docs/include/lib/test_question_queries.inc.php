@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
-// $Id: test_question_queries.inc.php 7653 2008-06-25 15:43:31Z hwong $
+// $Id$
 
 //Question for multiple choice.
 define('AT_SQL_QUESTION_MULTI', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 1, '%s', '%s', 

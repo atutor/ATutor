@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ContentUrl.class.php 7603 2008-06-11 14:59:33Z hwong $
+// $Id$
 /**
 * ContentUrl
 * Class for rewriting pretty urls.

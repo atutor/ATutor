@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
+// $Id$
+
 /* Variables */
 $supported_media_type = array(	'gif', 'jpg', 'bmp', 'png', 'jpeg', 
 								'txt', 'css', 'html', 'htm', 'csv', 'asc', 'tsv', 'xml', 'xsl',
