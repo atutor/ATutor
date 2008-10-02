@@ -27,7 +27,7 @@ define('AT_MODULE_DIR_STANDARD', '_standard');
 define('AT_MODULE_PATH', realpath(AT_INCLUDE_PATH.'../mods') . DIRECTORY_SEPARATOR);
 
 /**
-* ModuleFactory
+* ModuleFactory //
 * 
 * @access	public
 * @author	Joel Kronenberg
