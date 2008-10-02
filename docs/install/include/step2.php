@@ -18,7 +18,7 @@ if(isset($_POST['submit'])) {
 	unset($progress);
 
 	//check DB & table connection
-
+//
 	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
 	if (!$db) {
 		$errors[] = 'Unable to connect to database server.';
