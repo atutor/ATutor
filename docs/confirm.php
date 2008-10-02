@@ -34,7 +34,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 		$code = substr(md5($_GET['e'] . $row['creation_date'] . $id), 0, 10);
 
 		if ($code == $m) {
-			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$_GET[e]', last_login=last_login, creation_date=creation_date WHERE member_id=$id";
+			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$_GET[e]', last_login=NOW(), creation_date=creation_date WHERE member_id=$id";
 			$result = mysql_query($sql, $db);
 
 			$msg->addFeedback('CONFIRM_GOOD');
@@ -59,9 +59,9 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 
 		if ($code == $m) {
 			if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR.", creation_date=creation_date, last_login=last_login WHERE member_id=$id";
+				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR.", creation_date=creation_date, last_login=NOW() WHERE member_id=$id";
 			} else {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT.", creation_date=creation_date, last_login=last_login WHERE member_id=$id";
+				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT.", creation_date=creation_date, last_login=NOW() WHERE member_id=$id";
 			}
 			$result = mysql_query($sql, $db);
 
@@ -116,7 +116,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 				$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code.'&en_id='.$_POST["en_id"];
 			else
 				$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code;
-
+debug($confirmation_link);exit;
 			/* send the email confirmation message: */
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 			$mail = new ATutorMailer();
