@@ -116,7 +116,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 				$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code.'&en_id='.$_POST["en_id"];
 			else
 				$confirmation_link = $_base_href . 'confirm.php?id='.$row['member_id'].SEP.'m='.$code;
-debug($confirmation_link);exit;
+
 			/* send the email confirmation message: */
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 			$mail = new ATutorMailer();
