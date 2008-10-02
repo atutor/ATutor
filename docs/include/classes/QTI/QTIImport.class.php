@@ -1,13 +1,13 @@
 <?php
 /************************************************************************/
-/* ATutor																*/
+/* ATutor								*/
 /************************************************************************/
 /* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
+/* http://atutor.ca						        */
+/*	   								*/
+/* This program is free software. You can redistribute it and/or	*/
+/* modify it under the terms of the GNU General Public License		*/
+/* as published by the Free Software Foundation.			*/
 /************************************************************************/
 // $Id: QTIImport.class.php 8002 2008-10-02 19:15:13Z hwong $
 
