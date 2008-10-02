@@ -59,26 +59,16 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 
     }
 
+
     $_custom_head .= '
         <link href="'.$fluid_dir.'css/infusion-theme.css" rel="stylesheet" type="text/css" />
         <link href="'.$fluid_dir.'css/Uploader.css" rel="stylesheet" type="text/css" />
-
-        <script src="'.$fluid_dir.'js/jquery/jquery-1.2.3.js" type="text/javascript"></script>
-        <script src="'.$fluid_dir.'js/jquery/jquery.tabindex.js" type="text/javascript"></script>
-        <script src="'.$fluid_dir.'js/jquery/jARIA.js" type="text/javascript"></script>
-        <script src="'.$fluid_dir.'js/jquery/jquery.dimensions.js" type="text/javascript"></script>
-        <script src="'.$fluid_dir.'js/jquery/ui.base.js" type="text/javascript"></script>
-        <script src="'.$fluid_dir.'js/jquery/jquery.keyboard-a11y.js" type="text/javascript"></script>
-        <script src="'.$fluid_dir.'js/swfupload/swfupload.js" type="text/javascript"></script>
-        <script src="'.$fluid_dir.'js/fluid/Fluid.js" type="text/javascript"></script>
-        <script src="'.$fluid_dir.'js/fluid/Uploader.js" type="text/javascript"></script>
-
+        <script src="'.$fluid_dir.'js/Fluid-all.js" type="text/javascript"></script>
         <script language="JavaScript" type="text/javascript">
-            
+
             // set to empty to use demo upload js code instead actual server side upload handlers
-            var uploadURL = "include/lib/upload.php?path='.urlencode($current_path.$pathext).'";  // relative to the swf file
+            var uploadURL = "'.$_base_href.'include/lib/upload.php?path='.urlencode($current_path.$pathext).'";  // relative to the swf file
             var flashURL = "jscripts/fluid-components/swfupload/swfupload_f9.swf";
-            
             var settings =   {
                 whenDone: "'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'msg=FILEUPLOAD_DONE",
                 whenCancel: function(){},
@@ -86,7 +76,6 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
                 continueAfterUpload: true,
                 debug: false
             };
-            
             var myUpload; // mostly used for testing
             $(document).ready(function() {
                 myUpload = new fluid.Uploader("single-inline-fluid-uploader", uploadURL, flashURL, settings);
