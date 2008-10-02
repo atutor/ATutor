@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: step2.php 8002 2008-10-02 19:15:13Z hwong $
+// $Id: QTIParser.class.php 8002 2008-10-02 19:15:13Z hwong $
 
 define('AT_INCLUDE_PATH', '../../');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');
 /**
 * QTIImport
 * Class for prehandling the POST values before importing each QTI question into ATutor
-* Some definitions for the QTI question type:
+* Some definitions for the QTI question type: //
 *	1	Multiple choice
 *	2	True/false
 *	3	Open ended
