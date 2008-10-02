@@ -123,7 +123,7 @@ global $db;
 		      							checkbox_types($alternative['secondary_resource_id'], 'secondary', 'non_textual');
 			      						$languages = $languageManager->getAvailableLanguages();
 										echo '<label for="lang_'.$alternative['secondary_resource_id'].'">'._AT('secondary_resource_language').'</label><br />';
-										echo '<select name="lang_'.$alternative['secondary_resource_id'].'" id="lang_'.$alternative['secondary_resource_id'].'">';
+										echo '<select name="lang_'.$alternative['secondary_resource_id'].'_secondary" id="lang_'.$alternative['secondary_resource_id'].'">';
 										foreach ($languages as $codes){
 											$language = current($codes);
 											$lang_code = $language->getCode();
@@ -203,11 +203,12 @@ global $db;
 						$content_id = $row[primary_resource_id];
 						}
 	     			}
-	     		//	debug($content_id);
 	    		checkbox_types($content_id, 'primary', 'textual');
 	    		
 	    		$languages = $languageManager->getAvailableLanguages();
 				echo '<label for="lang_'.$content_id.'">'._AT('primary_resource_language').'</label><br />';
+				// NOTE: name is defined as "lang_1", but "editor/edit_content.php" saves on var "lang_1_primary" for 
+				// primary resource language. might be a potential bug.
 				echo '<select name="lang_'.$content_id.'" id="lang_'.$content_id.'">';
 				foreach ($languages as $codes)
 						{
@@ -266,7 +267,7 @@ if (mysql_num_rows($result_alt) > 0) {
 	    checkbox_types($alternative['secondary_resource_id'], 'secondary', 'non_textual');
 	  	$languages = $languageManager->getAvailableLanguages();
 		echo '<label for="lang_'.$alternative['secondary_resource_id'].'">Resource language</label><br />';
-		echo '<select name="lang_'.$alternative['secondary_resource_id'].'" id="lang_'.$alternative['secondary_resource_id'].'">';
+		echo '<select name="lang_'.$alternative['secondary_resource_id'].'_secondary" id="lang_'.$alternative['secondary_resource_id'].'">';
 		foreach ($languages as $codes){
 			$language = current($codes);
 			$lang_code = $language->getCode();
