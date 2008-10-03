@@ -1,19 +1,15 @@
 <?php
 /************************************************************************/
-/* ATutor								*/
+/* ATutor																*/
 /************************************************************************/
 /* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
-/* http://atutor.ca						        */
-/*	   								*/
-/* This program is free software. You can redistribute it and/or	*/
-/* modify it under the terms of the GNU General Public License		*/
-/* as published by the Free Software Foundation.			*/
+/* http://atutor.ca														*/
+/*	   																	*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
 /************************************************************************/
-<<<<<<< .mine
 // $Id$
-=======
-// $Id$
->>>>>>> .r8012
 
 define('AT_INCLUDE_PATH', '../../');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
