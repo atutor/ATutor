@@ -530,11 +530,22 @@ function get_display_name($id) {
 		global $db, $_config, $display_name_formats;
 	}
 
-	$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
-	$result	= mysql_query($sql, $db);
-	$row	= mysql_fetch_assoc($result);
+	if (substr($id, 0, 2) == 'g_' || substr($id, 0, 2) == 'G_')
+	{
+		$sql	= "SELECT name FROM ".TABLE_PREFIX."guests WHERE guest_id='".$id."'";
+		$result	= mysql_query($sql, $db);
+		$row	= mysql_fetch_assoc($result);
 
-	return _AT($display_name_formats[$_config['display_name_format']], $row['login'], $row['first_name'], $row['second_name'], $row['last_name']);
+		return _AT($display_name_formats[$_config['display_name_format']], '', $row['name'], '', '');
+	}
+	else
+	{
+		$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
+		$result	= mysql_query($sql, $db);
+		$row	= mysql_fetch_assoc($result);
+
+		return _AT($display_name_formats[$_config['display_name_format']], $row['login'], $row['first_name'], $row['second_name'], $row['last_name']);
+	}
 }
 
 function get_forum_name($fid){

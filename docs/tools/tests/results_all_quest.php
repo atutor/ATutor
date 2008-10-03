@@ -17,8 +17,9 @@ require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 authenticate(AT_PRIV_TESTS);
 
-
 $tid = intval($_REQUEST['tid']);
+
+if (isset($_POST['reset_filter'])) unset($_POST);
 
 $_pages['tools/tests/results_all_quest.php']['title_var']  = 'question_statistics';
 $_pages['tools/tests/results_all_quest.php']['parent']  = 'tools/tests/index.php';
@@ -62,11 +63,35 @@ $long_qs = substr($long_qs, 0, -1);
 //get the answers:  count | q_id | answer
 $sql = "SELECT count(*), A.question_id, A.answer, A.score
 		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
-		WHERE R.status=1 AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=$tid
-		GROUP BY A.question_id, A.answer
-		ORDER BY A.question_id, A.answer";
-$result = mysql_query($sql, $db);
+		WHERE R.status=1 AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=$tid";
 
+if ($_POST["user_type"] == 1) $sql .= " AND R.member_id not like 'G_%' AND R.member_id > 0 ";
+if ($_POST["user_type"] == 2) $sql .= " AND (R.member_id like 'G_%' OR R.member_id = 0) ";
+
+$sql .=	" GROUP BY A.question_id, A.answer
+		ORDER BY A.question_id, A.answer";
+
+$result = mysql_query($sql, $db);
+?>
+
+<div class="input-form">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?tid='.$tid; ?>">
+	<div class="row">
+		<?php echo _AT('user_type'); ?><br />
+		<input type="radio" name="user_type" value="1" id="u0" <?php if ($_POST['user_type'] == 1) { echo 'checked="checked"'; } ?> /><label for="u0"><?php echo _AT('registered_members'); ?></label> 
+		<input type="radio" name="user_type" value="2" id="u1" <?php if ($_POST['user_type'] == 2) { echo 'checked="checked"'; } ?> /><label for="u1"><?php echo _AT('guests'); ?></label> 
+		<input type="radio" name="user_type" value="0" id="u2" <?php if (!isset($_POST['user_type']) || ($_POST['user_type'] != 1 && $_POST['user_type'] != 2)) { echo 'checked="checked"'; } ?> /><label for="u2"><?php echo _AT('all'); ?></label> 
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+		<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		<input type="hidden" name="test_id" value="<?php echo $tid; ?>" />
+	</div>
+</form>
+</div>
+
+<?php
 echo '<img src="images/checkmark.gif" alt="'._AT('correct_answer').'" />- '._AT('correct_answer').'<br /></p>';
 
 $ans = array();	

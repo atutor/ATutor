@@ -66,6 +66,15 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] != 2))
 	$status = '';
 }
 
+if ($_GET['user_type'] == 1 || $_GET['user_type'] == 2) {
+	if ($_GET['user_type'] == 1) {
+		$status = " AND R.member_id not like 'G_%' AND R.member_id > 0 ";
+	} else {
+		$status = " AND (R.member_id like 'G_%' OR R.member_id = 0) ";
+	}
+	$page_string .= SEP.'user_type='.$_GET['user_type'];
+}
+
 //get test info
 $sql	= "SELECT out_of, anonymous, random, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
@@ -134,11 +143,16 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 		<div class="row">
 			<?php echo _AT('status'); ?><br />
 			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('marked_label', $num_sub - $num_unmarked); ?></label> 
-
 			<input type="radio" name="status" value="0" id="s1" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked_label', $num_unmarked); ?></label> 
-
 			<input type="radio" name="status" value="2" id="s2" <?php if (!isset($_GET['status']) || ($_GET['status'] != 0 && $_GET['status'] != 1)) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('all_label', $num_sub); ?></label> 
 
+		</div>
+
+		<div class="row">
+			<?php echo _AT('user_type'); ?><br />
+			<input type="radio" name="user_type" value="1" id="u0" <?php if ($_GET['user_type'] == 1) { echo 'checked="checked"'; } ?> /><label for="u0"><?php echo _AT('registered_members'); ?></label> 
+			<input type="radio" name="user_type" value="2" id="u1" <?php if ($_GET['user_type'] == 2) { echo 'checked="checked"'; } ?> /><label for="u1"><?php echo _AT('guests'); ?></label> 
+			<input type="radio" name="user_type" value="0" id="u2" <?php if (!isset($_GET['user_type']) || ($_GET['user_type'] != 1 && $_GET['user_type'] != 2)) { echo 'checked="checked"'; } ?> /><label for="u2"><?php echo _AT('all'); ?></label> 
 		</div>
 
 		<div class="row buttons">

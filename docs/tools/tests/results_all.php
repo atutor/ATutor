@@ -130,11 +130,7 @@ $_pages['tools/tests/results_all_quest.php?tid='.$tid]['title_var'] = 'question_
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tools/tests/results_all.php');
 
-if (isset($_POST['reset_filter'])) {
-	unset($_POST['start_date']);
-	unset($_POST['end_date']);
-	unset($_POST['student_type']);
-}
+if (isset($_POST['reset_filter'])) unset($_POST);
 
 if (!isset($_POST['student_type'])) {
 	$_POST['student_type'] = 'all';
@@ -192,6 +188,9 @@ $sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TAB
 if ($start_date)     $sql .= " AND R.date_taken >= '" . $start_date . "'";
 if ($end_date)     $sql .= " AND R.date_taken <= '" . $end_date . "'";
 
+if ($_POST["user_type"] == 1) $sql .= " AND R.member_id not like 'G_%' AND R.member_id > 0 ";
+if ($_POST["user_type"] == 2) $sql .= " AND (R.member_id like 'G_%' OR R.member_id = 0) ";
+
 $sql .= " ORDER BY M.login, R.date_taken";
 
 $result = mysql_query($sql, $db);
@@ -247,7 +246,8 @@ if ($row = mysql_fetch_assoc($result)) {
 			$anonymous = $row2['anonymous'];
 	}
 
-	do {
+	while ($row = mysql_fetch_assoc($result))
+	{
 		if ($random) {
 			$total_weight = get_random_outof($row['test_id'], $row['result_id']);
 		}
@@ -265,8 +265,8 @@ if ($row = mysql_fetch_assoc($result)) {
 			display_test_info($row);
 		elseif ($_POST['student_type'] == 'all')
 			display_test_info($row);
-
-	} while ($row = mysql_fetch_assoc($result));
+	}
+	
 	$table_content .= '</tbody>';
 
 	$table_content .= '<tfoot>';
@@ -354,6 +354,13 @@ $msg->printErrors();
 		<label for="end_date"><?php echo _AT('end_date'); ?>(YYYY-MM-DD)</label>
 		<input id='end_date' name='end_date' type='text' value='<?php echo $end_date?>' />
 		<img src='images/calendar.gif' style="vertical-align: middle; cursor: pointer;" onclick="scwShow(scwID('end_date'),event);" />
+	</div>
+
+	<div class="row">
+		<?php echo _AT('user_type'); ?><br />
+		<input type="radio" name="user_type" value="1" id="u0" <?php if ($_POST['user_type'] == 1) { echo 'checked="checked"'; } ?> /><label for="u0"><?php echo _AT('registered_members'); ?></label> 
+		<input type="radio" name="user_type" value="2" id="u1" <?php if ($_POST['user_type'] == 2) { echo 'checked="checked"'; } ?> /><label for="u1"><?php echo _AT('guests'); ?></label> 
+		<input type="radio" name="user_type" value="0" id="u2" <?php if (!isset($_POST['user_type']) || ($_POST['user_type'] != 1 && $_POST['user_type'] != 2)) { echo 'checked="checked"'; } ?> /><label for="u2"><?php echo _AT('all'); ?></label> 
 	</div>
 
 <?php
