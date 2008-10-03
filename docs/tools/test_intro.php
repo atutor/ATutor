@@ -123,34 +123,54 @@ if (!$test_row['random']) {
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("test_description"); ?></legend><div class="row">
 <?php endif; ?>
 	<div class="row">
-		<dl class="col-list">
-			<dt><?php echo _AT('test_description'); ?></dt>
-			<dd><?php echo $test_row['description']; ?></dd>
+		<table>
+<?php if ($test_row['description']<>""): ?>
+		<tr>
+			<td><?php echo _AT('test_description'); ?></td>
+			<td><?php echo $test_row['description']; ?></td>
+		</tr>
+<?php endif; ?>
 
-			<dt><?php echo _AT('questions'); ?></dt>
-			<dd><?php echo $test_row['num_questions']; ?></dd>
+		<tr>
+			<td><?php echo _AT('questions'); ?></td>
+			<td><?php echo $test_row['num_questions']; ?></td>
+		<tr>
 
-			<dt><?php echo _AT('out_of'); ?></dt>
-			<dd><?php echo $test_row['out_of']; ?></dd>
+		<tr>
+			<td><?php echo _AT('out_of'); ?></td>
+			<td><?php echo $test_row['out_of']; ?></td>
+		<tr>
 	
-			<dt><?php echo _AT('attempts'); ?></dt>
-			<dd><?php echo $num_takes; ?> / <?php echo ($test_row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) ? _AT('unlimited') : $test_row['num_takes']; ?></dd>
+		<tr>
+			<td><?php echo _AT('attempts'); ?></td>
+			<td><?php echo $num_takes; ?> / <?php echo ($test_row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) ? _AT('unlimited') : $test_row['num_takes']; ?></td>
+		<tr>
 			
-			<dt><?php echo _AT('start_date'); ?></dt>
-			<dd><?php echo AT_date(	_AT('startend_date_long_format'), $test_row['start_date'], AT_DATE_MYSQL_DATETIME); ?></dd>
+		<tr>
+			<td><?php echo _AT('start_date'); ?></td>
+			<td><?php echo AT_date(	_AT('startend_date_long_format'), $test_row['start_date'], AT_DATE_MYSQL_DATETIME); ?></td>
+		<tr>
 
-			<dt><?php echo _AT('end_date'); ?></dt>
-			<dd><?php echo AT_date(	_AT('startend_date_long_format'), $test_row['end_date'], AT_DATE_MYSQL_DATETIME); ?></dd>
+		<tr>
+			<td><?php echo _AT('end_date'); ?></td>
+			<td><?php echo AT_date(	_AT('startend_date_long_format'), $test_row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
+		<tr>
 
-			<dt><?php echo _AT('anonymous'); ?></dt>
-			<dd><?php echo $test_row['anonymous'] ? _AT('yes') : _AT('no'); ?></dd>
+		<tr>
+			<td><?php echo _AT('anonymous'); ?></td>
+			<td><?php echo $test_row['anonymous'] ? _AT('yes') : _AT('no'); ?></td>
+		<tr>
 
-			<dt><?php echo _AT('display'); ?></dt>
-			<dd><?php echo $test_row['display'] ? _AT('one_question_per_page') : _AT('all_questions_on_page'); ?></dd>
+		<tr>
+			<td><?php echo _AT('display'); ?></td>
+			<td><?php echo $test_row['display'] ? _AT('one_question_per_page') : _AT('all_questions_on_page'); ?></td>
+		<tr>
 
-			<dt><?php echo _AT('instructions'); ?></dt>
-			<dd><?php echo nl2br($test_row['instructions']); ?></dd>
-		</dl>
+		<tr>
+			<td><?php echo _AT('instructions'); ?></td>
+			<td><?php echo nl2br($test_row['instructions']); ?></td>
+		<tr>
+		</table>
 	</div>
 <?php if ($test_row['guests'] && !$_SESSION['member_id']): ?>
 	</fieldset>
@@ -159,31 +179,32 @@ if (!$test_row['random']) {
 <?php if (($test_row['guests']) && !$_SESSION['member_id']): ?>
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("guest_information").' ('._AT('optional').')'; ?></legend><div class="row">
 
-	<div class="row">
-		<label for="guest_name"><?php echo _AT('guest_name'); ?></label>
-		<input id="guest_name" name="guest_name" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['guest_name'])); ?>" />
-	</div>
+	<table>
+	<tr>
+		<td><label for="guest_name"><?php echo _AT('guest_name'); ?></label></td>
+		<td><input id="guest_name" name="guest_name" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['guest_name'])); ?>" /></td>
+	</tr>
 
-	<div class="row">
-		<label for="organization"><?php echo _AT('organization'); ?></label>
-		<input id="organization" name="organization" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['organization'])); ?>" />
-	</div>
+	<tr>
+		<td><label for="organization"><?php echo _AT('organization'); ?></label></td>
+		<td><input id="organization" name="organization" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['organization'])); ?>" /></td>
+	</tr>
 
-	<div class="row">
-		<label for="location"><?php echo _AT('location'); ?></label>
-		<input id="location" name="location" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['location'])); ?>" />
-	</div>
+	<tr>
+		<td><label for="location"><?php echo _AT('location'); ?></label></td>
+		<td><input id="location" name="location" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['location'])); ?>" /></td>
+	</tr>
 
-	<div class="row">
-		<label for="role"><?php echo _AT('role'); ?></label>
-		<input id="role" name="role" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['role'])); ?>" />
-	</div>
+	<tr>
+		<td><label for="role"><?php echo _AT('role'); ?></label></td>
+		<td><input id="role" name="role" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['role'])); ?>" /></td>
+	</tr>
 
-	<div class="row">
-		<label for="focus"><?php echo _AT('focus'); ?></label>
-		<input id="focus" name="focus" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['focus'])); ?>" />
-	</div>
-
+	<tr>
+		<td><label for="focus"><?php echo _AT('focus'); ?></label></td>
+		<td><input id="focus" name="focus" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['focus'])); ?>" /></td>
+	</tr>
+	</table>
 	</fieldset>
 <?php endif; ?>
 
