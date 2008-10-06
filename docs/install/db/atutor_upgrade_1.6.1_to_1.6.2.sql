@@ -130,3 +130,16 @@ INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from,
 INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Inadequate', 0, 59);
 
 INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) VALUES('_standard/gradebook', 2, 1048576, 4096, 0, 0);
+
+# SQL for collecting guest information at test introduction page
+CREATE TABLE `guests` (
+  `guest_id` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(255),
+  `organization` VARCHAR(255),
+  `location` VARCHAR(255),
+  `role` VARCHAR(255),
+  `focus` VARCHAR(255),
+  PRIMARY KEY  (`guest_id`)
+) TYPE = MYISAM;
+
+ALTER TABLE `tests_results` MODIFY member_id VARCHAR(10);
