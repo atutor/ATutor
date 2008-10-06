@@ -193,10 +193,10 @@ function get_next_guest_id()
 {
 	global $db;
 	
-	$sql = "SELECT max(guest_id) max_guest_id FROM ".TABLE_PREFIX."guests";
+	$sql = "SELECT max(cast(substring(guest_id,3) as unsigned))+1 next_guest_id FROM ".TABLE_PREFIX."guests";
 	$result	= mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
-	return "G_". (intval(substr($row["max_guest_id"], 2)) + 1);
+	return "G_". $row["next_guest_id"];
 }
 ?>
