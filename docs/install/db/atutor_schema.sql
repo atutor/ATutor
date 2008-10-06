@@ -433,6 +433,18 @@ CREATE TABLE `groups_types` (
 ) TYPE = MYISAM;
 
 # --------------------------------------------------------
+# Table structure for table `guests` (since 1.6.2)
+CREATE TABLE `guests` (
+  `guest_id` VARCHAR(10) NOT NULL,
+  `name` VARCHAR(255),
+  `organization` VARCHAR(255),
+  `location` VARCHAR(255),
+  `role` VARCHAR(255),
+  `focus` VARCHAR(255),
+  PRIMARY KEY  (`guest_id`)
+) TYPE = MYISAM;
+
+# --------------------------------------------------------
 # Table structure for table `handbook_notes`
 
 CREATE TABLE `handbook_notes` (
@@ -894,7 +906,7 @@ CREATE TABLE `tests_questions_categories` (
 CREATE TABLE `tests_results` (
   `result_id` mediumint(8) unsigned NOT NULL auto_increment,
   `test_id` mediumint(8) unsigned NOT NULL default '0',
-  `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `member_id` VARCHAR(10) NOT NULL default '',
   `date_taken` TIMESTAMP NOT NULL,
   `final_score` char(5) NOT NULL default '',
   `status` TINYINT NOT NULL DEFAULT '0',
