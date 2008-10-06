@@ -122,8 +122,7 @@ if (!$test_row['random']) {
 <?php if ($test_row['guests'] && !$_SESSION['member_id']): ?>
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("test_description"); ?></legend><div class="row">
 <?php endif; ?>
-	<div class="row">
-		<table>
+	<table>
 <?php if ($test_row['description']<>""): ?>
 		<tr>
 			<td><?php echo _AT('test_description'); ?></td>
@@ -171,7 +170,6 @@ if (!$test_row['random']) {
 			<td><?php echo nl2br($test_row['instructions']); ?></td>
 		<tr>
 		</table>
-	</div>
 <?php if ($test_row['guests'] && !$_SESSION['member_id']): ?>
 	</fieldset>
 <?php endif; ?>
@@ -179,33 +177,38 @@ if (!$test_row['random']) {
 <?php if (($test_row['guests']) && !$_SESSION['member_id']): ?>
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("guest_information").' ('._AT('optional').')'; ?></legend><div class="row">
 
-	<table>
+	<table class="none" width="100%">
 	<tr>
-		<td><label for="guest_name"><?php echo _AT('guest_name'); ?></label></td>
-		<td><input id="guest_name" name="guest_name" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['guest_name'])); ?>" /></td>
+		<td width="20%"><label for="guest_name" style="float:right;"><?php echo _AT('guest_name'); ?></label></td>
+		<td width="80%"><input id="guest_name" name="guest_name" size="50" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['guest_name'])); ?>"/></td>
 	</tr>
 
 	<tr>
-		<td><label for="organization"><?php echo _AT('organization'); ?></label></td>
-		<td><input id="organization" name="organization" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['organization'])); ?>" /></td>
+		<td><label for="organization" style="float:right;"><?php echo _AT('organization'); ?></label></td>
+		<td><input id="organization" name="organization" size="50" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['organization'])); ?>" /></td>
 	</tr>
 
 	<tr>
-		<td><label for="location"><?php echo _AT('location'); ?></label></td>
-		<td><input id="location" name="location" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['location'])); ?>" /></td>
+		<td><label for="location" style="float:right;"><?php echo _AT('location'); ?></label></td>
+		<td><input id="location" name="location" size="50" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['location'])); ?>" /></td>
 	</tr>
 
 	<tr>
-		<td><label for="role"><?php echo _AT('role'); ?></label></td>
-		<td><input id="role" name="role" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['role'])); ?>" /></td>
+		<td><label for="role" style="float:right;"><?php echo _AT('role'); ?></label></td>
+		<td><input id="role" name="role" size="50" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['role'])); ?>" /></td>
 	</tr>
 
 	<tr>
-		<td><label for="focus"><?php echo _AT('focus'); ?></label></td>
-		<td><input id="focus" name="focus" size="100" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['focus'])); ?>" /></td>
+		<td><label for="focus" style="float:right;"><?php echo _AT('focus'); ?></label></td>
+		<td><input id="focus" name="focus"  size="50" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['focus'])); ?>" /></td>
+
 	</tr>
 	</table>
+
 	</fieldset>
+
+
+
 <?php endif; ?>
 
 	
