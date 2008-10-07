@@ -29,7 +29,7 @@
 		</div>
 			<div class="body">
 				<?php if ($row['icon'] == ''): ?>
-						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" alt="" />
+						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" alt="<?php echo $row['title']; ?>" />
 				<?php else: 
 						echo $link;  
 
