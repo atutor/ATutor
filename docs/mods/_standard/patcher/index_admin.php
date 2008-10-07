@@ -31,9 +31,9 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 	else
 		$description = $patch_row["description"] . _AT('patch_dependent_patch_not_installed') . "<span style='color: red'>" . $dependent_patches . "</span>";
 ?>
-	<tr <?php if ($enable_radiotton) echo 'onmousedown="document.form[\'m'. $row_id.'\'].checked = true; rowselect(this);"'; ?> id="r_<?php echo $row_id; ?>">
-		<td><input type="radio" name="id" value="<?php echo $row_id; ?>" id="m<?php echo $row_id; ?>" <?php if (!$enable_radiotton) echo "disabled "; if (strcmp($row_id, $id) == 0 || strcmp($row_id, $patch_id) == 0) echo "checked "?> /></td>
-		<td><label for="m<?php echo $row_id; ?>"><?php echo $patch_row["atutor_patch_id"]; ?></label></td>
+	<tr <?php if ($enable_radiotton) echo 'onmousedown="document.form[\'m'. $row_id.'\'].checked = true; rowselect(this);" id="r_'. $row_id .'"'; ?>>
+		<td><input type="radio" name="id" value="<?php echo $row_id; ?>"<?php if ($enable_radiotton) echo 'id="m'. $row_id.'"'; ?> <?php if (!$enable_radiotton) echo 'disabled="disabled" '; if (strcmp($row_id, $id) == 0 || strcmp($row_id, $patch_id) == 0) echo "checked "?> /></td>
+		<td><label <?php if ($enable_radiotton) echo 'for="m'.$row_id.'"'; ?>><?php echo $patch_row["atutor_patch_id"]; ?></label></td>
 		<td><?php echo $description; ?></td>
 		<td><?php if (!isset($patch_row['status'])) echo "Uninstalled"; else echo $patch_row["status"]; ?></td>
 		<td><?php echo $patch_row["available_to"]; ?></td>
@@ -42,7 +42,7 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 		if (preg_match('/Installed/', $patch_row["status"]) > 0 && ($patch_row["remove_permission_files"]<> "" || $patch_row["backup_files"]<>"" || $patch_row["patch_files"]<> ""))
 			echo '
 		  <div class="row buttons">
-				<input type="button" align="center" name="info" value="'._AT('view_message').'" onClick="location.href=\''. $_SERVER['PHP_SELF'] .'?patch_id='.$row_id.'\'" />
+				<input type="button" align="middle" name="info" value="'._AT('view_message').'" onclick="location.href=\''. $_SERVER['PHP_SELF'] .'?patch_id='.$row_id.'\'" />
 			</div>';
 		?>
 		</td>
@@ -408,25 +408,25 @@ else
 </div>
 </form>
 
-<FORM NAME="frm_upload" ENCTYPE="multipart/form-data" METHOD=POST ACTION="<?php echo $_SERVER['PHP_SELF']; ?>" >
+<form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 	
 <div class="input-form">
 		<div class="row"><?php echo _AT("upload_patch"); ?></div>
 
 		<div class="row">
-			<INPUT TYPE="hidden" name="MAX_FILE_SIZE" VALUE="52428800">
-			<INPUT TYPE="file" NAME="patchfile"  SIZE=50>
+			<input type="hidden" name="MAX_FILE_SIZE" value="52428800" />
+			<input type="file" name="patchfile"  size="50" />
 		</div>
 		
 		<div class="row buttons">
-			<INPUT TYPE="submit" name="install_upload" value="Install" onClick="javascript: return validate_filename(); " class="submit" />
-			<INPUT TYPE="hidden" name="uploading" value="1">
+			<input type="submit" name="install_upload" value="Install" onclick="javascript: return validate_filename(); " class="submit" />
+			<input type="hidden" name="uploading" value="1" />
 		</div>
 </div>
 
 </form>
 
-<SCRIPT LANGUAGE="JavaScript">
+<script language="JavaScript">
 <!--
 
 String.prototype.trim = function() {

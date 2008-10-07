@@ -107,15 +107,15 @@ if ($num_of_dependents == 0)
 	</div>
 
 	<div class="row buttons"  style="float:left">
-		<input type="button" name="add_a_file" value="<?php echo _AT('add_a_file'); ?>" onClick="add_file()" />
+		<input type="button" name="add_a_file" value="<?php echo _AT('add_a_file'); ?>" onclick="add_file()" />
 	</div>
 	
 	<br /><br />
 	
 	<div class="row buttons">
 		<input type="submit" name="create" value=" <?php echo _AT('create_patch'); ?> " accesskey="c" />
-		<input type="submit" name="save" value=" <?php echo _AT('save'); ?> " accesskey="s" onClick="document.form.target=''; "/>
-		<input type="button" name="cancel" value=" <?php echo _AT('cancel'); ?> " onClick="location.href='mods/_standard/patcher/myown_patches.php'" />
+		<input type="submit" name="save" value=" <?php echo _AT('save'); ?> " accesskey="s" onclick="document.form.target=''; "/>
+		<input type="button" name="cancel" value=" <?php echo _AT('cancel'); ?> " onclick="location.href='mods/_standard/patcher/myown_patches.php'" />
 	</div>
 
 </div>
@@ -326,7 +326,7 @@ var ACTION_HTML_TEMPLATE = ' \
 	</table> \
 	</div> \
 	<div class="row buttons" style="float:left"> \
-		<input type="button" value="<?php echo _AT("delete_this_file"); ?>" onClick="del_file(event)" /> \
+		<input type="button" value="<?php echo _AT("delete_this_file"); ?>" onclick="del_file(event)" /> \
 	</div> \
 	<br /><br /> \
 </div> \
