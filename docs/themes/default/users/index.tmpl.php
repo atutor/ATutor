@@ -52,7 +52,7 @@
                     	$dir = "images/courses/".$row['icon'];
                 }
                 ?>
-				<img src="<?php echo $dir; ?>" class="icon" border="0" alt="" />
+				<img src="<?php echo $dir; ?>" class="icon" border="0" alt="<?php echo $row['title']; ?>" />
 					<?php echo $link2; ?>
 				<?php endif; ?>
 
