@@ -85,7 +85,7 @@ if ($_config['check_version']) {
 			foreach ($patch_list_array as $row_num => $patch)
 				$patch_ids .= '\'' . $patch['atutor_patch_id'] . '\', ';
 				
-			$sql = "select count(*) cnt_installed_patches from ".TABLE_PREFIX."patches " .
+			$sql = "select count(distinct atutor_patch_id) cnt_installed_patches from ".TABLE_PREFIX."patches " .
 			       "where atutor_patch_id in (" . substr($patch_ids, 0, -2) .")".
 			       " and status like '%Installed'";
 		
@@ -93,7 +93,7 @@ if ($_config['check_version']) {
 			$row = mysql_fetch_assoc($result);
 			
 			$cnt = count($patch_list_array) - $row['cnt_installed_patches'];
-			
+
 			if ($cnt > 0)
 			{
 		?>
