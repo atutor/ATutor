@@ -1,4 +1,17 @@
 <?php
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/* http://atutor.ca                                                     */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+// $Id: index_admin.php 7208 2008-02-08 16:07:24Z cindy $
+
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
@@ -232,7 +245,7 @@ if ($patch_id > 0)
 			$feedbacks[] = _AT('remove_write_permission');
 			
 			foreach($remove_permission_files as $remove_permission_file)
-				if ($remove_permission_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $remove_permission_file . "</strong><br>";
+				if ($remove_permission_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $remove_permission_file . "</strong><br />";
 
 			$notes = '<form action="'. $_SERVER['PHP_SELF'].'?patch_id='.$patch_id.'" method="post" name="remove_permission">
 		  <div class="row buttons">
@@ -259,7 +272,7 @@ if ($patch_id > 0)
 				$feedbacks[] = _AT('patcher_show_backup_files');
 				
 				foreach($backup_files as $backup_file)
-					if ($backup_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $backup_file . "</strong><br>";
+					if ($backup_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $backup_file . "</strong><br />";
 			}
 		}
 
@@ -272,7 +285,7 @@ if ($patch_id > 0)
 				$feedbacks[] = _AT('patcher_show_patch_files');
 				
 				foreach($patch_files as $patch_file)
-					if ($patch_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $patch_file . "</strong><br>";
+					if ($patch_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $patch_file . "</strong><br />";
 					
 			}
 		}

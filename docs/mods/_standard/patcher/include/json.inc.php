@@ -1,4 +1,16 @@
 <?php
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/* http://atutor.ca                                                     */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+
 // my simple JSON encode/decode function, similar to PHP5.2 
 function json_encode_result($phpdata) {
 	if(gettype($phpdata) == "resource") 

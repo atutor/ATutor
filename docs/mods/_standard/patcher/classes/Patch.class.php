@@ -1,14 +1,14 @@
 <?php
 /************************************************************************/
-/* ATutor																*/
+/* ATutor                                                               */
 /************************************************************************/
 /* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/* http://atutor.ca                                                     */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id: Patch.class.php 7208 2008-02-08 16:07:24Z cindy $
 
@@ -250,12 +250,12 @@ class Patch {
 			
 			foreach($this->need_access_to_folders as $folder)
 			{
-				$this->errors[0] .= '<strong>'. $folder . "</strong><br>";
+				$this->errors[0] .= '<strong>'. $folder . "</strong><br />";
 			}
 
 			foreach($this->need_access_to_files as $file)
 			{
-				$this->errors[0] .= '<strong>'. $file . "</strong><br>";
+				$this->errors[0] .= '<strong>'. $file . "</strong><br />";
 			}
 
 			$notes = '<form action="'. $_SERVER['PHP_SELF'].'?id='.$id.'&who='. $who .'" method="post" name="skip_files_modified">
@@ -370,19 +370,19 @@ class Patch {
 			{
 				if (!file_exists($patch_file['location'] . $patch_file['name']))
 				{
-					$not_exist_files .= $patch_file['location'] . $patch_file['name'] . '<br>';
+					$not_exist_files .= $patch_file['location'] . $patch_file['name'] . '<br />';
 					$has_not_exist_files = true;
 				}
 				else if ($this->isFileModified($patch_file['location'], $patch_file['name']))
 				{
 					if ($patch_file['action']=='overwrite')
 					{
-						$overwrite_files .= realpath($patch_file['location'] . $patch_file['name']) . '<br>';
+						$overwrite_files .= realpath($patch_file['location'] . $patch_file['name']) . '<br />';
 						$overwrite_modified_files = true;
 					}
 					if ($patch_file['action']=='alter')
 					{
-						$alter_files .= realpath($patch_file['location'] . $patch_file['name']) . '<br>';
+						$alter_files .= realpath($patch_file['location'] . $patch_file['name']) . '<br />';
 						$alter_modified_files = true;
 					}
 				}
