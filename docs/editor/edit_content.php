@@ -363,7 +363,7 @@ if (isset($_POST['upload'])) {
 										urlencode($_FILES['uploadedfile']['name']), 
 										$_GET['popup'],
 										SEP);
-						$msg->addFeedback($f);
+						//$msg->addFeedback($f);
 		
 					} /* else */
 
