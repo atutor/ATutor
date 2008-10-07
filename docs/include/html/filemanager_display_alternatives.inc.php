@@ -316,7 +316,7 @@ while (false !== ($file = readdir($dir)) ) {
 
 		$files[$file1] .= '<a href="'.$get_file.$pathext.urlencode($filename).'">'.$file.'</a>';
 
-		if ($ext == 'zip') {
+/*		if ($ext == 'zip') {
 			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext=' . urlencode($pathext) . SEP . 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">'."\n";
 			$files[$file1] .= '<img src="'.$_base_href.'images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="img-size-fm3" />'."\n";
 			$files[$file1] .= '</a>';
@@ -327,7 +327,7 @@ while (false !== ($file = readdir($dir)) ) {
 			$files[$file1] .= '<img src="'.$_base_href.'images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'" height="15" width="18" class="img-size-fm4" />'."\n";
 			$files[$file1] .= '</a>';
 		}
-
+*/
 		$files[$file1] .= '&nbsp;</label></td></tr>'."\n";
 		
 	}
