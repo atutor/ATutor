@@ -15,6 +15,8 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
+require_once('classes/PatchListParser.class.php');
+require_once('include/common.inc.php');
 
 set_time_limit(0);
 
@@ -68,8 +70,6 @@ if ($_POST['no'])
 	exit;
 }
 
-require_once('classes/PatchListParser.class.php');
-require_once('include/common.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 if (trim($_POST['who']) != '') $who = trim($_POST['who']);
@@ -77,26 +77,32 @@ elseif (trim($_REQUEST['who']) != '') $who = trim($_REQUEST['who']);
 else $who = "public";
 
 // check the connection to server update.atutor.ca
-$update_server = "update.atutor.ca"; 
-$connection_test_file = "http://" . $update_server . '/index.php';
+$update_server = "http://update.atutor.ca"; 
+$connection_test_file = $update_server . '/index.php';
 $connection = @file_get_contents($connection_test_file);
 
 if (!$connection) 
 {
-	print '<span style="color: red"><b>Error: Cannot connect to patch server: '. $update_server . '</b></span>';
-	exit;
+	$infos = array('CANNOT_CONNECT_PATCH_SERVER', $update_server);
+	$msg->addInfo($infos);
+	$server_connected = false;
 }
+else
+	$server_connected = true;
 
-// get patch list
-$patch_folder = "http://" . $update_server . '/patch/' . str_replace('.', '_', VERSION) . '/';
-
-$patch_list_xml = @file_get_contents($patch_folder . 'patch_list.xml');
-
-if ($patch_list_xml) 
+// get patch list if successfully connect to patch server
+if ($server_connected)
 {
-	$patchListParser =& new PatchListParser();
-	$patchListParser->parse($patch_list_xml);
-	$patch_list_array = $patchListParser->getMyParsedArrayForVersion(VERSION);
+	$patch_folder = $update_server . '/patch/' . str_replace('.', '_', VERSION) . '/';
+	
+	$patch_list_xml = @file_get_contents($patch_folder . 'patch_list.xml');
+	
+	if ($patch_list_xml) 
+	{
+		$patchListParser =& new PatchListParser();
+		$patchListParser->parse($patch_list_xml);
+		$patch_list_array = $patchListParser->getMyParsedArrayForVersion(VERSION);
+	}
 }
 // end of get patch list
 
@@ -297,15 +303,12 @@ if ($patch_id > 0)
 	}
 }
 
-$msg->printErrors();
-
+$msg->printAll();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">
 
-<?php 
-?>
 <table class="data" summary="" style="width: 100%" rules="cols">
 <thead>
 	<tr>
@@ -389,7 +392,6 @@ else
 				$array_id++;
 		}
 	}
-
 ?>
 </tbody>
 <tfoot>

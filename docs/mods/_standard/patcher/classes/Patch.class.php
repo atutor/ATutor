@@ -43,6 +43,7 @@ class Patch {
 	var $patch_suffix;                    // suffix appended for patch files copied from update.atutor.ca
 	var $skipFilesModified = false;       // if set to true, report error for files that have been modified by user
 	var $module_content_dir;              // content folder used to create patch.sql
+	var $svn_server_connected;            // flag indicating if can connect to svn server, if not, consider all files manipulated by patch as modified
 
 	// constant, URL of user's ATutor release version in SVN 
 	var $svn_tag_folder = 'http://atutorsvn.atrc.utoronto.ca/repos/atutor/tags/';
@@ -90,12 +91,21 @@ class Patch {
 	*/
 	function applyPatch() 
 	{
+		global $msg;
+		
 		// Checks on 
-		// 1. if svn server is up
+		// 1. if svn server is up. If not, consider all files manipulated by patch as modified
 		// 2. if the local file is customized by user
 		// 3. if script has write priviledge on local file/folder
 		// 4. if dependent patches have been installed
-		if (!$this->pingDomain($this->svn_tag_folder)) return false;
+		if (!$this->pingDomain($this->svn_tag_folder)) 
+		{
+			$msg->addInfo('CANNOT_CONNECT_SVN_SERVER');
+			$msg->printInfos();
+			$this->svn_server_connected = false;
+		}
+		else
+			$this->svn_server_connected = true;
 		
 		if (!$this->checkDependentPatches()) return false;
 
@@ -433,6 +443,8 @@ class Patch {
 	{
 		global $db;
 
+		if (!$this->svn_server_connected) return true;
+		
 		$svn_file = $this->svn_tag_folder . 'atutor_' . str_replace('.', '_', VERSION) .
 		            str_replace(substr($this->relative_to_atutor_root, 0, -1), '' , $folder) .$file;
 		$local_file = $folder.$file;
@@ -676,9 +688,8 @@ class Patch {
     $file = @fopen ($domain, 'r');
 
     if (!$file) 
-    {
     	return false;
-    }
+
     return true;
 	}
 
