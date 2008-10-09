@@ -414,7 +414,7 @@ class Backup {
 				if (($row = @fgetcsv($fp, 70000)) !== false)
 				{
 					$sql = "UPDATE ".TABLE_PREFIX."courses 
-					           SET banner = '". $row[0]. "' 
+					           SET banner = '". mysql_real_escape_string($row[0]). "' 
 					         WHERE course_id = ".$this->course_id;
 					$result = mysql_query($sql,$db) or die(mysql_error());
 				}
