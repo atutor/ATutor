@@ -143,3 +143,4 @@ CREATE TABLE `guests` (
 ) TYPE = MYISAM;
 
 ALTER TABLE `tests_results` MODIFY member_id VARCHAR(10);
+ALTER TABLE `tests` ADD COLUMN `show_guest_form` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `failfeedback`;

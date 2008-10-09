@@ -802,6 +802,7 @@ CREATE TABLE `tests` (
   `passpercent` MEDIUMINT NOT NULL default '0',
   `passfeedback` TEXT NOT NULL,
   `failfeedback` TEXT NOT NULL,
+  `show_guest_form` TINYINT(1) UNSIGNED NOT NULL default '0',
   PRIMARY KEY  (`test_id`)
 ) TYPE=MyISAM;
 
