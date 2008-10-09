@@ -2,7 +2,7 @@
 
 $sql = array();
 
-$sql['tests'] = 'SELECT test_id, title, format, start_date, end_date, randomize_order, num_questions, instructions, content_id, result_release, random, difficulty, num_takes, anonymous, out_of, guests, display, description, passscore, passpercent, passfeedback, failfeedback FROM '.TABLE_PREFIX.'tests WHERE course_id=? ORDER BY test_id ASC';
+$sql['tests'] = 'SELECT test_id, title, format, start_date, end_date, randomize_order, num_questions, instructions, content_id, result_release, random, difficulty, num_takes, anonymous, out_of, guests, display, description, passscore, passpercent, passfeedback, failfeedback, show_guest_form FROM '.TABLE_PREFIX.'tests WHERE course_id=? ORDER BY test_id ASC';
 
 $sql['tests_questions_categories'] = 'SELECT category_id, title FROM '.TABLE_PREFIX.'tests_questions_categories WHERE course_id=?';
 
@@ -42,6 +42,7 @@ function tests_convert($row, $course_id, $table_id_map, $version) {
 	$new_row[20]  = $row[19];
 	$new_row[21]  = $row[20];
 	$new_row[22]  = $row[21];
+	$new_row[23]  = $row[22];
 	return $new_row;
 }
 
