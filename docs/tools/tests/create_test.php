@@ -38,6 +38,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['num_takes']    = intval($_POST['num_takes']);
 	$_POST['anonymous']    = intval($_POST['anonymous']);
 	$_POST['allow_guests'] = $_POST['allow_guests'] ? 1 : 0;
+	$_POST['show_guest_form'] = $_POST['show_guest_form'] ? 1 : 0;
 	$_POST['instructions'] = $addslashes($_POST['instructions']);
 	$_POST['display']	   = intval($_POST['display']);
 
@@ -148,7 +149,8 @@ if (isset($_POST['cancel'])) {
              anonymous,
              out_of,
              guests,
-             display)" .
+             display,
+             show_guest_form)" .
 		       "VALUES 
 		        (NULL, 
 		         $_SESSION[course_id], 
@@ -172,7 +174,8 @@ if (isset($_POST['cancel'])) {
 		         $_POST[anonymous], 
 		         '', 
 		         $_POST[allow_guests], 
-		         $_POST[display])";
+		         $_POST[display],
+		         $_POST[show_guest_form])";
 
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);
@@ -299,14 +302,25 @@ function disable_texts (name) {
 			if ($_POST['allow_guests'] == 1) {
 				$y = 'checked="checked"';
 				$n = '';
+				$disable_show_guest_form = '';
 			} else {
 				$y = '';
 				$n = 'checked="checked"';
+				$disable_show_guest_form = 'disabled="disabled"';
 			}
 		?>
 
-		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> /><label for="allow_guestsN"><?php echo _AT('no'); ?></label> 
-		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
+		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> onfocus="document.form.show_guest_form.checked=false; document.form.show_guest_form.disabled=true;" /><label for="allow_guestsN"><?php echo _AT('no'); ?></label> 
+		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> onfocus="document.form.show_guest_form.disabled=false;" /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
+    <br />
+		<?php 
+			if ($_POST['show_guest_form'] == 1)
+				$y = 'checked="checked"';
+			else
+				$y = '';
+		?>
+
+		<input type="checkbox" name="show_guest_form" id="show_guest_form" value="1" <?php echo $y . ' '. $disable_show_guest_form; ?> /><label for="show_guest_form"><?php echo _AT('show_guest_form'); ?></label> 
 	</div>
 
 	<div class="row">

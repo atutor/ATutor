@@ -40,6 +40,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['anonymous']			= intval($_POST['anonymous']);
 	$_POST['display']			= intval($_POST['display']);
 	$_POST['allow_guests']      = $_POST['allow_guests'] ? 1 : 0;
+	$_POST['show_guest_form']   = $_POST['show_guest_form'] ? 1 : 0;
 	$_POST['instructions']      = $addslashes($_POST['instructions']);
 
 	/* this doesn't actually get used: */
@@ -164,6 +165,7 @@ if (isset($_POST['cancel'])) {
 			            num_takes=$_POST[num_takes], 
 			            anonymous=$_POST[anonymous], 
 			            guests=$_POST[allow_guests], 
+			            show_guest_form=$_POST[show_guest_form],
 			            out_of=$total_weight, 
 			            display=$_POST[display] 
 			        WHERE test_id=$tid 
@@ -315,14 +317,25 @@ function disable_texts (name) {
 			if ($_POST['allow_guests'] == 1) {
 				$y = 'checked="checked"';
 				$n = '';
+				$disable_show_guest_form = '';
 			} else {
 				$y = '';
 				$n = 'checked="checked"';
+				$disable_show_guest_form = 'disabled="disabled"';
 			}
 		?>
 
-		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> /><label for="allow_guestsN"><?php echo _AT('no'); ?></label> 
-		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
+		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> onfocus="document.form.show_guest_form.checked=false; document.form.show_guest_form.disabled=true;" /><label for="allow_guestsN"><?php echo _AT('no'); ?></label> 
+		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> onfocus="document.form.show_guest_form.disabled=false;" /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
+    <br />
+		<?php 
+			if ($_POST['show_guest_form'] == 1)
+				$y = 'checked="checked"';
+			else
+				$y = '';
+		?>
+
+		<input type="checkbox" name="show_guest_form" id="show_guest_form" value="1" <?php echo $y . ' '. $disable_show_guest_form; ?> /><label for="show_guest_form"><?php echo _AT('show_guest_form'); ?></label> 
 	</div>
 
 	<div class="row">

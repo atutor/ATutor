@@ -119,7 +119,7 @@ if (!$test_row['random']) {
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo $test_row['title']; ?></legend><div class="row">
 
-<?php if ($test_row['guests'] && !$_SESSION['member_id']): ?>
+<?php if ($test_row['guests'] && $test_row['show_guest_form'] && !$_SESSION['member_id']): ?>
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("test_description"); ?></legend><div class="row">
 <?php endif; ?>
 	<table>
@@ -174,7 +174,7 @@ if (!$test_row['random']) {
 	</fieldset>
 <?php endif; ?>
 
-<?php if (($test_row['guests']) && !$_SESSION['member_id']): ?>
+<?php if (($test_row['guests']) && $test_row['show_guest_form'] && !$_SESSION['member_id']): ?>
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("guest_information").' ('._AT('optional').')'; ?></legend><div class="row">
 
 	<table class="none" width="100%">
