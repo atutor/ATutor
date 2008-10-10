@@ -13,6 +13,7 @@
 // $Id$
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
+require(AT_INCLUDE_PATH.'classes/A4a/A4aExport.class.php');
 
 /* content id of an optional chapter */
 $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : 0;
@@ -52,6 +53,10 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	$course_id = $c;
 
 } else {
+	$use_a4a = false;
+	if (isset($_REQUEST['to_a4a'])){
+		$use_a4a = true;
+	}
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$course_id = $_SESSION['course_id'];
 }
@@ -202,6 +207,7 @@ $test_ids = array();	//global array to store all the test ids
 
 /* generate the IMS QTI resource and files */
 /*
+/* in print_organizations
 foreach ($content[0] as $content_box){
 	$content_test_rs = $contentManager->getContentTestsAssoc($content_box['content_id']);	
 	while ($content_test_row = mysql_fetch_assoc($content_test_rs)){

@@ -56,7 +56,7 @@ function print_organizations($parent_id,
 	global $used_glossary_terms, $course_id, $course_language_charset, $course_language_code;
 	static $paths, $zipped_files;
 	global $glossary;
-	global $test_zipped_files;
+	global $test_zipped_files, $use_a4a;
 
 	$space  = '    ';
 	$prefix = '                    ';
@@ -168,6 +168,19 @@ function print_organizations($parent_id,
 					}
 				}
 			}
+
+			/* generate the a4a files */
+			if ($use_a4a == true){
+				$a4aExport = new A4aExport($content['content_id']);
+				$secondary_files = $a4aExport->getAllSecondaryFiles();
+				$a4a_xml = $a4aExport->exportA4a();
+				$a4a_xml_filename = 'a4a_'.$content['content_id'].'.xml';
+				$zipfile->add_file($a4a_xml, $a4a_xml_filename);	
+				$my_files[] = $a4a_xml_filename;
+				$content_files .= str_replace('{FILE}', $a4a_xml_filename, $ims_template_xml['xml']);	
+				//add a4a files to the archieve
+				$my_files = array_merge($my_files, $secondary_files);
+			}
 			
 			/* handle @import */
 			$import_files = get_import_files($content['text']);
@@ -203,10 +216,12 @@ function print_organizations($parent_id,
 					$file_info = stat( $file_path );
 
 					//condition checks if the file has been added, so then the test won't be added to all the subchildren
-					//leads to normal iamges not capable to be extracted.
+					//leads to normal images not capable to be extracted.
 					if (is_array($test_zipped_files) && !in_array($file, $test_zipped_files) && file_exists($file_path)){
 						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
 						$test_zipped_files[] = $content['content_path'] . $file;
+					} elseif (!is_array($test_zipped_files) && file_exists($file_path)){
+						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
 					}
 
 					$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);

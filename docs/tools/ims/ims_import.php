@@ -19,6 +19,7 @@ require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'lib/qti.inc.php'); 
 //require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
+require(AT_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
 
 /* make sure we own this course that we're exporting */
 authenticate(AT_PRIV_CONTENT);
@@ -72,6 +73,9 @@ $test_message = '';
 			} elseif (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
+			} elseif (	isset($_POST['allow_a4a_import']) && isset($items[$current_identifier]) 
+						&& preg_match('/((.*)\/)*a4a\_[0-9]+\.xml$/', $attrs['href'])) {
+				$items[$current_identifier]['a4a'] = $attrs['href'];
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
@@ -634,13 +638,10 @@ foreach ($items as $item_id => $content_info)
 
 			//Get the XML file out and start importing them into our database.
 			//TODO: See question_import.php 287-289.
-			//BUG: No file associated.
 			$qids = $qti_import->importQuestions($test_attributes);
 
 			//import test
 			$tid = $qti_import->importTest();
-
-			//debug($qti_import->weights, 'weights');
 
 			//associate question and tests
 			foreach ($qids as $order=>$qid){
@@ -668,6 +669,14 @@ foreach ($items as $item_id => $content_info)
 			}
 		}
 	}
+
+	/* get the a4a related xml */
+	if (isset($items[$item_id]['a4a']) && $items[$item_id]['a4a'] != '') {
+		$a4a_xml = $import_path.$items[$item_id]['a4a'];
+		$a4a_import = new A4aImport($items[$item_id]['real_content_id']);
+		$a4a_import->importA4a($a4a_xml);
+	}
+	
 }
 
 
