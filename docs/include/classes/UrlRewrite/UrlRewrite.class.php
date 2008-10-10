@@ -181,7 +181,15 @@ class UrlRewrite  {
 	 */
 	function convertToPrettyUrl($course_id, $url){
 		global $_config, $db;
-		list($front, $end) = preg_split('/\?/', $url);
+		$pretty_url = '';
+
+		if (strpos($url, '?')!==FALSE){
+			list($front, $end) = preg_split('/\?/', $url);
+		} else {
+			$front = $url;
+			$end = '';
+		}
+
 		$front_array = explode('/', $front);
 
 		//find out what kind of link this is, pretty url? relative url? or PHP_SELF url?
@@ -237,6 +245,8 @@ class UrlRewrite  {
 			$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE course_dir_name='$course_id'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
+			$course_orig = '';
+
 			if ($row['course_id']!=''){
 				$course_orig = $row['course_id'];
 			} 
@@ -266,7 +276,7 @@ class UrlRewrite  {
 					$pretty_url = $course_id.'/content';
 					//if there are other pretty url queries at the back, append it
 					//Note: this is to fix the hopping content problem between diff courses
-					if ($matches[3] != ''){
+					if (isset($matches[3]) && $matches[3] != ''){
 						$pretty_url .= $matches[3];
 					}
 					$obj =& new ContentUrl();

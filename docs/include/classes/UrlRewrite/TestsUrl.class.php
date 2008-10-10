@@ -33,6 +33,8 @@ class TestsUrl {
 	 * Construct pretty url by the given query string.
 	 */
 	function constructPrettyUrl($query){
+		$url = '';  //url to be returned
+
 		if (empty($query)){
 			return '';
 		}

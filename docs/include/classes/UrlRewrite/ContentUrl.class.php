@@ -28,6 +28,9 @@ class ContentUrl {
 	 * Construct pretty url by the given query string.
 	 */
 	function constructPrettyUrl($query){
+		$url = '';  //url to be returned
+		$bookmark = '';		//html bookmark
+
 		if (empty($query)){
 			return '';
 		}
