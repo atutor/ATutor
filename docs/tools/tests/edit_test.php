@@ -73,6 +73,20 @@ if (isset($_POST['cancel'])) {
 		$missing_fields[] = _AT('points_score');
 	}
 
+
+	/* 
+	 * If test is anonymous and have submissions, then we don't permit changes.
+	 * This addresses the following issue: http://www.atutor.ca/atutor/mantis/view.php?id=3268
+	 * TODO:	Add an extra column in test_results to remember the state of anonymous submissions.
+	 *			make changes accordingly on line 255 as well.
+	 */
+	$sql = "SELECT t.test_id, anonymous FROM ".TABLE_PREFIX."tests_results r NATURAL JOIN ".TABLE_PREFIX."tests t WHERE r.test_id = t.test_id AND r.test_id=$tid";
+	$result	= mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		//If there are submission(s) for this test, anonymous field will not be altered.
+		$_POST['anonymous'] = $row['anonymous'];
+	}
+
 	if ($missing_fields) {
 		$missing_fields = implode(', ', $missing_fields);
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
@@ -307,9 +321,26 @@ function disable_texts (name) {
 				$n = 'checked="checked"';
 			}
 		?>
-		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no'); ?></label>
-		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes'); ?></label>
+		<?php
+			// This addresses the following issue: http://www.atutor.ca/atutor/mantis/view.php?id=3268
+			// Ref: line 64
+			$sql = "SELECT t.test_id, anonymous FROM ".TABLE_PREFIX."tests_results r NATURAL JOIN ".TABLE_PREFIX."tests t WHERE r.test_id = t.test_id AND r.test_id=$tid";
+			$result	= mysql_query($sql, $db);
+			$anonymous_disabled = '';
+			if ($row = mysql_fetch_assoc($result)) {
+				//If there are submission(s) for this test, anonymous field will not be altered.
+				$anonymous_disabled = 'disabled';
+			}
+		?>
+		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> <?php echo $anonymous_disabled; ?> /><label for="anonN"><?php echo _AT('no'); ?></label>
+		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> <?php echo $anonymous_disabled; ?> /><label for="anonY"><?php echo _AT('yes'); ?></label>
+		<?php
+			if ($anonymous_disabled != ""){
+				echo '('._AT('disabled').')';
+			}
+		?>
 	</div>
+
 
 	<div class="row">
 		<?php echo _AT('allow_guests'); ?><br />
