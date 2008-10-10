@@ -166,7 +166,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 							$course_icon = 'images/courses/'.$row['icon'];
 						}
 					?>
-						<a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  $row['title']; ?>" /></a>	
+						<a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  $row['title']; ?>" /> </a>	
 					<?php } ?>
 				</dt>
 				<dd><h3 <?php echo $style_for_title; ?>><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo $row['title']; ?></a></h3></dd>
