@@ -21,10 +21,10 @@ global $db;
 
 <div class="row_alternatives" id="radio_alt">
 	<input type="radio" name="alternatives" value="1" id="single_resources" onclick="openIt(1)" <?php if (($_POST['alternatives'] != 2) || ($_GET['alternatives'] != 2)) { echo 'checked="checked"';} ?> />
-	<label for="single_resources"><?php echo _AT('define_alternatives_to_non_textual_resources');  ?></label>
+	<label for="single_resources"><?php echo _AT('define_alternatives_to_single_resources');  ?></label>
 	<br/>
 	<input type="radio" name="alternatives" value="2" id="whole_page" onclick="openIt(2)" <?php if (($_POST['alternatives'] == 2) || ($_GET['alternatives'] == 2)) { echo 'checked="checked"'; } ?> />
-	<label for="whole_page"><?php echo _AT('define_alternatives_to_textual_resources');  ?></label>
+	<label for="whole_page"><?php echo _AT('define_alternatives_to_the_whole_page');  ?></label>
 <br/><br/>
 <?php echo '<input class="button" type="submit" name="save_types_and_language" value="'._AT('save_types_and_language').'" class="button"/>'; ?>
 
@@ -205,8 +205,19 @@ global $db;
 	      			while ($row = mysql_fetch_assoc($result)) {
 						$content_id = $row[primary_resource_id];
 						}
+					//Modified by Silvia on Oct 10, 2008
+					//The whole resource page is inserted in the DB always and only as a textual resource
+					$sql_sel = "SELECT type_id FROM ".TABLE_PREFIX."resource_types WHERE type='textual'";
+					$result  = mysql_query($sql_sel, $db);	
+	      			$row     = mysql_fetch_assoc($result);
+					$sql_ins = "INSERT INTO ".TABLE_PREFIX."primary_resources_types VALUES ($content_id, $row[type_id])"; 
+	     			$result  = mysql_query($sql_ins, $db);
 	     			}
-	    		checkbox_types($content_id, 'primary', 'textual');
+				//Modified by Silvia on Oct 10, 2008
+				//In order to remove the checkboxes to declare whole page types 
+				//(it is recorded only and always as a textual resource)
+	     		
+	     		//checkbox_types($content_id, 'primary', 'textual');
 	    		
 	    		$languages = $languageManager->getAvailableLanguages();
 				echo '<label for="lang_'.$content_id.'">'._AT('primary_resource_language').'</label><br />';
@@ -228,6 +239,37 @@ global $db;
 						}
 						?>
 					</select>
+					</div>
+	
+	<div class="row">
+<?php
+$sql_alt	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id=".$content_id." order by secondary_resource_id";
+$result_alt	= mysql_query($sql_alt, $db);
+if (mysql_num_rows($result_alt) > 0) {
+	while ($alternative = mysql_fetch_assoc($result_alt)){
+	    checkbox_types($alternative['secondary_resource_id'], 'secondary', 'non_textual');
+	  	$languages = $languageManager->getAvailableLanguages();
+		echo '<label for="lang_'.$alternative['secondary_resource_id'].'">'._AT('secondary_resource_language').'</label><br />';
+		echo '<select name="lang_'.$alternative['secondary_resource_id'].'_secondary" id="lang_'.$alternative['secondary_resource_id'].'">';
+		foreach ($languages as $codes){
+			$language = current($codes);
+			$lang_code = $language->getCode();
+			$lang_native_name = $language->getNativeName();
+			$lang_english_name = $language->getEnglishName();
+			echo '<option value="'.$lang_code.'"';
+			if ($lang_code == $alternative['language_code']) 
+				echo ' selected="selected"';
+			echo '>';
+			echo $lang_english_name . ' - '. $lang_native_name; 
+			echo '</option>';
+			}
+		?>
+		</select>
+		<p><?php //delete_alternative($alternative, $cid, $current_tab); ?></p>
+		<?php
+	}
+}
+?>
 		</div>
 				
 	
@@ -269,33 +311,13 @@ if (mysql_num_rows($result_alt) > 0) {
 	while ($alternative = mysql_fetch_assoc($result_alt)){
 		echo '<label for="body_text_alt">'._AT(secondary_resource_body).'</label><br />';
 		echo '<textarea name="body_text_alt" id="body_text_alt" cols="" rows="20">'.$alternative['secondary_resource'].'</textarea>';
-	    checkbox_types($alternative['secondary_resource_id'], 'secondary', 'non_textual');
-	  	$languages = $languageManager->getAvailableLanguages();
-		echo '<label for="lang_'.$alternative['secondary_resource_id'].'">Resource language</label><br />';
-		echo '<select name="lang_'.$alternative['secondary_resource_id'].'_secondary" id="lang_'.$alternative['secondary_resource_id'].'">';
-		foreach ($languages as $codes){
-			$language = current($codes);
-			$lang_code = $language->getCode();
-			$lang_native_name = $language->getNativeName();
-			$lang_english_name = $language->getEnglishName();
-			echo '<option value="'.$lang_code.'"';
-			if ($lang_code == $alternative['language_code']) 
-				echo ' selected="selected"';
-			echo '>';
-			echo $lang_english_name . ' - '. $lang_native_name; 
-			echo '</option>';
-			}
-		?>
-		</select>
-		<p><?php //delete_alternative($alternative, $cid, $current_tab); ?></p>
-		<?php
 	}
 }else{
 	echo '<label for="body_text_alt">'._AT(secondary_resource_body).'</label><br />';
 	echo '<textarea name="body_text_alt" id="body_text_alt" cols="" rows="20">'.htmlspecialchars($_POST['body_text']).'</textarea>';
 }
-
 ?>
+
 	</div>
 	
 	<div class="row">
@@ -304,7 +326,7 @@ if (mysql_num_rows($result_alt) > 0) {
 
 	<div class="row">
 		<strong><?php echo _AT('or'); ?></strong> <?php echo _AT('paste_file'); ?><br />
-		<input type="file" name="uploadedfile_paste" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>" /><br />
+		<input type="file" name="uploadedfile_paste" class="formfield" size="20" /> <input type="submit" name="submit_file_alt" value="<?php echo _AT('upload'); ?>" /><br />
 		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
 		&middot;<?php echo _AT('edit_after_upload'); ?></small>
 	</div>
