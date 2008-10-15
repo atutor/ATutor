@@ -201,6 +201,32 @@ class A4a {
 		$result = mysql_query($sql, $db);
 	}
 
+
+	// Delete all materials associated with this content
+	function deleteA4a(){
+		global $db; 
+
+		$pri_resource_ids = array();
+
+		// Get all primary resources ID out that're associated with this content
+		$sql = 'SELECT a.primary_resource_id FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX.'primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE content_id='.$this->cid;
+		$result = mysql_query($sql);
+
+		while($row=mysql_fetch_assoc($result)){
+			$pri_resource_ids[] = $row['primary_resource_id'];
+		}
+		$glued_pri_ids = implode(",", $pri_resource_ids);
+
+		// Delete all secondary a4a
+		$sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX.'secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id IN ('.$glued_pri_ids.')';
+		$result = mysql_query($sql);
+
+		// If successful, remove all primary resources
+		if ($result){
+			$sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX.'primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE content_id='.$this->cid;
+			mysql_query($sql);
+		}
+	}
 }
 
 ?>

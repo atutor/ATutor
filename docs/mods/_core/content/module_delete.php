@@ -1,6 +1,8 @@
 <?php
 
 function content_delete($course) {
+	require(AT_INCLUDE_PATH.'classes/A4a/a4a.class.php');
+
 	global $db;
 
 	// related_content + content:
@@ -16,6 +18,10 @@ function content_delete($course) {
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$row[0]";
 		$result4 = mysql_query($sql, $db);
+
+		// Delete all AccessForAll contents 
+		$a4a = new A4a($row[0]);
+		$a4a->deleteA4a();
 	}
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE course_id=$course";
