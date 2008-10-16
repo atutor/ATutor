@@ -87,7 +87,7 @@ else
 			// get "completed date" and "time spent"
 			if ($grade <> "")
 			{
-				$sql_tr = "SELECT R.result_id, R.date_taken, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS diff FROM ".TABLE_PREFIX."tests_results R WHERE R.status=1 AND R.test_id=".$row["id"]." AND R.member_id=".$_SESSION[member_id];
+				$sql_tr = "SELECT R.result_id, R.date_taken, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS diff FROM ".TABLE_PREFIX."tests_results R WHERE R.status=1 AND R.test_id=".$row["id"]." AND R.member_id='".$_SESSION[member_id]."'";
 				$result_tr = mysql_query($sql_tr, $db) or die(mysql_error());
 				$row_tr = mysql_fetch_assoc($result_tr);
 			}

@@ -161,7 +161,7 @@ function get_member_grade($test_id, $member_id, $grade_scale_id)
 	$grade = "";
 	
 	// find out final_score, out_of
-	$sql = "SELECT t.random, t.out_of, r.result_id, r.final_score FROM ".TABLE_PREFIX."tests t, ".TABLE_PREFIX."tests_results r WHERE t.test_id=".$test_id." AND t.test_id=r.test_id AND r.member_id=".$member_id;
+	$sql = "SELECT t.random, t.out_of, r.result_id, r.final_score FROM ".TABLE_PREFIX."tests t, ".TABLE_PREFIX."tests_results r WHERE t.test_id=".$test_id." AND t.test_id=r.test_id AND r.member_id='".$member_id."'";
 	$result = mysql_query($sql, $db) or die(mysql_error());
 	$row = mysql_fetch_assoc($result);
 
