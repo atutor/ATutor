@@ -20,7 +20,7 @@ function get_test_result_id($test_id, &$max_pos) {
 	global $db;
 
 	if ($_SESSION['member_id']) {
-		$sql	= "SELECT result_id, max_pos FROM ".TABLE_PREFIX."tests_results WHERE test_id=$test_id AND member_id={$_SESSION['member_id']} AND status=0";
+		$sql	= "SELECT result_id, max_pos FROM ".TABLE_PREFIX."tests_results WHERE test_id=$test_id AND member_id='{$_SESSION['member_id']}' AND status=0";
 	} else if ($_SESSION['test_result_id']) {
 		// guest with on-going test
 		$sql	= "SELECT result_id, max_pos FROM ".TABLE_PREFIX."tests_results WHERE test_id=$test_id AND result_id={$_SESSION['test_result_id']} AND status=0";
