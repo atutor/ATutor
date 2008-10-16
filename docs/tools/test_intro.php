@@ -83,7 +83,7 @@ else if (isset($_POST['submit']))
  * If max attempted reached, then stop it.
  * @3300
  */
-$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id=".$_SESSION['member_id'];
+$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$_SESSION['member_id']."'";
 if ( (($test_row['start_date2'] > time()) || ($test_row['end_date2'] < time())) || 
    ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -96,7 +96,7 @@ if ( (($test_row['start_date2'] > time()) || ($test_row['end_date2'] < time())) 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 // get number of attempts
-$sql    = "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=$tid AND member_id={$_SESSION['member_id']}";
+$sql    = "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=$tid AND member_id='".$_SESSION['member_id']."'";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
 	$num_takes = $row['cnt'];

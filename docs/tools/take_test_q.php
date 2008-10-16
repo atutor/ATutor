@@ -76,11 +76,15 @@ if (!isset($_GET['pos'])) {
 $max_pos = 0;
 
 // get and check for a valid result_id. if there is none then get all the questions and insert them as in progress.
-// note: for guests the result_id is stored in session, but no need to really know that here.
-$result_id = get_test_result_id($tid, $max_pos);
+// note: for guests without guest information, the result_id is stored in session, but no need to really know that here;
+//       for guests with guest information, always start a new test.
+if (isset($_REQUEST['gid']))
+	$result_id = 0;
+else
+	$result_id = get_test_result_id($tid, $max_pos);
 
 // set position to allow users to return to a test they have partially completed, and continue from where they left of.
-if ($pos == 0 && $result_id > 0)
+if (!isset($_GET['pos']) && $result_id > 0)
 {
 	$sql = "SELECT COUNT(*) pos FROM ".TABLE_PREFIX."tests_answers WHERE result_id = ". $result_id ." AND answer <> ''";
 	$answer_result = mysql_query($sql, $db) or die(mysql_error());

@@ -44,7 +44,7 @@ if ($test_row['display']) {
 
 $out_of = $test_row['out_of'];
 
-$sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id=".$_SESSION['member_id'];
+$sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$_SESSION['member_id']."'";
 $takes_result= mysql_query($sql, $db);
 $takes = mysql_fetch_assoc($takes_result);	
 
@@ -59,8 +59,8 @@ if ( (($test_row['start_date'] > time()) || ($test_row['end_date'] < time())) ||
 
 if (isset($_POST['submit'])) {
 	// insert
-	if ($_SESSION['member_id']) {
-		$sql	= "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid AND member_id=$_SESSION[member_id] AND status=0";
+	if (!isset($_POST['gid'])) {
+		$sql	= "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid AND member_id='$_SESSION[member_id]' AND status=0";
 		$result	= mysql_query($sql, $db);
 		$row    = mysql_fetch_assoc($result);
 		$result_id = $row['result_id'];
@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 			$obj = TestQuestions::getQuestion($row['type']);
 			$score = $obj->mark($row);
 
-			if ($_SESSION['member_id']) {
+			if (!isset($_POST["gid"])) {
 				$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET answer='{$_POST[answers][$row[question_id]]}', score='$score' WHERE result_id=$result_id AND question_id=$row[question_id]";
 			} else {
 				$sql	= "INSERT INTO ".TABLE_PREFIX."tests_answers VALUES ($result_id, $row[question_id], 0, '{$_POST[answers][$row[question_id]]}', '$score', '')";
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
 
 	// update the final score
 	// update status to complate to fix refresh test issue.
-	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=$result_id AND member_id='$_SESSION[member_id]'";
+	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=$result_id";
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -125,7 +125,8 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 // first check if there's an 'in progress' test.
 // this is the only place in the code that makes sure there is only ONE 'in progress' test going on.
 $in_progress = false;
-$sql = "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE member_id={$_SESSION['member_id']} AND test_id=$tid AND status=0";
+$sql = "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE member_id='{$_SESSION['member_id']}' AND test_id=$tid AND status=0";
+
 $result  = mysql_query($sql);
 if ($row = mysql_fetch_assoc($result)) {
 	$result_id = $row['result_id'];
@@ -179,7 +180,7 @@ if (!$result || !$questions) {
 }
 
 // save $questions with no response, and set status to 'in progress' in test_results <---
-if ($_SESSION['member_id'] && !$in_progress) {
+if (!isset($_REQUEST['gid']) && !$in_progress) {
 	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $tid, '$_SESSION[member_id]', NOW(), '', 0, NOW(), 0)";
 	$result = mysql_query($sql, $db);
 	$result_id = mysql_insert_id($db);
@@ -208,7 +209,7 @@ if ($_SESSION['member_id'] && !$in_progress) {
 
 	<?php
 	foreach ($questions as $row) {
-		if ($_SESSION['member_id'] && !$in_progress) {
+		if (!isset($_POST["gid"]) && !$in_progress) {
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_answers VALUES ($result_id, $row[question_id], $_SESSION[member_id], '', '', '')";
 			mysql_query($sql, $db);
 		}

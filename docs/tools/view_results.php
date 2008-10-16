@@ -41,7 +41,7 @@ $is_random  = $row['random'];
 $mark_right = ' <img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" title="'._AT('correct_answer').'" />';
 $mark_wrong = ' <img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" title="'._AT('wrong_answer').'" />';
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id=$_SESSION[member_id]";
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id='$_SESSION[member_id]'";
 $result	= mysql_query($sql, $db); 
 if (!$row = mysql_fetch_assoc($result)){
 	$msg->printErrors('ITEM_NOT_FOUND');
