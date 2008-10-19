@@ -519,6 +519,8 @@ if ($current_tab == 5) {
 	   	 									$lang=$_POST['lang_'.$alt[secondary_resource_id].'_secondary'];
 											$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET language_code='$lang' WHERE secondary_resource_id=$alt[secondary_resource_id]";
 											$up 	= mysql_query($sql_up, $db);
+
+      
 		   	 							}	
 									}			
 								}
@@ -526,6 +528,10 @@ if ($current_tab == 5) {
 								$lang=$_POST['lang_'.$row[primary_resource_id].'_primary'];
 								$sql_up	= "UPDATE ".TABLE_PREFIX."primary_resources SET language_code='$lang' WHERE primary_resource_id=$row[primary_resource_id]";
 								$up 	= mysql_query($sql_up, $db);
+								/* Added feedback message after types and language are updated Greg Oct 19/08  
+
+								  */
+								 $msg->addFeedback('RESOURCE_PROPERTIES_UPDATED');
 	   	 					}
 	   	 				}
 					}
@@ -599,10 +605,12 @@ if ($current_tab == 5) {
 							   	 				$lang   = $_POST['lang_'.$alt[secondary_resource_id].'_secondary'];
 												$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET language_code='$lang' WHERE secondary_resource_id='$alt[secondary_resource_id]'";
 												$up 	= mysql_query($sql_up, $db);
+
 	   	 									}
      	 									$lang=$_POST['lang_'.$row[primary_resource_id].'_primary'];
 											$sql_up	= "UPDATE ".TABLE_PREFIX."primary_resources SET language_code='$lang' WHERE primary_resource_id='$row[primary_resource_id]'";
 											$up 	= mysql_query($sql_up, $db);
+
 	   	 								}
 									}
 								}
