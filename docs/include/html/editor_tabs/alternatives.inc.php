@@ -16,16 +16,23 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 require(AT_INCLUDE_PATH.'lib/alternatives_functions.inc.php');
 
 global $db;
-
+/*
+Edited by Greg Oct 19
+Commented out radios for full page and file alternatives
+for now
+*/
 ?>
 
 <div class="row_alternatives" id="radio_alt">
-	<input type="radio" name="alternatives" value="1" id="single_resources" onclick="openIt(1)" <?php if (($_POST['alternatives'] != 2) || ($_GET['alternatives'] != 2)) { echo 'checked="checked"';} ?> />
+	<input type="hidden" name="alternatives" value="1" id="single_resources" onclick="openIt(1)" />
+
+
+<!--	<input type="radio" name="alternatives" value="1" id="single_resources" onclick="openIt(1)" <?php if (($_POST['alternatives'] != 2) || ($_GET['alternatives'] != 2)) { echo 'checked="checked"';} ?> />
 	<label for="single_resources"><?php echo _AT('define_alternatives_to_single_resources');  ?></label>
 	<br/>
 	<input type="radio" name="alternatives" value="2" id="whole_page" onclick="openIt(2)" <?php if (($_POST['alternatives'] == 2) || ($_GET['alternatives'] == 2)) { echo 'checked="checked"'; } ?> />
 	<label for="whole_page"><?php echo _AT('define_alternatives_to_the_whole_page');  ?></label>
-<br/><br/>
+<br/><br/> -->
 <?php echo '<input class="button" type="submit" name="save_types_and_language" value="'._AT('save_types_and_language').'" class="button"/>'; ?>
 
 
