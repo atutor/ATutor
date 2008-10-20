@@ -1,7 +1,7 @@
 var demo = demo || {};
 
 demo.initMyLayout = function (basepath) {
-	var myLayoutContainer = fluid.utils.jById ("contentwrapper");
+	/*var myLayoutContainer = fluid.utils.jById ("contentwrapper");
 	
 	var myOrderableFinder = function () {
 	return jQuery ("div[id^=atutor]", myLayoutContainer);
@@ -24,5 +24,30 @@ demo.initMyLayout = function (basepath) {
 				});     
 		} });
 	
-	return new fluid.Reorderer (myLayoutContainer, findItems, layoutHandler);
+	return new fluid.Reorderer (myLayoutContainer, findItems, layoutHandler);	
+	*/
+
+	var myReorderableLayout = fluid.reorderLayout ("body", {
+		selectors: {
+			columns: "#contentwrapper",
+		    modules: "div[id^=atutor]",
+			grabHandle: "div[id^=toolbar]"
+		},
+		listeners: {
+			//onShowKeyboardDropWarning: null,
+			//onMove: null,
+			afterMove: function(){ 
+			//save the state to the db
+			var myDivs = jQuery ("div[id^=atutor]", "#contentwrapper");
+			jQuery.post(basepath+"themes/fluid/save_state.php", { 'left':myDivs[0].id },
+				function(data) { 
+					//alert(data);
+				});     
+			}
+		}
+		
+	});
+
+
+
 };
