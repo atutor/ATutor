@@ -74,16 +74,8 @@ global $system_courses, $_custom_css,$db;
 	<?php endif; ?>
 	<?php echo $this->custom_css; ?>
 
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/jquery-1.2.3.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/jquery.keyboard-a11y.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/jquery.dimensions.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/ui.base.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/ui.draggable.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/ui.droppable.js"></script>
-	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/jquery/jARIA.js"></script>
+	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/Fluid-all.js"></script>
 
-	<script language="JavaScript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/fluid/Fluid.js" type="text/javascript"></script>
-	<script language="JavaScript" src="<?php echo $this->base_path; ?>jscripts/fluid-components/js/fluid/Reorderer.js" type="text/javascript"></script>
 
 	<script type="text/javascript">jQuery.noConflict();</script> 
 	
@@ -339,19 +331,18 @@ function toggleToc(objId) {
 		<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu) { ?> width:99%; <?php } else { ?> width:76.5%; <?php } ?>
 	">
 	
+	<div id="toolbar.content" class="grab" style="padding-top:4px; float:left"><img src="<?php echo $this->img; ?>layers.png" style="float:left;" alt="<?php echo _AT('drag'); ?>" /></div>
+	<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
+			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+	<?php endif; ?>
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 		<div id="breadcrumbs">
-		<div id="toolbar.content" class="grab"><img src="<?php echo $this->img; ?>layers.png" style="float:left;" alt="<?php echo _AT('drag'); ?>" /></div>
-			&nbsp;
 			<?php foreach ($this->path as $page): ?>
 				<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> > 
 			<?php endforeach; ?> <?php echo $this->page_title; ?>
 		</div>
 	<?php } ?>
-		<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
-			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
-		<?php endif; ?>
-
+		
 		<?php if ($_SESSION['course_id'] > 0): ?>
 		<a href=""></a>
 		<div id="sequence-links">

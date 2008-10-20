@@ -434,14 +434,9 @@ a#back-to {
 
 div#breadcrumbs {
     /* The path bar, including breadcrumbs and add to favorites */
-    background-color:#efefef;
-    border: 1px solid #8b8b8b;
-    display:block;
     width:100%;
-	clear:both;
     font-size: 0.85em;
-	padding:3px 0px 3px 0px;
-	float:left;
+	padding-top:4px;
 }
 h2.page-title {
 	margin-bottom: 10px;
