@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 div.input-form {
 	width: 90%; 
 	margin-left:auto; 
@@ -35,6 +43,7 @@ div.input-form textarea {
 	padding: 2px;
 	margin-right: 2px;
 }
+
 div.input-form input[type=text], div.input-form input[type=password] {
 	border: 1px solid #595241;
 	padding: 2px;
