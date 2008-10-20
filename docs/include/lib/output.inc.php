@@ -847,7 +847,7 @@ function get_content_table($content)
 			
 			if ($i == 0)
 			{
-				$content_table = "<div id=\"toc\">\n<strong>". _AT("table_of_contents")."</strong>\n";
+				$content_table = "<div id=\"toc\">\n<fieldset id=\"toc\"><legend>". _AT("table_of_contents")."</legend>\n";
 			}
 
 			$content = str_replace($found_headers[$i][0], '<div id="'.$div_id.'">'.$found_headers[$i][0].'</div>', $content);
@@ -855,7 +855,7 @@ function get_content_table($content)
 
 			if ($i == count($found_headers) - 1)
 			{
-				$content_table .= "</div><br />";
+				$content_table .= "</fieldset></div><br />";
 			}
 		}
 		return array($content_table, $content);
