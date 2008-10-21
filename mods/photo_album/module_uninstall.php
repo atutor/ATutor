@@ -22,7 +22,7 @@
  */
  
 /**
- * @desc the line below safe-guards this file from being accessed directly from a web browser. It will only execute if required from within an ATutor script, in our case the Module::install() method.
+ * @desc the line below safe-guards this file from being accessed directly from a web browser. It will only execute if required from within an ATutor script, in our case the Module::uninstall() method.
  */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (!defined('AT_MODULE_PATH')) { exit; }
@@ -41,33 +41,6 @@ foreach ($pa_array as $directory){
 	
 		if (!clr_dir($directory))
 			$msg->addError(array('MODULE_UNINSTALL', '<li>'.$directory.' can not be removed. Please manually remove it.</li>'));
-	}
-}
-
-/**
- * check if GD is installed and is version 2 or higher
- */
-if (! extension_loaded('gd')) {
-	$msg->addError(array('MODULE_INSTALL', '<li>This module requires the GD Library. Please <a href="http://www.boutell.com/gd/" title="Link to GD web site">install it</a>.</li>'));
-} else {
-	if (function_exists('gd_info')) {
-		// use gd_info if possible...
-		$gd_ver_info = gd_info();
-		preg_match('/\d/', $gd_ver_info['GD Version'], $match);
-		if ($match[0] < 2) {
-			$msg->addError(array('MODULE_INSTALL', '<li>This module requires GD version 2 or higher. Please <a href="http://www.boutell.com/gd/" title="Link to GD web site">install it</a>.</li>'));
-		}
-	} else {
-		// ...otherwise use phpinfo().
-		ob_start();
-		phpinfo(8);
-		$info = ob_get_contents();
-		ob_end_clean();
-		$info = stristr($info, 'gd version');
-		preg_match('/\d/', $info, $match);
-		if ($match[0] < 2) {
-			$msg->addError(array('MODULE_INSTALL', '<li>This module requires the GD Library version 2 or higher. Please <a href="http://www.boutell.com/gd/" title="Link to GD web site">install it</a>.</li>'));
-	   }
 	}
 }
 

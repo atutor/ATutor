@@ -1,10 +1,29 @@
 <?php
 /*******
+ * module_uninstall.php performs reversion of module_install.php
+ */
+
+/*******
  * the line below safe-guards this file from being accessed directly from
  * a web browser. It will only execute if required from within an ATutor script,
  * in our case the Module::uninstall() method.
  */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+/********
+ * the following code is used for creating a module-specific directory.
+ * it generates appropriate error messages to aid in its creation.
+ */
+$directory = AT_INCLUDE_PATH .'../mods/phpdoc2/apidoc';
+$directory_path = '/mods/phpdoc2/apidoc';
+
+// check if the directory exists
+if (is_dir($directory)) {
+	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
+	if (!clr_dir($directory))
+		$msg->addError(array('MODULE_UNINSTALL', '<li>'.$directory_path.' can not be removed. Please manually remove it.</li>'));
+}
 
 /******
  * the following code checks if there are any errors (generated previously)

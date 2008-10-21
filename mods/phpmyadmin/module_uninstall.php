@@ -6,11 +6,6 @@
  */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-/******
- * the following code checks if there are any errors (generated previously)
- * then uses the SqlUtility to run reverted database queries of module.sql, 
- * ie. "create table" statement in module.sql is run as drop according table.
- */
 if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
 	// deal with the SQL file:
 	require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
