@@ -134,9 +134,9 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 
 	<div class="row">
 		<input type="checkbox" name="allow_test_import" id="allow_test_import" checked="checked" />
-		<label for="allow_test_import"><?php echo _AT('allow_test_import'); ?></label> <br />
+		<label for="allow_test_import"><?php echo _AT('test_import_package'); ?></label> <br />
 		<input type="checkbox" name="allow_a4a_import" id="allow_a4a_import" checked="checked" />
-		<label for="allow_a4a_import"><?php echo _AT('allow_a4a_import'); ?></label>		
+		<label for="allow_a4a_import"><?php echo _AT('a4a_import_package'); ?></label>		
 	</div>
 	
 	<div class="row">
