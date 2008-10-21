@@ -69,6 +69,16 @@ if (!is_dir($content_dir.'/patcher')) {
 	$errors[] = '<strong>'.$content_dir.'/patcher</strong> directory is not writable.';
 }
 ////////////////////////
+
+// Create the module content directory
+if (!is_dir($content_dir.'/module')) {
+	if (!@mkdir($content_dir.'/module')) {
+		$errors[] = '<strong>'.$content_dir.'/module</strong> directory does not exist and cannot be created.';  
+	}
+} else if (!is_writable($content_dir.'/module')){
+	$errors[] = '<strong>'.$content_dir.'/module</strong> directory is not writable.';
+}
+////////////////////////
 echo '<br />';
 if (isset($progress)) {
 	print_feedback($progress);

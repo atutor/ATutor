@@ -23,6 +23,7 @@ $args = '';
 if (isset($_GET['enabled'])  && $_GET['enabled'])  {  $args .= 'enabled=1';      }
 if (isset($_GET['disabled']) && $_GET['disabled']) {  $args .= SEP.'disabled=1'; }
 if (isset($_GET['missing'])  && $_GET['missing'])  {  $args .= SEP.'missing=1';  }
+if (isset($_GET['partially_uninstalled'])  && $_GET['partially_uninstalled'])  {  $args .= SEP.'partially_uninstalled=1';  }
 if (isset($_GET['core'])     && $_GET['core'])     {  $args .= SEP.'core=1';     }
 if (isset($_GET['standard']) && $_GET['standard']) {  $args .= SEP.'standard=1'; }
 if (isset($_GET['extra'])    && $_GET['extra'])    {  $args .= SEP.'extra=1';    }
@@ -34,7 +35,7 @@ if (isset($_GET['reset_filter'])) {
 
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	$module =& $moduleFactory->getModule($_GET['mod_dir']);
-	if (!$module->isEnabled() && !$module->isCore() && !$module->isMissing()) {
+	if (!$module->isEnabled() && !$module->isCore() && !$module->isMissing() && !$module->isPartiallyUninstalled()) {
 		$module->enable();
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
@@ -48,6 +49,8 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		$msg->addError('DISABLE_CORE_MODULE');
 	} else if ($module->isMissing()) {
 		$msg->addError('DISABLE_MISSING_MODULE');
+	} else if ($module->isPartiallyUninstalled()) {
+		$msg->addError('DISABLE_PARTIALLY_UNINSTALLED_MODULE');
 	} else if ($module->isEnabled()) {
 		$module->disable();
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -58,7 +61,35 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	header('Location: details.php?mod='.$_GET['mod_dir'] . SEP . $args);
 	exit;
 
-} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['details'])) {
+} else if (isset($_GET['mod_dir'], $_GET['uninstall'])) {
+	$module =& $moduleFactory->getModule($_GET['mod_dir']);
+
+	$module_folder = '../../mods/'.$_GET['mod_dir'];
+	// check if the module has been un-installed
+	if (!file_exists($module_folder))
+	{
+		$msg->addError('ALREADY_UNINSTALLED');
+	}
+
+	// check if the module is installed via "Available Extra Modules"
+	// which are the modules can be un-installed 
+	if (!file_exists($module_folder.'/module_uninstall.php') || !is_writable($module_folder))
+	{
+		$msg->addError('CANNOT_UNINSTALL_MANUAL_MODULE');
+	}
+
+	// only extra modules can be uninstalled
+	if (!$module->isExtra()) {
+		$msg->addError('ONLY_UNINSTALL_EXTRA_MODULE');
+	} 
+	
+  if (!$msg->containsErrors())
+	{
+		header('Location: module_uninstall_step_1.php?mod=' . urlencode($_GET['mod_dir']) . SEP.'args='.urlencode($args));
+		exit;
+	}
+
+} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['details']) || isset($_GET['uninstall'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;
@@ -71,14 +102,15 @@ $module_status_bits = $module_type_bits = 0;
 if (isset($_GET['enabled']))  { $module_status_bits += AT_MODULE_STATUS_ENABLED;  }
 if (isset($_GET['disabled'])) {	$module_status_bits += AT_MODULE_STATUS_DISABLED; }
 if (isset($_GET['missing']))  {	$module_status_bits += AT_MODULE_STATUS_MISSING;  }
+if (isset($_GET['partially_uninstalled']))  {	$module_status_bits += AT_MODULE_STATUS_PARTIALLY_UNINSTALLED;  }
 
 if (isset($_GET['core']))     {  $module_type_bits += AT_MODULE_TYPE_CORE;     }
 if (isset($_GET['standard'])) {  $module_type_bits += AT_MODULE_TYPE_STANDARD; }
 if (isset($_GET['extra']))    {  $module_type_bits += AT_MODULE_TYPE_EXTRA;    }
 
 if ($module_status_bits == 0) {
-	$module_status_bits = AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_MISSING;
-	$_GET['enabled'] = $_GET['disabled'] = $_GET['missing'] = 1;
+	$module_status_bits = AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_MISSING | AT_MODULE_STATUS_PARTIALLY_UNINSTALLED;
+	$_GET['enabled'] = $_GET['disabled'] = $_GET['missing'] = $_GET['partially_uninstalled'] = 1;
 }
 
 if ($module_type_bits == 0) {
@@ -113,6 +145,8 @@ $keys = array_keys($module_list);
 			<input type="checkbox" name="disabled" value="1" id="s1" <?php if (isset($_GET['disabled'])) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('disabled'); ?></label> 
 
 			<input type="checkbox" name="missing" value="1" id="s2" <?php if (isset($_GET['missing'])) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('missing'); ?></label> 
+
+			<input type="checkbox" name="partially_uninstalled" value="1" id="s3" <?php if (isset($_GET['partially_uninstalled'])) { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('partially_uninstalled'); ?></label> 
 		</div>
 
 		<div class="row buttons">
@@ -130,6 +164,7 @@ $keys = array_keys($module_list);
 <input type="hidden" name="standard" value="<?php echo (int) isset($_GET['standard']); ?>" />
 <input type="hidden" name="extra" value="<?php echo (int) isset($_GET['extra']); ?>" />
 <input type="hidden" name="missing" value="<?php echo (int) isset($_GET['missing']); ?>" />
+<input type="hidden" name="partially_uninstalled" value="<?php echo (int) isset($_GET['partially_uninstalled']); ?>" />
 
 <table class="data" summary="" rules="cols">
 <colgroup>
@@ -152,6 +187,7 @@ $keys = array_keys($module_list);
 		<input type="submit" name="details" value="<?php echo _AT('details'); ?>" />
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
+		<input type="submit" name="uninstall" value="<?php echo _AT('uninstall'); ?>" />
 	</td>
 </tr>
 </tfoot>
@@ -175,6 +211,8 @@ $keys = array_keys($module_list);
 				echo _AT('enabled');
 			} else if ($module->isMissing()) {
 				echo '<strong>'._AT('missing').'</strong>';
+			} else if ($module->isPartiallyUninstalled()) {
+				echo _AT('partially_uninstalled');
 			} else {
 				echo '<em>'._AT('disabled').'</em>';
 			}

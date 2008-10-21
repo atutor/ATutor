@@ -136,52 +136,90 @@ class SqlUtility
 		return false;
 	}
 
-	function queryFromFile($sql_file_path, $table_prefix){
+	function queryFromFile($sql_file_path, $table_prefix)
+	{
 		global $db, $progress, $errors;
-		
+
 		$tables = array();
 
-        if (!file_exists($sql_file_path)) {
-            return false;
-        }
+		if (!file_exists($sql_file_path))
+			return false;
 
-        $sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
-        SqlUtility::splitSqlFile($pieces, $sql_query);
+		$sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
+		SqlUtility::splitSqlFile($pieces, $sql_query);
 
-	    foreach ($pieces as $piece) {
-	        $piece = trim($piece);
-            // [0] contains the prefixed query
-            // [4] contains unprefixed table name
-
-			if ($table_prefix || ($table_prefix == '')) {
-	            $prefixed_query = SqlUtility::prefixQuery($piece, $table_prefix);
-			} else {
+		foreach ($pieces as $piece)
+		{
+			$piece = trim($piece);
+			
+			// [0] contains the prefixed query
+			// [4] contains unprefixed table name
+			if ($table_prefix || ($table_prefix == ''))
+				$prefixed_query = SqlUtility::prefixQuery($piece, $table_prefix);
+			else
 				$prefixed_query = $piece;
-			}
 	
-			if ($prefixed_query != false ) {
-                $table = $table_prefix.$prefixed_query[4];
-                if($prefixed_query[1] == 'CREATE TABLE'){
-                    if (mysql_query($prefixed_query[0],$db) !== false) {
+			if ($prefixed_query != false )
+			{
+				$table = $table_prefix.$prefixed_query[4];
+				if($prefixed_query[1] == 'CREATE TABLE')
+				{
+					if (mysql_query($prefixed_query[0],$db) !== false)
 						$progress[] = 'Table <b>'.$table . '</b> created successfully.';
-                    } else {
-						if (mysql_errno($db) == 1050) {
+					else
+					{
+						if (mysql_errno($db) == 1050)
 							$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
-						} else {
-							$errors[] = 'Table <b>' . $table . '</b> creation failed.';
-						}
-                    }
-                }
-                elseif($prefixed_query[1] == 'INSERT INTO'){
+						else
+								$errors[] = 'Table <b>' . $table . '</b> creation failed.';
+					}
+				}
+				elseif($prefixed_query[1] == 'INSERT INTO')
 					mysql_query($prefixed_query[0],$db);
-                }elseif($prefixed_query[1] == 'ALTER TABLE'){
-                    mysql_query($prefixed_query[0],$db);
-                }elseif($prefixed_query[1] == 'DROP TABLE'){
-                    mysql_query($prefixed_query[1] . ' ' .$table,$db);
-                }
-            }
+				elseif($prefixed_query[1] == 'REPLACE INTO')
+					mysql_query($prefixed_query[0],$db);
+				elseif($prefixed_query[1] == 'ALTER TABLE')
+					mysql_query($prefixed_query[0],$db);
+				elseif($prefixed_query[1] == 'DROP TABLE')
+					mysql_query($prefixed_query[1] . ' ' .$table,$db);
+        }
 		}
-        return TRUE;
-    }
+    return TRUE;
+  }
+
+	// This function only revert queries on "CREATE TABLE" and "INSERT INTO language_text"
+	function revertQueryFromFile($sql_file_path, $table_prefix)
+	{
+		global $db, $progress, $errors;
+
+		$tables = array();
+
+		if (!file_exists($sql_file_path))
+			return false;
+
+		$sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
+		SqlUtility::splitSqlFile($pieces, $sql_query);
+
+		foreach ($pieces as $piece)
+		{
+			$piece = trim($piece);
+
+			$pattern_create_table = "/^CREATE TABLE\s+([`]?)([^`\s]+)\\1(\s)+/siU";
+			if (preg_match($pattern_create_table, $piece, $matches))
+			{
+				$sql = 'DROP TABLE '. $table_prefix . $matches[2];
+				mysql_query($sql, $db);
+			}
+			
+			$pattern_insert_lang = "/^INSERT INTO\s+([`]?)language_text\\1\s+.*VALUES.*'.*'.*'(.*)'.*'(.*)'/siU";
+			if (preg_match($pattern_insert_lang, $piece, $matches))
+			{
+				$sql = "DELETE FROM ".$table_prefix."language_text WHERE variable='".$matches[2]."' AND term='".$matches[3]."'";
+				mysql_query($sql, $db);
+			}
+		}
+
+    return TRUE;
+  }
 }
 ?>

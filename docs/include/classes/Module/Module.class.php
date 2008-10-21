@@ -16,6 +16,7 @@ define('AT_MODULE_STATUS_DISABLED',    1);
 define('AT_MODULE_STATUS_ENABLED',     2);
 define('AT_MODULE_STATUS_MISSING',     4);
 define('AT_MODULE_STATUS_UNINSTALLED', 8); // not in the db
+define('AT_MODULE_STATUS_PARTIALLY_UNINSTALLED', 16); // not in the db
 
 define('AT_MODULE_TYPE_CORE',     1);
 define('AT_MODULE_TYPE_STANDARD', 2);
@@ -196,6 +197,7 @@ class Module {
 
 	// statuses
 	function checkStatus($status) { return (bool) ($status & $this->_status); }
+	function isPartiallyUninstalled()  { return ($this->_status == AT_MODULE_STATUS_PARTIALLY_UNINSTALLED) ? true : false; }
 	function isUninstalled()  { return ($this->_status == AT_MODULE_STATUS_UNINSTALLED) ? true : false; }
 	function isEnabled()      { return ($this->_status == AT_MODULE_STATUS_ENABLED)     ? true : false; }
 	function isDisabled()     { return ($this->_status == AT_MODULE_STATUS_DISABLED)    ? true : false; }
@@ -567,6 +569,44 @@ class Module {
 				$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
 				mysql_query($sql, $db);
 			}
+		}
+	}
+
+	/**
+	* Uninstalls the module
+	* @access  public
+	* @author  Cindy Qi Li
+	*/
+	function uninstall($del_data='') {
+		global $msg;
+
+		if (file_exists(AT_MODULE_PATH . $this->_directoryName . '/module_uninstall.php') && $del_data == 1) 
+		{
+			require(AT_MODULE_PATH . $this->_directoryName . '/module_uninstall.php');
+		}
+
+		if (!$msg->containsErrors()) 
+		{
+			require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+			
+			if (!clr_dir(AT_MODULE_PATH . $this->_directoryName))
+				$msg->addError(array('MODULE_UNINSTALL', '<li>'.AT_MODULE_PATH . $this->_directoryName.' can not be removed. Please manually remove it.</li>'));
+		}
+		
+		if (!$msg->containsErrors()) 
+		{
+			global $db;
+
+			$sql = "DELETE FROM ". TABLE_PREFIX . "modules WHERE dir_name = '".$this->_directoryName."'";
+			mysql_query($sql, $db);
+		}
+
+		if ($msg->containsErrors()) 
+		{
+			global $db;
+
+			$sql = "UPDATE ". TABLE_PREFIX . "modules SET status=".AT_MODULE_STATUS_PARTIALLY_UNINSTALLED." WHERE dir_name='".$this->_directoryName."'";
+			mysql_query($sql, $db);
 		}
 	}
 
