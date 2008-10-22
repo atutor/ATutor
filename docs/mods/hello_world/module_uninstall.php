@@ -6,7 +6,7 @@
 /*******
  * the line below safe-guards this file from being accessed directly from
  * a web browser. It will only execute if required from within an ATutor script,
- * in our case the Module::install() method.
+ * in our case the Module::uninstall() method.
  */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
