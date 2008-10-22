@@ -449,6 +449,9 @@ class Patch {
 		            str_replace(substr($this->relative_to_atutor_root, 0, -1), '' , $folder) .$file;
 		$local_file = $folder.$file;
 
+		// if svn script does not exist, consider the script is modified
+		if (!file_exists($svn_file)) return true;
+		
 		// check if the local file has been modified by user. if it is, don't overwrite
 		if ($this->compareFiles($svn_file, $local_file) <> 0)
 		{
