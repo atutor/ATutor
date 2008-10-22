@@ -69,7 +69,14 @@ if (isset($_POST['current_tab'])) {
 }
 
 if (isset($_POST['submit_file'])) {
-	paste_from_file();
+	paste_from_file(body_text);
+} else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
+	/* we're saving. redirects if successful. */
+	save_changes(true, $current_tab);
+}
+
+if (isset($_POST['submit_file_alt'])) {
+	paste_from_file(body_text_alt);
 } else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
 	/* we're saving. redirects if successful. */
 	save_changes(true, $current_tab);
@@ -414,38 +421,7 @@ if ($current_tab == 5){
 				$msg->addError('RESOURCE_NOT_DEFINED');
 			}
 		}
-/*		else {
-			if (isset($_POST['body_text_alt'])){
-				if ($_POST['body_text_alt'] != $_POST['body_text']){
-					$cid_wholepage = $cid.'_wholepage';
-					$sql	= "SELECT * FROM ".TABLE_PREFIX."primary_resources WHERE content_id='$cid' and resource='$cid_wholepage'";
-		    		$result = mysql_query($sql, $db);
-	    		
-			    	if (mysql_num_rows($result) > 0) {
-		    	 		while ($row = mysql_fetch_assoc($result)) {
-	    	 				$sql_contr 	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id='$row[primary_resource_id]'";
-	     		 			$contr 	 	= mysql_query($sql_contr, $db);
-	     	 				if (mysql_num_rows($contr) > 0) {
-	     	 					while ($secondary = mysql_fetch_assoc($contr)) {
-	     	 						$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET secondary_resource='$_POST[body_text_alt]' WHERE secondary_resource_id=$secondary[secondary_resource_id]";
-									$up 	= mysql_query($sql_up, $db);
-	     	 						$msg->addFeedback('ALTERNATIVE_UPDATED');
-	     	 					}	
-		     				}else {
-	    	 					$sql_ins = "INSERT INTO ".TABLE_PREFIX."secondary_resources VALUES (NULL, '$row[primary_resource_id]', '$_POST[body_text_alt]', 'en')";
-								$ins     = mysql_query($sql_ins, $db);
-								$msg->addFeedback('ALTERNATIVE_ADDED');
-							}
-						}
-					}
-	    		}
-		//		else 
-		//			$msg->addError('ALTERNATIVE_NOT_DEFINED');
-			}
-		//	else 
-		//		$msg->addError('RESOURCE_NOT_DEFINED');
-		}
-	*/	
+
 		
 	if ($_REQUEST[act]=='delete')	{
 		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources WHERE secondary_resource_id='$_REQUEST[id_alt]'";
@@ -459,10 +435,6 @@ if ($current_tab == 5){
 }
 
 
-
-//End Added by Silvia
-
-//Added by Silvia 
 if ($current_tab == 5) {
 	if (isset($_POST['save_types_and_language'])){
 		if(($_POST['alternatives']==1) || ($_GET['alternatives']==1)){
@@ -623,79 +595,6 @@ if ($current_tab == 5) {
 	}
 }		
 
-									
-						/*	$sql_type	 = "SELECT * FROM ".TABLE_PREFIX."resource_types";
-							$result_type = mysql_query($sql_type, $db);
-	    				
-		     	 			if (mysql_num_rows($result_type) > 0) {
-	   			 				while ($type = mysql_fetch_assoc($result_type)) {
-	   	 							$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$row[primary_resource_id]' and type_id='$type[type_id]'";
-			   	 					$contr		= mysql_query($sql_contr, $db);	   
-			   			 			if (mysql_num_rows($contr) > 0) {
-	   			 						while ($control = mysql_fetch_assoc($contr)) {
-	   	 									if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary']))
-	   	 										continue;
-			   	 							else {
-	   			 								$sql_del = "DELETE FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$control[primary_resource_id]' and type_id='$control[type_id]'";
-												$result_del = mysql_query($sql_del, $db);
-			 								}
-	   	 								}	
-	   	 							} else {
-	   	 								if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary'])){
-											$sql_ins	= "INSERT INTO ".TABLE_PREFIX."primary_resources_types VALUES ($row[primary_resource_id], $type[type_id])";
-											$ins 		= mysql_query($sql_ins, $db);
-										}	
-	   	 					*/
-	   	 					/*			$sql_alt	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id='$row[primary_resource_id]'";
-	    								$result_alt = mysql_query($sql_alt, $db);
-	    					
-										if (mysql_num_rows($result_alt) > 0) {
-     			 							while ($alt = mysql_fetch_assoc($result_alt)) {
-												$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$alt[secondary_resource_id]' and type_id='$type[type_id]'";
-	   	 										$contr	= mysql_query($sql_contr, $db);	   
-				   	 							if (mysql_num_rows($contr) > 0) {
-	   	 											while ($control = mysql_fetch_assoc($contr)) {
-	   	 												if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary']))
-	   	 													continue;
-				   	 									else {
-	   	 													$sql_del = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$control[secondary_resource_id]' and type_id='$control[type_id]'";
-															$result_del = mysql_query($sql_del, $db);
-		 												}
-				   	 								}		
-	   	 										} else {
-													if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary'])){
-														$sql_ins	= "INSERT INTO ".TABLE_PREFIX."secondary_resources_types VALUES ($alt[secondary_resource_id], $type[type_id])";
-														$ins 		= mysql_query($sql_ins, $db);
-		   	 										}
-							   	 					$lang   = $_POST['lang_'.$alt[secondary_resource_id].'_secondary'];
-													$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET language_code='$lang' WHERE secondary_resource_id='$alt[secondary_resource_id]'";
-													$up 	= mysql_query($sql_up, $db);
-	   	 										}
-     	 										$lang=$_POST['lang_'.$row[primary_resource_id].'_primary'];
-												$sql_up	= "UPDATE ".TABLE_PREFIX."primary_resources SET language_code='$lang' WHERE primary_resource_id='$row[primary_resource_id]'";
-												$up 	= mysql_query($sql_up, $db);
-	   	 									}
-										}
-									}
-	   	 						}
-							}
-	   					}
-					}
-				}
-	    	}
-		//		else 
-		//			$msg->addError('ALTERNATIVE_NOT_DEFINED');
-		}
-		//	else 
-		//		$msg->addError('RESOURCE_NOT_DEFINED');
-	}		
-/*			
-			if (mysql_num_rows($result) > 0) {
-	   			while ($row = mysql_fetch_assoc($result)) {
-*/		
-	
-//}
-	
 //End Added by Silvia 
 
 //Extended Test within content functionality - Harris @Sep 9, 2008
