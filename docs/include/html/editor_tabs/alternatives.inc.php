@@ -47,7 +47,7 @@ for now
 				
 		if ($n==0){
 			echo '<p>';
-			echo _AT('No_non_textual_resources');
+			echo _AT('No_resources');
 			echo '</p>';
 		} else {
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."primary_resources WHERE content_id=".$cid." order by primary_resource_id";
