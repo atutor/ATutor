@@ -106,7 +106,7 @@ function display_test_info($row)
 			$result3 = mysql_query($sql, $db);
 			$row3 = mysql_fetch_assoc($result3);
 			
-			$csv_content .= ', '.$row3['name'] . ', '.$row3['organization']. ', '.$row3['location']. ', '.$row3['role']. ', '.$row3['focus'];
+			$csv_content .= ', '.quote_csv($row3['name']) . ', '.quote_csv($row3['organization']). ', '.quote_csv($row3['location']). ', '.quote_csv($row3['role']). ', '.quote_csv($row3['focus']);
 		}
 		
 		$csv_content .= "\n";
