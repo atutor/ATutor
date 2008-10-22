@@ -197,6 +197,9 @@ function get_next_guest_id()
 	$result	= mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
-	return "G_". $row["next_guest_id"];
+	if (!is_int($row["next_guest_id"]))  // first guest id
+		return "G_0";
+	else
+		return "G_". $row["next_guest_id"];
 }
 ?>
