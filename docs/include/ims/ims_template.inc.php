@@ -170,18 +170,15 @@ function print_organizations($parent_id,
 			}
 
 			/* generate the a4a files */
+			$a4a_xml_array = array();
 			if ($use_a4a == true){
 				$a4aExport = new A4aExport($content['content_id']);
+//				$a4aExport->setRelativePath('resources/'.$content['content_path']);
 				$secondary_files = $a4aExport->getAllSecondaryFiles();
-				$a4a_xml = $a4aExport->exportA4a();
-				$a4a_xml_filename = 'a4a_'.$content['content_id'].'.xml';
-				$zipfile->add_file($a4a_xml, $a4a_xml_filename);	
-				$my_files[] = $a4a_xml_filename;
-				$content_files .= str_replace('{FILE}', $a4a_xml_filename, $ims_template_xml['xml']);	
-				//add a4a files to the archieve
-				$my_files = array_merge($my_files, $secondary_files);
+				$a4a_xml_array = $a4aExport->exportA4a();
+				$my_files = array_merge($my_files, $a4aExport->getAllSecondaryFiles());
 			}
-			
+
 			/* handle @import */
 			$import_files = get_import_files($content['text']);
 
@@ -224,9 +221,36 @@ function print_organizations($parent_id,
 						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
 					}
 
-					$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+					//a4a secondary files have mapping, save the ones that we want in order to add the tag in
+					$a4a_secondary_files = array();
+					foreach ($a4a_xml_array as $a4a_filename=>$a4a_filearray){
+						if (preg_match('/(.*)\sto\s(.*)/', $a4a_filename, $matches)){
+							//save the actual file name
+							$a4a_secondary_files[$matches[1]][] = $a4a_filename;	//values are holders
+						}
+					}
+
+					// If this file has a4a alternatives, link it.
+					if (isset($a4a_xml_array[$file]) || isset($a4a_secondary_files[$file])){
+						//if this is an array, meaning that it has more than 1 alternatives, print all
+						if (is_array($a4a_secondary_files[$file])){
+							$all_secondary_files_md = '';	//reinitialize string to null
+							foreach ($a4a_secondary_files[$file] as $v){
+								$all_secondary_files_md .= $a4a_xml_array[$v];	//all the meta data								
+							}
+							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
+															array('resources/'.$content['content_path'] . $file, $all_secondary_files_md), 
+															$ims_template_xml['file_meta']);
+						} else {	
+							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
+															array('resources/'.$content['content_path'] . $file, $a4a_xml_array[$file]), 
+															$ims_template_xml['file_meta']);
+						}
+					} else {
+						$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+					}
 				}
-				
+
 				/* check if this file is one of the test xml file, if so, we need to add the dependency
 				 * Note:  The file has already been added to the archieve before this is called.
 				 */
@@ -374,7 +398,11 @@ $ims_template_xml['resource'] = '		<resource identifier="MANIFEST01_RESOURCE{CON
 
 $ims_template_xml['file'] = '			<file href="resources/{FILE}"/>'."\n";
 $ims_template_xml['xml'] = '			<file href="{FILE}"/>'."\n";
-
+$ims_template_xml['file_meta'] = '			<file href="{FILE}">
+				<metadata>
+				{FILE_META_DATA}
+				</metadata>
+			</file>'."\n";
 $ims_template_xml['final'] = '
 	<organizations default="MANIFEST01_ORG1">
 		<organization identifier="MANIFEST01_ORG1" structure="hierarchical">

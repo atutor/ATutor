@@ -25,6 +25,7 @@ class A4a {
 	//variables
 	var $cid = 0;						//content id
 	var $resource_types = array();		//resource types hash mapping
+	var $relative_path = '';			//relative path to the file 
 
 	//Constructor
 	function A4a($cid){
@@ -201,6 +202,12 @@ class A4a {
 		$result = mysql_query($sql, $db);
 	}
 
+	
+	// Set the relative path to all files
+	function setRelativePath($path){
+		$this->relative_path = $path . '/';
+	}
+
 
 	// Delete all materials associated with this content
 	function deleteA4a(){
@@ -215,16 +222,20 @@ class A4a {
 		while($row=mysql_fetch_assoc($result)){
 			$pri_resource_ids[] = $row['primary_resource_id'];
 		}
-		$glued_pri_ids = implode(",", $pri_resource_ids);
 
-		// Delete all secondary a4a
-		$sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX.'secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id IN ('.$glued_pri_ids.')';
-		$result = mysql_query($sql);
+		//If the are primary resources found
+		if (!empty($pri_resource_ids)){
+			$glued_pri_ids = implode(",", $pri_resource_ids);
 
-		// If successful, remove all primary resources
-		if ($result){
-			$sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX.'primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE content_id='.$this->cid;
-			mysql_query($sql);
+			// Delete all secondary a4a
+			$sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX.'secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id IN ('.$glued_pri_ids.')';
+			$result = mysql_query($sql);
+
+			// If successful, remove all primary resources
+			if ($result){
+				$sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX.'primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE content_id='.$this->cid;
+				mysql_query($sql);
+			}
 		}
 	}
 }

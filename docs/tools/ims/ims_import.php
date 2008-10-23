@@ -34,7 +34,6 @@ $package_base_path = '';
 $xml_base_path = '';
 $element_path = array();
 $imported_glossary = array();
-$resource_num = 0;
 $test_attributes = array();
 $character_data = '';
 $test_message = '';
@@ -45,7 +44,7 @@ $test_message = '';
 		global $items, $path, $package_base_path;
 		global $element_path;
 		global $xml_base_path, $test_message;
-		static $current_identifier;
+		global $current_identifier;
 
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
 			$xml_base_path = $attrs['xml:base'];
@@ -110,7 +109,7 @@ $test_message = '';
 //			if (!isset($items[$current_identifier]['test_message'])){
 //				$items[$current_identifier]['test_message'] = $test_message;
 //			}
-		}
+		} 
 		if (($name == 'item') && ($attrs['parameters'] != '')) {
 			$items[$attrs['identifierref']]['test_message'] = $attrs['parameters'];
 		}
@@ -125,10 +124,35 @@ $test_message = '';
 	/* called when an element ends */
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
-		global $path, $element_path, $my_data;
-
+		global $path, $element_path, $my_data, $items;
+		global $current_identifier;
+		static $resource_num = 0;
+		
+		//variable handling
+		if ($current_identifier ==''){
+			return;
+		}
+		$my_data = trim($my_data);
+		$last_file_name = $items[$current_identifier]['file'][(sizeof($items[$current_identifier]['file']))-1];
+		
 		if ($name == 'item') {
 			array_pop($path);
+		} elseif ($name=='originalAccessMode'){
+			if (in_array('accessModeStatement', $element_path)){
+				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['access_stmt_originalAccessMode'][] = $my_data;
+			} elseif (in_array('adaptationStatement', $element_path)){
+				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['adapt_stmt_originalAccessMode'][] = $my_data;
+			}			
+		} elseif (($name=='language') && in_array('accessModeStatement', $element_path)){
+			$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['language'][] = $my_data;
+		} elseif ($name=='hasAdaptation') {
+			$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['hasAdaptation'][] = $my_data;
+		} elseif ($name=='isAdaptationOf'){
+			$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['isAdaptationOf'][] = $my_data;
+		} elseif ($name=='accessForAllResource'){
+			$resource_num++;
+		} elseif($name=='file'){
+			$resource_num = 0;	//reset resournce number to 0 when the file tags ends
 		}
 
 		if ($element_path === array('manifest', 'metadata', 'imsmd:lom', 'imsmd:general', 'imsmd:title', 'imsmd:langstring')) {
@@ -163,16 +187,18 @@ $test_message = '';
 
 					/* horible kludge to fix the <ns2:objectiveDesc xmlns:ns2="http://www.utoronto.ca/atrc/tile/xsd/tile_objective"> */
 					/* from TILE */
-					if ($element_path[count($element_path)-1] != 'ns1:objectiveDesc') {
+					if (in_array('accessForAllResource', $element_path)){
+						//skip this tag
+					} elseif ($element_path[count($element_path)-1] != 'ns1:objectiveDesc') {
 						$items[$current_item_id]['title'] .= $data;
 					}
 	
 				} else {
 					$order[$parent_item_id] ++;
 
-					$item_tmpl = array('title'			=> $data,
-													'parent_content_id' => $parent_item_id,
-													'ordering'			=> $order[$parent_item_id]-1);
+					$item_tmpl = array(	'title'			=> $data,
+										'parent_content_id' => $parent_item_id,
+										'ordering'			=> $order[$parent_item_id]-1);
 
 					//append other array values if it exists
 					if (is_array($items[$current_item_id])){
@@ -183,7 +209,6 @@ $test_message = '';
 				}
 			}
 		}
-
 
 		$my_data .= $data;
 	}
@@ -401,6 +426,7 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 }
 
 xml_parser_free($xml_parser);
+
 
 /* check if the glossary terms exist */
 if (file_exists($import_path . 'glossary.xml')){
@@ -671,12 +697,11 @@ foreach ($items as $item_id => $content_info)
 	}
 
 	/* get the a4a related xml */
-	if (isset($items[$item_id]['a4a']) && $items[$item_id]['a4a'] != '') {
-		$a4a_xml = $import_path.$items[$item_id]['a4a'];
+	if (isset($items[$item_id]['a4a']) && !empty($items[$item_id]['a4a'])) {
 		$a4a_import = new A4aImport($items[$item_id]['real_content_id']);
-		$a4a_import->importA4a($a4a_xml);
+		$a4a_import->setRelativePath($items[$item_id]['new_path']);
+		$a4a_import->importA4a($items[$item_id]['a4a']);
 	}
-	
 }
 
 
