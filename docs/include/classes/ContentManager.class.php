@@ -311,6 +311,11 @@ class ContentManager
 		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
 
+		/* Delete all AccessForAll contents */
+		require(AT_INCLUDE_PATH.'classes/A4a/a4a.class.php');
+		$a4a = new A4a($content_id);
+		$a4a->deleteA4a();
+
 		/* re-order the rest of the content */
 		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $this->db);
