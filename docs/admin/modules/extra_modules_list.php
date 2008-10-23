@@ -173,11 +173,9 @@ $msg->printErrors();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<div class="input-form">
-
 <?php 
 ?>
-<table class="data" summary="" style="width: 100%" rules="cols">
+<table class="data" summary="" rules="cols">
 <thead>
 	<tr>
 		<th scope="col">&nbsp;</th>
@@ -188,6 +186,16 @@ $msg->printErrors();
 	</tr>
 </thead>
 	
+<tfoot>
+<tr>
+	<td colspan="5">
+		<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
+		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
+		<input type="submit" name="version_history" value="<?php echo _AT('version_history'); ?>" />
+	</td>
+</tr>
+</tfoot>
+
 <tbody>
 <?php 
 $num_of_modules = count($module_list_array);
@@ -197,11 +205,7 @@ if ($num_of_modules == 0)
 ?>
 
 <tr>
-	<td colspan="7">
-<?php 
-	echo _AT('none_found');
-?>
-	</td>
+	<td colspan="7"><?php echo _AT('none_found'); ?></td>
 </tr>
 
 <?php 
@@ -228,22 +232,11 @@ else
 
 ?>
 </tbody>
-<tfoot>
-<tr>
-	<td colspan="5">
-		<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
-		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<input type="submit" name="version_history" value="<?php echo _AT('version_history'); ?>" />
-	</td>
-</tr>
-</tfoot>
 
 <?php 
 }
 ?>
 </table>
-
-</div>
 </form>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
