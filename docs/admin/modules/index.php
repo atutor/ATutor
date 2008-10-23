@@ -89,7 +89,33 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		exit;
 	}
 
-} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['details']) || isset($_GET['uninstall'])) {
+} else if (isset($_GET['mod_dir'], $_GET['export'])) {
+	$module =& $moduleFactory->getModule($_GET['mod_dir']);
+
+	$module_folder = '../../mods/'.$_GET['mod_dir'];
+	// check if the module has been un-installed
+	if (!file_exists($module_folder))
+	{
+		$msg->addError('ITEM_NOT_FOUND');
+	}
+
+	// only extra modules can be uninstalled
+	if (!$module->isExtra()) {
+		$msg->addError('ONLY_EXPORT_EXTRA_MODULE');
+	} 
+	
+  if (!$msg->containsErrors())
+	{
+		require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
+		
+		$zipfile = new zipfile();
+		$zipfile->add_dir('../../mods/'.$_GET['mod_dir'].'/', $_GET['mod_dir'].'/');
+		$zipfile->close();
+		$zipfile->send_file($_GET['mod_dir']);
+		exit;
+	}
+
+} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['details']) || isset($_GET['uninstall']) || isset($_GET['export'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;
@@ -99,14 +125,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $module_status_bits = $module_type_bits = 0;
 
-if (isset($_GET['enabled']))  { $module_status_bits += AT_MODULE_STATUS_ENABLED;  }
-if (isset($_GET['disabled'])) {	$module_status_bits += AT_MODULE_STATUS_DISABLED; }
-if (isset($_GET['missing']))  {	$module_status_bits += AT_MODULE_STATUS_MISSING;  }
-if (isset($_GET['partially_uninstalled']))  {	$module_status_bits += AT_MODULE_STATUS_PARTIALLY_UNINSTALLED;  }
+if ($_GET['enabled'])  { $module_status_bits += AT_MODULE_STATUS_ENABLED;  }
+if ($_GET['disabled']) {	$module_status_bits += AT_MODULE_STATUS_DISABLED; }
+if ($_GET['missing'])  {	$module_status_bits += AT_MODULE_STATUS_MISSING;  }
+if ($_GET['partially_uninstalled'])  {	$module_status_bits += AT_MODULE_STATUS_PARTIALLY_UNINSTALLED;  }
 
-if (isset($_GET['core']))     {  $module_type_bits += AT_MODULE_TYPE_CORE;     }
-if (isset($_GET['standard'])) {  $module_type_bits += AT_MODULE_TYPE_STANDARD; }
-if (isset($_GET['extra']))    {  $module_type_bits += AT_MODULE_TYPE_EXTRA;    }
+if ($_GET['core'])     {  $module_type_bits += AT_MODULE_TYPE_CORE;     }
+if ($_GET['standard']) {  $module_type_bits += AT_MODULE_TYPE_STANDARD; }
+if ($_GET['extra'])    {  $module_type_bits += AT_MODULE_TYPE_EXTRA;    }
 
 if ($module_status_bits == 0) {
 	$module_status_bits = AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_MISSING | AT_MODULE_STATUS_PARTIALLY_UNINSTALLED;
@@ -130,23 +156,23 @@ $keys = array_keys($module_list);
 
 		<div class="row">
 			<?php echo _AT('type'); ?><br />
-			<input type="checkbox" name="core" value="1" id="t0" <?php if (isset($_GET['core'])) { echo 'checked="checked"'; } ?> /><label for="t0"><?php echo _AT('core'); ?></label>
+			<input type="checkbox" name="core" value="1" id="t0" <?php if ($_GET['core']) { echo 'checked="checked"'; } ?> /><label for="t0"><?php echo _AT('core'); ?></label>
 
-			<input type="checkbox" name="standard" value="1" id="t1" <?php if (isset($_GET['standard'])) { echo 'checked="checked"'; } ?> /><label for="t1"><?php echo _AT('standard'); ?></label> 
+			<input type="checkbox" name="standard" value="1" id="t1" <?php if ($_GET['standard']) { echo 'checked="checked"'; } ?> /><label for="t1"><?php echo _AT('standard'); ?></label> 
 
-			<input type="checkbox" name="extra" value="1" id="t2" <?php if (isset($_GET['extra'])) { echo 'checked="checked"'; } ?> /><label for="t2"><?php echo _AT('extra'); ?></label> 
+			<input type="checkbox" name="extra" value="1" id="t2" <?php if ($_GET['extra']) { echo 'checked="checked"'; } ?> /><label for="t2"><?php echo _AT('extra'); ?></label> 
 		</div>
 
 
 		<div class="row">
 			<?php echo _AT('status'); ?><br />
-			<input type="checkbox" name="enabled" value="1" id="s0" <?php if (isset($_GET['enabled'])) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('enabled'); ?></label> 
+			<input type="checkbox" name="enabled" value="1" id="s0" <?php if ($_GET['enabled']) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('enabled'); ?></label> 
 
-			<input type="checkbox" name="disabled" value="1" id="s1" <?php if (isset($_GET['disabled'])) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('disabled'); ?></label> 
+			<input type="checkbox" name="disabled" value="1" id="s1" <?php if ($_GET['disabled']) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('disabled'); ?></label> 
 
-			<input type="checkbox" name="missing" value="1" id="s2" <?php if (isset($_GET['missing'])) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('missing'); ?></label> 
+			<input type="checkbox" name="missing" value="1" id="s2" <?php if ($_GET['missing']) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('missing'); ?></label> 
 
-			<input type="checkbox" name="partially_uninstalled" value="1" id="s3" <?php if (isset($_GET['partially_uninstalled'])) { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('partially_uninstalled'); ?></label> 
+			<input type="checkbox" name="partially_uninstalled" value="1" id="s3" <?php if ($_GET['partially_uninstalled']) { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('partially_uninstalled'); ?></label> 
 		</div>
 
 		<div class="row buttons">
@@ -171,6 +197,7 @@ $keys = array_keys($module_list);
 		<col />
 		<col class="sort" />
 		<col span="4" />
+</colgroup>
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
@@ -188,15 +215,16 @@ $keys = array_keys($module_list);
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
 		<input type="submit" name="uninstall" value="<?php echo _AT('uninstall'); ?>" />
+		<input type="submit" name="export" value="<?php echo _AT('export'); ?>" />
 	</td>
 </tr>
 </tfoot>
 <tbody>
-<?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; ?>
+<?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; $i++?>
 
-	<tr onmousedown="document.form['t_<?php echo $dir_name; ?>'].checked = true; rowselect(this);" id="r_<?php echo $dir_name; ?>">
-		<td valign="top"><input type="radio" id="t_<?php echo $dir_name; ?>" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $dir_name; ?>"><?php echo $module->getName(); ?></label></td>
+	<tr onmousedown="document.form['t_<?php echo $i; ?>'].checked = true; rowselect(this);" id="r_<?php echo $i; ?>">
+		<td valign="top"><input type="radio" id="t_<?php echo $i; ?>" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
+		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $i; ?>"><?php echo $module->getName(); ?></label></td>
 		<td valign="top"><?php
 			if ($module->isCore()) {
 				echo '<strong>'._AT('core').'</strong>';
