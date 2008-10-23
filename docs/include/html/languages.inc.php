@@ -18,7 +18,7 @@ if($languageManager->getNumLanguages() < 2){
 	return;
 }
 ?>
-<div align="center" id="language" style="clear: left"><br /><?php
+<div align="center" id="lang" style="clear: left"><br /><?php
 
 	if ($languageManager->getNumLanguages() > 5) {
 		echo '<form method="get" action="'.htmlspecialchars($_my_uri, ENT_QUOTES).'">';
