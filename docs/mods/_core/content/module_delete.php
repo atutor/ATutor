@@ -1,7 +1,7 @@
 <?php
 
 function content_delete($course) {
-	require(AT_INCLUDE_PATH.'classes/A4a/a4a.class.php');
+	require(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 
 	global $db;
 
