@@ -136,6 +136,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 
 		$_pages['admin/modules/extra_modules_list.php']['title_var'] = 'avail_extra_modules';
 		$_pages['admin/modules/extra_modules_list.php']['parent']    = 'admin/modules/index.php';
+		$_pages['admin/modules/extra_modules_list.php']['guide']     = 'admin/?p=modules.php';
 
 		$_pages['admin/modules/version_history.php']['title_var'] = 'version_history';
 		$_pages['admin/modules/version_history.php']['parent']    = 'admin/modules/extra_modules_list.php';
