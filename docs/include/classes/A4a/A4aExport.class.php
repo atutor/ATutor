@@ -125,12 +125,12 @@ class A4aExport extends A4a {
 						$orig_access_mode[] = $this->getResourceNameById($type_id);
 					}
 					$savant->assign('orig_access_mode', $orig_access_mode);
-					$xml_array[$id.' to '.$uri] = $savant->fetch(AT_INCLUDE_PATH.'classes/A4a/a4a.tmpl.php');
+					$xml_array[$id.' to '.$uri] = $savant->fetch(AT_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
 				}
 			} else {
 				$savant->assign('primary_resource_uri', '');
 				$savant->assign('primary_resources', '');
-				$xml_array[$id] = $savant->fetch(AT_INCLUDE_PATH.'classes/A4a/a4a.tmpl.php');
+				$xml_array[$id] = $savant->fetch(AT_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
 			}
 
 //			$zipfile->add_file($xml, 'a4a_'.$this->cid.'_'.$index.'.xml');	
