@@ -1,9 +1,8 @@
 div.input-form {
 	width: 90%; 
-
+	border: 1px solid #B8AE9C;
 	margin-left:auto; 
 	margin-right:auto;
-	border: 0px;
 	margin-bottom: 20px;
 	line-height:150%;
 	background-color: #F8F8F8;
@@ -18,6 +17,7 @@ div.input-form div.row h3 {
 div.input-form div.row {
 	background-color: #F8F8F8;
 	padding:8px;
+	border: 1px solid #F9F6F2;
 }
 
 div.input-form .footer {
