@@ -21,6 +21,19 @@ Edited by Greg Oct 19
 Commented out radios for full page and file alternatives
 for now
 */
+
+/* Edited by Silvia Oct 24 
+Added a control in order to force 
+*/
+if ($cid == 0){
+	echo '<div class="row_alternatives" id="radio_alt">';
+	echo '<p>';
+	echo _AT('you_must_save_before_adding_adapted_content');
+	echo '</p>';
+	echo '</div>';
+}
+else{
+
 ?>
 
 <div class="row_alternatives" id="radio_alt">
@@ -395,3 +408,6 @@ function openIt(x){
 }
 //-->
 </script> 
+<?php
+}
+?>
