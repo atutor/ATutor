@@ -109,7 +109,7 @@ acronym {
 	<li><a href="#data_dir">Creating a Data Directory</a></li>
 	<li><a href="#execute">Executing an SQL FILE</a></li>
 	<li><a href="#errors">Generating Error Messages</a></li>
-
+	<li><a href="#uninstall">Uninstalling a Module</a></li>
 	</ul>
 
 <li><a href="#auth">Authentication &amp; Privileges</a></li>
@@ -162,6 +162,9 @@ acronym {
 
 			<dt><kbd>module_install.php</kbd></dt>
 			<dd>This file is used when installing the module. <em>Required</em>.</dd>
+
+			<dt><kbd>module_uninstall.php</kbd></dt>
+			<dd>This file is used to remove the module from the system. <em>Required for ATutor  1.6.2+</em>.</dd>
 
 			<dt><kbd>module_backup.php</kbd></dt>
 			<dd>This file is used when backing-up and restoring course content. <em>Optional</em>.</dd>
@@ -453,6 +456,57 @@ if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
 		<p>To check if any errors have been generated, use <kbd>$msg->containsErrors()</kbd> which evaluates to <kbd>TRUE</kbd> if a previous error has been generated.</p>
 		
 		<p>See the <a href="guidelines.html#error-feedback-messages">Error and Feedback </a>section of the Developer Documentation for more details about displaying messages.</p>
+
+<a name="uninstall"></a>
+	<h3>Uninstalling a Module</h3>
+<p>As of ATutor 1.6.2 a <kbd>module_uninstall.php</kbd> file is required with each module. This file uses the original module.sql file to deletes any database tables, and any language that may have been installed with <kbd>module.sql</kbd>, and removes any directories used by the module, and deletes the module directory itself.</p>
+
+<pre>
+
+/*******
+ * module_uninstall.php performs reversion of module_install.php
+ */
+
+/*******
+ * the line below safe-guards this file from being accessed directly from
+ * a web browser. It will only execute if required from within an ATutor script,
+ * in our case the Module::uninstall() method.
+ */
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+/********
+ * the following code is used for removing a module-specific directory created in module_install.php.
+ * it generates appropriate error messages to aid in its creation.
+ */
+$directory = AT_CONTENT_DIR .'example_maker';
+
+// check if the directory exists
+if (is_dir($directory)) {
+	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
+	if (!clr_dir($directory))
+		$msg->addError(array('MODULE_UNINSTALL', '<li>'.$directory.' can not be removed. Please manually remove it.</li>'));
+}
+
+/******
+ * the following code checks if there are any errors (generated previously)
+ * then uses the SqlUtility to run reverted database queries of module.sql, 
+ * ie. "create table" statement in module.sql is run as drop according table.
+ */
+if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
+	// deal with the SQL file:
+	require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
+	$sqlUtility =& new SqlUtility();
+
+	/*
+	 * the SQL file could be stored anywhere, and named anything, "module.sql" is simply
+	 * a convention we're using.
+	 */
+	$sqlUtility->revertQueryFromFile(dirname(__FILE__) . '/module.sql', TABLE_PREFIX);
+}
+
+</pre>
+
 <a name="auth"></a>
 <h2>Authentication &amp; Privileges</h2>
 	<p>See the <em>Installation: Specifying Privileges</em> section on creating privileges during the installation process.</p>
