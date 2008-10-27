@@ -118,6 +118,7 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 		<li><a href="../instructor/<?php echo $req_lang; ?>"><?php get_text('doc_instructor'); ?></a></li>
 		<li><a href="../developer/guidelines.html"><?php get_text('doc_dev'); ?></a></li>
 		<li><a href="../developer/modules.html"><?php get_text('doc_mods'); ?></a></li>
+		<li><a href="../developer/themes.html"><?php get_text('doc_themes'); ?></a></li>
 	</ol>
 
 	<ol>
