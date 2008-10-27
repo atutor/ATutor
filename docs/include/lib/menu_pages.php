@@ -120,7 +120,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 		$_pages['admin/modules/index.php']['title_var'] = 'modules';
 		$_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
 		$_pages['admin/modules/index.php']['guide']     = 'admin/?p=modules.php';
-		$_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.php', 'admin/modules/extra_modules_list.php');
+		$_pages['admin/modules/index.php']['children']  = array('admin/modules/install_modules.php');
 
 		$_pages['admin/modules/details.php']['title_var'] = 'details';
 		$_pages['admin/modules/details.php']['parent']    = 'admin/modules/index.php';
@@ -134,30 +134,24 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 		$_pages['admin/modules/module_uninstall_step_3.php']['title_var'] = 'module_uninstall';
 		$_pages['admin/modules/module_uninstall_step_3.php']['parent']    = 'admin/modules/index.php';
 
-		$_pages['admin/modules/extra_modules_list.php']['title_var'] = 'avail_extra_modules';
-		$_pages['admin/modules/extra_modules_list.php']['parent']    = 'admin/modules/index.php';
-		$_pages['admin/modules/extra_modules_list.php']['guide']     = 'admin/?p=modules.php';
+		$_pages['admin/modules/install_modules.php']['title_var'] = 'install_modules';
+		$_pages['admin/modules/install_modules.php']['parent']    = 'admin/modules/index.php';
+		$_pages['admin/modules/install_modules.php']['guide']     = 'admin/?p=modules.php';
 
 		$_pages['admin/modules/version_history.php']['title_var'] = 'version_history';
-		$_pages['admin/modules/version_history.php']['parent']    = 'admin/modules/extra_modules_list.php';
+		$_pages['admin/modules/version_history.php']['parent']    = 'admin/modules/install_modules.php';
 
 		$_pages['admin/modules/module_install_step_1.php']['title_var'] = 'details';
-		$_pages['admin/modules/module_install_step_1.php']['parent']    = 'admin/modules/extra_modules_list.php';
+		$_pages['admin/modules/module_install_step_1.php']['parent']    = 'admin/modules/install_modules.php';
 
 		$_pages['admin/modules/module_install_step_2.php']['title_var'] = 'details';
-		$_pages['admin/modules/module_install_step_2.php']['parent']    = 'admin/modules/extra_modules_list.php';
+		$_pages['admin/modules/module_install_step_2.php']['parent']    = 'admin/modules/install_modules.php';
 
 		$_pages['admin/modules/module_install_step_3.php']['title_var'] = 'details';
-		$_pages['admin/modules/module_install_step_3.php']['parent']    = 'admin/modules/extra_modules_list.php';
-
-		$_pages['admin/modules/add_new.php']['title_var'] = 'install_modules';
-		$_pages['admin/modules/add_new.php']['parent']    = 'admin/modules/index.php';
+		$_pages['admin/modules/module_install_step_3.php']['parent']    = 'admin/modules/install_modules.php';
 
 			$_pages['admin/modules/confirm.php']['title_var'] = 'confirm';
 			$_pages['admin/modules/confirm.php']['parent']    = 'admin/modules/add_new.php';
-
-		//$_pages['admin/modules/create.php']['title_var'] = 'create_module';
-		//$_pages['admin/modules/create.php']['parent']    = 'admin/modules/index.php';
 
 		$_pages['admin/cron_config.php']['title_var'] = 'cron_config';
 		$_pages['admin/cron_config.php']['parent']    = 'admin/config_edit.php';
