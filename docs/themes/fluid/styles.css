@@ -1494,3 +1494,21 @@ width: 19%;
 	margin-top:3px; 
 	margin-right:-5px;
 }
+
+/*  form fields grouping for WCAG 2.0 conformance*/
+
+fieldset.group_form{
+	margin:1em;
+	border:thin #6D7B8D solid;
+   	min-height: 160px;
+	width:90%;
+	padding:.5em;
+}
+
+legend.group_form{
+	border:thin #6D7B8D solid;
+	background-color: #E6E6E6;
+	font-weight: 600;
+	color: black;
+	padding:.2em;
+}

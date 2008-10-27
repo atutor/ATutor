@@ -18,6 +18,8 @@ html,body {
 /* heading attributes */
 h1, h2, h3, h4, h5, h6 {
 	font-family: trebuchet ms, Arial, sans-serif;
+	clear:left;
+	clear:right;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 5px;
@@ -1273,27 +1275,43 @@ dl#public-profile dd, dl.col-list dd {
 dl.col-list dt { width: 30% }
 dl.col-list dd { margin-left: 32% }
 
+
 /* browse courses */
 dl.browse-course {
 	width: 100%;
 	padding-bottom: 25px;
+	background-color: #fffaf0;
+	border:1px #9DAB9A solid;
+	width:75%;
+	margin:auto;
+	margin-left:15em;
+	margin-bottom:1em;
 }
 dl.browse-course dt {
 	float: left;
 	font-weight: bold;
 	width: 25%;
 	text-align: right;
-	clear: left;
 	padding: 5px 10px 5px 0px;
 	vertical-align: middle;
 }
 dl.browse-course dd {
 	margin-bottom: 5px;
-	clear: right;
 	padding: 5px 0px 5px 10px;
 	margin-left: 26%;
-	border-left: 1px solid #e0e0ff;
+
 }
+img.headicon {
+	float:  left;
+	margin-top:1.2em;
+	margin-right:.5em;
+	height:6.45em;
+	width:6.45em;
+	vertical-align:top;
+	border:1px solid white;
+}
+
+
 
 /** forum stuff **/
 #forum-thread li { clear:left; border:1px solid #eee; border-bottom: 1px solid #f0f0f0; float:left; width: 98%; list-style: none; }

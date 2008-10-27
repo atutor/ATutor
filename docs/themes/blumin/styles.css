@@ -32,6 +32,7 @@ p a:active {
 h1, h2, h3, h4, h5, h6 {
     color: Black;
     clear: left;
+clear: right;
     font: 100% Verdana, Helvetica, Arial, sans-serif;
     margin: 0;
     padding-top: 0.5em;
@@ -660,6 +661,41 @@ div.browse-unselected {
 ul.browse-list {
 	list-style: none;
 	padding:0px;
+}
+
+/* browse courses */
+dl.browse-course {
+	width: 100%;
+	padding-bottom: 25px;
+	background-color: #fffaf0;
+	border:1px #9DAB9A solid;
+	width:75%;
+	margin:auto;
+	margin-left:15em;
+	margin-bottom:1em;
+}
+dl.browse-course dt {
+	float: left;
+	font-weight: bold;
+	width: 25%;
+	text-align: right;
+	padding: 5px 10px 5px 0px;
+	vertical-align: middle;
+}
+dl.browse-course dd {
+	margin-bottom: 5px;
+	padding: 5px 0px 5px 10px;
+	margin-left: 26%;
+
+}
+img.headicon {
+	float:  left;
+	margin-top:1.2em;
+	margin-right:.5em;
+	height:6.45em;
+	width:6.45em;
+	vertical-align:top;
+	border:1px solid white;
 }
 
 /* feedback /errors */

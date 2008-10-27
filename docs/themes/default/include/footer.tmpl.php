@@ -22,7 +22,7 @@
 
 <?php
 debug($_rel_url,"get");
-
+debug($_REQUEST,"get");
 ?>
 </body>
 </html>

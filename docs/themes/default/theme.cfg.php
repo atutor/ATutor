@@ -30,6 +30,7 @@
 	$_theme['author_email'] = '';
 
 /* theme default course banner styles: */
+/*
 	$_theme['banner']['font-family'] = 'Verdana, Arial, sans-serif';
 	$_theme['banner']['font-weight'] = 'bold';
 	$_theme['banner']['color']       = 'black';
@@ -39,6 +40,6 @@
 	$_theme['banner']['background-color'] = 'white';
 	$_theme['banner']['background-image'] = '';
 	$_theme['banner']['vertical-align']   = 'middle';
-	$_theme['banner']['padding']          = '3px';
+	$_theme['banner']['padding']          = '3px';*/
 
 ?>
