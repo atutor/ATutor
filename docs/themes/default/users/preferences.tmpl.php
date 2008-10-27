@@ -255,7 +255,7 @@ if ($_SESSION['course_id'] == -1) // admin login
 else  // user login 
 {
 ?>
-		<input type="submit" name="set_default" value="<?php echo _AT('reapply_default'); ?>" accesskey="d" />
+		<input type="submit" name="set_default" value="<?php echo _AT('reapply_default'); ?>" accesskey="d" title="<?php echo _AT('reapply_default'); ?> - Alt-d" style="float:left;"/>
 <?php 
 }
 ?>
