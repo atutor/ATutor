@@ -20,6 +20,7 @@ $text['doc_admin'] = 'Administrator Documentation';
 $text['doc_dev'] = 'Developer Documentation';
 $text['doc_instructor'] = 'Instructor Documentation';
 $text['doc_mods'] = 'Module Development Documentation';
+$text['doc_themes'] = 'Theme Designer Documentation';
 $text['doc_notes_enabled'] = 'User contributed notes is <em>enabled</em>. <a href="index.php?login">Administrator Login</a>.';
 $text['doc_title'] = 'ATutor Handbook';
 $text['doc_welcome'] = 'Welcome to the official ATutor Handbook!';
