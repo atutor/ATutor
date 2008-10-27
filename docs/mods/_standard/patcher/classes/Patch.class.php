@@ -545,8 +545,15 @@ class Patch {
 		
 		// backup user's file
 		$backup_file = $local_file . "." . $this->backup_suffix;
-		$this->copyFile($local_file, $backup_file);
-		$this->backup_files[] = realpath($backup_file);
+		
+		// Checking existence of $backup_file is to fix the bug when there are multiple alter/delete actions 
+		// on the same file, the following backups overwrite the first backup which results in the loss of the
+		// original code.
+		if (!file_exists($backup_file))
+		{
+			$this->copyFile($local_file, $backup_file);
+			$this->backup_files[] = realpath($backup_file);
+		}
 		
 		$local_file_content = file_get_contents($local_file);
 
@@ -554,12 +561,20 @@ class Patch {
 		foreach ($this->patch_array['files'][$row_num]['action_detail'] as $garbage => $alter_file_action)
 		{
 			if ($alter_file_action['type'] == 'delete')
-			{
-				$local_file_content = $this->strReplace($alter_file_action['code_from'], '', $local_file_content);
-			}
+				$modified_local_file_content = $this->strReplace($alter_file_action['code_from'], '', $local_file_content);
 
 			if ($alter_file_action['type'] == 'replace')
-				$local_file_content = $this->strReplace($alter_file_action['code_from'], $alter_file_action['code_to'], $local_file_content);
+				$modified_local_file_content = $this->strReplace($alter_file_action['code_from'], $alter_file_action['code_to'], $local_file_content);
+				
+			// when code_from is not found, add in warning
+			if ($modified_local_file_content == $local_file_content)  
+			{
+				for ($i = 0; $i < count($this->backup_files); $i++)
+					if ($this->backup_files[$i] == realpath($backup_file))
+						$this->backup_files[$i] .= ' '._AT("chunks_not_found");
+			}
+			else
+				$local_file_content = $modified_local_file_content;
 
 			$this->createPatchesFilesActionsRecord($alter_file_action);
 		}
