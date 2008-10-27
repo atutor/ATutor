@@ -26,7 +26,7 @@ else if (isset($_POST["new"])) $new = $_POST["new"];
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'admin/modules/extra_modules_list.php');
+	header('Location: '.AT_BASE_HREF.'admin/modules/install_modules.php');
 	exit;
 } 
 else if (is_writable($module_folder) || isset($_POST['submit_yes'])) 

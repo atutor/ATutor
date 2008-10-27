@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'classes/Module/ModuleListParser.class.php');
 
 if (isset($_POST["cancel"]))
 {
-	header('Location: '.AT_BASE_HREF.'admin/modules/extra_modules_list.php');
+	header('Location: '.AT_BASE_HREF.'admin/modules/install_modules.php');
 	exit;
 }
 

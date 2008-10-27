@@ -33,7 +33,7 @@ if (!is_writable($module_folder) && isset($_POST['submit_yes']))
 	if ($cancelled == 1) 
 	{
 		$msg->addFeedback('CANCELLED');
-		header('Location: '.AT_BASE_HREF.'admin/modules/extra_modules_list.php');
+		header('Location: '.AT_BASE_HREF.'admin/modules/install_modules.php');
 	}
 	if ($installed == 1) 
 	{

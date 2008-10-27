@@ -33,7 +33,7 @@ if (isset($_POST['submit_no']))
 	else
 	{
 		$msg->addFeedback('CANCELLED');
-		header('Location: '.AT_BASE_HREF.'admin/modules/extra_modules_list.php');
+		header('Location: '.AT_BASE_HREF.'admin/modules/install_modules.php');
 	}
 	
 	exit;

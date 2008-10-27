@@ -29,7 +29,7 @@ if (isset($_POST['submit_no'])) {
 	header('Location: '.AT_BASE_HREF.'admin/modules/index.php?'.urlencode($_POST['args']));
 	exit;
 } 
-else if (is_writable($mods_folder) && isset($_POST['submit_yes'])) 
+else if (is_writable($mods_folder) || (is_writable($mods_folder) && isset($_POST['submit_yes'])))
 {
 	header('Location: '.AT_BASE_HREF.'admin/modules/module_uninstall_step_2.php?mod='.$mod.SEP.'args='.urlencode($args).SEP.'permission_granted='.$_POST["permission_granted"]);
 	exit;

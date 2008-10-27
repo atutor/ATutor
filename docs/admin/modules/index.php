@@ -71,17 +71,16 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		$msg->addError('ALREADY_UNINSTALLED');
 	}
 
-	// check if the module is installed via "Available Extra Modules"
-	// which are the modules can be un-installed 
-	if (!file_exists($module_folder.'/module_uninstall.php') || !is_writable($module_folder))
-	{
-		$msg->addError('CANNOT_UNINSTALL_MANUAL_MODULE');
-	}
-
 	// only extra modules can be uninstalled
 	if (!$module->isExtra()) {
 		$msg->addError('ONLY_UNINSTALL_EXTRA_MODULE');
 	} 
+	// check if the module is installed via "Available Extra Modules"
+	// which are the modules can be un-installed 
+	else if (!file_exists($module_folder.'/module_uninstall.php') || !is_writable($module_folder))
+	{
+		$msg->addError('CANNOT_UNINSTALL_MANUAL_MODULE');
+	}
 	
   if (!$msg->containsErrors())
 	{

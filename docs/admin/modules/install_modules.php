@@ -76,7 +76,7 @@ if ((isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["vers
 {
 	$msg->addError('NO_ITEM_SELECTED');
 }
-else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["version_history"]))
+else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["version_history"]) || isset($_POST["install_upload"]))
 {
 	if ($_POST['version_history'])
 	{
@@ -85,7 +85,11 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 	}
 
 	// install and download
-	$module_zip_file = $module_folder . $module_list_array[$_POST["id"]]['history'][0]['location'].$module_list_array[$_POST["id"]]['history'][0]['filename'];
+	if ($_POST["install_upload"])
+		$module_zip_file = $_FILES['modulefile']['tmp_name'];
+	else
+		$module_zip_file = $module_folder . $module_list_array[$_POST["id"]]['history'][0]['location'].$module_list_array[$_POST["id"]]['history'][0]['filename'];
+		
 	$file_content = file_get_contents($module_zip_file);
 
 	if (!$file_content & ($_POST['install'] || $_POST['download']))
@@ -94,12 +98,16 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 	}
 	else
 	{
-		if ($_POST['install'])
+		if ($_POST['install'] || $_POST['install_upload'])
 		{
 			clear_dir($module_content_folder);
 			
 			// download zip file from update.atutor.ca and write into module content folder
-			$local_module_zip_file = $module_content_folder. $module_list_array[$_POST["id"]]['history'][0]['filename'];
+			if ($_POST["install_upload"])
+				$local_module_zip_file = $module_content_folder . $_FILES['modulefile']['name'];
+			else
+				$local_module_zip_file = $module_content_folder. $module_list_array[$_POST["id"]]['history'][0]['filename'];
+			
 			$fp = fopen($local_module_zip_file, "w");
 			fwrite($fp, $file_content);
 			fclose($fp);
@@ -172,6 +180,24 @@ $msg->printErrors();
 
 ?>
 
+<form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
+	
+<div class="input-form">
+		<div class="row"><?php echo _AT("upload_module"); ?></div>
+
+		<div class="row">
+			<input type="hidden" name="MAX_FILE_SIZE" value="52428800" />
+			<input type="file" name="modulefile"  size="50" />
+		</div>
+		
+		<div class="row buttons">
+			<input type="submit" name="install_upload" value="Install" onclick="javascript: return validate_filename(); " class="submit" />
+			<input type="hidden" name="uploading" value="1" />
+		</div>
+</div>
+
+</form>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 
 ?>
@@ -181,7 +207,7 @@ $msg->printErrors();
 		<th scope="col">&nbsp;</th>
 		<th scope="col"><?php echo _AT('module_name');?></th>
 		<th scope="col"><?php echo _AT('description');?></th>
-		<th scope="col"><?php echo _AT('atutor_version_to_work_with');?></th>
+		<th scope="col"><?php echo _AT('version');?></th>
 		<th scope="col"><?php echo _AT('atutor_version_tested_with');?></th>
 	</tr>
 </thead>
@@ -222,7 +248,7 @@ else
 		<td><input type="radio" name="id" value="<?php echo $i; ?>" id="m<?php echo $i; ?>" /></td>
 		<td><label for="m<?php echo $i; ?>"><?php echo $module_list_array[$i]["name"]; ?></label></td>
 		<td><?php echo $module_list_array[$i]["description"]; ?></td>
-		<td><?php echo $module_list_array[$i]["atutor_version_to_work_with"]; ?></td>
+		<td><?php echo $module_list_array[$i]["history"][0]["version"]; ?></td>
 		<td><?php echo $module_list_array[$i]["atutor_version_tested_with"]; ?></td>
 	</tr>
 
@@ -238,5 +264,31 @@ else
 ?>
 </table>
 </form>
+
+<script language="JavaScript">
+<!--
+
+String.prototype.trim = function() {
+	return this.replace(/^\s+|\s+$/g,"");
+}
+
+// This function validates if and only if a zip file is given
+function validate_filename() {
+  // check file type
+  var file = document.frm_upload.patchfile.value;
+  if (!file || file.trim()=='') {
+    alert('Please give a zip file!');
+    return false;
+  }
+  
+  if(file.slice(file.lastIndexOf(".")).toLowerCase() != '.zip') {
+    alert('Please upload ZIP file only!');
+    return false;
+  }
+}
+
+//  End -->
+//-->
+</script>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
