@@ -29,7 +29,7 @@ if (isset($_POST['submit_no'])) {
 	header('Location: '.AT_BASE_HREF.'admin/modules/install_modules.php');
 	exit;
 } 
-else if (is_writable($module_folder) || isset($_POST['submit_yes'])) 
+else if (is_writable($module_folder) || (is_writable($module_folder) && isset($_POST['submit_yes']))) 
 {
 	header('Location: '.AT_BASE_HREF.'admin/modules/module_install_step_2.php?mod='.$mod.SEP.'new='.$new.SEP.'permission_granted='.$_POST["permission_granted"]);
 	exit;
