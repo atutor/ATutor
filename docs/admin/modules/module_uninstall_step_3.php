@@ -62,7 +62,7 @@ $hidden_vars['uninstalled'] = $uninstalled;
 $hidden_vars['args'] = $args;
 $hidden_vars['mod'] = $mod;
 
-$msg->addConfirm(array('REMOVE_WRITE_PERMISSION', realpath($mods_folder)), $hidden_vars);
+$msg->addConfirm(array('REMOVE_WRITE_PERMISSION', realpath($mods_folder)), $hidden_vars, _AT("continue"), '', true);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
