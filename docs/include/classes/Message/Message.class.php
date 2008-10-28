@@ -122,7 +122,7 @@ class Message {
 			$this->savant->assign('item', $_result);	// pass translated payload to savant var for processing
 
 			if ($type == 'confirm') {
-				$this->savant->assign('hidden_vars', $last_item);
+				$this->savant->assign('hidden_vars', $hidden_vars);
 				$this->savant->assign('button_yes_text', $button_yes_text);
 				$this->savant->assign('button_no_text', $button_no_text);
 
