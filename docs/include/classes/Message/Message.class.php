@@ -83,6 +83,7 @@ class Message {
 
 			if ($type == 'confirm') {
 				// the confirm msg's have the hidden vars as the last element in the array
+				$hide_button_no = array_pop($item);
 				$button_no_text = array_pop($item);
 				$button_yes_text = array_pop($item);
 				$hidden_vars = array_pop($item);
@@ -125,6 +126,7 @@ class Message {
 				$this->savant->assign('hidden_vars', $hidden_vars);
 				$this->savant->assign('button_yes_text', $button_yes_text);
 				$this->savant->assign('button_no_text', $button_no_text);
+				$this->savant->assign('hide_button_no', $hide_button_no);
 
 			} else if ($type == 'help') { // special case for help message, we need to check a few conditions
 				$a = (!isset($_GET['e']) && !$_SESSION['prefs']['PREF_HELP'] && !$_GET['h']);
@@ -279,7 +281,7 @@ class Message {
 	}
 	
 
-	function addConfirm($code, $hidden_vars = '', $button_yes_text='', $button_no_text='') {
+	function addConfirm($code, $hidden_vars = '', $button_yes_text='', $button_no_text='', $hide_button_no=false) {
 		$hidden_vars_string = '';
 		if (is_array($hidden_vars)) {
 			foreach ($hidden_vars as $key => $value) {
@@ -292,6 +294,7 @@ class Message {
 		$code[] = $hidden_vars_string;
 		$code[] = ($button_yes_text == '') ? _AT("submit_yes") : $button_yes_text;
 		$code[] = ($button_no_text == '') ? _AT("submit_no") : $button_no_text;
+		$code[] = $hide_button_no;
 		
 		$this->addAbstract('confirm', $code);
 	}

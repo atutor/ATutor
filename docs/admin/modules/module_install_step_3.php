@@ -50,7 +50,7 @@ unset($hidden_vars);
 $hidden_vars['cancelled'] = $cancelled;
 $hidden_vars['installed'] = $installed;
 
-$msg->addConfirm(array('REMOVE_WRITE_PERMISSION', realpath($module_folder)), $hidden_vars);
+$msg->addConfirm(array('REMOVE_WRITE_PERMISSION', realpath($module_folder)), $hidden_vars, _AT("continue"), '', true);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
