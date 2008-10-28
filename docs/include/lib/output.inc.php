@@ -1080,7 +1080,7 @@ function provide_alternatives($cid, $content_page){
 												$content = $first.$new.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'];
 												if ($last_c=="]"){
 													$after 	 = substr($before[1], 8);
-													
+													$after   = '</a>'.$after;
 												}else{
 													$shift 	 = strpos($before[1], '</');
 													$after 	 = substr($before[1], $shift);
