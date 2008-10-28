@@ -1169,7 +1169,7 @@ function provide_alternatives($cid, $content_page){
 												if ($last_c=="]"){
 													$after 	 = substr($before[1], 8);
 												}else{
-													$shift 	 = strpos($before[1], '</');
+													$shift 	 = strpos($before[1], '/>');
 													$after 	 = substr($before[1], $shift);
 												}
 												$content = $content.$after;
@@ -1181,11 +1181,12 @@ function provide_alternatives($cid, $content_page){
 													$after 	   = substr($before[1], 8);
 													$content   = $content.'[/media]'.'<p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
 												}else{
-													$shift 	   = strpos($before[1], '</');
+													$shift 	   = strpos($before[1], '/>');
 													$alt_shift = $len-$shift;
 													$res       = substr($before[1], 0, -$alt_shift);
+													$shift     = $shift+2;
 													$after 	   = substr($before[1], $shift);
-													$content   = $content.$res.'<p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
+													$content   = $content.$res.'/><p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
 												}
 											}
 										}
