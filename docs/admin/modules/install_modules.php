@@ -245,10 +245,12 @@ else
 		for ($i=0; $i < $num_of_modules; $i++)
 		{
 			// check if the module has been installed
-			$installed = false;
-			if (file_exists("../../mods/". $module_list_array[$i]["history"][0]["install_folder"]))
-				$installed = true;
-			
+			$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name = '" . $module_list_array[$i]["history"][0]["install_folder"] . "'";
+			$result = mysql_query($sql, $db) or die(mysql_error());
+
+			if (mysql_num_rows($result) == 0) $installed = false;
+			else $installed = true;
+
 ?>
 	<tr onmousedown="document.form['m<?php echo $i; ?>'].checked = true; rowselect(this);"  id="r_<?php echo $i; ?>">
 		<td><input type="radio" name="id" value="<?php echo $i; ?>" id="m<?php echo $i; ?>" <?php if ($installed) echo 'disabled="disabled"'; ?> /></td>
