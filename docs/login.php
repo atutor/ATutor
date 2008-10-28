@@ -16,6 +16,28 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+// For security reasons the token has to be generated anew before each login attempt.
+// The entropy of SHA-1 input should be comparable to that of its output; in other words, the more randomness you feed it the better.
+
+/***
+* Remove comments below to enable a remote login form.
+*/
+//if (isset($_POST['token']))
+//{
+//	$_SESSION['token'] = $_POST['token'];
+//}
+//else
+//{
+//	if (!isset($_SESSION['token']))
+//		$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
+//}
+
+/***
+* Add comments 2 lines below to enable a remote login form.
+*/
+if (!isset($_SESSION['token']))
+	$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
+
 if (isset($_GET['course'])) {
 	$_GET['course'] = intval($_GET['course']);
 } else {
@@ -138,10 +160,6 @@ unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['is_super_admin']);
 unset($_SESSION['dd_question_ids']);
-
-// For security reasons the token has to be generated anew before each login attempt.
-// The entropy of SHA-1 input should be comparable to that of its output; in other words, the more randomness you feed it the better.
-$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
 
 $_SESSION['prefs']['PREF_FORM_FOCUS'] = 1;
 
