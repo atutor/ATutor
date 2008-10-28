@@ -1094,11 +1094,12 @@ function provide_alternatives($cid, $content_page){
 													$after 	   = substr($before[1], 8);
 													$content   = $content.'[/media]'.'<p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
 												}else{
-													$shift 	   = strpos($before[1], '</');
+													$shift 	   = strpos($before[1], '</a>');
 													$alt_shift = $len-$shift;
 													$res       = substr($before[1], 0, -$alt_shift);
+													$shift     = $shift+4;
 													$after 	   = substr($before[1], $shift);
-													$content   = $content.$res.'<p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
+													$content   = $content.$res.'</a><p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
 												}
 											}	
 										}
