@@ -26,7 +26,7 @@
 
 	<div class="row buttons">
 		<input type="submit" name="submit_yes" value="<?php echo $this->button_yes_text; ?>" /> 
-<?php if(!$this->hide_button_no)): ?>
+<?php if(!$this->hide_button_no): ?>
 		<input type="submit" name="submit_no" value="<?php echo $this->button_no_text; ?>" />
 <?php endif; ?>
 	</div>
