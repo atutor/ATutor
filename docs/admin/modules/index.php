@@ -183,13 +183,13 @@ $keys = array_keys($module_list);
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 
-<input type="hidden" name="enabled" value="<?php echo (int) isset($_GET['enabled']); ?>" />
-<input type="hidden" name="disabled" value="<?php echo (int) isset($_GET['disabled']); ?>" />
-<input type="hidden" name="core" value="<?php echo (int) isset($_GET['core']); ?>" />
-<input type="hidden" name="standard" value="<?php echo (int) isset($_GET['standard']); ?>" />
-<input type="hidden" name="extra" value="<?php echo (int) isset($_GET['extra']); ?>" />
-<input type="hidden" name="missing" value="<?php echo (int) isset($_GET['missing']); ?>" />
-<input type="hidden" name="partially_uninstalled" value="<?php echo (int) isset($_GET['partially_uninstalled']); ?>" />
+<input type="hidden" name="enabled" value="<?php echo (int) $_GET['enabled']; ?>" />
+<input type="hidden" name="disabled" value="<?php echo (int) $_GET['disabled']; ?>" />
+<input type="hidden" name="core" value="<?php echo (int) $_GET['core']; ?>" />
+<input type="hidden" name="standard" value="<?php echo (int) $_GET['standard']; ?>" />
+<input type="hidden" name="extra" value="<?php echo (int) $_GET['extra']; ?>" />
+<input type="hidden" name="missing" value="<?php echo (int) $_GET['missing']; ?>" />
+<input type="hidden" name="partially_uninstalled" value="<?php echo (int) $_GET['partially_uninstalled']; ?>" />
 
 <table class="data" summary="" rules="cols">
 <colgroup>
