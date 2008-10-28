@@ -87,8 +87,15 @@ else{
 					}
 				}
 				if ($present[$i]==false) {
-					$sql_ins= "INSERT INTO ".TABLE_PREFIX."primary_resources VALUES (NULL, $cid, '$resources[$i]', NULL)";
-					$r 		= mysql_query($sql_ins, $db);
+					$sql_sel= "SELECT * FROM ".TABLE_PREFIX."primary_resources WHERE content_id=".$cid." and resource='$resources[$i]'";
+					$sel	= mysql_query($sql_sel, $db);
+					if (mysql_num_rows($sel) > 0)
+						continue;
+					else
+					{
+						$sql_ins= "INSERT INTO ".TABLE_PREFIX."primary_resources VALUES (NULL, $cid, '$resources[$i]', NULL)";
+						$r 		= mysql_query($sql_ins, $db);
+					}
 				}
 			}
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."primary_resources WHERE content_id=".$cid." order by primary_resource_id";
