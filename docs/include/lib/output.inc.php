@@ -1089,12 +1089,18 @@ function provide_alternatives($cid, $content_page){
 											}else {
 												$before    = split($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
-												$shift 	   = strpos($before[1], '</');
-												$alt_shift = $len-$shift;
-												$res       = substr($before[1], 0, -$alt_shift);
-												$after 	   = substr($before[1], $shift);
-												$content   = $content.$res.'<p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
-											}
+												$last_c  = substr($before[0], -1, 1);
+												if ($last_c=="]"){
+													$after 	   = substr($before[1], 8);
+													$content   = $content.'[/media]'.'<p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
+												}else{
+													$shift 	   = strpos($before[1], '</');
+													$alt_shift = $len-$shift;
+													$res       = substr($before[1], 0, -$alt_shift);
+													$after 	   = substr($before[1], $shift);
+													$content   = $content.$res.'<p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
+												}
+											}	
 										}
 									}
 								}
@@ -1162,7 +1168,6 @@ function provide_alternatives($cid, $content_page){
 												$content = $first.$new.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a>';
 												if ($last_c=="]"){
 													$after 	 = substr($before[1], 8);
-													
 												}else{
 													$shift 	 = strpos($before[1], '</');
 													$after 	 = substr($before[1], $shift);
@@ -1171,11 +1176,17 @@ function provide_alternatives($cid, $content_page){
 											}else {
 												$before    = split($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
-												$shift 	   = strpos($before[1], '</');
-												$alt_shift = $len-$shift;
-												$res       = substr($before[1], 0, -$alt_shift);
-												$after 	   = substr($before[1], $shift);
-												$content   = $content.$res.'<p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
+												$last_c  = substr($before[0], -1, 1);
+												if ($last_c=="]"){
+													$after 	   = substr($before[1], 8);
+													$content   = $content.'[/media]'.'<p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
+												}else{
+													$shift 	   = strpos($before[1], '</');
+													$alt_shift = $len-$shift;
+													$res       = substr($before[1], 0, -$alt_shift);
+													$after 	   = substr($before[1], $shift);
+													$content   = $content.$res.'<p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
+												}
 											}
 										}
 									}
