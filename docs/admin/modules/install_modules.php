@@ -174,6 +174,22 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 	}
 }
 
+if (isset($_POST['mod'])) {
+	$dir_name = str_replace(array('.','..'), '', $_POST['mod']);
+
+	if (isset($_POST['install_manually'])) {
+		header('Location: '.AT_BASE_HREF.'admin/modules/module_install_step_2.php?mod='.urlencode($dir_name).SEP.'new=1'.SEP.'mod_in=1');
+		exit;
+	}
+
+} else if (isset($_POST['install_manually'])) {
+	$msg->addError('NO_ITEM_SELECTED');
+}
+
+$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_UNINSTALLED | AT_MODULE_STATUS_MISSING | AT_MODULE_STATUS_PARTIALLY_UNINSTALLED, AT_MODULE_TYPE_EXTRA);
+$keys = array_keys($module_list);
+natsort($keys);
+
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printErrors();
@@ -197,6 +213,45 @@ $msg->printErrors();
 </div>
 
 </form>
+
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="installform">
+<table class="data" summary="" rules="cols">
+<thead>
+<tr>
+	<th scope="col">&nbsp;</th>
+	<th scope="col"><?php echo _AT('module_name'); ?></th>
+	<th scope="col"><?php echo _AT('directory_name'); ?></th>
+	<th scope="col"><?php echo _AT('description'); ?></th>
+</tr>
+</thead>
+
+<tfoot>
+<tr>
+	<td colspan="4">
+		<input type="submit" name="install_manually"  value="<?php echo _AT('install'); ?>" />
+	</td>
+</tr>
+</tfoot>
+
+<tbody>
+<?php if (!empty($keys)): ?>
+	<?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; ?>
+		<tr onmousedown="document.installform['m_<?php echo $dir_name; ?>'].checked = true; rowselect(this);" id="r_<?php echo $dir_name; ?>">
+			<td valign="top"><input type="radio" id="m_<?php echo $dir_name; ?>" name="mod" value="<?php echo $dir_name; ?>" /></td>
+			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><?php echo $module->getName(); ?></label></td>
+			<td valign="top"><code><?php echo $dir_name; ?>/</code></td>
+			<td valign="top"><?php echo $module->getDescription($_SESSION['lang']); ?></td>
+		</tr>
+	<?php endforeach; ?>
+<?php else: ?>
+	<tr>
+		<td colspan="4"><?php echo _AT('none_found'); ?></td>
+	</tr>
+<?php endif; ?>
+</tbody>
+</table>
+</form>
+<br />
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 

@@ -77,7 +77,7 @@ else if (isset($_POST['submit_yes']))
 }
 
 // copy module from content folder into mods folder
-if (isset($_GET['mod']))
+if (isset($_GET['mod']) && !isset($_GET['mod_in']))
 {
 	copys($module_content_folder.$_GET['mod'], '../../mods/'.$_GET['mod']);
 }
@@ -88,7 +88,7 @@ $moduleParser =& new ModuleParser();
 
 $_REQUEST['mod'] = str_replace(array('.','..'), '', $_GET['mod']);
 
-if (!file_exists($module_content_folder.$_GET['mod'].'/module.xml')) {
+if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
@@ -116,7 +116,7 @@ if (!file_exists($module_content_folder.$_GET['mod'].'/module.xml')) {
 	exit;
 }
 
-$moduleParser->parse(file_get_contents($module_content_folder.$_GET['mod'].'/module.xml'));
+$moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
 
 $module =& $moduleFactory->getModule($_GET['mod']);
 
