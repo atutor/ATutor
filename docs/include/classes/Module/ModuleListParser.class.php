@@ -94,6 +94,10 @@ class ModuleListParser {
 		{
 			$this->module_rows[$this->row_num]['history'][$this->history_num]['location'] = trim($this->character_data);
 		} 
+		else if ($this->element_path === array('module_list', 'module', 'history', 'release', 'install_folder')) 
+		{
+			$this->module_rows[$this->row_num]['history'][$this->history_num]['install_folder'] = trim($this->character_data);
+		} 
 		else if ($this->element_path === array('module_list', 'module', 'history', 'release', 'date')) 
 		{
 			$this->module_rows[$this->row_num]['history'][$this->history_num]['date'] = trim($this->character_data);

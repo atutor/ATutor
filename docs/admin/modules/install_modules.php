@@ -209,12 +209,13 @@ $msg->printErrors();
 		<th scope="col"><?php echo _AT('description');?></th>
 		<th scope="col"><?php echo _AT('version');?></th>
 		<th scope="col"><?php echo _AT('atutor_version_tested_with');?></th>
+		<th scope="col"><?php echo _AT('installed').'?';?></th>
 	</tr>
 </thead>
 	
 <tfoot>
 <tr>
-	<td colspan="5">
+	<td colspan="6">
 		<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
 		<input type="submit" name="version_history" value="<?php echo _AT('version_history'); ?>" />
@@ -243,13 +244,19 @@ else
 	{
 		for ($i=0; $i < $num_of_modules; $i++)
 		{
+			// check if the module has been installed
+			$installed = false;
+			if (file_exists("../../mods/". $module_list_array[$i]["history"][0]["install_folder"]))
+				$installed = true;
+			
 ?>
 	<tr onmousedown="document.form['m<?php echo $i; ?>'].checked = true; rowselect(this);"  id="r_<?php echo $i; ?>">
-		<td><input type="radio" name="id" value="<?php echo $i; ?>" id="m<?php echo $i; ?>" /></td>
+		<td><input type="radio" name="id" value="<?php echo $i; ?>" id="m<?php echo $i; ?>" <?php if ($installed) echo 'disabled="disabled"'; ?> /></td>
 		<td><label for="m<?php echo $i; ?>"><?php echo $module_list_array[$i]["name"]; ?></label></td>
 		<td><?php echo $module_list_array[$i]["description"]; ?></td>
 		<td><?php echo $module_list_array[$i]["history"][0]["version"]; ?></td>
 		<td><?php echo $module_list_array[$i]["atutor_version_tested_with"]; ?></td>
+		<td><?php if ($installed) echo _AT("installed"); else echo _AT("not_installed"); ?></td>
 	</tr>
 
 <?php 
@@ -275,7 +282,7 @@ String.prototype.trim = function() {
 // This function validates if and only if a zip file is given
 function validate_filename() {
   // check file type
-  var file = document.frm_upload.patchfile.value;
+  var file = document.frm_upload.modulefile.value;
   if (!file || file.trim()=='') {
     alert('Please give a zip file!');
     return false;

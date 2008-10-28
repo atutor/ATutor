@@ -37,7 +37,7 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 		<td><input type="radio" name="id" value="<?php echo $row_id; ?>"<?php if ($enable_radiotton) echo 'id="m'. $row_id.'"'; ?> <?php if (!$enable_radiotton) echo 'disabled="disabled" '; if (strcmp($row_id, $id) == 0 || strcmp($row_id, $patch_id) == 0) echo "checked "?> /></td>
 		<td><label <?php if ($enable_radiotton) echo 'for="m'.$row_id.'"'; ?>><?php echo $patch_row["atutor_patch_id"]; ?></label></td>
 		<td><?php echo $description; ?></td>
-		<td><?php if (!isset($patch_row['status'])) echo "Uninstalled"; else echo $patch_row["status"]; ?></td>
+		<td><?php if (!isset($patch_row['status'])) echo _AT("not_installed"); else echo $patch_row["status"]; ?></td>
 		<td><?php echo $patch_row["available_to"]; ?></td>
 		<td>
 		<?php 
