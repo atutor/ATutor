@@ -1168,11 +1168,15 @@ function provide_alternatives($cid, $content_page){
 												$content = $first.$new.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a>';
 												if ($last_c=="]"){
 													$after 	 = substr($before[1], 8);
+													$content = $content.$after;
 												}else{
-													$shift 	 = strpos($before[1], '/>');
-													$after 	 = substr($before[1], $shift);
+													$shift 	   = strpos($before[1], '/>');
+													$alt_shift = $len-$shift;
+													$res       = substr($before[1], 0, -$alt_shift);
+													$shift     = $shift+2;
+													$after 	   = substr($before[1], $shift);
+													$content = $content.$after;
 												}
-												$content = $content.$after;
 											}else {
 												$before    = split($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
