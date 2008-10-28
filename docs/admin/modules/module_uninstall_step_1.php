@@ -44,7 +44,7 @@ if (!is_writable($mods_folder))
 
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	
-	$msg->addConfirm(array('GRANT_WRITE_PERMISSION', realpath($mods_folder)), $hidden_vars);
+	$msg->addConfirm(array('GRANT_WRITE_PERMISSION', realpath($mods_folder)), $hidden_vars, _AT("continue"), _AT("cancel"));
 	$msg->printConfirm();
 	
 	require(AT_INCLUDE_PATH.'footer.inc.php'); 
