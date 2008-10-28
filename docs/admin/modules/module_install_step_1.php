@@ -44,12 +44,10 @@ if (!is_writable($module_folder))
 
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	
-	$msg->addConfirm(array('GRANT_WRITE_PERMISSION', realpath($module_folder)), $hidden_vars);
+	$msg->addConfirm(array('GRANT_WRITE_PERMISSION', realpath($module_folder)), $hidden_vars, _AT("continue"), _AT("cancel"));
 	$msg->printConfirm();
 	
 	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 }
-
-
 
 ?>

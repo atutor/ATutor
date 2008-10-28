@@ -25,8 +25,8 @@
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit_yes" value="<?php echo _AT('submit_yes'); ?>" /> 
-		<input type="submit" name="submit_no" value="<?php echo _AT('submit_no'); ?>" />
+		<input type="submit" name="submit_yes" value="<?php echo $this->button_yes_text; ?>" /> 
+		<input type="submit" name="submit_no" value="<?php echo $this->button_no_text; ?>" />
 	</div>
 </div>
 </form>
