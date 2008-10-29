@@ -28,7 +28,10 @@ if (isset($_POST['submit_yes'])) {
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
-		assign_session_prefs(unserialize(stripslashes($row['preferences'])));
+		if ($row['preferences'] == "")
+			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])));
+		else
+			assign_session_prefs(unserialize(stripslashes($row['preferences'])));
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];
 		$_SESSION['is_super_admin'] = $admin_login;

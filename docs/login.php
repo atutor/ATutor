@@ -99,7 +99,10 @@ if (isset($this_login, $this_password)) {
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
 		$_SESSION['login']		= $row['login'];
-		assign_session_prefs(unserialize(stripslashes($row['preferences'])));
+		if ($row['preferences'] == "")
+			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])));
+		else
+			assign_session_prefs(unserialize(stripslashes($row['preferences'])));
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];
 		$_SESSION['course_id']  = 0;
