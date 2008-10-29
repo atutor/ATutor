@@ -314,8 +314,9 @@ while (false !== ($file = readdir($dir)) ) {
 
 		$files[$file1] .= '<td ><label for="'.$file.'">&nbsp;';
 
-		$files[$file1] .= '<a href="'.$get_file.$pathext.urlencode($filename).'">'.$file.'</a>';
+	//	$files[$file1] .= '<a href="'.$get_file.$pathext.urlencode($filename).'">'.$file.'</a>';
 
+		$files[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$file.'</a>';
 		
 /*		if ($ext == 'zip') {
 			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext=' . urlencode($pathext) . SEP . 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">'."\n";
