@@ -171,6 +171,7 @@ if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_v
 																		'applied_version' => $patch_array['applied_version'],
 																		'patch_folder' => $patchURL,
 																		'available_to' => 'private',
+																		'sql' => $patch_array['sql'],
 																		'description' => $patch_array['description'],
 																		'dependent_patches' => $patch_array['dependent_patches']);
 			}
@@ -178,6 +179,7 @@ if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_v
 			if ($_POST["install"])
 			{
 				$current_patch_list = $patch_list_array[$id];
+				$current_patch_list["sql"] = $patch_array["sql"];
 			}
 
 			if ($_POST["install_upload"] && is_patch_installed($patch_array["atutor_patch_id"]))

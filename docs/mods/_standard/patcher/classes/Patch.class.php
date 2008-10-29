@@ -68,7 +68,7 @@ class Patch {
 		
 		$this->patch_array = $patch_array; 
 		$this->patch_summary_array = $patch_summary_array;
-		
+
 		$this->baseURL = $patch_folder;
 		$this ->backup_suffix = $patch_array['atutor_patch_id'] . ".old";
 		$this ->patch_suffix = $patch_array['atutor_patch_id'];
@@ -738,7 +738,7 @@ class Patch {
 					   '".mysql_real_escape_string($patch_summary_array["patch_folder"])."',
 					   '".mysql_real_escape_string($patch_summary_array["description"])."',
 					   '".$patch_summary_array["available_to"]."',
-					   '',
+					   '".mysql_real_escape_string($patch_summary_array["sql"])."',
 					   '".$patch_summary_array["status"]."',
 					   '',
 					   '',
