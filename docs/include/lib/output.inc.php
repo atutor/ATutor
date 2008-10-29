@@ -1077,7 +1077,7 @@ function provide_alternatives($cid, $content_page){
 												$shift   = $len-$shift;
 												$first   = substr($before[0], 0, -$shift);
 												$ext     = substr($row_audio['secondary_resource'], -3);
-												if (($ext==swf)||($ext==mp3)){
+												if ($ext==swf){
 													$content = $first.'[media]'.$row_audio['secondary_resource'];
 													if ($last_c=="]"){
 														$after 	 = substr($before[1], 8);
@@ -1105,7 +1105,7 @@ function provide_alternatives($cid, $content_page){
 												$content   = $before[0].$row['resource'];
 												$last_c  = substr($before[0], -1, 1);
 												$ext     = substr($row_audio['secondary_resource'], -3);
-												if (($ext==swf)||($ext==mp3)){
+												if ($ext==swf){
 													if ($last_c=="]"){
 														$after 	   = substr($before[1], 8);
 														$content   = $content.'[/media][media]'.$row_audio['secondary_resource'].'[/media]'.$after;
@@ -1143,7 +1143,7 @@ function provide_alternatives($cid, $content_page){
 						$result_text = mysql_query($sql_text, $db);
 							if (mysql_num_rows($result_text) > 0) {
 							while ($row_text = mysql_fetch_assoc($result_text)){
-								$sql_text_alt 	 = "SELECT * FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id=$row_visual[secondary_resource_id]";	
+								$sql_text_alt 	 = "SELECT * FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id=$row_text[secondary_resource_id]";	
 								$result_text_alt	 = mysql_query($sql_text_alt, $db);
 								if (mysql_num_rows($result_text_alt) > 0) {
 									while ($row_text_alt = mysql_fetch_assoc($result_text_alt)){
@@ -1154,23 +1154,65 @@ function provide_alternatives($cid, $content_page){
 												$len     = strlen($before[0]);
 												$shift   = $len-$shift;
 												$first   = substr($before[0], 0, -$shift);
-												$new 	 = '<a href="';
-												$content = $first.$new.$row_text['secondary_resource'].'">'.$row_text['secondary_resource'].'</a>';
-												$shift 	 = strpos($before[1], '</');
-												$after 	 = substr($before[1], $shift);
+												$ext     = substr($row_text['secondary_resource'], -3);
+												if (($ext==swf)||($ext==mp3)){
+													$content = $first.'[media]'.$row_text['secondary_resource'];
+													if ($last_c=="]"){
+														$after 	 = substr($before[1], 8);
+														$after   = '[/media]'.$after;
+													}else{
+														$shift 	 = strpos($before[1], '</');
+														$after 	 = substr($before[1], $shift);
+														$after 	 = substr($after, 4);
+														$after 	 = '[/media]'.$after;
+													}
+												}else{
+													if (($_SESSION['prefs']['PREF_ALT_TO_TEXT']==visual) && ($row_text_alt[type_id]==4)){
+														$new     = '<img border="0" alt="Alternate Text" src="';
+														$content = $first.$new.$row_text['secondary_resource'].'"/>';
+														$shift 	 = strpos($before[1], '</');
+														$after 	 = substr($before[1], $shift);
+														$after 	 = substr($after, 4);
+													}else{
+														$new 	 = '<a href="';
+														$content = $first.$new.$row_text['secondary_resource'].'">'.$row_text['secondary_resource'];
+														$shift 	 = strpos($before[1], '</');
+														$after 	 = substr($before[1], $shift);
+													}
+												}
 												$content = $content.$after;
 											}else {
 												$before    = split($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
-												$shift 	   = strpos($before[1], '</');
-												$alt_shift = $len-$shift;
-												$res       = substr($before[1], 0, -$alt_shift);
-												$after 	   = substr($before[1], $shift);
-												$content   = $content.$res.'<p><a href="'.$row_text['secondary_resource'].'">'.$row_text['secondary_resource'].'</a></p>'.$after;
+												$ext     = substr($row_text['secondary_resource'], -3);
+												if (($ext==swf)||($ext==mp3)){
+													$shift 	   = strpos($before[1], '</a>');
+													$alt_shift = $len-$shift;
+													$res       = substr($before[1], 0, -$alt_shift);
+													$shift     = $shift+4;
+													$after 	   = substr($before[1], $shift);
+													$content   = $content.$res.'</a><br/>[media]'.$row_text['secondary_resource'].'[/media]'.$after;
+												}else {
+													if (($_SESSION['prefs']['PREF_ALT_TO_TEXT']==visual) && ($row_text_alt[type_id]==4)){
+														$shift 	   = strpos($before[1], '</a>');
+														$alt_shift = $len-$shift;
+														$res       = substr($before[1], 0, -$alt_shift);
+														$shift     = $shift+4;
+														$after 	   = substr($before[1], $shift);
+														$content   = $content.$res.'</a><img border="0" alt="Alternate Text" src="'.$row_text['secondary_resource'].'"/>'.$after;
+													}else {
+														$shift 	   = strpos($before[1], '</a>');
+														$alt_shift = $len-$shift;
+														$res       = substr($before[1], 0, -$alt_shift);
+														$shift     = $shift+4;
+														$after 	   = substr($before[1], $shift);
+														$content   = $content.$res.'</a><p><a href="'.$row_text['secondary_resource'].'">'.$row_text['secondary_resource'].'</a></p>'.$after;
+													}
+												}
 											}
 										}
 									}
-								}
+								} 
 							}
 						}
 					}
