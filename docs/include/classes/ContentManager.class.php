@@ -312,7 +312,7 @@ class ContentManager
 		$result = mysql_query($sql, $this->db);
 
 		/* Delete all AccessForAll contents */
-		require_once(AT_INCLUDE_PATH.'classes/A4a/a4a.class.php');
+		require_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 		$a4a = new A4a($content_id);
 		$a4a->deleteA4a();
 
