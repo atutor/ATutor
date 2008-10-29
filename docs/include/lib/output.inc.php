@@ -1076,34 +1076,64 @@ function provide_alternatives($cid, $content_page){
 												$len     = strlen($before[0]);
 												$shift   = $len-$shift;
 												$first   = substr($before[0], 0, -$shift);
-												$new 	 = '<a href="';
-												$content = $first.$new.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'];
-												if ($last_c=="]"){
-													$after 	 = substr($before[1], 8);
-													$after   = '</a>'.$after;
+												$ext     = substr($row_audio['secondary_resource'], -3);
+												if (($ext==swf)||($ext==mp3)){
+													$content = $first.'[media]'.$row_audio['secondary_resource'];
+													if ($last_c=="]"){
+														$after 	 = substr($before[1], 8);
+														$after   = '[/media]'.$after;
+													}else{
+														$shift 	 = strpos($before[1], '</');
+														$after 	 = substr($before[1], $shift);
+														$after 	 = substr($after, 4);
+														$after 	 = '[/media]'.$after;
+													}
 												}else{
-													$shift 	 = strpos($before[1], '</');
-													$after 	 = substr($before[1], $shift);
+													$new 	 = '<a href="';
+													$content = $first.$new.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'];
+													if ($last_c=="]"){
+														$after 	 = substr($before[1], 8);
+														$after   = '</a>'.$after;
+													}else{
+														$shift 	 = strpos($before[1], '</');
+														$after 	 = substr($before[1], $shift);
+													}
 												}
 												$content = $content.$after;
 											}else {
 												$before    = split($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
 												$last_c  = substr($before[0], -1, 1);
-												if ($last_c=="]"){
-													$after 	   = substr($before[1], 8);
-													$content   = $content.'[/media]'.'<p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
-												}else{
-													$shift 	   = strpos($before[1], '</a>');
-													$alt_shift = $len-$shift;
-													$res       = substr($before[1], 0, -$alt_shift);
-													$shift     = $shift+4;
-													$after 	   = substr($before[1], $shift);
-													$content   = $content.$res.'</a><p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
+												$ext     = substr($row_audio['secondary_resource'], -3);
+												if (($ext==swf)||($ext==mp3)){
+													if ($last_c=="]"){
+														$after 	   = substr($before[1], 8);
+														$content   = $content.'[/media][media]'.$row_audio['secondary_resource'].'[/media]'.$after;
+													}else{
+														$shift 	   = strpos($before[1], '</a>');
+														$alt_shift = $len-$shift;
+														$res       = substr($before[1], 0, -$alt_shift);
+														$shift     = $shift+4;
+														$after 	   = substr($before[1], $shift);
+														$content   = $content.$res.'</a><br/>[media]'.$row_audio['secondary_resource'].'[/media]'.$after;
+													}
 												}
-											}	
+												else {
+													if ($last_c=="]"){
+														$after 	   = substr($before[1], 8);
+														$content   = $content.'[/media]'.'<p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
+													}else{
+														$shift 	   = strpos($before[1], '</a>');
+														$alt_shift = $len-$shift;
+														$res       = substr($before[1], 0, -$alt_shift);
+														$shift     = $shift+4;
+														$after 	   = substr($before[1], $shift);
+														$content   = $content.$res.'</a><p><a href="'.$row_audio['secondary_resource'].'">'.$row_audio['secondary_resource'].'</a></p>'.$after;
+													}
+												}	
+											}
 										}
-									}
+									}	
 								}
 							}
 						}
@@ -1165,33 +1195,63 @@ function provide_alternatives($cid, $content_page){
 												$len     = strlen($before[0]);
 												$shift   = $len-$shift;
 												$first   = substr($before[0], 0, -$shift);
-												$new 	 = '<a href="';
-												$content = $first.$new.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a>';
-												if ($last_c=="]"){
-													$after 	 = substr($before[1], 8);
-													$content = $content.$after;
+												$ext     = substr($row_visual['secondary_resource'], -3);
+												if ($ext==mp3){
+													$content = $first.'[media]'.$row_visual['secondary_resource'];
+													if ($last_c=="]"){
+														$after 	 = substr($before[1], 8);
+														$after   = '[/media]'.$after;
+													}else{
+														$shift 	 = strpos($before[1], '/>');
+														$after 	 = substr($before[1], $shift);
+														$after 	 = substr($after, 2);
+														$after 	 = '[/media]'.$after;
+													}
 												}else{
-													$shift 	   = strpos($before[1], '/>');
-													$alt_shift = $len-$shift;
-													$res       = substr($before[1], 0, -$alt_shift);
-													$shift     = $shift+2;
-													$after 	   = substr($before[1], $shift);
-													$content = $content.$after;
+													$new 	 = '<a href="';
+													$content = $first.$new.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a>';
+													if ($last_c=="]"){
+														$after 	 = substr($before[1], 8);
+														$content = $content.$after;
+													}else{
+														$shift 	   = strpos($before[1], '/>');
+														$alt_shift = $len-$shift;
+														$res       = substr($before[1], 0, -$alt_shift);
+														$shift     = $shift+2;
+														$after 	   = substr($before[1], $shift);
+													}
 												}
+												$content = $content.$after;
 											}else {
 												$before    = split($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
-												$last_c  = substr($before[0], -1, 1);
-												if ($last_c=="]"){
-													$after 	   = substr($before[1], 8);
-													$content   = $content.'[/media]'.'<p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
-												}else{
-													$shift 	   = strpos($before[1], '/>');
-													$alt_shift = $len-$shift;
-													$res       = substr($before[1], 0, -$alt_shift);
-													$shift     = $shift+2;
-													$after 	   = substr($before[1], $shift);
-													$content   = $content.$res.'/><p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
+												$last_c    = substr($before[0], -1, 1);
+ 												$ext       = substr($row_visual['secondary_resource'], -3);
+												if ($ext==mp3){
+													if ($last_c=="]"){
+														$after 	   = substr($before[1], 8);
+														$content   = $content.'[/media][media]'.$row_visual['secondary_resource'].'[/media]'.$after;
+													}else{
+														$shift 	   = strpos($before[1], '/>');
+														$alt_shift = $len-$shift;
+														$res       = substr($before[1], 0, -$alt_shift);
+														$shift     = $shift+2;
+														$after 	   = substr($before[1], $shift);
+														$content   = $content.$res.'/>[media]'.$row_visual['secondary_resource'].'[/media]'.$after;
+													}
+												}
+												else {
+													if ($last_c=="]"){
+														$after 	   = substr($before[1], 8);
+														$content   = $content.'[/media]'.'<p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
+													}else{
+														$shift 	   = strpos($before[1], '/>');
+														$alt_shift = $len-$shift;
+														$res       = substr($before[1], 0, -$alt_shift);
+														$shift     = $shift+2;
+														$after 	   = substr($before[1], $shift);
+														$content   = $content.$res.'/><p><a href="'.$row_visual['secondary_resource'].'">'.$row_visual['secondary_resource'].'</a></p>'.$after;
+													}
 												}
 											}
 										}
@@ -1212,6 +1272,7 @@ function provide_alternatives($cid, $content_page){
 		
 	}
 }	
+	
 /**
 * apply_timezone
 * converts a unix timestamp into another UNIX timestamp with timezone offset added up.
