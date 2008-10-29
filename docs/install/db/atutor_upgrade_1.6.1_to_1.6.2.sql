@@ -1,8 +1,6 @@
-/* Upgrade SQL for 1.6.1 to 1.6.2 */
+# Upgrade SQL for 1.6.1 to 1.6.2
 
-
-
-/* Setup Table for Access4All */
+# Setup Table for Access4All
 CREATE TABLE `primary_resources` (
   `primary_resource_id` mediumint(8) unsigned NOT NULL auto_increment,
   `content_id` mediumint(8) unsigned NOT NULL default '0',
@@ -54,12 +52,12 @@ INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintool
 #Add the scaffold tools module 
 INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, 2048, 0, 0);
 
-/* End Access4All setup */
+# End Access4All setup
 
 
 # Content Test Extension
 # @author	Harris
-# @date		Sep 08, 08 */
+# @date		Sep 08, 08
 CREATE TABLE `content_tests_assoc` (
   `content_id` INTEGER UNSIGNED NOT NULL,
   `test_id` INTEGER UNSIGNED NOT NULL,
