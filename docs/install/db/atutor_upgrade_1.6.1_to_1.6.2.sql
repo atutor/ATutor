@@ -64,8 +64,7 @@ CREATE TABLE `content_tests_assoc` (
   `content_id` INTEGER UNSIGNED NOT NULL,
   `test_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`content_id`, `test_id`)
-)
-TYPE = MyISAM;
+) TYPE = MyISAM;
 
 # Customized test messages associated with the content page
 ALTER TABLE `content` ADD COLUMN `test_message` TEXT NOT NULL AFTER `use_customized_head`;
