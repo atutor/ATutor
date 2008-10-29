@@ -247,6 +247,13 @@ function print_organizations($parent_id,
 															$ims_template_xml['file_meta']);
 						}
 					} else {
+						//if this file is in the test array, add an extra link to the direct file, 
+						//we cannot use if-else statement here 'cause the files don't neccessary be shared.
+						//content files are being packed inside {package_name}/files
+						//while test files are always just /files (without package_name).
+						if (!empty($test_zipped_files) && in_array($file, $test_zipped_files)){
+							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
+						} 
 						$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
 					}
 				}
@@ -255,7 +262,7 @@ function print_organizations($parent_id,
 				 * Note:  The file has already been added to the archieve before this is called.
 				 */
 				if (preg_match('/tests\_[0-9]+\.xml$/', $file) && !in_array($file, $test_zipped_files)){
-					$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);					
+					$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
 					$test_zipped_files[] = $file;
 				}
 			}
@@ -331,6 +338,7 @@ function print_organizations($parent_id,
 			echo $prefix.'</item>';
 			echo "\n";
 		}  
+
 		$string .= '</ul>';
 		if ($depth > 0) {
 			$string .= '</li>';
