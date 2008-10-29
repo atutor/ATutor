@@ -342,7 +342,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printErrors();
 
 ?>
-<script type='text/javascript' src='calendar.js'></script>
+<script type='text/javascript' src='jscripts/calendar.js'></script>
 
 <div class="input-form">
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?tid='.$tid; ?>">
