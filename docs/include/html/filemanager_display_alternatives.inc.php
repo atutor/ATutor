@@ -309,13 +309,14 @@ while (false !== ($file = readdir($dir)) ) {
 		
 	//	$files[$file1] .= '<tr>';
 		$files[$file1] .= '<tr> <td  align="center">';
-		$files[$file1] .= '<input type="radio" id="'.$file.'" value="'.$file.'" name="radio_alt"/> </td>'."\n";
+		$files[$file1] .= '<input type="radio" id="'.$pathext.$file.'" value="'.$pathext.$file.'" name="radio_alt"/> </td>'."\n";
 		$files[$file1] .= '<td align="center">'.$fileicon.'</td>'."\n";
 
 		$files[$file1] .= '<td ><label for="'.$file.'">&nbsp;';
 
 		$files[$file1] .= '<a href="'.$get_file.$pathext.urlencode($filename).'">'.$file.'</a>';
 
+		
 /*		if ($ext == 'zip') {
 			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext=' . urlencode($pathext) . SEP . 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">'."\n";
 			$files[$file1] .= '<img src="'.$_base_href.'images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="img-size-fm3" />'."\n";
