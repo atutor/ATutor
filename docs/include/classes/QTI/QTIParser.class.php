@@ -177,7 +177,7 @@ class QTIParser {
 				$this->item_num++;
 				break;
 			case 'mattext':
-				$this->mat_content[$this->item_num] .= $this->character_data;
+				$this->mat_content[$this->item_num] .= $this->reconstructRelativePath($this->character_data);
 				break;
 			case 'matimage':
 				$this->mat_content[$this->item_num] .= '<img src="'.$this->attributes[$this->item_num][$name]['uri'].'" alt="Image Not loaded:'.$this->attributes[$this->item_num][$name]['uri'].'" />';
@@ -400,12 +400,23 @@ class QTIParser {
 	//No longer needed to reconstruct, just needed to save the path, as of Aug 25th, 08.  Decided to overwrite files if the same name exist.  
 	function reconstructRelativePath($path){
 		//match img tag, all.
-		if (preg_match_all('/\<img(\s[^\>])*\ssrc\=[\\\\]?\"([^\\\\^\"]+)[\\\\]?\".*\/?\>/', $path, $matches) > 0){
+//		if (preg_match_all('/\<img(\s[^\>])*\ssrc\=[\\\\]?\"([^\\\\^\"]+)[\\\\]?\".*\/?\>/i', $path, $matches) > 0){
+//fixes multiple image tags within a $path
+		if (preg_match_all('/\<img(\s[^\>])*\ssrc\=[\\\\]?\"([^\\\\^\"]+)[\\\\]?\"/i', $path, $matches) > 0){
 			foreach ($matches[2] as $k=>$v){
-				$this->items[] = $v;	//save the url of this media.
-//				$path = str_replace($v, $this->relative_path.$v, $path);
+				if(strpos($v, 'http://')===false && !in_array($v, $this->items)) {
+					$this->items[] = $v;	//save the url of this media.
+	//				$path = str_replace($v, $this->relative_path.$v, $path);
+				}
 			}
 			return $path;
+		} elseif (preg_match_all('/\<embed(\s[^\>])*\ssrc\=[\\\\]?\"([^\\\\^\"]+)[\\\\]?\".*/i', $path, $matches) > 0){
+			foreach ($matches[2] as $k=>$v){
+				if(strpos($v, 'http://')===false && !in_array($v, $this->items)) {
+					$this->items[] = $v;	//save the url of this media.
+	//				$path = str_replace($v, $this->relative_path.$v, $path);
+				}
+			}
 		} else {
 			return $path;	
 		}

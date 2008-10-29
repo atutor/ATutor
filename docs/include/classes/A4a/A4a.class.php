@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		*/
 /* as published by the Free Software Foundation.					*/
 /********************************************************************/
-// $Id: a4a.class.php 8077 2008-10-23 18:32:31Z hwong $
+// $Id: A4a.class.php 8077 2008-10-23 18:32:31Z hwong $
 
 
 /**

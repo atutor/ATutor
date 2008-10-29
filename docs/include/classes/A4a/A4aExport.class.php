@@ -55,6 +55,8 @@ class A4aExport extends A4a {
 					}
 					//add this primary file ref, and the resources type to the secondary file
 					$this->original_files[$current_sec_file]['primary_resources'][$prop['resource']] = $rtid;
+//					$this->original_files[$current_sec_file]['primary_resources'][$prop['resource']]['language_code'] = $sec_resource['language_code'];
+
 				}
 				$res_type['resource_type'] = $rtid;	//could be 1+
 				$temp = array_merge($prop, $res_type, $secondary_array);
@@ -119,6 +121,9 @@ class A4aExport extends A4a {
 				foreach($resource['primary_resources'] as $uri=>$pri_resource_types){
 					$savant->assign('primary_resource_uri', $uri);
 					$savant->assign('primary_resources', $pri_resource_types);
+					//A file can be both original and alternative, and each could represent diff language
+					//Tried to resolve but the A4a v.2 only accept 1 language
+//					$savant->assign('language_code', $pri_resource_types['language_code']);
 					//overwrite orig_access_mode					
 					$orig_access_mode = array(); //reinitialize
 					foreach($resource['resource_type'][$uri] as $type_id){
@@ -132,13 +137,8 @@ class A4aExport extends A4a {
 				$savant->assign('primary_resources', '');
 				$xml_array[$id] = $savant->fetch(AT_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
 			}
-
-//			$zipfile->add_file($xml, 'a4a_'.$this->cid.'_'.$index.'.xml');	
 		}
 		return $xml_array;
-		//close and send
-//		$zipfile->close();
-//		$zipfile->send_file('AccessForAll');		
 	}
 
 	/**

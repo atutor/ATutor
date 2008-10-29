@@ -20,7 +20,21 @@
 						<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
 					</material>
 					<response_str ident="RESPONSE<?php echo $this->row['question_id']; ?>" rcardinality="Single">
-						<render_fib>
+						<?php
+							$fib_columns = 20;
+							$fib_rows = 1;
+
+							if ($this->row['properties'] == 1){
+								$fib_columns = 5;
+							} elseif ($this->row['properties'] == 2){
+								$fib_rows = 1;
+							} elseif ($this->row['properties'] == 3){
+								$fib_rows = 3;
+							} elseif ($this->row['properties'] == 4){
+								$fib_rows = 8;
+							} 
+						?>
+						<render_fib rows="<?php echo $fib_rows; ?>" columns="<?php echo $fib_columns; ?>">
 							<response_label ident="Choice<?php echo $i; ?>" />
 						</render_fib>
 					</response_str>

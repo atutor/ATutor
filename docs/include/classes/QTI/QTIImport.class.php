@@ -375,26 +375,30 @@ class QTIImport {
 			if ($new_file_loc==''){
 				$new_file_loc = $file_loc;
 			}
-
-			//check if new folder is there, if not, create it.
-			createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
-			
-			//copy files over
-	//			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-	//				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc) === false) {
-			//overwrite files
-			if (file_exists(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
-				unlink(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
-			}
-			if (file_exists(AT_CONTENT_DIR.'import/'.$_SESSION['course_id'].'/'.$file_loc)){
-				if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-					AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
-					//TODO: Print out file already exist error.
-					if (!$msg->containsErrors()) {
-		//				$msg->addError('FILE_EXISTED');
+		
+			//Check if the file_loc has been changed, if not, don't move it, let ims class to handle it
+			//we only want to touch the files that the test/surveys use
+			if ($new_file_loc!=$file_loc){
+				//check if new folder is there, if not, create it.
+				createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
+				
+				//copy files over
+		//			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
+		//				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc) === false) {
+				//overwrite files
+				if (file_exists(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
+					unlink(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
+				}
+				if (file_exists(AT_CONTENT_DIR.'import/'.$_SESSION['course_id'].'/'.$file_loc)){
+					if (copy(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
+						AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
+						//TODO: Print out file already exist error.
+						if (!$msg->containsErrors()) {
+			//				$msg->addError('FILE_EXISTED');
+						}
 					}
 				}
-			} 
+			}
 		}
 	}
 }

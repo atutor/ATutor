@@ -69,12 +69,13 @@ $test_message = '';
 				}
 
 				$items[$current_identifier]['new_path'] = implode('/', $temp_path);
-			} elseif (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
+			} 
+			if (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
-			} elseif (	isset($_POST['allow_a4a_import']) && isset($items[$current_identifier]) 
-						&& preg_match('/((.*)\/)*a4a\_[0-9]+\.xml$/', $attrs['href'])) {
-				$items[$current_identifier]['a4a'] = $attrs['href'];
+			} 
+			if (	isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
+				$items[$current_identifier]['a4a_import_enabled'] = true;
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
@@ -128,31 +129,32 @@ $test_message = '';
 		global $current_identifier;
 		static $resource_num = 0;
 		
-		//variable handling
-		if ($current_identifier ==''){
-			return;
-		}
-		$my_data = trim($my_data);
-		$last_file_name = $items[$current_identifier]['file'][(sizeof($items[$current_identifier]['file']))-1];
-		
 		if ($name == 'item') {
 			array_pop($path);
-		} elseif ($name=='originalAccessMode'){
-			if (in_array('accessModeStatement', $element_path)){
-				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['access_stmt_originalAccessMode'][] = $my_data;
-			} elseif (in_array('adaptationStatement', $element_path)){
-				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['adapt_stmt_originalAccessMode'][] = $my_data;
-			}			
-		} elseif (($name=='language') && in_array('accessModeStatement', $element_path)){
-			$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['language'][] = $my_data;
-		} elseif ($name=='hasAdaptation') {
-			$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['hasAdaptation'][] = $my_data;
-		} elseif ($name=='isAdaptationOf'){
-			$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['isAdaptationOf'][] = $my_data;
-		} elseif ($name=='accessForAllResource'){
-			$resource_num++;
-		} elseif($name=='file'){
-			$resource_num = 0;	//reset resournce number to 0 when the file tags ends
+		} 
+
+		//Handles A4a
+		if ($current_identifier != ''){
+			$my_data = trim($my_data);
+			$last_file_name = $items[$current_identifier]['file'][(sizeof($items[$current_identifier]['file']))-1];
+
+			if ($name=='originalAccessMode'){
+				if (in_array('accessModeStatement', $element_path)){
+					$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['access_stmt_originalAccessMode'][] = $my_data;
+				} elseif (in_array('adaptationStatement', $element_path)){
+					$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['adapt_stmt_originalAccessMode'][] = $my_data;
+				}			
+			} elseif (($name=='language') && in_array('accessModeStatement', $element_path)){
+				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['language'][] = $my_data;
+			} elseif ($name=='hasAdaptation') {
+				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['hasAdaptation'][] = $my_data;
+			} elseif ($name=='isAdaptationOf'){
+				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['isAdaptationOf'][] = $my_data;
+			} elseif ($name=='accessForAllResource'){
+				$resource_num++;
+			} elseif($name=='file'){
+				$resource_num = 0;	//reset resournce number to 0 when the file tags ends
+			}
 		}
 
 		if ($element_path === array('manifest', 'metadata', 'imsmd:lom', 'imsmd:general', 'imsmd:title', 'imsmd:langstring')) {
@@ -180,6 +182,7 @@ $test_message = '';
 				} else {
 					$parent_item_id = 0;
 				}
+
 				if (isset($items[$current_item_id]['parent_content_id']) && is_array($items[$current_item_id])) {
 
 					/* this item already exists, append the title		*/
@@ -697,13 +700,12 @@ foreach ($items as $item_id => $content_info)
 	}
 
 	/* get the a4a related xml */
-	if (isset($items[$item_id]['a4a']) && !empty($items[$item_id]['a4a'])) {
+	if (isset($items[$item_id]['a4a_import_enabled']) && isset($items[$item_id]['a4a']) && !empty($items[$item_id]['a4a'])) {
 		$a4a_import = new A4aImport($items[$item_id]['real_content_id']);
 		$a4a_import->setRelativePath($items[$item_id]['new_path']);
 		$a4a_import->importA4a($items[$item_id]['a4a']);
 	}
 }
-
 
 if ($package_base_path == '.') {
 	$package_base_path = '';
@@ -714,7 +716,7 @@ if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_p
 		$msg->addError('IMPORT_FAILED');
 	}
 }
-//clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
+clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
 if (isset($_POST['url'])) {
 	@unlink($full_filename);
