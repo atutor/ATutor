@@ -1197,7 +1197,8 @@ function provide_alternatives($cid, $content_page){
 													//$shift     = $shift;
 													$after 	   = substr($before[1], $shift);
 													$af 	   = strpos($after, '<');
-													if ($after[$af+1] != '/')
+													$str       = substr($after, $af, 4);
+													if ($str != '</a>')
 														$content   = $content.$res.'<br/>[media]'.$row_text['secondary_resource'].'[/media]'.$after;
 													else {
 														$shift 	   = strpos($before[1], '</a>');
