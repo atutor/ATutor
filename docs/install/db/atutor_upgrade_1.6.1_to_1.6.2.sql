@@ -128,6 +128,10 @@ INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from,
 
 INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) VALUES('_standard/gradebook', 2, 1048576, 4096, 0, 0);
 
+DELETE FROM `modules` WHERE dir_name = 'gradebook';
+
+UPDATE `courses` set home_links=replace(home_links, 'mods/gradebook/my_gradebook.php', 'mods/_standard/gradebook/my_gradebook.php'), main_links=replace(main_links, 'mods/gradebook/my_gradebook.php', 'mods/_standard/gradebook/my_gradebook.php');
+
 # SQL for collecting guest information at test introduction page
 CREATE TABLE `guests` (
   `guest_id` VARCHAR(10) NOT NULL,
