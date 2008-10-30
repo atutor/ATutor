@@ -46,6 +46,7 @@ class A4aImport extends A4a {
 
 					//get primary resource type
 					$resources_attrs = $resource['access_stmt_originalAccessMode'];
+
 					$attrs = $this->toResourceTypeId($resources_attrs);
 					
 					//insert primary resource type associations
@@ -66,7 +67,7 @@ class A4aImport extends A4a {
 							if(($this->relative_path.$secondary_file['isAdaptationOf'][0]) == $file_path){
 								$secondary_lang = $secondary_file['language'][0];
 
-								$secondary_attr = $this->toResourceTypeId($secondary_file['access_stmt_originalAccessMode']);
+								$secondary_attr = $this->toResourceTypeId($secondary_file['adapt_stmt_originalAccessMode']);
 								$secondary_id = $this->setSecondaryResource($primary_id, $secondary_resource, $secondary_lang);
 
 								//insert secondary resource type associations
