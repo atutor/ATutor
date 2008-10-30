@@ -110,7 +110,9 @@ function init() {
 <!--
 function insertTo(field) {
 		if (window.opener.document.getElementById(field)) {
-			window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent({format : 'raw'});
+			//use the following if we want to apply absolute path.	-harris.
+			//window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent({format : 'raw'});
+			window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent();
 		}
 }
 -->
