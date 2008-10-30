@@ -1188,15 +1188,25 @@ function provide_alternatives($cid, $content_page){
 											}else {
 												$before    = split($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
-												$ext     = substr($row_text['secondary_resource'], -3);
+												$ext       = substr($row_text['secondary_resource'], -3);
 												if (($ext==swf)||($ext==mp3)){
 //													$shift 	   = strpos($before[1], '</a>');
 													$shift 	   = strpos($before[1], '>') + 1;
 													$alt_shift = $len-$shift;
 													$res       = substr($before[1], 0, -$alt_shift);
-													$shift     = $shift+4;
+													//$shift     = $shift;
 													$after 	   = substr($before[1], $shift);
-													$content   = $content.$res.'<br/>[media]'.$row_text['secondary_resource'].'[/media]'.$after;
+													$af 	   = strpos($after, '<');
+													if ($after[$af+1] != '/')
+														$content   = $content.$res.'<br/>[media]'.$row_text['secondary_resource'].'[/media]'.$after;
+													else {
+														$shift 	   = strpos($before[1], '</a>');
+														$alt_shift = $len-$shift;
+														$res       = substr($before[1], 0, -$alt_shift);
+														$shift     = $shift+4;
+														$after 	   = substr($before[1], $shift);
+														$content   = $content.$res.'</a><br/>[media]'.$row_text['secondary_resource'].'[/media]'.$after;
+													}
 												}else {
 													if (($_SESSION['prefs']['PREF_ALT_TO_TEXT']==visual) && ($row_text_alt[type_id]==4)){
 														$shift 	   = strpos($before[1], '</a>');
@@ -1230,7 +1240,10 @@ function provide_alternatives($cid, $content_page){
 								$result_visual_alt	 = mysql_query($sql_visual_alt, $db);
 								if (mysql_num_rows($result_visual_alt) > 0) {
 									while ($row_visual_alt = mysql_fetch_assoc($result_visual_alt)){
-										if ((($_SESSION['prefs']['PREF_ALT_TO_VISUAL']==audio) && ($row_visual_alt[type_id]==1)) || (($_SESSION['prefs']['PREF_ALT_TO_VISUAL']==text) && ($row_visual_alt[type_id]==3)) || (($_SESSION['prefs']['PREF_ALT_TO_VISUAL']==sign_lang) && ($row_visual_alt[type_id]==2))){
+										if ((($_SESSION['prefs']['PREF_ALT_TO_VISUAL']==audio) && ($row_visual_alt[type_id]==1)) || 
+										    (($_SESSION['prefs']['PREF_ALT_TO_VISUAL']==text) && ($row_visual_alt[type_id]==3)) || 
+										    (($_SESSION['prefs']['PREF_ALT_TO_VISUAL']==sign_lang) && ($row_visual_alt[type_id]==2)))
+										{
 											if ($_SESSION['prefs']['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE']=='replace'){
 												$before  = split($row['resource'], $content);
 												$last_c  = substr($before[0], -1, 1);
