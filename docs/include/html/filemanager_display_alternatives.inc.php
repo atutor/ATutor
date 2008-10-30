@@ -20,7 +20,6 @@ define('AT_INCLUDE_PATH', '../../include/');
 
 global $db;
 
-
 //from tools/filemanager/index.php
 if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) && 
 	(!isset($_REQUEST['framed']) || !$_REQUEST['framed'])) {
@@ -37,9 +36,6 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) &&
 // end tools/filemanager/index.php
 
 
-//require(AT_INCLUDE_PATH.'html/filemanager_display.inc.php');
-
-		
 function get_file_extension($file_name) {
 	$ext = pathinfo($file_name);
 	return $ext['extension'];
@@ -78,13 +74,11 @@ $course_total = dirsize($current_path);
 $framed = intval($_GET['framed']);
 $popup = intval($_GET['popup']);
 
-
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$get_file = 'get.php/';
 } else {
 	$get_file = 'content/' . $_SESSION['course_id'] . '/';
 }
-
 
 echo '<p>'._AT('current_path').' ';
 
@@ -94,8 +88,6 @@ if ($pathext != '') {
 else {
 	echo _AT('home');
 }
-
-
 
 if ($pathext == '') {
 	$pathext = urlencode($_POST['pathext']);
@@ -120,8 +112,6 @@ if ($pathext != '') {
 	$bit = "";
 }
 echo '</p>';
-
-
 
 if ($popup == TRUE) {
 	$totalcol = 6;
@@ -152,16 +142,6 @@ if (TRUE || $framed != TRUE) {
 		}
 	}
 	
-	// filemanager listing table
-	// make new directory 
-//	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP. 'popup='.$popup.SEP. 'tab='.$current_tab.'" enctype="multipart/form-data">';
-
-//	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?cid='.$cid.'" enctype="multipart/form-data">';
-
-	
-//	echo 'ecco';
-//	echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
-	
 	echo '<fieldset><legend class="group_form">'._AT('add').'</legend>';
 	echo '<table cellspacing="1" cellpadding="0" border="0" summary="" align="center">';
 	echo '<tr><td colspan="2">';
@@ -184,17 +164,14 @@ if( $MakeDirOn ) {
 
 	$my_MaxCourseSize = $system_courses[$_SESSION['course_id']]['max_quota'];
 
-//	$alter=TRUE;
 	// upload file 
 	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) 
 		|| (($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) && ($course_total < $MaxCourseSize))
 		|| ($my_MaxCourseSize-$course_total > 0)) {
 		echo '<tr><td  colspan="1">';
-//		echo '<form onsubmit="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');" name="form1" method="post" action="../tools/filemanager/upload.php?alter='.$alter. SEP .'cid='.$cid. SEP . 'tab='.$current_tab.'" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 		echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" />';
 		echo '<input type="submit" name="upload" value="'._AT('upload').'" class="button" />';
-		//onClick="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');"
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
 		echo '<input type="hidden" name="alter" value="TRUE" />  ';
 
@@ -213,12 +190,9 @@ if( $MakeDirOn ) {
 // Directory and File listing 
 
 
-//echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?cid='.$cid. SEP.'pathext='.urlencode($pathext).SEP. 'popup='.$popup.SEP. 'tab='.$current_tab.'">';
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
-
-
-
 ?>
+
 <table class="data static" summary="" border="0" rules="groups" style="width: 90%">
 <thead>
 <tr>
@@ -243,7 +217,6 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 </tfoot>
 
 <?php
-
 
 if($pathext) : ?>
 	<tr>
@@ -306,30 +279,25 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '</tr>'."\n";
 	
 	} else {
+		if (!isset($cp))
+		{
+			// set content path $cp
+			$sql = "SELECT content_path FROM ".TABLE_PREFIX."content WHERE content_id=".$cid;
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$cp = $row["content_path"];
+		}
 		
-	//	$files[$file1] .= '<tr>';
+		$file_with_relative_path = get_relative_path($cp, $pathext.urlencode($file));
+		
 		$files[$file1] .= '<tr> <td  align="center">';
-		$files[$file1] .= '<input type="radio" id="'.$pathext.$file.'" value="'.$pathext.$file.'" name="radio_alt"/> </td>'."\n";
+		$files[$file1] .= '<input type="radio" id="'.$file_with_relative_path.'" value="'.$file_with_relative_path.'" name="radio_alt"/> </td>'."\n";
 		$files[$file1] .= '<td align="center">'.$fileicon.'</td>'."\n";
 
 		$files[$file1] .= '<td ><label for="'.$file.'">&nbsp;';
 
-	//	$files[$file1] .= '<a href="'.$get_file.$pathext.urlencode($filename).'">'.$file.'</a>';
+		$files[$file1] .= '<a href="'.$file_with_relative_path.'">'.$file.'</a>';
 
-		$files[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$file.'</a>';
-		
-/*		if ($ext == 'zip') {
-			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext=' . urlencode($pathext) . SEP . 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">'."\n";
-			$files[$file1] .= '<img src="'.$_base_href.'images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="img-size-fm3" />'."\n";
-			$files[$file1] .= '</a>';
-		}
-
-		if (in_array($ext, $editable_file_types)) {
-			$files[$file1] .= ' <a href="tools/filemanager/edit.php?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">'."\n";
-			$files[$file1] .= '<img src="'.$_base_href.'images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'" height="15" width="18" class="img-size-fm4" />'."\n";
-			$files[$file1] .= '</a>';
-		}
-*/
 		$files[$file1] .= '&nbsp;</label></td></tr>'."\n";
 		
 	}
@@ -351,9 +319,7 @@ if (is_array($files)) {
 	}
 }
 
-
 echo '</table>'."\n";
-//echo '</form>';
 
 closedir($dir);
 
