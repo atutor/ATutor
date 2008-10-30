@@ -67,6 +67,11 @@ $course_title    = $system_courses[$course_id]['title'];
 $course_language = $system_courses[$course_id]['primary_language'];
 
 $courseLanguage =& $languageManager->getLanguage($course_language);
+//If course language cannot be found, use UTF-8 English
+//@author harris, Oct 30,2008
+if ($courseLanguage == null){
+	$courseLanguage =& $languageManager->getLanguage('en');
+}
 
 $course_language_charset = $courseLanguage->getCharacterSet();
 $course_language_code = $courseLanguage->getCode();
