@@ -214,6 +214,10 @@ $msg->printErrors();
 
 </form>
 
+<?php 
+if (count($keys) > 0)
+{
+?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="installform">
 <table class="data" summary="" rules="cols">
 <thead>
@@ -252,6 +256,9 @@ $msg->printErrors();
 </table>
 </form>
 <br />
+<?php 
+}
+?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 
