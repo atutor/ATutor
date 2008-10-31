@@ -22,6 +22,15 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 // module content folder
 $module_content_folder = AT_CONTENT_DIR . "module/";
 
+if (isset($_GET["mod"])) $mod = $_GET["mod"];
+else if (isset($_POST["mod"])) $mod = $_POST["mod"];
+
+if (isset($_GET["new"])) $new = $_GET["new"];
+else if (isset($_POST["new"])) $new = $_POST["new"];
+
+if (isset($_GET["permission_granted"])) $permission_granted = $_GET["permission_granted"];
+else if (isset($_POST["permission_granted"])) $permission_granted = $_POST["permission_granted"];
+
 if (isset($_POST['submit_no']))
 {
 	clr_dir('../../mods/'.$_POST['mod']);
@@ -91,8 +100,8 @@ $_REQUEST['mod'] = str_replace(array('.','..'), '', $_GET['mod']);
 if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
-<input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
+<input type="hidden" name="mod" value="<?php echo $mod; ?>" />
+<input type="hidden" name="new" value="<?php echo $new; ?>" />
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $_GET['mod']; ?></h3>
@@ -123,9 +132,9 @@ $module =& $moduleFactory->getModule($_GET['mod']);
 $properties = $module->getProperties(array('maintainers', 'url', 'date', 'license', 'state', 'notes', 'version'));
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
-<input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
-<input type="hidden" name="permission_granted" value="<?php echo $_GET['permission_granted']; ?>" />
+<input type="hidden" name="mod" value="<?php echo $mod; ?>" />
+<input type="hidden" name="new" value="<?php echo $new; ?>" />
+<input type="hidden" name="permission_granted" value="<?php echo $permission_granted; ?>" />
 
 <input type="hidden" name="enabled" value="<?php echo (int) isset($_GET['enabled']); ?>" />
 <input type="hidden" name="disabled" value="<?php echo (int) isset($_GET['disabled']); ?>" />
