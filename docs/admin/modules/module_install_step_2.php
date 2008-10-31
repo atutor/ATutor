@@ -100,6 +100,7 @@ if (!file_exists('../../mods/'.$mod.'/module.xml')) {
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $mod; ?>" />
 <input type="hidden" name="new" value="<?php echo $new; ?>" />
+<input type="hidden" name="permission_granted" value="<?php echo $permission_granted; ?>" />
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $mod; ?></h3>
