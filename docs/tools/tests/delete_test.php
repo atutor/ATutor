@@ -33,6 +33,10 @@ authenticate(AT_PRIV_TESTS);
 			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
 			$result	= mysql_query($sql, $db);
 
+			//delete test content association as well
+			$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE test_id=$tid";
+			$result = mysql_query($sql, $db);
+
 			/* it has to delete the results as well... */
 			$sql	= "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
 			$result	= mysql_query($sql, $db);
