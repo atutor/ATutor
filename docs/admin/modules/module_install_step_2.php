@@ -22,7 +22,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 // module content folder
 $module_content_folder = AT_CONTENT_DIR . "module/";
 
-if (isset($_GET["mod"])) $mod = $_GET["mod"];
+if (isset($_GET["mod"])) $mod = str_replace(array('.','..'), '', $_GET['mod']);
 else if (isset($_POST["mod"])) $mod = $_POST["mod"];
 
 if (isset($_GET["new"])) $new = $_GET["new"];
@@ -86,25 +86,23 @@ else if (isset($_POST['submit_yes']))
 }
 
 // copy module from content folder into mods folder
-if (isset($_GET['mod']) && !isset($_GET['mod_in']))
+if (isset($mod) && !isset($_GET['mod_in']))
 {
-	copys($module_content_folder.$_GET['mod'], '../../mods/'.$_GET['mod']);
+	copys($module_content_folder.$mod, '../../mods/'.$mod);
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 $moduleParser =& new ModuleParser();
 
-$_REQUEST['mod'] = str_replace(array('.','..'), '', $_GET['mod']);
-
-if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
+if (!file_exists('../../mods/'.$mod.'/module.xml')) {
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $mod; ?>" />
 <input type="hidden" name="new" value="<?php echo $new; ?>" />
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo $_GET['mod']; ?></h3>
+		<h3><?php echo $mod; ?></h3>
 	</div>
 
 	<div class="row">
@@ -113,7 +111,7 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
-		<?php if (isset($_GET['new']) && $_GET['new']): ?>
+		<?php if (isset($new) && $new): ?>
 			<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
 		<?php endif; ?>
 	</div>
@@ -125,9 +123,9 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 	exit;
 }
 
-$moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
+$moduleParser->parse(file_get_contents('../../mods/'.$mod.'/module.xml'));
 
-$module =& $moduleFactory->getModule($_GET['mod']);
+$module =& $moduleFactory->getModule($mod);
 
 $properties = $module->getProperties(array('maintainers', 'url', 'date', 'license', 'state', 'notes', 'version'));
 ?>
@@ -210,20 +208,20 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 		</div>
 	<?php endif; ?>
 
-<?php if (!isset($_REQUEST['new'])): ?>
+<?php if (!isset($new)): ?>
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
 	</div>
 <?php endif; ?>
 </div>
 </form>
-<?php if (isset($_REQUEST['new'])): ?>
+<?php if (isset($new)): ?>
 	<?php
-		$hidden_vars['mod'] = $_REQUEST['mod'];
+		$hidden_vars['mod'] = $mod;
 		$hidden_vars['new'] = '1';
-		$hidden_vars['permission_granted'] = $_REQUEST['permission_granted'];
+		$hidden_vars['permission_granted'] = $permission_granted;
 		
-		$msg->addConfirm(array('ADD_MODULE', $_REQUEST['mod']), $hidden_vars);
+		$msg->addConfirm(array('ADD_MODULE', $mod), $hidden_vars);
 		$msg->printConfirm();
 	?>
 <?php endif; ?>
