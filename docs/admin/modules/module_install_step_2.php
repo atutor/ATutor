@@ -56,7 +56,7 @@ else if (isset($_POST['submit_yes']))
 
 	if ($msg->containsErrors()) 
 	{
-		header('Location: '.AT_BASE_HREF.'admin/modules/module_install_step_2.php?mod='.$addslashes($_POST['mod']).SEP.'new=1');
+		header('Location: '.AT_BASE_HREF.'admin/modules/module_install_step_2.php?mod='.$addslashes($mod).SEP.'new=1'.SEP.'permission_granted='.$permission_granted);
 	} 
 	else 
 	{
