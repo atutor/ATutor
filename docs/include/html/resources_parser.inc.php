@@ -109,13 +109,25 @@ $body = embed_media($body_t);
 
 $parser->parse($body);
 		
-		
+// add by Cindy Li. 
+// This resolves the problem introduced by [media] tag: when [media] is 
+// parsed into <object>, same resource appears a few times in <object> with different 
+// format to cater for different browsers or players. This way creates prolem that different
+// formats in <object> are all parsed and considered as different resource. array_unique()
+// call solves this problem. But, it introduces the new problem that when a same resource
+// appears at different places in the content and users do want to have them with different
+// alternatives. With this solution, this same resource only shows up once at "adapt content"
+// and only can have one alternative associate with. Table and scripts need to re-design
+// to solve this problem, for example, include line number in table. 
+$my_files = array_unique($my_files);
+
 /* handle @import */
 $import_files 	= get_import_files($body);
 			
 if (count($import_files) > 0) $my_files = array_merge($my_files, $import_files);
-			
+
 $i=0;
+
 foreach ($my_files as $file) {
 	/* filter out full urls */
 	$url_parts = @parse_url($file);
