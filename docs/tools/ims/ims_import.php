@@ -49,9 +49,11 @@ $test_message = '';
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
 			$xml_base_path = $attrs['xml:base'];
 		} else if ($name == 'file') {
+
 			// special case for webCT content packages that don't specify the `href` attribute 
 			// with the `<resource>` element.
 			// we take the `href` from the first `<file>` element.
+
 			if (isset($items[$current_identifier]) && ($items[$current_identifier]['href'] == '')) {
 				$attrs['href'] = urldecode($attrs['href']);
 
@@ -64,12 +66,14 @@ $test_message = '';
 
 				if ($package_base_path == '') {
 					$package_base_path = $temp_path;
-				} else {
-					$package_base_path = array_intersect($package_base_path, $temp_path);
-				}
+				} 
+//				else {
+//					$package_base_path = array_intersect($package_base_path, $temp_path);
+//				}
 
 				$items[$current_identifier]['new_path'] = implode('/', $temp_path);
 			} 
+
 			if (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
@@ -127,11 +131,19 @@ $test_message = '';
 	function endElement($parser, $name) {
 		global $path, $element_path, $my_data, $items;
 		global $current_identifier;
+		global $msg;
 		static $resource_num = 0;
 		
 		if ($name == 'item') {
 			array_pop($path);
 		} 
+
+		//check if this is a test import
+		if ($name == 'schema'){
+			if (trim($my_data)=='IMS Question and Test Interoperability'){			
+				$msg->addError('IMPORT_FAILED');
+			}
+		}
 
 		//Handles A4a
 		if ($current_identifier != ''){
@@ -459,6 +471,15 @@ if (file_exists($import_path . 'glossary.xml')){
 	}
 }
 
+// Check if there are any errors during parsing.
+if ($msg->containsErrors()) {
+	if (isset($_GET['tile'])) {
+		header('Location: '.$_base_path.'tools/tile/index.php');
+	} else {
+		header('Location: index.php');
+	}
+	exit;
+}
 
 /* generate a unique new package base path based on the package file name and date as needed. */
 /* the package name will be the dir where the content for this package will be put, as a result */
@@ -632,7 +653,7 @@ foreach ($items as $item_id => $content_info)
 			  test_message) 
 	       VALUES 
 			     ('.$_SESSION['course_id'].','															
-			     .$content_parent_id.','		
+			     .intval($content_parent_id).','		
 			     .($content_info['ordering'] + $my_offset + 1).','
 			     .'"'.$last_modified.'",													
 			      0,
@@ -692,7 +713,6 @@ foreach ($items as $item_id => $content_info)
 					'VALUES (' . $items[$item_id]['real_content_id'] . ", $tid)";
 			$result = mysql_query($sql, $db);
 		
-			//debug('imported test');
 			if (!$msg->containsErrors()) {
 				$msg->addFeedback('IMPORT_SUCCEEDED');
 			}
