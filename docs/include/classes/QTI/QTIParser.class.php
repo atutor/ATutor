@@ -402,7 +402,7 @@ class QTIParser {
 		//match img tag, all.
 //		if (preg_match_all('/\<img(\s[^\>])*\ssrc\=[\\\\]?\"([^\\\\^\"]+)[\\\\]?\".*\/?\>/i', $path, $matches) > 0){
 //fixes multiple image tags within a $path
-		if (preg_match_all('/\<img(\s[\w\W]+\=\\\\?\"[\w\W]+\\\\?\")*\ssrc\=[\\\\]?\"([^\\\\^\"]+)[\\\\]?\"/i', $path, $matches) > 0){
+		if (preg_match_all('/\<img(\s[\w\W]+\=[\\\\]?\"[^\\\\^\"]+[\\\\]?\")*\ssrc\=[\\\\]?\"([^\\\\^\"]+)[\\\\]?\"/i', $path, $matches) > 0){
 			foreach ($matches[2] as $k=>$v){
 				if(strpos($v, 'http://')===false && !in_array($v, $this->items)) {
 					$this->items[] = $v;	//save the url of this media.
