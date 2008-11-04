@@ -1632,3 +1632,7 @@ fieldset#toc {
 	border: 1pt solid #B8AE9C;
 	width:50%;
 }
+
+#side-menu{
+	overflow:hidden;
+}
