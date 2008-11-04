@@ -1513,3 +1513,18 @@ legend.group_form{
 	color: black;
 	padding:.2em;
 }
+
+
+/* format of "table of contents" on content page */
+#toc a 		{ display:block; margin:3px; }
+#toc .h2		{ padding:0 0 0 10px;}
+#toc .h3		{ padding:0 0 0 30px;}
+#toc .h4		{ padding:0 0 0 40px; }
+#toc .h5		{ padding:0 0 0 50px; }
+#toc .h6		{ padding:0 0 0 60px; }
+
+fieldset#toc {
+	background-color: #FEFDEF;
+	border: 1pt solid #B8AE9C;
+	width:50%;
+}
