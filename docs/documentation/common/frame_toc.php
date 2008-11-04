@@ -121,7 +121,7 @@ if ($section == 'admin'){
 
 } else if ($section == 'instructor'){
 	$pages = array(
-			'introduction.php' => array('creating_courses.php'),
+			'introduction.php' => array('creating_courses.php','student_tools.php', 'side_menu.php'),
 			'announcements.php',
 			'assignments.php',
 			'backups.php' => array(
@@ -163,7 +163,6 @@ if ($section == 'admin'){
 			'properties.php' => array('authenticated_access.php', 'delete_course.php'),
 			'reading_list.php',
 			'statistics.php',
-			'student_tools.php' => array('side_menu.php'),
 			'tests_surveys.php' => array(
 											'creating_tests_surveys.php',
 											'question_database.php' => array('creating_questions.php'),

@@ -4,7 +4,7 @@
 
 	<p>Links to external websites can be added to the course Links area, allowing course members to visit course related information elsewhere on the Web. Both students and instructors can add links by using <em>Suggest Link</em>. Student-submitted links must be approved by the instructor in the Links Manager. Instructors can also add links by using <em>Add Link</em> in the Links Manager.</p>
 
-	<p>The Links section is a <a href="student_tools.php">Student Tool</a> and can therefore be enabled or disabled, linked from the main menu or linked from the home page, and assigned as student privilege.</p>
+	<p>The Links section is a <a href="student_tools.php">Course Tool</a> and can therefore be enabled or disabled, linked from the main menu or linked from the home page, and assigned as student privilege.</p>
 
 	<p>The Links section can be selected for <a href="groups.php">Groups</a>. Groups members can add links, without them having to be approved by the Instructor, and either keep them private to the group, and only its members, or make them public, so others not in the group can browse through them.</p>
 

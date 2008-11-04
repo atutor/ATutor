@@ -2,6 +2,8 @@
 	$_pages = array();
     $_pages['introduction.php']                  = 'Introduction';
     $_pages['creating_courses.php']				 = 'Creating Courses';
+    $_pages['student_tools.php']                 = 'Course Tools';
+    $_pages['side_menu.php']                     = 'Side Menu';
     $_pages['announcements.php']                 = 'Announcements';
 	$_pages['assignments.php']					 = 'Assignments';
     $_pages['backups.php']                       = 'Backups';
@@ -42,8 +44,7 @@
     $_pages['delete_course.php']                 = 'Delete Course';
     $_pages['reading_list.php']					 = 'Reading List';
     $_pages['statistics.php']                    = 'Statistics';
-    $_pages['student_tools.php']                 = 'Student Tools';
-    $_pages['side_menu.php']                     = 'Side Menu';
+
     $_pages['tests_surveys.php']                 = 'Tests &amp; Surveys';
     $_pages['creating_tests_surveys.php']        = 'Creating Tests &amp; Surveys';
     $_pages['question_database.php']             = 'Question Database';
