@@ -106,10 +106,20 @@ $msg->printErrors();
 		<th scope="col"><?php echo _AT('version');?></th>
 		<th scope="col"><?php echo _AT('publish_date');?></th>
 		<th scope="col"><?php echo _AT('state');?></th>
+		<th scope="col"><?php echo _AT('maintainers');?></th>
 		<th scope="col"><?php echo _AT('notes');?></th>
 	</tr>
 </thead>
-	
+
+<tfoot>
+<tr>
+	<td colspan="6">
+		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</td>
+</tr>
+</tfoot>
+
 <tbody>
 <?php 
 $num_of_versions = count($module_list_array[$id]['history']);
@@ -141,6 +151,7 @@ else
 		<td><label for="m<?php echo $i; ?>"><?php echo $module_list_array[$id]["name"] . ' ' .$module_list_array[$id]['history'][$i]["version"]; ?></label></td>
 		<td><?php echo $module_list_array[$id]['history'][$i]["date"]; ?></td>
 		<td><?php echo $module_list_array[$id]['history'][$i]["state"]; ?></td>
+		<td><?php echo $module_list_array[$id]['history'][$i]["maintainer"]; ?></td>
 		<td><?php echo $module_list_array[$id]['history'][$i]["notes"]; ?></td>
 	</tr>
 
@@ -150,14 +161,6 @@ else
 
 ?>
 </tbody>
-<tfoot>
-<tr>
-	<td colspan="5">
-		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
-	</td>
-</tr>
-</tfoot>
 
 <?php 
 }

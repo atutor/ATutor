@@ -271,13 +271,14 @@ if (count($keys) > 0)
 		<th scope="col"><?php echo _AT('description');?></th>
 		<th scope="col"><?php echo _AT('version');?></th>
 		<th scope="col"><?php echo _AT('atutor_version_tested_with');?></th>
+		<th scope="col"><?php echo _AT('maintainers');?></th>
 		<th scope="col"><?php echo _AT('installed').'?';?></th>
 	</tr>
 </thead>
 	
 <tfoot>
 <tr>
-	<td colspan="6">
+	<td colspan="7">
 		<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
 		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
 		<input type="submit" name="version_history" value="<?php echo _AT('version_history'); ?>" />
@@ -320,6 +321,7 @@ else
 		<td><?php echo $module_list_array[$i]["description"]; ?></td>
 		<td><?php echo $module_list_array[$i]["history"][0]["version"]; ?></td>
 		<td><?php echo $module_list_array[$i]["atutor_version_tested_with"]; ?></td>
+		<td><?php echo $module_list_array[$i]["history"][0]["maintainer"]; ?></td>
 		<td><?php if ($installed) echo _AT("installed"); else echo _AT("not_installed"); ?></td>
 	</tr>
 
