@@ -28,8 +28,8 @@
 	$_pages['administrators.php']                = 'Administrators';
 	$_pages['courses.php']                       = 'Courses';
 	$_pages['creating_courses.php']              = 'Creating Courses';
-	$_pages['default_student_tools.php']         = 'Default Student Tools';
-	$_pages['default_side_menu.php']			 = 'Default Side Menu';
+	$_pages['default_student_tools.php']         = 'Default Course Tools';
+	$_pages['default_side_menu.php']	     = 'Default Side Menu';
 	$_pages['backups.php']                       = 'Backups';
 	$_pages['forums.php']                        = 'Forums';
 	$_pages['auto_enroll.php']                        = 'Auto-Enroll at Registration';
