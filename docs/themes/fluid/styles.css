@@ -1447,6 +1447,7 @@ width: 19%;
 	background-color:#efefef;
 	border:1px solid #8b8b8b;
 	padding:0px 5px 0px 5px;
+	overflow: hidden;
 }
 
 .side-menu h3 {
