@@ -13,7 +13,7 @@
 		<dt>Delete Package</dt>
 		<dd><p>Removes a SCO from a course, and deletes all associated files.</p></dd>
 
-		<dt>Package Setting</dt>
+		<dt>Package Setting (DISABLED IN THIS VERSION OF ATUTOR)</dt>
 		<dd>
    			<p><code>Credit Mode</code> sets the package to credit or no credit.</p>
 
