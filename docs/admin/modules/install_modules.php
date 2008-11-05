@@ -320,7 +320,7 @@ else
 		<td><label for="m<?php echo $i; ?>"><?php echo $module_list_array[$i]["name"]; ?></label></td>
 		<td><?php echo $module_list_array[$i]["description"]; ?></td>
 		<td><?php echo $module_list_array[$i]["history"][0]["version"]; ?></td>
-		<td><?php echo $module_list_array[$i]["atutor_version_tested_with"]; ?></td>
+		<td><?php echo $module_list_array[$i]["atutor_version"]; ?></td>
 		<td><?php echo $module_list_array[$i]["history"][0]["maintainer"]; ?></td>
 		<td><?php if ($installed) echo _AT("installed"); else echo _AT("not_installed"); ?></td>
 	</tr>

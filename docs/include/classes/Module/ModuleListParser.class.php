@@ -62,17 +62,13 @@ class ModuleListParser {
 		{
 			$this->module_rows[$this->row_num]['name'] = trim($this->character_data);
 		} 
+		else if ($this->element_path === array('module_list', 'module', 'atutor_version')) 
+		{
+			$this->module_rows[$this->row_num]['atutor_version'] = trim($this->character_data);
+		} 
 		else if ($this->element_path === array('module_list', 'module', 'description')) 
 		{
 			$this->module_rows[$this->row_num]['description'] = trim($this->character_data);
-		} 
-		else if ($this->element_path === array('module_list', 'module', 'atutor_version_to_work_with')) 
-		{
-			$this->module_rows[$this->row_num]['atutor_version_to_work_with'] = trim($this->character_data);
-		} 
-		else if ($this->element_path === array('module_list', 'module', 'atutor_version_tested_with')) 
-		{
-			$this->module_rows[$this->row_num]['atutor_version_tested_with'] = trim($this->character_data);
 		} 
 		else if ($this->element_path === array('module_list', 'module', 'history')) 
 		{
