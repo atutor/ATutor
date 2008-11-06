@@ -163,7 +163,9 @@ function print_organizations($parent_id,
 					foreach($added_files as $filename=>$file_array){
 						$my_files[] = $filename;
 						foreach ($file_array as $garbage=>$filename2){
-							$my_files[] = $filename2;
+							if (!in_array($filename2, $my_files)){
+								$my_files[] = $filename2;
+							}
 						}
 					}
 				}
@@ -214,12 +216,13 @@ function print_organizations($parent_id,
 
 					//condition checks if the file has been added, so then the test won't be added to all the subchildren
 					//leads to normal images not capable to be extracted.
-					if (is_array($test_zipped_files) && !in_array($file, $test_zipped_files) && file_exists($file_path)){
+					if (is_array($test_zipped_files) && !in_array($file_path, $test_zipped_files) && file_exists($file_path)){
 						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
-						$test_zipped_files[] = $content['content_path'] . $file;
+//						$test_zipped_files[] = $content['content_path'] . $file;
+						$test_zipped_files[] = $file_path;
 					} elseif (!is_array($test_zipped_files) && file_exists($file_path)){
 						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
-					}
+					} 
 
 					//a4a secondary files have mapping, save the ones that we want in order to add the tag in
 					$a4a_secondary_files = array();
@@ -248,13 +251,11 @@ function print_organizations($parent_id,
 						}
 					} else {
 						//if this file is in the test array, add an extra link to the direct file, 
-						//we cannot use if-else statement here 'cause the files don't neccessary be shared.
-						//content files are being packed inside {package_name}/files
-						//while test files are always just /files (without package_name).
-						if (!empty($test_zipped_files) && in_array($file, $test_zipped_files)){
+						if (!empty($test_zipped_files) && in_array($file_path, $test_zipped_files)){
 							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
-						} 
-						$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+						} else {
+							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+						}
 					}
 				}
 
@@ -346,8 +347,6 @@ function print_organizations($parent_id,
 
 	}
 }
-
-
 
 $ims_template_xml['header'] = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
 <!--This is an ATutor SCORM 1.2 Content Package document-->

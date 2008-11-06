@@ -344,9 +344,9 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	// add any dependency files:
 	foreach ($dependencies as $resource => $resource_server_path) {
 		//add this file in if it's not already in the zip package
-		if (!in_array($resource, $test_zipped_files)){
+		if (!in_array($resource_server_path, $test_zipped_files)){
 			$zipfile->add_file(@file_get_contents($resource_server_path), 'resources/'.$resource, filemtime($resource_server_path));
-			$test_zipped_files[] = $resource;
+			$test_zipped_files[] = $resource_server_path;
 		}
 	}
 
