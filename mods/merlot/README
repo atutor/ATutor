@@ -6,14 +6,14 @@ Merlot Location
 http://fedsearch.merlot.org:9090/jaxrpc-MerlotSearch/searchservice?WSDL
 
 Merlot Key
-This modules requires a Merlot Key to function.  Visit the Merlot Web site to obtain a free key.
-http://fedsearch.merlot.org:9090/jaxrpc-MerlotKey/keysignup.html
+This modules requires a Merlot Key to function.  Visit the Merlot Web site to obtain a key.
+http://www.merlot.org/merlot/signWebServicesForm.htm
 
 Requirements
 1. php 4.3 + with expat and soap enabled.
 or
 php 5+ (default install of php 5 includes the required php libraries)
-2. ATutor 1.5.3.2+
+2. ATutor 1.6.2+
 
 
 Installation
