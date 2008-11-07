@@ -36,6 +36,7 @@
     $_pages['forums.php']                        = 'Forums';
     $_pages['managing_threads.php']              = 'Managing Forum Threads';
     $_pages['managing_posts.php']		 = 'Managing Forum Posts';
+    $_pages['forum_export.php']		         = 'Export Forum';
     $_pages['glossary.php']                      = 'Glossary';
     $_pages['groups.php']			 = 'Groups';
     $_pages['links.php']                         = 'Links';

@@ -152,8 +152,8 @@ if ($section == 'admin'){
 									'managing_files_folders.php',
 									'extracting_zip_archives.php'
 									),
-			'forums.php' => array(
-									'managing_threads.php' => array('managing_posts.php')
+			'forums.php' => array(				'managing_threads.php' => 									array('managing_posts.php'),
+									'forum_export.php'
 									),
 			'faq.php',
 			'glossary.php',
