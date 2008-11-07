@@ -49,7 +49,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 
 				$v_formatted = urldecode(array_search($glossary_key_lower[$v], $glossary));
 
-				$def = htmlentities(AT_print($glossary_key_lower[$v], 'glossary.definition'));
+				$def = htmlentities(AT_print($glossary_key_lower[$v], 'glossary.definition'), ENT_QUOTES, 'UTF-8');
 
 				$count++;
 				//echo '&#176; <a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';

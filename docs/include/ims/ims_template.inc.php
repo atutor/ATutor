@@ -220,7 +220,7 @@ function print_organizations($parent_id,
 						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
 //						$test_zipped_files[] = $content['content_path'] . $file;
 						$test_zipped_files[] = $file_path;
-					} elseif (!is_array($test_zipped_files) && file_exists($file_path)){
+					} elseif (!is_array($test_zipped_files) && file_exists($file_path) && !in_array($file_path, $zipped_files)){
 						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
 					} 
 
