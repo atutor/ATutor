@@ -335,7 +335,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 
 	//TODO: wrap around xml now
 	$savant->assign('xml_content', $xml);
-	$savant->assign('title', htmlentities($row['title']));
+	$savant->assign('title', htmlentities($row['title'], ENT_QUOTES, 'UTF-8'));
 	$xml = $savant->fetch('test_questions/wrapper.tmpl.php');
 
 	$xml_filename = 'tests_'.$tid.'.xml';
@@ -518,7 +518,7 @@ function TestQuestionCounter($increment = FALSE) {
 		$this->savant->assign('encoding', $encoding);
 		//Convert all row values to html entities
 		foreach ($row as $k=>$v){
-			$row[$k] = htmlentities($v, ENT_QUOTES);
+			$row[$k] = htmlentities($v, ENT_QUOTES, 'UTF-8');
 		}
 		$this->assignQTIVariables($row);
 		if ($version=='2.1') {
