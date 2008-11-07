@@ -121,7 +121,7 @@ if ($section == 'admin'){
 
 } else if ($section == 'instructor'){
 	$pages = array(
-			'introduction.php' => array('creating_courses.php','student_tools.php', 'side_menu.php'),
+			'introduction.php' => array('creating_courses.php','student_tools.php', 'fha_student_tools.php','side_menu.php'),
 			'announcements.php',
 			'assignments.php',
 			'backups.php' => array(

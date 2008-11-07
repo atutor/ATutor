@@ -1,8 +1,7 @@
 <?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Course Tools Setup</h2>
-	<p>Once the course has been created, the Course Tools can be configured. Course Tools is a collection of course features that may be useful for various types of learning activities. It is found under the instructor's Manage tab. Tools include: Forums, Glossary, Site-map, Links, Polls, TILE Repository Search, Tests &amp; Surveys, My Tracker, Export Content, Chat, Directory, Inbox, and Packages. Instructors can decide where these tools will be accessed from - the <em>Main Navigation</em>, and/or <em>Course Home</em>.</p>
-
+	<p>Once the course has been created, the Course Tools can be configured. Course Tools is a collection of course features that may be useful for various types of learning activities. It is found under the instructor's Manage tab. Tools include: Forums, Glossary, Site-map, Links, Polls, TILE Repository Search, Tests &amp; Surveys, My Tracker, Export Content, Chat, Directory, Inbox, and Packages. Instructors can decide where these tools will be accessed from - the <em>Main Navigation</em>, and/or <em>Course Home</em>. Also see <a href="fha_student_tools.php">Student Tools</a> for details on moving tools to their own separate screen, removing them from the course home page.</p>
 	<dl>
 	<dt>Main Navigation</dt>
 	<dd>In the default Atutor theme, the Main Navigation appears as tabs below the title of the course. Course Tools specified to appear here will each have their own tab. Note that other themes may choose to display the Main Navigation differently. </dd>
