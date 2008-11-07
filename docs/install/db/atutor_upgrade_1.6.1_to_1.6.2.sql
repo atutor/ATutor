@@ -145,3 +145,14 @@ CREATE TABLE `guests` (
 
 ALTER TABLE `tests_results` MODIFY member_id VARCHAR(10);
 ALTER TABLE `tests` ADD COLUMN `show_guest_form` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `failfeedback`;
+
+
+#move the old student toos to course tool, and add the new student tools
+UPDATE `modules` SET `dir_name` = '_standard/course_tools' WHERE `dir_name` = '_standard/student_tools' LIMIT 1 ;
+INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`)VALUES ('_standard/student_tools', '2', '2097152', '0', '0', '0');
+
+CREATE TABLE `fha_student_tools` (
+   `course_id` mediumint(8) unsigned NOT NULL,
+   `links` text NOT NULL ,
+   PRIMARY KEY ( `course_id` )
+);

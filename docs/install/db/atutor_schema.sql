@@ -636,7 +636,7 @@ INSERT INTO `modules` VALUES ('_standard/chat',          2, 16,        0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/file_manager',      2, 32,        0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/links',         2, 64,        0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/forums',        2, 128,       16, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/student_tools', 2, 256,       0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/course_tools',  2, 256,       0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/enrolment',         2, 512,       512, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/course_email',  2, 1024,      0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/announcements', 2, 2048,      0, 0, 0);
@@ -647,6 +647,7 @@ INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/gradebook',   2, 1048576,    4096, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/student_tools',  2, 2097152,       0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2, 0, 0);
 INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4, 0, 0);
 INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8, 0, 0);
@@ -1168,3 +1169,10 @@ INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from,
 
 #  END gradebook SQL
 
+# Create table for standalone student tools page
+
+CREATE TABLE `fha_student_tools` (
+   `course_id` mediumint(8) unsigned NOT NULL,
+   `links` text NOT NULL ,
+   PRIMARY KEY ( `course_id` )
+);
