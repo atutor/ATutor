@@ -1,7 +1,13 @@
 Userplane WebChat for ATutor ReadMe
 
 This module can be installed with ATutor to add live text, audio, and video chat to ATutor courses. Each course on an ATutor system is provided with its own Webchat.
+Import Install
+1. Select the UserPlane module from those listed in the ATutor Module Manager's Import Module utility.
 
+2. Press Install and follow the instructions.
+
+
+Manual Install
 1. Copy the downloaded file into the ATutor mods/ directory and unzip it there. 
 
 On Windows systems use and application like WinZip the extract the file into the mods/ directory
