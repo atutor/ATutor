@@ -4,7 +4,7 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 
 define('AT_PRIV_STYLES', $this->getPrivilege());
 
-$this->_pages['tools/modules.php']['title_var'] = 'student_tools';
+$this->_pages['tools/modules.php']['title_var'] = 'course_tools';
 $this->_pages['tools/modules.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/modules.php']['children']  = array('tools/side_menu.php');
 $this->_pages['tools/modules.php']['guide']     = 'instructor/?p=student_tools.php';
