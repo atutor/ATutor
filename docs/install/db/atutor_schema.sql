@@ -646,8 +646,9 @@ INSERT INTO `modules` VALUES ('_core/groups',            2, 65536,     0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/reading_list',  2, 131072,    0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/file_storage',  2, 262144,    0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/gradebook',   2, 1048576,    4096, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/student_tools',  2, 2097152,       0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/gradebook',     2, 1048576, 4096, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/student_tools', 2, 2097152,   0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/farchive',      2, 4194304, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2, 0, 0);
 INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4, 0, 0);
 INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8, 0, 0);
@@ -665,6 +666,7 @@ INSERT INTO `modules` VALUES ('_standard/blogs',         2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/profile_pictures', 2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/patcher', 2, 0, 1024, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, 2048, 0, 0);
+
 # --------------------------------------------------------
 # Table structure for table `news`
 

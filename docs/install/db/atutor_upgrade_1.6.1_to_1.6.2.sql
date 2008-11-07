@@ -156,3 +156,5 @@ CREATE TABLE `fha_student_tools` (
    `links` text NOT NULL ,
    PRIMARY KEY ( `course_id` )
 );
+# Add the forum archiver to standard modules
+INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`)VALUES ('_standard/farchive', '2', '4194304', '0', '0', '0');
