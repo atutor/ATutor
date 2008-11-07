@@ -327,7 +327,7 @@ function toggleToc(objId) {
 			if (state && (state == 'none')) {
 				document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu">');
 			} else {
-				document.writeln('<a name="menu"></a><div style="" id="side-menu">');
+				document.writeln('<a name="menu"></a><div id="side-menu">');
 			}
 			//]]>
 			</script>
