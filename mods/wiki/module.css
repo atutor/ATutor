@@ -1,0 +1,225 @@
+
+/*
+   This sample stylesheet lists all possible stylesheet sections, that
+   ewiki and its plugins may output. But don't forget to also have a look
+   into the README section about this. (This also obsoletes the 'core.css'
+   sample in the fragments/css/ directory.)
+*/
+
+
+
+/* a typical wiki page outout is separated into following classes:
+
+ .wiki.<action>.<PageName>
+    .text-head
+       h2.text-title
+    .text-body
+       <...>
+    .wiki-plugins
+       .action-links
+       .<more-plugins>
+*/
+.wiki.edit.FrontPage {
+  	background: transparent;
+	background-color: white;
+	border:thin #cccccc solid;
+	padding:1em;
+	margin-right:1em;
+}
+
+input[type=submit]{
+	color:black;
+	border:thin black solid;
+	background-color:white;
+}
+
+.wiki-plugins{
+	background-color: white;
+	border:thin #999 solid;
+	font-weight:600;
+	padding:.2em;
+
+}
+
+
+.edit-box{
+	border: 1px solid #999;
+	background-color: white;
+	padding:1em;
+
+}
+
+/*-- links to non-existent pages*/
+.NotFound * {
+   text-decoration: none;
+   border-bottom: dashed 1px blue;
+}
+.NotFound a {
+   color: red;
+   border-bottom-style: none;
+}
+
+
+/*.wiki  {
+   background: url("wikibg.png") repeat-y;
+}*/
+
+
+/* ----------------------------------------------
+  then you can select on $actions
+  or even page names
+*/
+/*.wiki.edit {
+   background-color: #993322;
+}*/
+
+.wiki.info {
+   	background-color: white;
+	border:thin #cccccc solid;
+	padding: 1em;
+}
+
+.wiki.view.PageIndex {			/* "PageIndex" when "view"ed */
+   background-color: #ffee55;
+}
+
+.wiki.SiteOverview {			/* "SiteOverview" regardless of $action */
+   font-family: "Lucida Bright";
+}
+.version-info{
+	border:thin black solid;
+	padding:1em;
+}
+
+
+
+/* -----------------------------------------------
+  every page has a title now, always <h2>,
+  some of them enclose links (when "view"ed)
+*/
+/*.wiki h2.page.title {
+   color: red;
+   border-bottom: 2px #eedddd solid;
+}*/
+
+/*.wiki h2.page.title a {
+   color: #5555cc;
+   text-decoration: none;
+}*/
+
+
+/* -----------------------------------------------
+  the ".action-links" or ".control-links" are the
+  list of links below every wiki page ('PageInfo'
+  and 'EditThisPage' ...)
+*/
+/*.wiki.view .action-links {
+   background-color: #444444;
+   border: dashed 4px #444444;
+}*/
+
+.wiki.view .action-links hr,  .wiki .action-links br, hr {
+  	 display: none;
+}
+
+/*.wiki.view .action-links a {
+   color: #ffffff;
+}*/
+
+/*.wiki.view .action-links a:hover {
+   background: #151155;
+}*/
+
+
+/* -----------------------------------------------
+  the "info" pages result list is often
+  chunked into parts
+*/
+.wiki.info .chunked-result a {
+   	text-decoration: underline;
+   	background-color: #ddbb55;
+}
+
+
+/* -----------------------------------------------
+  the "edit" pages form elements are grouped
+*/
+.wiki.edit .edit-box {
+   /* usually encloses a textarea and two submit buttons */
+}
+
+.wiki.edit .edit-box textarea {
+  	 border: 1px solid #000000;
+   	background-color: #eeeeee;
+}
+
+.wiki.edit form[name=ewiki] {
+   /* old way, doesn't work with good old IE reliable */
+}
+
+/*.wiki.edit .image-upload {
+   background: url("image-upload.jpeg") no-repeat;
+}
+*/
+.wiki.edit .preview {
+	margin-bottom:1em;
+	border:thin #cccccc  dashed;
+   	font-size:100%;
+}
+
+.attachments{
+	background-color:white;
+	border:thin #cccccc solid;
+	margin:1em;
+	padding: 1em;
+}
+
+.links, .view, .tour{
+ 	border: thin #cccccc solid;
+	margin-right:1em;
+padding:.5em;
+
+}
+/*
+
+Calendar styles
+*/
+
+table.calendar {
+   	background-color: #CDBDAD;
+	margin-top:1em;
+}
+table.calendar td {
+   	font-family: "Verdana", "Arial", sans-serif;
+}
+
+table.calendar .head {
+   	font-size: 10pt;
+   	text-align: center;
+}
+
+table.calendar .daynames {
+   	color:#BA997A;
+   	font-size: 10pt;
+   	text-align:center;
+}
+
+table.calendar .day {
+   	font-size: 10pt;
+   	text-align:right;
+}
+table.calendar .today{
+   	background-color:#D7CFC7;
+   	font-size: 8pt;   
+   	text-align:right;
+}
+
+table.calendar a.found {
+   	text-decoration: none;
+	font-weight:600;
+}
+table.calendar a.hide {
+   	text-decoration: none;
+}
+
+

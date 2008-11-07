@@ -1,0 +1,1388 @@
+
+ErfurtWiki - a fast, user-friendly, highly configurable Wiki engine in PHP
+==========================================================================
+
+
+README
+¯¯¯¯¯¯
+This is the main documentation for ewiki. It tries to describes the basics,
+and how to set it up. More detailed explanations on other issues are
+separated out into the [README.config], [README.plugins], [README.fragments]
+and [INTERNALS] files, and into the doc/ directory.
+(Once you have the Wiki running, you could also read this file in hypertext
+format.)
+
+        1 What is this?
+      1.1 Why "ErfurtWiki"?
+    1.1.1 Unique Features
+    1.1.2 WikiAlternatives
+      1.2 Project Pages
+    1.2.1 Obtaining Support
+    1.2.2 License
+    1.2.3 Authors
+
+        2 HowTo
+      2.1 Integration with yoursite.php
+    2.1.1 What to do if images don't work
+      2.2 Creating a "config.php"
+      2.3 flat file database
+      2.4 tarball directoy structure
+
+        3 other/advanced integration issues
+      3.1 Generation of a "monsterwiki.php" script
+      3.2 Supplying the WikiPageName
+    3.2.1 mod_rewrite or PATH_INFO
+    3.2.2 use with the 404 trick
+      3.3 Security considerations
+    3.3.1 PHP settings (register_globals)
+    3.3.2 The two modes of operation (_protected_mode and _flat_real_mode)
+      3.4 simple usage restrictions via wrappers (a locked PersonalWiki)
+      3.5 PhpWiki compatibility
+    3.5.1 Transition from another WikiWare
+      3.6 Idea Collection
+    3.6.1 Multiple Wikis / InterWiki feature abuse
+
+        4 Tweaking (your own wiki markup and CSS)
+      4.1 Customizing ewiki_format()
+      4.2 Customization using CSS
+      4.3 user style classes in pages
+      4.4 rendered page content
+      4.5 pages enclosed in style classes
+      4.6 plugin output styling
+
+        5 Explanations
+      5.1 Binary and Text content
+    5.1.1 Image Uploading
+    5.1.2 Images Caching
+    5.1.3 Image WikiMarkup
+    5.1.4 binary_store, direct access
+    5.1.5 Arbitrary Binary Content
+      5.2 $action and $id
+    5.2.1 ewiki URLs
+
+        6 Appendix
+      6.1 Apache config
+      6.2 PHP config
+      6.3 error numbers
+
+
+
+
+
+
+  -------------------------------------------------------------------- 1 --
+
+
+
+What is this?
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+This is a WikiWikiWeb engine implemented in the PHP web scripting
+language. A WikiWiki is a web site which can be edited by everybody
+who visits it (most commonly without requiring that user to register
+before).
+
+It should allow easy integration into an existing web site (portal
+or homepage / CMS-like software), as it is more a library and does
+not output a full .html page - but instead just the formatted wiki
+text for inclusion in your pages` body/content area.
+
+Many extension plugins are available and can easily be hooked in
+(construction set principle). Try the "tools/setup" script.
+
+
+
+Why "ErfurtWiki"?
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+The project name comes from the home town of the author (Erfurt is next
+to Weimar.de); and our internal project name is in fact just "ewiki".
+
+
+
+        Unique Features
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        ewiki is not just another Wiki engine, it has some features that
+        clearly separate it from other implementations:
+
+        - contained within a single file (see the notes on "monsterwiki")
+        - does not impose a pre-defined layout, because it integrates
+          nicely into yoursite
+        - it is rather fast - uses regexs too, but the formatting kernel
+          uses the simple and quick string functions
+        - it is extremely featureful
+        - ewiki is not GPLed like 98% of all other Wiki implementations
+        - provides case-insensitive Wiki links, multiple database backends,
+          and all extended features are optional (a very exhaustive plugin
+          interface, and over 200 ready to use plugins)
+        - highlights: WikiCommander, OpenSearch, WikiSync, PHP-RPC database,
+          PingBack, TextUpload, click-and-run .xpi plugins, image upload,
+          GaGaLinks, XFN, CSS markup, WikiScript (not yet), TCN, and
+          in-page-macros: TableEditor, WebDAV, ...
+
+
+
+        WikiAlternatives
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        If you don't like ewiki, then try at least one of these:
+
+        - PhpWiki has a more complete approach than this WikiWare,
+          get it from http://freshmeat.net/projects/phpwiki,
+          it has support for different database types, features localization
+          and comes with an integrated admin area and also lots of plugins
+          made by its gigantic user base and development group. It initially
+          inspired the ewiki project, but also was the reason for starting
+          it.
+	- TikiWiki is a portal system centering around a powerful Wiki
+	  implementation. Thousands of plugins and developers, many cool
+	  extensions. http://tikiwiki.org/ and the http://tikipro.org/ fork
+        - Pie is a lean and unbloated Wiki implementation using a file based
+          database and storing pages as HTML. <http://pie.ekkaia.org/>
+        - WakkaWiki by Hendrik Mans is also a very powerful PHP implementation,
+          see http://www.wakkawiki.com/
+        - Miki is another nice (small) implementation in PHP from Jukka
+          Zitting.  Get it from http://miki.sourceforge.net/
+        - coWiki - completely OOP and the source code layout is great; looks
+          very featureful, but is more a CMS than a Wiki (authentication
+          bloat) and has also a little weird markup, but better check it out
+          yourself on http://cowiki.org/
+        - PmWiki is one of the more mature Wiki implementations for PHP,
+          it has been around for some time, has a large user base and is
+          still in active development. http://pmwiki.org/
+        - MediaWiki drives the well-known WikiPedia project. It is very
+          powerful, but like Pmwiki comes with features that initially
+          are somehwat overkill for many users. The developer base is
+          huge, and features get added hourly. http://www.mediawiki.org/
+        - PWiki2 was once the rising star in the world of PHP based Wikis,
+          but seems to have frozen in development. http://www.pwiki2.org/
+
+        The BEST PLACE to look for evil concurrent implementations is:
+        http://c2.com/cgi/wiki?WikiEngines
+
+        And there is a new WikiEngine comparison table coming up, which
+        tries to sort them by supported features:
+        http://wikifeatures.wiki.taoriver.net/moin.cgi/WikiEngine
+
+        Why do we recommend "concurrent" projects?  Simple answer: ewiki is
+        not a commercial project, we do not depend upon having thousands of
+        "customers" or users; and it makes especially no sense to persuade
+        people to use it. While ewiki is very flexible, it is not believed
+        to met everybodys needs (that would be silly, wouldn't it?).
+        Choices are good, and the free software community offers a lot here,
+        so please just check them out, and make YOUR choice.
+
+        Also have a visit at http://www.cmsmatrix.org/ if you've got time.
+
+
+
+Project Pages
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+official freshmeat project page: 
+- http://freshmeat.net/projects/ewiki
+
+demo site:
+- http://erfurtwiki.sourceforge.net/
+
+newest versions (unstable development releases):
+- http://erfurtwiki.sourceforge.net/downloads/
+
+mailing list archive
+- http://www.freelists.org/archives/ewiki/
+
+secondary site, WebInstaller:
+- http://ewiki.berlios.de/
+
+
+
+        Obtaining Support
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        Getting support for problems with ewiki is possible, but please read
+        this README first. The authors are thankful for BugReports, and of
+        course would like to know where this documentation is not detailed
+        enough and fails to explain things clearly.  However, before you
+        send requests to anyone, please visit following site (this is
+        necessary to get FREE support):
+
+        http://www.catb.org/~esr/faqs/smart-questions.html
+
+        Then please feel free to contact the author or leave notes on the
+        BugReports or UserSuggestion pages on our project site.
+        - http://erfurtwiki.sourceforge.net/BugReports
+        - http://erfurtwiki.sourceforge.net/SupportForum
+
+        Joining our http://erfurtwiki.sourceforge.net/MailingList would
+        allow you to reach a larger audience for your questions. However
+        you need to sign up first, and it's not much faster than the forum.
+        Keep in mind, that answers may come in slowly, and visiting back
+        first after 2 or 3 days is best practice.
+
+        But after all: DON'T BE SHY TO ASK QUESTIONS - only because we
+        have a README here doesn't mean we don't want to give you real
+        support.
+
+
+
+        License
+        ¯¯¯¯¯¯¯
+        ErfurtWiki is PublicDomain, which means that you can do with it
+        whatever you want (that actually means it is free of copyright and
+        any restrictions).  So it is free as in beer, and you can fork it,
+        rename it, commercialize it, or publish a derived version under the
+        GNU GPL, BSD, MPL, CC* licenses or even Microsofts' EULA.
+
+        ADDITIONAL NOTE: a few plugins in the plugins/lib/ directory may not
+        be PD (to date all are, but that could change).  Also the LiveUser
+        auth plugins (plugins/auth-liveuser/) are distributed under the GNU
+        LGPL. Everything that was a GNU GPL extension module was separated
+        out into our "extra"-tarball.
+
+
+
+        Authors
+        ¯¯¯¯¯¯¯
+        Mario Salzer <mario*erphesfurt·de> icq95596825 (+Yahoo,Jabber)
+        Andy Fundinger <andy*burgiss·com> from http://burgiss.com/
+
+        For the complete list of authors and contributors please see the
+        CREDITS file.
+
+        This project is rather mature and well tested now, but to improve it
+        further we need to know what doesn't work or what could be enhanced.
+        Every mail is a contribution (yep, that is not measured in lines of
+        source code).
+
+
+
+
+
+  -------------------------------------------------------------------- 2 --
+
+
+
+
+HowTo
+¯¯¯¯¯
+ewiki is very easy to set up, you only need a web server with PHP (4.1
+or later) support. It even runs without a SQL database, but that requires
+additional configuration (see for "db/flat_files" in [README.plugins]).
+If you unpacked the tarball you can often simply point your browser to
+there [http://localhost/ewiki/], to get it running.
+
+The following paragraphs are assuming you want to integrate the Wiki
+engine into an existing web site / template. Otherwise you would simply
+go with one of the supplied examples/, which are often ready to use.
+
+If you don't want to set it up yourself, you could check out our cool
+new remote web install service:
+http://ewiki.berlios.de/installer/
+
+
+
+Integration with yoursite.php
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+For the next few paragraphs the "yoursite.php" refers to whatever
+files and/or scripts belong to your already existing website. This
+hypothetical script should at least output the <html><body> tags
+around the output from ewiki. The most simple script to accomplish
+this could look like this (see also example-2.php):
+ 
+    <?php
+       mysql_connect("localhost", "DB-USER-NAME", "PASSWORD");     #[1]
+       mysql_query("use DATABASE-NAME-HERE");
+
+       define("EWIKI_SCRIPT", "yoursite.php?page=");               #[2]
+       include_once("ewiki.php");                                  #[3]
+    ?>
+    <HTML>
+     <head>...</head>
+    <BODY>
+    <?php
+       echo  ewiki_page();                                         #[4]
+    ?>
+    </BODY>
+    </HTML>
+   
+[1]  The first two commands open a connection to your MySQL database.
+Usually one saves the result of mysql_connect() in a variable named
+$db or so, but that was not used in "ewiki.php" at all (because PHP
+does not depend on it if there is only a single db connection).
+
+[2]  The define line tells ewiki about the <a href= hyperlinks it
+shall create for wiki pages.
+
+[3]  The include_once("ewiki.php") finally loads the ewiki "library" and
+sets any EWIKI_ constants that have not already been defined here. Instead
+of "include" we use the safer "include_once" since version R1.02b
+
+[4]  The final call to the ewiki_page() function returns the wiki page
+which was requested by the browser as <html> string. The "echo" command
+lets PHP print it out.
+
+
+
+        What to do if images don't work
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        If you don't start the yoursite template with a <?php code part as
+        shown in the initial example but have some <HTML> tags before the
+        initial inclusion of the "ewiki.php" script, then ewiki cannot
+        handle binary content (like uploaded images).
+
+        You must ensure, that yoursite.php script starts with <?php and has
+        the include_once("ewiki.php") or include_once("config.php") there:
+
+            <?php
+               mysql_connect(":/var/run/mysqld/mysqld.sock", "USER", "PW");
+               mysql_query("use DBNAME");
+
+               define("EWIKI_SCRIPT", "yoursite.php?page=);
+               error_reporting(0);
+
+               include_once("ewiki.php");
+
+               $content = ewiki_page();
+            ?>
+            <HTML>
+            <HEAD>
+              <TITLE><?php  echo $ewiki_title;  ?>
+            </HEAD>
+            <BODY>
+            <?php
+               echo $content;
+            ?>
+            </BODY>
+            </HTML>
+
+        Please again, note the initial <?php part before the very first plain
+        HTML output - yoursite.php must really start with it, or else binary
+        content (uploaded images) won't work!
+
+        You could, of course use a "binary.php" besides "yoursite.php", to
+        get around this problem; please see fragments/ for an example.
+
+
+
+Creating a "config.php"
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+Instead of including the plain "ewiki.php" script as shown in the
+example above, many people may find it more useful to include_once()
+a "config.php", which then itself loads the ewiki script.
+
+Customization of ewiki takes place, by pre-defining() some of the
+EWIKI_ configuration settings and loading extension plugins (see
+[README.config] and [README.plugins] for a complete overview). To
+not move that work and code into yoursite it is recommended to
+create some sort of "config.php" script, which then contained the
+various define() and include_once() commands.
+
+It is sometimes even senseful to establish the database connection
+(if you use SQL and not the flat_files backend) inside of such a
+config script, if it wasn't already established in yoursite.
+
+So such a config.php script could contain:
+ - multiple define() commands, setting ewiki behaviour constants
+ - include_once() commands to load extension plugins
+ - evtl. some include_once() and define() for the db_flat_files plugin
+   (if you don't have a SQL database)
+ - and last but not least - an include_once("ewiki.php");
+
+If you then include_once() such a config.php, you get a fully functional
+and preconfigured Wiki to include into yoursite. By using this
+approach, you still could override some of the EWIKI_ settings with
+additional define() constants right before the include_once("config.php").
+
+  <?php
+     define("EWIKI_whatever", "...");
+     include_once("includes/ewiki/myconfig.php");
+  ?>
+  <HTML>
+  <BODY>
+  <?php
+     echo  ewiki_page();
+  ?>
+  </BODY>
+  </HTML>
+
+Note: All path names here are just examples, they will differ for
+your setup!
+
+But again, creating a "config.php" script is optional; it is
+supplied in the ewiki tarball for convinience, not for reference.
+You may however want to create one of your own, by simply using
+the "SetupWizard" script. Just point your web browser to
+[http://localhost/ewiki/tools/t_setup.php] and chose the options and
+extensions you want. Beware that while it provides a simplified
+overview, it is not really short.
+
+IMPORTANT: Please use "include_once()" instead of the "include()"
+feature. This is to prevent accidential double loading of plugins.
+We do this since R1.02b, and this is how the generated config scripts
+will work.
+
+
+
+flat file database
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+If you don't have a MySQL database, then you must configure ewiki to
+store pages in a dedicated directory. You need to include_once() the
+'plugins/db/flat_files.php' plugin prior to 'ewiki.php'. You must
+also set the constant EWIKI_DBFILES_DIRECTORY to a location which
+is world-writable ("chmod 4777 dirname" in FTP/shell). Usually this
+would look like (in yoursite or a config.php):
+
+   define("EWIKI_DBFILES_DIRECTORY", "./pages/");
+   include_once("plugins/db/fast_files.php");
+   ...
+   include_once("ewiki.php");
+
+See [README.plugins] for more information on "db/flat_files". You can
+also use the newer "db/dzf2" which creates a deep directory structure,
+and seems to be a bit faster on some systems - moreover that one also
+provided case-insensitive WikiPageLinking under Unix.
+
+
+
+tarball directoy structure
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+You get following directories and files, when you unpack the tarball:
+
+README.*       main documentation
+doc/           detailed doc on certain subjects
+ewiki.php      the core script, contains the minimum wiki
+config.php     example configuration script
+example-1.php  example yoursite wiki wrapper
+examples/      more sample layout wrapper scripts
+plugins/       large directory with extension scripts
+local/         empty, use for your own/modified plugins
+fragments/     code snippets, separate files, often not very ewiki specific
+init-pages/    holds default wiki pages, automatically transfered into DB
+spages/        "StaticPages" are dynamic/page plugins
+tools/         database + administration tools, including SetupWizard
+wiki.css       description of CSS classes used in the core and plugins
+z.php          interface for Wiki-RPC, WebDAV, ?binary=, OpenSearch, sync, ...
+
+Feel free to explore especially plugins/ and fragments/ somewhat deeper
+with your favourite file browser. Every file should carry a little amount
+of documentation on top. The [README.plugins] file is always somewhat
+outdated and not meant to describe everything anyhow.
+
+
+
+
+
+  -------------------------------------------------------------------- 3 ---
+
+
+
+other/advanced integration issues
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+Once you mastered the basic steps to integrate the wiki into yoursite, you
+may choose to fine tune the generated URLs, behaviour and appearance.
+
+The following paragraphs are a selection of common issues and solutions,
+like using mod_rewrite, setting up simple authentication schemes or changing
+from another Wiki.
+
+
+
+Generation of a "monsterwiki.php" script
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+ewiki over the time grow larger, and nowadays isn't anymore the
+SINGLE SCRIPT it once was. The distribution ships with over hundred
+extension plugins. But nevertheless it is still possible to build
+a single script from it all.
+
+That being said, the "ewiki.php" script still implements a fully
+functional Wiki (and just only lacks the advanced features supplied
+by the plugins). - You could still just include_once() the "ewiki.php"
+script into yoursite and delete everything else the ewiki tarball
+contained.
+
+However, it is also possible to MERGE all wanted plugins and the
+core script together to built a customized (feature enhanced) Wiki
+script from it. All you needed to do was:
+
+  /unix/$   cat  ewiki.php plugins/*.*  >  monsterwiki.php
+or
+  C:\win\   type  ewiki.php plugins/*.*  >  monsterwiki.php
+
+This way you'd get the "monsterwiki.php" file, which contained the
+ewiki core script plus all plugins - but of course, you should only
+copy the ones in, you really need and want (and not all "*.*" as
+shown in the example above)!
+
+The UNIX shell script "tools/mkhuge" will do exactly that for you;
+it accepts a parameter from 0 to 3, which will merge a custom set
+of useful plugins into the then generated "monsterwiki.php" script.
+In newer versions, you may want to use the "tools/setup" console
+tool instead (for Linux), which makes this far easier.
+
+If you have built a "monsterwiki.php" script, you can include() this
+instead of the minimal "ewiki.php" into yoursite to integrate a Wiki.
+
+Eventually you'd also want to merge some configuration settings into
+this monsterwiki script, so you wouldn't have to put the define(...)
+commands into yoursite.php before you include("monsterwiki.php");
+The define() commands however need to be the very first part merged
+into that monsterwiki script, so it's best to edit the monsterscript
+after generation and insert the appropriate settings then at the
+very beginning.
+    You could also merge a (reduced!) "config.php" into the script,
+    using the above "cat" (or "type" for DOS/Win) method.  But
+    beware, that this "config.php" then does not contain any
+    include() command; because else the resulting "monsterwiki.php"
+    script would fail trying to load the "ewiki.php" core script and
+    plugins which were probably already merged in. (The newer and
+    recommended "include_once()" won't help here.)  Even if you merge
+    such a minimal config script at the start of this monsterwiki
+    script, you still could override some settings (at least
+    establishing the database connection) from within yoursite, if
+    you think it's useful.
+
+Additional note: You could still include() plugins, if you included()
+such a monsterwiki script into yoursite, provided that the plugin
+you try to include() wasn't already merged into that monsterwiki.php
+script before (else it would crash the PHP interpreter, because
+loading it twice is once too much => error + crash).
+
+StaticPages (read about "spages" plugin) can also be included, if
+you first convert them into ordinary ["page"] plugins using the 
+'mkpageplugin' commandline tool.
+
+
+
+Supplying the WikiPageName
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+If you just call ewiki_page() as shown in the first example, it will
+try to get the name of the requested WikiPage either from the
+$_SERVER["PATH_INFO"] variable or from one of the GET-variables '?id='
+or '?name=' or '?page=' or '?file=' (available as $_REQUEST["name"]). 
+If yoursite.php however uses another way or another varname to receive
+the WikiPageName you can just give it as first parameter:
+
+  ewiki_page( $id = "WikiPageName" );
+
+example-4.php shows how this can be used to list a second WikiPage
+(the list of newest pages) somewhere else on yoursite.php.
+
+
+
+        mod_rewrite or PATH_INFO
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        If you dedicate a complete directory for your wiki, you should keep
+        in mind, that some of the generated URLs contain slashes (for
+        example "edit/WikiPage"), and will look like subdirectories and thus
+        confuse browsers.
+
+        So you should either set EWIKI_SCRIPT to the absolute directory
+        containing your wiki wrapper script: define(EWIKI_SCRIPT,
+        "http://myserver/wiki/"); or else put a <BASE HREF="..."> into the
+        generated pages. Take this precaution because some of the generated
+        links contain additional slashes (like "edit/ThisPage") and thus may
+        make browsers believe in a changed subdirectory.
+
+        This applies to mod_rewrite usage and if you call your wiki wrapper
+        with the page name as PATH_INFO (like "/wiki/index.php/WikiPage").
+
+        Do not forget to enable EWIKI_USE_PATH_INFO, as it is per default
+        disabled for Apache servers! Also check, if EWIKI_URLENCODE and
+        _URLDECODE suit your needs, else you will find it useful that all URL
+        generation is encapsulated in our ewiki_script() function (so you can
+        easily adjust it).
+
+
+
+        use with the 404 trick
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        Once I've implemented a way to run a web server below another one
+        (actually Nanoweb below Apache, for more details see
+        http://nanoweb.si.kz/), because the Apache on one of my providers
+        servers was heavily misconfigured - so I handed work over to a
+        secondary WebServer.
+
+        This trick also works without mod_rewrite support, and is therefore
+        also well suited for cheap WebSpace. Put following into the
+        .htaccess of the dedicated wiki directory:
+
+          #-- handle "not found" pages by ewiki
+          ErrorDocument 404 /wiki/index.php
+          DirectoryIndex 404 index.php
+
+        This will allow the "yoursite.php/ewiki.php" script to catch all
+        missed files, which would usually trigger a 404 error. Inside your
+        ewiki wrapper script, you must then however decode the originally
+        requested URL:
+
+          $url = $_SERVER["REQUEST_URL"];               # Apache often uses this one
+          $url = preg_replace("#^/wiki#", "", $url);    # strip wiki subdir name
+          $_SERVER["PATH_INFO"] = $url;                 # make ewiki see it
+
+        The second step is very important, it strips the name of the
+        dedicated subdirectory from the URL, which cannot be done inside
+        ewiki.php.
+
+           The $url from the above example could also be used as $id
+           parameter to ewiki_page().           
+
+        It should be noted, that some Apache implementations are garbaging
+        POST requests in case of a triggered 404 error - but you can simply
+        test this by saving a changed WikiPage.
+
+        See also the "fragments/404finder.php" example on this.
+
+        Do not forget to enable EWIKI_USE_PATH_INFO, as it is per default
+        disabled for Apache servers!
+
+
+
+Security considerations
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+ewiki was developed using a PHP5 interpreter, but with limitations of PHP4.3
+in mind. There are huge differences (a rather instable, bug-prone and still
+unfinished language) across the 4.x versions of PHP. The 4.0 series is not
+enough to run ewiki, you'll need at least a PHP 4.1 (4.07) to make it work
+reliable.
+
+One must also know, that there are also differences between the settings of
+providers. Some for example enforce users to run their scripts in so called
+"safe mode" (crippled mode) in place of real server security guidelines.
+Other still use pre-4.3 settings for the PHP interpreter (the Win4 php.ini
+still is outdated). So take care, and adjust settings using .htaccess`
+php_option for Apache servers if you can.
+ 
+
+
+        PHP settings (register_globals)
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        Because ewiki was developed on later PHP versions (at least 4.3), it
+        heavily uses the $_REQUEST array and assumes a deactivated
+        "register_globals" setting in php.ini
+        If this is not the case for your setup / WebServer or with your
+        provider the ewiki.php script may expose some security leaks
+        (because of uninitialized variables).
+
+        ewiki in general does only use a few global variables, but especially
+        the $ewiki_ring variable (which is used for PROTECTED_MODE) can lead
+        to problems, if you use it without an existing authentication
+        concept.  The $ewiki_plugins is also a very complex task, and I
+        cannot safely state that it won't be able to produce exploits, if
+        the variable is tweaked externally (pushed into by a client).
+
+        So the best thing you could do is to disable register_globals (this
+        can be done from inside a directories .htaccess file by inserting
+        the line "php_option register_globals off").
+
+        A fragments/ include will be added to strike against variables which
+        got set from outside (this is rather easy for variables used by
+        ewiki, because their names all start with "$ewiki_").
+
+
+
+        The two modes of operation (_protected_mode and _flat_real_mode)
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        While this wiki was originally developed as a real wiki, many people
+        use it for different things now, like private HomePages, easy CMS on
+        commercial web sites.
+
+        This fact lead to the support of a restricted operation mode, now
+        known as the _PROTECTED_MODE. It is often used to require people to
+        log in before they can edit pages or upload things. It is completely
+        optional, and doesn't have much impact on speed when left disabled.
+
+                                  Btw, the standard ewiki operation mode is
+                                        now known as the _FLAT_REAL_MODE ;)
+
+        If you'd like to use authentication, you'll probably want to chain
+        some plugins which enable you to use the user database from
+        yoursite.php, so you do not need a separate .htaccess or an
+        additional relational database for passwords. Please see the section
+        on auth plugins.
+
+        See also the EWIKI_PROTECTED_MODE configuration constant and the
+        separate [plugins/auth/README.auth] file for further and more
+        detailed informations on this feature.
+
+
+
+simple usage restrictions via wrappers (a locked PersonalWiki)
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+The easiest way to cripple a Wiki setup to be browseable-only for the larger
+public, and to allow only a small subset of users to edit pages is to write
+two wrapper scripts around the ewiki.php library.
+
+One of the wrapper scripts should include and use ewiki as described in the
+"Integration with yoursite.php" paragraph. You may want to move this wrapper
+script into a password protected subdirectory (say "/wikiadmin/index.php")
+or just include("fragments/funcs/auth.php").
+
+Another wrapper script should then be provided for the users that are only
+allowed to view pages. To disallow editing you'll just have to enrich it
+with commands like:
+
+ unset($ewiki_plugins["action"]["edit"]);       # disables editing
+ unset($ewiki_plugins["action"]["info"]);       # no info/ action
+ unset($ewiki_plugins["page"]["SearchPages"]);  # no search function
+
+This code must occur after you have 'included("ewiki.php");' the library,
+but before you call the 'ewiki_page();' function, so the unwanted actions
+and pages really do not get activated.
+
+So far the basic approach. If you however have real user authentication
+code behind the scenes you probably don't want to maintain two different
+wrapper scripts. You'll then just put the functionality stripping code
+from above into an if-clause in "yoursite.php" like:
+
+ if (! $user_is_logged_in) {
+   unset($ewiki_plugins["action"]);   # (you should do it less destructive ;)
+ }
+
+Note: this is again an example. DO NOT copy&paste examples and assume
+they'll work for you!
+
+
+
+PhpWiki compatibility
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+The MySQL database table is partially compatible to PhpWiki versions 1.2.x,
+but not with the current PhpWiki 1.3.x versions. There is however now a
+db/phpwiki13 plugin which allows to access those too (rw).
+
+
+
+        Transition from another WikiWare
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        If you choosed ewiki to replace an already existing wiki script on
+        your site, you should first think about, that the syntax/WikiMarkup
+        isn't equal across all Wikis. There are a few markup extension
+        plugins, that may help you around this, but beware that transition
+        with a larger collection of WikiPages won't be very easy.
+
+        The best way to import the old WikiPages to ewiki, is to first
+        export it using the tools of the previous WikiWare. You can then
+        just put the produced text/plain PageSource into "init-pages/",
+        because all files found therein (note, that there shouldn't be any
+        file name extension like .txt) are feed directly into the ewiki
+        database, when ewiki is run for the very first time (when the
+        EWIKI_PAGE_INDEX is not found in the db).
+
+        There is a "plugins/db/phpwiki13.php" which may be useful in first
+        trying ewiki, but it is not recommended to use it for daily work. 
+        Speaking of PhpWiki you could also use the "tools/t_convertdb.php"
+        to import (and markup convert) all pages from PhpWiki to the ewiki
+        database format.
+
+
+
+Idea Collection
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+Here we'll note some tricks, on how to do this and that. Some of the
+following paragraphs also explain workarounds for currently lacking
+features.
+
+
+
+        Multiple Wikis / InterWiki feature abuse
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        Other WikiWare provides means to have multiple namespaces in a wiki,
+        what if fact is contrary to the original Wiki idea suggesting a
+        single flat namespace. ewiki does not support SubWikis or alike, to
+        get multiple Wikis using one ewiki installation you'll need multiple
+        layout and config wrappers (each with its own absolute URL and
+        differen EWIKI_DB_TABLE_NAME or EWIKI_DBFILES_DIRECTORY constants).
+
+        This way you'd get two independent Wikis (with two different SQL
+        database tables, or flat_files directories), and of course links
+        between those two need a special syntax. And the best approach here
+        was to use the InterWiki linking feature.
+
+        To do so, invent to InterWikiAbbreviations for each of your separate
+        Wikis and add it to $ewiki_config["interwiki"] as follows:
+
+          $ewiki_config["interwiki"]["main"] = "/wiki/main/?id=";
+          $ewiki_config["interwiki"]["office"] = "/wiki/office/?id=";
+          $ewiki_config["interwiki"]["tech"] = "http://tech.company.com/?id=";
+          $ewiki_config["interwiki"]["our-www"] = "http://www.company.com/";
+        
+        The last one is an example, on how to use the InterWiki feature to
+        generate references to arbitrary web documents, with a simple syntax
+        like "[our-www:/customers/pub/rules.html]" - it's somehow standard to
+        use "company-url:" or "company-www:" as InterWikiAbbreviation for this
+        purpose.
+
+
+
+
+
+  -------------------------------------------------------------------- 4 --
+
+
+
+
+
+Tweaking (your own wiki markup and CSS)
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+(this part of the README is also just a collection of random notes)
+
+
+
+
+Customizing ewiki_format()
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+There are various markup extension plugins available for ewiki, which
+allow you to use BBCode or the syntax of another WikiWare. But if you
+have a closer look at $ewiki_config (the defaults are in 'ewiki.php'
+around line 200), you'll notice, that you can configure the WikiMarkup
+that is to be used.
+Various "wm_..." entries map our obscure markup to html <tags> (or at
+least fragments of them). So in order to add a feature you could insert
+an own rule there. (But keep in mind, that every new WikiMarkup slows
+down the transformation function.)
+
+Often you want to append an entry to "wm_style", for example:
+
+   $ewiki_config["wm_style"]["==="] = array("<h1>", "</h1>");
+
+Would allow you to write "===SomeText===" in a WikiPage, which then would
+display as an far-too-large headline.
+
+You can also add markup with different 'start' and 'end' characters, using
+the "wm_start_end" entry in $ewiki_config. For example the following would
+render "... ((((some text)))) ..." in a page using the html <kbd> tag:
+
+   $ewiki_config["wm_start_end"][] = array(
+       "((((", "))))",   "<kbd>", "</kbd>",
+   );
+
+Please see the section on "ewiki_format() internals" on how to write a
+["format_..."] or markup plugin, see [README.programming].
+
+
+
+Customization using CSS
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+There are now some interesting ways to style ewiki output, just read on.
+
+Please note, that it in your stylesheets you just write ".wiki" and
+REALLY NOT ".ewiki" this time.
+
+Also important is, that we discourage use of the underscore in CSS class
+names, because it is simply forbidden there, even if current browsers do
+not complain as loudly as the w3c does. (That's just why you'll now see
+lots of class names with minus dashes instead of underscores.)
+
+
+
+pages enclosed in generic style classes
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+The most powerful way to style the content ewiki includes into your site
+is to use the generic style class names which enclose every page that comes
+from ewiki:
+
+   <div class="wiki view PageName">
+      ...
+   </div>
+
+This <div> is always the outermost tag around the html content that returns
+from ewiki_page(). It will always contain the class "wiki", after this
+the current page action/ and PageName (the action is usually "view", but
+can be also "edit", "info", "links" or something similar).
+
+If you haven't seen that before, this is in fact valid CSS. It means that
+this <div> is part of three classes. You can then use either ".wiki" or
+".view" or ".PageName" or any compound of the three like ".wiki.view.PageNm"
+as selectors in your stylesheet.
+
+   Note: Non-word characters in page names are converted into '-' dashes
+   usually (including dots and spaces, underscores, and so on), consecutive
+   dashes are collapsed. If a page name originally started with a number,
+   then "page" will be prepended to it.
+   So for example "99BottlesOfBeer.en" became "page99BottlesOfBeer-en" in
+   the stylesheet.
+
+Keeping this in mind you can easily style all, a few or even just a single
+page from ewiki in your stylesheet. (We'll explain it here, because the word
+of multiple class names and the cascading way of using CSS is not very
+widespread.)
+
+.wiki  {                       // this affects every page ewiki returns
+   background-color: #ccccff;
+   font-family: "WikiFont";
+   ...
+}
+
+.wiki.view  { ... }            // only applies to pages that are "view"ed
+.wiki.links  { ... }           // BackLinks
+.wiki.edit  { ... }            // when a page gets edited
+
+.wiki.PageIndex  {             // this rule affects only a __single__ page
+   ...                         // regardless what the "action/" is now;
+}                              // useful for "PowerSearch" or "PageIndex"
+
+.wiki.edit.ThisVerySpecialPage {   // this css section applies to just one
+   ...                             // page again, and this time only when
+}                                  // it gets edited
+
+
+
+page style class fragmentation
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+Moreover inside that generic <div> the page is fragmented further into
+its individual parts to make styling it only partially really simple:
+
+   <div class="wiki view PageName">
+
+      <div class="text-head">
+        <h2 class="text-title"> <a>PageName</a> </h2>
+      </div>
+
+      <div class="text-body">
+        here comes the
+        actual page content
+        ...
+      </div>
+
+      <div class="wiki-plugins">
+
+         <div class="action-links">
+            <br/>  <hr/>
+            <a>edit</a>  <a>info</a>  <a>links</a>
+         </div>
+
+      </div>
+   </div>
+
+So the .wiki class itself is divided into three parts, where .text-head
+typically only contains the headline (.text-title) and the actual page
+content comes encapsulated in .text-body
+
+The part following as .wiki-plugins contains the individually named output
+blocks from the so called aview-plugins, one of it is the .control-links
+block containing the EditThisPage, BackLinks, ... actions and control links.
+But there may be more of it inside of the .wiki-plugins block. See also
+the paragraph on "plugin output styling".
+
+Likewise the .text-head block could contain more, but currently no plugin
+throws other output above the page content or title.
+
+This further separation allows you for example to give headlines or page
+content different borders or margins than the action links, so that it
+matches better into your layout. You however don't need to use that classes
+at all and could simply apply all styles onto the complete .wiki selector
+as usual.
+
+
+
+rendered page content
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+If you are not interested in walking around the "ewiki.php" script
+when you want to tune how the output looks, you should try to
+utilize the (few) CSS classes ewiki defines (it does not include
+even one color setting or <font> tag):
+
+<style type="text/css">
+
+   p     { font: ... }          // almost every part of the generated
+                                // wiki pages is inside a <p>...</p>
+
+   em    { ... }                // you could encolour this, if the browsers
+   strong { ... }               // usual italic is not emphasized enough
+
+   .indent                      // to specify a different space-indentation
+
+</style>   
+
+
+
+user style classes in pages
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+The plugins/markup/css allows you to use CSS classes and style definitions
+in WikiPages. With the double at "@@" followed by a css classname or command
+you start styling a paragraph or parts of the text.
+
+  @@classname at the start of a paragraph will
+  enclose it into a <div class="classname">
+  completely
+
+  But inside of some text, the @@styledef only
+  affects the part until the next  @@ - everything
+  that comes later won't be enclosed in a <span>
+
+While the css style classes must be defined in your sites` global stylesheet
+to take effect, you could also use direct CSS style commands instead. These
+also must follow the @@ immediately and may not contain spaces. So something
+like @@color:#ff0000; will work, while specifying font names may not always.
+
+
+
+plugin output styling
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+There often appear special 'pieces' within a rendered page that ewiki
+returns, because not everything in the returned html code belongs to the
+requested pages` content.
+
+For example the current pages` title needs its own css class, like does
+the block of action links ("EditThisPage, PageInfo, ...") below every page,
+so it can be distinguished from the pages` text.
+
+Also note again the use of the '.wiki' selector within the following
+stylesheet guide and ewiki CSS class overview:
+
+
+.wiki  h2.page.title  {         // all titles now have it, while many
+   ...                          // of them include links as well
+}
+
+.wiki.view  .action-links  {    // "EditThisPage, PageInfo, ..." links
+   ...                          // are inside such a block, like are two
+}                               // <hr>'s
+
+.wiki.info  .chunked-result {   // some generated pages (like the history
+   ...                          // info/ ones) may need to split their
+}                               // results; this matches those links
+
+  //-- the edit/ pages are separated into
+  //   following blocks:
+.wiki.edit  .edit-box   { ... }
+.wiki.edit  .image-upload   { ... }
+.wiki.edit  .preview  { ... }
+
+  //-- info/ pages contain a history of page versions, each enclosed in
+  //   a <table class="version-info">, the <tr>s inside can be selected
+  //   separately:
+.wiki.info  table.version-info  { ... }
+.wiki.info  .version-info  .action-links  { ... }
+.wiki.info  .version-info  .page-author  { ... }
+.wiki.info  .page-refs  { ... }
+.wiki.info  .page-flags  { ... }
+
+
+The class naming across most of the extension plugins is not unified, so you
+may often need to look it up here - or inside of the plugins source code.
+This is at least necessary for calendar and navbar, which follow a very
+different naming scheme.
+
+.wiki  .download-entry  { ... }
+.wiki  .download-form  { ... }
+.wiki  .upload-form  { ... }
+
+.wiki  .image-append  { ... }
+
+
+
+
+
+
+
+  -------------------------------------------------------------------- 5 --
+
+
+
+
+Explanations
+¯¯¯¯¯¯¯¯¯¯¯¯
+The next few paragraphs shall enlight more detailed how some things are
+handled in ewiki (and why it is that way).
+
+
+
+Binary and Text content
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+Because I'd like to keep it small (see also the "Everything in one
+script" paragraph) ewiki also creates just one database table.
+Differently from other Wikis this one has the 'flags' setting for
+each saved page. And as I successfully used this bad trick in earlier
+projects many times to integrate support for hundreds of different
+functions (CMS, links, boards/forums, ...) into a single table; I
+thought it could be funny to have something like this in ewiki too.
+
+While the image thingi seemed senseful to me, other binary data
+cannot be feed into database without helper plugins, because this is
+a Wiki script and not an almighty portal software!
+
+Uploading and caching of images requires the EWIKI_SCRIPT_BINARY
+constant to be set correctly (no output may be made before "ewiki.php"
+is included == "binary safe").
+The ewiki_binary() function handles almost all of this, and gets
+activated automagically (whenever required) as soon as ewiki.php is
+included().
+
+I believe these functions to be rather safe, as there are many sanity checks
+throughout the code to separate between _DB_F_BINARY and _DB_F_TEXT content.
+
+
+
+        Image Uploading
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        The currently most important use for the BINARY flag and image
+        functions is to upload images with the small form below every page
+        edit box.
+
+        The upload/caching functions can be disabled fully if
+        EWIKI_SCRIPT_BINARY and EWIKI_CACHE_IMAGES are set empty (or zero).
+
+        URLs starting with "internal://" represent the uploaded files. The
+        string is just a md5() sum generated from the contents of the
+        uploaded file. This way files won't get saved another time if they
+        are uploaded twice.  For uploading a JavaScript-capable browser is
+        recommended. It will work without, but then requires the user to
+        copy the [internal://...] text (from one window to another).
+
+        The color of the temporary upload info screen can only be changed
+        inside the ewiki_binary() function, currently.
+
+        Beware that images usually get downscaled if they are larger than
+        specified with EWIKI_IMAGE_MAXSIZE (per default 64K).
+
+
+
+        Images Caching
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        Images are usually redirected through EWIKI_SCRIPT_BINARY, and ewiki
+        tries to save them inside the database as with uploaded images. So
+        most of the facts from the previous paragraph apply to this function
+        too.
+
+        You must enable this feature with EWIKI_IMAGE_CACHING, it is shipped
+        disabled currently.
+        Adding a ?nocache to the image URL disables this feature for just one
+        specific image, if _IMAGE_CACHING was otherwise enabled.
+
+        Images are downscaled to fit the maximum defined size in
+        EWIKI_IMAGE_MAXSIZE (bytes) if the PHP libgd extension is available
+        (else dropped and then always redirecting clients which request
+        those image).
+
+
+
+        Image WikiMarkup
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        Usually one writes image references using square brackets around the
+        url of an image: [http://www.example.com/pics/image.png] or:
+        [internal://md5md5md5md5md5md5md5md5md5md5md5md5.png]
+
+        This will include (inline) the image into the page, when rendered
+        and viewed.  Using the standard square bracket link entitling syntax
+        also image references can be named (non-graphics / alternative
+        text):
+        [http://www.example.com/pics/image.png | This is an example image]
+        [http://.../image.pic "or entitle it using double quotes"]
+
+        Images can also be "aligned" to either side of the screen, thus the
+        remaining text will flow around it. To achieve this include spaces
+        to the left or the right of the image URL:
+
+        * picture to the LEFT:   [http://www.example.com/pics/image.png  ]
+        * picture to the RIGHT:  [  http://www.example.com/pics/image.png]
+        * CENTRED picture:     [  http://www.example.com/pics/image.png  ]
+
+        Note that you must use __two__ spaces, currently!
+
+        Image rescaling is possible by appending x=... and y=... as query
+        string parameters behind the image URL:
+          [http://www.example.com/pics/image.png?x=160&y=120]
+        The query string parameters "width" and "height" are also accepted.
+
+        If you have an image URL, but you do not want to get that image
+        inlined into the current page, then just leave out the square
+        brackets around.
+
+
+
+        binary_store, direct access
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        While storing the binary data together with text pages in the same
+        database is most often a good thing and suits most sites, there
+        exists also a workaround/hack to keep this binary data in plain
+        files. The advantage is a smaller database and possibly a little
+        speed enhancement (with a large collection of binary things in the
+        db). However the drawback is, that use of plugins/binary_store is
+        only transparent to the main ewiki script, but all admin tools/
+        won't be aware of it.
+
+        If you choose to use the binary_store.php plugin, you can also let
+        ewiki generate URLs directly to the then stored data files if you
+        just set the EWIKI_DB_STORE_URL constant.
+
+        Please see the paragraph on this plugin for more informations on
+        this.
+
+
+
+        Arbitrary Binary Content
+        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+        Set the EWIKI_ACCEPT_BINARY constant, if you'd like to allow any
+        binary file to be uploaded and saved in the database using the image
+        upload function.  Uploaded files will show up as ordinary (except
+        that "internal://" href prefix) links.
+
+        Please also note the "plugins/download.php", which does a much
+        better job than this constant.
+
+
+
+$action and $id
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+Inside of ewiki.php you'll see many occurrences of variables named $id and
+$action. The $id refers to the current page, which usually is a string like
+ThisPage, ThatPage, OrAnotherPage.
+
+Because just having pages wasn't believed to be sufficient enough, there
+is also a way to do something with them. That is what the $action tells.
+The most often used $action is "view" and is automatically assumed when
+no other $action was specified in the current ewiki URL. For non-existent
+pages alternatively the "edit" $action may get used instead.
+
+So the $action now delegates control about a requested page to a subfunc
+or plugin of ewiki, so the stored data of the page can be used for
+something (viewing being again the most common thing to do with it).
+
+"action/ForTheCurrentPage" is how both often looks in conjunction (again:
+if there is no "$action/" then "view/" will be assumed). Here the $action
+appears in front of the page name separated by a slash. A pagename now can
+contain slashes too, because ewiki can figure out, that "view/That/Page"
+separates into the $action being "view" and $id is "That/Page" in this
+example (the "view" gets mandatory in such cases).
+
+
+
+        ewiki URLs
+        ¯¯¯¯¯¯¯¯¯¯
+        "$action/$id" is most commonly appended as "GET parameter" to an
+        ewiki URL, after a string like "?id=" or "?page=" - you've already
+        noticed that!
+
+        There are of course other ways to design the URLs ewiki produces
+        and uses, the PATH_INFO being one of the most favoured alternatives.
+        (we had a paragraph on this earlier, see on top of this README)
+
+        Other Wikis use different URLs too, but you can tweak ewiki easily
+        to a different behaviour, because you have the chance to pass your
+        $action and $id to ewiki_page() from different sources. And because
+        URL generation is encapsulated into the function ewiki_script()
+        you could easily change just a few lines to make them look like you
+        desire.
+
+        The $action can be passed as "?action=" parameter already (this is
+        core support), so URLs could for example look like
+        ".../my/wiki.php?id=ThisPage&action=view" ... or something alike.
+
+
+
+
+
+  -------------------------------------------------------------------- 6 --
+
+
+
+Appendix
+¯¯¯¯¯¯¯¯
+This sections lists things, that in fact have little to do with ewiki.
+
+
+
+Apache config
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+You must of course configure your Apache (or any other Webserver) to
+feed .php scripts through the PHP interpreter, either libphp (Apache)
+or the standalone CGI PHP interpreter.
+
+If your Webserver supports mod_rewrite (Apache, Nanoweb), you may wish
+to use it for URL beatification as described in "fragments/htaccess".
+
+
+
+
+PHP config
+¯¯¯¯¯¯¯¯¯¯
+ewiki relies upon various settings of the PHP interpreter, which either
+can be changed with entries in the php.ini or via option settings from
+within .htaccess (only if you have Apache with libphp running).
+
+A .htaccess option setting looks like:
+
+  php_option register_globals off
+
+while in the "php.ini" you would just write:
+
+  register_globals = off
+
+
+
+The recommended settings are:
+
+  magic_slashes_gpc = off       ; This was enabled for old PHP versions
+                                ; to help newbies writing more secure
+         ; scripts in regards to database access (makes you wonder, which
+         ; newbie actually could deal with databases). Nowadays this setting
+         ; is still enabled by some providers, which try to keep their buggy
+         ; site running.
+         ; As a workaround (SlowSlowSlow, and not WikiWiki!) you can use
+         ; fragments/strip_wonderful_slashes.php
+
+  magic_quotes_runtime = off    ; This is even more awful than the above,
+                                ; and if you cannot disable it, then you
+         ; should not run ewiki on your Webserver. It is not believed to
+         ; work correctly with that setting.
+
+  register_globals = off        ; This setting is a security risk, if kept
+                                ; enabled, because ewiki was written on a
+         ; system where it is disabled (like with all newer PHP versions).
+         ; It once was a very convinient setting, but the PHP language has
+         ; long lost its sinmplicity and ease.
+
+  register_argc_argv = on       ; is important for 'ewikictl' & Co.
+
+  safe_mode = off               ; The so called 'Safe Mode' was introduced
+                                ; for mass hosters, which didn't want to
+         ; deal with security guidelines and needed an easy way to "secure"
+         ; their servers. This setting cripples various PHP functions, and
+         ; thus will disallow to use multiple ewiki extensions. The Safe
+         ; Mode renders it completely useless and stupid to run a webserver
+         ; on the Unix/Linux plattform, because its strenght was to invoke
+         ; the various fast utilities and filters through pipes. And the
+         ; lack of this opportunity then disables many ewiki extensions.
+
+  allow_url_fopen = on          ; You will need these, if you want ewiki
+  file_uploads = on             ; to deal with image caching and file
+                                ; uploads (of course).
+
+  error_reporting = ...         ; You should preferrably have this disabled,
+                                ; even if ewiki.php already carries an
+         ; error_reporting() call to do exactly that.
+         ; The ewiki code is clean, but no longer cares about PHP "Notices"
+         ; and sometimes also "Warnings" that much.
+
+  cgi.force_redirect = 0        ; This is a stupid PHP option, that is only
+                                ; there to fix a "/cgi-bin/ install" of PHP.
+
+  cgi.fix_pathinfo = 0          ; PHP scrambles the PATH_INFO if you keep
+                                ; this enabled. However Apache 1.3 often
+         ; returns a broken value, so this may not matter to you anyhow.
+
+  cgi.rfc2616_headers = ...     ; If you don't have Apache 1.3 running
+                                ; (any earlier versions would do, and laters
+         ; will be fixed again), then you should enable this; though ewiki
+         ; does not rely on it.
+
+  short_open_tag = ...          ; ewiki does NOT care
+
+  output_buffering = ...        ; ewiki does NOT care
+
+
+
+error numbers
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+A few ewiki error messages are kept uninformative to prevent abuse of
+security (misconfiguration) leaks through visitors. Usually you will find
+an error number besides (in the tradition of OS/2 ;-), which you can then
+lookup here:
+
+
+ERROR #0257: is triggered by fragments/strike_register_globals to signalise
+   that your PHP interpreter is still configured with register_globals
+   enabled. The whole purpose of fragments/strike_... is to prevent variable
+   injection from outside. Suddenly this is what happened if you've seen this
+   message - but if you've discovered it yourself, then the reason for this
+   security problem is a bogus extension plugin, which simply tried to
+   reinsert values from one innovocation to another in a non-standard (too
+   direct) way.
+   Simply disable register_globals and unload the fragments/strike_...
+   script to get rid of this error.
+

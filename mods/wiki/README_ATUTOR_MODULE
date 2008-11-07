@@ -1,0 +1,30 @@
+README ATutor Module
+This version of the ewiki module for ATutor is available in English, as well as some limited Spanish and German. Languages are automatically available based in the perferred language set in the users browser. See the translation section  in the ewiki.php file if you wish to start a new language
+
+Installing EWiki for ATutor
+
+1. Download the appropriate version of the module from the ATutor modules site.
+
+ATutor Modules
+http://www.atutor.ca/atutor/modules.php
+
+2. Delete any previously installed wiki/ directory if you are upgrading. NOTE:  Wiki files will be preserved in the course content/ directories.
+
+3. Extract/Unzip the downloaded file into the mods/ directory of your ATutor installation. This will create a directory called wiki/. (you may wish to modify the config.php file to enable/disable EWiki plugins)
+
+On Linux
+>tar xzvf atutor_ewiki-R1.02b.tar.gz
+
+Windows
+left or right click the file to unzip it into the mods/ directory
+(you might use Winzip or Winrar to extract the file)
+
+4. Login to ATutor as the administrator
+
+5. Choose the Modules Tab, then choose Install Modules. 
+
+6. Select EWiki from list of uninstalled modules, then press Install   Confirm by clicking the Yes button to complete the installation.
+
+7. From the Module Manager select the Wiki module then press Enable to make EWiki available to users on the system.
+
+

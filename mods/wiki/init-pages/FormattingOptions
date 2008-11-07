@@ -1,0 +1,18 @@
+<strong>basic html can be used</strong>
+
+ABBR( a Adaptive Technology Resource Centre)
+
+|table|cells|can|
+|be|merged||
+||
+   <?plugin TableEditor
+
+| use | this |
+| table | for |
+| editing | . |
+
+?>
+<?plugin BackLinks ?>
+an enumerated list
+1. item 1
+2. item 2

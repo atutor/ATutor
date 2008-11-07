@@ -1,0 +1,259 @@
+
+what plugin .meta files are for
+-------------------------------
+
+Plugins in ewiki have traditionally been just an asorted collection
+of PHP include scripts. To accomodate real plugin management (using
+the PluginLoader or the ConfigurationWizard, WikiInstaller, mkxpi,
+INI-configurations and other stuff) we had to provide the necessary
+data in some form.
+
+In-plugin (within comment fields) or centralized (in a big db file)
+listings have been abandoned in favour of accompanying .meta files.
+The format is a RFC822/HTTP/VCARD-like list of name:value-pairs in
+a file with the .meta extension after the basename. This sort of
+file is easier and faster to parse than XML-style data containers.
+
+
+fields
+------
+
+Currently known and interpreted fields (most of them are optional)
+and possible values are:
+
+  api:        just "ewiki" or "PHP" for us
+               - could signalize an incompatible plugin, if other CMS
+                 suddenly adopted this .meta file scheme
+               - a value of "PHP" says that the plugin is NOT ewiki-
+                 specific
+
+  type:       general description of what the contained code does
+               - this field is NOT in ewiki-specific terminology
+               - eventually not useful in itself, informational
+              for example:
+                "functions"  - collection of (random) functions
+                "variables"  - variable definitions
+                "data"       - constants, large variables, etc.
+                "intercept"  - handlers and interrupting control code
+                "mangle"     - on strings or data hashes
+                "transform"  - html conversion
+                "link"       - page names / data mangling
+                "database"   - app
+                "auth"       - app
+                "input"      - form fields or so
+                "listing"    - (html) lists of page names
+                "special"    - unspecific
+                "virtual"    - the according .php script is ignored,
+                and "R"        only the .meta data important
+                "api"        - itself provides an interface, remote API
+              sometimes this field just simply contains the name of
+              an ewiki hook (not recommended)
+
+  hooks:      used ewiki plugin hooks as comma separated list,
+                "page"
+                "action"
+                ...
+              see also INTERNALS and API documentation
+
+  page:       occoupied plugin hooks for the given type, if any,
+  action:     comma separated
+  list:       (possible field names depend on what was set as type:)
+
+  id:         identifier for this plugin
+               - replaces basename of the current file
+               - not implemented yet
+
+  depends:    some pluginmanagers can automatically load other
+  conflicts:  plugins or include scripts, if that's a requirement
+              for the current function
+  recommends: another plugin which makes sense in conjunction to the
+              described
+  provides:   virtual plugin identifier, which other plugins may depend
+              upon (or conflict with)
+  delivers:   like provides:, but that ONLY one plugin may deliver it,
+              and all others so become conflicting
+
+  category:   plugins are grouped by structure of the plugins/
+              directory, but for some pluginmanagers a more
+              descriptive and divergent classification is possible
+              using this field and its values (more possible):
+              - action, admin, appearance, authentication, aview, database,
+                edit, extension, feature, filter, fragments, hypertext,
+                library, markup, meta, mpi, old, optimation, page, spam,
+                user
+              We use the plugins/ subdirectory name alternatively, but
+              if omitted the plugin could not appear in plugin listings.
+
+  priority:   how important is this plugin - if it's included/loaded
+              by default:
+                "core"           - always
+                "required"       - always
+                "standard"       - enabled
+                "default"        - enabled
+                "important"      - often is
+                "recommended"    - should be
+                "optional"       - user decided
+                "extra"          - ranks higher than "bonus"
+                "bonus"          - super-optional gimmicks
+                "rare"           - too special for most people
+                "deprecated"     - NOT recommended or old
+                "never"          - unused, can be enabled only by hand
+                "auto"           - a pure dependency
+              WikiInstaller uses this to make differently feature-
+              loaded versions.
+               - this would probably be served better by numeric
+                 importance levels (0..10), but hey
+
+  title:      shown by most pluginmanagers, informational
+  decription:
+
+  author:     informational fields for contributed plugins
+  homepage:   
+  license:
+  copyright:
+
+  url:        download page for new plugin versions
+
+  version:    contributed plugins or from different project/vendor
+              sometimes contain a version number
+
+  update:     URL of actual plugin .php file, best if accompanied
+              by .meta file; used for automatic updates
+
+  sort:       some plugins must be loaded in a certain order to
+              function properly (e.g. database interface before most
+              others)
+              - gives a relative sequence number
+              - default for all other plugins is 0
+              - range from -100 to +100 for ewiki plugins,
+                outside more for general PHP additions (like
+                upgrade.php)
+              rarely needed, rarely present, most pluginmanagers
+              already take care of the database plugins themselves
+
+  funcs:      for dependency/conflict checking, this entry lists
+              all defined functions
+
+  config:     list of configuration constants, variables;
+              description of multi-line format in next paragraph
+
+You can add fields as you wish, for some plugins special values
+(like "*") are sometimes used.
+
+
+config: field
+-------------
+
+The only non-string field is "config:", as it is made up of
+multiple lines, which describes constants and variables with
+possible configuration settings. This is mostly used for
+presenting <form>s which config.php/.ini fiels generated from.
+
+Constants are detected, because they are all-uppercase, and 
+configuration variables by a leading dollarg  sign. A equal
+sign follows with either just one default value, or nothing,
+or a dash | separated list of allowed values. Finally a //
+comment may follow.
+
+  CONSTANT_NAME=value          // comment, help, info
+  $ewiki_config["name"]=       // default is empty string
+  ANOTHER_OPTION=1|2|3|4|5     // possible values
+  OR_EVEN=yes=1|never=0        // entitled, first is default
+
+Take care not to have spaces before or after the equal sign.
+
+
+sort: ordering
+--------------
+
+Some plugins must be loaded at certain positions before or with
+others. Especially the database plugins need to be present
+before the core script initiates the registered _binary() part.
+Therefore the sort: field pre-orders loading of them. Currently
+following ranges and points are defined:
+
+
+  -200    non-ewiki additions
+    ..
+  -100    minimum for ewiki plugins
+    ..
+   -50    higher-up interfaces, pre-dependencies
+    ..
+     0    almost all plugins (the zero is implicit, plugins are
+          loaded unordered normally)
+    ..
+    50    database backend
+    ..
+    80    binary module (mostly auto-initiated in core script)
+    ..
+   100    ewiki core
+    ..
+
+Plugins of course may be loaded after +100 and before -100, but
+generally this should be avoided and the ["init"] hook be used
+instead.
+
+Ordering of plugins must be fine-tuned by users. Registration of
+action plugins for example always influences the order they are
+displayed in later. The sort mechanism cannot handle any user
+preferences.
+
+
+example
+-------
+
+As example consider following .meta file:
++--------------------------------------------
+|api: ewiki
+|type: intercept
+|hooks: handler, page, edit_save
+|category: blocks
+|page: VirtualPageName
+|title: module-name
+|description: adds interesting features
+|config:
+|  PLUGIN_SETTING=1|0  // enables it
+ 
+
+notes
+-----
+
+future:
+  .meta plugin data can later be reimported into plugin files'
+  topmost comment section, if they get prefixed with an "@",
+  like for example:
+   /*
+    *  @api: ewiki
+    *  @title: ...
+    */
+
+
+tools
+-----
+
+There are a few support scripts in the "dtools" package (CVS),
+which can be useful, if you'd like to tweak defaults or patch
+descriptions, for some reason??? (doesn't make sense except
+if you'd like to help out).
+
+- "genmeta" created most initial description files from the
+  earlier FEATUREDB and SetupWizard + WikiInstaller
+- "editmeta.php" can tweak various important fields for all
+  (200+) plugins at once
+- "metafiles.php" contains general utility code
+- "updatemeta" can analyze plugins and updates (=does not
+  overwrite) according .meta descriptions - functions, hooks,
+  and general informations
+
+
+changelog
+---------
+
+The field names and values have been ravamped multiple times in their
+initial design phase.
+- "priority:" was called "inclusion:" before
+- "type:" changed its semantics and possible values
+- "sort:" was introduced rather late
+- "name:" has been removed in favor of "id:"
+- "section:" has been rejected in favour of "category:"
+

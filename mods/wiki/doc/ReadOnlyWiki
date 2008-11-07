@@ -1,0 +1,87 @@
+
+If you want a read-only Wiki for the public, then there is an easy method
+with which you can do that without having to use any ewiki ProtectedMode
+plugins.
+
+You just create two "wrappers". One which allows doesn't allow write
+access, and a second which does (with prior HTTP login then of course).
+There is also a section in the README which explains this.
+
+
+a locked personal Wiki, without ProtectedMode
+---------------------------------------------
+
+Using a Wiki to create a personal homepage is of course also possible. It is
+just a convinience to use the easy Wiki technics as backend, instead of a
+bloated and complicated CMS like PhpNuke or so.
+
+It was also possible to add an overall Wiki lock, and then to afterwards
+some pages as _WRITEABLE by the public. Though currently that code 
+(see ==plugings/auth/perm_old.php==) is still to be overhauled.
+
+-----
+
+The ==ewiki.php== script basically is some sort of library, and it is
+possible to build multiple frontends to your Wiki (like the scripts in our
+examples/ directory). This not only allows to have multiple layouts
+available, but also to have each with a different feature set.
+
+A ''different feature set'' then could also mean, that you have one wrapper
+for the public (which for example wouldn't allow editing), and a second for
+yourself, which did (but then required a password; see also
+[fragments/funcs/auth.php]). This is useful, if you want a PersonalWiki.
+
+
+a sample public wrapper, that forbids editing
+---------------------------------------------
+
+<code>
+<?php
+   define("EWIKI_SCRIPT", "public.php?id=");
+   include("config.php");
+   // or   include("ewiki.php");
+
+   #-- disallow some stuff, you wouldn't want visitors to do
+   unset($ewiki_plugins["action"]["edit"]);
+   unset($ewiki_plugins["action"]["info"]);
+?>
+...
+<body>
+  <?php
+       #-- output page content
+       echo ewiki_page();  
+  ?>
+</body>
+...
+</code>
+
+Often you would want to call this (see EWIKI_SCRIPT) file then "index.php"
+instead.
+
+
+
+your unrestricted personal wrapper
+----------------------------------
+
+The wrapper which allows editing of course should be protected with a login.
+
+<code>
+<?php
+   define("EWIKI_SCRIPT", "admin.php?id=");
+   include("config.php");  // or   include("ewiki.php");
+   #-- add some admin stuff
+   include("plugins/admin/page_searchandreplace.php");
+   #-- require a password
+   include("fragments/funcs/auth.php");
+?>
+...
+<?php
+   echo ewiki_page();
+?>
+...
+</code>
+
+Please note, the different setting for EWIKI_SCRIPT here. It is not
+necessary to keep the name "admin.php" script secret, because it is
+already protected by HTTP auth (see the ==.../auth.php== script).
+

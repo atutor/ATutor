@@ -1,0 +1,116 @@
+This is a list of rather often asked questions, together with answers of
+course. It has been compiled from our MailingList, SupportForum and years
+of experience with user frustration. :)
+
+
+When I edit a page, ugly BACKSLASHES \ \\ appear before quotation marks.
+------------------------------------------------------------------------
+
+This is not a bug in ewiki+, but a misconfiguration of the PHP interpreter.
+Older versions still have the dumb "magic_quotes_gpc" setting enabled in the
+"php.ini". Ask your provider to change this (disabled per default since PHP
+version 4.2).
+
+As workaround it is recommended to ALWAYS load the "plugins/lib/fix.php"
+script. This will remove the backslashes from the mangled input, and won't
+hurt otherwise.
+
+
+Where can I switch the LANGUAGE for the »!ErfurtWiki«?
+------------------------------------------------------
+
+NoWhere! It depends on the settings of your browser. Every browser sends
+a list of preferred languages with every request. ewiki+ automatically
+checks for this and chooses the most appropriate translations. (Of course
+it is possible to hard-wire a certain language.)
+
+You could use the plugin "linking/tcn" to let it automatically switch
+between pages in a multi-lingual Wiki.
+
+
+TABLES and link TITLES
+----------------------
+
+The dash syntax for giving titles to links, of course clashes with the
+markup for tables.
+
+To work around this, and also because it looks nicer, you can use the
+alternative syntax with quotation marks:
+
+   ["quotes around the title" ExtendedWikiMarkup]
+
+
+The default LAYOUT doesn't look so nice
+---------------------------------------
+
+All the example layouts distributed with the main ewiki tarball aren't
+quite good-looking. There is always too little time to spend it on that,
+and then this is also to encourage people to use their own layouts.
+
+You can go to http://oswd.org/ and get ideas or templates from there. Or
+download our ewiki extra tarball or the layouts from the WebInstaller on
+http://ewiki.berlios.de/installer/layouts/
+
+
+I want side PANELS and an editable MENU
+---------------------------------------
+
+Only few of the default/example layouts come with portal-script like
+features. But you can have a look into fragments/blocks/ if you are
+looking for some fancy feature.
+
+ewiki doesn't care too much about your site layout, it only emits the
+inner body part (with the Wiki page and controls). What else you want to
+have on your pages is hardly controlled by it - that's the major design
+constraint and conceptual shortcoming here.
+
+
+Spammers! Spammers! Spammers! I need help, quick!
+-------------------------------------------------
+
+Please read the doc/LinkSpammers file. We have prepared lots of
+countermeasures.
+
+
+Have authors listed with a name/page in addition to the IP address
+------------------------------------------------------------------
+
+This is the domain of the "$ewiki_author" variable. If you want your users
+to set their names themselves (so your scripts don't need to do that), you
+can use the "plugins/edit/authorname" plugin for example. The ProtectedMode
+plugins provide similar functionatility (though that's overkill here).
+There is even a WikiUserLogin page plugin.
+
+
+
+
+
+old
+---
+
+! Remove
+
+__Q:__ What for are the settings in "default settings are good settings - sometimes"?
+
+__A:__ please see the README file, most configuration constants are explained there,
+ask the author if something is unmentioned and unclear or annoying.
+As ewiki.php can be included() in very different environments these 
+settings may allow you to integrate it more sane and nicely. However
+usually the distributed settings are very __ok__.
+
+
+
+! no errors, but nothing happens
+
+__Q:__ There is no database-mistake, but I can't see or edit all files. 
+what's the reason?
+
+__A:__ In the current release: go to ewiki.php and make a "echo mysql_error();"
+in function "ewiki_database" before "return;". This might help to localise
+the problems :-)
+Reasons can be very different, so feel free to contact the author for support (icq95596825, mail: mario@erphesfurt.de).
+
+
+
+
+

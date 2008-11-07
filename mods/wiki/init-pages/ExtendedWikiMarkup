@@ -1,0 +1,180 @@
+You really should learn what the basic WikiMarkup can do for you, before you
+start to read about more complex features.
+
+
+!! Image markup
+
+Images can be inlined into a page using square brackets around the absolute
+www-address of the image file, like ![http://www/image.png].
+
+To align an image (define how the following text flows around it) one 
+can add space characters inside the square brackets before and/or after
+its !http://-address:
+* text flows around on the right ![http://example.com/image.png  ]
+* left aligned image ![  http://example.com/image.png]
+* with spaces on the left and right, a image will display centred
+
+One can also specify to which size a image shall be rescaled by the browser,
+if this is added as parameters with a query string like appendation; for
+example ![http://www.example.com/image.png?x=200&y=100] would scale the
+image to 200 pixels width and 100 pixels height. One can also use width= and
+height= parameters to do so.
+
+
+!! Anchors [#AnchOrs]
+
+Instead of linking from page to page, one can also create inner page links
+using so called anchors. Anchors are defined and referenced using the hash
+sign inside square brackets. ![#anchorname] for example creates an anchor,
+to reference it one must put the page name in front of the hash sign,
+like ![ThisPage#anchorname].
+
+Requiring a pagename in front of the anchor name to reference to it is some
+overhead but the only senseful way to create valid links. So to create
+links to an anchor on the current page one must write ![CurrentPage#anchor].
+But there is also the special dot notation, which allows to write
+~[.#anchor] for a jump to an anchor inside of the current page.
+
+Anchors and anchor references can and should also be entitled using
+quotation marks or the dash sign:
+* ![#anchor "Title for this anchor"].
+* ![anchors title | #anchor2]
+
+If you ever happen to have a page name including the hash # sign as part of
+its name, then you must escape this one by appending another hash at the end
+of links to that page, like ~[PageAboutThe#Sign#] for example.
+
+Please also note, that this behaviour is configurable, so defining anchors
+and referencing them may work differently on other sites.
+
+
+!! footnotes
+
+To create a footnote {{ a footnote can contain additional information snippets}}
+use double curly brackets. Usually creating a new page to explain something
+in more detail is a much better approach, so the footnotes extension is a
+plugin in ErfurtWiki and thus not available per default.
+
+!! Links
+
+* a WikiWord will form a hyperlink
+* any valid www-address like http://www.example.com/ will do too
+* many nonvalid addresses will do too, see file://localhost/etc/passwd
+* [square brackets around text] makes a hyperlink
+** adding (more) [[square brackets around it]] is more [[[[intuitive]]]] than with other wikis
+** a ![title | for square bracket links ] can be added using the | character
+*** the title should be on the left to the linked WikiWord
+*** but for ewiki it can be on either side, because a http://www can be easily distinguished
+** a !["title" for square bracket links] can also be assigned using quotation marks
+*** the title inside the quotation marks can be on either side of the !["..." wiki link] or ![http:// "URL"]
+*** you can use this too for image links
+*** this scheme is useful, but incompatible with other !WikiSoftware
+* the ! exclamation mark or the tilde ~ can be used to escape a !!WikiWord or a !!http://www.address.net/ and of course escapes !![square brackets] as easily
+** this is more understandable than escaping with "[" like in other wikis (like [PhpWiki|PhpWiki:])
+* instead of square brackets, one may utilize the ^ character to make a ^^wikilink of !NotBumpyWords
+
+
+!! Lists
+
+* one can create lists by writing an asterisk at the beginning of a line
+*# or enumerated lists by using a hash sign instead
+*# instead of the asterisk the - minus character can be used sometimes
+* definition lists can be created using :: at the line start or as sublist
+*:definition: explanation
+*:anotherdef: another description
+* there are some more rules
+*# lists should be separated with an empty line from other text
+*# put a space behind the list bullet (*, #, -, ::)
+*# a space in front of a list bullet escapes it (the line won't become a list entry)
+
+
+!! Paragraphs
+
+Every block of text (without empty lines) will form a paragraph.
+
+      Text can be indented using spaces or TABs at the start of a line.
+      Lists, Tables and headlines cannot be indented. (Indentation is
+      counted in steps of ''nearly'' 3 spaces.)
+
+You can right align text by using two minus characters at the beginning of a
+line, which is often used to sign a bracket of text.
+-- author
+
+
+!! Text style
+
+* text can be made __bold__ or **bold**
+* or ''italic''
+* ##big## and 도small도
+* up^^set^^
+
+But there exist equivalents in old style WikiMarkup:
+
+* '''bold'''
+* '''''bold and italic'''''
+
+And ##most## of 도these도 things **can** be __''combined''__.
+
+
+!! hidden comments
+
+* you can add hidden comments to your page
+** users just viewing the page won't notice it
+** it can only be seen, when the page gets edited
+* click on EditThisPage to see, how the standard HTML comment escape is used for this
+
+<!-- I'm a hidden comment -->
+
+
+!! !InterWiki:Links
+
+* there exist abbreviations for concurrent wikis on the web
+* to reference a page from another wiki, just prepend the Wikis name and a colon before the remote !WikiPageName
+** ErfurtWiki:ErfurtWiki
+** WardsWiki:WikiClones
+** WardsWiki:InterWiki
+* that's why you should avoid the colon inside of square brackets
+
+
+!!! page blocks
+
+<block>
+     There can be some special areas within a Wiki page. And they are often
+     enclosed in so called <block> tags, which look much like the ones of 
+     [HTML|HyperTextMarkupLanguage]. You however must write them
+     all-lowercase, or else they won't work.
+</block>
+
+
+! PRE-formatted text
+
+If you wish text to appear as you type it - that is, all spaces remain
+where they are, and lines stay as long as you inserted it - then you need
+a block of "pre-formatted" text.
+* use the <pr&#101;> ... </pre> 'tags' for a paragraph of preformatted text,
+  that still allowed to use [WikiWord]s and simple markup
+* with <cod&#101;>...</code> instead you would really see text as you typed it,
+  with square brackets and other escapes not garbaging your text
+
+<pre>
+   This    fragment is        a  ''pre-formatted''
+      paragraph.
+</pre>
+
+
+! inline HTML
+
+Per default most HTML won't work in a Wiki (using the rescuehtml plugin at
+least the simple tags would be allowed). So to use HTML in a Wiki page, it
+must be specifically configured (the _DB_F_HTML flag) or this needed to be
+globally allowed for your Wiki.
+
+* you can however designate blocks of HTML using
+** <htm&#108;>...</html> (all lowercase!)
+** <ht&#109;>...</htm> which still allowed [WikiWord]s and most markup
+
+
+
+!! in-page plugins (macros)
+
+If configured, this wiki also allows to activate plugins inside of pages, which are called MpiPlugins.

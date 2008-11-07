@@ -1,0 +1,116 @@
+The small console/terminal tool 'setup' allows to configure used
+plugins and settings like the web-based SetupWizard (t_setupwiz)
+does. Most Linux users will find it more user-friendly, while it
+is rather complicated to get running under Windows (you need a
+dialog.exe or whiptail.exe with Cygwin probably).
+
+Basically you can enable and disable plugins and change their
+configuration settings and constants, and then let this tool
+generate a .ini file from it or write out a "config.php" script.
+It is also possible to generate a MonsterWiki script (where all
+plugins and settings are in one .php include) using this tool.
+
+Navigation through the menu is constrained by your "dialog" tool
+version. There are different available, and some versions are
+more deviated from the standard. The console "dialog" works best
+(displays help) and so you may want to get run it in a terminal
+and disable the Xdialog version by using following command:
+
+   NO_X=1  php ./tools/setup
+
+It does not work together with "kdialog" and the new "zenity"
+plague. Both were designed incompatible to the existing dialog
+interface standard, and it's simply not possible to take them
+into account. The "lxdialog" tool is used as last resort, but of
+course won't feel all too user-friendly.
+
+
+Navigation
+----------
+
+You often come back to the main menu using the [Cancel] button
+or ESC (press twice or wait on the console/terminal).
+
+The tool can be exited using the DONE entry in the main menu or
+by pressing Ctrl-C from the invoking terminal. The latter is
+useful, if you don't want the changes you made to be stored into
+the backup data file (./tools/setup.dat).
+
+
+.ini or .php
+------------
+
+It is recommended to always save an .ini file first, because
+that is slightly more reliable. The setup tool automatically
+keeps a backup of the last session and all made changes, but
+this is sometimes not what you want, because any made test
+changes will live on.
+
+Use the .ini file with the fragments/ini.php plugin loader, which
+takes care to load all plugins (and the core) after setting all
+configuration constants an variables.
+
+A config.php script is of course senseful to generate, after
+you feel finished. You may want to make a backup of your old
+config.php script, before you let the setup tool OVERWRITE your
+existing file.
+
+
+Bugs
+----
+
+In the plugin selection lists, pressing the [Help] button will
+make all made crosses vanish again. That's a problem with the
+way how dialog communicates with the calling script (any made
+changes cannot be detected).
+
+Some categories in the plugin overview cannot be selected,
+because they do not contain available plugins (all that are
+contained are then typically hidden - deprecated or excluded).
+This visual glitch is not worked around, because it's a too
+minor issue.
+
+
+Notes
+-----
+
+More informations about the sorting of ewiki plugins can be
+found in doc/PluginMetaFiles.
+
+The recent settings are kept in a file called "tools/setup.dat"
+nearby the script.
+
+
+Running non-locally
+-------------------
+
+If you have a working X11 environment on your web server, and
+the Xdialog utility installed, then you could run this tool
+over the network. You must make "setup.dat" and "ewiki.ini"
+world-writable or use a setuid wrapper around the calling
+script.
+Simply create following CGI script "Xsetup.php" in the ewiki
+root or tools directory:
+
+  <body bgcolor="#000000" text="#ffffff">
+  <?php
+  /*
+     start setup script over X11,
+     - needs Xdialog on the web server
+     - you must enable connections with "xhost +1.2.3.4"  (server IP)
+  */
+
+  echo "Enable X11 connections, using 'xhost +$_SERVER[SERVER_ADDR]'.\n<hr>\n<br>\n";
+  flush();
+  ob_implicit_flush(1);
+
+  putenv("DISPLAY=$_SERVER[REMOTE_ADDR]:0");
+  putenv("DIALOG=Xdialog");
+  system("./tools/setup");
+
+  ?>
+  </body>
+
+Call this after allowing (xhost + ) remote, unauthenticated
+connections.
+

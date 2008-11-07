@@ -1,0 +1,13 @@
+If you'd like to add a new page to this site you first should find a page
+with a related subject, as it is the goal of a Wiki hypertext system
+to have its contents sensefully connected.
+
+If you found a page just click on EditThisPage so you can change
+its contents. Find the right place to insert a HyperLink to your new page
+and give it a nice new WikiWord. You should spend some time on choosing a
+name for the new page, give it a talking name so others will want to click
+it.
+
+After saving your changes, you'll see a question mark appear behind
+the newly inserted WikiWord, because the specified page DoesNotYetExist.
+Just click on it, so you get to the edit box for your new page.

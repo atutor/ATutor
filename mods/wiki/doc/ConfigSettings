@@ -1,0 +1,851 @@
+
+ewiki configuration constants and variables
+===========================================
+
+
+README.config
+¯¯¯¯¯¯¯¯¯¯¯¯¯
+In this part of the documentation the core configuration settings/constants
+will be described. There is a long list of EWIKI_ constants and a smaller
+fraction of setup variables in the $ewiki_config[] array, which can tweak
+behaviour.
+
+Some other run-time variables are described in the [README.programming],
+which also talks about other internals.
+
+
+
+  -------------------------------------------------------------------- 3 --
+                  
+
+
+EWIKI_ constants
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+This chapter explains some of the constants and how you can utilize
+them to tweak some of ewiki's behaviour.
+
+The recommended way to change settings is to copy the define() commands
+from "ewiki.php" into "yoursite.php" (see our example "config.php"). This
+is a good idea, because then your settings won't get lost if you upgrade
+to a newer version by overwriting your tweaked "ewiki.php".
+
+                   [Note: constants in PHP can be defined() once only, so
+                   pre-defining them in "yoursite.php" or a "config.php"
+                   script is nearly like a 'configuration']
+
+To define() some of those constants in 'yoursite.php' is especially a good
+thing, because some of them are more used like state variables and it may
+be more senseful to set them depending on informations only available in
+the scripts of yoursite.php (for example if yourscripts provide a way to
+authenticate and login a user you could give him additional rights within
+ewiki by pre-defining one of the following constants).
+
+
+ EWIKI_SCRIPT
+     This is the most important setting. It is used by ewiki.php
+     to generate links to other WikiPages.
+
+     It needs the name of yourscript.php which itself includes
+     ewiki.php.
+     The name of the linked WikiPage is just appended to the string
+     defined here, so you must ensure that it either ends in "/"
+     or "?id=" or "?name=" or "?page=" so it constructs a valid
+     URL after concatenation (or %s replaced) with the WikiPageName.
+
+     If you utilize mod_rewrite on your server, you may wish to
+     make it blank when all requests to http://wiki.example.com/
+     are redirected to the correct script by your WebServer.
+
+     If your wrapper script for example is called 'index.php' then you
+     can just set EWIKI_SCRIPT to "?page=" (which then refers to the
+     index.php of the current directory).
+     You should preferrably set it absolute to the servers DocumentRoot,
+     which gets a requirement if you'd like to give page names and actions
+     via PATH_INFO "/wiki.php/WikiPage" and not as QUERY_STRING "?id=".
+
+     Update: this constant will stay, but the core script now utilizes
+     the ewiki_script() function (which itself additionally respects
+     the $ewiki_config["script"] config variable in favour).
+
+     ewiki_script() introduces use of the "%s" placeholder inside
+     EWIKI_SCRIPT, which will be replaced by pagename and action, when
+     URLs are generated.
+
+ EWIKI_SCRIPT_URL
+     Some parts of ewiki require the absolute URL of the ewiki wrapper
+     script. So in contrast to the (often) short EWIKI_SCRIPT, this
+     constant MUST contain the protocol and server name, like:
+     "http://www.example.com/wiki/index.php?id="
+     If you do not set this constant, it will be guessed by the
+     ewiki_script_url() funciton, what often works but may be suboptimal
+     and could also lead to security problems.
+      
+
+ EWIKI_DB_TABLE_NAME
+     Sets the name of the MySQL database table name to be created
+     and used to store all WikiPages.
+ EWIKI_DBQUERY_BUFFER
+     When set to a value>0 then SQL database buffering will be enabled
+     for SEARCH and GETALL queries. This is mostly like the old (R1.00)
+     behaviour (memory exhaustive), but instead is limited to the size
+     defined by this configuration constant (for example 384K).
+ EWIKI_DBFILES_DIRECTORY
+     Defines where db_flat_files puts the database (made up of files).
+     There is a separate paragraph about this,
+ EWIKI_DBFILES_ENCODE
+     If set to 1 will generate urlencoded() filenames even on UNIX
+     systems, so the dbff database 'files' get exchangeable across
+     DOS/Win and UNIX filesystems. Not recommended, and will make
+     ewiki run bogus, if you switch it after there already entries
+     in the database.
+     It may however be useful to enable this per default, if you want to
+     "backup" (this is the wrong way) from a Unix server to a Win box via
+     an ordinary FTP program (more professional tools could however handle
+     this more easily).
+ EWIKI_DBFILES_NLR
+     Used by flat files backends to encode newline characters.
+ EWIKI_DBFILES_GZLEVEL
+     Compression level for fast flat files and dba backend.
+ EWIKI_DBA
+     File name of .db3 data file, if the dba/dbx backend was used.
+ EWIKI_INIT_PAGES
+     Names the directory from which the basic pages should be read and
+     then written into the database, when ewiki is run the very first
+     time (or the FrontPage - EWIKI_PAGE_INDEX) is still empty.
+     Btw, you could use the 'ewikictl' utility to export all your Wiki
+     pages into this directory as auto-reinit-backup.
+
+
+ EWIKI_NAME
+     Defines the name of your Wiki. (This is not used currently, but
+     is required, as _PAGE_INDEX is often just set to "FrontPage".)
+ EWIKI_PAGE_INDEX
+     This defines the name of the WikiPage which shall be displayed
+     when no value is received within the URL. Often this is called
+     the "FrontPage" of the Wiki.
+     The mysql error message "Table 'ewiki' already exists" will appear
+     until you create (and fill) the page specified herein.
+     If you'd like to have a wiki without FrontPage, you can set this
+     constant to 0 or "" - you must then however ensure, that the ewiki
+     script is never activated without a page name!
+ EWIKI_PAGE_NEWEST
+     This defined the name of the virtual (internally generated) page
+     containing a list of the lately added WikiPages.
+ EWIKI_PAGE_SEARCH
+     Holds the WikiPageName for the search function.
+ EWIKI_PAGE_LIST
+     List of all pages.
+ EWIKI_PAGE_HITS
+     Pages ordered by most hits.
+ EWIKI_PAGE_VERSIONS
+     Page list sorted by number of changes/revisions.
+ EWIKI_PAGE_UPDATES
+     "UpdatedPages" 
+
+
+ EWIKI_CONTROL_LINE
+     Pre-define this with 0 before including("ewiki.php") if you
+     don't want that "<HR><A HREF>EditThisPage</A> ..." to be shown
+     at the bottom of each page.
+     You must then generate the EditThisPage link yourself somewhere
+     else on yoursite.php - It is often easier to simply edit the
+     ewiki_control_links() function to match the layout/design of yoursite.
+ EWIKI_LIST_LIMIT
+     Number of pages to show up in search queries (and other generated
+     pages).
+ EWIKI_PRINT_TITLE
+     If set to 0 will prevent the page title from being shown on many
+     pages (generated and database content ones).
+ EWIKI_SPLIT_TITLE
+     If changed to 1 will separate WikiPages titles into its different
+     word parts (only on top of each page).
+
+
+ EWIKI_DEFAULT_ACTION
+ EWIKI_AUTO_EDIT
+     If set to 1 (default) will automatically bring up the edit box
+     for non-existent pages. Else a page in between will appear ("please
+     edit me!") like in PhpWiki.
+ EWIKI_EDIT_REDIRECT
+ EWIKI_RESOLVE_DNS
+ EWIKI_HTTP_HEADERS
+     Allows ewiki to throw HTTP headers, where appropriate. You should keep
+     it enabled, as it allows for things like RedirectionAfterEdit (when
+     a page gets saved), and many other useful things.
+     headers() can often only be sent, if your wiki/yoursite.php is binary
+     safe, or uses PHPs output buffering (less reliable).
+ EWIKI_HTTP_HEADERS
+     Instructs browsers not to cache delivered pages at all. This is often
+     a good thing, because otherwise unclever caches will prevent the most
+     recent wikipage version to get seen by users.
+ EWIKI_NO_CACHE
+     Sends appropriate header to effectively prevent caching of pages
+     (since they change quickly).
+
+
+ EWIKI_CASE_INSENSITIVE
+     Was only recently implemented, but ewiki is fully configurable now in
+     regards to WikiLink case. It is enabled per default, and thus allows
+     referencing any "WikiPage" using strings like "WiKipAgE". This is
+     believed to be more user-friendly than case-dependency.
+     Reverting to "binary" page name matching is not fully complete now (our
+     database scheme was designed for case-insensitivity from the very start
+     and thus the DB code first needs tweaking before links in ewiki really
+     get case-dependent. (case-insensitivity in ewiki.php means, that
+     everything is converted into lowercase characters for comparisions)
+ EWIKI_HIT_COUNTING
+     Enable counting of page views.
+
+
+ EWIKI_URLENCODE
+ EWIKI_URLDECODE
+     You shouldn't disable both unless you know, you don't need to encode
+     WikiPageNames (else almost always necessary for sanity and security
+     reasons).
+ EWIKI_USE_PATH_INFO
+     If you have a broken Webserver (like many Apache versions), you may
+     wish to disable the use of PATH_INFO. If you ever happen to see
+     "Edit page '/wiki/example-1.php'", you probably need to disable it.
+ EWIKI_USE_ACTION_PARAM
+     Allows the page action command to be given as '&action=...' within
+     an URL (else only "action/WikiPage" allowed). You want to leave that
+     enabled.
+     If you set this constant to 2, ewiki will default to actively create
+     such URLs (instead of using the "edit/PageName" prefix). If set so you
+     should then disable EWIKI_ACTION_TAKE_ASIS, and you probably want to
+     edit EWIKI_SCRIPT to make ewiki emit _PATH_INFO style URLs as seen in
+     other WikiWare.
+ EWIKI_ACTION_SEP_CHAR
+     Defines the character that separates the page name from the action
+     name in generated URLs. Per default this is the slash, but you
+     could use something else (like the ":" colon), which however may
+     have a few drawbacks somewhere else.
+ EWIKI_ACTION_TAKE_ASIS
+     If kept enabled, ewiki will always take anything before a slash
+     in the given ?id= as action. If set to 0, it will however check
+     if such an action exists (or is enabled) at all, thus making it
+     easier to retrieve ?id=With/Slashes in it (without ewiki suddenly
+     treating the first part as $action string).
+ EWIKI_SUBPAGE_LONGTITLE
+ EWIKI_SUBPAGE_START
+ EWIKI_SUBPAGE_CHARS
+     Character classes used to decipher SubPages (an optional extension).
+
+
+ EWIKI_ESCAPE_AT
+     Encodes the "@" sign into a html entities, which in the past helped
+     a little bit against address rippers. But please check out the new
+     plugins/email_protect.php, which is more effective against email
+     harvesters.
+ EWIKI_ALLOW_HTML
+     Usually you do not want that users are able to add <HTML> tags
+     inside the WikiPages as this allows for corruption of your page
+     layout or creation of harmful JavaScript areas.
+
+     This is however one of the few constants which could be set by
+     yoursite.php for logged-in users. If it is set while a user
+     saves a changed page, then the special EWIKI_DB_F_HTML will
+     be set for the newly created version, so <HTML> won't be
+     garbaged by ewiki_format() if another (not logged-in) user
+     requests the WikiPage next time.
+
+     You must start a line with a "|" to actually make the HTML
+     work within a WikiPage.
+
+     If a not logged-in user however re-saves the page this flag
+     won't be set anymore, so you should be careful about that.
+     {{edit ewiki.php and define(_DB_F_HTML with 8+16) to change}}
+ EWIKI_RESCUE_HTML
+     Was replaced by "plugins/markup_rescuehtml.php", which now allows
+     for certain 'safe' HTML tags within the wiki source to be used.
+ EWIKI_HTML_CHARS
+     If set the rendering function will backconvert html entities which
+     represent non-latin characters, like &#4234; or &#1324;
+
+
+ EWIKI_DB_F_*
+     Page flags are associated to every page and can be used to effectively
+     tweak access restrictions and behaviour of individual text pieces.
+     There are various tools/ to tweak them in a running database.
+ EWIKI_DB_F_TEXT
+     This flag is set for every WikiPage inside the database. Usually
+     the only flag set on creation of a new page.
+     Starting from R1.00b previous flags will be copied after applying
+     EWIKI_DB_F_COPYMASK.
+ EWIKI_DB_F_BINARY
+     Used for cached/uploaded images. Prevents a page from getting
+     shown.
+ EWIKI_DB_F_DISABLED
+     If set will prevent the page from being shown. Not useful.
+     You could more easily unset the TEXT flag to disable page view.
+ EWIKI_DB_F_HTML
+     Special flag to allow the current version to include <HTML>
+     tags regardless of the global EWIKI_ALLOW_HTML setting.
+ EWIKI_DB_F_READONLY
+     Prevents a new version to be saved, and thus disallows
+     editing of the WikiPage.
+ EWIKI_DB_F_WRITEABLE
+     Is the reversal of READONLY but only useful if you crippled
+     ewiki by setting EWIKI_EDIT_AUTHENTICATE, as this flag is only
+     intended to reallow editing of a page if you disallowed it before
+     with _EDIT_AUTH (which denies access to _all_ pages).
+ EWIKI_DB_F_APPENDONLY
+     Gets implemented by the plugins/append*.php, and allows to lock
+     a page, in that users can only append to edit (or edit parts of
+     it). See the plugin description for more details.
+ EWIKI_DB_F_SYSTEM
+     Is used to mark internally used data holders (usually serialized()
+     variables).
+ EWIKI_DB_F_PART
+     Denotes a page that first must be merged with others (only one piece
+     of a larger group of pages).
+ EWIKI_DB_F_MINOR
+     Signalizes hiding that revision on RecentChanges and UpatedPages.
+ EWIKI_DB_F_HIDDEN
+     Page shouldn't show up on any of the automatically generated page
+     lists (like RecentChanges and SearchPages). Links on pages will still
+     be rendered normally, unless the deadlyhidden plugin was loaded.
+ EWIKI_DB_F_ARCHIVE
+     Excludes a page/version from automated deletion (cron scripts).
+ EWIKI_DB_F_EXEC
+     Marks a system page containing executable (PHP) code. Not a core
+     feature, only used by xpi plugins to date.
+ EWIKI_DB_F_TYPE
+     Used internally to separate TEXT, BINARY, DISABLED and SYSTEM entries.
+ EWIKI_DB_F_ACCESS
+     Is a mask to check for READONLY, WRITEABLE and APPENDONLY flags.
+ EWIKI_DB_F_COPYMASK
+     When a new page is created, the flags of the previous version
+     are ANDed with this value to strip off some unsafe settings.
+     Note, that the _HTML and a few other feature flags are now copied
+     as well, so you may want to set a page _READONLY once you enabled
+     "unsafe" options.
+ Always keep in mind, that flags could be reimported from previous versions
+ as well - it hasn't been verified, but that could happen.
+
+
+ EWIKI_PROTECTED_MODE
+     Is an operation mode of ewiki, which activates ewiki_auth() function,
+     that is utilized from many places to require a permission level (from
+     authenticated users). Set this constant to 1 to enable this mode.
+     You'll also need some plugins from plugins/auth/ to make this useful.
+
+     If this constant is set to 2, then you don't need a permission plugin,
+     but can control access to the edit/ function, by setting $ewiki_ring
+     to 2 (to allow) from within yoursite.php scripts. This setting is also
+     sometimes referred to as the "ClassicProtectedMode".
+ EWIKI_FLAT_REAL_MODE
+     Not a configuration directive, but the opposite to _PROTECTED_MODE ;)
+ EWIKI_AUTH_DEFAULT_RING
+     Is the permission level which is to be set, if no user is logged in
+     currently (defaults to 3 - which means "browsing only").
+ EWIKI_AUTO_LOGIN
+     If this is enabled, then ewiki_page() automatically requests for
+     (re-)presenting the login <form> on startup, if current authentication
+     isn't sufficient to go any further. Leave this enabled, it helps around
+     some problems.
+ EWIKI_EDIT_AUTHENTICATE
+ EWIKI_ALLOW_OVERWRITE
+     Outdated (were present in older ewiki versions). See
+     'plugins/auth/auth_perm_old.php' to get them back.
+ EWIKI_PROTECTED_MODE_HIDING
+     Hides links to pages that weren't viewable with current auth status.
+
+ EWIKI_ADMIN_PW
+     Is used occasionally by some plugins as lightweight alternative to
+     the ProtectedMode.
+
+
+
+ EWIKI_SCRIPT_BINARY
+     This requires the REAL absolute address of the ewiki.php
+     library script (but the database must already be opened).
+     Needed for the function for cached/uploaded images.
+     You can set it to almost the same value as EWIKI_SCRIPT if it
+     is ensured that there is yet no output made, and the headers()
+     are not already sent.
+
+     Usually just "?binary=" works fine (if you use the index.php
+     way of including ewiki.php).
+
+     If you don't want ewiki to use image caching and uploading
+     functions you would define this to "" or 0, because this disables
+     the <img href> redirection through ewiki_binary(). You should then
+     also disable the following two constants:
+ EWIKI_ENGANGE_BINARY
+     If you pre-define this to zero, the _binary() part of ewiki won't
+     come up automatically as soon as you include the ewiki.php script.
+ EWIKI_CACHE_IMAGES
+     Allow caching of images.
+     To disable all the image functions (uploading, caching) set this to 0,
+     as well as EWIKI_SCRIPT_BINARY and:
+ EWIKI_IMAGE_MAXSIZE
+     ewiki will scale down images until they get smaller than
+     the absolute size (bytes) given here. This is true for cached
+     and uploaded images.
+     Your database may grow really fast, if you set it too high!
+     (even if .BMP and .XWD files are discarded normally ;-)
+ EWIKI_IMAGE_MAXALLOC
+     Maximum size of image while uploading and resizing it (memory
+     limits).
+ EWIKI_IMAGE_RESIZE
+     Enables the internal resizing functions.
+ EWIKI_IMAGE_MAXWIDTH
+ EWIKI_IMAGE_MAXHEIGHT
+     Maximum height and width for uploaded images. Else resizing will
+     engage.
+ EWIKI_IMAGE_ACCEPT
+     All acceptable MIME types for uploading.
+ EWIKI_IDF_INTERNAL
+     Is used to identify uploaded images and data files. Usually you do
+     not want to change it, especially if there are already uploaded
+     files; however "chrome://" or "file://localhost/tmp/" could be
+     funny alternatives to the default "internal://".
+
+     Note that the renderer relies only on some unique string to detect
+     binary references, but the database functions in fact depend upon
+     "://" to return image sizes on "FIND" calls.
+ EWIKI_ACCEPT_BINARY
+     Allows users to upload arbitrary binary files through the image upload
+     function. You should now rather use the downloads plugin, which adds
+     a lot of functionality missing better suited for such purposes.
+     This feature depends on the image upload and cache function.
+
+
+ EWIKI_SERVER
+     Name of the web server domain. (auto)
+ EWIKI_BASE_URL
+     URL to access the current installation. (auto)
+ EWIKI_ADDPARAMDELIM
+     Automatically defined, holds either "?" or "&" depending on what
+     is in EWIKI_SCRIPT. You shouldn't change this unless you know what
+     you are doing. (auto)
+ EWIKI_CHARS_U
+ EWIKI_CHARS_L
+     Allowed chars in WikiPageNames (uppercase and lowercase chars). Use
+     this to localize your wiki (standard Wikis only allow A-Z, think of
+     that when it comes to InterWiki).
+ EWIKI_TMP
+     Tells ewiki which directory to use for temporary files. The default
+     value is "/tmp" or whatever the environment variable $TEMP or %TEMP
+     tells (often "C:\\Windoze\\Temp" or "C:\\Trashcan" on DOS systems).
+ EWIKI_LOGLEVEL
+     Log messages are internally separated into four categories:
+     0=evil errors, 1=warnings, 2=notices, 3=annoying debug stuff.
+     If you do not want a log at all, just set this constant
+     to -1 or 357. If you set it to 1 for example, you will see
+     error and warning messages in EWIKI_LOGFILE.
+
+
+ EWIKI_UP_*
+     URL parameters. Changing these may only be necessary, if one is already
+     evaluated within yoursite.php for other purposes (incompatibilities).
+     You could also change these just to make some of the generated URLs
+     look a bit nicer ;)
+ EWIKI_UP_BINARY
+ EWIKI_UP_UPLOAD
+ EWIKI_UP_PARENTID
+ EWIKI_UP_LISTLIM
+
+
+ EWIKI_T_*
+     These text string constants were replaced by the $ewiki_t[] array and
+     ewiki_t() function.
+ EWIKI_DEFAULT_LANG
+     This value is used by a few plugins, that must guess the desired
+     language of visitors, or the language of a pages content.
+ EWIKI_CHARSET
+     ewiki currently only supports the Latin-1 charset, but UTF-8
+     support is underway. So you should only specify "ISO-8859-1"
+     or "UTF-8" herein (while most other "ISO-8859-*" are believed
+     to work too).
+
+
+ UNIX_MILLENNIUM
+     Just a constant. Used for verification of timestamps (ony range 1*UM
+     till 2*UM accepted).
+ EWIKI_VERSION
+     Is not used at all. It is just placed on top of every ewiki.php to tell
+     you, which version you are running currently.
+     Major releases have a version number like 'R1.00a', while testing and
+     unstable releases have another number appended 'R1.00a7'.
+    
+
+
+
+$ewiki_config array
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+As it turned out not all configuration settings are as everlasting that
+they can be constants (this mainly applies to "look&feel"-settings). So
+some of the above mentioned EWIKI_ constants can now be overridden by
+settings in the more flexible $ewiki_config[] array.
+
+Usually this array contains index=>value pairs with simple boolean
+meanings, but often there are more complex entries and some of its contents
+are data/behaviour entries (that were previously/falsely in $ewiki_plugins).
+
+  $ewiki_config["name"] = "setting...";
+
+Would overwrite/override a default setting by that name. You can put
+this assignment even above loading the ewiki.php script (or after doing
+so), because the built-in defaults won't overwrite single existing
+values.
+
+
+general, links
+-------------- 
+
+ ["script"]
+     Replaced EWIKI_SCRIPT, and is used to define the path/URL of the ewiki
+     wrapper script (yoursite.php, which at least included the ewiki.php
+     script and runs the ewiki_page() function).
+
+ ["script_url"]
+     Should contain an absolute URL to the ewiki wrapper script. (replaces
+     EWIKI_SCRIPT_URL)
+
+ ["script_binary"]
+     same as EWIKI_SCRIPT_BINARY
+
+
+appearance
+----------
+
+ ["print_title"]
+     replaces EWIKI_PRINT_TITLE, but also allows finer grained control:
+     a 1 says that titles should be added at top of pages
+     a 2 states that titles should also link for internal and generated
+         pages
+     a 3 will make linked titles even for pages, that should normally not
+         have them
+
+ ["split_title"]
+     replaces EWIKI_SPLIT_TITLE, defines if pages` titles WikiWords should
+     be separated by spaces when displayed in pages
+
+ ["qmark_links"]
+     Defines how links to not-existing pages shall look. Usually links to
+     such pages would be bold words with a QuestionMarkLink behind it. But
+     you can fully customize it:
+
+       "0b?"  would produce the default <b>QuestionMarkLink</b><a>?</a>
+       "0u+"  became <u>UnderLined</b><a>+</a>
+       "?b0"  became <a>?</a><b>StrongText</b>
+       "*u0"  became <a>*</a><b>UnderLined</b>
+       "[i]"  would show as <a>[</a><i>ItalicTitle</i><a>]</a>
+
+     So the innermost letter will make the HTML tag, which encloses the
+     title of the linked page (you can only use one-letter tags, like <u>
+     or <b>, <i> or even <s>). While the characters besides control, if
+     (the "0" suppresses it on either side) and how the link to the
+     not-existent page will appear.
+     That way you can have the HyperQuestionMark on both or only one of
+     the sides, and you can choose an arbitrary symbol for it ("*" and
+     often "+" make good replacements for the question mark).
+
+     If you want to enclose the title of the linked (but not existing)
+     page in another html tag (not one-letter), then you can set this
+     configuration variable with an array containing 3 elements (which
+     correspond to the flags/chars in the string variant):
+
+        $ewiki_config["qmark_links"] = array(0, "tt", "?");
+
+     (You could for example use a "<img src=qmark.png>" instead of the
+     usual textual question mark here.)
+
+     If you set ["qmark_links"] to simply 0 or -1, then you will get
+     a very ordinary link, that should later be styled via CSS. Links to
+     not-existent pages are always enclosed in <span class="NotFound">.
+
+     Adv: a fourth character (like "0b?E") in the pattern would force
+     linking to the edit/ action of that page.
+
+ ["control_links_enclose"]
+     Is typically empty, but if you want to style the action links below
+     every page via real CSS, you could turn them into a list using:
+
+        $ewiki_config["control_links_enclose"] = array(
+           "<ul>", "<li>", "</li>", "</ul>"
+        );
+
+     So you can put arbitrary html/text into the 4 array elements, into
+     which the single control/action links will later be enclosed.
+
+
+access controls
+---------------
+
+ ["action_links"][$ACTION1][$ACTION2]
+     Holds title for $ACTION2 when shown on a page activated with $ACTION1
+     (only "view" and "info" get other actions` titles associated
+     currently).  This is used for the _control_links() for example to
+     entitle/show action links.
+
+ ["idf"][$TYPE]
+     Associates arrays with identification (search) strings into classes
+     (we have "url" and "img", "obj" for example associated with proto://
+     prefixes or filename extension lists).
+
+ ["interwiki"][$PREFX]
+     Connects other Wikis` script URLs to WikiLinkPrefixes.
+
+
+formatting / rendering control
+------------------------------
+
+ ["format_params"][]
+     Contains the default $params, the ewiki_format() function will assume,
+     if they weren't overridden by the second paramater given to it.
+
+ ["wm_..."]
+    WikiMarkup definitions. See the [README] section on tweaking for some
+    examples on how to define your own markup.
+
+
+you probably don't want/need to change at all
+---------------------------------------------
+
+ ["wiki_pre_scan_regex"]
+     Is the regular expression used to separate out links from a pages`
+     content to query the database for existence of all mentioned WikiPages.
+
+ ["wiki_link_regex"]
+     Is the actual link search regular expression. It is responsible for
+     finding WikiWords and things in square brackets and ordinary http://
+     or internal:// WWW-links and even email addresses.
+
+ ["htmlentities"]
+     Used by ewiki_format() to pre-escape <html> in wikipages (later some
+     of the escaped html is often reactivated).
+
+ ["format_block"][$BTYPE]
+     Defines "block" types, which are scanned for in WikiPages (using the
+     given search strings), and then handled by specialized ["format_block"]
+     plugins (instead of the core ewiki_format() function code).
+
+
+informational
+-------------
+ ["ua"]
+     Contains an User-Agent/X-Server string build from the ewiki version
+     number and some major extension plugins.
+
+
+
+PLUGIN_ constants in short overview
+¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯
+Plugins provide additional configuration settings, that sometimes (=rarely)
+need to be tweaked:
+
+
+ EWIKI_PAGE_EMAIL
+    "ProtectedEmail" virtual page for hiding mail addresses from bots
+ EWIKI_EMAILPROT_UNLOCK
+    automatically disables the email_protection rewrites, once a user
+    is authenticated as a real person
+ EWIKI_UP_ENCEMAIL
+ EWIKI_UP_NOSPAMBOT
+ EWIKI_UP_REQUESTLV
+ EWIKI_UP_REDIRECT_COUNT
+     prevents endless loops for redirection across Wikis
+ EWIKI_FAKE_EMAIL_LOOP
+     how many faked email addresses to generate
+ STR_ROT17
+     used for simple reversable string ciphering (= making text unreadable)
+
+ EWIKI_JUMP_HTTP
+     allow [jump:...] markup to redirect even to an http:// URL
+
+ EWIKI_NOTIFY_WITH_DIFF
+     (integer) include a diff of the change in notify: mails, but only if
+     the diff is larger than the given size of bytes (e.g. set this to 300)
+ EWIKI_NOTIFY_SENDER
+     sender email address to use for page content change notify: messages
+
+ EWIKI_BIN_DIFF
+     (eventually full) path name to GNU diff utility
+ EWIKI_BIN_PATCH
+     path name of GNU patch utility
+
+ EWIKI_SPAGES_DIR
+     standard directory name for StaticPages, usually set to "spages/"
+ EWIKI_SPAGES_BIN
+     allow/try serving of image files from the spages/ directory, by
+     circumventing any ewiki_page() output
+
+ EWIKI_DB_F_MODERATORFLAGS
+
+ EWIKI_NAME_SEP
+ CALENDAR_NAME_SEP
+     seperator character for identifying subpages of certain types
+
+ CALENDAR_PAGE_TITLE_REGEX
+ CALENDAR_PAGE_DATE_PARSE_REGEX
+
+ EWIKI_AUTH_QUERY_SAFE
+      constant which states if the current auth [request] backend is
+      binary clean - that is, it can be activated even in POST requests
+ EWIKI_USERDB_SYSTEMGROUPS
+      page name for authentication purposes, stores group names
+ EWIKI_PERM_UNIX_UMASK
+ EWIKI_PERM_UNIX_SHAREHOLDERS
+ EWIKI_PERM_USERSET_FREE
+ EWIKI_USERDB_GROUPDELIMS
+ EWIKI_PHPLIB_ALLUSERS_PERM
+ EWIKI_AUTH_ANONYMOUS_RING
+ EWIKI_AUTH_ANONYMOUS_VERIFY
+ EWIKI_USERDB_SYSTEMPASSWD
+ EWIKI_PAGE_USERREGISTRY
+ EWIKI_USERDB_USERREGISTRY
+ EWIKI_REGISTERED_LEVEL
+ EWIKI_LDAP_SERVER
+ EWIKI_LDAP_RDN
+ EWIKI_LDAP_FILTER
+ EWIKI_LDAP_RING
+ YOUR_PASSWORD
+ YOUR_LEVEL
+ EWIKI_LOGGEDIN_RING
+ EWIKI_MIN_DICT_WORD_LENGTH
+ EWIKI_PASS_DICT_PATH
+ EWIKI_PASSWORD_COMPLEXITY
+ EWIKI_LIVEUSER_LOGIN_SHUTDOWN_DELAY
+ EWIKI_PASSWD_LIFETIME
+ EWIKI_NOT_LOGGEDIN_RING
+ ALERT_RECIPIENTS
+ ALERT_SUBJECT
+ LEVENSTIEN_MIN
+ LW_PREFIX
+ LW_PASSWORD_LEN_MIN
+ LW_PASSWORD_LEN_MAX
+ LU_GUI_USER_SUBGROUPS
+ EWIKI_LOGGEDIN_RING
+ EWIKI_NOT_LOGGEDIN_RING
+
+ EWIKI_LINKTREE_UL
+ DEFAULT_LOGO
+ EWIKI_POSTID_PARSE_REGEX
+ EWIKI_DBFF_ACCURATE
+ DZF2_HIT_COUNTING
+ EWIKI_DB_UTF8
+ EWIKI_DB_STORE_DIRECTORY
+ EWIKI_DB_STORE_MINSIZE
+ EWIKI_DB_STORE_MAXSIZE
+ EWIKI_DB_STORE_URL
+ EWIKI_DB_ZIP
+ EWIKI_DB_FAST_FILES
+ EWIKI_DB_FAST_FILES
+ EWIKI_DBFF_ACCURATE
+ PHPWIKI13_WRITEACCESS
+ EWIKI_APPENDONLY_COMMENTSPART
+ EWIKI_APPENDWRITE_AUTOLOCK
+ EWIKI_DB_F_APPENDWRITE
+ EWIKI_IMGRESIZE_WIN
+ EWIKI_IMGRESIZE_WIN
+ EWIKI_IMAGE_MAX_PIXELS
+ EWIKI_IMAGE_TOLERANCE
+ EWIKI_WORK_AREA
+ EWIKI_IMAGE_MAX_X
+ EWIKI_IMAGE_MIN_X
+ EWIKI_IMAGE_MAX_Y
+ EWIKI_IMAGE_RATIO
+
+ XPI_DB
+ XPI_EVERYBODY_JPI
+ EWIKI_ACTION_USE_PARAM
+ EWIKI_REFERER_NOISE
+ EWIKI_XHTML
+ EWIKI_UP_SCREAMOMATIC
+ EWIKI_BINARY_DATA_SAFE_AUTH
+ EWIKI_CACHE_FULL
+ EWIKI_CACHE_ALL
+ EWIKI_CACHE_VTIME
+ EWIKI_CACHE_DIR
+ EWIKI_CACHE_DB
+ EWIKI_NAVBAR_SELECTALL_DEPTH
+ EWIKI_NAVBAR_ACTIVATEPARENTS
+ EWIKI_NAVBAR_ACTIVATECHILDREN
+ EWIKI_NAVBAR_ACTION
+ EWIKI_DESC
+ EWIKI_COPY
+ EWIKI_CATEGORY
+ EWIKI_LOGO_URL
+ EWIKI_USERVARS_PAGENAME_PREFIX
+ EWIKI_USERVARS_PAGENAME_PREFIX
+ EWIKI_AUTOLINKING_CACHE
+ EWIKI_LINK_ICONS_DIR
+ EWIKI_LINK_ICONS_LOOKUP_DIR
+ EWIKI_LINK_ICONS_LOOKUP_SIZE
+ EWIKI_LINK_ICONS_DEFAULT_SIZE
+ EWIKI_AUTO_CHOOSE
+ EWIKI_UP_FORCE_LANG
+ ZERO_PAGERANK
+ EWIKI_PAGE_BANNED
+ EWIKI_CSS_BLOCK
+ EWIKI_CSS_INLINE
+ EWIKI_CSS_CLASSPREP
+ EWIKI_CSS_LOWER
+ EWIKI_CSS_FIX
+ SMILIES_DIR
+ SMILIES_BASE_HREF
+ MIMETEX_BIN
+ MIMETEX_DIR
+ MIMETEX_PATH
+ MIMETEX_INLINE
+ EWIKI_ACTION_CALENDAR
+ EWIKI_PAGE_CALENDAR
+ EWIKI_PAGE_YEAR_CALENDAR
+ EWIKI_CALENDAR_WIDTH
+ EWIKI_NAME_SEP
+ CALENDAR_NAME_SEP
+ CALENDAR_PAGE_TITLE_REGEX
+ EWIKI_UPLOAD_MAXSIZE
+ EWIKI_PAGE_UPLOAD
+ EWIKI_PAGE_DOWNLOAD
+ EWIKI_ACTION_ATTACHMENTS
+ EWIKI_MPI_DEMANDLOAD
+ EWIKI_MPI_AUTOLOAD_DIR
+ EWIKI_MPI_FILE_PREFIX
+ EWIKI_MPI_FILE_POSTFIX
+ EWIKI_MPI_MARKUP_REGEX
+ EWIKI_MPI_INSERT_TBL
+ EWIKI_UP_SURVEY
+ EWIKI_MPI_SYNDICATE_INVALIDATE
+ EWIKI_GALLERY_WIDTH
+ EWIKI_PAGE_IMAGEGALLERY
+ EWIKI_PAGE_ORPHANEDPAGES
+ EWIKI_PAGE_POWERSEARCH
+ EWIKI_PAGE_RANDOMPAGE
+ EWIKI_PAGE_SINCEUPDATES
+ EWIKI_UNTAR
+ EWIKI_UNZIP
+ EWIKI_DEV_STDOUT
+ EWIKI_PAGE_WORDINDEX
+ EWIKI_PAGE_RECENTCHANGES
+ EWIKI_PAGE_EXALL
+ EWIKI_PAGE_SITEMAP
+ EWIKI_SITEMAP_DEPTH
+ EWIKI_WIKIDUMP_ARCNAME
+ EWIKI_WIKIDUMP_DEFAULTTYPE
+ EWIKI_WIKIDUMP_MAXLEVEL
+ EWIKI_DUMP_FILENAME_REGEX
+ NUM_LINKS
+ ZERO_LEVEL
+ NESTED_LEVEL
+ EWIKI_UP_AUTHOR_NAME
+ EWIKI_UP_CHANGELOG
+ EWIKI_PAGE_LOGOCNTRL_GALLERY
+ ZERO_PAGERANK
+ EWIKI_PAGE_BANNED
+ EWIKI_PAGE_BLOCKED
+ EWIKI_BULTINCAT_METAID
+ EWIKI_UP_SET_CATEGORY
+ EWIKI_UP_METABOX
+ EWIKI_UP_PAGENUM
+ EWIKI_UP_PAGEEND
+ EWIKI_UP_PAGE_LENGTH
+ EWIKI_USERNAME_LENGTH
+ EWIKI_GROUPNAME_LENGTH
+ EWIKI_PASSWORD_LENGTH
+ EWIKI_FIELDNAME_LENGTH
+
+

@@ -1,0 +1,31 @@
+A !WikiWord is made up of two or more concatenated words with
+uppercase letters (this is often also referred to as CamelCase).
+If you write a word this way into a page of the WikiWikiWeb, you create
+a new HyperLink.
+
+These are valid !WikiWords for example:
+
+* RunCapitalizedWordsTogether
+* EditThisPage
+* ThisIsAWikiWordAsWell
+
+while those are not:
+
+* IBM
+* somewordswithoutuppercaseletters
+* 123456789
+
+You can also create [HyperLink]s inside your WikiWikiWeb which
+are not made up of [WikiWord]s by using square brackets:
+
+* [[This is a sentence in square brackets which becomes a Hyperlink]]
+* [[I'm a link too]]
+
+Sometimes you must be a bit creative to invent nice and talking !WikiWords,
+but this can also be very funny.
+
+The letter case does not matter in ErfurtWiki, so that 'ErFurtWiKi'
+points to the front page too.
+
+Read more about this on the page about WikiMarkup and the
+[page about creating other pages | CreatePages].

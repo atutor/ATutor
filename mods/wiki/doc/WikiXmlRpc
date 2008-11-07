@@ -1,0 +1,172 @@
++ interwikimapquery
+
+The XmlPlusRpc (XML-RPC compatible) interface of ewiki allows to query
+information for the Wiki using a standardized interface (remote procedure
+calls) to access the database indirectly. Speaking of standards, there are
+two, and ewiki adheres to the JspWiki:WikiRPCInterface, because that is
+believed to be more well-thought than the implementations in UseMod,
+MoinMoin and of course TWiki (as usual).
+
+All <string> and <base64> values passed back and forth are supposed to be
+UTF-8 encoded for compliant access (even if ewiki itself does not support
+it).
+
+Interface methods so far:
+
+: wiki.getRPCVersionSupported() :
+   returns (int) 1
+: wiki.getPage(pagename) :
+   returns raw WikiSource for the given page (current version) in <base64>
+: wiki.getPageVersion(pagename, version) :
+   returns raw WikiSource for the given page (given version) in <base64>
+: wiki.getPageHtml(pagename) :
+   returns rendered WikiPage for the given name (current version) in <base64>
+: wiki.getPageHtmlVersion(pagename, version) :
+   returns rendered WikiPage for the given name (specified version) in <base64>
+: wiki.getPageInfo(pagename) :
+   returns [.#MetaDataStruct] for the WikiPage (current version),
+: wiki.getPageInfoVersion(pagename, version) :
+   returns [.#MetaDataStruct] for the WikiPage (specified version)
+: wiki.getAllPages() :
+   returns an array of page names
+: wiki.getRecentChanges(since_timestamp) 
+   returns an array of [.#MetaDataStruct]s
+: wiki.listLinks(pagename) :
+   returns one [.#ListLinksStruct] for the given page (current version)
+: wiki.listLinksVersion(pagename, version) :
+   returns one [.#ListLinksStruct] for the given page (requested version)
+: wiki.putPage(pagename, content) :
+   not enabled (not implemented)
+
+
+! ~MetaDataStruct [#MetaDataStruct]
+
+The wiki.getPageInfo() and wiki.getRecentChanges() calls return a <struct>
+(or an array of) as follows:
+
+<code>
+  array(
+    "name" => ... as <string>,
+    "lastModified" => ... in <dateTime.iso8601>,
+    "author" => ... as <string>,
+    "version" => ... as <int>,
+  )
+</code>
+
+Or the same in XmlPlusRpc notation:
+
+<pre>
+<value>
+  <struct>
+     <member>
+       <name>name</name>
+       <value><string>PageName</string></value>
+     </member>
+     <member>
+       <name>lastModified</name>
+       <value><dateTime.iso8601>20010909T01:46:40</dateTime.iso8601></value>
+     </member>
+     <member> 
+        <name>author</name>
+        <value><string>AuthorNamePage</string></value>
+     </member>
+     <member>
+        <name>version</name>
+        <value><int>1</int></value>
+     </member>
+  </struct>
+</value>
+</pre>
+
+----
+
+! ~ListLinksStruct [#ListLinksStruct]
+
+Only the wiki.listLinks() method returns this result <struct>:
+
+<code>
+  array(
+    "page" => URL or pagename <string>,
+    "type" => "external" or "local" <string>,
+    "href" => local (WikiLinks) or absolute URL <string>,
+  )
+</code>
+
+Or in XmlPlusRpc notation:
+
+<pre>
+<value><array>
+   <data>
+      <value><struct>
+        <member>
+            <name>page</name>
+            <value><string>PageName</string></value>
+        </member>
+        <member>
+            <name>type</name>
+            <value><string>local</string></value>
+        </member>
+        <member>
+            <name>href</name>
+            <value><string>/cgi-bin/wiki.cgi?PageName</string></value>
+        </member>
+      </struct></value>
+      <value><struct>
+        <member>
+            <name>page</name>
+            <value><string>http://www.example.com/</string></value>
+        </member>
+        <member>
+            <name>type</name>
+            <value><string>external</string></value>
+        </member>
+        <member>
+            <name>href</name>
+            <value><string>http://www.example.com/</string></value>
+        </member>
+      </struct></value>
+      ...
+   </data>
+</array></value>
+</pre>
+
+------
+
+
+!! known WikiRpcImplementations
+
+There are two differing ''standards'' for the Wiki XmlPlusRpc interface.
+
+| version  | WikiServers implementing it        | WikiClients using it    |  implementation details |
+| old      | [MoinMoin:], [UseMod:], [TWiki:]   | [MetaWiki:WikiGateway]  | sporadically uses additional URL encoding for parameter and result <string>s that are already UTF-8 encoded |
+| new      | [JspWiki:], [ErfurtWiki:]          | ???                     | all <string>s and <base64> ''binary'' data is encoded as UTF-8, in __all__ parameters and in result values |
+
+So all further occourences of <string> and <base64> actually mean an UTF-8
+encoded string representation, that additionally is sometimes urlencoded().
+
+
+! the interface
+
+The current version of the interface is 1, everything else should be
+considered as extension of the mentioned WikiWare.
+
+All WikiXmlRpc methods have a class prefix of "__wiki.__" to their
+methodName().
+
+|ver | XmlPlusRpc methodName()            | input parameter types | result values | WikiWare notes |
+|1 | getRPCVersionSupported()              | -                    | <int> 1       | -  |
+|1 | getPage(pagename)                     | <string>             | <base64>WikiPageSource</base64>  | -  |
+|1 | getPageVersion(pagename, version)     | <string>, <int>      | <base64>WikiPageSource</base64>  | -  |
+|1 | getPageHtml(pagename)                 | <string>             | <base64>HtmlRenderedWikiPage</base64>  | -  |
+|1 | getPageHtmlVersion(pagename, version) | <string>, <int>      | <base64>HtmlRenderedWikiPage</base64>  | -  |
+|1 | getPageInfo(pagename)                 | <string>             | a [.#MetaDataStruct "MetaDataStruc"]   | -  |
+|1 | getPageInfoVersion(pagename, version) | <string>, <int>      | a [.#MetaDataStruct "MetaDataStruc"]   | -  |
+|1 | getAllPages()                         | -                    | an <array> of PageName <string>s       | -  |
+|1 | getRecentChanges(since_timestamp)     | <dateTime.iso8601>, since_timestamp represents the time point from which one would like to get the list of changed pages | returns an <arrra> of [.#MetaDataStruct "meta data <struct>s"] like the one emitted by wiki.getPageInfo() | -  |
+|1 | listLinks(pagename)                   | <string>             | returns an [.#ListLinksStruct "<array> of listLinks <struct>s"]  | wiki.listLinks() returns the links from a page, internal and external (WWW) ones; it is unknown which of the implementations also return image links, and links to not yet existing internal pages (QuestionMarkLinks) |
+|1 | putPage(pagename, content)            | <string>, <base64> content to be saved as new page source | returns <boolean>1</boolean> on success, else the false value | not implemented/enabled in all Wikis  |
+|2 | putPage(pagename, content, attributes) | <string>, <base64> content, struct> attributes | -  | where the attributes struct shall have parameters like {comment} and {minoredit}  |
+|2 | getBackLinks(pagename)                | <string>             | <array> of <string>s like for getAllPages()  | proposed extension for [JspWiki:]   |
+|x | filterData(data, contentType, params) | <base64>, <string>, <struct>    | returns <struct> with { "data" => <base64/>, "contentType" => <string/> }  | a [TWiki:] extension, see [TWiki:XmlRpcFilteringPipe]   |
+|x | listLinksVersion(pagename, version)   | -  | -  | only implemented in [ErfurtWiki:], works like wiki.listLinks()   |
+

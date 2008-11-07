@@ -1,0 +1,112 @@
+Use this file as template page for the markup/abbr plugin. Most
+terms herein are computing/technics related (except a few runaways).
+
+|ABI|Application Binary Interface|
+|API|Application Programming Interface|
+|BCD|binary coded decimal|
+|BIOS|Basic Input/Output System|
+|BNC|Bayonet Nut Connector|
+|CET|Central European Time|
+|CGI|Common Gateway Interface|
+|CISC|Complex Instruction Set Computer|
+|CLI|Command Line Interpreter|
+|CMOS|Complementary Metal Oxide Semiconductors|
+|CMYK|Cyan, Magenta, Yellow, Black|
+|CNC|Computer Numeric Control|
+|CPU|Central Processing Unit|
+|CRC|cyclic redundancy checking|
+|CSS|cascading style sheets|
+|DMA|Direct Memory Access|
+|DNS|Domain Name System|
+|DOS|Disk Operating System|
+|DTD|Document Type Definition|
+|EOF|end of file|
+|EOT|end of tape|
+|FAQ|Frequently Asked Questions|
+|FAT|File Allocation Table|
+|FOAF|Friend Of A Friend|
+|FTP|File Transfer Protocol|
+|GMT|Greenwhich Mean Time|
+|GPL|(GNU projects) General Public License|
+|HTML|HyperText Markup Language|
+|HTTP|HyperText Transfer Protocol|
+|IRC|Internet Relay Chat|
+|ISDN|Integrated Services Digital Network|
+|ISP|Internet Service Provider|
+|JIT|Just-in-time|
+|KISS|"Keep It Simple, Stupid" principle|
+|LAN|local area network|
+|LCD|Liquid Crystal Display|
+|LED|light-emitting diode|
+|LID|Light-Weight Identity|
+|LSB|least significant bit|
+|MBR|Mmaster Boot Record|
+|MSB|most significant bit|
+|MSIE|Microsoft Intranet Exploder|
+|OCR|Optical Character Recognition|
+|PHP|PHP Hypertext Processor language|
+|PNG|Portable Network Graphics|
+|RDF|Resource Description Framework|
+|RFC|Request For Comments|
+|RGB|Red, Green, Blue|
+|ROM|Read-Only Memory|
+|RPG|Report Program Generator|
+|SCSI|small computer system interface|
+|USB|Universal Serial Bus|
+|UTC|Universal Time Code|
+|WAN|wide area network|
+|WLAN|wireless local area network|
+|WWW|World Wide Web|
+|XML|Extensible Markup Language|
+|XUL|XML User-interface Language|
+|XUP|XML User Profiles|
+|EULA|End User Licence Agreement|
+|NDA|Non-Disclosure Agreement|
+|TCO|Total Cost of Ownership|
+|CEO|Chief Executive Officer|
+|CIO|Chief Information Officer|
+|CRM|Customer Relationship Management|
+|FOSS|Free and Open Source Software|
+|FUD|Fear, Uncertainty and Doubt|
+|MBA|Master of Business Administration|
+|SLA|Service Level Agreement|
+|ATM|Automated Teller Machine|
+|BBQ|barbecue|
+|ISBN|International Standard Book Number|
+|MTB|mountain bike|
+|PVC|polyvinyl chloride|
+|SOS|Save Our Souls|
+|SPF|Sun Protection Factor|
+|UFO|unidentified flying object|
+|VCR|Video Cassette Recorder|
+|BBC|British Broadcasting Company|
+|BBS|Bulletin Board System|
+|BSD|Berkeley System Distribution (Unix derivate, and a license)|
+|CCC|Chaos Computer Club|
+|CIA|Central Intelligence Agency|
+|ECB|European Central Bank|
+|ECMA|European Computer Manufacturers Association|
+|ESA|European Space Agency|
+|FBI|Federal Bureau of Investigation|
+|FSF|Free Software Foundation|
+|IBM|International Business Machines Corp.|
+|IETF|Internet Engineering Task Force|
+|IRTF|Internet Research Task Force|
+|NBC|National Broadcasting Company|
+|UNICEF|United Nations Children's Fund|
+|UNO|United Nations|
+|USA|United States of America|
+|WIPO|World Intellectual Property Organization|
+|WTO|World Trade Organization|
+|HIV|Human Immuno-deficiency Virus|
+|AFAIK|as far as I know|
+|AKA|also known as|
+|BTW|by the way|
+|BWQ|buzzword quotient|
+|DIY|do it yourself|
+|FYI|for your information|
+|IANAL|I am not a lawyer|
+|IIRC|if I recall/remember correctly|
+|IMHO|in my humble (honest) opinion|
+|RTFM|Read the fine (fucking) manual!|
+

@@ -1,0 +1,7 @@
+This is a language which applies formatting rules (color and size) to text
+and which can be used to insert [HyperLink]s into it. HTML is __not__ a
+programming language.
+
+Inside a [Wiki|WikiWikiWeb] HTML is usually disallowed (Wiki:WhyDoesntWikiDoHtml),
+so the <HTML> tags will show up as ordinary text and thus cannot be used to
+encolor text or annoy other people.
