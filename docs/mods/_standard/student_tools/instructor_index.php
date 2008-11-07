@@ -1,5 +1,5 @@
 <?php
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN);
 
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 	$sql    = "REPLACE INTO ".TABLE_PREFIX."fha_student_tools VALUES ($_SESSION[course_id], '$main_links')";
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('SECTIONS_SAVED');
+	$msg->addFeedback('STUDENT_TOOLS_SAVED');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
@@ -91,7 +91,7 @@ $num_modules = count($fha_student_tools);
 </tfoot>
 <tbody>
 <?php foreach ($_current_modules as $module): ?>
-<?php if ($module == 'mods/fha_student_tools/index.php') { continue; } ?>
+<?php if ($module == 'mods/_standard/student_tools/index.php') { continue; } ?>
 <?php $count++; ?>
 <tr>
 	<td>
