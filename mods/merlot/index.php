@@ -15,14 +15,13 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $_custom_css = $_base_path . 'mods/merlot/module.css'; // use a custom stylesheet
-$default_num_of_results = 25;
+$default_results_per_page = 25;
 
-//global $search;
 $advanced = intval($advanced);
 $browse =  intval($browse);
 
-if (!isset($_POST["search_type"])) $_POST["search_type"] = 0;
-if (!isset($_POST["num_of_results"])) $_POST["num_of_results"] = $default_num_of_results;
+if (!isset($_REQUEST["search_type"])) $_REQUEST["search_type"] = 0;
+if (!isset($_REQUEST["results_per_page"])) $_REQUEST["results_per_page"] = $default_results_per_page;
 
 // check if merlot is configured
 if(!isset($_config['merlot_key']) || !isset($_config['merlot_location']))
@@ -57,42 +56,42 @@ if($_REQUEST['advanced']){
 			<table>
 				<tr>
 					<td colspan="2">
-						<input type="radio" name="search_type" value="0" id="allKeyWords" <?php if ($_POST["search_type"] == 0) echo 'checked="checked"'; ?> /><label for="allKeyWords">All Words</label>
-						<input type="radio" name="search_type" value="1" id="anyKeyWords" <?php if ($_POST["search_type"] == 1) echo 'checked="checked"'; ?> /><label for="anyKeyWords">Any Word</label>
-						<input type="radio" name="search_type" value="2"  id="exactPhraseKeyWords" <?php if ($_POST["search_type"] == 2) echo 'checked="checked"'; ?> /><label for="exactPhraseKeyWords">Exact Phrase</label>
+						<input type="radio" name="search_type" value="0" id="allKeyWords" <?php if ($_REQUEST["search_type"] == 0) echo 'checked="checked"'; ?> /><label for="allKeyWords">All Words</label>
+						<input type="radio" name="search_type" value="1" id="anyKeyWords" <?php if ($_REQUEST["search_type"] == 1) echo 'checked="checked"'; ?> /><label for="anyKeyWords">Any Word</label>
+						<input type="radio" name="search_type" value="2"  id="exactPhraseKeyWords" <?php if ($_REQUEST["search_type"] == 2) echo 'checked="checked"'; ?> /><label for="exactPhraseKeyWords">Exact Phrase</label>
 					</td>
 				</tr>
 					
 				<tr>
 					<td><label for="words2"><?php echo _AT('keywords'); ?></label></td>
-					<td><input type="text" name="keywords" size="100" id="words2" value="<?php echo $_POST['keywords']; ?>" /></td>
+					<td><input type="text" name="keywords" size="100" id="words2" value="<?php echo $_REQUEST['keywords']; ?>" /></td>
 				</tr>
 
 				<tr>
 					<td><label for="title"><?php echo _AT('title'); ?></label></td>
-					<td><input type="text" name="title" size="100" id="title" value="<?php echo $_POST['title']; ?>" /></td>
+					<td><input type="text" name="title" size="100" id="title" value="<?php echo $_REQUEST['title']; ?>" /></td>
 				</tr>
 
 				<tr>
 					<td><label for="description"><?php echo _AT('description'); ?></label></td>
-					<td><input type="text" name="description" size="100" id="description" value="<?php echo $_POST['description']; ?>" /></td>
+					<td><input type="text" name="description" size="100" id="description" value="<?php echo $_REQUEST['description']; ?>" /></td>
 				</tr>
 
 				<tr>
 					<td><label for="author"><?php echo _AT('author'); ?></label></td>
-					<td><input type="text" name="author" size="100" id="author" value="<?php echo $_POST['author']; ?>" /></td>
+					<td><input type="text" name="author" size="100" id="author" value="<?php echo $_REQUEST['author']; ?>" /></td>
 				</tr>
 
 				<tr>
 					<td colspan="2">
-						<input type="checkbox" name="creativeCommons" value="true" id="creativeCommons" <?php if ($_POST["creativeCommons"] == "true") echo 'checked="checked"'; ?> /><label for="creativeCommons"><?php echo _AT("merlot_creative_commons"); ?></label>
+						<input type="checkbox" name="creativeCommons" value="true" id="creativeCommons" <?php if ($_REQUEST["creativeCommons"] == "true") echo 'checked="checked"'; ?> /><label for="creativeCommons"><?php echo _AT("merlot_creative_commons"); ?></label>
 					</td>
 				</tr>
 
 				<tr>
 					<td colspan="2">
-						<label for="num_of_results"><?php echo _AT('merlot_num_of_results'); ?></label>
-						<input type="text" name="num_of_results" size="20" id="num_of_results" value="<?php echo $_POST['num_of_results']; ?>" />
+						<label for="results_per_page"><?php echo _AT('merlot_results_per_page'); ?></label>
+						<input type="text" name="results_per_page" size="20" id="results_per_page" value="<?php echo $_REQUEST['results_per_page']; ?>" />
 					</td>
 				</tr>
 			</table>
@@ -108,21 +107,12 @@ if($_REQUEST['advanced']){
 <br /> 
 
 <?php
-	//if ($_REQUEST['submit']){
-	//	require(AT_INCLUDE_PATH.'../mods/merlot/merlot_soap.php');
-	//}
-	if ($_REQUEST['submit']){
+	if ($_REQUEST['submit'] || isset($_REQUEST['p']))
+	{
 		require(AT_INCLUDE_PATH.'../mods/merlot/merlot_rest.php');
 	}
 
 }
-?>
-<!--
-<iframe src="http://localhost/docs/content/tmp_merlot_results.xml" width="90%">
 
-</iframe>
-//-->
-
-<?php
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

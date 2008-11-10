@@ -33,7 +33,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','merlot_category','Link Cate
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_submit','Submit',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_add_link','Add Course Link',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_creative_commons','Creative Commons',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','merlot_num_of_results','Number of Results to Display',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot_results_per_page','Number of Results to Display Per Page',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_config','Enter the location of the MERLOT repository (http://fedsearch.merlot.org:9090/jaxrpc-MerlotSearch/searchservice?WSDL ) and the MERLOT key. A free MERLOT key can be obtained at: ( http://fedsearch.merlot.org:9090/jaxrpc-MerlotKey/keysignup.html  ) ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_location','MERLOT Location',NOW(),'');

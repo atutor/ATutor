@@ -14,24 +14,57 @@
 
 require("./classes/MerlotResultParser.class.php");
 
-$keywords = trim($_POST['keywords']);
-$title = trim($_POST['title']);
-$description = trim($_POST['description']);
-$author = trim($_POST['author']);
-$num_of_results = intval(trim($_POST['num_of_results']));
+$keywords = trim($_REQUEST['keywords']);
+$title = trim($_REQUEST['title']);
+$description = trim($_REQUEST['description']);
+$author = trim($_REQUEST['author']);
+$results_per_page = intval(trim($_REQUEST['results_per_page']));
 
-if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_POST["creativeCommons"] == "true")
+if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_REQUEST["creativeCommons"] == "true")
 {
-	if ($keywords <> "") $url_search = "&keywords=".urlencode($keywords);
-	if ($title <> "") $url_search .= "&title=".urlencode($title);
-	if ($description <> "") $url_search .= "&description=".urlencode($description);
-	if ($author <> "") $url_search .= "&author=".urlencode($author);
-	if ($_POST["search_type"] == 0) $url_search .= "&allKeyWords=true";
-	if ($_POST["search_type"] == 1) $url_search .= "&anyKeyWords=true";
-	if ($_POST["search_type"] == 2) $url_search .= "&exactPhraseKeyWords=true";
-	if ($_POST["creativeCommons"] == "true") $url_search .= "&creativeCommons=true";
-	if ($num_of_results > 25 || $num_of_results == 0) $url_search .= "&size=".$default_num_of_results;
-	else $url_search .= "&size=".$num_of_results;
+	$page = intval($_REQUEST['p']);
+	if (!$page) {
+		$page = 1;
+	}	
+
+	if ($keywords <> "")
+	{
+		$page_str = SEP."keywords=".urlencode($keywords);
+		$url_search = "&keywords=".urlencode($keywords);
+	}
+	if ($title <> "") 
+	{
+		$page_str .= SEP."title=".urlencode($title);
+		$url_search .= "&title=".urlencode($title);
+	}
+	if ($description <> "") 
+	{
+		$page_str .= SEP. "description=".urlencode($description);
+		$url_search .= "&description=".urlencode($description);
+	}
+	if ($author <> "") 
+	{
+		$page_str .= SEP. "author=".urlencode($author);
+		$url_search .= "&author=".urlencode($author);
+	}
+	
+	if (isset($_REQUEST["search_type"])) 
+		$page_str .= SEP."search_type=".$_REQUEST["search_type"];
+	
+	if ($_REQUEST["search_type"] == 0) $url_search .= "&allKeyWords=true";
+	if ($_REQUEST["search_type"] == 1) $url_search .= "&anyKeyWords=true";
+	if ($_REQUEST["search_type"] == 2) $url_search .= "&exactPhraseKeyWords=true";
+	if ($_REQUEST["creativeCommons"] == "true") 
+	{
+		$page_str .= SEP. "creativeCommons=true";
+		$url_search .= "&creativeCommons=true";
+	}
+	
+	if ($results_per_page > $default_results_per_page || $results_per_page == 0)
+		$results_per_page = $default_results_per_page;
+	
+	$page_str .= SEP. "results_per_page=".$results_per_page;
+	$url_search .= "&size=".$results_per_page."&firstRecNumber=".$results_per_page*($page - 1);
 
 	$url = $_config['merlot_location']."?licenseKey=".$_config['merlot_key'].$url_search;
 
@@ -47,16 +80,21 @@ if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_P
 		$MerlotResultParser =& new MerlotResultParser();
 		$MerlotResultParser->parse($xml_results);
 		$result_list = $MerlotResultParser->getParsedArray();
-//		debug($result_list);
+
 		if ($result_list['status'] == 'failed')  // failed, display error
 			echo "<span style='color:red'>"._AT('error').": ".$result_list['error']."</span>";
 		else  // success, display results
 		{
-//			debug($result_list);
 			if (is_array($result_list))
 			{
+				$num_results = $result_list["summary"]["totalCount"];
+				$num_pages = max(ceil($num_results / $results_per_page), 1);
+				
 				echo '	<div id="search_results">';
-				echo "		<h2>". _AT('results')." <small>(".$result_list["summary"]["resultCount"]." out of ".$result_list["summary"]["totalCount"].")</small></h2>";
+				echo "		<h2>". _AT('results')." <small>(".$result_list["summary"]["resultCount"]." out of ".$num_results.")</small></h2>";
+
+				print_paginator($page, $num_results, $page_str, $results_per_page);
+
 				foreach ($result_list as $key=>$result)
 				{
 					if (is_int($key))
