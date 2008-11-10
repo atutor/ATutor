@@ -30,7 +30,7 @@ ALTER TABLE `courses` ADD COLUMN `course_dir_name` VARCHAR(255) NOT NULL AFTER `
 
 # Extend members.password for encrypted password
 ALTER TABLE `members` MODIFY password VARCHAR(40);
-UPDATE `members` SET password = SHA1(password), creation_date=creation_date, last_login=last_login;
+UPDATE `members` SET password = SHA1(password), creation_date=creation_date, last_login=last_login WHERE CHAR_LENGTH(password) < 40;
 
 # --------------------------------------------------------
 # Table structure for table `patches`
