@@ -101,7 +101,7 @@ if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_R
 					{
 ?>
 
-		<dl class="browse-course">
+		<dl class="browse-result">
 
 			<dt></dt>
 			<dd><h3><a href="<?php echo $result['detailURL']; ?>"><?php echo $result['title']; ?></a></h3></dd>

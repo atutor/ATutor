@@ -204,3 +204,27 @@ border: 1px solid;
 .legend-left-table {background-color: #F4F4F4; color: #000000;font-weight: normal;border: solid 1px #CCCCCC; border-collapse: separate;border-spacing: 3px;padding: 0px;}
 .legend-left-table-section-header {background-color: #CCCCCC; color: #660000; font-weight: bold;}
 .legend-left-table td {padding: 1px 1px 1px 1px;}
+
+/* browse courses */
+dl.browse-result {
+	width: 100%;
+	padding-bottom: 25px;
+	background-color: #fffaf0;
+	border:1px #6F7172 solid;
+	width:90%;
+	margin:auto;
+}
+dl.browse-result dt {
+	float: left;
+	font-weight: bold;
+	width: 25%;
+	text-align: right;
+	padding: 5px 10px 5px 0px;
+	vertical-align: middle;
+}
+dl.browse-result dd {
+	margin-bottom: 5px;
+	clear: right;
+	padding: 5px 0px 5px 10px;
+	margin-left: 26%;
+}
