@@ -27,10 +27,16 @@ if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_R
 		$page = 1;
 	}	
 
+	if ($results_per_page > $default_results_per_page || $results_per_page == 0)
+		$results_per_page = $default_results_per_page;
+	
+	$page_str = "results_per_page=".$results_per_page;
+	$url_search = "&size=".$results_per_page."&firstRecNumber=".$results_per_page*($page - 1);
+
 	if ($keywords <> "")
 	{
-		$page_str = SEP."keywords=".urlencode($keywords);
-		$url_search = "&keywords=".urlencode($keywords);
+		$page_str .= SEP."keywords=".urlencode($keywords);
+		$url_search .= "&keywords=".urlencode($keywords);
 	}
 	if ($title <> "") 
 	{
@@ -60,12 +66,6 @@ if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_R
 		$url_search .= "&creativeCommons=true";
 	}
 	
-	if ($results_per_page > $default_results_per_page || $results_per_page == 0)
-		$results_per_page = $default_results_per_page;
-	
-	$page_str .= SEP. "results_per_page=".$results_per_page;
-	$url_search .= "&size=".$results_per_page."&firstRecNumber=".$results_per_page*($page - 1);
-
 	$url = $_config['merlot_location']."?licenseKey=".$_config['merlot_key'].$url_search;
 
 	$xml_results = file_get_contents($url);
@@ -93,7 +93,7 @@ if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_R
 				echo '	<div id="search_results">';
 				echo "		<h2>". _AT('results')." <small>(".$result_list["summary"]["resultCount"]." out of ".$num_results.")</small></h2>";
 
-				print_paginator($page, $num_results, $page_str, $results_per_page);
+				print_paginator($page, $num_results, htmlspecialchars($page_str), $results_per_page);
 
 				foreach ($result_list as $key=>$result)
 				{
@@ -104,16 +104,16 @@ if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_R
 		<dl class="browse-result">
 
 			<dt></dt>
-			<dd><h3><a href="<?php echo $result['detailURL']; ?>"><?php echo $result['title']; ?></a></h3></dd>
+			<dd><h3><a href="<?php echo $result['detailURL']; ?>"><?php echo htmlspecialchars($result['title']); ?></a></h3></dd>
 						
 			<dt><?php echo _AT("author"); ?></dt>
-			<dd><?php echo $result['authorName']; ?></dd>
+			<dd><?php if ($result['authorName']=='') echo _AT('unknown'); else echo htmlspecialchars($result['authorName']); ?></dd>
 
 			<dt><?php echo _AT("merlot_creation_date"); ?></dt>
-			<dd><?php echo $result['creationDate']; ?></dd>
+			<dd><?php echo date('Y-m-d', round($result['creationDate']/1000)); ?></dd>
 
 			<dt><?php echo _AT("description"); ?></dt>
-			<dd><?php if (strlen($result['description']) > 120) echo substr($result['description'], 0, 120). "..."; ?></dd>
+			<dd><?php if ($result['description']=='') echo _AT('na'); else if (strlen($result['description']) > 120) echo substr(htmlspecialchars($result['description']), 0, 120). "..."; else echo htmlspecialchars($result['description']); ?></dd>
 
 			<dt><?php echo _AT("merlot_creative_commons"); ?></dt>
 			<dd><?php if ($result['creativeCommons'] == "true") echo _AT('yes'); else echo _AT('no'); ?></dd>
