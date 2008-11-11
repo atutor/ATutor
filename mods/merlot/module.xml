@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
     <name lang="en">MERLOT Search Module</name> 
-    <description lang="en">A SOAP web service client for searching the MERLOT content repository.</description> 
+    <description lang="en">A REST web service client for searching the MERLOT content repository.</description> 
     <maintainers>
         <maintainer> 
             <name>ATutor Team</name> 
