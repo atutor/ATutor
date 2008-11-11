@@ -50,7 +50,9 @@ if($_REQUEST['advanced']){
 		<div class="input-form">
 
 			<div>
-			<img src="<?php echo $_base_path; ?>mods/merlot/merlot.gif" height="50" width="50" style="margin-right:3px;float:left;text-align:right;" alt="<?php  echo _AT('merlot'); ?>" />
+			<a href="http://www.merlot.org">
+				<img src="<?php echo $_base_path; ?>mods/merlot/merlotlogo.gif" height="50" width="150" style="margin-right:3px;float:left;text-align:right;" alt="<?php  echo _AT('merlot'); ?>" />
+			</a>
 			<?php  echo _AT('merlot_howto'); ?>
 			</div>
 			<table>
@@ -103,6 +105,12 @@ if($_REQUEST['advanced']){
 	</form>
 <?php } ?>
 
+<div align="center">
+	<small>
+		<a href="http://about.merlot.org/wsrs.html"><?php echo _AT('merlot_web_service_agreement'); ?></a>&nbsp;
+		<a href="http://taste.merlot.org/acceptableuserpolicy.html"><?php echo _AT('merlot_user_agreement'); ?></a>
+	</small>
+</div>
 
 <br /> 
 

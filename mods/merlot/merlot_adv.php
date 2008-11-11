@@ -17,7 +17,10 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" name="merlotForm" method="get"  id="merlotForm">
 <input type="hidden" name="advsearch" value="1" />
 <script type="text/javascript" language="JavaScript" src="<?php echo $_base_path; ?>mods/merlot/merlot.js"></script>
-			<img src="<?php echo $_base_path; ?>mods/merlot/merlot.gif" height="50" width="50" style="margin-right:3px;float:left;text-align:right;" alt="<?php  echo _AT('merlot'); ?>" /><strong>   <?php echo _AT('merlot_by_keywords');  ?>:</strong>
+	<a href="http://www.merlot.org">
+		<img src="<?php echo $_base_path; ?>mods/merlot/merlotlogo.gif" height="50" width="150" style="margin-right:3px;float:left;text-align:right;" alt="<?php  echo _AT('merlot'); ?>" />
+	</a>
+	<strong>   <?php echo _AT('merlot_by_keywords');  ?>:</strong>
 <table>
   <tr>
 	<td colspan="2" align="right">
