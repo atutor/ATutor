@@ -28,7 +28,7 @@ Added a control in order to force
 if ($cid == 0){
 	echo '<div class="row_alternatives" id="radio_alt">';
 	echo '<p>';
-	echo _AT('you_must_save_before_adding_adapted_content');
+	echo $msg->printInfos(SAVE_CONTENT);
 	echo '</p>';
 	echo '</div>';
 }
