@@ -29,10 +29,13 @@ $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 if (isset($_POST['rename'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir to rename
-		$msg->addError('NO_FILE_SELECT');
-	} else if (count($_POST['check']) != 1) {
+		$msg->addError('NO_ITEM_SELECTED');
+	} else if (count($_POST['check']) < 1) {
 		// error: you must select one file/dir to rename
 		$msg->addError('NO_ITEM_SELECTED');
+	} else if (count($_POST['check']) > 1) {
+		// error: you must select ONLY one file/dir to rename
+		$msg->addError('SELECT_ONE_ITEM');
 	} else {
 		header('Location: rename.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'oldname='.urlencode($_POST['check'][0]));
 		exit;
@@ -40,7 +43,7 @@ if (isset($_POST['rename'])) {
 } else if (isset($_POST['delete'])) {
 	
 	if (!is_array($_POST['check'])) {
-		$msg->addError('NO_FILE_SELECT');
+		$msg->addError('NO_ITEM_SELECTED');
 	} else {
 
 		$list = implode(',', $_POST['check']);
@@ -50,7 +53,7 @@ if (isset($_POST['rename'])) {
 } else if (isset($_POST['move'])) {
 
 	if (!is_array($_POST['check'])) {
-		$msg->addError('NO_FILE_SELECT');
+		$msg->addError('NO_ITEM_SELECTED');
 	} else {
 
 		$list = implode(',', $_POST['check']);		
