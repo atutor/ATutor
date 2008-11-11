@@ -1,7 +1,7 @@
 # sql file for Merlot module
 
 INSERT INTO `language_text` VALUES ('en', '_module','merlot','MERLOT Repository',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','merlot_howto','Enter terms to search for in the MERLOT Repository of Educational Resources. Use and/or to narrow search results. <strong>Maximum results displayed: 25</strong>',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot_howto','Enter terms to search for in the MERLOT Repository of Educational Resources.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_results_displayed','Results Displayed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_results_found','Results Found',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_add_to_link_howto','The following link will be added to the course links. Select a category and adjust the title and description as needed.',NOW(),'');
@@ -37,7 +37,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','merlot_results_per_page','N
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_web_service_agreement','MERLOT Web Services and Related Software Agreement',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_user_agreement','MERLOT Acceptable Use Agreement',NOW(),'');
 
-INSERT INTO `language_text` VALUES ('en', '_module','merlot_config','Enter the location of the MERLOT repository (http://fedsearch.merlot.org:9090/jaxrpc-MerlotSearch/searchservice?WSDL ) and the MERLOT key. A free MERLOT key can be obtained at: ( http://fedsearch.merlot.org:9090/jaxrpc-MerlotKey/keysignup.html  ) ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','merlot_config','Enter the location of the MERLOT repository (http://www.merlot.org/merlot/materials.rest) and the MERLOT key. A free MERLOT key can be obtained at: (http://www.merlot.org/merlot/signWebServicesForm.htm) ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_location','MERLOT Location',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','merlot_key','MERLOT Key',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MERLOT_NOT_CONFIG','The MERLOT Repository does not appear to be activated. Please contact your ATutor administrator to have it turned on.',NOW(),'');

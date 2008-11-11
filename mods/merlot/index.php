@@ -50,10 +50,10 @@ if($_REQUEST['advanced']){
 		<div class="input-form">
 
 			<div>
-			<a href="http://www.merlot.org">
-				<img src="<?php echo $_base_path; ?>mods/merlot/merlotlogo.gif" height="50" width="150" style="margin-right:3px;float:left;text-align:right;border:0;" alt="<?php  echo _AT('merlot'); ?>" />
-			</a>
 			<?php  echo _AT('merlot_howto'); ?>
+			<a href="http://www.merlot.org">
+				<img src="<?php echo $_base_path; ?>mods/merlot/merlotlogo.gif" height="50" width="150" style="margin-right:3px;float:right;text-align:right;border:0;" alt="<?php  echo _AT('merlot'); ?>" />
+			</a>
 			</div>
 			<table>
 				<tr>
@@ -93,7 +93,13 @@ if($_REQUEST['advanced']){
 				<tr>
 					<td colspan="2">
 						<label for="results_per_page"><?php echo _AT('merlot_results_per_page'); ?></label>
-						<input type="text" name="results_per_page" size="20" id="results_per_page" value="<?php echo $_REQUEST['results_per_page']; ?>" />
+						<select name="results_per_page">
+							<option value="5" <?php if ($_REQUEST["results_per_page"] == 5) echo 'selected="selected"' ?>>5</option>
+							<option value="10" <?php if ($_REQUEST["results_per_page"] == 10) echo 'selected="selected"' ?>>10</option>
+							<option value="15" <?php if ($_REQUEST["results_per_page"] == 15) echo 'selected="selected"' ?>>15</option>
+							<option value="20" <?php if ($_REQUEST["results_per_page"] == 20) echo 'selected="selected"' ?>>20</option>
+							<option value="25" <?php if ($_REQUEST["results_per_page"] == 25) echo 'selected="selected"' ?>>25</option>
+						</select>
 					</td>
 				</tr>
 			</table>
