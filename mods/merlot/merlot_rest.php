@@ -110,7 +110,7 @@ if($keywords <> "" || $title <> "" || $description <> "" || $author <> "" || $_R
 			<dd><?php if ($result['authorName']=='') echo _AT('unknown'); else echo htmlspecialchars($result['authorName']); ?></dd>
 
 			<dt><?php echo _AT("merlot_creation_date"); ?></dt>
-			<dd><?php echo date('Y-m-d', round($result['creationDate']/1000)); ?></dd>
+			<dd><?php echo date('M j, Y', round($result['creationDate']/1000)); ?></dd>
 
 			<dt><?php echo _AT("description"); ?></dt>
 			<dd><?php if ($result['description']=='') echo _AT('na'); else if (strlen($result['description']) > 120) echo substr(htmlspecialchars($result['description']), 0, 120). "..."; else echo htmlspecialchars($result['description']); ?></dd>
