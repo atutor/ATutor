@@ -599,7 +599,8 @@ foreach ($items as $item_id => $content_info)
 			if ($contains_glossary_terms) 
 			{
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
-				$content = preg_replace('/<a href="([.\w\d\s]+[^"]+)" target="body" class="at-term">([.\w\d\s&;"]+)<\/a>/i', '[?]\\2[/?]', $content);
+				// refer to bug 3641, edited by Harris
+				$content = preg_replace('/<a href="([.\w\d\s]+[^"]+)" target="body" class="at-term">([.\w\d\s&;"]+|.*)<\/a>/i', '[?]\\2[/?]', $content);
 			}
 
 			/* potential security risk? */
