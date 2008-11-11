@@ -49,13 +49,13 @@ if($_REQUEST['advanced']){
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" method="post" name="form">
 		<div class="input-form">
 
-			<div>
-			<?php  echo _AT('merlot_howto'); ?>
+			<div style="padding:1em;">
 			<a href="http://www.merlot.org">
-				<img src="<?php echo $_base_path; ?>mods/merlot/merlotlogo.gif" height="50" width="150" style="margin-right:3px;float:right;text-align:right;border:0;" alt="<?php  echo _AT('merlot'); ?>" />
+				<img src="<?php echo $_base_path; ?>mods/merlot/merlotlogo.gif" height="53" width="187" style="float:right;text-align:right;border:0;" alt="<?php  echo _AT('merlot'); ?>" />
 			</a>
+			<?php  echo _AT('merlot_howto'); ?>
 			</div>
-			<table>
+			<table width="100%">
 				<tr>
 					<td colspan="2">
 						<input type="radio" name="search_type" value="0" id="allKeyWords" <?php if ($_REQUEST["search_type"] == 0) echo 'checked="checked"'; ?> /><label for="allKeyWords">All Words</label>
@@ -65,7 +65,7 @@ if($_REQUEST['advanced']){
 				</tr>
 					
 				<tr>
-					<td><label for="words2"><?php echo _AT('keywords'); ?></label></td>
+					<td width="20%"><label for="words2"><?php echo _AT('keywords'); ?></label></td>
 					<td><input type="text" name="keywords" size="100" id="words2" value="<?php echo $_REQUEST['keywords']; ?>" /></td>
 				</tr>
 
