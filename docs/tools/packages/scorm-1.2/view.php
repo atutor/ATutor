@@ -36,7 +36,6 @@ if (!$_GET['org_id']) {
 	exit;
 }  
 
-
 $sql = "SELECT	first_name, last_name
 	FROM	".TABLE_PREFIX."members
 	WHERE	member_id = ".$_SESSION['member_id'];
@@ -53,6 +52,21 @@ $student_name = $q_row['last_name'] . ', ' . $q_row['first_name'];
 	$result = mysql_query($sql, $db);
 	$q_row  = mysql_fetch_assoc($result);
 	$pkg    = $q_row['package_id'];
+
+// check if the org_id belongs to current course
+	$sql = "SELECT course_id FROM ".TABLE_PREFIX."packages WHERE package_id = '".$pkg."'";
+	$result = mysql_query($sql, $db);
+	$row  = mysql_fetch_assoc($result);
+	if ($row["course_id"] <> $_SESSION['course_id'])
+	{
+		$msg->addError('ACCESS_DENIED');
+	
+		$_pages['tools/packages/scorm-1.2/view.php']['title_var'] = _AT('scorm_packages');
+		require (AT_INCLUDE_PATH.'header.inc.php');
+		$msg->printAll();
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
 
 	$sql = "SELECT	item_id, scormtype, idx, title, href
 		FROM	".TABLE_PREFIX."scorm_1_2_item
