@@ -51,7 +51,7 @@ if($_REQUEST['advanced']){
 
 			<div>
 			<a href="http://www.merlot.org">
-				<img src="<?php echo $_base_path; ?>mods/merlot/merlotlogo.gif" height="50" width="150" style="margin-right:3px;float:left;text-align:right;" alt="<?php  echo _AT('merlot'); ?>" />
+				<img src="<?php echo $_base_path; ?>mods/merlot/merlotlogo.gif" height="50" width="150" style="margin-right:3px;float:left;text-align:right;border:0;" alt="<?php  echo _AT('merlot'); ?>" />
 			</a>
 			<?php  echo _AT('merlot_howto'); ?>
 			</div>
