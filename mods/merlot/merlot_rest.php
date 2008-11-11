@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: merlot_rest.php 6614 2006-09-27 19:32:29Z greg $
 
-require("./classes/MerlotResultParser.class.php");
+require("classes/MerlotResultParser.class.php");
 
 $keywords = trim($_REQUEST['keywords']);
 $title = trim($_REQUEST['title']);
