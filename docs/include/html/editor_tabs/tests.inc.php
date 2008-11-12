@@ -29,6 +29,13 @@ while ($row = mysql_fetch_assoc($result)) {
 $sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY start_date DESC";
 $result	= mysql_query($sql, $db);
 $num_tests = mysql_num_rows($result);
+
+//If there are no tests, don't display anything except a message
+if ($num_tests == 0){
+	$msg->addInfo('NO_TESTS');
+	$msg->printInfos();
+	return;
+}
 ?>
 
 
