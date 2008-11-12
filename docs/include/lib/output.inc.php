@@ -1224,7 +1224,11 @@ function provide_alternatives($cid, $content_page){
 														$content = $first.$new.$row_text['secondary_resource'].'"/>';
 														$shift 	 = strpos($before[1], '</');
 														$after 	 = substr($before[1], $shift);
-														$after 	 = substr($after, 4);
+														$media	 = substr($after, 0, 8);
+														if ($media == '[/media]')
+															$after 	 = substr($after, 8);
+														else
+															$after 	 = substr($after, 4);
 													}
 													else
 													{
