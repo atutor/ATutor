@@ -245,7 +245,7 @@ class UrlRewrite  {
 			$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE course_dir_name='$course_id'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
-			$course_orig = '';
+			$course_orig = $course_id;
 
 			if ($row['course_id']!=''){
 				$course_orig = $row['course_id'];
