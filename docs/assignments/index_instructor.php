@@ -34,7 +34,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 // sort order of table
 $orders = array('ASC' => 'DESC', 'DESC' => 'ASC');
-$cols   = array('title' => 1, 'date' => 1);
+$cols   = array('title' => 1, 'date_due' => 1);
 $sort = 'title';
 $order = 'ASC';
 if (isset($_GET['sort'])){
