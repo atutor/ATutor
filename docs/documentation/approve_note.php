@@ -12,7 +12,7 @@ function my_add_null_slashes( $string ) {
 if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes = 'my_add_null_slashes';
 } else {
-	$addslashes = 'addslashes';
+	$addslashes = 'mysql_real_escape_string';
 }
 
 
