@@ -179,6 +179,10 @@ function get_forums_search_result($words, $predicate, $course_id, &$total_score)
 		$lower_body			= $strtolower($row['body']);
 		$num_posts			= intval($row['num_comments']);
 
+		if ($strlen($row['body']) > 270) {
+			$row['body']  = $substr($row['body'], 0, 268).'...';
+		}
+
 		for ($i=0; $i<$num_words; $i++) {
 			$score += 8 * substr_count($lower_forum_title,	$lower_words[$i]);		/* forum's title are weighed more */
 			$score += 4 * substr_count($lower_subject,		$lower_words[$i]);		/* thread subject are weighed more */
@@ -287,7 +291,7 @@ function print_search_pages($result) {
 		} else {
 			echo '<em>'._AT('none').'</em>';
 		}
-		echo '. <small class="search-info"><strong>'._AT('author').':</strong> ';
+		echo '. <strong>'._AT('author').':</strong> ';
 		if ($items['member_id']) {
 			echo AT_print(get_display_name($items['member_id']), 'members.login');
 		} else {
