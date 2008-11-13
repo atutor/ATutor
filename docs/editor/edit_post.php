@@ -66,8 +66,8 @@ if ($_POST['edit_post']) {
 	$_POST['pid']		= intval($_POST['pid']);
 
 	$_POST['subject']  = $addslashes($_POST['subject']);
-	//If subject > 100,then chop subject
-	$_POST['subject'] = validate_length($_POST['subject'], 100);
+	//If subject > 60,then chop subject
+	$_POST['subject'] = validate_length($_POST['subject'], 60);
 
 	$_POST['body']  = $addslashes($_POST['body']);
 
@@ -125,7 +125,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
-		<input type="text" maxlength="45" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($post_row['subject'])); ?>" id="subject" />
+		<input type="text" maxlength="80" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($post_row['subject'])); ?>" id="subject" />
 	</div>
 
 	<div class="row">
