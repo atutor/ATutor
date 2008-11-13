@@ -66,7 +66,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $fha_student_tools = array();
 
-$sql = "SELECT links FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id=$_SESSION[course_id]";
+$sql = "SELECT links FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id=$_SESSION[course_id] AND links <> ''";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
 	$fha_student_tools = explode('|', $row['links']);
@@ -90,9 +90,11 @@ $num_modules = count($fha_student_tools);
 </tr>
 </tfoot>
 <tbody>
+
+<?php debug($_current_modules); ?>
 <?php foreach ($_current_modules as $module): ?>
 <?php if ($module == 'mods/_standard/student_tools/index.php') { continue; } ?>
-<?php $count++; ?>
+<?php  ?>
 <tr>
 	<td>
 		<?php if (in_array($module, $fha_student_tools)): ?>
@@ -125,7 +127,9 @@ $num_modules = count($fha_student_tools);
 		<?php endif; ?>
 	</td>
 </tr>
-<?php endforeach; ?>
+<?php 
+$count++;
+endforeach; ?>
 </tbody>
 </table>
 </form>
