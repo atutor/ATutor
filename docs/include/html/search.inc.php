@@ -15,7 +15,6 @@
 // NOTE! please see include/lib/search.inc.php NOTE!
 
 /* some error checking can go here: */
-
 if (isset($_GET['search'])) {
 	$_GET['words'] = stripslashes($addslashes($_GET['words']));
 	$_GET['words'] = str_replace(array('"', '\''), '', $_GET['words']);
@@ -47,6 +46,14 @@ if (isset($_GET['search'])) {
 		$checked_display_as_summaries = ' checked="checked"';
 	}
 
+	// search within options
+	if (isset($_GET['search_within']) && in_array('content', $_GET['search_within'])){
+		$checked_sw_content = ' checked="checked"';
+	} 
+	if (isset($_GET['search_within']) && in_array('forums', $_GET['search_within'])) {
+		$checked_sw_forums = ' checked="checked"';
+	}
+
 } else {
 	// default values:
 	$checked_include_all      = ' checked="checked"';
@@ -60,6 +67,19 @@ if (isset($_GET['search'])) {
 	} else {
 		$checked_find_in_all_courses  = ' checked="checked"';
 		$checked_display_as_summaries = ' checked="checked"';
+	}
+
+	// search within options
+	if (isset($_GET['search_within'])){
+		if (in_array('content', $_GET['search_within'])) {
+			$checked_sw_content = ' checked="checked"';
+		} 
+		if (in_array('forums', $_GET['search_within'])) {
+			$checked_sw_forums = ' checked="checked"';
+		}
+	} else {
+		$checked_sw_content		  = ' checked="checked"';
+		$checked_sw_forums		  = ' checked="checked"';
 	}
 }
 if (isset($_GET['search']) && !$_GET['words']) {
@@ -94,6 +114,12 @@ if (isset($_GET['search']) && !$_GET['words']) {
 				<?php endif; ?>
 
 				<input type="radio" name="find_in" value="all" id="f3" <?php echo $checked_find_in_all_courses; ?> /><label for="f3"><?php echo _AT('all_available_courses'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('search_within'); ?><br />
+			<input type="checkbox" name="search_within[]" value="content" id="sw_content" <?php echo $checked_sw_content; ?> /><label for="sw_content"><?php echo _AT('content'); ?></label>
+			<input type="checkbox" name="search_within[]" value="forums" id="sw_forums" <?php echo $checked_sw_forums; ?> /><label for="sw_forums"><?php echo _AT('forums'); ?></label>	
 	</div>
 
 	<div class="row">
@@ -141,6 +167,7 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 		} else { // $_GET['find_in'] == 'all' (or other). always safe to perform.
 			$my_courses = get_all_courses($_SESSION['member_id']);
 		}
+
 		foreach ($my_courses as $tmp_course_id) {
 			if ($_GET['display_as'] == 'pages') {
 				// merge all the content results together

@@ -30,6 +30,10 @@ $this->_pages['tools/forums/index.php']['children']  = array('editor/add_forum.p
 //student pages
 $this->_pages['forum/list.php']['title_var']  = 'forums';
 $this->_pages['forum/list.php']['img']        = 'images/home-forums.gif';
+$this->_pages['forum/list.php']['children']        = array('search.php?search_within[]=forums');
+	//list.php's children
+	$this->_pages['search.php?search_within[]=forums']['title_var'] = 'search';
+	$this->_pages['search.php?search_within[]=forums']['parent']    = 'forum/index.php';
 
 // for admin
 if (admin_authenticate(AT_ADMIN_PRIV_FORUMS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {

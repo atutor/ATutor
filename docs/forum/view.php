@@ -34,13 +34,14 @@ $forum_info = get_forum($fid);
 
 $_pages[url_rewrite('forum/index.php?fid='.$fid)]['title']    = get_forum_name($fid);
 $_pages[url_rewrite('forum/index.php?fid='.$fid)]['parent']   = 'forum/list.php';
-$_pages[url_rewrite('forum/index.php?fid='.$fid)]['children'] = array(url_rewrite('forum/new_thread.php?fid='.$fid));
+$_pages[url_rewrite('forum/index.php?fid='.$fid)]['children'] = array(url_rewrite('forum/new_thread.php?fid='.$fid), 'search.php?search_within[]=forums');
 
 $_pages[url_rewrite('forum/new_thread.php?fid='.$fid)]['title_var'] = 'new_thread';
 $_pages[url_rewrite('forum/new_thread.php?fid='.$fid)]['parent']    = url_rewrite('forum/index.php?fid='.$fid);
 
 $_pages['forum/view.php']['parent'] = url_rewrite('forum/index.php?fid='.$fid);
-
+$_pages['search.php?search_within[]=forums']['title_var'] = 'search';
+$_pages['search.php?search_within[]=forums']['parent']    = url_rewrite('forum/index.php');
 
 if ($_REQUEST['reply']) {
 	$onload = 'document.form.subject.focus();';
