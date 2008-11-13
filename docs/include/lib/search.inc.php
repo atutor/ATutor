@@ -287,6 +287,12 @@ function print_search_pages($result) {
 		} else {
 			echo '<em>'._AT('none').'</em>';
 		}
+		echo '. <small class="search-info"><strong>'._AT('author').':</strong> ';
+		if ($items['member_id']) {
+			echo AT_print(get_display_name($items['member_id']), 'members.login');
+		} else {
+			echo '<em>'._AT('none').'</em>';
+		}
 		echo '. <strong>'._AT('updated').':</strong> ';
 		echo AT_date(_AT('inbox_date_format'), ($items['last_modified']!='')?$items['last_modified']:$items['last_comment'], AT_DATE_MYSQL_DATETIME);
 
