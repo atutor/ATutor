@@ -17,9 +17,25 @@ if (admin_authenticate(AT_ADMIN_PRIV_THEMES, TRUE) || admin_authenticate(AT_ADMI
 	//admin
 	$this->_pages['admin/themes/index.php']['title_var'] = 'themes';
 	$this->_pages['admin/themes/index.php']['guide']     = 'admin/?p=themes.php';
+	$this->_pages['admin/themes/index.php']['children']  = array('admin/themes/install_themes.php');
 
 	$this->_pages['admin/themes/delete.php']['title_var'] = 'delete';
 	$this->_pages['admin/themes/delete.php']['parent']    = 'admin/themes/index.php';
+
+	$this->_pages['admin/themes/install_themes.php']['title_var'] = 'install_themes';
+	$this->_pages['admin/themes/install_themes.php']['parent'] = 'admin/themes/index.php';
+
+	$this->_pages['admin/themes/theme_install_step_1.php']['title_var'] = 'details';
+	$this->_pages['admin/themes/theme_install_step_1.php']['parent']    = 'admin/themes/install_themes.php';
+
+	$this->_pages['admin/themes/theme_install_step_2.php']['title_var'] = 'details';
+	$this->_pages['admin/themes/theme_install_step_2.php']['parent']    = 'admin/themes/install_themes.php';
+
+	$this->_pages['admin/themes/theme_install_step_3.php']['title_var'] = 'details';
+	$this->_pages['admin/themes/theme_install_step_3.php']['parent']    = 'admin/themes/install_themes.php';
+
+	$this->_pages['admin/themes/version_history.php']['title_var'] = 'version_history';
+	$this->_pages['admin/themes/version_history.php']['parent']    = 'admin/themes/install_themes.php';
 
 }
 ?>

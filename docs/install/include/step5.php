@@ -91,6 +91,13 @@ if (isset($_POST['submit'])) {
 		} else if (!is_writable($_POST['content_dir'].'/module')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/module</strong> directory is not writable.';
 		}
+		if (!is_dir($_POST['content_dir'].'/theme')) {
+			if (!@mkdir($_POST['content_dir'].'/theme')) {
+				$errors[] = '<strong>'.$_POST['content_dir'].'/theme</strong> directory does not exist and cannot be created.';  
+			}
+		} else if (!is_writable($_POST['content_dir'].'/theme')){
+			$errors[] = '<strong>'.$_POST['content_dir'].'/theme</strong> directory is not writable.';
+		}
 
 		// save blank index.html pages to those directories
 		@copy('../images/index.html', $_POST['content_dir'] . '/import/index.html');
