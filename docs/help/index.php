@@ -31,6 +31,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 <h3><?php echo _AT('external_help'); ?></h3>
 <ul>
+	<li style="padding-bottom: 20px;"><?php echo _AT('request_services'); ?>
+		<br /><?php echo _AT('request_services_text'); ?></li>
 
 	<li style="padding-bottom: 20px;"><?php echo _AT('howto_course'); ?>
 		<br /><?php echo _AT('howto_course_text'); ?></li>
