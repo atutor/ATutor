@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="EN"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <theme>
 	<title>Fluid</title>
-	<version>1.0</version>
+	<version>1.6</version>
 	<last_updated>2008-05-12</last_updated>
 	<extra_info>An ATutor theme that implements fluid elements. See http://fluidproject.org for more information.</extra_info>
 </theme>
