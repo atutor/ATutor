@@ -15,9 +15,10 @@ error_reporting(E_ALL ^ E_NOTICE);
 if ($step < 4) {
 	error_reporting(0);
 	include('../include/config.inc.php');
+	include('include/common.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (defined('AT_INSTALL')) {
-		echo 'ATutor appears to have been installed already.';
+		echo print_meta_redirect();
 		exit;
 	}
 }

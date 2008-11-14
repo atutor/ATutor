@@ -219,6 +219,20 @@ if (version_compare(phpversion(), '5.0') < 0) {
 	}
 }
 
+/** 
+ * Print the HTML of the meta forward codes
+ */
+function print_meta_redirect(){
+	$body = 'ATutor appears to have been installed already. <br/>';
+	$body .= '<a href="../index.php">Click here<a/> to login.';
+
+	$html = "<html>\n";
+	$html .= '<body>'.$body.'</body>'."\n";
+	$html .= "</html>\n";
+
+	return $html;
+}
+
 /**
  * This function is used for printing variables for debugging.
  * @access  public
