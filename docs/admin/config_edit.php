@@ -35,6 +35,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['max_course_float']   = intval($_POST['max_course_float']);
 	$_POST['max_course_float']   = max(0, $_POST['max_course_float']);
 	$_POST['allow_registration']   = intval($_POST['allow_registration']);
+	$_POST['allow_instructor_registration']   = intval($_POST['allow_instructor_registration']);
 	$_POST['allow_unenroll']   = intval($_POST['allow_unenroll']);
 	$_POST['master_list']        = intval($_POST['master_list']);
 	$_POST['email_confirmation'] = intval($_POST['email_confirmation']);
@@ -54,7 +55,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['display_name_format']       = intval($_POST['display_name_format']);
 	$_POST['pretty_url']				= intval($_POST['pretty_url']);
 	$_POST['course_dir_name']			= intval($_POST['course_dir_name']);
-	
+
 	//apache_mod_rewrite can only be enabled if pretty_url is.
 	if ($_POST['pretty_url']==1){
 		$_POST['apache_mod_rewrite']		= intval($_POST['apache_mod_rewrite']);
@@ -234,6 +235,10 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 	<div class="row">
 		<?php echo _AT('allow_registration'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_registration'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="allow_registration" value="1" id="reg_y" <?php if($_config['allow_registration']) { echo 'checked="checked"'; }?>  /><label for="reg_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_registration" value="0" id="reg_n" <?php if(!$_config['allow_registration']) { echo 'checked="checked"'; }?>  /><label for="reg_n"><?php echo _AT('disable'); ?></label>
+	</div>
+	<div class="row">
+		<?php echo _AT('allow_instructor_registration'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_instructor_registration'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="allow_instructor_registration" value="1" id="enrollreg_y" <?php if($_config['allow_instructor_registration']) { echo 'checked="checked"'; }?>  /><label for="enrollreg_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_instructor_registration" value="0" id="enrollreg_n" <?php if(!$_config['allow_instructor_registration']) { echo 'checked="checked"'; }?>  /><label for="enrollreg_n"><?php echo _AT('disable'); ?></label>
 	</div>
 	<div class="row">
 		<?php echo _AT('allow_unenroll'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_unenroll'] ? _AT('enable') : _AT('disable')); ?>)<br />
