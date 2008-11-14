@@ -130,7 +130,7 @@ $tabs = array('enrolled', 'assistants', 'alumni', 'pending_enrollment', 'not_enr
 
 
 // Remove Not Enrolled tab if system preference is turned off 1.6.2
-if($_config['allow_instructor_registration'] == 1){
+if($_config['allow_instructor_registration'] != 1){
 	array_pop($tabs);
 }
 
