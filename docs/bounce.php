@@ -110,6 +110,7 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 		$_SESSION['course_id']  = -1;
 		$_SESSION['privileges'] = intval($row['privileges']);
 		$_SESSION['lang'] = $row['language'];
+		assign_session_prefs(unserialize(stripslashes($_config['pref_defaults'])));
 		unset($_SESSION['member_id']);
 		unset($_SESSION['is_super_admin']);
 
