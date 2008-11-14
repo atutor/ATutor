@@ -90,6 +90,9 @@ if (isset($_GET['group']) && ($_GET['group'] != '')) {
 
 require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
 $tabs = get_tabs();	
+
+
+//debug( $num_tabs);
 $num_tabs = count($tabs);
 
 for ($i=0; $i < $num_tabs; $i++) {
@@ -124,6 +127,12 @@ $view_select = intval($_POST['view_select']);
 
 // the possible tabs. order matters.
 $tabs = array('enrolled', 'assistants', 'alumni', 'pending_enrollment', 'not_enrolled');
+
+
+// Remove Not Enrolled tab if system preference is turned off 1.6.2
+if($_config['allow_instructor_registration'] == 1){
+	array_pop($tabs);
+}
 
 $num_tabs = count($tabs);
 if (isset($_REQUEST['tab'])) {
