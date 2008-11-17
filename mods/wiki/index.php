@@ -22,7 +22,7 @@ if (isset($_GET['top'])) {
 	define('AT_INCLUDE_PATH', '../../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-	include_once("config.php");
+	include_once(AT_INCLUDE_PATH."../mods/wiki/config.php");
 	$content =  ewiki_page();
 	$content = stripslashes($content);
 

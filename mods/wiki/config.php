@@ -1,4 +1,4 @@
-<?php  chdir(dirname(__FILE__));
+<?php  //chdir(dirname(__FILE__));
 
 /*
 This is a sample config file for the ewiki addon for ATutor. You might choose to modify it

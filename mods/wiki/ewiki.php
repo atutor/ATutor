@@ -45,6 +45,7 @@ if (!class_exists("ewiki_database_mysql")) { include_once("plugins/db/mysql.php"
         #-- change to your needs (site lang)
 	define("EWIKI_NAME", "UnnamedWiki");		# Wiki title
 	define("EWIKI_PAGE_INDEX", "ATutorWiki");	# default page
+	define("EWIKI_PAGE_PRETTY_URL", 'mods\/wiki\/index.php');		#pretty URL format of this page
 	define("EWIKI_PAGE_LIST", "PageIndex");
 	define("EWIKI_PAGE_SEARCH", "SearchPages");
 	define("EWIKI_PAGE_NEWEST", "NewestPages");
@@ -528,6 +529,7 @@ function ewiki_page($id=false) {
          $id = substr($id, $delim + 1);
       }
    }
+
    if (EWIKI_USE_ACTION_PARAM && isset($_REQUEST["action"])) {
       $action = rawurlencode($_REQUEST["action"]);
    }
@@ -836,6 +838,7 @@ function ewiki_id() {
    (EWIKI_USE_PATH_INFO)
       and isset($_SERVER["PATH_INFO"])
       and ($_SERVER["PATH_INFO"] != $_SERVER["SCRIPT_NAME"])  // Apache+PHP workaround
+	  and (preg_replace('/\/\d+\/'.EWIKI_PAGE_PRETTY_URL.'/', '', $_SERVER['PATH_INFO']) != '') 
       and ($id = ltrim($_SERVER["PATH_INFO"], "/")) or
    (!isset($_REQUEST["id"])) and ($id = trim(strtok($_SERVER["QUERY_STRING"], "&?;")));
    if (!strlen($id) || ($id=="id=")) {
