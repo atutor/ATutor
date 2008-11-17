@@ -6,6 +6,7 @@
 		<patch_folder>1_6-1</patch_folder>
 		<description>Patch No. 1 for ATutor 1.6</description>
 		<available_to>public</available_to>
+		<author>&lt;a href=&quot;http://atutor.ca&quot;&gt;ATutor&lt;/a&gt;</author>
 		<dependent_patches></dependent_patches>
 	</patch>
 	
@@ -15,6 +16,7 @@
 		<patch_folder>1_6-2</patch_folder>
 		<description>Patch No. 2 for ATutor 1.6</description>
 		<available_to>public</available_to>
+		<author>&lt;a href=&quot;http://atutor.ca&quot;&gt;ATutor&lt;/a&gt;</author>
 		<dependent_patches>
 			<dependent_patch>00001</dependent_patch>
 			<dependent_patch>00003</dependent_patch>

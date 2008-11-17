@@ -77,6 +77,10 @@ class PatchListParser {
 		{
 			$this->patch_rows[$this->row_num]['available_to'] = trim($this->character_data);
 		} 
+		else if ($this->element_path === array('patch_list', 'patch', 'author')) 
+		{
+			$this->patch_rows[$this->row_num]['author'] = trim($this->character_data);
+		} 
 		else if ($this->element_path === array('patch_list', 'patch', 'dependent_patches', 'dependent_patch')) 
 		{
 			$this->patch_rows[$this->row_num]['dependent_patches'][$this->dependent_patches_num++] = trim($this->character_data);

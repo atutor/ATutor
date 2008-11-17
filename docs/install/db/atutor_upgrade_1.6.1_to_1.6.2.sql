@@ -71,6 +71,10 @@ ALTER TABLE `content` ADD COLUMN `allow_test_export` TINYINT(1) UNSIGNED NOT NUL
 # Extend field "value" for extended default preference setting string
 ALTER TABLE `config` MODIFY value TEXT;
 
+# Extend field "author", "installed_date" for extended patch information
+ALTER TABLE `patches` ADD COLUMN `author` VARCHAR(255) NOT NULL AFTER `patch_files`;
+ALTER TABLE `patches` ADD COLUMN `installed_date` datetime NOT NULL AFTER `author`;
+
 # sql file for gradebook module
 
 CREATE TABLE `grade_scales` (

@@ -39,6 +39,8 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 		<td><?php echo $description; ?></td>
 		<td><?php if (!isset($patch_row['status'])) echo _AT("not_installed"); else echo $patch_row["status"]; ?></td>
 		<td><?php echo $patch_row["available_to"]; ?></td>
+		<td><?php echo $patch_row["author"]; ?></td>
+		<td><?php if (isset($patch_row['status'])) echo ($patch_row["installed_date"]=='0000-00-00 00:00:00')?_AT('na'):$patch_row["installed_date"]; ?></td>
 		<td>
 		<?php 
 		if (preg_match('/Installed/', $patch_row["status"]) > 0 && ($patch_row["remove_permission_files"]<> "" || $patch_row["backup_files"]<>"" || $patch_row["patch_files"]<> ""))
@@ -171,6 +173,7 @@ if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_v
 																		'applied_version' => $patch_array['applied_version'],
 																		'patch_folder' => $patchURL,
 																		'available_to' => 'private',
+																		'author' => $patch_array['author'],
 																		'sql' => $patch_array['sql'],
 																		'description' => $patch_array['description'],
 																		'dependent_patches' => $patch_array['dependent_patches']);
@@ -319,6 +322,8 @@ $msg->printAll();
 		<th scope="col"><?php echo _AT('description');?></th>
 		<th scope="col"><?php echo _AT('status');?></th>
 		<th scope="col"><?php echo _AT('available_to');?></th>
+		<th scope="col"><?php echo _AT('author');?></th>
+		<th scope="col"><?php echo _AT('installed_date');?></th>
 		<th scope="col"><?php echo _AT('view_message');?></th>
 	</tr>
 </thead>
@@ -338,7 +343,7 @@ if ($num_of_patches == 0)
 ?>
 
 <tr>
-	<td colspan="7">
+	<td colspan="8">
 <?php 
 	echo _AT('none_found');
 ?>
@@ -398,7 +403,7 @@ else
 </tbody>
 <tfoot>
 <tr>
-	<td colspan="7">
+	<td colspan="8">
 		<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
 	</td>
 </tr>

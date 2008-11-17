@@ -2,6 +2,7 @@
 <patch>
 	<atutor_patch_id>00001</atutor_patch_id>
 	<applied_version>1.6</applied_version>
+	<author>&lt;a href=&quot;http://atutor.ca&quot;&gt;ATutor&lt;/a&gt;</author>
 	<description>Sample patch XML</description>
 	<dependent_patches>
 		<dependent_patch>00002</dependent_patch>

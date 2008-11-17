@@ -951,6 +951,8 @@ CREATE TABLE `patches` (
   `remove_permission_files` text NOT NULL,
   `backup_files` text NOT NULL,
   `patch_files` text NOT NULL,
+  `author` VARCHAR(255) NOT NULL,
+  `installed_date` datetime NOT NULL,
 	PRIMARY KEY  (`patches_id`)
 );
 

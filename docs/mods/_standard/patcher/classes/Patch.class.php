@@ -731,7 +731,9 @@ class Patch {
 					   status,
 					   remove_permission_files,
 					   backup_files,
-					   patch_files)
+					   patch_files,
+					   author,
+					   installed_date)
 					  VALUES
 					  ('".$patch_summary_array["atutor_patch_id"]."',
 					   '".$patch_summary_array["applied_version"]."',
@@ -742,7 +744,10 @@ class Patch {
 					   '".$patch_summary_array["status"]."',
 					   '',
 					   '',
-					   '')";
+					   '',
+					   '".mysql_real_escape_string($patch_summary_array["author"])."',
+					   now()
+					   )";
 
 		$result = mysql_query($sql, $db) or die(mysql_error());
 		
