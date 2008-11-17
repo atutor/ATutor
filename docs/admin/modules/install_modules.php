@@ -70,7 +70,9 @@ if ($module_list_xml)
 // end of get module list
 
 $module_content_folder = AT_CONTENT_DIR . "module/";
-		
+
+if (!is_dir($module_content_folder)) mkdir($module_content_folder);
+
 // Installation process
 if ((isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["version_history"])) && !isset($_POST["id"]))
 {
