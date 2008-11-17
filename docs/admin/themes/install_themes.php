@@ -71,7 +71,10 @@ if ($theme_list_xml)
 // end of get theme list
 
 $theme_content_folder = AT_CONTENT_DIR . "theme/";
-		
+
+// create theme content dir if not exists
+if (!is_dir($theme_content_folder)) mkdir($theme_content_folder);
+
 // Installation process
 if ((isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["version_history"])) && !isset($_POST["id"]))
 {
