@@ -115,7 +115,7 @@ $_POST['formatting'] = intval($row['formatting']);
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="edit_news" value="true">
 <input type="hidden" name="aid" value="<?php echo $row['news_id']; ?>">
-
+<input type="submit" name="submit" style="display:none;"/>
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />

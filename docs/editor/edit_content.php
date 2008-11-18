@@ -711,6 +711,7 @@ $pid = intval($_REQUEST['pid']);
 //	echo '<input type="hidden" name="alternatives" value="$alternatives" />';
 	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
+	echo '<input type="submit" name="submit" style="display:none;"/>';
 	if (($current_tab != 0) && (($_current_tab != 5))) {
 		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
 		echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';

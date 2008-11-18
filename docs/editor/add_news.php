@@ -104,7 +104,7 @@ $msg->printErrors();
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="add_news" value="true" />
-
+	<input type="submit" name="submit" style="display:none;"/>
 	<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_announcement'); ?></legend>
 		<div class="row">

@@ -116,7 +116,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 <input type="hidden" name="framed"  value="<?php echo $framed; ?>" />
 <input type="hidden" name="popup"   value="<?php echo $popup; ?>" />
 <input type="hidden" name="file"    value="<?php echo $file; ?>" />
-
+<input type="submit" name="submit" style="display:none;"/>
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $file; ?></h3>

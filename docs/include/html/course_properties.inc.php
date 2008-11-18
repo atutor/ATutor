@@ -159,6 +159,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 	<input type="hidden" name="created_date" value="<?php echo $row['created_date']; ?>" />
 	<input type="hidden" name="show_courses" value="<?php echo $_GET['show_courses']; ?>" />
 	<input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
+	<input type="submit" name="submit" style="display:none;"/>
 
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('properties'); ?></legend>

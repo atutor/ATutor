@@ -117,6 +117,7 @@ if (isset($_POST['description'])) {
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'] . $owner_arg_prefix; ?>" method="post" name="form">
 <input type="hidden" name="folder" value="<?php echo abs($_REQUEST['folder']); ?>" />
+<input type="submit" name="submit" style="display:none;"/>
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('file_name'); ?></label><br />
