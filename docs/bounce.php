@@ -51,9 +51,9 @@ function count_login( ) {
     if (!$result) {
 		/* that entry already exists, then update it. */
 		if ($_SESSION['is_guest']) {
-			$sql   = "UPDATE ".TABLE_PREFIX."course_stats SET guests=guests+1 WHERE course_id=$_SESSION[course_id] AND login_date=NOW()";
+			$sql   = "UPDATE ".TABLE_PREFIX."course_stats SET guests=guests+1 WHERE course_id=$_SESSION[course_id] AND login_date=CURDATE()";
 		} else {
-			$sql   = "UPDATE ".TABLE_PREFIX."course_stats SET members=members+1 WHERE course_id=$_SESSION[course_id] AND login_date=NOW()";
+			$sql   = "UPDATE ".TABLE_PREFIX."course_stats SET members=members+1 WHERE course_id=$_SESSION[course_id] AND login_date=CURDATE()";
 		}
 		$result = @mysql_query($sql, $db);
 	}
