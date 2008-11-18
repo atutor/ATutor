@@ -126,7 +126,7 @@ if (!$test_row['random']) {
 <?php if ($test_row['description']<>""): ?>
 		<tr>
 			<td><?php echo _AT('test_description'); ?></td>
-			<td><?php echo $test_row['description']; ?></td>
+			<td><?php echo empty($test_row['description']) ? '&nbsp;' : $test_row['description']; ?></td>
 		</tr>
 <?php endif; ?>
 
