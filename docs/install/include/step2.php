@@ -43,7 +43,7 @@ if(isset($_POST['submit'])) {
 				}
 			} else {
 				/* Check if the database that existed is in UTF-8, if not, ask for retry */
-				$sql = "SHOW CREATE DATABASE $_POST[db_name]";
+				$sql = "SHOW CREATE DATABASE `$_POST[db_name]`";
 				$result = mysql_query($sql, $db);
 				$row = mysql_fetch_assoc($result);
 				
