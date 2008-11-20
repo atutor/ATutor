@@ -21,7 +21,7 @@ if (!$_SESSION['valid_user']) {
 
 $msg->printErrors();
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 	$subject	= $_POST['subject'];
 	$body		= $_POST['body'];
 	$parent_id	= $_POST['parent_id'];
@@ -30,7 +30,7 @@ if ($_POST['submit']) {
 	if ($_POST['reply']!=''){
 		$saved_post['body'] = $_POST['replytext'];
 	}
-} else if ($_GET['reply'] != '') {
+} else if (isset($_GET['reply']) && $_GET['reply'] != '') {
 	$subject = $saved_post['subject'];
 
 	if (substr($subject, 0, 3) != 'Re:') {
@@ -65,7 +65,7 @@ if ($_POST['submit']) {
 		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
 	</div>
 
-	<?php if ($_REQUEST['reply']): ?>
+	<?php if (isset($_REQUEST['reply'])): ?>
 		<div class="row">
 			<label for="body"><?php echo _AT('forum_reply_to'); ?></label><br />
 			<textarea cols="45" name="replytext" rows="5"><?php echo $saved_post['body']; ?></textarea>

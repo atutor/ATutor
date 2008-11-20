@@ -666,6 +666,9 @@ class ContentManager
 			$num_items = count($top_level);
 			foreach ($top_level as $garbage => $content) {
 				$link = '';
+				//tests do not have content id
+				$content['content_id'] = isset($content['content_id']) ? $content['content_id'] : '';
+
 				if (!$ignore_state) {
 					$link .= '<a name="menu'.$content['content_id'].'"></a>';
 				}

@@ -14,6 +14,18 @@
 
 // NOTE! please see include/lib/search.inc.php NOTE!
 
+//initialize variables
+$checked_include_one			= '';
+$checked_include_all			= '';
+$checked_find_in_course			= '';
+$checked_find_in_my_courses		= '';
+$checked_find_in_all_courses	= '';
+$checked_sw_content				= '';
+$checked_sw_forums				= '';
+$checked_display_as_courses		= '';
+$checked_display_as_pages		= '';
+$checked_display_as_summaries	= '';
+
 /* some error checking can go here: */
 if (isset($_GET['search'])) {
 	$_GET['words'] = stripslashes($addslashes($_GET['words']));
@@ -200,21 +212,27 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 
 	$num_pages = ceil($num_found / $results_per_page);
 			
-	$page = intval($_GET['p']);
+	$page = isset($_GET['p']) ? intval($_GET['p']) : 0;
 	if (!$page) {
 		$page = 1;
 	}
 			
 	$count = (($page-1) * $results_per_page) + 1;
 
+	//get the search within string
+	$search_within_str = '';
+	foreach($_GET['search_within'] as $category){
+		$search_within_str .= SEP.'search_within[]='.$category;
+	}
+
 	$pages_text = '<div class="paging">';
 	$pages_text .= '<ul>';
 	for ($i=1; $i<=$num_pages; $i++) {
 		$pages_text .= '<li>';
 		if ($i == $page) {
-			$pages_text .= '<a class="current" href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results"><em>'.$i.'</em></a>';
+			$pages_text .= '<a class="current" href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].$search_within_str.SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results"><em>'.$i.'</em></a>';
 		} else {
-			$pages_text .= '<a href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
+			$pages_text .= '<a href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].$search_within_str.SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
 		}
 		$pages_text .= '</li>';
 	}

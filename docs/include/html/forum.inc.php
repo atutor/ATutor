@@ -18,7 +18,7 @@ $num_threads = mysql_fetch_assoc($result);
 $num_threads = $num_threads['cnt'];
 
 $num_per_page = 10;
-if (!$_GET['page']) {
+if (!isset($_GET['page']) || !$_GET['page']) {
 	$page = 1;
 } else {
 	$page = intval($_GET['page']);
@@ -101,7 +101,6 @@ if (!($row = mysql_fetch_assoc($result))) {
 	echo '</tfoot>';
 	echo '<tbody>';
 
-	$current_thread = $row['thread_id'];
 	do {
 		/* crop the subject, if needed */
 		$full_subject = $row['subject'];	//save a copy before croping

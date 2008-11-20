@@ -343,7 +343,7 @@ function toggleToc(objId) {
 	<?php endif; ?>
 
 	<div id="contentcolumn"
-		<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu): ?>
+		<?php if (($_SESSION['course_id'] <= 0) && isset($this->side_menu) && !$this->side_menu): ?>
 			style="margin-left:0.5em;width:99%;"
 		<?php endif; ?>
 		>

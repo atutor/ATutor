@@ -28,7 +28,7 @@ class UrlParser {
 	// Constructor
 	function UrlParser($pathinfo=''){
 		if ($pathinfo==''){
-			$pathinfo = $_SERVER['PATH_INFO'];
+			$pathinfo = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
 		}
 		$this->parsePathInfo($pathinfo);
 	}
@@ -93,11 +93,13 @@ class UrlParser {
 		}
 
 		//Check if there are any matches for prettied query string, if not, use the actual query.
-		if ($matches[5] == ''){
+		if (!isset($matches[5]) || $matches[5] == ''){
 			$matches[5] = $_SERVER['QUERY_STRING'];
 		}
 
 		//Create object based on this path.
+		$matches[2] = isset($matches[2]) ? $matches[2] : '';
+		$matches[4] = isset($matches[4]) ? $matches[4] : '';
 		$url_obj = new UrlRewrite($matches[2], $matches[4], $matches[5]);
 
 		$this->path_array = array($course_id, $url_obj);

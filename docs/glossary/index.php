@@ -22,7 +22,7 @@ while ($row = mysql_fetch_array($result)) {
 	$glossary_related[$row['related_word_id']][] = $row['word_id'];			
 }
 
-$_GET['w'] = stripslashes($_GET['w']);
+$_GET['w'] = isset($_GET['w']) ? stripslashes($_GET['w']) : '';
 
 if ($_GET['w']) {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] AND word='".addslashes(urldecode($_GET['w']))."'";		
@@ -41,7 +41,7 @@ if(mysql_num_rows($result) > 0){
 	$num_results = count($gloss_results);
 	$results_per_page = 25;
 	$num_pages = ceil($num_results / $results_per_page);
-	$page = intval($_GET['p']);
+	$page = isset($_GET['p']) ? intval($_GET['p']) : 0;
 	if (!$page) {
 		$page = 1;
 	}
@@ -90,7 +90,7 @@ if(mysql_num_rows($result) > 0){
 			<?php endif; ?>
 			<strong><?php echo stripslashes($item['word']); ?>
 
-			<?php if (($item['related_word_id'] != 0) || (is_array($glossary_related[urlencode($item['word_id'])]) )):
+			<?php if (($item['related_word_id'] != 0) || (isset($glossary_related) && is_array($glossary_related[urlencode($item['word_id'])]) )):
 				echo ' ('._AT('see').': ';
 
 				$output = false;

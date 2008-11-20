@@ -28,14 +28,15 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 	$search_results			= array();
 	$content_search_results = array();
 	$forums_search_results	= array();
+	$course_score			= 0;
 
 	if (isset($_GET['search_within']) && is_array($_GET['search_within'])){
 		if (in_array('content', $_GET['search_within'])){
-			$content_search_results = get_content_search_result($words, $predicate, $course_id, &$total_score);
+			$content_search_results = get_content_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
 		}
 		if (in_array('forums', $_GET['search_within'])){
 			if (in_array('forum/list.php', $_pages[AT_NAV_HOME])){
-				$forums_search_results = get_forums_search_result($words, $predicate, $course_id, &$total_score);
+				$forums_search_results = get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
 			}
 		}
 
@@ -49,7 +50,7 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 	return $search_results;
 }
 
-function get_content_search_result($words, $predicate, $course_id, &$total_score) {
+function get_content_search_result($words, $predicate, $course_id, &$total_score, &$course_score) {
 	global $addslashes, $db, $highlight_system_courses, $strlen, $substr, $strtolower;
 
 	$search_results = array();
@@ -62,6 +63,8 @@ function get_content_search_result($words, $predicate, $course_id, &$total_score
 	$words = array_values(array_diff(array_unique($words), array('')));
 	$num_words = count($words);
 	$course_score = 0;
+	$words_sql = '';
+
 	for ($i=0; $i<$num_words; $i++) {
 		$lower_words[$i] = $strtolower($words[$i]);
 
@@ -129,7 +132,7 @@ function get_content_search_result($words, $predicate, $course_id, &$total_score
 /*
  * Get forum search results
  */
-function get_forums_search_result($words, $predicate, $course_id, &$total_score) {
+function get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score) {
 	global $addslashes, $db, $highlight_system_courses, $strlen, $substr, $strtolower;
 
 	$search_results = array();
@@ -142,6 +145,7 @@ function get_forums_search_result($words, $predicate, $course_id, &$total_score)
 	$words = array_values(array_diff(array_unique($words), array('')));
 	$num_words = count($words);
 	$course_score = 0;
+	$words_sql = '';
 
 	for ($i=0; $i<$num_words; $i++) {
 		$lower_words[$i] = $strtolower($words[$i]);
@@ -286,19 +290,19 @@ function print_search_pages($result) {
 		}
 
 		echo '<br /><small class="search-info">[<strong>'._AT('keywords').':</strong> ';
-		if ($items['keywords']) {
+		if (isset($items['keywords'])) {
 			echo $items['keywords'];
 		} else {
 			echo '<em>'._AT('none').'</em>';
 		}
 		echo '. <strong>'._AT('author').':</strong> ';
-		if ($items['member_id']) {
+		if (isset($items['member_id'])) {
 			echo AT_print(get_display_name($items['member_id']), 'members.login');
 		} else {
 			echo '<em>'._AT('none').'</em>';
 		}
 		echo '. <strong>'._AT('updated').':</strong> ';
-		echo AT_date(_AT('inbox_date_format'), ($items['last_modified']!='')?$items['last_modified']:$items['last_comment'], AT_DATE_MYSQL_DATETIME);
+		echo AT_date(_AT('inbox_date_format'), (isset($items['last_modified']) && $items['last_modified']!='')?$items['last_modified']:$items['last_comment'], AT_DATE_MYSQL_DATETIME);
 
 		echo ']</small>';
 

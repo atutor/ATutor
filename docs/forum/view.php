@@ -15,6 +15,8 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $fid = intval($_GET['fid']);
+$_GET['reply'] = isset($_GET['reply']) ? $_GET['reply'] : '';
+
 
 if (!isset($_GET['fid']) || !$fid) {
 	header('Location: list.php');
@@ -172,6 +174,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$subscribed = true;
 		} else {
 			echo '<p><a href="forum/subscribe.php?fid='.$fid.SEP.'pid='.$_GET['pid'].'">'._AT('subscribe').'</a></p>';
+			$subscribed = false;
 		}
 	}
 	if ($_SESSION['valid_user'] && !$_SESSION['enroll']) {
