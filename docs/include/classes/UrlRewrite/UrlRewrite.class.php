@@ -119,6 +119,8 @@ class UrlRewrite  {
 	 */
 	function constructPrettyUrl($query){
 		global $_config; 
+		$bookmark  = '';
+
 		if (empty($query)){
 			return '';
 		}

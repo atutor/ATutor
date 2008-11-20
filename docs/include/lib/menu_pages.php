@@ -24,7 +24,7 @@ if($_config['allow_registration']){
 	$reg_tab = "registration.php";
 }
 $_pages[AT_NAV_PUBLIC] = array_merge(array('login.php',$reg_tab,'browse.php'), (isset($_pages[AT_NAV_PUBLIC]) ? $_pages[AT_NAV_PUBLIC] : array()));
-$_pages[AT_NAV_START]  = array_merge(array('users/index.php',  'users/profile.php', 'users/preferences.php'), (array) $_pages[AT_NAV_START]);
+$_pages[AT_NAV_START]  = array_merge(array('users/index.php',  'users/profile.php', 'users/preferences.php'), (isset($_pages[AT_NAV_START]) ? (array) $_pages[AT_NAV_START] : array()));
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();
 
