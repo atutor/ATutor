@@ -1,87 +1,94 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<div id="browse">
-	<div style="white-space:nowrap; padding-right:30px;">
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('filter'); ?></legend>
+	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<div class="input-form">
+			<div class="row">
+				<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
+			</div>
+			<div class="row">
+				<?php echo _AT('access'); ?><br />
+				<input type="radio" name="access" value="private" id="s1" <?php if ($_GET['access'] == 'private') { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('private'); ?></label> 
 
-			<!--h3><?php echo _AT('cats_categories'); ?></h3>
+				<input type="radio" name="access" value="protected" id="s2" <?php if ($_GET['access'] == 'protected') { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('protected'); ?></label>
 
-			<ul class="browse-list">
-				<?php 
-				foreach ($this->cats as $cat_id => $cat_name): 
-					echo '<li>';
-					if ($cat_id == $this->cat): ?>
-						<div class="browse-selected">
-					<?php else: ?>
-						<div class="browse-unselected">
-					<?php endif; ?>
-							<a href="<?php echo $_SERVER['PHP_SELF'].'?cat='.$cat_id; ?>#courses"><?php echo $cat_name ?></a>    
-						</div>
-					</li>
-				<?php endforeach; ?>		
-			</ul>			<br /-->
-	</div>
-	<a name="courses"></a>
-	<!--div style="float: left; white-space:nowrap; padding-right:30px;">
-			<h3><?php echo _AT('courses').': '.$this->cats[$this->cat]; ?></h3>
+				<input type="radio" name="access" value="public" id="s3" <?php if ($_GET['access'] == 'public') { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('public'); ?></label>
 
-			<?php if (isset($this->courses)):
-				$cur_sub_cat = ''; ?>
+				<input type="radio" name="access" value="" id="s" <?php if ($_GET['access'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+			</div>
 
-				<ul class="browse-list">
-					<li>
-					<?php if ($this->show_course == 0): ?>
-						<div class="browse-selected">
-					<?php else: ?>
-						<div class="browse-unselected">
-					<?php endif; ?>
-						<a href="<?php echo $_SERVER['PHP_SELF']; ?>?cat=0<?php echo SEP;?>show_course=0#info"><?php echo _AT('all_courses'); ?></a>
-					</div>			
-					</li>
-					
-					<?php foreach ($this->courses as $course_id=>$info):
-						if (isset($this->sub_cats) && array_key_exists($info['cat_id'], $this->sub_cats) && ($cur_sub_cat != $this->sub_cats[$info['cat_id']])):
-							$cur_sub_cat = $this->sub_cats[$info['cat_id']];?>
-							</ul><br /><h4><?php echo $cur_sub_cat; ?></h4><ul class="browse-list">
-						<?php endif; ?>
-						<li>
-						<?php if ($info['selected']): ?>
-							<div class="browse-selected">
-						<?php else: ?>
-							<div class="browse-unselected">
-						<?php endif; ?>
-							<a href="<?php echo $info['url']; ?>"><?php echo $info['title']; ?></a>
-						</div>
-						</li>
+		<?php if ($this->has_categories): ?>
+			<div class="row">
+				<label for="category"><?php echo _AT('category'); ?></label><br/>
+				<select name="category" id="category">
+					<option value="-1">- - - <?php echo _AT('cats_all'); ?> - - -</option>
+					<option value="0" <?php if ($_GET['category'] == 0) { echo 'selected="selected"'; } ?>>- - - <?php echo _AT('cats_uncategorized'); ?> - - -</option>
+					<?php echo $this->categories_select; ?>
+				</select>
+			</div>
+		<?php endif; ?>
 
-					<?php endforeach; ?>
-				</ul>
-			<?php else:
-				echo _AT('no_courses');
-			endif;?>
-			<br />
-	</div-->
+			<div class="row">
+				<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('title').', '._AT('description'); ?>)</label><br />
 
+				<input type="text" name="search" id="search" size="40" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+				<br/>
+				<?php echo _AT('search_match'); ?>:
+				<input type="radio" name="include" value="all" id="match_all" <?php echo $this->checked_include_all; ?> /><label for="match_all"><?php echo _AT('search_all_words'); ?></label> 
+				<input type="radio" name="include" value="one" id="match_one" <?php echo $this->checked_include_one; ?> /><label for="match_one"><?php echo _AT('search_any_word'); ?></label>
+			</div>
+
+			<div class="row buttons">
+				<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>"/>
+				<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>"/>
+			</div>
+		</div>
+	</form>
+</fieldset>
 	<ul style=" padding: 0px; margin: 0px">
-	<?php foreach ($this->course_row as $this->course_row): ?>
+	<?php while ($row = mysql_fetch_assoc($this->courses_result)): ?>
 		<li style="list-style: none; width: 80%">
-			<dl id="public-profile">
-				<dd><h3><a href="bounce.php?course=<?php echo $this->course_row['course_id']; ?>"><?php echo $this->course_row['title']; ?></a></h3></dd>
-				
-				<dt><?php echo _AT('description'); ?></dt>
-				<dd><?php echo $this->course_row['description']; ?>&nbsp;</dd>
+			<dl class="browse-course">
+				<dt>
+					<?php if ($row['icon']) { // if a course icon is available, display it here.  
+						$style_for_title = 'style="height: 79px;"'; 
 
+						//Check if this is a custom icon, if so, use get_course_icon.php to get it
+						//Otherwise, simply link it from the images/
+						$path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
+		                if (file_exists($path.$row['icon'])) {
+							if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+								$course_icon = 'get_course_icon.php/?id='.$row['course_id'];
+							} else {
+								$course_icon = 'content/' . $row['course_id'] . '/';
+							}
+						} else {
+							$course_icon = 'images/courses/'.$row['icon'];
+						}
+					?>
+						<a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  $row['title']; ?>" /> </a>	
+					<?php } ?>
+				</dt>
+				<dd><h3 <?php echo $style_for_title; ?>><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo $row['title']; ?></a></h3></dd>
+				
+			<?php if ($row['description']): ?>
+				<dt><?php echo _AT('description'); ?></dt>
+				<dd><?php echo nl2br($row['description']); ?>&nbsp;</dd>
+			<?php endif; ?>
+
+			<?php if ($has_categories): ?>
 				<dt><?php echo _AT('category'); ?></dt>
-				<dd><?php echo $this->cats[$this->course_row['cat_id']]; ?>&nbsp;</dd>
+				<dd><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$page_string.SEP; ?>category=<?php echo $row['cat_id']; ?>"><?php echo $cats[$row['cat_id']]; ?></a>&nbsp;</dd>
+			<?php endif; ?>
 				
 				<dt><?php echo _AT('instructor'); ?></dt>
-				<dd><a href="<?php echo AT_BASE_HREF; ?>contact_instructor.php?id=<?php echo $this->course_row['course_id']; ?>"><?php echo get_display_name($this->course_row['member_id']); ?></a></dd>
+				<dd><a href="<?php echo AT_BASE_HREF; ?>contact_instructor.php?id=<?php echo $row['course_id']; ?>"><?php echo get_display_name($row['member_id']); ?></a></dd>
 
 				<dt><?php echo _AT('access'); ?></dt>
-				<dd><?php echo _AT($this->course_row['access']); ?></dd>
+				<dd><?php echo _AT($row['access']); ?></dd>
 			</dl>
 		</li>
-	<?php endforeach; ?>
+	<?php endwhile; ?>
 	</ul>
-</div>
-<br />
+
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
