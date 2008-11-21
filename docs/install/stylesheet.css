@@ -168,8 +168,6 @@ form {
 /* user menu at top */
 .topbar {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat-x;
 	background-color: #D1D7DC;
 	text-align: center;
 	padding: 3px;
@@ -178,7 +176,6 @@ form {
 /* breadcrumbs */
 td.breadcrumbs	{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic3.gif');
 	color: #FFFFFF;
 	background-color: #006699;
 	height: 26px;
@@ -226,7 +223,6 @@ td.row1, table.row1 {
 /* menu titles*/
 td.cat, th {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
 	background-repeat: repeat-x;
 	background-color:#D1D7DC; 
 	height: 25px;
@@ -239,8 +235,6 @@ td.cat, th {
 }
 td.cat2 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
 	text-align: center;
 	font-weight: bold;
 	padding: 1px;
@@ -248,8 +242,6 @@ td.cat2 {
 }
 td.cat2b {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
 	text-align: center;
 	font-weight: bold;
 	height: 27px;
@@ -258,8 +250,6 @@ td.cat2b {
 }
 td.cat2c {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
 	text-align: center;
 	font-weight: bold;
 	height: 27px;
@@ -268,8 +258,6 @@ td.cat2c {
 }
 td.cat2d {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
 	text-align: center;
 	font-weight: bold;
 	height: 27px;
@@ -278,8 +266,6 @@ td.cat2d {
 }
 td.cat2e {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
 	text-align: center;
 	font-weight: bold;
 	height: 27px;
@@ -288,8 +274,6 @@ td.cat2e {
 }
 table.cat2 {
 font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat-x;
 	/*Remove this attribute, to fix Opera menu display problem*/
 	/*height: 27px;*/
 	text-align: center;

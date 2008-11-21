@@ -16,9 +16,9 @@ error_reporting(E_ALL ^ E_NOTICE);
 if ($step < 6) {
 	error_reporting(0);
 	include('../include/config.inc.php');
-	include('include/common.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (defined('AT_INSTALL')) {
+		include_once(AT_INCLUDE_PATH.'common.inc.php');
 		echo print_meta_redirect();
 		exit;
 	}

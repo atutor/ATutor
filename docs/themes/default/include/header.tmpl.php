@@ -68,7 +68,7 @@ global $system_courses, $_custom_css,$db;
 	<![endif]-->
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<?php echo $this->rtl_css; ?>
-	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
+	<?php if (isset($_SESSION['course_id']) && $system_courses[$_SESSION['course_id']]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
@@ -236,13 +236,13 @@ function toggleToc(objId) {
 
 	?>
 	<!-- section title -->
-	<?php if ($_SESSION['valid_user']): 
+	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 		echo '<div style="font-size:small;font-weight:bold;padding-left:1em;color:white;">'.stripslashes(SITE_NAME).'</div>'; 
 	else:
 		echo '<br />';	
 	endif; ?>
 	<h1 id="section-title"><?php echo $this->section_title; ?>
-		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
+		<?php if ((isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
 	</h1>
@@ -254,6 +254,7 @@ function toggleToc(objId) {
 <!-- the main navigation. in our case, tabs -->
 	<ul id="topnavlist">
 		<?php foreach ($this->top_level_pages as $page): ?>
+			<?php $accesscounter = 0; //initialize ?>
 			<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
 			<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
 			<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
@@ -270,7 +271,7 @@ function toggleToc(objId) {
 <div style="background-color:#E6E6E6; font-size:0.85em; padding-top: 5px; border-bottom:1px solid black; height:2em;">
 	<!-- the sub navigation -->
 	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
-		<?php if ($_SESSION['valid_user']): ?>					
+		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>					
 			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
 			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
@@ -303,7 +304,7 @@ function toggleToc(objId) {
 </div>
 
 <div style="padding:3px;">
-<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
+<?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 	<!-- the bread crumbs -->
 	<div id="breadcrumbs">
 		<?php foreach ($this->path as $page): ?>
@@ -312,14 +313,14 @@ function toggleToc(objId) {
 	</div>
 <?php } ?>
 
-	<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
+	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
 		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	<?php endif; ?>
 </div>
 
 
 <div id="contentwrapper">
-	<?php if (($_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
+	<?php if ((isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
 		<div id="leftcolumn">
 			<script type="text/javascript">
 			//<![CDATA[
@@ -343,12 +344,12 @@ function toggleToc(objId) {
 	<?php endif; ?>
 
 	<div id="contentcolumn"
-		<?php if (($_SESSION['course_id'] <= 0) && isset($this->side_menu) && !$this->side_menu): ?>
+		<?php if ((isset($_SESSION['course_id']) && $_SESSION['course_id'] <= 0) && isset($this->side_menu) && !$this->side_menu): ?>
 			style="margin-left:0.5em;width:99%;"
 		<?php endif; ?>
 		>
 
-		<?php if ($_SESSION['course_id'] > 0): ?>
+		<?php if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?>
 		<div id="menutoggle">
 
 			<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>

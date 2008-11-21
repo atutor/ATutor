@@ -20,7 +20,7 @@ global $system_courses;
 ?>
 <div align="center"><?php
 
-	if (($_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['copyright'] != '') {	
+	if ((isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['copyright'] != '') {	
 		echo '<small>' . AT_print($system_courses[$_SESSION['course_id']]['copyright'], 'courses.copyright') . '</small><br />';
 	}
 

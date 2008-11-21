@@ -907,17 +907,19 @@ function url_rewrite($url, $is_rewriting_header=AT_PRETTY_URL_NOT_HEADER, $force
 	 * Had used $_SESSION[valid_user] before but it created this problem: 
 	 * http://www.atutor.ca/atutor/mantis/view.php?id=3426
 	 */
-	if ($force || $_SESSION['course_id'] > 0) {
+	if ($force || (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0)) {
 		//if course id is defined, apply pretty url.
 	} 
 	//if this is something that is displayed on the login page, don't modify the urls.
-	else if ((admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) || admin_authenticate($_SESSION['privileges'], AT_PRIV_RETURN))
-		|| (isset($_SESSION['is_guest']) && $_SESSION['is_guest']==1)){
+	else if ( (admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) 
+			|| (isset($_SESSION['privileges']) && admin_authenticate($_SESSION['privileges'], AT_PRIV_RETURN))) 
+			|| (isset($_SESSION['is_guest']) && $_SESSION['is_guest']==1)){
 		return $url;
 	} 
 
 	//if we allow pretty url in the system
 	if ($_config['pretty_url'] > 0){
+		$course_id = 0;
 		//If we allow course dir name from sys perf		
 		if ($_config['course_dir_name'] > 0){
 			if (preg_match('/bounce.php\?course=([\d]+)$/', $url, $matches) == 1){
