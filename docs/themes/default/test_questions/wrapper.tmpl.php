@@ -1,7 +1,7 @@
 <<?php echo '?'; ?>xml version="1.0" encoding="<?php echo $this->encoding; ?>"<?php echo '?'; ?>>
 
 <questestinterop 
-	xmlns="http://www.imsproject.org/question"
+	xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 >
 	<assessment title="<?php echo $this->title; ?>" ident="<?php echo md5($this->tid); ?>">
