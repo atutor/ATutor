@@ -489,7 +489,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 }
 ?>
 
-<form method="get" action="file_storage/index.php" name="form">
+<form method="get" action="<?php echo url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER);?>" name="form">
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 <input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 <table class="data">
