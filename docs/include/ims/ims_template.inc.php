@@ -213,10 +213,10 @@ function print_organizations($parent_id,
 					}
 
 					$file_info = stat( $file_path );
-
 					//condition checks if the file has been added, so then the test won't be added to all the subchildren
 					//leads to normal images not capable to be extracted.
-					if (is_array($test_zipped_files) && !in_array($file_path, $test_zipped_files) && file_exists($file_path)){
+					if ( (empty($test_zipped_files) || (is_array($test_zipped_files) && !in_array($file_path, $test_zipped_files))) 
+						 && file_exists($file_path)){
 						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
 //						$test_zipped_files[] = $content['content_path'] . $file;
 						$test_zipped_files[] = $file_path;
