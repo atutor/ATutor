@@ -1,5 +1,5 @@
 <!-- likert question (aka multiple choice with no correct answer) -->
-		<item title="Multiple choice question">
+		<item title="Multiple choice question" ident="ITEM_<?php echo $this->row['question_id']; ?>">
 			<itemmetadata>
 				<qtimetadata>
 					<qtimetadatafield>
@@ -15,10 +15,10 @@
 				</qtimetadata>
 			</itemmetadata>
 			<presentation>
-				<material>
-					<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
-				</material>
 				<flow>
+					<material>
+						<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
+					</material>
 					<response_lid ident="RESPONSE<?php echo $this->row['question_id']; ?>" rcardinality="Single">
 						<render_choice shuffle="No" minnumber="1" maxnumber="1">
 							<flow_label>

@@ -1,5 +1,5 @@
 <!-- multi answer multiple choice question with partial marks -->
-		<item title="Multiple answer question">
+		<item title="Multiple answer question" ident="ITEM_<?php echo $this->row['question_id']; ?>">
 			<itemmetadata>
 				<qtimetadata>
 					<qtimetadatafield>
@@ -15,10 +15,10 @@
 				</qtimetadata>
 			</itemmetadata>
 			<presentation>
-				<material>
-					<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
-				</material>
 				<flow>
+					<material>
+						<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
+					</material>
 					<response_lid ident="RESPONSE<?php echo $this->row['question_id']; ?>" rcardinality="Multiple">
 						<render_choice shuffle="No">
 						<?php for ($i=0; $i < $this->num_choices; $i++): ?>

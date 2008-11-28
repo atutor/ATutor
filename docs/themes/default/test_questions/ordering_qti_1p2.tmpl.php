@@ -1,5 +1,5 @@
 <!-- ordering question -->
-		<item title="Ordering question">
+		<item title="Ordering question" ident="ITEM_<?php echo $this->row['question_id']; ?>">
 			<itemmetadata>
 				<qtimetadata>
 					<qtimetadatafield>
@@ -9,10 +9,10 @@
 				</qtimetadata>
 			</itemmetadata>
 			<presentation>
-				<material>
-					<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
-				</material>
 				<flow>
+					<material>
+						<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
+					</material>
 					<response_lid ident="RESPONSE<?php echo $this->row['question_id']; ?>" rcardinality="Ordered">
 						<render_choice shuffle="Yes" minnumber="<?php echo $this->num_choices;?>" maxnumber="<?php echo $this->num_choices;?>">
 							<?php for ($i=0; $i < $this->num_choices; $i++): ?>

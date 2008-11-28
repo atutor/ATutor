@@ -1,5 +1,5 @@
 <!-- open ended (free text) question -->
-		<item title="Open ended question">
+		<item title="Open ended question" ident="ITEM_<?php echo $this->row['question_id']; ?>">
 			<itemmetadata>
 				<qtimetadata>
 					<qtimetadatafield>

@@ -1,5 +1,5 @@
 <!-- matching question with partial marks -->
-		<item title="Mathcing question">
+		<item title="Mathcing question" ident="ITEM_<?php echo $this->row['question_id']; ?>">
 			<itemmetadata>
 				<qmd_itemtype>Matching</qmd_itemtype>
 				<qtimetadata>
@@ -9,11 +9,11 @@
 					</qtimetadatafield>
 				</qtimetadata>
 			</itemmetadata>
-			<presentation>
-				<material>
-					<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
-				</material>
+			<presentation>				
 				<flow>
+					<material>
+						<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
+					</material>
 					<?php for ($i=0; $i < $this->num_choices; $i++): ?>		
 					<response_grp ident="RESPONSE-<?php echo md5($this->row['question_id'].$i); ?>" rcardinality="Multiple">
 						<material>

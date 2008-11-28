@@ -1,5 +1,5 @@
 <!-- true or false question (aka multiple choice with two choices) -->
-		<item title="True or False question">
+		<item title="True or False question" ident="ITEM_<?php echo $this->row['question_id']; ?>">
 			<itemmetadata>
 				<qtimetadata>
 					<qtimetadatafield>
@@ -15,10 +15,10 @@
 				</qtimetadata>
 			</itemmetadata>
 			<presentation>
-				<material>
-					<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
-				</material>
 				<flow>
+					<material>
+						<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
+					</material>
 					<response_lid ident="RESPONSE<?php echo $this->row['question_id']; ?>" rcardinality="Single">
 						<render_choice shuffle="No">
 							<response_label ident="ChoiceT">	
