@@ -26,7 +26,7 @@ if (isset($_GET['edit'])) {
 	exit;
 } else if (isset($_GET['submissions'])){
 	$_GET['assignment'] = intval($_GET['assignment']);
-	header('Location: '.AT_BASE_HREF.'file_storage/index.php?ot='.WORKSPACE_ASSIGNMENT.SEP.'oid='.$_GET['assignment']);
+	header('Location: '.url_rewrite('file_storage/index.php?ot='.WORKSPACE_ASSIGNMENT.SEP.'oid='.$_GET['assignment'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
