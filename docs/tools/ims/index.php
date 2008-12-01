@@ -63,7 +63,7 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 	$_main_menu = array($_main_menu[0]);
 }
 ?>
-<form method="post" action="tools/ims/ims_export.php">
+<form name="exportForm" method="post" action="tools/ims/ims_export.php">
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('export_content'); ?></legend>
 	<div class="row">
@@ -83,6 +83,12 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 	</div>
 
 	<?php if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)): ?>
+			<div class="row">
+				<input type="radio" name="export_as" id="to_cp" value="1" checked="checked" onclick="changeFormAction('cp');" />
+				<label for="to_cp"><?php echo _AT('content_package'); ?></label> <br />
+				<input type="radio" name="export_as" id="to_cc" value="1" onclick="changeFormAction('cc');" />
+				<label for="to_cc"><?php echo _AT('common_cartridge'); ?><?php echo _AT('experimental'); ?></label>
+			</div>
 			<div class="row">
 				<input type="checkbox" name="to_tile" id="to_tile" value="1" />
 				<label for="to_tile"><?php echo _AT('tile_export'); ?></label> <br />
@@ -169,6 +175,17 @@ function openWindow(page) {
 		newWindow.focus();
 	}
 }
+
+//Change form action 
+function changeFormAction(type){
+	var obj = document.exportForm;
+	if (type=="cc"){
+		obj.action = "tools/imscc/ims_export.php";
+	} else if (type=="cp"){
+		obj.action = "tools/ims/ims_export.php";
+	}
+}
+
 </script>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
