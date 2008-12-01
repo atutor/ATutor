@@ -27,6 +27,7 @@ if(isset($_POST['submit'])) {
 		$sql = "SELECT VERSION() AS version";
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
+		$row['version'] = str_replace (array('-community-nt', '-max', '-standard'), '', strtolower($row['version']));
 		if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
 			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.1.10 or later.';
 		}
