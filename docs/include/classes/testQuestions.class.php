@@ -263,7 +263,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	require_once(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
 	require_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	// for XML_HTMLSax
 	require_once(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
-	global $savant, $db, $system_courses, $languageManager, $test_zipped_files;
+	global $savant, $db, $system_courses, $languageManager, $test_zipped_files, $test_files, $use_cc;
 	global $course_id;
 
 	$course_language = $system_courses[$_SESSION['course_id']]['primary_language'];
@@ -323,6 +323,9 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 		$xml = $xml . "\n\n" . $local_xml;
 	}
 
+	//files that are found inside the test; used by print_organization(), to add all test files into QTI/ folder.
+	$test_files = $dependencies;
+
 	$resources[] = array('href'         => 'tests_'.$tid.'.xml',
 						 'dependencies' => array_keys($dependencies));
 
@@ -339,14 +342,20 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	$xml = $savant->fetch('test_questions/wrapper.tmpl.php');
 
 	$xml_filename = 'tests_'.$tid.'.xml';
-	$zipfile->add_file($xml, $xml_filename);
+	if (!$use_cc){		
+		$zipfile->add_file($xml, $xml_filename);
+	} else {
+		$zipfile->add_file($xml, 'QTI/'.$xml_filename);
+	}
 
 	// add any dependency files:
-	foreach ($dependencies as $resource => $resource_server_path) {
-		//add this file in if it's not already in the zip package
-		if (!in_array($resource_server_path, $test_zipped_files)){
-			$zipfile->add_file(@file_get_contents($resource_server_path), 'resources/'.$resource, filemtime($resource_server_path));
-			$test_zipped_files[] = $resource_server_path;
+	if (!$use_cc){
+		foreach ($dependencies as $resource => $resource_server_path) {
+			//add this file in if it's not already in the zip package
+			if (!in_array($resource_server_path, $test_zipped_files)){
+				$zipfile->add_file(@file_get_contents($resource_server_path), 'resources/'.$resource, filemtime($resource_server_path));
+				$test_zipped_files[] = $resource_server_path;
+			}
 		}
 	}
 
