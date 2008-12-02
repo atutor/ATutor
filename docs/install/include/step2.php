@@ -34,7 +34,7 @@ if(isset($_POST['submit'])) {
 
 		if (!isset($errors)){
 			if (!mysql_select_db($_POST['db_name'], $db)) {
-				$sql = "CREATE DATABASE $_POST[db_name] CHARACTER SET utf8 COLLATE utf8_general_ci";
+				$sql = "CREATE DATABASE `$_POST[db_name]` CHARACTER SET utf8 COLLATE utf8_general_ci";
 				$result = mysql_query($sql, $db);
 				if (!$result) {
 					$errors[] = 'Unable to select or create database <b>'.$_POST['db_name'].'</b>.';
