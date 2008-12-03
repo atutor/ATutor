@@ -501,6 +501,8 @@ if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
 
 if ($package_base_path) {
 	$package_base_path = implode('/', $package_base_path);
+} elseif (empty($package_base_path)){
+	$package_base_path = '';
 }
 
 if ($xml_base_path) {
@@ -604,7 +606,7 @@ foreach ($items as $item_id => $content_info)
 			}
 
 			/* potential security risk? */
-			if ( strpos($content_info['href'], '..') === false) {
+			if ( strpos($content_info['href'], '..') === false && !preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href'])) {
 				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			}
 		} else if ($ext) {
@@ -635,7 +637,13 @@ foreach ($items as $item_id => $content_info)
 	$head = addslashes($head);
 	$content_info['title'] = addslashes($content_info['title']);
 	$content_info['test_message'] = addslashes($content_info['test_message']);
-	$content = addslashes($content);
+
+	//if this file is a test_xml, create a blank page instead, for imscc.
+	if (preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href'])){
+		$content = '';
+	} else {
+		$content = addslashes($content);
+	}
 
 	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
 	      . '(course_id, 

@@ -398,7 +398,7 @@ $ims_template_xml['xml'] = '			<file href="{FILE}"/>'."\n";
 $ims_template_xml['glossary'] = '			<item identifier="GlossaryItem" identifierref="MANIFEST01_RESOURCE_GLOSSARY">
 				<title>Glossary</title>
 			</item>';
-$ims_template_xml['test'] = '			<item identifier="QTI" identifierref="MANIFEST01_RESOURCE_QTI{TEST_ID}">
+$ims_template_xml['test'] = '			<item identifier="QTI{TEST_ID}" identifierref="MANIFEST01_RESOURCE_QTI{TEST_ID}">
 				<title>Test {TEST_ID}</title>
 			</item>';
 $ims_template_xml['file_meta'] = '			<file href="{FILE}">
