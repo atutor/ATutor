@@ -20,6 +20,7 @@ $checked_include_all			= '';
 $checked_find_in_course			= '';
 $checked_find_in_my_courses		= '';
 $checked_find_in_all_courses	= '';
+$checked_sw_all					= '';
 $checked_sw_content				= '';
 $checked_sw_forums				= '';
 $checked_display_as_courses		= '';
@@ -59,16 +60,18 @@ if (isset($_GET['search'])) {
 	}
 
 	// search within options
-	if (isset($_GET['search_within']) && in_array('content', $_GET['search_within'])){
+	if ($_GET['search_within']=='content'){
 		$checked_sw_content = ' checked="checked"';
-	} 
-	if (isset($_GET['search_within']) && in_array('forums', $_GET['search_within'])) {
+	} elseif ($_GET['search_within']=='forums') {
 		$checked_sw_forums = ' checked="checked"';
+	} else {
+		$checked_sw_all = ' checked="checked"';
 	}
 
 } else {
 	// default values:
 	$checked_include_all      = ' checked="checked"';
+	$checked_sw_all			  = ' checked="checked"';
 
 	if ($_SESSION['course_id'] > 0) {
 		$checked_find_in_course   = ' checked="checked"';
@@ -79,19 +82,6 @@ if (isset($_GET['search'])) {
 	} else {
 		$checked_find_in_all_courses  = ' checked="checked"';
 		$checked_display_as_summaries = ' checked="checked"';
-	}
-
-	// search within options
-	if (isset($_GET['search_within'])){
-		if (in_array('content', $_GET['search_within'])) {
-			$checked_sw_content = ' checked="checked"';
-		} 
-		if (in_array('forums', $_GET['search_within'])) {
-			$checked_sw_forums = ' checked="checked"';
-		}
-	} else {
-		$checked_sw_content		  = ' checked="checked"';
-		$checked_sw_forums		  = ' checked="checked"';
 	}
 }
 if (isset($_GET['search']) && !$_GET['words']) {
@@ -129,9 +119,10 @@ if (isset($_GET['search']) && !$_GET['words']) {
 	</div>
 
 	<div class="row">
-		<?php echo _AT('search_within'); ?><br />
-			<input type="checkbox" name="search_within[]" value="content" id="sw_content" <?php echo $checked_sw_content; ?> /><label for="sw_content"><?php echo _AT('content'); ?></label>
-			<input type="checkbox" name="search_within[]" value="forums" id="sw_forums" <?php echo $checked_sw_forums; ?> /><label for="sw_forums"><?php echo _AT('forums'); ?></label>	
+		<?php echo _AT('search_in'); ?><br />
+			<input type="radio" name="search_within" value="all" id="sw_all" <?php echo $checked_sw_all; ?> /><label for="sw_all"><?php echo _AT('all'); ?></label>	
+			<input type="radio" name="search_within" value="content" id="sw_content" <?php echo $checked_sw_content; ?> /><label for="sw_content"><?php echo _AT('content'); ?></label>
+			<input type="radio" name="search_within" value="forums" id="sw_forums" <?php echo $checked_sw_forums; ?> /><label for="sw_forums"><?php echo _AT('forums'); ?></label>	
 	</div>
 
 	<div class="row">
@@ -219,20 +210,14 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 			
 	$count = (($page-1) * $results_per_page) + 1;
 
-	//get the search within string
-	$search_within_str = '';
-	foreach($_GET['search_within'] as $category){
-		$search_within_str .= SEP.'search_within[]='.$category;
-	}
-
 	$pages_text = '<div class="paging">';
 	$pages_text .= '<ul>';
 	for ($i=1; $i<=$num_pages; $i++) {
 		$pages_text .= '<li>';
 		if ($i == $page) {
-			$pages_text .= '<a class="current" href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].$search_within_str.SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results"><em>'.$i.'</em></a>';
+			$pages_text .= '<a class="current" href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'search_within='.$_GET['search_within'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results"><em>'.$i.'</em></a>';
 		} else {
-			$pages_text .= '<a href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].$search_within_str.SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
+			$pages_text .= '<a href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'search_within='.$_GET['search_within'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
 		}
 		$pages_text .= '</li>';
 	}

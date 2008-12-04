@@ -30,17 +30,23 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 	$forums_search_results	= array();
 	$course_score			= 0;
 
-	if (isset($_GET['search_within']) && is_array($_GET['search_within'])){
-		if (in_array('content', $_GET['search_within'])){
+	if (isset($_GET['search_within'])){
+		if ($_GET['search_within'] == 'content'){
 			$content_search_results = get_content_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
-		}
-		if (in_array('forums', $_GET['search_within'])){
-			if (in_array('forum/list.php', $_pages[AT_NAV_HOME])){
-				$forums_search_results = get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
+			$search_results = $content_search_results;
+		} elseif ($_GET['search_within'] == 'forums'){
+			$forums_search_results = get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
+			// if course_id is not being set, then the search doesn't have to check if the forum has been disabled
+			if (isset($_SESSION['course_id']) && $_SESSION['course_id']==0){
+				$search_results = $forums_search_results;
+			} elseif (in_array('forum/list.php', $_pages[AT_NAV_HOME])){
+				$search_results = $forums_search_results;
 			}
-		}
-
-		$search_results = array_merge($content_search_results, $forums_search_results);
+		} else {
+			$content_search_results = get_content_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
+			$forums_search_results = get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
+			$search_results = array_merge($content_search_results, $forums_search_results);
+		}		
 
 		if ((count($search_results) == 0) && $course_score && ($_GET['display_as'] != 'pages')) {
 				$num_found++;
@@ -131,6 +137,7 @@ function get_content_search_result($words, $predicate, $course_id, &$total_score
 
 /*
  * Get forum search results
+ * @author Harris Wong
  */
 function get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score) {
 	global $addslashes, $db, $highlight_system_courses, $strlen, $substr, $strtolower;
@@ -154,7 +161,7 @@ function get_forums_search_result($words, $predicate, $course_id, &$total_score,
 			$words_sql .= $predicate;
 		}
 		$words[$i] = $addslashes($words[$i]);
-		$words_sql .= ' (course_forums.title LIKE "%'.$words[$i].'%" OR T.subject LIKE "%'.$words[$i].'%" OR T.body LIKE "%'.$words[$i].'%")';
+		$words_sql .= ' (course_group_forums.title LIKE "%'.$words[$i].'%" OR T.subject LIKE "%'.$words[$i].'%" OR T.body LIKE "%'.$words[$i].'%")';
 
 		/* search through the course title and description keeping track of its total */
 		$course_score += 15 * substr_count($strtolower($highlight_system_courses[$course_id]['title']),       $lower_words[$i]);
@@ -166,9 +173,30 @@ function get_forums_search_result($words, $predicate, $course_id, &$total_score,
 	}
 
 	//forums sql
-	$sql =	'SELECT course_forums.title AS forum_title, course_forums.course_id, T.* FROM '.TABLE_PREFIX.'forums_threads T RIGHT JOIN ';
-	$sql .=	'(SELECT * FROM '.TABLE_PREFIX.'forums_courses NATURAL JOIN '.TABLE_PREFIX.'forums WHERE course_id='.$course_id.') AS course_forums ';
-	$sql .=	'ON T.forum_id = course_forums.forum_id WHERE ' . $words_sql;
+	// Wants to get course forums + "my" group forums 
+	//if the search is performed outside of a course, do not search in any group forums
+	// UNION on course_forums and group_forums
+	// TODO: Simplify the query.
+	((isset($_SESSION['is_admin']) && $_SESSION['is_admin'] > 0) ? $is_admin_string = '1 OR ' : $is_admin_string = '');
+	(isset($_SESSION['member_id']) ? $member_id = $_SESSION['member_id'] : $member_id = 0);
+	$sql =	'SELECT course_group_forums.title AS forum_title, course_group_forums.course_id, T.* FROM '.TABLE_PREFIX.'forums_threads T RIGHT JOIN ';
+	
+	//course forums
+	$sql .=	'(	SELECT forum_id, course_id, title, description, num_topics, num_posts, last_post, mins_to_edit FROM '.TABLE_PREFIX.'forums_courses ';
+	$sql .= '	NATURAL JOIN '.TABLE_PREFIX.'forums WHERE course_id='.$course_id;
+	
+	$sql .= '	UNION ';
+
+	//group forums 
+	$sql .= '	SELECT forum_id, course_id, title, description, num_topics, num_posts, last_post, mins_to_edit FROM at_forums_groups NATURAL JOIN ';
+	$sql .= '	(SELECT forum_id, num_topics, num_posts, last_post, mins_to_edit FROM at_forums) AS f NATURAL JOIN ';
+	$sql .= '	AT_groups_members NATURAL JOIN ';
+	$sql .= '	(SELECT g.*, gt.course_id FROM at_groups g INNER JOIN at_groups_types gt USING (type_id) WHERE course_id='.$course_id.') AS group_course WHERE		';
+	$sql .=		$is_admin_string .'member_id='.$member_id;
+	$sql .=	') AS course_group_forums ';
+	
+	$sql .=	'USING (forum_id) ';
+	$sql .= 'WHERE ' . $words_sql;
 
 	$result = mysql_query($sql, $db);
 	while($row = mysql_fetch_assoc($result)) {
