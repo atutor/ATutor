@@ -1,0 +1,3 @@
+This is a module that cleans up the files and folders left over by removed courses and members from ATutor versions older than 1.6.3 in which when members or courses are deleted, their members' personal files and course assignment files stored in file storage are not deleted accordingly. This module is created for one-time clean-up of these files. 
+
+After installation, this module creates admin tool -> User -> Clean Up File Storage. Clicking on "Clean Up File Storage" leads to the list of the files to be cleaned up and asks for user's approval on deletion. Once user approves, the listed files are permanently deleted from file storage.
