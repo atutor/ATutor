@@ -1121,14 +1121,14 @@ INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintool
 CREATE TABLE `grade_scales` (
    `grade_scale_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
    `member_id` mediumint(8) unsigned NOT NULL default '0',
-   `scale_name` VARCHAR(255) NOT NULL ,
+   `scale_name` VARCHAR(255) NOT NULL default '',
    `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
    PRIMARY KEY ( `grade_scale_id` )
 );
 
 CREATE TABLE `grade_scales_detail` (
    `grade_scale_id` mediumint(8) unsigned NOT NULL,
-   `scale_value` VARCHAR(50) NOT NULL ,
+   `scale_value` VARCHAR(50) NOT NULL default '',
    `percentage_from` MEDIUMINT NOT NULL default '0',
    `percentage_to` MEDIUMINT NOT NULL default '0',
    PRIMARY KEY (`grade_scale_id`, `scale_value`)
@@ -1139,7 +1139,7 @@ CREATE TABLE `gradebook_tests` (
    `id` mediumint(8) unsigned NOT NULL default '0' COMMENT 'Values: 0, tests.test_id or assignments.assignment_id. 0 for external tests/assignments. tests.test_id for ATutor tests, assignments.assignment_id for ATutor assignments.',
    `type` VARCHAR(50) NOT NULL default '' COMMENT 'Values: ATutor Test, ATutor Assignment, External',
    `course_id` mediumint(8) unsigned NOT NULL default '0' COMMENT 'Values: 0 or courses.course_id. Only has value for external tests/assignments. When ATutor internal assignments/tests/surveys, always 0.',
-   `title` VARCHAR(255) NOT NULL COMMENT 'Values: Null or test name. Always null if ATutor internal assignments/tests/surveys.',
+   `title` VARCHAR(255) NOT NULL default '' COMMENT 'Values: Null or test name. Always null if ATutor internal assignments/tests/surveys.',
    `due_date` datetime NOT NULL default '0000-00-00 00:00:00',
    `grade_scale_id` mediumint(8) unsigned NOT NULL default '0',
    PRIMARY KEY ( `gradebook_test_id` )
@@ -1148,7 +1148,7 @@ CREATE TABLE `gradebook_tests` (
 CREATE TABLE `gradebook_detail` (
    `gradebook_test_id` mediumint(8) unsigned NOT NULL,
    `member_id` mediumint(8) unsigned NOT NULL default '0',
-   `grade` VARCHAR(255) NOT NULL,
+   `grade` VARCHAR(255) NOT NULL default '',
    PRIMARY KEY (`gradebook_test_id`, `member_id`)
 );
 
