@@ -80,7 +80,7 @@ a:hover {
 }
 
 /*  Table of content attributes*/
-div#toc{
+div.toc{
 	font-family: Helevetica, Arial, sans-serif;
 	background-color: #eeeeee;
 	padding: 5px;
@@ -1246,4 +1246,19 @@ dl#public-profile dd {
 	margin-bottom: 5px;
 	clear: right;
 	padding: 5px 0px 5px 5px;
+}
+/*  Table of content attributes*/
+
+/* format of "table of contents" on content page */
+#toc a 		{ display:block; margin:3px; }
+#toc .h2		{ padding:0 0 0 10px;}
+#toc .h3		{ padding:0 0 0 30px;}
+#toc .h4		{ padding:0 0 0 40px; }
+#toc .h5		{ padding:0 0 0 50px; }
+#toc .h6		{ padding:0 0 0 60px; }
+
+fieldset#toc {
+	background-color: #FEFDEF;
+	border: 1pt solid #B8AE9C;
+	width:50%;
 }
