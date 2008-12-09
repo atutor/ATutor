@@ -64,7 +64,7 @@ a:hover {
 }
 
 /*  Table of content attributes*/
-div#toc{
+p#toc{
 	font-family: Helevetica, Arial, sans-serif;
 	background-color: #eeeeee;
 	padding-right: 3px;
