@@ -24,7 +24,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 
 <?php if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") { ?>
 <div id="content-table">
-	<?php echo _AT('table_of_content'); ?> <br />
 	<?php echo $this->content_table; ?>
 </div>
 <?php } ?>
