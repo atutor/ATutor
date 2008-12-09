@@ -150,6 +150,7 @@ function save_changes($redir, $current_tab) {
 			$old_w = $w;
 			$key = in_array_cin($w, $glossary_ids);
 			$w = urldecode($w);
+			$d = $addslashes($d);
 
 			if (($key !== false) && (($glossary[$old_w] != $d) || isset($_POST['related_term'][$old_w])) ) {
 				$w = addslashes($w);
