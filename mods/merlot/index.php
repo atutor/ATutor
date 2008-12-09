@@ -15,7 +15,8 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $_custom_css = $_base_path . 'mods/merlot/module.css'; // use a custom stylesheet
-$default_results_per_page = 25;
+//$default_results_per_page = 25;
+$default_results_per_page = 10;
 
 $advanced = intval($advanced);
 $browse =  intval($browse);
@@ -89,7 +90,7 @@ if($_REQUEST['advanced']){
 						<input type="checkbox" name="creativeCommons" value="true" id="creativeCommons" <?php if ($_REQUEST["creativeCommons"] == "true") echo 'checked="checked"'; ?> /><label for="creativeCommons"><?php echo _AT("merlot_creative_commons"); ?></label>
 					</td>
 				</tr>
-
+<!--
 				<tr>
 					<td colspan="2">
 						<label for="results_per_page"><?php echo _AT('merlot_results_per_page'); ?></label>
@@ -102,6 +103,7 @@ if($_REQUEST['advanced']){
 						</select>
 					</td>
 				</tr>
+//-->
 			</table>
 			
 			<div class="row buttons">
