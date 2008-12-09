@@ -1331,3 +1331,16 @@ div.forum-post-content div.body p { margin-bottom:20px; }
 /** inbox stuff - reuses some of the forum layout **/
 #inbox-msg li { clear:left; border:1px solid #eee; border-bottom: 1px solid #f0f0f0; width: 98%; list-style: none; }
 
+/* format of "table of contents" on content page */
+#toc a 		{ display:block; margin:3px; }
+#toc .h2		{ padding:0 0 0 10px;}
+#toc .h3		{ padding:0 0 0 30px;}
+#toc .h4		{ padding:0 0 0 40px; }
+#toc .h5		{ padding:0 0 0 50px; }
+#toc .h6		{ padding:0 0 0 60px; }
+
+fieldset#toc {
+	background-color: #FEFDEF;
+	border: 1pt solid #B8AE9C;
+	width:50%;
+}
