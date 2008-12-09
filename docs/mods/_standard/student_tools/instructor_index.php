@@ -91,7 +91,6 @@ $num_modules = count($fha_student_tools);
 </tfoot>
 <tbody>
 
-<?php debug($_current_modules); ?>
 <?php foreach ($_current_modules as $module): ?>
 <?php if ($module == 'mods/_standard/student_tools/index.php') { continue; } ?>
 <?php  ?>
