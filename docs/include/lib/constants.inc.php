@@ -32,6 +32,7 @@ $_config_defaults['site_name']                 = '';
 $_config_defaults['home_url']                  = ''; // empty means disabled
 $_config_defaults['default_language']          = 'en';
 $_config_defaults['allow_registration']        = 1;
+$_config_defaults['allow_instructor_registration']        = 1;
 $_config_defaults['allow_unenroll']            = 1;
 $_config_defaults['cache_dir']                 = ''; // empty means disabled
 $_config_defaults['enable_category_themes']    = 0; // disabled
