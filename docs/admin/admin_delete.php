@@ -115,6 +115,11 @@ function delete_user($id) {
 	$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE member_id=$id";
 	mysql_query($sql, $db);
 	write_to_log(AT_ADMIN_LOG_DELETE, 'member_track', mysql_affected_rows($db), $sql);
+	
+	// delete personal files from file storage
+	require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
+	fs_delete_workspace(WORKSPACE_PERSONAL, $id);
+
 
 	return;
 }
