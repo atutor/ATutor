@@ -1,0 +1,36 @@
+/* IE specific styles */
+
+ul#topnavlist {
+	zoom:100%;
+	margin:0px;
+}
+
+ul#topnavlist li {
+	zoom:100%;
+	padding:0.3em;
+	padding-bottom:0.3em;
+	margin:0px;
+	margin-bottom:-3px;
+}
+
+label {
+	zoom:100%;
+	margin:0px;
+}
+
+table.data tfoot input {
+	min-width:0px;
+}
+
+#topnavlistcontainer {
+	margin-bottom:-1px;
+}
+
+#header{
+	height: 7.2em;
+}
+
+div#top-links a:active{
+	color:black;
+	background-color:#F6EAD6;
+}

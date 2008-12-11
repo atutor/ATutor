@@ -1,0 +1,178 @@
+/*
+    Themes
+    Comply with the w3c spec on color contrast requirements
+ */
+
+/*
+        Shared Declarations
+=============================================
+ */
+.fl-wrapper-widget {}
+.fl-grababble {
+    background-image:url("../images/shared/gripper.png");
+    background-position: center top;
+    background-repeat: no-repeat;
+    cursor:move;
+}
+.fl-wrapper-callout {
+    border-width:1px;
+    border-style: dotted;
+    padding:5px;
+}
+/*
+                Debug
+=============================================
+ */
+
+/* topographical debugging */
+.fl-theme-debug {color:#fff; background-color:rgb(0,0,0)}
+.fl-theme-debug a {color:#F00;}
+.fl-theme-debug div {}
+.fl-theme-debug div {background-color:rgb(41,41,41);}
+.fl-theme-debug div div {background-color:rgb(82,82,82);}
+.fl-theme-debug div div div {background-color:rgb(123,123,123)}
+.fl-theme-debug div div div div {background-color:rgb(164,164,164)}
+.fl-theme-debug div div div div div {background-color:rgb(205,205,205)}
+.fl-theme-debug div div div div div div {background-color:rgb(246,246,246)}
+
+
+/*
+                Mist
+=============================================
+ */
+/*
+ * Color Schema:
+ *     DEFINITIONS:
+ *         white     : #ffffff
+ *         light blue: #dfefff
+ *         med blue  : #5a95cf
+ *         dark blue : #4070a1
+ *         grey      : #999999
+ *         charcoal  : #333333
+ *         black     : #000000
+ *     :focus & .selectable
+ *         text       : white   
+ *         bg         : dark blue
+ *         outline    : light blue
+ *     text           : black
+ *     links
+ *         :link      : med blue
+ *         :active    : med blue
+ *         :visited   : med blue
+ *         :hover     : light blue
+ *     headings
+ *         h1
+ *             text   : dark blue
+ *             border : dark blue
+ *             bg     : light blue
+ *         h2
+ *             text   : med blue
+ *         h3-6
+ *             text   : grey
+ *     tables
+ *         headers
+ *             text    : black
+ *             border  : med blue
+ *             bg      : light blue
+ *          cells
+ *              text   : black
+ *              border : grey
+ *     forms    
+ *         input[text]
+ *             bg       : light blue
+ *             border   : dark blue
+ *         textarea
+ *             bg       : light blue
+ *             border   : dark blue
+ *     tab helper    
+ *         text         : dark blue
+ *         bg           : light blue
+ *         hover        : med blue
+ *         active text  : med blue
+ *         active bg    : white
+ *         active hover : white
+ *         border       : dark blue
+ *     menu helper
+ *         text         : dark blue
+ *         bg           : white
+ *         hover        : light blue
+ *         active text  : white
+ *         active bg    : dark blue
+ *         active hover : dark blue
+
+ */
+.fl-theme-mist :focus,
+.fl-theme-mist .selectable  {
+   /* themed focus indicator */
+  /*
+   outline: 2px solid #dfefff !important;
+   background-color:#4070a1 !important;
+   color: #ffffff !important;
+   */
+}
+
+.fl-theme-mist {color:#000000; background-color:#ffffff; border-color:#4070a1;}
+.fl-theme-mist a {color: #5a95cf; font-weight:bold;}
+.fl-theme-mist a:hover {color: #5a95cf;}
+.fl-theme-mist h1 {color:#4070a1; background-color:#dfefff; border-bottom-width:2px; border-bottom-style:solid;} 
+.fl-theme-mist h2 {color: #5a95cf;}
+
+.fl-theme-mist th {border:1px solid #5a95cf; background-color:#dfefff;}
+.fl-theme-mist td {border:1px solid #999999;}
+.fl-theme-mist .fl-textfield {}
+.fl-theme-mist .fl-textarea {}
+
+/* temp selector to access inline edit input fields (should use a classname but now there is none applied) */
+.fl-theme-mist span input {background-color:#dfefff; border: 1px solid #5a95cf; margin:-1px;}
+
+/* Wrappers and Callouts  */
+.fl-theme-mist .fl-wrapper-widget { border:3px solid #dfefff; background-color:#333; color:#fff;}
+.fl-theme-mist .fl-wrapper-callout { border-color:#999999; background-color:#dfefff; }
+
+/* Helper: Tabs */
+.fl-theme-mist .fl-tabs {border-bottom-color:#4070a1;}
+
+.fl-theme-mist .fl-tabs li  {background-color:#dfefff;}
+.fl-theme-mist .fl-tabs li,
+.fl-theme-mist .fl-tabs li a  {font-weight:bold; color:#4070a1; border-color:#4070a1; border-bottom-color:#4070a1; text-decoration:none;}
+
+
+.fl-theme-mist .fl-tabs li:hover,
+.fl-theme-mist .fl-tabs li:hover a,
+.fl-theme-mist .fl-tabs li a:hover {background-color:#5a95cf; color:#fff;}
+
+.fl-theme-mist .fl-tabs li.fl-activeTab,
+.fl-theme-mist .fl-tabs li.fl-activeTab:hover,
+.fl-theme-mist .fl-tabs li.fl-activeTab a,
+.fl-theme-mist .fl-tabs li.fl-activeTab a:hover {background-color: #fff; border-bottom-color:#fff; color:#508cc9;}
+
+.fl-theme-mist .fl-tab-content {background-color:#ffffff; color:#000;}
+
+/* Helper: Menu */
+.fl-theme-mist .fl-listmenu {border:1px solid #4070a1; background-color:#fff;}
+.fl-theme-mist .fl-listmenu li,
+.fl-theme-mist .fl-listmenu li a  {font-weight:bold; color:#4070a1; background-color:#dfefff; border-color:#4070a1; text-decoration:none;}
+
+.fl-theme-mist .fl-listmenu a:hover {background-color:#5a95cf; color:#fff;}
+.fl-theme-mist .fl-listmenu .fl-activemenu,
+.fl-theme-mist .fl-listmenu .fl-activemenu:hover { background-color: #fff; border-bottom-color:#fff; color:#508cc9;}
+
+/* Helper: Thumbnail Grid */
+.fl-theme-mist .fl-grid {border:2px solid #4070a1; background-color:#fff;}
+.fl-theme-mist .fl-grid li {background-color:#dfefff; border:1px solid #4070a1}
+.fl-theme-mist .fl-grid .caption {background-color:#dfefff; color:#5a95cf; }
+/*
+.fl-theme-mist .fl-grid a:hover,
+.fl-theme-mist .fl-grid a:hover .caption {background-color:#5a95cf; color:#fff;}
+*/
+
+/* Helper: Dialogs */
+.fl-theme-mist .fl-dialog-modal {position:absolute; opacity:0.5; filter:alpha(opacity=50); background-color:#333; top:0; left:0; height:100%; width:100%;}
+.fl-theme-mist .fl-dialog-content {}
+
+
+/*
+                Coal
+=============================================
+ */
+

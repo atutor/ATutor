@@ -1,0 +1,51 @@
+Gradebook ReadMe
+
+This module can be installed with ATutor for:
+1) instructors to manage students' marks from ATutor generated tests, from ATutor assignments, or from external tests and assignments. Multiple Tests can be combined into a single Gradebook entry. Custom scales can be defined and used across courses. Gradebook data can be exported for reporting and data analysis.
+2) students to view their marks for completed tests or assignments, list tests or assignments yet to be completed or yet to be marked, and print out a report of their marks.
+
+For additional documentation see: http://wiki.atutor.ca/display/atutorwiki/Gradebook
+
+* How to install Patcher
+1. Copy the downloaded file into the ATutor mods/ directory and unzip it there. 
+
+On Windows systems use and application like WinZip the extract the file into the mods/ directory
+
+On Unix/Linux systems use the command:
+
+tar xzvf gradebook-0.1.tar.gz
+
+2. Login to ATutor as the administrator and run Install Module under the Modules tab, Select the Gradebook module, which should be listed as available to be installed when the module has been unzipped into the modes directory
+
+3. Once the module has been installed, and enabled, login as instructor, click on tab "Manage", "Gradebook" line is there. Instructors can grant access on gradebook to students through "Student Tools".
+
+* How to use gradebook (for instructors)
+1. Gradebook Scales
+	ATutor includes a number of predefined, commonly used grade scales, used to convert number grades into some other form, such as a letter grade, or a Pass/Fail grade.  In the Grade Scales submenu choose Add Grade Scale to create your own custom scale(s). You may choose to populate the Grade Scale form with an existing scale, then edit the scale to create a new one. Or, you may create a brand new scale. Once created, new scales become available to you in any of the course you own.
+
+2. Add ATutor Test/Assignment to Gradebook
+
+2.1 Add ATutor Assignment
+	Assignments that have been created using the ATutor Assignment Manager can be added to the gradebook. Select the "Title" of the assignment from those available, then select the scale to be used. Once an assignment has been added to the gradebook, marks are entered as "External Marks". Marks may be entered either as a percentage mark or a scale mark. If percentage is used, the gradebook will attempt to convert those percentage marks to a scale mark.
+
+2.2 Add ATutor Test
+	Tests that are created using the ATutor Test & Survey Manager can be added to the gradebook if the test's "Attempts Allowed" property has been set to 1 attempt. Select the test "Title" from those available, then select the Grade Scale to be used for the test. Additional scales can be created by using the Grade Scales tool. Note that Surveys will not be available to add to the Gradebook. Surveys are technically tests in the Test & Survey Manager that do not have any "weight" or mark assigned to questions.
+
+3. Update ATutor Marks
+
+3.1 Update ATutor Marks
+	Marks are imported from ATutor tests, rather than displaying them live from the Test & Surveys Manager. Therefore, when marks are updated in the Test & Surveys Manager, the Gradebook needs to be updated to reimport the modified marks. You may choose to update all ATutor tests at once, or choose only to update a single test at a time. Or, you may choose to update only marks for a single student, on all test or a single test.
+
+3.2 Combine ATutor Tests
+	Different ATutor generated tests can be combined into a single gradebook entry, if for instance you needed to combine marks from a term test, and marks from a make up test for students who happened to miss the term test. As many tests as required can be combined into a single parent test listed in the "Combine Into"  menu. Select the test to be combined from the "Combined From" select menu, then press the "Combine" button to import the marks from that test.  Be sure to run "Update ATutor Marks" on the "Combined Into" test at least once before combining marks from other tests. When combining marks from multiple tests, should you encounter a conflict such as a mark that already exists for a particular student, you will be given the option to overwrite the old mark with the new one, use the old mark, use the higher mark, or use the lower mark. 
+	
+4. External Marks
+
+4.1 Export
+	The Export tool is used to export a course list in a CSV form into which marks can be entered manually, then reimported back into the Gradebook. It can also be used to export marks from the Gradebook to import those marks back into another application such as a spreadsheet, or another database.
+
+4.2 Import
+	Marks from an external assignment or test can be imported in a Comma Separated Values (CSV) file in the form ""firstname", "lastname", "email", "grade"" with one student per line. The mark can either be a scale mark such ""A"" or ""Pass"", or a percentage mark such as "78%". Select the test or assignment previously defined through "Add Tests/Assignment" The first line of the imported file should contain the field names ""First Name, Last Name, Email, Grade" " If it is not included the first line will be removed when the marks are imported.
+
+5. Edit Marks
+	Use the Search feature to narrow the data displayed in the table below. The table below can be printed as a report, or the data displayed in it can be exported as a CSV file to be reimported into a spreadsheet or database for archiving or for additional analysis. External marks displayed in the table can be edited directly from within the table by choosing the appropriate "edit" link, editing either marks for a single student, or editing marks for a single test. To edit marks from ATutor based tests, use the "Test & Surveys Manager". When editing ATutor based marks, be sure to run "Update ATutor Marks" to have the changes take affect in the Gradebook..

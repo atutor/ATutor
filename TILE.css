@@ -1,0 +1,349 @@
+body {
+font-family:  sans-serif;
+padding: 0px;
+margin: 0px;
+}
+
+a {color: #003366;}
+a:active {color: #003366;}
+a:visited {color: #003366;}
+
+textarea {
+color: #003366;
+border-color: #003366;
+border-width: 1px;
+border-style: solid;
+background: #FFFFFF;
+margin-top: 0.5em;
+margin-bottom: 1px;
+padding: 0.1em;
+}
+
+.objective {
+font-weight: bold;
+}
+
+.center {
+text-align: center;
+}
+
+.left {
+text-align: left;
+}
+
+.right {
+text-align: right;
+}
+
+.small {
+font-size: small;
+}
+
+.larger {
+font-size: larger;
+}
+
+.xlarge {
+font-size: x-large;
+}
+
+.bold {
+font-weight: bold;
+}
+
+.acclipHL, a.acclipHL,
+a.acclipHL:link, a.acclipHL:active, a.acclipHL:visited {
+background-color: #003366;
+color: #ffffff;
+}
+
+.excludedItem {
+text-decoration: line-through !important;
+}
+
+.searchResults { 
+margin: 0 0.5em;
+}
+
+.searchhit {
+font-size: larger;
+font-weight: bold;
+}
+
+.errorbox {
+background-color: #ffdddd;
+border: 2px solid red;
+padding: 0 1em;
+}
+
+.error {
+color: red;
+font-weight: bold;
+}
+
+.alert {
+font-weight: bold;
+}
+
+#TILEImage, #TILEObject {
+text-align: center;
+}
+
+#TILELink {
+font-size: larger;
+text-align: center;
+}
+
+#TILEHeading {
+font-size: x-large;
+text-align: center;
+font-weight: bold;
+}
+
+#TILEBanner { 
+text-align: center 
+}
+
+#TILEMenu p {
+text-align: center;
+}
+
+#TILEOriginalContent, #TILENavigationBottom, #TILEMenu {
+padding: 0 1em 0 1em;
+}
+
+#TILENavigationTop {
+padding: 0.5em 1em 0 1em;
+}
+
+.TILENavLink a {
+  color: #000000; 
+  font-weight: bold;
+}
+
+#TILETableOfContentsInner {
+  padding: 0.5em 0.5em 0.5em 0.75em;
+  margin: 0;
+}
+
+#TILETableOfContentsInner ol {
+list-style: none; 
+border: none; 
+padding: 0;
+margin: 0;
+}
+
+#TILETableOfContentsInner li li {
+padding: 0 0 0 0.5em;
+margin: 0;
+}
+
+#TILEMainTableOfContents ol {
+list-style: none; 
+border: none; 
+margin: 0; 
+padding: 0;
+}
+
+#TILEMainTableOfContents li li {
+padding: 0 0 0 1.0em;
+margin: 0;
+}
+
+#TILEMainTableOfContents ul {
+list-style-position: inside;
+padding-left: 0;
+border-left: 0;
+margin-left: 0;
+}
+
+.TILETOCHead {
+}
+
+#TILEMenu {
+text-align: center;
+}
+
+#TILEViewItemPalette {
+position: absolute;
+top: 0;
+left: 80%;
+width: 20%;
+margin: 0;
+border-style: solid;
+border-width: 0;
+border-color: #333333;
+background-color: #EEEEEE;
+overflow: hidden;
+}
+
+#TILEViewItemPaletteInner {
+padding: 0.5em 1.0em 1.0em 1.0em;
+}
+
+#TILEViewItemPaletteInput {
+font-size: small;
+}
+
+.TILEAnnotation {
+background-color: #ffff80;
+color: black;
+width: 95%;
+}
+
+.TILEToolbarHeading {
+font-weight: bold;
+}
+
+.TILEViewItemTextInput {
+width: 65%;
+}
+
+#TILEContent {
+padding: 0 1em;
+}
+
+.searchField {
+font-family: monospace;
+}
+
+div.toptabs {
+    border-bottom-color: #003366;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding: 0.5em 0em 0em 1em;
+}
+
+div.bottomtabs {
+    border-top-color: #003366;
+    border-top-style: solid;
+    border-top-width: 1px;
+    padding: 0em 0em 0.5em 1em;
+}
+
+div.bottomtabs a {
+    border-style: none solid solid solid;
+}
+
+div.toptabs a {
+    border-style: solid solid none solid;
+}
+
+div.tabs {
+    /* Navigational Plone Tabs(tm), implemented by customizing the a tag - 
+    they are surprisingly elegant. The power of CSS runs strong in these :) */
+    background: transparent;
+    border-collapse: collapse;
+    text-align: center;
+    text-transform: lowercase;
+}
+
+div.tabs a {
+    /* The normal, unselected tabs. They are all links */
+    background: transparent;
+    border-color: #003366;
+    border-width: 1px;
+    color: #003366;
+    font-weight: normal;
+    height: 1.2em;
+    margin-right: 0.5em;
+    padding: 0em 0.5em;
+    text-decoration: none;
+}
+
+div.tabs a.selected {
+    /* The selected tab. There's only one of this */
+    background: #CC9900;
+    border-color: #003366;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+    font-weight: normal;
+}
+
+div.tabs a:hover {
+    background: #FFFFFF;
+    border-color: #003366;
+    color: #CC9900;
+}
+
+div.tabs a.singlebutton {
+    color: #CC9900;
+    padding: 0em 2em;
+}
+
+div.tabs a.singlebutton:hover {
+    color: #003366;
+    padding: 0em 2em;
+}
+
+div.uppertabs {
+    /* Bar with personalized menu (user preferences, favorites etc) */
+    background: #FFFFFF;
+    border-top-color: #003366;
+    border-top-style: solid;
+    border-top-width: 1px;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: center;
+    text-transform: lowercase;
+}
+
+div.uppertabs a,
+div.uppertabs a:link, div.uppertabs a:active, div.uppertabs a:visited {
+    background-color: #003366;
+    color: #FFFFFF;
+    font-weight: normal;
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 0.25em 0.5em;
+    border-color: #003366;
+    border-style: solid;
+    border-width: 1px;
+    text-decoration: none;
+}
+
+div.uppertabs a:hover {
+    background-color: #FFFFFF;
+    color: #003366;
+}
+
+div.uppertabs img {
+    vertical-align: bottom;
+}
+
+.activityTemplate {
+  border:1px solid #8888aa;
+  background-color:#f7f8ff;
+  padding: 5px;
+}
+
+dt span.activityTemplate {
+  padding: 2px;
+}
+
+/* Protect TILE controls on the View page against content styles */
+.TILEControl {
+font-family: sans-serif;
+}
+
+/* The summary on the Authoring Tool Publish page */
+table.PublishSummary td, table.PublishSummary th {
+vertical-align: baseline;
+text-align: left;
+}
+
+span.formlabel {
+  float: left;
+  width: 45%;
+  text-align: right;
+}
+span.spaced {
+  padding: 0 10px 0 0;
+}
+
+span.formfield {
+  float: right;
+  width: 55%;
+  text-align: left;
+}

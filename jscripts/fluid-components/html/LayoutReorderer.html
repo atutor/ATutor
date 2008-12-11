@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Simple Layout Reorderer Sample</title>
+        
+        <link rel="stylesheet" type="text/css" href="../css/fluid.reset.css" />
+        <link rel="stylesheet" type="text/css" href="../css/fluid.layout.css" />
+        <link rel="stylesheet" type="text/css" href="../css/fluid.states.css" />
+        <link rel="stylesheet" type="text/css" href="../css/fluid.themes.css" />
+        <link rel="stylesheet" type="text/css" href="../css/LayoutReorderer.css" />
+        
+        <script type="text/javascript" src="../js/jquery/jquery-1.2.6.js"></script>
+        <script type="text/javascript" src="../js/jquery/jARIA.js"></script>
+        <script type="text/javascript" src="../js/jquery/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../js/jquery/ui.core.js"></script>
+        <script type="text/javascript" src="../js/jquery/ui.draggable.js"></script>
+        <script type="text/javascript" src="../js/json/json2.js"></script>
+        
+        <script type="text/javascript" src="../js/fluid/Fluid.js"></script>
+        <script type="text/javascript" src="../js/fluid/FluidDOMUtilities.js"></script>
+        <script type="text/javascript" src="../js/fluid/GeometricManager.js"></script>        
+        <script type="text/javascript" src="../js/fluid/Reorderer.js"></script>
+        <script type="text/javascript" src="../js/fluid/LayoutReorderer.js"></script>
+        <script type="text/javascript" src="../js/fluid/ModuleLayout.js"></script>
+
+        <script type="text/javascript">
+            // all elements (columns and sortable portlets) must have a unique ID as of Fluid 0.4
+            // Can this change to either manually or automatically assigning unique identifiers/classnames (avoiding taking over the ID)?
+            
+            // all columns/modules must be reachable by a selctor that can be safely scoped to the container            
+            // you can use any css selector pattern to find columns and modules, as long as jQuery selectors support it
+            jQuery(document).ready(function () {
+                /******************************************/
+                // Example 1, grab by class names
+                    fluid.reorderLayout ("#fluid-LayoutReorderer-sample1", {
+                        selectors: {
+                            columns: ".myColumn",
+                            modules: ".mySortable"
+                        }
+                    });
+                               
+                
+                /******************************************/
+                // Example 3, the most robust layout system with locked portlets
+                fluid.reorderLayout ("#fluid-LayoutReorderer-sample2", {
+                    selectors: {
+                        columns: ".myColumn",
+                        modules: "> div > div",
+                        lockedModules: ".locked",
+                        dropWarning: ".dropWarning"
+                    }
+                });
+              
+            });
+        </script>
+	</head>
+	<body>
+	    <div class="example">
+            <h1>Example 1: A simple set of sortable elements within columns</h1>
+            <p>Sortable elements are also sometimes called "portlets".</p>
+            <div id="fluid-LayoutReorderer-sample1" class="columnSetup1 fluid-vertical-order">
+                <div class="myColumn fl-container-flex30 fl-force-left">
+                    <h2>Column A</h2>
+                    <div class="mySortable">Draggable Content (1)</div>
+                    <div class="mySortable">Draggable Content (2)</div>
+                    <div class="mySortable">Draggable Content (3)</div>
+                    <div class="mySortable">Draggable Content (4)</div>
+                    <div class="mySortable">Draggable Content (5)</div>
+                </div>
+                <div class="myColumn fl-container-flex30 fl-force-left">
+                    <h2>Column B</h2>
+                    <div class="mySortable">Draggable Content (6)</div>
+                    <div class="mySortable">Draggable Content (7)</div>
+                </div>
+                <div class="myColumn fl-container-flex30 fl-force-left">
+                    <h2>Column C</h2>
+                    <div class="mySortable">Draggable Content (8)</div>
+                    <div class="mySortable">Draggable Content (9)</div>
+                    <div class="mySortable">Draggable Content (10)</div>
+                </div>
+            </div>
+        </div>     
+
+        <div class="example">
+            <h1>Example 2: Complex sorting</h1>
+            <p>The most robust sorting mechanism. Includes locked portlets.</p>
+    
+            <div id="fluid-LayoutReorderer-sample2" class="columnSetup3 fluid-vertical-order">
+            	 <!-- invalid drag n drop message template -->
+                <div class="dropWarning">Can't place about locked portlet</div>
+
+                <div class="myColumn">
+                    <h2>Column A</h2>
+                    <div class="locked">Content Portal A1 (Locked)</div>
+                    <div>Content Portal A2</div>
+                    <div>Content Portal A3</div>
+                    <div>Content Portal A4</div>
+                </div>
+                <div class="myColumn">
+                    <h2>Column B</h2>
+                    <div class="locked">Content Portal B1 (Locked)</div>
+                    <div>Content Portal B2</div>
+                    <div>Content Portal B3</div>
+                    <div>Content Portal B4</div>
+                </div>
+                <div class="myColumn">
+                    <h2>Column C</h2>
+                    <div>Content Portal C1</div>
+                    <div>Content Portal C2</div>
+                    <div>Content Portal C3</div>
+                    <div>Content Portal C4</div>
+                </div>
+            </div>
+        </div>
+
+                
+	</body>
+</html>
+

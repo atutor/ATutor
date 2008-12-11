@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Reorder Examples</title>
+
+        <link rel="stylesheet" type="text/css" href="../css/fluid.presentation.css" />
+        <link rel="stylesheet" type="text/css" href="../css/fluid.states.css" />
+        <link rel="stylesheet" type="text/css" href="../css/Reorderer.css" />
+
+        <script type="text/javascript" src="../js/jquery/jquery-1.2.6.js"></script>
+        <script type="text/javascript" src="../js/jquery/jARIA.js"></script>
+        <script type="text/javascript" src="../js/jquery/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../js/jquery/ui.core.js"></script>
+        <script type="text/javascript" src="../js/jquery/ui.draggable.js"></script>
+        <script type="text/javascript" src="../js/fluid/Fluid.js"></script>
+        <script type="text/javascript" src="../js/fluid/FluidDOMUtilities.js"></script>
+        <script type="text/javascript" src="../js/fluid/GeometricManager.js"></script>
+        <script type="text/javascript" src="../js/fluid/Reorderer.js"></script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                /* only specific list items are sortable */
+                var reorder_example_list = fluid.reorderList('#myList', {
+                    selectors : {
+                        movables : 'li.orderable',
+                        selectables: 'li',
+                        dropTargets: 'li'
+                    }
+                });
+
+                /* only specific list items are sortable */
+                var reorder_example_tabs = fluid.reorderList('#myTabs',  {
+                    selectors : {
+                        movables : 'li'
+                    },
+                    orientation : fluid.orientation.HORIZONTAL
+                });
+
+                /* two-dimensional sorting in a grid */                
+                var reorder_example_grid = fluid.reorderGrid('#myGrid',  {
+                    selectors : {
+                        movables : 'p'
+                    }
+                });
+
+            });
+        </script>
+
+    </head>
+    <body>
+        <h1>Example 1. Semi-sortable List</h1>
+        <p>This list only has a few sortable items</p>
+        <ol id="myList" class="fluid-vertical-order">
+          <li class="orderable">I'm sortable</li>
+
+          <li>Not sortable</li>
+
+          <li>Not sortable</li>
+
+          <li class="orderable">I'm sortable</li>
+
+          <li class="orderable">I'm sortable</li>
+
+          <li>Not sortable</li>
+
+          <li class="orderable">I'm sortable</li>
+   
+        </ol>
+
+        <h1>Example 2. Sortable Tabs</h1>
+        <p>List items laid out as horizontal tabs</p>
+        <ul id="myTabs" class="fluid-horizontal-order">
+            <li class="activeTab"><a href="#">Tab A</a></li>
+            <li><a href="#">Tab B</a></li>
+            <li><a href="#">Tab C</a></li>
+            <li><a href="#">Tab D</a></li>
+            <li><a href="#">Tab E</a></li>
+        </ul>
+        <div class="tabsContent">
+            Some content here....
+        </div>
+        
+        <h1>Example 3. Sortable Grid</h1>
+        <p>Items are laid out in a grid pattern</p>
+        <div id="myGrid" class="fluid-horizontal-order">
+            <p>You</p>
+            <p>I</p>           
+            <p>Are</p>
+            <p>Am</p>
+            <p>We</p>
+            <p>Wonderful</p>
+            <p>Dogs</p>
+            <p>Cat</p>
+            <p>Happy</p>
+        </div>
+    </body>
+</html>
