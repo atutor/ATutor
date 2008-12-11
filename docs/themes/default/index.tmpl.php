@@ -27,7 +27,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 	<?php foreach ($this->announcements as $item): ?>
 		<div class="news">
 			<h3><?php echo $item['title']; ?></h3>
-			<p><span class="date"><?php echo $item['date'] .' '. _AT('by').' ' . $item['author']; ?></span> &nbsp; <?php echo $item['body']; ?></p>
+			<p><span class="date"><?php echo $item['date'] .' '. _AT('by').' ' . $item['author']; ?></span></p> <?php echo $item['body']; ?>
 		</div>
 	<?php endforeach; ?>
 
