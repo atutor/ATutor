@@ -83,7 +83,7 @@ function print_organizations($parent_id,
 				$content['content_path'] .= '/';
 			}
 
-			$link = $prevfix.'<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'" parameters="'.htmlentities($content['test_message']).'">'."\n";
+			$link = $prevfix.'<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'" parameters="'.htmlentities($content['test_message'], ENT_QUOTES, 'UTF-8').'">'."\n";
 			$html_link = '<a href="resources/'.$content['content_path'].$content['content_id'].'.html" target="body">'.$content['title'].'</a>';
 			
 			/* save the content as HTML files */
