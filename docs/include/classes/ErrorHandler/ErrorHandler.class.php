@@ -173,7 +173,7 @@ class ErrorHandler {
 					 */
 					case 'VITAL': // @see vital.inc.php
 						if ($this->LOG_ERR_TO_FILE) { 
-								if ($val_phhinfo_printed === true) {
+								if ($val_phpinfo_printed === true) {
 									$val_phpinfo = '';
 								}
 								$this->log_to_files($val_phpinfo, $val_phpinfo_foot, 'ATutor v' . VERSION . '<br/>'. 'PHP ERROR MESSAGE:' . '<br/><p>'
@@ -193,7 +193,7 @@ class ErrorHandler {
 						
 					case 'BKP_MEMBER': // @see TableBackup.class.php
 						if ($this->LOG_ERR_TO_FILE) { 
-								if ($val_phhinfo_printed === true) {
+								if ($val_phpinfo_printed === true) {
 									$val_phpinfo = '';
 								}
 								$this->log_to_files($val_phpinfo, $val_phpinfo_foot, 'ATutor v' . VERSION . '<br/>'. 'PHP ERROR MESSAGE:' . '<br/><p>'
@@ -213,7 +213,7 @@ class ErrorHandler {
 					
 					default: // standard user error without custom prefix
 						if ($this->LOG_ERR_TO_FILE) { 
-								if ($val_phhinfo_printed === true) {
+								if ($val_phpinfo_printed === true) {
 									$val_phpinfo = '';
 								}
 								
@@ -235,7 +235,7 @@ class ErrorHandler {
 			case E_WARNING: 
 			case E_USER_WARNING: 
 				if ($this->LOG_WARN_TO_FILE) { 
-					if ($val_phhinfo_printed === true) {
+					if ($val_phpinfo_printed === true) {
 						$val_phpinfo = '';
 					}
 								
