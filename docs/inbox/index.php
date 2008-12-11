@@ -102,8 +102,8 @@ if (isset($_GET['view']) && $_GET['view']) {
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
 $result = mysql_query($sql,$db);
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data static" summary="" rules="rows" width="55%">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form" >
+<table class="data" summary="" rules="rows" width="55%">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
@@ -124,7 +124,7 @@ $result = mysql_query($sql,$db);
 		<?php if ($row['message_id'] == $_GET['view']): ?>
 			<tr class="selected">
 		<?php else: ?>
-			<tr>
+			<tr onmousedown="document.form['m<?php echo $row['message_id']; ?>'].checked = !document.form['m<?php echo $row['message_id']; ?>'].checked; rowselectbox(this, document.form['m<?php echo $row['message_id']; ?>'].checked, '');" id="r_<?php echo $row['message_id']; ?>_1">
 		<?php endif; ?>
 		<td><input type="checkbox" name="id[]" value="<?php echo $row['message_id']; ?>" id="m<?php echo $row['message_id']; ?>" <?php if (isset($_POST['id']) && in_array($row['message_id'], $_POST['id'])) { echo 'checked="checked"'; } ?> title="<?php echo _AT('delete').': '.AT_print($row['subject'], 'messages.subject');?>"/></td>
 		<td valign="middle">
@@ -147,13 +147,13 @@ $result = mysql_query($sql,$db);
 		}
 		echo '</td>';
 
-		echo '<td>';
+		echo '<td><label for="m'.$row['message_id'].'">';
 		if ($_GET['view'] != $row['message_id']) {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row['message_id'].'">'.AT_print($row['subject'], 'messages.subject').'</a>';
 		} else {
 			echo '<strong>'.AT_print($row['subject'], 'messages.subject').'</strong>';
 		}
-		echo '</td>';
+		echo '</label></td>';
 	
 		echo '<td valign="middle" align="left" nowrap="nowrap">';
 		echo AT_date(_AT('inbox_date_format'),  $row['date_sent'], AT_DATE_MYSQL_DATETIME);
