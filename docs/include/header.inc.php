@@ -40,7 +40,7 @@ global $substr, $strlen;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 require(AT_INCLUDE_PATH . 'lib/pref_functions.inc.php');
-require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
+//require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
 
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
@@ -268,7 +268,7 @@ if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['pop
 	$savant->display('include/fm_header.tmpl.php');
 } else {
 
-	$savant->assign('opensocial', open_social_libs($_base_href));
+//	$savant->assign('opensocial', open_social_libs($_base_href));
 	$savant->display('include/header.tmpl.php');
 
 }
