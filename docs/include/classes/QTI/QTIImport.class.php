@@ -78,7 +78,7 @@ class QTIImport {
 	 * @return	int		the question ids.
 	 */
 	function importQuestions($attributes){
-		global $supported_media_type;
+		global $supported_media_type, $msg;
 		$qids = array();
 
 		foreach($attributes as $resource=>$attrs){
