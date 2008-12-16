@@ -47,25 +47,26 @@ $connection = @file_get_contents($connection_test_file);
 
 if (!$connection) 
 {
-	$infos = array('CANNOT_CONNECT_SERVER', $update_server);
-	$msg->addError($infos);
-	
-	require(AT_INCLUDE_PATH.'header.inc.php');
-  $msg->printAll();
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
+	$msg->addInfo(array('CANNOT_CONNECT_MOD_SERVER'));
 }
-
-// get module list
-$module_folder = $update_server . '/modules/';
-
-$module_list_xml = @file_get_contents($module_folder . 'module_list.xml');
-
-if ($module_list_xml) 
+else
 {
-	$moduleListParser =& new ModuleListParser();
-	$moduleListParser->parse($module_list_xml);
-	$module_list_array = $moduleListParser->getParsedArray();
+	// get module list
+	$module_folder = $update_server . '/modules/';
+	
+	$module_list_xml = @file_get_contents($module_folder . 'module_list.xml');
+	
+	if ($module_list_xml) 
+	{
+		$moduleListParser =& new ModuleListParser();
+		$moduleListParser->parse($module_list_xml);
+		$module_list_array = $moduleListParser->getParsedArray();
+	}
+	// end of get module list
+	
+	$module_content_folder = AT_CONTENT_DIR . "module/";
+	
+	if (!is_dir($module_content_folder)) mkdir($module_content_folder);
 }
 // end of get module list
 
@@ -194,7 +195,7 @@ natsort($keys);
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printErrors();
+$msg->printAll();
 
 ?>
 
