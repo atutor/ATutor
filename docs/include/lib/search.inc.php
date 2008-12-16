@@ -188,11 +188,11 @@ function get_forums_search_result($words, $predicate, $course_id, &$total_score,
 	$sql .= '	UNION ';
 
 	//group forums 
-	$sql .= '	SELECT forum_id, course_id, title, description, num_topics, num_posts, last_post, mins_to_edit FROM at_forums_groups NATURAL JOIN ';
-	$sql .= '	(SELECT forum_id, num_topics, num_posts, last_post, mins_to_edit FROM at_forums) AS f NATURAL JOIN ';
-	$sql .= '	AT_groups_members NATURAL JOIN ';
-	$sql .= '	(SELECT g.*, gt.course_id FROM at_groups g INNER JOIN at_groups_types gt USING (type_id) WHERE course_id='.$course_id.') AS group_course WHERE		';
-	$sql .=		$is_admin_string .'member_id='.$member_id;
+	$sql .= '	SELECT forum_id, course_id, title, description, num_topics, num_posts, last_post, mins_to_edit FROM '.TABLE_PREFIX.'forums_groups NATURAL JOIN ';
+	$sql .= '	(SELECT forum_id, num_topics, num_posts, last_post, mins_to_edit FROM '.TABLE_PREFIX.'forums) AS f NATURAL JOIN ';
+	$sql .= '	'.TABLE_PREFIX.'groups_members NATURAL JOIN ';
+	$sql .= '	(SELECT g.*, gt.course_id FROM '.TABLE_PREFIX.'groups g INNER JOIN '.TABLE_PREFIX.'groups_types gt USING (type_id) WHERE ';
+	$sql .=	'	course_id='.$course_id.') AS group_course WHERE	'.$is_admin_string .'member_id='.$member_id;
 	$sql .=	') AS course_group_forums ';
 	
 	$sql .=	'USING (forum_id) ';
