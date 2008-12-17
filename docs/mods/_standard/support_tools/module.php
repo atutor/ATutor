@@ -26,7 +26,6 @@ if (admin_authenticate(AT_ADMIN_PRIV_SUPPORT_TOOLS, TRUE) || admin_authenticate(
 		$this->_pages['mods/_standard/support_tools/scaffolds.php']['parent']    = 'admin/courses.php';
 		$this->_pages['mods/_standard/support_tools/scaffolds.php']['title_var'] = 'support_tools';
 		$this->_pages['admin/courses.php']['children'] = array('mods/_standard/support_tools/scaffolds.php');
-		$this->_pages['admin/forums.php']['parent']    = 'admin/courses.php';
 	} 
 }
 ?>
