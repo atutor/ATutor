@@ -100,7 +100,7 @@ CREATE TABLE `blog_posts_comments` (
 
 CREATE TABLE `config` (
   `name` CHAR( 30 ) NOT NULL default '',
-  `value` CHAR( 255 ) NOT NULL default '',
+  `value` TEXT NOT NULL default '',
   PRIMARY KEY ( `name` )
 ) TYPE = MYISAM;
 
