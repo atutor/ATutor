@@ -675,21 +675,36 @@ class Patch {
 	*/
 	function strReplace($search, $replace, $subject)
 	{
+		// Note: "\n\r", "\r\n" must come after "\n", "\r" in the array.
+		// otherwise, the new line replace underneath would wrongly replace "\n\r" to "\r\r" or "\n\n"
 		$new_line_array = array("\n", "\r", "\n\r", "\r\n");
 		
 		foreach ($new_line_array as $new_line)
 		{
-			if (preg_match('/'.preg_quote($new_line).'/', $search) > 0)   $search_new_line = $new_line;
-			if (preg_match('/'.preg_quote($new_line).'/', $replace) > 0)   $replace_new_line = $new_line;
-			if (preg_match('/'.preg_quote($new_line).'/', $subject) > 0)   $subject_new_line = $new_line;
+			if (preg_match('/'.preg_quote($new_line).'/', $search) > 0)   $search_new_lines[] = $new_line;
+			if (preg_match('/'.preg_quote($new_line).'/', $replace) > 0)   $replace_new_lines[] = $new_line;
+			if (preg_match('/'.preg_quote($new_line).'/', $subject) > 0)   $subject_new_lines[] = $new_line;
 		}
 
-		// replace new line chars in $search & $replace to new line in $subject
-		if ($search_new_line <> "" && $search_new_line <> $subject_new_line) 
-			$search = preg_replace('/'.preg_quote($search_new_line).'/', $subject_new_line, $search);
+		// replace new line chars in $search, $replace, $subject to the last new line in $subject
+		if (is_array($subject_new_line)) $new_line_replace_to = array_pop($subject_new_lines);
 		
-		if ($replace_new_line <> "" && $replace_new_line <> $subject_new_line) 
-			$replace = preg_replace('/'.preg_quote($replace_new_line).'/', $subject_new_line, $replace);
+		if ($new_line_replace_to <> '')
+		{
+			if (count($search_new_lines) > 0)
+				foreach ($search_new_lines as $new_line)
+					if ($new_line <> $new_line_replace_to)
+						$search = preg_replace('/'.preg_quote($new_line).'/', $subject_new_line, $search);
+			
+			if (count($replace_new_lines) > 0)
+				foreach ($replace_new_lines as $new_line)
+					if ($new_line <> $new_line_replace_to)
+						$replace = preg_replace('/'.preg_quote($new_line).'/', $subject_new_line, $replace);
+			
+			if (count($subject_new_lines) > 0)
+				foreach ($subject_new_lines as $new_line)
+					$replace = preg_replace('/'.preg_quote($new_line).'/', $subject_new_line, $subject);
+		}
 		
 		return preg_replace('/'. preg_quote($search, '/') .'/', $replace, $subject);
 	}
