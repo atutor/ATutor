@@ -212,7 +212,7 @@ else
 </div>
 </form>
 
-<form name="form1" method="post" action="mods/gradebook/verify_tests.php">
+<form name="form1" method="post" action="mods/_standard/gradebook/verify_tests.php">
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('combine_tests'); ?></legend>
 	<div class="row">

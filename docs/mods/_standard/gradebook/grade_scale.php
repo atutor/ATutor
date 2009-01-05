@@ -60,7 +60,7 @@ else if (!empty($_POST) && !isset($_POST['grade_scale_id'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
-<form name="form" method="post" action="<?php echo 'mods/gradebook/grade_scale.php'; ?>">
+<form name="form" method="post" action="mods/_standard/gradebook/grade_scale.php">
 
 <h3 align="center"><?php echo _AT('custom_grade_scale'); ?></h3>
 

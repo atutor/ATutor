@@ -52,7 +52,7 @@ $sql = "(SELECT g.gradebook_test_id, g.id, type, t.title, t.end_date due_date, g
 				" WHERE g.type='ATutor Assignment'".
 				" AND g.id = a.assignment_id".
 				" AND a.course_id=".$_SESSION["course_id"].
-				" ORDER BY title)";
+				" ORDER BY title)".
 				" UNION (SELECT gradebook_test_id, id, type, title, due_date, grade_scale_id, '' result_release ".
 				" FROM ".TABLE_PREFIX."gradebook_tests".
 				" WHERE course_id=".$_SESSION["course_id"].

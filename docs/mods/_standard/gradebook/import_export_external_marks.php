@@ -186,7 +186,7 @@ else
 
 <br /><br />
 
-<form name="form1" method="post" action="mods/gradebook/verify_list.php" enctype="multipart/form-data">
+<form name="form1" method="post" action="mods/_standard/gradebook/verify_list.php" enctype="multipart/form-data">
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import'); ?></legend>
 	<div class="row">
