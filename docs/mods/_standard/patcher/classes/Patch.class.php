@@ -675,9 +675,10 @@ class Patch {
 	*/
 	function strReplace($search, $replace, $subject)
 	{
-		// Note: "\n\r", "\r\n" must come after "\n", "\r" in the array.
+		// Note: DO NOT change the order of the array elements. 
+		// "\n\r", "\r\n" must come before "\n", "\r" in the array, 
 		// otherwise, the new line replace underneath would wrongly replace "\n\r" to "\r\r" or "\n\n"
-		$new_line_array = array("\n", "\r", "\n\r", "\r\n");
+		$new_line_array = array("\n\r", "\r\n", "\r", "\n");
 		
 		foreach ($new_line_array as $new_line)
 		{
@@ -687,23 +688,23 @@ class Patch {
 		}
 
 		// replace new line chars in $search, $replace, $subject to the last new line in $subject
-		if (is_array($subject_new_line)) $new_line_replace_to = array_pop($subject_new_lines);
-		
+		if (is_array($subject_new_lines)) $new_line_replace_to = array_pop(&$subject_new_lines);
+
 		if ($new_line_replace_to <> '')
 		{
 			if (count($search_new_lines) > 0)
 				foreach ($search_new_lines as $new_line)
 					if ($new_line <> $new_line_replace_to)
-						$search = preg_replace('/'.preg_quote($new_line).'/', $subject_new_line, $search);
+						$search = preg_replace('/'.preg_quote($new_line).'/', $new_line_replace_to, $search);
 			
 			if (count($replace_new_lines) > 0)
 				foreach ($replace_new_lines as $new_line)
 					if ($new_line <> $new_line_replace_to)
-						$replace = preg_replace('/'.preg_quote($new_line).'/', $subject_new_line, $replace);
+						$replace = preg_replace('/'.preg_quote($new_line).'/', $new_line_replace_to, $replace);
 			
 			if (count($subject_new_lines) > 0)
 				foreach ($subject_new_lines as $new_line)
-					$replace = preg_replace('/'.preg_quote($new_line).'/', $subject_new_line, $subject);
+					$subject = preg_replace('/'.preg_quote($new_line).'/', $new_line_replace_to, $subject);
 		}
 		
 		return preg_replace('/'. preg_quote($search, '/') .'/', $replace, $subject);

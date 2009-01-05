@@ -368,11 +368,12 @@ else
 			if (!is_patch_installed($new_patch['atutor_patch_id']))
 			{
 				$dependent_patches_installed = true;
-			
+				$dependent_patches = "";
+				
 				// check if the dependent patches are installed
 				if (is_array($new_patch["dependent_patches"]))
 				{
-					$dependent_patches = "";
+					
 					foreach ($new_patch["dependent_patches"] as $num => $dependent_patch)
 					{
 						if (!is_patch_installed($dependent_patch))
