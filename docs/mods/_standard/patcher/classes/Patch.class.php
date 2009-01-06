@@ -450,8 +450,8 @@ class Patch {
 		$local_file = $folder.$file;
 
 		// if svn script does not exist, consider the script is modified
-		if (!file_exists($svn_file)) return true;
-		
+		if (!file_get_contents($svn_file)) return true;
+
 		// check if the local file has been modified by user. if it is, don't overwrite
 		if ($this->compareFiles($svn_file, $local_file) <> 0)
 		{
@@ -659,7 +659,7 @@ class Patch {
 		
 		$src_content = preg_replace($pattern, '', file_get_contents($src));
 		$dest_content = preg_replace($pattern, '', file_get_contents($dest));
-		
+
 		return strcasecmp($src_content, $dest_content);
 	}
 	
