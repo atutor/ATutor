@@ -96,7 +96,7 @@ if ($do_check) {
 
 	<div class="row">
 		<strong><?php echo _AT('or'); ?></strong> <label for="uploadedfile"><?php echo _AT('paste_file'); ?></label><br />
-		<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" /><br />
+		<input type="file" name="uploadedfile_paste" id="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" /><br />
 		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
 		&middot;<?php echo _AT('edit_after_upload'); ?></small>
 	</div>
