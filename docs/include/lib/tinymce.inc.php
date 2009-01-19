@@ -57,7 +57,7 @@ tinyMCE.init({
 	}	
 	echo 'theme : "advanced",
 	relative_urls : true,
-	content_css :"'.$_base_path.'/themes/'.$_SESSION['prefs'][PREF_THEME].'/styles.css",
+	content_css :"'.$_base_path.'/include/lib/tinymce_styles.css",
 	convert_urls : true,
 	convert_fonts_to_spans : true,
 	accessibility_warnings : true,
