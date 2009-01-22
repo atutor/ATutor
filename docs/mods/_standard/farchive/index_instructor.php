@@ -116,7 +116,7 @@ function submForm() {
     var frm = document.getElementById('selForum'); 
     var id = frm.options[frm.selectedIndex].value;
     var title = frm.options[frm.selectedIndex].text;
-    document.forms[0].action = 'mods/farchive/send_zip_archive.php?fid='+id+'&title='+title;
+    document.forms[0].action = 'mods/_standard/farchive/send_zip_archive.php?fid='+id+'&title='+title;
     document.forms[0].submit();
 }
 </script>
