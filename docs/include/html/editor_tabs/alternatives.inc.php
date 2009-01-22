@@ -231,7 +231,7 @@ else{
 		$body_ins = $_POST['body_text'];
 	else 
 	{
-		$sql = "SELECT * FROM AT_content WHERE content_id='$cid'";
+		$sql = "SELECT * FROM ".TABLE_PREFIX."content WHERE content_id='$cid'";
 		$result = mysql_query($sql, $db);
 
 		while ($row = mysql_fetch_assoc($result)) 
