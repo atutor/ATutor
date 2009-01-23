@@ -36,7 +36,12 @@ if (isset($_POST['cancel'])) {
 		$hash_bit = substr($hash, 5, 15);
 		
 		$change_link = $_base_href.'password_reminder.php?id='.$row['member_id'].'&g='.$gen.'&h='.$hash_bit;
-		$tmp_message  = _AT(array('password_request2',$row['login'], $_base_href, AT_PASSWORD_REMINDER_EXPIRY, $change_link));
+		if($row['first_name'] != ''){
+			$reply_name = $row['first_name'];
+		}else{
+			$reply_name = $row['login'];
+		}
+		$tmp_message  = _AT(array('password_request2',$reply_name, $row['login'], AT_PASSWORD_REMINDER_EXPIRY, $change_link));
 
 		//send email
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
