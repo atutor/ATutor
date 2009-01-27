@@ -24,7 +24,7 @@ $zipfile->add_file(file_get_contents(AT_CONTENT_DIR.'/styles.css'), 'styles.css'
 unlink(AT_CONTENT_DIR.'/styles.css');
 
 // replaces spaces with underscores
-if (stripos($forum_title, chr(32)) != false) {
+if (strpos($forum_title, chr(32)) != false) {
     $forum_title = str_replace(chr(32), chr(95), $forum_title);
 }
 $zipfile->send_file($forum_title);
