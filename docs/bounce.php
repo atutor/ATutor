@@ -124,6 +124,13 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 }
 
 if (!empty($_REQUEST['pu'])) {
+	//request ib stands for 'is bounced', this is to avoid the infinite 302 redirect
+	//A better way to deal with this rather than using querystring? (Session won't work)
+	if (!empty($_REQUEST['ib'])) {
+		return;
+	}
+	$_REQUEST['pu'] .= SEP .'ib=1';
+
 	//for pretty url iff mod_rewrite is not on
 	if ($_config['apache_mod_rewrite'] > 0){
 		//URL are in pretty format, but not in .htaccess RewriteRule format

@@ -267,8 +267,9 @@ if ((!isset($_SESSION['course_id']) || $_SESSION['course_id'] == 0) && ($_user_l
 /* check if we are in the requested course, if not, bounce to it.
  * @author harris, for pretty url, read AT_PRETTY_URL_HANDLER
  */ 
-if (isset($_pretty_url_course_id) && $_SESSION['course_id'] != $_pretty_url_course_id){
-//	$_SESSION['course_id'] = $_pretty_url_course_id;
+if ((isset($_SESSION['course_id']) && isset($_pretty_url_course_id) && $_SESSION['course_id'] != $_pretty_url_course_id) ||
+	(isset($_pretty_url_course_id) && !isset($_SESSION['course_id']) && !isset($_REQUEST['ib']))) {
+
 	if($_config['pretty_url'] == 0){
 		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id.SEP.'pu='.$_SERVER['PATH_INFO'].urlencode('?'.$_SERVER['QUERY_STRING']));
 	} else {
