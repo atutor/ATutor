@@ -1,6 +1,12 @@
 # BEGIN ATutor
 <IfModule mod_rewrite.c>
 RewriteEngine On
+#RewriteBase	/ATutor
+
+#Takes out ib flag
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)\&ib\=1$ $1 [L]
 
 #Forums rules
 RewriteCond     %{REQUEST_FILENAME}     !-f
