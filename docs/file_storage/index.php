@@ -39,6 +39,7 @@ if (isset($_GET['files'])){
 
 if (isset($_GET['submit_workspace'])) {
 	unset($_GET['folder']);
+	unset($assignment_for);
 
 	$owner_type = abs($_GET['ot']);
 
@@ -52,8 +53,12 @@ if (isset($_GET['submit_workspace'])) {
 			unset($owner_id);
 		}
 	} else if ($owner_type == WORKSPACE_ASSIGNMENT) {
-		$parts = explode('_', $_GET['ot'], 2);
+		$parts = explode('_', $_GET['ot'], 3);
+
 		if (isset($parts[1]) && $parts[1]) {
+			if ($parts[2] == 'my') {
+				$assignment_for = 'my'; 
+			}
 			$owner_id = $parts[1];
 		} else {
 			$owner_type = WORKSPACE_ASSIGNMENT;
@@ -93,6 +98,10 @@ if (!isset($owner_id)) {
 }
 
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
+
+if ($assignment_for == 'my') {
+	$owner_arg_prefix .= 'folder='.$_SESSION['member_id'];	
+}
 if (!($owner_status = fs_authenticate($owner_type, $owner_id))) {
 	$msg->addError('ACCESS_DENIED');
 	header('Location: '.url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
@@ -487,6 +496,20 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 		$file_storage_assignments[] = $row;
 	}
 }
+
+if ($_SESSION['member_id'] && $_SESSION['enroll']){
+	$my_assignments = array();
+	$sql = "SELECT distinct a.title, a.assignment_id FROM ".TABLE_PREFIX."assignments a, ".TABLE_PREFIX."files f
+	         WHERE a.course_id = ".$_SESSION[course_id]."
+	           AND a.assignment_id = f.owner_id
+	           AND f.owner_type= ".WORKSPACE_ASSIGNMENT."
+	           AND f.member_id = ".$_SESSION['member_id']."
+	         ORDER BY a.title";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$my_assignments[] = $row;
+	}
+}
 ?>
 
 <form method="get" action="<?php echo url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER);?>" name="form">
@@ -520,6 +543,13 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 				<optgroup label="<?php echo _AT('groups'); ?>">
 					<?php foreach ($file_storage_groups as $group): ?>
 						<option value="<?php echo WORKSPACE_GROUP; ?>_<?php echo $group['group_id']; ?>" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == $group['group_id']) { echo 'selected="selected"'; } ?>><?php echo $group['title']; ?></option>
+					<?php endforeach; ?>
+				</optgroup>
+			<?php endif; ?>
+			<?php if (count($my_assignments) != 0) : ?>
+				<optgroup label="<?php echo _AT('assignments'); ?>">
+					<?php foreach ($my_assignments as $my_assignment): ?>
+						<option value="<?php echo WORKSPACE_ASSIGNMENT; ?>_<?php echo $my_assignment['assignment_id']; ?>_my" <?php if ($owner_type == WORKSPACE_ASSIGNMENT && $owner_id == $my_assignment['assignment_id']) { echo 'selected="selected"'; } ?>><?php echo $my_assignment['title']; ?></option>
 					<?php endforeach; ?>
 				</optgroup>
 			<?php endif; ?>

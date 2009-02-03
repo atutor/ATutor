@@ -43,10 +43,25 @@ function fs_authenticate($owner_type, $owner_id) {
 
 		return WORKSPACE_AUTH_RW;
 
-	} else if ($owner_type == WORKSPACE_ASSIGNMENT && authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
-		// instructors have read only access to assignments
-
-		return WORKSPACE_AUTH_READ;
+	} else if ($owner_type == WORKSPACE_ASSIGNMENT) {
+		if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN))
+		{ 
+			// instructors have read only access to assignments
+			return WORKSPACE_AUTH_READ;
+		}
+		else
+		{ 
+			// students have read access to their own assignments
+			global $db;
+			$sql = "SELECT COUNT(*) cnt FROM ".TABLE_PREFIX."files
+			         WHERE owner_id =".$owner_id."
+	                   AND owner_type= ".WORKSPACE_ASSIGNMENT."
+	                   AND member_id = ".$_SESSION['member_id'];
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			
+			if ($row['cnt'] > 0) RETURN WORKSPACE_AUTH_READ;
+		}
 	
 	} else if ($owner_type == WORKSPACE_GROUP) {
 		if (isset($_SESSION['groups'][$owner_id])) {
