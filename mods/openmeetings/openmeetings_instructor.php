@@ -33,6 +33,10 @@ if (isset($_POST['create_room']) && isset($_POST['room_id'])) {
 	$_POST['room_id'] = intval($_POST['room_id']);
 	$om_obj->om_deleteRoom($_POST['room_id']);
 	$msg->addFeedback('OPENMEETINGS_DELETE_SUCEEDED');
+} elseif (isset($_POST['delete_room']) && isset($_POST['room_id'])){
+	$_POST['room_id'] = intval($_POST['room_id']);
+	$om_obj->om_deleteRoom($_POST['room_id']);
+	$msg->addFeedback('OPENMEETINGS_DELETE_SUCEEDED');
 } elseif (isset($_POST['create_room']) || (isset($_POST['update_room']) && isset($_POST['room_id']))){
 	//mysql escape
 	$_POST['openmeetings_roomtype']				= intval($_POST['openmeetings_roomtype']);

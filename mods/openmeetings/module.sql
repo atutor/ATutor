@@ -50,6 +50,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_audience','Aud
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_create_room_instr','Adjust the following settings, then click "Create" to start the conference/audience room.  For more information on the settings, please see the <a href="http://code.google.com/p/openmeetings/wiki/SoapMethods#addRoom" target="_new">Openmeetings documentation</a>.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_edit_room','Edit room',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_create_room','Create new room',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','openmeetings_delete_room','Remove room',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_OPENMEETINGS_URL_ADD_SAVED','Openmeetings configuration options were successfully saved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_OPENMEETINGS_CANCELLED','Successfully cancelled without saving any changes.',NOW(),'');

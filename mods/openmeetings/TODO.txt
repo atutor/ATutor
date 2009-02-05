@@ -35,3 +35,8 @@ June 25, 08
 June 26, 08
 ------------
 - Added the ability to create diff type of rooms: conference/audience
+
+Feb 5, 09
+------------
+- Added the ability to delete conference rooms.
+- Now compatible with Openmeetings 0.7RC1 (Red5 7.0+)

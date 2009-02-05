@@ -4598,7 +4598,7 @@ class wsdl extends nusoap_base {
 						//echo "array SECOND<br/>";
 						$this->debug('calling serializeType w/named param');
 						//echo "PARAMS: ";
-						print_r ($parameters[$name]); 
+						//print_r ($parameters[$name]); 
 						//echo "<br/>";
 						$xml .= $this->serializeType($name, $type, $parameters[$name], $use, $enc_style);
 					} else {
