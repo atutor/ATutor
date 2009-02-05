@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
-<module version="0.1"> 
+<module version="0.3"> 
     <name lang="en">Openmeetings</name> 
     <description lang="en">Openmeetings is a Multi-Language Cross-Platform Customizable Video-Conferencing and Collaboration Flash based web application.</description> 
     <maintainers>
@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>GNU</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2008-06-26</date> 
+        <version>0.3</version> 
+        <date>2009-02-05</date> 
         <state>stable</state> 
 	<notes>Requires Openmeetings server(Red5) be installed on the user's system.  Details can be found at http://code.google.com/p/openmeetings/</notes> 
     </release> 
