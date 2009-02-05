@@ -12,9 +12,50 @@ Installation
 4. Open the administrator's Openmeetings screen and enter the URL, username and password to the Openmeetings installion you will be using.  The user account must have Admin-rights.
 
 This module has been tested on the following specifications:
-Openmeetings	0.5.1 (r1406) 
-Red5		0.63  (Please note that 0.7.0 doesn't work properly with Openmeetings 0.5.1) [http://osflash.org/red5]
+Openmeetings	0.7    (RC1)
+Red5		0.7+   [http://osflash.org/red5]
 
 
 License: 	
 GNU Lesser General Public License
+
+ 
+ 
+Changelog: 
+============
+Feb 5, 09
+------------
+- Added the ability to delete conference rooms.
+- Now compatible with Openmeetings 0.7RC1 (Red5 7.0+)
+
+June 26, 08
+------------
+- Added the ability to create diff type of rooms: conference/audience
+
+June 25, 08
+------------
+- Admin can now delete or create group meetings
+
+June 19, 08
+------------
+- Allow users to retrieve the recordings.  [June 25, 08 - milestone for version 5.3]
+- Make the index page a bit more pretty.
+
+June 11, 08
+------------
+- Allow each group to have their own meeting, anyone in the group can start off the meeting, and when all exit, room should be deleted.
+- Course meeting should be triggered by instructor only.  Otherwise page should display the meeting time (There is no meeting at the moment.  THe next available meeting is at xxxx)
+- Instructor should probably be capable to adjust their own meeting size in their own config.
+- Research on how recorded video works, see if we can remove meetings as well.
+- admin/openmeetings, check if there is a slash at the end.
+
+June 05, 08
+------------
+- allow admin to change the room size.
+- clean room after course is deleted.
+- though these would be way easier to do it in the openmeeting's end
+- upgrade nusoup script
+- update readme, and write up something that teaches the user to setup red5
+- allow 2 modes
+
+
