@@ -129,15 +129,14 @@ if (!empty($_REQUEST['pu'])) {
 	if (!empty($_REQUEST['ib'])) {
 		return;
 	}
-	$_REQUEST['pu'] .= SEP .'ib=1';
-
+	
 	//for pretty url iff mod_rewrite is not on
 	if ($_config['apache_mod_rewrite'] > 0){
 		//URL are in pretty format, but not in .htaccess RewriteRule format
 		//http://www.atutor.ca/atutor/mantis/view.php?id=3426
-		$page = url_rewrite($_REQUEST['pu'], AT_PRETTY_URL_NOT_HEADER, true);
+		$page = url_rewrite($_REQUEST['pu'], AT_PRETTY_URL_NOT_HEADER, true) . '/ib/1';
 	} else {
-		$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'];
+		$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'] . SEP .'ib=1';
 	}
 } elseif (!empty($_REQUEST['p'])) {
 	//For search
