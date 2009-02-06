@@ -24,7 +24,8 @@ foreach ($rids as $k => $id) {
 $rid = implode(',', $rids);
 
 // Check that the user deletes submissions in his own test; if not, exit like authenticate()
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results LEFT JOIN ".TABLE_PREFIX."tests USING (test_id) WHERE result_id IN ($rid) AND course_id = $_SESSION[course_id] AND test_id = $tid";
+$sql	= "SELECT count(*) AS cnt FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."tests USING (test_id) WHERE result_id IN ($rid) AND course_id = $_SESSION[course_id] AND R.test_id = $tid";
+
 $result	= mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 if ($row['cnt'] < count($rids)) {
