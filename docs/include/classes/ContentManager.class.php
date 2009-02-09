@@ -502,7 +502,13 @@ class ContentManager
 
 	/* Access: Private */
 	function getNextContent($content_id, $order=0) {
-		if (!$content_id) { return; }
+		// set to first content when $content_id is not given
+		if (!$content_id) { 
+			foreach ($this->_menu_info as $menu_id => $menu_content) {
+				$content_id = $menu_id;
+				break;
+			}
+		}
 
 		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
 		$myOrder  = $this->_menu_info[$content_id]['ordering'];
