@@ -454,21 +454,36 @@ class ContentManager
 	}
 
 	/* Access: Private */
+	// functions getPreviousContent() & getNextContent() always skip tests associated with the content
 	function getPreviousContent($content_id, $order=0) {
 		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
 		$myOrder  = $this->_menu_info[$content_id]['ordering'];
 
 		if (isset($this->_menu[$myParent][$myOrder-2]) && ($this->_menu[$myParent][$myOrder-2] != '') && ($order==0)) {
 			// has sibling: checking if sibling has children
-			
 			$mySibling = $this->_menu[$myParent][$myOrder-2];
+			
+			// if sibling is a test, return parent content. 
+			// Note that tests are always the first children of a content
+			if (isset($mySibling['test_id'])) {
+				return(array('content_id'	=> $myParent,
+				             'ordering'		=> $this->_menu_info[$myParent]['ordering'],
+				             'title'		=> $this->_menu_info[$myParent]['title']));
+			}
 			
 			if ( isset($this->_menu[$mySibling['content_id']]) && is_array($this->_menu[$mySibling['content_id']]) && ($order==0) ) {
 				$num_children = count($this->_menu[$mySibling['content_id']]);
 
 				// sibling has $num_children children
-				return($this->getPreviousContent($this->_menu[$mySibling['content_id']][$num_children-1]['content_id'], 1));
-
+				// if the sibling's last child is a test, which means there's no content page under this sibling, return the sibling itself
+				if (isset($this->_menu[$mySibling['content_id']][$num_children-1]['test_id'])){
+					return(array('content_id'	=> $mySibling['content_id'],
+					             'ordering'		=> $this->_menu_info[$mySibling['content_id']]['ordering'],
+					             'title'		=> $this->_menu_info[$mySibling['content_id']]['title']));
+				}
+				else {
+					return($this->getPreviousContent($this->_menu[$mySibling['content_id']][$num_children-1]['content_id'], 1));
+				}
 			} else {
 				// sibling has no children. return it
 				return($this->_menu[$myParent][$myOrder-2]);
@@ -487,8 +502,19 @@ class ContentManager
 							 'title'		=> $this->_menu_info[$myParent]['title']));
 			} else {
 				if ( isset($this->_menu[$content_id]) && is_array($this->_menu[$content_id]) ) {
+
 					$num_children = count($this->_menu[$content_id]);
-					return ($this->getPreviousContent($this->_menu[$content_id][$num_children-1]['content_id'], 1));
+					
+					// when last child is a test, return the parent content
+					// Note that tests are always the first children of a content
+					if (isset($this->_menu[$content_id][$num_children-1]['test_id'])) {
+						return(array('content_id'	=> $content_id,
+				             'ordering'		=> $this->_menu_info[$content_id]['ordering'],
+				             'title'		=> $this->_menu_info[$content_id]['title']));
+					}
+					else {
+						return ($this->getPreviousContent($this->_menu[$content_id][$num_children-1]['content_id'], 1));
+					}
 
 				} else {
 					/* no children */
@@ -499,32 +525,64 @@ class ContentManager
 			}
 		}
 	}
-
+		
 	/* Access: Private */
+	// functions getPreviousContent() & getNextContent() always skip tests associated with the content
 	function getNextContent($content_id, $order=0) {
-		// set to first content when $content_id is not given
-		if (!$content_id) { 
-			foreach ($this->_menu_info as $menu_id => $menu_content) {
-				$content_id = $menu_id;
-				break;
-			}
+		// return first root content when $content_id is not given
+		if (!$content_id) {
+			return $this->_menu[0][0];
 		}
-
+		
 		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
 		$myOrder  = $this->_menu_info[$content_id]['ordering'];
+		
+		// calculate $myOrder, add in the number of tests in front of this content page
+		if (is_array($this->_menu[$myParent])) {
+			$num_of_tests = 0;
+			foreach ($this->_menu[$myParent] as $menuContent) {
+				if ($menuContent['content_id'] == $content_id) break;
+				if (isset($menuContent['test_id'])) $num_of_tests++;
+			}
+		}
+		$myOrder += $num_of_tests;
+		// end of calculating $myOrder
+		
 		/* if this content has children, then take the first one. */
 		if ( isset($this->_menu[$content_id]) && is_array($this->_menu[$content_id]) && ($order==0) ) {
 			/* has children */
-			return($this->_menu[$content_id][0]);
+			// if the child is a test, keep searching for the content id 
+			foreach ($this->_menu[$content_id] as $menuID => $menuContent)
+			{
+				if (!empty($menuContent['test_id'])) continue;
+				else 
+				{
+					$nextMenu = $this->_menu[$content_id][$menuID];
+					break;
+				}
+			}
+			
+			// all children are tests
+			if (!isset($nextMenu))
+			{
+				if (isset($this->_menu[$myParent][$myOrder]['content_id'])) {
+					// has sibling
+					return $this->_menu[$myParent][$myOrder];
+				}
+				else { // no sibling
+					$nextMenu = $this->getNextContent($myParent, 1);
+				}
+			}
+			return $nextMenu;
 		} else {
 			/* no children */
 			if (isset($this->_menu[$myParent][$myOrder]) && $this->_menu[$myParent][$myOrder] != '') {
 				/* Has sibling */
-				return($this->_menu[$myParent][$myOrder]);
+				return $this->_menu[$myParent][$myOrder];
 			} else {
 				/* No more siblings */
 				if ($myParent != 0) {
-					return($this->getNextContent($myParent, 1));
+					return $this->getNextContent($myParent, 1);
 				}
 			}
 		}
