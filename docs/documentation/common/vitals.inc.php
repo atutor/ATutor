@@ -77,18 +77,13 @@ function get_text($var, $return = FALSE) {
 	}
 }
 
-function get_available_languages($section) {
-	global $available_languages;
-
+function get_lang() {
 	$path = dirname(__FILE__);
-	if (is_dir($path)) {
-		$files = glob($path . '/??');
-		if (is_array($files)) {
-			foreach ($files as $filename) {
-				$filename = basename($filename);
-				$available_languages[$filename] = $filename;
-			}
-		}
+	if (is_dir($path.'/'.$_SESSION['lang'])) {
+		return $_SESSION['lang'];
+	}
+	else {
+		return 'en';
 	}
 }
 
@@ -113,24 +108,10 @@ if (isset($_available_sections[$second_last_dir_name])) {
 	$lang = $req_lang = $last_dir_name;
 	$section = $second_last_dir_name;
 	$rel_path = '../../';
-	get_available_languages($section);
 } else if (isset($_available_sections[$last_dir_name])) {
 	$section = $last_dir_name;
 	$rel_path = '../';
-	get_available_languages($section);
-
-	foreach ($_GET as $lang_name => $garbage) {
-		if (isset($available_languages[$lang_name])) {
-			$lang = $req_lang = $lang_name;
-			break;
-		}
-	}
-	if (!$lang && !$req_lang && isset($_SESSION['lang']) && isset($available_languages[$_SESSION['lang']])) {
-		$lang = $req_lang = $_SESSION['lang'];
-	} else if (!$lang && !$req_lang) {
-		$lang = $req_lang = 'en';
-	}
-
+	$lang = $req_lang = get_lang();
 } else {
 	foreach ($_available_sections as $section_name) {
 		if (isset($_GET[$section_name])) {
@@ -140,28 +121,12 @@ if (isset($_available_sections[$second_last_dir_name])) {
 		}
 	}
 	if ($section) {
-		get_available_languages($section);
-		foreach ($available_languages as $lang_name) {
-			if (isset($_GET[$lang_name])) {
-				$lang = $req_lang = $lang_name;
-				break;
-			}
-		}
-		if ((!isset($lang) || !$lang) && isset($_SESSION['lang']) && isset($available_languages[$_SESSION['lang']])) {
-			$lang = $req_lang = $_SESSION['lang'];
-		} else if (!$lang) {
-			$lang = $req_lang = 'en';
-		}
 		$rel_path = '../';
 	} else {
-		$lang = $req_lang = 'en';
 		$section = 'general';
 		$rel_path = '../';
-		get_available_languages($section);
 	}
+	$lang = $req_lang = get_lang();
 }
-
-$lang = htmlspecialchars($lang);
-$req_lang = htmlspecialchars($req_lang);
 
 ?>
