@@ -10,7 +10,7 @@ RewriteRule (.*)\&ib\=1$ $1 [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/ib/1$ $1/index.php?ib=1 [L]
+RewriteRule (.*)/ib/1$ $1/?ib=1 [L]
 
 #Forums rules
 RewriteCond     %{REQUEST_FILENAME}     !-f

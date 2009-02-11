@@ -52,8 +52,8 @@ if (!$obj->isEmpty()){
 	$pretty_current_page = $obj->getPage();
 	//If page not found, forward back to index.php
 	//ignore error, cause it will give a warning: No such file error, and can't send header.
-	if (!@include($obj->getPage())){
-		header('Location: index.php');
+	if (!@include($pretty_current_page)){
+		header('Location: '.AT_BASE_HREF.'index.php');
 		exit;
 	} 
 } elseif ($_pretty_url_course_id==0) {
