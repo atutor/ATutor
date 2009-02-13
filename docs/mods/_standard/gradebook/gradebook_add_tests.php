@@ -176,9 +176,8 @@ $sql_at = "SELECT * FROM ".TABLE_PREFIX."tests t".
 												" WHERE g.id = t.test_id".
 												" AND g.type='ATutor Test')".
 				" AND test_id IN (SELECT test_id FROM ".TABLE_PREFIX."tests_questions_assoc ".
-								" WHERE weight > 0 ".
 								" GROUP BY test_id ".
-								" HAVING count(*) > 0) ".
+								" HAVING sum(weight) > 0) ".
 				" ORDER BY title";
 $result_at = mysql_query($sql_at, $db) or die(mysql_error());
 
