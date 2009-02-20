@@ -253,8 +253,8 @@ function toggleToc(objId) {
 <div id="topnavlistcontainer">
 <!-- the main navigation. in our case, tabs -->
 	<ul id="topnavlist">
+		<?php $accesscounter = 0; //initialize ?>
 		<?php foreach ($this->top_level_pages as $page): ?>
-			<?php $accesscounter = 0; //initialize ?>
 			<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
 			<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
 			<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
