@@ -23,12 +23,19 @@ if($_config['allow_registration'] != 1){
 		exit;
 }
 
-
 if (isset($_POST['cancel'])) {
 	header('Location: ./login.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
+
+	/* registration token validation */
+	if (sha1($_SESSION['token']) != $_POST['registration_token']){
+		//Prevent registration from any other pages other than the ATutor pages.
+		//SHA1(SESSION[token]) so that no one knows what the actual token is, thus cannot recreate it on another page.
+		header('Location: ./login.php');
+		exit;
+	}
 
 	/* email check */
 	$chk_email = $addslashes($_POST['email']);
@@ -303,7 +310,6 @@ if (isset($_POST['cancel'])) {
 } else {
 	$_POST = array();
 }
-
 unset($_SESSION['member_id']);
 unset($_SESSION['valid_user']);
 unset($_SESSION['login']);

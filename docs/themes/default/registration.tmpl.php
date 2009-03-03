@@ -29,6 +29,7 @@ function encrypt_password()
 <input name="ml" type="hidden" value="<?php echo $this->ml; ?>" />
 <input name="password_error" type="hidden" />
 <input type="hidden" name="form_password_hidden" value="" />
+<input type="hidden" name="registration_token" value="<?php echo sha1($_SESSION['token']); ?>" />
 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('required_information'); ?></legend>
