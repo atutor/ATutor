@@ -4,7 +4,7 @@ define(AT_SHINDIG_URL,						'http://localhost/shindig/php');
 //define(AT_SHINDIG_URL,						'http://142.150.154.167/shindig/php');
 //define(AT_SHINDIG_URL,						'http://social.atutor.ca/shindig/php');
 
-//Privacy Control Constants, fields
+//Privacy Control Constants, field indices
 //Profile
 define(AT_SOCIAL_PROFILE_BASIC,				0);	//Basic profile info
 define(AT_SOCIAL_PROFILE_PROFILE,			1);	//All Profile info

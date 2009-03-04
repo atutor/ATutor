@@ -2,6 +2,7 @@
 //Profile template for social
 ?>
 <div class="">
+	<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_PROFILE, $this->relationship, $this->prefs)): ?>
 	<div class="">
 		<h2 class="page-title"><?php echo printSocialName($this->profile['member_id']); ?></h2>
 		<?php if ($this->scope=='owner'): ?>
@@ -34,8 +35,10 @@
 				<dd><?php echo $this->profile['country']; ?></dd>
 			</dl>
 		</div>
+		<?php endif; ?>
 
 		<div class="" style="width:40%; float:right;" >
+			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_CONNECTION, $this->relationship, $this->prefs)): ?>
 			<div class="" style="width:250;" >
 				<h5><?php echo _AT('connections'); ?></h5>
 				<ul>
@@ -47,6 +50,9 @@
 					?>
 				</ul>
 			</div>
+			<?php endif; ?>
+
+			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_STATUS_UPDATE, $this->relationship, $this->prefs)): ?>
 			<div class="" style="width:250;">
 				<h5><?php echo _AT('activities'); ?></h5>
 				<ul>
@@ -61,6 +67,7 @@
 					?>
 				</ul>
 			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

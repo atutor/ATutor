@@ -136,7 +136,8 @@ class ATutorDbFetcher {
     return true;
   }
 
-  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds) {
+//  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds) {
+  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields) {
 	global $db;
     //TODO add support for filterBy, filterOp and filterValue
     $this->checkDb();
@@ -289,7 +290,6 @@ class ATutorDbFetcher {
   }
 
   public function getAppData($ids, $keys, $app_id) {
-	global $addslashes;
     $this->checkDb();
     $data = array();
     foreach ($ids as $key => $val) {
@@ -304,7 +304,7 @@ class ATutorDbFetcher {
       $keys = '';
     } elseif (is_array($keys)) {
       foreach ($keys as $key => $val) {
-        $keys[$key] = "'" . $addslashes($val) . "'";
+        $keys[$key] = "'" . addslashes($val) . "'";
       }
       $keys = "and name in (" . implode(',', $keys) . ")";
     } else {

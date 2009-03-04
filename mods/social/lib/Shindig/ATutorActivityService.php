@@ -13,9 +13,11 @@ class ATutorActivityService extends ATutorService implements ActivityService {
     throw new SocialSpiException("Activity not found", ResponseError::$NOT_FOUND);
   }
 
-  public function getActivities($userIds, $groupId, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds, $token) {
+ // public function getActivities($userIds, $groupId, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds, $token) {
+  public function getActivities($userIds, $groupId, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $token) {
     $ids = $this->getIdSet($userIds, $groupId, $token);
-    $activities = ATutorDbFetcher::get()->getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds);
+//    $activities = ATutorDbFetcher::get()->getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds);
+    $activities = ATutorDbFetcher::get()->getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields);
     if ($activities) {
       $totalResults = $activities['totalResults'];
       $startIndex = $activities['startIndex'];

@@ -9,13 +9,25 @@ class PrivacyController{
 
 	/**
 	 * Validate user privacy preference against SESSION's, if empty, fetch from DB.
-	 * @param	int			The field that should be validated against.
+	 * @param	int			The field index that should be validated against, check lib/constnats.inc.php
 	 * @param	int			Relationship between SESSION[member] and the current user's
 	 * @param	mixed		The prefs array in respect to the field_id, for instance, if this is validating against profile, then the pref should be the profile								preferences.  ([array]=>preference[profile, basic_profile, photo, ...])
 	 * @return	boolean		True if access granted, false otherwise.
 	 */
 	function validatePrivacy($field_id, $relationship, $pref){
-		//
+		$pref_string = $pref[$field_id];
+		debug($pref_string, $field_id);
+
+		//if AT_SOCIAL_EVERYONE_VISIBILITY is set, relationship flag will no longer matters.
+		if ($relationship==AT_SOCIAL_EVERYONE_VISIBILITY){
+			return true;
+		}
+
+		if (is_array($pref_string) && !empty($pref_string)){		
+			return (in_array($relationship, $pref_string));
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -26,8 +38,15 @@ class PrivacyController{
 	 */
 	function getRelationship($id){
 		global $db;
-		$sql = 'SELECT relationship FROM'.TABLE_PREFIX."friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
+
+		//if id = self, always true (cause i should be able to see my own profile)
+		if ($id == $_SESSION['member_id']){
+			return AT_SOCIAL_EVERYONE_VISIBILITY;
+		}
+
+		$sql = 'SELECT relationship FROM '.TABLE_PREFIX."friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
 		$result = mysql_query($sql, $db);
+		echo $sql;
 		if ($result){
 			list($relationship) = mysql_fetch_row($result);
 		}
@@ -42,20 +61,24 @@ class PrivacyController{
 	/**
 	 * Get user privacy perference
 	 * @param	int		user id
+	 * @Precondition: include('PrivacyObject.class.php');
 	 */
 	function getPrivacyObject($member_id){
 		global $db;
 		$member_id = intval($member_id);		
 		
 		//TODO: Check if this object exists in _SESSION, if so, don't pull it from db again
-
 		$sql = 'SELECT preferences FROM '.TABLE_PREFIX.'privacy_preferences WHERE member_id='.$member_id;
 		$result = mysql_query($sql, $db);
-		list($prefs) = mysql_fetch_row($result);
-		$privacy_obj = unserialize($prefs);
+		if ($result){
+			list($prefs) = mysql_fetch_row($result);
+			$privacy_obj = unserialize($prefs);
 
-		//Should we checked if this is an actual object before returning it?
-		return($privacy_obj);
+			//Should we checked if this is an actual object before returning it?
+			return($privacy_obj);
+		}
+		//No such person
+		return null;
 	}
 
 	/**
@@ -70,7 +93,9 @@ class PrivacyController{
 		$member_id = intval($member_id);
 		$prefs = serialize($prefs);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."privacy_preferences SET preference='$prefs' WHERE member_id=.$member_id";
+		//TODO: Change it back to update
+		$sql = 'REPLACE '.TABLE_PREFIX."privacy_preferences SET member_id=$member_id, preferences='$prefs'";
+		echo $sql;
 		$result = mysql_query($sql, $db);
 		return $result;
 	}

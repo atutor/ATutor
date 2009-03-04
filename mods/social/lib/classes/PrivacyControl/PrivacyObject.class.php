@@ -1,6 +1,6 @@
 <?php
 /**
- * Privacy Object
+ * Simple Privacy Object
  */
 class PrivacyObject{
 	var $profile_prefs;
@@ -13,32 +13,34 @@ class PrivacyObject{
 
 	//Return bitwise representation of the profile privacy settings
 	function getProfile(){
-		return $profile_prefs;
+		return $this->profile_prefs;
 	}
 
 	//Return bitwise representation of the search privacy settings
 	function getSearch(){
-		return $search_prefs;
+		return $this->search_prefs;
 	}
 
 	//Return bitwise representation of the activity privacy settings
 	function getActivity(){
-		return $activity_prefs;
+		return $this->activity_prefs;
 	}
 
-	//Set 
+	/* Set 
+	 * @param	mixed	array of profile preferences
+	 */
 	function setProfile($prefs){
-		$prefs = abs($prefs);
 		$this->profile_prefs = $prefs;
 	}
 
+	/*
+	 * @param	mixed	array of prefs 
+	 */
 	function setSearch($prefs){
-		$prefs = abs($prefs);
 		$this->search_prefs = $prefs;
 	}
 
 	function setActivity($prefs){
-		$prefs = abs($prefs);
 		$this->activities_prefs = $prefs;
 	}
 
