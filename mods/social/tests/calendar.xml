@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+<ModulePrefs title="Google Calendar"
+description="Google Calendar for your site, webpage or blog"
+author="Michael B."
+author_email="michael.feedback@gmail.com"
+author_affiliation="Google Inc."
+author_location="Palo Alto, CA"
+title_url="http://www.google.com/calendar/"
+height="450"
+screenshot="/ig/modules/calendar.png"
+thumbnail="/ig/modules/calendar-thm.png"
+category="communication"
+category2="tools"
+>
+<Locale lang="en" country="us" />
+</ModulePrefs>
+<UserPref name="showCalendar2"
+display_name="Display calendar:"
+datatype="bool"
+default_value="true"
+/>
+
+<UserPref name="showAgenda"
+display_name="Agenda displayed"
+datatype="bool"
+default_value="true"
+/>
+
+<UserPref name="calendarFeeds"
+display_name="calendarFeeds"
+datatype="hidden"
+default_value="({})"
+/>
+<UserPref name="firstDay"
+display_name="First day of week:"
+default_value="Sunday"
+datatype="enum"
+>
+<EnumValue value="Sunday" />
+<EnumValue value="Monday" />
+<EnumValue value="Saturday" />
+</UserPref>
+
+<UserPref name="syndicatable"
+display_name="Indicates whether this is a syndicatable gadget"
+datatype="hidden"
+default_value="true"
+/>
+<UserPref name="stylesheet"
+display_name="Stylesheet URL:"
+/>
+<UserPref name="sub"
+display_name="Show &quot;Subscribe&quot; links:"
+datatype="bool"
+default_value="true"
+/>
+<UserPref name="c0u"
+display_name="Calendar 1 URL:"
+/>
+<UserPref name="c0c"
+display_name="Calendar 1 Color:"
+/>
+<UserPref name="c1u"
+display_name="Calendar 2 URL:"
+/>
+<UserPref name="c1c"
+display_name="Calendar 2 Color:"
+/>
+<UserPref name="c2u"
+display_name="Calendar 3 URL:"
+/>
+<UserPref name="c2c"
+display_name="Calendar 3 Color:"
+/>
+<UserPref name="c3u"
+display_name="Calendar 4 URL:"
+/>
+<UserPref name="c3c"
+display_name="Calendar 4 Color:"
+/>
+<UserPref name="min"
+display_name="Minimum number of events to display:"
+/>
+<UserPref name="start"
+display_name="First date YYYY-MM-DD (defaults to the current day):"
+/>
+
+<UserPref name="timeFormat"
+display_name="Time format:"
+default_value="1:00pm"
+datatype="enum"
+>
+<EnumValue value="1:00pm" />
+<EnumValue value="13:00" />
+</UserPref>
+<UserPref name="calendarFeedsImported"
+display_name="calendarFeedsImported"
+datatype="hidden"
+default_value="0"
+/>
+<Content type="html"><![CDATA[
+
+<script>
+new function() {
+var prefs = new _IG_Prefs(__MODULE_ID__);
+var isSyndicated = (prefs.getString('syndicatable') == 'true');
+
+if (isSyndicated) {
+// syndicated version of the gadget may link to an external stylesheet
+var stylesheet = prefs.getString('stylesheet');
+if (stylesheet) {
+var linkEl = document.createElement('link');
+linkEl.setAttribute('rel', 'STYLESHEET');
+linkEl.setAttribute('href', stylesheet);
+document.getElementsByTagName('head')[0].appendChild(linkEl);
+}
+}
+}
+</script>
+
+<center>
+
+<span id=msgtable__MODULE_ID__ style="display:none">
+<table style="background-color:rgb(250,209,99); margin: 4px 0;" cellpadding=0 cellspacing=0>
+<tr>
+<td class="tl evhtml"></td>
+<td rowspan="2" style="padding: 2px 4px" id="msgarea__MODULE_ID__"></td>
+<td class="tr evhtml"></td>
+</tr>
+<tr>
+<td class="bl evhtml"></td>
+<td class="br evhtml"></td>
+</tr>
+</table>
+<p></p>
+</span>
+
+<table id="pickerContainer__MODULE_ID__" cellpadding=0 cellspacing=0
+class="pickerContainerTable"
+style="background-color:#c3d9ff;margin-top:4px">
+<tr style="height:2px"><td class="tl dphtml"><td><td class="tr dphtml"></tr>
+<tr><td><td style="width:13em"><div id="picker__MODULE_ID__">
+<table cellspacing=0 cellpadding=0 border=0 height=160 width=100%><tr><td>
+<center>
+<i><font size=-1 color=#666666>
+<div>Loading...</div>
+</font></i>
+</center>
+</td></tr></table>
+</div><td></tr>
+<tr style="height:2px"><td class="bl dphtml"><td><td class="br dphtml"></tr>
+</table>
+
+<script>
+if (!(new _IG_Prefs(__MODULE_ID__)).getBool('showCalendar2')) {
+_gel('pickerContainer' + __MODULE_ID__).style.display = 'none';
+}
+</script>
+
+<div id="createEventLinks__MODULE_ID__"
+style="display:none; font-size: 70%; padding-top: 1px">
+<span class=fakelink id="open-quick-add__MODULE_ID__">Quick Add</span>&nbsp;&nbsp;<a
+href="/calendar/event?action=TEMPLATE" id="createEvent__MODULE_ID__"
+target="_BLANK" style="color:rgb(0,0,204)"
+title="Opens the Create Event form in Google Calendar in a new window"
+>Create Event</a>&nbsp;&nbsp;<span class=fakelink id=toggleA__MODULE_ID__
+style="color:rgb(119,119,204)"></span>
+<img id=calListPopup__MODULE_ID__
+style="vertical-align: text-bottom; cursor: pointer"
+title="Select which calendars you would like to display">
+</div>
+
+</center>
+
+<div id="agenda__MODULE_ID__" style="display: none">
+<div id="agendaTable__MODULE_ID__"></div>
+</div>
+
+<div id="webContentDiv__MODULE_ID__"
+style="display:none; position:absolute;
+background-color: white; border: 1px solid gray;
+font-size: 83%">
+<div>
+<div style="background-color: rgb(232, 238, 247); padding-bottom: 2px">
+<img src="http://www.google.com/calendar/images/close.gif"
+id="webContentDivCloseBox__MODULE_ID__"
+style="float:right;margin:2px 2px 0 0;cursor:pointer">
+<div id="webContentDivTitle__MODULE_ID__" style="padding-left: 2px; font-weight: bold"></div>
+</div>
+<div id="webContentDivBody__MODULE_ID__"></div>
+</div>
+</div>
+
+<div id="agendaDiv__MODULE_ID__"
+style="display:none; position:absolute; width: 20em;
+background-color: white; border: 1px solid gray;
+font-size: 83%">
+<div>
+<div style="background-color: rgb(232, 238, 247); padding-bottom: 2px">
+<img src="http://www.google.com/calendar/images/close.gif"
+id="agendaCloseBox__MODULE_ID__"
+style="float:right;margin:2px 2px 0 0;cursor:pointer">
+<div id="agendaDivTitle__MODULE_ID__" style="padding-left: 2px; font-weight: bold"></div>
+</div>
+<form id="datedQuickAdd__MODULE_ID__">
+<INPUT type="HIDDEN" name="date">
+<table style="font-size: 83%; width: 100%">
+<tr style="width:100%">
+<td style="width:100%">
+<INPUT id="datedInput__MODULE_ID__" name=quickadd style="width:100%">
+</td>
+<td><INPUT type="SUBMIT" value="Add"></td>
+</tr>
+</table>
+</form>
+<div id="agendaDivBody__MODULE_ID__"></div>
+</div>
+</div>
+
+<div id="subscribe__MODULE_ID__" style="display:none" class="subscribeLinks">
+</div>
+
+<iframe name="GoogleCalendarFrame__MODULE_ID__" style="display:none"
+src="about:blank" width="0px" height="0px"></iframe>
+
+
+<style>
+.pbox {
+top: 1px;
+width: 15em;
+line-height: 1.2em;
+margin:0 10px 10px 0;
+font-size: 85%;
+}
+
+
+/* =Menu borders (top and bottom) creates rounded corners
+----------------------------------------------- */
+.pbox .t2, .pbox .b2, .pbox .sb2 {
+background-color:#BBBBBB; /* D */
+position:relative;
+top:-1px;
+height:1px;
+margin:0 1px;
+font-size:1px;
+line-height:1px;
+}
+
+.pbox .offset, .pbox .b2 {
+border-right:1px solid #666666; /* A */
+}
+.pbox .t2 {
+margin-right:2px;
+}
+.pbox .b2 {
+background-color:#BBBBBB; /* D */
+}
+.pbox .sb2 {
+display:block;
+background-color:#666666;/* A */
+margin-left:2px;
+}
+
+.boxbody {
+background-color:#DDDDDD; /* E */
+position:relative;
+top:-1px;
+border:solid #BBBBBB; /* D */
+border-width:0 1px;
+}
+.boxbody ul, .boxbody li {
+margin:0;
+padding:0;
+list-style:none;
+}
+
+/* The main chrome containing the calendar is spaced this far from the side */
+.datePickerDiv {
+background: #c3d9ff;
+padding: 0px 0px 9px 9px;
+line-height: 1em;
+}
+
+.DP_monthtable {
+width: 100%;
+background: #fff;
+padding: 0px;
+border-bottom: 1px #A2BBDD solid;
+font-size: 83%;
+}
+
+.DP_monthtable TD {
+text-align: center;
+padding: 2px;
+font-family: Verdana;
+font-size: 85%;
+}
+
+.DP_heading {
+cursor: pointer;
+background: rgb(195, 217, 255);
+color: #112ABB;
+vertical-align: middle;
+}
+
+.DP_days {
+background: rgb(195, 217, 255);
+}
+
+.DP_dayh {
+cursor: default;
+font-size: 78%;
+}
+
+.DP_cur {
+font:bold 78%/1em Verdana,Sans-serif;
+padding-bottom: 4px;
+text-align: center;
+}
+.DP_prev, .DP_next {
+font-size: 125%;
+padding-bottom: 6px;
+cursor: pointer;
+}
+
+.DP_prev { text-align: right; }
+.DP_next { text-align: left; }
+
+/* today */
+.DP_today {
+background : #9ab !important;
+border: 1px solid !important;
+border-color: #567 #abc #abc #567 !important;
+color: #fff;
+}
+.DP_today_selected {
+background : #579 !important;
+border: 1px solid !important;
+border-color: #246 #9bd #9bd #246 !important;
+color: #fff;
+}
+
+/* weekday is Gmail blue when selected */
+.DP_weekday {
+background: rgb(255, 255, 255);
+}
+.DP_weekday_selected {
+background: rgb(170, 204, 238);
+}
+
+/* weekend goes from gray to dark blue when selected */
+.DP_weekend {
+background: #E8EEF7;
+}
+.DP_weekend_selected {
+background: rgb(153, 187, 221);
+}
+
+.DP_onmonth {
+}
+
+.DP_offmonth {
+color: #888;
+}
+
+.DP_day_top {
+border-top: 1px #A2BBDD solid;
+}
+
+.DP_day_right {
+border-right: 1px #A2BBDD solid;
+}
+
+.DP_day_left {
+border-left: 1px #A2BBDD solid;
+}
+.fakelink {
+text-decoration: underline;
+cursor: pointer;
+color: rgb(0, 0, 204);
+}
+.eventChip {
+font-size: 82%;
+font-family: Arial;
+}
+.eventCell {
+vertical-align: top;
+font-size: 82%;
+font-family: Arial;
+}
+.agendaLine {
+background-color: rgb(229, 236, 249);
+line-height: 1px;
+height: 1px;
+padding: 0px;
+font-size: 1px;
+}
+.timeSlot {
+text-align: right;
+white-space: nowrap;
+padding-right: 0.5em;
+}
+.dateDescription {
+white-space: nowrap;
+font-style: italic;
+color: gray;
+}
+
+a.eventCell:link, a.eventCell:visited {text-decoration: none; }
+a.eventCell:hover, a.eventCell:active {text-decoration: underline; }
+
+/* need full URL if not hosted on google.com */
+td.tl {background:url("http://www.google.com/calendar/images/corner_tl.gif") top left}
+td.bl {background:url("http://www.google.com/calendar/images/corner_bl.gif") bottom left}
+td.tr {background:url("http://www.google.com/calendar/images/corner_tr.gif") top right}
+td.br {background:url("http://www.google.com/calendar/images/corner_br.gif") bottom right}
+td.evhtml {background-repeat:no-repeat;padding-left:4px;width:4px}
+td.dphtml {background-repeat:no-repeat;width:2px}
+
+/* used with Quick Add */
+.reset {
+clear:both;
+height:1px;
+margin:0;
+font-size:1px;
+line-height:1px;
+}
+
+
+.t2 {
+line-height: 1px;
+height: 1px;
+font-size: 1px;
+border-width: 0 1px;
+border-style: solid;
+border-color: white;
+}
+
+.calChip {
+color: white;
+padding: 0 2px;
+}
+
+.subscribeLinks {
+margin-top: 10px;
+font-size: 80%;
+}
+</style>
+<script src="/ig/modules/calendar_content/calendar.js"></script>
+<script>
+if (navigator.userAgent.toLowerCase().indexOf('msie') != -1) {
+document.body.onload = function() { new _CalendarModule(__MODULE_ID__); };
+} else {
+new _CalendarModule(__MODULE_ID__);
+}
+</script>
+]]></Content>
+</Module>

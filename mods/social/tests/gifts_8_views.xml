@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+  <ModulePrefs title="Gifts part 8 - Views">
+    <Require feature="opensocial-0.8"/>
+    <Require feature="views" />
+    <Preload href="http://opensocial-resources.googlecode.com/svn/samples/tutorial/tags/api-0.8/gifts.json" />
+  </ModulePrefs>
+  <Content type="html" view="home,profile,canvas">
+    <![CDATA[
+      <script>
+        var globalGivenGifts = {};
+        var globalFriends = {};
+        var globalGiftList = ['a cashew nut', 'a peanut', 'a hazelnut', 'a red pistaschio nut'];
+        var globalView = gadgets.views.getCurrentView().getName();
+        
+        function postActivity(nut, friend) {
+          var title = 'gave ' + globalFriends.getById(friend).getDisplayName() + ' ' + globalGiftList[nut];
+          var params = {};
+          params[opensocial.Activity.Field.TITLE] = title;
+          var activity = opensocial.newActivity(params)
+          opensocial.requestCreateActivity(activity, opensocial.CreateActivityPriority.HIGH, function() {});
+        }
+
+        function updateReceivedList(viewer, data, friends) {
+          var viewerId = viewer.getId();
+
+          var html = new Array();
+          html.push('You have received:<ul>');
+          friends.each(function(person) {
+            if (data[person.getId()]) {
+              var json = data[person.getId()]['gifts'];
+
+              var gifts = {}
+              if (!json) {
+                gifts = {};
+              }
+              try {
+                gifts = gadgets.json.parse(gadgets.util.unescapeString(json));
+              } catch (e) {
+                gifts = {};
+              }
+
+              for (i in gifts) {
+                if (i.hasOwnProperty && i == viewerId) {
+                  for (j in gifts[i]) {
+                    if (j.hasOwnProperty) {
+                      html.push('<li>', globalGiftList[gifts[i][j]], ' from ', person.getDisplayName(), '</li>');
+                    }
+                  }
+                }
+              }
+            }
+          });
+          html.push('</ul>');
+          document.getElementById('received').innerHTML = html.join('');
+        }
+
+        function updateGiftList(viewer, data, friends) {
+          var json = null;
+          if (data[viewer.getId()]) {
+            json = data[viewer.getId()]['gifts'];
+          }
+
+          if (!json) {
+            globalGivenGifts = {};
+          }
+          try {
+            globalGivenGifts = gadgets.json.parse(gadgets.util.unescapeString(json));
+          } catch (e) {
+            globalGivenGifts = {};
+          }
+
+          var html = new Array();
+          html.push('You have given:');
+          html.push('<ul>');
+          for (i in globalGivenGifts) {
+            if (i.hasOwnProperty) {
+              for (j in globalGivenGifts[i]) {
+                if (j.hasOwnProperty) {
+                  html.push('<li>', friends.getById(i).getDisplayName(), ' received ', globalGiftList[globalGivenGifts[i][j]], '</li>');
+                }
+              }
+            }
+          }
+          html.push('</ul>');
+          document.getElementById('given').innerHTML = html.join('');
+        }
+
+        function giveGift() {
+          var nut = document.getElementById('nut').value;
+          var friend = document.getElementById('person').value;
+
+          if (!globalGivenGifts) {
+            globalGivenGifts = {};
+          }
+          if (!globalGivenGifts[friend]) {
+            globalGivenGifts[friend] = new Array();
+          }
+          globalGivenGifts[friend].push(nut);
+          var json = gadgets.json.stringify(globalGivenGifts);
+
+          var req = opensocial.newDataRequest();
+          req.add(req.newUpdatePersonAppDataRequest("VIEWER", 'gifts', json));
+          req.add(req.newFetchPersonRequest("VIEWER"), 'viewer');
+					
+					var viewerFriends = opensocial.newIdSpec({ "userId" : "VIEWER", "groupId" : "FRIENDS" });
+					var opt_params = {};
+					opt_params[opensocial.DataRequest.PeopleRequestFields.MAX] = 100;
+          req.add(req.newFetchPeopleRequest(viewerFriends, opt_params), 'viewerFriends');
+
+          var viewer = opensocial.newIdSpec({ "userId" : "VIEWER" });
+          req.add(req.newFetchPersonAppDataRequest(viewer, 'gifts'), 'data');
+
+          req.add(req.newFetchPersonAppDataRequest(viewerFriends, 'gifts', opt_params), 'viewerFriendData');
+          req.send(onLoadFriends);
+
+          postActivity(nut, friend);
+        }
+
+        function makeOptionsMenu() {
+          var html = new Array();
+          html.push('<select id="nut">');
+          for (var i = 0; i < globalGiftList.length; i++) {
+            html.push('<option value="', i, '">', globalGiftList[i], '</option>');
+          }
+          html.push('</select>');
+          document.getElementById('gifts').innerHTML = html.join('');
+        }
+
+        function loadFriends() {
+          var req = opensocial.newDataRequest();
+          req.add(req.newFetchPersonRequest("VIEWER"), 'viewer');
+					
+					var viewerFriends = opensocial.newIdSpec({ "userId" : "VIEWER", "groupId" : "FRIENDS" });
+					var opt_params = {};
+					opt_params[opensocial.DataRequest.PeopleRequestFields.MAX] = 100;
+          req.add(req.newFetchPeopleRequest(viewerFriends, opt_params), 'viewerFriends');
+
+          var viewer = opensocial.newIdSpec({ "userId" : "VIEWER" });
+          req.add(req.newFetchPersonAppDataRequest(viewer, 'gifts'), 'data');
+
+          req.add(req.newFetchPersonAppDataRequest(viewerFriends, 'gifts', opt_params), 'viewerFriendData');
+          req.send(onLoadFriends);
+        }
+        
+        function onLoadFriends(data) {
+          var viewer = data.get('viewer').getData();
+          var viewerFriends = data.get('viewerFriends').getData();
+          var giftData = data.get('data').getData();
+          var viewerFriendData = data.get('viewerFriendData').getData();
+          
+          if (globalView == "canvas") {
+            html = new Array();
+            html.push('<select id="person">');
+            viewerFriends.each(function(person) {
+              if (person.getId()) {
+                html.push('<option value="', person.getId(), '">', person.getDisplayName(), '</option>');
+              }
+            });
+            html.push('</select>');
+            document.getElementById('friends').innerHTML = html.join('');
+            
+            updateGiftList(viewer, giftData, viewerFriends);
+            document.getElementById('give').style.display = "block";
+          } else {
+            document.getElementById('more').style.display = "block";
+          }
+          
+          globalFriends = viewerFriends;
+
+          updateReceivedList(viewer, viewerFriendData, viewerFriends);
+        }
+
+        function onGiftList(data) {
+           if (data.data && data.data.length) {
+             globalGiftList = data.data;
+           } 
+           loadFriends();
+           makeOptionsMenu();
+        };
+
+        function requestGiftList(url) {
+          var params = {};
+          params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+          gadgets.io.makeRequest(url, onGiftList, params);
+        }
+
+        function init() {
+           requestGiftList('http://opensocial-resources.googlecode.com/svn/samples/tutorial/tags/api-0.8/gifts.json');
+        }
+        
+        function navigateToCanvas() {
+          var canvas = gadgets.views.getSupportedViews()["canvas"];
+          gadgets.views.requestNavigateTo(canvas);
+        }
+        
+        gadgets.util.registerOnLoadHandler(init);
+      </script>
+      <div id='main'>
+        <div id='give' style='display: none;'>
+          <form id='gift_form'>
+            Give <span id='gifts'></span> to <span id='friends'></span>. <a href='javascript:void(0);' onclick='giveGift();'>Give!</a>
+          </form>
+        </div>
+        <div id='given'></div>
+        <div id='received'</div>
+        <div id='more' style='display: none;'>
+          <a href='javascript:void(0);' onclick='navigateToCanvas();'>More</a>
+        </div>
+      </div>
+    ]]>
+  </Content>
+</Module>

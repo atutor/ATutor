@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Social Network Feature</name> 
+    <description lang="en">Putting ATutor into the age of social network.  Allowing user to share profile, pictures, files, activities over ATutor.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license></license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2008-12-17</date> 
+        <state>in development</state> 
+        <notes></notes> 
+    </release> 
+</module>
