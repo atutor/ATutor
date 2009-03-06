@@ -1012,18 +1012,22 @@ function query_bit( $bitfield, $bit ) {
 * @author  Joel Kronenberg
 */
 function authenticate($privilege, $check = false) {
-	if (!$_SESSION['valid_user']) {
-		return false;
-	}
 	if ($_SESSION['is_admin']) {
 		return true;
 	}
-	$auth = query_bit($_SESSION['privileges'], $privilege);
 
-	if (!$auth && $check) {
-		return false;
-	} else if (!$auth && !$check) {
-		exit;
+	$auth = query_bit($_SESSION['privileges'], $privilege);
+	
+	if (!$_SESSION['valid_user'] || !$auth) {
+		if (!$check){
+			global $msg;
+			$msg->addInfo('NO_PERMISSION');
+			require(AT_INCLUDE_PATH.'header.inc.php'); 
+			require(AT_INCLUDE_PATH.'footer.inc.php'); 
+			exit;
+		} else {
+			return false;
+		}
 	}
 	return true;
 }

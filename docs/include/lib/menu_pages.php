@@ -52,7 +52,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		$_pages[AT_NAV_COURSE][] = 'tools/index.php';		
-	} else if ($_SESSION['privileges']) {
+	} else if ($_SESSION['privileges'] && $moduleFactory!=null) {
 		
 		/**
 		 * the loop and all this module priv checking is done to hide the Manage tab
