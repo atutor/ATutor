@@ -27,7 +27,7 @@ function treeEl ($s) {
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+authenticate(AT_PRIV_PACKAGES);
 $me = 'tools/packages/scorm-1.2/view.php';
 $im = 'tools/packages/scorm-1.2/images/';
 
@@ -61,7 +61,7 @@ $student_name = $q_row['last_name'] . ', ' . $q_row['first_name'];
 	{
 		$msg->addError('ACCESS_DENIED');
 	
-		$_pages['tools/packages/scorm-1.2/view.php']['title_var'] = _AT('scorm_packages');
+		$_pages['tools/packages/scorm-1.2/view.php']['title_var'] = 'scorm_packages';
 		require (AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printAll();
 		require(AT_INCLUDE_PATH.'footer.inc.php');

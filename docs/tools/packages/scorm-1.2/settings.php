@@ -24,7 +24,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+if (authenticate(AT_PRIV_PACKAGES, AT_PRIV_RETURN)) {
        $_pages['tools/packages/scorm-1.2/settings.php']['parent'] =
                'tools/packages/index.php';
        $_pages['tools/packages/scorm-1.2/settings.php']['children'] = array ();

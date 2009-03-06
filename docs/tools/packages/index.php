@@ -23,24 +23,26 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+authenticate(AT_PRIV_PACKAGES);
 require ('lib.inc.php');
 $pkgs = getPackagesManagerLinkList();
 
-if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+if (authenticate(AT_PRIV_PACKAGES, AT_PRIV_RETURN)) {
 	$_pages['tools/packages/index.php']['children'] = array (
 	        'tools/packages/import.php'
 	);
-	/*
+	
 	if (sizeOf ($pkgs) > 0) {
 		array_push ($_pages['tools/packages/index.php']['children'], 
 	       		            'tools/packages/delete.php'
 		);
+		/*
 		array_push ($_pages['tools/packages/index.php']['children'], 
 	       			    'tools/packages/settings.php'
 		);
+		*/
 	}
-	*/
+	
 }
 
 

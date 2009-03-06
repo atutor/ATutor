@@ -24,6 +24,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_PACKAGES);
 define ('PACKAGE_TYPES', 'scorm-1.2');
 
 if (isset ($_POST['type'])){

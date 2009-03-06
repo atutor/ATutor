@@ -32,7 +32,7 @@ $_SESSION['done'] = 1;
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); 
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 
-authenticate(AT_PRIV_CONTENT);
+authenticate(AT_PRIV_PACKAGES);
 
 
 function chmodPackageDir ($path) {
