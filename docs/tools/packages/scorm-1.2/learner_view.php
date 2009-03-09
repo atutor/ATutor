@@ -23,7 +23,6 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_PACKAGES);
 $me = 'tools/packages/scorm-1.2/learner_view.php';
 $im = 'tools/packages/scorm-1.2/images/';
 
