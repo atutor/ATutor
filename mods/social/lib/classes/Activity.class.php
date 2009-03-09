@@ -1,23 +1,19 @@
 <?php
-define('SOCIAL_FRIEND_ACTIVITIES_MAX', 10);
-
 /**
  * This class is designed to handle the transactions for all the news, updates and
  * activities that are issued by the user.
  *
  */
 class Activity{
-
-
 	function Activity(){
 	}
-
 
 	/** 
 	 * Adds a new activity into the database.
 	 * @param	int		user id
 	 * @param	string	the message of that describe this activity
 	 * @param	int		the application that's linked with this activity.  Purpose is to display it with a link.
+	 * TODO: What happens if title is empty? Don't add it?
 	 */
 	function addActivity($id, $title, $app_id=0){
 		global $db, $addslashes;
@@ -43,14 +39,18 @@ class Activity{
 	 * Retrieve activity from the database
 	 * 
 	 * @param	int		user id.
+	 * @param	boolean	set TRUE to display all entry		
 	 * @return	The array of description of all the activities from the given user.
 	 */
-	function getActivities($id){
+	function getActivities($id, $displayAll=false){
 		global $db;
 		$activities = array();
 		$id = intval($id);
 		if ($id > 0){
 			$sql = 'SELECT * FROM '.TABLE_PREFIX."activities WHERE member_id=$id ORDER BY created_date DESC";
+			if (!$displayAll){
+				$sql .= ' LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
+			}
 			$result = mysql_query($sql, $db);
 			if ($result){
 				while($row = mysql_fetch_assoc($result)){

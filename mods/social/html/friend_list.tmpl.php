@@ -15,7 +15,7 @@
 <?php endif; ?>
 
 <div class="gadget_wrapper">
-<div class="gadget_title_bar"><?php echo _AT('connection'); ?></div>
+<div class="gadget_title_bar"><a href="mods/social/connections.php"><?php echo _AT('connection'); ?></a></div>
 <?php
 /**
  * Loop through all the friends and print out a list.  

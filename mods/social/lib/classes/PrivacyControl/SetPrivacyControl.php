@@ -24,7 +24,7 @@
 							array(AT_SOCIAL_FRIENDS_VISIBILITY),	//profile status update
 							array(AT_SOCIAL_FRIENDS_VISIBILITY),	//media
 							array(),								//connection
-							array(AT_SOCIAL_FRIENDS_VISIBILITY),	//education
+							array(),	//education
 							array(AT_SOCIAL_FRIENDS_VISIBILITY)		//job position
 						  );
 print_r($profile_prefs);

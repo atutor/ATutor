@@ -47,6 +47,8 @@ if ($privacy_obj==null){
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('scope', ($id!=$_SESSION['member_id']) ? 'viewer' : 'owner');
 $savant->assign('profile', $profile->getDetails());
+$savant->assign('education', $profile->getEducation());
+$savant->assign('position', $profile->getPosition());
 $savant->assign('friends', $friends);
 $savant->assign('activities', $activities);
 $savant->assign('prefs', $profile_prefs);

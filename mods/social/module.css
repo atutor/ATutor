@@ -25,6 +25,11 @@ div .gadget_title_bar {
 	color: #DEDEA4;
 	padding-left: 0.5em; 
 }
+div .gadget_title_bar a{
+	color: #DEDEA4;
+}
+
+
 div .gadget_container {
 	background-color: #DEDEC0;
 }

@@ -1,5 +1,6 @@
 <?php
 define('AT_INCLUDE_PATH', '../../include/');
+$_user_location = 'public';
 include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_SOCIAL_INCLUDE.'classes/Application.class.php');
 

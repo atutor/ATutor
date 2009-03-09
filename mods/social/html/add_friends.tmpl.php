@@ -24,7 +24,16 @@
 	<div class="gadget_container">
 	<?php 
 	if (!empty($this->friends)):
+		$privacy_controller = new PrivacyController();
+echo "<h2>There are ".sizeof($this->friends)." entries.</h2>";
 		foreach ($this->friends as $id=>$person): 
+			$privacy_obj = $privacy_controller->getPrivacyObject($id);
+//			debug($privacy_obj->getSearch(), 'search');
+			$relationship = $privacy_controller->getRelationship($id);
+			if (!PrivacyController::validatePrivacy(AT_SOCIAL_SEARCH_VISIBILITY, $relationship, $privacy_obj->getSearch())){
+				//if this user doesn't want to be searched.
+				continue;
+			}
 	?>
 	<div class="contact_mini" >
 		<?php if (isset($person['added']) && $person['added']==1): ?>

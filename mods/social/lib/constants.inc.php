@@ -15,6 +15,7 @@ define(AT_SOCIAL_PROFILE_EDUCATION,			5);
 define(AT_SOCIAL_PROFILE_POSITION,			6);	//Job
 //Search 		
 define(AT_SOCIAL_SEARCH_VISIBILITY,			0);	//Who can find the user via search
+//Search Results set? What to return via the search
 define(AT_SOCIAL_SEARCH_PROFILE,			1);	//Search through profile?
 define(AT_SOCIAL_SEARCH_CONNECTION,			2);	//Search through connection?
 define(AT_SOCIAL_SEARCH_EDUCATION,			3);	//Search through education?
@@ -26,8 +27,13 @@ define(AT_SOCIAL_ACTIVITIES_APPLICATION,	2);	//Adding an application
 //Application 
 //TODO: Application can record activities via ATutorAppDataService, restrict it.
 
+//Any additional flags should be added to 
+//  lib/classes/PrivacyControl/PrivacyController.class.php::getPermissionLevels()
 define(AT_SOCIAL_EVERYONE_VISIBILITY,				0);	//Everyone
 define(AT_SOCIAL_FRIENDS_VISIBILITY,				1);	//Friends
 define(AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY,		2);	//Friends of Friends
 define(AT_SOCIAL_NETWORK_VISIBILITY,				3);	//Network
+
+//Activity class constants
+define('SOCIAL_FRIEND_ACTIVITIES_MAX', 10);
 ?>

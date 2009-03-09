@@ -11,7 +11,8 @@ class PrivacyController{
 	 * Validate user privacy preference against SESSION's, if empty, fetch from DB.
 	 * @param	int			The field index that should be validated against, check lib/constnats.inc.php
 	 * @param	int			Relationship between SESSION[member] and the current user's
-	 * @param	mixed		The prefs array in respect to the field_id, for instance, if this is validating against profile, then the pref should be the profile								preferences.  ([array]=>preference[profile, basic_profile, photo, ...])
+	 * @param	mixed		The prefs array in respect to the field_id, for instance, if this is validating against profile, 
+	 *						then the pref should be the profile preferences.  ([array]=>preference[profile, basic_profile, photo, ...])
 	 * @return	boolean		True if access granted, false otherwise.
 	 */
 	function validatePrivacy($field_id, $relationship, $pref){
@@ -51,8 +52,10 @@ class PrivacyController{
 			list($relationship) = mysql_fetch_row($result);
 		}
 
+		//If the relationship is not set, this implies that it's not in the table, 
+		//implying that the user has never set its privacy settings, meaning a default is needed
 		if (!isset($relationship)){
-			return -1;
+			return AT_SOCIAL_EVERYONE_VISIBILITY;
 		}
 
 		return $relationship;
@@ -70,7 +73,7 @@ class PrivacyController{
 		//TODO: Check if this object exists in _SESSION, if so, don't pull it from db again
 		$sql = 'SELECT preferences FROM '.TABLE_PREFIX.'privacy_preferences WHERE member_id='.$member_id;
 		$result = mysql_query($sql, $db);
-		if ($result){
+		if (mysql_numrows($result) > 0){
 			list($prefs) = mysql_fetch_row($result);
 			$privacy_obj = unserialize($prefs);
 
@@ -78,7 +81,7 @@ class PrivacyController{
 			return($privacy_obj);
 		}
 		//No such person
-		return null;
+		return new PrivacyObject();
 	}
 
 	/**
@@ -89,7 +92,8 @@ class PrivacyController{
 	 * @return	true if update was successful, false otherwise
 	 */
 	function updatePrivacyPreference($member_id, $prefs){
-		global $db;
+		global $db, $addslashes;
+
 		$member_id = intval($member_id);
 		$prefs = serialize($prefs);
 
@@ -98,6 +102,21 @@ class PrivacyController{
 		echo $sql;
 		$result = mysql_query($sql, $db);
 		return $result;
+	}
+
+	/**
+	 * Returns an array of the user permission levels 
+	 * Check constants.inc.php
+	 */
+	function getPermissionLevels(){
+		return array (
+			//checkboxes don't need to have none and everyone
+//			-1										=>	_AT('none'),
+//			AT_SOCIAL_EVERYONE_VISIBILITY			=>	_AT('everyone'),
+			AT_SOCIAL_FRIENDS_VISIBILITY			=>	_AT('friends'),
+			AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY =>	_AT('friends_of_friends'),
+			AT_SOCIAL_NETWORK_VISIBILITY			=>	_AT('network')
+		);
 	}
 }
 ?>

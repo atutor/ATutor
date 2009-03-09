@@ -1,7 +1,10 @@
 <?php
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
+require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
+require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
 
 if (!$_SESSION['valid_user']) {

@@ -19,6 +19,7 @@
 		<?php 
 		foreach ($this->friends as $i=>$obj):
 			$id	= $obj->id;
+			//check for search preference
 			$profile = $obj->profile;
 		?>
 		<div class="contact_mini">

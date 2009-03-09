@@ -1,6 +1,5 @@
 <?php
 define('AT_INCLUDE_PATH', '../../include/');
-require_once(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
 require_once(AT_SOCIAL_INCLUDE.'classes/Member.class.php');
 
@@ -18,7 +17,6 @@ function getFriends($member_id){
 	
 	//All member_id = member_id, and All friend_id = member_id
 	$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$member_id.' OR F.friend_id='.$member_id.')';
-
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)){
@@ -33,7 +31,6 @@ function getFriends($member_id){
 	//		$friends[$row['friend_id']]['first_name']	=	$row['first_name'];
 	//		$friends[$row['friend_id']]['last_name']	=	$row['last_name'];
 		}
-
 	}
 /*
 	//All friend_id = member_id
@@ -45,7 +42,6 @@ function getFriends($member_id){
 //		$friends[$row['friend_id']]['last_name']	=	$row['last_name'];
 	}
 */
-
 	return $friends;
 }
 
@@ -174,15 +170,21 @@ function searchFriends($name, $searchMyFriends = false){
 	$name = $addslashes($name);	
 	$sub_names = explode(' ', $name);
 	foreach($sub_names as $piece){
-		$query .= "(first_name LIKE '%$piece%' OR  second_name LIKE '%$piece%' OR last_name LIKE '%$piece%' OR email LIKE '$piece') AND ";
+		$query .= "(first_name LIKE '%$piece%' OR second_name LIKE '%$piece%' OR last_name LIKE '%$piece%' OR email LIKE '$piece') AND ";
 	}
 	//trim back the extra "AND "
 	$query = substr($query, 0, -4);
-	
 	if ($searchMyFriends == true){
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].' OR F.friend_id='.$_SESSION['member_id'].') AND ';
 	} else {
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE ';
+		/*
+		* Harris note:
+		* IF the search my friend is off, then it should search all members inside that table
+		* don't know what i did the search inside [friends x members]
+		* end Harris note;
+		*/
+		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE ';
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members M WHERE ';
 	}
 	$sql = $sql . $query;
 	$rs = mysql_query($sql, $db);
@@ -270,8 +272,5 @@ function getProfileLink($id, $str){
  */
 function getMemberActivities($member_id){
 }
-
-
-
 
 ?>

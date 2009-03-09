@@ -43,7 +43,7 @@ if (sizeof($list_of_friends) > 0){
 
 <div class="divider"></div>
 <ul class="social_side_menu">
-	<li><a href=""><?php echo _AT('settings'); ?></a></li>
+	<li><a href="<?php echo url_rewrite('/mods/social/privacy_settings.php'); ?>"><?php echo _AT('settings'); ?></a></li>
 </ul>
 
 <form action="<?php echo url_rewrite('/mods/social/add_friends.php');?>" method="POST">
