@@ -30,7 +30,7 @@ if (isset($_GET['id'])){
 if(isset($_POST['search'])){
 	if (empty($_POST['searchFriends'])){
 		$msg->addError('CANNOT_EMPTY');
-		header('Location: '.url_rewrite('mods/social/add_friends.php'));
+		header('Location: '.url_rewrite('mods/social/add_friends.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 	$_POST['searchFriends'] = $addslashes($_POST['searchFriends']);	

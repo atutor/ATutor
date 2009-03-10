@@ -1,8 +1,8 @@
 <?php
 //Add Friends Template
 ?>
-<div class="search_form">
-	<div class="gadget_title_bar"><?php echo _AT('searchForFriends'); ?></div>
+<div class="input-form">
+	<div class="row"><?php echo _AT('searchForFriends'); ?></div>
 	<div class="row">
 		<form action="<?php echo url_rewrite('/mods/social/add_friends.php');?>" method="POST" >
 			<label for="searchFriends"><?php echo _AT('search'); ?></label>
@@ -19,16 +19,16 @@
 	</div>
 </div>
 
-<div class="gadget_wrapper">
-<div class="gadget_title_bar"><?php echo _AT('my_connections'); ?></div>
-	<div class="gadget_container">
+<div class="">
+<div class="box"><?php echo _AT('my_connections'); ?></div>
+	<div class="box">
 	<?php 
 	if (!empty($this->friends)):
 		$privacy_controller = new PrivacyController();
 echo "<h2>There are ".sizeof($this->friends)." entries.</h2>";
 		foreach ($this->friends as $id=>$person): 
 			$privacy_obj = $privacy_controller->getPrivacyObject($id);
-//			debug($privacy_obj->getSearch(), 'search');
+//			debug($privacy_obj->getSearch(), 'search'.$id);
 			$relationship = $privacy_controller->getRelationship($id);
 			if (!PrivacyController::validatePrivacy(AT_SOCIAL_SEARCH_VISIBILITY, $relationship, $privacy_obj->getSearch())){
 				//if this user doesn't want to be searched.

@@ -25,6 +25,7 @@ if (sizeof($list_of_friends) > 0){
 	<li><a href="<?php echo url_rewrite('/mods/social/connections.php'); ?>">Contacts</a></li>
 	<li><a href="<?php echo url_rewrite('/mods/social/sprofile.php'); ?>">My Social Profile</a></li>
 	<li><a href="<?php echo url_rewrite('/mods/social/applications.php'); ?>">Applications</a></li>
+	<li><a href="<?php echo url_rewrite('/mods/social/sgroups.php'); ?>">Social Groups</a></li>
 </ul>
 
 <div class="divider"></div>

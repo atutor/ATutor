@@ -24,8 +24,9 @@ class PrivacyController{
 			return true;
 		}
 
+		//all values are 1 or 0, match the key to the field_id
 		if (is_array($pref_string) && !empty($pref_string)){		
-			return (in_array($relationship, $pref_string));
+			return (isset($pref_string[$relationship]));
 		} else {
 			return false;
 		}

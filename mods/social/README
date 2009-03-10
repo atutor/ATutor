@@ -1,0 +1,249 @@
+Dec 15, 2008
+------------
+http://www.chabotc.com/guides/shindig_install/
+Shindig test for Windows
+
+CONFIG
+-------------
+PHP Exptension needed (php.ini):
+- curl
+- openssl
+- all gadgets require SHINDIG.
+
+PARTUZA
+-----------
+Then install partuza
+change asp_tags in php.ini
+
+
+TODOs:
+------------
+- Profile needs work
+- Format and styles
+- Paginator
+- Language, instead of 'Friends', maybe we should use 'Contacts'?
+	- Otherwise it has to be broken down into coworkers, collegues, etc.
+- Implements the relationships into the friends.inc.php
+- sort by most active for connection
+	- show contact that we may know
+- mutual friends
+- generate a list of "friends that you may know"
+- take out app
+- progress meter for profile (dynamic) [as in ie.40% profile done.]
+- Google ads
+- need another 'group' table?
+	- join groups, invite, etc, discussion, news, articles
+	- just forums. everything in here. shares the atutor forums
+- A lot of the fields inside the ATutorService, Shindig's Person interface has not been implemented into the ATutorService class.
+  These fields such as, books, accounts, sports, quotes, moves, etc. can be added later depends on the needs.
+- OAuth service
+- Change the <table> to <div> for training_and_education and credits_and_work_experience under sprofile.tmpl.php
+- need to shorten the list of connections and activities, add "more..." to it.  
+- need more filters for search under connection
+- PHP 4.3.0 for ATutor requirement, cannot use __construct (5.0 only)
+- job search
+- CMSMadeSimple single logon
+- IMPORTANT: 
+	For every new user/ or existing user, add an entry to the privacy table, default it to 11111 for everything. 
+	So then the precondition = everyone before social module will have a privacy setting
+- Fix the AT_friends relationship, needs to implement this into the confirm friends section. For now, manually add it to the DB.
+- friends search needs to implement the resultset restrictions
+
+Jan 13, 2009
+------------
+- Implement Social Network into ATutor.  This includes setting up new tables, and new pages.
+- I have decided to implement this via a module.  Better modualirty and extendibility.  
+
+Hardships: 
+- URL rewrite with mods.  This is gonna give me some problems that I didn't have time to test back then when i was developing url_rewrite.  Now is a good time to fix those problems as well.
+
+
+Due:
+- End of January -.-"
+
+
+Jan 14, 2009
+------------
+Questions: 
+- Should I add relationship table for the future? Right now I am using just a table...
+	- obviously...
+	- instead of using the relationship tables that I had in my notebook.  Use constants, for i18n language purposes.
+
+
+Jan 15, 2009
+------------
+- Only records the 'good' things.
+- There is a bug in add friends.  It list people that are not my friends as friends.
+- Change "friends" to "contact", boss wants it to be linkedin style, not facebook style.  The more linkedin it is, the more merrier.
+- Add friends picture/name should be clickable to their profile.
+
+Jan 19, 2009
+------------
+- "My Friend" sql fixed
+- added Approval and Rejection.
+- Removal okay.
+- Activities message errors.
+- Okay, So Shindig is the server that consists of all the JS.  Basically, that means, it is "The container".  And it is open source =D
+- Meaning, I only need to implement RESTFUL and RPC API
+
+PROBLEMS:
+- **Slow profile picture loading, don't know why.
+
+QUESTIONS:
+- Should we consider the MVC Model?
+
+Jan 22, 2009
+------------
+- Need a bit more research.  Shindig actually has the social library built in.
+- Need to build a bridge to connect stuff to it, or any other server.
+- It serves as a gadget server 
+
+
+Jan 27, 2009
+------------
+- Javascript running now within ATutor content page, need to set up the set() function
+	- which means we also need to get the hash key-value function setup
+
+
+Jan 28, 2009
+------------
+- Successfully created a request to the server with the library and security token.
+- Need to work on retrieving data back. 
+- problem, google chrome is stopping all my "unsafe activities"....
+- need to work on the prefs string.
+- remember to add the container.js and a bunch others library in order for it to work, ask cindy if there are easy ways to add them in
+
+
+Jan 29, 2009
+------------
+- implement add applications.
+- then reorganize the application and savant template codes
+- then, sigh, worry about the Shindig container thing.
+
+Jan 30, 2009
+------------
+- create a constant file inside the mod.
+- implement view param
+
+Feb 2, 2009
+-----------
+- Build a graph for the network.  The one with the most edges = most popular
+- Add all the person entries to a new table, why, 3NF, so far we will add the following:
+	- *at_member_position
+	- *at_member_education
+	- *at_member_websites
+	- at_member_additional_information
+- Need to think about groups as well
+
+- As well, located a bug for Login -> Course, ib flag took out the session.
+
+
+Feb 3, 2009
+-----------
+- QUESTIONS
+- Timeline/time diagram problem.  Should we display all activities before the time that the friend is approved? Or afterwards? If so, a timestamp is needed for the friend table.
+- Display Applications --> "My Applicatoins" and "Show all availble applications"?  Instructor levels applications?  Anyone can store informations? How big should it be? Max applications per person?
+- i18n problems with this.
+- be able to validate the user = session id before doing any edition.  Users should not be able to see others by altering POST and GET variables.
+- *too slow on social profile page, there are too many queries running.
+
+Feb 12, 2009
+------------
+- Fixed the slow issue on the social profile page.
+
+- QUESTIONS
+- How much user data can we store?  As in, the application data, how many application can a user have/ how many applicatoin data can be stored into our db?
+- Social profile and user profile.  Creates extreme confusion... we only want one, what is the possible/feasible way to implement a module, and change the profile page?
+	- invovles changing the template of the user profile.  Affects all themes? 
+
+Feb 17, 2009
+------------
+- Contact needs work, need to find the functionality of things.
+- Prepare questions for the upcoming meeting w/ Greg, need to discuss several things for Opensocial to happen.
+	- Openid and Oauth, research on those.
+- Privacy issue, visibility issue
+
+
+Feb 18, 2009
+------------
+- How do we limit application? Can anyone install any application?
+- I am gonna use this color theme: http://colorschemedesigner.com/#1T11TdteJw0Lt
+- Fixed the load time from get_profile_image, use the method defined in vitals.
+- Look into the spandict gadget to see how similar gadgets can be installed.
+
+
+*- Redesign searchFriends.
+- Provide REST/RPC support so then other client can grab our friends? Need to provide OAuth then?...oh god.
+
+
+Feb 19, 2009
+------------
+- container.js has been changed? inside atutor/jscript/opensocial
+- lots of clean up for this folder as well
+- bulid a social graph maybe?
+- search contact/connection works perfectly now.
+- gadget fails, check if it does provide REST
+- working on ATutor REST services 
+
+Feb 23, 2009
+------------
+- http://code.google.com/apis/opensocial/docs/dataapis.html
+- Implemented \lib\Shindig\ATutorDbFetcher.php, \lib\Shindig\ATutorService.php
+	- a bunch of GET, DELETE, CREATE services based on the Opensocial spec, which the interface are defined in Shindig /src/
+- A brief explaination on how this works (gadget that needs service):
+	- Web browser -> send requests to gagdets?ifr to load the gadget, this is handled by the iframe thing which i have in the Application.class.php
+	- Shindig receives the request and found out that this gadget requires member_id's friends list, and recognize this is a service request
+	- Sends out JSON format _POST value to ATutor service, ATutor service calls up ATutorDbFetcher to fetch info from the tables, returns via JSON
+	- Shindig recevied data and sends it back to gadget.
+	- Gadget parse these data and display it with javascript.
+- Lots of the Requests are being handled within the Javascript itself, which in our case, container.js for now.
+- Moved JS library from /jscript/ to /lib/js/
+
+
+Feb 25, 2009
+------------
+- Fans feature for artist? sounds interesting
+- allow the storage of demo
+
+MILESTONE:
+- Get all the API RESTful and services ready
+- Then move on to privacy control
+
+Mar 04, 2009
+------------
+- privacy control classes implemented on profile.
+- added a SetPrivacyControl.php to create temp user.
+- Altered Shindig class to adapt the tag SPI. Check shindig tag's repository shindig/php/src/social/spi/
+- Only the Activities has been changed, for some reasons the activity_ids param is missing.  I am keeping the original function callers anyway.
+
+Mar 09, 2009
+------------
+- search is not functioning.  
+  SQL 
+	SELECT * FROM at_members m where
+	first_name like "%a%" OR
+	last_name like "%a%" OR
+	email like "%a%"
+  returns 83 entries
+  where a search on "a" will only returns 21.
+  - Privacy control which doesn't do anything at the moment returns 13.
+   .........WTH
+	*- Side note, I fixed the query and then all the entries are back, just don't do any search in [friends x members]
+
+Mar 10, 2009
+-------------
+- fixed search
+- fixed search with friends
+- fixed markFriends
+- added privacy control over search
+- fixed PrivacyObject default constructor
+- adjusted css to greg's suggestion, will stop using module.css
+- Social groups
+	- side menu
+	- displaying on profile 
+	- associate it to the activity class
+	- ability to add members (everyone can add once they are in group?), new db table to link the group forum
+	- group creator special ability to remove people.
+	- for now, all activities, events, discussions are carried out via the social forum.
+	- rework AT_forum classes so that it no longer binds to SESSION[class_id], all social forum is available everywhere in _AT
+	- todo: group moderator (assign someone with special power, ie. add member)

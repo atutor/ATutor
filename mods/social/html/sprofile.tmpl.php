@@ -1,8 +1,8 @@
 <?php
 //Profile template for social
 ?>
-<div class="">
-	<div class="">
+<div class="input-form">
+	<div class="row">
 		<h2 class="page-title"><?php echo printSocialName($this->profile['member_id']); ?></h2>
 		<?php if ($this->scope=='owner'): ?>
 		<b><a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><?php echo _AT('edit_profile'); ?></a></b>
@@ -10,7 +10,7 @@
 	</div>
 	
 	<div class="">
-		<div class="" style="width:40%; float:left;" >
+		<div class="row" style="width:40%; float:left;" >
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_PROFILE, $this->relationship, $this->prefs)): ?>
 			<div>
 			<dl id="public-profile">
@@ -98,7 +98,7 @@
 		</div>
 		
 
-		<div class="" style="width:40%; float:right;" >
+		<div class="row" style="width:40%; float:right;" >
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_CONNECTION, $this->relationship, $this->prefs)): ?>
 			<div class="" style="width:250;" >
 				<h5><?php echo _AT('connections'); ?></h5>

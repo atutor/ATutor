@@ -45,8 +45,12 @@ class Application extends Applications{
 		//determine next id
 		$sql = 'SELECT MAX(id) AS max_id FROM '.TABLE_PREFIX.'applications';
 		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		$id = $row['max_id'] + 1;
+		if ($result){
+			$row = mysql_fetch_assoc($result);
+			$id = $row['max_id'] + 1;
+		} else {
+			$id = 1;
+		}
 		$user_id = $_SESSION['member_id'];
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX."applications (id, url, title, height, screenshot, thumbnail, author, author_email, description, settings, views) VALUES ($id, '$url', '$title', $height, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views')";

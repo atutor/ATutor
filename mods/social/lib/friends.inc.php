@@ -194,6 +194,9 @@ function searchFriends($name, $searchMyFriends = false){
 		$temp =& $result[$row['member_id']];
 		$temp['first_name'] = $row['first_name'];
 		$temp['last_name'] = $row['last_name'];
+		if ($searchMyFriends){
+			$temp['added'] = 1;
+		}
 	}
 	return $result;
 }
@@ -203,10 +206,12 @@ function searchFriends($name, $searchMyFriends = false){
  * Given an array list of friends, this function will add an attribute 'added' into the array if this person is already connected to the user.
  * @param	int		the user id
  * @param	array	the given array of friends
+ * @return	marked array
  */
  function markFriends($id, $connections){
 	//get all friends
 	$my_friends = getFriends($id);
+
 	foreach($my_friends as $friends){
 		//if it is in the connection, set the attribute
 		if($connections[$friends->id] != null){
