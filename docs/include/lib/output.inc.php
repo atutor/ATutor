@@ -582,6 +582,12 @@ function myCodes($text, $html = false) {
 
 	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
 	$html = !$html ? 0 : 1;
+
+	// little hack added by greg to add syntax highlighting without using <?php \?\>
+
+	$text = str_replace("[code]","[code]<?php",$text);
+	$text = str_replace("[/code]","?>[/code]",$text);
+
 	$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'), $html)", $text);
 	// now remove the <?php added above and leave the syntax colour behind.
 	$text = str_replace("&lt;?php", "", $text);
