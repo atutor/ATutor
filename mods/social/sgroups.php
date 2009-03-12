@@ -12,9 +12,6 @@ if (!$_SESSION['valid_user']) {
 	exit;
 }
 
-// Get member friends
-$friends = getFriends($id);
-
 // Get activities	
 $act_obj = new Activity();
 $activities = $act_obj->getActivities($id);
@@ -22,6 +19,6 @@ $activities = $act_obj->getActivities($id);
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-echo 'In process...';
+$savant->display('sgroups.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

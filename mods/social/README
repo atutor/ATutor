@@ -48,6 +48,35 @@ TODOs:
 	So then the precondition = everyone before social module will have a privacy setting
 - Fix the AT_friends relationship, needs to implement this into the confirm friends section. For now, manually add it to the DB.
 - friends search needs to implement the resultset restrictions
+- search privacy control needs imporovement, all friends should be able to search them out, meaning if relationship = 1, then privacy control->disable()
+- limit the memory a user can use for applications (either a total or as per)
+- Clean up at_activities after [duration] or [amount of activities]
+
+
+FEATURES:
+------------------
+- Social groups
+	- side menu
+	- displaying on profile 
+	- associate it to the activity class
+	- ability to add members (everyone can add once they are in group?), new db table to link the group forum
+	- group creator special ability to remove people.
+	- for now, all activities, events, discussions are carried out via the social forum.
+	- rework AT_forum classes so that it no longer binds to SESSION[class_id], all social forum is available everywhere in _AT
+	- todo: group moderator (assign someone with special power, ie. add member)
+	- list all available groups (privacy control)
+	- search group
+	- create group
+	- ability to pass on the administrative rights to someone else.
+	- discussion board
+	- group type -> open/close ; public/private
+	- group news (forum?)
+	- send message to all group members
+	- apply graph theory, data structure if we want to have stats, which data to display, data analysis etc. 
+		- Maybe using multi-dimension arrays?
+		- Use adjacent matrices or linked-list for graphs...?
+	- add blog under social networking
+
 
 Jan 13, 2009
 ------------
@@ -132,7 +161,7 @@ Feb 2, 2009
 	- *at_member_position
 	- *at_member_education
 	- *at_member_websites
-	- at_member_additional_information
+	- *at_member_additional_information
 - Need to think about groups as well
 
 - As well, located a bug for Login -> Course, ib flag took out the session.
@@ -238,12 +267,10 @@ Mar 10, 2009
 - added privacy control over search
 - fixed PrivacyObject default constructor
 - adjusted css to greg's suggestion, will stop using module.css
-- Social groups
-	- side menu
-	- displaying on profile 
-	- associate it to the activity class
-	- ability to add members (everyone can add once they are in group?), new db table to link the group forum
-	- group creator special ability to remove people.
-	- for now, all activities, events, discussions are carried out via the social forum.
-	- rework AT_forum classes so that it no longer binds to SESSION[class_id], all social forum is available everywhere in _AT
-	- todo: group moderator (assign someone with special power, ie. add member)
+- Check Features ontop for 
+
+
+Mar 12, 2009
+-------------
+- designed the simple UML for group in my notebook.
+- 

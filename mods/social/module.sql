@@ -111,3 +111,44 @@ CREATE TABLE `privacy_preferences` (
   PRIMARY KEY (`member_id`)
 )
 ENGINE = MyISAM;
+
+# Social Group tables
+CREATE TABLE `social_groups` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `member_id` INTEGER UNSIGNED NOT NULL,
+  `type` INTEGER UNSIGNED NOT NULL,
+  `logo` VARCHAR(255) NOT NULL,
+  `description` TEXT NOT NULL,
+  `created_date` TIMESTAMP NOT NULL,
+  `last_updated` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = MyISAM;
+
+CREATE TABLE `social_groups_activities` (
+  `activity_id` INTEGER UNSIGNED NOT NULL,
+  `group_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`a_id`, `g_id`)
+)
+ENGINE = MyISAM;
+
+CREATE TABLE `social_groups_members` (
+  `group_id` INTEGER UNSIGNED NOT NULL,
+  `member_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`group_id`, `member_id`)
+)
+ENGINE = MyISAM;
+
+CREATE TABLE `social_groups_types` (
+  `type_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(127) NOT NULL,
+  PRIMARY KEY (`type_id`)
+)
+ENGINE = MyISAM;
+
+CREATE TABLE `social_groups_forums` (
+  `group_id` INTEGER UNSIGNED NOT NULL,
+  `forum_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`group_id`, `forum_id`)
+)
+ENGINE = MyISAM;

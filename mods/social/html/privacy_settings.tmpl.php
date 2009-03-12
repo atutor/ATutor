@@ -85,6 +85,7 @@
 		<?php endforeach; ?>
 		</div>
 </div>
+Following are to be implemented...
 <div class="row">
 	<label for="search_profile"><?php echo _AT('search_profile'); ?></label>
 		<div>
