@@ -117,6 +117,7 @@ CREATE TABLE `social_groups` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `type` INTEGER UNSIGNED NOT NULL,
+   `name` VARCHAR(255) NOT NULL,
   `logo` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
   `created_date` TIMESTAMP NOT NULL,
@@ -141,7 +142,7 @@ ENGINE = MyISAM;
 
 CREATE TABLE `social_groups_types` (
   `type_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  `type` VARCHAR(127) NOT NULL,
+  `title` VARCHAR(127) NOT NULL,
   PRIMARY KEY (`type_id`)
 )
 ENGINE = MyISAM;
@@ -152,3 +153,15 @@ CREATE TABLE `social_groups_forums` (
   PRIMARY KEY (`group_id`, `forum_id`)
 )
 ENGINE = MyISAM;
+
+
+#====== Initial Data ========
+REPLACE INTO at_social_groups_types SET title='business', type_id=1;
+REPLACE INTO at_social_groups_types SET title='common_interest', type_id=2;
+REPLACE INTO at_social_groups_types SET title='entertainment_arts', type_id=3;
+REPLACE INTO at_social_groups_types SET title='geography', type_id=4;
+REPLACE INTO at_social_groups_types SET title='internet_technology', type_id=5;
+REPLACE INTO at_social_groups_types SET title='organization', type_id=6;
+REPLACE INTO at_social_groups_types SET title='music', type_id=7;
+REPLACE INTO at_social_groups_types SET title='sports_recreation', type_id=8;
+

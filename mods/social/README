@@ -70,12 +70,16 @@ FEATURES:
 	- ability to pass on the administrative rights to someone else.
 	- discussion board
 	- group type -> open/close ; public/private
-	- group news (forum?)
-	- send message to all group members
+		- ability to add group type by the admins, not predefined by the programmer
+		- PROS: flexibility
+		- CONS: unity fails across different systems + type search
+	- group news (use the forum for now?)
+	- blog
+	- ability send messages to all group members
 	- apply graph theory, data structure if we want to have stats, which data to display, data analysis etc. 
 		- Maybe using multi-dimension arrays?
 		- Use adjacent matrices or linked-list for graphs...?
-	- add blog under social networking
+	- social group files, including media files, such as pictures, video, audio, etc...
 
 
 Jan 13, 2009
@@ -273,4 +277,9 @@ Mar 10, 2009
 Mar 12, 2009
 -------------
 - designed the simple UML for group in my notebook.
-- 
+
+
+Mar 13, 2009
+-------------
+- Potentially security holes inside all social.tmpl.php, cuz they use $_POST
+	- fix: use savant assign even for post, and escape XSS injection

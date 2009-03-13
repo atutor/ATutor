@@ -10,25 +10,25 @@
 			<input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
 		</div>
 	</form>
-	</div>
-</div>
 
-<div class="" style="float:left;" >
-	<div class="box"><?php echo _AT('connection'); ?></div>
-	<div class="box">
-		<?php 
-		foreach ($this->friends as $i=>$obj):
-			$id	= $obj->id;
-			//check for search preference
-			$profile = $obj->profile;
-		?>
-		<div class="contact_mini">
-			<ul>
-			<li><a href="mods/social/sprofile.php?id=<?php echo $id;?>"><?php echo printSocialProfileImg($id); ?></a></li>
-			<li><?php echo printSocialName($id); ?></li>
-			<li><a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><?php echo '[x]'; ?></a></li>
-			</ul>
+
+	<div class="" style="float:left;" >
+		<div class="box"><?php echo _AT('connection'); ?></div>
+		<div class="box">
+			<?php 
+			foreach ($this->friends as $i=>$obj):
+				$id	= $obj->id;
+				//check for search preference
+				$profile = $obj->profile;
+			?>
+			<div class="contact_mini">
+				<ul>
+				<li><a href="mods/social/sprofile.php?id=<?php echo $id;?>"><?php echo printSocialProfileImg($id); ?></a></li>
+				<li><?php echo printSocialName($id); ?></li>
+				<li><a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><?php echo '[x]'; ?></a></li>
+				</ul>
+			</div>
+			<?php endforeach; ?>
 		</div>
-		<?php endforeach; ?>
 	</div>
 </div>

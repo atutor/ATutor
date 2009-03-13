@@ -6,7 +6,8 @@ class SocialGroup {
 	var $group_id;		//group id
 	var $user_id;		//group creator
 	var $logo;			//logo
-	var $type;			//the type_id
+	var $name;			//group name
+	var $type_id;		//the type_id
 	var $description;	//description of this group
 	var $created_date;	//sql timestamp
 	var $last_updated;	//sql timestamp
@@ -15,8 +16,25 @@ class SocialGroup {
 	 * Constructor
 	 */
 	function SocialGroup($group_id){
-		$this->group_id = $group_id;
+		global $db;
+		$this->group_id = intval($group_id);
+
+		if ($this->group_id > 0){
+			$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups WHERE group_id='.$this->group_id;
+			$result = mysql_query($sql, $db);
+			if ($result){
+				$row = mysql_fetch_assoc($result);
+				$this->user_id		= $row['member_id'];
+				$this->logo			= $row['logo'];
+				$this->name			= $row['name'];
+				$this->type_id		= $row['type_id'];
+				$this->description	= $row['description'];
+				$this->created_date = $row['created_date'];
+				$this->last_updated = $row['last_updated'];
+			}
+		}
 	}
+
 
 	/**
 	 * Retrieve a list of group members 
@@ -46,7 +64,7 @@ class SocialGroup {
 	 function getGroupActivities(){
 		 global $db;
 		 $activities = array();
-		 $sql = 'SELECT a,id AS id, a.title AS title FROM '.TABLE_PREFIX.'social_groups_activities g LEFT JOIN '.TABLE_PREFIX'.activities a ON g.activity_id=a.id WHERE g.group_id='.$this->group_id;
+		 $sql = 'SELECT a,id AS id, a.title AS title FROM '.TABLE_PREFIX.'social_groups_activities g LEFT JOIN '.TABLE_PREFIX.'activities a ON g.activity_id=a.id WHERE g.group_id='.$this->group_id;
 		 $result = mysql_query($sql, $db);
 		 if ($result){
 			 while($row = mysql_fetch_assoc($result)){
@@ -69,6 +87,9 @@ class SocialGroup {
 	 }
 	 function getLogo()	{
 		 return $this->logo;
+	 }
+	 function getName() {
+		 return $this->name;
 	 }
 	 function getDescription(){
 		 return $this->description;
@@ -142,7 +163,26 @@ class SocialGroup {
 	/**
 	 * Delete all group forums
 	 */
-	function removeGroupForums(){}
+	function removeGroupForums(){
+		global $db;
+		include(AT_INCLUDE_PATH.'lib/forums.inc.php');
+
+		//delete all forums for this social group
+		$sql = 'SELECT forum_id FROM '.TABLE_PREFIX.'social_groups_forums WHERE group_id='.$this->group_id;
+		$result = mysql_query($sql, $db);
+		if ($result){
+			while ($row = mysql_fetch_assoc($result)){
+				delete_forum($row['forum_id']);
+			}
+		}
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_forums WHERE group_id='.$this->group_id;
+		$result = mysql_query($sql, $db);
+		if ($result){
+			return true;
+		} 
+		return false;
+	}
 
 	
 	/**

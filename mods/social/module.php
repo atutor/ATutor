@@ -77,11 +77,14 @@ $this->_pages['mods/social/add_friends.php']['parent'] = 'mods/social/index.php'
 $this->_pages['mods/social/connections.php']['title_var'] = 'connections';
 $this->_pages['mods/social/connections.php']['parent'] = 'mods/social/index.php';
 
-$this->_pages['mods/social/sgroups.php']['title_var'] = 'social_groups';
-$this->_pages['mods/social/sgroups.php']['parent'] = 'mods/social/index.php';
-
 $this->_pages['mods/social/privacy_settings.php']['title_var'] = 'privacy_settings';
 $this->_pages['mods/social/privacy_settings.php']['parent'] = 'mods/social/index.php';
+
+$this->_pages['mods/social/groups/index.php']['title_var'] = 'social_groups';
+$this->_pages['mods/social/groups/index.php']['parent'] = 'mods/social/index.php';
+
+$this->_pages['mods/social/groups/create.php']['title_var'] = 'create_groups';
+$this->_pages['mods/social/groups/create.php']['parent'] = 'mods/social/groups/index.php';
 
 
 /* public pages */
