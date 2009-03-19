@@ -3,6 +3,8 @@ define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/Applications.class.php');
+require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
+require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
 
 //Handles search queries from side menu
@@ -63,7 +65,8 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 			} else {
 				$savant->assign('friends', getFriends($_SESSION['member_id']));
 			}
-			$savant->assign('pendingRequests', getPendingRequests());			
+			$savant->assign('groupsInvitations', getGroupInvitations());
+			$savant->assign('pendingRequests', getPendingRequests());
 			$savant->display('friend_list.tmpl.php'); 
 		?>
 	</div>

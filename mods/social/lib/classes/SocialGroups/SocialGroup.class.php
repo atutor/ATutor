@@ -3,14 +3,16 @@
  * Class for individual social group
  */
 class SocialGroup {
-	var $group_id;		//group id
-	var $user_id;		//group creator
-	var $logo;			//logo
-	var $name;			//group name
-	var $type_id;		//the type_id
-	var $description;	//description of this group
-	var $created_date;	//sql timestamp
-	var $last_updated;	//sql timestamp
+	var $group_id;			//group id
+	var $user_id;			//group creator
+	var $logo;				//logo
+	var $name;				//group name
+	var $type_id;			//the type_id
+	var $description;		//description of this group
+	var $created_date;		//sql timestamp
+	var $last_updated;		//sql timestamp
+	var $group_members;		//group members
+	var $group_activities;	//group activities
 
 	/**
 	 * Constructor
@@ -20,17 +22,19 @@ class SocialGroup {
 		$this->group_id = intval($group_id);
 
 		if ($this->group_id > 0){
-			$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups WHERE group_id='.$this->group_id;
+			$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups WHERE id='.$this->group_id;
 			$result = mysql_query($sql, $db);
 			if ($result){
 				$row = mysql_fetch_assoc($result);
-				$this->user_id		= $row['member_id'];
-				$this->logo			= $row['logo'];
-				$this->name			= $row['name'];
-				$this->type_id		= $row['type_id'];
-				$this->description	= $row['description'];
-				$this->created_date = $row['created_date'];
-				$this->last_updated = $row['last_updated'];
+				$this->user_id			= $row['member_id'];
+				$this->logo				= $row['logo'];
+				$this->name				= $row['name'];
+				$this->type_id			= $row['type_id'];
+				$this->description		= $row['description'];
+				$this->created_date		= $row['created_date'];
+				$this->last_updated		= $row['last_updated'];
+				$this->group_members	= $this->getGroupMembers();
+				$this->group_activities = $this->getGroupActivities();
 			}
 		}
 	}
@@ -43,6 +47,9 @@ class SocialGroup {
 	 */
 	 function getGroupMembers(){
 		global $db;
+		if (!empty($this->group_member)){
+			return $this->group_members;
+		}
 		$members = array();
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members WHERE group_id='.$this->group_id;
 		$result = mysql_query($sql, $db);
@@ -51,6 +58,7 @@ class SocialGroup {
 				$members[] = new Member($row['member_id']);
 			}
 		}
+
 		//TODO Return empty array or should i return error?
 		return $members;
 	 } 
@@ -63,6 +71,9 @@ class SocialGroup {
 	 */
 	 function getGroupActivities(){
 		 global $db;
+		 if (!empty($this->group_activities)){
+			return $this->group_activities;
+		}
 		 $activities = array();
 		 $sql = 'SELECT a,id AS id, a.title AS title FROM '.TABLE_PREFIX.'social_groups_activities g LEFT JOIN '.TABLE_PREFIX.'activities a ON g.activity_id=a.id WHERE g.group_id='.$this->group_id;
 		 $result = mysql_query($sql, $db);
@@ -71,22 +82,34 @@ class SocialGroup {
 				 $activities[$row['id']] = $row['title'];
 			 }
 		 }
-		 return $result;
+		 return $activities;
 	 }
 
 
 	/**
 	 * Get the group information
 	 */
+	 function getID(){
+		 return $this->group_id;
+	 }
 	 function getUser(){
 		return $this->user_id;
 	 }
 	 function getGroupType(){
+		 global $db;
 		//or maybe print out the exact type name
-		return $this->type_id;
+		$sql = 'SELECT title FROM '.TABLE_PREFIX.'social_groups_types WHERE type_id='.$this->type_id;
+		$result = mysql_query($sql, $db);
+		list($type_name) = mysql_fetch_row($result);
+		return _AT($type_name);
 	 }
 	 function getLogo()	{
-		 return $this->logo;
+		if (file_exists($this->logo)) {
+			$str = '<img src="get_sgroup_logo.php?id='.$id.'" alt="" />';
+		} else {
+			$str = '<img src="mods/social/images/nogroup.gif" alt="" />';
+		}
+		 return $str;
 	 }
 	 function getName() {
 		 return $this->name;
@@ -107,25 +130,50 @@ class SocialGroup {
 	 * @return	boolean	true if succeded, false otherwise.
 	 */
 	 function addMember($member_id){
+		global $db;
 		$member_id = intval($member_id);
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_members (group_id, member_id) VALUES ('.$this->group_id.", $member_id)";
 		$result = mysql_query($sql, $db);
 		if ($result){
+			//add a record to the activities
+			$act = new Activity();		
+			$str1 = printSocialName($friend_id).' has joined the group, <a href="social/groups/view.php?id='.$this->getID().'">'.$this->getName().'</a>';
+			$act->addActivity($member_id, $str1);
+			unset($act);
 			return true;
 		}
 		return false;
 	 }
 
 
-	 /** 
-	  * Remove a member from the group
-	  * @param	int		member_id
-	  * @retrun	boolean	troe successful and false otherwise.
-	  */
+	/**
+	 * Sends an invitation to a member
+	 * @param	int		member_id
+	 */
+	 function addInvitation($member_id) {
+		 global $db;
+		 $member_id = intval($member_id);
+
+		 $sql = 'INSERT INTO '.TABLE_PREFIX.'social_group_invitations (sender_id, member_id, group_id) VALUES ('
+				.$_SESSION['member_id'].', '.$member_id.', '.$this->group_id.')';
+		 $result = mysql_query($sql, $db);
+	 }
+
+	
+	/** 
+	 * Remove a member from the group
+	 * @param	int		member_id
+	 * @retrun	boolean	troe successful and false otherwise.
+	 */
 	 function removeMember($member_id){
 		global $db;
 		$member_id = intval($member_id);
+
+		//quit if member_id = creator id
+		if ($member_id == $this->getUser()){
+			return false;
+		}
 
 		$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_members WHERE member_id=$member_id AND group_id=".$this->group_id;
 		$result = mysql_query($sql, $db);
@@ -159,6 +207,7 @@ class SocialGroup {
 		 }
 		 return false;
 	 }
+
 
 	/**
 	 * Delete all group forums
@@ -197,6 +246,5 @@ class SocialGroup {
 		}
 		return false;
 	}
-
 }
 ?>

@@ -94,6 +94,7 @@ function approveFriendRequest($friend_id){
 		$act->addActivity($_SESSION['member_id'], $str1);
 		$str2 = 'and '.printSocialName($_SESSION['member_id']).' are now friends.';
 		$act->addActivity($friend_id, $str2);
+		unset($act);
 	}
 }
 
@@ -222,13 +223,105 @@ function searchFriends($name, $searchMyFriends = false){
  }
 
 
+/**
+ * Invite other members
+ * @param	int		The member that we are going to invite
+ * @param	int		The group id in which we are inviting the person to.
+ */
+ function addGroupInvitation($member_id, $group_id){
+	 global $db;
+
+	 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups_invitations (sender_id, group_id, member_id) VALUES ($_SESSION[member_id], $group_id, $member_id)";
+	 echo $sql;
+	 $result = mysql_query($sql, $db);
+	 if($result){
+		 return true;
+	 } 
+	 return false;
+ }
+
+
+/**
+ * Get invitation from "ME", which is the logged in person
+ * @return	list of groups id + sender_id
+ */
+ function getGroupInvitations(){
+	global $db;
+	$inv = array();
+
+	$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_invitations WHERE member_id='.$_SESSION['member_id'];
+
+	$result = mysql_query($sql, $db);
+	if ($result){
+		while ($row = mysql_fetch_assoc($result)){
+			$inv[$row['group_id']][] = $row['sender_id'];
+		}
+	}
+
+	return $inv;
+ }
+
+ /**
+  * Accept "my" group invitation
+  * @param	int		group id
+  * @param	int		sender's member_id
+  */
+function acceptGroupInvitation($group_id){
+	global $db;
+	
+	//will only add member if the group_id is valid.
+	if ($group_id <= 0){
+		return;
+	}
+
+	$sg = new SocialGroup($group_id);
+	$isSucceeded = $sg->addMember($_SESSION['member_id']);
+
+	if ($isSucceeded){
+		removeGroupInvitation($group_id);
+	}
+}
+
+
+ /**
+  * Reject "my" group invitation
+  */
+ function rejectGroupInvitation($group_id){
+	 return removeGroupInvitation($group_id);
+ }
+
+ /**
+  * Remove "my" group invitation
+  * @param	int		group id
+  * @param	int		sender's member id
+  */
+ function removeGroupInvitation($group_id){
+	global $db;
+
+	//delete invitation based on 3 primary keys
+//	$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_invitations WHERE group_id=$group_id AND sender_id=$sender_id AND member_id=$member_id";
+	//doesn't need sender_id cause we want to remove all anyway.
+	$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_invitations WHERE group_id=$group_id AND member_id=$_SESSION[member_id]";
+	$result = mysql_query($sql, $db);
+	if ($result){
+		return true;
+	}
+	return false;
+ }
+
+
 /** 
   * Print social name, with AT_print and profile link 
+  * @param	int		member id
+  * @param	link	will return a hyperlink when set to true
   * return	the name to be printed.
   */
-function printSocialName($id){
+function printSocialName($id, $link=true){
 	$str .= AT_print(get_display_name($id), 'members.full_name');
-	return getProfileLink($id, $str);
+	if ($link) {
+		return getProfileLink($id, $str);
+	} 
+	return $str;
 }
 
 

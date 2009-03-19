@@ -51,6 +51,17 @@ TODOs:
 - search privacy control needs imporovement, all friends should be able to search them out, meaning if relationship = 1, then privacy control->disable()
 - limit the memory a user can use for applications (either a total or as per)
 - Clean up at_activities after [duration] or [amount of activities]
+- [03.17.2009] Group invite.php, check if "I" have already invited this person, if so disable checkbox.
+- [03.17.2009] Group invite.php, maybe allow search on existing member?
+- [03.17.2009] Group invite.php, implements flashy, dynamic, web2.0 search, livesearch=http://www.w3schools.com/php/php_ajax_livesearch.asp
+- [03.17.2009] fix .htaccess on groups/index.php problem
+- [03.17.2009] Implements 'Leave Group', 'Edit Group', 'Disband Group'.
+- [03.17.2009] Approve/Reject groups invitation, functions built but needs the interface.
+- [03.18.2009] Maybe mouse over list and show a box of description, not sure about accessibility though...
+- [03.18.2009] Groups search, with filters. Do we need filters? Like do we need to search by category? I would think not. Just title suffices?
+- [03.19.2009] Fix all broken links, lots of links are dummy links.
+- [03.19.2009] support Logo upload
+- [03.19.2009] Message board needs to be implemented, on social group page.
 
 
 FEATURES:
@@ -283,3 +294,33 @@ Mar 13, 2009
 -------------
 - Potentially security holes inside all social.tmpl.php, cuz they use $_POST
 	- fix: use savant assign even for post, and escape XSS injection
+
+
+Mar 17, 2009
+------------
+- Lots of TODO, check above.
+- invitation works.
+- list "My Groups", "Recently Joined"
+- Functions for acception/rejecting/removing groups invitation is done inside friends.inc.php.
+	- Though, need interface to work with this.
+- Needs to implement Leave Group, Edit Group, Disband Group
+- Build a blog/wall kinda thing?
+
+
+Mar 18, 2009
+------------
+- done invitation Accept/reject
+- done Edit
+- done leave group
+- brief info on "my groups"
+
+- BUG: leave group shows cached group info, either reassign variable or find a better way for this.
+
+
+Mar 19, 2009
+------------
+- got search working, sort by "weight", weight is defined by the # of times the search phrase appears inside the result
+- got livesearch working
+	- Find a way to disable the input suggestion from browsers.  Can do this by generation a random # for the input name attribute, so then it will not be cached.
+	- done.
+- Now, i guess it's a good time to link to group forum...? sigh

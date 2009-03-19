@@ -71,6 +71,7 @@ class Application extends Applications{
 		if ($result){
 			$act = new Activity();		
 			$act->addActivity($_SESSION['member_id'], '', $id);
+			unset($act);
 		}
 	}
 

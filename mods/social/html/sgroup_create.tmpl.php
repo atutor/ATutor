@@ -21,11 +21,11 @@
 
 		<div class="row">
 			<label for="description"><?php echo _AT('description'); ?></label>
-			<textarea cols="40" rows="5" name="description" id="description"><?php echo $_POST['description']; ?> </textarea>
+			<textarea cols="40" rows="5" name="description" id="description"><?php echo $_POST['description']; ?></textarea>
 		</div>
 
 		<div class="row">
-			<input class="button" type="submit" name="create" value="<?php echo _AT('search'); ?>" />	
+			<input class="button" type="submit" name="create" value="<?php echo _AT('create'); ?>" />	
 		</div>
 	</form>
 </div>

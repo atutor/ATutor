@@ -12,7 +12,6 @@
 <div class="input-form">	
 	<form action="<?php echo 'mods/social/groups/search.php'; ?>" method="POST" id="search_group_form">
 		<div class="row">
-			<span style="float:right"><a href="mods/social/groups/create.php">Create a new group</a></span>
 			<label for="search_groups"><?php echo _AT('search'); ?></label>
 			<input type="text" size="60" name="search_groups_<?php echo $rand;?>" id="search_groups" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value)"/>
 			<input type="hidden" name="rand_key" value="<?php echo $rand;?>"/>
@@ -21,30 +20,24 @@
 		</div>
 	</form>
 
-
-	<div class="" style="width:50%;float:left;" >
-		<div class="box"><?php echo _AT('recently_joined'); ?></div>
+	<div class="box">
+		<?php if (!empty($this->search_result)):
+		foreach($this->search_result as $group_id=>$group_array): 
+		$group_obj = $group_array['obj'];
+		?>
 		<div class="box">
-			ToDO:
-			Photoalbums
-			Forums...etc
+			<dl>
+				<dt><?php echo _AT('title'); ?></dt>
+				<dd><a href=""><?php echo $group_obj->getName();?></a></dd>
+
+				<dt><?php echo _AT('group_type'); ?></dt>
+				<dd><?php echo $group_obj->getGroupType();?></dd>
+
+				<dt><?php echo _AT('size'); ?></dt>
+				<dd><?php echo count($group_obj->getGroupMembers());?></dd>
+			</dl>
 		</div>
+		<?php endforeach; endif;?>
 	</div>
 
-	<div class="" style="width:50%;float:right;" >
-		<div class="box"><?php echo _AT('my_groups'); ?></div>
-		<div class="box">
-			<?php foreach ($this->my_groups as $i=>$grp): 
-				$grp_obj = new SocialGroup($grp);
-			?>
-			<div class="contact_mini">
-				<div class="box">
-					<a href="mods/social/groups/view.php?id=<?php echo $grp;?>"><?php echo $grp_obj->getName(); ?></a><br/>
-					<?php echo _AT('type') .': '. $grp_obj->getGroupType();?><br/>
-					<?php echo _AT('description') .': '. $grp_obj->getDescription();?><br/>
-				</div>
-			</div>
-			<?php endforeach; ?>
-		</div>
-	</div>
 </div>

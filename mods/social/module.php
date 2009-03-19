@@ -86,6 +86,17 @@ $this->_pages['mods/social/groups/index.php']['parent'] = 'mods/social/index.php
 $this->_pages['mods/social/groups/create.php']['title_var'] = 'create_groups';
 $this->_pages['mods/social/groups/create.php']['parent'] = 'mods/social/groups/index.php';
 
+$this->_pages['mods/social/groups/view.php']['title_var'] = 'view_groups';
+$this->_pages['mods/social/groups/view.php']['parent'] = 'mods/social/groups/index.php';
+
+$this->_pages['mods/social/groups/invite.php']['title_var'] = 'invite_groups';
+$this->_pages['mods/social/groups/invite.php']['parent'] = 'mods/social/groups/index.php';
+
+$this->_pages['mods/social/groups/edit.php']['title_var'] = 'edit_groups';
+$this->_pages['mods/social/groups/edit.php']['parent'] = 'mods/social/groups/index.php';
+
+$this->_pages['mods/social/groups/search.php']['title_var'] = 'search';
+$this->_pages['mods/social/groups/search.php']['parent'] = 'mods/social/groups/index.php';
 
 /* public pages */
 $this->_pages[AT_NAV_PUBLIC] = array('mods/social/index_public.php');
