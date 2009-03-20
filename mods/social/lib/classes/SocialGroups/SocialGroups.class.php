@@ -53,6 +53,9 @@ class SocialGroups{
 		 //remove group members
 		 $social_group->removeGroupMembers();
 
+		
+		 //TODO remove message board
+
 		 //remove groups 
 		 $sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups WHERE id='.$id;
 		 mysql_query($sql, $db);

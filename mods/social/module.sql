@@ -32,7 +32,7 @@ CREATE TABLE `application_settings` (
   `application_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `name` VARCHAR(255) NOT NULL,
-  `value` VARCHAR(255) NOT NULL,
+  `value` TEXT NOT NULL,
   PRIMARY KEY (`application_id`, `member_id`, `name`)
 )
 ENGINE = MyISAM;
@@ -161,6 +161,18 @@ CREATE TABLE `social_groups_forums` (
   PRIMARY KEY (`group_id`, `forum_id`)
 )
 ENGINE = MyISAM;
+
+# Groups message board
+CREATE TABLE `social_groups_board` (
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `member_id` INTEGER UNSIGNED NOT NULL,
+  `group_id` INTEGER UNSIGNED NOT NULL,
+  `body` TEXT NOT NULL,
+  `created_date` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`)
+)
+ENGINE = MyISAM;
+
 
 
 #====== Initial Data ========

@@ -87,6 +87,25 @@ class SocialGroup {
 
 
 	/**
+	 * Get message boards message, return a list sorted by date, in descending order
+	 */
+	 function getMessages(){
+		 global $db;
+		 $result = array();	
+
+		 $sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID().' ORDER BY created_date DESC';
+		 $rs = mysql_query($sql, $db);
+
+		 if ($rs){
+			 while ($row = mysql_fetch_assoc($rs)){
+				$result [$row['id']] = $row;
+			 }
+		 }
+		 return $result;
+	 }
+
+
+	/**
 	 * Get the group information
 	 */
 	 function getID(){
@@ -161,6 +180,41 @@ class SocialGroup {
 	 }
 
 	
+	/**
+	 * Add message to the message board
+	 * @param	string	the message body
+	 */
+	 function addMessage($body) {
+		 global $db, $addslashes;
+		 $body = $addslashes($body);
+		 $member_id = $_SESSION['member_id'];
+		 $group_id = $this->getID();
+
+		 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups_board (member_id, group_id, body, created_date) VALUES ($member_id, $group_id, '$body', NOW())";
+		 $result = mysql_query($sql, $db);
+		 return $result;
+	 }
+	
+
+	/** 
+	 * Edit message 
+	 * @param	int		the id of the message
+	 * @param	string	message body
+	 */
+	 function updateMessage($id, $body){
+		 global $db, $addslashes;
+		 $id = intval($id);
+		 $body = $addslashes($body);
+		if ($id <= 0){
+			return false;
+		}
+
+		$sql = 'UPDATE '.TABLE_PREFIX."social_groups_board SET body='$body' WHERE id=$id";
+		$result = mysql_query($sql, $db);
+		return $result;
+	 }
+	
+
 	/** 
 	 * Remove a member from the group
 	 * @param	int		member_id
@@ -245,6 +299,31 @@ class SocialGroup {
 			return true;
 		}
 		return false;
+	}
+
+
+	/** 
+	 * Delete a message from the board
+	 */
+	function removeMessage($id){
+		global $db;
+		$id = intval ($id);
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id";
+		$result = mysql_query($sql, $db);
+		return $result;
+	}
+
+	
+	/**
+	 * Delete all the messages from the board
+	 */
+	function removeAllMessages(){
+		global $db;
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID();
+		$result = mysql_query($sql, $db);
+		return $result;
 	}
 }
 ?>

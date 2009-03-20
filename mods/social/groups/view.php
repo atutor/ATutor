@@ -15,6 +15,14 @@ if (isset($_GET['remove']) && $_GET['remove']==1){
 	$group_obj->removeMember($_SESSION['member_id']);
 }
 
+//submit message
+if (isset($_POST['submit'])){
+	$body = $_POST['msg_body'];
+	if ($body!=''){
+		$group_obj->addMessage($body);
+	}
+}
+
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('groupsInvitations',getGroupInvitations());

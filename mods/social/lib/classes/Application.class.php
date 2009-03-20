@@ -64,7 +64,8 @@ class Application extends Applications{
 			$id = $row['id'];
 		} 
 
-		//Add a record into application_settings regardless since it has to be mapped onto the user.
+		//Add a record into application_settings regardless since it has to be mapped onto the user
+		//TODO: use another table
 		$sql = 'INSERT INTO '.TABLE_PREFIX."application_settings (application_id, member_id, name, value) VALUES ($id, $user_id, '$title', 'Place holder')";
 		$result = mysql_query($sql, $db);
 

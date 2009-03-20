@@ -321,6 +321,19 @@ Mar 19, 2009
 ------------
 - got search working, sort by "weight", weight is defined by the # of times the search phrase appears inside the result
 - got livesearch working
-	- Find a way to disable the input suggestion from browsers.  Can do this by generation a random # for the input name attribute, so then it will not be cached.
+	- Find a way to disable the input suggestion from browsers.  Can do this by generation a random # for the input name attribute, 
+	  so then it will not be cached.
 	- done.
 - Now, i guess it's a good time to link to group forum...? sigh
+
+
+Mar 20, 2009
+------------
+- Message board implemented, need to do error/feedback messages though.
+- jquery.all.js ==> 
+
+Class.create is not a function
+- [Break on this error] var Container = Class.create();
+  container.js (line 1)
+- element.dispatchEvent is not a function
+  [Break on this error] element.dispatchEvent(event);
