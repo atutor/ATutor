@@ -1,8 +1,8 @@
 var xmlHttp;
 
-function showResults(str) {
+function showResults(str, search_id, url) {
 	if (str.length==0) { 
-	  document.getElementById("livesearch").innerHTML="";
+	  document.getElementById(search_id).innerHTML="";
 	  return;
 	}
 	xmlHttp=GetXmlHttpObject();
@@ -11,7 +11,6 @@ function showResults(str) {
 	  return;
 	} 
 
-	var url="mods/social/groups/search.php";
 	url=url+"?q="+str;
 	xmlHttp.onreadystatechange=stateChanged;
 	xmlHttp.open("GET",url,true);

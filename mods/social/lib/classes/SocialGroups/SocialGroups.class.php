@@ -1,4 +1,6 @@
 <?php
+require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
+
 /**
  * Social Groups, this is different from the Groups class in ATutor.
  */
@@ -21,16 +23,24 @@ class SocialGroups{
 		 global $db, $addslashes;
 
 		 $type_id = intval($type_id);
+		 $name = $addslashes($name);
 		 $description = $addslashes($description);
 		 $logo = $addslashes($logo);
+		 $member_id = $_SESSION['member_id'];
 
-		 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups (`member_id`, `type_id`, `logo`, `name`, `description`, `created_date`, `last_updated`) VALUES ($_SESSION[member_id], $type_id, '$logo', '$name', '$description', NOW(), NOW())";
+		 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups (`member_id`, `type_id`, `logo`, `name`, `description`, `created_date`, `last_updated`) VALUES ($member_id, $type_id, '$logo', '$name', '$description', NOW(), NOW())";
 		 $result = mysql_query($sql, $db);
 		 $group_id = mysql_insert_id();
 		 if ($result){
 			 //add it to the group member table
 			 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups_members (group_id, member_id) VALUES ($group_id, $_SESSION[member_id])";
 			 $result = mysql_query($sql, $db);
+			 if ($result){
+				$act = new Activity();		
+				$str1 = ' has added the group, <a href="mods/social/groups/view.php?id='.$group_id.'">'.$name.'</a>';
+				$act->addActivity($member_id, $str1);
+				unset($act);
+			 }
 			 return true;
 		 }
 		 return false;
@@ -45,20 +55,20 @@ class SocialGroups{
 		 $social_group = new SocialGroup($id);
 
 		 //remove group activities
-		 $social_group->removeGroupActivities();
+		 $status = $social_group->removeGroupActivities();
 
 		 //remove group forums
-		$social_group->removeGroupForums();
+		 $status &= $social_group->removeGroupForums();
 
 		 //remove group members
-		 $social_group->removeGroupMembers();
+		 $status &= $social_group->removeGroupMembers();
 
-		
-		 //TODO remove message board
+		 //remove message board
+		 $status &= $social_group->removeAllMessages();
 
 		 //remove groups 
 		 $sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups WHERE id='.$id;
-		 mysql_query($sql, $db);
+		 $status &= mysql_query($sql, $db);
 	 }
 
 
@@ -85,6 +95,10 @@ class SocialGroups{
 		 debug();echo $sql;
 		 $result = mysql_query($sql, $db);
 		 if ($result){
+			 $act = new Activity();		
+			 $str1 = ' has updated the group, <a href="mods/social/groups/view.php?id='.$group_id.'">'.$name.'</a>';
+			 $act->addActivity($member_id, $str1);
+			 unset($act);
 			 return true;
 		 } 
 		 return false;

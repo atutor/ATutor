@@ -21,11 +21,11 @@ if (sizeof($list_of_friends) > 0){
 ?>
 
 <ul class="social_side_menu">
-	<li><a href="<?php echo url_rewrite('/mods/social/index.php'); ?>">Home</a></li>
-	<li><a href="<?php echo url_rewrite('/mods/social/connections.php'); ?>">Contacts</a></li>
-	<li><a href="<?php echo url_rewrite('/mods/social/sprofile.php'); ?>">My Social Profile</a></li>
-	<li><a href="<?php echo url_rewrite('/mods/social/applications.php'); ?>">Applications</a></li>
-	<li><a href="<?php echo url_rewrite('/mods/social/groups/index.php'); ?>">Social Groups</a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/index.php', AT_PRETTY_URL_HEADER); ?>">Home</a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/connections.php', AT_PRETTY_URL_HEADER); ?>">Contacts</a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/sprofile.php', AT_PRETTY_URL_HEADER); ?>">My Social Profile</a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/applications.php', AT_PRETTY_URL_HEADER); ?>">Applications</a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER); ?>">Social Groups</a></li>
 </ul>
 
 <div class="divider"></div>
@@ -37,17 +37,17 @@ if (sizeof($list_of_friends) > 0){
 <ul class="social_side_menu">
 	<?php 
 	foreach ($myApplications as $id=>$app_obj){
-		echo '<li><a href="'.url_rewrite('/mods/social/applications.php?app_id='.$id).'">'.$app_obj->title.'</a></li>';
+		echo '<li><a href="'.url_rewrite('mods/social/applications.php?app_id='.$id, AT_PRETTY_URL_HEADER).'">'.$app_obj->title.'</a></li>';
 	}
 	?>
 </ul>
 
 <div class="divider"></div>
 <ul class="social_side_menu">
-	<li><a href="<?php echo url_rewrite('/mods/social/privacy_settings.php'); ?>"><?php echo _AT('settings'); ?></a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/privacy_settings.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('settings'); ?></a></li>
 </ul>
 
-<form action="<?php echo url_rewrite('/mods/social/add_friends.php');?>" method="POST">
+<form action="<?php echo url_rewrite('mods/social/add_friends.php', AT_PRETTY_URL_HEADER);?>" method="POST">
 	<input type="text" name="searchFriends" value="<?php echo urldecode($_POST['searchFriends']); ?>"/>
 	<input type="submit" name="search" value="<?php echo _AT('search'); ?>" class="button" />
 </form>

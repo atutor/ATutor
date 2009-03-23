@@ -63,7 +63,7 @@
 			<?php endif; ?>
 			<?php if ($this->group_obj->getUser() == $_SESSION['member_id']): ?>
 			<a href="mods/social/groups/edit.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('edit_group'); ?></a>
-			<a href=""><?php echo _AT('disband_group'); ?></a>
+			<a href="mods/social/groups/delete.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('disband_group'); ?></a>
 			<?php endif; ?>
 
 			<?php if(!empty($this->groupsInvitations)): ?>

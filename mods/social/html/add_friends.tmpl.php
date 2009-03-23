@@ -4,7 +4,7 @@
 <div class="input-form">
 	<div class="row"><?php echo _AT('searchForFriends'); ?></div>
 	<div class="row">
-		<form action="<?php echo url_rewrite('/mods/social/add_friends.php');?>" method="POST" >
+		<form action="<?php echo url_rewrite('mods/social/add_friends.php');?>" method="POST" >
 			<label for="searchFriends"><?php echo _AT('search'); ?></label>
 			<input type="text" size="60" name="searchFriends" id="searchFriends" value="<?php echo $_POST['searchFriends']; ?>"/>
 			<label for ="myFriendsOnly"><?php echo _AT('myFriendsOnly'); ?></label>

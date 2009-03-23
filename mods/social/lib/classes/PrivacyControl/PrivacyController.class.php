@@ -4,7 +4,7 @@
  */
 class PrivacyController{
 	//Constructor
-	function __construct(){
+	function PrivacyController(){
 	}
 
 	/**

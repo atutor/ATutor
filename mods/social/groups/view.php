@@ -9,7 +9,7 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 //Get group
 $gid = intval($_GET['id']);
 $group_obj = new SocialGroup($gid);
-
+debug($group_obj);
 //remove group member
 if (isset($_GET['remove']) && $_GET['remove']==1){
 	$group_obj->removeMember($_SESSION['member_id']);

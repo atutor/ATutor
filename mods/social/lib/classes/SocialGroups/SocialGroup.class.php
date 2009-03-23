@@ -1,4 +1,6 @@
 <?php
+require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
+
 /**
  * Class for individual social group
  */
@@ -248,7 +250,7 @@ class SocialGroup {
 		 $act_obj = new Activity();
 
 		 //First remove groups activities from activity table
-		 $allActs = $social_group->getActivities();
+		 $allActs = $this->group_activities;
 		 foreach ($allActs as $id=>$garbage) {
 			$act_obj->deleteActivity($id);
 		 }

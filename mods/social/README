@@ -62,6 +62,8 @@ TODOs:
 - [03.19.2009] Fix all broken links, lots of links are dummy links.
 - [03.19.2009] support Logo upload
 - [03.19.2009] Message board needs to be implemented, on social group page.
+- [03.23.2009] Namespace all tables to "social_"
+- [03.23.2009] Find friends and Add friends should be separated.
 
 
 FEATURES:
@@ -337,3 +339,7 @@ Class.create is not a function
   container.js (line 1)
 - element.dispatchEvent is not a function
   [Break on this error] element.dispatchEvent(event);
+
+
+Mar 23, 2009
+------------

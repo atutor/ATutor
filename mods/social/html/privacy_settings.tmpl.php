@@ -1,4 +1,4 @@
-<form action="<?php echo url_rewrite('/mods/social/privacy_settings.php');?>" method="POST">
+<form action="<?php echo url_rewrite('mods/social/privacy_settings.php');?>" method="POST">
 <div class="input-form">
 <div class="row">Controls who can see your profile and related information. </div>
 <fieldset class="group_form"><legend class="group_form">Profile Control</legend>
