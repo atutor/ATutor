@@ -22,14 +22,14 @@ function getFriends($member_id){
 	while ($row = mysql_fetch_assoc($result)){
 		if ($row['member_id']==$member_id){
 			//member_id=member_id case
-			$friends[$row['friend_id']]			=	new Member($row['friend_id']);
-	//		$friends[$row['member_id']]['first_name']	=	$row['first_name'];
-	//		$friends[$row['member_id']]['last_name']	=	$row['last_name'];
+			$friends[$row['friend_id']]			=	$row['friend_id'];
+			$friends[$row['member_id']]['first_name']	=	$row['first_name'];
+			$friends[$row['member_id']]['last_name']	=	$row['last_name'];
 		} else {
 			//friend_id = member_id
-			$friends[$row['member_id']]			=	new Member($row['member_id']);
-	//		$friends[$row['friend_id']]['first_name']	=	$row['first_name'];
-	//		$friends[$row['friend_id']]['last_name']	=	$row['last_name'];
+			$friends[$row['member_id']]			=	$row['member_id'];
+			$friends[$row['friend_id']]['first_name']	=	$row['first_name'];
+			$friends[$row['friend_id']]['last_name']	=	$row['last_name'];
 		}
 	}
 /*

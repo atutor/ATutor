@@ -1,12 +1,21 @@
-<?php
-//Add Friends Template
+<script src="mods/social/lib/js/livesearch.js" type="text/javascript"></script>
+<?php 
+	//Add Friends Template
+	//Generate a random number for the search input name fields, so that the browser will not remember any previous entries.
+	$rand = md5(rand(0, time())); 
+	if ($this->rand_key != ''){
+		$last_search = $_POST['search_friends_'.$this->rand_key];
+	} else {
+		$last_search = $_POST['search_friends_'.$rand];	
+	}
 ?>
+
 <div class="input-form">
 	<div class="row"><?php echo _AT('searchForFriends'); ?></div>
 	<div class="row">
-		<form action="<?php echo url_rewrite('mods/social/add_friends.php');?>" method="POST" >
+		<form action="<?php echo url_rewrite('mods/social/add_friends.php');?>" method="POST" id="search_friends_form">
 			<label for="searchFriends"><?php echo _AT('search'); ?></label>
-			<input type="text" size="60" name="searchFriends" id="searchFriends" value="<?php echo $_POST['searchFriends']; ?>"/>
+			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $_POST['search_friends_'.$last_search]; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/add_friends.php')"/>
 			<label for ="myFriendsOnly"><?php echo _AT('myFriendsOnly'); ?></label>
 			<?php 
 			if (isset($_POST['myFriendsOnly'])){
@@ -15,6 +24,7 @@
 			?>
 			<input type="checkbox" name="myFriendsOnly" id="myFriendsOnly" value="yes" <?php echo $mfo_checked; ?>/>
 			<input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
+			<div id="livesearch"></div>
 		</form>
 	</div>
 </div>

@@ -116,7 +116,7 @@ ENGINE = MyISAM;
 CREATE TABLE `social_groups` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INTEGER UNSIGNED NOT NULL,
-  `type` INTEGER UNSIGNED NOT NULL,
+  `type_id` INTEGER UNSIGNED NOT NULL,
    `name` VARCHAR(255) NOT NULL,
   `logo` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
@@ -129,7 +129,7 @@ ENGINE = MyISAM;
 CREATE TABLE `social_groups_activities` (
   `activity_id` INTEGER UNSIGNED NOT NULL,
   `group_id` INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY (`a_id`, `g_id`)
+  PRIMARY KEY (`activity_id`, `group_id`)
 )
 ENGINE = MyISAM;
 

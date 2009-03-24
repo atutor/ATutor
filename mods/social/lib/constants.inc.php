@@ -1,7 +1,7 @@
 <?php
 //Constants Declaration
-//define(AT_SHINDIG_URL,						'http://localhost/shindig/php');
-define(AT_SHINDIG_URL,						'http://142.150.154.167/shindig/php');
+define(AT_SHINDIG_URL,						'http://localhost/shindig/php');
+//define(AT_SHINDIG_URL,						'http://142.150.154.167/shindig/php');
 //define(AT_SHINDIG_URL,						'http://social.atutor.ca/shindig/php');
 
 //Privacy Control Constants, field indices

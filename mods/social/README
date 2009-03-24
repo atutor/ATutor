@@ -343,3 +343,4 @@ Class.create is not a function
 
 Mar 23, 2009
 ------------
+- validate group before going into view.php.  ie. if group is deleted.
