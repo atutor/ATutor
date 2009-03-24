@@ -97,9 +97,11 @@ ENGINE = MyISAM;
 # Person additional information cojoint with the members table
 CREATE TABLE `member_additional_information` (
   `member_id` INTEGER UNSIGNED NOT NULL,
+  `expertise` VARCHAR(255) NOT NULL,
   `interests` TEXT,
   `associations` TEXT,
   `awards` TEXT,
+  `others` TEXT,
   PRIMARY KEY (`member_id`)
 )
 ENGINE = MyISAM;

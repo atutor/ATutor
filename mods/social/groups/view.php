@@ -9,7 +9,14 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 //Get group
 $gid = intval($_GET['id']);
 $group_obj = new SocialGroup($gid);
-debug($group_obj);
+
+//check if this group is valid
+if (!$group_obj->isValid()){
+	$msg->addError('group_has_been_removed');
+	header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+	exit;
+}
+
 //remove group member
 if (isset($_GET['remove']) && $_GET['remove']==1){
 	$group_obj->removeMember($_SESSION['member_id']);

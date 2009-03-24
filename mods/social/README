@@ -64,6 +64,9 @@ TODOs:
 - [03.19.2009] Message board needs to be implemented, on social group page.
 - [03.23.2009] Namespace all tables to "social_"
 - [03.23.2009] Find friends and Add friends should be separated.
+- [03.24.2009] Smarten the connection search, so that it lists different suggestions based on the checked flags.
+- [03.24.2009] create the index_mystart and index_public pages.
+
 
 
 FEATURES:
@@ -344,3 +347,7 @@ Class.create is not a function
 Mar 23, 2009
 ------------
 - validate group before going into view.php.  ie. if group is deleted.
+- add $_user_location	= 'users'; on all pages.
+	- creates all sort of problem with the pretty url...
+- found a bug on search friends, now fixed.  
+- need to restructurize the sprofile layout, looks like crap now.

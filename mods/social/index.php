@@ -57,7 +57,7 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 //			echo '</div>';
 		?>
 	</div>
-	<div id="box" style="float:left; margin-left:1em;">
+	<div id="box" style="float:left; margin-left:0.2em;">
 		<?php			
 			//if friends array is not empty.
 			if (!empty($friends)){

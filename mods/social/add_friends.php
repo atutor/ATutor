@@ -19,10 +19,6 @@ if (!$_SESSION['valid_user']) {
 $friends = getFriends($_SESSION['member_id']);
 $rand_key = $addslashes($_POST['rand_key']);	//should we excape?
 
-if ($rand_key!='' && isset($_POST['search_friends_'.$rand_key])){
-	$query = $addslashes($_POST['search_friends_'.$rand_key]);
-	$search_result = $social_groups->search($query);
-}
 
 //if $_GET['q'] is set, handle Ajax.
 if (isset($_GET['q'])){
@@ -70,13 +66,13 @@ if($rand_key!='' && isset($_POST['search_friends_'.$rand_key])){
 		header('Location: '.url_rewrite('mods/social/add_friends.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
-	$_POST['search_friends'] = $addslashes($_POST['search_friends']);	
+	$search_field = $addslashes($_POST['search_friends_'.$rand_key]);	
 	if (isset($_POST['myFriendsOnly'])){
 		//retrieve a list of my friends
-		$friends = searchFriends($_POST['search_friends'], true);
+		$friends = searchFriends($search_field, true);
 	} else {
 		//retrieve a list of friends by the search
-		$friends = searchFriends($_POST['search_friends']);
+		$friends = searchFriends($search_field);
 	}
 
 	//mark those that are already added

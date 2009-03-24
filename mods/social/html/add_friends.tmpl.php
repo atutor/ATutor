@@ -23,6 +23,7 @@
 			}
 			?>
 			<input type="checkbox" name="myFriendsOnly" id="myFriendsOnly" value="yes" <?php echo $mfo_checked; ?>/>
+			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>"/>
 			<input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
 			<div id="livesearch"></div>
 		</form>
@@ -50,6 +51,7 @@ echo "<h2>There are ".sizeof($this->friends)." entries.</h2>";
 			<?php echo printSocialProfileImg($id); ?>
 			<?php echo printSocialName($id); ?>
 <!--		<a href="mods/social/remove_friend.php?id=<?php echo $id; ?>"><?php echo _AT('remove_friend'); ?></a>   -->
+			<a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><?php echo '[x]'; ?></a>
 		<?php else: ?>
 			<?php if (!isset($_POST['myFriendsOnly'])): ?>
 			<?php echo printSocialProfileImg($id); ?>

@@ -15,6 +15,7 @@ class SocialGroup {
 	var $last_updated;		//sql timestamp
 	var $group_members;		//group members
 	var $group_activities;	//group activities
+	var $is_valid;			//set false if this is not a valid group
 
 	/**
 	 * Constructor
@@ -26,7 +27,7 @@ class SocialGroup {
 		if ($this->group_id > 0){
 			$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups WHERE id='.$this->group_id;
 			$result = mysql_query($sql, $db);
-			if ($result){
+			if (mysql_num_rows($result) > 0){
 				$row = mysql_fetch_assoc($result);
 				$this->user_id			= $row['member_id'];
 				$this->logo				= $row['logo'];
@@ -37,6 +38,10 @@ class SocialGroup {
 				$this->last_updated		= $row['last_updated'];
 				$this->group_members	= $this->getGroupMembers();
 				$this->group_activities = $this->getGroupActivities();
+				$this->is_valid			= true;
+			} else {
+				//group does not exist, most likely deleted
+				$this->is_valid			= false;
 			}
 		}
 	}
@@ -143,6 +148,9 @@ class SocialGroup {
 	 }
 	 function getLastUpdated(){
 		 return $this->last_updated;
+	 }
+	 function isValid(){
+		 return $this->is_valid;
 	 }
 
 	/**

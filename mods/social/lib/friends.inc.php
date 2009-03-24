@@ -4,7 +4,7 @@ require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
 require_once(AT_SOCIAL_INCLUDE.'classes/Member.class.php');
 
 /** 
- * This function will return a list of the member's member Object.
+ * Get all the connections from the given member id
  * $obj->url should retrieve the member's profile link.
  *
  * @param	int		the person who we want to get friends from
@@ -23,13 +23,13 @@ function getFriends($member_id){
 		if ($row['member_id']==$member_id){
 			//member_id=member_id case
 			$friends[$row['friend_id']]			=	$row['friend_id'];
-			$friends[$row['member_id']]['first_name']	=	$row['first_name'];
-			$friends[$row['member_id']]['last_name']	=	$row['last_name'];
+//			$friends[$row['member_id']]['first_name']	=	$row['first_name'];
+//			$friends[$row['member_id']]['last_name']	=	$row['last_name'];
 		} else {
 			//friend_id = member_id
 			$friends[$row['member_id']]			=	$row['member_id'];
-			$friends[$row['friend_id']]['first_name']	=	$row['first_name'];
-			$friends[$row['friend_id']]['last_name']	=	$row['last_name'];
+//			$friends[$row['friend_id']]['first_name']	=	$row['first_name'];
+//			$friends[$row['friend_id']]['last_name']	=	$row['last_name'];
 		}
 	}
 /*
@@ -166,6 +166,7 @@ function removeFriend($friend_id){
 function searchFriends($name, $searchMyFriends = false){
 	global $db, $addslashes;
 	$result = array(); 
+	$my_friends = array();
 
 	//break the names by space, then accumulate the query
 	$name = $addslashes($name);	
@@ -175,14 +176,35 @@ function searchFriends($name, $searchMyFriends = false){
 	}
 	//trim back the extra "AND "
 	$query = substr($query, 0, -4);
+
+	//If searchMyFriend is true, return the "my friends" array
+	//else, use "my friends" array to distinguish which of these are already in my connection
+	$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].' OR F.friend_id='.$_SESSION['member_id'].') AND ';
+	$sql = $sql . $query;
+	$rs = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($rs)){
+		if ($row['member_id']==$_SESSION['member_id']){
+			$this_id = $row['friend_id'];
+		} else {
+			$this_id = $row['member_id'];
+		}
+		$temp =& $my_friends[$this_id];	
+		$temp['obj'] = new Member($this_id);
+		if ($searchMyFriends){
+			$temp['added'] = 1;
+		}
+	}
+	unset($this_id);  //don't want the following statements to reuse this
+
+	//Check if this is a search on all people
 	if ($searchMyFriends == true){
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].' OR F.friend_id='.$_SESSION['member_id'].') AND ';
+		return $my_friends;
 	} else {
 		/*
-		* Harris note:
-		* IF the search my friend is off, then it should search all members inside that table
-		* don't know what i did the search inside [friends x members]
-		* end Harris note;
+		* Harris' note:
+		* IF the 'search my friend' is off, then it should search all members inside that table
+		* don't know why i did the search inside [friends x members]
+		* end note;
 		*/
 		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE ';
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members M WHERE ';
@@ -192,13 +214,20 @@ function searchFriends($name, $searchMyFriends = false){
 
 	//Get all members out
 	while($row = mysql_fetch_assoc($rs)){
-		$temp =& $result[$row['member_id']];
-		$temp['first_name'] = $row['first_name'];
-		$temp['last_name'] = $row['last_name'];
-		if ($searchMyFriends){
+		if ($row['member_id']==$_SESSION['member_id']){
+			$this_id = $row['friend_id'];
+		} else {
+			$this_id = $row['member_id'];
+		}
+		$temp =& $result[$this_id];		
+//		$temp['first_name'] = $row['first_name'];
+//		$temp['last_name'] = $row['last_name'];
+
+		//if this person exists in "my friends" list, mark it.
+		if (isset($my_friends[$this_id])){
 			$temp['added'] = 1;
 		}
-	}
+	} 
 	return $result;
 }
 
@@ -215,8 +244,8 @@ function searchFriends($name, $searchMyFriends = false){
 
 	foreach($my_friends as $friends){
 		//if it is in the connection, set the attribute
-		if($connections[$friends->id] != null){
-			$connections[$friends->id]['added'] = 1;
+		if($connections[$friends] != null){
+			$connections[$friends]['added'] = 1;
 		}
 	}
 	return $connections;

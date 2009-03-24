@@ -1,13 +1,14 @@
 <?php
 //Profile template for social
 ?>
-<div class="input-form">
-	<div class="row">
-		<h2 class="page-title"><?php echo printSocialName($this->profile['member_id']); ?></h2>
+<div class="">
+	<span>
+		<?php echo printSocialProfileImg($this->profile['member_id']); ?>	
+		<h2><?php echo printSocialName($this->profile['member_id']); ?></h2>
 		<?php if ($this->scope=='owner'): ?>
-		<b><a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><?php echo _AT('edit_profile'); ?></a></b>
+		<strong><a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><?php echo _AT('edit_profile'); ?></a></strong>
 		<?php endif; ?>
-	</div>
+	</span>
 	
 	<div class="">
 		<div class="row" style="width:40%; float:left;" >
@@ -15,7 +16,7 @@
 			<div>
 			<dl id="public-profile">
 				<dt><?php echo _AT('picture'); ?></dt>
-				<dd><?php echo printSocialProfileImg($this->profile['member_id']); ?></dd>
+				<dd></dd>
 
 				<dt><?php echo _AT('email'); ?></dt>
 				<dd><?php echo $this->profile['email']; ?></dd>
@@ -98,21 +99,7 @@
 		</div>
 		
 
-		<div class="row" style="width:40%; float:right;" >
-			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_CONNECTION, $this->relationship, $this->prefs)): ?>
-			<div class="" style="width:250;" >
-				<h5><?php echo _AT('connections'); ?></h5>
-				<ul>
-					<?php
-						foreach($this->friends as $friend){
-							//echo '<li><a href="mods/social/sprofile.php?id='.$friend->id.'"><img src="get_profile_img.php?id='.$friend->id.'" alt="Profile Picture" /></a></li>';
-							echo '<li><a href="'.url_rewrite('mods/social/sprofile.php?id='.$friend->id).'">'.printSocialName($friend->id).'</a></li>';
-						}							
-					?>
-				</ul>
-			</div>
-			<?php endif; ?>
-
+		<div class="row" style="float:left;" >
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_STATUS_UPDATE, $this->relationship, $this->prefs)): ?>
 			<div class="" style="width:250;">
 				<h5><?php echo _AT('activities'); ?></h5>
@@ -129,6 +116,21 @@
 				</ul>
 			</div>
 			<?php endif; ?>
+
+			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_CONNECTION, $this->relationship, $this->prefs)): ?>
+			<div class="" >
+				<h5><?php echo _AT('connections'); ?></h5>
+				<div>
+				<?php foreach($this->friends as $friend_id): ?>														
+							<div style="float:left;">
+							<a href="mods/social/sprofile.php?id=<?php echo $friend_id;?>"><?php echo printSocialProfileImg($friend_id); ?></a>	
+							<?php echo printSocialName($friend_id); ?>
+							</div>
+				<?php endforeach; ?>
+				</div>
+			</div>
+			<?php endif; ?>
+			
 		</div>
 	</div>
 </div>
