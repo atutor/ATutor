@@ -71,7 +71,6 @@ TODOs:
 		open should allow eveyrone to join, and close requires ppl to approve
 
 
-
 FEATURES:
 ------------------
 - Social groups
@@ -359,3 +358,10 @@ Mar 25, 2009
 ------------
 - Adjusted the privacy settings, so that "everyone" means everyone but not my friends.
 - Now the search will search on people iff that flag is on. By default it is.
+
+
+Mar 26, 2009
+------------
+- Beta-prerelease is out.  All the basics should be working, cept that little tiny javascript contrainer thing that i have to code.
+	- Fixed bug
+- bug: url_rewrite=off; then application links failed cuz the social_ constant failed...
