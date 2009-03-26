@@ -1,4 +1,6 @@
 <?php 
+global $savant, $_config, $stripslashes;
+
 require_once('lib/friends.inc.php');
 require_once('lib/classes/Application.class.php');
 /* start output buffering: */
