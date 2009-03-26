@@ -19,7 +19,6 @@ class Activity{
 		global $db, $addslashes;
 		$id = intval($id);
 		$app_id = intval($app_id);
-		$title = $addslashes($title);
 		$app_string = '';
 
 		if ($app_id > 0){
@@ -119,7 +118,7 @@ class Activity{
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		
-		$msg = ' has added the <a href="'.url_rewrite('mods/social/applications.php?app_id='.$app_id).'">"'.$row['title'].'"</a> application.';
+		$msg = ' has added the <a href="'.url_rewrite('mods/social/applications.php?app_id='.$app_id).'">"'.htmlentities($row['title']).'"</a> application.';
 		return $msg;
 	 }
 }

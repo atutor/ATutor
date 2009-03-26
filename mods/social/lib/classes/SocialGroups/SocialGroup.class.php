@@ -138,7 +138,7 @@ class SocialGroup {
 		 return $str;
 	 }
 	 function getName() {
-		 return $this->name;
+		 return htmlentities($this->name);
 	 }
 	 function getDescription(){
 		 return $this->description;
@@ -167,7 +167,7 @@ class SocialGroup {
 		if ($result){
 			//add a record to the activities
 			$act = new Activity();		
-			$str1 = printSocialName($friend_id).' has joined the group, <a href="social/groups/view.php?id='.$this->getID().'">'.$this->getName().'</a>';
+			$str1 = printSocialName($friend_id).' has joined the group, <a href="social/groups/view.php?id='.$this->getID().'">'.htmlentities($this->getName()).'</a>';
 			$act->addActivity($member_id, $str1);
 			unset($act);
 			return true;
