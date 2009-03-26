@@ -5,8 +5,8 @@
  *
  */
 class Activity{
-	function Activity(){
-	}
+	//constructor
+	function Activity(){}
 
 	/** 
 	 * Adds a new activity into the database.
@@ -119,9 +119,8 @@ class Activity{
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		
-		$msg = ' has added the <a href="">"'.$row['title'].'"</a> application.';
+		$msg = ' has added the <a href="'.url_rewrite('mods/social/applications.php?app_id='.$app_id).'">"'.$row['title'].'"</a> application.';
 		return $msg;
 	 }
 }
-
 ?>

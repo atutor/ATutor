@@ -12,6 +12,10 @@ $social_groups = new SocialGroups();
 // Get this group
 $id = intval($_REQUEST['id']);  //make sure $_GET and $_POST don't overlap the use of 'id'
 
+//validate if this script is being run by the group admin
+//validate the group_admin is indeed a group member
+//TODO
+
 // Update group
 if (isset($_POST['save'])){
 	//check if fields are empty
@@ -28,7 +32,8 @@ if (isset($_POST['save'])){
 
 		if($isSucceded){
 			$msg->addFeedback('group_updated');
-			header('Location: index.php');
+			header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+			exit;
 		} else {
 			//Something went bad in the backend, contact admin?
 			$msg->addFeedback('group_edit_failed');

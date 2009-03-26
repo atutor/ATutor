@@ -10,16 +10,11 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 $gid = intval($_REQUEST['id']);
 $group_obj = new SocialGroup($gid);
 
-//handles submit
-if (isset($_POST['inviteMember']) && isset($_POST['new_members'])){
-//	debug($_POST['new_members']);
-	//add to request table
-	foreach ($_POST['new_members'] as $k=>$v){
-		$k = intval($k);
-		addGroupInvitation($k, $gid);
-	}
-	$msg->addFeedback('INVITATION_SENT');
-}
+//Todo: Implements the add group request feature
+//adds to a 
+
+addGroupRequest($_SESSION['member_id'], $gid);
+$msg->addFeedback('INVITATION_SENT');
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');

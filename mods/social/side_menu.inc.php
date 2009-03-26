@@ -14,7 +14,7 @@ if (sizeof($list_of_friends) > 0){
 		//make a size limit so the rest will be "..."
 	}
 } else {
-	echo 'You don\'t have any friends in your network yet, <a href="'.url_rewrite('mods/social/add_friends.php').'">click here</a> to start adding friends to your networking';
+	echo 'You don\'t have any friends in your network yet, <a href="'.url_rewrite('mods/social/connections.php').'">click here</a> to start adding friends to your networking';
 }
 */
 //search box
@@ -22,7 +22,7 @@ if (sizeof($list_of_friends) > 0){
 
 <ul class="social_side_menu">
 	<li><a href="<?php echo url_rewrite('mods/social/index.php', AT_PRETTY_URL_HEADER); ?>">Home</a></li>
-	<li><a href="<?php echo url_rewrite('mods/social/add_friends.php', AT_PRETTY_URL_HEADER); ?>">Contacts</a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/connections.php', AT_PRETTY_URL_HEADER); ?>">Contacts</a></li>
 	<li><a href="<?php echo url_rewrite('mods/social/sprofile.php', AT_PRETTY_URL_HEADER); ?>">My Social Profile</a></li>
 	<li><a href="<?php echo url_rewrite('mods/social/applications.php', AT_PRETTY_URL_HEADER); ?>">Applications</a></li>
 	<li><a href="<?php echo url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER); ?>">Social Groups</a></li>
@@ -47,7 +47,7 @@ if (sizeof($list_of_friends) > 0){
 	<li><a href="<?php echo url_rewrite('mods/social/privacy_settings.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('settings'); ?></a></li>
 </ul>
 
-<form action="<?php echo url_rewrite('mods/social/add_friends.php', AT_PRETTY_URL_HEADER);?>" method="POST">
+<form action="<?php echo url_rewrite('mods/social/connections.php', AT_PRETTY_URL_HEADER);?>" method="POST">
 	<input type="text" name="searchFriends" value="<?php echo urldecode($_POST['searchFriends']); ?>"/>
 	<input type="submit" name="search" value="<?php echo _AT('search'); ?>" class="button" />
 </form>

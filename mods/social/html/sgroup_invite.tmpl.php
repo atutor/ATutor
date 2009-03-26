@@ -1,4 +1,4 @@
-<?php debug($this->group_obj); ?>
+<?php //debug($this->group_obj); ?>
 <div>
 	<div style="float:left;">
 		<div>
@@ -20,19 +20,19 @@
 			<div style="height:300px;overflow:scroll;">
 				<?php 
 				$all_friends = getFriends($_SESSION['member_id']);
-				foreach ($all_friends as $k=>$person_obj): 
-					if(in_array($person_obj, $this->group_obj->getGroupMembers())){
+				foreach ($all_friends as $k=>$member_id): 
+					if(in_array(new Member($member_id), $this->group_obj->getGroupMembers())){
 						$extra = ' disabled="disabled"';
 					} else {
 						$extra = '';
 					}
 
-					if(isset($_POST['new_members'][$person_obj->getID()])){
+					if(isset($_POST['new_members'][$member_id])){
 						$extra .= ' checked="checked"';
 					}
 				?>
-					<input type="checkbox" name="new_members[<?php echo $person_obj->getID();?>]" id="member_<?php echo $person_obj->getID(); ?>" <?php echo $extra;?>/>
-					<label for="member_<?php echo $person_obj->getID(); ?>"><?php echo printSocialName($person_obj->getID(), false); ?></label><br/>
+					<input type="checkbox" name="new_members[<?php echo $member_id;?>]" id="member_<?php echo $member_id; ?>" <?php echo $extra;?>/>
+					<label for="member_<?php echo $member_id; ?>"><?php echo printSocialName($member_id, false); ?></label><br/>
 				<?php endforeach; ?>
 			</div>
 			<input type="hidden" name="id" value="<?php echo $_REQUEST['id']; ?>" />

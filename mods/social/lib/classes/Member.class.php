@@ -87,14 +87,18 @@ class Member {
 	 * @param	string		CSV format of interests, ie. camping, biking, etc
 	 * @param	string		CSV format of associations, clubs, groups, ie. IEEE
 	 * @param	string		CSV format of awards, honors
+	 * @param	string		expterise, occupation
+ 	 * @param	string		any extra information
 	 */
-	function addAdditionalInformation($interests, $associations, $awards){ 
+	function addAdditionalInformation($interests, $associations, $awards, $expertise, $others){ 
 		global $addslashes, $db;
 		$member_id		= $this->id;
 		$interests		= $addslashes($interests);
 		$associations	= $addslashes($associations);
 		$awards			= $addslashes($awards);
-		$sql = 'INSERT INTO ' . TABLE_PREFIX . "member_additional_information (member_id, interests,  associations, awards) VALUES ($member_id, '$interests', '$associations', '$awards')";
+		$expertise		= $addslashes($expertise);
+		$others			= $addslashes($others);
+		$sql = 'INSERT INTO ' . TABLE_PREFIX . "member_additional_information (member_id, interests,  associations, awards, expertise, others) VALUES ($member_id, '$interests', '$associations', '$awards', '$expertise', '$others')";
 		mysql_query($sql, $db);
 	}
 
@@ -176,14 +180,16 @@ class Member {
 	 * @param	string		CSV format of interests, ie. camping, biking, etc
 	 * @param	string		CSV format of associations, clubs, groups, ie. IEEE
 	 * @param	string		CSV format of awards, honors
+	 * @param	string		expterise, occupation
+ 	 * @param	string		any extra information
 	 */
-	function updateAdditionalInformation($interests, $associations, $awards){ 
+	function updateAdditionalInformation($interests, $associations, $awards, $expertise, $others){ 
 		global $addslashes, $db;
 		$interests = $addslashes($interests);
 		$associations = $addslashes($associations);
 		$awards = $addslashes($awards);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."member_additional_information SET interests='$interests', associations='$associations', awards='$awards' WHERE member_id=".$_SESSION['member_id'];
+		$sql = 'UPDATE '.TABLE_PREFIX."member_additional_information SET interests='$interests', associations='$associations', awards='$awards', expertise='$expertise', others='$others' WHERE member_id=".$_SESSION['member_id'];
 		mysql_query($sql, $db);
 	}
 
@@ -192,7 +198,7 @@ class Member {
 	 * Get member info
 	 */
 	function getDetails(){
-		$sql =	'SELECT core.*, T.interests, T.associations, T.awards FROM '.
+		$sql =	'SELECT core.*, T.interests, T.associations, T.awards, T.expertise, T.others FROM '.
 				'(SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$this->id.') AS core '.
 				'LEFT JOIN '.
 				TABLE_PREFIX.'member_additional_information T ON core.member_id=T.member_id';

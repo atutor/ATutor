@@ -5,6 +5,7 @@
 	<span>
 		<?php echo printSocialProfileImg($this->profile['member_id']); ?>	
 		<h2><?php echo printSocialName($this->profile['member_id']); ?></h2>
+		
 		<?php if ($this->scope=='owner'): ?>
 		<strong><a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><?php echo _AT('edit_profile'); ?></a></strong>
 		<?php endif; ?>
@@ -14,10 +15,11 @@
 		<div class="row" style="width:40%; float:left;" >
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_PROFILE, $this->relationship, $this->prefs)): ?>
 			<div>
+			<h5><?php echo _AT('profile'); ?></h5>
 			<dl id="public-profile">
-				<dt><?php echo _AT('picture'); ?></dt>
-				<dd></dd>
-
+				<dt><?php echo _AT('expertise'); ?></dt>
+				<dd><?php echo $this->profile['expertise']; ?></dd>
+				
 				<dt><?php echo _AT('email'); ?></dt>
 				<dd><?php echo $this->profile['email']; ?></dd>
 
@@ -44,6 +46,9 @@
 
 				<dt><?php echo _AT('awards'); ?></dt>
 				<dd><?php echo $this->profile['awards']; ?></dd>
+
+				<dt><?php echo _AT('others'); ?></dt>
+				<dd><?php echo $this->profile['others']; ?></dd>
 			</dl>
 			</div>
 			<?php endif; ?>
@@ -54,12 +59,13 @@
 				<?php if (empty($this->education)): ?>
 				<div> N/A </div>
 				<?php else: ?>
-				<table>	
-					<tr>
+				<table class="data static">	
+					<thead>
 						<th>School/Institution</th>
 						<th>Degree/Program/Course</th>
 						<th>Year</th>
-					</tr>
+					</thead>
+					<tbody>
 					<?php
 						foreach($this->education as $edu){
 							echo '<tr><td>'.$edu['university'].'</td>';
@@ -67,6 +73,7 @@
 							echo '<td>'.$edu['from'].'-'.$edu['to'].'</td></tr>';
 						}							
 					?>
+					</tbody>
 				</table>
 				<?php endif; ?>
 			</div>
@@ -78,12 +85,13 @@
 				<?php if (empty($this->position)): ?>
 				<div> N/A </div>
 				<?php else: ?>
-				<table>	
-					<tr>
+				<table class="data static">	
+					<thead>
 						<th>Company</th>
 						<th>Title</th>
 						<th>Year</th>
-					</tr>
+					</thead>
+					<tbody>
 					<?php
 						foreach($this->position as $pos){
 							echo '<tr><td>'.$pos['company'].'</td>';
@@ -91,13 +99,12 @@
 							echo '<td>'.$pos['from'].'-'.$pos['to'].'</td></tr>';
 						}							
 					?>
+					</tbody>
 				</table>
 				<?php endif; ?>
 			</div>
 			<?php endif; ?>
-
-		</div>
-		
+		</div>		
 
 		<div class="row" style="float:left;" >
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_STATUS_UPDATE, $this->relationship, $this->prefs)): ?>
@@ -118,14 +125,14 @@
 			<?php endif; ?>
 
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_CONNECTION, $this->relationship, $this->prefs)): ?>
-			<div class="" >
+			<div class="" style="width:400px">
 				<h5><?php echo _AT('connections'); ?></h5>
-				<div>
+				<div style="float:left;">
 				<?php foreach($this->friends as $friend_id): ?>														
-							<div style="float:left;">
-							<a href="mods/social/sprofile.php?id=<?php echo $friend_id;?>"><?php echo printSocialProfileImg($friend_id); ?></a>	
-							<?php echo printSocialName($friend_id); ?>
-							</div>
+					<div style="float:left; margin-left:1em;">
+					<a href="mods/social/sprofile.php?id=<?php echo $friend_id;?>"><?php echo printSocialProfileImg($friend_id); ?></a>	<br/>
+					<?php echo printSocialName($friend_id); ?>
+					</div>
 				<?php endforeach; ?>
 				</div>
 			</div>

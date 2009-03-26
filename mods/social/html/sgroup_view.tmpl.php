@@ -1,4 +1,4 @@
-<?php debug($this->group_obj); ?>
+<?php //debug($this->group_obj); ?>
 <div class="">
 	<div style="float:left;">
 		<div class="box">
@@ -70,17 +70,21 @@
 			<div>
 			<div class="box">New Group Invitations</div>
 			<?php
-				foreach ($this->groupsInvitations[$this->group_obj->getID()] as $index=>$sender_id){
-					$name .= printSocialName($sender_id).', ';
-				}
+				foreach ($this->groupsInvitations as $id=>$sender_ids): 
+				$gobj = new SocialGroup($id);
+				$name = '';
+					foreach($sender_ids as $index=>$sender_id){
+						$name .= printSocialName($sender_id).', ';
+					}
 				$name = substr($name, 0, -2);
 			?>
 			<div class="box">
 				<ul>
-				<li><?php echo $name; ?> has invited you to join this group.</li>
+				<li><?php echo $name; ?> has invited you to join <a href="mods/social/groups/view.php?id=<?php echo $gobj->getID();?>"><?php echo $gobj->getName();?></a>.</li>
 				<li><?php echo 'Accept request?'; ?><a href="mods/social/groups/invitation_handler.php?action=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('accept_request'); ?></a>|<a href="mods/social/groups/invitation_handler.php?action=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('reject_request'); ?></a></li>
 				</ul>
 			</div>
+			<?php endforeach; ?>
 			</div>
 			<?php endif; ?>
 

@@ -91,8 +91,8 @@ class SocialGroups{
 		 $description = $addslashes($description);
 		 $logo = $addslashes($logo);
 
-		 $sql = 'UPDATE '.TABLE_PREFIX."social_groups SET `member_id`=$_SESSION[member_id], `type_id`=$type_id, `logo`='$logo', `name`='$name', `description`='$description', `last_updated`=NOW() WHERE id=$group_id";
-		 debug();echo $sql;
+		 $sql = 'UPDATE '.TABLE_PREFIX."social_groups SET `member_id`=$member_id, `type_id`=$type_id, `logo`='$logo', `name`='$name', `description`='$description', `last_updated`=NOW() WHERE id=$group_id";
+//		 debug();echo $sql;
 		 $result = mysql_query($sql, $db);
 		 if ($result){
 			 $act = new Activity();		

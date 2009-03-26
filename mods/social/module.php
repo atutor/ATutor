@@ -71,8 +71,8 @@ $this->_pages['mods/social/edit_profile.php']['parent'] = 'mods/social/sprofile.
 $this->_pages['mods/social/applications.php']['title_var'] = 'social_profile';
 $this->_pages['mods/social/applications.php']['parent'] = 'mods/social/index.php';
 
-$this->_pages['mods/social/add_friends.php']['title_var'] = 'connections';
-$this->_pages['mods/social/add_friends.php']['parent'] = 'mods/social/index.php';
+$this->_pages['mods/social/connections.php']['title_var'] = 'connections';
+$this->_pages['mods/social/connections.php']['parent'] = 'mods/social/index.php';
 //	$this->_pages['mods/social/add_friends.php']['title_var'] = 'add_friends';
 //	$this->_pages['mods/social/add_friends.php']['parent'] = 'mods/social/connections.php';
 

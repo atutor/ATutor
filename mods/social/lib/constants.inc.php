@@ -29,7 +29,7 @@ define(AT_SOCIAL_ACTIVITIES_APPLICATION,	2);	//Adding an application
 
 //Any additional flags should be added to 
 //  lib/classes/PrivacyControl/PrivacyController.class.php::getPermissionLevels()
-define(AT_SOCIAL_EVERYONE_VISIBILITY,				0);	//Everyone
+define(AT_SOCIAL_EVERYONE_VISIBILITY,				0);	//Everyone that is not a friend of mine
 define(AT_SOCIAL_FRIENDS_VISIBILITY,				1);	//Friends
 define(AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY,		2);	//Friends of Friends
 define(AT_SOCIAL_NETWORK_VISIBILITY,				3);	//Network

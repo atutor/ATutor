@@ -37,6 +37,14 @@ CREATE TABLE `application_settings` (
 )
 ENGINE = MyISAM;
 
+# Application members mapping
+CREATE TABLE `members_application` (
+  `member_id` INTEGER UNSIGNED NOT NULL,
+  `app_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`member_id`, `app_id`)
+)
+ENGINE = MyISAM;
+
 # Friends table
 CREATE TABLE `friends` (
   `member_id` INTEGER UNSIGNED NOT NULL,

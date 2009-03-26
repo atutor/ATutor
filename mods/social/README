@@ -66,6 +66,9 @@ TODOs:
 - [03.23.2009] Find friends and Add friends should be separated.
 - [03.24.2009] Smarten the connection search, so that it lists different suggestions based on the checked flags.
 - [03.24.2009] create the index_mystart and index_public pages.
+- [03.25.2009] search within friends should always be enabled.  Make no sense to disable it
+- [03.25.2009] adds a group request feature where people click to join the group.  Group has its own properties, like the type? Open? Close?
+		open should allow eveyrone to join, and close requires ppl to approve
 
 
 
@@ -350,4 +353,9 @@ Mar 23, 2009
 - add $_user_location	= 'users'; on all pages.
 	- creates all sort of problem with the pretty url...
 - found a bug on search friends, now fixed.  
-- need to restructurize the sprofile layout, looks like crap now.
+
+
+Mar 25, 2009
+------------
+- Adjusted the privacy settings, so that "everyone" means everyone but not my friends.
+- Now the search will search on people iff that flag is on. By default it is.

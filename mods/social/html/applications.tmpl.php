@@ -21,7 +21,7 @@
 			<input type="hidden" name="show_applications" value="1" />
 			<input type="submit" value="<?php echo _AT('show_available_applications'); ?>" class="button" />
 			<?php else: ?>
-			<input type="submit" value="<?php echo _AT('hide_available_applications'); ?>" class="button" />	
+			<input type="submit" value="<?php echo _AT('show_your_applications'); ?>" class="button" />	
 			<?php endif; ?>
 			</form>
 		</div>

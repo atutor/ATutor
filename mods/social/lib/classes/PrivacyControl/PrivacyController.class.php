@@ -17,12 +17,13 @@ class PrivacyController{
 	 */
 	function validatePrivacy($field_id, $relationship, $pref){
 		$pref_string = $pref[$field_id];
-		debug($pref_string, $field_id);
+//		debug($pref_string, $field_id);
 
+//I have take this out so that in the settings, "Eveyerone" permission has to be switched on for everyone to see
 		//if AT_SOCIAL_EVERYONE_VISIBILITY is set, relationship flag will no longer matters.
-		if ($relationship==AT_SOCIAL_EVERYONE_VISIBILITY){
-			return true;
-		}
+//		if ($relationship==AT_SOCIAL_EVERYONE_VISIBILITY){
+//			return true;
+//		}
 
 		//all values are 1 or 0, match the key to the field_id
 		if (is_array($pref_string) && !empty($pref_string)){		
@@ -48,7 +49,7 @@ class PrivacyController{
 
 		$sql = 'SELECT relationship FROM '.TABLE_PREFIX."friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
 		$result = mysql_query($sql, $db);
-		echo $sql;
+//		echo $sql;
 		if ($result){
 			list($relationship) = mysql_fetch_row($result);
 		}
@@ -100,7 +101,7 @@ class PrivacyController{
 
 		//TODO: Change it back to update
 		$sql = 'REPLACE '.TABLE_PREFIX."privacy_preferences SET member_id=$member_id, preferences='$prefs'";
-		echo $sql;
+//		echo $sql;
 		$result = mysql_query($sql, $db);
 		return $result;
 	}
@@ -113,7 +114,7 @@ class PrivacyController{
 		return array (
 			//checkboxes don't need to have none and everyone
 //			-1										=>	_AT('none'),
-//			AT_SOCIAL_EVERYONE_VISIBILITY			=>	_AT('everyone'),
+			AT_SOCIAL_EVERYONE_VISIBILITY			=>	_AT('non_friends'),
 			AT_SOCIAL_FRIENDS_VISIBILITY			=>	_AT('friends'),
 			AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY =>	_AT('friends_of_friends'),
 			AT_SOCIAL_NETWORK_VISIBILITY			=>	_AT('network')

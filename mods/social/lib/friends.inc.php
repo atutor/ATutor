@@ -261,7 +261,7 @@ function searchFriends($name, $searchMyFriends = false){
 	 global $db;
 
 	 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups_invitations (sender_id, group_id, member_id) VALUES ($_SESSION[member_id], $group_id, $member_id)";
-	 echo $sql;
+//	 echo $sql;
 	 $result = mysql_query($sql, $db);
 	 if($result){
 		 return true;

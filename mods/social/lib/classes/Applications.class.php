@@ -19,7 +19,7 @@ class Applications {
 		global $db;
 		$hash = array();
 
-		$sql = 'SELECT id, title FROM '.TABLE_PREFIX.'applications a, (SELECT DISTINCT application_id FROM '.TABLE_PREFIX.'application_settings WHERE member_id='.$_SESSION['member_id'].') AS apps WHERE a.id=apps.application_id';
+		$sql = 'SELECT id, title FROM '.TABLE_PREFIX.'applications a, (SELECT application_id FROM '.TABLE_PREFIX.'members_application WHERE member_id='.$_SESSION['member_id'].') AS apps WHERE a.id=apps.application_id';
 		$result = mysql_query($sql, $db);
 
 		if ($result){

@@ -66,12 +66,36 @@ class Application extends Applications{
 
 		//Add a record into application_settings regardless since it has to be mapped onto the user
 		//TODO: use another table
-		$sql = 'INSERT INTO '.TABLE_PREFIX."application_settings (application_id, member_id, name, value) VALUES ($id, $user_id, '$title', 'Place holder')";
+/*		$sql = 'INSERT INTO '.TABLE_PREFIX."application_settings (application_id, member_id, name, value) VALUES ($id, $user_id, '$title', 'Place holder')";
 		$result = mysql_query($sql, $db);
 
 		if ($result){
 			$act = new Activity();		
 			$act->addActivity($_SESSION['member_id'], '', $id);
+			unset($act);
+		}
+*/
+		$this->addMemberApplication($member_id, $app_id);
+	}
+
+
+	/**
+	 * Add this application to the member's application list
+	 * @param	int		member_id
+	 * @param	int		application_id
+	 */
+	function addMemberApplication($member_id, $app_id){
+		global $db;
+
+		$member_id = intval($member_id);
+		$app_id = intval($app_id);
+
+		$sql = 'INSERT INTO '.TABLE_PREFIX."members_application (member_id, application_id) VALUES ($member_id, $app_id)";
+		$result = mysql_query($sql, $db);
+
+		if ($result){
+			$act = new Activity();		
+			$act->addActivity($_SESSION['member_id'], '', $app_id);
 			unset($act);
 		}
 	}
@@ -131,6 +155,26 @@ class Application extends Applications{
 		$result = mysql_query($sql, $db);
 
 		//TODO: Might want to add something here to throw appropriate exceptions
+		return $result;
+	}
+
+
+	/**
+	 * Get member's applications
+	 * @param	int		the member id
+	 */
+	function getMemberApplications($member_id){
+		global $db;
+		$result = array();
+
+		$member_id = intval($member_id);
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members_application WHERE member_id='.$member_id;
+		$rs = mysql_query($sql, $db);
+		if ($rs){
+			while($row = mysql_fetch_assoc($rs)){
+				$result[] = $row['app_id'];
+			}
+		}
 		return $result;
 	}
 
@@ -242,7 +286,7 @@ class Application extends Applications{
 						'default', // domain key, shindig will check for php/config/<domain>.php for container specific configuration
 						urlencode($this->getUrl()), // app url
 						$this->getModId());// mod id
-debug($securityToken);
+//debug($securityToken);
 		$url = AT_SHINDIG_URL.'/gadgets/ifr?' 
 			. "synd=default" 
 			. "&container=default" 
@@ -302,6 +346,11 @@ debug($securityToken);
 	function deleteApplication(){
 		global $db;
 
+		//delete application mapping
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'members_application WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
+		$rs = mysql_query($sql);
+
+		//delete application data?
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'application_settings WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
 		$rs = mysql_query($sql);
 
