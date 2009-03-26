@@ -61,7 +61,7 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 	include(AT_INCLUDE_PATH.'header.inc.php');
 	$savant->assign('id', $id);
 	if ($_GET['edit']=='position'){
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'member_position WHERE id='.$id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_position WHERE id='.$id;
 		$rs = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($rs);
 		
@@ -73,7 +73,7 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('description', $row['description']);
 		$savant->display('edit_profile/edit_position.tmpl.php');
 	} elseif ($_GET['edit']=='education'){
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'member_education WHERE id='.$id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_education WHERE id='.$id;
 		$rs = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($rs);
 
@@ -88,7 +88,7 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('description', $row['description']);
 		$savant->display('edit_profile/edit_education.tmpl.php');
 	} elseif ($_GET['edit']=='websites'){
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'member_websites WHERE id='.$id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_websites WHERE id='.$id;
 		$rs = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($rs);
 

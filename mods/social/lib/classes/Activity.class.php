@@ -28,7 +28,7 @@ class Activity{
 		}
 
 		if ($id > 0 && $title!=''){
-			$sql = 'INSERT INTO '.TABLE_PREFIX."activities SET member_id=$id, title='$title'".$app_string;
+			$sql = 'INSERT INTO '.TABLE_PREFIX."social_activities SET member_id=$id, title='$title'".$app_string;
 			mysql_query($sql, $db);
 		}
 	}
@@ -46,7 +46,7 @@ class Activity{
 		$activities = array();
 		$id = intval($id);
 		if ($id > 0){
-			$sql = 'SELECT * FROM '.TABLE_PREFIX."activities WHERE member_id=$id ORDER BY created_date DESC";
+			$sql = 'SELECT * FROM '.TABLE_PREFIX."social_activities WHERE member_id=$id ORDER BY created_date DESC";
 			if (!$displayAll){
 				$sql .= ' LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
 			}
@@ -71,7 +71,7 @@ class Activity{
 		global $db;
 
 		$id = intval($id);
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'activities WHERE id='.$id;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_activities WHERE id='.$id;
 		mysql_query($sql, $db);
 	}
 
@@ -88,7 +88,7 @@ class Activity{
 
 		$friends = getFriends($id);	
 		$friends_ids = implode(', ', array_keys($friends));
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'activities WHERE member_id IN ('.$friends_ids.') ORDER BY created_date DESC LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_activities WHERE member_id IN ('.$friends_ids.') ORDER BY created_date DESC LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
 		$result = mysql_query($sql, $db);
 
 		if ($result){
@@ -114,7 +114,7 @@ class Activity{
 		
 		//This here, it is actually better to use $url instead of app_id.
 		//$url is the primary key.  $id is also a key, but it is not guranteed that it will be unique
-		$sql = 'SELECT title FROM '.TABLE_PREFIX."applications WHERE id=$app_id";
+		$sql = 'SELECT title FROM '.TABLE_PREFIX."social_applications WHERE id=$app_id";
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		

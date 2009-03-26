@@ -1,6 +1,6 @@
 # Setup Table for ATutor Social Networking Feature
 # Activities
-CREATE TABLE `activities` (
+CREATE TABLE `social_activities` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `application_id` INTEGER UNSIGNED NOT NULL,
@@ -11,9 +11,9 @@ CREATE TABLE `activities` (
 ENGINE = MyISAM;
 
 # Applications/ Gagdets table
-CREATE TABLE `applications` (
+CREATE TABLE `social_applications` (
   `id` INTEGER UNSIGNED,
-  `url` TEXT NOT NULL NOT NULL DEFAULT '',
+  `url` VARCHAR(255) NOT NULL DEFAULT '',
   `title` VARCHAR(255) NOT NULL,
   `height` INTEGER UNSIGNED, 
   `screenshot` VARCHAR(255) NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE `applications` (
 ENGINE = MyISAM;
 
 # Application Settings, like storing the perference string.
-CREATE TABLE `application_settings` (
+CREATE TABLE `social_application_settings` (
   `application_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `name` VARCHAR(255) NOT NULL,
@@ -38,15 +38,15 @@ CREATE TABLE `application_settings` (
 ENGINE = MyISAM;
 
 # Application members mapping
-CREATE TABLE `members_application` (
+CREATE TABLE `social_members_applications` (
   `member_id` INTEGER UNSIGNED NOT NULL,
-  `app_id` INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY (`member_id`, `app_id`)
+  `application_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`member_id`, `application_id`)
 )
 ENGINE = MyISAM;
 
 # Friends table
-CREATE TABLE `friends` (
+CREATE TABLE `social_friends` (
   `member_id` INTEGER UNSIGNED NOT NULL,
   `friend_id` INTEGER UNSIGNED NOT NULL,
   `relationship` INTEGER UNSIGNED NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `friends` (
 ENGINE = MyISAM;
 
 # Friend requests table
-CREATE TABLE `friend_requests` (
+CREATE TABLE `social_friend_requests` (
   `member_id` INTEGER UNSIGNED NOT NULL,
   `friend_id` INTEGER UNSIGNED NOT NULL,
   `relationship` INTEGER UNSIGNED NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `friend_requests` (
 ENGINE = MyISAM;
 
 # Person Positions (jobs)
-CREATE TABLE `member_position` (
+CREATE TABLE `social_member_position` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `title` VARCHAR(255) NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE `member_position` (
 ENGINE = MyISAM;
 
 # Person education 
-CREATE TABLE `member_education` (
+CREATE TABLE `social_member_education` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `university` VARCHAR(255) NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE `member_education` (
 ENGINE = MyISAM;
 
 # Person related web sites
-CREATE TABLE `member_websites` (
+CREATE TABLE `social_member_websites` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `url` VARCHAR(255) NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE `member_websites` (
 ENGINE = MyISAM;
 
 # Person additional information cojoint with the members table
-CREATE TABLE `member_additional_information` (
+CREATE TABLE `social_member_additional_information` (
   `member_id` INTEGER UNSIGNED NOT NULL,
   `expertise` VARCHAR(255) NOT NULL,
   `interests` TEXT,
@@ -115,7 +115,7 @@ CREATE TABLE `member_additional_information` (
 ENGINE = MyISAM;
 
 # Privacy Control Preferences
-CREATE TABLE `privacy_preferences` (
+CREATE TABLE `social_privacy_preferences` (
   `member_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `preferences` TEXT NOT NULL,
   PRIMARY KEY (`member_id`)

@@ -82,7 +82,7 @@ class SocialGroup {
 			return $this->group_activities;
 		}
 		 $activities = array();
-		 $sql = 'SELECT a,id AS id, a.title AS title FROM '.TABLE_PREFIX.'social_groups_activities g LEFT JOIN '.TABLE_PREFIX.'activities a ON g.activity_id=a.id WHERE g.group_id='.$this->group_id;
+		 $sql = 'SELECT a,id AS id, a.title AS title FROM '.TABLE_PREFIX.'social_groups_activities g LEFT JOIN '.TABLE_PREFIX.'social_activities a ON g.activity_id=a.id WHERE g.group_id='.$this->group_id;
 		 $result = mysql_query($sql, $db);
 		 if ($result){
 			 while($row = mysql_fetch_assoc($result)){

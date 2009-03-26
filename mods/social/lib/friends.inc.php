@@ -16,7 +16,7 @@ function getFriends($member_id){
 	$friends = array();
 	
 	//All member_id = member_id, and All friend_id = member_id
-	$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$member_id.' OR F.friend_id='.$member_id.')';
+	$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$member_id.' OR F.friend_id='.$member_id.')';
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)){
@@ -34,7 +34,7 @@ function getFriends($member_id){
 	}
 /*
 	//All friend_id = member_id
-	$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE F.friend_id='.$member_id;
+	$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE F.friend_id='.$member_id;
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)){
 		$friends[$row['member_id']]			=	new Member($row['member_id']);
@@ -57,7 +57,7 @@ function getPendingRequests(){
 	 * friend_id is the member that needs to approve/reject.  Thus, when we want to retrieve 
 	 * pending requests, we need to pull entries from friend_id.
 	 */
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'friend_requests WHERE friend_id='.$_SESSION['member_id'];
+	$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_friend_requests WHERE friend_id='.$_SESSION['member_id'];
 	$rs = mysql_query($sql, $db);
 
 	//myself=> pending objs
@@ -118,7 +118,7 @@ function rejectFriendRequest($friend_id){
  */
 function removeFriendRequest($member_id, $friend_id){
 	global $db;
-	$sql = 'DELETE FROM '.TABLE_PREFIX."friend_requests WHERE member_id=$member_id AND friend_id=$friend_id";
+	$sql = 'DELETE FROM '.TABLE_PREFIX."social_friend_requests WHERE member_id=$member_id AND friend_id=$friend_id";
 	$is_succeeded = mysql_query($sql, $db);
 	return $is_succeeded;
 }
@@ -137,7 +137,7 @@ function addFriendRequest($friend_id){
 	 return;
 	}
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."friend_requests SET member_id=$_SESSION[member_id], friend_id=$friend_id";
+	$sql = "INSERT INTO ".TABLE_PREFIX."social_friend_requests SET member_id=$_SESSION[member_id], friend_id=$friend_id";
 	mysql_query($sql, $db);		
  }
  
@@ -151,7 +151,7 @@ function removeFriend($friend_id){
 	global $db;
 	$friend_id = intval($friend_id);
 
-	$sql = 'DELETE FROM '.TABLE_PREFIX.'friends WHERE (member_id='.$_SESSION['member_id'].' AND '.'friend_id='.$friend_id.') OR (friend_id='.$_SESSION['member_id'].' AND '.'member_id='.$friend_id.')';
+	$sql = 'DELETE FROM '.TABLE_PREFIX.'social_friends WHERE (member_id='.$_SESSION['member_id'].' AND '.'friend_id='.$friend_id.') OR (friend_id='.$_SESSION['member_id'].' AND '.'member_id='.$friend_id.')';
 	mysql_query($sql, $db);
 }
 
@@ -180,7 +180,7 @@ function searchFriends($name, $searchMyFriends = false){
 
 	//If searchMyFriend is true, return the "my friends" array
 	//else, use "my friends" array to distinguish which of these are already in my connection
-	$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].' OR F.friend_id='.$_SESSION['member_id'].') AND ';
+	$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].' OR F.friend_id='.$_SESSION['member_id'].') AND ';
 	$sql = $sql . $query;
 	$rs = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($rs)){
@@ -207,7 +207,7 @@ function searchFriends($name, $searchMyFriends = false){
 		* don't know why i did the search inside [friends x members]
 		* end note;
 		*/
-		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE ';
+		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE ';
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members M WHERE ';
 	}
 	$sql = $sql . $query;

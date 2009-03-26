@@ -26,7 +26,7 @@ define('AT_ADMIN_PRIV_SOCIAL', $this->getAdminPrivilege());
 /*******
  * create a side menu box/stack.
  */
-$this->_stacks['social'] = array('title_var'=>'social', 'file'=>'mods/social/side_menu.inc.php');
+$this->_stacks['social'] = array('title_var'=>'social', 'file'=>AT_INCLUDE_PATH.'../mods/social/side_menu.inc.php');
 // ** possible alternative: **
 // $this->addStack('social', array('title_var' => 'social', 'file' => './side_menu.inc.php');
 

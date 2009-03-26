@@ -104,7 +104,7 @@ class ATutorDbFetcher {
 //    $body = isset($activity['body']) ? $activity['body'] : '';
     $title = mysql_real_escape_string($title);
 //    $body = mysql_real_escape_string($body);
-	$sql = "insert into ".TABLE_PREFIX."activities (id, member_id, application_id, title, created_date) values (0, $member_id, $app_id, '$title', NOW())";
+	$sql = "insert into ".TABLE_PREFIX."social_activities (id, member_id, application_id, title, created_date) values (0, $member_id, $app_id, '$title', NOW())";
     mysql_query($sql, $this->db);
     if (! ($activityId = mysql_insert_id($this->db))) {
       return false;
@@ -155,7 +155,7 @@ class ATutorDbFetcher {
       $activityIdQuery = '';
     }
     // return a proper totalResults count
-	$sql = "select count(id) from ".TABLE_PREFIX."activities where ".TABLE_PREFIX."activities.person_id in ($ids) $activityIdQuery";
+	$sql = "select count(id) from ".TABLE_PREFIX."social_activities where ".TABLE_PREFIX."activities.person_id in ($ids) $activityIdQuery";
     $res = mysql_query($sql, $this->db);
 
     if ($res !== false) {
@@ -170,14 +170,14 @@ class ATutorDbFetcher {
     $activities['count'] = $count;
     $query = "
 			select 
-				".TABLE_PREFIX."activities.member_id as member_id,
-				".TABLE_PREFIX."activities.id as activity_id,
-				".TABLE_PREFIX."activities.title as title,
-				".TABLE_PREFIX."activities.created as created
+				".TABLE_PREFIX."social_activities.member_id as member_id,
+				".TABLE_PREFIX."social_activities.id as activity_id,
+				".TABLE_PREFIX."social_activities.title as title,
+				".TABLE_PREFIX."social_activities.created as created
 			from 
-				".TABLE_PREFIX."activities
+				".TABLE_PREFIX."social_activities
 			where
-				".TABLE_PREFIX."activities.member_id in ($ids)
+				".TABLE_PREFIX."social_activities.member_id in ($ids)
 				$activityIdQuery
 			order by 
 				created desc
@@ -214,8 +214,8 @@ class ATutorDbFetcher {
     $activityIds = implode(',', $activityIds);
     $userId = intval($userId);
     $appId = intval($appId);
-	//can use this instead: 	$sql = "delete from ".TABLE_PREFIX."activities where id in ($activityIds)";
-	$sql = "delete from ".TABLE_PREFIX."activities where member_id = $userId and application_id = $appId and id in ($activityIds)";
+	//can use this instead: 	$sql = "delete from ".TABLE_PREFIX."social_activities where id in ($activityIds)";
+	$sql = "delete from ".TABLE_PREFIX."social_activities where member_id = $userId and application_id = $appId and id in ($activityIds)";
 	
     mysql_query($sql, $this->db);
     return (mysql_affected_rows($this->db) != 0);
@@ -256,12 +256,12 @@ class ATutorDbFetcher {
     $app_id = intval($app_id);
     if (empty($value)) {
       // empty key kind of became to mean "delete data" (was an old orkut hack that became part of the spec spec)
-	  $sql = "delete from ".TABLE_PREFIX."application_settings where application_id = $app_id and member_id = $member_id and name = '$key'";
+	  $sql = "delete from ".TABLE_PREFIX."social_application_settings where application_id = $app_id and member_id = $member_id and name = '$key'";
       if (! @mysql_query($sql, $this->db)) {
         return false;
       }
     } else {
-		$sql ="insert into ".TABLE_PREFIX."application_settings (application_id, member_id, name, value) values ($app_id, $member_id, '$key', '$value') on duplicate key update value = '$value'";
+		$sql ="insert into ".TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) values ($app_id, $member_id, '$key', '$value') on duplicate key update value = '$value'";
       if (! @mysql_query($sql, $this->db)) {
         return false;
       }
@@ -275,13 +275,13 @@ class ATutorDbFetcher {
     $person_id = intval($member_id);
     $app_id = intval($app_id);
     if ($key == '*') {
-		$sql = "delete from ".TABLE_PREFIX."application_settings where application_id = $app_id and member_id = $member_id";
+		$sql = "delete from ".TABLE_PREFIX."social_application_settings where application_id = $app_id and member_id = $member_id";
       if (! @mysql_query($sql, $this->db)) {
         return false;
       }
     } else {
       $key = mysql_real_escape_string($this->db, $key);
-	  $sql = "delete from ".TABLE_PREFIX."application_settings where application_id = $app_id and member_id = $member_id and name = '$key'";
+	  $sql = "delete from ".TABLE_PREFIX."social_application_settings where application_id = $app_id and member_id = $member_id and name = '$key'";
       if (! @mysql_query($sql, $this->db)) {
         return false;
       }
@@ -310,7 +310,7 @@ class ATutorDbFetcher {
     } else {
       $keys = '';
     }
-	$sql = "select member_id, name, value from ".TABLE_PREFIX."application_settings where application_id = $app_id and member_id in (" . implode(',', $ids) . ") $keys";
+	$sql = "select member_id, name, value from ".TABLE_PREFIX."social_application_settings where application_id = $app_id and member_id in (" . implode(',', $ids) . ") $keys";
     $res = mysql_query($sql, $this->db);
     while (list($member_id, $key, $value) = mysql_fetch_row($res)) {
       if (! isset($data[$member_id])) {
@@ -331,11 +331,11 @@ class ATutorDbFetcher {
       // remove the filterBy field, it's taken care of in the query already, otherwise filterResults will disqualify all results
       $options->setFilterBy(null);
       $appId = $token->getAppId();
-      $filterQuery = " and id in (select member_id from ".TABLE_PREFIX."applications where application_id = $appId)";
+      $filterQuery = " and id in (select member_id from ".TABLE_PREFIX."social_applications where application_id = $appId)";
     } elseif ($options->getFilterBy() == 'all') {
       $options->setFilterBy(null);
     }
-    $query = "SELECT member.*, info.interests, info.associations, info.awards FROM ".TABLE_PREFIX."members member LEFT JOIN ".TABLE_PREFIX."member_additional_information info ON member.member_id=info.member_id WHERE  member.member_id IN (" . implode(',', $ids) . ") $filterQuery ORDER BY member.member_id ";
+    $query = "SELECT member.*, info.interests, info.associations, info.awards FROM ".TABLE_PREFIX."members member LEFT JOIN ".TABLE_PREFIX."social_member_additional_information info ON member.member_id=info.member_id WHERE  member.member_id IN (" . implode(',', $ids) . ") $filterQuery ORDER BY member.member_id ";
 
     $res = mysql_query($query, $this->db);
     if ($res) {
@@ -401,7 +401,7 @@ class ATutorDbFetcher {
         /* the following fields require additional queries so are only executed if requested */
         if (isset($fields['activities']) || isset($fields['@all'])) {
           $activities = array();
-		  $sql = "select title from ".TABLE_PREFIX."activities where member_id = " . $member_id;
+		  $sql = "select title from ".TABLE_PREFIX."social_activities where member_id = " . $member_id;
           $res2 = mysql_query($sql, $this->db);
 
           while (list($activity) = mysql_fetch_row($res2)) {

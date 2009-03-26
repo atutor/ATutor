@@ -30,7 +30,7 @@ class Member {
 		$to			= intval($to);
 		$description = $addslashes($description);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."member_position (member_id, company, title, from, to, description) VALUES ($member_id, '$company', '$title', $from, $to, '$description')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_position (member_id, company, title, from, to, description) VALUES ($member_id, '$company', '$title', $from, $to, '$description')";
 		mysql_query($sql, $db);
 	}
 
@@ -61,7 +61,7 @@ class Member {
 		$field				= $addslsahes($field);
 		$description		= $addslashes($description);
 		
-		$sql = 'INSERT INTO '.TABLE_PREFIX."member_education (member_id, university, from, to, country, province, degree, field, description) VALUES ($member_id, '$university', $from, $to, '$country', '$province', '$degree', '$field', '$description')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_education (member_id, university, from, to, country, province, degree, field, description) VALUES ($member_id, '$university', $from, $to, '$country', '$province', '$degree', '$field', '$description')";
 		mysql_query($sql, $db);
 	}
 
@@ -122,7 +122,7 @@ class Member {
 		$to			 = intval($to);
 		$description = $addslashes($description);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."member_position SET company='$company', title='$title', `from`=$from, `to`=$to, description='$description' WHERE id=$id";
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_position SET company='$company', title='$title', `from`=$from, `to`=$to, description='$description' WHERE id=$id";
 		mysql_query($sql, $db);
 	}
 
@@ -153,7 +153,7 @@ class Member {
 		$field				= $addslashes($field);
 		$description		= $addslashes($description);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."member_education SET university='$university', `from`=$from, `to`=$to, country='$country', province='$province', degree='$degree', field='$field', description='$description' WHERE id=$id";
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_education SET university='$university', `from`=$from, `to`=$to, country='$country', province='$province', degree='$degree', field='$field', description='$description' WHERE id=$id";
 		mysql_query($sql, $db);		
 	}
 
@@ -170,7 +170,7 @@ class Member {
 		$url		= $addslashes($url);
 		$site_name	= $addslashes($site_name);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."member_websites SET url='$url', site_name='$site_name' WHERE id=$id";
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_websites SET url='$url', site_name='$site_name' WHERE id=$id";
 		mysql_query($sql, $db);
 	}
 
@@ -189,7 +189,7 @@ class Member {
 		$associations = $addslashes($associations);
 		$awards = $addslashes($awards);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."member_additional_information SET interests='$interests', associations='$associations', awards='$awards', expertise='$expertise', others='$others' WHERE member_id=".$_SESSION['member_id'];
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET interests='$interests', associations='$associations', awards='$awards', expertise='$expertise', others='$others' WHERE member_id=".$_SESSION['member_id'];
 		mysql_query($sql, $db);
 	}
 
@@ -201,7 +201,7 @@ class Member {
 		$sql =	'SELECT core.*, T.interests, T.associations, T.awards, T.expertise, T.others FROM '.
 				'(SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$this->id.') AS core '.
 				'LEFT JOIN '.
-				TABLE_PREFIX.'member_additional_information T ON core.member_id=T.member_id';
+				TABLE_PREFIX.'social_member_additional_information T ON core.member_id=T.member_id';
 		$result = mysql_query($sql);
 		if ($result){
 			$row = mysql_fetch_assoc($result);
@@ -219,7 +219,7 @@ class Member {
 		global $db;
 		$position = array();
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'member_position WHERE member_id='.$this->id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_position WHERE member_id='.$this->id;
 		$result = mysql_query($sql, $db);
 		if ($result){
 			while($row = mysql_fetch_assoc($result)){
@@ -239,7 +239,7 @@ class Member {
 		global $db;
 		$education = array();
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'member_education WHERE member_id='.$this->id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_education WHERE member_id='.$this->id;
 		$result = mysql_query($sql, $db);
 		if ($result){
 			while($row = mysql_fetch_assoc($result)){
@@ -258,7 +258,7 @@ class Member {
 		global $db;
 		$websites = array();
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'member_websites WHERE member_id='.$this->id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_websites WHERE member_id='.$this->id;
 		$result = mysql_query($sql, $db);
 		if ($result){
 			while($row = mysql_fetch_assoc($result)){

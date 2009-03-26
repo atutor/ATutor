@@ -73,7 +73,7 @@ class PrivacyController{
 		$member_id = intval($member_id);		
 		
 		//TODO: Check if this object exists in _SESSION, if so, don't pull it from db again
-		$sql = 'SELECT preferences FROM '.TABLE_PREFIX.'privacy_preferences WHERE member_id='.$member_id;
+		$sql = 'SELECT preferences FROM '.TABLE_PREFIX.'social_privacy_preferences WHERE member_id='.$member_id;
 		$result = mysql_query($sql, $db);
 		if (mysql_numrows($result) > 0){
 			list($prefs) = mysql_fetch_row($result);
@@ -100,7 +100,7 @@ class PrivacyController{
 		$prefs = serialize($prefs);
 
 		//TODO: Change it back to update
-		$sql = 'REPLACE '.TABLE_PREFIX."privacy_preferences SET member_id=$member_id, preferences='$prefs'";
+		$sql = 'REPLACE '.TABLE_PREFIX."social_privacy_preferences SET member_id=$member_id, preferences='$prefs'";
 //		echo $sql;
 		$result = mysql_query($sql, $db);
 		return $result;

@@ -43,7 +43,7 @@ class Application extends Applications{
 		$views					= $addslashes(serialize($gadget_obj->views));
 
 		//determine next id
-		$sql = 'SELECT MAX(id) AS max_id FROM '.TABLE_PREFIX.'applications';
+		$sql = 'SELECT MAX(id) AS max_id FROM '.TABLE_PREFIX.'social_applications';
 		$result = mysql_query($sql, $db);
 		if ($result){
 			$row = mysql_fetch_assoc($result);
@@ -51,14 +51,14 @@ class Application extends Applications{
 		} else {
 			$id = 1;
 		}
-		$user_id = $_SESSION['member_id'];
+		$member_id = $_SESSION['member_id'];
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."applications (id, url, title, height, screenshot, thumbnail, author, author_email, description, settings, views) VALUES ($id, '$url', '$title', $height, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_applications (id, url, title, height, screenshot, thumbnail, author, author_email, description, settings, views) VALUES ($id, '$url', '$title', $height, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views')";
 		$result = mysql_query($sql, $db);
 		
 		//This application is already in the database, get its ID out
 		if (!$result){			
-			$sql = 'SELECT id FROM '.TABLE_PREFIX."applications WHERE url='$url'";
+			$sql = 'SELECT id FROM '.TABLE_PREFIX."social_applications WHERE url='$url'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 			$id = $row['id'];
@@ -66,7 +66,7 @@ class Application extends Applications{
 
 		//Add a record into application_settings regardless since it has to be mapped onto the user
 		//TODO: use another table
-/*		$sql = 'INSERT INTO '.TABLE_PREFIX."application_settings (application_id, member_id, name, value) VALUES ($id, $user_id, '$title', 'Place holder')";
+/*		$sql = 'INSERT INTO '.TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES ($id, $member_id, '$title', 'Place holder')";
 		$result = mysql_query($sql, $db);
 
 		if ($result){
@@ -75,7 +75,7 @@ class Application extends Applications{
 			unset($act);
 		}
 */
-		$this->addMemberApplication($member_id, $app_id);
+		$this->addMemberApplication($member_id, $id);
 	}
 
 
@@ -90,7 +90,7 @@ class Application extends Applications{
 		$member_id = intval($member_id);
 		$app_id = intval($app_id);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."members_application (member_id, application_id) VALUES ($member_id, $app_id)";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_members_applications (member_id, application_id) VALUES ($member_id, $app_id)";
 		$result = mysql_query($sql, $db);
 
 		if ($result){
@@ -150,7 +150,7 @@ class Application extends Applications{
 		$key		= $addslashes($key);
 		$value		= $addslashes($value);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."application_settings (application_id, member_id, name, value) VALUES ($app_id, $member_id, '$key', '$value') ON DUPLICATE KEY UPDATE value='$value'";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES ($app_id, $member_id, '$key', '$value') ON DUPLICATE KEY UPDATE value='$value'";
 		echo($sql);
 		$result = mysql_query($sql, $db);
 
@@ -168,7 +168,7 @@ class Application extends Applications{
 		$result = array();
 
 		$member_id = intval($member_id);
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members_application WHERE member_id='.$member_id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_members_applications WHERE member_id='.$member_id;
 		$rs = mysql_query($sql, $db);
 		if ($rs){
 			while($row = mysql_fetch_assoc($rs)){
@@ -188,7 +188,7 @@ class Application extends Applications{
 		$result = array();
 		$member_id = intval($member_id);
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."application_settings WHERE member_id=$member_id AND application_id=".$this->id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."social_application_settings WHERE member_id=$member_id AND application_id=".$this->id;
 		$rs = mysql_query($sql);
 		if ($rs){
 			//loop cause an application can have multiple pairs of key=>value
@@ -321,7 +321,7 @@ debug($securityToken);
 	function getApplicationPrefs(){
 		global $db;
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'applications WHERE id='.$this->id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_applications WHERE id='.$this->id;
 		$rs = mysql_query($sql);
 
 		if ($rs){
@@ -347,11 +347,11 @@ debug($securityToken);
 		global $db;
 
 		//delete application mapping
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'members_application WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_members_applications WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
 		$rs = mysql_query($sql);
 
 		//delete application data?
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'application_settings WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_application_settings WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
 		$rs = mysql_query($sql);
 
 		return $rs;
