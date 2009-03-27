@@ -180,8 +180,12 @@ function searchFriends($name, $searchMyFriends = false){
 
 	//If searchMyFriend is true, return the "my friends" array
 	//else, use "my friends" array to distinguish which of these are already in my connection
-	$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].' OR F.friend_id='.$_SESSION['member_id'].') AND ';
-	$sql = $sql . $query;
+	$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].') AND ';
+	$sql .= $query;
+	$sql .= ' UNION ';
+	$sql .= 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.member_id=M.member_id WHERE (F.friend_id='.$_SESSION['member_id'].') AND ';
+	$sql .= $query;
+
 	$rs = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($rs)){
 		if ($row['member_id']==$_SESSION['member_id']){

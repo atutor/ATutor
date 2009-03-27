@@ -114,10 +114,10 @@ class PrivacyController{
 		return array (
 			//checkboxes don't need to have none and everyone
 //			-1										=>	_AT('none'),
-			AT_SOCIAL_EVERYONE_VISIBILITY			=>	_AT('non_friends'),
+			AT_SOCIAL_EVERYONE_VISIBILITY			=>	_AT('world_network'),
 			AT_SOCIAL_FRIENDS_VISIBILITY			=>	_AT('friends'),
 			AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY =>	_AT('friends_of_friends'),
-			AT_SOCIAL_NETWORK_VISIBILITY			=>	_AT('network')
+			AT_SOCIAL_NETWORK_VISIBILITY			=>	_AT('local_network')
 		);
 	}
 }
