@@ -50,7 +50,8 @@ if (sizeof($list_of_friends) > 0){
 </ul>
 
 <form action="<?php echo url_rewrite('mods/social/connections.php', AT_PRETTY_URL_HEADER);?>" method="POST">
-	<input type="text" name="searchFriends" value="<?php echo urldecode($_POST['searchFriends']); ?>"/>
+	<input type="text" name="search_friends_123" value="<?php echo urldecode($_POST['searchFriends']); ?>"/>
+	<input type="hidden" name="rand_key" value="123"/>
 	<input type="submit" name="search" value="<?php echo _AT('search'); ?>" class="button" />
 </form>
 

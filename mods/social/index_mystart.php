@@ -1,5 +1,5 @@
 <?php
 //use index.php
-header('Location: index.php');
+header('Location: mods/social/index.php');
 exit;
 ?>
