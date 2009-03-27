@@ -290,6 +290,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','search_profile','Search Pro
 INSERT INTO `language_text` VALUES ('en', '_module','search_connections','Search Connections',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','search_education','Search Education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','search_position','Search Position',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','privacy_settings','Privacy Settings',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field cannot be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_ADDED_SUCCESSFULLY','Gadget was successsfully added.',NOW(),'');
