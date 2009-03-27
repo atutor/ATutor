@@ -81,7 +81,7 @@ function approveFriendRequest($friend_id){
 		return;
 	}
 	//TODO: hardcoded relationship = 1
-	$sql = "INSERT INTO ".TABLE_PREFIX."friends SET member_id=$_SESSION[member_id], friend_id=$friend_id, relationship=1";
+	$sql = "INSERT INTO ".TABLE_PREFIX."social_friends SET member_id=$_SESSION[member_id], friend_id=$friend_id, relationship=1";
 	$is_succeeded = mysql_query($sql, $db);	
 	//remove the equivalent friend request
 	if ($is_succeeded){

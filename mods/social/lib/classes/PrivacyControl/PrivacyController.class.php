@@ -47,7 +47,7 @@ class PrivacyController{
 			return AT_SOCIAL_EVERYONE_VISIBILITY;
 		}
 
-		$sql = 'SELECT relationship FROM '.TABLE_PREFIX."friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
+		$sql = 'SELECT relationship FROM '.TABLE_PREFIX."social_friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
 		$result = mysql_query($sql, $db);
 //		echo $sql;
 		if ($result){
