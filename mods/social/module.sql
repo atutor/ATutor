@@ -261,9 +261,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','disband_group','Disband Gro
 INSERT INTO `language_text` VALUES ('en', '_module','added_member','Added Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','not_added_member','Add Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','invite_group','Invite New Group Members',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','social_groups','Network Groups',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','position','Position',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','add_position','Add new position',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_new_position','Add new position',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','education','Education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','add_new_education','Add new education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','websites','Websites',NOW(),'');
