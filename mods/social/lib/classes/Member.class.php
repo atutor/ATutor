@@ -58,7 +58,7 @@ class Member {
 		$country			= $addslashes($country);
 		$province			= $addslashes($province);
 		$degree				= $addslashes($degree);
-		$field				= $addslsahes($field);
+		$field				= $addslashes($field);
 		$description		= $addslashes($description);
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_education (member_id, university, `from`, `to`, country, province, degree, field, description) VALUES ($member_id, '$university', $from, $to, '$country', '$province', '$degree', '$field', '$description')";
@@ -77,8 +77,8 @@ class Member {
 		$url		= urlencode($url);
 		$site_name	= $addslashes($site_name);
 
-		$sql = 'INSERT INTO '. TABLE_PREFIX ."member_websites (member_id, url, site_name) VALUES ($member_id, '$url', '$site_name')";
-		mysql_query($sql, $db);		
+		$sql = 'INSERT INTO '. TABLE_PREFIX ."social_member_websites (member_id, url, site_name) VALUES ($member_id, '$url', '$site_name')";
+		mysql_query($sql, $db);
 	}
 
 
@@ -98,7 +98,7 @@ class Member {
 		$awards			= $addslashes($awards);
 		$expertise		= $addslashes($expertise);
 		$others			= $addslashes($others);
-		$sql = 'INSERT INTO ' . TABLE_PREFIX . "member_additional_information (member_id, interests,  associations, awards, expertise, others) VALUES ($member_id, '$interests', '$associations', '$awards', '$expertise', '$others')";
+		$sql = 'INSERT INTO ' . TABLE_PREFIX . "social_member_additional_information (member_id, interests,  associations, awards, expertise, others) VALUES ($member_id, '$interests', '$associations', '$awards', '$expertise', '$others')";
 		mysql_query($sql, $db);
 	}
 

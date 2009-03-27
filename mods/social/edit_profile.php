@@ -179,6 +179,19 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 }
 
 
+// Handles Deleting
+if (isset($_GET['delete'])){
+	$id	= intval($_GET['id']);
+	if ($_GET['delete']=='position'){
+		$member->deletePosition($id);
+	} elseif ($_GET['delete']=='education'){
+		$member->deleteEducation($id);
+	} elseif ($_GET['delete']=='websites'){
+		$member->deleteWebsite($id);
+	}
+}
+
+
 // Member object
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('profile', $member->getDetails());

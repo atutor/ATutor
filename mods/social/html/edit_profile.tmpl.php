@@ -9,7 +9,7 @@
 			//note: $id is just a array holder, it does not represent $row[id]
 			foreach ($this->position as $id=>$row): ?>
 		<div class="profile_container">
-			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=position'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=position'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo url_rewrite('mods/social/edit_profile.php?delete=position'.SEP.'id='.$row['id']); ?>"><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo _AT('company') . ': ' . $row['company']; ?></div>
 			<div><?php echo _AT('title') . ': ' . $row['title']; ?></div>
 			<div><?php echo _AT('range') . ': ' . $row['from'] . ' - ' . $row['to']; ?></div>
@@ -26,7 +26,7 @@
 		if (!empty($this->education)):
 			foreach ($this->education as $id=>$row): ?>
 		<div class="profile_container">
-			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=education'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=education'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo url_rewrite('mods/social/edit_profile.php?delete=education'.SEP.'id='.$row['id']); ?>"><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo _AT('university') . ': ' . $row['university']; ?></div>
 			<div><?php echo _AT('location') . ': ' . $row['country'] . ', ' . $row['province']; ?></div>
 			<div><?php echo _AT('degree') . ': ' . $row['degree']; ?></div>
@@ -45,7 +45,7 @@
 		if (!empty($this->websites)):
 			foreach ($this->websites as $id=>$row): ?>
 		<div class="profile_container">
-			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=websites'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=websites'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo url_rewrite('mods/social/edit_profile.php?delete=websites'.SEP.'id='.$row['id']); ?>"><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo _AT('site_name') . ': ' . $row['site_name']; ?></div>
 			<div><?php echo _AT('url') . ': ' . $row['url']; ?></div>
 		</div>
