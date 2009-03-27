@@ -15,7 +15,7 @@ if (isset($_GET['action'])){
 			rejectGroupInvitation($id);
 		}
 	}
-	$msg->addFeedback('group_joined');
+	$msg->addFeedback('GROUP_JOINED');
 	header('Location: '.url_rewrite('mods/social/groups/view.php?id='.$id), AT_PRETTY_URL_HEADER);
 	exit;
 }

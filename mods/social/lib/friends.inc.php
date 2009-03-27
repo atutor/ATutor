@@ -91,9 +91,9 @@ function approveFriendRequest($friend_id){
 	//add to activities log
 	if ($is_succeeded){
 		$act = new Activity();		
-		$str1 = 'and '.printSocialName($friend_id).' are now friends.';
+		$str1 = _AT('now_friends1', printSocialName($friend_id)); 
 		$act->addActivity($_SESSION['member_id'], $str1);
-		$str2 = 'and '.printSocialName($_SESSION['member_id']).' are now friends.';
+		$str2 = _AT('now_friends2', printSocialName($_SESSION['member_id'])); 
 		$act->addActivity($friend_id, $str2);
 		unset($act);
 	}

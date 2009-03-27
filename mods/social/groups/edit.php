@@ -31,12 +31,12 @@ if (isset($_POST['save'])){
 		$isSucceded = $social_groups->updateGroup($id, $_POST['group_admin'], $_POST['group_type'], $_POST['group_name'], $_POST['description'], $_POST['logo']);
 
 		if($isSucceded){
-			$msg->addFeedback('group_updated');
+			$msg->addFeedback('SOCIAL_GROUP_UPDATED');
 			header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
 			exit;
 		} else {
 			//Something went bad in the backend, contact admin?
-			$msg->addFeedback('group_edit_failed');
+			$msg->addFeedback('GROUP_EDIT_FAILED');
 		}
 	}
 }

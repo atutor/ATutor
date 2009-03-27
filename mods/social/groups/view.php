@@ -12,7 +12,7 @@ $group_obj = new SocialGroup($gid);
 
 //check if this group is valid
 if (!$group_obj->isValid()){
-	$msg->addError('group_has_been_removed');
+	$msg->addError('GROUP_HAS_BEEN_REMOVED');
 	header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
 	exit;
 }

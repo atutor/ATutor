@@ -1,7 +1,7 @@
 <form action="<?php echo url_rewrite('mods/social/privacy_settings.php');?>" method="POST">
 <div class="input-form">
-<div class="row">Controls who can see your profile and related information. </div>
-<fieldset class="group_form"><legend class="group_form">Profile Control</legend>
+<div class="row"><?php echo _AT('privacy_control_blurb'); ?> </div>
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('profile_control'); ?></legend>
 <div class="row">
 	<label for="basic_profile"><?php echo _AT('basic_profile'); ?></label>
 		<div>
@@ -43,7 +43,7 @@
 	</div>
 </div>
 <div class="row">
-	<label for="connection"><?php echo _AT('connection'); ?></label>
+	<label for="connection"><?php echo _AT('connections'); ?></label>
 	<div>
 		<?php foreach ($this->controller->getPermissionLevels() as $control_id=>$control_string): 
 			(isset($this->profile_prefs[AT_SOCIAL_PROFILE_CONNECTION][$control_id]))?$checked=' checked="checked"':$checked='';	?>		
@@ -85,7 +85,7 @@
 		<?php endforeach; ?>
 		</div>
 </div>
-Following are to be implemented...
+[[[Following are to be implemented...]]]
 <div class="row">
 	<label for="search_profile"><?php echo _AT('search_profile'); ?></label>
 		<div>
@@ -97,7 +97,7 @@ Following are to be implemented...
 		</div>
 </div>
 <div class="row">
-	<label for="search_connection"><?php echo _AT('search_connection'); ?></label>
+	<label for="search_connection"><?php echo _AT('search_connections'); ?></label>
 		<div>
 		<?php foreach ($this->controller->getPermissionLevels() as $control_id=>$control_string): 
 			(isset($this->search_prefs[AT_SOCIAL_SEARCH_CONNECTION][$control_id]))?$checked=' checked="checked"':$checked='';	?>		

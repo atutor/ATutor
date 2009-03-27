@@ -44,7 +44,7 @@ if (isset($_GET['app_id'])){
 	//Add application
 	if (isset($_GET['add']) && intval($_GET['add'])==1){
 		$app->addMemberApplication($_SESSION['member_id'], $_GET['app_id']);
-		$msg->addFeedback('gadget_added_successfully');
+		$msg->addFeedback('GADGET_ADDED_SUCCESSFULLY');
 		header('Location: '. url_rewrite('mods/social/applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
@@ -52,7 +52,7 @@ if (isset($_GET['app_id'])){
 	//Delete application
 	if (isset($_GET['delete']) && intval($_GET['delete']) > 0) {
 		$app->deleteApplication();
-		$msg->addFeedback('gadget_deleted_successfully');
+		$msg->addFeedback('GADGET_REMOVED_SUCCESSFULLY');
 		header('Location: '. url_rewrite('mods/social/applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}

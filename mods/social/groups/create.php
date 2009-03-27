@@ -30,11 +30,11 @@ if (isset($_POST['create'])){
 		$isSucceded = $social_groups->addGroup($_POST['group_type'], $_POST['group_name'], $_POST['description'], $_POST['logo']);
 
 		if($isSucceded){
-			$msg->addFeedback('group_created');
+			$msg->addFeedback('GROUP_CREATED');
 			header('Location: index.php');
 		} else {
 			//Something went bad in the backend, contact admin?
-			$msg->addFeedback('group_creation_failed');
+			$msg->addError('GROUP_CREATION_FAILED');
 		}
 	}
 }

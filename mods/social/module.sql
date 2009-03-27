@@ -216,8 +216,6 @@ INSERT INTO `language_text` VALUES ('en', '_module','there_are_entries','There a
 INSERT INTO `language_text` VALUES ('en', '_module','remove_friend','Remove Contact',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','add_to_friends','Add to contacts',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','my_friends_only','Only my contacts',NOW(),'');
-
-
 INSERT INTO `language_text` VALUES ('en', '_module','expertise','Expertise',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','dob','Date of Birth',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','interests','Interests',NOW(),'');
@@ -251,10 +249,9 @@ INSERT INTO `language_text` VALUES ('en', '_module','geography','Geographic',NOW
 INSERT INTO `language_text` VALUES ('en', '_module','internet_technology','Internet Technology',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','music','Music',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','sports_recreation','Sports and Recreation',NOW(),'');
-
 INSERT INTO `language_text` VALUES ('en', '_module','group_info','Group Details',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','created_by','Created By',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','last_updated','Last Updated',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','last_update','Last Update',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','number_of_members','Number of Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','message_board','Message Board',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','invite','Invite',NOW(),'');
@@ -265,27 +262,46 @@ INSERT INTO `language_text` VALUES ('en', '_module','added_member','Added Member
 INSERT INTO `language_text` VALUES ('en', '_module','not_added_member','Add Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','invite_group','Invite New Group Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','social_groups','Network Groups',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','settings','Settings',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','settings','Settings',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','settings','Settings',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','settings','Settings',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','settings','Settings',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','settings','Settings',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','position','Position',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_position','Add new position',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','education','Education',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_new_education','Add new education',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','websites','Websites',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_new_websites','Add new website',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_new_interest','Add new interest',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_new_association','Add new association',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_new_award','Add new award',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','reject_request','Reject Request',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','show_your_applications','Show Your Applications',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','avaiable_applications','Available Gadgets',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','view_groups','View Group',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','now_friends1','and %s are now contacts.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','now_friends2','and %s are now contacts',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','friends','My Contacts',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','friends_of_friends','Contacts of Your Contacts',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','local_network','Local Network',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','world_network','World Network',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','basic_profile','Basic Profile',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','detailed_profile','Detailed Profile',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','profile_control','Profile Visability',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','privacy_control_blurb','Controls who can see your profile and related information.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','search_visibility','Search Visibility',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','search_profile','Search Profile',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','search_connections','Search Connections',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','search_education','Search Education',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','search_position','Search Position',NOW(),'');
 
-
-
-
-
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field canot be empty.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field cannot be empty.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_ADDED_SUCCESSFULLY','Gadget was successsfully added.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_REMOVED_SUCCESSFULLY','Gadget was successsfully removed.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GROUP_CREATED','Group was successfully created.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_CREATION_FAILED','Group creation failed.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GROUP_JOINED','Group successfully joined.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_INVITATION_SENT','Invitation successfully sent.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANT_DELETE_GROUP','You cannot delete this group.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_HAS_BEEN_REMOVED','Group has been removed.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_SOCIAL_GROUP_UPDATED','Group successfully updated.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_EDIT_FAILEDY','Group edit failed.',NOW(),'');
 
 
 

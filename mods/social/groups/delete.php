@@ -16,7 +16,7 @@ $sgs = new SocialGroups();
 
 //validate if this user is the administrator of the group
 if ($sg->getUser() != $_SESSION['member_id']){
-	$msg->addError('delete_group');
+	$msg->addError('CANT_DELETE_GROUP');
 	header('Location: index.php');
 	exit;
 }
