@@ -30,7 +30,7 @@ class Member {
 		$to			= intval($to);
 		$description = $addslashes($description);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_position (member_id, company, title, from, to, description) VALUES ($member_id, '$company', '$title', $from, $to, '$description')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_position (member_id, company, title, `from`, `to`, description) VALUES ($member_id, '$company', '$title', $from, $to, '$description')";
 		mysql_query($sql, $db);
 	}
 
@@ -61,7 +61,7 @@ class Member {
 		$field				= $addslsahes($field);
 		$description		= $addslashes($description);
 		
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_education (member_id, university, from, to, country, province, degree, field, description) VALUES ($member_id, '$university', $from, $to, '$country', '$province', '$degree', '$field', '$description')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_education (member_id, university, `from`, `to`, country, province, degree, field, description) VALUES ($member_id, '$university', $from, $to, '$country', '$province', '$degree', '$field', '$description')";
 		mysql_query($sql, $db);
 	}
 
@@ -183,14 +183,37 @@ class Member {
 	 * @param	string		expterise, occupation
  	 * @param	string		any extra information
 	 */
-	function updateAdditionalInformation($interests, $associations, $awards, $expertise, $others){ 
+	function updateAdditionalInformation($interests='', $associations='', $awards='', $expertise='', $others=''){ 
 		global $addslashes, $db;
 		$interests = $addslashes($interests);
 		$associations = $addslashes($associations);
 		$awards = $addslashes($awards);
+		$expertise = $addslashes($expertise);
+		$others = $addslashes($others);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET interests='$interests', associations='$associations', awards='$awards', expertise='$expertise', others='$others' WHERE member_id=".$_SESSION['member_id'];
-		mysql_query($sql, $db);
+		$sql = '';
+		//tricky, not all fields get updated at once.  Update only the ones that has entries.
+		if ($interests!=''){
+			$sql .= "interests='$interests', ";
+		}
+		if ($associations!=''){
+			$sql .= " associations='$associations', ";
+		}
+		if ($awards!=''){
+			$sql .= "awards='$awards', ";
+		}
+		if ($expertise!=''){
+			$sql .= "expertise='$expertise', ";
+		}
+		if ($others!=''){
+			$sql .= "others='$others', ";		
+		}
+		if ($sql!=''){
+			$sql = substr($sql, 0, -2);
+		}
+
+		$sql2 = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET ".$sql." WHERE member_id=".$_SESSION['member_id'];
+		mysql_query($sql2, $db);
 	}
 
 
@@ -268,6 +291,42 @@ class Member {
 		return $websites;
 	}
 
+	
+	/**
+	 * Delete position
+	 * @param	int		position id
+	 */
+	function deletePosition($id){
+		global $db;
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_position WHERE id='.$id;
+		$result = mysql_query($sql, $db);
+	 }
+
+	
+	/**
+	 * Delete education
+	 * @param	int		education id
+	 */
+	function deleteEducation($id){
+		global $db;
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_education WHERE id='.$id;
+		$result = mysql_query($sql, $db);
+	}
+
+	
+	/**
+	 * Delete websites
+	 * @param	int		websites id
+	 */
+	function deleteWebsite($id){
+		global $db;
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_websites WHERE id='.$id;
+		$result = mysql_query($sql, $db);
+	}
+	
 
 	/**
 	 * Get the ID of this member

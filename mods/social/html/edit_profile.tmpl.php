@@ -17,7 +17,7 @@
 		<?php
 			endforeach;
 		endif; ?>
-			<p><a href=""><?php echo _AT('add_new_position'); ?></a></p>
+			<p><a href="<?php echo url_rewrite('mods/social/edit_profile.php?add=position'); ?>"><?php echo _AT('add_new_position'); ?></a></p>
 		</div>
 	</li>
 	<li>
@@ -37,7 +37,7 @@
 		<?php 
 			endforeach; 
 		endif; ?>
-			<p><a href=""><?php echo _AT('add_new_education'); ?></a></p>
+			<p><a href="<?php echo url_rewrite('mods/social/edit_profile.php?add=education'); ?>"><?php echo _AT('add_new_education'); ?></a></p>
 	</li>
 	<li>
 		<strong><?php echo _AT('websites'); ?></strong><br/>
@@ -52,13 +52,14 @@
 		<?php 
 			endforeach; 
 		endif; ?>
-		<p><a href=""><?php echo _AT('add_new_websites'); ?></a></p>
+		<p><a href="<?php echo url_rewrite('mods/social/edit_profile.php?add=websites'); ?>"><?php echo _AT('add_new_websites'); ?></a></p>
 	</li>
 
 	<li>
 		<strong><?php echo _AT('interests'); ?></strong><br/>
 		<?php if (!empty($this->profile['interests'])): ?>
 		<div class="profile_container">
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=interests'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo $this->profile['interests']; ?></div>
 		</div>
 		<?php else: ?>
@@ -70,6 +71,7 @@
 		<strong><?php echo _AT('associations'); ?></strong><br/>
 		<?php if (!empty($this->profile['associations'])): ?>
 		<div class="profile_container">
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=associations'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo $this->profile['associations']; ?></div>
 		</div>
 		<?php else: ?>
@@ -81,6 +83,7 @@
 		<strong><?php echo _AT('awards'); ?></strong><br/>
 		<?php if (!empty($this->profile['awards'])): ?>
 		<div class="profile_container">
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=awards'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo $this->profile['awards']; ?></div>
 		</div>
 		<?php else: ?>

@@ -239,7 +239,7 @@ class ATutorDbFetcher {
     $this->checkDb();
     $ret = array();
     $person_id = intval($person_id);
-	$sql = "select member_id, friend_id from ".TABLE_PREFIX."friends where member_id = $member_id or friend_id = $member_id";
+	$sql = "select member_id, friend_id from ".TABLE_PREFIX."social_friends where member_id = $member_id or friend_id = $member_id";
     $res = mysql_query($sql, $this->db);
     while (list($mid, $fid) = mysql_fetch_row($res)) {
       $id = ($mid == $member_id) ? $fid : $mid;

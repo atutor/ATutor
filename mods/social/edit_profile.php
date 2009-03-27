@@ -48,10 +48,58 @@ if (isset($_POST['submit'])){
 			$url		= $addslashes($_POST['url']);
 			$site_name	= $addslashes($_POST['site_name']);
 			$member->updateWebsite($id, $url, $site_name);
+		} elseif ($_POST['edit']=='interests' || $_POST['edit']=='associations' || $_POST['edit']=='awards' || $_POST['edit']=='expertise' 
+					|| $_POST['edit']=='others'){
+			$interests		= $addslashes($_POST['interests']);
+			$associations	= $addslashes($_POST['associations']);
+			$awards			= $addslashes($_POST['awards']);
+			$expertise		= $addslashes($_POST['expertise']);
+			$others			= $addslashes($_POST['others']);
+			$member->updateAdditionalInformation($interests, $associations, $awards, $expertise, $others);
+		}
+	} 
+	elseif (isset($_POST['add'])) {
+		if ($_POST['add']=='position'){
+			$company	 = $addslashes($_POST['company']);
+			$title		 = $addslashes($_POST['title']);
+			$from		 = intval($_POST['from']);
+			$to			 = intval($_POST['to']);
+			$description = $addslashes($_POST['description']);
+			$member->addPosition($company, $title, $from, $to, $description);
+		} elseif ($_POST['add']=='education'){
+			$university	 = $addslashes($_POST['university']);
+			$country	 = $addslashes($_POST['country']);
+			$province	 = $addslashes($_POST['province']);
+			$degree		 = $addslashes($_POST['degree']);
+			$field		 = $addslashes($_POST['field']);
+			$from		 = intval($_POST['from']);
+			$to			 = intval($_POST['to']);
+			$description = $addslashes($_POST['description']);
+			$member->addEducation($university, $from, $to, $country, $province, $degree, $field, $description);
+		} elseif ($_POST['add']=='websites'){
+			$url		= $addslashes($_POST['url']);
+			$site_name	= $addslashes($_POST['site_name']);
+			$member->addWebsite($url, $site_name);
 		}
 	}
 }
 
+
+// Handles Adding
+if (isset($_GET['add'])){
+	//header starts here.
+	include(AT_INCLUDE_PATH.'header.inc.php');
+	if ($_GET['add']=='position'){
+		$savant->display('edit_profile/add_position.tmpl.php');
+	} elseif ($_GET['add']=='education'){
+		$savant->display('edit_profile/add_education.tmpl.php');
+	} elseif ($_GET['add']=='websites'){
+		$savant->display('edit_profile/add_websites.tmpl.php');
+	}
+	//footer
+	include(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 
 // Handles Editing
 if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
@@ -98,8 +146,32 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->display('edit_profile/edit_websites.tmpl.php');
 
 	} elseif ($_GET['edit']=='interests'){
-	} elseif ($_GET['edit']=='assocations'){
+		$sql = 'SELECT interests FROM '.TABLE_PREFIX.'social_member_additional_information WHERE member_id='.$_SESSION['member_id'];
+		$rs = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($rs);
+
+		//Template
+		$savant->assign('interests', $row['interests']);
+		$savant->assign('title', 'interests');
+		$savant->display('edit_profile/edit_additional.tmpl.php');
+	} elseif ($_GET['edit']=='associations'){
+		$sql = 'SELECT associations FROM '.TABLE_PREFIX.'social_member_additional_information WHERE member_id='.$_SESSION['member_id'];
+		$rs = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($rs);
+
+		//Template
+		$savant->assign('associations', $row['associations']);
+		$savant->assign('title', 'associations');
+		$savant->display('edit_profile/edit_additional.tmpl.php');
 	} elseif ($_GET['edit']=='awards'){
+		$sql = 'SELECT awards FROM '.TABLE_PREFIX.'social_member_additional_information WHERE member_id='.$_SESSION['member_id'];
+		$rs = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($rs);
+
+		//Template
+		$savant->assign('awards', $row['awards']);
+		$savant->assign('title', 'awards');
+		$savant->display('edit_profile/edit_additional.tmpl.php');
 	} 
 	//footer
 	include(AT_INCLUDE_PATH.'footer.inc.php');

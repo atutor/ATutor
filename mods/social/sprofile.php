@@ -28,10 +28,10 @@ $friends = getFriends($id);
 $act_obj = new Activity();
 $activities = $act_obj->getActivities($id);
 
-//Member object
+// Member object
 $profile = new Member($id);
 
-//Privacy Controller
+// Privacy Controller
 $pc = new PrivacyController();
 $privacy_obj = $pc->getPrivacyObject($id);
 if ($privacy_obj==null){
@@ -44,7 +44,7 @@ if ($privacy_obj==null){
 	$profile_prefs = $privacy_obj->getProfile();
 }
 
-//Display
+// Display
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('scope', ($id!=$_SESSION['member_id']) ? 'viewer' : 'owner');
 $savant->assign('profile', $profile->getDetails());
