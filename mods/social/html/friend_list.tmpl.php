@@ -1,14 +1,14 @@
 <?php if(!empty($this->pendingRequests)): ?>
 <div>
-<div class="box">Pending Friend Requests</div>
+<div class="box"><?php echo _AT('pending_friend_requests'); ?></div>
 <?php
 	foreach ($this->pendingRequests as $id=>$r_obj): 
 ?>
 <div class="box">
 	<ul>
-	<li><a href="mods/social/sprofile.php?id=<?php echo $id;?>"><img src="get_profile_img.php?id=<?php echo $id; ?>" alt="Profile Picture" /></a></li>
+	<li><a href="mods/social/sprofile.php?id=<?php echo $id;?>"><img src="get_profile_img.php?id=<?php echo $id; ?>" alt="<?php echo _AT('profile_picture'); ?>" /></a></li>
 	<li><?php echo printSocialName($id) ?></li>
-	<li><?php echo 'Approve request?'; ?><a href="<?php echo url_rewrite('mods/social/index.php');?>?approval=y<?php echo SEP;?>id=<?php echo $r_obj->id;?>"><?php echo _AT('approve_request'); ?></a>|<a href="<?php echo url_rewrite('mods/social/index.php');?>?approval=n<?php echo SEP;?>id=<?php echo $r_obj->id;?>"><?php echo _AT('reject_request'); ?></a></li>
+	<li><?php echo _AT('approve_request'); ?><a href="<?php echo url_rewrite('mods/social/index.php');?>?approval=y<?php echo SEP;?>id=<?php echo $r_obj->id;?>"><?php echo _AT('approve_request'); ?></a>|<a href="<?php echo url_rewrite('mods/social/index.php');?>?approval=n<?php echo SEP;?>id=<?php echo $r_obj->id;?>"><?php echo _AT('reject_request'); ?></a></li>
 	</ul>
 </div>
 <?php endforeach; ?>
@@ -30,7 +30,7 @@
 <div class="box">
 	<ul>
 	<li><?php echo $name; ?> has invited you to join <a href="mods/social/groups/view.php?id=<?php echo $gobj->getID();?>"><?php echo $gobj->getName();?></a>.</li>
-	<li><?php echo 'Accept request?'; ?><a href="mods/social/groups/invitation_handler.php?action=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('accept_request'); ?></a>|<a href="mods/social/groups/invitation_handler.php?action=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('reject_request'); ?></a></li>
+	<li><?php echo _AT('accept_request'); ?><a href="mods/social/groups/invitation_handler.php?action=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('accept_request'); ?></a>|<a href="mods/social/groups/invitation_handler.php?action=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('reject_request'); ?></a></li>
 	</ul>
 </div>
 <?php endforeach; ?>
@@ -38,7 +38,7 @@
 <?php endif; ?>
 
 <div class="">
-<div class="box"><a href="mods/social/connections.php"><?php echo _AT('connection'); ?></a></div>
+<div class="box"><a href="mods/social/connections.php"><?php echo _AT('connections'); ?></a></div>
 <?php
 /**
  * Loop through all the friends and print out a list.  
@@ -60,6 +60,6 @@ if (!empty($this->friends)): ?>
 	<?php endforeach; ?>
 	</div>
 <?php else: ?>
-<?php echo _AT('NO_FRIENDS'); ?>
+<?php echo _AT('no_friends'); ?>
 <?php endif; ?>
 </div>

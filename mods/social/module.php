@@ -68,7 +68,7 @@ $this->_pages['mods/social/sprofile.php']['parent'] = 'mods/social/index.php';
 $this->_pages['mods/social/edit_profile.php']['title_var'] = 'edit_profile';
 $this->_pages['mods/social/edit_profile.php']['parent'] = 'mods/social/sprofile.php';
 
-$this->_pages['mods/social/applications.php']['title_var'] = 'social_profile';
+$this->_pages['mods/social/applications.php']['title_var'] = 'gadgets';
 $this->_pages['mods/social/applications.php']['parent'] = 'mods/social/index.php';
 
 $this->_pages['mods/social/connections.php']['title_var'] = 'connections';

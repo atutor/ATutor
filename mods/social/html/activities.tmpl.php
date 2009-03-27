@@ -14,6 +14,6 @@ if (!empty($this->activities)): ?>
 		</ul>
 	</div>
 <?php else: ?>
-<?php echo _AT('NO_ACTIVITIES'); ?>
+<?php echo _AT('no_activities'); ?>
 <?php endif; ?>
 </div>

@@ -62,7 +62,7 @@ if (isset($_GET['id'])){
 //handle search friends request
 if($rand_key!='' && isset($_POST['search_friends_'.$rand_key])){
 	if (empty($_POST['search_friends_'.$rand_key])){
-		$msg->addError('CANNOT_EMPTY');
+		$msg->addError('CANNOT_BE_EMPTY');
 		header('Location: '.url_rewrite('mods/social/connections.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}

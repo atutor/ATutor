@@ -7,10 +7,10 @@
 <script type="text/javascript" src="mods/social/lib/js/container.js"></script>
 
 <div class="search_form">	
-		<div class="gadget_title_bar"><?php echo _AT('manage_application'); ?></div>
+		<div class="gadget_title_bar"><?php echo _AT('add_application'); ?></div>
 		<div class="row">
 			<form method="POST" action="<?php echo url_rewrite("mods/social/applications.php"); ?>">
-			<label for="app_url">Add an application by url: </label>
+			<label for="app_url"><?php echo _AT('add_application_url'); ?>: </label>
 			<input id="app_url" name="app_url" type="text" />
 			<input type="hidden" name="add_application" value="1" />
 			<input type="submit" value="<?php echo _AT('add_application'); ?>" class="button" />

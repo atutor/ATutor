@@ -118,7 +118,8 @@ class Activity{
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		
-		$msg = ' has added the <a href="'.url_rewrite('mods/social/applications.php?app_id='.$app_id).'">"'.htmlentities($row['title']).'"</a> application.';
+		$msg = _AT("has_added_app", url_rewrite('mods/social/applications.php?app_id='.$app_id),
+			htmlentities($row['title']));
 		return $msg;
 	 }
 }

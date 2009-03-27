@@ -35,7 +35,7 @@
 				<dt><?php echo _AT('country'); ?></dt>
 				<dd><?php echo $this->profile['country']; ?></dd>
 
-				<dt><?php echo _AT('address'); ?></dt>
+				<dt><?php echo _AT('street_address'); ?></dt>
 				<dd><?php echo $this->profile['postal']; ?></dd>
 
 				<dt><?php echo _AT('interests'); ?></dt>
@@ -57,13 +57,13 @@
 			<div>
 				<h5><?php echo _AT('training_and_education'); ?></h5>
 				<?php if (empty($this->education)): ?>
-				<div> N/A </div>
+				<div> <?php echo _AT('na'); ?> </div>
 				<?php else: ?>
 				<table class="data static">	
 					<thead>
-						<th>School/Institution</th>
-						<th>Degree/Program/Course</th>
-						<th>Year</th>
+						<th> <?php echo _AT('institution'); ?></th>
+						<th> <?php echo _AT('degrees'); ?></th>
+						<th> <?php echo _AT('year'); ?></th>
 					</thead>
 					<tbody>
 					<?php
@@ -83,13 +83,13 @@
 			<div>
 				<h5><?php echo _AT('credits_and_work_experience'); ?></h5>
 				<?php if (empty($this->position)): ?>
-				<div> N/A </div>
+				<div> <?php echo _AT('na'); ?></div>
 				<?php else: ?>
 				<table class="data static">	
 					<thead>
-						<th>Company</th>
-						<th>Title</th>
-						<th>Year</th>
+						<th><?php echo _AT('company'); ?></th>
+						<th><?php echo _AT('title'); ?></th>
+						<th><?php echo _AT('year'); ?></th>
 					</thead>
 					<tbody>
 					<?php
