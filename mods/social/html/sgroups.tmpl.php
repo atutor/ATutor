@@ -9,7 +9,9 @@
 	}
 ?>
 
-<div class="input-form">	
+<div class="input-form" style="width:40%;padding:1em;min-height:4.5em;">
+	<div class="contentrow">
+<h3><?php echo _AT('search_for_groups'); ?></h3>
 	<form action="<?php echo 'mods/social/groups/search.php'; ?>" method="POST" id="search_group_form">
 		<div class="row">
 			<span style="float:right"><a href="mods/social/groups/create.php">Create a new group</a></span>
@@ -20,26 +22,26 @@
 			<div id="livesearch"></div>
 		</div>
 	</form>
+</div></div>
 
-
-	<div class="" style="width:50%;float:left;" >
-		<div class="box"><?php echo _AT('recently_joined'); ?></div>
-		<div class="box">
+	<div class="" style="width:49%;float:left;" >
+		<div class="headingbox"><h3><?php echo _AT('recently_joined'); ?></h3></div>
+		<div class="contentbox">
 			ToDO:
 			Photoalbums
 			Forums...etc
 		</div>
 	</div>
 
-	<div class="" style="width:50%;float:right;" >
-		<div class="box"><?php echo _AT('my_groups'); ?></div>
-		<div class="box">
+	<div class="" style="width:49%;float:right;" >
+		<div class="headingbox"><h3><?php echo _AT('my_groups'); ?></h3></div>
+		<div class="contentbox">
 			<?php foreach ($this->my_groups as $i=>$grp): 
 				$grp_obj = new SocialGroup($grp);
 			?>
 			<div class="contact_mini">
 				<div class="box">
-					<a href="mods/social/groups/view.php?id=<?php echo $grp;?>"><?php echo $grp_obj->getName(); ?></a><br/>
+					<a href="mods/social/groups/view.php?id=<?php echo $grp;?>"><h4><?php echo $grp_obj->getName(); ?></h4></a><br/>
 					<?php echo _AT('type') .': '. $grp_obj->getGroupType();?><br/>
 					<?php echo _AT('description') .': '. $grp_obj->getDescription();?><br/>
 				</div>

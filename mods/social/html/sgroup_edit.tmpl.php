@@ -36,8 +36,8 @@
 		</div>
 
 		<div class="row">
-			<label for="logo"><?php echo _AT('logo'); ?></label>
-			<input type="text" size="60" name="logo" id="logo" value="<?php echo $this->group_obj->logo; ?>"/>
+			<label for="logo"><?php echo _AT('group_logo'); ?></label>
+			<input type="file" size="60" name="logo" id="logo" value="<?php echo $this->group_obj->logo; ?>"/>
 		</diV>
 
 		<div class="row">

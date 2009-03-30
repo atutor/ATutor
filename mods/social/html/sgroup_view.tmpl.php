@@ -1,9 +1,32 @@
 <?php //debug($this->group_obj); ?>
-<div class="">
-	<div style="float:left;">
+
+		<div><?php echo $this->logo;?></div>
 		<div class="box">
-			<h5><?php echo _AT('group_info'); ?></h5>
-			<dl>
+			<?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
+			| <a href="mods/social/groups/invite.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('invite'); ?></a> |
+			<a href="mods/social/groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>remove=1"><?php echo _AT('leave_group'); ?></a> |				
+			<?php else: ?>
+			<a href="mods/social/groups/join.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('join_group'); ?></a> |
+			<?php endif; ?>
+			<?php if ($this->group_obj->getUser() == $_SESSION['member_id']): ?>
+			<a href="mods/social/groups/edit.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('edit_group'); ?></a> |
+			<a href="mods/social/groups/delete.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('disband_group'); ?></a> |
+			<?php endif; ?>
+
+			<?php include('notifications.tmpl.php'); ?>
+		</div>
+		<div>
+			<?php 
+				foreach ($this->group_obj->getGroupActivities() as $activity_id=>$activity_title){
+					echo $activity_title;
+				}				
+			?>
+		</div>
+
+	<div class="headingbox">
+			<h3><?php echo _AT('group_info'); ?></h3></div>
+		<div class="contentbox">
+			<dl  id="public-profile">
 				<dt><?php echo _AT('group_name'); ?></dt>
 				<dd><?php echo $this->group_obj->getName();?></dd>
 
@@ -16,18 +39,20 @@
 				<dt><?php echo _AT('created_date'); ?></dt>
 				<dd><?php echo AT_DATE(_AT('startend_date_long_format'), $this->group_obj->getCreatedDate(), AT_DATE_MYSQL_DATETIME);?></dd>
 
-				<dt><?php echo _AT('last_update'); ?></dt>
+				<dt><?php echo _AT('last_updated'); ?></dt>
 				<dd><?php echo AT_DATE(_AT('startend_date_long_format'), $this->group_obj->getLastUpdated(), AT_DATE_MYSQL_DATETIME);?></dd>
 
 				<dt><?php echo _AT('number_of_members');?></dt>
 				<dd><?php echo count($this->group_obj->group_members);?></dd>
 			</dl>
-		</div>
+		</div><br />
 		
-		<div class="box">
-			<h5><?php echo _AT('message_board'); ?></h5>
+		<div class="headingbox">
+			<h3><?php echo _AT('message_board'); ?></h3></div>
+		<div class="contentbox">	
 			<form method="POST" action="">
-				<textarea name="msg_body"></textarea>
+				<label for="message"></label>
+				<textarea name="msg_body" id="message" cols="40" rows="5"></textarea><br />
 				<input class="button" type="submit" name="submit" value="<?php echo _AT('post');?>" />
 			</form><hr/>
 
@@ -52,28 +77,4 @@
 	</div>
 
 
-	<div style="float:right;">
-		<div><?php echo $this->logo;?></div>
-		<div class="box">
-			<?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
-			<a href="mods/social/groups/invite.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('invite'); ?></a>
-			<a href="mods/social/groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>remove=1"><?php echo _AT('leave_group'); ?></a>				
-			<?php else: ?>
-			<a href="mods/social/groups/join.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('join_group'); ?></a>
-			<?php endif; ?>
-			<?php if ($this->group_obj->getUser() == $_SESSION['member_id']): ?>
-			<a href="mods/social/groups/edit.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('edit_group'); ?></a>
-			<a href="mods/social/groups/delete.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('disband_group'); ?></a>
-			<?php endif; ?>
-
-			<?php include('notifications.tmpl.php'); ?>
-		</div>
-		<div>
-			<?php 
-				foreach ($this->group_obj->getGroupActivities() as $activity_id=>$activity_title){
-					echo $activity_title;
-				}				
-			?>
-		</div>
-	</div>
 </div>

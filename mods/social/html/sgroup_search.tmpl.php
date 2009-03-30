@@ -8,8 +8,9 @@
 		$last_search = $_POST['search_groups_'.$rand];	
 	}
 ?>
-
-<div class="input-form">	
+<div class="input-form" style="width:40%;padding:1em;min-height:4.5em;">
+	<div class="contentrow">
+<h3><?php echo _AT('search_for_groups'); ?></h3>
 	<form action="<?php echo 'mods/social/groups/search.php'; ?>" method="POST" id="search_group_form">
 		<div class="row">
 			<label for="search_groups"><?php echo _AT('search'); ?></label>
@@ -19,7 +20,7 @@
 			<div id="livesearch"></div>
 		</div>
 	</form>
-
+</div>
 	<div class="box">
 		<?php if (!empty($this->search_result)):
 		foreach($this->search_result as $group_id=>$group_array): 

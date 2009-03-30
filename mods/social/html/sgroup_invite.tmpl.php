@@ -1,8 +1,9 @@
 <?php //debug($this->group_obj); ?>
-<div>
-	<div style="float:left;">
-		<div>
-			<span><?php echo _AT('added_members'); ?></span>
+<div style="width:90%">
+	<div style="float:left;width:47%; clear:right;">
+		<div class="headingbox">
+			<h3><?php echo _AT('added_members'); ?></h3></div>
+		<div class="contentbox">
 			<ul>
 			<?php foreach ($this->group_obj->getGroupMembers() as $k=>$person_obj): ?>
 				<li><?php echo printSocialName($person_obj->getID()); ?></li>
@@ -10,11 +11,11 @@
 			</ul>
 		</div>
 	</div>
-
-
-	<div style="float:left;width:20%;">
+ 	<div style="float:right;width:47%;">
 		<form class="input-form" method="POST" action="mods/social/groups/invite.php">
-			<span><?php echo _AT('not_added_members'); ?></span>
+			<div class="headingbox">
+			<h3><?php echo _AT('not_added_members'); ?></h3></div>
+		<div class="contentbox">
 			<label for="search_not_added_members"><?php echo _AT('search');?></label>
 			<input type="text" name="search_not_added_members" id="search_not_added_members">
 			<div style="height:300px;overflow:scroll;">

@@ -82,7 +82,7 @@
 		<a href="<?php echo  AT_SOCIAL_INCLUDE.'../applications.php?app_id='.$id.SEP.'delete=1'; ?>"><?php echo _AT('remove');?></a>
 	</div>
 	<div style="width:60%; margin-left:10em; padding-top:1.5em;"><?php echo $app_obj->getDescription(); ?></div>
-	<br/>
+	
 </div>
 <?php endforeach; ?>
 </div>

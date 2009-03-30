@@ -263,6 +263,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','last_update','Last Update',
 INSERT INTO `language_text` VALUES ('en', '_module','number_of_members','Number of Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','message_board','Message Board',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','invite','Invite',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','invite_groups','Invite New Group Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','leave_group','Leave Group',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','edit_group','Edit Group',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','disband_group','Disband Group',NOW(),'');
@@ -301,6 +302,12 @@ INSERT INTO `language_text` VALUES ('en', '_module','privacy_settings','Privacy 
 INSERT INTO `language_text` VALUES ('en', '_module','new_group_invitations','New Group Invitations',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','has_invited_join','%s has invited you to join <a href="mods/social/groups/view.php?id=%s">%s</a>.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','suggestions','Suggestions',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','university','School/Institution',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','field','Area of Study',NOW(),'');
+
+INSERT INTO `language_text` VALUES ('en', '_module','group_admin','Group Moderator',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','edit_education','Edit Education',NOW(),'');
+
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field cannot be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_ADDED_SUCCESSFULLY','Gadget was successsfully added.',NOW(),'');
@@ -308,7 +315,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_REMOVED_SU
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GROUP_CREATED','Group was successfully created.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_CREATION_FAILED','Group creation failed.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GROUP_JOINED','Group successfully joined.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_INVITATION_SENT','Invitation successfully sent.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_INVITATION_SENT','Invitation successfully sent. Person will be added when the invitation has been accepted.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANT_DELETE_GROUP','You cannot delete this group.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_HAS_BEEN_REMOVED','Group has been removed.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_SOCIAL_GROUP_UPDATED','Group successfully updated.',NOW(),'');

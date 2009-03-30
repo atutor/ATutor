@@ -3,7 +3,7 @@
 <ul>
 	<li>
 		<div>
-		<strong><?php echo _AT('position'); ?></strong><br/>
+		<strong><?php echo _AT('position'); ?></strong>	<br/>
 		<?php 
 		if (!empty($this->position)):
 			//note: $id is just a array holder, it does not represent $row[id]
