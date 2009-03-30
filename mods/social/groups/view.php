@@ -21,6 +21,9 @@ if (!$group_obj->isValid()){
 //remove group member
 if (isset($_GET['remove']) && $_GET['remove']==1){
 	$group_obj->removeMember($_SESSION['member_id']);
+	$msg->addFeedback('LEFT_GROUP_SUCCESSFULLY');
+	header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+	exit;
 }
 
 //submit message
@@ -33,7 +36,7 @@ if (isset($_POST['submit'])){
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->assign('groups_invitations',getGroupInvitations());
+$savant->assign('group_invitations',getGroupInvitations());
 $savant->assign('group_obj', $group_obj);
 $savant->display('sgroup_view.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');

@@ -47,6 +47,7 @@
 			</dl>
 		</div><br />
 		
+		<?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
 		<div class="headingbox">
 			<h3><?php echo _AT('message_board'); ?></h3></div>
 		<div class="contentbox">	
@@ -74,6 +75,7 @@
 				endforeach;
 			?>
 		</div>
+		<?php endif; ?>
 	</div>
 
 

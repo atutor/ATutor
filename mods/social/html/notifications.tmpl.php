@@ -22,12 +22,12 @@ if(!empty($this->pending_requests)):
 
 <?php 
 //Group invitations requests
-if(!empty($this->groups_invitations)): 
+if(!empty($this->group_invitations)): 
 ?>
 <div>
 <div class="headingbox"><?php echo _AT('new_group_invitations'); ?></div>
 <?php
-	foreach ($this->groupsInvitations as $id=>$sender_ids): 
+	foreach ($this->group_invitations as $id=>$sender_ids): 
 	$gobj = new SocialGroup($id);
 	$name = '';
 		foreach($sender_ids as $index=>$sender_id){
@@ -38,7 +38,7 @@ if(!empty($this->groups_invitations)):
 <div class="contentbox">
 	<ul>
 	<li id="activity"><?php echo _AT('has_invited_join', $name, $gobj->getID(), $gobj->getName()); ?></li>
-	<li  id="activity"><?php echo _AT('accept_request'); ?><a href="mods/social/groups/invitation_handler.php?action=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('accept_request'); ?></a>|<a href="mods/social/groups/invitation_handler.php?action=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('reject_request'); ?></a></li>
+	<li id="activity"><?php echo _AT('accept_request'); ?><a href="mods/social/groups/invitation_handler.php?invitation=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('accept_request'); ?></a>|<a href="mods/social/groups/invitation_handler.php?invitation=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('reject_request'); ?></a></li>
 	</ul>
 </div>
 <?php endforeach; ?>
@@ -48,16 +48,23 @@ if(!empty($this->groups_invitations)):
 
 <?php
 //Group requests
-if (!empty($this->groups_requests)): 
+if (!empty($this->group_requests)): 
 ?>
 <div>
-<div class="box">New Group Requests</div>
-<div class="box">
+<div class="headingbox"><?php echo _AT('new_group_requests'); ?></div>
+<div class="contentbox">
 <?php
-	foreach ($this->groups_requests as $index=>$sender_id):
-		$name = printSocialName($sender_id);
+foreach ($this->group_requests as $id=>$senders):
+	$gobj = new SocialGroup($id);
+	foreach($senders as $index=>$sender_id):
+	$name = printSocialName($sender_id);
 ?>
+	<ul>
+		<li id="activity"><?php echo _AT('has_requested_to', $name, $gobj->getID(), $gobj->getName()); ?></li>
+		<li id="activity"><a href="mods/social/groups/invitation_handler.php?request=accept<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><?php echo _AT('accept_request'); ?></a>|<a href="mods/social/groups/invitation_handler.php?request=reject<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><?php echo _AT('reject_request'); ?></a></li>
+	</ul>
+<?php endforeach;
+endforeach; ?>
 </div>
-<?php endforeach; ?>
 </div>
 <?php endif; ?>

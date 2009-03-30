@@ -346,13 +346,15 @@ function acceptGroupInvitation($group_id){
 	 return removeGroupInvitation($group_id);
  }
 
+
+
  /**
   * Remove "my" group invitation
   * @param	int		group id
-  * @param	int		sender's member id
   */
  function removeGroupInvitation($group_id){
 	global $db;
+	$group_id = intval($group_id);
 
 	//delete invitation based on 3 primary keys
 //	$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_invitations WHERE group_id=$group_id AND sender_id=$sender_id AND member_id=$member_id";
@@ -363,6 +365,59 @@ function acceptGroupInvitation($group_id){
 		return true;
 	}
 	return false;
+ }
+
+
+ /** 
+  * Accept the group request
+  * @param	int		group id
+  * @param	int		member that made this request
+  */
+ function acceptGroupRequest($group_id, $sender_id){
+	global $db;
+	
+	//will only add member if the group_id is valid.
+	if ($group_id <= 0){
+		return;
+	}
+
+	$sg = new SocialGroup($group_id);
+	$isSucceeded = $sg->addMember($sender_id);
+
+	if ($isSucceeded){
+		removeGroupRequest($group_id, $sender_id);
+	}
+ }
+
+
+ /**
+  * Reject the group request
+  * @param	int		group id
+  * @param  int		member that made this request
+  */
+ function rejectGroupRequest($group_id, $member_id) {
+	 return removeGroupRequest($group_id, $sender_id);
+ }
+
+
+
+ /** 
+  * Remove group requests
+  * @param	int		group id
+   * @param  int		member that made this request
+  */
+ function removeGroupRequest($group_id, $sender_id){
+	 global $db;
+	 $group_id = intval($group_id);
+	 $sender_id = intval($sender_id);
+
+	 $sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_requests WHERE group_id=$group_id AND member_id=$_SESSION[member_id] AND sender_id=$sender_id";
+
+	 $result = mysql_query($sql, $db);
+	 if ($result){
+		 return true;
+	 }
+	 return false;
  }
 
 

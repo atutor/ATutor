@@ -6,13 +6,24 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 
-if (isset($_GET['action'])){
+if (isset($_GET['invitation']) || isset($_GET['request'])){
 	$id = intval($_GET['id']);
+	$sender_id = intval($_GET['sender_id']);
 	if ($id > 0){
-		if ($_GET['action']=='accept'){
+		//handle invitations
+		if ($_GET['invitation']=='accept'){
 			acceptGroupInvitation($id);
-		} elseif ($_GET['action']=='reject'){
+		} elseif ($_GET['invitation']=='reject'){
 			rejectGroupInvitation($id);
+		}
+
+		//handle requests (requests to join a group from some member)
+		if ($sender_id > 0){
+			if ($_GET['request']=='accept'){
+				acceptGroupRequest($id, $sender_id);
+			} elseif ($_GET['request']=='reject'){
+				rejectGroupRequest($id, $sender_id);
+			}
 		}
 	}
 	$msg->addFeedback('GROUP_JOINED');
