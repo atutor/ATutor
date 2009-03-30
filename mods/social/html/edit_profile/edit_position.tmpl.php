@@ -8,7 +8,7 @@
 	$from = intval($this->from);
 	$to = intval($this->to);
 ?>
-<div class="headingbox"><h3><?php echo _AT('edit_position'); ?></h3></a></div>
+<div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_position');}else{echo  _AT('add_new_position');}?></h3></div>
 <div class="contentbox">
 <form method="POST" action="<?php echo url_rewrite('mods/social/edit_profile.php'); ?>">
 	<dl id="public-profile">
@@ -29,7 +29,13 @@
 		<dd><textarea name="description" id="description" cols="40" rows="5"><?php echo $description; ?></textarea></dd>
 
 	<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
-	<input type="hidden" name="edit" value="position" />
+	
+		<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
+		<?php if($_GET['id']){ ?>
+		<input type="hidden" name="edit" value="position" />
+		<?php }else { ?>
+		<input type="hidden" name="add" value="position" />
+		<?php } ?>
 	<input type="submit" class="button" name="submit" value="<?php echo _AT('save'); ?>" />
 	<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 </div>
