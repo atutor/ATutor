@@ -90,11 +90,11 @@ if (isset($_GET['add'])){
 	//header starts here.
 	include(AT_INCLUDE_PATH.'header.inc.php');
 	if ($_GET['add']=='position'){
-		$savant->display('edit_profile/add_position.tmpl.php');
+		$savant->display('edit_profile/edit_position.tmpl.php');
 	} elseif ($_GET['add']=='education'){
-		$savant->display('edit_profile/add_education.tmpl.php');
+		$savant->display('edit_profile/edit_education.tmpl.php');
 	} elseif ($_GET['add']=='websites'){
-		$savant->display('edit_profile/add_websites.tmpl.php');
+		$savant->display('edit_profile/edit_websites.tmpl.php');
 	}
 	//footer
 	include(AT_INCLUDE_PATH.'footer.inc.php');
