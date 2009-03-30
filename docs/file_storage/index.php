@@ -566,7 +566,16 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 		<br />
 		<?php echo _AT('current_path'); ?>
 			<a href="<?php 
-			echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder=0'); ?>"><?php echo _AT('home'); ?></a>
+			if ($owner_type == WORKSPACE_ASSIGNMENT && !authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN))
+			{ // student assignment's folder; if it's instrutor who has priviledge to view all students' assignments, folder is 0
+				$folder = $_SESSION['member_id'];
+			}
+			else
+			{
+				$folder = 0;
+			}
+				
+			echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.$folder); ?>"><?php echo _AT('home'); ?></a>
 		<?php foreach ($folder_path as $folder_info): ?>
 			<?php if ($folder_info['folder_id'] == $folder_id): ?>
 				» <?php echo htmlspecialchars($folder_info['title']); ?>
