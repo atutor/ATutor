@@ -40,7 +40,7 @@ if (isset($_GET['approval'])){
 include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <div>
-	<div style="float:left;">
+	<div style="float:left; width:60%;">
 		<?php
 			//network updates
 			$actvity_obj = new Activity();
@@ -57,7 +57,7 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 //			echo '</div>';
 		?>
 	</div>
-	<div id="box" style="float:left; margin-left:0.2em;">
+	<div id="box" style="float:right; margin-left:0.2em;width:39%;">
 		<?php			
 			//if friends array is not empty.
 			if (!empty($friends)){

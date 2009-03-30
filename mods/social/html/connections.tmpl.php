@@ -10,33 +10,33 @@
 	}
 ?>
 
-<div class="input-form">
-	<div class="row"><?php echo _AT('search_for_friends'); ?></div>
-	<div class="row">
+<div class="input-form" style="width:40%;padding:1em;min-height:4.5em;">
+       <div class="contentrow">
+<h3><?php echo _AT('search_for_friends'); ?></h3>
 		<form action="<?php echo url_rewrite('mods/social/connections.php');?>" method="POST" id="search_friends_form">
-			<label for="searchFriends"><?php echo _AT('search'); ?></label>
-			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $_POST['search_friends_'.$last_search]; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/connections.php')"/>
-			<label for ="myFriendsOnly"><?php echo _AT('my_friends_only'); ?></label>
+			<label for="searchFriends" style="display:none;"><?php echo _AT('search'); ?></label>
+			<input type="text" size="40" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $_POST['search_friends_'.$last_search]; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/connections.php')"/> <input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
 			<?php 
 			if (isset($_POST['myFriendsOnly'])){
 				$mfo_checked = ' checked="checked"';
 			}
 			?>
-			<input type="checkbox" name="myFriendsOnly" id="myFriendsOnly" value="<?php echo _AT('yes'); ?>" <?php echo $mfo_checked; ?>/>
-			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>"/>
-			<input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
+			<br/> <div style="float:right;"><input type="checkbox" name="myFriendsOnly" id="myFriendsOnly" value="<?php echo _AT('yes'); ?>" <?php echo $mfo_checked; ?> />
+			<label for ="myFriendsOnly"><?php echo _AT('my_friends_only'); ?></label></div>
+			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>" />
+			
 			<div id="livesearch"></div>
 		</form>
 	</div>
 </div>
 
 <div class="">
-<div class="box"><?php echo _AT('connections'); ?></div>
-	<div class="box">
+<div class="headingbox"><h3><?php echo _AT('connections'); ?></h3></div>
+	<div class="contentbox">
 	<?php 
 	if (!empty($this->friends)):
 		$privacy_controller = new PrivacyController();
-		echo "<h2>"._AT('there_are_entries', sizeof($this->friends))."</h2>";
+		echo "<h4>"._AT('there_are_entries', sizeof($this->friends))."</h4>";
 		foreach ($this->friends as $id=>$person): 
 			$privacy_obj = $privacy_controller->getPrivacyObject($id);
 //			debug($privacy_obj->getSearch(), 'search'.$id);

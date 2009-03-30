@@ -7,8 +7,8 @@
 <script type="text/javascript" src="mods/social/lib/js/container.js"></script>
 
 <div class="search_form">	
-		<div class="gadget_title_bar"><?php echo _AT('add_application'); ?></div>
-		<div class="row">
+		<div class="headingbox"><h3><?php echo _AT('add_application'); ?></div>
+		<div class="contentbox">
 			<form method="POST" action="<?php echo url_rewrite("mods/social/applications.php"); ?>">
 			<label for="app_url"><?php echo _AT('add_application_url'); ?>: </label>
 			<input id="app_url" name="app_url" type="text" />
@@ -29,7 +29,7 @@
 
 <?php if (isset($this->list_of_all_apps) && !empty($this->list_of_all_apps)): ?>
 <div class="gadget_wrapper">
-<div class="gadget_title_bar"><?php echo _AT('avaiable_applications'); ?></div>
+<div class="headingbox"><h3><?php echo _AT('avaiable_applications'); ?></h3></div>
 <?php	
 	foreach ($this->list_of_all_apps as $id=>$app_obj): 
 	//skip the ones that are installed already
@@ -61,12 +61,12 @@
 <?php else: ?>
 
 <div class="gadget_wrapper">
-<div class="gadget_title_bar"><?php echo _AT('your_applications'); ?></div>
+<div class="headingbox"><h3><?php echo _AT('your_applications'); ?></h3></div>
 <?php	
 	foreach ($this->list_of_my_apps as $id=>$app_obj): 
 	$author = ($app_obj->getAuthor()!='')?$app_obj->getAuthor():_AT('unknown'); 	
 ?>
-<div class="gadget_container" style="padding:1em;">	
+<div class="contentbox" style="padding:1em;">	
 	<div style="float:left; ">
 		<?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?><br/>
 		<?php echo $app_obj->getAppLink('<img src="'.$app_obj->getThumbnail().'"/>', $id); ?><br/>

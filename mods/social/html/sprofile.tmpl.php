@@ -1,64 +1,83 @@
 <?php
 //Profile template for social
 ?>
-<div class="">
+<div>
 	<span>
-		<?php echo printSocialProfileImg($this->profile['member_id']); ?>	
-		<h2><?php echo printSocialName($this->profile['member_id']); ?></h2>
-		
+		<?php echo printSocialProfileImg($this->profile['member_id']); ?>
+		<span style="float:right;">[
 		<?php if ($this->scope=='owner'): ?>
-		<strong><a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><?php echo _AT('edit_profile'); ?></a></strong>
+<a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><?php echo _AT('edit_profile'); ?></a> ]</span>
 		<?php endif; ?>
+</div>	
+<div class="headingbox">
+		<h3><?php echo printSocialName($this->profile['member_id'], false); ?></h3>
+</div>
+
+
 	</span>
 	
-	<div class="">
-		<div class="row" style="width:40%; float:left;" >
+<div>
+		<div class="contentbox">
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_PROFILE, $this->relationship, $this->prefs)): ?>
 			<div>
-			<h5><?php echo _AT('profile'); ?></h5>
+			<h4><?php echo _AT('social_profile'); ?></h4>
 			<dl id="public-profile">
+				<?php if($this->profile['occupation']){ ?>
+				<dt><?php echo _AT('occupation'); ?></dt>
+				<dd><?php echo $this->profile['occupation']; ?></dd>
+				<?php }?>
+				<?php if($this->profile['expertise']){ ?>
 				<dt><?php echo _AT('expertise'); ?></dt>
 				<dd><?php echo $this->profile['expertise']; ?></dd>
-				
+				<?php }?>
+				<?php if($this->profile['email']){ ?>
 				<dt><?php echo _AT('email'); ?></dt>
 				<dd><?php echo $this->profile['email']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['gender']){ ?>
 				<dt><?php echo _AT('gender'); ?></dt>
 				<dd><?php echo $this->profile['gender']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['dob']){ ?>
 				<dt><?php echo _AT('dob'); ?></dt>
 				<dd><?php echo $this->profile['dob']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['phone']){ ?>
 				<dt><?php echo _AT('phone'); ?></dt>
 				<dd><?php echo $this->profile['phone']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['country']){ ?>
 				<dt><?php echo _AT('country'); ?></dt>
 				<dd><?php echo $this->profile['country']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['postal']){ ?>
 				<dt><?php echo _AT('street_address'); ?></dt>
 				<dd><?php echo $this->profile['postal']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['interests']){ ?>
 				<dt><?php echo _AT('interests'); ?></dt>
 				<dd><?php echo $this->profile['interests']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['associations']){ ?>
 				<dt><?php echo _AT('associations'); ?></dt>
 				<dd><?php echo $this->profile['associations']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['awards']){ ?>
 				<dt><?php echo _AT('awards'); ?></dt>
 				<dd><?php echo $this->profile['awards']; ?></dd>
-
+				<?php }?>
+				<?php if($this->profile['others']){ ?>
 				<dt><?php echo _AT('others'); ?></dt>
 				<dd><?php echo $this->profile['others']; ?></dd>
+				<?php }?>
 			</dl>
 			</div>
 			<?php endif; ?>
 
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_EDUCATION, $this->relationship, $this->prefs)): ?>
 			<div>
-				<h5><?php echo _AT('training_and_education'); ?></h5>
-				<?php if (empty($this->education)): ?>
-				<div> <?php echo _AT('na'); ?> </div>
-				<?php else: ?>
+				<?php if (!empty($this->education)){ ?>
+				<h4><?php echo _AT('training_and_education'); ?></h4>
 				<table class="data static">	
 					<thead>
 						<th> <?php echo _AT('institution'); ?></th>
@@ -75,16 +94,14 @@
 					?>
 					</tbody>
 				</table>
-				<?php endif; ?>
+				<?php } ?>
 			</div>
 			<?php endif; ?>
 
-			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_POSITION, $this->relationship, $this->prefs)): ?>
+			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_POSITION, $this->relationship, $this->prefs)){ ?>
 			<div>
-				<h5><?php echo _AT('credits_and_work_experience'); ?></h5>
-				<?php if (empty($this->position)): ?>
-				<div> <?php echo _AT('na'); ?></div>
-				<?php else: ?>
+				<?php if (!empty($this->position)){ ?>
+				<h4><?php echo _AT('credits_and_work_experience'); ?></h4>
 				<table class="data static">	
 					<thead>
 						<th><?php echo _AT('company'); ?></th>
@@ -101,15 +118,15 @@
 					?>
 					</tbody>
 				</table>
-				<?php endif; ?>
+				<?php }?>
 			</div>
-			<?php endif; ?>
-		</div>		
+			<?php } ?>
+		</div>	<br />	
 
-		<div class="row" style="float:left;" >
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_STATUS_UPDATE, $this->relationship, $this->prefs)): ?>
-			<div class="" style="width:250;">
-				<h5><?php echo _AT('activities'); ?></h5>
+			<div class="headingbox" style="width:250;">
+				<h4><?php echo _AT('activities'); ?></h4></div>
+			<div class="contentbox" id="activity">
 				<ul>
 					<?php
 						foreach($this->activities as $activity){
@@ -121,20 +138,21 @@
 						}							
 					?>
 				</ul>
-			</div>
+			</div><br />
 			<?php endif; ?>
 
 			<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_CONNECTION, $this->relationship, $this->prefs)): ?>
-			<div class="" style="width:400px">
+			<div class="headingbox">
 				<h5><?php echo _AT('connections'); ?></h5>
-				<div style="float:left;">
-				<?php foreach($this->friends as $friend_id): ?>														
+			</div>
+			<div class="contentbox">
+				<?php foreach($this->friends as $friend_id): ?>													
 					<div style="float:left; margin-left:1em;">
 					<a href="mods/social/sprofile.php?id=<?php echo $friend_id;?>"><?php echo printSocialProfileImg($friend_id); ?></a>	<br/>
 					<?php echo printSocialName($friend_id); ?>
 					</div>
+
 				<?php endforeach; ?>
-				</div>
 			</div>
 			<?php endif; ?>
 			

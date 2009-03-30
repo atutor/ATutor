@@ -9,14 +9,16 @@ div .profile_container {
 div .profile_container .top_right {
 	float: right;
 }
-
+/*
 
 div .connection_container {
 	border:1px solid #ddd; 
 }
+*/
 
 
 /* Gadget window */
+/*
 div .gadget_wrapper{
 	margin-bottom: 1em;
 }
@@ -49,6 +51,8 @@ div .contact_mini img{
 	border: none;
 }
 
+*/
+
 /* Search form */
 div .search_form {
 	margin-bottom: 1em;
@@ -63,11 +67,13 @@ div .button {
 	border: 1px solid #aaa;
 }
 div .button:hover{
-	background-color: #4C4C16;
-	color: #DEDEC0;
+	background-color: #cccccc;
+	color: #ffffff;
 }
 
 /* Side menu */
+
+/*
 ul.social_side_menu {
 	padding-left: 0px;
 }
@@ -75,8 +81,38 @@ ul.social_side_menu li {
 	padding-bottom: 0.2em;
 	list-style: none;
 }
+*/
 div .divider {
 	border-bottom:1px solid #C1C157; 
 	padding-bottom:0.5em; 
 	margin-bottom:0.5em;
+}
+
+#activity{
+
+ 	line-height:18pt;
+}
+
+div.headingbox, h3.headingbox, a.headingbox{
+	border:thin black solid;
+	padding:.2em;
+	background-color: #cccccc;
+	text-decoration:none;
+}
+
+
+div.contentbox, input-form{
+	margin-left:1em;
+	border-left:thin black solid;
+	border-right:thin black solid;
+	border-bottom:thin black solid;
+	padding:.5em;
+	background-color: #eeeeee;
+        overflow:hidden;
+}
+
+div.suggestions{
+	border:1px solid #a50707;
+	margin-left:10px; 
+	width:50%;
 }

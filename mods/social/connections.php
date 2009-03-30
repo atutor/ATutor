@@ -33,7 +33,7 @@ if (isset($_GET['q'])){
 	}
 
 	if (!empty($search_result)){
-		echo '<div style="border:1px solid #a50707; margin-left:50px; width:45%;">Suggestion:<br/>';
+		echo '<div class="suggestions">'._AT('suggestions').':<br/>';
 		$counter = 0;
 		foreach($search_result as $member_id=>$member_array){
 			//display 10 suggestions

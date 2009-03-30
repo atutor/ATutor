@@ -9,8 +9,8 @@
 	foreach ($this->list_of_my_apps as $id=>$app_obj): 
 ?>
 <div class="gadget_wrapper">
-<div class="gadget_title_bar"><?php echo $app_obj->getTitle(); ?></div>
-<div class="gadget_container" style="padding:0.5em;">
+<div class="headingbox"><h3><?php echo $app_obj->getTitle(); ?></h3></div>
+<div class="contentbox" style="padding:0.5em;">
 <?php
 	//the name and id here in the iframe is used by the container.js to identify the caller.
 	//Simply, the id is used here to generate the $(this.f)

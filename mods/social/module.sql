@@ -208,8 +208,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','no_activities','No network 
 INSERT INTO `language_text` VALUES ('en', '_module','no_friends','You have no contacts yet.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pending_friend_requests','Pending Friend Requests',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','profile_picture','Profile Picture',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','approve_request','Approve_request?',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','accept_request','Accept request?',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','approve_request','Approve Request',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','accept_request','Accept Request',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','search_for_friends','Search for contacts',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','my_connections','Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','there_are_entries','There are %s entries.',NOW(),'');
@@ -290,6 +290,9 @@ INSERT INTO `language_text` VALUES ('en', '_module','search_connections','Search
 INSERT INTO `language_text` VALUES ('en', '_module','search_education','Search Education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','search_position','Search Position',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','privacy_settings','Privacy Settings',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','new_group_invitations','New Group Invitations',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','has_invited_join','%s has invited you to join <a href="mods/social/groups/view.php?id=%s">%s</a>.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','suggestions','Suggestions',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field cannot be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_ADDED_SUCCESSFULLY','Gadget was successsfully added.',NOW(),'');
