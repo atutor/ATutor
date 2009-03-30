@@ -192,7 +192,7 @@ function fs_get_folder_by_pid($parent_folder_id, $owner_type, $owner_id) {
 	if ($owner_type == WORKSPACE_ASSIGNMENT) {
 		// get the folder row from the assignments table
 		// does not currently support sub-folders for assignments
-		if ($parent_folder_id == 0) {
+		if ($parent_folder_id == 0 && authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 			$sql = "SELECT assign_to FROM ".TABLE_PREFIX."assignments WHERE assignment_id=$owner_id AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql, $db);
 			$row  = mysql_fetch_assoc($result);
