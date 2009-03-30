@@ -158,6 +158,14 @@ CREATE TABLE `social_groups_invitations` (
 )
 ENGINE = MyISAM;
 
+CREATE TABLE `social_groups_requests` (
+  `sender_id` INTEGER UNSIGNED NOT NULL,
+  `member_id` INTEGER UNSIGNED NOT NULL,
+  `group_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`sender_id`, `member_id`, `group_id`)
+)
+ENGINE = MyISAM;
+
 CREATE TABLE `social_groups_types` (
   `type_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(127) NOT NULL,

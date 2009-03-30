@@ -7,18 +7,17 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 
 //Get group
-$gid = intval($_REQUEST['id']);
+$gid = intval($_GET['id']);
 $group_obj = new SocialGroup($gid);
+$result = $group_obj->addRequest();
 
-//Todo: Implements the add group request feature
-//adds to a 
-
-addGroupRequest($_SESSION['member_id'], $gid);
-$msg->addFeedback('INVITATION_SENT');
+if ($result){
+	$msg->addFeedback('INVITATION_SENT');
+} else {
+	$msg->addFeedback('INVITATION_SENT_FAILED');
+}
 
 //Display
-include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->assign('group_obj', $group_obj);
-$savant->display('sgroup_invite.tmpl.php');
-include(AT_INCLUDE_PATH.'footer.inc.php');
+header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+exit;
 ?>

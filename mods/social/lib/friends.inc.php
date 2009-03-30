@@ -295,6 +295,28 @@ function searchFriends($name, $searchMyFriends = false){
 	return $inv;
  }
 
+
+ /** 
+  * Get group requests for "ME", which is the logged in person.
+  * @return	list of groups id + sender_id
+  */
+ function getGroupRequests(){
+	 global $db;
+	 $requests = array();
+
+	 $sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_requests WHERE member_id='.$_SESSION['member_id'];
+
+	 $result = mysql_query($sql, $db);
+	 if ($result){
+		while ($row = mysql_fetch_assoc($result)){
+			$requests[$row['group_id']][] = $row['sender_id'];
+		}
+	 }
+
+	 return $requests;
+ }
+
+
  /**
   * Accept "my" group invitation
   * @param	int		group id

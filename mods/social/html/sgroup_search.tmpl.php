@@ -28,13 +28,18 @@
 		<div class="box">
 			<dl>
 				<dt><?php echo _AT('title'); ?></dt>
-				<dd><a href="<?php echo url_rewrite('mods/social/groups/view.php?id='.$group_obj->getID()); ?>"><?php echo $group_obj->getName();?></a></dd>
+				<dd><a href="<?php echo url_rewrite('mods/social/groups/view.php?id='.$group_obj->getID()); ?>"><?php echo $group_obj->getName();?></a> 
+				<?php if (in_array(new Member($_SESSION['member_id']), $group_obj->getGroupMembers())){
+				echo '('._AT('group_joined').')';
+				}
+				?>
+				</dd>
 
 				<dt><?php echo _AT('group_type'); ?></dt>
 				<dd><?php echo $group_obj->getGroupType();?></dd>
 
 				<dt><?php echo _AT('size'); ?></dt>
-				<dd><?php echo count($group_obj->getGroupMembers());?></dd>
+				<dd><?php echo count($group_obj->getGroupMembers());?></dd>				
 			</dl>
 		</div>
 		<?php endforeach; endif;?>

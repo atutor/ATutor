@@ -81,6 +81,7 @@ $friends = markFriends($_SESSION['member_id'], $friends);
 
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('friends', $friends);
+$savant->assign('rand_key', $rand_key);
 $savant->display('connections.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -15,7 +15,8 @@
 <h3><?php echo _AT('search_for_friends'); ?></h3>
 		<form action="<?php echo url_rewrite('mods/social/connections.php');?>" method="POST" id="search_friends_form">
 			<label for="searchFriends" style="display:none;"><?php echo _AT('search'); ?></label>
-			<input type="text" size="40" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $_POST['search_friends_'.$last_search]; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/connections.php')"/> <input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
+			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/connections.php')"/>
+			<label for ="myFriendsOnly"><?php echo _AT('my_friends_only'); ?></label>
 			<?php 
 			if (isset($_POST['myFriendsOnly'])){
 				$mfo_checked = ' checked="checked"';

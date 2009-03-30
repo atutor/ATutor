@@ -92,12 +92,15 @@ FEATURES:
 		- PROS: flexibility
 		- CONS: unity fails across different systems + type search
 	- group news (use the forum for now?)
+	- group message board
 	- blog
 	- ability send messages to all group members
 	- apply graph theory, data structure if we want to have stats, which data to display, data analysis etc. 
 		- Maybe using multi-dimension arrays?
 		- Use adjacent matrices or linked-list for graphs...?
 	- social group files, including media files, such as pictures, video, audio, etc...
+	- Allow different relationship between users, ie. colleague, family, etc.  This allows us to expand the privacy control in the future.
+	- 
 
 
 Jan 13, 2009

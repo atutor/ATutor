@@ -65,8 +65,9 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 			} else {
 				$savant->assign('friends', getFriends($_SESSION['member_id']));
 			}
-			$savant->assign('groupsInvitations', getGroupInvitations());
-			$savant->assign('pendingRequests', getPendingRequests());
+			$savant->assign('groups_invitations', getGroupInvitations());
+			$savant->assign('groups_requests', getGroupRequests());
+			$savant->assign('pending_requests', getPendingRequests());
 			$savant->display('friend_list.tmpl.php'); 
 		?>
 	</div>

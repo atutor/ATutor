@@ -16,6 +16,8 @@ if (isset($_POST['inviteMember']) && isset($_POST['new_members'])){
 	//add to request table
 	foreach ($_POST['new_members'] as $k=>$v){
 		$k = intval($k);
+
+		//TODO, move the following function from friends.inc.php to the SocialGroup.class object
 		addGroupInvitation($k, $gid);
 	}
 	$msg->addFeedback('INVITATION_SENT');

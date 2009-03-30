@@ -54,7 +54,7 @@ class SocialGroup {
 	 */
 	 function getGroupMembers(){
 		global $db;
-		if (!empty($this->group_member)){
+		if (!empty($this->group_members)){
 			return $this->group_members;
 		}
 		$members = array();
@@ -181,14 +181,27 @@ class SocialGroup {
 	 * @param	int		member_id
 	 */
 	 function addInvitation($member_id) {
-		 global $db;
-		 $member_id = intval($member_id);
+		global $db;
+		$member_id = intval($member_id);
 
-		 $sql = 'INSERT INTO '.TABLE_PREFIX.'social_group_invitations (sender_id, member_id, group_id) VALUES ('
-				.$_SESSION['member_id'].', '.$member_id.', '.$this->group_id.')';
-		 $result = mysql_query($sql, $db);
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_invitations (sender_id, member_id, group_id) VALUES ('
+				.$_SESSION['member_id'].', '.$member_id.', '.$this->getID().')';
+		$result = mysql_query($sql, $db);
 	 }
 
+
+	/** 
+	 * Sends a request to the group creator 
+	 * @param	int		member_id
+	 */
+	function addRequest(){
+		global $db;
+	
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_requests (sender_id, member_id, group_id) VALUES ('
+				.$_SESSION['member_id'].', '.$this->getUser().', '.$this->getID().')';
+		$result = mysql_query($sql, $db);
+		return $result;
+	}
 	
 	/**
 	 * Add message to the message board

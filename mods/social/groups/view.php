@@ -32,7 +32,7 @@ if (isset($_POST['submit'])){
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->assign('groupsInvitations',getGroupInvitations());
+$savant->assign('groups_invitations',getGroupInvitations());
 $savant->assign('group_obj', $group_obj);
 $savant->display('sgroup_view.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');

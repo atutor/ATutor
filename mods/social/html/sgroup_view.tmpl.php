@@ -59,35 +59,14 @@
 			<a href="mods/social/groups/invite.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('invite'); ?></a>
 			<a href="mods/social/groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>remove=1"><?php echo _AT('leave_group'); ?></a>				
 			<?php else: ?>
-			<a href=""><?php echo _AT('join_group'); ?></a>
+			<a href="mods/social/groups/join.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('join_group'); ?></a>
 			<?php endif; ?>
 			<?php if ($this->group_obj->getUser() == $_SESSION['member_id']): ?>
 			<a href="mods/social/groups/edit.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('edit_group'); ?></a>
 			<a href="mods/social/groups/delete.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('disband_group'); ?></a>
 			<?php endif; ?>
 
-			<?php if(!empty($this->groupsInvitations)): ?>
-			<div>
-			<div class="box">New Group Invitations</div>
-			<?php
-				foreach ($this->groupsInvitations as $id=>$sender_ids): 
-				$gobj = new SocialGroup($id);
-				$name = '';
-					foreach($sender_ids as $index=>$sender_id){
-						$name .= printSocialName($sender_id).', ';
-					}
-				$name = substr($name, 0, -2);
-			?>
-			<div class="box">
-				<ul>
-				<li><?php echo $name; ?> has invited you to join <a href="mods/social/groups/view.php?id=<?php echo $gobj->getID();?>"><?php echo $gobj->getName();?></a>.</li>
-				<li><?php echo 'Accept request?'; ?><a href="mods/social/groups/invitation_handler.php?action=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('accept_request'); ?></a>|<a href="mods/social/groups/invitation_handler.php?action=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><?php echo _AT('reject_request'); ?></a></li>
-				</ul>
-			</div>
-			<?php endforeach; ?>
-			</div>
-			<?php endif; ?>
-
+			<?php include('notifications.tmpl.php'); ?>
 		</div>
 		<div>
 			<?php 
