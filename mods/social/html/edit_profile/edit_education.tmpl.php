@@ -11,7 +11,7 @@
 	$to			 = intval($this->to);
 	$description = $addslashes($this->description);
 ?>
-<div class="headingbox"><h3><?php echo _AT('edit_education'); ?></h3></a></div>
+<div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_education');}else{echo  _AT('add_new_education');}?></h3></a></div>
 <div class="contentbox">
 <form method="POST" action="<?php echo url_rewrite('mods/social/edit_profile.php'); ?>">
 	<dl id="public-profile">
@@ -40,7 +40,12 @@
 		<dd><textarea name="description" id="description" cols="40" rows="5" ><?php echo $description; ?></textarea></dd>
 	
 		<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
+		<?php if($_GET['id']){ ?>
 		<input type="hidden" name="edit" value="education" />
+		<?php }else { ?>
+		<input type="hidden" name="add" value="education" />
+		<?php } ?>
+	
 		<input type="submit" name="submit" class="button" value="<?php echo _AT('save'); ?>" />
 		<input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?>" />
 	</dl>
