@@ -12,16 +12,21 @@
 <div class="contentbox">
 <form method="POST" action="<?php echo url_rewrite('mods/social/edit_profile.php'); ?>">
 	<dl id="public-profile">
-	<dt><label for="company"><?php echo _AT('company'); ?></label></dt>
-	<dd><input type="text" id="company" name="company" value="<?php echo $company; ?>" /></dd>
-	<dt><label for="title"><?php echo _AT('title'); ?></label></dt>
-	<dd><input type="text" id="title" name="title" value="<?php echo $title; ?>" /></dd>
-	<dt><label for="from"><?php echo _AT('from'); ?></label></dt>
-	<dd><input type="text" id="from" name="from" value="<?php echo $from; ?>" /></dd>
-	<dt><label for="to"><?php echo _AT('to'); ?></label></dt>
-	<dd><input type="text" id="to" name="to" value="<?php echo $to; ?>" /></dd>
-	<dt><label for="description"><?php echo _AT('description'); ?></label>	</dt>
-	<dd><textarea name="description" id="description" cols="40" rows="5"><?php echo $description; ?></textarea></dd>
+
+		<dt><label for="company"><?php echo _AT('company'); ?></label></dt>
+		<dd><input type="text" id="company" name="company" value="<?php echo $company; ?>" /></dd>
+	
+		<dt><label for="title"><?php echo _AT('title'); ?></label></dt>
+		<dd><input type="text" id="title" name="title" value="<?php echo $title; ?>" /></dd>
+	
+		<dt><label for="from"><?php echo _AT('from'); ?></label></dt>
+		<dd><input type="text" id="from" name="from" value="<?php echo $from; ?>" /></dd>
+	
+		<dt><label for="to"><?php echo _AT('to'); ?></label></dt>
+		<dd><input type="text" id="to" name="to" value="<?php echo $to; ?>" /></dd>
+	
+		<dt><label for="description"><?php echo _AT('description'); ?></label>	</dt>
+		<dd><textarea name="description" id="description" cols="40" rows="5"><?php echo $description; ?></textarea></dd>
 
 	<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
 	<input type="hidden" name="edit" value="position" />
