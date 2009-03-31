@@ -33,7 +33,7 @@
 		<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
 		<?php if($_GET['id']){ ?>
 		<input type="hidden" name="edit" value="position" />
-		<?php }else { ?>
+		<?php } else { ?>
 		<input type="hidden" name="add" value="position" />
 		<?php } ?>
 	<input type="submit" class="button" name="submit" value="<?php echo _AT('save'); ?>" />

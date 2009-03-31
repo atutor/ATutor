@@ -130,11 +130,14 @@ class SocialGroup {
 		return _AT($type_name);
 	 }
 	 function getLogo()	{
-		if (file_exists($this->logo)) {
-			$str = '<img src="get_sgroup_logo.php?id='.$id.'" alt="" />';
-		} else {
-			$str = '<img src="mods/social/images/nogroup.gif" alt="" />';
+		if (!empty($this->logo)) {
+			$str = '<img src="mods/social/groups/get_sgroup_logo.php?id='.$this->getID().'" alt="'.$this->getName().'" title="'.$this->getName().'"/>';
+		} 
+		/*
+		else {
+			$str = '<img src="mods/social/images/nogroup.gif" alt="" title=""/>';
 		}
+		*/
 		 return $str;
 	 }
 	 function getName() {

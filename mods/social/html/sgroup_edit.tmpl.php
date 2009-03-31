@@ -1,5 +1,5 @@
 <div class="input-form">	
-	<form action="<?php echo 'mods/social/groups/edit.php'; ?>" method="POST" >
+	<form action="<?php echo 'mods/social/groups/edit.php'; ?>" method="POST" enctype="multipart/form-data">
 		<div class="row">
 			<label for="group_name"><?php echo _AT('group_name'); ?></label>
 			<input type="text" size="60" name="group_name" id="group_name" value="<?php echo $this->group_obj->getName(); ?>"/>
@@ -37,7 +37,7 @@
 
 		<div class="row">
 			<label for="logo"><?php echo _AT('group_logo'); ?></label>
-			<input type="file" size="60" name="logo" id="logo" value="<?php echo $this->group_obj->logo; ?>"/>
+			<input type="file" size="60" name="logo" id="logo" />
 		</diV>
 
 		<div class="row">

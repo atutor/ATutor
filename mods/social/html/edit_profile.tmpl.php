@@ -59,11 +59,11 @@
 		<strong><?php echo _AT('interests'); ?></strong><br/>
 		<?php if (!empty($this->profile['interests'])): ?>
 		<div class="profile_container">
-			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=interests'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=interests'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo url_rewrite('mods/social/edit_profile.php?delete=interests'); ?>"><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo $this->profile['interests']; ?></div>
 		</div>
 		<?php else: ?>
-		<p><a href=""><?php echo _AT('add_new_interest'); ?></a></p>
+		<p><a href="<?php echo url_rewrite('mods/social/edit_profile.php?add=interests'); ?>"><?php echo _AT('add_new_interest'); ?></a></p>
 		<?php endif; ?>
 	</li>
 
@@ -71,11 +71,11 @@
 		<strong><?php echo _AT('associations'); ?></strong><br/>
 		<?php if (!empty($this->profile['associations'])): ?>
 		<div class="profile_container">
-			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=associations'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=associations'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo url_rewrite('mods/social/edit_profile.php?delete=associations'); ?>"><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo $this->profile['associations']; ?></div>
 		</div>
 		<?php else: ?>
-		<p><a href=""><?php echo _AT('add_new_association'); ?></a></p>
+		<p><a href="<?php echo url_rewrite('mods/social/edit_profile.php?add=associations'); ?>"><?php echo _AT('add_new_association'); ?></a></p>
 		<?php endif; ?>
 	</li>
 
@@ -83,11 +83,11 @@
 		<strong><?php echo _AT('awards'); ?></strong><br/>
 		<?php if (!empty($this->profile['awards'])): ?>
 		<div class="profile_container">
-			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=awards'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href=""><?php echo _AT('remove'); ?></a></div>
+			<div class="top_right"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=awards'.SEP.'id='.$row['id']); ?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo url_rewrite('mods/social/edit_profile.php?delete=awards'); ?>"><?php echo _AT('remove'); ?></a></div>
 			<div><?php echo $this->profile['awards']; ?></div>
 		</div>
 		<?php else: ?>
-		<p><a href=""><?php echo _AT('add_new_award'); ?></a></p>
+		<p><a href="<?php echo url_rewrite('mods/social/edit_profile.php?add=awards'); ?>"><?php echo _AT('add_new_award'); ?></a></p>
 		<?php endif; ?>
 	</li>
 </ul>

@@ -83,6 +83,33 @@ class Member {
 
 
 	/** 
+	 * Add new interest for this member, in CSV format
+	 * @param	string		interest
+	 */
+	function addInterests($interests){
+		$this->updateAdditionalInformation($interests);
+	}
+
+
+	/** 
+	 * Add new interest for this member, in CSV format
+	 * @param	string		interest
+	 */
+	function addAssociations($associations){
+		$this->updateAdditionalInformation('', $associations);
+	}
+
+
+	/** 
+	 * Add new interest for this member, in CSV format
+	 * @param	string		interest
+	 */
+	function addAwards($awards){
+		$this->updateAdditionalInformation('', '', $awards);
+	}
+
+
+	/** 
 	 * Add additional information, including interest, awards, associations.
 	 * @param	string		CSV format of interests, ie. camping, biking, etc
 	 * @param	string		CSV format of associations, clubs, groups, ie. IEEE
@@ -327,6 +354,39 @@ class Member {
 		$result = mysql_query($sql, $db);
 	}
 	
+
+	/**
+	 * Delete interest
+	 */
+	function deleteInterests(){
+		global $db;
+
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET interests='' WHERE member_id=".$this->getID();
+		$result = mysql_query($sql, $db);
+	}
+
+
+	/**
+	 * Delete interest
+	 */
+	function deleteAssociations(){
+		global $db;
+
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET associations='' WHERE member_id=".$this->getID();
+		$result = mysql_query($sql, $db);
+	}
+
+	
+	/**
+	 * Delete interest
+	 */
+	function deleteAwards(){
+		global $db;
+
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET awards='' WHERE member_id=".$this->getID();
+		$result = mysql_query($sql, $db);
+	}
+
 
 	/**
 	 * Get the ID of this member

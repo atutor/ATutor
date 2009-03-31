@@ -50,11 +50,11 @@ if (isset($_POST['submit'])){
 			$member->updateWebsite($id, $url, $site_name);
 		} elseif ($_POST['edit']=='interests' || $_POST['edit']=='associations' || $_POST['edit']=='awards' || $_POST['edit']=='expertise' 
 					|| $_POST['edit']=='others'){
-			$interests		= $addslashes($_POST['interests']);
-			$associations	= $addslashes($_POST['associations']);
-			$awards			= $addslashes($_POST['awards']);
-			$expertise		= $addslashes($_POST['expertise']);
-			$others			= $addslashes($_POST['others']);
+			$interests		= isset($_POST['interests'])&&$_POST['interests']==''? _AT('na'): $addslashes($_POST['interests']);
+			$associations	= isset($_POST['associations'])&&$_POST['associations']==''? _AT('na'): $addslashes($_POST['associations']);
+			$awards			= isset($_POST['awards'])&&$_POST['awards']==''? _AT('na'): $addslashes($_POST['awards']);
+			$expertise		= isset($_POST['expertise'])&&$_POST['expertise']==''? _AT('na'): $addslashes($_POST['expertise']);
+			$others			= isset($_POST['others'])&&$_POST['others']==''? _AT('na'): $addslashes($_POST['others']);
 			$member->updateAdditionalInformation($interests, $associations, $awards, $expertise, $others);
 		}
 	} 
@@ -80,7 +80,16 @@ if (isset($_POST['submit'])){
 			$url		= $addslashes($_POST['url']);
 			$site_name	= $addslashes($_POST['site_name']);
 			$member->addWebsite($url, $site_name);
-		}
+		} elseif ($_POST['add']=='interests'){
+			$interests	= $addslashes($_POST['interests']);
+			$member->addInterests($interests);
+		} elseif ($_POST['add']=='associations'){
+			$associations = $addslashes($_POST['associations']);
+			$member->addAssociations($associations);
+		} elseif ($_POST['add']=='awards'){
+			$awards		= $addslashes($_POST['awards']);
+			$member->addAwards($awards);
+		} 
 	}
 }
 
@@ -95,7 +104,10 @@ if (isset($_GET['add'])){
 		$savant->display('edit_profile/edit_education.tmpl.php');
 	} elseif ($_GET['add']=='websites'){
 		$savant->display('edit_profile/edit_websites.tmpl.php');
-	}
+	} elseif ($_GET['add']=='interests' || $_GET['add']=='associations' || $_GET['add']=='awards'){
+		$savant->assign('title', $_GET['add']);
+		$savant->display('edit_profile/edit_additional.tmpl.php');
+	} 
 	//footer
 	include(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -188,6 +200,12 @@ if (isset($_GET['delete'])){
 		$member->deleteEducation($id);
 	} elseif ($_GET['delete']=='websites'){
 		$member->deleteWebsite($id);
+	} elseif ($_GET['delete']=='interests'){
+		$member->deleteInterests($id);
+	} elseif ($_GET['delete']=='associations'){
+		$member->deleteAssociations($id);
+	} elseif ($_GET['delete']=='awards'){
+		$member->deleteAwards($id);
 	}
 }
 

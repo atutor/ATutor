@@ -69,6 +69,8 @@ TODOs:
 - [03.25.2009] search within friends should always be enabled.  Make no sense to disable it
 - [03.25.2009] adds a group request feature where people click to join the group.  Group has its own properties, like the type? Open? Close?
 		open should allow eveyrone to join, and close requires ppl to approve
+- [03.31.2009] Tracks who has visited you.
+- [03.31.2009] resize_image function might wanna be included in vitals?  It has already been used in several places.
 
 
 FEATURES:
@@ -368,3 +370,7 @@ Mar 26, 2009
 - Beta-prerelease is out.  All the basics should be working, cept that little tiny javascript contrainer thing that i have to code.
 	- Fixed bug
 - bug: url_rewrite=off; then application links failed cuz the social_ constant failed...
+
+Mar 30, 2009
+------------
+- Do delete interests, delete awards, and delete associations.

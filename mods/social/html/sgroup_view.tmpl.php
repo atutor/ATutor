@@ -1,6 +1,4 @@
 <?php //debug($this->group_obj); ?>
-
-		<div><?php echo $this->logo;?></div>
 		<div class="box">
 			<?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
 			| <a href="mods/social/groups/invite.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('invite'); ?></a> |
@@ -26,6 +24,7 @@
 	<div class="headingbox">
 			<h3><?php echo _AT('group_info'); ?></h3></div>
 		<div class="contentbox">
+			<div><?php echo $this->group_obj->getLogo();?></div>
 			<dl  id="public-profile">
 				<dt><?php echo _AT('group_name'); ?></dt>
 				<dd><?php echo $this->group_obj->getName();?></dd>
