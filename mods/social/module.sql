@@ -327,3 +327,4 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_EDIT_FAILEDY',
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_SOCIAL_SETTINGS_SAVED','Social networking settings have been saved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SOCIAL_SETTINGS_NOT_SAVED','Social networking settings were not saved.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REQUEST_FRIEND_ADDED','Your request has been sent. Your new contact will be added when the person has accepted your request.',NOW(),'');
