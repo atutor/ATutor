@@ -54,6 +54,7 @@ if (isset($_GET['id'])){
 	$id = intval($_GET['id']);
 	if($id > 0){
 		addFriendRequest($id);
+		$msg->addFeedback('REQUEST_FRIEND_ADDED');
 		header('Location: '.url_rewrite('mods/social/connections.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
