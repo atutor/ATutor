@@ -50,7 +50,7 @@ if(!empty($this->group_invitations)):
 //Group requests
 if (!empty($this->group_requests)): 
 ?>
-<div  style="float:right; margin-left:0.2em;width:39%;">
+
 <div class="headingbox"><h3><?php echo _AT('new_group_requests'); ?></h3></div>
 <div class="contentbox">
 <?php
@@ -60,11 +60,11 @@ foreach ($this->group_requests as $id=>$senders):
 	$name = printSocialName($sender_id);
 ?>
 	<ul>
-		<li id="activity"><?php echo _AT('has_requested_to', $name, $gobj->getID(), $gobj->getName()); ?></li>
+		<li id="activity"><?php echo _AT('has_requested_to', $name, $gobj->getName()); ?></li>
 		<li id="activity"><a href="mods/social/groups/invitation_handler.php?request=accept<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><?php echo _AT('accept_request'); ?></a>|<a href="mods/social/groups/invitation_handler.php?request=reject<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><?php echo _AT('reject_request'); ?></a></li>
 	</ul>
 <?php endforeach;
 endforeach; ?>
-</div>
-</div>
+</div><br />
+
 <?php endif; ?>

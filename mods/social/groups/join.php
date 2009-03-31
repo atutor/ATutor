@@ -12,9 +12,9 @@ $group_obj = new SocialGroup($gid);
 $result = $group_obj->addRequest();
 
 if ($result){
-	$msg->addFeedback('INVITATION_SENT');
+	$msg->addFeedback('JOIN_REQUEST_SENT');
 } else {
-	$msg->addFeedback('INVITATION_SENT_FAILED');
+	$msg->addError('JOIN_REQUEST_FAILED');
 }
 
 //Display

@@ -14,7 +14,7 @@
 <h3><?php echo _AT('search_for_groups'); ?></h3>
 	<form action="<?php echo 'mods/social/groups/search.php'; ?>" method="POST" id="search_group_form">
 		<div class="row">
-			<span style="float:right"><a href="mods/social/groups/create.php">Create a new group</a></span>
+
 			<label for="search_groups"><?php echo _AT('search'); ?></label>
 			<input type="text" size="60" name="search_groups_<?php echo $rand;?>" id="search_groups" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/groups/search.php')"/>
 			<input type="hidden" name="rand_key" value="<?php echo $rand;?>"/>
@@ -22,6 +22,7 @@
 			<div id="livesearch"></div>
 		</div>
 	</form>
+			<span style="float:right"><a href="mods/social/groups/create.php">Create a new group</a></span><br />
 </div></div>
 
 	<div class="" style="width:49%;float:left;" >

@@ -300,6 +300,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','search_education','Search E
 INSERT INTO `language_text` VALUES ('en', '_module','search_position','Search Position',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','privacy_settings','Privacy Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','new_group_invitations','New Group Invitations',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_joined','You are a member of this group.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','has_requested_to','%s as requested to join the group %s.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','has_invited_join','%s has invited you to join <a href="mods/social/groups/view.php?id=%s">%s</a>.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','suggestions','Suggestions',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','university','School/Institution',NOW(),'');
@@ -323,8 +325,11 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_INVITATION_SENT',
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANT_DELETE_GROUP','You cannot delete this group.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_HAS_BEEN_REMOVED','Group has been removed.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_SOCIAL_GROUP_UPDATED','Group successfully updated.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_EDIT_FAILEDY','Group edit failed.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GROUP_EDIT_FAILED','Group edit failed.',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_SOCIAL_SETTINGS_SAVED','Social networking settings have been saved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SOCIAL_SETTINGS_NOT_SAVED','Social networking settings were not saved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REQUEST_FRIEND_ADDED','Your request has been sent. Your new contact will be added when the person has accepted your request.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JOIN_REQUEST_SENT','Request to join group has been sent. You will be added to the group when your request has been approved.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_JOIN_REQUEST_FAILED','Request to join group failed.',NOW(),'');
+

@@ -9,7 +9,6 @@
 	}
 ?>
 <div class="input-form" style="width:40%;padding:1em;min-height:4.5em;">
-	<div class="contentrow">
 <h3><?php echo _AT('search_for_groups'); ?></h3>
 	<form action="<?php echo 'mods/social/groups/search.php'; ?>" method="POST" id="search_group_form">
 		<div class="row">
@@ -17,17 +16,20 @@
 				<input type="text" size="60" name="search_groups_<?php echo $rand;?>" id="search_groups" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/groups/search.php')"/>
 			<input type="hidden" name="rand_key" value="<?php echo $rand;?>"/>
 			<input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
+			<span style="float:right"><a href="mods/social/groups/create.php">Create a new group</a></span><br />
 			<div id="livesearch"></div>
 		</div>
 	</form>
 </div>
-	<div class="box">
+
+	<div class="headingbox"><h3><?php echo _AT('search_results'); ?></h3></div>
+	<div class="contentbox">
 		<?php if (!empty($this->search_result)):
 		foreach($this->search_result as $group_id=>$group_array): 
 		$group_obj = $group_array['obj'];
 		?>
 		<div class="box">
-			<dl>
+			<dl id="public-profile">
 				<dt><?php echo _AT('title'); ?></dt>
 				<dd><a href="<?php echo url_rewrite('mods/social/groups/view.php?id='.$group_obj->getID()); ?>"><?php echo $group_obj->getName();?></a> 
 				<?php if (in_array(new Member($_SESSION['member_id']), $group_obj->getGroupMembers())){
