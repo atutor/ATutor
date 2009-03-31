@@ -333,3 +333,15 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REQUEST_FRIEND_AD
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JOIN_REQUEST_SENT','Request to join group has been sent. You will be added to the group when your request has been approved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_JOIN_REQUEST_FAILED','Request to join group failed.',NOW(),'');
 
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ACCEPT_GROUP_INVITATION','Invitation to join group was accepted.',NOW(),'');
+
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REJECT_GROUP_INVITATION','Invitation to join group was rejected.',NOW(),'');
+
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ACCEPT_GROUP_REQUEST','Request to join group was accepted.',NOW(),'');
+
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REJECT_GROUP_REQUEST','Request to join group was rejected.',NOW(),'');
+
+
+
+
+
