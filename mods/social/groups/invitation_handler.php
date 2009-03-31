@@ -9,24 +9,45 @@ require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 if (isset($_GET['invitation']) || isset($_GET['request'])){
 	$id = intval($_GET['id']);
 	$sender_id = intval($_GET['sender_id']);
+	$status = -1;
 	if ($id > 0){
 		//handle invitations
 		if ($_GET['invitation']=='accept'){
 			acceptGroupInvitation($id);
+			$status = 1;
 		} elseif ($_GET['invitation']=='reject'){
 			rejectGroupInvitation($id);
+			$status = 2;
 		}
 
 		//handle requests (requests to join a group from some member)
 		if ($sender_id > 0){
 			if ($_GET['request']=='accept'){
 				acceptGroupRequest($id, $sender_id);
+				$status = 3;
 			} elseif ($_GET['request']=='reject'){
 				rejectGroupRequest($id, $sender_id);
+				$status = 4;
 			}
 		}
 	}
-	$msg->addFeedback('GROUP_JOINED');
+
+	switch($status){
+		case 1:
+			$msg->addFeedback('ACCEPT_GROUP_INVITATION');
+			break;
+		case 2:
+			$msg->addFeedback('REJECT_GROUP_INVITATION');
+			break;
+		case 3:
+			$msg->addFeedback('ACCEPT_GROUP_REQUEST');
+			break;
+		case 4:
+			$msg->addFeedback('REJECT_GROUP_REQUEST');
+			break;
+		default:
+			break;
+	}
 	header('Location: '.url_rewrite('mods/social/groups/view.php?id='.$id, AT_PRETTY_URL_HEADER));
 	exit;
 }
