@@ -38,13 +38,13 @@ $_group_tool = $_student_tool = 'mods/social/index.php';
 /*******
  * add the admin pages when needed.
  */
-/*
-if (admin_authenticate(AT_ADMIN_PRIV_social, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+
+if (admin_authenticate(AT_ADMIN_PRIV_SOCIAL, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages[AT_NAV_ADMIN] = array('mods/social/index_admin.php');
 	$this->_pages['mods/social/index_admin.php']['title_var'] = 'social';
 	$this->_pages['mods/social/index_admin.php']['parent']    = AT_NAV_ADMIN;
 }
-*/
+
 
 /*******
  * instructor Manage section:
