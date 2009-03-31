@@ -51,14 +51,16 @@
 	<div class="contact_mini" >
 		<?php if (isset($person['added']) && $person['added']==1): ?>
 			<?php echo printSocialProfileImg($id); ?>
+			<a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete'); ?>" border="0"/></a>
+			<br />    
 			<?php echo printSocialName($id); ?>
-		<a href="mods/social/remove_friend.php?id=<?php echo $id; ?>"><?php echo _AT('remove_friend'); ?></a>   
-			<a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><?php echo '[x]'; ?></a>
+			
 		<?php else: ?>
 			<?php if (!isset($_POST['myFriendsOnly'])): ?>
-			<?php echo printSocialProfileImg($id); ?>
+			<div style="float:right;"><a href="mods/social/connections.php?id=<?php echo $id; ?>"><?php echo _AT('add_to_friends'); ?></a> </div>
+			<?php echo printSocialProfileImg($id); ?><br />
 			<?php echo printSocialName($id); ?>
-			<a href="mods/social/connections.php?id=<?php echo $id; ?>"><?php echo _AT('add_to_friends'); ?></a> 
+
 			<?php endif; ?>
 		<?php endif; ?>
 	</div>

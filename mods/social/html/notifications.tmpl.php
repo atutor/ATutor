@@ -2,14 +2,14 @@
 //Friend request
 if(!empty($this->pending_requests)): 
 ?>
-<div>
+
 <div class="headingbox"><h3><?php echo _AT('pending_friend_requests'); ?></h3></div>
 <div class="contentbox">
 <?php
 	foreach ($this->pending_requests as $id=>$r_obj): 
 ?>
 
-<div class="box">
+	<div class="box" style="border:thin solid black;">
 	<ul>
 	<li><a href="mods/social/sprofile.php?id=<?php echo $id;?>"><img src="get_profile_img.php?id=<?php echo $id; ?>" alt="<?php echo _AT('profile_picture'); ?>" /></a></li>
 	<li><?php echo printSocialName($id) ?></li>
@@ -17,10 +17,9 @@ if(!empty($this->pending_requests)):
 	</ul>
 
 <?php endforeach; ?>
-</div>
+	</div><br />
+</div><br />
 <?php endif; ?>
-</div>
-
 
 <?php 
 //Group invitations requests

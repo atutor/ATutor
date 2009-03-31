@@ -28,14 +28,15 @@ if (sizeof($list_of_friends) > 0){
 	<li><a href="<?php echo url_rewrite('mods/social/sprofile.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('social_profile'); ?></a></li>
 	<li><a href="<?php echo url_rewrite('mods/social/applications.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('applications'); ?></a></li>
 	<li><a href="<?php echo url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('social_groups'); ?></a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/privacy_settings.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('settings'); ?></a></li>
 </ul>
 
+<?php
+$applications_obj = new Applications();
+$myApplications = $applications_obj->listMyApplications();
+ if (!empty($myApplications)): ?>
 <div class="divider"></div>
 <div><?php echo _AT('applications'); ?></div>
-<?php 
-	$applications_obj = new Applications();
-	$myApplications = $applications_obj->listMyApplications();
-?>
 <ul class="social_side_menu">
 	<?php 
 	foreach ($myApplications as $id=>$app_obj){
@@ -43,14 +44,11 @@ if (sizeof($list_of_friends) > 0){
 	}
 	?>
 </ul>
-
+<?php endif; ?>
 <div class="divider"></div>
-<ul class="social_side_menu">
-	<li><a href="<?php echo url_rewrite('mods/social/privacy_settings.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('settings'); ?></a></li>
-</ul>
 
 <form action="<?php echo url_rewrite('mods/social/connections.php', AT_PRETTY_URL_HEADER);?>" method="POST">
-	<input type="text" name="search_friends_123" value="<?php echo urldecode($_POST['searchFriends']); ?>"/>
+	<input type="text" name="search_friends_123" value="<?php echo urldecode($_POST['searchFriends']); ?>" title="<?php echo _AT('search_for_friends'); ?>" />
 	<input type="hidden" name="rand_key" value="123"/>
 	<input type="submit" name="search" value="<?php echo _AT('search'); ?>" class="button" />
 </form>

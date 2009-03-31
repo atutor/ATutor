@@ -23,5 +23,5 @@
 	frameborder="no" src="<?php echo $app_obj->getIframeUrl($_SESSION['member_id'], 'profile', $_GET['appParams']);?>" class="gadgets-gadget"
 	name="remote_iframe_<?php echo $app_obj->getId(); ?>"
 	id="remote_iframe_<?php echo $app_obj->getId(); ?>"></iframe>	
-</div></div>
+</div></div><br />
 <?php endforeach; ?>
