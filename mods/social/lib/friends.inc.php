@@ -395,7 +395,7 @@ function acceptGroupInvitation($group_id){
   * @param	int		group id
   * @param  int		member that made this request
   */
- function rejectGroupRequest($group_id, $member_id) {
+ function rejectGroupRequest($group_id, $sender_id) {
 	 return removeGroupRequest($group_id, $sender_id);
  }
 
