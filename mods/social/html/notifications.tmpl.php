@@ -1,6 +1,3 @@
-asdasdasdsad
-
-
 <?php 
 //Friend request
 if(!empty($this->pending_requests)): 
