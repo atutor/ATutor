@@ -1,6 +1,6 @@
 <?php require('notifications.tmpl.php'); ?>
 
-<div class="">
+<div style="float:right; margin-left:0.2em;width:39%;">
 <div class="headingbox"><a href="mods/social/connections.php"><h3><?php echo _AT('connections'); ?></h3></a></div>
 <?php
 /**
