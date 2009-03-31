@@ -44,7 +44,7 @@
 					<a href="mods/social/groups/view.php?id=<?php echo $grp;?>"><h4><?php echo $grp_obj->getName(); ?></h4></a><br/>
 					<?php echo _AT('type') .': '. $grp_obj->getGroupType();?><br/>
 					<?php echo _AT('description') .': '. $grp_obj->getDescription();?><br/>
-				</div>
+				</div><br />
 			</div>
 			<?php endforeach; ?>
 		</div>

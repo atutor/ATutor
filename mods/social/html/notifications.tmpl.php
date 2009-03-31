@@ -25,7 +25,7 @@ if(!empty($this->pending_requests)):
 //Group invitations requests
 if(!empty($this->group_invitations)): 
 ?>
-<div style="float:right; margin-left:0.2em;width:39%;">
+
 <div class="headingbox"><h3><?php echo _AT('new_group_invitations'); ?></h3></div>
 <?php
 	foreach ($this->group_invitations as $id=>$sender_ids): 
