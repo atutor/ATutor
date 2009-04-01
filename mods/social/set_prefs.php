@@ -1,4 +1,5 @@
 <?php
+// $Id$
 define('AT_INCLUDE_PATH', '../../include/');
 $_user_location = 'public';
 include(AT_INCLUDE_PATH.'vitals.inc.php');

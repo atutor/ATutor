@@ -1,4 +1,5 @@
 <?php
+// $Id$
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_SOCIAL);

@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id: get_profile_img.php 6979 2007-06-20 17:35:02Z greg$
+
 define('AT_INCLUDE_PATH', '../../../include/');
 @ob_end_clean();
 header("Content-Encoding: none");

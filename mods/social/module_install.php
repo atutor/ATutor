@@ -1,4 +1,5 @@
 <?php
+// $Id$
 /*******
  * the line below safe-guards this file from being accessed directly from
  * a web browser. It will only execute if required from within an ATutor script,

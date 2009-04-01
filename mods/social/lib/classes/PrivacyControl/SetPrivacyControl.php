@@ -1,4 +1,5 @@
 <?php
+// $Id$
 
 	//Temp script to set hardcoded PrivacyControl into the db.
 	//This should be done via a user perference config page

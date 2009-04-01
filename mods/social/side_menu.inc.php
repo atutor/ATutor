@@ -1,4 +1,5 @@
 <?php 
+// $Id$
 global $savant, $_config, $stripslashes;
 
 require_once('lib/friends.inc.php');

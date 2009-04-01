@@ -1,4 +1,5 @@
 <?php
+// $Id$
 /*******
  * this function named [module_name]_delete is called whenever a course content is deleted
  * which includes when restoring a backup with override set, or when deleting an entire course.

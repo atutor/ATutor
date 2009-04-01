@@ -1,4 +1,5 @@
 <?php
+// $Id$
 /*******
  * doesn't allow this file to be loaded with a browser.
  */

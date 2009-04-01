@@ -1,4 +1,5 @@
 <?php
+// $Id$
 define('AT_INCLUDE_PATH', '../../include/');
 require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
 require_once(AT_SOCIAL_INCLUDE.'classes/Member.class.php');

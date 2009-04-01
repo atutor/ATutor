@@ -1,4 +1,5 @@
 <?php
+// $Id$
 require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
 require_once(AT_SOCIAL_INCLUDE.'classes/Application.class.php');
 require_once(AT_SOCIAL_INCLUDE.'constants.inc.php');

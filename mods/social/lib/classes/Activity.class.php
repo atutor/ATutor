@@ -1,4 +1,5 @@
 <?php
+// $Id$
 /**
  * This class is designed to handle the transactions for all the news, updates and
  * activities that are issued by the user.

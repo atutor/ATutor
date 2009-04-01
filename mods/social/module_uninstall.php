@@ -1,4 +1,5 @@
 <?php
+// $Id$
 /*******
  * module_uninstall.php performs reversion of module_install.php
  */

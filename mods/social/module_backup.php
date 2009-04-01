@@ -1,4 +1,5 @@
 <?php
+// $Id$
 /* each table to be backed up. includes the sql entry and fields */
 
 $dirs = array();

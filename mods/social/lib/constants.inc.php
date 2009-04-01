@@ -1,4 +1,5 @@
 <?php
+// $Id$
 //Constants Declaration
 //define(AT_SHINDIG_URL,						'http://localhost/shindig/php');
 //define(AT_SHINDIG_URL,						'http://142.150.154.167/shindig/php');

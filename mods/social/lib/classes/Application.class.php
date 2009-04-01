@@ -1,4 +1,5 @@
 <?php
+// $Id$
 require_once(dirname(__FILE__) . '/Applications.class.php');
 require_once(dirname(__FILE__) .'/../SecurityToken.php');
 require_once(dirname(__FILE__) .'/../BlobCrypter.php');
