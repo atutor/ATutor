@@ -84,9 +84,9 @@ if (isset($_POST['create'])){
 	}
 
 	// delete the old images (if any)
-	foreach ($supported_images as $extension) {
-		if (file_exists(AT_CONTENT_DIR.'social/'. $id.'.'.$extension)) {
-			unlink(AT_CONTENT_DIR.'social/'. $id.'.'.$extension);
+	foreach ($supported_images as $ext) {
+		if (file_exists(AT_CONTENT_DIR.'social/'. $id.'.'.$ext)) {
+			unlink(AT_CONTENT_DIR.'social/'. $id.'.'.$ext);
 		}
 	}
 
