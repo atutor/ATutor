@@ -41,6 +41,9 @@
 				$grp_obj = new SocialGroup($grp);
 			?>
 			<div class="contact_mini">
+				<?php if ($grp_obj->getUser() == $_SESSION['member_id']): ?>
+					<div style="float:right;margin:1em;"><a href="<?php echo $_base_href; ?>mods/social/groups/edit.php?id=<?php echo $grp;?>"><img src="<?php echo $_base_href; ?>mods/social/images/icon-settings.png" alt="<?php echo _AT('settings'); ?>" title="<?php echo _AT('settings'); ?>" border="0"/></div>
+				<?php endif; ?>
 				<div class="box">
 					<?php echo $grp_obj->getLogo(); ?>
 					<a href="mods/social/groups/view.php?id=<?php echo $grp;?>"><h4><?php echo $grp_obj->getName(); ?></h4></a><br/>

@@ -1,3 +1,10 @@
+
+<?php global $msg; $msg->printConfirm(); ?>
+
+
+
+
+
 <?php //debug($this->group_obj); ?>
 		<div class="box">
 			<?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
@@ -8,7 +15,7 @@
 			<?php endif; ?>
 			<?php if ($this->group_obj->getUser() == $_SESSION['member_id']): ?>
 			<a href="mods/social/groups/edit.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('edit_group'); ?></a> |
-			<a href="mods/social/groups/delete.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('disband_group'); ?></a> |
+			<a href="mods/social/groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>delete=confirm"><?php echo _AT('disband_group'); ?></a> |
 			<?php endif; ?>
 
 			<?php include('notifications.tmpl.php'); ?>
@@ -38,7 +45,7 @@
 				<dt><?php echo _AT('created_date'); ?></dt>
 				<dd><?php echo AT_DATE(_AT('startend_date_long_format'), $this->group_obj->getCreatedDate(), AT_DATE_MYSQL_DATETIME);?></dd>
 
-				<dt><?php echo _AT('last_updated'); ?></dt>
+				<dt><?php echo _AT('group_last_updated'); ?></dt>
 				<dd><?php echo AT_DATE(_AT('startend_date_long_format'), $this->group_obj->getLastUpdated(), AT_DATE_MYSQL_DATETIME);?></dd>
 
 				<dt><?php echo _AT('number_of_members');?></dt>

@@ -261,7 +261,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','music','Music',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','sports_recreation','Sports and Recreation',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','group_info','Group Details',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','created_by','Created By',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','last_update','Last Update',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_last_update','Last Update',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','number_of_members','Number of Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','message_board','Message Board',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','invite','Invite',NOW(),'');

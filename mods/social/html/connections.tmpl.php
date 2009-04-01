@@ -50,14 +50,14 @@
 	?>
 	<div class="contact_mini" >
 		<?php if (isset($person['added']) && $person['added']==1): ?>
+			<a style="vertical-align:top;float:right;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" border="0"/></a>
 			<?php echo printSocialProfileImg($id); ?>
-			<a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete'); ?>" border="0"/></a>
-			<br />    
+			<br />  
 			<?php echo printSocialName($id); ?>
 			
 		<?php else: ?>
 			<?php if (!isset($_POST['myFriendsOnly'])): ?>
-			<div style="float:right;"><a href="mods/social/connections.php?id=<?php echo $id; ?>"><?php echo _AT('add_to_friends'); ?></a> </div>
+			<div style="float:right;"><a href="mods/social/connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href; ?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0"/></a> </div>
 			<?php echo printSocialProfileImg($id); ?><br />
 			<?php echo printSocialName($id); ?>
 
