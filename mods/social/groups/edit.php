@@ -12,10 +12,18 @@ $social_groups = new SocialGroups();
 
 // Get this group
 $id = intval($_REQUEST['id']);  //make sure $_GET and $_POST don't overlap the use of 'id'
+$group = new SocialGroup($id);
 
-//validate if this script is being run by the group admin
-//validate the group_admin is indeed a group member
+//validate if this user is the administrator of the group
+if ($group->getUser() != $_SESSION['member_id']){
+	$msg->addError('CANT_EDIT_GROUP');
+	header('Location: index.php');
+	exit;
+}
+
 //TODO
+//validate the group_admin is indeed a group member
+
 function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
 	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
 
@@ -160,8 +168,6 @@ if (isset($_POST['save'])){
 		}
 	}
 }
-
-$group = new SocialGroup($id);
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
