@@ -16,10 +16,10 @@ if (!empty($this->friends)): ?>
 		} ?>
 		<div class="contact_mini">
 			<div style="float:right;"><a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" border="0"/></a></div>
-			<ul>
-			<li><a href="mods/social/sprofile.php?id=<?php echo $id;?>"><?php echo printSocialProfileImg($id); ?></a><br /><?php echo printSocialName($id); ?></li>
+			<div>
+			<a href="mods/social/sprofile.php?id=<?php echo $id;?>"><?php echo printSocialProfileImg($id); ?></a><br /><?php echo printSocialName($id); ?>
 
-			</ul>
+			</div>
 		</div>
 	<?php endforeach; ?>
 	</div>

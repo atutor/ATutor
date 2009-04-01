@@ -91,7 +91,7 @@ $this->_pages['mods/social/groups/view.php']['parent'] = 'mods/social/groups/ind
 $this->_pages['mods/social/groups/invite.php']['title_var'] = 'invite_groups';
 $this->_pages['mods/social/groups/invite.php']['parent'] = 'mods/social/groups/index.php';
 
-$this->_pages['mods/social/groups/edit.php']['title_var'] = 'edit_groups';
+$this->_pages['mods/social/groups/edit.php']['title_var'] = 'edit_group';
 $this->_pages['mods/social/groups/edit.php']['parent'] = 'mods/social/groups/index.php';
 
 $this->_pages['mods/social/groups/search.php']['title_var'] = 'search';

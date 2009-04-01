@@ -133,11 +133,11 @@ class SocialGroup {
 		if (!empty($this->logo)) {
 			$str = '<img src="mods/social/groups/get_sgroup_logo.php?id='.$this->getID().'" alt="'.$this->getName().'" title="'.$this->getName().'"/>';
 		} 
-		/*
+		
 		else {
-			$str = '<img src="mods/social/images/nogroup.gif" alt="" title=""/>';
+			$str = '<img src="mods/social/images/placelogo.gif" alt="'._AT('placelogo').'" title="'._AT('placelogo').'"/>';
 		}
-		*/
+		
 		 return $str;
 	 }
 	 function getName() {

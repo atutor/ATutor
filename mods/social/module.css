@@ -52,6 +52,12 @@ div .contact_mini img{
 }
 
 */
+dl#public-profile {
+	white-space:nowrap;
+}
+dl#public-profile dt {
+        min-width:12em;
+}
 
 /* Search form */
 div .search_form {
