@@ -6,6 +6,7 @@ require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 
+
 // Get social group class
 $social_groups = new SocialGroups();
 
@@ -22,6 +23,7 @@ if ($sg->getUser() != $_SESSION['member_id']){
 }
 
 //delete group 
+$msg->addFeedback('GROUP_DELETED');
 $sgs->removeGroup($id);
 header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
 exit;

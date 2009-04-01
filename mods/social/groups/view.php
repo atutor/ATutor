@@ -8,7 +8,7 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
 
 //Get group
-$gid = intval($_GET['id']);
+$gid = intval($_REQUEST['id']);
 $group_obj = new SocialGroup($gid);
 
 //check if this group is valid
@@ -32,6 +32,24 @@ if (isset($_POST['submit'])){
 	if ($body!=''){
 		$group_obj->addMessage($body);
 	}
+}
+
+if($_GET['delete'] == "confirm"){
+	//$msg->addConfirm('DELETE_GROUP', $group_obj->getName());
+	//$msg->addConfirm('DELETE_GROUP', );
+	$hidden_vars['id'] = $gid;
+	$msg->addConfirm(array('DELETE_GROUP', $group_obj->getName()), $hidden_vars);
+	header('Location: '.url_rewrite("mods/social/groups/view.php?id=".$gid, AT_PRETTY_URL_HEADER));
+	exit;
+
+}else if($_POST['submit_yes']){
+
+	header('Location: '.url_rewrite("mods/social/groups/delete.php?id=".$gid, AT_PRETTY_URL_HEADER));
+	exit;
+}else if($_POST['submit_no']){
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.url_rewrite("mods/social/groups/view.php?id=".$gid, AT_PRETTY_URL_HEADER));
+	exit;
 }
 
 //Display
