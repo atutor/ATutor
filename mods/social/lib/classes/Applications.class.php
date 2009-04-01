@@ -50,7 +50,7 @@ class Applications {
 	 * Return the application link for this given id.
 	 */
 	function getAppLink($title, $id){
-		return '<a href="' . AT_SOCIAL_INCLUDE.'../applications.php?app_id='.$id . '"><b>' . $title . '</b></a>';
+		return '<a href="'.url_rewrite('mods/social/applications.php?app_id='.$id) . '"><b>' . $title . '</b></a>';
 	}
 
 }
