@@ -1,4 +1,5 @@
 <?php
+// $Id$
 require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
 
 /**
