@@ -29,7 +29,7 @@
 
 <?php if (isset($this->list_of_all_apps) && !empty($this->list_of_all_apps)): ?>
 <div class="gadget_wrapper">
-<div class="headingbox"><h3><?php echo _AT('avaiable_applications'); ?></h3></div>
+<div class="headingbox"><h3><?php echo _AT('available_applications'); ?></h3></div>
 <?php	
 	foreach ($this->list_of_all_apps as $id=>$app_obj): 
 	//skip the ones that are installed already

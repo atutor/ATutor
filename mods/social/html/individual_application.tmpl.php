@@ -5,7 +5,7 @@
 	src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
 <script type="text/javascript" src="mods/social/lib/js/container.js"></script>
 
-<h3><?php echo _AT('your_application'); ?></h3>
+<h3><?php echo $this->app->getTitle(); ?></h3>
 <div class="gadgets-gadget-content"><iframe width="800px"
 	scrolling="<?=$this->gadget['scrolling'] || $this->gadget['scrolling'] == 'true' ? 'yes' : 'no'?>"
 	height="<?php $app=$this->app; echo $app->getHeight();?>px"

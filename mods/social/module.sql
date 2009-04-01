@@ -281,7 +281,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','add_new_association','Add n
 INSERT INTO `language_text` VALUES ('en', '_module','add_new_award','Add new award',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','reject_request','Reject Request',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','show_your_applications','Show Your Applications',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','avaiable_applications','Available Gadgets',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','available_applications','Available Gadgets',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','view_groups','View Group',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','now_friends1','and %s are now contacts.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','now_friends2','and %s are now contacts',NOW(),'');
