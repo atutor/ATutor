@@ -374,3 +374,8 @@ Mar 26, 2009
 Mar 30, 2009
 ------------
 - Do delete interests, delete awards, and delete associations.
+
+Apr 1, 2009
+-----------
+- All the pages should add $_user_location = 'public';
+- 

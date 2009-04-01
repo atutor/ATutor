@@ -91,7 +91,7 @@ if (isset($_POST['create'])){
 			}
 		}
 
-		$new_filename = $id . '.' . $extension;
+		$new_filename = 'no_id'. '.' . $extension;
 		$original_img = AT_CONTENT_DIR.'social/temp_'. $new_filename;
 		$thumbnail_img= AT_CONTENT_DIR.'social/'. $new_filename;
 
@@ -134,8 +134,14 @@ if (isset($_POST['create'])){
 		$missing_fields = implode(', ', $missing_fields);
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	} else {
-		$isSucceded = $social_groups->addGroup($_POST['group_type'], $_POST['group_name'], $_POST['description'], $new_filename);
-		if($isSucceded){
+		$group_id = $social_groups->addGroup($_POST['group_type'], $_POST['group_name'], $_POST['description']);
+		if($group_id){
+			//Add the logo in now that we have the group id. And rename the old one.
+			$new_group = new SocialGroup($group_id);
+			$new_group->updateGroupLogo($group_id . '.' . $extension);
+			$new_location = AT_CONTENT_DIR.'social/'. $group_id . '.' . $extension;
+			copy($thumbnail_img, $new_location);
+			unlink($thumbnail_img);
 			$msg->addFeedback('GROUP_CREATED');
 			header('Location: index.php');
 			exit;

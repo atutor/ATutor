@@ -220,6 +220,19 @@ class SocialGroup {
 		 $result = mysql_query($sql, $db);
 		 return $result;
 	 }
+
+	
+	/**
+	 * Update group logo
+	 * @param	string	filename of the logo. <name.extension>
+	 */
+	function updateGroupLogo($logo) {
+		global $db, $addslashes;
+		$logo = $addslashes($logo);
+		$sql = 'UPDATE '.TABLE_PREFIX."social_groups SET logo='$logo' WHERE id=".$this->getID();
+		$result = mysql_query($sql, $db);
+		return $result;
+	}
 	
 
 	/** 
@@ -263,7 +276,18 @@ class SocialGroup {
 		return false;
 	 }
 
-	
+	/**
+	 * Remove logo from content/social folder
+	 */
+	function removeGroupLogo(){	
+		if ($this->logo!=''){
+			unlink(AT_CONTENT_DIR.'social/'. $this->logo);
+		}
+		return file_exists(AT_CONTENT_DIR.'social/'. $this->logo);
+	}
+
+
+
 	/**
 	 * Delete all group activities
 	 * ToDo: Delete just one?
@@ -327,6 +351,33 @@ class SocialGroup {
 		return false;
 	}
 
+
+	/** 
+	 * Delete all requests inside this group
+	 */
+	function removeGroupRequests(){
+		global $db;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_requests WHERE group_id='.$this->group_id;
+		$result = mysql_query($sql, $db);
+		if ($result){
+			return true;
+		}
+		return false;
+	}
+
+
+	/**
+	 * Delete all invitations inside this group
+	 */
+	function removeGroupInvitations(){
+		global $db;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_invitations WHERE group_id='.$this->group_id;
+		$result = mysql_query($sql, $db);
+		if ($result){
+			return true;
+		}
+		return false;
+	}
 
 	/** 
 	 * Delete a message from the board

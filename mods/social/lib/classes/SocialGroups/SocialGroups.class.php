@@ -16,19 +16,17 @@ class SocialGroups{
 	 * @param	int		the group type specified in the table, social_groups_types
 	 * @param	string	name of the group
 	 * @param	string	description of the group
-	 * @param	string	the filename of the logo
-	 * @return	true if succeded, false otherwise.
+	 * @return	the id of this new group if succeded, false otherwise.
 	 */
-	 function addGroup($type_id, $name, $description, $logo){
+	 function addGroup($type_id, $name, $description){
 		 global $db, $addslashes;
 
 		 $type_id = intval($type_id);
 		 $name = $addslashes($name);
 		 $description = $addslashes($description);
-		 $logo = $addslashes($logo);
 		 $member_id = $_SESSION['member_id'];
 
-		 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups (`member_id`, `type_id`, `logo`, `name`, `description`, `created_date`, `last_updated`) VALUES ($member_id, $type_id, '$logo', '$name', '$description', NOW(), NOW())";
+		 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups (`member_id`, `type_id`, `name`, `description`, `created_date`, `last_updated`) VALUES ($member_id, $type_id, '$name', '$description', NOW(), NOW())";
 		 $result = mysql_query($sql, $db);
 		 $group_id = mysql_insert_id();
 		 if ($result){
@@ -41,7 +39,7 @@ class SocialGroups{
 				$act->addActivity($member_id, $str1);
 				unset($act);
 			 }
-			 return true;
+			 return $group_id;
 		 }
 		 return false;
 	 }
@@ -63,8 +61,17 @@ class SocialGroups{
 		 //remove group members
 		 $status &= $social_group->removeGroupMembers();
 
+		 //remove group requests
+		 $status &= $social_group->removeGroupRequests();
+
+		 //remove group invitations
+		 $status &= $social_group->removeGroupInvitations();
+
 		 //remove message board
 		 $status &= $social_group->removeAllMessages();
+
+		 //remove group logo
+		 $status &= $social_group->removeGroupLogo();
 
 		 //remove groups 
 		 $sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups WHERE id='.$id;
