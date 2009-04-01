@@ -86,4 +86,10 @@
 </div>
 <?php endforeach; ?>
 </div>
+<?php if(empty($id)){
+echo '<div class="contentbox" style="padding:1em;">';
+echo _AT('no_gadgets_installed');
+echo '</div>';
+}
+?>
 <?php endif; ?>
