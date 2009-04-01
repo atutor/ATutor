@@ -10,6 +10,31 @@ $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom styleshee
 // Get social group class
 $social_groups = new SocialGroups();
 
+//validate if this script is being run by the group admin
+//validate the group_admin is indeed a group member
+//TODO
+function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
+	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
+
+	if ($type == 'gif') {
+		$source = imagecreatefromgif($src);
+	} else if ($type == 'jpg') {
+		$source = imagecreatefromjpeg($src);
+	} else {
+		$source = imagecreatefrompng($src);
+	}
+	
+	imagecopyresampled($thumbnail_img, $source, 0, 0, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
+
+	if ($type == 'gif') {
+		imagegif($thumbnail_img, $dest);
+	} else if ($type == 'jpg') {
+		imagejpeg($thumbnail_img, $dest, 75);
+	} else {
+		imagepng($thumbnail_img, $dest, 7);
+	}
+}
+
 if (isset($_POST['create'])){
 	//handles group logo
 	$gd_info = gd_info();
