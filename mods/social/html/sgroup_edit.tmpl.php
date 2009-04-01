@@ -36,8 +36,13 @@
 		</div>
 
 		<div class="row">
+			<?php 
+				if ($this->group_obj->getLogo()!='') {
+					echo $this->group_obj->getLogo();
+				} 
+			?>
 			<label for="logo"><?php echo _AT('group_logo'); ?></label>
-			<input type="file" size="60" name="logo" id="logo" />
+			<input type="file" size="40" name="logo" id="logo" />
 		</diV>
 
 		<div class="row">
