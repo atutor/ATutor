@@ -9,7 +9,8 @@
 	foreach ($this->list_of_my_apps as $id=>$app_obj): 
 ?>
 <div class="gadget_wrapper">
-<div class="headingbox"><a href="<?php echo $_base_href; ?>mods/social/applications.php?app_id=<?php echo $app_obj->getId().SEP;?>delete=1"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" border="0" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" style="float:right;" /></a><h3><?php echo $app_obj->getTitle(); ?></h3></div>
+<div class="headingbox"><a href="<?php echo $_base_href; ?>mods/social/applications.php?app_id=<?php echo $app_obj->getId().SEP;?>delete=1"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" border="0" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" style="float:right;" /></a>
+<h3><?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?></h3></div>
 <div class="contentbox" style="padding:0.5em;">
 <?php
 	//the name and id here in the iframe is used by the container.js to identify the caller.

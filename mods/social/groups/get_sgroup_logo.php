@@ -26,7 +26,7 @@ $result = mysql_query($sql, $db);
 
 list($filename) = mysql_fetch_array($result);
 
-$file = AT_CONTENT_DIR .'module/social/'.$filename;
+$file = AT_CONTENT_DIR .'social/'.$filename;
 
 $extensions = array('gif', 'jpg', 'png');
 $pathinfo = pathinfo($file);

@@ -1,10 +1,27 @@
+<?php 
+if (isset($this->group_obj)){
+	//edit
+	$form_url = 'mods/social/groups/edit.php';
+	$button_name = 'save';
+	$name = $this->group_obj->getName();
+	$logo = $this->group_obj->getLogo();
+	$description = $this->group_obj->getDescription();
+	$id = $this->group_obj->getID();
+} else {
+	//create new one
+	$form_url = 'mods/social/groups/create.php';
+	$button_name = 'create';
+}
+?>
+
 <div class="input-form">	
-	<form action="<?php echo 'mods/social/groups/edit.php'; ?>" method="POST" enctype="multipart/form-data">
+	<form action="<?php echo $form_url; ?>" method="POST" enctype="multipart/form-data">
 		<div class="row">
 			<label for="group_name"><?php echo _AT('group_name'); ?></label>
-			<input type="text" size="60" name="group_name" id="group_name" value="<?php echo $this->group_obj->getName(); ?>"/>
+			<input type="text" size="60" name="group_name" id="group_name" value="<?php echo $name; ?>"/>
 		</div>
 
+		<?php if (isset($this->group_obj)): ?>
 		<div class="row">
 			<label for="group_admin"><?php echo _AT('group_admin'); ?></label>
 			<select name="group_admin" id="group_admin">
@@ -19,6 +36,7 @@
 			<?php endforeach; ?>
 			</select>
 		</div>
+		<?php endif; ?>
 
 		<div class="row">
 			<label for="group_type"><?php echo _AT('group_type'); ?></label>
@@ -37,8 +55,8 @@
 
 		<div class="row">
 			<?php 
-				if ($this->group_obj->getLogo()!='') {
-					echo $this->group_obj->getLogo();
+				if ($logo!='') {
+					echo $logo;
 				} 
 			?>
 			<label for="logo"><?php echo _AT('group_logo'); ?></label>
@@ -47,12 +65,12 @@
 
 		<div class="row">
 			<label for="description"><?php echo _AT('description'); ?></label>
-			<textarea cols="40" rows="5" name="description" id="description"><?php echo $this->group_obj->getDescription(); ?></textarea>
+			<textarea cols="40" rows="5" name="description" id="description"><?php echo $description; ?></textarea>
 		</div>
 
 		<div class="row">
-			<input type="hidden" name="id" value="<?php echo $this->group_obj->getID();?>" /?>
-			<input class="button" type="submit" name="save" value="<?php echo _AT('save'); ?>" />	
+			<input type="hidden" name="id" value="<?php echo $id;?>" /?>
+			<input class="button" type="submit" name="<?php echo $button_name; ?>" value="<?php echo _AT($button_name); ?>" />	
 		</div>
 	</form>
 </div>

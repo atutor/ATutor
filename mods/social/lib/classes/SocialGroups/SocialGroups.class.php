@@ -90,9 +90,15 @@ class SocialGroups{
 		 $name = $addslashes($name);
 		 $description = $addslashes($description);
 		 $logo = $addslashes($logo);
+		 //only include logo sql iff it is not empty, otherwise the old entry will be erased.
+		 if ($logo!=''){
+			 $logo_sql = "`logo`='$logo', ";
+		 } else {
+			 $logo_sql = '';
+		 }
 
-		 $sql = 'UPDATE '.TABLE_PREFIX."social_groups SET `member_id`=$member_id, `type_id`=$type_id, `logo`='$logo', `name`='$name', `description`='$description', `last_updated`=NOW() WHERE id=$group_id";
-//		 debug();echo $sql;
+		 $sql = 'UPDATE '.TABLE_PREFIX."social_groups SET `member_id`=$member_id, `type_id`=$type_id, ".$logo_sql."`name`='$name', `description`='$description', `last_updated`=NOW() WHERE id=$group_id";
+
 		 $result = mysql_query($sql, $db);
 		 if ($result){
 			 $act = new Activity();		

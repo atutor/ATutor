@@ -1,5 +1,6 @@
 <?php
 //use index.php
-header('Location: mods/social/index.php');
-exit;
+
+include('index.php');
+
 ?>

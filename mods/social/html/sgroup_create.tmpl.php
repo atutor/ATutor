@@ -1,3 +1,10 @@
+<?php
+//Deprecated
+//Use sgroup_edit.tmpl.php instead.
+//keeping this just as a record
+//@harris
+?>
+
 <div class="input-form">	
 	<form action="<?php echo url_rewrite('mods/social/groups/create.php'); ?>" method="POST" >
 		<div class="row">
