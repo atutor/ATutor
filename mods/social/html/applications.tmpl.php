@@ -38,7 +38,7 @@
 	}
 	$author = ($app_obj->getAuthor()!='')?$app_obj->getAuthor():_AT('unknown'); 	
 ?>
-<div class="gadget_container" style="padding:1em;">	
+<div class="contentbox" style="padding:1em;">	
 	<div style="float:left; ">
 		<?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?><br/>
 		<?php echo $app_obj->getAppLink('<img src="'.$app_obj->getThumbnail().'"/>', $id); ?><br/>
@@ -51,7 +51,7 @@
 
 	<div style="float: right;">
 		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'settings=1'; ?>"><?php echo _AT('settings');?></a>
-		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'add=1'; ?>"><?php echo _AT('add');?></a>
+		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'add=1'; ?>"><?php echo _AT('add_to_mygadgets');?></a>
 	</div>
 	<div style="width:60%; margin-left:10em; padding-top:1.5em;"><?php echo $app_obj->getDescription(); ?></div>
 	<br/>

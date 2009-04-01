@@ -16,7 +16,7 @@
 				<input type="text" size="60" name="search_groups_<?php echo $rand;?>" id="search_groups" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/groups/search.php')"/>
 			<input type="hidden" name="rand_key" value="<?php echo $rand;?>"/>
 			<input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
-			<span style="float:right"><a href="mods/social/groups/create.php">Create a new group</a></span><br />
+			<span style="float:right"><a href="mods/social/groups/create.php"><?php echo _AT('create_group'); ?></a></span><br />
 			<div id="livesearch"></div>
 		</div>
 	</form>

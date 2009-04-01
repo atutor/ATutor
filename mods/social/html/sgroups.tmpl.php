@@ -22,7 +22,7 @@
 			<div id="livesearch"></div>
 		</div>
 	</form>
-			<span style="float:right"><a href="mods/social/groups/create.php">Create a new group</a></span><br />
+			<span style="float:right"><a href="mods/social/groups/create.php"><?php echo _AT('create_group'); ?></a></span><br />
 </div></div>
 
 	<div class="" style="width:49%;float:left;" >

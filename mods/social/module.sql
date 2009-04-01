@@ -194,14 +194,14 @@ ENGINE = MyISAM;
 
 
 #====== Initial Data ========
-REPLACE INTO social_groups_types SET title='business', type_id=1;
-REPLACE INTO social_groups_types SET title='common_interest', type_id=2;
-REPLACE INTO social_groups_types SET title='entertainment_arts', type_id=3;
-REPLACE INTO social_groups_types SET title='geography', type_id=4;
-REPLACE INTO social_groups_types SET title='internet_technology', type_id=5;
-REPLACE INTO social_groups_types SET title='organization', type_id=6;
-REPLACE INTO social_groups_types SET title='music', type_id=7;
-REPLACE INTO social_groups_types SET title='sports_recreation', type_id=8;
+INSERT INTO social_groups_types SET title='business', type_id=1;
+INSERT INTO social_groups_types SET title='common_interest', type_id=2;
+INSERT INTO social_groups_types SET title='entertainment_arts', type_id=3;
+INSERT INTO social_groups_types SET title='geography', type_id=4;
+INSERT INTO social_groups_types SET title='internet_technology', type_id=5;
+INSERT INTO social_groups_types SET title='organization', type_id=6;
+INSERT INTO social_groups_types SET title='music', type_id=7;
+INSERT INTO social_groups_types SET title='sports_recreation', type_id=8;
 
 # Module Language
 INSERT INTO `language_text` VALUES ('en', '_module','settings','Settings',NOW(),'');
@@ -209,6 +209,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','social','Networking',NOW(),
 INSERT INTO `language_text` VALUES ('en', '_module','applications','Gadgets',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','manage_applications','Manage Gadgets',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','add_application','Add Gadget',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_to_mygadgets','Add to My Gadgets',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','show_available_applications','Show Available Gadgets',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','network_updates','Network Activity',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','connections','My Contacts',NOW(),'');
@@ -245,6 +246,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','add_application_url','Add g
 INSERT INTO `language_text` VALUES ('en', '_module','your_applications','My Gadgets',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','social_profile','Network Profile',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','social_groups','Network Groups',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','search_for_groups','Search for Groups',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','recently_joined','Recently Joined',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','my_groups','My Network Groups',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','group_name','Group Name',NOW(),'');
@@ -306,6 +308,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','has_invited_join','%s has i
 INSERT INTO `language_text` VALUES ('en', '_module','suggestions','Suggestions',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','university','School/Institution',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','field','Area of Study',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','create_group','Create New Group',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','group_admin','Group Moderator',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','edit_education','Edit Education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','admin_social','Social Network Settings',NOW(),'');

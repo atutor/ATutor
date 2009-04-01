@@ -50,7 +50,7 @@ $myApplications = $applications_obj->listMyApplications();
 <form action="<?php echo url_rewrite('mods/social/connections.php', AT_PRETTY_URL_HEADER);?>" method="POST">
 	<input type="text" name="search_friends_123" value="<?php echo urldecode($_POST['searchFriends']); ?>" title="<?php echo _AT('search_for_friends'); ?>" />
 	<input type="hidden" name="rand_key" value="123"/>
-	<input type="submit" name="search" value="<?php echo _AT('search'); ?>" class="button" />
+	<input type="submit" name="search" value="<?php echo _AT('search_for_friends'); ?>" class="button" />
 </form>
 
 <?php
