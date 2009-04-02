@@ -154,7 +154,7 @@ class SocialGroup {
 		 return $str;
 	 }
 	 function getName() {
-		 return htmlentities($this->name);
+		 return htmlentities($this->name, ENT_QUOTES, 'UTF-8');
 	 }
 	 function getDescription(){
 		 return $this->description;

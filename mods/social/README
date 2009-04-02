@@ -72,7 +72,8 @@ TODOs:
 - [03.31.2009] Tracks who has visited you.
 - [03.31.2009] resize_image function might wanna be included in vitals?  It has already been used in several places.
 - [04.01.2009] Email: News Feeds; activities (cron based on last login, take all activities and send it to the user); 
-		contacts/groups invitations+requests. USe phpmailer.
+		contacts/groups invitations+requests. USe phpmailer. Create a mailer.class for this.
+
 
 
 FEATURES:
