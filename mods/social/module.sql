@@ -173,12 +173,12 @@ CREATE TABLE `social_groups_types` (
 )
 ENGINE = MyISAM;
 
-CREATE TABLE `social_groups_forums` (
-  `group_id` INTEGER UNSIGNED NOT NULL,
-  `forum_id` INTEGER UNSIGNED NOT NULL,
-  PRIMARY KEY (`group_id`, `forum_id`)
-)
-ENGINE = MyISAM;
+-- CREATE TABLE `social_groups_forums` (
+--   `group_id` INTEGER UNSIGNED NOT NULL,
+--   `forum_id` INTEGER UNSIGNED NOT NULL,
+--   PRIMARY KEY (`group_id`, `forum_id`)
+-- )
+-- ENGINE = MyISAM;
 
 # Groups message board
 CREATE TABLE `social_groups_board` (
@@ -311,9 +311,43 @@ INSERT INTO `language_text` VALUES ('en', '_module','university','School/Institu
 INSERT INTO `language_text` VALUES ('en', '_module','field','Area of Study',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','create_group','Create New Group',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','group_admin','Group Moderator',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','added_members','Current Group Members',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','not_added_members','Invite Group Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','edit_education','Edit Education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','admin_social','Social Network Settings',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','notification_new_contact','%s wants to add you to as a ATutor Social contact. Follow the link below to login and accept or reject the request. 
+
+------
+Sent from ATutor Social at:
+%s
+',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','contact_request','ATutor Social Contact Request',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','contact_accepted','ATutor Social Contact Accepted',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','notification_accept_contact','%s has been added to your ATutor Social contacts. Follow the link below to review your new contact. 
+
+------
+Sent from ATutor Social at:
+%s
+',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','notification_group_invite','%s has invited you to join the %s group. Follow the link below to login and accept or reject the invitation. 
+
+------
+Sent from ATutor Social at:
+%s
+',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_invitation','ATutor Social Group Invitation',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','shindig_url','URL of Optional ShinDig server.',NOW(),'');
+
+
+INSERT INTO `language_text` VALUES ('en', '_module','notification_group_invite_accepted','%s has accepted your  invitation to join the %s group. Follow the link below to login to the group.
+
+------
+Sent from ATutor Social at:
+%s
+',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_invitation_accepted','ATutor Social Group Invitation Accepted',NOW(),'');
+
+
 INSERT INTO `language_text` VALUES ('en', '_module','shindig_blurb','If you have your own Shindig server setup, your can enter the URL to the server here. If you do not have your own Shindig server, you can either leave the URL empty, or you can use "http://social.atutor.ca/shindig/php" to connect to the ATutor social network. Shindig allows users to link gadgets from other sites into their social networking environment, as well as communicate with those in other social networks. If you choose not to use a Shindig server, your social network will function as a self-contained network, without access to external networks.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field cannot be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_ADDED_SUCCESSFULLY','Gadget was successsfully added.',NOW(),'');

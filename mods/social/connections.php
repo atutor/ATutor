@@ -68,6 +68,27 @@ if (isset($_GET['id'])){
 	if($id > 0){
 		addFriendRequest($id);
 		$msg->addFeedback('REQUEST_FRIEND_ADDED');
+		$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+		$result_notify = mysql_query($sql_notify, $db);
+		$row_notify = mysql_fetch_assoc($result_notify);
+
+		if ($row_notify['email'] != '') {
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			$body = _AT('notification_new_contact', get_display_name($_SESSION['member_id']), $_base_href.'mods/social/index_mystart.php');
+			$sender = get_display_name($_SESSION['member_id']);
+			$mail = new ATutorMailer;
+			$mail->AddAddress($row_notify['email'], $sender);
+			$mail->FromName = $_config['site_name'];
+			$mail->From     = $_config['contact_email'];
+			$mail->Subject  = _AT('contact_request');
+			$mail->Body     = $body;
+
+			if(!$mail->Send()) {
+				$msg->addError('SENDING_ERROR');
+			}
+			unset($mail);
+		}
+
 		header('Location: '.url_rewrite('mods/social/connections.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}

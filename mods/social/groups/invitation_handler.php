@@ -23,9 +23,41 @@ if (isset($_GET['invitation']) || isset($_GET['request'])){
 	$id = intval($_GET['id']);
 	$sender_id = intval($_GET['sender_id']);
 	$status = -1;
+	$group_obj = new SocialGroup($id);
 	if ($id > 0){
 		//handle invitations
 		if ($_GET['invitation']=='accept'){
+
+			$sql = "SELECT sender_id from ".TABLE_PREFIX."social_groups_invitations WHERE  member_id = '$_SESSION[member_id]' AND group_id = '$id'";
+
+			$result_sender = mysql_query($sql, $db);
+			$sender = mysql_fetch_array($result_sender);
+
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			foreach ($sender as $sid){
+
+				$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$sid";
+				$result_notify = mysql_query($sql_notify, $db);
+				$row_notify = mysql_fetch_assoc($result_notify);
+				//require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+				if ($row_notify['email'] != '') {
+					//require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+					$body = _AT('notification_group_invite_accepted', get_display_name($_SESSION['member_id']),$group_obj->getName() , $_base_href.'mods/social/index_mystart.php');
+					$sender = get_display_name($_SESSION['member_id']);
+					$mail = new ATutorMailer;
+					$mail->AddAddress($row_notify['email'], $sender);
+					$mail->FromName = $_config['site_name'];
+					$mail->From     = $_config['contact_email'];
+					$mail->Subject  = _AT('group_invitation_accepted');
+					$mail->Body     = $body;
+		
+					if(!$mail->Send()) {
+						$msg->addError('SENDING_ERROR');
+					}
+					unset($mail);
+				}
+			}
+
 			acceptGroupInvitation($id);
 			$status = 1;
 		} elseif ($_GET['invitation']=='reject'){

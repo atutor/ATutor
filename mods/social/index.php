@@ -8,7 +8,7 @@
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
 /* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
+/* as published by the Free Software Foundation.		*/
 /****************************************************************/
 // $Id$
 
@@ -43,6 +43,27 @@ if (isset($_GET['approval'])){
 	$id = intval($_GET['id']);
 	if ($_GET['approval'] == 'y'){
 		approveFriendRequest($id);
+		$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+		$result_notify = mysql_query($sql_notify, $db);
+		$row_notify = mysql_fetch_assoc($result_notify);
+
+		if ($row_notify['email'] != '') {
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			$body = _AT('notification_accept_contact', get_display_name($_SESSION['member_id']), $_base_href.'mods/social/index_mystart.php');
+			$sender = get_display_name($_SESSION['member_id']);
+			$mail = new ATutorMailer;
+			$mail->AddAddress($row_notify['email'], $sender);
+			$mail->FromName = $_config['site_name'];
+			$mail->From     = $_config['contact_email'];
+			$mail->Subject  = _AT('contact_accepted');
+			$mail->Body     = $body;
+
+			if(!$mail->Send()) {
+				$msg->addError('SENDING_ERROR');
+			}
+			unset($mail);
+		}
+
 	} elseif ($_GET['approval'] == 'n'){
 		rejectFriendRequest($id);
 	}

@@ -30,9 +30,30 @@ if (isset($_POST['inviteMember']) && isset($_POST['new_members'])){
 	//add to request table
 	foreach ($_POST['new_members'] as $k=>$v){
 		$k = intval($k);
+		if ($gid != ''){
+			$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$k";
+			$result_notify = mysql_query($sql_notify, $db);
+			$row_notify = mysql_fetch_assoc($result_notify);
 
+			if ($row_notify['email'] != '') {
+				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+				$body = _AT('notification_group_invite', get_display_name($_SESSION['member_id']),$group_obj->getName() , $_base_href.'mods/social/index_mystart.php');
+				$sender = get_display_name($_SESSION['member_id']);
+				$mail = new ATutorMailer;
+				$mail->AddAddress($row_notify['email'], $sender);
+				$mail->FromName = $_config['site_name'];
+				$mail->From     = $_config['contact_email'];
+				$mail->Subject  = _AT('group_invitation');
+				$mail->Body     = $body;
+	
+				if(!$mail->Send()) {
+					$msg->addError('SENDING_ERROR');
+				}
+				unset($mail);
+			}
 		//TODO, move the following function from friends.inc.php to the SocialGroup.class object
 		addGroupInvitation($k, $gid);
+		}
 	}
 	$msg->addFeedback('INVITATION_SENT');
 }
