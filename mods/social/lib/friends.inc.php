@@ -21,15 +21,19 @@ require_once(AT_SOCIAL_INCLUDE.'classes/Member.class.php');
  * $obj->url should retrieve the member's profile link.
  *
  * @param	int		the person who we want to get friends from
+ * @param	int		the max number of friends to be returned
  *
  * TODO: Need optimization, too slow.
  */
-function getFriends($member_id){
+function getFriends($member_id, $limit=0){
 	global $db, $addslashes;
 	$friends = array();
 	
 	//All member_id = member_id, and All friend_id = member_id
 	$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$member_id.' OR F.friend_id='.$member_id.')';
+	if ($limit > 0){
+		$sql .= ' LIMIT '.$limit;
+	}
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)){

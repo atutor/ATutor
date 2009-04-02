@@ -24,56 +24,61 @@
 	?>
 </div>
 
-<div class="headingbox"><h3><?php echo _AT('group_info'); ?></h3></div>
-<div class="contentbox">
-	<div><?php echo $this->group_obj->getLogo();?></div>
-	<dl  id="public-profile">
-		<dt><?php echo _AT('group_name'); ?></dt>
-		<dd><?php echo $this->group_obj->getName();?></dd>
-
-		<dt><?php echo _AT('group_type'); ?></dt>
-		<dd><?php echo $this->group_obj->getGroupType();?></dd>
-
-		<dt><?php echo _AT('created_by'); ?></dt>
-		<dd><?php echo printSocialName($this->group_obj->getUser());?></dd>
-
-		<dt><?php echo _AT('created_date'); ?></dt>
-		<dd><?php echo AT_DATE(_AT('startend_date_long_format'), $this->group_obj->getCreatedDate(), AT_DATE_MYSQL_DATETIME);?></dd>
-
-		<dt><?php echo _AT('group_last_updated'); ?></dt>
-		<dd><?php echo AT_DATE(_AT('startend_date_long_format'), $this->group_obj->getLastUpdated(), AT_DATE_MYSQL_DATETIME);?></dd>
-
-		<dt><?php echo _AT('number_of_members');?></dt>
-		<dd><?php echo count($this->group_obj->group_members);?></dd>
-	</dl>
-</div><br />
 
 <?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
-<div class="headingbox">
-	<h3><?php echo _AT('message_board'); ?></h3></div>
-<div class="contentbox">	
-	<form method="POST" action="">
-		<label for="message"></label>
-		<textarea name="msg_body" id="message" cols="40" rows="5"></textarea><br />
-		<input class="button" type="submit" name="submit" value="<?php echo _AT('post');?>" />
-	</form><hr/>
+<div style="width:40%; float:left;margin-right:1em;">
+	<div class="headingbox">
+		<h3><?php echo _AT('message_board'); ?></h3></div>
+	<div class="contentbox">	
+		<form method="POST" action="">
+			<label for="message"></label>
+			<textarea name="msg_body" id="message" cols="40" rows="5"></textarea><br />
+			<input class="button" type="submit" name="submit" value="<?php echo _AT('post');?>" />
+		</form><hr/>
 
-	<?php 
-		$counter=0;
-		foreach ($this->group_obj->getMessages() as $id=>$message_array): 
-			//Make this a constant later
-			if ($counter > 10){
-				echo '<a href="">show all</a>';
-				break;
-			}
-	?>
-		<div class="content">
-			<?php echo $message_array['created_date'].' - '.printSocialName($message_array['member_id']); ?>
-			<p><?php echo $message_array['body']; ?></p>
-		</div>
-	<?php 
-		$counter++;
-		endforeach;
-	?>
+		<?php 
+			$counter=0;
+			foreach ($this->group_obj->getMessages() as $id=>$message_array): 
+				//Make this a constant later
+				if ($counter > 10){
+					echo '<a href="">show all</a>';
+					break;
+				}
+		?>
+			<div class="content">
+				<?php echo $message_array['created_date'].' - '.printSocialName($message_array['member_id']); ?>
+				<p><?php echo $message_array['body']; ?></p>
+			</div>
+		<?php 
+			$counter++;
+			endforeach;
+		?>
+	</div>
 </div>
 <?php endif; ?>
+
+<div style="width:40%; float:left;">
+	<div class="headingbox"><h3><?php echo _AT('group_info'); ?></h3></div>
+	<div class="contentbox">
+		<div><?php echo $this->group_obj->getLogo();?></div>
+		<dl  id="public-profile">
+			<dt><?php echo _AT('group_name'); ?></dt>
+			<dd><?php echo $this->group_obj->getName();?></dd>
+
+			<dt><?php echo _AT('group_type'); ?></dt>
+			<dd><?php echo $this->group_obj->getGroupType();?></dd>
+
+			<dt><?php echo _AT('created_by'); ?></dt>
+			<dd><?php echo printSocialName($this->group_obj->getUser());?></dd>
+
+			<dt><?php echo _AT('created_date'); ?></dt>
+			<dd><?php echo AT_DATE(_AT('startend_date_long_format'), $this->group_obj->getCreatedDate(), AT_DATE_MYSQL_DATETIME);?></dd>
+
+			<dt><?php echo _AT('group_last_updated'); ?></dt>
+			<dd><?php echo AT_DATE(_AT('startend_date_long_format'), $this->group_obj->getLastUpdated(), AT_DATE_MYSQL_DATETIME);?></dd>
+
+			<dt><?php echo _AT('number_of_members');?></dt>
+			<dd><?php echo count($this->group_obj->group_members);?></dd>
+		</dl>
+	</div><br />
+</div>

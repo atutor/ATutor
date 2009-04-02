@@ -76,13 +76,23 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 			if (!empty($friends)){
 				$savant->assign('friends', $friends);
 			} else {
-				$savant->assign('friends', getFriends($_SESSION['member_id']));
+				$savant->assign('friends', getFriends($_SESSION['member_id'], SOCIAL_FRIEND_HOMEPAGE_MAX));
 			}
 			$savant->assign('group_invitations', getGroupInvitations());
 			$savant->assign('group_requests', getGroupRequests());
 			$savant->assign('pending_requests', getPendingRequests());
 			$savant->display('friend_list.tmpl.php'); 
 		?>
+		
+	</div>
+	<div>
+	<?php			
+		//if my groups array is not empty.
+		$social_group = new SocialGroups();
+		$my_groups = $social_group->getMemberGroups($_SESSION['member_id']);
+		$savant->assign('my_groups', $my_groups);
+		$savant->display('tiny_sgroups.tmpl.php');
+	?>
 	</div>
 </div>
 

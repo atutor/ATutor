@@ -15,13 +15,18 @@ if (!empty($this->friends)): ?>
 			continue;
 		} ?>
 		<div class="contact_mini">
-			<div style="float:right;"><a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" border="0"/></a></div>
-			<div>
-			<a href="mods/social/sprofile.php?id=<?php echo $id;?>"><?php echo printSocialProfileImg($id); ?></a><br /><?php echo printSocialName($id); ?>
-
+			<!-- don't want delete on the front page
+			<div style="float:right;">
+				<a style="vertical-align:top;" href="<?php echo url_rewrite('mods/social/index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" border="0"/></a>
+			</div>
+			-->
+			<div style="width:110px; float:left; padding-bottom:0.2em;">
+				<a href="mods/social/sprofile.php?id=<?php echo $id;?>"><?php echo printSocialProfileImg($id); ?></a><br />
+				<?php echo printSocialName($id); ?>
 			</div>
 		</div>
 	<?php endforeach; ?>
+	<div style="clear:both;"><a href="mods/social/connections.php"><?php echo _AT('show_all');?></a></div>
 	</div>
 <?php else: ?>
 <?php echo _AT('no_friends'); ?>

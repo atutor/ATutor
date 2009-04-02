@@ -47,6 +47,7 @@ define(AT_SOCIAL_FRIENDS_VISIBILITY,				1);	//Friends
 define(AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY,		2);	//Friends of Friends
 define(AT_SOCIAL_NETWORK_VISIBILITY,				3);	//Network
 
-//Activity class constants
-define('SOCIAL_FRIEND_ACTIVITIES_MAX', 10);
+//Display control
+define('SOCIAL_FRIEND_ACTIVITIES_MAX', 10);		//Activity class constants
+define('SOCIAL_FRIEND_HOMEPAGE_MAX', 15);		//# of friends to display on the homepage contact's box
 ?>
