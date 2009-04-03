@@ -56,7 +56,6 @@ if($_GET['delete'] == "confirm"){
 	exit;
 
 }else if($_POST['submit_yes']){
-
 	header('Location: '.url_rewrite("mods/social/groups/delete.php?id=".$gid, AT_PRETTY_URL_HEADER));
 	exit;
 }else if($_POST['submit_no']){

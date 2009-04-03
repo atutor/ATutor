@@ -241,6 +241,13 @@ function searchFriends($name, $searchMyFriends = false){
 		} else {
 			$this_id = $row['member_id'];
 		}
+
+		//skip empty entry, don't know why there would be empty entry. 
+		//TODO: Trace this. could be a bug in query
+		if ($this_id == ''){
+			continue;
+		}
+
 		$temp =& $result[$this_id];		
 //		$temp['first_name'] = $row['first_name'];
 //		$temp['last_name'] = $row['last_name'];

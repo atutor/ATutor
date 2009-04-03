@@ -45,12 +45,13 @@ class Application extends Applications{
 		//TODO: Many more fields to add
 //		$id						= $gadget_obj['moduleId'];   //after i change the URL to the key.
 		$author					= $addslashes($gadget_obj->author);
-		$author_email			= $addslashes($gadget_obj->author_email);
+		$author_email			= $addslashes($gadget_obj->authorEmail);
 		$description			= $addslashes($gadget_obj->description);
 		$screenshot				= $addslashes($gadget_obj->screenshot);
 		$thumbnail				= $addslashes($gadget_obj->thumbnail);
 		$title					= $addslashes($gadget_obj->title);
 		$height					= intval($gadget_obj->height);
+		$module_id				= intval($gadget_obj->module_id);
 		$url					= $addslashes($gadget_obj->url);
 		$userPrefs				= $addslashes(serialize($gadget_obj->userPrefs));
 		$views					= $addslashes(serialize($gadget_obj->views));
@@ -66,28 +67,28 @@ class Application extends Applications{
 		}
 		$member_id = $_SESSION['member_id'];
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_applications (id, url, title, height, screenshot, thumbnail, author, author_email, description, settings, views) VALUES ($id, '$url', '$title', $height, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_applications (id, url, title, height, screenshot, thumbnail, author, author_email, description, settings, views) VALUES ($id, '$url', '$title', $height, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views', NOW())";
 		$result = mysql_query($sql, $db);
 		
 		//This application is already in the database, get its ID out
 		if (!$result){			
-			$sql = 'SELECT id FROM '.TABLE_PREFIX."social_applications WHERE url='$url'";
+			$sql = 'SELECT id, UNIX_TIMESTAMP(last_updated) AS last_updated FROM '.TABLE_PREFIX."social_applications WHERE url='$url'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 			$id = $row['id'];
+
+			//Update the gadget
+			//TODO: Needs some sort of comparing instead of blinding updating everytime. Version(can't find any)? Date(need another field in db?)
+			//Use TIMESTAMP for now, but i perfer version #.
+			//If the gadget is SOCIAL_APPLICATION_UPDATE_SCHEDULE days old, update it
+			if (abs($row['last_updated']) < strtotime('-'.SOCIAL_APPLICATION_UPDATE_SCHEDULE.' day')){
+				$sql = 'UPDATE '.TABLE_PREFIX."social_applications SET title='$title', height=$height, screenshot='$screenshot', thumbnail='$thumbnail', author='$author', author_email='$author_email', description='$description', settings='$userPrefs', views='$views', last_updated=NOW() WHERE url='$url'";
+				$result = mysql_query($sql, $db);
+				echo $sql;
+			}			
 		} 
 
-		//Add a record into application_settings regardless since it has to be mapped onto the user
-		//TODO: use another table
-/*		$sql = 'INSERT INTO '.TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES ($id, $member_id, '$title', 'Place holder')";
-		$result = mysql_query($sql, $db);
-
-		if ($result){
-			$act = new Activity();		
-			$act->addActivity($_SESSION['member_id'], '', $id);
-			unset($act);
-		}
-*/
+		//Add a record into application_member table for mapping
 		$this->addMemberApplication($member_id, $id);
 	}
 
@@ -225,6 +226,10 @@ class Application extends Applications{
 		return $this->title;
 	}
 
+	function getModuleId(){
+		return $this->module_id;
+	}
+
 	function getHeight(){
 		return $this->height;
 	}
@@ -298,15 +303,15 @@ class Application extends Applications{
 						$this->getId(), // app id
 						'default', // domain key, shindig will check for php/config/<domain>.php for container specific configuration
 						urlencode($this->getUrl()), // app url
-						$this->getModId());// mod id
+						$this->getModuleId());// mod id
 debug($securityToken);
 		$url = AT_SHINDIG_URL.'/gadgets/ifr?' 
 			. "synd=default" 
 			. "&container=default" 
 			. "&viewer=". $_SESSION['member_id']
 			. "&owner=" . $oid
-			. "&aid=" . $this->getId()		//application id
-			. "&mid=" . 0					//not sure what mod_id is
+			. "&aid=" . $this->getId()			//application id
+			. "&mid=" . $this->getModuleId()	//not sure what mod_id is
 			. "&country=US" 
 			. "&lang=en" 
 			. "&view=" . $view	//canvas for this big thing, should be a variable
@@ -320,10 +325,6 @@ debug($securityToken);
 	//TO BE IMPLEMENTED
 	function getVersion(){
 		return '0.1';
-	}
-
-	function getModId(){
-		return 0;
 	}
 
 
@@ -350,6 +351,7 @@ debug($securityToken);
 			$this->description	= $row['description'];
 			$this->settings		= $row['settings'];
 			$this->views		= $row['views'];
+			$this->last_updated	= $row['last_updated'];
 		}
 	}
 

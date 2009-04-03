@@ -110,6 +110,9 @@ $this->_pages['mods/social/groups/edit.php']['parent'] = 'mods/social/groups/ind
 $this->_pages['mods/social/groups/search.php']['title_var'] = 'search';
 $this->_pages['mods/social/groups/search.php']['parent'] = 'mods/social/groups/index.php';
 
+$this->_pages['mods/social/groups/list.php']['title_var'] = 'group_members';
+$this->_pages['mods/social/groups/list.php']['parent'] = 'mods/social/groups/index.php';
+
 /* public pages */
 $this->_pages[AT_NAV_PUBLIC] = array('mods/social/index_public.php');
 $this->_pages['mods/social/index_public.php']['title_var'] = 'social';

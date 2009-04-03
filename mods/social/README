@@ -73,6 +73,7 @@ TODOs:
 - [03.31.2009] resize_image function might wanna be included in vitals?  It has already been used in several places.
 - [04.01.2009] Email: News Feeds; activities (cron based on last login, take all activities and send it to the user); 
 		contacts/groups invitations+requests. USe phpmailer. Create a mailer.class for this.
+- [04.03.2009] Maybe to make a general search($string, $member_obj_array) that takess any member obj array.  This can be used for friends search as well.  Optimize the code and structure a bit.
 
 
 
@@ -391,4 +392,8 @@ Apr 2, 2009
 *- Groups page, just group listings + Create Group box to the right
 *- Group page, split messages left, group info right
 *- Gadgets screen comment out settings
-- 
+
+Apr 3, 2009
+-----------
+- Application.class.php: cleaned up old codes that uses place holder in the app table.  Now uses member_app table
+- Gadget will now update itself upon user's 'Add application', iff the last_update < SOCIAL_APPLICATION_UPDATE_SCHEDULE

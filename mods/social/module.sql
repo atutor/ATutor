@@ -23,6 +23,7 @@ CREATE TABLE `social_applications` (
   `description` TEXT NOT NULL,
   `settings` TEXT NOT NULL,
   `views` TEXT NOT NULL,
+  `last_updated` TIMESTAMP NOT NULL,
   PRIMARY KEY (`url`)
 )
 ENGINE = MyISAM;

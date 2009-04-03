@@ -415,5 +415,35 @@ class SocialGroup {
 		$result = mysql_query($sql, $db);
 		return $result;
 	}
+
+
+	/**
+	 * Search members
+	 * TODO: Maybe to make a general search($string, $member_obj_array) that takess any member obj array.  
+	 *		 This can be used for friends search as well.  Optimize the code and structure a bit.
+	 * @param	string	member name
+	 * @return	array  of Members Object
+	 */
+	function searchMembers($name){
+		global $db, $addslashes;
+
+		//break the names by space, then accumulate the query
+		$name = $addslashes($name);	
+		$sub_names = explode(' ', $name);
+		foreach($sub_names as $piece){
+			$query .= "(first_name LIKE '%$piece%' OR second_name LIKE '%$piece%' OR last_name LIKE '%$piece%' OR email LIKE '$piece') AND ";
+		}
+		//trim back the extra "AND "
+		$query = substr($query, 0, -4);
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members g LEFT JOIN '.TABLE_PREFIX.'members m ON g.member_id=m.member_id WHERE g.group_id=8 AND '.$query;
+
+		$rs = mysql_query($sql, $db);
+
+		while ($row=mysql_fetch_assoc($rs)) {
+			$result[$row['member_id']] = new Member($row['member_id']);
+		}
+		return $result;
+	}
 }
 ?>

@@ -1,18 +1,25 @@
 <?php global $msg; $msg->printConfirm(); ?>
 <div class="box">
+	<?php //existing members ?>
 	<?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
 	| <a href="mods/social/groups/invite.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('invite'); ?></a> |
 
+	<?php //group admin ?>
 	<?php if ($this->group_obj->getUser() == $_SESSION['member_id']): ?>
 	<a href="mods/social/groups/edit.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('edit_group'); ?></a> |
 	<a href="mods/social/groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>delete=confirm"><?php echo _AT('disband_group'); ?></a> |
+	<?php //existing members ?>
 	<?php else: ?>
 	<a href="mods/social/groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>remove=1"><?php echo _AT('leave_group'); ?></a> |
 	<?php endif; ?>
 
+	<?php //new members ?>
 	<?php else: ?>
 	<a href="mods/social/groups/join.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('join_group'); ?></a> |
 	<?php endif; ?>
+
+	<?php //everyone ?>
+	<a href="mods/social/groups/list.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('group_members'); ?></a> |
 
 	<?php include('notifications.tmpl.php'); ?>
 </div>
