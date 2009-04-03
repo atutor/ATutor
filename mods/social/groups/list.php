@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id: connections.php 8410 2009-04-02 20:49:34Z greg $
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -81,6 +82,7 @@ if (isset($_GET['remove']) && isset($_GET['member_id'])){
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->display('pubmenu.tmpl.php');
 $savant->assign('grp_obj', $grp_obj);
 $savant->assign('grp_members', $grp_members);
 $savant->assign('rand_key', $rand_key);

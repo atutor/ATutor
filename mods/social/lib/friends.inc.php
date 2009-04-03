@@ -36,17 +36,19 @@ function getFriends($member_id, $limit=0){
 	}
 	$result = mysql_query($sql, $db);
 
-	while ($row = mysql_fetch_assoc($result)){
-		if ($row['member_id']==$member_id){
-			//member_id=member_id case
-			$friends[$row['friend_id']]			=	$row['friend_id'];
-//			$friends[$row['member_id']]['first_name']	=	$row['first_name'];
-//			$friends[$row['member_id']]['last_name']	=	$row['last_name'];
-		} else {
-			//friend_id = member_id
-			$friends[$row['member_id']]			=	$row['member_id'];
-//			$friends[$row['friend_id']]['first_name']	=	$row['first_name'];
-//			$friends[$row['friend_id']]['last_name']	=	$row['last_name'];
+	if ($result){
+		while ($row = mysql_fetch_assoc($result)){
+			if ($row['member_id']==$member_id){
+				//member_id=member_id case
+				$friends[$row['friend_id']]			=	$row['friend_id'];
+	//			$friends[$row['member_id']]['first_name']	=	$row['first_name'];
+	//			$friends[$row['member_id']]['last_name']	=	$row['last_name'];
+			} else {
+				//friend_id = member_id
+				$friends[$row['member_id']]			=	$row['member_id'];
+	//			$friends[$row['friend_id']]['first_name']	=	$row['first_name'];
+	//			$friends[$row['friend_id']]['last_name']	=	$row['last_name'];
+			}
 		}
 	}
 /*
@@ -204,16 +206,18 @@ function searchFriends($name, $searchMyFriends = false){
 	$sql .= $query;
 
 	$rs = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($rs)){
-		if ($row['member_id']==$_SESSION['member_id']){
-			$this_id = $row['friend_id'];
-		} else {
-			$this_id = $row['member_id'];
-		}
-		$temp =& $my_friends[$this_id];	
-		$temp['obj'] = new Member($this_id);
-		if ($searchMyFriends){
-			$temp['added'] = 1;
+	if ($rs){
+		while ($row = mysql_fetch_assoc($rs)){
+			if ($row['member_id']==$_SESSION['member_id']){
+				$this_id = $row['friend_id'];
+			} else {
+				$this_id = $row['member_id'];
+			}
+			$temp =& $my_friends[$this_id];	
+			$temp['obj'] = new Member($this_id);
+			if ($searchMyFriends){
+				$temp['added'] = 1;
+			}
 		}
 	}
 	unset($this_id);  //don't want the following statements to reuse this

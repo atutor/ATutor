@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -96,6 +97,7 @@ if (isset($_GET['app_id'])){
 $list_of_my_apps = $app->listMyApplications();
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->display('pubmenu.tmpl.php');
 $savant->assign('list_of_my_apps', $list_of_my_apps);
 $savant->assign('list_of_all_apps', $list_of_all_apps);
 $savant->display('applications.tmpl.php');

@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -39,11 +40,8 @@ $my_groups = $social_group->getMemberGroups($_SESSION['member_id']);
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-?>
-
-<?php
+$savant->display('pubmenu.tmpl.php');
 $savant->assign('my_groups', $my_groups);
 $savant->display('sgroups.tmpl.php');
-
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

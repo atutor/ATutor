@@ -125,10 +125,12 @@ $this->_pages['mods/social/index_public.php']['title_var'] = 'social';
 $this->_pages['mods/social/index_public.php']['parent'] = AT_NAV_PUBLIC;
 
 
+
 /* my start page pages */
-$this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');
-$this->_pages['mods/social/index_mystart.php']['title_var'] = 'social';
-$this->_pages['mods/social/index_mystart.php']['parent'] = AT_NAV_START;
+//$this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');
+$this->_pages[AT_NAV_START]  = array('mods/social/index.php');
+$this->_pages['mods/social/index.php']['title_var'] = 'social';
+$this->_pages['mods/social/index.php']['parent'] = AT_NAV_START;
 
 
 function social_get_group_url($group_id) {

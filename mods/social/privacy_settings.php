@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -35,6 +36,7 @@ if (isset($_POST['submit'])){
 
 //Page prints from here
 include(AT_INCLUDE_PATH.'header.inc.php'); 
+$savant->display('pubmenu.tmpl.php');
 $savant->assign('controller', $controller);
 $savant->assign('profile_prefs', $private_obj->getProfile());
 $savant->assign('search_prefs', $private_obj->getSearch());

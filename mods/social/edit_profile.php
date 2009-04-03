@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -225,6 +226,7 @@ if (isset($_GET['delete'])){
 
 // Member object
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->display('pubmenu.tmpl.php');
 $savant->assign('profile', $member->getDetails());
 $savant->assign('position', $member->getPosition());
 $savant->assign('education', $member->getEducation());

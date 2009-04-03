@@ -13,7 +13,7 @@
 // $Id$
 
 //use index.php
-$_user_location	= 'users';
+$_user_location	= 'public';
 include('index.php');
 exit;
 ?>

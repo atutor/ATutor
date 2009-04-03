@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -20,6 +21,7 @@ require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
 $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
 
+/*
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$info = array('INVALID_USER', $_SESSION['course_id']);
@@ -27,6 +29,7 @@ if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
+*/
 
 // Get profile object
 $id = intval($_GET['id']);
@@ -59,6 +62,7 @@ if ($privacy_obj==null){
 
 // Display
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->display('pubmenu.tmpl.php');
 $savant->assign('scope', ($id!=$_SESSION['member_id']) ? 'viewer' : 'owner');
 $savant->assign('profile', $profile->getDetails());
 $savant->assign('education', $profile->getEducation());

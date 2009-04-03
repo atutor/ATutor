@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -66,6 +67,7 @@ if($_GET['delete'] == "confirm"){
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->display('pubmenu.tmpl.php');
 $savant->assign('group_invitations',getGroupInvitations());
 $savant->assign('group_obj', $group_obj);
 $savant->display('sgroup_view.tmpl.php');

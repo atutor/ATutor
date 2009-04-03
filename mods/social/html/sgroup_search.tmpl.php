@@ -30,6 +30,9 @@
 		?>
 		<div class="box">
 			<dl id="public-profile">
+				<dt><?php echo _AT('group_logo'); ?></dt>
+				<dd><?php echo $group_obj->getLogo();?></dd>
+
 				<dt><?php echo _AT('title'); ?></dt>
 				<dd><a href="<?php echo url_rewrite('mods/social/groups/view.php?id='.$group_obj->getID()); ?>"><?php echo $group_obj->getName();?></a> 
 				<?php if (in_array(new Member($_SESSION['member_id']), $group_obj->getGroupMembers())){
