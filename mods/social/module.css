@@ -122,3 +122,13 @@ div.suggestions{
 	margin-left:10px; 
 	width:50%;
 }
+li.inlinelist{
+	display: inline; 
+	padding-right: 1em;
+}
+ul.social_inline_menu{
+background-color: #eeeeee;
+border:thin #cccccc solid;
+padding:.5em;
+
+}
