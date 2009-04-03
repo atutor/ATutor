@@ -106,7 +106,7 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 		?>
 		
 	</div>
-	<div style="float:right;clear:right;min-width:39%">
+	<div style="float:right;clear:right;min-width:39%"><br />
 	<?php			
 		//if my groups array is not empty.
 		$social_group = new SocialGroups();

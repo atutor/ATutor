@@ -1,4 +1,4 @@
-<br />
+
 	<div class="headingbox"><h3><?php echo _AT('my_groups'); ?></h3></div>
 	<div class="contentbox">
 		<?php foreach ($this->my_groups as $i=>$grp): 
