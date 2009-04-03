@@ -1,10 +1,7 @@
 <h2><?php echo $this->profile['first_name'].' '.$this->profile['last_name']; ?></h2>
 
-<ul class="social_inline_menu">
-	<li class="inlinelist"><a href="<?php echo 'mods/social/profile_picture.php?profile=picture'; ?>"><?php echo _AT('Picture'); ?></a></li>
-	<li class="inlinelist"><a href="<?php echo 'users/profile.php?profile=basic'; ?>"><?php echo _AT('basic_profile'); ?></a></li>
-	<li class="inlinelist"><a href="<?php echo 'mods/social/sprofile.php?profile=social'; ?>"><?php echo _AT('social_profile'); ?></a></li>
-</ul>
+
+<?php include("lib/profile_menu.inc.php")  ?>
 
 <ul>
 	<li>
