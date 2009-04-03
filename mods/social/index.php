@@ -72,8 +72,6 @@ if (isset($_GET['approval'])){
 }
 
 include (AT_INCLUDE_PATH.'header.inc.php'); ?>
-
-
 	<div style="float:left; width:59%;">
 		<?php
 			//network updates
@@ -91,7 +89,7 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 //			echo '</div>';
 		?>
 	</div>
-	<div>
+	<div style="float:right;width:39%;min-width:39%;">
 		<?php			
 			//if friends array is not empty.
 			if (!empty($friends)){
@@ -106,7 +104,7 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 		?>
 		
 	</div>
-	<div style="float:right;clear:right;min-width:39%"><br />
+	<div style="float:right;clear:right;width:39%;min-width:39%;"><br />
 	<?php			
 		//if my groups array is not empty.
 		$social_group = new SocialGroups();

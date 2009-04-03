@@ -10,8 +10,27 @@
 	}
 ?>
 
-
-<div class="" style="float:left; width:50%">
+<div class="input-form" style="float:right; width:34%;padding:1em;min-height:4.5em;">
+	<div class="contentrow">
+		<h3><?php echo _AT('search_for_friends'); ?></h3>
+		<form action="<?php echo url_rewrite('mods/social/connections.php');?>" method="POST" id="search_friends_form">
+			<label for="searchFriends" style="display:none;"><?php echo _AT('search'); ?></label>
+			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/connections.php')"/>
+			<input type="submit" name="search" value="<?php echo _AT('search'); ?>">
+			<?php 
+			if (isset($_POST['myFriendsOnly'])){
+				$mfo_checked = ' checked="checked"';
+			}
+			?>
+			<br/> <div style="float:right;"><input type="checkbox" name="myFriendsOnly" id="myFriendsOnly" value="<?php echo _AT('yes'); ?>" <?php echo $mfo_checked; ?> />
+			<label for ="myFriendsOnly"><?php echo _AT('my_friends_only'); ?></label></div>
+			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>" />
+			
+			<div id="livesearch"></div>
+		</form>
+	</div>
+</div>
+<div class="" style="float:left; width:59%">
 	<div class="headingbox"><h3><?php echo _AT('connections'); ?></h3></div>
 	<div class="contentbox">
 	<?php 
@@ -54,23 +73,3 @@
 	</div>
 </div>
 
-<div class="input-form" style="float:right; width:40%;padding:1em;min-height:4.5em;">
-	<div class="contentrow">
-		<h3><?php echo _AT('search_for_friends'); ?></h3>
-		<form action="<?php echo url_rewrite('mods/social/connections.php');?>" method="POST" id="search_friends_form">
-			<label for="searchFriends" style="display:none;"><?php echo _AT('search'); ?></label>
-			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/connections.php')"/>
-			<input type="submit" name="search" value="<?php echo _AT('search'); ?>">
-			<?php 
-			if (isset($_POST['myFriendsOnly'])){
-				$mfo_checked = ' checked="checked"';
-			}
-			?>
-			<br/> <div style="float:right;"><input type="checkbox" name="myFriendsOnly" id="myFriendsOnly" value="<?php echo _AT('yes'); ?>" <?php echo $mfo_checked; ?> />
-			<label for ="myFriendsOnly"><?php echo _AT('my_friends_only'); ?></label></div>
-			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>" />
-			
-			<div id="livesearch"></div>
-		</form>
-	</div>
-</div>

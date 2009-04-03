@@ -40,7 +40,7 @@ $my_groups = $social_group->getMemberGroups($_SESSION['member_id']);
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
 ?>
-<div>
+
 <?php
 $savant->assign('my_groups', $my_groups);
 $savant->display('sgroups.tmpl.php');

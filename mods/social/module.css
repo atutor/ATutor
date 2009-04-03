@@ -101,7 +101,7 @@ div .divider {
 }
 
 div.headingbox, h3.headingbox, a.headingbox{
-	border:thin black solid;
+	border:1px black solid;
 	padding:.2em;
 	background-color: #cccccc;
 	text-decoration:none;
@@ -109,9 +109,9 @@ div.headingbox, h3.headingbox, a.headingbox{
 
 div.contentbox, input-form{
 	margin-left:1em;
-	border-left:thin black solid;
-	border-right:thin black solid;
-	border-bottom:thin black solid;
+	border-left:1px black solid;
+	border-right:1px black solid;
+	border-bottom:1px black solid;
 	padding:.5em;
 	background-color: #eeeeee;
         overflow:hidden;

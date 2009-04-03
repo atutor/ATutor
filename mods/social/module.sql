@@ -204,6 +204,7 @@ INSERT INTO social_groups_types SET title='music', type_id=7;
 INSERT INTO social_groups_types SET title='sports_recreation', type_id=8;
 
 # Module Language
+INSERT INTO `language_text` VALUES ('en', '_module','network_home','My Network',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','settings','Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','social','Networking',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','applications','Gadgets',NOW(),'');
@@ -282,7 +283,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','add_new_interest','Add new 
 INSERT INTO `language_text` VALUES ('en', '_module','add_new_association','Add new association',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','add_new_award','Add new award',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','reject_request','Reject Request',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','show_your_applications','Show Your Applications',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','show_your_applications','Show Your Gadgets',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','available_applications','Available Gadgets',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','view_groups','View Group',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','now_friends1','and %s are now contacts.',NOW(),'');

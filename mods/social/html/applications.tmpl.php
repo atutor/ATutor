@@ -7,7 +7,7 @@
 <script type="text/javascript" src="mods/social/lib/js/container.js"></script>
 
 <div class="search_form">	
-		<div class="headingbox"><h3><?php echo _AT('add_application'); ?></div>
+		<div class="headingbox"><h3><?php echo _AT('add_application'); ?></h3></div>
 		<div class="contentbox">
 			<form method="POST" action="<?php echo url_rewrite("mods/social/applications.php"); ?>">
 			<label for="app_url"><?php echo _AT('add_application_url'); ?>: </label>

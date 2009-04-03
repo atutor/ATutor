@@ -10,7 +10,7 @@
 	<h3><?php echo printSocialName($this->profile['member_id'], false); ?></h3>
 </div>	
 <div class="contentbox">
-	<div style="float:right;clear:left; width:10%; margin-bottom:-4em;">
+	<div style="float:right;margin-bottom:-15em;">
 		<?php echo printSocialProfileImg($this->profile['member_id']); ?>
 	</div>
 	<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_PROFILE, $this->relationship, $this->prefs)): ?>
