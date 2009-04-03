@@ -84,6 +84,9 @@ $this->_pages['mods/social/edit_profile.php']['parent'] = 'mods/social/sprofile.
 $this->_pages['mods/social/profile_picture.php']['title_var'] = 'picture';
 $this->_pages['mods/social/profile_picture.php']['parent'] = 'mods/social/edit_profile.php';
 
+$this->_pages['mods/social/basic_profile.php']['title_var'] = 'profile';
+$this->_pages['mods/social/basic_profile.php']['parent'] = 'mods/social/edit_profile.php';
+
 $this->_pages['mods/social/applications.php']['title_var'] = 'gadgets';
 $this->_pages['mods/social/applications.php']['parent'] = 'mods/social/index.php';
 
