@@ -3,8 +3,9 @@
 	<div class="contentbox">
 		<?php foreach ($this->my_groups as $i=>$grp): 
 			$grp_obj = new SocialGroup($grp);
+
 		?>
-		<div class="contact_mini">
+		<div class="contact_mini">ss
 			<?php if ($grp_obj->getUser() == $_SESSION['member_id']): ?>
 				<div style="float:right;margin:1em;"><a href="<?php echo $_base_href; ?>mods/social/groups/edit.php?id=<?php echo $grp;?>"><img src="<?php echo $_base_href; ?>mods/social/images/icon-settings.png" alt="<?php echo _AT('settings'); ?>" title="<?php echo _AT('settings'); ?>" border="0"/></a></div>
 			<?php endif; ?>
@@ -22,4 +23,8 @@
 			</div><br />
 		</div>
 		<?php endforeach; ?>
+		<?php		
+		if(!$grp){ 
+			echo _AT('no_groups_yet');
+		 } ?>
 	</div>

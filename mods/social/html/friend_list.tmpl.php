@@ -1,4 +1,4 @@
-<div style="float:right; clear:right; margin-left:0.2em;">
+<div style="float:right;width:100%;">
 <?php require('notifications.tmpl.php'); ?>
 </div>
 <div style="float:right;min-width:100%;">

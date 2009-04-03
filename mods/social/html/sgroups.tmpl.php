@@ -26,10 +26,12 @@
 			</form>		
 		</div>
 	</div>
-
-	<div class="headingbox"><h3><?php echo _AT('create_group'); ?></h3></div>
-	<div class="contentbox">
-		<p>blah^1000</p>
+</div>
+<div style="float:right;clear:right;width:39%;">
+	<div class="input-form" style="padding:1em;min-height:4.5em;">
+	<h3><?php echo _AT('create_group'); ?></h3>
+		<p><?php echo _AT('create_group_blurb');  ?></p>
 		<span><a href="mods/social/groups/create.php"><?php echo _AT('create_group'); ?></a></span><br />
 	</div>
+</div>
 </div>

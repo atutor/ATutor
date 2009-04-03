@@ -220,7 +220,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','pending_friend_requests','P
 INSERT INTO `language_text` VALUES ('en', '_module','profile_picture','Profile Picture',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','approve_request','Approve Request',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','accept_request','Accept Request',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','search_for_friends','Search for contacts',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','search_for_friends','Search People',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','my_connections','Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','there_are_entries','There are %s entries.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','remove_friend','Remove Contact',NOW(),'');
@@ -311,6 +311,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','suggestions','Suggestions',
 INSERT INTO `language_text` VALUES ('en', '_module','university','School/Institution',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','field','Area of Study',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','create_group','Create New Group',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','create_group_blurb','Create a new group on a particular topic, then invite people to post news items or discuss the topic. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','group_admin','Group Moderator',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','added_members','Current Group Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','not_added_members','Invite Group Members',NOW(),'');
@@ -338,17 +339,28 @@ Sent from ATutor Social at:
 ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','group_invitation','ATutor Social Group Invitation',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','shindig_url','URL of Optional ShinDig server.',NOW(),'');
-
-
 INSERT INTO `language_text` VALUES ('en', '_module','notification_group_invite_accepted','%s has accepted your  invitation to join the %s group. Follow the link below to login to the group.
 
 ------
-Sent from ATutor Social at:
+Login to ATutor Social at:
 %s
 ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','group_invitation_accepted','ATutor Social Group Invitation Accepted',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','notification_group_request_accepted','Your request to join the %s group has been accepted. Follow the link below to login to the group.
 
+------
+Login to ATutor Social at:
+%s
+',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_request_accepted','ATutor Social Group Request Accepted',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','notification_group_request','A request has been made to join the %s group Follow the link below to login and accept or reject the request.
 
+------
+Login to ATutor Social at:
+%s
+',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_request','ATutor Social Join Group Request',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','no_groups_yet','You have not joined any groups yet.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','shindig_blurb','If you have your own Shindig server setup, your can enter the URL to the server here. If you do not have your own Shindig server, you can either leave the URL empty, or you can use "http://social.atutor.ca/shindig/php" to connect to the ATutor social network. Shindig allows users to link gadgets from other sites into their social networking environment, as well as communicate with those in other social networks. If you choose not to use a Shindig server, your social network will function as a self-contained network, without access to external networks.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field cannot be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_ADDED_SUCCESSFULLY','Gadget was successsfully added.',NOW(),'');
