@@ -8,10 +8,10 @@
 		$last_search = $_POST['search_groups_'.$rand];	
 	}
 ?>
-
+<div style="width:59%;float:left">
 <?php include('tiny_sgroups.tmpl.php'); ?>
-
-<div style="width:40%;float:left">
+</div>
+<div style="width:39%;float:right"><br />
 	<div class="input-form" style="padding:1em;min-height:4.5em;">
 		<div class="contentrow">
 			<h3><?php echo _AT('search_for_groups'); ?></h3>

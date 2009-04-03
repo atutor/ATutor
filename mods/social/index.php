@@ -73,7 +73,7 @@ if (isset($_GET['approval'])){
 
 include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<div>
+
 	<div style="float:left; width:59%;">
 		<?php
 			//network updates
@@ -106,7 +106,7 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 		?>
 		
 	</div>
-	<div>
+	<div style="float:right;clear:right;min-width:39%">
 	<?php			
 		//if my groups array is not empty.
 		$social_group = new SocialGroups();
@@ -115,6 +115,6 @@ include (AT_INCLUDE_PATH.'header.inc.php'); ?>
 		$savant->display('tiny_sgroups.tmpl.php');
 	?>
 	</div>
-</div>
+
 
 <?php include (AT_INCLUDE_PATH.'footer.inc.php'); ?>
