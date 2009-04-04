@@ -67,7 +67,7 @@ class Application extends Applications{
 		}
 		$member_id = $_SESSION['member_id'];
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_applications (id, url, title, height, screenshot, thumbnail, author, author_email, description, settings, views) VALUES ($id, '$url', '$title', $height, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views', NOW())";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_applications (id, url, title, height, screenshot, thumbnail, author, author_email, description, settings, views, last_updated) VALUES ($id, '$url', '$title', $height, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views', NOW())";
 		$result = mysql_query($sql, $db);
 		
 		//This application is already in the database, get its ID out
@@ -84,7 +84,7 @@ class Application extends Applications{
 			if (abs($row['last_updated']) < strtotime('-'.SOCIAL_APPLICATION_UPDATE_SCHEDULE.' day')){
 				$sql = 'UPDATE '.TABLE_PREFIX."social_applications SET title='$title', height=$height, screenshot='$screenshot', thumbnail='$thumbnail', author='$author', author_email='$author_email', description='$description', settings='$userPrefs', views='$views', last_updated=NOW() WHERE url='$url'";
 				$result = mysql_query($sql, $db);
-				echo $sql;
+				//echo $sql;
 			}			
 		} 
 

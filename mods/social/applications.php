@@ -40,7 +40,7 @@ if (isset($_POST['add_application']) && isset($_POST['app_url'])){
 		//add applicatoin to database
 		$app->addApplication($gadget);
 	} else {
-		debug($gadget);
+	//	debug($gadget);
 	}
 }
 
