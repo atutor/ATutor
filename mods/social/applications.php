@@ -53,7 +53,6 @@ if (isset($_POST['show_applications'])){
 if (isset($_GET['app_id'])){
 	$_GET['app_id'] = intval($_GET['app_id']);
 	$app = new Application($_GET['app_id']);	//testing application 1, 2
-
 	
 	//Add application
 	if (isset($_GET['add']) && intval($_GET['add'])==1){
@@ -86,7 +85,6 @@ if (isset($_GET['app_id'])){
 	//display
 	include(AT_INCLUDE_PATH.'header.inc.php');
 	$savant->assign('iframe_url', $iframe_url);
-	$savant->assign('gadget', $gadget);
 	$savant->assign('app', $app);
 	$savant->display('individual_application.tmpl.php');
 	include(AT_INCLUDE_PATH.'footer.inc.php');

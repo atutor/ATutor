@@ -48,7 +48,8 @@ TODOs:
 	So then the precondition = everyone before social module will have a privacy setting
 - Fix the AT_friends relationship, needs to implement this into the confirm friends section. For now, manually add it to the DB.
 - friends search needs to implement the resultset restrictions
-- search privacy control needs imporovement, all friends should be able to search them out, meaning if relationship = 1, then privacy control->disable()
+- search privacy control needs imporovement, all friends should be able to search them out, meaning if relationship = 1, then privacy
+  control->disable()
 - limit the memory a user can use for applications (either a total or as per)
 - Clean up at_activities after [duration] or [amount of activities]
 - [03.17.2009] Group invite.php, check if "I" have already invited this person, if so disable checkbox.
@@ -60,12 +61,8 @@ TODOs:
 - [03.18.2009] Maybe mouse over list and show a box of description, not sure about accessibility though...
 - [03.18.2009] Groups search, with filters. Do we need filters? Like do we need to search by category? I would think not. Just title suffices?
 - [03.19.2009] Fix all broken links, lots of links are dummy links.
-- [03.19.2009] support Logo upload
-- [03.19.2009] Message board needs to be implemented, on social group page.
-- [03.23.2009] Namespace all tables to "social_"
 - [03.23.2009] Find friends and Add friends should be separated.
 - [03.24.2009] Smarten the connection search, so that it lists different suggestions based on the checked flags.
-- [03.24.2009] create the index_mystart and index_public pages.
 - [03.25.2009] search within friends should always be enabled.  Make no sense to disable it
 - [03.25.2009] adds a group request feature where people click to join the group.  Group has its own properties, like the type? Open? Close?
 		open should allow eveyrone to join, and close requires ppl to approve
@@ -73,7 +70,12 @@ TODOs:
 - [03.31.2009] resize_image function might wanna be included in vitals?  It has already been used in several places.
 - [04.01.2009] Email: News Feeds; activities (cron based on last login, take all activities and send it to the user); 
 		contacts/groups invitations+requests. USe phpmailer. Create a mailer.class for this.
-- [04.03.2009] Maybe to make a general search($string, $member_obj_array) that takess any member obj array.  This can be used for friends search as well.  Optimize the code and structure a bit.
+- [04.03.2009] Maybe to make a general search($string, $member_obj_array) that takess any member obj array.  
+		This can be used for friends search as well.  Optimize the code and structure a bit.
+- [04.06.2009] All the .js file have to be relative links?  So far, the module will only work under pretty_url=off.  
+		To hack this, admin has to adjust container.js and change .php links to <your_installation>/*.php, 
+		ie. "set_prefs.php" to "/atutor/set_prefs.php"
+
 
 
 
@@ -397,3 +399,6 @@ Apr 3, 2009
 -----------
 - Application.class.php: cleaned up old codes that uses place holder in the app table.  Now uses member_app table
 - Gadget will now update itself upon user's 'Add application', iff the last_update < SOCIAL_APPLICATION_UPDATE_SCHEDULE
+- Applications are URL sensitive.  So if it's localhost, it will not work cause the gadget server is on social.atutor.ca.
+- container.js won't like the separator, it parses '&' instead of ';'
+- mods/social/lib/classes/Application.class.php, the SEP there breaks the iframe URL, and somehow Shindig have trouble parsing it. 

@@ -42,7 +42,7 @@ Container.prototype = {
 		if ($(this.f) != undefined) {
 			var params = gadgets.container._parseIframeUrl($(this.f).src);
 			//TODO use params.st to make the store request, it holds the owner / viewer / app id / mod id required
-			new Ajax.Request('./set_prefs.php', {method: 'get', parameters: { name: name, value: value, st: params.st }});
+			new Ajax.Request('./mods/social/set_prefs.php', {method: 'get', parameters: { name: name, value: value, st: params.st }});
 		}
 	},
 	
@@ -58,9 +58,9 @@ Container.prototype = {
 		if (view === 'home') {
 			return '/home';
 		} else if (view === 'profile') {
-			return '/profile/'+person;
+			return '/sprofile.php?id='+person;
 		} else if (view === 'canvas') {
-			return './applications.php?app_id='+app;
+			return './mods/social/applications.php?app_id='+app;
 		} else {
 			return null;
 		}

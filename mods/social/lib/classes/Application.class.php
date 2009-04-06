@@ -85,7 +85,7 @@ class Application extends Applications{
 				$sql = 'UPDATE '.TABLE_PREFIX."social_applications SET title='$title', height=$height, screenshot='$screenshot', thumbnail='$thumbnail', author='$author', author_email='$author_email', description='$description', settings='$userPrefs', views='$views', last_updated=NOW() WHERE url='$url'";
 				$result = mysql_query($sql, $db);
 				//echo $sql;
-			}			
+			}
 		} 
 
 		//Add a record into application_member table for mapping
@@ -286,14 +286,18 @@ class Application extends Applications{
 			  if (isset($user_settings[$key])) {
 				unset($user_settings[$key]);
 			  }
-			  $prefs .= SEP.'up_' . urlencode($key) . '=' . urlencode($value);
+			  //shindig doesn't like ';', it only takes '&' as of Apr 6th, 2009
+			  //$prefs .= SEP.'up_' . urlencode($key) . '=' . urlencode($value);
+			  $prefs .= '&up_' . urlencode($key) . '=' . urlencode($value);
 			}
 		}
 		foreach ($user_settings as $name => $value) {
 			// if some keys _are_ set in the db, but not in the gadget metadata, we still parse them on the url
 			// (the above loop unsets the entries that matched  
 			if (! empty($value) && ! isset($appParams[$name])) {
-			  $prefs .= SEP.'up_' . urlencode($name) . '=' . urlencode($value);
+			//shindig doesn't like ';', it only takes '&' as of Apr 6th, 2009
+			//$prefs .= SEP.'up_' . urlencode($name) . '=' . urlencode($value);
+			$prefs .= '&up_' . urlencode($name) . '=' . urlencode($value);
 			}
 		}
 
@@ -304,7 +308,7 @@ class Application extends Applications{
 						'default', // domain key, shindig will check for php/config/<domain>.php for container specific configuration
 						urlencode($this->getUrl()), // app url
 						$this->getModuleId());// mod id
-debug($securityToken);
+
 		$url = AT_SHINDIG_URL.'/gadgets/ifr?' 
 			. "synd=default" 
 			. "&container=default" 
