@@ -1,5 +1,5 @@
-<form method="post">
-		<? 
+<form method="post" action="<?php echo url_rewrite('mods/social/applications.php');?>">
+<? 
   if (! empty($this->settings)) {
     $settings = $this->settings;
     foreach ($settings as $key => $setting) {
@@ -17,23 +17,30 @@
           echo "</select>\n";
           break;
         case 'STRING':
-          echo "<input type=\"text\" name=\"$key\" value=\"$default\" />\n";
-          break;
-        case 'HIDDEN':
-          echo "<input type=\"hidden\" name=\"$key\" value=\"$default\" />\n";
-          break;
+			if (isset($this->user_settings[$key]) && $this->user_settings[$key]!=''){
+				$default=$this->user_settings[$key];
+			}
+			echo "<input type=\"text\" name=\"$key\" value=\"$default\" />\n";
+			break;
+		case 'HIDDEN':
+			//hide these for now so that they don't get saved?
+			//echo "<input type=\"hidden\" name=\"$key\" value=\"$default\" />\n";
+			break;
         case 'BOOL':
-          //TODO add radio boxes here, should they be yes / no?
-          break;
+			//TODO add radio boxes here, should they be yes / no?
+			break;
         case 'LIST':
-          //TODO not sure what to do with this one yet
-          break;
+			//TODO not sure what to do with this one yet
+			break;
         case 'NUMBER':
-          echo "<input type=\"text\" name=\"$key\" value=\"$default\" />\n";
-          break;
+			echo "<input type=\"text\" name=\"$key\" value=\"$default\" />\n";
+			break;
       }
       echo "</div>";
     }
-    echo "<br /><input type=\"submit\" value=\"Save\" />\n</form>\n";
   }
   ?>
+  <input type="hidden" name="app_id" value="<?php echo $this->app_id; ?>" />
+  <input type="hidden" name="app_settings" value="1" />
+  <input type="submit" value="<?php echo _AT('save');?>"/>
+</form>

@@ -54,7 +54,10 @@
 	-->
 		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'add=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_mygadgets');?>" title="<?php echo _AT('add_to_mygadgets');?>" border="0"/></a>
 	</div>
-	<div style="width:60%; margin-left:10em; padding-top:1.5em;"><?php echo $app_obj->getDescription(); ?></div>
+	<div style="width:60%; margin-left:10em; padding-top:1.5em;">
+		<?php echo $app_obj->getDescription(); ?><br/><br/>
+		<?php echo $app_obj->getUrl(); ?><br/>
+	</div>
 	<br/>
 </div>
 <?php endforeach; ?>
@@ -79,12 +82,14 @@
 	</div>
 
 	<div style="float: right;">
-	<!--
 		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'settings=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/icon-settings.png" alt="<?php echo _AT('settings');?>" title="<?php echo _AT('settings');?>" border="0"/></a>
-	-->
+	
 		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'delete=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete');?>" title="<?php echo _AT('delete');?>" border="0"/></a>
 	</div>
-	<div style="width:60%; margin-left:10em; padding-top:1.5em;"><?php echo $app_obj->getDescription(); ?></div>
+	<div style="width:60%; margin-left:10em; padding-top:1.5em;">
+		<?php echo $app_obj->getDescription(); ?><br/><br/>
+		<?php echo $app_obj->getUrl(); ?><br/>
+	</div>
 	
 </div>
 <?php endforeach; ?>

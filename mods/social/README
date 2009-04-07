@@ -75,7 +75,9 @@ TODOs:
 - [04.06.2009] All the .js file have to be relative links?  So far, the module will only work under pretty_url=off.  
 		To hack this, admin has to adjust container.js and change .php links to <your_installation>/*.php, 
 		ie. "set_prefs.php" to "/atutor/set_prefs.php"
-
+- [04.06.2009] Allow users to display the gadgets they wanna see on the home tab.  Not all.  And allow them to specify the 
+		order and arrangement.  Ideally done with fluid.
+- [04.06.2009] Settings for application needed. 
 
 
 
@@ -402,3 +404,12 @@ Apr 3, 2009
 - Applications are URL sensitive.  So if it's localhost, it will not work cause the gadget server is on social.atutor.ca.
 - container.js won't like the separator, it parses '&' instead of ';'
 - mods/social/lib/classes/Application.class.php, the SEP there breaks the iframe URL, and somehow Shindig have trouble parsing it. 
+- added gadget XML Url for quick insert testing purposes.
+- Gadget bugs:
+	- XML thumbnail: not full URL, either parse it to add the full URL, or to treat this as gadget developer 
+	error (check the opensocial first and make sure their spec disallow relative URL).  Print out a "no application" picture
+
+
+Apr 7, 2009
+-----------
+- Gadget related bugs fixed 

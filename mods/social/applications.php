@@ -39,6 +39,9 @@ if (isset($_POST['add_application']) && isset($_POST['app_url'])){
 	if (empty($gadget->errors)){
 		//add applicatoin to database
 		$app->addApplication($gadget);
+		$msg->addFeedback('GADGET_ADDED_SUCCESSFULLY');
+		header('Location: '. url_rewrite('mods/social/applications.php', AT_PRETTY_URL_IS_HEADER));
+		exit;
 	} else {
 	//	debug($gadget);
 	}
@@ -50,9 +53,9 @@ if (isset($_POST['show_applications'])){
 }
 
 //Display individual application
-if (isset($_GET['app_id'])){
-	$_GET['app_id'] = intval($_GET['app_id']);
-	$app = new Application($_GET['app_id']);	//testing application 1, 2
+if (isset($_REQUEST['app_id'])){
+	$_REQUEST['app_id'] = intval($_REQUEST['app_id']);
+	$app = new Application($_REQUEST['app_id']);	//testing application 1, 2
 	
 	//Add application
 	if (isset($_GET['add']) && intval($_GET['add'])==1){
@@ -74,8 +77,25 @@ if (isset($_GET['app_id'])){
 	if (isset($_GET['settings'])){
 		include(AT_INCLUDE_PATH.'header.inc.php');
 		$savant->assign('settings', $app->getSettings());	//userPrefs
+		$savant->assign('user_settings', $app->getApplicationSettings($_SESSION['member_id']));
+		$savant->assign('app_id', $app->getId());	//id
 		$savant->display('application_settings.tmpl.php');
 		include(AT_INCLUDE_PATH.'footer.inc.php');		
+		exit;
+	}
+
+	//Save settings
+	if (isset($_POST['app_settings'])){
+		foreach ($app->getSettings() as $key=>$value){
+			if(isset($_POST[$key])){
+				//save values iff it is in the userPrefs serialized string.
+				//don't save values blindly from the $_POST.
+				$value = $addslashes($_POST[$key]);
+				$app->setApplicationSettings($_SESSION['member_id'], $key, $value);
+			}
+		}
+		$msg->addFeedback('GADGET_SETTINGS_SAVED');
+		header('Location: '. url_rewrite('mods/social/applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 

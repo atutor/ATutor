@@ -165,7 +165,6 @@ class Application extends Applications{
 		$value		= $addslashes($value);
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES ($app_id, $member_id, '$key', '$value') ON DUPLICATE KEY UPDATE value='$value'";
-		echo($sql);
 		$result = mysql_query($sql, $db);
 
 		//TODO: Might want to add something here to throw appropriate exceptions
@@ -231,6 +230,9 @@ class Application extends Applications{
 	}
 
 	function getHeight(){
+		if ($this->height==0){
+			return 600;
+		}
 		return $this->height;
 	}
 
@@ -239,6 +241,12 @@ class Application extends Applications{
 	}
 
 	function getThumbnail(){
+		//check if this thumbnail link is a relative link
+		$url = parse_url($this->thumbnail);
+		if (!isset($url['scheme']) && !isset($url['host'])){
+			$orig_url = parse_url($this->getUrl());
+			return $orig_url['scheme'].'://'.$orig_url['host'].$this->thumbnail;
+		}
 		return $this->thumbnail;
 	}
 
