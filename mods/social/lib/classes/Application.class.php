@@ -316,7 +316,7 @@ class Application extends Applications{
 						'default', // domain key, shindig will check for php/config/<domain>.php for container specific configuration
 						urlencode($this->getUrl()), // app url
 						$this->getModuleId());// mod id
-
+//debug($securityToken);
 		$url = AT_SHINDIG_URL.'/gadgets/ifr?' 
 			. "synd=default" 
 			. "&container=default" 

@@ -41,6 +41,6 @@ $savant->assign('controller', $controller);
 $savant->assign('profile_prefs', $private_obj->getProfile());
 $savant->assign('search_prefs', $private_obj->getSearch());
 $savant->assign('application_prefs', $private_obj->getActivity());
-$savant->display('privacy_settings.tmpl.php');
+$savant->display('settings/privacy_settings.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

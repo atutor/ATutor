@@ -40,7 +40,7 @@ class PrivacyController{
 
 		//all values are 1 or 0, match the key to the field_id
 		if (is_array($pref_string) && !empty($pref_string)){		
-			return (isset($pref_string[$relationship]));
+			return (isset($pref_string[$relationship]) && $pref_string[$relationship]==1);
 		} else {
 			return false;
 		}
@@ -60,12 +60,17 @@ class PrivacyController{
 			return AT_SOCIAL_EVERYONE_VISIBILITY;
 		}
 
+		//is friend of friend?
+		if (isFriendOfFriend($id, $_SESSION['member_id'])==true){
+			return AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY;
+		}
+
 		$sql = 'SELECT relationship FROM '.TABLE_PREFIX."social_friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
 		$result = mysql_query($sql, $db);
 //		echo $sql;
 		if ($result){
 			list($relationship) = mysql_fetch_row($result);
-		}
+		}		
 
 		//If the relationship is not set, this implies that it's not in the table, 
 		//implying that the user has never set its privacy settings, meaning a default is needed

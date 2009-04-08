@@ -380,7 +380,7 @@ class Member {
 
 
 	/**
-	 * Delete interest
+	 * Delete associations
 	 */
 	function deleteAssociations(){
 		global $db;
@@ -391,7 +391,7 @@ class Member {
 
 	
 	/**
-	 * Delete interest
+	 * Delete awards
 	 */
 	function deleteAwards(){
 		global $db;

@@ -69,7 +69,8 @@ TODOs:
 - [03.31.2009] Tracks who has visited you.
 - [03.31.2009] resize_image function might wanna be included in vitals?  It has already been used in several places.
 - [04.01.2009] Email: News Feeds; activities (cron based on last login, take all activities and send it to the user); 
-		contacts/groups invitations+requests. USe phpmailer. Create a mailer.class for this.
+		contacts/groups invitations+requests. USe phpmailer. 
+		TODO: Create a mailer.class for this.
 - [04.03.2009] Maybe to make a general search($string, $member_obj_array) that takess any member obj array.  
 		This can be used for friends search as well.  Optimize the code and structure a bit.
 - [04.06.2009] All the .js file have to be relative links?  So far, the module will only work under pretty_url=off.  
@@ -77,7 +78,10 @@ TODOs:
 		ie. "set_prefs.php" to "/atutor/set_prefs.php"
 - [04.06.2009] Allow users to display the gadgets they wanna see on the home tab.  Not all.  And allow them to specify the 
 		order and arrangement.  Ideally done with fluid.
-- [04.06.2009] Settings for application needed. 
+- [04.06.2009] Settings for application needed. [done]
+- [04.07.2009] Need to bring user back to the PHP_SELF page.
+- [04.07.2009] Friends of friends needed --> determining relationship + friends u may know.  Need to build a decider...
+- [04.08.2009] Rearrange gadgets on home page via settings
 
 
 
@@ -413,3 +417,12 @@ Apr 3, 2009
 Apr 7, 2009
 -----------
 - Gadget related bugs fixed 
+
+
+Apr 8, 2009
+-----------
+- Added friend of friend privacy control + "people you may know" box
+- "People you may know" might need to have a "add to friend" button, but it will redirects us to connection.php which i don't want.
+- TODO: Somehow all the pages should know where to redirect pages to with the PHP_SELF 
+- Create settings pages for privacy control, account control, and application control.
+- For now, application settings should manage the ordering/show on desktop or not.

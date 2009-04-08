@@ -143,7 +143,7 @@
 		<div class="contentbox">
 			<?php foreach($this->friends as $friend_id): ?>													
 				<div style="float:left; margin-left:1em;">
-				<a href="mods/social/sprofile.php?id=<?php echo $friend_id;?>"><?php echo printSocialProfileImg($friend_id); ?></a>	<br/>
+				<?php echo printSocialProfileImg($friend_id); ?><br/>
 				<?php echo printSocialName($friend_id); ?>
 				</div>
 

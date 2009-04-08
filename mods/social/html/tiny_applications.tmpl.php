@@ -9,8 +9,14 @@
 	foreach ($this->list_of_my_apps as $id=>$app_obj): 
 ?>
 <div class="gadget_wrapper">
-<div class="headingbox"><a href="<?php echo $_base_href; ?>mods/social/applications.php?app_id=<?php echo $app_obj->getId().SEP;?>delete=1"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" border="0" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" style="float:right;" /></a>
-<h3><?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?></h3></div>
+<div class="headingbox">
+	<div style="float:right">
+		<a href="<?php echo $_base_href; ?>mods/social/applications.php?app_id=<?php echo $app_obj->getId().SEP;?>delete=1"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" border="0" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" style="float:right;" /></a>
+
+		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'settings=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/icon-settings.png" alt="<?php echo _AT('settings');?>" title="<?php echo _AT('settings');?>" border="0" style="float:right;" /></a>
+	</div>	
+	<h3><?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?></h3>
+</div>
 <div class="contentbox" style="padding:0.5em;">
 <?php
 	//the name and id here in the iframe is used by the container.js to identify the caller.
@@ -22,7 +28,7 @@
 	scrolling="<?=$this->gadget['scrolling'] || $this->gadget['scrolling'] == 'true' ? 'yes' : 'no'?>"
 	height="<?php echo $app_obj->getHeight();?>px" width="100%"
 	frameborder="no" src="<?php echo $app_obj->getIframeUrl($_SESSION['member_id'], 'profile', $_GET['appParams']);?>" class="gadgets-gadget"
-	name="remote_iframe_<?php echo $app_obj->getId(); ?>"
-	id="remote_iframe_<?php echo $app_obj->getId(); ?>"></iframe>	
+	name="remote_iframe_<?php echo $app_obj->getModuleId(); ?>"
+	id="remote_iframe_<?php echo $app_obj->getModuleId(); ?>"></iframe>	
 </div></div><br />
 <?php endforeach; ?>

@@ -10,6 +10,6 @@
 	scrolling="<?=$this->gadget['scrolling'] || $this->gadget['scrolling'] == 'true' ? 'yes' : 'no'?>"
 	height="<?php $app=$this->app; echo $app->getHeight();?>px"
 	frameborder="no" src="<?php echo $this->iframe_url;?>" class="gadgets-gadget"
-	name="remote_iframe_<?php echo $this->app->getModuleId();?>"
-	id="remote_iframe_<?php echo $this->app->getModuleId();?>"></iframe></div>
+	name="remote_iframe_<?php echo $this->app->getId();?>"
+	id="remote_iframe_<?php echo $this->app->getId();?>"></iframe></div>
 </div>

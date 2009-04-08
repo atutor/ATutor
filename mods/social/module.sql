@@ -318,7 +318,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','added_members','Current Gro
 INSERT INTO `language_text` VALUES ('en', '_module','not_added_members','Invite Group Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','edit_education','Edit Education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','admin_social','Social Network Settings',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','notification_new_contact','%s wants to add you to as a ATutor Social contact. Follow the link below to login and accept or reject the request. 
+INSERT INTO `language_text` VALUES ('en', '_module','people_you_may_know','People you may know',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','notification_new_contact','%s wants to add you to as a ATutor Social contact. Follow the link below to login and accept or reject the request. ', NOW(), '');
 
 ------
 Sent from ATutor Social at:

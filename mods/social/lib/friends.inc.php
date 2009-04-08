@@ -66,6 +66,77 @@ function getFriends($member_id, $limit=0){
 
 
 /**
+ * Decide rather these two people are strictly friend of friend.  If they are already friends, return false.
+ *
+ * @param	int		person A's member_id
+ * @param	int		person B's member_id
+ * @return	true if they are friend of friend.
+ */
+function isFriendOfFriend($member_a, $member_b){
+	$member_a = intval($member_a);
+	$member_b = intval($member_b);
+	$friends_of_a = getFriends($member_a);
+	
+	//if these two are already friends
+	if(isset($friends_of_a[$member_b])){
+		return false;
+	}
+	
+	$friends_of_b = getFriends($member_b);
+	$fof = array_intersect($friends_of_a, $friends_of_b);	//friends of friends
+
+	//If it is not empty or not null, then they have friends 
+	if (!empty($fof) > 0){
+		return true;
+	}
+	return false;
+}
+
+
+/**
+ * Get a list of people you may know
+ */
+function getPeopleYouMayKnow(){
+	global $db;
+	$counter = 0;
+	$people_you_may_know = array();
+
+	$sql = 'SELECT MAX(member_id) FROM '.TABLE_PREFIX.'members';
+	$result = mysql_query($sql, $db);
+	if ($result){
+		list($max_id) = mysql_fetch_array($result);
+	} else {
+		return null;
+	}
+	
+	//if we ran out of people, quit;
+	while($counter++ < $max_id){
+		//if we get enough people we might know, quit; 
+		if (sizeof($people_you_may_know) >= SOCIAL_NUMBER_OF_PEOPLE_YOU_MAY_KNOW){
+			break;
+		}
+		//get new random member
+		$random_member = rand(1, $max_id);	//seed is generated automatically since php 4.2.0
+
+		//if this person is myself, next
+		if ($random_member==$_SESSION['member_id']){
+			continue;
+		}
+
+		//if we have added this random number before, next.
+		if (in_array($random_member, $people_you_may_know)){
+			continue;
+		}
+
+		if (isFriendOfFriend($_SESSION['member_id'], $random_member)){
+			$people_you_may_know[] = $random_member;
+		}
+	}
+	return $people_you_may_know;
+}
+
+
+/**
  * Returns a list of "my" friend requests.
  * @return	array of friend requests
  */

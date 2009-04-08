@@ -41,7 +41,7 @@ if (sizeof($list_of_friends) > 0){
 	<li><a href="<?php echo url_rewrite('mods/social/sprofile.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('social_profile'); ?></a></li>
 	<li><a href="<?php echo url_rewrite('mods/social/applications.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('applications'); ?></a></li>
 	<li><a href="<?php echo url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('social_groups'); ?></a></li>
-	<li><a href="<?php echo url_rewrite('mods/social/privacy_settings.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('settings'); ?></a></li>
+	<li><a href="<?php echo url_rewrite('mods/social/settings.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('settings'); ?></a></li>
 </ul>
 
 <?php

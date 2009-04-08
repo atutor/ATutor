@@ -1,5 +1,6 @@
-<form action="<?php echo url_rewrite('mods/social/privacy_settings.php');?>" method="POST">
+<form action="<?php echo url_rewrite('mods/social/settings.php');?>" method="POST">
 <div class="input-form">
+<h4><?php echo _AT('privacy_settings'); ?></h4>
 <div class="row"><?php echo _AT('privacy_control_blurb'); ?> </div>
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('profile_control'); ?></legend>
 <div class="row">
@@ -131,6 +132,7 @@
 
 
 <div class="row">
+	<input type="hidden" name="n" value="privacy_settings" />
 	<input class="button" type="submit" name="submit" value="<?php echo _AT('save'); ?>"/>
 </div>
 </div>

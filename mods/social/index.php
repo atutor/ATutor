@@ -106,6 +106,31 @@ $savant->display('pubmenu.tmpl.php'); ?>
 		?>
 		
 	</div>
+	
+	<!-- people you may know -->
+	<?php 
+	$people_you_may_know = getPeopleYouMayKnow();	
+	if(!empty($people_you_may_know)):
+	?>
+	<div style="padding-top:1em;float:right;clear:right;width:39%;min-width:39%;">
+		
+		<div class="headingbox">
+			<h3><?php echo _AT('people_you_may_know'); ?></h3>
+		</div>
+		<div class="contentbox">
+		<?php foreach ($people_you_may_know as $index=>$id): ?>
+			<div style="width:100%;">
+				<div style="padding-bottom:0.2em;">
+					<?php echo printSocialProfileImg($id); ?>					
+					<?php echo printSocialName($id); ?>
+					<a href="mods/social/connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href; ?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0" style=""/></a>
+				</div>
+			</div>
+		<?php endforeach; ?>
+		</div>
+	</div>
+	<?php endif; ?>
+
 	<div style="float:right;clear:right;width:39%;min-width:39%;"><br />
 	<?php			
 		//if my groups array is not empty.

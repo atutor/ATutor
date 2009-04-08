@@ -50,5 +50,6 @@ define(AT_SOCIAL_NETWORK_VISIBILITY,				3);	//Network
 //Display control
 define('SOCIAL_FRIEND_ACTIVITIES_MAX', 10);			//Activity class constants
 define('SOCIAL_FRIEND_HOMEPAGE_MAX', 15);			//# of friends to display on the homepage contact's box
-define('SOCIAL_APPLICATION_UPDATE_SCHEDULE', 10)	//in days
+define('SOCIAL_APPLICATION_UPDATE_SCHEDULE', 10);	//in days
+define('SOCIAL_NUMBER_OF_PEOPLE_YOU_MAY_KNOW', 3);	//the number of "people you may know" to be displayed on the home tab
 ?>
