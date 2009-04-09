@@ -425,4 +425,6 @@ Apr 8, 2009
 - "People you may know" might need to have a "add to friend" button, but it will redirects us to connection.php which i don't want.
 - TODO: Somehow all the pages should know where to redirect pages to with the PHP_SELF 
 - Create settings pages for privacy control, account control, and application control.
-- For now, application settings should manage the ordering/show on desktop or not.
+- For now, application settings should manage the ordering/show on desktop or not.  Reason is to distinguish the "remove application" 
+  and "remove application from home" functionality.  The first one will clean the app data and the second one won't.
+- Deleting a gadget will remove ALl data, but removing it from sight won't.

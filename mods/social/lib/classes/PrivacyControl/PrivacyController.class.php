@@ -115,7 +115,7 @@ class PrivacyController{
 		global $db, $addslashes;
 
 		$member_id = intval($member_id);
-		$prefs = serialize($prefs);
+		$prefs = $addslashes(serialize($prefs));
 
 		//TODO: Change it back to update
 		$sql = 'REPLACE '.TABLE_PREFIX."social_privacy_preferences SET member_id=$member_id, preferences='$prefs'";

@@ -7,7 +7,8 @@
 		<div style="float:left;"><?php echo $app_obj->getTitle(); ?></div>
 		<div style="float:right;">
 			<label for="app_<?php echo $app_obj->getID();?>"><?php echo _AT('show_on_home_page'); ?></label>
-			<input type="checkbox" id="app_<?php echo $app_obj->getID();?>" name="app_<?php echo $app_obj->getID();?>" value="" />
+			<?php (isset($this->home_display[$id]))? $checked = ' checked="checked"': $checked = ''; ?>
+			<input type="checkbox" id="app_<?php echo $app_obj->getID();?>" name="app[<?php echo $app_obj->getID();?>]" value="1" <?php echo $checked; ?>/>
 		</div>
 		<div><br/></div>
 	</div>

@@ -192,6 +192,13 @@ CREATE TABLE `social_groups_board` (
 )
 ENGINE = MyISAM;
 
+# Settings
+CREATE TABLE `social_user_settings` (
+  `member_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `app_settings` TEXT NOT NULL,
+  PRIMARY KEY (`member_id`)
+)
+ENGINE = MyISAM;
 
 
 #====== Initial Data ========

@@ -49,11 +49,17 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='privacy_settings'){
 	$savant->assign('application_prefs', $private_obj->getActivity());
 	$savant->display('settings/privacy_settings.tmpl.php');
 } elseif (isset($_REQUEST['n']) && $_REQUEST['n']=='application_settings'){
-	//TODO
-	//Page prints from here
+	$app = new Application();
+	$apps = new Applications();
+	//handle application setting updates
+	if (isset($_POST['submit'])){
+		//Updates
+		$app->setHomeDisplaySettings($_POST['app']);
+		//TODO print message/feedback
+	}
 	
 	//initialization
-	$app = new Application();
+	$savant->assign('home_display', $apps->getHomeDisplaySettings());
 	$savant->assign('my_apps', $list_of_my_apps = $app->listMyApplications());
 	$savant->display('settings/application_settings.tmpl.php');
 } else {
