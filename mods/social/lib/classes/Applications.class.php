@@ -26,20 +26,24 @@ class Applications {
 
 	/** 
 	 * Retrieve a list of applications' titles
+	 * @param	boolean		true if we only want to list the applications that we allow via the settings, false otherwise.
 	 * @return hash of applications, id=>app obj
 	 */
-	function listMyApplications(){
+	function listMyApplications($use_settings=false){
 		global $db;
 		$hash = array();
 
 		$sql = 'SELECT id, title FROM '.TABLE_PREFIX.'social_applications a, (SELECT application_id FROM '.TABLE_PREFIX.'social_members_applications WHERE member_id='.$_SESSION['member_id'].') AS apps WHERE a.id=apps.application_id';
 		$result = mysql_query($sql, $db);
 		$home_settings = $this->getHomeDisplaySettings();
-
 		if ($result){
 			while($row = mysql_fetch_assoc($result)){
 				$app = new Application($row['id']);
-				
+				if($use_settings){
+					if(!isset($home_settings[$row['id']])){
+						continue;
+					}
+				}
 				$hash[$row['id']] = $app;
 			}
 		}

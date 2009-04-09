@@ -83,7 +83,7 @@ $savant->display('pubmenu.tmpl.php'); ?>
 
 			//applications/gagdets
 			$applications_obj = new Applications();
-			$savant->assign('list_of_my_apps', $applications_obj->listMyApplications());
+			$savant->assign('list_of_my_apps', $applications_obj->listMyApplications(true));
 			$savant->display('tiny_applications.tmpl.php');
 //			echo '<div class="gadget_wrapper">';
 //			echo '<div class="gadget_title_bar">Applications</div>';
