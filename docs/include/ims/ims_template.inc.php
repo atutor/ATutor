@@ -213,15 +213,20 @@ function print_organizations($parent_id,
 					}
 
 					$file_info = stat( $file_path );
+
+					//Fixes relative paths, so folder1/folder2/../file.jpg will become just folder1/file.jpg
+					$file_save_path = str_replace(AT_CONTENT_DIR . $course_id . '\\', '', $file_path);
+					$file_save_path = str_replace('\\', '/', $file_save_path);
+
 					//condition checks if the file has been added, so then the test won't be added to all the subchildren
 					//leads to normal images not capable to be extracted.
 					if ( (empty($test_zipped_files) || (is_array($test_zipped_files) && !in_array($file_path, $test_zipped_files))) 
 						 && file_exists($file_path)){
-						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
+						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $file_save_path, $file_info['mtime']);
 //						$test_zipped_files[] = $content['content_path'] . $file;
 						$test_zipped_files[] = $file_path;
 					} elseif (!is_array($test_zipped_files) && file_exists($file_path) && !in_array($file_path, $zipped_files)){
-						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
+						$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $file_save_path, $file_info['mtime']);
 					} 
 
 					//a4a secondary files have mapping, save the ones that we want in order to add the tag in
@@ -242,19 +247,19 @@ function print_organizations($parent_id,
 								$all_secondary_files_md .= $a4a_xml_array[$v];	//all the meta data								
 							}
 							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
-															array('resources/'.$content['content_path'] . $file, $all_secondary_files_md), 
+															array('resources/'.$file_save_path, $all_secondary_files_md), 
 															$ims_template_xml['file_meta']);
 						} else {	
 							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
-															array('resources/'.$content['content_path'] . $file, $a4a_xml_array[$file]), 
+															array('resources/'.$file_save_path, $a4a_xml_array[$file]), 
 															$ims_template_xml['file_meta']);
 						}
 					} else {
 						//if this file is in the test array, add an extra link to the direct file, 
 						if (!empty($test_zipped_files) && in_array($file_path, $test_zipped_files)){
-							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
+							$content_files .= str_replace('{FILE}', $file_save_path, $ims_template_xml['file']);
 						} else {
-							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+							$content_files .= str_replace('{FILE}', $file_save_path, $ims_template_xml['file']);
 						}
 					}
 				}

@@ -740,6 +740,14 @@ if ($package_base_path == '.') {
 	$package_base_path = '';
 }
 
+// loop through the files outside the package folder, and copy them to its relative path
+$handler = opendir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources');
+while ($file = readdir($handler)){
+	$filename = AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources/'.$file;
+	if(is_file($filename)){
+		@rename($filename, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$file);
+	}
+}
 if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
 		$msg->addError('IMPORT_FAILED');
