@@ -9,49 +9,7 @@ div .profile_container {
 div .profile_container .top_right {
 	float: right;
 }
-/*
 
-div .connection_container {
-	border:1px solid #ddd; 
-}
-*/
-
-
-/* Gadget window */
-/*
-div .gadget_wrapper{
-	margin-bottom: 1em;
-}
-div .gadget_title_bar {
-	background-color: #58583C;
-	color: #DEDEA4;
-	padding-left: 0.5em; 
-}
-div .gadget_title_bar a{
-	color: #DEDEA4;
-}
-
-
-div .gadget_container {
-	background-color: #DEDEC0;
-}
-div .contact_mini{
-	border-bottom: 1px solid white;
-	padding-bottom: 0.5em;
-	padding-top: 0.5em;
-}
-div .contact_mini ul, div .contact_mini ul li{
-	padding: 0;
-	padding-left: 0.5em;;
-	padding-right: 0.5em;
-	list-style: none;
-	display: inline;
-}
-div .contact_mini img{
-	border: none;
-}
-
-*/
 dl#public-profile {
 	white-space:nowrap;
 }
@@ -79,15 +37,15 @@ div .button:hover{
 
 /* Side menu */
 
-/*
+
 ul.social_side_menu {
-	padding-left: 0px;
+	padding-left: 2em;
 }
 ul.social_side_menu li {
 	padding-bottom: 0.2em;
-	list-style: none;
+	list-style: circle;
 }
-*/
+
 div .divider {
 	border-bottom:1px solid #C1C157; 
 	padding-bottom:0.5em; 
@@ -101,19 +59,22 @@ div .divider {
 }
 
 div.headingbox, h3.headingbox, a.headingbox{
-	border:1px black solid;
+	border:1px #cccccc solid;
 	padding:.2em;
-	background-color: #cccccc;
+	background-color: #eeeeee;
 	text-decoration:none;
+	line-height:1em;
+	font-size:.7em;
 }
 
 div.contentbox, input-form{
-	margin-left:1em;
-	border-left:1px black solid;
-	border-right:1px black solid;
-	border-bottom:1px black solid;
+	margin-left:.2em;
+	margin-right:.2em;
+	border-left:1px #cccccc solid;
+	border-right:1px #dddddd solid;
+	border-bottom:1px #cccccc solid;
 	padding:.5em;
-	background-color: #eeeeee;
+	background-color: #ffffff;
         overflow:hidden;
 }
 

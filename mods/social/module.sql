@@ -286,7 +286,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','add_new_position','Add new 
 INSERT INTO `language_text` VALUES ('en', '_module','education','Education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','add_new_education','Add new education',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','websites','Websites',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','add_new_websites','Add new website',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_new_website','Add new website',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','add_new_interest','Add new interest',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','add_new_association','Add new association',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','add_new_award','Add new award',NOW(),'');
