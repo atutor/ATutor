@@ -79,14 +79,13 @@
 				<div style="clear:both;"></div><br/>
 			</div>
 
-			<?php 
-			else:
-				echo _AT('none_found');
-			endif; ?>
+			<?php endif; ?>
 		<?php endif; ?>
 	</div>
 	<?php 
 		endforeach; 
+	else:
+		echo _AT('none_found');
 	endif;
 	?>
 	</div>
