@@ -79,7 +79,10 @@
 				<div style="clear:both;"></div><br/>
 			</div>
 
-			<?php endif; ?>
+			<?php 
+			else:
+				echo _AT('none_found');
+			endif; ?>
 		<?php endif; ?>
 	</div>
 	<?php 
