@@ -11,7 +11,7 @@
 	
 		<label for="<?php echo $title;?>"><?php echo _AT($title); ?></label>
 <div>
-		<textarea rows="4" cols="60" id="<?php echo $title;?>" name="<?php echo $title;?>" value="<?php echo $$title; ?>" /></textarea>
+		<textarea rows="4" cols="60" id="<?php echo $title;?>" name="<?php echo $title;?>" /><?php echo $$title; ?></textarea>
 	</div>
 	
 	<?php if (isset($this->id)): ?>
