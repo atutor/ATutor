@@ -29,6 +29,11 @@ class PrivacyController{
 	 * @return	boolean		True if access granted, false otherwise.
 	 */
 	function validatePrivacy($field_id, $relationship, $pref){
+		//if this is the owner, return true without question
+		if ($relationship==AT_SOCIAL_OWNER_VISIBILITY){
+			return true;
+		}
+
 		$pref_string = $pref[$field_id];
 //		debug($pref_string, $field_id);
 
@@ -57,7 +62,7 @@ class PrivacyController{
 
 		//if id = self, always true (cause i should be able to see my own profile)
 		if ($id == $_SESSION['member_id']){
-			return AT_SOCIAL_EVERYONE_VISIBILITY;
+			return AT_SOCIAL_OWNER_VISIBILITY;
 		}
 
 		//is friend of friend?

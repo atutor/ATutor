@@ -67,6 +67,7 @@ $savant->assign('scope', ($id!=$_SESSION['member_id']) ? 'viewer' : 'owner');
 $savant->assign('profile', $profile->getDetails());
 $savant->assign('education', $profile->getEducation());
 $savant->assign('position', $profile->getPosition());
+$savant->assign('websites', $profile->getWebsites());
 $savant->assign('friends', $friends);
 $savant->assign('activities', $activities);
 $savant->assign('prefs', $profile_prefs);
