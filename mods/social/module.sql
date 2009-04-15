@@ -331,6 +331,9 @@ INSERT INTO `language_text` VALUES ('en', '_module','application_control_blurb',
 INSERT INTO `language_text` VALUES ('en', '_module','show_on_home_page','Show on Home Page',NOW(),'')
 
 INSERT INTO `language_text` VALUES ('en', '_module','people_you_may_know','People you may know',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','account_settings','Account settings',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','application_settings','Application  settings',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','show_on_home_page','Show this gadget?',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','notification_new_contact','%s wants to add you to as a ATutor Social contact. Follow the link below to login and accept or reject the request. ', NOW(), '');
 
 ------

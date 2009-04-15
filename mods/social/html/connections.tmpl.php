@@ -87,8 +87,10 @@
 	endif;
 	?>
 	</div>
+	<!--
 	<div style="float:right;">
 		[-- TODO: Paginator --]
 	</div>
+	-->
 </div>
 

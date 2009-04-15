@@ -25,10 +25,12 @@
 		<dt><?php echo _AT('expertise'); ?></dt>
 		<dd><?php echo $this->profile['expertise']; ?></dd>
 		<?php }?>
-		<?php if($this->profile['email']){ ?>
+		<?php if ($this->relationship==AT_SOCIAL_FRIENDS_VISIBILITY): ?>
+		<?php if($this->profile['email']): ?>
 		<dt><?php echo _AT('email'); ?></dt>
 		<dd><?php echo $this->profile['email']; ?></dd>
-		<?php }?>
+		<?php endif; ?>
+		<?php endif; ?>
 		<?php if($this->profile['gender']){ ?>
 		<dt><?php echo _AT('gender'); ?></dt>
 		<dd><?php echo $this->profile['gender']; ?></dd>

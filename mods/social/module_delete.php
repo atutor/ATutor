@@ -18,7 +18,7 @@
  * the function must delete all module-specific material associated with this course.
  * $course is the ID of the course to delete.
  */
-
+/*
 function hello_world_delete($course) {
 	global $db;
 
@@ -30,5 +30,5 @@ function hello_world_delete($course) {
 	$path = AT_CONTENT_DIR .'hello_world/' . $course .'/';
 	clr_dir($path);
 }
-
+*/
 ?>

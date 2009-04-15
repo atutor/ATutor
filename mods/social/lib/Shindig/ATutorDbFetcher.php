@@ -532,7 +532,7 @@ class ATutorDbFetcher {
         $organizations = array();
         $fetchedOrg = false;
         if (isset($fields['jobs']) || isset($fields['@all'])) {
-		  $sql = "SELECT * FROM ". TABLE_PREFIX . "member_position WHERE member_id = ".$member_id;
+		  $sql = "SELECT * FROM ". TABLE_PREFIX . "social_member_position WHERE member_id = ".$member_id;
           $res2 = mysql_query($sql, $this->db);
           while ($row = mysql_fetch_assoc($res2)) {
             $organization = new Organization();

@@ -24,7 +24,7 @@
 	</div>
 </div>
 <div class="" style="float:left; width:59%">
-	<div class="headingbox"><h3><?php echo _AT('connections'); ?></h3></div>
+	<div class="headingbox"><h3><?php echo _AT('search_results'); ?></h3></div>
 	<div class="contentbox">
 	<?php 
 	if (!empty($this->friends)):
@@ -56,11 +56,15 @@
 	</div>
 	<?php 
 		endforeach; 
+		else: 
+			echo _AT('none_found');
 	endif;
 	?>
 	</div>
+	<!--
 	<div style="float:right;">
 		[-- TODO: Paginator --]
 	</div>
+	-->
 </div>
 

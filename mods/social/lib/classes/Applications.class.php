@@ -67,7 +67,10 @@ class Applications {
 	}
 
 	/**
-	 * Return the application link for this given id.
+	 * Return the <a> link of an application by the given id.
+	 * @param	string	the title/name of this application
+	 * @param	int		application id
+	 * @return	THe <a> tag link of the requested application.
 	 */
 	function getAppLink($title, $id){
 		return '<a href="'.url_rewrite('mods/social/applications.php?app_id='.$id) . '"><b>' . $title . '</b></a>';
@@ -76,6 +79,7 @@ class Applications {
 	
 	/** 
 	 * Get the home display setting 
+	 * @return	array of settings that define which gadget to be displayed on the social home page.
 	 */
 	function getHomeDisplaySettings(){
 		global $db;

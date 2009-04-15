@@ -71,7 +71,7 @@ if (isset($_GET['id'])){
 	if($id > 0){
 		addFriendRequest($id);
 		$msg->addFeedback('REQUEST_FRIEND_ADDED');
-/*		$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+		$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 		$result_notify = mysql_query($sql_notify, $db);
 		$row_notify = mysql_fetch_assoc($result_notify);
 
@@ -91,7 +91,7 @@ if (isset($_GET['id'])){
 			}
 			unset($mail);
 		}
-*/
+
 		header('Location: '.url_rewrite('mods/social/connections.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}

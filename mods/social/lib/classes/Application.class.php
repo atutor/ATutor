@@ -237,7 +237,7 @@ class Application extends Applications{
 	}
 
 	function getModuleId(){
-		return $this->module_id;
+		return intval($this->module_id);
 	}
 
 	function getHeight(){
@@ -321,7 +321,7 @@ class Application extends Applications{
 		}
 
 		//generate security token
-		$securityToken = BasicSecurityToken::createFromValues((isset($_REQUEST['id'])?$_REQUEST['id']:$_SESSION['member_id']), // owner
+		$securityToken = BasicSecurityToken::createFromValues(($oid > 0?$oid:$_SESSION['member_id']), // owner
 						$_SESSION['member_id'], // viewer
 						$this->getId(), // app id
 						'default', // domain key, shindig will check for php/config/<domain>.php for container specific configuration
