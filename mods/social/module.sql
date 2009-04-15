@@ -70,8 +70,8 @@ CREATE TABLE `social_member_position` (
   `member_id` INTEGER UNSIGNED NOT NULL,
   `title` VARCHAR(255) NOT NULL,
   `company` VARCHAR(255) NOT NULL,
-  `from` INTEGER(6) NOT NULL DEFAULT 0,
-  `to` INTEGER(6) NOT NULL DEFAULT 0,
+  `from` VARCHAR(10) NOT NULL DEFAULT 0,
+  `to` VARCHAR(10) NOT NULL DEFAULT 0,
   `description` TEXT,
   PRIMARY KEY (`id`)
 )
@@ -86,8 +86,8 @@ CREATE TABLE `social_member_education` (
   `province` VARCHAR(128),
   `degree` VARCHAR(64),
   `field` VARCHAR(64),
-  `from` INTEGER(4) NOT NULL DEFAULT 0,
-  `to` INTEGER(4) NOT NULL DEFAULT 0,
+  `from` VARCHAR(10) NOT NULL DEFAULT 0,
+  `to` VARCHAR(10) NOT NULL DEFAULT 0,
   `description` TEXT NOT NULL,
   PRIMARY KEY (`id`)
 )

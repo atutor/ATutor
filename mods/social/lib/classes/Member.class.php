@@ -39,11 +39,11 @@ class Member {
 		$member_id	= $this->id;
 		$company	= $addslashes($company);
 		$title		= $addslashes($title);
-		$from		= intval($from);
-		$to			= intval($to);
+		$from		= $addslashes($from);
+		$to			= $addslashes($to);
 		$description = $addslashes($description);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_position (member_id, company, title, `from`, `to`, description) VALUES ($member_id, '$company', '$title', $from, $to, '$description')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_position (member_id, company, title, `from`, `to`, description) VALUES ($member_id, '$company', '$title', '$from', '$to', '$description')";
 		mysql_query($sql, $db);
 	}
 
@@ -66,15 +66,15 @@ class Member {
 		global $addslashes, $db;
 		$member_id			= $this->id;
 		$university			= $addslashes($university);
-		$from				= intval($from);
-		$to					= intval($to);
+		$from				= $addslashes($from);
+		$to					= $addslashes($to);
 		$country			= $addslashes($country);
 		$province			= $addslashes($province);
 		$degree				= $addslashes($degree);
 		$field				= $addslashes($field);
 		$description		= $addslashes($description);
 		
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_education (member_id, university, `from`, `to`, country, province, degree, field, description) VALUES ($member_id, '$university', $from, $to, '$country', '$province', '$degree', '$field', '$description')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_education (member_id, university, `from`, `to`, country, province, degree, field, description) VALUES ($member_id, '$university', '$from', '$to', '$country', '$province', '$degree', '$field', '$description')";
 		mysql_query($sql, $db);
 	}
 
@@ -158,11 +158,11 @@ class Member {
 		$id			 = intval($id);
 		$company	 = $addslashes($company);
 		$title		 = $addslashes($title);
-		$form		 = intval($form);
-		$to			 = intval($to);
+		$form		 = $addslashes($form);
+		$to			 = $addslashes($to);
 		$description = $addslashes($description);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_position SET company='$company', title='$title', `from`=$from, `to`=$to, description='$description' WHERE id=$id";
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_position SET company='$company', title='$title', `from`='$from', `to`='$to', description='$description' WHERE id=$id";
 		mysql_query($sql, $db);
 	}
 
@@ -185,15 +185,15 @@ class Member {
 		global $addslashes, $db;
 		$id					= intval($id);
 		$university			= $addslashes($university);
-		$from				= intval($from);
-		$to					= intval($to);
+		$from				= $addslashes($from);
+		$to					= $addslashes($to);
 		$country			= $addslashes($country);
 		$province			= $addslashes($province);
 		$degree				= $addslashes($degree);
 		$field				= $addslashes($field);
 		$description		= $addslashes($description);
 
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_education SET university='$university', `from`=$from, `to`=$to, country='$country', province='$province', degree='$degree', field='$field', description='$description' WHERE id=$id";
+		$sql = 'UPDATE '.TABLE_PREFIX."social_member_education SET university='$university', `from`='$from', `to`='$to', country='$country', province='$province', degree='$degree', field='$field', description='$description' WHERE id=$id";
 		mysql_query($sql, $db);		
 	}
 

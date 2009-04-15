@@ -44,8 +44,8 @@ if (isset($_POST['submit'])){
 		if ($_POST['edit']=='position'){
 			$company	 = $addslashes($_POST['company']);
 			$title		 = $addslashes($_POST['title']);
-			$from		 = intval($_POST['from']);
-			$to			 = intval($_POST['to']);
+			$from		 = $addslashes($_POST['from']);
+			$to			 = $addslashes($_POST['to']);
 			$description = $addslashes($_POST['description']);
 			$member->updatePosition($id, $company, $title, $from, $to, $description);			
 		} elseif ($_POST['edit']=='education'){
@@ -54,8 +54,8 @@ if (isset($_POST['submit'])){
 			$province	 = $addslashes($_POST['province']);
 			$degree		 = $addslashes($_POST['degree']);
 			$field		 = $addslashes($_POST['field']);
-			$from		 = intval($_POST['from']);
-			$to			 = intval($_POST['to']);
+			$from		 = $addslashes($_POST['from']);
+			$to			 = $addslashes($_POST['to']);
 			$description = $addslashes($_POST['description']);
 			$member->updateEducation($id, $university, $from, $to, $country, $province, $degree, $field, $description);
 		} elseif ($_POST['edit']=='websites'){
@@ -76,8 +76,8 @@ if (isset($_POST['submit'])){
 		if ($_POST['add']=='position'){
 			$company	 = $addslashes($_POST['company']);
 			$title		 = $addslashes($_POST['title']);
-			$from		 = intval($_POST['from']);
-			$to			 = intval($_POST['to']);
+			$from		 = $addslashes($_POST['from']);
+			$to			 = $addslashes($_POST['to']);
 			$description = $addslashes($_POST['description']);
 			$member->addPosition($company, $title, $from, $to, $description);
 		} elseif ($_POST['add']=='education'){
@@ -86,8 +86,8 @@ if (isset($_POST['submit'])){
 			$province	 = $addslashes($_POST['province']);
 			$degree		 = $addslashes($_POST['degree']);
 			$field		 = $addslashes($_POST['field']);
-			$from		 = intval($_POST['from']);
-			$to			 = intval($_POST['to']);
+			$from		 = $addslashes($_POST['from']);
+			$to			 = $addslashes($_POST['to']);
 			$description = $addslashes($_POST['description']);
 			$member->addEducation($university, $from, $to, $country, $province, $degree, $field, $description);
 		} elseif ($_POST['add']=='websites'){
