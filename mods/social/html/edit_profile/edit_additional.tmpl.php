@@ -8,9 +8,10 @@
 ?>
 <form method="POST" action="<?php echo url_rewrite('mods/social/edit_profile.php'); ?>">
 <div>
-	<div>
+	
 		<label for="<?php echo $title;?>"><?php echo _AT($title); ?></label>
-		<input type="text" size="100" id="<?php echo $title;?>" name="<?php echo $title;?>" value="<?php echo $$title; ?>" />
+<div>
+		<textarea rows="4" cols="60" id="<?php echo $title;?>" name="<?php echo $title;?>" value="<?php echo $$title; ?>" /></textarea>
 	</div>
 	
 	<?php if (isset($this->id)): ?>
@@ -19,7 +20,7 @@
 	<?php else: ?>	
 	<input type="hidden" name="add" value="<?php echo $title; ?>" />
 	<?php endif; ?>
-	<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
-	<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" class="button"/>
+	<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button"/>
 </div>
 </form>
