@@ -252,7 +252,7 @@ class Member {
 			$sql = substr($sql, 0, -2);
 		}
 
-		$sql2 = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET ".$sql." WHERE member_id=".$_SESSION['member_id'];
+		$sql2 = 'REPLACE '.TABLE_PREFIX."social_member_additional_information SET ".$sql.", member_id=".$_SESSION['member_id'];
 		mysql_query($sql2, $db);
 	}
 
