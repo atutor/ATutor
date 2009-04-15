@@ -30,7 +30,7 @@
 		<dt><?php echo _AT('expertise'); ?></dt>
 		<dd><?php echo $this->profile['expertise']; ?></dd>
 		<?php }?>
-		<?php if ($this->relationship==AT_SOCIAL_FRIENDS_VISIBILITY): ?>
+		<?php if ($this->relationship==AT_SOCIAL_FRIENDS_VISIBILITY || $this->relationship==AT_SOCIAL_OWNER_VISIBILITY): ?>
 		<?php if($this->profile['email']): ?>
 		<dt><?php echo _AT('email'); ?></dt>
 		<dd><?php echo $this->profile['email']; ?></dd>
