@@ -402,8 +402,3 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ACCEPT_GROUP_REQU
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REJECT_GROUP_REQUEST','Request to join group was rejected.',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LEFT_GROUP_SUCCESSFULLY','Successfully removed from group.',NOW(),'');
-
-
-
-
-

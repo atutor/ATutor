@@ -149,17 +149,23 @@
 	<div class="headingbox" style="width:250;">
 		<h4><?php echo _AT('activities'); ?></h4></div>
 	<div class="contentbox" id="activity">
-		<ul>
-			<?php
+			<?php if(!empty($this->activities)) : ?>
+			<ul>
+			<?php 
 				foreach($this->activities as $activity){
 					if ($_SESSION['member_id']== $this->profile['member_id']){
 						echo '<li>'._AT('you').' '.$activity.'</li>';
 					} else {
 						echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';	
 					}
-				}							
+				}
+				?>
+			</ul>
+			<?php 
+				else:
+					echo _AT('none_found');
+				endif; 
 			?>
-		</ul>
 	</div><br />
 	<?php endif; ?>
 

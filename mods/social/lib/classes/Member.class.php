@@ -252,7 +252,7 @@ class Member {
 			$sql = substr($sql, 0, -2);
 		}
 
-		$sql2 = 'REPLACE '.TABLE_PREFIX."social_member_additional_information SET ".$sql.", member_id=".$_SESSION['member_id'];
+		$sql2 = 'INSERT INTO '.TABLE_PREFIX."social_member_additional_information SET ".$sql.", member_id=".$_SESSION['member_id'] . " ON DUPLICATE KEY UPDATE ".$sql;
 		mysql_query($sql2, $db);
 	}
 

@@ -86,7 +86,7 @@
 		<strong><?php echo _AT('awards'); ?></strong><br/>
 		<?php if (!empty($this->profile['awards'])): ?>
 		<div class="profile_container">
-			<div class="top_right" style="border:thin #cccccc solid;"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=awards'.SEP.'id='.$row['id']); ?>"><img src="<?php echo $_base_href; ?>mods/social/images/edit_profile.gif" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>" border="0" /></a>  <a href="<?php echo url_rewrite('mods/social/edit_profile.php?delete=awards'); ?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('remove'); ?> ?>" title="<?php echo _AT('remove'); ?>" border="0" /></div>
+			<div class="top_right" style="border:thin #cccccc solid;"><a href="<?php echo url_rewrite('mods/social/edit_profile.php?edit=awards'.SEP.'id='.$row['id']); ?>"><img src="<?php echo $_base_href; ?>mods/social/images/edit_profile.gif" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>" border="0" /></a>  <a href="<?php echo url_rewrite('mods/social/edit_profile.php?delete=awards'); ?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('remove'); ?> ?>" title="<?php echo _AT('remove'); ?>" border="0" /></a></div>
 			<div><?php echo $this->profile['awards']; ?></div>
 		</div>
 		<?php else: ?>
