@@ -330,8 +330,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','admin_social','Social Netwo
 
 INSERT INTO `language_text` VALUES ('en', '_module','application_settings','Gadget Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','application_control_blurb','Choose which gadgets to display on your networking home page.',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','show_on_home_page','Show on Home Page',NOW(),'')
-INSERT INTO `language_text` VALUES ('en', '_module','group_last_updated','Last Updated ',NOW(),'')
+INSERT INTO `language_text` VALUES ('en', '_module','show_on_home_page','Show on Home Page',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_last_updated','Last Updated ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','people_you_may_know','People you may know',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','account_settings','Account settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','application_settings','Application  settings',NOW(),'');
