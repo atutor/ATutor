@@ -3,9 +3,7 @@
 ?>
 	
 <div class="headingbox">
-	<?php if ($this->scope=='owner'): ?>
 
-	<?php endif; ?>
 	<h3><?php echo printSocialName($this->profile['member_id'], false); ?></h3>
 </div>	
 <div class="contentbox">
@@ -14,9 +12,14 @@
 	</div>
 	<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_PROFILE, $this->relationship, $this->prefs)): ?>
 	<div>
+	<?php if ($this->scope=='owner'): ?>
 	<div style="float:left; border:thin #cccccc solid;">
 		<a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><img src="<?php echo $_base_href; ?>mods/social/images/edit_profile.gif" alt="<?php echo _AT('edit_profile'); ?>" title="<?php echo _AT('edit_profile'); ?>" border="0"/></a>
 	</div><br />
+	<?php endif; ?>
+
+
+
 	<h4><?php echo _AT('social_profile'); ?></h4>
 	<dl id="public-profile">
 		<?php if($this->profile['occupation']){ ?>
@@ -149,23 +152,17 @@
 	<div class="headingbox" style="width:250;">
 		<h4><?php echo _AT('activities'); ?></h4></div>
 	<div class="contentbox" id="activity">
-			<?php if(!empty($this->activities)) : ?>
-			<ul>
-			<?php 
+		<ul>
+			<?php
 				foreach($this->activities as $activity){
 					if ($_SESSION['member_id']== $this->profile['member_id']){
 						echo '<li>'._AT('you').' '.$activity.'</li>';
 					} else {
 						echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';	
 					}
-				}
-				?>
-			</ul>
-			<?php 
-				else:
-					echo _AT('none_found');
-				endif; 
+				}							
 			?>
+		</ul>
 	</div><br />
 	<?php endif; ?>
 
