@@ -4,8 +4,7 @@
 	
 <div class="headingbox">
 	<?php if ($this->scope=='owner'): ?>
-	<div style="float:right;">
-	<a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><img src="<?php echo $_base_href; ?>mods/social/images/edit_profile.gif" alt="<?php echo _AT('edit_profile'); ?>" title="<?php echo _AT('edit_profile'); ?>" border="0"/></a> </div>
+
 	<?php endif; ?>
 	<h3><?php echo printSocialName($this->profile['member_id'], false); ?></h3>
 </div>	
@@ -15,6 +14,8 @@
 	</div>
 	<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_PROFILE, $this->relationship, $this->prefs)): ?>
 	<div>
+	<div style="float:left; border:thin #cccccc solid;">
+	<a href=<?php echo url_rewrite("mods/social/edit_profile.php");?>><img src="<?php echo $_base_href; ?>mods/social/images/edit_profile.gif" alt="<?php echo _AT('edit_profile'); ?>" title="<?php echo _AT('edit_profile'); ?>" border="0"/></a> </div><br />
 	<h4><?php echo _AT('social_profile'); ?></h4>
 	<dl id="public-profile">
 		<?php if($this->profile['occupation']){ ?>
