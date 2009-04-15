@@ -302,6 +302,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','local_network','Local Netwo
 INSERT INTO `language_text` VALUES ('en', '_module','world_network','World Network',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','basic_profile','Basic Profile',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','detailed_profile','Detailed Profile',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','show_all','show all',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','profile_control','Profile Visability',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','no_gadgets_installed','You have not installed any gadgets yet.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','privacy_control_blurb','Controls who can see your profile and related information.',NOW(),'');
