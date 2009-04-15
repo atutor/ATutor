@@ -48,7 +48,10 @@
 				<dd><?php echo count($group_obj->getGroupMembers());?></dd>				
 			</dl>
 		</div>
-		<?php endforeach; endif;?>
+		<?php endforeach; 
+		else: 
+			echo _AT('none_found');
+		endif;?>
 	</div>
 
 </div>
