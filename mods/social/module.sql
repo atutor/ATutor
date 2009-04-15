@@ -303,6 +303,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','world_network','World Netwo
 INSERT INTO `language_text` VALUES ('en', '_module','basic_profile','Basic Profile',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','detailed_profile','Detailed Profile',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','profile_control','Profile Visability',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','no_gadgets_installed','You have not installed any gadgets yet.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','privacy_control_blurb','Controls who can see your profile and related information.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','search_visibility','Search Visibility',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','search_profile','Search Profile',NOW(),'');
