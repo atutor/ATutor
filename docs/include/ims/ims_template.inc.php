@@ -215,7 +215,7 @@ function print_organizations($parent_id,
 					$file_info = stat( $file_path );
 
 					//Fixes relative paths, so folder1/folder2/../file.jpg will become just folder1/file.jpg
-					$file_save_path = str_replace(AT_CONTENT_DIR . $course_id . '\\', '', $file_path);
+					$file_save_path = str_replace(AT_CONTENT_DIR . $course_id . DIRECTORY_SEPARATOR, '', $file_path);
 					$file_save_path = str_replace('\\', '/', $file_save_path);
 
 					//condition checks if the file has been added, so then the test won't be added to all the subchildren
