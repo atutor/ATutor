@@ -13,7 +13,9 @@
 // $Id$
 
 /* each table to be backed up. includes the sql entry and fields */
-
+/*
+ * TODO: decide how to back up all the social data
+ *
 $dirs = array();
 $dirs['hello_world/'] = AT_CONTENT_DIR . 'hello_world' . DIRECTORY_SEPARATOR;
 
@@ -27,5 +29,5 @@ function hello_world_convert($row, $course_id, $table_id_map, $version) {
 
 	return $new_row;
 }
-
+*/
 ?>
