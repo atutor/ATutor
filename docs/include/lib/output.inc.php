@@ -113,7 +113,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 
 	if ($format_type == AT_DATE_INDEX_VALUE) {
 		// apply timezone offset
-		apply_timezone($timestamp);
+		$timestamp = apply_timezone($timestamp);
 	
 		if ($format == '%D') {
 			return _AT($day_name_con[$timestamp-1]);
@@ -152,7 +152,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	}
 
 	// apply timezone offset
-	apply_timezone($timestamp);
+	$timestamp = apply_timezone($timestamp);
 
 	/* pull out all the %X items from $format */
 	$first_token = strpos($format, '%');
