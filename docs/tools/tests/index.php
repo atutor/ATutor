@@ -155,11 +155,11 @@ $cols=6;
 				if (mysql_num_rows($result_sub) == 0) {
 					echo _AT('everyone');
 				} else {
-					$row_sub = mysql_fetch_assoc($result_sub);
-					echo $row_sub['title'];
-					do {
-						echo ', '.$row_sub['title'];
-					} while ($row_sub = mysql_fetch_assoc($result_sub));
+					$assigned_groups = '';
+					while ($row_sub = mysql_fetch_assoc($result_sub)) {
+						$assigned_groups .= $row_sub['title'].', ';
+					}
+					echo substr($assigned_groups, 0, -2);
 				}				
 				?>
 			</td>
