@@ -103,6 +103,15 @@ CREATE TABLE `social_member_websites` (
 )
 ENGINE = MyISAM;
 
+# Tracks visitor counts
+CREATE TABLE `social_member_track` (
+  `member_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+  `visitor_id` INTEGER UNSIGNED NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`member_id`, `visitor_id`, `timestamp`)
+)
+ENGINE = MyISAM;
+
 # Person additional information cojoint with the members table
 CREATE TABLE `social_member_additional_information` (
   `member_id` INTEGER UNSIGNED NOT NULL,

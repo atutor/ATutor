@@ -48,7 +48,7 @@ class Activity{
 
 
 	/** 
-	 * Retrieve activity from the database
+	 * Retrieve this user's activity
 	 * 
 	 * @param	int		user id.
 	 * @param	boolean	set TRUE to display all entry		

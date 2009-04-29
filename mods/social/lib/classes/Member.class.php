@@ -143,6 +143,18 @@ class Member {
 	}
 
 
+	/** 
+	 * Add visitor
+	 * @param	int		visitor id
+	 */
+	function addVisitor($visitor_id){
+		global $db;
+		$visitor_id = intval($visitor_id);
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_track (`member_id`, `visitor_id`, `timestamp`) VALUES (".$this->getID().", $visitor_id, NOW())";
+		mysql_query($sql, $db);
+	}
+
+
 	/**
 	 * Update a new job position
 	 * @param	int			The id of this entry
@@ -329,6 +341,24 @@ class Member {
 			}
 		}
 		return $websites;
+	}
+
+
+	/**
+	 * Get visitor counts
+	 * TODO: Potentially, can return the list of visitors as well.
+	 * @return	the count of all visitors on this page
+	 */
+	function getVisitors(){
+		global $db;
+		$now = time() - 60*60*30;	//month?  why 30, 'cause average is 30.5 days per month in a year.
+
+		$sql = 'SELECT COUNT(visitor_id) AS count UNIX_TIMESTAMP(timestamp) AS time FROM '.TABLE_PREFIX.'social_member_track WHERE member_id='.$this->id;
+		$result = mysql_query($sql, $db);
+		if ($result){
+			list($count) = mysql_fetch_array($result);
+		}
+		return $count;
 	}
 
 	

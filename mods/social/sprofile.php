@@ -47,6 +47,11 @@ $activities = $act_obj->getActivities($id);
 // Member object
 $profile = new Member($id);
 
+// Tracks
+if ($profile->getID() != $_SESSION['member_id']){
+	$profile->addVisitor($_SESSION['member_id']);
+}
+
 // Privacy Controller
 $pc = new PrivacyController();
 $privacy_obj = $pc->getPrivacyObject($id);

@@ -57,7 +57,7 @@
 						$member_obj = new Member($id);
 						$profile = $member_obj->getDetails();
 						echo printSocialName($id) . '<br/>';
-						echo $profile['country'] . ' ' . $profile['province'] . '<br/>';
+						echo $profile['province'] . ' ' . $profile['country'] . '<br/>';
 					?>
 				</div>
 				<div style="clear:both;"></div><br/>
