@@ -39,7 +39,8 @@
 		else
 			$selected_time_zone = $_SESSION['prefs']['PREF_TIMEZONE'];
 
-		echo '<input type="text" name="time_zone" value="'.$selected_time_zone.'" size="4"/>';
+		echo '<input type="text" name="time_zone" value="'.$selected_time_zone.'" size="4"/>&nbsp;&nbsp;';
+		echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 		?>
 	</div>
 	
