@@ -32,7 +32,7 @@ function getFriends($member_id, $limit=0){
 	//All member_id = member_id, and All friend_id = member_id
 	$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$member_id.' OR F.friend_id='.$member_id.')';
 	if ($limit > 0){
-		$sql .= ' LIMIT '.$limit;
+		$sql .= ' ORDER BY RAND() LIMIT '.$limit;
 	}
 	$result = mysql_query($sql, $db);
 

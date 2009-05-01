@@ -108,6 +108,11 @@ class Application extends Applications{
 		$result = mysql_query($sql, $db);
 
 		if ($result){
+			//Add this to the home page
+			$home_settings = $this->getHomeDisplaySettings();
+			$home_settings[$app_id] = 1;	//manually set this application
+			$this->setHomeDisplaySettings($home_settings);
+
 			$act = new Activity();		
 			$act->addActivity($_SESSION['member_id'], '', $app_id);
 			unset($act);
@@ -169,18 +174,6 @@ class Application extends Applications{
 
 		//TODO: Might want to add something here to throw appropriate exceptions
 		return $result;
-	}
-
-	/**
-	 * To determine which application to show on the home tab
-	 * Save the settings in serialized format.
-	 * @param	mixed		settings array. [note: upgrade this to  an object if needed later on]
-	 */
-	function setHomeDisplaySettings($settings){
-		global $db, $addslashes;
-		$settings = $addslashes(serialize($settings));
-		$sql = 'REPLACE INTO '.TABLE_PREFIX."social_user_settings SET app_settings='".$settings."', member_id=".$_SESSION['member_id'];
-		$result = mysql_query($sql, $db);
 	}
 
 
@@ -391,6 +384,13 @@ class Application extends Applications{
 		//delete application data?
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_application_settings WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
 		$rs = mysql_query($sql);
+
+		//delete application settings
+		$home_settings = $this->getHomeDisplaySettings();
+		if (isset($home_settings[$this->id])){			
+			unset($home_settings[$this->id]);
+			$this->setHomeDisplaySettings($home_settings);
+		}
 
 		return $rs;
 	}

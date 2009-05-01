@@ -154,13 +154,16 @@
 	<div class="contentbox" id="activity">
 		<ul>
 			<?php
-				foreach($this->activities as $activity){
+				foreach($this->activities as $id=>$activity){
 					if ($_SESSION['member_id']== $this->profile['member_id']){
-						echo '<li>'._AT('you').' '.$activity.'</li>';
+						echo '<li>'._AT('you');
+						echo ' '.$activity.' ';
+						echo '<a href="'.url_rewrite('mods/social/sprofile.php?delete='.$id).'"><img src="'.$_base_href.'mods/social/images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a></li>';
 					} else {
-						echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';	
+						echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';
 					}
-				}							
+					
+				}
 			?>
 		</ul>
 	</div><br />
@@ -171,13 +174,30 @@
 		<h5><?php echo _AT('connections'); ?></h5>
 	</div>
 	<div class="contentbox">
-		<?php foreach($this->friends as $friend_id): ?>													
+		<?php if (sizeof($this->friends)>0):
+				foreach($this->friends as $friend_id): ?>													
 			<div style="float:left; margin-left:1em;">
 			<?php echo printSocialProfileImg($friend_id); ?><br/>
 			<?php echo printSocialName($friend_id); ?>
 			</div>
+		<?php 	endforeach;
+			else: 
+				echo _AT('no_friends');
+			endif; ?>
+	</div><br/>
 
+	<?php if (isset($this->mutual_friends)): ?>
+	<div class="headingbox">
+		<h5><?php echo _AT('mutual_connections'); ?></h5>
+	</div>
+	<div class="contentbox">
+		<?php foreach($this->mutual_friends as $friend_id): ?>
+			<div style="float:left; margin-left:1em;">
+			<?php echo printSocialProfileImg($friend_id); ?><br/>
+			<?php echo printSocialName($friend_id); ?>
+			</div>
 		<?php endforeach; ?>
 	</div>
+	<?php endif; //this->mutual_friends != empty ?>
 	<?php endif; ?>
 </div>

@@ -66,6 +66,20 @@ class Applications {
 		return $hash;
 	}
 
+
+	/**
+	 * To determine which application to show on the home tab
+	 * Save the settings in serialized format.
+	 * @param	mixed		settings array. [note: upgrade this to  an object if needed later on]
+	 */
+	function setHomeDisplaySettings($settings){
+		global $db, $addslashes;
+		$settings = $addslashes(serialize($settings));
+		$sql = 'REPLACE INTO '.TABLE_PREFIX."social_user_settings SET app_settings='".$settings."', member_id=".$_SESSION['member_id'];
+		$result = mysql_query($sql, $db);
+	}
+
+
 	/**
 	 * Return the <a> link of an application by the given id.
 	 * @param	string	the title/name of this application

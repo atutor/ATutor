@@ -79,13 +79,19 @@ class Activity{
 	 * Remove an activity
 	 *
 	 * @param	int		user id
+	 * @return	true if activity is deleted.
 	 */
 	function deleteActivity($id){
 		global $db;
 
 		$id = intval($id);
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_activities WHERE id='.$id;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_activities WHERE member_id='.$_SESSION['member_id'].' AND id='.$id;
 		mysql_query($sql, $db);
+		if (mysql_affected_rows() > 0){
+			return true;
+		} else  {
+			return false;
+		}
 	}
 
 	
@@ -93,15 +99,19 @@ class Activity{
 	 * Retrieve friends' recent activities
 	 *
 	 * @param	int		user id
+	 * @param	boolean	set TRUE to display all entry		
 	 * @return	The array of description of all the activities of the given user's friends.
 	 */
-	 function getFriendsActivities($id){
+	 function getFriendsActivities($id, $displayAll=false){
 		global $db;
 		$activities = array();
 
 		$friends = getFriends($id);	
 		$friends_ids = implode(', ', array_keys($friends));
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_activities WHERE member_id IN ('.$friends_ids.') ORDER BY created_date DESC LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_activities WHERE member_id IN ('.$friends_ids.') ORDER BY created_date DESC';
+		if (!$displayAll){
+			$sql .= ' LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
+		}
 		$result = mysql_query($sql, $db);
 
 		if ($result){

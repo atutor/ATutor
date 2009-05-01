@@ -98,7 +98,8 @@ $savant->display('pubmenu.tmpl.php'); ?>
 			<h3><?php echo _AT('visitor_counts'); ?>: 
 			<?php 
 				$user = new Member($_SESSION['member_id']); 
-				echo $user->getVisitors();
+				$count = $user->getVisitors();
+				echo $count['total'];
 			?>
 			</h3>
 		</div>
@@ -116,15 +117,14 @@ $savant->display('pubmenu.tmpl.php'); ?>
 			$savant->assign('group_requests', getGroupRequests());
 			$savant->assign('pending_requests', getPendingRequests());
 			$savant->display('friend_list.tmpl.php'); 
-		?>
-		
+		?>		
 	</div>
-	
-	<!-- people you may know -->
+		
 	<?php 
 	$people_you_may_know = getPeopleYouMayKnow();	
 	if(!empty($people_you_may_know)):
 	?>
+	<!-- people you may know -->
 	<div style="padding-top:1em;float:right;clear:right;width:39%;min-width:39%;">
 		
 		<div class="headingbox">
@@ -143,7 +143,7 @@ $savant->display('pubmenu.tmpl.php'); ?>
 		</div>
 	</div>
 	<?php endif; ?>
-
+	<!-- groups -->
 	<div style="float:right;clear:right;width:39%;min-width:39%;"><br />
 	<?php			
 		//if my groups array is not empty.

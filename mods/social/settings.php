@@ -35,16 +35,17 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 	$savant->display('settings/account_settings.tmpl.php');
 } elseif (isset($_REQUEST['n']) && $_REQUEST['n']=='application_settings'){
 	$app = new Application();
-	$apps = new Applications();
 	//handle application setting updates
 	if (isset($_POST['submit'])){
 		//Updates
 		$app->setHomeDisplaySettings($_POST['app']);
 		//TODO print message/feedback
+		$msg->addFeedback('SETTINGS_UPDATED');
+		$msg->printAll();
 	}
 	
 	//initialization
-	$savant->assign('home_display', $apps->getHomeDisplaySettings());
+	$savant->assign('home_display', $app->getHomeDisplaySettings());
 	$savant->assign('my_apps', $list_of_my_apps = $app->listMyApplications());
 	$savant->display('settings/application_settings.tmpl.php');
 } else {
@@ -59,6 +60,8 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 		PrivacyController::updatePrivacyPreference($_SESSION['member_id'], $private_obj);
 
 		//TODO print message/feedback
+		$msg->addFeedback('SETTINGS_UPDATED');
+		$msg->printAll();
 	}
 
 	//Page prints from here

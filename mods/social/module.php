@@ -95,6 +95,9 @@ $this->_pages['mods/social/connections.php']['parent'] = 'mods/social/index.php'
 //	$this->_pages['mods/social/add_friends.php']['title_var'] = 'add_friends';
 //	$this->_pages['mods/social/add_friends.php']['parent'] = 'mods/social/connections.php';
 
+$this->_pages['mods/social/activities.php']['title_var'] = 'activities';
+$this->_pages['mods/social/activities.php']['parent'] = 'mods/social/index.php';
+
 $this->_pages['mods/social/settings.php']['title_var'] = 'settings';
 $this->_pages['mods/social/settings.php']['parent'] = 'mods/social/index.php';
 

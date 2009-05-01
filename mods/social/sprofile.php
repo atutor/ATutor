@@ -40,6 +40,14 @@ if ($id=='' || $id==0){
 // Get member friends
 $friends = getFriends($id);
 
+// Get mutual friends
+if ($id!=$_SESSION['member_id']){
+	$my_friends = getFriends($_SESSION['member_id']);
+	$mutual_friends = array_intersect($friends, $my_friends);
+} else {
+	$mutual_friends = array();
+}
+
 // Get activities	
 $act_obj = new Activity();
 $activities = $act_obj->getActivities($id);
@@ -65,9 +73,26 @@ if ($privacy_obj==null){
 	$profile_prefs = $privacy_obj->getProfile();
 }
 
+// Delete activities
+if (isset($_GET['delete'])){
+	$id = intval($_GET['delete']);
+	if ($id > 0){
+		if ($act_obj->deleteActivity($id)){
+			$msg->addFeedBack('ACTIVITY_DELETED');
+		} else {
+			$msg->addError('ACTIVITY_DELETE_FAILED');
+		}
+		header('Location: '.url_rewrite('mods/social/sprofile.php', AT_PRETTY_URL_HEADER));
+		exit;
+	}
+}
+
 // Display
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->display('pubmenu.tmpl.php');
+if (!empty($mutual_friends)){
+	$savant->assign('mutual_friends', $mutual_friends);
+}
 $savant->assign('scope', ($id!=$_SESSION['member_id']) ? 'viewer' : 'owner');
 $savant->assign('profile', $profile->getDetails());
 $savant->assign('education', $profile->getEducation());

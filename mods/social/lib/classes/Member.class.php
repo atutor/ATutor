@@ -345,18 +345,33 @@ class Member {
 
 
 	/**
-	 * Get visitor counts
-	 * TODO: Potentially, can return the list of visitors as well.
-	 * @return	the count of all visitors on this page
+	 * Get visitor counts within a month, the resultant array contains a daily, weekly, monthly, and a total count.
+	 * @return	the count of all visitors on this page, within a month. 
 	 */
 	function getVisitors(){
 		global $db;
-		$now = time() - 60*60*30;	//month?  why 30, 'cause average is 30.5 days per month in a year.
+		$count = array();	
+		//Time offsets
+		$month	= time() - 60*60*30;	//month
+		$week	= time() - 60*60*7;		//week
+		$day	= time() - 60*60;		//day
 
-		$sql = 'SELECT COUNT(visitor_id) AS count UNIX_TIMESTAMP(timestamp) AS time FROM '.TABLE_PREFIX.'social_member_track WHERE member_id='.$this->id;
+		$sql = 'SELECT visitor_id, UNIX_TIMESTAMP(timestamp) AS `time` FROM '.TABLE_PREFIX.'social_member_track WHERE member_id='.$this->id;
+
 		$result = mysql_query($sql, $db);
 		if ($result){
-			list($count) = mysql_fetch_array($result);
+			while ($row = mysql_fetch_assoc($result)){
+				if($row['time'] > $week && $row['time'] <= $month){
+					$count['month']++;
+				} elseif ($row['time'] > $day && $row['time'] <= $week){
+					$count['week']++;
+				} elseif ($row['time'] <= $day){
+					$count['day']++;
+				} else {
+					continue;
+				}
+				$count['total']++;
+			}
 		}
 		return $count;
 	}
