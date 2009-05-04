@@ -22,7 +22,7 @@ if (!empty($this->friends)): ?>
 			</div>
 			-->
 			<div style="width:110px; float:left; padding-bottom:0.2em;">
-				<a href="mods/social/sprofile.php?id=<?php echo $id;?>"><?php echo printSocialProfileImg($id); ?></a><br />
+				<?php echo printSocialProfileImg($id); ?><br />
 				<?php echo printSocialName($id); ?>
 			</div>
 		</div>

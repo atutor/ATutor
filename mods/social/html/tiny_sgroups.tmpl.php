@@ -16,7 +16,7 @@
 
 			<div class="box">
 				<?php echo $grp_obj->getLogo(); ?>
-				<a href="mods/social/groups/view.php?id=<?php echo $grp;?>"><h4><?php echo $grp_obj->getName(); ?></h4></a><br/>
+				<a href="<?php echo url_rewrite('mods/social/groups/view.php?id='.$grp);?>"><h4><?php echo $grp_obj->getName(); ?></h4></a><br/>
 				<?php echo _AT('type') .': '. $grp_obj->getGroupType();?><br/>
 				<?php echo _AT('description') .': '. $grp_obj->getDescription();?><br/>
 			</div><br />

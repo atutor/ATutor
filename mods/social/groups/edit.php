@@ -181,6 +181,10 @@ if (isset($_POST['save'])){
 			$msg->addFeedback('GROUP_EDIT_FAILED');
 		}
 	}
+} elseif (isset($_POST['cancel'])){
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+	exit;
 }
 
 //Display

@@ -71,6 +71,7 @@ if (isset($this->group_obj)){
 		<div class="row">
 			<input type="hidden" name="id" value="<?php echo $id;?>" /?>
 			<input class="button" type="submit" name="<?php echo $button_name; ?>" value="<?php echo _AT($button_name); ?>" />	
+			<input class="button" type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />	
 		</div>
 	</form>
 </div>

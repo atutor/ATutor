@@ -62,10 +62,14 @@
 				</div>
 				<div style="clear:both;"></div><br/>
 			</div>
-			
+
 		<?php else: ?>
 			<?php if (!isset($_POST['myFriendsOnly'])): ?>
+			<?php if ($person['pending']==1): ?>	
+			<div style="float:right;"><?php echo _AT('pending'); ?></div>
+			<?php else: ?>
 			<div style="float:right;"><a href="mods/social/connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href; ?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0"/></a> </div>
+			<?php endif; ?>
 			<div>
 				<div style="float:left;"><?php echo printSocialProfileImg($id); ?></div>
 				<div style="padding-left:0.5em; float:left;">

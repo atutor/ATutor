@@ -100,6 +100,7 @@ function getPeopleYouMayKnow(){
 	global $db;
 	$counter = 0;
 	$people_you_may_know = array();
+	$pending_requests = getPendingRequests(true);
 
 	$sql = 'SELECT MAX(member_id) FROM '.TABLE_PREFIX.'members';
 	$result = mysql_query($sql, $db);
@@ -123,6 +124,12 @@ function getPeopleYouMayKnow(){
 			continue;
 		}
 
+		//if this person is already on pending, next.
+		if (isset($pending_requests[$random_member])){
+			continue;
+		}
+		
+
 		//if we have added this random number before, next.
 		if (in_array($random_member, $people_you_may_know)){
 			continue;
@@ -137,22 +144,28 @@ function getPeopleYouMayKnow(){
 
 
 /**
- * Returns a list of "my" friend requests.
+ * Returns a list of friend requests to me/by me depends on the flag
+ * @param	flag, true for requests made by me, false for requests made to me. DEFAULT: false
  * @return	array of friend requests
  */
-function getPendingRequests(){
+function getPendingRequests($request_by_me=false){
 	global $db;
 	/* NOTE: This table is not bilinear, unlike the friends table.
 	 * In this table, please do not be confused, member_id is the one who requests
 	 * friend_id is the member that needs to approve/reject.  Thus, when we want to retrieve 
 	 * pending requests, we need to pull entries from friend_id.
 	 */
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_friend_requests WHERE friend_id='.$_SESSION['member_id'];
+	
+	if ($request_by_me==true) {
+		$sql = 'SELECT friend_id AS id FROM '.TABLE_PREFIX.'social_friend_requests WHERE member_id='.$_SESSION['member_id'];
+	} else {
+		$sql = 'SELECT member_id AS id FROM '.TABLE_PREFIX.'social_friend_requests WHERE friend_id='.$_SESSION['member_id'];
+	}
 	$rs = mysql_query($sql, $db);
 
 	//myself=> pending objs
 	while($row = mysql_fetch_assoc($rs)){
-		$requests[$row['member_id']] =	new Member($row['member_id']);
+		$requests[$row['id']] =	new Member($row['id']);
 	}
 	return $requests;
 }
@@ -345,11 +358,19 @@ function searchFriends($name, $searchMyFriends = false){
  function markFriends($id, $connections){
 	//get all friends
 	$my_friends = getFriends($id);
+	$pending_requests = getPendingRequests(true);
 
 	foreach($my_friends as $friends){
 		//if it is in the connection, set the attribute
 		if($connections[$friends] != null){
 			$connections[$friends]['added'] = 1;
+		} 
+	}
+
+	foreach ($pending_requests as $friends=>$garbage){
+		//if it is already added, set pending =1
+		if ($pending_requests[$friends] != null){
+			$connections[$friends]['pending'] = 1;
 		}
 	}
 	return $connections;
@@ -566,7 +587,7 @@ function printSocialProfileImg($id) {
  * @return	the hyperlink to the profile
  */
 function getProfileLink($id, $str){
-	$link = '<a href="mods/social/sprofile.php?id='.$id.'">';
+	$link = '<a href="'.url_rewrite('mods/social/sprofile.php?id='.$id).'">';
 	$link .= $str;
 	$link .= '</a>';
 	return $link;
