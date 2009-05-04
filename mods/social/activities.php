@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: connections.php 8435 2009-04-15 14:50:42Z hwong $
+// $Id$
 $_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../include/');
