@@ -15,43 +15,30 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
-if ($_POST['desc_submit']) {
+if ($_POST['make_decision']) 
+{
 	//get list of decisions	
 	$desc_query = '';
 	if (is_array($_POST['d'])) {
-		for($i=0; $i<count($_POST['d']); $i++) {
-			$desc_query .= '&'.$i.'='.$_POST['d'][$i];
+		foreach ($_POST['d'] as $sequenceID => $decision) {
+			$desc_query .= '&'.$sequenceID.'='.$decision;
 		}
+	}
 
-		$checker_url = AT_ACHECKER_URL. 'decisions;'
-					.'jsessionid='.$_POST['sessionid']
-					.'?file='.urlencode($_POST['pg_url'])
-					.'&output=chunk'
-					.'&name='.urlencode(get_display_name($_SESSION['member_id']))
-					.'&email='.urlencode(AT_BASE_HREF)
-					.$desc_query;
+	$checker_url = AT_ACHECKER_URL. 'decisions.php?'
+				.'uri='.urlencode($_POST['pg_url']).'&id='.AT_ACHECKER_WEB_SERVICE_ID
+				.'&session='.$_POST['sessionid'].'&output=html'.$desc_query;
 
-		if (@file_get_contents($checker_url) === false) {
-			$msg->addInfo('DECISION_NOT_SAVED');
-		}
-
-	} else {
+	if (@file_get_contents($checker_url) === false) {
 		$msg->addInfo('DECISION_NOT_SAVED');
 	}
-} else if (isset($_POST['reverse'])) {
-	list($achecker_id, $achecker_element, $achecker_identifier) = explode('_', key($_POST['reverse']), 3);
-
-	$reverse_url = AT_ACHECKER_URL . 'decisions;'
-					.'jsessionid='.$_POST['sessionid']
-					.'?file='.urlencode($_POST['pg_url'])
-					.'&lang=eng'
-					.'&reverse=true'
-					.$achecker_element
-					.$achecker_identifier
-					.'&checkid='.$achecker_id;
-
-
-
+} 
+else if (isset($_POST['reverse'])) 
+{
+	$reverse_url = AT_ACHECKER_URL. 'decisions.php?'
+				.'uri='.urlencode($_POST['pg_url']).'&id='.AT_ACHECKER_WEB_SERVICE_ID
+				.'&session='.$_POST['sessionid'].'&output=html&reverse=true&'.key($_POST['reverse']).'=N';
+	
 	if (@file_get_contents($reverse_url) === false) {
 		$msg->addInfo('DECISION_NOT_REVERSED');
 	} else {
@@ -80,13 +67,12 @@ if ($_POST['desc_submit']) {
 
 			$pg_url = AT_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
 
-			$checker_url = AT_ACHECKER_URL.'Checkacc?file='.urlencode($pg_url)
-							. '&guide=wcag-2-0-aa&output=chunk&line=5'
-							. '&vurl=' . urlencode(AT_BASE_HREF . 'editor/view_item.php');
+			$checker_url = AT_ACHECKER_URL.'checkacc.php?uri='.urlencode($pg_url).'&id='.AT_ACHECKER_WEB_SERVICE_ID
+							. '&guide=WCAG2-L2&output=html&offset=10';
 
 			$report = @file_get_contents($checker_url);
 
-			if ($report == 1) {
+			if (stristr($report, '<div id="error">')) {
 				$msg->printErrors('INVALID_URL');
 			} else if ($report === false) {
 				$msg->printInfos('SERVICE_UNAVAILABLE');

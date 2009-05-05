@@ -608,7 +608,9 @@ function write_temp_file() {
 			<title>{TITLE}</title>
 			<meta name="Generator" content="ATutor accessibility checker file - can be deleted">
 		</head>
-		<body>{CONTENT}</body>
+		<body>
+		{CONTENT}
+		</body>
 		</html>';
 
 		$page_html = str_replace(	array('{BASE_HREF}', '{TITLE}', '{CONTENT}'),
