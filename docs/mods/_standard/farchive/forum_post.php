@@ -45,7 +45,7 @@ $head = "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
         'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
       <html xmlns='http://www.w3.org/1999/xhtml' lang='en' xml:lang='en'>";
 
-$head .= "<head><link rel=StyleSheet href='styles.css' type='text/css' media='screen'><title>Exported Forum</title></head><body>";
+$head .= "<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8' /><link rel=StyleSheet href='styles.css' type='text/css' media='screen'><title>Exported Forum</title></head><body>";
 
 $tmpfile = AT_CONTENT_DIR."/exported_forum.html";
 $main = fopen($tmpfile, "w");

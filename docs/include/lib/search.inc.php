@@ -23,7 +23,7 @@ function score_cmp($a, $b) {
 
 
 function get_search_result($words, $predicate, $course_id, &$num_found, &$total_score){
-	global $_pages; 
+	global $_pages, $moduleFactory; 
 
 	$search_results			= array();
 	$content_search_results = array();
@@ -36,10 +36,12 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 			$search_results = $content_search_results;
 		} elseif ($_GET['search_within'] == 'forums'){
 			$forums_search_results = get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
-			// if course_id is not being set, then the search doesn't have to check if the forum has been disabled
+			// get all enabled modules
+			$modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
+			// if forum has been disabled, don't search in it. 
 			if (isset($_SESSION['course_id']) && $_SESSION['course_id']==0){
 				$search_results = $forums_search_results;
-			} elseif (in_array('forum/list.php', $_pages[AT_NAV_HOME])){
+			} elseif (isset($modules['_standard/forums'])){
 				$search_results = $forums_search_results;
 			}
 		} else {
