@@ -1,16 +1,8 @@
 	<div class="headingbox"><h3><?php echo _AT('my_groups'); ?></h3></div>
 	<div class="contentbox">
-		<?php 
-		//randomize index 
-		$added_groups = array();
-		for ($i=0; sizeof($added_groups)<SOCIAL_GROUP_HOMEPAGE_MAX ; $i++): 
-			$grp = $this->my_groups[rand(0, sizeof($this->my_groups)-1)];
-			if (in_array($grp, $added_groups)){
-				continue;
-			} else {
-				$added_groups[] = $grp;
-			}
+		<?php foreach ($this->my_groups as $i=>$grp): 
 			$grp_obj = new SocialGroup($grp);
+
 		?>
 		<div class="contact_mini">
 			<?php if ($grp_obj->getUser() == $_SESSION['member_id']): ?>
@@ -29,7 +21,7 @@
 				<?php echo _AT('description') .': '. $grp_obj->getDescription();?><br/>
 			</div><br />
 		</div>
-		<?php endfor; ?>
+		<?php endforeach; ?>
 		<?php		
 		if(!$grp){ 
 			echo _AT('no_groups_yet');

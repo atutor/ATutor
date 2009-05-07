@@ -149,7 +149,18 @@ $savant->display('pubmenu.tmpl.php'); ?>
 		//if my groups array is not empty.
 		$social_group = new SocialGroups();
 		$my_groups = $social_group->getMemberGroups($_SESSION['member_id']);
-		$savant->assign('my_groups', $my_groups);
+		$random_groups = array();
+		for ($i=0; sizeof($random_groups)<SOCIAL_GROUP_HOMEPAGE_MAX ; $i++){
+			$grp = $my_groups[rand(0, sizeof($my_groups)-1)];
+			if (in_array($grp, $random_groups)){
+				continue;
+			} else {
+				$random_groups[] = $grp;
+			}
+		}
+		//assign
+		$savant->assign('my_groups', $random_groups);
+		$savant->assign('randomize_groups', true);
 		$savant->display('tiny_sgroups.tmpl.php');
 	?>
 	</div>
