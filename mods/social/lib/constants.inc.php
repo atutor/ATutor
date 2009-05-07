@@ -13,8 +13,8 @@
 // $Id$
 
 //Constants Declaration
-define(AT_SHINDIG_URL,						'http://localhost/shindig/php');
-//define(AT_SHINDIG_URL,						'http://social.atutor.ca/shindig/php');
+//define(AT_SHINDIG_URL,						'http://localhost/shindig/php');
+define(AT_SHINDIG_URL,						'http://social.atutor.ca/shindig/php');
 
 //Privacy Control Constants, field indices
 //Profile
@@ -48,8 +48,9 @@ define(AT_SOCIAL_NETWORK_VISIBILITY,				3);	//Network
 define(AT_SOCIAL_OWNER_VISIBILITY,					4);	//Myself
 
 //Display control
-define('SOCIAL_FRIEND_ACTIVITIES_MAX', 10);			//Activity class constants
-define('SOCIAL_FRIEND_HOMEPAGE_MAX', 15);			//# of friends to display on the homepage contact's box
-define('SOCIAL_APPLICATION_UPDATE_SCHEDULE', 10);	//in days
-define('SOCIAL_NUMBER_OF_PEOPLE_YOU_MAY_KNOW', 3);	//the number of "people you may know" to be displayed on the home tab
+define('SOCIAL_FRIEND_ACTIVITIES_MAX',				10); //Activity class constants
+define('SOCIAL_FRIEND_HOMEPAGE_MAX',				15); //# of friends to display on the homepage contact's box
+define('SOCIAL_GROUP_HOMEPAGE_MAX',					3); //# of friends to display on the homepage contact's box
+define('SOCIAL_APPLICATION_UPDATE_SCHEDULE',		10); //in days
+define('SOCIAL_NUMBER_OF_PEOPLE_YOU_MAY_KNOW',		3);	 //the number of "people you may know" to be displayed on the home tab
 ?>

@@ -151,11 +151,13 @@ if (isset($_POST['create'])){
 		$group_id = $social_groups->addGroup($_POST['group_type'], $_POST['group_name'], $_POST['description']);
 		if($group_id){
 			//Add the logo in now that we have the group id. And rename the old one.
-			$new_group = new SocialGroup($group_id);
-			$new_group->updateGroupLogo($group_id . '.' . $extension);
-			$new_location = AT_CONTENT_DIR.'social/'. $group_id . '.' . $extension;
-			copy($thumbnail_img, $new_location);
-			unlink($thumbnail_img);
+			if ($thumbnail_img!=''){			
+				$new_group = new SocialGroup($group_id);
+				$new_group->updateGroupLogo($group_id . '.' . $extension);
+				$new_location = AT_CONTENT_DIR.'social/'. $group_id . '.' . $extension;
+				copy($thumbnail_img, $new_location);
+				unlink($thumbnail_img);
+			}
 			$msg->addFeedback('GROUP_CREATED');
 			header('Location: index.php');
 			exit;
