@@ -154,8 +154,9 @@ function getPendingRequests($request_by_me=false){
 	 * In this table, please do not be confused, member_id is the one who requests
 	 * friend_id is the member that needs to approve/reject.  Thus, when we want to retrieve 
 	 * pending requests, we need to pull entries from friend_id.
-	 */
-	
+	 */	
+	$requests = array();
+
 	if ($request_by_me==true) {
 		$sql = 'SELECT friend_id AS id FROM '.TABLE_PREFIX.'social_friend_requests WHERE member_id='.$_SESSION['member_id'];
 	} else {
@@ -267,7 +268,7 @@ function removeFriend($friend_id){
  *
  * TODO: search needs work.  Order by the most matches to the least matches
  */ 
-function searchFriends($name, $searchMyFriends = false){
+function searchFriends($name, $searchMyFriends = false, $offset=-1){
 	global $db, $addslashes;
 	$result = array(); 
 	$my_friends = array();
@@ -282,11 +283,16 @@ function searchFriends($name, $searchMyFriends = false){
 	$query = substr($query, 0, -4);
 
 	//If searchMyFriend is true, return the "my friends" array
+	//If the member_id is empty, (this happens when we are doing a search without logging in) then get all members?
 	//else, use "my friends" array to distinguish which of these are already in my connection
-	$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].') AND ';
-	$sql .= $query;
-	$sql .= ' UNION ';
-	$sql .= 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.member_id=M.member_id WHERE (F.friend_id='.$_SESSION['member_id'].') AND ';
+	if(!isset($_SESSION['member_id'])){
+		$sql = 'SELECT member_id FROM '.TABLE_PREFIX.'members WHERE ';
+	} else {
+		$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].') AND ';
+		$sql .= $query;
+		$sql .= ' UNION ';
+		$sql .= 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.member_id=M.member_id WHERE (F.friend_id='.$_SESSION['member_id'].') AND ';
+	}
 	$sql .= $query;
 
 	$rs = mysql_query($sql, $db);
@@ -314,21 +320,25 @@ function searchFriends($name, $searchMyFriends = false){
 		* Harris' note:
 		* IF the 'search my friend' is off, then it should search all members inside that table
 		* don't know why i did the search inside [friends x members]
+		* Also this query is gonna pull out all members cept 'myself'
 		* end note;
 		*/
 		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE ';
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members M WHERE ';
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members M WHERE member_id!='.$_SESSION['member_id'].' AND ';
 	}
 	$sql = $sql . $query;
+	if ($offset >= 0){
+		$sql .= " LIMIT $offset, ". SOCIAL_FRIEND_SEARCH_MAX;
+	}
 	$rs = mysql_query($sql, $db);
 
 	//Get all members out
 	while($row = mysql_fetch_assoc($rs)){
-		if ($row['member_id']==$_SESSION['member_id']){
-			$this_id = $row['friend_id'];
-		} else {
+//		if ($row['member_id']==$_SESSION['member_id']){
+//			$this_id = $row['friend_id'];
+//		} else {
 			$this_id = $row['member_id'];
-		}
+//		}
 
 		//skip empty entry, don't know why there would be empty entry. 
 		//TODO: Trace this. could be a bug in query
@@ -336,7 +346,8 @@ function searchFriends($name, $searchMyFriends = false){
 			continue;
 		}
 
-		$temp =& $result[$this_id];		
+		$temp =& $result[$this_id];	
+		$temp['id'] = $this_id;
 //		$temp['first_name'] = $row['first_name'];
 //		$temp['last_name'] = $row['last_name'];
 
@@ -369,7 +380,7 @@ function searchFriends($name, $searchMyFriends = false){
 
 	foreach ($pending_requests as $friends=>$garbage){
 		//if it is already added, set pending =1
-		if ($pending_requests[$friends] != null){
+		if ($connections[$friends] != null){
 			$connections[$friends]['pending'] = 1;
 		}
 	}

@@ -163,12 +163,17 @@ class SocialGroups{
 	
 	/**
 	 * Get ALL of a person's groups
+	 * @param	int	the groups that this member is in.
+	 * @param	int	the index of which the entry to get
 	 */
-	 function getMemberGroups($member_id){
+	 function getMemberGroups($member_id, $offset=-1){
 		 global $db;
 		 $my_groups = array();
 
 		 $sql = 'SELECT group_id FROM '.TABLE_PREFIX.'social_groups_members WHERE member_id='.$member_id;
+		 if ($offset >= 0){
+			$sql .= " LIMIT $offset, ".SOCIAL_GROUP_MAX;
+		 }
 		 $result = mysql_query($sql, $db);
 		 if ($result){
 			 while($row = mysql_fetch_assoc($result)){

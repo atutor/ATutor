@@ -273,16 +273,31 @@ class Member {
 	 * Get member info
 	 */
 	function getDetails(){
+		global $db;
 		$sql =	'SELECT core.*, T.interests, T.associations, T.awards, T.expertise, T.others FROM '.
 				'(SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$this->id.') AS core '.
 				'LEFT JOIN '.
 				TABLE_PREFIX.'social_member_additional_information T ON core.member_id=T.member_id';
-		$result = mysql_query($sql);
+		$result = mysql_query($sql, $db);
 		if ($result){
 			$row = mysql_fetch_assoc($result);
 			$this->profile = $row;
 		}
 		return $this->profile;
+	}
+
+
+	/**
+	 * Get member address
+	 */
+	function getAddress(){
+		global $db;
+		$sql = 'SELECT address, postal, city, province, country FROM '.TABLE_PREFIX.'members WHERE member_id='.$this->id;
+		$result = mysql_query($sql, $db);
+		if ($result){
+			$row = mysql_fetch_assoc($result);
+		}
+		return $row;
 	}
 	
 

@@ -35,6 +35,14 @@ if (!$_SESSION['valid_user']) {
 $friends = getFriends($_SESSION['member_id']);
 $rand_key = $addslashes($_POST['rand_key']);	//should we excape?
 
+//paginator settings
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}	
+$count  = (($page-1) * SOCIAL_FRIEND_SEARCH_MAX) + 1;
+$offset = ($page-1) * SOCIAL_FRIEND_SEARCH_MAX;
+
 
 //if $_GET['q'] is set, handle Ajax.
 if (isset($_GET['q'])){
@@ -98,27 +106,34 @@ if (isset($_GET['id'])){
 }
 
 //handle search friends request
-if($rand_key!='' && isset($_POST['search_friends_'.$rand_key])){
-	if (empty($_POST['search_friends_'.$rand_key])){
+if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET['search_friends'])){
+	if (empty($_POST['search_friends_'.$rand_key]) && !isset($_GET['search_friends'])){
 		$msg->addError('CANNOT_BE_EMPTY');
 		header('Location: '.url_rewrite('mods/social/connections.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
-	$search_field = $addslashes($_POST['search_friends_'.$rand_key]);	
+	//to adapt paginator GET queries
+	if($_GET['search_friends']){
+		$search_field = $addslashes($_GET['search_friends']);
+	} else {
+		$search_field = $addslashes($_POST['search_friends_'.$rand_key]);	
+	}
 	if (isset($_POST['myFriendsOnly'])){
 		//retrieve a list of my friends
 		$friends = searchFriends($search_field, true);
 	} else {
 		//retrieve a list of friends by the search
-		$friends = searchFriends($search_field);
+		$friends = searchFriends($search_field);	//to calculate the total number. TODO: need a better way, wasting of runtime.
+		$num_pages = max(ceil(sizeof($friends) / SOCIAL_FRIEND_SEARCH_MAX), 1);
+		$friends = searchFriends($search_field, false, $offset);
 	}
-} 
+} 	
 
 //mark those that are already added
 $friends = markFriends($_SESSION['member_id'], $friends);
-
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->display('pubmenu.tmpl.php');
+print_paginator($page, $num_pages, 'search_friends='.$search_field, 1); 
 $savant->assign('friends', $friends);
 $savant->assign('rand_key', $rand_key);
 $savant->display('connections.tmpl.php');

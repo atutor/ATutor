@@ -144,10 +144,8 @@ class SocialGroup {
 	 }
 	 function getLogo()	{
 		if (!empty($this->logo)) {
-			$str = '<img src="mods/social/groups/get_sgroup_logo.php?id='.$this->getID().'" alt="'.$this->getName().'" title="'.$this->getName().'"/>';
-		} 
-		
-		else {
+			$str = '<a href="'.url_rewrite('mods/social/groups/view.php?id='.$this->getID()).'"><img border="0" src="mods/social/groups/get_sgroup_logo.php?id='.$this->getID().'" alt="'.$this->getName().'" title="'.$this->getName().'"/></a>';
+		} else {
 			$str = '<img src="mods/social/images/placelogo.gif" alt="'._AT('placelogo').'" title="'._AT('placelogo').'"/>';
 		}
 		

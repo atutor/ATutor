@@ -29,18 +29,28 @@ if (!$_SESSION['valid_user']) {
 	exit;
 }
 
+//paginator settings
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}	
+$count  = (($page-1) * SOCIAL_GROUP_MAX) + 1;
+$offset = ($page-1) * SOCIAL_GROUP_MAX;
+
 // Get activities	
 $act_obj = new Activity();
 $activities = $act_obj->getActivities($id);
 
 // Get social group class
 $social_group = new SocialGroups();
-$my_groups = $social_group->getMemberGroups($_SESSION['member_id']);
-
+$my_groups = $social_group->getMemberGroups($_SESSION['member_id']);	//to get the size
+$num_pages = sizeof($my_groups)/SOCIAL_GROUP_MAX;
+$my_groups = $social_group->getMemberGroups($_SESSION['member_id'], $offset);
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->display('pubmenu.tmpl.php');
+print_paginator($page, $num_pages, '', 1); 
 $savant->assign('my_groups', $my_groups);
 $savant->display('sgroups.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');

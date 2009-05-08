@@ -5,6 +5,8 @@
 	$rand = md5(rand(0, time())); 
 	if ($this->rand_key != ''){
 		$last_search = $_POST['search_friends_'.$this->rand_key];
+	} elseif(isset($_GET['search_friends'])) {
+		$last_search = htmlentities($_GET['search_friends']);
 	} else {
 		$last_search = $_POST['search_friends_'.$rand];	
 	}
@@ -55,9 +57,9 @@
 				<div style="padding-left:0.5em; float:left;">
 					<?php 
 						$member_obj = new Member($id);
-						$profile = $member_obj->getDetails();
+						$address = $member_obj->getAddress();
 						echo printSocialName($id) . '<br/>';
-						echo $profile['province'] . ' ' . $profile['country'] . '<br/>';
+						echo $address['province'] . ' ' . $address['country'] . '<br/>';
 					?>
 				</div>
 				<div style="clear:both;"></div><br/>
@@ -75,9 +77,9 @@
 				<div style="padding-left:0.5em; float:left;">
 					<?php 
 						$member_obj = new Member($id);
-						$profile = $member_obj->getDetails();
+						$address = $member_obj->getAddress();
 						echo printSocialName($id) . '<br/>';
-						echo $profile['country'] . ' ' . $profile['province'] . '<br/>';
+						echo $address['country'] . ' ' . $address['province'] . '<br/>';
 					?>
 				</div>
 				<div style="clear:both;"></div><br/>
