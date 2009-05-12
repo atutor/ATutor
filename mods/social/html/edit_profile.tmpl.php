@@ -1,7 +1,7 @@
 <h2><?php echo $this->profile['first_name'].' '.$this->profile['last_name']; ?></h2>
 
 
-<?php include("lib/profile_menu.inc.php")  ?>
+<?php include(AT_SOCIAL_INCLUDE."profile_menu.inc.php")  ?>
 
 <ul>
 	<li>

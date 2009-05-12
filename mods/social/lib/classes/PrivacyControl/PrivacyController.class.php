@@ -54,6 +54,8 @@ class PrivacyController{
 	/**
 	 * Get the relationship between Session[member_id] and the given id.
 	 * Relationship can be friends, friends of friends, network, family, aquaintance, etc.
+	 * TODO: Confirm that the order of checks is not important.  Draw a control flow diagram to check this.
+	 *		 For now, Friends of friends > Groups
 	 * @param	int		the member that we want to find the relationship to the session[member]
 	 * @return	relationship status
 	 */
@@ -69,6 +71,9 @@ class PrivacyController{
 		if (isFriendOfFriend($id, $_SESSION['member_id'])==true){
 			return AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY;
 		}
+
+		//is in some of the groups together?
+
 
 		$sql = 'SELECT relationship FROM '.TABLE_PREFIX."social_friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
 		$result = mysql_query($sql, $db);
@@ -140,7 +145,8 @@ class PrivacyController{
 			AT_SOCIAL_EVERYONE_VISIBILITY			=>	_AT('world_network'),
 			AT_SOCIAL_FRIENDS_VISIBILITY			=>	_AT('friends'),
 			AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY =>	_AT('friends_of_friends'),
-			AT_SOCIAL_NETWORK_VISIBILITY			=>	_AT('local_network')
+			AT_SOCIAL_NETWORK_VISIBILITY			=>	_AT('local_network'),
+			AT_SOCIAL_GROUPS_VISIBILITY				=>	_AT('groups')
 		);
 	}
 }

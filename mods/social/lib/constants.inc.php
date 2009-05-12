@@ -46,6 +46,7 @@ define(AT_SOCIAL_FRIENDS_VISIBILITY,				1);	//Friends
 define(AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY,		2);	//Friends of Friends
 define(AT_SOCIAL_NETWORK_VISIBILITY,				3);	//Network
 define(AT_SOCIAL_OWNER_VISIBILITY,					4);	//Myself
+define(AT_SOCIAL_GROUPS_VISIBILITY,					5);	//Groups
 
 //Display control
 define('SOCIAL_FRIEND_ACTIVITIES_MAX',				10); //Activity class constants
