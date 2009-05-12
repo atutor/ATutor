@@ -1,3 +1,7 @@
+<?php 
+if (empty($this->my_apps)):
+	echo _AT('no_gadgets_installed'); 
+else: ?>
 <form action="<?php echo url_rewrite('mods/social/settings.php');?>" method="POST">
 <div class="input-form">
 	<h4><?php echo _AT('application_settings'); ?></h4>
@@ -12,10 +16,11 @@
 		</div>
 		<div><br/></div>
 	</div>
-	<?php endforeach; ?>
+	<?php endforeach;?>
 	<div class="row">
 		<input type="hidden" name="n" value="application_settings" />
 		<input class="button" type="submit" name="submit" value="<?php echo _AT('save'); ?>"/>
 	</div>
 </div>
 </form>
+<?php endif; ?>

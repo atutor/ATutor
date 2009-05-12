@@ -73,7 +73,15 @@ class PrivacyController{
 		}
 
 		//is in some of the groups together?
+		$social_groups = new SocialGroups();
+		$my_group = $social_groups->getMemberGroups($_SESSION['member_id']);
+		$person_group = $social_groups->getMemberGroups($id);
+		$groups_intersection = array_intersect($my_group, $person_group); //groups intersection
 
+		//If it is not empty or not null, then these 2 people share a group
+		if (!empty($groups_intersection) > 0){
+			return AT_SOCIAL_GROUPS_VISIBILITY;
+		}
 
 		$sql = 'SELECT relationship FROM '.TABLE_PREFIX."social_friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
 		$result = mysql_query($sql, $db);
@@ -85,7 +93,7 @@ class PrivacyController{
 		//If the relationship is not set, this implies that it's not in the table, 
 		//implying that the user has never set its privacy settings, meaning a default is needed
 		if (!isset($relationship)){
-			return AT_SOCIAL_EVERYONE_VISIBILITY;
+			return AT_SOCIAL_NETWORK_VISIBILITY;
 		}
 
 		return $relationship;
