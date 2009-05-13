@@ -282,38 +282,37 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 	//trim back the extra "AND "
 	$query = substr($query, 0, -4);
 
-	//If searchMyFriend is true, return the "my friends" array
-	//If the member_id is empty, (this happens when we are doing a search without logging in) then get all members?
-	//else, use "my friends" array to distinguish which of these are already in my connection
-	if(!isset($_SESSION['member_id'])){
-		$sql = 'SELECT member_id FROM '.TABLE_PREFIX.'members WHERE ';
-	} else {
-		$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].') AND ';
-		$sql .= $query;
-		$sql .= ' UNION ';
-		$sql .= 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.member_id=M.member_id WHERE (F.friend_id='.$_SESSION['member_id'].') AND ';
-	}
-	$sql .= $query;
-
-	$rs = mysql_query($sql, $db);
-	if ($rs){
-		while ($row = mysql_fetch_assoc($rs)){
-			if ($row['member_id']==$_SESSION['member_id']){
-				$this_id = $row['friend_id'];
-			} else {
-				$this_id = $row['member_id'];
-			}
-			$temp =& $my_friends[$this_id];	
-			$temp['obj'] = new Member($this_id);
-			if ($searchMyFriends){
-				$temp['added'] = 1;
-			}
-		}
-	}
-	unset($this_id);  //don't want the following statements to reuse this
-
 	//Check if this is a search on all people
 	if ($searchMyFriends == true){
+		//If searchMyFriend is true, return the "my friends" array
+		//If the member_id is empty, (this happens when we are doing a search without logging in) then get all members?
+		//else, use "my friends" array to distinguish which of these are already in my connection
+		if(!isset($_SESSION['member_id'])){
+			$sql = 'SELECT member_id FROM '.TABLE_PREFIX.'members WHERE ';
+		} else {
+			$sql = 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$_SESSION['member_id'].') AND ';
+			$sql .= $query;
+			$sql .= ' UNION ';
+			$sql .= 'SELECT F.* FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.member_id=M.member_id WHERE (F.friend_id='.$_SESSION['member_id'].') AND ';
+		}
+		$sql .= $query;
+
+		$rs = mysql_query($sql, $db);
+		if ($rs){
+			while ($row = mysql_fetch_assoc($rs)){
+				if ($row['member_id']==$_SESSION['member_id']){
+					$this_id = $row['friend_id'];
+				} else {
+					$this_id = $row['member_id'];
+				}
+				$temp =& $my_friends[$this_id];	
+				$temp['obj'] = new Member($this_id);
+				if ($searchMyFriends){
+					$temp['added'] = 1;
+				}
+			}
+		}
+		unset($this_id);  //don't want the following statements to reuse this
 		return $my_friends;
 	} else {
 		/*
@@ -321,10 +320,14 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 		* IF the 'search my friend' is off, then it should search all members inside that table
 		* don't know why i did the search inside [friends x members]
 		* Also this query is gonna pull out all members cept 'myself'
+		* raised a small problem for public use, cause there is no member_id
 		* end note;
 		*/
 		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE ';
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members M WHERE member_id!='.$_SESSION['member_id'].' AND ';
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members M WHERE ';
+		if (isset($_SESSION['member_id'])){
+			$sql .= 'member_id!='.$_SESSION['member_id'].' AND ';
+		}
 	}
 	$sql = $sql . $query;
 	if ($offset >= 0){

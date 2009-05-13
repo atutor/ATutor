@@ -21,6 +21,14 @@ include(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 include(AT_SOCIAL_INCLUDE.'classes/Application.class.php');
 $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
 
+if (!$_SESSION['valid_user']) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$info = array('INVALID_USER', $_SESSION['course_id']);
+	$msg->printInfos($info);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 $controller = new PrivacyController();
 $private_obj = $controller->getPrivacyObject($_SESSION['member_id']);
 

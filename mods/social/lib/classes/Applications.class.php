@@ -66,6 +66,17 @@ class Applications {
 		return $hash;
 	}
 
+	
+	/**
+	 * Delete applications
+	 * @param	array	array of application_id to be deleted.
+	 */
+	function deleteApplications($ids){
+		global $db;
+		$id_list = implode(', ', $ids);
+		$sql = 'DELETE FROM '.TABLE_PREFIX."social_applications WHERE id IN ($id_list)";
+		mysql_query($sql, $db);
+	}
 
 	/**
 	 * To determine which application to show on the home tab

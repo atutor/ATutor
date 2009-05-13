@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+include_once(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 
 /**
  * Class PrivacyController

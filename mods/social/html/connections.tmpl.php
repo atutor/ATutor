@@ -11,7 +11,7 @@
 		$last_search = $_POST['search_friends_'.$rand];	
 	}
 ?>
-
+<?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>
 <div class="input-form" style="float:right; width:34%;padding:1em;min-height:4.5em;">
 	<div class="contentrow">
 		<h3><?php echo _AT('search_for_friends'); ?></h3>
@@ -101,4 +101,5 @@
 	</div>
 	-->
 </div>
-
+<div style="clear:both;"></div>
+<?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>

@@ -55,5 +55,5 @@ define('SOCIAL_GROUP_HOMEPAGE_MAX',					3); //# of friends to display on the hom
 define('SOCIAL_GROUP_MAX',							5); //# of friends to display on the homepage contact's box
 define('SOCIAL_APPLICATION_UPDATE_SCHEDULE',		10); //in days
 define('SOCIAL_NUMBER_OF_PEOPLE_YOU_MAY_KNOW',		3);	 //the number of "people you may know" to be displayed on the home tab
-define('SOCIAL_FRIEND_SEARCH_MAX', 50);				//search result maximum
+define('SOCIAL_FRIEND_SEARCH_MAX',					50); //search result maximum
 ?>

@@ -21,7 +21,7 @@ require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
 
-/*
+
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$info = array('INVALID_USER', $_SESSION['course_id']);
@@ -29,7 +29,6 @@ if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-*/
 
 // default display my friends
 $friends = getFriends($_SESSION['member_id']);
@@ -123,7 +122,7 @@ if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET[
 		$friends = searchFriends($search_field, true);
 	} else {
 		//retrieve a list of friends by the search
-		$friends = searchFriends($search_field);	//to calculate the total number. TODO: need a better way, wasting of runtime.
+		$friends = searchFriends($search_field);	//to calculate the total number. TODO: need a better way, wasting runtime.
 		$num_pages = max(ceil(sizeof($friends) / SOCIAL_FRIEND_SEARCH_MAX), 1);
 		$friends = searchFriends($search_field, false, $offset);
 	}
@@ -133,7 +132,9 @@ if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET[
 $friends = markFriends($_SESSION['member_id'], $friends);
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->display('pubmenu.tmpl.php');
-print_paginator($page, $num_pages, 'search_friends='.$search_field, 1); 
+$savant->assign('page', $page);
+$savant->assign('num_pages', $num_pages);
+$savant->assign('search_field', $search_field);
 $savant->assign('friends', $friends);
 $savant->assign('rand_key', $rand_key);
 $savant->display('connections.tmpl.php');

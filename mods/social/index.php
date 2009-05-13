@@ -21,6 +21,14 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
 
+if (!$_SESSION['valid_user']) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$info = array('INVALID_USER', $_SESSION['course_id']);
+	$msg->printInfos($info);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 //Handles search queries from side menu
 if (isset($_GET['searchFriends']) && $_GET['friendsName']!=''){
 	$wanted = $addslashes($_GET['friendsName']);

@@ -271,6 +271,7 @@ class Member {
 
 	/**
 	 * Get member info
+	 * This method tends to be have a negative impact on system run time.  
 	 */
 	function getDetails(){
 		global $db;

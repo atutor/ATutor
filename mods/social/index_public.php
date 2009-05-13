@@ -23,6 +23,14 @@ $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom styleshee
 
 $rand_key = $addslashes($_POST['rand_key']);	//should we excape?
 
+//paginator settings
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}	
+$count  = (($page-1) * SOCIAL_FRIEND_SEARCH_MAX) + 1;
+$offset = ($page-1) * SOCIAL_FRIEND_SEARCH_MAX;
+
 
 //if $_GET['q'] is set, handle Ajax.
 if (isset($_GET['q'])){
@@ -50,6 +58,8 @@ if (isset($_GET['q'])){
 }
 
 //safe guard
+//No friend request on index_public.. need login
+/*
 if (isset($_GET['id'])){
 	$id = intval($_GET['id']);
 	if($id > 0){
@@ -80,25 +90,36 @@ if (isset($_GET['id'])){
 		exit;
 	}
 }
+*/
 
 //handle search friends request
-if($rand_key!='' && isset($_POST['search_friends_'.$rand_key])){
-	if (empty($_POST['search_friends_'.$rand_key])){
+if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET['search_friends'])){
+	if (empty($_POST['search_friends_'.$rand_key]) && !isset($_GET['search_friends'])){
 		$msg->addError('CANNOT_BE_EMPTY');
-		header('Location: '.url_rewrite('mods/social/connections.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite('mods/social/index_public.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
-	$search_field = $addslashes($_POST['search_friends_'.$rand_key]);	
+	//to adapt paginator GET queries
+	if($_GET['search_friends']){
+		$search_field = $addslashes($_GET['search_friends']);
+	} else {
+		$search_field = $addslashes($_POST['search_friends_'.$rand_key]);	
+	}
 	if (isset($_POST['myFriendsOnly'])){
 		//retrieve a list of my friends
 		$friends = searchFriends($search_field, true);
 	} else {
 		//retrieve a list of friends by the search
-		$friends = searchFriends($search_field);
+		$friends = searchFriends($search_field);	//to calculate the total number. TODO: need a better way, wasting runtime.
+		$num_pages = max(ceil(sizeof($friends) / SOCIAL_FRIEND_SEARCH_MAX), 1);
+		$friends = searchFriends($search_field, false, $offset);
 	}
 } 
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->assign('page', $page);
+$savant->assign('num_pages', $num_pages);
+$savant->assign('search_field', $search_field);
 $savant->assign('friends', $friends);
 $savant->assign('rand_key', $rand_key);
 $savant->display('index_public.tmpl.php');
