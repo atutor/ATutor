@@ -368,20 +368,19 @@ class Member {
 		global $db;
 		$count = array();	
 		//Time offsets
-		$month	= time() - 60*60*30;	//month
-		$week	= time() - 60*60*7;		//week
-		$day	= time() - 60*60;		//day
+		$month	= time() - 60*60*30;	//month, within 30days.
+		$week	= time() - 60*60*7;		//week, within 7 days.
+		$day	= time() - 60*60;		//day, within 24 hours.
 
-		$sql = 'SELECT visitor_id, UNIX_TIMESTAMP(timestamp) AS `time` FROM '.TABLE_PREFIX.'social_member_track WHERE member_id='.$this->id;
-
+		$sql = 'SELECT visitor_id, UNIX_TIMESTAMP(timestamp) AS `current_time` FROM '.TABLE_PREFIX.'social_member_track WHERE member_id='.$this->id;
 		$result = mysql_query($sql, $db);
 		if ($result){
 			while ($row = mysql_fetch_assoc($result)){
-				if($row['time'] > $week && $row['time'] <= $month){
+				if($row['current_time'] >= $month && $row['current_time'] <= $week){
 					$count['month']++;
-				} elseif ($row['time'] > $day && $row['time'] <= $week){
+				} elseif ($row['current_time'] > $week && $row['current_time'] <= $day){
 					$count['week']++;
-				} elseif ($row['time'] <= $day){
+				} elseif ($row['current_time'] > $day){
 					$count['day']++;
 				} else {
 					continue;

@@ -33,7 +33,7 @@ if (isset($_POST['delete'])){
 		//cannot be empty
 		$msg->addFeedback('GADGET_DELETED_EMPTY');
 	}
-}//
+}
 
 //data
 $all_apps = $apps->listApplications();
