@@ -3,7 +3,8 @@
 	src="<?php echo AT_SHINDIG_URL; ?>/gadgets/js/rpc.js?c=1"></script>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
-<script type="text/javascript" src="mods/social/lib/js/container.js"></script>
+<script type="text/javascript" src="mods/social/lib/js/jquery.all.js"></script>
+<!--<script type="text/javascript" src="mods/social/lib/js/container.js"></script>-->
 
 <?php	
 	foreach ($this->list_of_my_apps as $id=>$app_obj): 

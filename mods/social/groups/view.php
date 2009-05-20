@@ -48,6 +48,7 @@ if (isset($_POST['submit'])){
 	}
 }
 
+// delete group
 if($_GET['delete'] == "confirm"){
 	//$msg->addConfirm('DELETE_GROUP', $group_obj->getName());
 	//$msg->addConfirm('DELETE_GROUP', );

@@ -23,6 +23,7 @@ class SocialGroup {
 	var $logo;				//logo
 	var $name;				//group name
 	var $type_id;			//the type_id
+	var $privacy;			//privacy, 0 for public, 1 for private
 	var $description;		//description of this group
 	var $created_date;		//sql timestamp
 	var $last_updated;		//sql timestamp
@@ -46,6 +47,7 @@ class SocialGroup {
 				$this->logo				= $row['logo'];
 				$this->name				= $row['name'];
 				$this->type_id			= $row['type_id'];
+				$this->privacy			= $row['privacy'];
 				$this->description		= $row['description'];
 				$this->created_date		= $row['created_date'];
 				$this->last_updated		= $row['last_updated'];
@@ -105,6 +107,23 @@ class SocialGroup {
 		 return $activities;
 	 }
 
+	/**
+	 * Get a specific mesage
+	 * @param	int		the message id.
+	 * @return the text of the message
+	 */
+	function getMessage($id){
+		global $db;
+		$id = intval($id);
+
+		$sql = 'SELECT body FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID().' AND id='.$id;
+		$rs = mysql_query($sql, $db);
+		if($rs){
+			list($body) = mysql_fetch_array($rs);
+			return nl2br(htmlentities($body));
+		}
+		return false;
+	}
 
 	/**
 	 * Get message boards message, return a list sorted by date, in descending order
@@ -118,6 +137,7 @@ class SocialGroup {
 
 		 if ($rs){
 			 while ($row = mysql_fetch_assoc($rs)){
+				$row['body'] = nl2br(htmlentities($row['body']));	//escape xss attack
 				$result [$row['id']] = $row;
 			 }
 		 }
@@ -155,10 +175,13 @@ class SocialGroup {
 		 return htmlentities($this->name, ENT_QUOTES, 'UTF-8');
 	 }
 	 function getDescription(){
-		 return $this->description;
+		 return nl2br(htmlentities($this->description, ENT_QUOTES, 'UTF-8'));
 	 }
 	 function getCreatedDate(){
 		 return $this->created_date;
+	 }
+	 function getPrivacy(){
+		 return $this->privacy;
 	 }
 	 function getLastUpdated(){
 		 return $this->last_updated;
@@ -392,12 +415,18 @@ class SocialGroup {
 
 	/** 
 	 * Delete a message from the board
+	 * @param	int		member_id
 	 */
-	function removeMessage($id){
+	function removeMessage($id, $member_id){
 		global $db;
 		$id = intval ($id);
-
-		$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id";
+		$member_id = intval($member_id);
+		if ($member_id == $this->user_id){
+			//if moderator.
+			$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id ";
+		} else {
+			$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id AND member_id=$member_id";
+		}
 		$result = mysql_query($sql, $db);
 		return $result;
 	}

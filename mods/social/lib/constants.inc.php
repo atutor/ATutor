@@ -13,8 +13,8 @@
 // $Id$
 
 //Constants Declaration
-//define(AT_SHINDIG_URL,						'http://localhost/shindig/php');
-define(AT_SHINDIG_URL,						'http://social.atutor.ca/shindig/php');
+define(AT_SHINDIG_URL,						'http://localhost/shindig_old/php');
+//define(AT_SHINDIG_URL,						'http://social.atutor.ca/shindig/php');
 
 //Privacy Control Constants, field indices
 //Profile

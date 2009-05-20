@@ -158,8 +158,9 @@ $savant->display('pubmenu.tmpl.php'); ?>
 		$social_group = new SocialGroups();
 		$my_groups = $social_group->getMemberGroups($_SESSION['member_id']);
 		$random_groups = array();
-		for ($i=0; sizeof($random_groups)<SOCIAL_GROUP_HOMEPAGE_MAX ; $i++){
+		for ($i=0; (sizeof($random_groups)<SOCIAL_GROUP_HOMEPAGE_MAX && $i<sizeof($my_groups)); $i++){
 			$grp = $my_groups[rand(0, sizeof($my_groups)-1)];
+		
 			if (in_array($grp, $random_groups)){
 				continue;
 			} else {

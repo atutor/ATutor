@@ -1,5 +1,4 @@
-var Container = Class.create();
-Container.prototype = {
+var Container = Class.extend({
 	maxHeight: 4096,
 	
 	initialize: function() {
@@ -83,5 +82,9 @@ Container.prototype = {
 	}
 }
 
-// Create and initialize our container class
-gadgets.container = new Container();
+/**
+ * Create the container class on page load
+ */
+$(document).ready(function() {
+  gadgets.container = new Container();
+});

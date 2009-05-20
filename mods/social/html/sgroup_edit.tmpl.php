@@ -5,6 +5,7 @@ if (isset($this->group_obj)){
 	$button_name = 'save';
 	$name = $this->group_obj->getName();
 	$logo = $this->group_obj->getLogo();
+	$privacy = $this->group_obj->getPrivacy();
 	$description = $this->group_obj->getDescription();
 	$id = $this->group_obj->getID();
 } else {
@@ -51,6 +52,21 @@ if (isset($this->group_obj)){
 				<option value="<?php echo $type_id;?>" <?php echo $selected;?>><?php echo _AT($type);?></option>
 			<?php endforeach; ?>
 			</select>
+		</div>
+
+		<div class="row">
+			<?php
+				if ($privacy==1){
+					$private_selected = ' checked="checked"';
+				}  else {
+					$public_selected = ' checked="checked"';
+				}
+			?>
+			<label><?php echo _AT('group_privacy');?></label><br/>
+			<input type="radio" name="group_privacy" id="group_privacy_public" value="public" <?php echo $public_selected; ?>/>
+			<label for="group_privacy_public"><?php echo _AT('group_privacy_public'); ?></label><br/>
+			<input type="radio" name="group_privacy" id="group_privacy_private" value="private" <?php echo $private_selected; ?>/>
+			<label for="group_privacy_private"><?php echo _AT('group_privacy_private'); ?></label>
 		</div>
 
 		<div class="row">

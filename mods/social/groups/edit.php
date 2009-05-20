@@ -170,7 +170,7 @@ if (isset($_POST['save'])){
 		$missing_fields = implode(', ', $missing_fields);
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	} else {
-		$isSucceded = $social_groups->updateGroup($id, $_POST['group_admin'], $_POST['group_type'], $_POST['group_name'], $_POST['description'], $new_filename);
+		$isSucceded = $social_groups->updateGroup($id, $_POST['group_admin'], $_POST['group_type'], $_POST['group_name'], $_POST['description'], $new_filename, $_POST['group_privacy']);
 
 		if($isSucceded){
 			$msg->addFeedback('SOCIAL_GROUP_UPDATED');
@@ -178,7 +178,7 @@ if (isset($_POST['save'])){
 			exit;
 		} else {
 			//Something went bad in the backend, contact admin?
-			$msg->addFeedback('GROUP_EDIT_FAILED');
+			$msg->addError('GROUP_EDIT_FAILED');
 		}
 	}
 } elseif (isset($_POST['cancel'])){

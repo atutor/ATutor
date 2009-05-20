@@ -113,6 +113,8 @@ $this->_pages['mods/social/groups/create.php']['parent'] = 'mods/social/groups/i
 
 $this->_pages['mods/social/groups/view.php']['title_var'] = 'view_groups';
 $this->_pages['mods/social/groups/view.php']['parent'] = 'mods/social/groups/index.php';
+	$this->_pages['mods/social/groups/delete_message.php']['title_var'] = 'delete_message';
+	$this->_pages['mods/social/groups/delete_message.php']['parent'] = 'mods/social/groups/view.php';
 
 $this->_pages['mods/social/groups/invite.php']['title_var'] = 'invite_groups';
 $this->_pages['mods/social/groups/invite.php']['parent'] = 'mods/social/groups/index.php';

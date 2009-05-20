@@ -26,27 +26,19 @@
 	<div class="contentbox">
 		<?php if (!empty($this->search_result)):
 		foreach($this->search_result as $group_id=>$group_array): 
-		$group_obj = $group_array['obj'];
+		$grp_obj = $group_array['obj'];
 		?>
 		<div class="box">
-			<dl id="public-profile">
-				<dt><?php echo _AT('group_logo'); ?></dt>
-				<dd><?php echo $group_obj->getLogo();?></dd>
-
-				<dt><?php echo _AT('title'); ?></dt>
-				<dd><a href="<?php echo url_rewrite('mods/social/groups/view.php?id='.$group_obj->getID()); ?>"><?php echo $group_obj->getName();?></a> 
-				<?php if (in_array(new Member($_SESSION['member_id']), $group_obj->getGroupMembers())){
-				echo '('._AT('group_joined').')';
-				}
-				?>
-				</dd>
-
-				<dt><?php echo _AT('group_type'); ?></dt>
-				<dd><?php echo $group_obj->getGroupType();?></dd>
-
-				<dt><?php echo _AT('size'); ?></dt>
-				<dd><?php echo count($group_obj->getGroupMembers());?></dd>				
-			</dl>
+			<div style="float:left;">
+			<?php echo $grp_obj->getLogo(); ?>
+			
+			</div>
+			<div style="float:left; padding-left:0.5em;">
+			<a href="<?php echo url_rewrite('mods/social/groups/view.php?id='.$grp);?>"><h4><?php echo $grp_obj->getName(); ?></h4></a><br/>
+				<?php echo _AT('type') .': '. $grp_obj->getGroupType();?><br/>
+				<?php echo _AT('description') .': <br/>'. $grp_obj->getDescription();?><br/>
+			</div>
+			<div style="clear:both;"></div>
 		</div>
 		<?php endforeach; 
 		else: 
