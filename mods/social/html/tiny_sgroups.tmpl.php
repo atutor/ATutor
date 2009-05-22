@@ -21,7 +21,8 @@
 				</div>
 				<div style="float:left; padding-left:0.5em;">
 				<a href="<?php echo url_rewrite('mods/social/groups/view.php?id='.$grp);?>"><h4><?php echo $grp_obj->getName(); ?></h4></a><br/>
-					<?php echo _AT('type') .': '. $grp_obj->getGroupType();?><br/>
+					<?php echo _AT('category') .': '. $grp_obj->getGroupType();?><br/>
+					<?php echo _AT('type') .': '. ($grp_obj->getPrivacy()?_AT('private'):_AT('public'))?><br/>
 					<?php echo _AT('description') .': <br/>'. $grp_obj->getDescription();?><br/>
 				</div>
 				<div style="clear:both;"></div>

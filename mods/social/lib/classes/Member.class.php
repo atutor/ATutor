@@ -366,7 +366,7 @@ class Member {
 	 */
 	function getVisitors(){
 		global $db;
-		$count = array();	
+		$count = array('month'=>0, 'week'=>0, 'day'=>0, 'total'=>0);
 		//Time offsets
 		$month	= time() - 60*60*30;	//month, within 30days.
 		$week	= time() - 60*60*7;		//week, within 7 days.

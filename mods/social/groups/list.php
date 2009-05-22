@@ -23,8 +23,8 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 $_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
 
-$id = intval($_GET['id']);
-if ($id < 0){
+$id = intval($_REQUEST['id']);
+if ($id < 1){
 	exit;
 }
 

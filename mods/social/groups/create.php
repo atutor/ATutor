@@ -148,7 +148,7 @@ if (isset($_POST['create'])){
 		$missing_fields = implode(', ', $missing_fields);
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	} else {
-		$group_id = $social_groups->addGroup($_POST['group_type'], $_POST['group_name'], $_POST['description']);
+		$group_id = $social_groups->addGroup($_POST['group_type'], $_POST['group_name'], $_POST['description'], $_POST['group_privacy']);
 		if($group_id){
 			//Add the logo in now that we have the group id. And rename the old one.
 			if ($thumbnail_img!=''){			

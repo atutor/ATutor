@@ -42,16 +42,47 @@
 			<textarea name="msg_body" id="message" cols="40" rows="5"></textarea><br />
 			<input class="button" type="submit" name="submit" value="<?php echo _AT('post');?>" />
 		</form><hr/>
+		
+		<!-- handles sliding -->
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script>
+		  $(document).ready(function(){		
+			var h = $("#messages").height();
+			var line_of_height = 250;
 
+			if (h>=500){
+				$('#buttonList').show();
+				$('#message_board').css({'height':'500px'});
+			} else {
+				$('#buttonList').hide();
+			}
+
+			$("#prevButton").click(function(event){
+			  if (h < $("#messages").height()){
+				  $("#messages").animate({"marginTop": "+="+line_of_height+"px"}, "slow");
+				  h += line_of_height;
+ 				  $("#temp").html(h);
+			  }
+			  event.preventDefault();
+			});
+
+			$("#nextButton").click(function(event){
+			  if ( h >= line_of_height) {
+				  $("#messages").animate({"marginTop": "-="+line_of_height +"px"}, "slow");
+				  h -= line_of_height ;
+				  $("#temp").html(h);
+			  }
+			  event.preventDefault();
+			});
+
+		  });
+		  </script>
+
+		<div id="message_board" style="max-height:500px; overflow:hidden;">
+		<div id="messages">
 		<?php 
 			$counter=0;
-			foreach ($this->group_obj->getMessages() as $id=>$message_array): 
-				//Make this a constant later
-				if ($counter > 10){
-					echo '<a href="">show all</a>';
-					break;
-				}
-		?>
+			foreach ($this->group_obj->getMessages() as $id=>$message_array): ?>
 			<div class="content">
 				<?php echo $message_array['created_date'].' - '.printSocialName($message_array['member_id']); ?>
 				<?php 
@@ -64,7 +95,13 @@
 		<?php 
 			$counter++;
 			endforeach;
-		?>
+		?>		
+		</div></div>
+		<div id="buttonList">
+			<a id="prevButton" href="#">&lt;&lt;<?php echo _AT('previous'); ?></a>
+			<a id="nextButton" href="#"><?php echo _AT('next'); ?>&gt;&gt;</a>
+		</div>
+		<div id="temp"></div>
 	</div>
 </div>
 <?php endif; ?>
@@ -79,6 +116,9 @@
 
 			<dt><?php echo _AT('group_type'); ?></dt>
 			<dd><?php echo $this->group_obj->getGroupType();?></dd>
+
+			<dt><?php echo _AT('group_privacy'); ?></dt>
+			<dd><?php echo ($this->group_obj->getPrivacy()?_AT('private'):_AT('public'))?><br/></dd>			
 
 			<dt><?php echo _AT('created_by'); ?></dt>
 			<dd><?php echo printSocialName($this->group_obj->getUser());?></dd>

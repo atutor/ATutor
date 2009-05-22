@@ -18,7 +18,7 @@
 			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', 'mods/social/groups/list.php')"/>
 			<input type="submit" name="search" value="<?php echo _AT('search'); ?>">
 			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>" />
-			
+			<input type="hidden" name="id" value="<?php echo $this->grp_obj->getID(); ?>" />			
 			<div id="livesearch"></div>
 		</form>
 	</div>

@@ -42,7 +42,12 @@ if($gid > 0 && $mid > 0){
 	}
 	$hidden_vars['gid'] = $gid;
 	$hidden_vars['delete'] = $mid;
-	$msg->addConfirm(array('DELETE', $group->getMessage($mid)), $hidden_vars);
+	$message = $group->getMessage($mid, $_SESSION['member_id']);
+	if ($message==false){
+		$msg->addError('INVALID');	//users tries to delete message that aren't theirs.
+	} else {
+		$msg->addConfirm(array('DELETE', $group->getMessage($mid, $_SESSION['member_id'])), $hidden_vars);
+	}
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');

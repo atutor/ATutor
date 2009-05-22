@@ -108,15 +108,23 @@ class SocialGroup {
 	 }
 
 	/**
-	 * Get a specific mesage
+	 * Get a specific mesage from the given user.
 	 * @param	int		the message id.
+	 * @param	int		the member id, the member who created this message, or the moderator.
 	 * @return the text of the message
 	 */
-	function getMessage($id){
+	function getMessage($id, $member_id){
 		global $db;
 		$id = intval($id);
-
+		$member_id = intval($member_id);
+		
 		$sql = 'SELECT body FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID().' AND id='.$id;
+		
+		//if not moderator
+		if($member_id!=$this->user_id){
+			$sql .= ' AND member_id='.$member_id;
+		} 
+
 		$rs = mysql_query($sql, $db);
 		if($rs){
 			list($body) = mysql_fetch_array($rs);
@@ -166,7 +174,7 @@ class SocialGroup {
 		if (!empty($this->logo)) {
 			$str = '<a href="'.url_rewrite('mods/social/groups/view.php?id='.$this->getID()).'"><img border="0" src="mods/social/groups/get_sgroup_logo.php?id='.$this->getID().'" alt="'.$this->getName().'" title="'.$this->getName().'"/></a>';
 		} else {
-			$str = '<img src="mods/social/images/placelogo.gif" alt="'._AT('placelogo').'" title="'._AT('placelogo').'"/>';
+			$str = '<img src="mods/social/images/placelogo.png" alt="'._AT('placelogo').'" title="'._AT('placelogo').'"/>';
 		}
 		
 		 return $str;
@@ -181,6 +189,7 @@ class SocialGroup {
 		 return $this->created_date;
 	 }
 	 function getPrivacy(){
+		 //0 for public, 1 for private
 		 return $this->privacy;
 	 }
 	 function getLastUpdated(){
@@ -421,12 +430,12 @@ class SocialGroup {
 		global $db;
 		$id = intval ($id);
 		$member_id = intval($member_id);
-		if ($member_id == $this->user_id){
-			//if moderator.
-			$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id ";
-		} else {
-			$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id AND member_id=$member_id";
-		}
+		$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id ";
+
+		//if not moderator.
+		if ($member_id != $this->user_id){
+			$sql .= " AND member_id=$member_id";			
+		} 
 		$result = mysql_query($sql, $db);
 		return $result;
 	}
@@ -463,8 +472,7 @@ class SocialGroup {
 		//trim back the extra "AND "
 		$query = substr($query, 0, -4);
 		
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members g LEFT JOIN '.TABLE_PREFIX.'members m ON g.member_id=m.member_id WHERE g.group_id=8 AND '.$query;
-
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members g LEFT JOIN '.TABLE_PREFIX.'members m ON g.member_id=m.member_id WHERE g.group_id='.$this->getID().' AND '.$query;
 		$rs = mysql_query($sql, $db);
 
 		while ($row=mysql_fetch_assoc($rs)) {
