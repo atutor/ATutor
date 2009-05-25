@@ -1,6 +1,15 @@
 
 <div class="">
-<div class="headingbox"><h3><?php echo _AT('network_updates'); ?></h3></div>
+<div class="headingbox">
+	<div style="float:right">
+	<?php
+		$user = new Member($_SESSION['member_id']); 
+		$count = $user->getVisitors();
+		echo _AT('visitor_counts').': '.$count['total'];
+	?>
+	</div>
+	<h3><?php echo _AT('network_updates'); ?></h3>
+</div>
 <?php
 /**
  * Loop through all the friends and print out a list.  

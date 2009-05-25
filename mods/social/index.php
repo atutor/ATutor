@@ -100,19 +100,6 @@ $savant->display('pubmenu.tmpl.php'); ?>
 		?>
 	</div>
 
-	<!-- counts -->
-	<div style="float:right;width:39%;min-width:39%;">
-		<div class="headingbox">
-			<h3><?php echo _AT('visitor_counts'); ?>: 
-			<?php 
-				$user = new Member($_SESSION['member_id']); 
-				$count = $user->getVisitors();
-				echo $count['total'];
-			?>
-			</h3>
-		</div>
-		<div class="contentbox"></div>
-	</div>
 	<div style="float:right;width:39%;min-width:39%;">
 		<?php			
 			//if friends array is not empty.

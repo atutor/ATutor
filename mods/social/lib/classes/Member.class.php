@@ -368,11 +368,11 @@ class Member {
 		global $db;
 		$count = array('month'=>0, 'week'=>0, 'day'=>0, 'total'=>0);
 		//Time offsets
-		$month	= time() - 60*60*30;	//month, within 30days.
-		$week	= time() - 60*60*7;		//week, within 7 days.
-		$day	= time() - 60*60;		//day, within 24 hours.
-
+		$month	= time() - 60*60*24*30;	//month, within 30days.
+		$week	= time() - 60*60*24*7;		//week, within 7 days.
+		$day	= time() - 60*60*24;		//day, within 24 hours.
 		$sql = 'SELECT visitor_id, UNIX_TIMESTAMP(timestamp) AS `current_time` FROM '.TABLE_PREFIX.'social_member_track WHERE member_id='.$this->id;
+
 		$result = mysql_query($sql, $db);
 		if ($result){
 			while ($row = mysql_fetch_assoc($result)){
