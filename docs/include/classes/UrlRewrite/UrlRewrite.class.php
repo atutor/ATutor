@@ -264,11 +264,15 @@ class UrlRewrite  {
 			$obj =& $this;  //default
 			//Overwrite the UrlRewrite obj if there are any private rules
 			if ($_config['apache_mod_rewrite'] > 0){
-				//take out '.php' if any exists.
-				if ($end=='' && preg_match('/index\.php$/', $front)==1){
-					$pretty_url .= preg_replace('/index.php/', '', $front);
+				//take out '.php' if any exists. (Apply only to non-modules, otherwise it might cause problems)
+				if (preg_match('/^mods/', $front)!=1){
+					if ($end=='' && preg_match('/index\.php$/', $front)==1){
+						$pretty_url .= preg_replace('/index.php/', '', $front);
+					} else {
+						$pretty_url .= preg_replace('/\.php/', '', $front);
+					}
 				} else {
-					$pretty_url .= preg_replace('/\.php/', '', $front);
+					$pretty_url .= $front;
 				}
 
 				if (preg_match('/forum\/(index|view|list)\.php/', $front)==1) {
