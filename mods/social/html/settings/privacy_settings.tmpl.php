@@ -86,6 +86,7 @@
 		<?php endforeach; ?>
 		</div>
 </div>
+<!-- These settings will be implemented after
 [[[Following are to be implemented...]]]
 <div class="row">
 	<label for="search_profile"><?php echo _AT('search_profile'); ?></label>
@@ -127,7 +128,7 @@
 		<?php endforeach; ?>
 		</div>
 </div>
-
+-->
 </fieldset>
 
 
