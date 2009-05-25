@@ -3,19 +3,19 @@
 	src="<?php echo AT_SHINDIG_URL; ?>/gadgets/js/rpc.js?c=1"></script>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
-<script type="text/javascript" src="mods/social/lib/js/jquery.all.js"></script>
+<script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/jquery.all.js"></script>
 <!-- <script type="text/javascript" src="mods/social/lib/js/container.js"></script> -->
 <div class="search_form">	
 		<div class="headingbox"><h3><?php echo _AT('add_application'); ?></h3></div>
 		<div class="contentbox">
-			<form method="POST" action="<?php echo url_rewrite("mods/social/applications.php"); ?>">
+			<form method="POST" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME."applications.php"); ?>">
 			<label for="app_url"><?php echo _AT('add_application_url'); ?>: </label>
 			<input id="app_url" name="app_url" type="text" />
 			<input type="hidden" name="add_application" value="1" />
 			<input type="submit" value="<?php echo _AT('add_application'); ?>" class="button" />
 			</form>
 
-			<form method="POST" action="<?php echo url_rewrite("mods/social/applications.php"); ?>">
+			<form method="POST" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME."applications.php"); ?>">
 			<?php if (!isset($this->list_of_all_apps)): ?>
 			<input type="hidden" name="show_applications" value="1" />
 			<input type="submit" value="<?php echo _AT('show_available_applications'); ?>" class="button" />
@@ -52,7 +52,7 @@
 	<!--
 		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'settings=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/icon-settings.png" alt="<?php echo _AT('settings');?>" title="<?php echo _AT('settings');?>" border="0"/></a>
 	-->
-		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'add=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_mygadgets');?>" title="<?php echo _AT('add_to_mygadgets');?>" border="0"/></a>
+		<a href="<?php echo AT_SOCIAL_BASENAME.'applications.php?app_id='.$id.SEP.'add=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_mygadgets');?>" title="<?php echo _AT('add_to_mygadgets');?>" border="0"/></a>
 	</div>
 	<div style="width:60%; margin-left:10em; padding-top:1.5em;">
 		<?php echo $app_obj->getDescription(); ?><br/><br/>
@@ -82,9 +82,9 @@
 	</div>
 
 	<div style="float: right;">
-		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'settings=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/icon-settings.png" alt="<?php echo _AT('settings');?>" title="<?php echo _AT('settings');?>" border="0"/></a>
+		<a href="<?php echo AT_SOCIAL_BASENAME.'applications.php?app_id='.$id.SEP.'settings=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/icon-settings.png" alt="<?php echo _AT('settings');?>" title="<?php echo _AT('settings');?>" border="0"/></a>
 	
-		<a href="<?php echo  'mods/social/applications.php?app_id='.$id.SEP.'delete=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete');?>" title="<?php echo _AT('delete');?>" border="0"/></a>
+		<a href="<?php echo AT_SOCIAL_BASENAME.'applications.php?app_id='.$id.SEP.'delete=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete');?>" title="<?php echo _AT('delete');?>" border="0"/></a>
 	</div>
 	<div style="width:60%; margin-left:10em; padding-top:1.5em;">
 		<?php echo $app_obj->getDescription(); ?><br/><br/>

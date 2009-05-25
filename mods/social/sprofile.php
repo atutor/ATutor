@@ -19,7 +19,7 @@ require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 /*
 if (!$_SESSION['valid_user']) {
@@ -82,7 +82,7 @@ if (isset($_GET['delete'])){
 		} else {
 			$msg->addError('ACTIVITY_DELETE_FAILED');
 		}
-		header('Location: '.url_rewrite('mods/social/sprofile.php', AT_PRETTY_URL_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php', AT_PRETTY_URL_HEADER));
 		exit;
 	}
 }

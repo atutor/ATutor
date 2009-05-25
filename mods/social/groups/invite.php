@@ -19,7 +19,7 @@ require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 //Get group
 $gid = intval($_REQUEST['id']);
@@ -38,7 +38,7 @@ if (isset($_POST['inviteMember']) && isset($_POST['new_members'])){
 
 			if ($row_notify['email'] != '') {
 				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-				$body = _AT('notification_group_invite', get_display_name($_SESSION['member_id']),$group_obj->getName() , $_base_href.'mods/social/index_mystart.php');
+				$body = _AT('notification_group_invite', get_display_name($_SESSION['member_id']),$group_obj->getName() , $_base_href.AT_SOCIAL_BASENAME.'index_mystart.php');
 				$sender = get_display_name($_SESSION['member_id']);
 				$mail = new ATutorMailer;
 				$mail->AddAddress($row_notify['email'], $sender);

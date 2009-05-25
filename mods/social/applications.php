@@ -17,7 +17,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_SOCIAL_INCLUDE.'friends.inc.php');
 include(AT_SOCIAL_INCLUDE.'classes/Application.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -40,7 +40,7 @@ if (isset($_POST['add_application']) && isset($_POST['app_url'])){
 		//add applicatoin to database
 		$app->addApplication($gadget);
 		$msg->addFeedback('GADGET_ADDED_SUCCESSFULLY');
-		header('Location: '. url_rewrite('mods/social/applications.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	} else {
 	//	debug($gadget);
@@ -61,7 +61,7 @@ if (isset($_REQUEST['app_id'])){
 	if (isset($_GET['add']) && intval($_GET['add'])==1){
 		$app->addMemberApplication($_SESSION['member_id'], $_GET['app_id']);
 		$msg->addFeedback('GADGET_ADDED_SUCCESSFULLY');
-		header('Location: '. url_rewrite('mods/social/applications.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 
@@ -69,7 +69,7 @@ if (isset($_REQUEST['app_id'])){
 	if (isset($_GET['delete']) && intval($_GET['delete']) > 0) {
 		$app->deleteApplication();
 		$msg->addFeedback('GADGET_REMOVED_SUCCESSFULLY');
-		header('Location: '. url_rewrite('mods/social/applications.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 
@@ -95,7 +95,7 @@ if (isset($_REQUEST['app_id'])){
 			}
 		}
 		$msg->addFeedback('GADGET_SETTINGS_SAVED');
-		header('Location: '. url_rewrite('mods/social/applications.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 

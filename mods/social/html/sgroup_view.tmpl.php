@@ -2,24 +2,24 @@
 <div class="box">
 	<?php //existing members ?>
 	<?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
-	| <a href="mods/social/groups/invite.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('invite'); ?></a> |
+	| <a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/invite.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('invite'); ?></a> |
 
 	<?php //group admin ?>
 	<?php if ($this->group_obj->getUser() == $_SESSION['member_id']): ?>
-	<a href="mods/social/groups/edit.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('edit_group'); ?></a> |
-	<a href="mods/social/groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>delete=confirm"><?php echo _AT('disband_group'); ?></a> |
+	<a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/edit.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('edit_group'); ?></a> |
+	<a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>delete=confirm"><?php echo _AT('disband_group'); ?></a> |
 	<?php //existing members ?>
 	<?php else: ?>
-	<a href="mods/social/groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>remove=1"><?php echo _AT('leave_group'); ?></a> |
+	<a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/view.php?id=<?php echo $this->group_obj->getID().SEP;?>remove=1"><?php echo _AT('leave_group'); ?></a> |
 	<?php endif; ?>
 
 	<?php //new members ?>
 	<?php else: ?>
-	<a href="mods/social/groups/join.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('join_group'); ?></a> |
+	<a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/join.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('join_group'); ?></a> |
 	<?php endif; ?>
 
 	<?php //everyone ?>
-	<a href="mods/social/groups/list.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('group_members'); ?></a> |
+	<a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/list.php?id=<?php echo $this->group_obj->getID();?>"><?php echo _AT('group_members'); ?></a> |
 
 	<?php include('notifications.tmpl.php'); ?>
 </div>
@@ -87,7 +87,7 @@
 				<?php echo $message_array['created_date'].' - '.printSocialName($message_array['member_id']); ?>
 				<?php 
 				if ($message_array['member_id']==$_SESSION['member_id'] || $this->group_obj->getUser()==$_SESSION['member_id']){
-					echo '<a href="'.url_rewrite('mods/social/groups/delete_message.php?gid='.$this->group_obj->getID().SEP.'delete='.$id).'"><img src="'.$_base_href.'mods/social/images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a>';
+					echo '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'groups/delete_message.php?gid='.$this->group_obj->getID().SEP.'delete='.$id).'"><img src="'.$_base_href.'mods/social/images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a>';
 				}
 				?>
 				<p><?php echo $message_array['body']; ?></p>

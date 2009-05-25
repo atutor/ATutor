@@ -5,10 +5,17 @@
 <div>
 	<div><h2><?php echo printSocialName($this->profile['member_id'], false); ?></h2></div>
 	<div style="float:left; width:40%;">		
-		<div class="headingbox"><h5><?php echo _AT('profile'); ?></h5></div>
+		<div class="headingbox">
+			<h5><?php echo _AT('profile'); ?></h5>
+		</div>
 		<div class="contentbox">
+		<?php if ($this->scope=='owner'): ?>
+		<div style="float:right; border:thin #cccccc solid;">
+			<a href=<?php echo url_rewrite(AT_SOCIAL_BASENAME."edit_profile.php");?>><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME;?>images/edit_profile.gif" alt="<?php echo _AT('edit_profile'); ?>" title="<?php echo _AT('edit_profile'); ?>" border="0"/></a>
+		</div>		
+		<?php endif; ?>
 		<?php echo printSocialProfileImg($this->profile['member_id']); ?>
-		<dl id="public-profile">
+		<dl>
 			<?php if($this->profile['occupation']){ ?>
 			<dt><?php echo _AT('occupation'); ?></dt>
 			<dd><?php echo $this->profile['occupation']; ?></dd>
@@ -65,54 +72,55 @@
 
 	<div style="float:left; width:59%;">	
 		<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_EDUCATION, $this->relationship, $this->prefs)): ?>
-		<div>
 			<?php if (!empty($this->education)){ ?>
-			<div class="headingbox"><h5><?php echo _AT('training_and_education'); ?></h5></div>
-			<div class="contentbox">
-			<table class="data static">	
-				<thead>
-					<th> <?php echo _AT('institution'); ?></th>
-					<th> <?php echo _AT('degrees'); ?></th>
-					<th> <?php echo _AT('year'); ?></th>
-				</thead>
-				<tbody>
-				<?php
-					foreach($this->education as $edu){
-						echo '<tr><td>'.$edu['university'].'</td>';
-						echo '<td>'.$edu['degree'].'/'.$edu['field'].'/'.$edu['field'].'</td>';
-						echo '<td>'.$edu['from'].'-'.$edu['to'].'</td></tr>';
-					}							
-				?>
-				</tbody>
-			</table>
-			</div>
+			<div>
+				<div class="headingbox"><h5><?php echo _AT('training_and_education'); ?></h5></div>
+				<div class="contentbox">
+				<table class="data static">	
+					<thead>
+						<th> <?php echo _AT('institution'); ?></th>
+						<th> <?php echo _AT('degrees'); ?></th>
+						<th> <?php echo _AT('year'); ?></th>
+					</thead>
+					<tbody>
+					<?php
+						foreach($this->education as $edu){
+							echo '<tr><td>'.$edu['university'].'</td>';
+							echo '<td>'.$edu['degree'].'/'.$edu['field'].'/'.$edu['field'].'</td>';
+							echo '<td>'.$edu['from'].'-'.$edu['to'].'</td></tr>';
+						}							
+					?>
+					</tbody>
+				</table>
+				</div>
+			</div><br/>
 			<?php } ?>
-		</div><br/>
 		<?php endif; ?>
 
 		<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_POSITION, $this->relationship, $this->prefs)): ?>
-		<div>
+		
 			<?php if (!empty($this->position)){ ?>
-			<div class="headingbox"><h5><?php echo _AT('credits_and_work_experience'); ?></h5></div>
-			<div class="contentbox">
-			<table class="data static">	
-				<thead>
-					<th><?php echo _AT('company'); ?></th>
-					<th><?php echo _AT('title'); ?></th>
-					<th><?php echo _AT('year'); ?></th>
-				</thead>
-				<tbody>
-				<?php
-					foreach($this->position as $pos){
-						echo '<tr><td>'.$pos['company'].'</td>';
-						echo '<td>'.$pos['title'].'</td>';
-						echo '<td>'.$pos['from'].'-'.$pos['to'].'</td></tr>';
-					}							
-				?>
-				</tbody>
-			</table></div>
-			<?php } ?>
-		</div><br/>
+			<div>
+				<div class="headingbox"><h5><?php echo _AT('credits_and_work_experience'); ?></h5></div>
+				<div class="contentbox">
+				<table class="data static">	
+					<thead>
+						<th><?php echo _AT('company'); ?></th>
+						<th><?php echo _AT('title'); ?></th>
+						<th><?php echo _AT('year'); ?></th>
+					</thead>
+					<tbody>
+					<?php
+						foreach($this->position as $pos){
+							echo '<tr><td>'.$pos['company'].'</td>';
+							echo '<td>'.$pos['title'].'</td>';
+							echo '<td>'.$pos['from'].'-'.$pos['to'].'</td></tr>';
+						}							
+					?>
+					</tbody>
+				</table></div>
+			</div><br/>
+			<?php } ?>		
 		<?php endif; ?>
 
 		<?php if (PrivacyController::validatePrivacy(AT_SOCIAL_PROFILE_MEDIA, $this->relationship, $this->prefs)): ?>
@@ -149,7 +157,7 @@
 						if ($_SESSION['member_id']== $this->profile['member_id']){
 							echo '<li>'._AT('you');
 							echo ' '.$activity.' ';
-							echo '<a href="'.url_rewrite('mods/social/sprofile.php?delete='.$id).'"><img src="'.$_base_href.'mods/social/images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a></li>';
+							echo '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php?delete='.$id).'"><img src="'.$_base_href.'mods/social/images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a></li>';
 						} else {
 							echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';
 						}

@@ -19,7 +19,7 @@ require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 // Get social group class
 $social_groups = new SocialGroups();

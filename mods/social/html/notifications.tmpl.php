@@ -10,7 +10,7 @@ if(!empty($this->pending_requests)):
 ?>
 
 	<div class="box" style="border:thin solid black;">
-	<div style="float:right;"><a href="<?php echo url_rewrite('mods/social/index.php');?>?approval=y<?php echo SEP;?>id=<?php echo $r_obj->id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a><a href="<?php echo url_rewrite('mods/social/index.php');?>?approval=n<?php echo SEP;?>id=<?php echo $r_obj->id;?>"> <img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a>
+	<div style="float:right;"><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index.php');?>?approval=y<?php echo SEP;?>id=<?php echo $r_obj->id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a><a href="<?php echo url_rewrite('mods/social/index.php');?>?approval=n<?php echo SEP;?>id=<?php echo $r_obj->id;?>"> <img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a>
 	</div>
 	<ul>
 	<li><?php echo printSocialProfileImg($id);?></li>
@@ -39,7 +39,7 @@ if(!empty($this->group_invitations)):
 	$name = substr($name, 0, -2);
 ?>
 <div class="contentbox">
-	<div style="float:right;"><a href="mods/social/groups/invitation_handler.php?invitation=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><img src="<?php echo $_base_href; ?>mods/social/images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a> <a href="mods/social/groups/invitation_handler.php?invitation=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a></div>
+	<div style="float:right;"><a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/invitation_handler.php?invitation=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><img src="<?php echo $_base_href; ?>mods/social/images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a> <a href="mods/social/groups/invitation_handler.php?invitation=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a></div>
 	<ul>
 	<li id="activity"><?php echo _AT('has_invited_join', $name, $gobj->getID(), $gobj->getName()); ?></li>
 
@@ -65,7 +65,7 @@ foreach ($this->group_requests as $id=>$senders):
 ?>
 <div class="box" style="border:thin solid black;">
 	<div style="float:right;">
-		<a href="mods/social/groups/invitation_handler.php?request=accept<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a> <a href="mods/social/groups/invitation_handler.php?request=reject<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a>
+		<a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/invitation_handler.php?request=accept<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a> <a href="mods/social/groups/invitation_handler.php?request=reject<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a>
 	</div>
 	<ul>
 		<li id="activity"><?php echo _AT('has_requested_to', $name, $gobj->getName()); ?></li>

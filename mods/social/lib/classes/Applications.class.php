@@ -98,7 +98,7 @@ class Applications {
 	 * @return	THe <a> tag link of the requested application.
 	 */
 	function getAppLink($title, $id){
-		return '<a href="'.url_rewrite('mods/social/applications.php?app_id='.$id) . '"><b>' . $title . '</b></a>';
+		return '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'applications.php?app_id='.$id) . '"><b>' . $title . '</b></a>';
 	}
 
 	

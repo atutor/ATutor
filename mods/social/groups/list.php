@@ -21,7 +21,7 @@ require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 //require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 $id = intval($_REQUEST['id']);
 if ($id < 1){
@@ -59,7 +59,7 @@ if (isset($_GET['q'])){
 if($rand_key!='' && isset($_POST['search_friends_'.$rand_key])){
 	if (empty($_POST['search_friends_'.$rand_key])){
 		$msg->addError('CANNOT_BE_EMPTY');
-		header('Location: '.url_rewrite('mods/social/list.php?id='.$id, AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/list.php?id='.$id, AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 	$search_field = $addslashes($_POST['search_friends_'.$rand_key]);
@@ -76,7 +76,7 @@ if (isset($_GET['remove']) && isset($_GET['member_id'])){
 	if($_SESSION['member_id']==$grp_obj->getUser()){
 		$grp_obj->removeMember($member_id);
 		$msg->addFeedback('GRUOP_MEMBER_REMOVED');
-		header('Location: '.url_rewrite('mods/social/groups/list.php?id='.$id, AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/list.php?id='.$id, AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }

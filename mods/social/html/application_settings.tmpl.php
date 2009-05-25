@@ -1,4 +1,4 @@
-<form method="post" action="<?php echo url_rewrite('mods/social/applications.php');?>">
+<form method="post" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'applications.php');?>">
 <? 
   if (! empty($this->settings)) {
     $settings = $this->settings;

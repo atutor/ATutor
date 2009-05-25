@@ -21,8 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * add savant variable
  */
 global $savant;
-define('AT_SOCIAL_BASE',		AT_INCLUDE_PATH.'../mods/social/');
-define('AT_SOCIAL_INCLUDE',		AT_SOCIAL_BASE.'lib/');
+require(AT_INCLUDE_PATH.'../mods/social/lib/constants.inc.php');	//load constant file right away.
 $savant->addPath('template',	AT_SOCIAL_BASE.'html/');
 
 /******
@@ -46,7 +45,7 @@ $this->_stacks['social'] = array('title_var'=>'social', 'file'=>AT_INCLUDE_PATH.
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_group_tool = $_student_tool = 'mods/social/index.php';
+$_group_tool = $_student_tool = AT_SOCIAL_BASENAME.'index.php';
 
 /*******
  * add the admin pages when needed.
@@ -54,20 +53,20 @@ $_group_tool = $_student_tool = 'mods/social/index.php';
 
 if (admin_authenticate(AT_ADMIN_PRIV_SOCIAL, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages[AT_NAV_ADMIN] = array('mods/social/index_admin.php');
-	$this->_pages['mods/social/index_admin.php']['title_var'] = 'social';
-	$this->_pages['mods/social/index_admin.php']['parent']    = AT_NAV_ADMIN;
-	$this->_pages['mods/social/index_admin.php']['children']    = array('mods/social/admin/delete_applications.php');
+	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['title_var'] = 'social';
+	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['parent']    = AT_NAV_ADMIN;
+	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['children']    = array(AT_SOCIAL_BASENAME.'admin/delete_applications.php');
 
-		$this->_pages['mods/social/admin/delete_applications.php']['title_var'] = 'delete_applications';
-		$this->_pages['mods/social/admin/delete_applications.php']['parent'] = 'mods/social/index_admin.php';
+		$this->_pages[AT_SOCIAL_BASENAME.'admin/delete_applications.php']['title_var'] = 'delete_applications';
+		$this->_pages[AT_SOCIAL_BASENAME.'admin/delete_applications.php']['parent'] = AT_SOCIAL_BASENAME.'index_admin.php';
 }
 
 
 /*******
  * instructor Manage section:
  */
-$this->_pages['mods/social/index_instructor.php']['title_var'] = 'social';
-$this->_pages['mods/social/index_instructor.php']['parent']   = 'tools/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'index_instructor.php']['title_var'] = 'social';
+$this->_pages[AT_SOCIAL_BASENAME.'index_instructor.php']['parent']   = 'tools/index.php';
 
 // ** possible alternative: **
 // $this->pages['./index_instructor.php']['title_var'] = 'social';
@@ -76,73 +75,73 @@ $this->_pages['mods/social/index_instructor.php']['parent']   = 'tools/index.php
 /*******
  * student page.
  */
-$this->_pages['mods/social/index.php']['title_var'] = 'social';
-$this->_pages['mods/social/index.php']['img']       = 'mods/social/images/social.jpg';
+$this->_pages[AT_SOCIAL_BASENAME.'index.php']['title_var'] = 'social';
+$this->_pages[AT_SOCIAL_BASENAME.'index.php']['img']       = AT_SOCIAL_BASENAME.'images/social.jpg';
 
-$this->_pages['mods/social/sprofile.php']['title_var'] = 'social_profile';
-$this->_pages['mods/social/sprofile.php']['parent'] = 'mods/social/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['title_var'] = 'social_profile';
+$this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
 
-$this->_pages['mods/social/edit_profile.php']['title_var'] = 'edit_profile';
-$this->_pages['mods/social/edit_profile.php']['parent'] = 'mods/social/sprofile.php';
+$this->_pages[AT_SOCIAL_BASENAME.'edit_profile.php']['title_var'] = 'edit_profile';
+$this->_pages[AT_SOCIAL_BASENAME.'edit_profile.php']['parent'] = AT_SOCIAL_BASENAME.'sprofile.php';
 
-$this->_pages['mods/social/profile_picture.php']['title_var'] = 'picture';
-$this->_pages['mods/social/profile_picture.php']['parent'] = 'mods/social/edit_profile.php';
+$this->_pages[AT_SOCIAL_BASENAME.'profile_picture.php']['title_var'] = 'picture';
+$this->_pages[AT_SOCIAL_BASENAME.'profile_picture.php']['parent'] = AT_SOCIAL_BASENAME.'edit_profile.php';
 
-$this->_pages['mods/social/basic_profile.php']['title_var'] = 'profile';
-$this->_pages['mods/social/basic_profile.php']['parent'] = 'mods/social/edit_profile.php';
+$this->_pages[AT_SOCIAL_BASENAME.'basic_profile.php']['title_var'] = 'profile';
+$this->_pages[AT_SOCIAL_BASENAME.'basic_profile.php']['parent'] = AT_SOCIAL_BASENAME.'edit_profile.php';
 
-$this->_pages['mods/social/applications.php']['title_var'] = 'gadgets';
-$this->_pages['mods/social/applications.php']['parent'] = 'mods/social/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['title_var'] = 'gadgets';
+$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
 
-$this->_pages['mods/social/connections.php']['title_var'] = 'connections';
-$this->_pages['mods/social/connections.php']['parent'] = 'mods/social/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'connections.php']['title_var'] = 'connections';
+$this->_pages[AT_SOCIAL_BASENAME.'connections.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
 //	$this->_pages['mods/social/add_friends.php']['title_var'] = 'add_friends';
 //	$this->_pages['mods/social/add_friends.php']['parent'] = 'mods/social/connections.php';
 
-$this->_pages['mods/social/activities.php']['title_var'] = 'activities';
-$this->_pages['mods/social/activities.php']['parent'] = 'mods/social/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'activities.php']['title_var'] = 'activities';
+$this->_pages[AT_SOCIAL_BASENAME.'activities.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
 
-$this->_pages['mods/social/settings.php']['title_var'] = 'settings';
-$this->_pages['mods/social/settings.php']['parent'] = 'mods/social/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'settings.php']['title_var'] = 'settings';
+$this->_pages[AT_SOCIAL_BASENAME.'settings.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
 
-$this->_pages['mods/social/groups/index.php']['title_var'] = 'social_groups';
-$this->_pages['mods/social/groups/index.php']['parent'] = 'mods/social/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['title_var'] = 'social_groups';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
 
-$this->_pages['mods/social/groups/create.php']['title_var'] = 'create_groups';
-$this->_pages['mods/social/groups/create.php']['parent'] = 'mods/social/groups/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/create.php']['title_var'] = 'create_groups';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/create.php']['parent'] = AT_SOCIAL_BASENAME.'groups/index.php';
 
-$this->_pages['mods/social/groups/view.php']['title_var'] = 'view_groups';
-$this->_pages['mods/social/groups/view.php']['parent'] = 'mods/social/groups/index.php';
-	$this->_pages['mods/social/groups/delete_message.php']['title_var'] = 'delete_message';
-	$this->_pages['mods/social/groups/delete_message.php']['parent'] = 'mods/social/groups/view.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/view.php']['title_var'] = 'view_groups';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/view.php']['parent'] = AT_SOCIAL_BASENAME.'groups/index.php';
+	$this->_pages[AT_SOCIAL_BASENAME.'groups/delete_message.php']['title_var'] = 'delete_message';
+	$this->_pages[AT_SOCIAL_BASENAME.'groups/delete_message.php']['parent'] = AT_SOCIAL_BASENAME.'groups/view.php';
 
-$this->_pages['mods/social/groups/invite.php']['title_var'] = 'invite_groups';
-$this->_pages['mods/social/groups/invite.php']['parent'] = 'mods/social/groups/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/invite.php']['title_var'] = 'invite_groups';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/invite.php']['parent'] = AT_SOCIAL_BASENAME.'groups/index.php';
 
-$this->_pages['mods/social/groups/edit.php']['title_var'] = 'edit_group';
-$this->_pages['mods/social/groups/edit.php']['parent'] = 'mods/social/groups/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/edit.php']['title_var'] = 'edit_group';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/edit.php']['parent'] = AT_SOCIAL_BASENAME.'groups/index.php';
 
-$this->_pages['mods/social/groups/search.php']['title_var'] = 'search';
-$this->_pages['mods/social/groups/search.php']['parent'] = 'mods/social/groups/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/search.php']['title_var'] = 'search';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/search.php']['parent'] = AT_SOCIAL_BASENAME.'groups/index.php';
 
-$this->_pages['mods/social/groups/list.php']['title_var'] = 'group_members';
-$this->_pages['mods/social/groups/list.php']['parent'] = 'mods/social/groups/index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/list.php']['title_var'] = 'group_members';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/list.php']['parent'] = AT_SOCIAL_BASENAME.'groups/index.php';
 
 /* public pages */
-$this->_pages[AT_NAV_PUBLIC] = array('mods/social/index_public.php');
-$this->_pages['mods/social/index_public.php']['title_var'] = 'social';
-$this->_pages['mods/social/index_public.php']['parent'] = AT_NAV_PUBLIC;
+$this->_pages[AT_NAV_PUBLIC] = array(AT_SOCIAL_BASENAME.'index_public.php');
+$this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['title_var'] = 'social';
+$this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['parent'] = AT_NAV_PUBLIC;
 
 
 /* my start page pages */
 if ($_SESSION['valid_user']==1){
 //$this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');
-$this->_pages[AT_NAV_START]  = array('mods/social/index.php');
-$this->_pages['mods/social/index.php']['title_var'] = 'social';
-$this->_pages['mods/social/index.php']['parent'] = AT_NAV_START;
+$this->_pages[AT_NAV_START]  = array(AT_SOCIAL_BASENAME.'index.php');
+$this->_pages[AT_SOCIAL_BASENAME.'index.php']['title_var'] = 'social';
+$this->_pages[AT_SOCIAL_BASENAME.'index.php']['parent'] = AT_NAV_START;
 }
 
 function social_get_group_url($group_id) {
-	return 'mods/social/index.php';
+	return AT_SOCIAL_BASENAME.'index.php';
 }
 ?>

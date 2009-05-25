@@ -1,4 +1,4 @@
-<form class="input-form" action="mods/social/admin/delete_applications.php" method="POST">
+<form class="input-form" action="<?php echo AT_SOCIAL_BASENAME;?>admin/delete_applications.php" method="POST">
 <div class="gadget_wrapper">
 <div class="headingbox"><h3><?php echo _AT('available_applications'); ?></h3></div>
 <?php	

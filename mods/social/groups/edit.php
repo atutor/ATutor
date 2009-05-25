@@ -174,7 +174,7 @@ if (isset($_POST['save'])){
 
 		if($isSucceded){
 			$msg->addFeedback('SOCIAL_GROUP_UPDATED');
-			header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+			header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php', AT_PRETTY_URL_HEADER));
 			exit;
 		} else {
 			//Something went bad in the backend, contact admin?
@@ -183,7 +183,7 @@ if (isset($_POST['save'])){
 	}
 } elseif (isset($_POST['cancel'])){
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php', AT_PRETTY_URL_HEADER));
 	exit;
 }
 

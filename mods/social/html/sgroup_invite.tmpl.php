@@ -12,7 +12,7 @@
 		</div>
 	</div>
  	<div style="float:right;width:47%;">
-		<form class="input-form" method="POST" action="mods/social/groups/invite.php">
+		<form class="input-form" method="POST" action="<?php echo AT_SOCIAL_BASENAME; ?>groups/invite.php">
 			<div class="headingbox">
 			<h3><?php echo _AT('not_added_members'); ?></h3></div>
 		<div class="contentbox">

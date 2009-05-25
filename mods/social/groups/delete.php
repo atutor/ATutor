@@ -39,7 +39,7 @@ if ($sg->getUser() != $_SESSION['member_id']){
 //delete group 
 $msg->addFeedback('GROUP_DELETED');
 $sgs->removeGroup($id);
-header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php', AT_PRETTY_URL_HEADER));
 exit;
 
 //Display

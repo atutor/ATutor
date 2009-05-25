@@ -585,7 +585,7 @@ function printSocialProfileImg($id) {
 	if (profile_image_exists($id)) {
 		$str = '<img src="get_profile_img.php?id='.$id.'" alt="" />';
 	} else {
-		$str = '<img src="mods/social/images/nophoto.gif" alt="" />';
+		$str = '<img src="'.AT_SOCIAL_BASENAME.'images/nophoto.gif" alt="" />';
 	}
 	return getProfileLink($id, $str);
 }
@@ -601,7 +601,7 @@ function printSocialProfileImg($id) {
  * @return	the hyperlink to the profile
  */
 function getProfileLink($id, $str){
-	$link = '<a href="'.url_rewrite('mods/social/sprofile.php?id='.$id).'">';
+	$link = '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php?id='.$id).'">';
 	$link .= $str;
 	$link .= '</a>';
 	return $link;

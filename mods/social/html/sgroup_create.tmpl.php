@@ -6,7 +6,7 @@
 ?>
 
 <div class="input-form">	
-	<form action="<?php echo url_rewrite('mods/social/groups/create.php'); ?>" method="POST" >
+	<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'groups/create.php'); ?>" method="POST" >
 		<div class="row">
 			<label for="group_name"><?php echo _AT('group_name'); ?></label>
 			<input type="text" size="60" name="group_name" id="group_name" value="<?php echo $_POST['group_name']; ?>"/>

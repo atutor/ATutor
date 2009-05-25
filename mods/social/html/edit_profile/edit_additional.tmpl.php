@@ -6,7 +6,7 @@
 	$associations = $addslashes($this->associations);
 	$awards		 = $addslashes($this->awards);
 ?>
-<form method="POST" action="<?php echo url_rewrite('mods/social/edit_profile.php'); ?>">
+<form method="POST" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php'); ?>">
 <div>
 	
 		<label for="<?php echo $title;?>"><?php echo _AT($title); ?></label>

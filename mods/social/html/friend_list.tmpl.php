@@ -3,7 +3,7 @@
 </div>
 <div style="float:right;min-width:100%;">
 <div class="headingbox">
-<a href="mods/social/connections.php"><h3><?php echo _AT('connections'); ?></h3></a></div>
+<a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php"><h3><?php echo _AT('connections'); ?></h3></a></div>
 <?php
 /**
  * Loop through all the friends and print out a list.  
@@ -27,7 +27,7 @@ if (!empty($this->friends)): ?>
 			</div>
 		</div>
 	<?php endforeach; ?>
-	<div style="clear:both;"><a href="mods/social/connections.php"><?php echo _AT('show_all');?></a></div>
+	<div style="clear:both;"><a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php"><?php echo _AT('show_all');?></a></div>
 	</div>
 <?php else: ?>
 <?php echo _AT('no_friends'); ?>

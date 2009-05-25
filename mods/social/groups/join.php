@@ -51,7 +51,7 @@ if ($group_obj->getPrivacy()==0){
 		$row_notify = mysql_fetch_assoc($result_notify);
 
 		if ($row_notify['email'] != '') {
-			$body = _AT('notification_group_request', $group_obj->getName() , $_base_href.'mods/social/index_mystart.php');
+			$body = _AT('notification_group_request', $group_obj->getName() , $_base_href.AT_SOCIAL_BASENAME.'index_mystart.php');
 			$sender = get_display_name($_SESSION['member_id']);
 			$mail = new ATutorMailer;
 			$mail->AddAddress($row_notify['email'], $sender);
@@ -75,6 +75,6 @@ if ($group_obj->getPrivacy()==0){
 
 
 //Display
-header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php', AT_PRETTY_URL_HEADER));
 exit;
 ?>

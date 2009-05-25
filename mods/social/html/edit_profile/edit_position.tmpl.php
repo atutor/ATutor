@@ -11,7 +11,7 @@
 <script type='text/javascript' src='jscripts/calendar.js'></script>
 <div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_position');}else{echo  _AT('add_new_position');}?></h3></div>
 <div class="contentbox">
-<form method="POST" action="<?php echo url_rewrite('mods/social/edit_profile.php'); ?>">
+<form method="POST" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php'); ?>">
 	<dl id="public-profile">
 
 		<dt><label for="company"><?php echo _AT('company'); ?></label></dt>

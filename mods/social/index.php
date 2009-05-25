@@ -19,7 +19,7 @@ require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/Applications.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -40,11 +40,11 @@ if (isset($_GET['remove'])){
 	$id = intval($_GET['id']);
 //	if (isset($_GET['confirm_remove'])){
 		removeFriend($id);
-		header('Location: '.url_rewrite('mods/social/index.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'index.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 //	}
 //	$msg->addConfirm("are_you_sure?");
-//	header('Location: '.url_rewrite('mods/social/index.php?remove=yes'.SEP.'id='.$id.SEP.'confirm_remove=yes'));
+//	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'index.php?remove=yes'.SEP.'id='.$id.SEP.'confirm_remove=yes'));
 }
 
 //Handles request approval, and rejection
@@ -58,7 +58,7 @@ if (isset($_GET['approval'])){
 
 		if ($row_notify['email'] != '') {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-			$body = _AT('notification_accept_contact', get_display_name($_SESSION['member_id']), $_base_href.'mods/social/index_mystart.php');
+			$body = _AT('notification_accept_contact', get_display_name($_SESSION['member_id']), $_base_href.AT_SOCIAL_BASENAME.'index_mystart.php');
 			$sender = get_display_name($_SESSION['member_id']);
 			$mail = new ATutorMailer;
 			$mail->AddAddress($row_notify['email'], $sender);
@@ -76,7 +76,7 @@ if (isset($_GET['approval'])){
 	} elseif ($_GET['approval'] == 'n'){
 		rejectFriendRequest($id);
 	}
-	header('Location: '.url_rewrite('mods/social/index.php', AT_PRETTY_URL_IS_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -131,7 +131,7 @@ $savant->display('pubmenu.tmpl.php'); ?>
 				<div style="padding-bottom:0.2em;">
 					<?php echo printSocialProfileImg($id); ?>					
 					<?php echo printSocialName($id); ?>
-					<a href="mods/social/connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href; ?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0" style=""/></a>
+					<a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href; ?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0" style=""/></a>
 				</div>
 			</div>
 		<?php endforeach; ?>

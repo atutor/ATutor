@@ -43,7 +43,7 @@ if (isset($_GET['invitation']) || isset($_GET['request'])){
 				//require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 				if ($row_notify['email'] != '') {
 					//require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-					$body = _AT('notification_group_invite_accepted', get_display_name($_SESSION['member_id']),$group_obj->getName() , $_base_href.'mods/social/index_mystart.php');
+					$body = _AT('notification_group_invite_accepted', get_display_name($_SESSION['member_id']),$group_obj->getName() , $_base_href.AT_SOCIAL_BASENAME.'index_mystart.php');
 					$sender = get_display_name($_SESSION['member_id']);
 					$mail = new ATutorMailer;
 					$mail->AddAddress($row_notify['email'], $sender);
@@ -83,7 +83,7 @@ if (isset($_GET['invitation']) || isset($_GET['request'])){
 				$row_notify = mysql_fetch_assoc($result_notify);
 
 				if ($row_notify['email'] != '') {
-					$body = _AT('notification_group_request_accepted', $group_obj->getName() , $_base_href.'mods/social/index_mystart.php');
+					$body = _AT('notification_group_request_accepted', $group_obj->getName() , $_base_href.AT_SOCIAL_BASENAME.'index_mystart.php');
 					$sender = get_display_name($_SESSION['member_id']);
 					$mail = new ATutorMailer;
 					$mail->AddAddress($row_notify['email'], $sender);
@@ -123,10 +123,10 @@ if (isset($_GET['invitation']) || isset($_GET['request'])){
 		default:
 			break;
 	}
-	header('Location: '.url_rewrite('mods/social/groups/view.php?id='.$id, AT_PRETTY_URL_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/view.php?id='.$id, AT_PRETTY_URL_HEADER));
 	exit;
 }
 
-header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php', AT_PRETTY_URL_HEADER));
 exit;
 ?>

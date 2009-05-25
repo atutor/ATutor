@@ -2,7 +2,7 @@
 if (empty($this->my_apps)):
 	echo _AT('no_gadgets_installed'); 
 else: ?>
-<form action="<?php echo url_rewrite('mods/social/settings.php');?>" method="POST">
+<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'settings.php');?>" method="POST">
 <div class="input-form">
 	<h4><?php echo _AT('application_settings'); ?></h4>
 	<div class="row"><?php echo _AT('application_control_blurb'); ?></div>

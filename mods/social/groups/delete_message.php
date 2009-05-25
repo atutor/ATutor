@@ -33,11 +33,11 @@ if($gid > 0 && $mid > 0){
 		} else {
 			$msg->addError('CANT_DELETE_MESSAGE');
 		}
-		header('Location: '.url_rewrite('mods/social/groups/view.php?id='.$gid, AT_PRETTY_URL_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/view.php?id='.$gid, AT_PRETTY_URL_HEADER));
 		exit;
 	} elseif ($_POST['submit_no']){
 		$msg->addFeedback('CANCELLED');
-		header('Location: '.url_rewrite("mods/social/groups/view.php?id=".$gid, AT_PRETTY_URL_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/view.php?id='.$gid, AT_PRETTY_URL_HEADER));
 		exit;
 	}
 	$hidden_vars['gid'] = $gid;

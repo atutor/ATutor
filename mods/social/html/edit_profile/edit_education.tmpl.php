@@ -14,7 +14,7 @@
 <script type='text/javascript' src='jscripts/calendar.js'></script>
 <div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_education');}else{echo  _AT('add_new_education');}?></h3></a></div>
 <div class="contentbox">
-<form method="POST" action="<?php echo url_rewrite('mods/social/edit_profile.php'); ?>">
+<form method="POST" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php'); ?>">
 	<dl id="public-profile">
 		<dt><label for="university"><?php echo _AT('university'); ?></label></dt>
 		<dd><input type="text" id="university" name="university" value="<?php echo $university; ?>" /></dd>

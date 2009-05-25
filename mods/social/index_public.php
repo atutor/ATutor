@@ -19,7 +19,7 @@ require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 $rand_key = $addslashes($_POST['rand_key']);	//should we excape?
 
@@ -71,7 +71,7 @@ if (isset($_GET['id'])){
 
 		if ($row_notify['email'] != '') {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-			$body = _AT('notification_new_contact', get_display_name($_SESSION['member_id']), $_base_href.'mods/social/index_mystart.php');
+			$body = _AT('notification_new_contact', get_display_name($_SESSION['member_id']), $_base_href.AT_SOCIAL_BASENAME.'index_mystart.php');
 			$sender = get_display_name($_SESSION['member_id']);
 			$mail = new ATutorMailer;
 			$mail->AddAddress($row_notify['email'], $sender);
@@ -86,7 +86,7 @@ if (isset($_GET['id'])){
 			unset($mail);
 		}
 
-		header('Location: '.url_rewrite('mods/social/connections.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'connections.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }
@@ -96,7 +96,7 @@ if (isset($_GET['id'])){
 if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET['search_friends'])){
 	if (empty($_POST['search_friends_'.$rand_key]) && !isset($_GET['search_friends'])){
 		$msg->addError('CANNOT_BE_EMPTY');
-		header('Location: '.url_rewrite('mods/social/index_public.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'index_public.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 	//to adapt paginator GET queries

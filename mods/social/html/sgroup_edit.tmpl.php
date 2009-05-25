@@ -1,7 +1,7 @@
 <?php 
 if (isset($this->group_obj)){
 	//edit
-	$form_url = 'mods/social/groups/edit.php';
+	$form_url = AT_SOCIAL_BASENAME.'groups/edit.php';
 	$button_name = 'save';
 	$name = $this->group_obj->getName();
 	$logo = $this->group_obj->getLogo();
@@ -10,7 +10,7 @@ if (isset($this->group_obj)){
 	$id = $this->group_obj->getID();
 } else {
 	//create new one
-	$form_url = 'mods/social/groups/create.php';
+	$form_url = AT_SOCIAL_BASENAME.'groups/create.php';
 	$button_name = 'create';
 }
 ?>

@@ -19,7 +19,7 @@ require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 //Get group
 $gid = intval($_REQUEST['id']);
@@ -28,7 +28,7 @@ $group_obj = new SocialGroup($gid);
 //check if this group is valid
 if (!$group_obj->isValid()){
 	$msg->addError('GROUP_HAS_BEEN_REMOVED');
-	header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php', AT_PRETTY_URL_HEADER));
 	exit;
 }
 
@@ -36,7 +36,7 @@ if (!$group_obj->isValid()){
 if (isset($_GET['remove']) && $_GET['remove']==1){
 	$group_obj->removeMember($_SESSION['member_id']);
 	$msg->addFeedback('LEFT_GROUP_SUCCESSFULLY');
-	header('Location: '.url_rewrite('mods/social/groups/index.php', AT_PRETTY_URL_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php', AT_PRETTY_URL_HEADER));
 	exit;
 }
 
@@ -54,15 +54,15 @@ if($_GET['delete'] == "confirm"){
 	//$msg->addConfirm('DELETE_GROUP', );
 	$hidden_vars['id'] = $gid;
 	$msg->addConfirm(array('DELETE_GROUP', $group_obj->getName()), $hidden_vars);
-	header('Location: '.url_rewrite("mods/social/groups/view.php?id=".$gid, AT_PRETTY_URL_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME."groups/view.php?id=".$gid, AT_PRETTY_URL_HEADER));
 	exit;
 
 }else if($_POST['submit_yes']){
-	header('Location: '.url_rewrite("mods/social/groups/delete.php?id=".$gid, AT_PRETTY_URL_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME."groups/delete.php?id=".$gid, AT_PRETTY_URL_HEADER));
 	exit;
 }else if($_POST['submit_no']){
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.url_rewrite("mods/social/groups/view.php?id=".$gid, AT_PRETTY_URL_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME."groups/view.php?id=".$gid, AT_PRETTY_URL_HEADER));
 	exit;
 }
 

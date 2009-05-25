@@ -19,7 +19,7 @@ require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 include(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
 include(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 include(AT_SOCIAL_INCLUDE.'classes/Application.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');

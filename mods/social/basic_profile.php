@@ -16,7 +16,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 

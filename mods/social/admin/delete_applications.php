@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 include(AT_SOCIAL_INCLUDE.'classes/Application.class.php');
-$_custom_css = $_base_path . 'mods/social/module.css'; // use a custom stylesheet
+$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 //initialization
 $apps = new Applications();
@@ -31,7 +31,7 @@ if (isset($_POST['delete'])){
 		$msg->addFeedback('GADGET_DELETED_SUCCESSFULLY');		
 	} else {
 		//cannot be empty
-		$msg->addFeedback('GADGET_DELETED_EMPTY');
+		$msg->addError('GADGET_DELETED_CANNOT_BE_EMPTY');
 	}
 }
 

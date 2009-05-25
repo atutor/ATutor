@@ -7,7 +7,7 @@
 ?>
 <div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_websites');}else{echo  _AT('add_new_website');}?></h3></div>
 <div class="contentbox">
-<form method="POST" action="<?php echo url_rewrite('mods/social/edit_profile.php'); ?>">
+<form method="POST" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php'); ?>">
 	<dl id="public-profile">
 	<dt><label for="url"><?php echo _AT('url'); ?></label></dt>
 	<dd><input type="text" id="url" name="url" value="<?php echo $url; ?>" /></dd>
