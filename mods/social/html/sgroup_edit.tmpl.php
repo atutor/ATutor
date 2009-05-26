@@ -62,11 +62,11 @@ if (isset($this->group_obj)){
 					$public_selected = ' checked="checked"';
 				}
 			?>
-			<label><?php echo _AT('group_privacy');?></label><br/>
-			<input type="radio" name="group_privacy" id="group_privacy_public" value="public" <?php echo $public_selected; ?>/>
-			<label for="group_privacy_public"><?php echo _AT('group_privacy_public'); ?></label><br/>
-			<input type="radio" name="group_privacy" id="group_privacy_private" value="private" <?php echo $private_selected; ?>/>
-			<label for="group_privacy_private"><?php echo _AT('group_privacy_private'); ?></label>
+			<label><?php echo _AT('access');?></label><br/>
+			<input type="radio" name="group_privacy" id="group_about_public" value="public" <?php echo $public_selected; ?>/>
+			<label for="group_about_public"><?php echo _AT('public').': '._AT('group_about_public'); ?></label><br/>
+			<input type="radio" name="group_privacy" id="group_about_private" value="private" <?php echo $private_selected; ?>/>
+			<label for="group_about_private"><?php echo _AT('private').': '._AT('group_about_private'); ?></label>
 		</div>
 
 		<div class="row">

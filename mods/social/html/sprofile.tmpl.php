@@ -151,9 +151,15 @@
 		<div class="headingbox">
 			<h5><?php echo _AT('activities'); ?></h5></div>
 		<div class="contentbox" id="activity">
+			<?php if(!empty($this->activities)): ?>
 			<ul>
 				<?php
 					foreach($this->activities as $id=>$activity){
+						echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';
+						/*
+						 * harris @may 26, 2009
+						 * Would be nice to use this, but we will have to change "has" to "have" for _AT('you')
+						 *
 						if ($_SESSION['member_id']== $this->profile['member_id']){
 							echo '<li>'._AT('you');
 							echo ' '.$activity.' ';
@@ -161,10 +167,13 @@
 						} else {
 							echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';
 						}
-						
+						*/						
 					}
 				?>
 			</ul>
+			<?php else: ?>
+			<?php echo _AT('no_activities'); ?>
+			<?php endif; ?>
 		</div><br />
 		<?php endif; ?>
 

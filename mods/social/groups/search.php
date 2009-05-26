@@ -32,11 +32,6 @@ if (!$_SESSION['valid_user']) {
 $social_groups = new SocialGroups();
 $rand_key = $addslashes($_POST['rand_key']);	//should we excape?
 
-if ($rand_key!='' && isset($_POST['search_groups_'.$rand_key])){
-	$query = $addslashes($_POST['search_groups_'.$rand_key]);
-	$search_result = $social_groups->search($query);
-}
-
 //if $_GET['q'] is set, handle Ajax.
 if (isset($_GET['q'])){
 	$query = $addslashes($_GET['q']);
@@ -64,6 +59,14 @@ if (isset($_GET['q'])){
 		echo '</div>';
 	}
 	exit;
+}
+
+// handle post request
+if ($rand_key!='' && isset($_POST['search_groups_'.$rand_key]) && !empty($_POST['search_groups_'.$rand_key])){
+	$query = $addslashes($_POST['search_groups_'.$rand_key]);
+	$search_result = $social_groups->search($query);
+} elseif(empty($_POST['search_groups_'.$rand_key])) {
+	$msg->addError('CANNOT_BE_EMPTY');
 }
 
 //Display

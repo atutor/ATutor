@@ -391,6 +391,12 @@ Login to ATutor Social at:
 INSERT INTO `language_text` VALUES ('en', '_module','group_request','ATutor Social Join Group Request',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','no_groups_yet','You have not joined any groups yet.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','shindig_blurb','If you have your own Shindig server setup, your can enter the URL to the server here. If you do not have your own Shindig server, you can either leave the URL empty, or you can use "http://social.atutor.ca/shindig/php" to connect to the ATutor social network. Shindig allows users to link gadgets from other sites into their social networking environment, as well as communicate with those in other social networks. If you choose not to use a Shindig server, your social network will function as a self-contained network, without access to external networks.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','visitor_counts','Visitor counts',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_about_public','The group is opened to all users.  No approval is needed.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','group_about_private','Users will have to be approved by the moderator to join this group.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','degrees','Degrees',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','delete_applications','Delete applications',NOW(),'');
+
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CANNOT_BE_EMPTY','Search field cannot be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_ADDED_SUCCESSFULLY','Gadget was successsfully added.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_GADGET_REMOVED_SUCCESSFULLY','Gadget was successsfully removed.',NOW(),'');
@@ -407,9 +413,9 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SOCIAL_SETTINGS_NOT_
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REQUEST_FRIEND_ADDED','Your request has been sent. Your new contact will be added when the person has accepted your request.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JOIN_REQUEST_SENT','Request to join group has been sent. You will be added to the group when your request has been approved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_JOIN_REQUEST_FAILED','Request to join group failed. Perhaps you have already requested to join this group.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GADGET_DELETED_CANNOT_BE_EMPTY','You need to select at least one application to delete.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ACCEPT_GROUP_INVITATION','Invitation to join group was accepted.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REJECT_GROUP_INVITATION','Invitation to join group was rejected.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ACCEPT_GROUP_REQUEST','Request to join group was accepted.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REJECT_GROUP_REQUEST','Request to join group was rejected.',NOW(),'');
-
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LEFT_GROUP_SUCCESSFULLY','Successfully removed from group.',NOW(),'');

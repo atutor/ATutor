@@ -28,7 +28,7 @@ if (isset($_POST['delete'])){
 	if (isset($_POST['apps']) && !empty($_POST['apps'])){
 		//need confirm box
 		$apps->deleteApplications($_POST['apps']);
-		$msg->addFeedback('GADGET_DELETED_SUCCESSFULLY');		
+		$msg->addFeedback('GADGET_REMOVED_SUCCESSFULLY');		
 	} else {
 		//cannot be empty
 		$msg->addError('GADGET_DELETED_CANNOT_BE_EMPTY');
