@@ -87,7 +87,7 @@
 				<?php echo $message_array['created_date'].' - '.printSocialName($message_array['member_id']); ?>
 				<?php 
 				if ($message_array['member_id']==$_SESSION['member_id'] || $this->group_obj->getUser()==$_SESSION['member_id']){
-					echo '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'groups/delete_message.php?gid='.$this->group_obj->getID().SEP.'delete='.$id).'"><img src="'.$_base_href.'mods/social/images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a>';
+					echo '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'groups/delete_message.php?gid='.$this->group_obj->getID().SEP.'delete='.$id).'"><img src="'.$_base_href.AT_SOCIAL_BASENAME.'images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a>';
 				}
 				?>
 				<p><?php echo $message_array['body']; ?></p>

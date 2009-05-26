@@ -131,7 +131,7 @@ $savant->display('pubmenu.tmpl.php'); ?>
 				<div style="padding-bottom:0.2em;">
 					<?php echo printSocialProfileImg($id); ?>					
 					<?php echo printSocialName($id); ?>
-					<a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href; ?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0" style=""/></a>
+					<a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0" style=""/></a>
 				</div>
 			</div>
 		<?php endforeach; ?>

@@ -33,7 +33,7 @@
 	?>
 	<div class="contact_mini" >
 		<?php if($_SESSION['member_id']==$this->grp_obj->getUser()): ?>
-		<div style="float:right;"><a href="<?php echo AT_SOCIAL_BASENAME;?>groups/list.php?remove=yes<?php echo SEP;?>id=<?php echo $this->grp_obj->getID(); ?><?php echo SEP;?>member_id=<?php echo $person_obj->getID(); ?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('remove_group_member'); ?>" title="<?php echo _AT('remove_group_member'); ?>" border="0"/></a> </div>
+		<div style="float:right;"><a href="<?php echo AT_SOCIAL_BASENAME;?>groups/list.php?remove=yes<?php echo SEP;?>id=<?php echo $this->grp_obj->getID(); ?><?php echo SEP;?>member_id=<?php echo $person_obj->getID(); ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('remove_group_member'); ?>" title="<?php echo _AT('remove_group_member'); ?>" border="0"/></a> </div>
 		<?php endif; ?>
 		<div>
 			<div style="float:left;"><?php echo printSocialProfileImg($person_obj->getID()); ?></div>

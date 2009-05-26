@@ -141,7 +141,7 @@ class Activity{
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		
-		$msg = _AT("has_added_app", url_rewrite('mods/social/applications.php?app_id='.$app_id),
+		$msg = _AT("has_added_app", url_rewrite(AT_SOCIAL_BASENAME.'applications.php?app_id='.$app_id),
 			htmlentities($row['title']));
 		return $msg;
 	 }

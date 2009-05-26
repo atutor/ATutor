@@ -51,7 +51,7 @@
 	?>
 	<div class="contact_mini" >
 		<?php if (isset($person['added']) && $person['added']==1): ?>
-			<a style="vertical-align:top;float:right;" href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" border="0"/></a>
+			<a style="vertical-align:top;float:right;" href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" border="0"/></a>
 			<div>
 				<div style="float:left;"><?php echo printSocialProfileImg($id); ?></div>
 				<div style="padding-left:0.5em; float:left;">
@@ -70,7 +70,7 @@
 			<?php if ($person['pending']==1): ?>	
 			<div style="float:right;"><?php echo _AT('pending'); ?></div>
 			<?php else: ?>
-			<div style="float:right;"><a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href; ?>mods/social/images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0"/></a> </div>
+			<div style="float:right;"><a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0"/></a> </div>
 			<?php endif; ?>
 			<div>
 				<div style="float:left;"><?php echo printSocialProfileImg($id); ?></div>

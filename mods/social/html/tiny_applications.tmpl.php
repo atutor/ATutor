@@ -12,9 +12,9 @@
 <div class="gadget_wrapper">
 <div class="headingbox">
 	<div style="float:right">
-		<a href="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>applications.php?app_id=<?php echo $app_obj->getId().SEP;?>delete=1"><img src="<?php echo $_base_href; ?>mods/social/images/b_drop.png" border="0" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" style="float:right;" /></a>
+		<a href="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>applications.php?app_id=<?php echo $app_obj->getId().SEP;?>delete=1"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" border="0" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" style="float:right;" /></a>
 
-		<a href="<?php echo AT_SOCIAL_BASENAME.'applications.php?app_id='.$id.SEP.'settings=1'; ?>"><img src="<?php echo $_base_href;?>mods/social/images/icon-settings.png" alt="<?php echo _AT('settings');?>" title="<?php echo _AT('settings');?>" border="0" style="float:right;" /></a>
+		<a href="<?php echo AT_SOCIAL_BASENAME.'applications.php?app_id='.$id.SEP.'settings=1'; ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME;?>images/icon-settings.png" alt="<?php echo _AT('settings');?>" title="<?php echo _AT('settings');?>" border="0" style="float:right;" /></a>
 	</div>	
 	<h3><?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?></h3>
 </div>

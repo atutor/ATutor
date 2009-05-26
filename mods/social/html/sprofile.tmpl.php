@@ -157,7 +157,7 @@
 						if ($_SESSION['member_id']== $this->profile['member_id']){
 							echo '<li>'._AT('you');
 							echo ' '.$activity.' ';
-							echo '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php?delete='.$id).'"><img src="'.$_base_href.'mods/social/images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a></li>';
+							echo '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php?delete='.$id).'"><img src="'.$_base_href.AT_SOCIAL_BASENAME.'images/b_drop.png" alt="'._AT('remove').'" title="'._AT('remove').'" border="0" /></a></li>';
 						} else {
 							echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';
 						}
