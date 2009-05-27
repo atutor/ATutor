@@ -379,8 +379,5 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 
 
 <?php 
-global $_config;
-debug($_config);
-
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
