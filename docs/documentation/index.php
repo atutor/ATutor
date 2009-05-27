@@ -42,6 +42,8 @@ $path = '../common/';
 <html lang="en">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<title>ATutor Handbook</title>
+
+<head>
 <script type="text/javascript">
 
 var i = 0;
@@ -87,15 +89,38 @@ function hide() {
 	return false;
 }
 </script>
+</head>
 
 <?php 
 if (isset($_GET['p'])) {
 	$body = htmlentities($_GET['p']);
+	$accessible_pages = scandir('.');
+	
+	if (!in_array($body, $accessible_pages))
+	{
+?>
+<div style="width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid #DD0000;
+	padding: 5px;
+	background-color: #F4DCDC;
+	color: #A50707;
+	background-color: #F4DCDC;
+	padding-left: 25px;
+	font-weight: bold;">
+	INACCESSIBLE PAGE
+</div>
+
+<?php exit;
+	}
 } else {
 	$body = 'introduction.php';
 } 
 ?>
-</head>
+
 <frameset rows="24,*">
 	<frame src="<?php echo $path; ?>frame_header.php?<?php echo $section; ?>&amp;<?php echo $req_lang; ?>" frameborder="0" name="header" title="header" scrolling="no" noresize="noresize">
 	<frameset cols="22%, *" id="frameset1">
