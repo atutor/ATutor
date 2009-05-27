@@ -31,5 +31,5 @@
 	<br/>
 </div>
 <?php endforeach; ?>
-<div class="row" style="float: right;"><input class="button" type="submit" name="delete" value="<?php echo _AT('delete_checked');?>"/></div>
+<div class="row" style="float: right;"><input class="button" type="submit" name="delete" value="<?php echo _AT('delete');?>"/></div>
 </form>
