@@ -2,8 +2,8 @@
 	global $addslashes;
 
 	//escape all strings
-	$url		= $addslashes($this->url);
-	$site_name	= $addslashes($this->site_name);
+	$url		= htmlentities_utf8($this->url);
+	$site_name	= htmlentities_utf8($this->site_name);
 ?>
 <div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_websites');}else{echo  _AT('add_new_website');}?></h3></div>
 <div class="contentbox">

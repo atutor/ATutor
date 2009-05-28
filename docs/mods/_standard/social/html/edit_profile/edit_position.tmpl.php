@@ -1,11 +1,11 @@
 <?php
 	global $addslashes;
 	//escape all strings
-	$company		= $addslashes($this->company);
-	$title			= $addslashes($this->profile_title);
-	$description	= $this->description;
-	$from			= $addslashes($this->from);
-	$to				= $addslashes($this->to);
+	$company		= htmlentities_utf8($this->company);
+	$title			= htmlentities_utf8($this->profile_title);
+	$description	= htmlentities_utf8($this->description);
+	$from			= htmlentities_utf8($this->from);
+	$to				= htmlentities_utf8($this->to);
 ?>
 <script type='text/javascript' src='jscripts/calendar.js'></script>
 <div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_position');}else{echo  _AT('add_new_position');}?></h3></div>

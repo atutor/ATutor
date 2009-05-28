@@ -10,7 +10,7 @@
 	} else {
 		$last_search = $_POST['search_friends_'.$rand];	
 	}
-	$last_search = htmlentities_utf8($last_search);
+	$last_search = htmlentities($last_search, ENT_COMPAT, 'UTF-8');	//wants to convert only double quotes, not single.
 ?>
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>
 <div class="input-form" style="float:right; width:34%;padding:1em;min-height:4.5em;">

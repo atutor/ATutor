@@ -46,7 +46,12 @@ if (isset($_GET['q'])){
 			}
 
 			$group_obj = $group_array['obj'];
-			echo '<a href="javascript:void(0);" onclick="document.getElementById(\'search_groups\').value=\''.$group_obj->getName().'\'; document.getElementById(\'search_group_form\').submit();">'.$group_obj->getName().'</a><br/>';
+			/* A bit of a hack here
+			 * Escape XSS for the ajax search. Problem: the ' and " is changed to its entities.
+			 *
+			 * @Apr 2, 2009 - Harris
+			 */
+			echo '<a href="javascript:void(0);" onclick="document.getElementById(\'search_groups\').value=\''.htmlentities_utf8($group_obj->getName()).'\'; document.getElementById(\'search_group_form\').submit();">'.$group_obj->getName().'</a><br/>';
 			$counter++;
 		}
 		echo '</div>';
