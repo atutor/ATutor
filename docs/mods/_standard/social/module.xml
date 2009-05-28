@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">ATutor Social</name> 
+    <description lang="en">Putting ATutor into the age of social networking.  Allow users to share profiles and activities, link OpenSocial gadgets and applications into their social learning environment, and network with others locally, on other ATutor installations, or on other social networks.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL/ATutor</license> 
+	<release> 
+        <version>0.9 Beta</version> 
+        <date>2008-12-17</date> 
+	<state>In development. This version is primarily available for experimentation and feedback, leading up to a release of a stable version about June 09. Users are encouraged to make feature suggestions, report bugs, and get involved in developing the ATutor social network. Discussions can the started in the ATutor community forums  http://www.atutor.ca/forum/16/1.html
+	
+	
+	
+	</state> 
+	<notes>Also note that ATutor Social runs with or without the OpenSocial Shindig server. You may point to your own Shindig server if you have one (download from: http://incubator.apache.org/shindig/), or use the ATutor social network server at http://social.atutor.ca/shindig/php. See the Administrator's Networking Admin panel to setup a link to a Shindig server, and link to other netowrks and applications, or do not use Shindig to create a self-contained social network using only your local ATutor installation.</notes> 
+    </release> 
+</module>
