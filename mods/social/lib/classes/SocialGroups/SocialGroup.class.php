@@ -128,7 +128,7 @@ class SocialGroup {
 		$rs = mysql_query($sql, $db);
 		if($rs){
 			list($body) = mysql_fetch_array($rs);
-			return nl2br(htmlentities($body));
+			return htmlentities_utf8($body);
 		}
 		return false;
 	}
@@ -145,7 +145,7 @@ class SocialGroup {
 
 		 if ($rs){
 			 while ($row = mysql_fetch_assoc($rs)){
-				$row['body'] = nl2br(htmlentities($row['body']));	//escape xss attack
+				$row['body'] = htmlentities_utf8($row['body']);	//escape xss attack
 				$result [$row['id']] = $row;
 			 }
 		 }
@@ -180,10 +180,11 @@ class SocialGroup {
 		 return $str;
 	 }
 	 function getName() {
-		 return htmlentities($this->name, ENT_QUOTES, 'UTF-8');
+		 return htmlentities_utf8($this->name);
 	 }
-	 function getDescription(){
-		 return nl2br(htmlentities($this->description, ENT_QUOTES, 'UTF-8'));
+	 //@param boolean change all carrier returns to <br/> if true.
+	 function getDescription($use_nl2br=true){
+		 return htmlentities_utf8($this->description, $use_nl2br);
 	 }
 	 function getCreatedDate(){
 		 return $this->created_date;
@@ -213,7 +214,7 @@ class SocialGroup {
 		if ($result){
 			//add a record to the activities
 			$act = new Activity();		
-			$str1 = printSocialName($friend_id).' has joined the group, <a href="social/groups/view.php?id='.$this->getID().'">'.htmlentities($this->getName()).'</a>';
+			$str1 = printSocialName($friend_id).' has joined the group, <a href="social/groups/view.php?id='.$this->getID().'">'.htmlentities_utf8($this->getName()).'</a>';
 			$act->addActivity($member_id, $str1);
 			unset($act);
 			return true;

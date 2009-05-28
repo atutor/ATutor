@@ -7,6 +7,7 @@
 	} else {
 		$last_search = $_POST['search_groups_'.$rand];	
 	}
+	$last_search = htmlentities($last_search, ENT_COMPAT, 'UTF-8');	//wants to convert only double quotes, not single.
 ?>
 <div class="input-form" style="width:40%;padding:1em;min-height:4.5em;">
 <h3><?php echo _AT('search_for_groups'); ?></h3>

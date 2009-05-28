@@ -6,7 +6,7 @@ if (isset($this->group_obj)){
 	$name = $this->group_obj->getName();
 	$logo = $this->group_obj->getLogo();
 	$privacy = $this->group_obj->getPrivacy();
-	$description = $this->group_obj->getDescription();
+	$description = $this->group_obj->getDescription(false);
 	$id = $this->group_obj->getID();
 } else {
 	//create new one

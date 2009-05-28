@@ -1,10 +1,10 @@
 <?php
 	global $addslashes;
 	//escape all strings
-	$title  = $addslashes($this->title);
-	$interests	 = $addslashes($this->interests);
-	$associations = $addslashes($this->associations);
-	$awards		 = $addslashes($this->awards);
+	$title			= htmlentities_utf8($this->title);
+	$interests		= htmlentities_utf8($this->interests, false);
+	$associations	= htmlentities_utf8($this->associations, false);
+	$awards			= htmlentities_utf8($this->awards, false);
 ?>
 <form method="POST" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php'); ?>">
 <div>

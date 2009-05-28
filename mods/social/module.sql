@@ -184,12 +184,12 @@ CREATE TABLE `social_groups_types` (
 )
 ENGINE = MyISAM;
 
--- CREATE TABLE `social_groups_forums` (
---   `group_id` INTEGER UNSIGNED NOT NULL,
---   `forum_id` INTEGER UNSIGNED NOT NULL,
---   PRIMARY KEY (`group_id`, `forum_id`)
--- )
--- ENGINE = MyISAM;
+# CREATE TABLE `social_groups_forums` (
+#   `group_id` INTEGER UNSIGNED NOT NULL,
+#   `forum_id` INTEGER UNSIGNED NOT NULL,
+#   PRIMARY KEY (`group_id`, `forum_id`)
+# )
+# ENGINE = MyISAM;
 
 # Groups message board
 CREATE TABLE `social_groups_board` (
@@ -219,7 +219,7 @@ INSERT INTO social_groups_types SET title='geography', type_id=4;
 INSERT INTO social_groups_types SET title='internet_technology', type_id=5;
 INSERT INTO social_groups_types SET title='organization', type_id=6;
 INSERT INTO social_groups_types SET title='music', type_id=7;
-INSERT INTO social_groups_types SET title='sports_recreation', type_id=8;
+INSERT INTO social_groups_types SET title='sports_recreation', typew_id=8;
 
 # Module Language
 INSERT INTO `language_text` VALUES ('en', '_module','network_home','My Network',NOW(),'');
@@ -336,6 +336,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','group_admin','Group Moderat
 INSERT INTO `language_text` VALUES ('en', '_module','added_members','Current Group Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','not_added_members','Invite Group Members',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','edit_education','Edit Education',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','edit_position','Edit Position',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','edit_websites','Edit Websites',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','admin_social','Social Network Settings',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_module','application_settings','Gadget Settings',NOW(),'');

@@ -117,7 +117,7 @@
 			<dt><?php echo _AT('group_type'); ?></dt>
 			<dd><?php echo $this->group_obj->getGroupType();?></dd>
 
-			<dt><?php echo _AT('group_privacy'); ?></dt>
+			<dt><?php echo _AT('access'); ?></dt>
 			<dd><?php echo ($this->group_obj->getPrivacy()?_AT('private'):_AT('public'))?><br/></dd>			
 
 			<dt><?php echo _AT('created_by'); ?></dt>

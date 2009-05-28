@@ -2,14 +2,14 @@
 	global $addslashes;
 
 	//escape all strings
-	$university  = $addslashes($this->university);
-	$country	 = $addslashes($this->country);
-	$province	 = $addslashes($this->province);
-	$degree		 = $addslashes($this->degree);
-	$field		 = $addslashes($this->field);
-	$from		 = $addslashes($this->from);
-	$to			 = $addslashes($this->to);
-	$description = $addslashes($this->description);
+	$university  = htmlentities_utf8($this->university);
+	$country	 = htmlentities_utf8($this->country);
+	$province	 = htmlentities_utf8($this->province);
+	$degree		 = htmlentities_utf8($this->degree);
+	$field		 = htmlentities_utf8($this->field);
+	$from		 = htmlentities_utf8($this->from);
+	$to			 = htmlentities_utf8($this->to);
+	$description = htmlentities_utf8($this->description);
 ?>
 <script type='text/javascript' src='jscripts/calendar.js'></script>
 <div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_education');}else{echo  _AT('add_new_education');}?></h3></a></div>
@@ -19,11 +19,11 @@
 		<dt><label for="university"><?php echo _AT('university'); ?></label></dt>
 		<dd><input type="text" id="university" name="university" value="<?php echo $university; ?>" /></dd>
 	
-		<dt><label for="country"><?php echo _AT('country'); ?></label></dt>
-		<dd><input type="text" id="country"  name="country" value="<?php echo $country; ?>" /></dd>
-	
 		<dt><label for="province"><?php echo _AT('province'); ?></label></dt>
 		<dd><input type="text" id="province"  name="province" value="<?php echo $province; ?>" /></dd>
+		
+		<dt><label for="country"><?php echo _AT('country'); ?></label></dt>
+		<dd><input type="text" id="country"  name="country" value="<?php echo $country; ?>" /></dd>
 		
 		<dt><label for="degree"><?php echo _AT('degree'); ?></label></dt>
 		<dd><input type="text" id="degree"  name="degree" value="<?php echo $degree; ?>" /></dd>

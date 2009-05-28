@@ -42,66 +42,66 @@ if (isset($_POST['submit'])){
 	if (isset($_POST['edit'])){
 			$id			 = intval($_POST['id']);
 		if ($_POST['edit']=='position'){
-			$company	 = $addslashes($_POST['company']);
-			$title		 = $addslashes($_POST['title']);
-			$from		 = $addslashes($_POST['from']);
-			$to			 = $addslashes($_POST['to']);
-			$description = $addslashes($_POST['description']);
+			$company	 = $_POST['company'];
+			$title		 = $_POST['title'];
+			$from		 = $_POST['from'];
+			$to			 = $_POST['to'];
+			$description = $_POST['description'];
 			$member->updatePosition($id, $company, $title, $from, $to, $description);			
 		} elseif ($_POST['edit']=='education'){
-			$university	 = $addslashes($_POST['university']);
-			$country	 = $addslashes($_POST['country']);
-			$province	 = $addslashes($_POST['province']);
-			$degree		 = $addslashes($_POST['degree']);
-			$field		 = $addslashes($_POST['field']);
-			$from		 = $addslashes($_POST['from']);
-			$to			 = $addslashes($_POST['to']);
-			$description = $addslashes($_POST['description']);
+			$university	 = $_POST['university'];
+			$country	 = $_POST['country'];
+			$province	 = $_POST['province'];
+			$degree		 = $_POST['degree'];
+			$field		 = $_POST['field'];
+			$from		 = $_POST['from'];
+			$to			 = $_POST['to'];
+			$description = $_POST['description'];
 			$member->updateEducation($id, $university, $from, $to, $country, $province, $degree, $field, $description);
 		} elseif ($_POST['edit']=='websites'){
-			$url		= $addslashes($_POST['url']);
-			$site_name	= $addslashes($_POST['site_name']);
+			$url		= $_POST['url'];
+			$site_name	= $_POST['site_name'];
 			$member->updateWebsite($id, $url, $site_name);
 		} elseif ($_POST['edit']=='interests' || $_POST['edit']=='associations' || $_POST['edit']=='awards' || $_POST['edit']=='expertise' 
 					|| $_POST['edit']=='others'){
-			$interests		= isset($_POST['interests'])&&$_POST['interests']==''? _AT('na'): $addslashes($_POST['interests']);
-			$associations	= isset($_POST['associations'])&&$_POST['associations']==''? _AT('na'): $addslashes($_POST['associations']);
+			$interests		= isset($_POST['interests'])&&$_POST['interests']==''? _AT('na'): $_POST['interests'];
+			$associations	= isset($_POST['associations'])&&$_POST['associations']==''? _AT('na'): $_POST['associations'];
 			$awards			= isset($_POST['awards'])&&$_POST['awards']==''? _AT('na'): $addslashes($_POST['awards']);
-			$expertise		= isset($_POST['expertise'])&&$_POST['expertise']==''? _AT('na'): $addslashes($_POST['expertise']);
-			$others			= isset($_POST['others'])&&$_POST['others']==''? _AT('na'): $addslashes($_POST['others']);
+			$expertise		= isset($_POST['expertise'])&&$_POST['expertise']==''? _AT('na'): $_POST['expertise'];
+			$others			= isset($_POST['others'])&&$_POST['others']==''? _AT('na'): $_POST['others'];
 			$member->updateAdditionalInformation($interests, $associations, $awards, $expertise, $others);
 		}
 	} 
 	elseif (isset($_POST['add'])) {
 		if ($_POST['add']=='position'){
-			$company	 = $addslashes($_POST['company']);
-			$title		 = $addslashes($_POST['title']);
-			$from		 = $addslashes($_POST['from']);
-			$to			 = $addslashes($_POST['to']);
-			$description = $addslashes($_POST['description']);
+			$company	 = $_POST['company'];
+			$title		 = $_POST['title'];
+			$from		 = $_POST['from'];
+			$to			 = $_POST['to'];
+			$description = $_POST['description'];
 			$member->addPosition($company, $title, $from, $to, $description);
 		} elseif ($_POST['add']=='education'){
-			$university	 = $addslashes($_POST['university']);
-			$country	 = $addslashes($_POST['country']);
-			$province	 = $addslashes($_POST['province']);
-			$degree		 = $addslashes($_POST['degree']);
-			$field		 = $addslashes($_POST['field']);
-			$from		 = $addslashes($_POST['from']);
-			$to			 = $addslashes($_POST['to']);
-			$description = $addslashes($_POST['description']);
+			$university	 = $_POST['university'];
+			$country	 = $_POST['country'];
+			$province	 = $_POST['province'];
+			$degree		 = $_POST['degree'];
+			$field		 = $_POST['field'];
+			$from		 = $_POST['from'];
+			$to			 = $_POST['to'];
+			$description = $_POST['description'];
 			$member->addEducation($university, $from, $to, $country, $province, $degree, $field, $description);
 		} elseif ($_POST['add']=='websites'){
-			$url		= $addslashes($_POST['url']);
-			$site_name	= $addslashes($_POST['site_name']);
+			$url		= $_POST['url'];
+			$site_name	= $_POST['site_name'];
 			$member->addWebsite($url, $site_name);
 		} elseif ($_POST['add']=='interests'){
-			$interests	= $addslashes($_POST['interests']);
+			$interests	= $_POST['interests'];
 			$member->addInterests($interests);
 		} elseif ($_POST['add']=='associations'){
-			$associations = $addslashes($_POST['associations']);
+			$associations = $_POST['associations'];
 			$member->addAssociations($associations);
 		} elseif ($_POST['add']=='awards'){
-			$awards		= $addslashes($_POST['awards']);
+			$awards		= $_POST['awards'];
 			$member->addAwards($awards);
 		} 
 	}
@@ -141,7 +141,7 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		
 		//Template
 		$savant->assign('company', $row['company']);
-		$savant->assign('title', $row['title']);
+		$savant->assign('profile_title', $row['title']);
 		$savant->assign('from', $row['from']);
 		$savant->assign('to', $row['to']);
 		$savant->assign('description', $row['description']);
