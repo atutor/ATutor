@@ -7,7 +7,8 @@
 	} else {
 		$last_search = $_POST['search_groups_'.$rand];	
 	}
-	$last_search = htmlentities($last_search, ENT_COMPAT, 'UTF-8');	//wants to convert only double quotes, not single.
+	//take out double quotes until there is a way to escape XSS from the ajax script.
+	$last_search = preg_replace('/\"/', '', $last_search);
 ?>
 <div class="input-form" style="width:40%;padding:1em;min-height:4.5em;">
 <h3><?php echo _AT('search_for_groups'); ?></h3>
