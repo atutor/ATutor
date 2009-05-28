@@ -65,8 +65,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_SOCIAL, TRUE) || admin_authenticate(AT_ADMI
 /*******
  * instructor Manage section:
  */
-$this->_pages[AT_SOCIAL_BASENAME.'index_instructor.php']['title_var'] = 'social';
-$this->_pages[AT_SOCIAL_BASENAME.'index_instructor.php']['parent']   = 'tools/index.php';
+//$this->_pages[AT_SOCIAL_BASENAME.'index_instructor.php']['title_var'] = 'social';
+//$this->_pages[AT_SOCIAL_BASENAME.'index_instructor.php']['parent']   = 'tools/index.php';
 
 // ** possible alternative: **
 // $this->pages['./index_instructor.php']['title_var'] = 'social';
