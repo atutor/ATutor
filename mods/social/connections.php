@@ -45,7 +45,7 @@ $offset = ($page-1) * SOCIAL_FRIEND_SEARCH_MAX;
 
 //if $_GET['q'] is set, handle Ajax.
 if (isset($_GET['q'])){
-	$query = $addslashes($_GET['q']);
+	$query = $_GET['q'];	//don't need to addslashes here cause searchFriends will do it.
 
 	if (isset($_POST['myFriendsOnly'])){
 		//retrieve a list of my friends
@@ -112,10 +112,11 @@ if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET[
 		exit;
 	}
 	//to adapt paginator GET queries
+	//don't need to apply addslashes here cause searchFriends will do it.
 	if($_GET['search_friends']){
-		$search_field = $addslashes($_GET['search_friends']);
+		$search_field = $_GET['search_friends'];
 	} else {
-		$search_field = $addslashes($_POST['search_friends_'.$rand_key]);	
+		$search_field = $_POST['search_friends_'.$rand_key];
 	}
 	if (isset($_POST['myFriendsOnly'])){
 		//retrieve a list of my friends

@@ -272,12 +272,28 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 	global $db, $addslashes;
 	$result = array(); 
 	$my_friends = array();
+	$exact_match = false;
 
 	//break the names by space, then accumulate the query
+	if (preg_match("/^\\\\?\"(.*)\\\\?\"$/", $name, $matches)){
+		$exact_match = true;
+		$name = $matches[1];
+	}
 	$name = $addslashes($name);	
 	$sub_names = explode(' ', $name);
 	foreach($sub_names as $piece){
-		$query .= "(first_name LIKE '%$piece%' OR second_name LIKE '%$piece%' OR last_name LIKE '%$piece%' OR email LIKE '$piece') AND ";
+		if ($piece == ''){
+			continue;
+		}
+
+		//if there are 2 double quotes around a search phrase, then search it as if it's "first_name last_name".
+		//else, match any contact in the search phrase.
+		if ($exact_match){
+			$match_piece = "= '$piece' ";
+		} else {
+			$match_piece = "LIKE '%$piece%' ";
+		}
+		$query .= "(first_name $match_piece OR second_name $match_piece OR last_name $match_piece OR email LIKE '$piece') AND ";
 	}
 	//trim back the extra "AND "
 	$query = substr($query, 0, -4);
