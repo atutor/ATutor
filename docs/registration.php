@@ -103,6 +103,9 @@ if (isset($_POST['cancel'])) {
 	}
 
 	// check if first+last is unique
+	/**
+	 * http://www.atutor.ca/atutor/mantis/view.php?id=3727
+	 * Taking out the first and last name uniqueness check
 	if ($_POST['first_name'] && $_POST['last_name']) {
 		$first_name_sql  = $addslashes($_POST['first_name']);
 		$last_name_sql   = $addslashes($_POST['last_name']);
@@ -114,6 +117,7 @@ if (isset($_POST['cancel'])) {
 			$msg->addError('FIRST_LAST_NAME_UNIQUE');
 		}
 	}
+	 */
 
 	$_POST['login'] = strtolower($_POST['login']);
 
