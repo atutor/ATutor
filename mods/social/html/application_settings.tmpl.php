@@ -28,6 +28,17 @@
 			break;
         case 'BOOL':
 			//TODO add radio boxes here, should they be yes / no?
+			$yes = '';
+			$no = '';
+			if ($default=='true'){
+				$yes = ' checked="checked"';
+			} else {
+				$no = ' checked="checked"';
+			}
+			echo '<label for="'.$key.'_yes"/>'._AT('yes').'</label>';
+			echo '<input id="'.$key.'_yes" type="radio" name="'.$key.'" value="true" '.$yes.' />';
+			echo '<label for="'.$key.'_no"/>'._AT('no').'</label>';
+			echo '<input id="'.$key.'_no" type="radio" name="'.$key.'" value="false" '.$no.' />';			
 			break;
         case 'LIST':
 			//TODO not sure what to do with this one yet
