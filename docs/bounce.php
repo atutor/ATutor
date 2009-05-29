@@ -126,6 +126,7 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 if (!empty($_REQUEST['pu'])) {
 	//request ib stands for 'is bounced', this is to avoid the infinite 302 redirect
 	//A better way to deal with this rather than using querystring? (Session won't work)
+	//Session doesn't work,leads to bounce out error as well.
 	if (!empty($_REQUEST['ib'])) {
 		return;
 	}
@@ -233,7 +234,6 @@ if ($set_to_public) {
 	$row['access'] = "public";
 }
 
-//debug($row); exit;
 switch ($row['access']){
 	case 'public':
 		apply_category_theme($row['cat_id']);
@@ -246,7 +246,7 @@ switch ($row['access']){
 			$_SESSION['member_id']	= 0;
 			$_SESSION['is_admin']	= false;
 			$_SESSION['is_guest']	= true;
-	
+
 			/* add guest login to counter: */
 			count_login();
 		} else if (!$_SESSION['valid_user']) {
@@ -297,7 +297,7 @@ switch ($row['access']){
 		}
 
 		/* add member login to counter: */
-		if (!$_SESSION['is_admin']) {
+		if (!$_SESSION['is_admin'] && $_SESSION['member_id'] > 0) {
 			count_login();
 		}
 
