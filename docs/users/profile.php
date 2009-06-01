@@ -49,6 +49,8 @@ if (isset($_POST['submit'])) {
 	$_POST['last_name'] = str_replace('<', '', $_POST['last_name']);
 
 	// check if first+last is unique
+	/*
+	 * http://www.atutor.ca/atutor/mantis/view.php?id=3760
 	if ($_POST['first_name'] && $_POST['last_name']) {
 		$first_name_sql  = $addslashes($_POST['first_name']);
 		$last_name_sql   = $addslashes($_POST['last_name']);
@@ -60,6 +62,7 @@ if (isset($_POST['submit'])) {
 			$msg->addError('FIRST_LAST_NAME_UNIQUE');
 		}
 	}
+	 */
 
 	//check date of birth
 	$mo = intval($_POST['month']);
