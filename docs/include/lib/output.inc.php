@@ -372,7 +372,8 @@ function _AT() {
 
 		if (isset($_config['latex_server']) && $_config['latex_server']) {
 			// see: http://www.forkosh.com/mimetex.html
-			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
+			//$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config_defaults['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
+			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config_defaults['latex_server'].htmlentities('$1').'\" align=\"middle\">'", $input);
 		}
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_QUOTES)) {
@@ -831,7 +832,8 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 
 	if (isset($_config_defaults['latex_server']) && $_config_defaults['latex_server']) {
 		// see: http://www.forkosh.com/mimetex.html
-		$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config_defaults['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
+		//$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config_defaults['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
+		$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config_defaults['latex_server'].htmlentities('$1').'\" align=\"middle\">'", $input);
 	}
 
 	if ($html) {
