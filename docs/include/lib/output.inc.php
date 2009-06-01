@@ -354,7 +354,7 @@ function _AT() {
 	* @author	Joel Kronenberg
 	*/
 	function AT_print($input, $name, $runtime_html = true) {
-		global $_field_formatting;
+		global $_field_formatting, $_config;
 
 		if (!isset($_field_formatting[$name])) {
 			/* field not set, check if there's a global setting */
@@ -368,6 +368,11 @@ function _AT() {
 				/* same as AT_FORMAT_NONE */
 				return $input;
 			}
+		}
+
+		if (isset($_config['latex_server']) && $_config['latex_server']) {
+			// see: http://www.forkosh.com/mimetex.html
+			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
 		}
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_QUOTES)) {
