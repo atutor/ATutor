@@ -29,6 +29,6 @@
 	<h3>Export Module </h3>
 	<p>If you want to take a copy of a module from your ATutor system to import into another ATutor installation, or to bundle a copy of a module you have created to submit to atutor.ca to be included in the module repository, select the module from the Module Manager screen, then press <strong>Export</strong>. This will create a standard module ZIP file that you can download.</p>
 	
-	<p>Visit the <a href="http://www.atutor.ca/atutor/modules.php" target="_new">ATutor Modules Site</a> for a list of add-on modules for ATutor.</p>
+	<p>Visit the <a href="http://www.atutor.ca/atutor/modules/index.php" target="_new">ATutor Modules Site</a> for a list of add-on modules for ATutor.</p>
 
 <?php require('../common/body_footer.inc.php');?>
