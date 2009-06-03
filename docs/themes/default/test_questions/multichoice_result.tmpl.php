@@ -6,7 +6,7 @@
 			<li style="padding: 4px">
 				<?php if (($this->row['answer_'.$i] == 1) && in_array($i, $this->answers)): ?>
 					<img src="<?php echo $this->base_path; ?>images/checkmark.gif" alt="<?php echo _AT('correct_answer'); ?>" title="<?php echo _AT('correct_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
-				<?php elseif (($this->row['answer_'.$i] == 1) || in_array($i, $this->answers)): ?>
+				<?php elseif (($this->row['answer_'.$i] == 0) || in_array($i, $this->answers)): ?>
 					<img src="<?php echo $this->base_path; ?>images/x.gif" alt="<?php echo _AT('wrong_answer'); ?>" title="<?php echo _AT('wrong_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
 				<?php else: ?>
 					<img src="<?php echo $this->base_path; ?>images/clr.gif" alt="" title="" height="16" width="16" style="vertical-align: middle" />
