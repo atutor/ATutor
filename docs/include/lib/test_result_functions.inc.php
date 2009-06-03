@@ -138,6 +138,17 @@ function authenticate_test($tid) {
 		}
 	}
 
+	//Check assistants privileges
+	$sql = "SELECT privileges FROM at_course_enrollment a WHERE member_id=$_SESSION[member_id] AND course_id=$_SESSION[course_id]";
+	$result = mysql_query($sql, $db);
+	if ($result){
+		list($privileges) = mysql_fetch_array($result);
+		if (query_bit($privileges, AT_PRIV_GROUPS) && query_bit($privileges, AT_PRIV_TESTS)){
+			return TRUE;
+		}
+
+	}
+
 	return FALSE;
 }
 
