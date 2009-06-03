@@ -48,7 +48,7 @@ if ($_GET['reset_filter']) {
 
 $page_string = '';
 $orders = array('asc' => 'desc', 'desc' => 'asc');
-$cols   = array('login' => 1, 'public_field' => 1, 'first_name' => 1, 'second_name' => 1, 'last_name' => 1, 'email' => 1, 'status' => 1, 'last_login' => 1);
+$cols   = array('login' => 1, 'public_field' => 1, 'first_name' => 1, 'second_name' => 1, 'last_name' => 1, 'email' => 1, 'status' => 1, 'last_login' => 1, 'creation_date' => 1);
 
 if (isset($_GET['asc'])) {
 	$order = 'asc';
@@ -180,9 +180,9 @@ if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
 }
 
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, L.public_field FROM ".TABLE_PREFIX."members M LEFT JOIN (SELECT * FROM ".TABLE_PREFIX."master_list WHERE member_id <> 0) L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, M.creation_date, L.public_field FROM ".TABLE_PREFIX."members M LEFT JOIN (SELECT * FROM ".TABLE_PREFIX."master_list WHERE member_id <> 0) L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
 } else {
-	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login FROM ".TABLE_PREFIX."members M WHERE M.status $status AND $search AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, M.creation_date FROM ".TABLE_PREFIX."members M WHERE M.status $status AND $search AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
 }
 
 $result = mysql_query($sql, $db);
@@ -300,6 +300,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<?php elseif($col == 'last_login'): ?>
 		<col span="<?php echo 7 + $col_counts; ?>" />
 		<col class="sort" />
+	<?php elseif($col == 'creation_date'): ?>
+		<col span="<?php echo 8 + $col_counts; ?>" />
+		<col class="sort" />
 	<?php endif; ?>
 </colgroup>
 <thead>
@@ -316,13 +319,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=last_login<?php echo $page_string; ?>"><?php echo _AT('last_login'); ?></a></th>
+	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=creation_date<?php echo $page_string; ?>"><?php echo _AT('creation_date'); ?></a></th>
 </tr>
 
 </thead>
 <?php if ($num_results > 0): ?>
 	<tfoot>
 	<tr>
-		<td colspan="<?php echo 8 + $col_counts; ?>">
+		<td colspan="<?php echo 9 + $col_counts; ?>">
 			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
 			<input type="submit" name="password" value="<?php echo _AT('password'); ?>" />
 			<?php if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, true)): ?>
@@ -356,7 +360,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
 					<td><?php echo $row['public_field']; ?></td>
 				<?php endif; ?>
-
+				<?php $startend_date_longs_format=_AT('startend_date_longs_format'); ?>
 				<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
 				<td><?php echo AT_print($row['second_name'], 'members.second_name'); ?></td>
 				<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
@@ -367,19 +371,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 						<?php echo _AT('never'); ?>
 					<?php else: ?>
 						<?php 
-						
-						$startend_date_longs_format=_AT('startend_date_longs_format');
 						//echo AT_date('%d/%m/%y - %H:%i', $row['last_login'], AT_DATE_MYSQL_TIMESTAMP_14);
 						echo AT_date($startend_date_longs_format, $row['last_login'], AT_DATE_MYSQL_TIMESTAMP_14); 
 					?>
 					<?php endif; ?>
 				</td>
+				<td><?php echo AT_date($startend_date_longs_format, $row['creation_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 			</tr>
 		<?php endwhile; ?>
 	</tbody>
 <?php else: ?>
 	<tr>
-		<td colspan="<?php echo 8 + $col_counts; ?>"><?php echo _AT('none_found'); ?></td>
+		<td colspan="<?php echo 9 + $col_counts; ?>"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </table>
