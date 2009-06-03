@@ -222,15 +222,15 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 	</div>
 
 	<div class="row">
+		<label for="maximum_login_attempt"><?php echo _AT('maximum_login_attempt'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_login']; ?>)<br />
+		<input type="text" size="10" name="max_login" id="maximum_login_attempt" value="<?php if (!empty($_POST['max_login'])) { echo $stripslashes(htmlspecialchars($_POST['max_login'])); } else { echo $_config['max_login']; } ?>"  /> <?php echo _AT('times'); ?>
+	</div>
+	
+	<div class="row">
 		<?php echo _AT('display_name_format'); ?> (<?php echo _AT('default'); ?>: <em><?php echo _AT($display_name_formats[$_config_defaults['display_name_format']], _AT('login_name'), _AT('first_name'), _AT('second_name'), _AT('last_name')); ?></em>)<br />
 		<?php foreach ($display_name_formats as $key => $value): ?>
 			<input type="radio" name="display_name_format" value="<?php echo $key; ?>" id="dnf<?php echo $key; ?>" <?php if ($_config['display_name_format'] == $key) { echo 'checked="checked"'; }?> /><label for="dnf<?php echo $key; ?>"><em><?php echo _AT($value, _AT('login_name'), _AT('first_name'), _AT('second_name'), _AT('last_name')); ?></em></label><br />
 		<?php endforeach; ?>
-	</div>
-
-	<div class="row">
-		<label for="maximum_login_attempt"><?php echo _AT('maximum_login_attempt'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_login']; ?>)<br />
-		<input type="text" size="10" name="max_login" id="maximum_login_attempt" value="<?php if (!empty($_POST['max_login'])) { echo $stripslashes(htmlspecialchars($_POST['max_login'])); } else { echo $_config['max_login']; } ?>"  /> <?php echo _AT('times'); ?>
 	</div>
 
 	<div class="row">
