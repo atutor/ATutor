@@ -3,7 +3,7 @@
 	//escape all strings
 	$company		= htmlentities_utf8($this->company);
 	$title			= htmlentities_utf8($this->profile_title);
-	$description	= htmlentities_utf8($this->description);
+	$description	= htmlentities_utf8($this->description, false);
 	$from			= htmlentities_utf8($this->from);
 	$to				= htmlentities_utf8($this->to);
 ?>
