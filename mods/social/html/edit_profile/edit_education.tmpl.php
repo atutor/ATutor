@@ -9,7 +9,7 @@
 	$field		 = htmlentities_utf8($this->field);
 	$from		 = htmlentities_utf8($this->from);
 	$to			 = htmlentities_utf8($this->to);
-	$description = htmlentities_utf8($this->description);
+	$description = htmlentities_utf8($this->description, false);
 ?>
 <script type='text/javascript' src='jscripts/calendar.js'></script>
 <div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_education');}else{echo  _AT('add_new_education');}?></h3></a></div>
