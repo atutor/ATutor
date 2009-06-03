@@ -233,7 +233,6 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 		$zipfile->send_file($zip_file_name);
 	}
 	exit;
-
 }
 // action - Delete Files/Folders (pre-confirmation)
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {

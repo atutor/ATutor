@@ -29,6 +29,7 @@ if (isset($_GET['size']) && $_GET['size'] == 'o') {
 
 $file = AT_CONTENT_DIR . 'profile_pictures/' . $size .'/'. $id .'.';
 
+
 $extensions = array('gif', 'jpg', 'png');
 
 foreach ($extensions as $extension) {
@@ -36,6 +37,11 @@ foreach ($extensions as $extension) {
 		$file .= $extension;
 	}
 }
+
+//if file does not exist, quit.
+if (!file_exists($file)){
+	return;
+} 
 
 $pathinfo = pathinfo($file);
 $ext = $pathinfo['extension'];

@@ -55,6 +55,8 @@ if (isset($_POST['cancel'])) {
 	$_POST['display_name_format']       = intval($_POST['display_name_format']);
 	$_POST['pretty_url']				= intval($_POST['pretty_url']);
 	$_POST['course_dir_name']			= intval($_POST['course_dir_name']);
+	$_POST['max_login']					= intval($_POST['max_login']);		//max login attempt
+	$_POST['use_captcha']				= $_POST['use_captcha'] ? 1 : 0;
 
 	//apache_mod_rewrite can only be enabled if pretty_url is.
 	if ($_POST['pretty_url']==1){
@@ -227,6 +229,11 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 	</div>
 
 	<div class="row">
+		<label for="maximum_login_attempt"><?php echo _AT('maximum_login_attempt'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_login']; ?>)<br />
+		<input type="text" size="10" name="max_login" id="maximum_login_attempt" value="<?php if (!empty($_POST['max_login'])) { echo $stripslashes(htmlspecialchars($_POST['max_login'])); } else { echo $_config['max_login']; } ?>"  /> <?php echo _AT('times'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo _AT('master_list_authentication'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['master_list'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="master_list" value="1" id="ml_y" <?php if ($_config['master_list']) { echo 'checked="checked"'; }?>  /><label for="ml_y"><?php echo _AT('enable'); ?></label> 
 
@@ -239,6 +246,10 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 	<div class="row">
 		<?php echo _AT('allow_instructor_registration'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_instructor_registration'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="allow_instructor_registration" value="1" id="enrollreg_y" <?php if($_config['allow_instructor_registration']) { echo 'checked="checked"'; }?>  /><label for="enrollreg_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_instructor_registration" value="0" id="enrollreg_n" <?php if(!$_config['allow_instructor_registration']) { echo 'checked="checked"'; }?>  /><label for="enrollreg_n"><?php echo _AT('disable'); ?></label>
+	</div>
+	<div class="row">
+		<?php echo _AT('use_captcha'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['use_captcha'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="use_captcha" value="1" id="use_captcha_y" <?php if($_config['use_captcha']) { echo 'checked="checked"'; }?>  /><label for="use_captcha_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="use_captcha" value="0" id="use_captcha_n" <?php if(!$_config['use_captcha']) { echo 'checked="checked"'; }?>  /><label for="use_captcha_n"><?php echo _AT('disable'); ?></label>
 	</div>
 	<div class="row">
 		<?php echo _AT('allow_unenroll'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_unenroll'] ? _AT('enable') : _AT('disable')); ?>)<br />

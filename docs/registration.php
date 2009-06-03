@@ -15,6 +15,7 @@ $_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+include(AT_INCLUDE_PATH."securimage/securimage.php");
 
 if($_config['allow_registration'] != 1){
 		$msg->addInfo('REG_DISABLED');
@@ -40,6 +41,14 @@ if (isset($_POST['cancel'])) {
 	/* email check */
 	$chk_email = $addslashes($_POST['email']);
 	$chk_login = $addslashes($_POST['login']);
+
+	//CAPTCHA
+	if (isset($_config['use_captcha']) && $_config['use_captcha']==1){
+		$img = new Securimage();
+		$valid = $img->check($_POST['secret']);
+		if (!$valid)
+			$msg->addError('SECRET_ERROR');
+	}
 
 	$_POST['password'] = $_POST['form_password_hidden'];
 	$_POST['first_name'] = trim($_POST['first_name']);
@@ -92,6 +101,8 @@ if (isset($_POST['cancel'])) {
 	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$chk_email'",$db);
 	if (mysql_num_rows($result) != 0) {
 		$msg->addError('EMAIL_EXISTS');
+	} else if ($_POST['email'] != $_POST['email2']) {
+		$msg->addError('EMAIL_MISMATCH');
 	}
 
 	if (!$_POST['first_name']) { 

@@ -87,10 +87,30 @@ function encrypt_password()
 		</div>
 	<?php endif; ?>
 
+	<?php if (isset($_config['use_captcha']) && $_config['use_captcha']==1): ?>
+	<div class="row">
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+		<label for="secret"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=<?php echo md5(uniqid(time())); ?>" id="simage" align="left" /></label>
+		<a href="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_play.php" title="Audible Version of CAPTCHA"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/audio_icon.gif" alt="Audio Version" onclick="this.blur()" align="top" border="0"></a><br>
+		<a href="#" title="Refresh Image" onclick="document.getElementById('simage').src = '<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/refresh.gif" alt="Reload Image" onclick="this.blur()" align="bottom" border="0"></a>
+
+		<br />
+		<p><?php echo _AT('image_validation_text'); ?><br />
+		<input id="secret" name="secret" type="text" size="6" maxlength="6" value="" />
+		<br />
+		<small><?php echo _AT('image_validation_text2'); ?><br /></small>
+	</div>
+	<?php endif; ?>
+
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />
 		<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
 		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email'] || !isset($_POST['submit'])) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
+	</div>
+
+	<div class="row">
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email2"><?php echo _AT('email_again'); ?></label><br />
+		<input id="email2" name="email2" type="text" size="50" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email2'])); ?>" />
 	</div>
 
 	<div class="row">
