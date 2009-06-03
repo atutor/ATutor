@@ -224,4 +224,13 @@ INSERT INTO social_groups_types SET title='sports_recreation', type_id=8;
 
 # END Social Networking setup
 
+# Module setting
 INSERT INTO `modules` VALUES ('_standard/social',	 2, 8388608, 0, 0, 0);
+
+# Login attempt control table
+CREATE TABLE `member_login_attempt` (
+  `login` varchar(20) NOT NULL,
+  `attempt` tinyint(3) unsigned default NULL,
+  `expiry` int(10) unsigned default NULL,
+  PRIMARY KEY  (`login`)
+) ENGINE=MyISAM
