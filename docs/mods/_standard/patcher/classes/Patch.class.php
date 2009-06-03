@@ -688,7 +688,7 @@ class Patch {
 		}
 
 		// replace new line chars in $search, $replace, $subject to the last new line in $subject
-		if (is_array($subject_new_lines)) $new_line_replace_to = array_pop(&$subject_new_lines);
+		if (is_array($subject_new_lines)) $new_line_replace_to = array_pop($subject_new_lines);
 
 		if ($new_line_replace_to <> '')
 		{
