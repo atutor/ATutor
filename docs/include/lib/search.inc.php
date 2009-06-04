@@ -32,10 +32,10 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 
 	if (isset($_GET['search_within'])){
 		if ($_GET['search_within'] == 'content'){
-			$content_search_results = get_content_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
+			$content_search_results = get_content_search_result($words, $predicate, $course_id, $total_score, $course_score);
 			$search_results = $content_search_results;
 		} elseif ($_GET['search_within'] == 'forums'){
-			$forums_search_results = get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
+			$forums_search_results = get_forums_search_result($words, $predicate, $course_id, $total_score, $course_score);
 			// get all enabled modules
 			$modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
 			// if forum has been disabled, don't search in it. 
@@ -45,8 +45,8 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 				$search_results = $forums_search_results;
 			}
 		} else {
-			$content_search_results = get_content_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
-			$forums_search_results = get_forums_search_result($words, $predicate, $course_id, &$total_score, &$course_score);
+			$content_search_results = get_content_search_result($words, $predicate, $course_id, $total_score, $course_score);
+			$forums_search_results = get_forums_search_result($words, $predicate, $course_id, $total_score, $course_score);
 			$search_results = array_merge($content_search_results, $forums_search_results);
 		}		
 
