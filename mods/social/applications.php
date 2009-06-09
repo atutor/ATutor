@@ -32,6 +32,12 @@ $app = new Application();
 
 // Install gadgets
 if (isset($_POST['add_application']) && isset($_POST['app_url'])){
+	//check if curl is installed
+	if (!extension_loaded('curl')){
+		$msg->addError('CURL_NOT_INSTALLED');
+		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
+		exit; 
+	}
 	$app_url = $addslashes($_POST['app_url']);
 	$gadget = $app->parseModulePrefs($app_url);
 	$gadget = $gadget[0];

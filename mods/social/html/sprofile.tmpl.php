@@ -154,8 +154,7 @@
 			<?php if(!empty($this->activities)): ?>
 			<ul>
 				<?php
-					foreach($this->activities as $id=>$activity){
-						echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';
+					foreach($this->activities as $id=>$activity):
 						/*
 						 * harris @may 26, 2009
 						 * Would be nice to use this, but we will have to change "has" to "have" for _AT('you')
@@ -167,9 +166,10 @@
 						} else {
 							echo '<li>'.printSocialName($this->profile['member_id']).' '.$activity.'</li>';
 						}
-						*/						
-					}
-				?>
+						*/
+				 ?>
+				 <li><?php echo $activity['created_date']. ' - '. printSocialName($activity['member_id']).' '. $activity['title']; ?></li>
+				<?php endforeach; ?>
 			</ul>
 			<?php else: ?>
 			<?php echo _AT('no_activities'); ?>
