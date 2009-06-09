@@ -48,7 +48,7 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 		//Updates
 		$app->setHomeDisplaySettings($_POST['app']);
 		//TODO print message/feedback
-		$msg->addFeedback('SETTINGS_UPDATED');
+		$msg->addFeedback('SOCIAL_SETTINGS_SAVED');
 		$msg->printAll();
 	}
 	
@@ -68,7 +68,7 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 		PrivacyController::updatePrivacyPreference($_SESSION['member_id'], $private_obj);
 
 		//TODO print message/feedback
-		$msg->addFeedback('SETTINGS_UPDATED');
+		$msg->addFeedback('SOCIAL_SETTINGS_SAVED');
 		$msg->printAll();
 	}
 
