@@ -12,10 +12,9 @@ if(!empty($this->pending_requests)):
 	<div class="box" style="border:thin solid black;">
 	<div style="float:right;"><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index.php');?>?approval=y<?php echo SEP;?>id=<?php echo $r_obj->id;?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index.php');?>?approval=n<?php echo SEP;?>id=<?php echo $r_obj->id;?>"> <img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a>
 	</div>
-	<ul>
-	<li><?php echo printSocialProfileImg($id);?></li>
-	<li><?php echo printSocialName($id) ?></li>
-
+	<ul style="list-style:none;">
+		<li style="display:inline;"><?php echo printSocialProfileImg($id);?></li>
+		<li style="display:inline;"><?php echo printSocialName($id) ?></li>
 	</ul>
 	</div><br />
 <?php endforeach; ?>

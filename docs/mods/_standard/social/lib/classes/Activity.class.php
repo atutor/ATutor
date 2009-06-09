@@ -66,7 +66,9 @@ class Activity{
 			$result = mysql_query($sql, $db);
 			if ($result){
 				while($row = mysql_fetch_assoc($result)){
-					$activities[$row['id']] = $row['title'];
+					$activities[$row['id']]['member_id'] = $row['member_id'];
+					$activities[$row['id']]['title'] = $row['title'];
+					$activities[$row['id']]['created_date'] = $row['created_date'];
 				}
 			}
 			return $activities;
