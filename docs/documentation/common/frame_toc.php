@@ -203,7 +203,14 @@ if ($section == 'admin'){
 												'packages.php',
 												'tile.php',
 												'file_storage.php'
-												)
+												),
+				'my_network.php' => array(					
+											'my_contacts.php',			
+											'my_groups.php',			
+											'my_profile.php',			
+											'my_gadgets.php',			
+											'my_settings.php'	
+											)			
 			);
 	hb_print_toc($pages, 'general');
 } ?>
