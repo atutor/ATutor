@@ -83,6 +83,7 @@ $this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['parent'] = AT_SOCIAL_BASENAME.
 
 $this->_pages[AT_SOCIAL_BASENAME.'edit_profile.php']['title_var'] = 'edit_profile';
 $this->_pages[AT_SOCIAL_BASENAME.'edit_profile.php']['parent'] = AT_SOCIAL_BASENAME.'sprofile.php';
+$this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['guide']     = 'general/?p=my_profile.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'profile_picture.php']['title_var'] = 'picture';
 $this->_pages[AT_SOCIAL_BASENAME.'profile_picture.php']['parent'] = AT_SOCIAL_BASENAME.'edit_profile.php';
@@ -92,9 +93,11 @@ $this->_pages[AT_SOCIAL_BASENAME.'basic_profile.php']['parent'] = AT_SOCIAL_BASE
 
 $this->_pages[AT_SOCIAL_BASENAME.'applications.php']['title_var'] = 'gadgets';
 $this->_pages[AT_SOCIAL_BASENAME.'applications.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['guide']     = 'general/?p=my_gadgets.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'connections.php']['title_var'] = 'connections';
 $this->_pages[AT_SOCIAL_BASENAME.'connections.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'connections.php']['guide']     = 'general/?p=my_contacts.php';
 //	$this->_pages['mods/social/add_friends.php']['title_var'] = 'add_friends';
 //	$this->_pages['mods/social/add_friends.php']['parent'] = 'mods/social/connections.php';
 
@@ -103,9 +106,11 @@ $this->_pages[AT_SOCIAL_BASENAME.'activities.php']['parent'] = AT_SOCIAL_BASENAM
 
 $this->_pages[AT_SOCIAL_BASENAME.'settings.php']['title_var'] = 'settings';
 $this->_pages[AT_SOCIAL_BASENAME.'settings.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'settings.php']['guide']     = 'general/?p=my_settings.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['title_var'] = 'social_groups';
 $this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['guide']     = 'general/?p=my_groups.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'groups/create.php']['title_var'] = 'create_groups';
 $this->_pages[AT_SOCIAL_BASENAME.'groups/create.php']['parent'] = AT_SOCIAL_BASENAME.'groups/index.php';
@@ -138,6 +143,7 @@ if ($_SESSION['valid_user']==1){
 //$this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');
 $this->_pages[AT_NAV_START]  = array(AT_SOCIAL_BASENAME.'index.php');
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['title_var'] = 'social';
+$this->_pages[AT_SOCIAL_BASENAME.'index.php']['guide']     = 'general/?p=my_network.php';
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['parent'] = AT_NAV_START;
 }
 
