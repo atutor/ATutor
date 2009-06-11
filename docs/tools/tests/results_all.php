@@ -75,8 +75,10 @@ function display_test_info($row)
 		//get answers for this test result
 		$sql = "SELECT question_id, score FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$row[result_id] AND question_id IN ($q_sql)";
 		$result2 = mysql_query($sql, $db);
-		while ($row2 = mysql_fetch_assoc($result2)) {
-			$answers[$row2['question_id']] = $row2['score'];
+		if ($result2){
+			while ($row2 = mysql_fetch_assoc($result2)) {
+				$answers[$row2['question_id']] = $row2['score'];
+			}
 		}
 		//print answers out for each question
 		for($i = 0; $i < $num_questions; $i++) {
