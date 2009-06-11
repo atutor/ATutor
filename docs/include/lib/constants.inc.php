@@ -59,7 +59,7 @@ $_config_defaults['time_zone']                 = ''; // empty means disabled or 
 $_config_defaults['prof_pic_max_file_size']	   = 819200; // max size of an uploaded profile pic, in bytes. default 800 KB
 $_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent inbox msgs are deleted
 $_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled/unsupported, (non-zero is the actual mysql value)
-$_config_defaults['latex_server']              = 'http://www.forkosh.dreamhost.com/mimetex.cgi?'; // the full URL to an external LaTeX parser
+$_config_defaults['latex_server']              = 'http://www.atutor.ca/cgi/mimetex.cgi?'; // the full URL to an external LaTeX parse
 $_config_defaults['gtype']					   = 0;	//Defaulted to be original google search, @author Harris
 $_config_defaults['pretty_url']				   = 0;	//pretty url, disabled
 $_config_defaults['course_dir_name']		   = 0;	//course dir name (course slug), disabled
