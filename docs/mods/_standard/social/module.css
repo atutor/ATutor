@@ -10,11 +10,13 @@ div .profile_container .top_right {
 	float: right;
 }
 
-dl#public-profile {
-	white-space:nowrap;
+dl.public-profile dd{
+	margin-left:0px;
 }
-dl#public-profile dt {
-        min-width:12em;
+dl.public-profile dt {
+	float: left;
+	font-weight: bold;
+	min-width:12em;
 }
 
 /* Search form */

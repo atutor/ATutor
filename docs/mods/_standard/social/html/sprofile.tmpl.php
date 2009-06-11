@@ -15,7 +15,7 @@
 		</div>		
 		<?php endif; ?>
 		<?php echo printSocialProfileImg($this->profile['member_id']); ?>
-		<dl>
+		<dl class="public-profile">
 			<?php if($this->profile['occupation']){ ?>
 			<dt><?php echo _AT('occupation'); ?></dt>
 			<dd><?php echo $this->profile['occupation']; ?></dd>
