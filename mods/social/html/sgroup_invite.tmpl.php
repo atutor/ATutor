@@ -16,8 +16,12 @@
 			<div class="headingbox">
 			<h3><?php echo _AT('not_added_members'); ?></h3></div>
 		<div class="contentbox">
+			<!-- 
+			  -- To be implemented 
+			  --
 			<label for="search_not_added_members"><?php echo _AT('search');?></label>
 			<input type="text" name="search_not_added_members" id="search_not_added_members">
+			  -->
 			<div style="height:300px;overflow:scroll;">
 				<?php 
 				$all_friends = getFriends($_SESSION['member_id']);

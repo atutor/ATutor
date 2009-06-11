@@ -8,4 +8,5 @@
 	<li class="inlinelist"><a href="<?php echo AT_SOCIAL_BASENAME.'groups/index.php'; ?>"><?php echo _AT('social_groups'); ?></a></li>
 	<li class="inlinelist"><a href="<?php echo AT_SOCIAL_BASENAME.'settings.php'; ?>"><?php echo _AT('settings'); ?></a></li>
 </ul>
+<br/>
 <?php endif; ?>
