@@ -589,9 +589,10 @@ function printSocialName($id, $link=true){
 /** 
  * Mimic vital's print_profile_img function, but with a more customized image definition
  * @param	int	the member id
+ * @param	1 for thumbnail, 2 for profile
  * @return	the profile image link
  */
-function printSocialProfileImg($id) {
+function printSocialProfileImg($id, $type=1) {
 	global $moduleFactory;
 	$str = '';
 	$mod = $moduleFactory->getModule('_standard/profile_pictures');
@@ -599,7 +600,11 @@ function printSocialProfileImg($id) {
 		return;
 	}
 	if (profile_image_exists($id)) {
-		$str = '<img src="get_profile_img.php?id='.$id.'" alt="" />';
+		if ($type==1){
+			$str = '<img src="get_profile_img.php?id='.$id.'" alt="" />';
+		} elseif ($type==2){
+			$str = '<img src="get_profile_img.php?id='.$id.SEP.'size=p" alt="" />';
+		}
 	} else {
 		$str = '<img src="'.AT_SOCIAL_BASENAME.'images/nophoto.gif" alt="" />';
 	}
