@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id: profile.php 7208 2008-01-09 16:07:24Z greg $
 
-//$_user_location	= 'users';
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
