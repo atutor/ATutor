@@ -47,6 +47,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['user_notes']                = intval($_POST['user_notes']);
 	$_POST['illegal_extentions']        = str_replace(array('  ', ' '), array(' ','|'), $_POST['illegal_extentions']);
 	$_POST['cache_dir']                 = trim($_POST['cache_dir']);
+	$_POST['latex_server']				= trim($_POST['latex_server']);
 	$_POST['course_backups']            = intval($_POST['course_backups']);
 	$_POST['course_backups']            = max(0, $_POST['course_backups']);
 	$_POST['check_version']             = $_POST['check_version'] ? 1 : 0;
@@ -294,6 +295,11 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 	<div class="row">
 		<label for="cache"><?php echo _AT('cache_directory'); ?></label><br />
 		<input type="text" name="cache_dir" id="cache" size="40" value="<?php if (!empty($_POST['cache_dir'])) { echo $stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $_config['cache_dir']; } ?>"  />
+	</div>
+
+	<div class="row">
+		<label for="cache"><?php echo _AT('latex_server'); ?></label><br />
+		<input type="text" name="latex_server" id="latex_server" size="40" value="<?php if (!empty($_POST['latex_server'])) { echo $stripslashes(htmlspecialchars($_POST['latex_server'])); } else { echo $_config['latex_server']; } ?>"  />
 	</div>
 
 	<div class="row">
