@@ -33,6 +33,9 @@
 		<?php endforeach; ?>
 	</div>
 </div>
+<!-- 
+  -- Not implemented yet.
+  --
 <div class="row">
 	<label for="media"><?php echo _AT('media'); ?></label>
 	<div>
@@ -43,6 +46,7 @@
 		<?php endforeach; ?>
 	</div>
 </div>
+  -->
 <div class="row">
 	<label for="connection"><?php echo _AT('connections'); ?></label>
 	<div>
