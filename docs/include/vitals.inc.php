@@ -79,7 +79,6 @@ function unregister_GLOBALS() {
 	@set_time_limit(0);
 	@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 	@session_cache_limiter('private, must-revalidate');
-
 	session_name('ATutorID');
 	error_reporting(AT_ERROR_REPORTING);
 
@@ -522,7 +521,6 @@ function get_login($id){
 
 function get_display_name($id) {
 	static $db, $_config, $display_name_formats;
-
 	if (!$id) {
 		return $_SESSION['login'];
 	}
@@ -1133,14 +1131,23 @@ function profile_image_exists($id) {
 	}
 }
 
-function print_profile_img($id) {
+/**
+ * print thumbnails or profile pic
+ * @param	int		image id
+ * @param	int		1 for thumbnail, 2 for profile
+ */
+function print_profile_img($id, $type=1) {
 	global $moduleFactory;
 	$mod = $moduleFactory->getModule('_standard/profile_pictures');
 	if ($mod->isEnabled() === FALSE) {
 		return;
 	}
 	if (profile_image_exists($id)) {
-		echo '<img src="get_profile_img.php?id='.$id.'" class="profile-picture" alt="" />';
+		if ($type==1){
+			echo '<img src="get_profile_img.php?id='.$id.'" class="profile-picture" alt="" />';
+		} elseif($type==2){
+			echo '<img src="get_profile_img.php?id='.$id.SEP.'size=p" class="profile-picture" alt="" />';
+		}
 	} else {
 		echo '<img src="images/clr.gif" height="100" width="100" class="profile-picture" alt="" />';
 	}

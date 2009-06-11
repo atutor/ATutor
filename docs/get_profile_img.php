@@ -23,6 +23,8 @@ require(AT_INCLUDE_PATH . 'lib/mime.inc.php');
 $id = intval($_GET['id']);
 if (isset($_GET['size']) && $_GET['size'] == 'o') {
 	$size = 'originals'; //t (thumbnail) or o (original)
+} elseif (isset($_GET['size']) && $_GET['size'] == 'p') {
+	$size = 'profile'; //p (profile) 
 } else {
 	$size = 'thumbs';
 }

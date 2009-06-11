@@ -20,6 +20,17 @@ global $display_name_formats, $moduleFactory;
 	<div class="row">
 		<p><a href="inbox/send_message.php?id=<?php echo $this->row['member_id']; ?>"><?php echo _AT('send_message'); ?></a></p>
 		<dl id="public-profile">
+			<?php $mod = $moduleFactory->getModule('_standard/profile_pictures'); 
+			if ($mod->isEnabled() === TRUE): ?>
+				<dt><?php echo _AT('picture'); ?></dt>
+				<dd><?php if (profile_image_exists($this->row['member_id'])): ?>
+					<a href="get_profile_img.php?id=<?php echo $this->row['member_id'].SEP.'size=o'; ?>"><?php print_profile_img($this->row['member_id'], 2); ?></a>
+					<?php else: ?>
+						<?php echo _AT('none'); ?>
+					<?php endif; ?>
+				</dd>
+			<?php endif; ?>
+
 			<dt><?php echo _AT('email'); ?></dt>
 			<dd>
 				<?php if($this->row['private_email']): ?>
@@ -49,18 +60,7 @@ global $display_name_formats, $moduleFactory;
 			</dd>
 			
 			<dt><?php echo _AT('status'); ?></dt>
-			<dd><?php echo $this->status; ?></dd>
-
-			<?php $mod = $moduleFactory->getModule('_standard/profile_pictures'); 
-			if ($mod->isEnabled() === TRUE): ?>
-				<dt><?php echo _AT('picture'); ?></dt>
-				<dd><?php if (profile_image_exists($this->row['member_id'])): ?>
-					<a href="get_profile_img.php?id=<?php echo $this->row['member_id'].SEP.'size=o'; ?>"><?php print_profile_img($this->row['member_id']); ?></a>
-					<?php else: ?>
-						<?php echo _AT('none'); ?>
-					<?php endif; ?>
-				</dd>
-			<?php endif; ?>
+			<dd><?php echo $this->status; ?></dd>			
 		</dl>
 
 	</div>
