@@ -1,4 +1,4 @@
-<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'settings.php');?>" method="POST">
+<br /><form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'settings.php');?>" method="POST">
 <div class="input-form">
 <h4><?php echo _AT('privacy_settings'); ?></h4>
 <div class="row"><?php echo _AT('privacy_control_blurb'); ?> </div>
