@@ -15,6 +15,7 @@
 		</div>		
 		<?php endif; ?>
 		<?php echo printSocialProfileImg($this->profile['member_id']); ?>
+		<p><a href="inbox/send_message.php?id=<?php echo $this->profile['member_id']; ?>"><?php echo _AT('send_message'); ?></a></p>
 		<dl class="public-profile">
 			<?php if($this->profile['occupation']){ ?>
 			<dt><?php echo _AT('occupation'); ?></dt>

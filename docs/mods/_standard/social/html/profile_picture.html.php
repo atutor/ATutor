@@ -13,7 +13,7 @@
 // $Id$
 //if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
+function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src_x=0, $src_y=0) {
 	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
 
 	if ($type == 'gif') {
@@ -24,7 +24,11 @@ function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
 		$source = imagecreatefrompng($src);
 	}
 	
-	imagecopyresampled($thumbnail_img, $source, 0, 0, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
+	if ($src_x > 0){
+		imagecopyresized($thumbnail_img, $source, 0, 0, $src_x, $src_y, $dest_w, $dest_h, $src_w, $src_h);
+	} else {
+		imagecopyresampled($thumbnail_img, $source, $src_x, $src_y, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
+	}
 
 	if ($type == 'gif') {
 		imagegif($thumbnail_img, $dest);
@@ -115,6 +119,7 @@ if (isset($_POST['cancel'])) {
 
 	$new_filename   = $member_id . '.' . $extension;
 	$original_img  = AT_CONTENT_DIR.'profile_pictures/originals/'. $new_filename;
+	$profile_img   = AT_CONTENT_DIR.'profile_pictures/profile/'. $new_filename;
 	$thumbnail_img = AT_CONTENT_DIR.'profile_pictures/thumbs/'. $new_filename;
 
 	// save original
@@ -131,7 +136,6 @@ if (isset($_POST['cancel'])) {
 	if ($width > $height && $width>100) {
 		$thumbnail_height = intval(100 * $height / $width);
 		$thumbnail_width  = 100;
-
 		resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
 	} else if ($width <= $height && $height > 100) {
 		$thumbnail_height= 100;
@@ -141,6 +145,27 @@ if (isset($_POST['cancel'])) {
 		// no resizing, just copy the image.
 		// it's too small to resize.
 		copy($original_img, $thumbnail_img);
+	}
+
+	// resize the original and save it to profile
+	$profile_fixed_height = 320;
+	$profile_fixed_width = 240;
+	if ($width > $height && $height>$profile_fixed_height) {
+		$profile_width = intval($profile_fixed_height * $width / $height);
+		$profile_height  = $profile_fixed_height;
+		resize_image($original_img, $profile_img, $height, $width, $profile_height, $profile_width, $extension);
+		//cropping
+		resize_image($profile_img, $profile_img, $profile_fixed_height, $profile_fixed_width, $profile_fixed_height, $profile_fixed_width, $extension, ($profile_width-$profile_fixed_width)/2);
+	} else if ($width <= $height && $width > $profile_fixed_width) {
+		$profile_width = $profile_fixed_width;
+		$profile_height = intval($profile_fixed_width * $height / $width);
+		resize_image($original_img, $profile_img, $height, $width, $profile_height, $profile_width, $extension);
+		//cropping
+		resize_image($profile_img, $profile_img, $profile_fixed_height, $profile_fixed_width, $profile_fixed_height, $profile_fixed_width, $extension, 0, ($profile_height-$profile_fixed_height)/2);
+	} else {
+		// no resizing, just copy the image.
+		// it's too small to resize.
+		copy($original_img, $profile_img);
 	}
 
 	$msg->addFeedback('PROFILE_UPDATED');

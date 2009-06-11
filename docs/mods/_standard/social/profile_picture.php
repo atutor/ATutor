@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id: profile_picture.php 7208 2008-01-09 16:07:24Z greg $
-
+$_user_location	= 'public';
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $member_id = $_SESSION['member_id'];
