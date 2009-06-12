@@ -5,16 +5,16 @@
 <div>
 	<div><h2><?php echo printSocialName($this->profile['member_id'], false); ?></h2></div>
 	<div style="float:left; width:40%;">		
-		<div class="headingbox">
+		<div class="headingbox" style="margin-right:1em;">
 			<h5><?php echo _AT('profile'); ?></h5>
 		</div>
-		<div class="contentbox">
+		<div class="contentbox" style="margin-right:1em;">
 		<?php if ($this->scope=='owner'): ?>
 		<div style="float:right; border:thin #cccccc solid;">
 			<a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME."edit_profile.php");?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME;?>images/edit_profile.gif" alt="<?php echo _AT('edit_profile'); ?>" title="<?php echo _AT('edit_profile'); ?>" border="0"/></a>
 		</div>		
 		<?php endif; ?>
-		<?php echo printSocialProfileImg($this->profile['member_id'], 2); ?>
+		<a href="get_profile_img.php?id=<?php echo $this->profile['member_id'].SEP ;?>size=o"><?php echo printSocialProfileImg($this->profile['member_id'], 2, false); ?></a>
 		<p><a href="inbox/send_message.php?id=<?php echo $this->profile['member_id']; ?>"><?php echo _AT('send_message'); ?></a></p>
 		<dl class="public-profile">
 			<?php if($this->profile['occupation']){ ?>

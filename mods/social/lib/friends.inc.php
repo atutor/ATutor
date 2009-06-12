@@ -590,9 +590,10 @@ function printSocialName($id, $link=true){
  * Mimic vital's print_profile_img function, but with a more customized image definition
  * @param	int	the member id
  * @param	1 for thumbnail, 2 for profile
+ * @param	true will return a href link to the profile page, false otherwise
  * @return	the profile image link
  */
-function printSocialProfileImg($id, $type=1) {
+function printSocialProfileImg($id, $type=1, $link=true) {
 	global $moduleFactory;
 	$str = '';
 	$mod = $moduleFactory->getModule('_standard/profile_pictures');
@@ -608,8 +609,12 @@ function printSocialProfileImg($id, $type=1) {
 	} else {
 		$str = '<img src="'.AT_SOCIAL_BASENAME.'images/nophoto.gif" alt="" />';
 	}
+	if (!$link){
+		return $str;
+	}
 	return getProfileLink($id, $str);
 }
+
 
 /**
  * Generate the a href link to the designated profile
