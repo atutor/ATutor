@@ -154,13 +154,22 @@ if ($reply_to) {
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E1.member_id=$_SESSION[member_id] AND E2.member_id=$reply_to AND E1.course_id=E2.course_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a')";
 	$result = mysql_query($sql, $db);
 	$row	= mysql_fetch_assoc($result);
+	$num_of_classmates = $row['cnt'];
 
-	if ($row['cnt'] == 0) {
+	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."social_friends SC 
+	           WHERE SC.member_id = ".$_SESSION[member_id]." 
+	           AND SC.friend_id = ".$reply_to." 
+	           OR SC.member_id = ".$reply_to." 
+	           AND SC.friend_id = ".$_SESSION[member_id];
+	$result = mysql_query($sql, $db);
+	$row	= mysql_fetch_assoc($result);
+	$num_of_contacts = $row['cnt'];
+
+	if ($num_of_classmates+$num_of_contacts == 0) {
 		$msg->printErrors('SEND_MEMBERS');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-
 }
 
 ?>
