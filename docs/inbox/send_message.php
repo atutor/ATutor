@@ -26,7 +26,6 @@ if (!$_SESSION['valid_user']) {
 	exit;
 }
 
-
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
@@ -91,7 +90,12 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-
+		if (isset($_SESSION['last_visited_page'])){
+			$page = $_SESSION['last_visited_page'];
+			unset($_SESSION['last_visited_page']);
+			header('Location: '.$page);
+			exit;
+		}		
 		header('Location: index.php');
 		exit;
 	}
