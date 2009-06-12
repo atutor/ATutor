@@ -73,6 +73,7 @@ if (isset($_POST['submit'])) {
 			} else {
 				mkdir($_POST['content_dir'].'/profile_pictures/originals');
 				mkdir($_POST['content_dir'].'/profile_pictures/thumbs');
+				mkdir($_POST['content_dir'].'/profile_pictures/profile');
 			}
 		} else if (!is_writable($_POST['content_dir'].'/profile_pictures')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/profile_pictures</strong> directory is not writable.';
