@@ -1160,9 +1160,12 @@ function profile_image_delete($id) {
 		if (file_exists(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension)) {
 			unlink(AT_CONTENT_DIR.'profile_pictures/originals/'. $id.'.'.$extension);
 		}
+		if (file_exists(AT_CONTENT_DIR.'profile_pictures/profile/'. $id.'.'.$extension)) {
+			unlink(AT_CONTENT_DIR.'profile_pictures/profile/'. $id.'.'.$extension);
+		}
 		if (file_exists(AT_CONTENT_DIR.'profile_pictures/thumbs/'. $id.'.'.$extension)) {
 			unlink(AT_CONTENT_DIR.'profile_pictures/thumbs/'. $id.'.'.$extension);
-		}
+		}		
 	}
 }
 
