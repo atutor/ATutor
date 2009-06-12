@@ -30,7 +30,7 @@
 		}				
 	?>
 </div>
-
+<br/>
 
 <?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
 <div style="width:59%; float:left;">
@@ -106,7 +106,7 @@
 </div>
 <?php endif; ?>
 
-<div style="width:39%;float:right;">
+<div style="width:39%;float:left;">
 	<div class="headingbox"><h3><?php echo _AT('group_info'); ?></h3></div>
 	<div class="contentbox">
 		<div><?php echo $this->group_obj->getLogo();?></div>
