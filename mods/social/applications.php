@@ -38,7 +38,7 @@ if (isset($_POST['add_application']) && isset($_POST['app_url'])){
 		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit; 
 	}
-	$app_url = $addslashes($_POST['app_url']);
+	$app_url = $addslashes(trim($_POST['app_url']));
 	$gadget = $app->parseModulePrefs($app_url);
 	$gadget = $gadget[0];
 
