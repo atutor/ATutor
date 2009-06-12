@@ -24,7 +24,7 @@ function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src
 		$source = imagecreatefrompng($src);
 	}
 	
-	if ($src_x > 0){
+	if ($src_x > 0 || $src_y > 0){
 		imagecopyresized($thumbnail_img, $source, 0, 0, $src_x, $src_y, $dest_w, $dest_h, $src_w, $src_h);
 	} else {
 		imagecopyresampled($thumbnail_img, $source, $src_x, $src_y, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
@@ -152,7 +152,7 @@ if (isset($_POST['cancel'])) {
 		$thumbnail_width  = $thumbnail_fixed_width;
 		resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
 		//cropping
-		resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, ($thumbnail_height-$thumbnail_fixed_height)/2);
+		resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, 0, ($thumbnail_height-$thumbnail_fixed_height)/2);
 	} else {
 		// no resizing, just copy the image.
 		// it's too small to resize.
