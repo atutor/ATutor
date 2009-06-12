@@ -47,6 +47,11 @@ if (!extension_loaded('gd')) {
 	exit;
 }
 
+// check if folder exists, if not, create it
+if (!is_dir(AT_CONTENT_DIR.'/profile_pictures/profile')) {
+	mkdir(AT_CONTENT_DIR.'/profile_pictures/profile');
+}
+
 $gd_info = gd_info();
 $supported_images = array();
 if ($gd_info['GIF Create Support']) {
@@ -133,14 +138,21 @@ if (isset($_POST['cancel'])) {
 	$width  = $image_attributes[0];
 	$height = $image_attributes[1];
 
-	if ($width > $height && $width>100) {
-		$thumbnail_height = intval(100 * $height / $width);
-		$thumbnail_width  = 100;
+	$thumbnail_fixed_height = 60; 
+	$thumbnail_fixed_width = 60; 
+
+	if ($width > $height && $height > $thumbnail_fixed_height) {
+		$thumbnail_height= $thumbnail_fixed_height;
+		$thumbnail_width = intval($thumbnail_fixed_height * $width / $height);
 		resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
-	} else if ($width <= $height && $height > 100) {
-		$thumbnail_height= 100;
-		$thumbnail_width = intval(100 * $width / $height);
+		//cropping
+		resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, ($thumbnail_width-$thumbnail_fixed_width)/2);
+	} else if ($width <= $height && $width>$thumbnail_fixed_width) {
+		$thumbnail_height = intval($thumbnail_fixed_width * $height / $width);
+		$thumbnail_width  = $thumbnail_fixed_width;
 		resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
+		//cropping
+		resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, ($thumbnail_height-$thumbnail_fixed_height)/2);
 	} else {
 		// no resizing, just copy the image.
 		// it's too small to resize.
