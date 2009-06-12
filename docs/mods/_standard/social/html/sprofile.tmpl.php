@@ -14,7 +14,7 @@
 			<a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME."edit_profile.php");?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME;?>images/edit_profile.gif" alt="<?php echo _AT('edit_profile'); ?>" title="<?php echo _AT('edit_profile'); ?>" border="0"/></a>
 		</div>		
 		<?php endif; ?>
-		<?php echo printSocialProfileImg($this->profile['member_id']); ?>
+		<?php echo printSocialProfileImg($this->profile['member_id'], 2); ?>
 		<p><a href="inbox/send_message.php?id=<?php echo $this->profile['member_id']; ?>"><?php echo _AT('send_message'); ?></a></p>
 		<dl class="public-profile">
 			<?php if($this->profile['occupation']){ ?>
