@@ -36,6 +36,7 @@ $id = intval($_GET['id']);
 if ($id=='' || $id==0){
 	$id = $_SESSION['member_id'];
 }
+$_SESSION['last_visited_page'] = $_base_href.AT_SOCIAL_BASENAME.'sprofile.php?id='.$id;
 
 // Get member friends
 $friends = getFriends($id);
