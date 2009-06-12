@@ -34,9 +34,9 @@
 
 <?php if (in_array(new Member($_SESSION['member_id']), $this->group_obj->group_members)): ?>
 <div style="width:59%; float:left;">
-	<div class="headingbox">
+	<div class="headingbox" style="margin-right:1em;">
 		<h3><?php echo _AT('message_board'); ?></h3></div>
-	<div class="contentbox">	
+	<div class="contentbox" style="margin-right:1em;">	
 		<form method="POST" action="">
 			<label for="message"></label>
 			<textarea name="msg_body" id="message" cols="40" rows="5"></textarea><br />
