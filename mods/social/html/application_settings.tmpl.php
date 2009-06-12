@@ -1,5 +1,5 @@
 <form method="post" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'applications.php');?>">
-<? 
+<?php
   $html = '';
   if (! empty($this->settings)) {
     $settings = $this->settings;
@@ -52,7 +52,7 @@
     }
   }
   if ($html != '') : 
-	  echo $html . "</div>";; 
+	  echo $html . "</div>";
   ?>
   <input type="hidden" name="app_id" value="<?php echo $this->app_id; ?>" />
   <input type="hidden" name="app_settings" value="1" />
