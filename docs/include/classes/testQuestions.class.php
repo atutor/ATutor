@@ -922,7 +922,7 @@ class LikertQuestion extends AbstracttestQuestion {
 
 	/*public */function mark($row) { 
 		$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
-		return NULL;
+		return 0;
 	}
 
 	//QTI Import Likert Question
