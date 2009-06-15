@@ -502,7 +502,7 @@ function TestQuestionCounter($increment = FALSE) {
 	*/
 	/*final public */function displayResult($row, $answer_row, $editable = FALSE) {
 		// print the generic question header
-		$this->displayHeader($row['weight'], (int) $answer_row['score'], $editable ? $row['question_id'] : FALSE);
+		$this->displayHeader($row['weight'], $answer_row['score'], $editable ? $row['question_id'] : FALSE);
 
 		// print the question specific template
 		$this->assignDisplayResultVariables($row, $answer_row);
@@ -543,7 +543,8 @@ function TestQuestionCounter($increment = FALSE) {
 	*/
 	/*final private */function displayHeader($weight, $score = FALSE, $question_id = FALSE) {
 		TestQuestionCounter(TRUE);
-
+		
+		if ($score) $score = intval($score);
 		$this->savant->assign('question_id', $question_id);
 		$this->savant->assign('score', $score);
 		$this->savant->assign('weight', $weight);
@@ -921,7 +922,7 @@ class LikertQuestion extends AbstracttestQuestion {
 
 	/*public */function mark($row) { 
 		$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
-		return 0;
+		return NULL;
 	}
 
 	//QTI Import Likert Question
@@ -1030,7 +1031,7 @@ class LongQuestion extends AbstracttestQuestion {
 	/*public */function mark($row) { 
 		global $addslashes;
 		$_POST['answers'][$row['question_id']] = $addslashes($_POST['answers'][$row['question_id']]);
-		return 0;
+		return NULL;
 	}
 
 	//QTI Import Open end/long Question

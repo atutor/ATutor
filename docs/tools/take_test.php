@@ -87,13 +87,23 @@ if (isset($_POST['submit'])) {
 			}
 			mysql_query($sql, $db);
 
-			$final_score += $score;
+			// don't set final score if there is any unmarked answers and release option is set to "after all answers are marked"
+			if (is_null($score))
+			{
+				if ($test_row['result_release']==AT_RELEASE_MARKED)
+					$set_empty_final_score = true;
+			}
+			else
+				$final_score += $score;
 		}
 	}
 
 	// update the final score
 	// update status to complate to fix refresh test issue.
-	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=$result_id";
+	if ($set_empty_final_score)
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=NULL, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=$result_id";
+	else
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=$result_id";
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

@@ -29,6 +29,17 @@ $_pages['tools/tests/view_results.php']['parent'] = 'tools/tests/results.php?tid
 $_pages['tools/tests/results.php?tid='.$tid]['title_var'] = 'submissions';
 $_pages['tools/tests/results.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
 
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+
+if (!($row = mysql_fetch_array($result))){
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printErrors('ITEM_NOT_FOUND');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+$test_title = $row['title'];
+$out_of		= $row['out_of'];
 
 if ($_POST['cancel']) {
 	$msg->addFeedback('CANCELLED');
@@ -45,15 +56,26 @@ if ($_POST['cancel']) {
 	if (is_array($_POST['scores'])) {
 		foreach ($_POST['scores'] as $qid => $score) {
 			$qid          = intval($qid);
-			$score		  = floatval($score);
-			$final_score += $score;
+			if ($score == '')
+			{
+				if ($row['result_release']==AT_RELEASE_MARKED)
+					$set_empty_final_score = true;
+			}
+			else
+			{
+				$score		  = floatval($score);
+				$final_score += $score;
+			}
 
 			$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score='$score' WHERE result_id=$rid AND question_id=$qid";
 			$result	= mysql_query($sql, $db);
 		}
 	}
 
-	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score='$final_score', date_taken=date_taken, end_time=end_time WHERE result_id=$rid AND status=1";
+	if ($set_empty_final_score)
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=NULL, date_taken=date_taken, end_time=end_time WHERE result_id=$rid AND status=1";
+	else
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score='$final_score', date_taken=date_taken, end_time=end_time WHERE result_id=$rid AND status=1";
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('RESULTS_UPDATED');
@@ -61,24 +83,13 @@ if ($_POST['cancel']) {
 	exit;
 }
 
+require(AT_INCLUDE_PATH.'header.inc.php');
+
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$content_base_href = 'get.php/';
 } else {
 	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
 }
-
-require(AT_INCLUDE_PATH.'header.inc.php');
-	
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-$result	= mysql_query($sql, $db);
-
-if (!($row = mysql_fetch_array($result))){
-	$msg->printErrors('ITEM_NOT_FOUND');
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-$test_title = $row['title'];
-$out_of		= $row['out_of'];
 
 $tid = intval($_GET['tid']);
 $rid = intval($_GET['rid']);
