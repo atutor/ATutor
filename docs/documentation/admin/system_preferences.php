@@ -72,6 +72,9 @@
 			<dt>Cache Directory</dt>
 			<dd>Where cached data is stored. On a Windows machine the path should look like <kbd>C:\Windows\temp\</kbd>, while on Unix it should look like <kbd>/tmp/cache/</kbd>. On some Linux/Unix based systems, a shared memory device can also be used <kbd>/dev/shm/</kbd> if it is available.  Leave empty to disable caching.</dd>
 
+			<dt>LaTex Server</dt>
+			<dd>The URL of the mimeTex server.  A public ATutor mimeTex web service is currently available at 'http://www.atutor.ca/cgi/mimetex.cgi?'.  For production use, please do not use the public mimeTeX web service. Install mimeTeX on your own server instead.  Please read <a href="http://www.forkosh.com/mimetex.html" target="_new">http://www.forkosh.com/mimetex.html</a> for installation details.  </dd>
+
 			<dt>Course Backups</dt>
 			<dd>The maximum number of backups that can be stored per course. The stored backups do not count towards the course's <em>Max Course Size</em>.</dd>
 
