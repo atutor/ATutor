@@ -26,15 +26,23 @@
 			<dt>Maximum Course Float</dt>
 			<dd>How much a course can be over its <em>Maximum Course Size</em> limit while still allowing a file to upload or import. Makes the course limit actually be <em>Max Course Size</em> + <em>Max Course Float</em>. When <em>Max Course Float</em> is reached, no more uploads will be allowed for that course until files are deleted and the course's space usage falls under the Maximum Course Size.</dd>
 
+			<dt>Maximum login attempts</dt>
+			<dd>The amount of times the user can attempt logging in before the system freeze the account for 30mins.</dd>
+
 			<dt>Display Name Format</dt>
 			<dd>The Display Name Format option controls how non-administrator users' names appear. This option is available in ATutor 1.5.4+.</dd>
 
 			<dt>Authenticate Against A Master Student List</dt>
 			<dd>Whether or not to enable Master Student List authentication. If enabled, only new accounts that validate against the master list will be created. See the <a href="master_student_list.php">Master Student List</a> section for additional details on using this feature.</dd>
 
-			<dt>Allow Public Registration</dt>
+			<dt>Allow Self-Registration</dt>
 			<dd>If enabled, users can self-register. Disable to remove registration functions</dd>
 
+			<dt>Allow Instructors to enroll users from the system registration list.</dt>
+			<dd>If enabled, instructors are allowed to enroll users from the system registration list.</dd>
+			
+			<dt>Allow the use of CAPTCHA</dt>
+			<dd>This requires the GD library installed (FreeType library is recommanded to have for better effect).  If enabled, users will be asked to enter an additional field for the alphanumeric sequence of the CAPTCHA image.  The CAPTCHA image can be mended in various ways depending on your need, please visit <a href="http://www.phpcaptcha.org/captcha-gallery/" target="_new">phpCaptcha</a> for more details.</dd>
 
 			<dt>Allow Students to Unenroll</dt>
 			<dd>If enabled, students can unenroll themselves from courses. If disabled, the Unenroll functions are removed.</dd>
@@ -87,6 +95,9 @@
 
 			<dt>Course Directory Name</dt>
 			<dd>If enabled, and only if the Pretty URL is enabled.  The course id in the pretty URL will be replaced by a custom course directory name.  This name can be setup individually and uniquely in the course property.  This option is available in ATutor 1.6.1+.</dd>
+
+			<dt>Apache mod_rewrite</dt>
+			<dd>Allows ATutor to use the Apache mod_rewrite function.  The mod_rewrite module must be loaded in the conf/httpd.conf file in order for this to work.  Please contact your server administrator for more details.  If enabled, the accessible pages will be shortened to the predefined rules.  Generally, go.php will be taken out.</dd>
 		</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>

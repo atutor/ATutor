@@ -248,9 +248,13 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 		<?php echo _AT('allow_instructor_registration'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_instructor_registration'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<input type="radio" name="allow_instructor_registration" value="1" id="enrollreg_y" <?php if($_config['allow_instructor_registration']) { echo 'checked="checked"'; }?>  /><label for="enrollreg_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_instructor_registration" value="0" id="enrollreg_n" <?php if(!$_config['allow_instructor_registration']) { echo 'checked="checked"'; }?>  /><label for="enrollreg_n"><?php echo _AT('disable'); ?></label>
 	</div>
-	<div class="row">
+	<div class="row">		
 		<?php echo _AT('use_captcha'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['use_captcha'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<?php if (extension_loaded('gd')): ?>
 		<input type="radio" name="use_captcha" value="1" id="use_captcha_y" <?php if($_config['use_captcha']) { echo 'checked="checked"'; }?>  /><label for="use_captcha_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="use_captcha" value="0" id="use_captcha_n" <?php if(!$_config['use_captcha']) { echo 'checked="checked"'; }?>  /><label for="use_captcha_n"><?php echo _AT('disable'); ?></label>
+		<?php else: ?>
+		<input type="radio" name="use_captcha" value="1" id="use_captcha_y" disabled="disabled" /><label for="use_captcha_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="use_captcha" value="0" id="use_captcha_n" checked="checked" /><label for="use_captcha_n"><?php echo _AT('disable'); ?></label>
+		<?php endif; ?>
 	</div>
 	<div class="row">
 		<?php echo _AT('allow_unenroll'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['allow_unenroll'] ? _AT('enable') : _AT('disable')); ?>)<br />

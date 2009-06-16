@@ -518,7 +518,6 @@ function TestQuestionCounter($increment = FALSE) {
 	*/
 	/*final public */function displayResultStatistics($row, $answers) {
 		TestQuestionCounter(TRUE);
-
 		$this->assignDisplayStatisticsVariables($row, $answers);
 		$this->savant->display('test_questions/' . $this->sPrefix . '_stats.tmpl.php');
 	}

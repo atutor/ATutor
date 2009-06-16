@@ -654,7 +654,15 @@ class Securimage {
             $font_color = imagecolorallocate($this->im, "0x$r", "0x$g", "0x$b");
           }
         }
-        @imagettftext($this->im, $this->font_size, $angle, $x, $y, $font_color, $this->ttf_file, $this->code{$i});
+		/* Will check if the FreeType library is loaded, if not, use the default PHP fonts.
+		 * @customized by ATutor, Harris Wong
+		 */
+		if (function_exists('imagettftext')) {
+			@imagettftext($this->im, $this->font_size, $angle, $x, $y, $font_color, $this->ttf_file, $this->code{$i});
+		} else {
+			$this->arc_linethrough = false; //no arcline then,too hard to see with the built in fonts and limited size
+			imagestring($this->im, 5, $x, $y-15, $this->code{$i}, $font_color);
+		}
 
         $x += rand($this->text_minimum_distance, $this->text_maximum_distance);
       } //for loop
