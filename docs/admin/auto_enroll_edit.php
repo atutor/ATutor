@@ -245,7 +245,7 @@ if ($num_of_rows == 0 || !isset($auto_enroll_id))
 	</div>
 </div>
 
-<? require("auto_enroll_filter_courses.php"); ?>
+<?php require("auto_enroll_filter_courses.php"); ?>
 
 </form>
 
