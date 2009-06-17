@@ -29,7 +29,7 @@ $_POST['dictionary'] == $addslashes($_POST['dictionary']);
 $_POST['thesaurus'] == $addslashes($_POST['thesaurus']);
 $_POST['atlas'] == $addslashes($_POST['atlas']);
 $_POST['calculator'] == $addslashes($_POST['calculator']);
-$_POST['abacus'] == $addslashes($_POST['abacus']);
+$_POST['abacus'] == $addslashes($_POST['abacas']);
 $_POST['note_taking'] == $addslashes($_POST['note_taking']);
 
 if (isset($_POST['submit'])) {
@@ -62,7 +62,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<label for="atlas"><?php echo _AT('atlas'); ?></label><br /><input type="text" id="atlas"  name="atlas" value="<?php echo $_config['atlas']; ?>"  size="60"/><br />
 		<label for="calculator"><?php echo _AT('calculator'); ?></label><br /><input type="text" id="calculator"  name="calculator" value="<?php echo $_config['calculator']; ?>"  size="60"/><br />
 		<label for=""><?php echo _AT('note_taking'); ?></label><br /><input type="text" id="note_taking"  name="note_taking" value="<?php echo $_config['note_taking']; ?>"  size="60"/>	<br />
-		<label for="abacus"><?php echo _AT('abacus'); ?></label><br /><input type="text" id="abacus"  name="abacus" value="<?php echo $_config['abacus']; ?>"  size="60"/><br />
+		<label for="abacas"><?php echo _AT('abacus'); ?></label><br /><input type="text" id="abacas"  name="abacas" value="<?php echo $_config['abacas']; ?>"  size="60"/><br />
 	</div>
 	<div class="buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
