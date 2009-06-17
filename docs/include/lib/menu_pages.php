@@ -87,7 +87,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_pages['admin/admins/my_password.php']['title_var'] = 'change_password';
 	$_pages['admin/admins/my_password.php']['parent']    = 'admin/index.php';
 
-	if (admin_authenticate(AT_ADMIN_PRIV_USERS, AT_PRIV_RETURN)) {
+	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		$_pages[AT_NAV_ADMIN][] = 'admin/config_edit.php';
 
 		$_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
@@ -115,7 +115,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_pages['admin/error_logging_view.php']['title_var'] = 'viewing_errors';
 	$_pages['admin/error_logging_view.php']['parent']    = 'admin/error_logging_details.php';
 
-	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		// hide modules from non-super admins
 		$_pages['admin/modules/index.php']['title_var'] = 'modules';
 		$_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
