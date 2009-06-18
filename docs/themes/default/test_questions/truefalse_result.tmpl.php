@@ -3,7 +3,7 @@
 <p>
 	<?php if (($this->row['answer_0'] == 1) && ($this->answers == 1)): ?>
 		<img src="<?php echo $this->base_path; ?>images/checkmark.gif" alt="<?php echo _AT('correct_answer'); ?>" title="<?php echo _AT('correct_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
-	<?php elseif ($this->row['answer_0'] == 1): ?>
+	<?php elseif ($this->row['answer_0'] == 2 && $this->answers == 1): ?>
 		<img src="<?php echo $this->base_path; ?>images/x.gif" alt="<?php echo _AT('wrong_answer'); ?>" title="<?php echo _AT('wrong_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
 	<?php else: ?>
 		<img src="<?php echo $this->base_path; ?>images/clr.gif" alt="" title="" height="16" width="16" style="vertical-align: middle" />
@@ -21,7 +21,7 @@
 <p>
 	<?php if (($this->row['answer_0'] == 2) && ($this->answers == 2)): ?>
 		<img src="<?php echo $this->base_path; ?>images/checkmark.gif" alt="<?php echo _AT('correct_answer'); ?>" title="<?php echo _AT('correct_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
-	<?php elseif ($this->row['answer_0'] == 2): ?>
+	<?php elseif ($this->row['answer_0'] == 1 && $this->answers == 2): ?>
 		<img src="<?php echo $this->base_path; ?>images/x.gif" alt="<?php echo _AT('wrong_answer'); ?>" title="<?php echo _AT('wrong_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
 	<?php else: ?>
 		<img src="<?php echo $this->base_path; ?>images/clr.gif" alt="" title="" height="16" width="16" style="vertical-align: middle" />
