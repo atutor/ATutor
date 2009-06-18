@@ -1342,6 +1342,7 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 	}
 
 	/*public */function mark($row) { 
+		$score = 0;
 		$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
 		if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
 			$score = $row['weight'];
