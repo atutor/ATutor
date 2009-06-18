@@ -251,10 +251,10 @@ function show_content(evt) {
 var ACTION_HTML_TEMPLATE = ' \
 <div style="border-width:thin; border-style:solid; padding: 5px 5px 5px 5px; margin:5px 5px 5px 5px"> \
 	<div style="float:left">Action:  \
-		<input type="radio" name="rb_action[{1}]" value="add" id="add" checked onclick="show_content(event);" /><label for="add"><?php echo addslashes(_AT("add")); ?></label> \
-		<input type="radio" name="rb_action[{1}]" value="alter" id="alter" onclick="show_content(event);" /><label for="alter"><?php echo addslashes(_AT("alter")); ?></label> \
-		<input type="radio" name="rb_action[{1}]" value="delete" id="delete" onclick="show_content(event);" /><label for="delete"><?php echo addslashes(_AT("delete")); ?></label> \
-		<input type="radio" name="rb_action[{1}]" value="overwrite" id="overwrite" onclick="show_content(event);" /><label for="overwrite"><?php echo addslashes(_AT("overwrite")); ?></label> \
+		<input type="radio" name="rb_action[{1}]" value="add" id="add[{1}]" checked onclick="show_content(event);" /><label for="add[{1}]"><?php echo addslashes(_AT("add")); ?></label> \
+		<input type="radio" name="rb_action[{1}]" value="alter" id="alter[{1}]" onclick="show_content(event);" /><label for="alter[{1}]"><?php echo addslashes(_AT("alter")); ?></label> \
+		<input type="radio" name="rb_action[{1}]" value="delete" id="delete[{1}]" onclick="show_content(event);" /><label for="delete[{1}]"><?php echo addslashes(_AT("delete")); ?></label> \
+		<input type="radio" name="rb_action[{1}]" value="overwrite" id="overwrite[{1}]" onclick="show_content(event);" /><label for="overwrite[{1}]"><?php echo addslashes(_AT("overwrite")); ?></label> \
 	</div> \
 	<br /><br /> \
 	<div> \
