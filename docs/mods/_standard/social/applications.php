@@ -49,7 +49,9 @@ if (isset($_POST['add_application']) && isset($_POST['app_url'])){
 		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	} else {
-	//	debug($gadget);
+		$msg->addError(array('GADGET_ADDED_FAILURE', implode(', ', $gadget->errors)));
+		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
+		exit; 
 	}
 }
 
