@@ -387,5 +387,5 @@ function toggleToc(objId) {
 	<!-- the page title -->
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 
-	<a name="content"></a>
+	<a name="content" title="<?php echo _AT('content'); ?>"></a>
 	<?php global $msg; $msg->printAll(); ?>

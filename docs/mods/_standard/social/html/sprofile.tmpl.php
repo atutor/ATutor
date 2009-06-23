@@ -3,10 +3,10 @@
 ?>
 
 <div>
-	<div><h2><?php echo printSocialName($this->profile['member_id'], false); ?></h2></div>
+	<div><h3><?php echo printSocialName($this->profile['member_id'], false); ?></h3></div>
 	<div style="float:left; width:40%;">		
 		<div class="headingbox" style="margin-right:1em;">
-			<h5><?php echo _AT('profile'); ?></h5>
+			<h4><?php echo _AT('profile'); ?></h4>
 		</div>
 		<div class="contentbox" style="margin-right:1em;">
 		<?php if ($this->scope=='owner'): ?>
@@ -78,11 +78,11 @@
 				<div class="headingbox"><h5><?php echo _AT('training_and_education'); ?></h5></div>
 				<div class="contentbox">
 				<table class="data static">	
-					<thead>
+					<thead><tr>
 						<th> <?php echo _AT('institution'); ?></th>
 						<th> <?php echo _AT('degrees'); ?></th>
 						<th> <?php echo _AT('year'); ?></th>
-					</thead>
+					</tr></thead>
 					<tbody>
 					<?php
 						foreach($this->education as $edu){
@@ -105,11 +105,11 @@
 				<div class="headingbox"><h5><?php echo _AT('credits_and_work_experience'); ?></h5></div>
 				<div class="contentbox">
 				<table class="data static">	
-					<thead>
+					<thead><tr>
 						<th><?php echo _AT('company'); ?></th>
 						<th><?php echo _AT('title'); ?></th>
 						<th><?php echo _AT('year'); ?></th>
-					</thead>
+					</tr></thead>
 					<tbody>
 					<?php
 						foreach($this->position as $pos){
@@ -130,10 +130,10 @@
 			<div class="headingbox"><h5><?php echo _AT('websites'); ?></h5></div>
 			<div class="contentbox">
 			<table class="data static">	
-				<thead>
+				<thead><tr>
 					<th><?php echo _AT('site_name'); ?></th>
 					<th><?php echo _AT('url'); ?></th>
-				</thead>
+				</tr></thead>
 				<tbody>
 				<?php
 					foreach($this->websites as $sites){
