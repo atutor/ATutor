@@ -200,8 +200,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 <?php endif; ?>
 	<div class="row">
-		<h3><?php echo _AT('upload_new_picture'); ?></h3>
-		<input type="file" name="file" /> (<?php echo implode(', ', $supported_images); ?>)</div>
+		<h3><label for="upload_picture"><?php echo _AT('upload_new_picture'); ?></label></h3>
+		<input type="file" name="file" id="upload_picture"/> (<?php echo implode(', ', $supported_images); ?>)</div>
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />

@@ -3,7 +3,7 @@
 </div>
 <div style="float:right;min-width:100%;">
 	<div class="headingbox">
-	<a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php"><h3><?php echo _AT('connections'); ?></h3></a></div>
+	<h3><a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php"><?php echo _AT('connections'); ?></a></h3></div>
 	<div class="contentbox">
 	<?php
 	/**

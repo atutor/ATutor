@@ -1,4 +1,4 @@
-	<div class="headingbox"><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php'); ?>"><h3><?php echo _AT('my_groups'); ?></h3></a></div>
+	<div class="headingbox"><h3><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php'); ?>"><?php echo _AT('my_groups'); ?></a></h3></div>
 	<div class="contentbox">
 		<?php foreach ($this->my_groups as $i=>$grp): 
 			$grp_obj = new SocialGroup($grp);
@@ -20,7 +20,7 @@
 				
 				</div>
 				<div style="float:left; padding-left:0.5em;">
-				<a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'groups/view.php?id='.$grp);?>"><h4><?php echo $grp_obj->getName(); ?></h4></a><br/>
+				<h4><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'groups/view.php?id='.$grp);?>"><?php echo $grp_obj->getName(); ?></a></h4><br/>
 					<?php echo _AT('group_type') .': '. $grp_obj->getGroupType();?><br/>
 					<?php echo _AT('access') .': '. ($grp_obj->getPrivacy()?_AT('private'):_AT('public'))?><br/>
 					<?php echo _AT('description') .': <br/>'. $grp_obj->getDescription();?><br/>
