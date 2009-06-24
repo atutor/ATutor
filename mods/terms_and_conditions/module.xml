@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Terms and conditions</name> 
+    <description lang="en">A module funded by FHA.  To enforce the users to agree to the terms and conditions before they login. </description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2009-06-24</date> 
+        <state>stable</state> 
+        <notes></notes> 
+    </release> 
+</module>
