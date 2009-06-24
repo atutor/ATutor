@@ -23,7 +23,6 @@ if (!($owner_status = blogs_authenticate($owner_type, $owner_id)) || !query_bit(
 	exit;
 }
 
-
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid'], AT_PRETTY_URL_IS_HEADER));
@@ -42,9 +41,14 @@ if (isset($_POST['cancel'])) {
 		$_POST['private'] = abs($_POST['private']);
 		$sql = "INSERT INTO ".TABLE_PREFIX."blog_posts VALUES (NULL, $_SESSION[member_id], ".BLOGS_GROUP.", $_POST[oid], $_POST[private], NOW(), 0, '$_POST[title]', '$_POST[body]')";
 		mysql_query($sql, $db);
-
+		
+		if (!isset($sub)) { 
+			require_once(AT_INCLUDE_PATH .'classes/subscribe.class.php');
+			$sub = new subscription(); 
+		}
+		$sub->send_mail('blog', $_POST['oid'], mysql_insert_id());
 		$msg->addFeedback('POST_ADDED_SUCCESSFULLY');
-
+	
 		header('Location: '.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid'], AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}

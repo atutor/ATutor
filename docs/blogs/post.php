@@ -44,11 +44,18 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 	if (!$msg->containsErrors()) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."blog_posts_comments VALUES (NULL, $id, $_SESSION[member_id], NOW(), $_POST[private], '$_POST[body]')";
 		mysql_query($sql, $db);
+		
+		if (!isset($sub)) { 
+			require_once(AT_INCLUDE_PATH .'classes/subscribe.class.php');
+			$sub = new subscription(); 
+		}
+		$sub->send_mail('blogcomment', $_REQUEST['oid'], mysql_insert_id());
+		
 		if (mysql_affected_rows($db) == 1) {
 			$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET num_comments=num_comments+1, date=date WHERE post_id=$id";
 			mysql_query($sql, $db);
 		}
-
+		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		header('Location: '.url_rewrite('blogs/post.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'id='.$id, AT_PRETTY_URL_IS_HEADER));

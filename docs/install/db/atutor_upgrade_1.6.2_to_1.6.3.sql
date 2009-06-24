@@ -234,3 +234,15 @@ CREATE TABLE `member_login_attempt` (
   `expiry` int(10) unsigned default NULL,
   PRIMARY KEY  (`login`)
 ) ENGINE=MyISAM
+
+# --------------------------------------------------------
+# Adding feature of blog subsription
+# Table structure for table `blog_subscription`
+# since 1.6.3
+CREATE TABLE `blog_subscription` (
+  `group_id` MEDIUMINT NOT NULL ,
+  `member_id` MEDIUMINT NOT NULL ,
+  PRIMARY KEY (group_id,member_id)
+) TYPE=MyISAM;
+
+# END Adding feature of blog subsription

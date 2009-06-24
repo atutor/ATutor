@@ -144,6 +144,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_FORUM_NOT_FOUND','Fo
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_FORUM_NO_DEL_SHARE','You do not have permission to delete a shared forum.','2004-12-10 11:10:25','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_FORUM_NO_EDIT_SHARE','You do not have permission to edit a Shared forum.','2004-12-10 11:15:41','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_FORUM_NO_SUBSCRIBE','Cannot subscribe to the requested thread. Only subscription to the top-level post is allowed.','2004-12-10 13:44:57','forum/subscribe.php');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GADGET_ADDED_FAILURE','The following error occured while adding a gadget:\r\n%s','2009-06-22 11:19:44','gadget error');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GADGET_DELETED_CANNOT_BE_EMPTY','You need to select at least one application to delete.','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GENERAL','This is a search and %s ATutor error.','2003-05-22 11:52:28','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_GOOGLE_KEY_INVALID','Invalid key.','2005-11-30 14:35:03','');
@@ -183,7 +184,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_EXISTS','That 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_TO_POST','You must be logged in to post.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOG_NOT_RESET','The error log could not be reset.','2005-03-10 15:54:03','error logging');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_ATTEMPTS','The test cannot be taken.  It is not available at this time, or you have reached the maximum number of attempts for this test.','2004-09-02 12:59:25','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_LOGIN_ATTEMPT','You have reached the maximum number of attempts to login.  Please retry again later.','2009-06-03 15:33:17','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_LOGIN_ATTEMPT','Maximum login attempts has been reached. Login has been temporarily disabled for 1 hour.  Please try again later.','2009-06-17 11:59:49','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_STORAGE_EXCEEDED','Adding this file exceeds the maximum course storage limit.','2003-10-03 16:00:08','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MISSING_THEMEXML','Cannot import. The import package is missing a vital component: themes.xml. Check that the theme package is for version 1.4.3 or above.','2004-12-09 11:59:21','admin/themese/import.php');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MODULE_INSTALL','The following error(s) were encountered when trying to install this module:\r\n<ul>%s</ul>','2005-10-11 10:48:49','');
@@ -270,6 +271,8 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ASSIGNMENT_HANDED
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ATUTOR_UPDATE_AVAILABLE','An updated version of ATutor is available! View the <a href=\"http://atutor.ca/atutor/change_log.php\">Change Log</a> for details.','2005-11-21 12:36:30','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_AUTO_DISABLED','Auto-Login has been disabled','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_AUTO_ENABLED','Auto-Login has been enabled. Next time you enter ATutor using this computer, you will bypass the login screen. ','2003-05-16 13:47:01','feedback msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_BLOG_SUBSCRIBED','Subscribed to blog feed.','2009-06-24 11:57:05','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_BLOG_UNSUBSCRIBED','Unsubscribed to blog feed.','2009-06-24 11:57:20','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_CANCELLED','Successfully cancelled without any changes.','2003-12-10 10:40:21','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_CLOSED','Successfully closed','2004-05-03 11:26:52','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_CONFIG_SAVED','System preferences have been saved successfully. A backup of the old configuration file was created and saved as %s (it\'s in your content directory).','2005-03-29 15:22:14','');
@@ -625,7 +628,13 @@ INSERT INTO `language_text` VALUES ('en', '_template','basic_profile','Basic Pro
 INSERT INTO `language_text` VALUES ('en', '_template','before_topic','Before: %s','2004-01-16 13:19:20','content editor');
 INSERT INTO `language_text` VALUES ('en', '_template','bg_colour','Background Colour','2008-09-09 09:01:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','black','Black','2008-09-09 09:01:13','');
+INSERT INTO `language_text` VALUES ('en', '_template','blogcomment_notify_body','*DO NOT REPLY TO THIS MESSAGE*  <br /><br />\r\nA new blog comment has been posted in the group %s.<br /><br />Click the following link to visit the course.<br /><br />%s','2009-06-24 11:59:01','');
+INSERT INTO `language_text` VALUES ('en', '_template','blogcomment_notify_subject','New blog comment','2009-06-24 11:57:46','');
 INSERT INTO `language_text` VALUES ('en', '_template','blogs','Blogs','2006-05-22 12:10:42','');
+INSERT INTO `language_text` VALUES ('en', '_template','blog_notify_body','*DO NOT REPLY TO THIS MESSAGE*  <br /><br />\r\nA new blog post has been published in the group %s.<br /><br />Click the following link to visit the course.<br /><br />%s','2009-06-24 11:58:46','');
+INSERT INTO `language_text` VALUES ('en', '_template','blog_notify_subject','New blog post','2009-06-24 11:57:33','');
+INSERT INTO `language_text` VALUES ('en', '_template','blog_subscribe','Subscribe','2009-06-24 11:53:15','');
+INSERT INTO `language_text` VALUES ('en', '_template','blog_unsubscribe','Unsubscribe','2009-06-24 11:53:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','blue','Blue','2003-05-18 12:09:34','global code picker tool');
 INSERT INTO `language_text` VALUES ('en', '_template','blue_guests','Blue = Guests','2003-05-18 12:10:38','instructor course statistics');
 INSERT INTO `language_text` VALUES ('en', '_template','body','Body','2003-05-18 12:11:16','add/edit forms for body field label');
@@ -844,6 +853,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','create_new_question','Cre
 INSERT INTO `language_text` VALUES ('en', '_template','create_patch','Create Patch','2008-04-21 15:11:31','');
 INSERT INTO `language_text` VALUES ('en', '_template','create_test','Create Test/Survey','2004-11-24 10:00:42','instructor test manager');
 INSERT INTO `language_text` VALUES ('en', '_template','create_user','Create User Account','2005-03-10 15:12:12','');
+INSERT INTO `language_text` VALUES ('en', '_template','creation_date','Creation Date','2009-06-17 13:32:26','admin/users.php');
 INSERT INTO `language_text` VALUES ('en', '_template','credits_and_work_experience','Credits and Work Experience','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','cron','Cron','2006-03-31 15:42:46','');
 INSERT INTO `language_text` VALUES ('en', '_template','cron_config','Cron Set-up','2006-04-03 14:22:14','');
@@ -1475,6 +1485,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','move_thread_to','Move thr
 INSERT INTO `language_text` VALUES ('en', '_template','move_to_inbox','Move to Inbox','2007-02-22 13:09:26','');
 INSERT INTO `language_text` VALUES ('en', '_template','move_up','Move Up','2005-08-02 15:44:46','modules');
 INSERT INTO `language_text` VALUES ('en', '_template','music','Music','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','mutual_connections','Mutual Connections','2009-06-12 15:42:42','');
 INSERT INTO `language_text` VALUES ('en', '_template','myown_patches','My Own Patches','2008-04-21 15:08:55','');
 INSERT INTO `language_text` VALUES ('en', '_template','mysql_version','MySQL Version','2007-07-26 13:40:50','');
 INSERT INTO `language_text` VALUES ('en', '_template','my_account','My Account','2005-03-28 14:04:37','');

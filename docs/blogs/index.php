@@ -13,6 +13,21 @@
 // $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH .'classes/subscribe.class.php');
+
+$sub = new subscription();
+
+if (isset($_GET)){
+	if ($_GET['subscribe'] == "set"){
+		if($sub->set_subscription('blog',$_SESSION['member_id'],$_GET['group_id'])){;
+			$msg->addFeedback('BLOG_SUBSCRIBED');
+		}
+	} else if ($_GET['subscribe'] == "unset"){
+		$sub->unset_subscription('blog',$_SESSION['member_id'],$_GET['group_id']);
+		$msg->addFeedback('BLOG_UNSUBSCRIBED');
+	}
+}
+
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $sql = "SELECT G.group_id, G.title, G.modules FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$_SESSION[course_id] ORDER BY G.title";
@@ -32,7 +47,14 @@ while ($row = mysql_fetch_assoc($result)) {
 			$last_updated = '';
 		}
 
-		echo '<li class="top-tool"><a href="'.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id']).'">'.$row['title'].$last_updated.'</a></li>';
+		echo '<li class="top-tool" style="position:relative;"><span style="position:absolute; left:4em;"><a href="'.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id']).'">'.$row['title'].$last_updated.'</a></span><span style="position:absolute; right:1em;">';
+		
+		// Check if subscribed and make appropriate button
+		if ($sub->is_subscribed('blog',$_SESSION['member_id'],$row['group_id'])){
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?group_id='.$row['group_id'].'&subscribe=unset"><img border="0" src="'.AT_BASE_HREF.'images/unsubscribe-envelope.png" alt="" /> '._AT('blog_unsubscribe').'</a>';
+		} else {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?group_id='.$row['group_id'].'&subscribe=set"><img border="0" src="'.AT_BASE_HREF.'images/subscribe-envelope.png" alt="" /> '._AT('blog_subscribe').'</a>';		
+		}
 		$blogs = true;
 	}
 }
