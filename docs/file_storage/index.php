@@ -436,7 +436,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		<div style="" >
 			<div class="input-form" style="width: 48%; float: right;" >
 				<div class="row">
-					<h3><a href="file_storage/index.php" onclick="javascript:toggleform('c_folder'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
+					<h3><a href="file_storage/index.php" onclick="javascript:toggleform('c_folder'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'" onfocus="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
 				</div>
 				<div  id="c_folder">
 					<div class="row">
@@ -450,9 +450,9 @@ while ($row = mysql_fetch_assoc($result)) {
 			</div>
 	
 	
-			<div class="input-form" style="float: left; width: 48%;">
+			<div class="input-form" style="float: left; width: 45%;">
 				<div class="row">
-					<h3><a href="file_storage/index.php" onclick="javascript:toggleform('upload'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
+					<h3><a href="file_storage/index.php" onclick="javascript:toggleform('upload'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'" onfocus="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
 				</div>
 				<div id="upload">
 					<div class="row">
