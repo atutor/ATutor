@@ -106,17 +106,6 @@ function unregister_GLOBALS() {
 		exit;
 	}
 
-	if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && (!isset($_user_location) || $_user_location != 'public') && !isset($_pretty_url_course_id)) {
-		if (isset($in_get) && $in_get && (($pos = strpos($_SERVER['PHP_SELF'], 'get.php/')) !== FALSE)) {
-			$redirect = substr($_SERVER['PHP_SELF'], 0, $pos) . 'login.php';
-			header('Location: '.$redirect);
-			exit;
-		}
-
-		header('Location: '.AT_BASE_HREF.'login.php');
-		exit;
-	}
-
 
 /***** end session initilization block ****/
 
@@ -135,6 +124,24 @@ $sql    = "SELECT * FROM ".TABLE_PREFIX."config";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) { 
 	$_config[$row['name']] = $row['value'];
+}
+
+//Check if users=valid
+if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && (!isset($_user_location) || $_user_location != 'public') && !isset($_pretty_url_course_id)) {
+	if (isset($in_get) && $in_get && (($pos = strpos($_SERVER['PHP_SELF'], 'get.php/')) !== FALSE)) {
+		$redirect = substr($_SERVER['PHP_SELF'], 0, $pos) . 'login.php';
+		header('Location: '.$redirect);
+		exit;
+	}
+
+	//hack for Terms and Conditions module.  Will need a better way to handle this module without adding this to the vitals. 
+	if($_config['enable_terms_and_conditions']==1){
+		header('Location: '.AT_BASE_HREF.'mods/terms_and_conditions/terms_and_conditions.php');
+		exit;
+	}
+
+	header('Location: '.AT_BASE_HREF.'login.php');
+	exit;
 }
 
 /* following is added as a transition period and backwards compatability: */
