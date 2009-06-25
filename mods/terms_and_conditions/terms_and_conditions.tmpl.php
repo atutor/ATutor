@@ -1,77 +1,63 @@
 <?php
 ?>
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>Fraser Health Online Learning System - Terms and Conditions of Use</title>
-<style type="text/css">
-<!--
-body {
-	font-family:Arial, Helvetica, sans-serif;
-	background-color:#FFFFFF;
-}
-#maintable {
-	background-color:#FFFFFF;
-	border-left:1px solid #C4C4C4;
-	border-right:1px solid #C4C4C4;
-	border-bottom:1px solid #C4C4C4;
-	border-top:4px solid #004780;
-}
-#maintitle {
-	margin-top:25px; 
-	margin-left:20px; 
-	margin-right:20px; 
-	margin-bottom:20px; 
-	color:#004780;
-	font-family:'Trebuchet MS'; 
-	font-weight:bold;
-}
-#logo {
-	border:0px solid red; 
-	margin-right:20px; 
-	margin-top:5px;
-}
-#attention {
-	width:450px;
-	color:red;
-	text-align:left;
-	font-weight:bold;
-	font-size:12px;
-}
-.martop20 {
-	margin-top:20px;
-}
-.marbot20 {
-	margin-top:20px;
-}
--->
-</style>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="shortcut icon" href="<?php echo $this->base_href; ?>favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="<?php echo $this->base_href.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->base_href.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
+	<!--[if IE]>
+	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
+	<![endif]-->
+	<link rel="stylesheet" href="<?php echo $this->base_href.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+	<title><?php echo $this->site_name . ' - ' .  _AT('terms_and_conditions'); ?></title>
+	<style type="text/css">
+	<!--
+	.tac {
+		width: 60%;
+		margin: 0px auto;
+		border: 1px solid #C4C4C4;
+		padding-bottom: 0.5em;
+	}
+	#tac_body{
+		width: 100%;
+		padding:0.5em;
+	}
+	#attention {
+		width:450px;
+		color:red;
+		text-align:left;
+		font-weight:bold;
+		font-size:12px;
+	}
+	.mar20 {
+		margin-top:20px;
+		border: 1px solid black; 
+		padding: 1em; 
+		overflow: scroll; 
+		width: 450px; 
+		height: 250px; 
+		font-size: 0.9em;
+	}
+	-->
+	</style>
 </head>
 <body>
-<div align="center">
-  <table id="maintable" cellpadding="0" cellspacing="0" border="0">
-    <tr style="background-color:#EBF4F9;">
-      <td><div id="maintitle"> <span style="font-size:18pt;"><?php echo $this->site_name;?></span> <br>
-          <span style="font-size:24pt;"><?php echo _AT('terms_and_conditions'); ?></span> </div></td>
-      <td width="350" align="right" valign="top"><img id="logo" src="FHA-logo.gif"> </td>
-    </tr>
-    <tr>
-      <td style="border-top:1px solid #70A1CA;" colspan="2" align="center" valign="middle"><div class="marbot20 martop20">
-          <?php echo $this->body_text; ?>
-        </div></td>
-    </tr>
-    <tr>
-      <td colspan="2" align="center"><div class="marbot20">
-          <form>
-            <input type="button" value="<?php echo _AT('i_do_not_agree');?>" onClick="parent.location='<?php echo $this->tac_link; ?>'">
-            <input type="button" value="<?php echo _AT('i_agree');?>" onClick="parent.location='<?php echo $this->base_href; ?>login.php'">
-          </form>
-        </div></td>
-    </tr>
-  </table>
-</div>
+	<div class="tac" align="center">
+		<div id="header">
+			<!-- section title -->
+			<h1 id="section-title"><?php echo SITE_NAME . ' - ' . _AT('terms_and_conditions'); ?></h1>
+		</div>
+		<div id="tac_body">
+			<div class="attention"><?php echo _AT('tac_attention'); ?></div>
+			<div class="mar20"><?php echo $this->body_text; ?></div>
+		</div>
+		<div><form>
+			<input class="button" type="button" value="<?php echo _AT('i_do_not_agree');?>" onClick="parent.location='<?php echo $this->tac_link; ?>'">
+			<input class="button" type="button" value="<?php echo _AT('i_agree');?>" onClick="parent.location='<?php echo $this->base_href; ?>login.php'">
+		</form></div>
+	</div>
 </body>
 </html>

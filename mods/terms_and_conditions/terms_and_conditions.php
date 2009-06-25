@@ -15,6 +15,7 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $savant->assign('site_name', $_config['site_name']);
+$savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 $savant->assign('base_href', $_base_href);
 $savant->assign('tac_link', $_config['tac_link']);
 $savant->assign('body_text', $_config['tac_body']);

@@ -75,7 +75,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 	</div>
 	<div class="row">
 		<label for="tac_link"><?php echo _AT('tac_link'); ?></label>
-		<input id="tac_link" type="text" name="tac_link" value="<?php echo $_POST['tac_link']; ?>" />
+		<input id="tac_link" type="text" name="tac_link" value="<?php echo $_POST['tac_link']; ?>" size="80"/>
 	</div>
 	<div class="row">
 		<?php echo _AT('formatting'); ?><br />
