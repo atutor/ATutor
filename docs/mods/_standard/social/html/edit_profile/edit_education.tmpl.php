@@ -12,6 +12,13 @@
 	$description = htmlentities_utf8($this->description, false);
 ?>
 <script type='text/javascript' src='jscripts/calendar.js'></script>
+<script type="text/javascript"> 
+<!--
+	//overwrite calendar dates range settings.
+	scwBaseYear			= scwDateNow.getFullYear()-50; 
+	scwDropDownYears	= 70; 
+-->
+</script>
 <div class="headingbox"><h3><?php if($_GET['id']){echo _AT('edit_education');}else{echo  _AT('add_new_education');}?></h3></div>
 <div class="contentbox">
 <form method="post" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php'); ?>">
