@@ -413,6 +413,9 @@ class Backup {
 
 				if (($row = @fgetcsv($fp, 70000)) !== false)
 				{
+					//hack for http://www.atutor.ca/atutor/mantis/view.php?id=3839
+					$row[0] = preg_replace('/\\\\r\\\\n/', "\r\n", $row[0]);
+
 					$sql = "UPDATE ".TABLE_PREFIX."courses 
 					           SET banner = '". mysql_real_escape_string($row[0]). "' 
 					         WHERE course_id = ".$this->course_id;
