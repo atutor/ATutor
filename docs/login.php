@@ -170,15 +170,24 @@ if (isset($this_login, $this_password)) {
 				$expiry_stmt = '';
 				$attempt_login++;
 				if ($attempt_expiry==0){
-					$expiry_stmt = ', expiry='.(time() + 60*30);	//half an hour from now
+					$expiry_stmt = ', expiry='.(time() + 60*60);	//an hour from now
 				} else {
-					$expiry_stmt = ', expiry='.$attempt_expiry;	//half an hour from now
+					$expiry_stmt = ', expiry='.$attempt_expiry;	//an hour from now
 				}
 				$sql = 'REPLACE INTO '.TABLE_PREFIX.'member_login_attempt SET attempt='.$attempt_login . $expiry_stmt .", login='$this_login'";
 				mysql_query($sql, $db);				
 			}
-			$msg->addError('INVALID_LOGIN');
 		}
+		//Different error messages depend on the number of login failure.
+		if (($_config['max_login']-$attempt_login)==2){
+			$msg->addError('MAX_LOGIN_ATTEMPT_2');
+		} elseif (($_config['max_login']-$attempt_login)==1){
+			$msg->addError('MAX_LOGIN_ATTEMPT_1');
+		} elseif (($_config['max_login']-$attempt_login)==0){
+			$msg->addError('MAX_LOGIN_ATTEMPT');
+		} else {
+			$msg->addError('INVALID_LOGIN');
+		} 
 	}
 }
 
