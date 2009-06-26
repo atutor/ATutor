@@ -85,7 +85,7 @@ if (isset($this_login, $this_password)) {
 	$this_password = $addslashes($this_password);
 
 	//Check if this account has exceeded maximum attempts
-	$sql = 'SELECT a.login, b.attempt, b.expiry FROM '.TABLE_PREFIX."members a LEFT JOIN ".TABLE_PREFIX."member_login_attempt b ON a.login=b.login WHERE a.login='$this_login'";
+	$sql = 'SELECT a.login, b.attempt, b.expiry FROM (SELECT login FROM '.TABLE_PREFIX.'members UNION SELECT login FROM '.TABLE_PREFIX.'admins) AS a LEFT JOIN '.TABLE_PREFIX."member_login_attempt b ON a.login=b.login WHERE a.login='$this_login'";
 
 	$result = mysql_query($sql, $db);
 	if ($result && mysql_numrows($result) > 0){
