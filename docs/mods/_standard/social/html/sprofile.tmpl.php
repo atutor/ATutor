@@ -55,7 +55,7 @@
 			<dt><?php echo _AT('interests'); ?></dt>
 			<dd><?php echo htmlentities_utf8($this->profile['interests']); ?></dd>
 			<?php }?>
-			<?php if($this->profile['associations']){ ?>
+			<?php if($this->profile['associations']){ ?>e
 			<dt><?php echo _AT('associations'); ?></dt>
 			<dd><?php echo htmlentities_utf8($this->profile['associations']); ?></dd>
 			<?php }?>
@@ -87,7 +87,7 @@
 					<?php
 						foreach($this->education as $edu){
 							echo '<tr><td>'.htmlentities_utf8($edu['university']).'</td>';
-							echo '<td>'.htmlentities_utf8($edu['degree'].'/'.$edu['field'].'/'.$edu['field']).'</td>';
+							echo '<td>'.htmlentities_utf8($edu['degree'].'/'.$edu['field']).'</td>';
 							echo '<td>'.htmlentities_utf8($edu['from'].'-'.$edu['to']).'</td></tr>';
 						}							
 					?>
