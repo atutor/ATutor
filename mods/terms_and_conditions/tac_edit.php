@@ -74,7 +74,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 		<input type="radio" name="enable_terms_and_conditions" value="1" id="terms_and_conditions_y" <?php if($_config['enable_terms_and_conditions']) { echo 'checked="checked"'; }?>  /><label for="terms_and_conditions_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="enable_terms_and_conditions" value="0" id="terms_and_conditions_n" <?php if(!$_config['enable_terms_and_conditions']) { echo 'checked="checked"'; }?>  /><label for="terms_and_conditions_n"><?php echo _AT('disable'); ?></label>
 	</div>
 	<div class="row">
-		<label for="tac_link"><?php echo _AT('tac_link'); ?></label>
+		<label for="tac_link"><?php echo _AT('tac_link'); ?></label><br/>
 		<input id="tac_link" type="text" name="tac_link" value="<?php echo $_POST['tac_link']; ?>" size="80"/>
 	</div>
 	<div class="row">
@@ -98,7 +98,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 	</div>
 
 	<div class="row">
-		<label for='body_text'><?php echo _AT('terms_and_conditions');?></label>
+		<label for='body_text'><?php echo _AT('terms_and_conditions');?></label><br/>
 		<textarea name="body_text" cols="55" rows="15" id="body_text"><?php echo $_POST['body_text']; ?></textarea>
 	</div>
 
