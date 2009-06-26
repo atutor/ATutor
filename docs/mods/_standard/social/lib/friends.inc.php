@@ -596,18 +596,19 @@ function printSocialName($id, $link=true){
 function printSocialProfileImg($id, $type=1, $link=true) {
 	global $moduleFactory;
 	$str = '';
+	$username = AT_print(get_display_name($id), 'members.full_name');
 	$mod = $moduleFactory->getModule('_standard/profile_pictures');
 	if ($mod->isEnabled() === FALSE) {
 		return;
 	}
 	if (profile_image_exists($id)) {
 		if ($type==1){
-			$str = '<img src="get_profile_img.php?id='.$id.'" alt="" />';
+			$str = '<img src="get_profile_img.php?id='.$id.'" alt="'.$username.'" />';
 		} elseif ($type==2){
-			$str = '<img src="get_profile_img.php?id='.$id.SEP.'size=p" alt="" />';
+			$str = '<img src="get_profile_img.php?id='.$id.SEP.'size=p" alt="'.$username.'" />';
 		}
 	} else {
-		$str = '<img src="'.AT_SOCIAL_BASENAME.'images/nophoto.gif" alt="" />';
+		$str = '<img src="'.AT_SOCIAL_BASENAME.'images/nophoto.gif" alt="'.$username.'" />';
 	}
 	if (!$link){
 		return $str;
