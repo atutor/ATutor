@@ -137,8 +137,12 @@
 				<tbody>
 				<?php
 					foreach($this->websites as $sites){
+						$is_http = preg_match("/^http/", $sites['url']);
+						if ($is_http==0){
+							$sites['url'] = 'http://' . $sites['url'];
+						}
 						echo '<tr><td>'.htmlentities_utf8($sites['site_name']).'</td>';
-						echo '<td><a href="'.$sites['url'].'">'.$sites['url'].'</a></td></tr>';
+						echo '<td><a href="'.$sites['url'].'" target="user_profile_site">'.$sites['url'].'</a></td></tr>';
 					}							
 				?>
 				</tbody>

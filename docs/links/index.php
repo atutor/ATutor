@@ -34,6 +34,12 @@ if (isset($_GET['view'])) {
 			$sql = "UPDATE ".TABLE_PREFIX."links SET hits=$row[hits] WHERE link_id=$_GET[view]";
 			mysql_query($sql,$db);
 		}
+		
+		//http://www.atutor.ca/atutor/mantis/view.php?id=3853
+		$is_http = preg_match("/^http/", $row['Url']);
+		if ($is_http==0){
+			$row['Url'] = 'http://' . $row['Url'];
+		}
 
 		//redirect
 		header('Location: ' . $row['Url']);

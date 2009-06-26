@@ -87,7 +87,7 @@ class Member {
 	function addWebsite($url, $site_name){ 
 		global $addslashes, $db;
 		$member_id	= $this->id;
-		$url		= urlencode($url);
+		$url		= $addslashes($url);
 		$site_name	= $addslashes($site_name);
 
 		$sql = 'INSERT INTO '. TABLE_PREFIX ."social_member_websites (member_id, url, site_name) VALUES ($member_id, '$url', '$site_name')";
@@ -353,6 +353,10 @@ class Member {
 		$result = mysql_query($sql, $db);
 		if ($result){
 			while($row = mysql_fetch_assoc($result)){
+				//escape XSS
+				$row['url'] = htmlentities($row['url']);
+				
+				//index row entry
 				$websites[] = $row;
 			}
 		}
