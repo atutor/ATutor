@@ -85,7 +85,8 @@ if (isset($this_login, $this_password)) {
 	$this_password = $addslashes($this_password);
 
 	//Check if this account has exceeded maximum attempts
-	$sql = 'SELECT a.login, b.attempt, b.expiry FROM (SELECT login FROM '.TABLE_PREFIX.'members UNION SELECT login FROM '.TABLE_PREFIX.'admins) AS a LEFT JOIN '.TABLE_PREFIX."member_login_attempt b ON a.login=b.login WHERE a.login='$this_login'";
+//	$sql = 'SELECT a.login, b.attempt, b.expiry FROM (SELECT login FROM '.TABLE_PREFIX.'members UNION SELECT login FROM '.TABLE_PREFIX.'admins) AS a LEFT JOIN '.TABLE_PREFIX."member_login_attempt b ON a.login=b.login WHERE a.login='$this_login'";
+	$sql = 'SELECT login, attempt, expiry FROM '.TABLE_PREFIX."member_login_attempt WHERE login='$this_login'";
 
 	$result = mysql_query($sql, $db);
 	if ($result && mysql_numrows($result) > 0){
@@ -166,7 +167,7 @@ if (isset($this_login, $this_password)) {
 
 		} else {
 			//Only if the user exist in our database
-			if ($attempt_login_name!=''){
+//			if ($attempt_login_name!=''){
 				$expiry_stmt = '';
 				$attempt_login++;
 				if ($attempt_expiry==0){
@@ -176,7 +177,7 @@ if (isset($this_login, $this_password)) {
 				}
 				$sql = 'REPLACE INTO '.TABLE_PREFIX.'member_login_attempt SET attempt='.$attempt_login . $expiry_stmt .", login='$this_login'";
 				mysql_query($sql, $db);				
-			}
+//			}
 		}
 		//Different error messages depend on the number of login failure.
 		if (($_config['max_login']-$attempt_login)==2){

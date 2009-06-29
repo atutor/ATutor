@@ -276,6 +276,12 @@ if (isset($_POST['cancel'])) {
 			mysql_query($master_list_sql, $db);
 		}
 
+		//reset login attempts
+			if ($result){
+				$sql = "DELETE FROM ".TABLE_PREFIX."member_login_attempt WHERE login='$_POST[login]'";
+				mysql_query($sql, $db);
+			}
+
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
 			$msg->addFeedback('REG_THANKS_CONFIRM');
 
