@@ -174,11 +174,11 @@ if (TRUE || $framed != TRUE) {
 		?>
 			<div id="fluid-container" <?php echo (isset($_COOKIE["fluid_on"]) && $_COOKIE["fluid_on"]=="yes") ? '' : 'style="display:none;"'; ?>>
 				<input type="button" id="uploader_link" class="button" name="upload_file" value="<?php echo _AT('upload_files'); ?>" onclick="toggleform('uploader', 'uploader_link');" />
-				<div id="uploader" style="border-width: 1px; border-style: dashed; display: none; padding: 5px;">
-					<form id="single-inline-fluid-uploader" class="fluid-uploader infusion" method="get" enctype="multipart/form-data" action="" style="margin: 0px; padding: 0px;">
+				<div id="uploader" style="display: none;">
+					<form id="flc-uploader" class="flc-uploader fl-uploader fl-progEnhance-enhanced" method="get" enctype="multipart/form-data" action="" style="margin: 0px; padding: 0px;">
 						<div class="start">
-							<div class="fluid-uploader-queue-wrapper">
-								<div class="fluid-scroller-table-head">
+							<div class="fl-uploader-queue-wrapper">
+								<div class="fl-uploader-queue-header">
 									<table cellspacing="0" cellpadding="0">
 											<tr>
 												<th scope="col" class="fileName"><?php echo _AT('file_name'); ?></th>
@@ -187,54 +187,55 @@ if (TRUE || $framed != TRUE) {
 											</tr>
 									</table>
 								</div>
-								<div class="fluid-scroller">
-									<div class="scroller-inner">
-										<table cellspacing="0" class="fluid-uploader-queue">
-											<tbody>
-												
-											</tbody>
-										</table>
-										<div class="file-progress"><span class="file-progress-text">76%</span></div>
-									</div>
-								</div>
-								
-								<div class="fluid-uploader-row-placeholder"> <?php echo _AT('click_browse_files'); ?> </div>
 
-								<div class="fluid-scroller-table-foot">
+			               <div class="flc-scroller fl-scroller">
+			                        <div class="fl-scroller-inner">
+			                            <table cellspacing="0" class="flc-uploader-queue fl-uploader-queue" summary="Queue of files to upload.">
+			                                <tbody>
+			                                    <!-- Rows will be rendered in here. -->
+			                                    
+			                                    <!-- Template markup for the file queue rows -->
+			                                    <tr class="flc-uploader-file-tmplt flc-uploader-file fl-uploader-hidden-templates">
+			                                        <th class="flc-uploader-file-name fl-uploader-file-name" scope="row"><?php echo _AT('file_placeholder'); ?></th>
+			                                        <td class="flc-uploader-file-size fl-uploader-file-size">0 <?php echo _AT('kb'); ?></td>
+			                                        <td class="fl-uploader-file-actions">
+			                                            <button type="button" class="flc-uploader-file-action fl-uploader-file-action" title="<?php echo _AT('remove_queued_file'); ?>" tabindex="-1">
+			                                                <span class="fl-uploader-button-text fl-uploader-hidden"><?php echo _AT('remove_queued_file'); ?></span>
+			                                            </button>
+			                                        </td>
+			                                    </tr>
+			                                    
+			                                    <!-- Template for the file error info rows -->
+			                                    <tr class="flc-uploader-file-error-tmplt fl-uploader-file-error fl-uploader-hidden-templates">
+			                                        <td colspan="3" class="flc-uploader-file-error"></td>
+			                                    </tr>
+			                                </tbody>
+			                            </table>
+			                            <div class="flc-uploader-file-progressor-tmplt fl-uploader-file-progress"><span class="fl-uploader-file-progress-text fl-uploader-hidden">76%</span></div>
+			                        </div>
+			                    </div>
+
+								<div class="flc-uploader-browse-instructions fl-uploader-browse-instructions"> <?php echo _AT('click_browse_files'); ?> </div>
+
+								<div class="flc-uploader-queue-footer fl-uploader-queue-footer">
 									<table cellspacing="0" cellpadding="0">
 											<tr>
-												<td class="footer-total"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> <?php echo _AT('files'); ?> (<span class="fluid-uploader-totalBytes">0 <?php echo _AT('kb'); ?></span>)</td>
-												<td class="footer-button" align="right" ><a class="fluid-uploader-browse" tabindex="0" ><?php echo _AT('browse_files'); ?></a></td>
+												<td class="flc-uploader-total-progress-text"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> <?php echo _AT('files'); ?> (<span class="fluid-uploader-totalBytes">0 <?php echo _AT('kb'); ?></span>)</td>
+												<td class="fl-uploader-footer-buttons" align="right" ><a class="flc-uploader-button-browse fl-uploader-browse" tabindex="0" ><?php echo _AT('browse_files'); ?></a></td>
 											</tr>
 									</table>
-									<div class="total-progress">&nbsp;</div>
+									<div class="flc-uploader-total-progress fl-uploader-total-progress-okay">&nbsp;</div>
 								</div>
 							</div>
-							<div class="fluid-uploader-btns">
-								<button type="button" class="fluid-uploader-upload default" ><?php echo _AT('upload'); ?></button>
-								<button type="button" class="fluid-uploader-resume default" ><?php echo _AT('resume'); ?></button>
-								<button type="button" class="fluid-uploader-pause" ><?php echo _AT('pause'); ?></button>
-								<button type="button" class="fluid-uploader-cancel cancel" onclick="toggleform('uploader', 'uploader_link');"><?php echo _AT('cancel'); ?></button>
-								<button type="button" class="fluid-uploader-done" ><?php echo _AT('done'); ?></button>
+							
+							<div class="fl-uploader-btns">
+								<button type="button" class="flc-uploader-button-pause fl-uploader-pause fl-uploader-hidden" onclick="toggleform('uploader', 'uploader_link');"><?php echo _AT('cancel'); ?></button>
+								<button type="button" class="flc-uploader-button-upload fl-uploader-upload fl-uploader-button-default fl-uploader-dim" ><?php echo _AT('upload'); ?></button>
 							</div>
 							
 						</div>
 					</form>
 
-					<div class="fluid-templates">
-						<table id="fluid-uploader">
-							<tr id="queue-row-tmplt">
-								<th class="fileName" scope="row"><?php echo _AT('file_placeholder'); ?></th>
-								<td class="fileSize">0 <?php echo _AT('kb'); ?></td>
-								<td class="fileRemove">
-									<button type="button" class="removeFile" title="Remove File" tabindex="0">
-										<span class="text-description"><?php echo _AT('remove_queued_file'); ?></span>
-									</button>
-								</td>
-							</tr>
-							<tr id="queue-error-tmplt" class="queue-error-row"><td colspan="3" class="queue-error"></td></tr>
-						</table>
-					</div>
 				</div>
 			</div>
 		<?php
@@ -248,7 +249,7 @@ if (TRUE || $framed != TRUE) {
 		}
 
 		// Simple single file uploader
-		echo '<form onsubmit="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');" name="form1" method="post" action="tools/filemanager/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
+		echo '<form onsubmit="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');" class="fl-ProgEnhance-basic" name="form1" method="post" action="tools/filemanager/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 		echo '<label for="uploadedfile">'._AT('upload_files').'</label><br />'."\n";
 		echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> ';

@@ -16,7 +16,6 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
-
 if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) && 
 	(!isset($_REQUEST['framed']) || !$_REQUEST['framed'])) {
 	$popup = TRUE;
@@ -29,7 +28,6 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) &&
 	$framed = FALSE;
 }
 
-
 // If Flash is detected, call the necessary css and js, and configure settings to use the Fluid Uploader
 if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
     /* Provide the option of switching between Fluid Uploader and simple single file uploader
@@ -37,7 +35,7 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
     if (!isset($_COOKIE["fluid_on"]))
         setcookie("fluid_on", "yes", time()+1200); 
 
-    $fluid_dir = 'jscripts/fluid-components/';
+    $fluid_dir = 'jscripts/infusion/';
     $framed = intval($_GET['framed']);
     $popup = intval($_GET['popup']);
     $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
@@ -59,36 +57,45 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 
     }
 
-
     $_custom_head .= '
-        <link href="'.$fluid_dir.'css/infusion-theme.css" rel="stylesheet" type="text/css" />
-        <link href="'.$fluid_dir.'css/Uploader.css" rel="stylesheet" type="text/css" />
-        <script src="'.$fluid_dir.'js/Fluid-all.js" type="text/javascript"></script>
+        <link href="'.$fluid_dir.'framework/fss/css/infusion-theme.css" rel="stylesheet" type="text/css" />
+        <link href="'.$fluid_dir.'components/uploader/css/Uploader.css" rel="stylesheet" type="text/css" />
+        <script src="'.$fluid_dir.'InfusionAll.js" type="text/javascript"></script>
         <script language="JavaScript" type="text/javascript">
 
-            // set to empty to use demo upload js code instead actual server side upload handlers
-            var uploadURL = "'.$_base_href.'include/lib/upload.php?path='.urlencode($current_path.$pathext).'";  // relative to the swf file
-            var flashURL = "jscripts/fluid-components/swfupload/swfupload_f9.swf";
-            var settings =   {
-                whenDone: "'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'msg=FILEUPLOAD_DONE",
-                whenCancel: function(){},
-                whenFileUploaded: function(fileName, serverResponse) {},
-                continueAfterUpload: true,
-                debug: false
-            };
             var myUpload; // mostly used for testing
-            $(document).ready(function() {
-                myUpload = new fluid.Uploader("single-inline-fluid-uploader", uploadURL, flashURL, settings);
-            });
+
+            jQuery(document).ready(function () {
+		    myUpload = fluid.progressiveEnhanceableUploader(".flc-uploader", ".fl-ProgEnhance-basic", {
+		        uploadManager: {
+				    type: "fluid.swfUploadManager",
+		
+				    options: {
+				       // Set the uploadURL to the URL for posting files to your server.
+				       uploadURL: "'.$_base_href.'include/lib/upload.php?path='.urlencode($current_path.$pathext).'",
+		
+				       // This option points to the location of the SWFUpload Flash object that ships with Fluid Infusion.
+				       flashURL: "jscripts/infusion/lib/swfupload/flash/swfupload.swf"
+					}
+				},
+		
+		        listeners: {
+            		onFileSuccess: function (file, serverData){
+		                // example assumes that the server code passes the new image URL in the serverData
+        		        window.location="'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'msg=FILEUPLOAD_DONE";
+                	}
+    		    },
+		
+                 decorators: [{
+                    type: "fluid.swfUploadSetupDecorator",
+                    options: {
+                         // This option points to the location of the Browse Files button used with Flash 10 clients.
+                         flashButtonImageURL: "'.AT_BASE_HREF.'jscripts/infusion/components/uploader/images/browse.png"
+					}
+                 }]
+		     });
+		});
         </script>
-        <style type="text/css">
-            .fluid-uploader {
-                margin-top: 2em;
-                padding: 1em 2em;
-                display: block;
-                clear: both;
-            }
-        </style>
     ';
 }
 
