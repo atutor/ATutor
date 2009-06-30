@@ -52,7 +52,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		$_pages[AT_NAV_COURSE][] = 'tools/index.php';		
-	} else if ($_SESSION['privileges'] && $moduleFactory!=null) {
+	} else if ($_SESSION['privileges']) {
 		
 		/**
 		 * the loop and all this module priv checking is done to hide the Manage tab
@@ -87,7 +87,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_pages['admin/admins/my_password.php']['title_var'] = 'change_password';
 	$_pages['admin/admins/my_password.php']['parent']    = 'admin/index.php';
 
-	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)) {
+	if (admin_authenticate(AT_ADMIN_PRIV_USERS, AT_PRIV_RETURN)) {
 		$_pages[AT_NAV_ADMIN][] = 'admin/config_edit.php';
 
 		$_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
@@ -115,7 +115,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_pages['admin/error_logging_view.php']['title_var'] = 'viewing_errors';
 	$_pages['admin/error_logging_view.php']['parent']    = 'admin/error_logging_details.php';
 
-	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)) {
+	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 		// hide modules from non-super admins
 		$_pages['admin/modules/index.php']['title_var'] = 'modules';
 		$_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
@@ -305,7 +305,7 @@ function get_num_new_messages() {
 }
 
 function get_main_navigation($current_page) {
-	global $_pages, $_base_path;
+	global $_pages, $_base_path, $_tool;
 
 	$parent_page = $_pages[$current_page]['parent'];
 	$_top_level_pages = array();
@@ -319,7 +319,12 @@ function get_main_navigation($current_page) {
 					$_page_title = _AT($_pages[$page]['title_var']);
 				}
 				
-				$_top_level_pages[] = array('url' => $_base_path . url_rewrite($page), 'title' => $_page_title);
+				if(isset($_tool[$_pages[$page]['title_var']]))					//viene prelevato il file nel caso in cui lo strumento sia valodo per essere inserito nella toolbar in fase di editing dei conenuti del corso
+					$tool_file = $_tool[$_pages[$page]['title_var']]['file'];
+				else
+					$tool_file = null;
+				
+				$_top_level_pages[] = array('url' => $_base_path . url_rewrite($page), 'title' => $_page_title, 'img' => $_base_path.$_pages[$page]['img'], 'tool_file' => $tool_file);
 			}
 		}
 	} else if (isset($parent_page)) {
@@ -412,20 +417,37 @@ function get_path($current_page) {
 }
 
 function get_home_navigation() {
-	global $_pages, $_base_path;
-
+	global $_pages, $_list, $_tool, $_base_path;
+		
 	$home_links = array();
-	foreach ($_pages[AT_NAV_HOME] as $child) {
+	foreach ($_pages[AT_NAV_HOME] as $child) {					//esecuzione del ciclo fin quando non saranno terminati i moduli presenti nella home-page del corso
 		if (isset($_pages[$child])) {
-			if (isset($_pages[$child]['title'])) {
-				$title = $_pages[$child]['title'];
+			if (isset($_pages[$child]['title'])) {				//viene prelevato il titolo che dovrà poi essere utilizzato nella visualizzazione
+				$title = $_pages[$child]['title'];	
 			} else {
-				$title = _AT($_pages[$child]['title_var']);
+				$title = _AT($_pages[$child]['title_var']);	
 			}
-			$home_links[] = array('url' => $_base_path . url_rewrite($child), 'title' => $title, 'img' => $_base_path.$_pages[$child]['img']);
+			if(isset($_pages[$child]['icon'])){					//si controlla se è presente l'icona inserita nel modulo di rifrimento. si ricorda che l'icona è inserita solo per i moduli che prevedono possibili sottocontenuti.
+				$icon = $_base_path.$_pages[$child]['icon'];	//in caso positivo viene prelevata e inserita in una variabile di appoggio che poi sarà a sua volta inserita all'interno dell'array finale home_links[]
+			} else if(isset($_pages[$child]['text'])){			//nel caso in cui non sia presente un' icona associata si controlla se è stato settata il testo (per moduli privi di sottocontenuti).
+				$text = $_pages[$child]['text'];				//il testo viene inserito in una variabile d'appoggio e successivamente nell'array.
+			}
+			
+			if (isset($_list[$_pages[$child]['title_var']])) 	//viene prelevato il path del file che dovrà poi essere richiamato nella visualizzazione dei sottocontenuti. solo i moduli che prevedono sottocontenuti avranno un file di riferimento.
+				$sub_file = $_list[$_pages[$child]['title_var']]['file'];
+			
+			if(isset($_tool[$_pages[$child]['title_var']]))		//viene prelevato il file nel caso in cui lo strumento sia valodo per essere inserito nella toolbar in fase di editing dei conenuti del corso
+				$tool_file = $_tool[$_pages[$child]['title_var']]['file'];
+			else
+				$tool_file = null;
+				
+			//inserimento di tutti i dati necessari per la visualizzazione dei moduli nella home-page. Impostato per default il check a visible in quanto i moduli caricati saranno tutti visibili nella home.
+			$home_links[] = array('url' => $_base_path . url_rewrite($child), 'title' => $title, 'img' => $_base_path.$_pages[$child]['img'], 'icon' => $icon, 'text' => $text, 'sub_file' => $sub_file, 'tool_file' => $tool_file, 'check'=> 'visible');
+			$icon="";											//azzeramento in modo che per i moduli che non prevedono mini-icons non verrà inserito nulla
+			$text="";
 		}
 	}
-
 	return $home_links;
 }
+
 ?>

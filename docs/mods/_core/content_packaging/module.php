@@ -12,7 +12,8 @@ $this->_pages['tools/ims/index.php']['guide']     = 'instructor/?p=content_packa
 
 //students
 $this->_pages['export.php']['title_var'] = 'export_content';
-$this->_pages['export.php']['img']       = 'images/home-export_content.gif';
+$this->_pages['export.php']['img']       = 'images/home-export_content.png';
+$this->_pages['export.php']['text']      = _AT('export_content_text');
 $this->_pages['export.php']['guide']     = 'general/?p=export_content.php';
 
 ?>

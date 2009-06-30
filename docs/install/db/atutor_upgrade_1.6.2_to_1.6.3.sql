@@ -246,3 +246,10 @@ CREATE TABLE `blog_subscription` (
 ) TYPE=MyISAM;
 
 # END Adding feature of blog subsription
+
+# --------------------------------------------------------
+# Adding feature of "detail view" and "icon view" on course home page
+# since 1.6.3
+ALTER TABLE `courses` add `home_view` tinyint NOT NULL DEFAULT 0;
+
+# END Adding feature of "detail view" and "icon view" on course home page

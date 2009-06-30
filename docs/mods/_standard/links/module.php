@@ -7,6 +7,12 @@ define('AT_PRIV_LINKS', $this->getPrivilege());
 // if this module is to be made available to students on the Home or Main Navigation
 $_group_tool = $_student_tool = 'links/index.php';
 
+//modules sub-content
+$this->_list['links'] = array('title_var'=>'links','file'=>'mods/_standard/links/sublinks.php');
+
+//tool manager
+$this->_tool['links'] = array('title_var'=>'links','file'=>'links_tool.php');
+
 /*$this->_pages['tools/links/index.php']['title_var'] = 'links';
 $this->_pages['tools/links/index.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/links/index.php']['children'] = array('tools/links/add.php', 'tools/links/categories.php', 'tools/links/categories_create.php');
@@ -64,7 +70,8 @@ $this->_pages['tools/links/index.php']['guide'] = 'instructor/?p=links.php';
 //student pages
 $this->_pages['links/index.php']['title_var'] = 'links';
 $this->_pages['links/index.php']['children']  = array('links/add.php', 'tools/links/index.php');
-$this->_pages['links/index.php']['img']       = 'images/home-links.gif';
+$this->_pages['links/index.php']['img']       = 'images/home-links.png';
+$this->_pages['links/index.php']['icon']       = 'images/home-links_sm.png';
 
 	$this->_pages['links/add.php']['title_var'] = 'suggest_link';
 	$this->_pages['links/add.php']['parent']    = 'links/index.php';

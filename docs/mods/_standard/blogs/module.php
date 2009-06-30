@@ -1,4 +1,16 @@
 <?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
 
@@ -9,12 +21,15 @@ define('BLOGS_AUTH_READ',  1);
 define('BLOGS_AUTH_WRITE', 2); 
 define('BLOGS_AUTH_RW',    3); // to save time
 
-
 // if this module is to be made available to students on the Home or Main Navigation
 $_group_tool = $_student_tool = 'blogs/index.php';
 
 $_pages['blogs/index.php']['title_var'] = 'blogs';
-$_pages['blogs/index.php']['img']       = 'images/home-blogs.gif';
+$_pages['blogs/index.php']['img']       = 'images/home-blogs.png';
+$_pages['blogs/index.php']['icon']      = 'images/home-blogs_sm.png';
+
+// module sublinks
+$this->_list['blogs'] = array('title_var'=>'blogs','file'=>'mods/_standard/blogs/sublinks.php');
 
 if (isset($_REQUEST['oid'])) {
 	$_pages['blogs/edit_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']]['title_var'] = 'edit';

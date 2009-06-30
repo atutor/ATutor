@@ -9,11 +9,14 @@ define('AT_PRIV_FILE_STORAGE',       $this->getPrivilege() );
 // if this module is to be made available to students on the Home or Main Navigation
 $_group_tool = $_student_tool = 'file_storage/index.php';
 
+//modules sub-content
+$this->_list['file_storage'] = array('title_var'=>'file_storage','file'=>'mods/_standard/file_storage/sublinks.php');
 
 //student pages
 $this->_pages['file_storage/index.php']['title_var']  = 'file_storage';
-$this->_pages['file_storage/index.php']['img']        = 'images/home-file_storage.gif';
-$this->_pages['file_storage/index.php']['guide']     = 'general/?p=file_storage.php';
+$this->_pages['file_storage/index.php']['img']        = 'images/home-file_storage.png';
+$this->_pages['file_storage/index.php']['icon']       = 'images/home-file_storage_icon.png';
+$this->_pages['file_storage/index.php']['guide']      = 'general/?p=file_storage.php';
 
 $this->_pages['file_storage/revisions.php']['title_var'] = 'revisions';
 $this->_pages['file_storage/revisions.php']['parent'] = 'file_storage/index.php';

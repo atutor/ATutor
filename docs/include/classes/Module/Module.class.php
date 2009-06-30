@@ -215,7 +215,7 @@ class Module {
 
 	function load() {
 		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module.php')) {
-			global $_modules, $_pages, $_stacks;
+			global $_modules, $_pages, $_stacks, $_list;  // $_list is for sublinks on "detail view"
 
 			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
 
@@ -229,6 +229,11 @@ class Module {
 				$_stacks = array_merge((array)$_stacks, $this->_stacks);
 			}
 
+			// sublinks on "detail view"
+			if(isset($this->_list)) {
+				$_list = array_merge((array)$_list, $this->_list);			
+			}
+			
 			//student tools
 			if (isset($_student_tool)) {
 				$this->_student_tool =& $_student_tool;

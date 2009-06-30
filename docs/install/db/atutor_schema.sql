@@ -213,7 +213,8 @@ CREATE TABLE `courses` (
   `side_menu` VARCHAR( 255 ) NOT NULL default '',
   `release_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `end_date` datetime NOT NULL default '0000-00-00 00:00:00',
-   `banner` TEXT NOT NULL ,
+   `banner` TEXT NOT NULL,
+   `home_view` tinyint NOT NULL DEFAULT 1,
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;
 

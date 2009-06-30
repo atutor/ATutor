@@ -20,4 +20,5 @@ $this->_pages['mods/_standard/student_tools/instructor_index.php']['parent']    
 $this->_pages['mods/_standard/student_tools/instructor_index.php']['guide']     = 'instructor/?p=fha_student_tools.php';
 $this->_pages['mods/_standard/student_tools/index.php']['title_var'] = 'student_tools';
 $this->_pages['mods/_standard/student_tools/index.php']['img']       = 'mods/_standard/student_tools/icon.gif';
+$this->_pages['mods/_standard/student_tools/index.php']['text']      = _AT('student_tools_text');
 ?>

@@ -7,6 +7,7 @@ $_student_tool = 'sitemap.php';
 
 $this->_pages['sitemap.php']['title_var'] = 'sitemap';
 $this->_pages['sitemap.php']['parent']    = 'index.php';
-$this->_pages['sitemap.php']['img']       = 'images/home-site_map.gif';
+$this->_pages['sitemap.php']['img']       = 'images/home-site_map.png';
+$this->_pages['sitemap.php']['text']      = _AT('sitemap_text');
 
 ?>

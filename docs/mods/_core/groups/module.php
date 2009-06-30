@@ -6,7 +6,6 @@ define('AT_PRIV_GROUPS', $this->getPrivilege());
 
 $_student_tool = 'groups.php';
 
-
 $this->_pages['tools/groups/index.php']['title_var'] = 'groups';
 $this->_pages['tools/groups/index.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/groups/index.php']['children']  = array('tools/groups/create.php');
@@ -38,6 +37,7 @@ $this->_pages['tools/groups/index.php']['guide']  = 'instructor/?p=groups.php';
 
 // student stuff
 $this->_pages['groups.php']['title_var'] = 'groups';
-$this->_pages['groups.php']['img']       = 'images/home-acollab.gif';
+$this->_pages['groups.php']['img']       = 'images/home-acollab.png';
+$this->_pages['groups.php']['text']      = _AT('groups_text');
 
 ?>

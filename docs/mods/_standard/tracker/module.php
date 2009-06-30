@@ -5,8 +5,12 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tool = 'my_stats.php';
 
+// module sublinks
+$this->_list['my_tracker'] = array('title_var'=>'my_tracker','file'=>'mods/_standard/tracker/sublinks.php');
+
 $_pages['my_stats.php']['title_var'] = 'my_tracker';
-$_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
+$_pages['my_stats.php']['img']       = 'images/home-tracker.png';
+$_pages['my_stats.php']['icon']      = 'images/home-tracker_sm.png';
 
 $_pages['tools/content/index.php']['children'][]  = 'tools/tracker/index.php';
 
