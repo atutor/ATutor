@@ -1,8 +1,33 @@
 <?php
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2002-2009                                              */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/* http://atutor.ca                                                     */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/*                                                                      */
+/* Contributed by University of Bologna.                                */
+/************************************************************************/
+
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$home_string = $system_courses[$_SESSION['course_id']]['home_links']; 
+if (stristr($_SERVER['HTTP_REFERER'], 'mods/_standard/student_tools/index.php'))
+{
+	global $db;
+	
+	$sql = "SELECT links FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id = $_SESSION[course_id]";
+	$result = mysql_query($sql,$db);
+	$row= mysql_fetch_assoc($result);
+	$home_string = $row['links'];
+}
+else
+	$home_string = $system_courses[$_SESSION['course_id']]['home_links']; 
+
 $home_links = explode('|',$home_string);						//scomposizione della sequenza dei moduli presenti nella home
 
 if(isset($_GET['move']) && isset($_GET['mid'])){				//verifica dei valori passati tramite GET. Se soddisfatto il controllo sarà eseguita la procedura di riordino dei moduli. (richiesto uno spostamento)
@@ -47,7 +72,10 @@ if(isset($_GET['move']) && isset($_GET['mid'])){				//verifica dei valori passat
 }
 	
 //query di aggiornamento interna al DB dove sarà inserita la nuova stringa aggiornata.
-$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$final_home_links' WHERE course_id=$_SESSION[course_id]";
+if (stristr($_SERVER['HTTP_REFERER'], 'mods/_standard/student_tools/index.php'))
+	$sql    = "UPDATE ".TABLE_PREFIX."fha_student_tools SET links='$final_home_links' WHERE course_id=$_SESSION[course_id]";
+else
+	$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$final_home_links' WHERE course_id=$_SESSION[course_id]";
 $result = mysql_query($sql, $db);
 
 //redirect alla pagina iniziale del corso (home) dove saranno ricaricati i moduli aggiornati.

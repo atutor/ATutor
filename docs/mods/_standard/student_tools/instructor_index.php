@@ -1,4 +1,16 @@
 <?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2009                                              */
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN);
@@ -54,7 +66,7 @@ if (isset($_POST['submit'])) {
 		$main_links = '';
 	}
 
-	$sql    = "REPLACE INTO ".TABLE_PREFIX."fha_student_tools VALUES ($_SESSION[course_id], '$main_links')";
+	$sql    = "REPLACE INTO ".TABLE_PREFIX."fha_student_tools VALUES ($_SESSION[course_id], '$main_links', 1)";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('STUDENT_TOOLS_SAVED');

@@ -1,4 +1,18 @@
 <?php
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2002-2009                                              */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/* http://atutor.ca                                                     */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/*                                                                      */
+/* Contributed by University of Bologna.                                */
+/************************************************************************/
+
 /* Il file viene richiamato per svolgere l'operazione di switch sui due modelli di visualizzazione della home-page.
 * 1) Visualizzazione Classica: Per ogni modulo viene visualizzata semplicemente l'icona corrispondente. (home_type = 0).
 * 2) Visualizzazione Aggiuntiva: i moduli saranno disposti su due colonne con scorciatoie di gestione sia per l'istruttore che per lo studente. (home_type =1).

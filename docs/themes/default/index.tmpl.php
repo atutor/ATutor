@@ -33,9 +33,11 @@ if($this->view_mode==0){ ?>
 	<div style="width: 100%; margin-top: -5px; float:left;">
 		<ul id="home-links">
 		<br>
+		<?php if (is_array($this->home_links)): ?>
 		<?php foreach ($this->home_links as $link): ?>
 			<li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home" border="0" /><?php echo $link['title']; ?></a></li>
 		<?php endforeach; ?>
+		<?php endif; ?>
 		</ul>
 	</div> <?php
 } else {		// Detail View, $this->view_mode=1.?>
@@ -43,14 +45,15 @@ if($this->view_mode==0){ ?>
 	<div style="width: 100%; margin-top: -5px; float: left; ">
 		<ul id="home-links">
 		<?php 				// create table container divided into two columns for the placement of modules
-		foreach ($this->home_links as $link)				// counting the number of modules present in the home for the student. need for controls on the positioning of the arrows of the various modules.
-			$num_modules++;
+		if (is_array($this->home_links))
+			foreach ($this->home_links as $link)				// counting the number of modules present in the home for the student. need for controls on the positioning of the arrows of the various modules.
+				$num_modules++;
 			
-		if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)){		// display enabled course tool
+		if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && is_array($this->home_links)){		// display enabled course tool
 			foreach ($this->home_links as $link){ ?>
 			<div id="home_box"> 
 				<div id="home_toolbar"><?php
-				if($num_modules!=0 && $this->enable_move_tool){													//si controlla se sono presenti moduli visibili nella home.
+				if($num_modules!=0){													//si controlla se sono presenti moduli visibili nella home.
 					if($num_modules != 1 && $link['check'] == 'visible'){ 				//se check � impostato 'visible' significa che il modulo sar� presente nella home e potrebbe necessitare delle frecce direzionali
 						if($count_modules <= 2 ){ 
 							if($num_modules >2 && ($num_modules-$count_modules)>1) 								//significa che ci sono possibili moduli sottostanti quindi sar� da stampare la freccia "down"
@@ -94,22 +97,24 @@ if($this->view_mode==0){ ?>
 				$count_modules++;										//aggiornamento del numero dei moduli sinora posizionati nella home
 			}
 		} else {														//caso in cui debbano essere visualizzati i moduli per lo studente nella detail view
-			foreach ($this->home_links as $link){?>
-				<div id="home_box">
-					<div id="home_toolbar">
-						<br>
-					</div><?php
-					print_sublinks($link); 							//chiamata alla funzione di stampa dei moduli (si ricorda che nel ciclo sono trattati solo quelli visibili nella home)?>
-					
-				</div>
-				<?php
-				if($column=='left'){									//caso in cui sia appena stata definita la prima cella della riga (posizione left)
-					$column='right';									//$column impostato a right per definire l'eventuale seconda cella
-				} 
-				else if($column=='right' ){ 							//caso in cui sia stata definita la seconda cella all'interno della riga.
-					$column="left";										
-				}
-			}
+			if (is_array($this->home_links)) {
+				foreach ($this->home_links as $link){?>
+					<div id="home_box">
+						<div id="home_toolbar">
+							<br>
+						</div><?php
+						print_sublinks($link); 							//chiamata alla funzione di stampa dei moduli (si ricorda che nel ciclo sono trattati solo quelli visibili nella home)?>
+						
+					</div>
+					<?php
+					if($column=='left'){									//caso in cui sia appena stata definita la prima cella della riga (posizione left)
+						$column='right';									//$column impostato a right per definire l'eventuale seconda cella
+					} 
+					else if($column=='right' ){ 							//caso in cui sia stata definita la seconda cella all'interno della riga.
+						$column="left";										
+					}
+				} // end of foreach
+			}// end of if
 		} ?>														<!-- chiusura tabella contenitore esterno -->
 		</ul>
 	</div> 

@@ -94,7 +94,6 @@ $result = mysql_query($sql,$db);
 $row= mysql_fetch_assoc($result);
 
 $savant->assign('view_mode', $row['home_view']);
-$savant->assign('enable_move_tool', true);
 $savant->assign('announcements', $news);
 $savant->assign('num_pages', $num_pages);
 $savant->assign('current_page', $page);
