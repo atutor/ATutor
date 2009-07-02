@@ -21,7 +21,7 @@ $home_links = array();
 
 if($fha_student_tools[0] != "" ){
 	//query reading the type of home viewable. 0: icon view   1: detail view
-	$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $_SESSION[course_id]";
+	$sql = "SELECT home_view FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id = $_SESSION[course_id]";
 	$result = mysql_query($sql,$db);
 	$row= mysql_fetch_assoc($result);
 	

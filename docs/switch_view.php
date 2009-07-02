@@ -9,7 +9,12 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if(isset($_GET['swid'])){							//si controlla se è stato settato swid tramite $_GET.
 	$swid = !$_GET['swid'];							//viene negato il valore di "swid" in modo da passare alla visualizzazione complementare aggiornando in seguito il DB.
-	$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_view='$swid' WHERE course_id=$_SESSION[course_id]";
+	
+	if (stristr($_SERVER['HTTP_REFERER'], 'mods/_standard/student_tools/index.php'))
+		$sql    = "UPDATE ".TABLE_PREFIX."fha_student_tools SET home_view='$swid' WHERE course_id=$_SESSION[course_id]";
+	else
+		$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_view='$swid' WHERE course_id=$_SESSION[course_id]";
+	
 	$result = mysql_query($sql, $db);
 	header('Location:'.$_SERVER['HTTP_REFERER']);	//redirect alla home del corso per la visualizzazione immediata delle modifiche apportate.
 }
