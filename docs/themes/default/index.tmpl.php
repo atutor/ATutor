@@ -47,7 +47,6 @@ if($swid==0){ ?>
 	
 	<div style="width: 100%; margin-top: -5px; float: left; ">
 		<ul id="home-links">
-		<br><br>
 		<?php 				// create table container divided into two columns for the placement of modules
 		foreach ($this->home_links as $link)				// counting the number of modules present in the home for the student. need for controls on the positioning of the arrows of the various modules.
 			$num_modules++;

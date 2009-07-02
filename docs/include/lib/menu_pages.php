@@ -305,7 +305,7 @@ function get_num_new_messages() {
 }
 
 function get_main_navigation($current_page) {
-	global $_pages, $_base_path, $_tool;
+	global $_pages, $_base_path;
 
 	$parent_page = $_pages[$current_page]['parent'];
 	$_top_level_pages = array();
@@ -318,11 +318,6 @@ function get_main_navigation($current_page) {
 				} else {
 					$_page_title = _AT($_pages[$page]['title_var']);
 				}
-				
-				if(isset($_tool[$_pages[$page]['title_var']]))					//viene prelevato il file nel caso in cui lo strumento sia valodo per essere inserito nella toolbar in fase di editing dei conenuti del corso
-					$tool_file = $_tool[$_pages[$page]['title_var']]['file'];
-				else
-					$tool_file = null;
 				
 				$_top_level_pages[] = array('url' => $_base_path . url_rewrite($page), 'title' => $_page_title, 'img' => $_base_path.$_pages[$page]['img'], 'tool_file' => $tool_file);
 			}
@@ -417,7 +412,7 @@ function get_path($current_page) {
 }
 
 function get_home_navigation() {
-	global $_pages, $_list, $_tool, $_base_path;
+	global $_pages, $_list, $_base_path;
 		
 	$home_links = array();
 	foreach ($_pages[AT_NAV_HOME] as $child) {					//esecuzione del ciclo fin quando non saranno terminati i moduli presenti nella home-page del corso
@@ -436,13 +431,17 @@ function get_home_navigation() {
 			if (isset($_list[$_pages[$child]['title_var']])) 	//viene prelevato il path del file che dovrà poi essere richiamato nella visualizzazione dei sottocontenuti. solo i moduli che prevedono sottocontenuti avranno un file di riferimento.
 				$sub_file = $_list[$_pages[$child]['title_var']]['file'];
 			
-			if(isset($_tool[$_pages[$child]['title_var']]))		//viene prelevato il file nel caso in cui lo strumento sia valodo per essere inserito nella toolbar in fase di editing dei conenuti del corso
-				$tool_file = $_tool[$_pages[$child]['title_var']]['file'];
+			$real_image_in_theme = AT_INCLUDE_PATH.'../themes/'.$_SESSION['prefs']['PREF_THEME'].'/'.$_pages[$child]['img'];
+			$image_in_theme = $_base_path.'themes/'.$_SESSION['prefs']['PREF_THEME'].'/'.$_pages[$child]['img'];
+			
+			// look for images in theme folder. If not exists, use images relative to ATutor root folder
+			if (file_exists($real_image_in_theme))
+				$image = $image_in_theme;
 			else
-				$tool_file = null;
+				$image = $_base_path.$_pages[$child]['img'];
 				
-			//inserimento di tutti i dati necessari per la visualizzazione dei moduli nella home-page. Impostato per default il check a visible in quanto i moduli caricati saranno tutti visibili nella home.
-			$home_links[] = array('url' => $_base_path . url_rewrite($child), 'title' => $title, 'img' => $_base_path.$_pages[$child]['img'], 'icon' => $icon, 'text' => $text, 'sub_file' => $sub_file, 'tool_file' => $tool_file, 'check'=> 'visible');
+			// inclusion of all data necessary for displaying the modules on the home-page. Set by default to check the visible because the modules will be loaded all visible in the home.
+			$home_links[] = array('url' => $_base_path . url_rewrite($child), 'title' => $title, 'img' => $image, 'icon' => $icon, 'text' => $text, 'sub_file' => $sub_file, 'tool_file' => $tool_file, 'check'=> 'visible');
 			$icon="";											//azzeramento in modo che per i moduli che non prevedono mini-icons non verrà inserito nulla
 			$text="";
 		}
