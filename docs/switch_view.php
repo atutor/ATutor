@@ -11,6 +11,6 @@ if(isset($_GET['swid'])){							//si controlla se è stato settato swid tramite $
 	$swid = !$_GET['swid'];							//viene negato il valore di "swid" in modo da passare alla visualizzazione complementare aggiornando in seguito il DB.
 	$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_view='$swid' WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
-	header('Location:'.AT_BASE_HREF.'index.php');	//redirect alla home del corso per la visualizzazione immediata delle modifiche apportate.
+	header('Location:'.$_SERVER['HTTP_REFERER']);	//redirect alla home del corso per la visualizzazione immediata delle modifiche apportate.
 }
 ?>

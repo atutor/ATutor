@@ -48,47 +48,43 @@ if($this->view_mode==0){ ?>
 			
 		if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)){		// display enabled course tool
 			foreach ($this->home_links as $link){ ?>
-						<div id="home_box"> 
-							<div id="home_toolbar"><?php
-							if($num_modules!=0){													//si controlla se sono presenti moduli visibili nella home.
-								if($num_modules != 1 && $link['check'] == 'visible'){ 				//se check � impostato 'visible' significa che il modulo sar� presente nella home e potrebbe necessitare delle frecce direzionali
-									if($count_modules <= 2 ){ 
-										if($num_modules >2 && ($num_modules-$count_modules)>1) 								//significa che ci sono possibili moduli sottostanti quindi sar� da stampare la freccia "down"
-											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=down"><img src="'.AT_BASE_HREF.'images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp';
-										if($column=="left")
-											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
-										else 
-											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
-									} else if($count_modules>2 && ($num_modules-$count_modules)>1){	//moduli intermedi, dovranno essere stampate obbligatoriamente le frecce 'up', 'down' e a seconda della colonna anche 'sx' o 'dx'
-										echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=down"><img src="'.AT_BASE_HREF.'images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp';
-										echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
-										if($column=="left")
-											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
-										else
-											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';	
-									}else if($count_modules>2 && ($num_modules-$count_modules)==1){
-										echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
-										if($column=="left")
-											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
-										else 
-											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
-									} else {														//caso in cui la differenza sia pari a zero. se l 'ultimo modulo � nella posizione di sx sar� stampata solo la freccia 'up' altrim se nella posizione di destra: freccia 'up' e 'sx'
-										echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
-										if($column=="right")
-											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
-									}
-									echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp';
-								} else if($num_modules == 1 && $link['check'] == 'visible'){ //
-									echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp';
-								} else{
-									echo '<a href ="'.AT_BASE_HREF.'move_module.php?home_url='.$link['home_url'].'"><img src="'.AT_BASE_HREF.'images/eye-mini-open.png" alt="set visible" border="0"/></a>&nbsp';
-								}
-							} else {	//nel caso in cui non siano presenti moduli visibili nella home, su ogni modulo dovr� essere data la possibilit� di renderlo 'visible'.
-								echo '<a href ="'.AT_BASE_HREF.'move_module.php?home_url='.$link['home_url'].'"><img src="'.AT_BASE_HREF.'images/eye-mini-open.png" alt="set visible" border="0"/></a>&nbsp';
-							} ?>
-							</div> <?php
-							print_sublinks($link); 						//chiamata alla funzione di stampa dei moduli?>
-						</div> <?php
+			<div id="home_box"> 
+				<div id="home_toolbar"><?php
+				if($num_modules!=0 && $this->enable_move_tool){													//si controlla se sono presenti moduli visibili nella home.
+					if($num_modules != 1 && $link['check'] == 'visible'){ 				//se check � impostato 'visible' significa che il modulo sar� presente nella home e potrebbe necessitare delle frecce direzionali
+						if($count_modules <= 2 ){ 
+							if($num_modules >2 && ($num_modules-$count_modules)>1) 								//significa che ci sono possibili moduli sottostanti quindi sar� da stampare la freccia "down"
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=down"><img src="'.AT_BASE_HREF.'images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp';
+							if($column=="left")
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
+							else 
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
+						} else if($count_modules>2 && ($num_modules-$count_modules)>1){	//moduli intermedi, dovranno essere stampate obbligatoriamente le frecce 'up', 'down' e a seconda della colonna anche 'sx' o 'dx'
+							echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=down"><img src="'.AT_BASE_HREF.'images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp';
+							echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
+							if($column=="left")
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
+							else
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';	
+						}else if($count_modules>2 && ($num_modules-$count_modules)==1){
+							echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
+							if($column=="left")
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
+							else 
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
+						} else {														//caso in cui la differenza sia pari a zero. se l 'ultimo modulo � nella posizione di sx sar� stampata solo la freccia 'up' altrim se nella posizione di destra: freccia 'up' e 'sx'
+							echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
+							if($column=="right")
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
+						}
+						echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp';
+					} else if($num_modules == 1 && $link['check'] == 'visible'){ //
+						echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp';
+					}
+				} ?>
+				</div> <?php
+				print_sublinks($link); 						//chiamata alla funzione di stampa dei moduli?>
+			</div> <?php
 				if($column=='left'){									//caso in cui sia appena stata definita la prima cella della riga (posizione left)
 					$column='right';									//$column impostato a right per definire l'eventuale seconda cella
 				} 
@@ -158,7 +154,7 @@ function print_sublinks($link){ ?>
 		</div>
 	</div><?php
 	if($link['icon']!=""){						//nel caso in cui sia settata una sottoicona per il modulo in esame allora saranno stampati gli eventuali sottocontenuti 
-		$array = require($link['sub_file']);	//viene richiamato il file di controllo specifico per i sottocontenuti contenuto in include/html/sibmodules
+		$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);	//viene richiamato il file di controllo specifico per i sottocontenuti contenuto in include/html/sibmodules
 		if(($array)==0){ 						//"0" è il valore di ritorno del file nel caso in cui non siano stati trovati dei sottocontenuti*/?>
 			<div id="home_text">
 				<i><?php echo _AT('none_found'); ?></i>

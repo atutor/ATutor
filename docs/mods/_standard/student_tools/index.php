@@ -20,21 +20,15 @@ $home_links = array();
 
 
 if($fha_student_tools[0] != "" ){
+	//query reading the type of home viewable. 0: icon view   1: detail view
+	$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $_SESSION[course_id]";
+	$result = mysql_query($sql,$db);
+	$row= mysql_fetch_assoc($result);
 	
-	foreach ($fha_student_tools as $child) {
-		if (isset($_pages[$child])) {
-			if (isset($_pages[$child]['title'])) {
-				$title = $_pages[$child]['title'];
-			} else {
-				$title = _AT($_pages[$child]['title_var']);
-			}
-			$home_links[] = array('url' => $_base_path . $child, 'title' => $title, 'img' => $_base_path.$_pages[$child]['img']);
-		}
-	}
+	$savant->assign('view_mode', $row['home_view']);
+	$savant->assign('home_links', get_home_navigation($fha_student_tools));
 }
-$savant->assign('home_links', $home_links);
 
-$savant->assign('announcements', array());
 $savant->assign('num_pages', 0);
 $savant->assign('current_page', 0);
 $savant->display('index.tmpl.php');

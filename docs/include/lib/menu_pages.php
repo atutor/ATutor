@@ -13,6 +13,8 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+global $_pages;
+
 /*
 	5 sections: public, my_start_page, course, admin, home
 */
@@ -411,11 +413,14 @@ function get_path($current_page) {
 	return $path;
 }
 
-function get_home_navigation() {
+function get_home_navigation($home_array='') {
 	global $_pages, $_list, $_base_path;
 		
+	// set default home_array to course index navigation array
+	if (!is_array($home_array)) $home_array = $_pages[AT_NAV_HOME];
+	
 	$home_links = array();
-	foreach ($_pages[AT_NAV_HOME] as $child) {					//esecuzione del ciclo fin quando non saranno terminati i moduli presenti nella home-page del corso
+	foreach ($home_array as $child) {					//esecuzione del ciclo fin quando non saranno terminati i moduli presenti nella home-page del corso
 		if (isset($_pages[$child])) {
 			if (isset($_pages[$child]['title'])) {				//viene prelevato il titolo che dovrà poi essere utilizzato nella visualizzazione
 				$title = $_pages[$child]['title'];	

@@ -51,5 +51,5 @@ $sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$final_home_links' WHE
 $result = mysql_query($sql, $db);
 
 //redirect alla pagina iniziale del corso (home) dove saranno ricaricati i moduli aggiornati.
-header('Location:'.AT_BASE_HREF.'index.php');
+header('Location:'.$_SERVER['HTTP_REFERER']);
 ?>
