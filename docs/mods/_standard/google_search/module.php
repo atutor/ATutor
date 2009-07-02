@@ -13,6 +13,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 
 }
 
+$this->_pages['google_search/index.php']['text']      = _AT('google_search_text');
 
 //side menu
 $this->_stacks['google_search'] = array('title_var'=>'google_search', 'file'=>dirname(__FILE__).'/side_menu.inc.php');

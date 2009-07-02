@@ -32,5 +32,3 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<meta http-equiv="Content-Type" content="text/html; <?php echo $myLang->getCharacterSet(); ?>" />
 </head>
 <body bgcolor="#FFFFFF">
-<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>

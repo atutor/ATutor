@@ -87,6 +87,8 @@ $this->_pages['mods/_standard/gradebook/grade_scale_edit.php']['parent']    = 'm
 $this->_pages['mods/_standard/gradebook/grade_scale_delete.php']['title_var'] = 'delete_grade_scale';
 $this->_pages['mods/_standard/gradebook/grade_scale_delete.php']['parent']    = 'mods/_standard/gradebook/grade_scale.php';
 
+$this->_pages['mods/_standard/gradebook/my_gradebook.php']['text']      = _AT('gradebook_text');
+
 /*******
  * student page.
  */

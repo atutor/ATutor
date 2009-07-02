@@ -137,6 +137,7 @@ $this->_pages[AT_NAV_PUBLIC] = array(AT_SOCIAL_BASENAME.'index_public.php');
 $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['title_var'] = 'social';
 $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['parent'] = AT_NAV_PUBLIC;
 
+$this->_pages['mods/_standard/social/index.php']['text']      = _AT('social_text');
 
 /* my start page pages */
 if ($_SESSION['valid_user']==1){
