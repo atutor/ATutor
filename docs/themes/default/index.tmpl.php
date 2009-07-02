@@ -12,29 +12,24 @@
 /************************************************************************/
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $db;
+global $_base_path, $_base_href;
+
 $count_modules=1; 			// starts at 1 because the first position indicates. do not ever give problems, because if no modules are present in the home will not be executed cycles of control.
 $num_modules=0;				// number of modules present and visible in the home for a certain course
 $column = "left";			// the count of columns from the left
 
-//query reading the type of home viewable. 0: icon view   1: detail view
-$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $_SESSION[course_id]";
-$result = mysql_query($sql,$db);
-$row= mysql_fetch_assoc($result);
-$swid = $row['home_view'];
-
 if ($this->banner): ?><?php echo $this->banner; ?><?php endif;
 
 // positioning switch of home ONLY FOR INSTRUCTORS. two icons will be used for identification to distinguish the two different views of the home.
-if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)){
-	if($swid==0)
-		echo '<a href ="../switch_view.php?swid='.$swid.'" style="background-color:#FFFFFF;"><img src="../images/detail_view.png"  alt ="'._AT('detail_view').'" border="0"/></a>';
+if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && count($this->home_links) > 0){
+	if($this->view_mode==0)
+		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/detail_view.png"  alt ="'._AT('detail_view').'" border="0"/></a>';
 	else
-		echo '<a href ="../switch_view.php?swid='.$swid.'" style="background-color:#FFFFFF;"><img src="../images/icon_view.png"  alt ="'._AT('icon_view').'" border="0"/></a>';
+		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/icon_view.png"  alt ="'._AT('icon_view').'" border="0"/></a>';
 }	
 
-// Icon View, $swid = 0. course will be made changes to the icons to restore the classic icons.
-if($swid==0){ ?>
+// Icon View, $this->view_mode = 0. course will be made changes to the icons to restore the classic icons.
+if($this->view_mode==0){ ?>
 	<div style="width: 100%; margin-top: -5px; float:left;">
 		<ul id="home-links">
 		<br>
@@ -43,7 +38,7 @@ if($swid==0){ ?>
 		<?php endforeach; ?>
 		</ul>
 	</div> <?php
-} else {		// Detail View, $swid=1.?>
+} else {		// Detail View, $this->view_mode=1.?>
 	
 	<div style="width: 100%; margin-top: -5px; float: left; ">
 		<ul id="home-links">
@@ -59,37 +54,37 @@ if($swid==0){ ?>
 								if($num_modules != 1 && $link['check'] == 'visible'){ 				//se check � impostato 'visible' significa che il modulo sar� presente nella home e potrebbe necessitare delle frecce direzionali
 									if($count_modules <= 2 ){ 
 										if($num_modules >2 && ($num_modules-$count_modules)>1) 								//significa che ci sono possibili moduli sottostanti quindi sar� da stampare la freccia "down"
-											echo '<a href ="../move_module.php?mid='.$count_modules.'&move=down"><img src="../images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp';
+											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=down"><img src="'.AT_BASE_HREF.'images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp';
 										if($column=="left")
-											echo '<a href ="../move_module.php?mid='.$count_modules.'&move=right"><img src="../images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
+											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
 										else 
-											echo '<a href ="../move_module.php?mid='.$count_modules.'&move=left"><img src="../images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
+											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
 									} else if($count_modules>2 && ($num_modules-$count_modules)>1){	//moduli intermedi, dovranno essere stampate obbligatoriamente le frecce 'up', 'down' e a seconda della colonna anche 'sx' o 'dx'
-										echo '<a href ="../move_module.php?mid='.$count_modules.'&move=down"><img src="../images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp';
-										echo '<a href ="../move_module.php?mid='.$count_modules.'&move=up"><img src="../images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
+										echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=down"><img src="'.AT_BASE_HREF.'images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp';
+										echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
 										if($column=="left")
-											echo '<a href ="../move_module.php?mid='.$count_modules.'&move=right"><img src="../images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
+											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
 										else
-											echo '<a href ="../move_module.php?mid='.$count_modules.'&move=left"><img src="../images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';	
+											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';	
 									}else if($count_modules>2 && ($num_modules-$count_modules)==1){
-										echo '<a href ="../move_module.php?mid='.$count_modules.'&move=up"><img src="../images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
+										echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
 										if($column=="left")
-											echo '<a href ="../move_module.php?mid='.$count_modules.'&move=right"><img src="../images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
+											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=right"><img src="'.AT_BASE_HREF.'images/arrow-mini-right.png" alt="move right" border="0"/></a>&nbsp';
 										else 
-											echo '<a href ="../move_module.php?mid='.$count_modules.'&move=left"><img src="../images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
+											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
 									} else {														//caso in cui la differenza sia pari a zero. se l 'ultimo modulo � nella posizione di sx sar� stampata solo la freccia 'up' altrim se nella posizione di destra: freccia 'up' e 'sx'
-										echo '<a href ="../move_module.php?mid='.$count_modules.'&move=up"><img src="../images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
+										echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp';
 										if($column=="right")
-											echo '<a href ="../move_module.php?mid='.$count_modules.'&move=left"><img src="../images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
+											echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp';
 									}
-									echo '<a href ="../move_module.php?mid='.$count_modules.'"><img src="../images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp';
+									echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp';
 								} else if($num_modules == 1 && $link['check'] == 'visible'){ //
-									echo '<a href ="../move_module.php?mid='.$count_modules.'"><img src="../images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp';
+									echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp';
 								} else{
-									echo '<a href ="../move_module.php?home_url='.$link['home_url'].'"><img src="../images/eye-mini-open.png" alt="set visible" border="0"/></a>&nbsp';
+									echo '<a href ="'.AT_BASE_HREF.'move_module.php?home_url='.$link['home_url'].'"><img src="'.AT_BASE_HREF.'images/eye-mini-open.png" alt="set visible" border="0"/></a>&nbsp';
 								}
 							} else {	//nel caso in cui non siano presenti moduli visibili nella home, su ogni modulo dovr� essere data la possibilit� di renderlo 'visible'.
-								echo '<a href ="../move_module.php?home_url='.$link['home_url'].'"><img src="../images/eye-mini-open.png" alt="set visible" border="0"/></a>&nbsp';
+								echo '<a href ="'.AT_BASE_HREF.'move_module.php?home_url='.$link['home_url'].'"><img src="'.AT_BASE_HREF.'images/eye-mini-open.png" alt="set visible" border="0"/></a>&nbsp';
 							} ?>
 							</div> <?php
 							print_sublinks($link); 						//chiamata alla funzione di stampa dei moduli?>

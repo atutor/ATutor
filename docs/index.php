@@ -88,6 +88,12 @@ if ($row = mysql_fetch_assoc($result)) {
 	$savant->assign('banner', '');
 }
 
+//query reading the type of home viewable. 0: icon view   1: detail view
+$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $_SESSION[course_id]";
+$result = mysql_query($sql,$db);
+$row= mysql_fetch_assoc($result);
+
+$savant->assign('view_mode', $row['home_view']);
 $savant->assign('announcements', $news);
 $savant->assign('num_pages', $num_pages);
 $savant->assign('current_page', $page);
