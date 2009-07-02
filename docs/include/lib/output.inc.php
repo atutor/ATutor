@@ -848,7 +848,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 
 function get_content_table($content)
 {
-	preg_match_all("/<(h[\d]+)[^>]*>(.*)<\/\\1>/i", $content, $found_headers, PREG_SET_ORDER);
+	preg_match_all("/<(h[\d]+)[^>]*>(.*)<\/(\s*)\\1(\s*)>/i", $content, $found_headers, PREG_SET_ORDER);
 	
 	if (count($found_headers) == 0) return array("", $content);
 	else
