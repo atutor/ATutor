@@ -76,7 +76,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_SOCIAL, TRUE) || admin_authenticate(AT_ADMI
  * student page.
  */
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['title_var'] = 'social';
-$this->_pages[AT_SOCIAL_BASENAME.'index.php']['img']       = AT_SOCIAL_BASENAME.'images/social.jpg';
+$this->_pages[AT_SOCIAL_BASENAME.'index.php']['img']       = AT_SOCIAL_BASENAME.'images/social.gif';
 
 $this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['title_var'] = 'social_profile';
 $this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
