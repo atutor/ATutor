@@ -1,3 +1,4 @@
+DROP TABLE language_text;
 # Table structure for table 'language_text'
 #
 
@@ -185,6 +186,8 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_TO_POST','You 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOG_NOT_RESET','The error log could not be reset.','2005-03-10 15:54:03','error logging');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_ATTEMPTS','The test cannot be taken.  It is not available at this time, or you have reached the maximum number of attempts for this test.','2004-09-02 12:59:25','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_LOGIN_ATTEMPT','Maximum login attempts has been reached. Login has been temporarily disabled for 1 hour.  Please try again later.','2009-06-17 11:59:49','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_LOGIN_ATTEMPT_1','Invalid username or password. You have one more attempt before the login page is disabled.','2009-06-26 16:37:13','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_LOGIN_ATTEMPT_2','You have entered an unrecognized login and password combination. You have two more attempts before the login page is disabled.','2009-06-26 16:35:44','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_STORAGE_EXCEEDED','Adding this file exceeds the maximum course storage limit.','2003-10-03 16:00:08','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MISSING_THEMEXML','Cannot import. The import package is missing a vital component: themes.xml. Check that the theme package is for version 1.4.3 or above.','2004-12-09 11:59:21','admin/themese/import.php');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MODULE_INSTALL','The following error(s) were encountered when trying to install this module:\r\n<ul>%s</ul>','2005-10-11 10:48:49','');
@@ -969,6 +972,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','depth_reached','Directory
 INSERT INTO `language_text` VALUES ('en', '_template','description','Description','2003-05-19 18:37:34','global description label');
 INSERT INTO `language_text` VALUES ('en', '_template','detailed_profile','Detailed Profile','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','details','Details','2003-05-19 18:38:03','instructor taught course table of the control panel');
+INSERT INTO `language_text` VALUES ('en', '_template','detail_view','Detail View','2009-06-30 16:13:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','dictionary','Dictionary','2008-09-09 09:03:56','');
 INSERT INTO `language_text` VALUES ('en', '_template','direction','Direction','2004-11-20 19:36:34','');
 INSERT INTO `language_text` VALUES ('en', '_template','directory','Directory','2005-03-09 15:28:11','');
@@ -1085,6 +1089,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','export','Export','2003-05
 INSERT INTO `language_text` VALUES ('en', '_template','export_content','Export Content','2003-10-03 11:00:51','');
 INSERT INTO `language_text` VALUES ('en', '_template','export_content_info','Export content as an IMS 1.1.3/IMS 1.1.4/SCORM 1.2 conformant content package of the selected topics in a single archive file. Download then unzipped the file to view it offline, by opening the <kbd>index.html</kbd> file within the package. Import the zipped package into ATutor, or into another conformant learning content management system.','2008-09-24 11:11:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','export_content_package_what','What to export','2003-10-14 11:11:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','export_content_text','Download content, unzip it onto your computer, then click \"index.html\" to view.','2009-07-02 14:15:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','export_entire_course_or_chap','Entire course, or select a chapter below','2003-10-07 15:14:52','');
 INSERT INTO `language_text` VALUES ('en', '_template','export_marks_info','To simplify the import process, you can export an empty csv file on the test you want to import, fill in the marks, import back into ATutor.','2008-09-25 16:01:17','gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','external_help','External Help','2005-03-17 10:31:39','');
@@ -1107,7 +1112,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','female','Female','2003-05
 INSERT INTO `language_text` VALUES ('en', '_template','fg_colour','Foreground Colour','2008-09-09 09:01:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','field','Area of Study','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','file','File','2003-05-20 09:18:31','file manager, zip tool');
-INSERT INTO `language_text` VALUES ('en', '_template','filemanager_date_format','%%Y-%%m-%%d %%h:%%i','2003-05-25 13:42:59','file manager date');
+INSERT INTO `language_text` VALUES ('en', '_template','filemanager_date_format','%%Y-%%m-%%d %%H:%%i','2009-06-30 16:05:29','file manager date');
 INSERT INTO `language_text` VALUES ('en', '_template','files','Files','2005-08-16 15:27:36','');
 INSERT INTO `language_text` VALUES ('en', '_template','file_manager','File Manager','2003-05-20 09:27:19','global file manager label');
 INSERT INTO `language_text` VALUES ('en', '_template','file_manager_frame','File Manager Frame','2005-01-31 11:14:37','viewing files in filemanger frame');
@@ -1187,6 +1192,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','google_search_images','Im
 INSERT INTO `language_text` VALUES ('en', '_template','google_search_local','Local','2007-08-31 11:57:07','Google search');
 INSERT INTO `language_text` VALUES ('en', '_template','google_search_news','News','2007-08-31 11:23:30','Google search');
 INSERT INTO `language_text` VALUES ('en', '_template','google_search_soap','Old Google Search <em>(requires license key</em> <b>before</b> <em>Dec 5th, 2006)</em>','2008-07-28 10:51:46','Google search');
+INSERT INTO `language_text` VALUES ('en', '_template','google_search_text','Search the Web outside this course for additional information.','2009-07-02 14:17:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','google_search_txt','To search for specific words within a website, enter them below then use the \'Search\' button.  If you wish to search course content, use the <a href=\"search.php\">content search</a>.','2005-10-20 11:02:02','');
 INSERT INTO `language_text` VALUES ('en', '_template','google_search_type_txt','Please select one of the Google search interfaces.','2007-08-31 14:36:30','Google search');
 INSERT INTO `language_text` VALUES ('en', '_template','google_search_videos','Videos','2007-08-31 11:22:53','Google search');
@@ -1195,6 +1201,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','goto_menu','Go to Menu','
 INSERT INTO `language_text` VALUES ('en', '_template','goto_top','Go to Top','2003-05-20 10:34:03','bypass link text in ATutor header');
 INSERT INTO `language_text` VALUES ('en', '_template','go_to_my_start_page','Go To My Start Page','2008-03-10 12:02:45','auto enroll property');
 INSERT INTO `language_text` VALUES ('en', '_template','grade','Grade','2008-09-25 16:01:17','gradebook');
+INSERT INTO `language_text` VALUES ('en', '_template','gradebook_text','Review marks for your tests and assignments.','2009-07-02 14:16:20','');
 INSERT INTO `language_text` VALUES ('en', '_template','grades_uncomparable','Grades are uncomparable. Choose another way to solve conflict','2008-09-25 16:01:17','gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','grade_already_exists','Conflict: Grade already exists - %s','2008-09-25 16:01:17','gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','grade_info','Note: \"Grade\" field can be grade defined in \"Grade Scale\" or percentage like 50%%.','2008-09-25 16:01:17','gradebook');
@@ -1208,6 +1215,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','grouped_by_course','Group
 INSERT INTO `language_text` VALUES ('en', '_template','groups','Groups','2004-11-25 15:45:26','');
 INSERT INTO `language_text` VALUES ('en', '_template','groups_create_automatic','Create multiple groups automatically','2006-03-21 15:36:08','');
 INSERT INTO `language_text` VALUES ('en', '_template','groups_create_manual','Create a single group manually','2006-03-21 15:36:58','');
+INSERT INTO `language_text` VALUES ('en', '_template','groups_text','Participate in group learning activities.','2009-07-02 14:16:03','');
 INSERT INTO `language_text` VALUES ('en', '_template','groups_type','Groups Type','2006-03-22 11:16:01','');
 INSERT INTO `language_text` VALUES ('en', '_template','group_about_private','Users will have to be approved by the moderator to join this group.','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','group_about_public','The group is opened to all users.  No approval is needed.','2009-05-27 12:01:11','');
@@ -1261,6 +1269,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','html','HTML','2003-05-20 
 INSERT INTO `language_text` VALUES ('en', '_template','html_only',' Plain Text or HTML files only.','2003-05-20 10:49:49','add/edit content, header');
 INSERT INTO `language_text` VALUES ('en', '_template','i','I','2007-01-10 13:48:26','');
 INSERT INTO `language_text` VALUES ('en', '_template','icon','Icon','2005-03-03 11:19:49','');
+INSERT INTO `language_text` VALUES ('en', '_template','icon_view','Icon View','2009-06-30 16:13:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','id','ID','2003-05-20 10:50:57','global ID (identification number) label');
 INSERT INTO `language_text` VALUES ('en', '_template','illegal_file','Illegal File Type','2003-05-20 10:52:36','zip utility when archive contain illegal extension');
 INSERT INTO `language_text` VALUES ('en', '_template','illegal_file_extensions','Illegal File Extensions','2005-03-03 10:52:15','');
@@ -1970,6 +1979,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','sign_lang','Sign Language
 INSERT INTO `language_text` VALUES ('en', '_template','sign_language','Sign language','2008-09-08 14:19:39','');
 INSERT INTO `language_text` VALUES ('en', '_template','singapore-sls','Singapore-SLS','2008-09-09 09:01:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','sitemap','Site-map','2003-05-21 20:17:21','global site-map text');
+INSERT INTO `language_text` VALUES ('en', '_template','sitemap_text','Browse through the whole course site from one location.','2009-07-02 14:15:24','');
 INSERT INTO `language_text` VALUES ('en', '_template','site_name','Site Name','2005-03-03 10:49:59','');
 INSERT INTO `language_text` VALUES ('en', '_template','size','Size','2003-05-22 13:01:20','file manager, zip tool');
 INSERT INTO `language_text` VALUES ('en', '_template','smile_angry','angry','2004-02-12 12:20:44','');
@@ -1987,6 +1997,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','smile_wink','wink','2004-
 INSERT INTO `language_text` VALUES ('en', '_template','social','Networking','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','social_groups','Network Groups','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','social_profile','Network Profile','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','social_text','Gather contacts, participate in interest groups, and create a social network.','2009-07-02 14:16:56','');
 INSERT INTO `language_text` VALUES ('en', '_template','spanish','Spanish','2008-09-09 09:01:12','');
 INSERT INTO `language_text` VALUES ('en', '_template','spanish-lse','Spanish-LSE','2008-09-09 09:01:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','specific_groups','Specific Groups','2006-03-23 13:39:26','');
@@ -2016,6 +2027,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','student_id','Student ID',
 INSERT INTO `language_text` VALUES ('en', '_template','student_not_exists','Student not exists','2008-09-25 16:01:17','gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','student_pin','Student PIN','2005-05-27 13:35:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','student_tools','Student Tools','2008-11-07 09:17:23','');
+INSERT INTO `language_text` VALUES ('en', '_template','student_tools_text','Access the tools used in this course.','2009-07-02 14:16:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','style_editor','Stylesheet Editor','2003-05-22 13:13:22','tool page/ stylesheet editor heading text');
 INSERT INTO `language_text` VALUES ('en', '_template','subject','Subject','2003-05-22 13:14:21','global message subject label');
 INSERT INTO `language_text` VALUES ('en', '_template','submission','Submission','2005-05-11 11:29:07','');
@@ -2080,6 +2092,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','tile_import_content_packa
 INSERT INTO `language_text` VALUES ('en', '_template','tile_keyword','Keyword','2004-05-03 13:14:23','');
 INSERT INTO `language_text` VALUES ('en', '_template','tile_progress','TILE Importing in Progress...','2004-05-05 16:03:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','tile_search','TILE Repository Search','2004-03-25 09:48:17','');
+INSERT INTO `language_text` VALUES ('en', '_template','tile_search_text','Search the content repository for additional learning materials.','2009-07-02 14:15:04','');
 INSERT INTO `language_text` VALUES ('en', '_template','tile_technical_format','Technical Format','2004-05-03 13:14:51','');
 INSERT INTO `language_text` VALUES ('en', '_template','times','Times','2009-06-03 15:33:17','');
 INSERT INTO `language_text` VALUES ('en', '_template','timestamp','Timestamp','2004-12-06 12:04:30','');
