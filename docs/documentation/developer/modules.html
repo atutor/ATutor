@@ -117,6 +117,7 @@ acronym {
 <li><a href="#config">Configuration Options</a></li>
 <li><a href="#styles">Custom Style Sheets</a></li>
 <li><a href="#sidemenu">Side Menu Boxes</a></li>
+<li><a href="#sublinks">Sublinks for Details View</a></li>
 <li><a href="#tools">Student Tools</a></li>
 <li><a href="#groups">Group Tools</a></li>
 <li><a href="#navigation">Navigation &amp; Hierarchy</a></li>
@@ -685,7 +686,34 @@ $savant->assign('title', _AT('example_maker'));
 $savant->display('include/box.tmpl.php');
 ?>
 </pre>
+<a name="sublinks"></a>
+<h2>Course tool details using <kbd>sublinks.php</kbd></h2>
 
+<p>When viewing the detailed course home page, it is possible to display with each module icon, the latest changes, current information for the module, or just a text description of the module. This inforamtion is contained in a module sublink.php file. The following example sublinks.php is free form PHP that gets a list of the three current tests so they can be accessed directly from the course home page.</p>
+
+<pre>
+
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+global $_base_path, $include_all, $include_one;
+global $savant;
+global $db;
+
+$tests_limit = 3;		//Maximum number of items to display on the course homepage
+
+$sql = "SELECT test_id, title, UNIX_TIMESTAMP(start_date) AS sd, UNIX_TIMESTAMP(end_date) AS ed FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY end_date DESC LIMIT $tests_limit";
+$result = mysql_query($sql, $db);
+
+if (mysql_num_rows($result) > 0) {
+	while ($row = mysql_fetch_assoc($result)) {
+		if ( ($row['sd'] <= time()) && ($row['ed'] >= time() ))		//Solo i test "On Going" dovranno essere visualizzati, per questo vengono controllate le date di inizio e fine in riferimento alla data odierna
+			$tests_list[] = array('sub_url' => $_base_path.url_rewrite('tools/test_intro.php?tid=' . $row['test_id']) , 'sub_text' => $row['title']); 
+	}
+	return $tests_list;	
+} else {
+	return 0;
+}
+
+</pre>
 <a name="tools"></a>
 <h2>Student Tools</h2>
 	<p>Student tools are pages linked from the home page or the main navigation of courses. A module can only implement one student tool. An instructor controls which student tools are available to a course using the <em>Student Tools</em> section found under <em>Manage</em>.</p>
