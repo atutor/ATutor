@@ -1344,3 +1344,15 @@ fieldset#toc {
 	border: 1pt solid #B8AE9C;
 	width:50%;
 }
+
+/* jQuery tooltip styles */
+#tooltip{
+	position:absolute;
+	z-index:3000;
+	border:3px solid #111;
+	background-color:#eeeeee;
+	padding:5px;
+}
+#tooltip h3,#tooltip div{
+	margin:0;
+}

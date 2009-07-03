@@ -52,9 +52,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 				$def = htmlentities(AT_print($glossary_key_lower[$v], 'glossary.definition'), ENT_QUOTES, 'UTF-8');
 
 				$count++;
-				//echo '&#176; <a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
-
-				echo '<a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_v).'#term" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.addslashes($v_formatted).'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.addslashes($v_formatted).'\', AUTOSTATUS);" onblur="return nd();">';
+				echo '<a class="tooltip" href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_v).'#term" title="'.addslashes($v_formatted).': '.$def.'">';
 				if ($strlen($original_v) > 26 ) {
 					$v_formatted = $substr($v_formatted, 0, 26-4).'...';
 				}

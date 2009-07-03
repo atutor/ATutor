@@ -1406,3 +1406,16 @@ ul#topnavlist li a.selected {    /* The selected tab. There's only one of this *
 #toc .h4		{ padding:0 0 0 40px; }
 #toc .h5		{ padding:0 0 0 50px; }
 #toc .h6		{ padding:0 0 0 60px; }
+
+/* jQuery tooltip styles */
+#tooltip{
+	position:absolute;
+	z-index:3000;
+	border:3px solid #111;
+	background-color:#eeeeee;
+	padding:5px;
+
+}
+#tooltip h3,#tooltip div{
+	margin:0;
+}

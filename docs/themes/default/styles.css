@@ -1701,3 +1701,14 @@ div#home_text{
 	font-size: 10pt;
 	text-align: justify;	
 }
+/* jQuery tooltip styles */
+#tooltip{
+	position:absolute;
+	z-index:3000;
+	border:3px solid #111;
+	background-color:#eeeeee;
+	padding:5px;
+}
+#tooltip h3,#tooltip div{
+	margin:0;
+}
