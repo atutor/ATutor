@@ -70,7 +70,7 @@ global $system_courses, $_custom_css;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 	<?php echo $this->custom_css; ?>
-	<script src="<?php echo $this->base_path; ?>jscripts/infusion/Fluidall.js" type="text/javascript"></script>
+	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusioAll.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/at_tooltip.js" type="text/javascript"></script>
 </head>
 <body onload="<?php echo $this->onload; ?>">
