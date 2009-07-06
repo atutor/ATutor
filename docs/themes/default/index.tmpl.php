@@ -165,7 +165,7 @@ function print_sublinks($link){ ?>
 	if($link['icon']!=""){						//nel caso in cui sia settata una sottoicona per il modulo in esame allora saranno stampati gli eventuali sottocontenuti 
 		$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);	//viene richiamato il file di controllo specifico per i sottocontenuti contenuto in include/html/sibmodules
 		if(($array)==0){ 						//"0" è il valore di ritorno del file nel caso in cui non siano stati trovati dei sottocontenuti*/?>
-			<div id="home_text">
+			<div class="home_text">
 				<i><?php echo _AT('none_found'); ?></i>
 			</div><?php
 		} else { ?>								<!-- stampa dei sottocontenuti, per ognuno verr� stampata la sub-icon relativa e il collegamento al sottocontenuto stesso -->
