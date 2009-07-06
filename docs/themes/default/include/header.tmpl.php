@@ -67,13 +67,13 @@ global $system_courses, $_custom_css,$db;
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
-	<?php echo $this->rtl_css; ?>
-	<?php if (isset($_SESSION['course_id']) && $system_courses[$_SESSION['course_id']]['rss']): ?>
+<?php echo $this->rtl_css; ?>
+<?php if (isset($_SESSION['course_id']) && $system_courses[$_SESSION['course_id']]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
-	<?php endif; ?>
-	<?php echo $this->custom_css; ?>
+<?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+<?php echo $this->custom_css; ?>
 	</head>
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">

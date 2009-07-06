@@ -119,6 +119,17 @@ if ($content_row['use_customized_head'] && strlen($content_row['head']) > 0)
 	$_custom_head = $content_row['head'];
 }
 
+global $_custom_head;
+$_custom_head = '
+	<script language="javascript" type="text/javascript">
+	//<!--
+	$(function() {
+	$(\'a.tooltip\').tooltip( { showBody: ": ", showURL: false } );
+	} );
+	//-->
+	</script>
+';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 save_last_cid($cid);
