@@ -82,7 +82,7 @@ if (isset($_GET['approval'])){
 
 include (AT_INCLUDE_PATH.'header.inc.php'); 
 $savant->display('pubmenu.tmpl.php'); ?>
-	<div style="float:left; width:59%;">
+	<div style="float:left; width:55%;">
 		<?php
 			//network updates
 			$actvity_obj = new Activity();
@@ -100,7 +100,7 @@ $savant->display('pubmenu.tmpl.php'); ?>
 		?>
 	</div>
 
-	<div style="float:right;width:39%;min-width:39%;">
+	<div style="float:right;width:38%;min-width:38%;">
 		<?php			
 			//if friends array is not empty.
 			if (!empty($friends)){
@@ -120,7 +120,7 @@ $savant->display('pubmenu.tmpl.php'); ?>
 	if(!empty($people_you_may_know)):
 	?>
 	<!-- people you may know -->
-	<div style="padding-top:1em;float:right;clear:right;width:39%;min-width:39%;">
+	<div style="padding-top:1em;float:right;clear:right;width:38%;min-width:38%;">
 		
 		<div class="headingbox">
 			<h3><?php echo _AT('people_you_may_know'); ?></h3>
@@ -139,7 +139,7 @@ $savant->display('pubmenu.tmpl.php'); ?>
 	</div>
 	<?php endif; ?>
 	<!-- groups -->
-	<div style="float:right;clear:right;width:39%;min-width:39%;"><br />
+	<div style="float:right;clear:right;width:38%;max-width:38%;"><br />
 	<?php			
 		//if my groups array is not empty.
 		$social_group = new SocialGroups();
