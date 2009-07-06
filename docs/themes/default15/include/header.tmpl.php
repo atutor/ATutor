@@ -60,9 +60,6 @@ global $system_courses;
 	<?php endif; ?>
 	<?php echo $this->custom_css; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>jscripts/at_tooltip.js" type="text/javascript"></script>
-
-
 </head>
 <body onload="setstates(); <?php echo $this->onload; ?>"><script language="javascript" type="text/javascript">
 //<!--
