@@ -43,7 +43,7 @@ if($this->view_mode==0){ ?>
 } else {		// Detail View, $this->view_mode=1.?>
 	
 	<div style="width: 100%; margin-top: -5px; float: left; ">
-		<ul>
+		<ul id="home-detail-links">
 		<?php 				// create table container divided into two columns for the placement of modules
 		if (is_array($this->home_links))
 			foreach ($this->home_links as $link)				// counting the number of modules present in the home for the student. need for controls on the positioning of the arrows of the various modules.

@@ -1213,7 +1213,7 @@ div.insidecol {
 
 
 /* index page */
-ul#home-links {
+ul#home-links, ul#home-detail-links {
 	list-style: none;
 }
 ul#home-links li {
