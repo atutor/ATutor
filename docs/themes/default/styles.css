@@ -1655,7 +1655,7 @@ div#home_box {
 	height: 150px;	
 	padding-top: 15px;
 	background: no-repeat; 
-	background-image: url(images/box.png);	
+	background-image: url(../../images/box.png);	
 	background-position: bottom;
 	position: static;
 	float: left;
