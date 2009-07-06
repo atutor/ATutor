@@ -510,7 +510,7 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 	}
 }
 ?>
-<div style="float:left; clear:right;width:100%;">
+<div style="float:left; clear:right; width:95%;">
 <form method="get" action="<?php echo url_rewrite('file_storage/index.php', AT_PRETTY_URL_IS_HEADER);?>" name="form">
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 <input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
