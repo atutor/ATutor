@@ -74,7 +74,7 @@ global $system_courses, $_custom_css,$db;
 <?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 <?php echo $this->custom_css; ?>
-	</head>
+</head>
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
 //<!--
