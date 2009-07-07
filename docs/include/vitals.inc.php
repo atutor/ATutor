@@ -246,7 +246,8 @@ if ($_config['time_zone']) {
 	} else {
 		// get default
 		$default_theme = get_default_theme();
-		if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
+		
+		if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name']) || $default_theme == '') {
 			$default_theme = array('dir_name' => 'default');
 		}
 		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
