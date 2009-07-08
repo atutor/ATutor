@@ -9,15 +9,15 @@
 
 <dl>
     <dt>Network Activity</dt>
-<dd>This is an ongoing report of what others in your network are doing. When one of your contacts post a message, joins a group, adds a gadget, or updates their profile for instance, you will know about it (if they have not turn this off in privacy settings).</dd>
+<dd>This is an ongoing report of what others in your network are doing. When one of your contacts posts a message, joins a group, adds a gadget, or updates their profile for instance, you will know about it (if they have not turn this off in privacy settings).</dd>
 
 <dt>My Contacts</dt>
 <dd>This is a list of people in your social network.  You can find others on the network by using the <strong>Search People</strong> tool, and you can request that you and they become contacts. When you find a person, click on the green plus sign (<img src="../../mods/_standard/social/images/plus_icon.gif" alt="plus">) to  make your request. To remove a person in your Contacts, click on the red X ( <img src="../../mods/_standard/social/images/b_drop.png" alt="ex">). View a contact's profile from My Contacts by clicking on their thumbnail photo or their name. </dd>
 
-<dd>Once people have been added to your contact, other suggested contact will be listed under People you Might Know,” those being people in your Contacts' Networks.</dd>
+<dd>Once people have been added to your contacts, other suggested contacts will be listed under People you Might Know,” those being people in your Contacts' Networks.</dd>
 
 <dt>My Network Groups</dt>
-<dd>These are social groups  in ATutor Social that you belong to. You can create new groups, search for and join groups that interest you, and send requests to others to join a group.</dd>
+<dd>These are social groups in ATutor Social that you belong to. You can create new groups, search for and join groups that interest you, and send requests to others to join a group.</dd>
 </dl>
 
 

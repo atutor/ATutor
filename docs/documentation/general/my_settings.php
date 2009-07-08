@@ -13,12 +13,12 @@
 <dd>All other information in your social profile that is not part of your Basic Profile</dd>
 <dt>Activities</dt>
 <dd>Choose these settings to hide you network activity from others. This is the information that appears in the Network Activity area of your networking tools.</dd>
-<dt>My Contact</dt>
+<dt>My Contacts</dt>
 <dd>Choose from these settings to limit who can see people in your Contacts list.</dd>
 <dt>Education</dt>
-<dd>Hide the education information you add to the detailed profile. You may turn on your Detailed Profile, then hide this section from it. </dd>
+<dd>Hide the education information you add to your detailed profile. You may turn on your Detailed Profile, then hide this section from it. </dd>
 <dt>Position</dt>
-<dd>Hide the position information you add to the detailed profile. You may turn on your Detailed Profile, then hide this section from it. </dd>
+<dd>Hide the position information you add to your detailed profile. You may turn on your Detailed Profile, then hide this section from it. </dd>
 </dl>
 
 <h4>Who sees your profile.</h4>
@@ -26,9 +26,9 @@
 <dt>World Network</dt>
 <dd>Allow anyone, using any ATutor Social system, to view (coming soon).</dd>
 <dt>My Contacts</dt>
-<dd>Any anyone in your contect list to view.</dd>
+<dd>Any anyone in your contact list to view.</dd>
 <dt>Contacts of Your Contacts</dt>
-<dd>Allow contacts of anyone in your contact list to view.</dd>
+<dd>Allow contacts of anyone in your contacts list to view.</dd>
 <dt>Local Network</dt>
 <dd>Allow anyone on your local ATutor Social system to view.</dd>
 <dt>Groups</dt>
