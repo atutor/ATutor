@@ -5,14 +5,14 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php get_text('atutor_documentation'); ?></title>
 <style type="text/css">
-body { font-family: Verdana,Arial,sans-serif; font-size: x-small; margin: 0px; padding: 3px; background: #f4f4f4; color: #afafaf; }
+body { font-family: Verdana,Arial,sans-serif; font-size: small; font-weight:bold; margin: 0px; padding: 1px; background: #f4f4f4; color: #afafaf; }
 ul, ol { list-style: none; padding-left: 0px; margin-left: -15px; }
 li { margin-left: 19pt; padding-top: 2px; }
 a { text-decoration: none; }
-a:link, a:visited { color: #006699; }
+a:link, a:visited { color: #006699; font-weight:7; }
 a:hover { color: #66AECC; }
-input { border: 0px; padding: 2px 5px 2px 5px; font-size: smaller; }
-input[type=submit] { color: #999; background-color: #dfdfdf; padding: 1px; }
+input { border: 1px solid #006699; padding: 2px 5px 2px 5px; font-size: smaller; }
+input[type=submit] { color: #000; background-color: #dfdfdf; padding: 1px; font-weight:bold;}
 input[type=submit]:hover { color: #999; background-color: #eee; padding: 1px; }
 form { padding: 0px; margin: 0px; display: inline; }
 </style>
@@ -48,7 +48,9 @@ function toggleToc(override) {
 // -->
 </script>
 </head>
-<body><form method="get" action="search.php" target="toc" onsubmit='toggleToc(true);false;'>
+<body>
+
+<form method="get" action="search.php" target="toc" onsubmit='toggleToc(true);false;'>
 <input type="hidden" name="<?php echo $section; ?>" value="" />
 <input type="hidden" name="<?php echo $req_lang; ?>" value="" />
 <script type="text/javascript">
@@ -73,5 +75,6 @@ if (top.name == 'popup') {
 			</script>
 
 </form>
+
 </body>
 </html>
