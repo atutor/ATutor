@@ -15,7 +15,7 @@ $this->_list['file_storage'] = array('title_var'=>'file_storage','file'=>'mods/_
 //student pages
 $this->_pages['file_storage/index.php']['title_var']  = 'file_storage';
 $this->_pages['file_storage/index.php']['img']        = 'images/home-file_storage.png';
-$this->_pages['file_storage/index.php']['icon']       = 'images/home-file_storage_icon.png';
+$this->_pages['file_storage/index.php']['icon']       = 'images/file_types/image.gif';
 $this->_pages['file_storage/index.php']['guide']      = 'general/?p=file_storage.php';
 
 $this->_pages['file_storage/revisions.php']['title_var'] = 'revisions';
