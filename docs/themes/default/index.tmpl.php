@@ -157,9 +157,9 @@ function print_sublinks($link){ ?>
 				<img src="<?php echo $link['img']; ?>" alt="" border="0"/>					
 		</div>
 		<div class="home_title">
-				<font size="+1"> 
+				<span style="font-size:110%"> 
 					<a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a>	<!-- inserimento link associato -->
-				</font>
+				</span>
 		</div>
 	</div><?php
 	if($link['icon']!=""){						//nel caso in cui sia settata una sottoicona per il modulo in esame allora saranno stampati gli eventuali sottocontenuti 
