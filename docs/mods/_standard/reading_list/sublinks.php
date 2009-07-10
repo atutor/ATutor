@@ -12,9 +12,11 @@ $result = mysql_query($sql, $db);
 
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
-		$reading_list[] = array('sub_url' =>$_base_path.url_rewrite('reading_list/display_resource.php?id=' . $row['resource_id']) , 'sub_text' => $row['title']); 
+		$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('reading_list/display_resource.php?id=' . $row['resource_id']).'"'.
+		          (strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'. 
+		          validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 	}
-	return $reading_list;	
+	return $list;	
 } else {
 	return 0;			//si ritorna 0 nel caso in cui il modulo corrente non possieda dei sottocontenuti
 }

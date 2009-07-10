@@ -353,4 +353,7 @@ define('GOOGLE_TYPE_AJAX',		1);		//The new AJAX search by google
 
 /* flags for validate_length in vitals. - @author Harris*/
 define('VALIDATE_LENGTH_FOR_DISPLAY',	1);	
+
+/* the length of sublink text display in the course index page, detail view */
+define('SUBLINK_TEXT_LEN', 38);
 ?>

@@ -22,7 +22,9 @@ $result = mysql_query($sql, $db);
 
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
-		$list[] = array('sub_url' => $_base_path.url_rewrite('profile.php?id='.$row['member_id']), 'sub_text' => $row['login']);
+		$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('profile.php?id='.$row['member_id']).'"'.
+		          (strlen($row['login']) > SUBLINK_TEXT_LEN ? ' title="'.$row['login'].'"' : '') .'>'. 
+		          validate_length($row['login'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 	}
 	return $list;
 	

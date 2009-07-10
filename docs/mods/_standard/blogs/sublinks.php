@@ -32,7 +32,10 @@ if (mysql_num_rows($result) > 0) {
 				$last_updated = '';
 			}
 	
-			$list[] = array('sub_url' => $_base_path.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id']) , 'sub_text' => $row['title'].$last_updated); 
+			$link_title = $row['title'].$last_updated;
+			$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id']).'"'.
+			          (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.$link_title.'"' : '') .'>'. 
+			          validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 		}
 	}
 	return $list;
@@ -40,6 +43,4 @@ if (mysql_num_rows($result) > 0) {
 } else {
 	return 0;
 }
-
-
 ?>

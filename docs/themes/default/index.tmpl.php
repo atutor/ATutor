@@ -157,27 +157,23 @@ function print_sublinks($link){ ?>
 				<img src="<?php echo $link['img']; ?>" alt="" border="0"/>					
 		</div>
 		<div class="home_title">
-				<span style="font-size:110%"> 
+				<font size="+1"> 
 					<a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a>	<!-- inserimento link associato -->
-				</span>
+				</font>
 		</div>
 	</div><?php
 	if($link['icon']!=""){						//nel caso in cui sia settata una sottoicona per il modulo in esame allora saranno stampati gli eventuali sottocontenuti 
 		$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);	//viene richiamato il file di controllo specifico per i sottocontenuti contenuto in include/html/sibmodules
-		if(($array)==0){ 						//"0" è il valore di ritorno del file nel caso in cui non siano stati trovati dei sottocontenuti*/?>
+		if(!is_array($array)){ 						//"0" è il valore di ritorno del file nel caso in cui non siano stati trovati dei sottocontenuti*/?>
 			<div class="home_text">
 				<i><?php echo _AT('none_found'); ?></i>
 			</div><?php
 		} else { ?>								<!-- stampa dei sottocontenuti, per ognuno verr� stampata la sub-icon relativa e il collegamento al sottocontenuto stesso -->
 			<div class="home_content"><?php
-				for($i=0; $array[$i]['sub_url']!=""; $i++){ 			//si esegue il ciclo di stampa fin quando saranno presenti sottocontenuti per il modulo corrente. il limite � impostato per default a 3?>
+			foreach($array as $sublink){ 			//si esegue il ciclo di stampa fin quando saranno presenti sottocontenuti per il modulo corrente. il limite � impostato per default a 3?>
 					<img src="<?php echo $link['icon']; ?>" border="0" alt="" /> <?php
-					$text = validate_length($array[$i]['sub_text'], 38, VALIDATE_LENGTH_FOR_DISPLAY); //controllo della lunghezza del testo dei sub content
-					if($text != $array[$i]['sub_text'])					//nel caso in cui la lunghezza sia superiore a quella prefissata viene visualizzato l' "alt" in modo da rapprsentare l'intera stringa
-						$title = $array[$i]['sub_text'];
-					else
-						$title=''; 										//$title impostato '' nel caso in cui non sia necessario visualizzare l' "atl" ?>
-					<a href="<?php echo $array[$i]['sub_url']; ?>" title="<?php echo $title; ?>"> <?php echo $text; ?> </a> 
+					if ($sublink <> '') echo $sublink;
+?>
 					<br/> <?php
 				} ?>
 			</div> <?php

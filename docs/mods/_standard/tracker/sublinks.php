@@ -12,7 +12,11 @@ $result = mysql_query($sql, $db);
 
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
-		$list[] = array('sub_url' => $_base_path.url_rewrite('content.php?cid='.$row['content_id']), 'sub_text' => $contentManager->_menu_info[$row['content_id']]['title']); 
+		$link_title = $contentManager->_menu_info[$row['content_id']]['title'];
+		
+		$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('content.php?cid='.$row['content_id']).'"'.
+		          (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.$link_title.'"' : '') .'>'. 
+		          validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
 	}
 	return $list;	
 } else {

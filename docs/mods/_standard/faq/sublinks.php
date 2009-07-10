@@ -11,9 +11,11 @@ $result = mysql_query($sql, $db);
 
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
-		$faq_list[] = array('sub_url' => $_base_path.url_rewrite('faq/index.php#'.$row['entry_id']) , 'sub_text' => $row['question']); 
+		$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('faq/index.php#'.$row['entry_id']).'"'.
+		          (strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 
+		          validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 	}
-	return $faq_list;
+	return $list;
 	
 } else {
 	return 0;
