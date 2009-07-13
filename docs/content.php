@@ -53,13 +53,12 @@ if ($content_row['content_path']) {
 }
 
 $parent_headings = '';
-$num_in_path = count($path)-1;
+$num_in_path = count($path);
 
 /* the page title: */
 $page_title = '';
 $page_title .= $content_row['title'];
 
-$num_in_path = count($path)-1;
 for ($i=0; $i<$num_in_path; $i++) {
 	$content_info = $path[$i];
 	if ($_SESSION['prefs']['PREF_NUMBERING']) {
@@ -69,6 +68,9 @@ for ($i=0; $i<$num_in_path; $i++) {
 		} else {
 			$top_num = $top_num.'.'.$contentManager->_menu_info[$content_info['content_id']]['ordering'];
 			$parent_headings .= $top_num;
+		}
+		if ($_SESSION['prefs']['PREF_NUMBERING']) {
+			$path[$i]['content_number'] = $top_num . ' ';
 		}
 		$parent_headings .= ' ';
 	}
@@ -87,17 +89,16 @@ if ($_SESSION['prefs']['PREF_NUMBERING']) {
 $parent = 0;
 foreach ($path as $page) {
 	if (!$parent) {
-		$_pages['content.php?cid='.$page['content_id']]['title']    = $page['title'];
+		$_pages['content.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
 		$_pages['content.php?cid='.$page['content_id']]['parent']   = 'index.php';
 	} else {
-		$_pages['content.php?cid='.$page['content_id']]['title']    = $page['title'];
+		$_pages['content.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
 		$_pages['content.php?cid='.$page['content_id']]['parent']   = 'content.php?cid='.$parent;
 	}
 
 	$_pages['content.php?cid='.$page['content_id']]['ignore'] = true;
 	$parent = $page['content_id'];
 }
-
 $last_page = array_pop($_pages);
 $_pages['content.php'] = $last_page;
 
