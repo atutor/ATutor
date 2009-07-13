@@ -1,8 +1,7 @@
 <?php
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $_base_path, $include_all, $include_one, $contentManager;
-global $savant;
+
 global $db;
 
 $record_limit = 3;		// number of sublinks to display at module home "detail view"

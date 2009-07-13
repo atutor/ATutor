@@ -16,9 +16,9 @@ if (is_array($activities)) {
 		if ($cnt >= $link_limit) break;
 		$cnt++;
 		
-		$link_title = $activity['created_date']. ' - '. printSocialName($activity['member_id']).' '. $activity['title'];
+		$link_title = strip_tags(printSocialName($activity['member_id']).' '. $activity['title']);
 
-		$list[] = validate_length(strip_tags($link_title), SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY);
+		$list[] = '<span title="'.$link_title.'">'.validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY)."</span>";
 	}
 	return $list;	
 } else {

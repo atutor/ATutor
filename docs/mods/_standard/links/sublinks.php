@@ -1,8 +1,6 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-global $_base_path, $include_all, $include_one;
-global $savant;
 global $db;
 
 $links_limit = 3;		//Numero massimo dei possibili sottocontenuti visualizzabili nella home-page

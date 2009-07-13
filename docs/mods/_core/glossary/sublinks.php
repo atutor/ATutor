@@ -12,8 +12,8 @@
 /************************************************************************/
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 global $db;
-global $_base_path;
 
 $record_limit = 3;	// Number of sublinks to display for this module on course home page -> detail view
 

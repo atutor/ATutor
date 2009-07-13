@@ -422,6 +422,9 @@ function get_home_navigation($home_array='') {
 	$home_links = array();
 	foreach ($home_array as $child) {					//esecuzione del ciclo fin quando non saranno terminati i moduli presenti nella home-page del corso
 		if (isset($_pages[$child])) {
+			// initialization
+			$title = $icon = $sub_file = $image = $text = $tool_file = '';
+			
 			if (isset($_pages[$child]['title'])) {				//viene prelevato il titolo che dovrà poi essere utilizzato nella visualizzazione
 				$title = $_pages[$child]['title'];	
 			} else {
@@ -447,8 +450,6 @@ function get_home_navigation($home_array='') {
 				
 			// inclusion of all data necessary for displaying the modules on the home-page. Set by default to check the visible because the modules will be loaded all visible in the home.
 			$home_links[] = array('url' => $_base_path . url_rewrite($child), 'title' => $title, 'img' => $image, 'icon' => $icon, 'text' => $text, 'sub_file' => $sub_file, 'tool_file' => $tool_file, 'check'=> 'visible');
-			$icon="";											//azzeramento in modo che per i moduli che non prevedono mini-icons non verrà inserito nulla
-			$text="";
 		}
 	}
 	return $home_links;

@@ -1,8 +1,8 @@
 <?php
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 global $db;
-global $_base_path;
 
 $post_limit = 3;	//Numero massimo dei possibili sottocontenuti visualizzabili nella home-page
 
