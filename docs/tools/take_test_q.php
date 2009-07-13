@@ -86,11 +86,16 @@ else
 // set position to allow users to return to a test they have partially completed, and continue from where they left of.
 if (!isset($_GET['pos']) && $result_id > 0)
 {
+	$sql = "SELECT COUNT(*) total_questions FROM ".TABLE_PREFIX."tests_answers WHERE result_id = ". $result_id;
+	$total_result = mysql_query($sql, $db) or die(mysql_error());
+	$total = mysql_fetch_assoc($total_result);
+	
 	$sql = "SELECT COUNT(*) pos FROM ".TABLE_PREFIX."tests_answers WHERE result_id = ". $result_id ." AND answer <> ''";
 	$answer_result = mysql_query($sql, $db) or die(mysql_error());
 	$answer = mysql_fetch_assoc($answer_result);
-	
-	$pos = $answer['pos'];
+
+	// if user answered all the questions without cliking last "next" button, resume test at the last question
+	$pos = ($total['total_questions'] == $answer['pos']) ? (--$answer['pos']) : $answer['pos'];
 }
 
 if ($result_id == 0) {
