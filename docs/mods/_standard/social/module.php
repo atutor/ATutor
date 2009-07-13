@@ -47,6 +47,9 @@ $this->_stacks['social'] = array('title_var'=>'social', 'file'=>AT_INCLUDE_PATH.
  */
 $_group_tool = $_student_tool = AT_SOCIAL_BASENAME.'index.php';
 
+$this->_list['social'] = array('title_var'=>'social','file'=>'mods/_standard/social/sublinks.php');
+$this->_pages[AT_SOCIAL_BASENAME.'index.php']['icon']      = 'images/home-directory_sm.png';
+
 /*******
  * add the admin pages when needed.
  */
@@ -136,8 +139,6 @@ $this->_pages[AT_SOCIAL_BASENAME.'groups/list.php']['parent'] = AT_SOCIAL_BASENA
 $this->_pages[AT_NAV_PUBLIC] = array(AT_SOCIAL_BASENAME.'index_public.php');
 $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['title_var'] = 'social';
 $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['parent'] = AT_NAV_PUBLIC;
-
-$this->_pages['mods/_standard/social/index.php']['text']      = _AT('social_text');
 
 /* my start page pages */
 if ($_SESSION['valid_user']==1){
