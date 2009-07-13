@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index_admin.php 8406 2009-04-01 20:38:44Z hwong $
+// $Id$
 $_user_location	= 'admin';
 
 define('AT_INCLUDE_PATH', '../../../../include/');

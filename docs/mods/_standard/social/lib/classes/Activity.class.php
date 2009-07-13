@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: Activity.class.php 8486 2009-05-26 17:59:29Z hwong $
+// $Id$
 
 /**
  * This class is designed to handle the transactions for all the news, updates and

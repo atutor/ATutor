@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: SocialGroup.class.php 8486 2009-05-26 17:59:29Z hwong $
+// $Id$
 
 require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
 

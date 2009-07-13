@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: module.php 8485 2009-05-25 20:50:55Z hwong $
+// $Id$
 
 /*******
  * doesn't allow this file to be loaded with a browser.

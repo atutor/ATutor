@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: Member.class.php 8487 2009-05-26 20:31:00Z hwong $
+// $Id$
 
 /**
  * Members class for Social Networking

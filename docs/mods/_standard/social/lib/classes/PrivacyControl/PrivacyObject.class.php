@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: PrivacyObject.class.php 8476 2009-05-13 19:20:45Z hwong $
+// $Id$
 
 /**
  * Simple Privacy Object

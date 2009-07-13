@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: privacy_settings.php 8423 2009-04-03 20:04:55Z hwong $
+// $Id$
 $_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../../include/');

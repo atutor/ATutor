@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ATutorMessagesService.php 8406 2009-04-01 20:38:44Z hwong $
+// $Id$
 
 class ATutorMessagesService extends ATutorService implements MessagesService {
   public function createMessage($userId, $appId, $message, $optionalMessageId, SecurityToken $token) {

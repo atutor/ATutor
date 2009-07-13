@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: Application.class.php 8465 2009-05-01 19:56:19Z hwong $
+// $Id$
 
 require_once(dirname(__FILE__) . '/Applications.class.php');
 require_once(dirname(__FILE__) .'/../SecurityToken.php');

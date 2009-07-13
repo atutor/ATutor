@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: side_menu.inc.php 8485 2009-05-25 20:50:55Z hwong $
+// $Id$
 
 global $savant, $_config, $stripslashes;
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: constants.inc.php 8485 2009-05-25 20:50:55Z hwong $
+// $Id$
 
 //Constants Declaration
 //define(AT_SHINDIG_URL,						'http://localhost/shindig/php');

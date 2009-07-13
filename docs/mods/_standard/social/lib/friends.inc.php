@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: friends.inc.php 8485 2009-05-25 20:50:55Z hwong $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: PrivacyController.class.php 8476 2009-05-13 19:20:45Z hwong $
+// $Id$
 include_once(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 
 /**

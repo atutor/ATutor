@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: SetPrivacyControl.php 8428 2009-04-08 20:26:42Z hwong $
+// $Id$
 
 //Temp script to set hardcoded PrivacyControl into the db.
 //This should be done via a user perference config page

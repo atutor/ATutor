@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ATutorActivityService.php 8406 2009-04-01 20:38:44Z hwong $
+// $Id$
 
 class ATutorActivityService extends ATutorService implements ActivityService {
   public function getActivity($userId, $groupId, $appdId, $fields, $activityId, SecurityToken $token) {

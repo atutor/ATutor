@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ATutorPersonService.php 8406 2009-04-01 20:38:44Z hwong $
+// $Id$
 
 class ATutorPersonService extends ATutorService implements PersonService {
   public function getPerson($userId, $groupId, $fields, SecurityToken $token) {

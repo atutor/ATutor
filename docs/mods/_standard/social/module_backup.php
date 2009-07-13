@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: module_backup.php 8457 2009-04-23 22:15:14Z hwong $
+// $Id$
 
 /* each table to be backed up. includes the sql entry and fields */
 /*

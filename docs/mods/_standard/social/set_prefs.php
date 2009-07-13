@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: set_prefs.php 8406 2009-04-01 20:38:44Z hwong $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../include/');
 $_user_location = 'public';
