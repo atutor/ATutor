@@ -1237,10 +1237,7 @@ dl#public-profile dd {
 	float: left;
 }
 
-#contentwrapper div.orderable {
-    cursor: move;
-}
-
+*/
 /*#contentcolumn {
 	margin-left: 0.5em;
 	padding-right: 5px;
@@ -1592,4 +1589,9 @@ div.home_text{
 }
 #tooltip h3,#tooltip div{
 	margin:0;
+}
+
+/* fluid reorderer */
+.grab{
+	background-color: #F2F7FE;
 }

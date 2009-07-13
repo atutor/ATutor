@@ -9,7 +9,7 @@
 	
 	<?php if ($_SESSION['course_id']>0 && $system_courses[$_SESSION['course_id']]['side_menu'] && $_SESSION['prefs']['PREF_MENU']=="right"): ?>
 	<div id="side-menu" class="orderable" style="display:inline; float:left">
-		<div><img src="<?php echo $this->img; ?>layers.png" /></div>
+		<div class="grab"><img src="<?php echo $this->img; ?>layers.png" /></div>
 		<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 	</div>
 	<?php endif; ?>

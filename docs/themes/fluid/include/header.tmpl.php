@@ -101,16 +101,15 @@ jQuery(document).ready(function () {
 		selectors : {
 			movables : '.orderable',
 			selectables: '.orderable',
-			dropTargets: '.orderable'
+			dropTargets: '.orderable',
+			grabHandle: '.grab'
 		},
 		orientation: fluid.orientation.HORIZONTAL,
 	    listeners: {
 			afterMove: function (item, requestedPosition, movables) {
 				//save the state to the db
-				var myDivs = jQuery("div[class^=orderable]", "#contentwrapper");
-				jQuery.post("<?php echo AT_BASE_HREF; ?>themes/fluid/save_state.php", { 'left':myDivs[0].id }, 
-						function(data) {}
-				);     
+				var myDivs = jQuery ("div[class^=orderable]", "#contentwrapper");
+				jQuery.post("<?php echo AT_BASE_HREF; ?>themes/fluid/save_state.php", { 'left':myDivs[0].id }, function(data) {});     
 	        }
 	    }
 	});
@@ -353,24 +352,26 @@ function toggleToc(objId) {
 <div id="contentwrapper" class="fluid-horizontal-order">
 	<?php if (($_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['side_menu'] && ($_SESSION['prefs']['PREF_MENU']!="right")): ?>
 	<div id="side-menu" class="orderable" style="display:inline; float:left">
-		<div><img src="<?php echo $this->img; ?>layers.png" alt="<?php echo _AT('drag'); ?>" /></div>
+		<div class="grab"><img src="<?php echo $this->img; ?>layers.png" alt="<?php echo _AT('drag'); ?>" /></div>
 		<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 	</div>
 	<?php endif; ?>
 
 	<div class="orderable" style="display:inline; float:left; margin-left: 10px; margin-right: 10px; <?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu) { ?> width:99%; <?php } else { ?> width:76.5%; <?php } ?>">
 	
-		<div><img src="<?php echo $this->img; ?>layers.png" style="float:left;" alt="<?php echo _AT('drag'); ?>" /></div>
+		<div class="grab">
+			<div><img src="<?php echo $this->img; ?>layers.png" style="float:left;margin:3px;" alt="<?php echo _AT('drag'); ?>" /></div>
 	<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
-			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+				<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	<?php endif; ?>
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
-		<div id="breadcrumbs">
-			<?php foreach ($this->path as $page): ?>
-				<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> > 
-			<?php endforeach; ?> <?php echo $this->page_title; ?>
-		</div>
+			<div id="breadcrumbs">
+				<?php foreach ($this->path as $page): ?>
+					<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> > 
+				<?php endforeach; ?> <?php echo $this->page_title; ?>
+			</div>
 	<?php } ?>
+		</div>
 		
 		<?php if ($_SESSION['course_id'] > 0): ?>
 		<a href=""></a>
