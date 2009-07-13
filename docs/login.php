@@ -182,7 +182,7 @@ if (isset($this_login, $this_password)) {
 				$expiry_stmt = '';
 				$attempt_login++;
 				if ($attempt_expiry==0){
-					$expiry_stmt = ', expiry='.(time() + 30*60);	//30min from now
+					$expiry_stmt = ', expiry='.(time() + LOGIN_ATTEMPT_LOCKED_TIME * 60);	//an hour from now
 				} else {
 					$expiry_stmt = ', expiry='.$attempt_expiry;	
 				}

@@ -27,7 +27,7 @@
 			<dd>How much a course can be over its <em>Maximum Course Size</em> limit while still allowing a file to upload or import. Makes the course limit actually be <em>Max Course Size</em> + <em>Max Course Float</em>. When <em>Max Course Float</em> is reached, no more uploads will be allowed for that course until files are deleted and the course's space usage falls under the Maximum Course Size.</dd>
 
 			<dt>Maximum login attempts</dt>
-			<dd>The amount of times the user can attempt logging in before the system freeze the account for 30mins.</dd>
+			<dd>The amount of times the user can attempt logging in before the system freeze the account for an hour.  Enter 0 for infinite times.</dd>
 
 			<dt>Display Name Format</dt>
 			<dd>The Display Name Format option controls how non-administrator users' names appear. This option is available in ATutor 1.5.4+.</dd>

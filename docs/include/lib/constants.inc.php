@@ -356,4 +356,7 @@ define('VALIDATE_LENGTH_FOR_DISPLAY',	1);
 
 /* the length of sublink text display in the course index page, detail view */
 define('SUBLINK_TEXT_LEN', 38);
+
+/* The lock out time for max login attempts */
+define('LOGIN_ATTEMPT_LOCKED_TIME', 60);	//in minutes, default an hour, 60 minutes
 ?>
