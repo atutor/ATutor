@@ -54,7 +54,11 @@ if (!$msg->containsFeedbacks()) {
 	}
 }
 
-
+//garbage collect for maximum login attempts table
+if (rand(1, 100) == 1){
+	$sql = 'DELETE FROM '.TABLE_PREFIX.'member_login_attempt WHERE expiry < '. time();
+	mysql_query($sql, $db);
+}
 
 if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	/* auto login */
@@ -98,7 +102,7 @@ if (isset($this_login, $this_password)) {
 	}
 	if($attempt_expiry > 0 && $attempt_expiry < time()){
 		//clear entry if it has expired
-		$sql = 'DELETE FROM '.TABLE_PREFIX.' member_login_attempt WHERE login='.$this_login;
+		$sql = 'DELETE FROM '.TABLE_PREFIX."member_login_attempt WHERE login='$this_login'";
 		mysql_query($sql, $db);
 		$attempt_login = 0;	
 		$attempt_expiry = 0;
@@ -111,7 +115,7 @@ if (isset($this_login, $this_password)) {
 	}
 	$result = mysql_query($sql, $db);
 
-	if($attempt_login >= $_config['max_login']){
+	if($_config['max_login'] > 0 && $attempt_login >= $_config['max_login']){
 		$msg->addError('MAX_LOGIN_ATTEMPT');
 	} else if (($row = mysql_fetch_assoc($result)) && ($row['status'] == AT_STATUS_UNCONFIRMED)) {
 		$msg->addError('NOT_CONFIRMED');
@@ -140,6 +144,10 @@ if (isset($this_login, $this_password)) {
 		$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
 		mysql_query($sql, $db);
 
+		//clear login attempt on successful login
+		$sql = 'DELETE FROM '.TABLE_PREFIX."member_login_attempt WHERE login='$this_login'";
+		mysql_query($sql, $db);
+
 		$msg->addFeedback('LOGIN_SUCCESS');
 		header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;
@@ -159,6 +167,9 @@ if (isset($this_login, $this_password)) {
 			$_SESSION['lang'] = $row['language'];
 
 			write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
+			//clear login attempt on successful login
+			$sql = 'DELETE FROM '.TABLE_PREFIX." member_login_attempt WHERE login='$this_login'";
+			mysql_query($sql, $db);
 
 			$msg->addFeedback('LOGIN_SUCCESS');
 
@@ -171,20 +182,20 @@ if (isset($this_login, $this_password)) {
 				$expiry_stmt = '';
 				$attempt_login++;
 				if ($attempt_expiry==0){
-					$expiry_stmt = ', expiry='.(time() + 60*60);	//an hour from now
+					$expiry_stmt = ', expiry='.(time() + 30*60);	//30min from now
 				} else {
-					$expiry_stmt = ', expiry='.$attempt_expiry;	//an hour from now
+					$expiry_stmt = ', expiry='.$attempt_expiry;	
 				}
 				$sql = 'REPLACE INTO '.TABLE_PREFIX.'member_login_attempt SET attempt='.$attempt_login . $expiry_stmt .", login='$this_login'";
 				mysql_query($sql, $db);				
 //			}
 		}
 		//Different error messages depend on the number of login failure.
-		if (($_config['max_login']-$attempt_login)==2){
+		if ($_config['max_login'] > 0 && ($_config['max_login']-$attempt_login)==2){
 			$msg->addError('MAX_LOGIN_ATTEMPT_2');
-		} elseif (($_config['max_login']-$attempt_login)==1){
+		} elseif ($_config['max_login'] > 0 && ($_config['max_login']-$attempt_login)==1){
 			$msg->addError('MAX_LOGIN_ATTEMPT_1');
-		} elseif (($_config['max_login']-$attempt_login)==0){
+		} elseif ($_config['max_login'] > 0 && ($_config['max_login']-$attempt_login)==0){
 			$msg->addError('MAX_LOGIN_ATTEMPT');
 		} else {
 			$msg->addError('INVALID_LOGIN');
