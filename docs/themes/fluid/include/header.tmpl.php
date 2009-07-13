@@ -74,27 +74,14 @@ global $system_courses, $_custom_css,$db;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
-	<?php echo $this->custom_css; ?>
 	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js"></script>
-<!-- 
-        <link rel="stylesheet" type="text/css" href="jscripts/infusion-1.1-src/framework/fss/css/fss-layout.css" />
-        <link rel="stylesheet" type="text/css" href="jscripts/infusion-1.1-src/framework/fss/css/fss-text.css" />
-        <link rel="stylesheet" type="text/css" href="jscripts/infusion-1.1-src/framework/fss/css/fss-theme-mist.css" />
-        <link rel="stylesheet" type="text/css" href="jscripts/infusion-1.1-src/framework/fss/css/fss-theme-hc.css" />
+	<?php echo $this->custom_css; ?>
+</head>
 
-        <link rel="stylesheet" type="text/css" href="jscripts/infusion-1.1-src/components/reorderer/css/Reorderer.css" />
+<body onload="<?php echo $this->onload; ?>">
 
-        <script type="text/javascript" src="jscripts/infusion-1.1-src/lib/jquery/core/js/jquery.js"></script>
-        <script type="text/javascript" src="jscripts/infusion-1.1-src/lib/jquery/ui/js/ui.core.js"></script>
-        <script type="text/javascript" src="jscripts/infusion-1.1-src/lib/jquery/ui/js/ui.draggable.js"></script>
-        <script type="text/javascript" src="jscripts/infusion-1.1-src/framework/core/js/jquery.keyboard-a11y.js"></script>
-        <script type="text/javascript" src="jscripts/infusion-1.1-src/framework/core/js/Fluid.js"></script>
-
-        <script type="text/javascript" src="jscripts/infusion-1.1-src/framework/core/js/FluidDOMUtilities.js"></script>
-        <script type="text/javascript" src="jscripts/infusion-1.1-src/components/reorderer/js/GeometricManager.js"></script>        
-        <script type="text/javascript" src="jscripts/infusion-1.1-src/components/reorderer/js/Reorderer.js"></script>
- -->
-	<script language="javascript" type="text/javascript">
+<script language="javascript" type="text/javascript">
+//<!--
 jQuery(document).ready(function () {
 	// only specific list items are sortable
 	var reorder_example_list = fluid.reorderList('#contentwrapper', {
@@ -215,14 +202,7 @@ function toggleToc(objId) {
 	}
 	setcookie(objId, toc.style.display, 1);
 }
-//-->
-</script>
-</head>
 
-<body onload="<?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="<?php echo $this->base_path; ?>overlib.js" type="text/javascript"></script>
-<script language="javascript" type="text/javascript">
-//<!--
 	function getcookie(cookiename) {
 		var cookiestring=""+document.cookie;
 		var index1=cookiestring.indexOf(cookiename);
@@ -233,6 +213,7 @@ function toggleToc(objId) {
 	}
 //-->
 </script>
+
 <div id="top-links"> <!-- top help/search/login links -->
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
