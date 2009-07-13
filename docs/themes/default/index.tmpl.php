@@ -151,7 +151,7 @@ if ($this->announcements): ?>
 /*la funzione viene utilizzata per la stampa dei moduli e degli eventuali sottocontenuti per ogni modulo. ad ogni chiamata sar� passato il modulo interessato dal quale saranno estrapolati
 * i dati necessari (preventivamente caricati) per la visualizzazione. in questo modo possono essere gestite le due distinte visualizzazioni: istruttore e studente
 */
-function print_sublinks($link){ ?>
+function print_sublinks($link){?>
 	<div class="home_icon_title">
 		<div class="home_icon">
 				<img src="<?php echo $link['img']; ?>" alt="" border="0"/>					
@@ -162,7 +162,7 @@ function print_sublinks($link){ ?>
 				</font>
 		</div>
 	</div><?php
-	if($link['icon']!=""){						//nel caso in cui sia settata una sottoicona per il modulo in esame allora saranno stampati gli eventuali sottocontenuti 
+	if($link['sub_file']!=""){						//nel caso in cui sia settata una sottoicona per il modulo in esame allora saranno stampati gli eventuali sottocontenuti 
 		$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);	//viene richiamato il file di controllo specifico per i sottocontenuti contenuto in include/html/sibmodules
 		if(!is_array($array)){ 						//"0" è il valore di ritorno del file nel caso in cui non siano stati trovati dei sottocontenuti*/?>
 			<div class="home_text">
