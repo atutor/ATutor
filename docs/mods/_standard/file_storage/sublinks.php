@@ -17,7 +17,7 @@ if (mysql_num_rows($result) > 0) {
 			$filetext = $row['file_name'];
 		}
 
-		$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('file_storage/index.php?download=1'.SEP.'files[]='. $row['file_id']).'"'.
+		$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('file_storage/index.php?download=1'.htmlentities(SEP).'files[]='. $row['file_id']).'"'.
 		          (strlen($filetext) > SUBLINK_TEXT_LEN ? ' title="'.$filetext.'"' : '') .'>'. 
 		          validate_length($filetext, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
 	}
