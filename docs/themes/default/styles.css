@@ -1712,3 +1712,55 @@ div.home_text{
 #tooltip h3,#tooltip div{
 	margin:0;
 }
+
+/* style for home page sublinks view */
+.outside_box{
+margin-top:.5em;
+margin-left:.4em;
+background:#e0e0e0;
+width:25em;
+height:8.0em;
+}
+
+.inside_box{
+width:100%;
+margin:auto;
+height:52%;
+margin-bottom:.2em;
+background:#eeeeee;
+
+}
+.details_or{
+width:25.80em;
+height:8.3em;
+margin:0;
+background-image:url(details_r.png);
+background-position: top right;
+background-repeat:no-repeat;
+}
+.details_ol{
+height:8.2em;
+margin:0px;
+width:.45em;
+background-image:url(details_l.png);
+background-position: top left;
+background-repeat:no-repeat;
+}
+.details_ir{
+width:.5em;
+height:100%;
+float:right;
+background-image:url(details_ir.png);
+background-position: top right;
+background-repeat:no-repeat;
+
+
+}
+.details_il{
+height:100%;
+float:left;
+background-image:url(details_il.png);
+background-position: top left;
+background-repeat:no-repeat;
+}
+
