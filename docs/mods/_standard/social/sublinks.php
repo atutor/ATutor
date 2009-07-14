@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-include(AT_INCLUDE_PATH.'../mods/_standard/social/lib/friends.inc.php');
+include_once(AT_INCLUDE_PATH.'../mods/_standard/social/lib/friends.inc.php');
 
 function substring($str, $length)
 {
