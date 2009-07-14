@@ -56,9 +56,13 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id, 'delete_id' => $delete_id);
-$msg->addConfirm(array('DELETE'), $hidden_vars);
-$msg->printConfirm();
+//get the comment to print into the confirm box
+$sql = 'SELECT comment FROM '.TABLE_PREFIX.'blog_posts_comments WHERE comment_id='.$delete_id;
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_assoc($result);
 
+$msg->addConfirm(array('DELETE', $row['comment']), $hidden_vars);
+$msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

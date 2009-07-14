@@ -60,7 +60,11 @@ $_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['children'
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars = array('id' => $id, 'ot' => $_REQUEST['ot'], 'oid' => $_REQUEST['oid']);
-$msg->addConfirm('DELETE', $hidden_vars);
+//get the post title to print into the confirm box
+$sql = 'SELECT title FROM '.TABLE_PREFIX.'blog_posts WHERE post_id='.$id;
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_assoc($result);
+$msg->addConfirm(array('DELETE', $row['title']), $hidden_vars);
 $msg->printConfirm();
 ?>
 

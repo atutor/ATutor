@@ -28,7 +28,7 @@ $auth = '';
 if (!query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 	$auth = 'private=0 AND ';
 }
-$sql = "SELECT member_id, private, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id ORDER BY date DESC";
+$sql = "SELECT member_id, private, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$owner_id AND post_id=$id ORDER BY date DESC";
 $result = mysql_query($sql, $db);
 
 
@@ -44,14 +44,15 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 	if (!$msg->containsErrors()) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."blog_posts_comments VALUES (NULL, $id, $_SESSION[member_id], NOW(), $_POST[private], '$_POST[body]')";
 		mysql_query($sql, $db);
+		$comments_affected_rows = mysql_affected_rows($db);
 		
 		if (!isset($sub)) { 
 			require_once(AT_INCLUDE_PATH .'classes/subscribe.class.php');
 			$sub = new subscription(); 
 		}
-		$sub->send_mail('blogcomment', $_REQUEST['oid'], mysql_insert_id());
+		$sub->send_mail('blogcomment', $owner_id, mysql_insert_id());
 		
-		if (mysql_affected_rows($db) == 1) {
+		if ($comments_affected_rows == 1) {
 			$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET num_comments=num_comments+1, date=date WHERE post_id=$id";
 			mysql_query($sql, $db);
 		}
@@ -69,20 +70,20 @@ if (!$post_row = mysql_fetch_assoc($result)) {
 }
 
 $_pages['blogs/post.php']['title'] = AT_PRINT($post_row['title'], 'blog_posts.title') . ($post_row['private'] ? ' - '._AT('private') : '');
-$_pages['blogs/post.php']['parent']    = 'blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'];
+$_pages['blogs/post.php']['parent']    = 'blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id;
 if (query_bit($owner_status, BLOGS_AUTH_WRITE)) {
-	$_pages['blogs/post.php']['children']  = array('blogs/edit_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id'], 'blogs/delete_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']);
+	$_pages['blogs/post.php']['children']  = array('blogs/edit_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id.SEP.'id='.$id, 'blogs/delete_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id.SEP.'id='.$id);
 } else {
 	$_pages['blogs/post.php']['children']  = array();
 }
 
-$_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['title'] = blogs_get_blog_name(BLOGS_GROUP, $_REQUEST['oid']);
-$_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['parent']    = 'blogs/index.php';
+$_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id]['title'] = blogs_get_blog_name(BLOGS_GROUP, $owner_id);
+$_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id]['parent']    = 'blogs/index.php';
 
 if (query_bit($owner_status, BLOGS_AUTH_WRITE)) {
-	$_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['children']  = array('blogs/add_post.php');
+	$_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id]['children']  = array('blogs/add_post.php');
 } else {
-	$_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['children']  = array();
+	$_pages['blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id]['children']  = array();
 }
 
 
