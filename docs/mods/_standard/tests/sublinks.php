@@ -14,7 +14,7 @@ $cnt = 0;
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
 		if ( ($row['sd'] <= time()) && ($row['ed'] >= time() ) && $cnt < $tests_limit)		//Solo i test "On Going" dovranno essere visualizzati, per questo vengono controllate le date di inizio e fine in riferimento alla data odierna
-			$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('tools/test_intro.php?tid=' . $row['test_id']).'"'.
+			$list[] = '<a href="'.url_rewrite('tools/test_intro.php?tid=' . $row['test_id'], AT_PRETTY_URL_IS_HEADER).'"'.
 			          (strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'. 
 			          validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
 			$cnt++; 

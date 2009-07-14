@@ -628,7 +628,7 @@ function printSocialProfileImg($id, $type=1, $link=true) {
  * @return	the hyperlink to the profile
  */
 function getProfileLink($id, $str){
-	$link = '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php?id='.$id).'">';
+	$link = '<a href="'.url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php?id='.$id, AT_PRETTY_URL_IS_HEADER).'">';
 	$link .= $str;
 	$link .= '</a>';
 	return $link;

@@ -20,7 +20,7 @@ foreach ($all_forums as $shared => $forums) {
 			$cnt++;
 
 			$link_title = $row['title'].' ('.AT_DATE('%F %j, %g:%i',$row['last_post'],AT_DATE_MYSQL_DATETIME).')';
-			$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('forum/index.php?fid='.$row['forum_id']).'"'.
+			$list[] = '<a href="'.url_rewrite('forum/index.php?fid='.$row['forum_id'], AT_PRETTY_URL_IS_HEADER).'"'.
 			          (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.$link_title.'"' : '') .'>'. 
 			          validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
 		}

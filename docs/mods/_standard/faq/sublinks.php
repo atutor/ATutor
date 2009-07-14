@@ -11,7 +11,7 @@ $result = mysql_query($sql, $db);
 
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
-		$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('faq/index.php#'.$row['entry_id']).'"'.
+		$list[] = '<a href="'.url_rewrite('faq/index.php#'.$row['entry_id'], AT_PRETTY_URL_IS_HEADER).'"'.
 		          (strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 
 		          validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 	}
