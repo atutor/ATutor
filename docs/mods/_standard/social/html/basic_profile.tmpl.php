@@ -1,5 +1,3 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-<?php include('lib/profile_menu.inc.php'); ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php global $languageManager, $_config; ?>
 <div class="input-form">
@@ -128,5 +126,3 @@
 	</div>
 </div>
 </form>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
