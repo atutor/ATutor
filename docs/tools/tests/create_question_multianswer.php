@@ -23,7 +23,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: question_db.php');
 	exit;
-} else if ($_POST['submit']) {
+} else if ($_POST['submit'] || $_POST['submit_yes']) {
 	$_POST['required'] = intval($_POST['required']);
 	$_POST['feedback'] = trim($_POST['feedback']);
 	$_POST['question'] = trim($_POST['question']);
@@ -58,7 +58,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			}
 		}
 			
-		if ($has_answer != TRUE) {
+		if ($has_answer != TRUE && !$_POST['submit_yes']) {
 	
 			$hidden_vars['required']    = htmlspecialchars($_POST['required']);
 			$hidden_vars['feedback']    = htmlspecialchars($_POST['feedback']);
