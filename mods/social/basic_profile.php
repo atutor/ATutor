@@ -139,10 +139,11 @@ if (!isset($_POST['submit'])) {
 }
 
 /* template starts here */
-
+require(AT_INCLUDE_PATH.'header.inc.php');
+include('lib/profile_menu.inc.php');
 $savant->assign('row', $row);
 $onload = 'document.form.first_name.focus();';
 
 //$savant->display('registration.tmpl.php');
 $savant->display('html/basic_profile.tmpl.php');
-?>
+require(AT_INCLUDE_PATH.'footer.inc.php');?>
