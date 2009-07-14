@@ -31,11 +31,11 @@
 			<dd><?php echo $this->profile['email']; ?></dd>
 			<?php endif; ?>
 			<?php endif; ?>
-			<?php if($this->profile['gender']){ ?>
+			<?php if($this->profile['gender']!='n'){ ?>
 			<dt><?php echo _AT('gender'); ?></dt>
 			<dd><?php echo $this->profile['gender']; ?></dd>
 			<?php }?>
-			<?php if($this->profile['dob']){ ?>
+			<?php if($this->profile['dob']!='0000-00-00'){ ?>
 			<dt><?php echo _AT('dob'); ?></dt>
 			<dd><?php echo $this->profile['dob']; ?></dd>
 			<?php }?>
