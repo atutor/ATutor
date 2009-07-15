@@ -211,6 +211,7 @@ class SocialGroups{
 		 $words = explode(' ', $query);
 		 foreach($words as $piece){
 			$extra .= "`name` LIKE '%$piece%' OR ";
+			$extra .= "`description` LIKE '%$piece%' OR ";
 		 }
 		 $extra = substr($extra, 0, -3);
 		 $sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups WHERE '.$extra;
