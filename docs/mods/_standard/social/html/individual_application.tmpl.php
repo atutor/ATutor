@@ -2,6 +2,7 @@
 <script type="text/javascript"
 	src="<?php echo AT_SHINDIG_URL; ?>/gadgets/js/rpc.js?c=1"></script>
 <script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/jquery-1.3.2.js"></script>
+<!-- <script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/jquery-ui.js"></script> -->
 <script type="text/javascript"
 	src="http://www.prototypejs.org/assets/2008/9/29/prototype-1.6.0.3.js"></script>
 	<script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/container.js"></script>

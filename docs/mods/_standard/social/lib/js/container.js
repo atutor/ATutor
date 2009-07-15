@@ -42,7 +42,7 @@ Container.prototype = {
 		if ($(this.f) != undefined) {
 			var params = gadgets.container._parseIframeUrl($(this.f).src);
 			//TODO use params.st to make the store request, it holds the owner / viewer / app id / mod id required
-			new Ajax.Request('./mods/social/set_prefs.php', {method: 'get', parameters: { name: name, value: value, st: params.st }});
+			new Ajax.Request('./mods/_standard/social/set_prefs.php', {method: 'get', parameters: { name: name, value: value, st: params.st }});
 		}
 	},
 	
