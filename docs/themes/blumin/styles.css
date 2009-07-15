@@ -117,7 +117,69 @@ a:visited {
 	color: #384F89;
 	text-decoration: none;
 }
-a:hover {
+a:hover {/* style for home page sublinks view */
+div.home_box {
+	width: 410px;
+	height: 150px;	
+	padding-top: 15px;
+	margin-left:1em;
+	float:left;
+}
+
+.outside_box{
+	margin-left:.4em;
+	background:#e0e0e0;
+	width:28em;
+	height:9.8em;
+}
+
+.inside_box{
+	width:100%;
+	margin:auto;
+	height:52%;
+	margin-bottom:.2em;
+	background:#eeeeee;
+}
+.details_or{
+	width:28.8em;
+	height:9.8em;
+	margin:0;
+	background-image:url(../../images/details_r.png);
+	background-position: top right;
+	background-repeat:no-repeat;
+}
+.details_ol{
+	height:9.8em;
+	margin:0px;
+	width:.45em;
+	background-image:url(../../images/details_l.png);
+	background-position: top left;
+	background-repeat:no-repeat;
+}
+.details_ir{
+	width:.5em;
+	height:100%;
+	float:right;
+	background-image:url(../../images/details_ir.png);
+	background-position: top right;
+	background-repeat:no-repeat;
+}
+.details_il{
+	height:100%;
+	float:left;
+	background-image:url(../../images/details_il.png);
+	background-position: top left;
+	background-repeat:no-repeat;
+}
+.home-title{
+	font-size:12pt;
+}
+.buttonbox{
+	float:right;
+}
+.details_text{
+	margin-left:1em;
+}
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	color: black;
 	text-decoration: none;
@@ -1400,4 +1462,67 @@ ul#topnavlist li a.selected {
 }
 #tooltip h3,#tooltip div{
 	margin:0;
+}
+/* style for home page sublinks view */
+div.home_box {
+	width: 30em;
+	height: 150px;	
+	padding-top: 15px;
+	margin-left:1em;
+	float:left;
+}
+
+.outside_box{
+	margin-left:.4em;
+	background:#e0e0e0;
+	width:28em;
+	height:9.8em;
+}
+
+.inside_box{
+	width:100%;
+	margin:auto;
+	height:52%;
+	margin-bottom:.2em;
+	background:#eeeeee;
+}
+.details_or{
+	width:28.8em;
+	height:9.8em;
+	margin:0;
+	background-image:url(../../images/details_r.png);
+	background-position: top right;
+	background-repeat:no-repeat;
+}
+.details_ol{
+	height:9.8em;
+	margin:0px;
+	width:.45em;
+	background-image:url(../../images/details_l.png);
+	background-position: top left;
+	background-repeat:no-repeat;
+}
+.details_ir{
+	width:.5em;
+	height:100%;
+	float:right;
+	background-image:url(../../images/details_ir.png);
+	background-position: top right;
+	background-repeat:no-repeat;
+}
+.details_il{
+	height:100%;
+	float:left;
+	background-image:url(../../images/details_il.png);
+	background-position: top left;
+	background-repeat:no-repeat;
+}
+.home-title{
+	font-size:12pt;
+}
+.buttonbox{
+	float:right;
+}
+.details_text{
+	margin-left:1em;
 }

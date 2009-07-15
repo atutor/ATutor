@@ -21,5 +21,7 @@ label {
 table.data tfoot input {
 	min-width:0px;
 }
-
+.outside_box{
+	height:9.6em;
+}
 

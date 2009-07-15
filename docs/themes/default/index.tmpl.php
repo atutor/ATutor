@@ -43,7 +43,7 @@ if($this->view_mode==0){ ?>
 } else {		// Detail View, $this->view_mode=1.?>
 	
 	<div style="width: 100%; margin-top: -5px; float: left; ">
-		<ul id="home-detail-links">
+		
 		<?php 				// create table container divided into two columns for the placement of modules
 		if (is_array($this->home_links))
 			foreach ($this->home_links as $link)				// counting the number of modules present in the home for the student. need for controls on the positioning of the arrows of the various modules.
@@ -51,12 +51,12 @@ if($this->view_mode==0){ ?>
 			
 		if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && is_array($this->home_links)){		// display enabled course tool
 			foreach ($this->home_links as $link){ ?>
-			<li>
+			
 			<div class="home_box"> 
-				<div class="home_toolbar"><?php
-				if($num_modules!=0){													//si controlla se sono presenti moduli visibili nella home.
+			<?php
+			if($num_modules!=0){													//si controlla se sono presenti moduli visibili nella home.
 					if($num_modules != 1 && $link['check'] == 'visible'){ 				//se check � impostato 'visible' significa che il modulo sar� presente nella home e potrebbe necessitare delle frecce direzionali
-						if($count_modules <= 2 ){ 
+						/* if($count_modules <= 2 ){ 
 							if($num_modules >2 && ($num_modules-$count_modules)>1) 								//significa che ci sono possibili moduli sottostanti quindi sar� da stampare la freccia "down"
 								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&amp;move=down"><img src="'.AT_BASE_HREF.'images/arrow-mini-down.png" alt="move down" border="0"/></a>&nbsp;';
 							if($column=="left")
@@ -80,16 +80,16 @@ if($this->view_mode==0){ ?>
 							echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&amp;move=up"><img src="'.AT_BASE_HREF.'images/arrow-mini-up.png" alt="move up" border="0"/></a>&nbsp;';
 							if($column=="right")
 								echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'&amp;move=left"><img src="'.AT_BASE_HREF.'images/arrow-mini-left.png" alt="move left" border="0"/></a>&nbsp;';
-						}
-						echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp;';
+						}*/
+						//echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp;';
 					} else if($num_modules == 1 && $link['check'] == 'visible'){ //
-						echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp;';
+						//echo '<a href ="'.AT_BASE_HREF.'move_module.php?mid='.$count_modules.'"><img src="'.AT_BASE_HREF.'images/eye-mini-close.png" alt="set invisible" border="0"/></a>&nbsp;';
 					}
 				} ?>
-				</div> <?php
+				 <?php
 				print_sublinks($link); 						//chiamata alla funzione di stampa dei moduli?>
 			</div>
-			</li> <?php
+			 <?php
 				if($column=='left'){									//caso in cui sia appena stata definita la prima cella della riga (posizione left)
 					$column='right';									//$column impostato a right per definire l'eventuale seconda cella
 				} 
@@ -117,13 +117,13 @@ if($this->view_mode==0){ ?>
 					else if($column=='right' ){ 							//caso in cui sia stata definita la seconda cella all'interno della riga.
 						$column="left";										
 					}
-				} // end of foreach
+				}  // end of foreach
 			}// end of if
 		} ?>														<!-- chiusura tabella contenitore esterno -->
-		</ul>
+	
 	</div> 
 	<?php
-}  
+}
 
 if ($this->announcements): ?>
 <h2 class="page-title"><?php echo _AT('announcements'); ?></h2>
@@ -152,35 +152,42 @@ if ($this->announcements): ?>
 * i dati necessari (preventivamente caricati) per la visualizzazione. in questo modo possono essere gestite le due distinte visualizzazioni: istruttore e studente
 */
 function print_sublinks($link){?>
-	<div class="home_icon_title">
-		<div class="home_icon">
-				<img src="<?php echo $link['img']; ?>" alt="" border="0"/>					
+
+<div class="details_ol">	
+	<div class="details_or">	
+		<div class="outside_box">
+		<div class="buttonbox">
+		<img src="http://www.atutor.ca/atutor/demo163/images/x.gif" alt="<?php  ?>"/>
 		</div>
-		<div class="home_title">
-				<font size="+1"> 
-					<a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a>	<!-- inserimento link associato -->
-				</font>
-		</div>
-	</div><?php
+		<img src="<?php echo $link['img']; ?>" alt="" border="0" style="vertical-align:middle;" height="51" width="51"/>
+		<span class="home-title"><a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a></span>
+		<div class="inside_box">
+			<div class="details_il">&nbsp;</div>
+			<div class="details_ir"></div>
+	<?php
 	if($link['sub_file']!=""){						//nel caso in cui sia settata una sottoicona per il modulo in esame allora saranno stampati gli eventuali sottocontenuti 
 		$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);	//viene richiamato il file di controllo specifico per i sottocontenuti contenuto in include/html/sibmodules
 		if(!is_array($array)){ 						//"0" è il valore di ritorno del file nel caso in cui non siano stati trovati dei sottocontenuti*/?>
-			<div class="home_text">
+			<div class="details-text">
 				<i><?php echo _AT('none_found'); ?></i>
 			</div><?php
 		} else { ?>								<!-- stampa dei sottocontenuti, per ognuno verr� stampata la sub-icon relativa e il collegamento al sottocontenuto stesso -->
-			<div class="home_content"><?php
+			<div class="details-text"><?php
 			foreach($array as $sublink){ 			//si esegue il ciclo di stampa fin quando saranno presenti sottocontenuti per il modulo corrente. il limite � impostato per default a 3?>
 					<img src="<?php echo $link['icon']; ?>" border="0" alt="" /> <?php
-					if ($sublink <> '') echo $sublink;
-?>
-					<br/> <?php
+					if ($sublink <> '') echo $sublink."<br />";
 				} ?>
 			</div> <?php
 		}						
 	} else { 									//se non sono presenti sottocontenuti viene adattata la tabella di conseguenza e stampata una breve descrizione?>
-		<div class="home_text">
+		<div class="details_text">
 		<?php echo $link['text']; ?> 
 		</div><?php
 	}
-} ?>
+?>		</div>
+		</div>
+	</div>
+</div>
+
+<?php } ?>
+
