@@ -12,25 +12,27 @@
 	}
 	$author = ($app_obj->getAuthor()!='')?$app_obj->getAuthor():_AT('unknown'); 	
 ?>
-	<div style="float:left; ">
-		<?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?><br/>
-		<?php echo $app_obj->getAppLink('<img src="'.$app_obj->getThumbnail().'"/>', $id); ?><br/>
-		<?php echo _AT('by'); ?> 
-		<?php if ($app_obj->getAuthorEmail()!=''): ?>
-			<a href="<?php echo $app_obj->getAuthorEmail(); ?>"><?php echo $author; ?></a>
-		<?php else: echo $author; ?>
-		<?php endif; ?>			
-	</div>
+	<div>
+		<div style="float:left; ">
+			<?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?><br/>
+			<?php echo $app_obj->getAppLink('<img src="'.$app_obj->getThumbnail().'"/>', $id); ?><br/>
+			<?php echo _AT('by'); ?> 
+			<?php if ($app_obj->getAuthorEmail()!=''): ?>
+				<a href="<?php echo $app_obj->getAuthorEmail(); ?>"><?php echo $author; ?></a>
+			<?php else: echo $author; ?>
+			<?php endif; ?>			
+		</div>
 
-	<div style="float: right;">
-		<label for="app_<?php echo $id;?>"><?php echo _AT('delete');?></label>
-		<input type="checkbox" id="app_<?php echo $id;?>" name="apps[]" value="<?php echo $id; ?>" />
+		<div style="float: right;">
+			<label for="app_<?php echo $id;?>"><?php echo _AT('delete');?></label>
+			<input type="checkbox" id="app_<?php echo $id;?>" name="apps[]" value="<?php echo $id; ?>" />
+		</div>
+		<div style="width:60%; margin-left:10em; padding-top:1.5em;">
+			<?php echo $app_obj->getDescription(); ?><br/><br/>
+			<?php echo $app_obj->getUrl(); ?><br/>
+		</div>
+		<div style="clear:both;"><hr/></div>
 	</div>
-	<div style="width:60%; margin-left:10em; padding-top:1.5em;">
-		<?php echo $app_obj->getDescription(); ?><br/><br/>
-		<?php echo $app_obj->getUrl(); ?><br/>
-	</div>
-	<br/>
 <?php endforeach; ?>
 <?php else: ?>
 <?php echo _AT('no_gadgets_installed'); ?>
