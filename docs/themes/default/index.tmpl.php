@@ -42,7 +42,7 @@ if($this->view_mode==0){ ?>
 	</div> <?php
 } else {		// Detail View, $this->view_mode=1.?>
 	
-	<div style="width: 100%; margin-top: -5px; float: left; ">
+	<div style="width: 98%; margin-top: -5px; float: left; ">
 		
 		<?php 				// create table container divided into two columns for the placement of modules
 		if (is_array($this->home_links))
