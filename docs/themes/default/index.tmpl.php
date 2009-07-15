@@ -30,7 +30,7 @@ if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && count($this->home_links) > 0){
 
 // Icon View, $this->view_mode = 0. course will be made changes to the icons to restore the classic icons.
 if($this->view_mode==0){ ?>
-	<div style="width: 100%; margin-top: -5px; float:left;">
+	<div style="width: 98%; margin-top: -5px; float:left;">
 		<ul id="home-links">
 		<br/>
 		<?php if (is_array($this->home_links)): ?>
