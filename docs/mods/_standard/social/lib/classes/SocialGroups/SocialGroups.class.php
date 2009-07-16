@@ -190,9 +190,10 @@ class SocialGroups{
 	 /**
 	  * Search
 	  * @param	string	query string for the search
+	  * @param	int	the index of which the entry to get
 	  * @param	string	filters
 	  */
-	 function search($query, $filters=''){
+	 function search($query, $offset=-1, $filters=''){
 		/* Perform a simple search for now
 		 * That searches only the title? 
 		 * Use Joel's search idea? Point based system search? The Google's idea?
@@ -204,18 +205,21 @@ class SocialGroups{
 		 */
 		 global $db, $addslashes;
 
-		 if ($query=='') return array();  //quit if search query is empty
-
-		 $search_result = array();
-		 $query = $addslashes(trim($query));
-		 $words = explode(' ', $query);
-		 foreach($words as $piece){
-			$extra .= "`name` LIKE '%$piece%' OR ";
-			$extra .= "`description` LIKE '%$piece%' OR ";
+		 $sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups';
+		 if ($query!=''){
+			 $search_result = array();
+			 $query = $addslashes(trim($query));
+			 $words = explode(' ', $query);
+			 foreach($words as $piece){
+				$extra .= "`name` LIKE '%$piece%' OR ";
+				$extra .= "`description` LIKE '%$piece%' OR ";
+			 }
+			 $extra = substr($extra, 0, -3);
+			 
+			 $sql .= ' WHERE '.$extra;
 		 }
-		 $extra = substr($extra, 0, -3);
-		 $sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups WHERE '.$extra;
 		 $result = mysql_query($sql, $db);
+
 		 if ($result){
 			while ($row = mysql_fetch_assoc($result)){
 				$search_result[$row['id']]['obj'] = new SocialGroup($row['id']);
@@ -223,16 +227,27 @@ class SocialGroups{
 			}
 		 }
 		 uasort($search_result, array($this, 'search_cmp'));
-		 return array_reverse($search_result);
+		 $search_result = array_reverse($search_result);
+
+		 //for paginator
+		 if ($offset >= 0){
+			$search_result = array_slice($search_result, $offset, SOCIAL_GROUP_MAX);
+		 }
+
+		 return $search_result;
 	 }
 
 
 	 /**
 	  * Return the counts of word appeareance in the given string.  
-	  * @param	array	the string that hte user typed in to search for
+	  * @param	array	the string that the user typed in to search for
 	  * @param	string	the name of the group
 	  */
 	 function inQuery($words, $str){
+		 //if either of the input is empty, there is no comparison thus no count.
+		 if (empty($words) || $str==''){
+			 return 0;
+		 }
 		 $count = 0;
 		 foreach ($words as $index=>$word){
 			 if (trim($word)=='') continue;

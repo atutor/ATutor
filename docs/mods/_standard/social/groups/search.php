@@ -30,7 +30,7 @@ if (!$_SESSION['valid_user']) {
 
 //social groups init
 $social_groups = new SocialGroups();
-$rand_key = $addslashes($_POST['rand_key']);	//should we excape?
+$rand_key = $addslashes($_REQUEST['rand_key']);	//should we excape?
 
 //if $_GET['q'] is set, handle Ajax.
 if (isset($_GET['q'])){
@@ -59,18 +59,42 @@ if (isset($_GET['q'])){
 	exit;
 }
 
+//paginator settings
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}	
+$count  = (($page-1) * SOCIAL_GROUP_MAX) + 1;
+$offset = ($page-1) * SOCIAL_GROUP_MAX;
+
+
 // handle post request
-if ($rand_key!='' && isset($_POST['search_groups_'.$rand_key]) && !empty($_POST['search_groups_'.$rand_key])){
-	$query = $addslashes($_POST['search_groups_'.$rand_key]);
+if ($rand_key!='' && isset($_REQUEST['search_groups_'.$rand_key])){
+	$query = $addslashes($_REQUEST['search_groups_'.$rand_key]);
 	$search_result = $social_groups->search($query);
-} elseif(empty($_POST['search_groups_'.$rand_key])) {
-	$msg->addError('CANNOT_BE_EMPTY');
+	$num_pages = sizeof($search_result)/SOCIAL_GROUP_MAX;	
+	$search_result = $social_groups->search($query, $offset);
 }
+/*elseif(empty($_POST['search_groups_'.$rand_key])) {
+	$msg->addError('CANNOT_BE_EMPTY');
+} */
+
+//Generate a random number for the search input name fields, so that the browser will not remember any previous entries.
+$rand = md5(rand(0, time())); 
+if ($rand_key != ''){
+	$last_search = $_REQUEST['search_groups_'.$rand_key];
+} else {
+	$last_search = $_REQUEST['search_groups_'.$rand];	
+}
+//take out double quotes until there is a way to escape XSS from the ajax script.
+$last_search = preg_replace('/\"/', '', $last_search);
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->display('pubmenu.tmpl.php');
-$savant->assign('rand_key', $rand_key);
+print_paginator($page, $num_pages, 'search_groups_'.$rand_key.'='.$query.SEP.'rand_key='.$rand_key, 1); 
+$savant->assign('rand_key', $rand);
+$savant->assign('last_search', $last_search);
 $savant->assign('search_result', $search_result);
 $savant->display('sgroup_search.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');

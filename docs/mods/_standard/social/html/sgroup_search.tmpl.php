@@ -1,22 +1,11 @@
 <script src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/livesearch.js" type="text/javascript"></script>
-<?php 
-	//Generate a random number for the search input name fields, so that the browser will not remember any previous entries.
-	$rand = md5(rand(0, time())); 
-	if ($this->rand_key != ''){
-		$last_search = $_POST['search_groups_'.$this->rand_key];
-	} else {
-		$last_search = $_POST['search_groups_'.$rand];	
-	}
-	//take out double quotes until there is a way to escape XSS from the ajax script.
-	$last_search = preg_replace('/\"/', '', $last_search);
-?>
 <div class="input-form" style="width:40%;padding:1em;min-height:4.5em;">
 <h3><?php echo _AT('search_for_groups'); ?></h3>
 	<form action="<?php echo AT_SOCIAL_BASENAME.'groups/search.php'; ?>" method="POST" id="search_group_form">
 		<div class="row">
 			<label for="search_groups"><?php echo _AT('search'); ?></label>
-				<input type="text" size="60" name="search_groups_<?php echo $rand;?>" id="search_groups" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', '<?php echo AT_SOCIAL_BASENAME; ?>groups/search.php')"/>
-			<input type="hidden" name="rand_key" value="<?php echo $rand;?>"/>
+				<input type="text" size="60" name="search_groups_<?php echo $this->rand_key;?>" id="search_groups" value="<?php echo $this->last_search; ?>" onkeyup="showResults(this.value, 'livesearch', '<?php echo AT_SOCIAL_BASENAME; ?>groups/search.php')"/>
+			<input type="hidden" name="rand_key" value="<?php echo $this->rand_key;?>"/>
 			<input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
 			<span style="float:right"><a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/create.php"><?php echo _AT('create_group'); ?></a></span><br />
 			<div id="livesearch"></div>

@@ -23,8 +23,9 @@
 					<input class="button" type="submit" name="search" value="<?php echo _AT('search'); ?>" />
 					<div id="livesearch"></div>
 				</div>
+				<div class="row"><a href="<?php echo AT_SOCIAL_BASENAME.'groups/search.php?search_groups_'.$rand.'='.$last_search.SEP.'rand_key='.$rand; ?>"><?php echo _AT('browse_all');?></a></div>
 			</form>		
-		</div>
+		</div>		
 	</div>
 </div>
 <div style="float:right;clear:right;width:39%;">

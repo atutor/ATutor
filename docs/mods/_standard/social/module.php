@@ -143,10 +143,10 @@ $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['parent'] = AT_NAV_PUBLIC;
 /* my start page pages */
 if ($_SESSION['valid_user']==1){
 //$this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');
-$this->_pages[AT_NAV_START]  = array(AT_SOCIAL_BASENAME.'index.php');
-$this->_pages[AT_SOCIAL_BASENAME.'index.php']['title_var'] = 'social';
-$this->_pages[AT_SOCIAL_BASENAME.'index.php']['guide']     = 'general/?p=my_network.php';
-$this->_pages[AT_SOCIAL_BASENAME.'index.php']['parent'] = AT_NAV_START;
+$this->_pages[AT_NAV_START]  = array(AT_SOCIAL_BASENAME.'index_mystart.php');
+$this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['title_var'] = 'social';
+$this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['guide']     = 'general/?p=my_network.php';
+$this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['parent'] = AT_NAV_START;
 }
 
 function social_get_group_url($group_id) {
