@@ -200,7 +200,7 @@ $savant->assign('current_sub_level_page', $_current_sub_level_page);
 
 $savant->assign('path', $_path);
 $savant->assign('back_to_page', isset($back_to_page) ? $back_to_page : null);
-$savant->assign('page_title', $_page_title);
+$savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
 $savant->assign('top_level_pages', $_top_level_pages);
 $savant->assign('section_title', $section_title);
 

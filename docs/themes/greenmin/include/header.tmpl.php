@@ -274,7 +274,7 @@ function toggleToc(objId) {
 <!-- the bread crumbs -->
 <div id="breadcrumbs">
 	<?php foreach ($this->path as $page): ?>
-		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
+		<a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
 	<?php endforeach; ?> <?php echo $this->page_title; ?>
 </div>
 <?php } ?>
