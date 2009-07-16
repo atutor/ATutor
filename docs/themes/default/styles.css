@@ -1773,3 +1773,7 @@ div.home_box {
 .details_text{
 	margin-left:1em;
 }
+.draggable_selected {
+	background-color: transparent;
+	cursor: move;
+}

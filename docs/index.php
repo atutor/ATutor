@@ -1,9 +1,9 @@
 <?php
 /************************************************************************/
-/* ATutor                                                             */
+/* ATutor                                                               */
 /************************************************************************/
-/* Copyright (c) 2008 by Greg Gay, Cindy Li                             */
-/* Adaptive Technology Resource Centre / University of Toronto			    */
+/* Copyright (c) 2002 - 2009                                            */
+/* Adaptive Technology Resource Centre / University of Toronto          */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
 /* modify it under the terms of the GNU General Public License          */
@@ -24,6 +24,58 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$course_base_href = 'get.php/';
 } else {
 	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
+//query reading the type of home viewable. 0: icon view   1: detail view
+$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $_SESSION[course_id]";
+$result = mysql_query($sql,$db);
+$row= mysql_fetch_assoc($result);
+$home_view = $row['home_view'];
+
+// Enable drag and drop to reorder displayed modules when the module view mode is 
+// set to "detail view" and user role is instructor
+if ($home_view == 1 && authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
+{
+	$_custom_head = '
+<link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
+<link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
+<link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-theme-mist.css" />
+<link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-theme-hc.css" />
+<link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/components/reorderer/css/Reorderer.css" />
+
+<script type="text/javascript">
+jQuery(document).ready(function () {
+	var reorder_example_grid = fluid.reorderGrid("#details_view",  {
+		selectors : {
+			movables : ".home_box"
+		},
+	    listeners: {
+			afterMove: function (item, requestedPosition, movables) {
+				//save the state to the db
+				var myDivs = jQuery ("div[class^=home_box]", "#details_view");
+				var moved_modules = "";
+				
+				if (myDivs.constructor.toString().indexOf("Array"))   // myDivs is an array
+				{
+					for (i=0; i<myDivs.length; i++)
+						moved_modules += myDivs[i].id+"|";
+				}
+				moved_modules = moved_modules.substring(0, moved_modules.length-1); // remove the last "|"
+				
+				if (moved_modules != "")
+					jQuery.post("'.AT_BASE_HREF.'move_module.php", { "moved_modules":moved_modules, "from":"course_index" }, function(data) {});     
+	        }
+	    },
+		styles: {
+		    selected: "draggable_selected",
+		    hover: "draggable_selected"
+		}
+	});
+	
+});
+</script>
+	
+';
 }
 
 require(AT_INCLUDE_PATH . 'header.inc.php');
@@ -88,12 +140,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	$savant->assign('banner', '');
 }
 
-//query reading the type of home viewable. 0: icon view   1: detail view
-$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $_SESSION[course_id]";
-$result = mysql_query($sql,$db);
-$row= mysql_fetch_assoc($result);
-
-$savant->assign('view_mode', $row['home_view']);
+$savant->assign('view_mode', $home_view);
 $savant->assign('announcements', $news);
 $savant->assign('num_pages', $num_pages);
 $savant->assign('current_page', $page);
