@@ -1,16 +1,16 @@
 <?php
 /************************************************************************/
-/* ATutor																*/
+/* ATutor                                                               */
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
+/* Copyright (c) 2002 - 2009                                            */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 1);
@@ -286,6 +286,28 @@ if ((isset($_SESSION['course_id']) && isset($_pretty_url_course_id) && $_SESSION
 }
 
    /**
+   * This function is used for printing variables into log file for debugging.
+   * @access  public
+   * @param   mixed $var	The variable to output
+   * @param   string $log	The location of the log file. If not provided, use the default one.
+   * @author  Joel Kronenberg
+   */
+function debug_to_log($var, $log='') {
+	if (!defined('AT_DEVEL') || !AT_DEVEL) {
+		return;
+	}
+	
+	if ($log == '') $log = AT_CONTENT_DIR. 'atutor.log';
+	$handle = fopen($log, 'a');
+	fwrite($handle, "\n\n");
+	fwrite($handle, date("F j, Y, g:i a"));
+	fwrite($handle, "\n");
+	fwrite($handle, var_export($var,1));
+	
+	fclose($handle);
+}
+
+   /**
    * This function is used for printing variables for debugging.
    * @access  public
    * @param   mixed $var	The variable to output
@@ -316,7 +338,6 @@ function debug($var, $title='') {
 	echo $str;
 	echo '</pre>';
 }
-
 
 /********************************************************************/
 /* the system course information									*/
