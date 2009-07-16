@@ -91,8 +91,8 @@ function encrypt_password()
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 		<label for="secret"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=<?php echo md5(uniqid(time())); ?>" id="simage" align="left" /></label>
-		<a href="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_play.php" title="Audible Version of CAPTCHA"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/audio_icon.gif" alt="Audio Version" onclick="this.blur()" align="top" border="0"></a><br>
-		<a href="#" title="Refresh Image" onclick="document.getElementById('simage').src = '<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/refresh.gif" alt="Reload Image" onclick="this.blur()" align="bottom" border="0"></a>
+		<a href="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_play.php" title="<?php echo _AT('audible_captcha'); ?>"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/audio_icon.gif" alt="<?php echo _AT('audible_captcha'); ?>" onclick="this.blur()" align="top" border="0"></a><br>
+		<a href="#" title="<?php echo _AT('refresh_image'); ?>" onclick="document.getElementById('simage').src = '<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/refresh.gif" alt="<?php echo _AT('refresh_image'); ?>" onclick="this.blur()" align="bottom" border="0"></a>
 
 		<br />
 		<p><?php echo _AT('image_validation_text'); ?><br />
