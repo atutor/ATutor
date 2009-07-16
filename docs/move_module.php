@@ -27,7 +27,7 @@ if (isset($_POST['from']))
 // handle remove module get request from course index page and student tools index page
 if ($_GET['remove'] <> '')
 {
-	if ($_SERVER['HTTP_REFERER'] == 'http://localhost/docs/index.php')
+	if ($_SERVER['HTTP_REFERER'] == AT_BASE_HREF.'index.php')
 		$from = 'course_index';
 	else
 		$from = 'student_tools';
