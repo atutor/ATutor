@@ -104,13 +104,13 @@ if ($row = mysql_fetch_assoc($result)) {
 	$num_takes = 0;
 }
 
-if (!$test_row['random']) {
-	$sql	= "SELECT COUNT(*) AS num_questions FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		$test_row['num_questions'] = $row['num_questions'];
-	} // else 0
-}	
+$sql	= "SELECT COUNT(*) AS num_questions FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_assoc($result);
+if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) {
+	$test_row['num_questions'] = $row['num_questions'];
+}
+
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">

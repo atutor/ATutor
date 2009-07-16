@@ -47,13 +47,13 @@ if (!$test_row['display']) {
 }
 
 $out_of = $test_row['out_of'];
-if (!$test_row['random']) {
-	$sql	= "SELECT COUNT(*) AS num_questions FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		$test_row['num_questions'] = $row['num_questions'];
-	} // else 0
-}	
+
+$sql	= "SELECT COUNT(*) AS num_questions FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_assoc($result);
+if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) {
+	$test_row['num_questions'] = $row['num_questions'];
+}
 
 $sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$mid."'";
 $takes_result= mysql_query($sql, $db) or die(mysql_error());
