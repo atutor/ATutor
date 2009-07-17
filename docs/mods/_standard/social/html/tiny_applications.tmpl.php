@@ -1,9 +1,9 @@
 <!--  compressed with java -jar {$path}/yuicompressor-2.3.5.jar -o {$file}-min.js {$file}.js -->
 <script type="text/javascript"
 	src="<?php echo AT_SHINDIG_URL; ?>/gadgets/js/rpc.js?c=1"></script>
+<script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/jquery-1.3.2.js"></script>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
-<script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/jquery.all.js"></script>
 <!--<script type="text/javascript" src="mods/social/lib/js/container.js"></script>-->
 
 <?php	
