@@ -38,7 +38,12 @@ if (isset($_POST['add_application']) && isset($_POST['app_url'])){
 		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
 		exit; 
 	}
-	$app_url = $addslashes(trim($_POST['app_url']));
+	$app_url = urldecode(trim($_POST['app_url']));
+	//grep the XML file out from any given URL
+	$app_url = preg_match('/url\=((http[s]?\:\/\/)?(.*)\.xml)/', $app_url, $matches);
+	if ($matches[1]!=''){
+		$app_url = $matches[1];
+	}
 	$gadget = $app->parseModulePrefs($app_url);
 	$gadget = $gadget[0];
 

@@ -60,7 +60,7 @@ Container.prototype = {
 		} else if (view === 'profile') {
 			return '/sprofile.php?id='+person;
 		} else if (view === 'canvas') {
-			return './mods/social/applications.php?app_id='+app;
+			return './mods/_standard/social/applications.php?app_id='+app;
 		} else {
 			return null;
 		}

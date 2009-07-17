@@ -4,7 +4,7 @@
 <script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/jquery-1.3.2.js"></script>
 <script type="text/javascript"
 	src="http://ajax.googleapis.com/ajax/libs/prototype/1.6.0.2/prototype.js"></script>
-<script type="text/javascript" src="mods/social/lib/js/container.js"></script>
+<script type="text/javascript" src="mods/_standard/social/lib/js/container.js"></script>
 <div class="search_form">	
 		<div class="headingbox"><h3><?php echo _AT('add_application'); ?></h3></div>
 		<div class="contentbox">
