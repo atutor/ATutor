@@ -290,7 +290,7 @@ if ((isset($_SESSION['course_id']) && isset($_pretty_url_course_id) && $_SESSION
    * @access  public
    * @param   mixed $var	The variable to output
    * @param   string $log	The location of the log file. If not provided, use the default one.
-   * @author  Joel Kronenberg
+   * @author  Cindy Qi Li
    */
 function debug_to_log($var, $log='') {
 	if (!defined('AT_DEVEL') || !AT_DEVEL) {
