@@ -17,6 +17,12 @@
  */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+if($_SESSION['course_id'] == 0 ){
+	$default_index = "index_mystart.php";
+}else{
+	$default_index = "index.php";
+}
+
 /*******
  * add savant variable
  */
@@ -45,7 +51,7 @@ $this->_stacks['social'] = array('title_var'=>'social', 'file'=>AT_INCLUDE_PATH.
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_group_tool = $_student_tool = AT_SOCIAL_BASENAME.'index.php';
+$_group_tool = $_student_tool = AT_SOCIAL_BASENAME.$default_index;
 
 $this->_list['social'] = array('title_var'=>'social','file'=>'mods/_standard/social/sublinks.php');
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['icon']      = 'images/home-directory_sm.png';
@@ -82,7 +88,7 @@ $this->_pages[AT_SOCIAL_BASENAME.'index.php']['title_var'] = 'social';
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['img']       = AT_SOCIAL_BASENAME.'images/social.gif';
 
 $this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['title_var'] = 'social_profile';
-$this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['parent'] = AT_SOCIAL_BASENAME.$default_index;
 
 $this->_pages[AT_SOCIAL_BASENAME.'edit_profile.php']['title_var'] = 'edit_profile';
 $this->_pages[AT_SOCIAL_BASENAME.'edit_profile.php']['parent'] = AT_SOCIAL_BASENAME.'sprofile.php';
@@ -95,24 +101,24 @@ $this->_pages[AT_SOCIAL_BASENAME.'basic_profile.php']['title_var'] = 'profile';
 $this->_pages[AT_SOCIAL_BASENAME.'basic_profile.php']['parent'] = AT_SOCIAL_BASENAME.'edit_profile.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'applications.php']['title_var'] = 'gadgets';
-$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['parent'] = AT_SOCIAL_BASENAME.$default_index;
 $this->_pages[AT_SOCIAL_BASENAME.'applications.php']['guide']     = 'general/?p=my_gadgets.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'connections.php']['title_var'] = 'connections';
-$this->_pages[AT_SOCIAL_BASENAME.'connections.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'connections.php']['parent'] = AT_SOCIAL_BASENAME.'index_mystart.php';
 $this->_pages[AT_SOCIAL_BASENAME.'connections.php']['guide']     = 'general/?p=my_contacts.php';
 //	$this->_pages['mods/social/add_friends.php']['title_var'] = 'add_friends';
 //	$this->_pages['mods/social/add_friends.php']['parent'] = 'mods/social/connections.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'activities.php']['title_var'] = 'activities';
-$this->_pages[AT_SOCIAL_BASENAME.'activities.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'activities.php']['parent'] = AT_SOCIAL_BASENAME.$default_index;
 
 $this->_pages[AT_SOCIAL_BASENAME.'settings.php']['title_var'] = 'settings';
-$this->_pages[AT_SOCIAL_BASENAME.'settings.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'settings.php']['parent'] = AT_SOCIAL_BASENAME.$default_index;
 $this->_pages[AT_SOCIAL_BASENAME.'settings.php']['guide']     = 'general/?p=my_settings.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['title_var'] = 'social_groups';
-$this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['parent'] = AT_SOCIAL_BASENAME.$default_index;
 $this->_pages[AT_SOCIAL_BASENAME.'groups/index.php']['guide']     = 'general/?p=my_groups.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'groups/create.php']['title_var'] = 'create_groups';
@@ -150,6 +156,6 @@ $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['parent'] = AT_NAV_START;
 }
 
 function social_get_group_url($group_id) {
-	return AT_SOCIAL_BASENAME.'index.php';
+	return AT_SOCIAL_BASENAME.$default_index;
 }
 ?>

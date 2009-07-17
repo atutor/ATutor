@@ -35,4 +35,4 @@
 		<span><a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/create.php"><?php echo _AT('create_group'); ?></a></span><br />
 	</div>
 </div>
-</div>
+

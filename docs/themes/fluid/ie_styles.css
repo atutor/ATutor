@@ -36,7 +36,19 @@ div#breadcrumbs {
 }
 #header{
 	background-color: #e1ecfe;
+	width:100%;
 }
+
+div#top-links {
+	position: relative;
+	padding-right: 5px;
+	line-height: 170%;
+	margin-top: 3px;
+}
+
 div#topnavlistcontainer {
     background-color: #e1ecfe;
+}
+.outside_box{
+	height:8.8em;
 }

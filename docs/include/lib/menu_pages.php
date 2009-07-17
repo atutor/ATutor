@@ -28,8 +28,20 @@ if($_config['allow_browse']){
 if($_config['allow_registration']){
 	$reg_tab = "registration.php";
 }
+
+if($_config['just_social']){
+
+$_pages[AT_NAV_START]  = array_merge(array('users/profile.php', 'users/preferences.php'), (isset($_pages[AT_NAV_START]) ? (array) $_pages[AT_NAV_START] : array()));
+
+}else{
+
+$_pages[AT_NAV_START]  = array_merge(array('users/index.php' , 'users/profile.php', 'users/preferences.php'), (isset($_pages[AT_NAV_START]) ? (array) $_pages[AT_NAV_START] : array()));
+
+}
 $_pages[AT_NAV_PUBLIC] = array_merge(array('login.php',$reg_tab,$browse_tab), (isset($_pages[AT_NAV_PUBLIC]) ? $_pages[AT_NAV_PUBLIC] : array()));
-$_pages[AT_NAV_START]  = array_merge(array('users/index.php',  'users/profile.php', 'users/preferences.php'), (isset($_pages[AT_NAV_START]) ? (array) $_pages[AT_NAV_START] : array()));
+
+
+//$_pages[AT_NAV_START]  = array_merge(array($my_tab , 'users/profile.php', 'users/preferences.php'), (isset($_pages[AT_NAV_START]) ? (array) $_pages[AT_NAV_START] : array()));
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();
 

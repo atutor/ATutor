@@ -34,6 +34,7 @@ $_config_defaults['home_url']                  = ''; // empty means disabled
 $_config_defaults['default_language']          = 'en';
 $_config_defaults['allow_registration']        = 1;
 $_config_defaults['allow_browse']              = 1;
+$_config_defaults['just_social']              = 0;
 $_config_defaults['allow_instructor_registration']        = 1;
 $_config_defaults['use_captcha']			   = 0;	//use captcha?
 $_config_defaults['allow_unenroll']            = 1;

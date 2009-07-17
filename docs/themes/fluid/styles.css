@@ -1527,57 +1527,69 @@ fieldset#toc {
 	width:50%;
 }
 
-/*ad home boxes*/
+/* style for home page sublinks view */
 div.home_box {
-	width: 410px;
+	width: 30em;
 	height: 150px;	
+	margin:0;
 	padding-top: 15px;
-	background: no-repeat; 
-	background-image: url(../../images/box.png);	
-	background-position: bottom;
-	position: static;
-	float: left;
+	margin-left:1em;
+	float:left;
 }
 
-div.home_toolbar{
-	width: 80px;
-	height: 17px;
-	padding-left: 4px;
+.outside_box{
+	margin-left:.4em;
+	background:#e0e0e0;
+	width:28em;
+	height:8.9em;
 }
 
-div.home_icon_title{
-	width: 470px;
-	height: 55px;
-	padding-top: 6px;
-	padding-left: 8px;	
+.inside_box{
+	width:100%;
+	margin:auto;
+	height:52%;
+	margin-bottom:.2em;
+	background:#eeeeee;
 }
-
-div.home_icon {
-	width: 65px;
-	height: 55px;
-	position: static;
-	padding-left: 2px;
-	float: left;
+.details_or{
+	width:28.8em;
+	height:9.8em;
+	margin:0;
+	background-image:url(../../images/details_r.png);
+	background-position: top right;
+	background-repeat:no-repeat;
 }
-
-div.home_title {
-	width: 380px;
-	height: 40px;
-	padding-top: 15px;
-	font-size: 13.5pt;
+.details_ol{
+	height:9.8em;
+	margin:0px;
+	width:.45em;
+	background-image:url(../../images/details_l.png);
+	background-position: top left;
+	background-repeat:no-repeat;
 }
-
-div.home_content{
-	width: 320px;
-	padding-left: 74px;
-	font-size: 10pt;
+.details_ir{
+	width:.5em;
+	height:100%;
+	float:right;
+	background-image:url(../../images/details_ir.png);
+	background-position: top right;
+	background-repeat:no-repeat;
 }
-
-div.home_text{
-	width: 300px;
-	padding-left: 74px;
-	font-size: 10pt;
-	text-align: justify;	
+.details_il{
+	height:100%;
+	float:left;
+	background-image:url(../../images/details_il.png);
+	background-position: top left;
+	background-repeat:no-repeat;
+}
+.home-title{
+	font-size:12pt;
+}
+.buttonbox{
+	float:right;
+}
+.details_text{
+	margin-left:1em;
 }
 /* jQuery tooltip styles */
 #tooltip{

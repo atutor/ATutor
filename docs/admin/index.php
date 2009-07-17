@@ -19,7 +19,25 @@ admin_authenticate();
 if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) { 
 	$msg->addWarning('TRANSLATE_ON');	
 }
+// Social networking only switch
+if (isset($_POST['social_submit'])) {
+	$_POST['just_social']          = intval($_POST['just_social']);
 
+	if ($_POST['just_social'] == 1) {
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('just_social', '$_POST[just_social]')";
+		mysql_query($sql, $db);
+		write_to_log(AT_ADMIN_LOG_REPLACE, 'config', mysql_affected_rows($db), $sql);
+		$msg->addFeedback('ATUTOR_SOCIAL_ONLY');
+		
+	} else if ($_POST['just_social'] == 0) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."config WHERE name='just_social'";
+		mysql_query($sql, $db);
+		write_to_log(AT_ADMIN_LOG_DELETE, 'config', mysql_affected_rows($db), $sql);
+		$msg->addFeedback('ATUTOR_SOCIAL_LMS');
+		
+	}
+	$_config['just_social'] = $_POST['just_social'];
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($_config['check_version']) {
@@ -28,9 +46,27 @@ if ($_config['check_version']) {
 		$msg->printFeedbacks('ATUTOR_UPDATE_AVAILABLE');
 	}
 }
+
 ?>
 
 <div style="width: 40%; float: right; padding-top: 4px; padding-left: 10px;">
+	<div class="input-form" style="width: 98%;">
+			<div class="row">
+				<h3><?php echo _AT('social_switch'); ?></h3>
+				<p><?php echo _AT('social_switch_text'); ?></p>
+			</div>
+			<div class="row">
+			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<?php echo _AT('social_switch'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['just_social'] ? _AT('just_social') : _AT('social_and_lms')); ?>)<br />
+			<input type="radio" name="just_social" value="1" id="social_y" <?php if($_config['just_social']) { echo 'checked="checked"'; }?>  /><label for="social_y"><?php echo _AT('just_social'); ?></label> <br /><input type="radio" name="just_social" value="0" id="social_n" <?php if(!$_config['just_social']) { echo 'checked="checked"'; }?>  /><label for="social_n"><?php echo _AT('social_and_lms'); ?></label>
+			</div>
+
+			<div class="row buttons">
+				<input type="submit" name="social_submit" value="<?php echo _AT('save'); ?>" />
+			</div>
+			</form>
+
+	</div>
 	<div class="input-form" style="width: 98%;">
 			<div class="row">
 				<h3><?php echo _AT('donate'); ?></h3>
