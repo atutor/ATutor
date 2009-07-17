@@ -810,7 +810,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 	 		$term = '(\s*'.$term.'\s*)';
 			$term = str_replace(' ','((<br \/>)*\s*)', $term); 
 
-			$def = htmlspecialchars($v);		
+			$def = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');		
 			if ($simple) {
 				$input = preg_replace
 						("/(\[\?\])$term(\[\/\?\])/i",
