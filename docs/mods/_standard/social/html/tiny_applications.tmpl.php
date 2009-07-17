@@ -29,7 +29,7 @@
 	scrolling="<?=$this->gadget['scrolling'] || $this->gadget['scrolling'] == 'true' ? 'yes' : 'no'?>"
 	height="<?php echo $app_obj->getHeight();?>px" width="100%"
 	frameborder="no" src="<?php echo $app_obj->getIframeUrl($_REQUEST['id'], 'profile', $_GET['appParams']);?>" class="gadgets-gadget"
-	name="remote_iframe_<?php echo $app_obj->getModuleId(); ?>"
-	id="remote_iframe_<?php echo $app_obj->getModuleId(); ?>"></iframe>	
+	name="remote_iframe_<?php echo $app_obj->getId(); ?>"
+	id="remote_iframe_<?php echo $app_obj->getId(); ?>"></iframe>	
 </div></div><br />
 <?php endforeach; ?>
