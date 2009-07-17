@@ -81,6 +81,10 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+if($_config['just_social'] == 1){
+	header('Location: mods/_standard/social/index.php');
+	exit;
+}
 $set_to_public = false;
 if ($_SERVER['PHP_SELF'] == $_base_path."acl.php") {
 	//search through the auth table and find password that matches get password
