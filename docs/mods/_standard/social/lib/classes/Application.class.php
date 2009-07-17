@@ -90,6 +90,11 @@ class Application extends Applications{
 
 		//Add a record into application_member table for mapping
 		$this->addMemberApplication($member_id, $id);
+		
+		// Post gadget information to www.atutor.ca for sharing
+		$this->saveApplicationForShare($gadget_obj->url, $gadget_obj->title, $gadget_obj->height,
+			$gadget_obj->screenshot, $gadget_obj->thumbnail, $gadget_obj->description,
+			$gadget_obj->author, $gadget_obj->authorEmail);
 	}
 
 
@@ -393,6 +398,27 @@ class Application extends Applications{
 		}
 
 		return $rs;
+	}
+	
+	/** 
+	 * Save gadget informaiton into atutor.ca/gadget_log.php to share among ATutor users
+	 */
+	function saveApplicationForShare($url, $title, $height, $screenshot, $thumbnail, $description, $author, $authorEmail){
+		$request = "&url=".urlencode($url)."&title=".urlencode($title).
+		           "&height=".urlencode($height)."&screenshot=".urlencode($screenshot).
+		           "&thumbnail=".urlencode($thumbnail)."&desc=".urlencode($description).
+		           "&author=".urlencode($author)."&authorEmail=".urlencode($authorEmail);
+		
+		$header = "POST /gadget_log.php HTTP/1.1\r\n";
+		$header .= "Host: atutor.ca\r\n";
+		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+		$header .= "Content-Length: " . strlen($request) . "\r\n\r\n";
+		$fp = fsockopen('www.atutor.ca', 80, $errno, $errstr, 30);
+
+		if ($fp) {
+			fputs($fp, $header . $request . "\r\n\r\n");
+			fclose($fp);
+		}
 	}
 }
 ?>
