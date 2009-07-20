@@ -53,7 +53,7 @@
 	?>
 	<div class="contact_mini" >
 		<?php if (isset($person['added']) && $person['added']==1): ?>
-			<a style="vertical-align:top;float:right;" href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index.php');?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" border="0"/></a>
+			<a style="vertical-align:top;float:right;" href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX);?>?remove=yes<?php echo SEP;?>id=<?php echo $id;?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>" border="0"/></a>
 			<div>
 				<div style="float:left;"><?php echo printSocialProfileImg($id); ?></div>
 				<div style="padding-left:0.5em; float:left;">

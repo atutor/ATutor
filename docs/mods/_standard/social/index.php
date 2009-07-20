@@ -40,7 +40,7 @@ if (isset($_GET['remove'])){
 	$id = intval($_GET['id']);
 //	if (isset($_GET['confirm_remove'])){
 		removeFriend($id);
-		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'index.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX, AT_PRETTY_URL_IS_HEADER));
 		exit;
 //	}
 //	$msg->addConfirm("are_you_sure?");
@@ -76,7 +76,7 @@ if (isset($_GET['approval'])){
 	} elseif ($_GET['approval'] == 'n'){
 		rejectFriendRequest($id);
 	}
-	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'index.php', AT_PRETTY_URL_IS_HEADER));
+	header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX, AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 

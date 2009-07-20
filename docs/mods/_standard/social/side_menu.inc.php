@@ -36,7 +36,7 @@ if (sizeof($list_of_friends) > 0){
 ?>
 
 <ul class="social_side_menu">
-	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('network_home'); ?></a></li>
+	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX, AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('network_home'); ?></a></li>
 	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'connections.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('connections'); ?></a></li>
 	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('social_profile'); ?></a></li>
 	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('applications'); ?></a></li>

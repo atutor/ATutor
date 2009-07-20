@@ -20,6 +20,12 @@ define(AT_SHINDIG_URL,						'http://social.atutor.ca/shindig/php');
 define('AT_SOCIAL_BASENAME',	'mods/_standard/social/');
 define('AT_SOCIAL_BASE',		AT_INCLUDE_PATH.'../mods/_standard/social/');
 define('AT_SOCIAL_INCLUDE',		AT_SOCIAL_BASE.'lib/');
+//if course_id = 0, then it's outside of course scope, use index_mystart. "just_social" inclusive.
+if($_SESSION['course_id'] == 0 ){
+	define('AT_SOCIAL_INDEX', 'index_mystart.php');
+} else {
+	define('AT_SOCIAL_INDEX', 'index.php');
+}
 
 //Privacy Control Constants, field indices
 //Profile
@@ -61,4 +67,5 @@ define('SOCIAL_GROUP_MAX',							5); //# of friends to display on the homepage c
 define('SOCIAL_APPLICATION_UPDATE_SCHEDULE',		10); //in days
 define('SOCIAL_NUMBER_OF_PEOPLE_YOU_MAY_KNOW',		3);	 //the number of "people you may know" to be displayed on the home tab
 define('SOCIAL_FRIEND_SEARCH_MAX',					50); //search result maximum
+
 ?>

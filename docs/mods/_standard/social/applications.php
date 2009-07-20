@@ -40,10 +40,15 @@ if (isset($_POST['add_application']) && isset($_POST['app_url'])){
 	}
 	$app_url = urldecode(trim($_POST['app_url']));
 	//grep the XML file out from any given URL
-	$app_url = preg_match('/url\=((http[s]?\:\/\/)?(.*)\.xml)/', $app_url, $matches);
+	preg_match('/url\=((http[s]?\:\/\/)?(.*)\.xml)/', $app_url, $matches);
 	if ($matches[1]!=''){
 		$app_url = $matches[1];
+	}	
+	//validate app_url to make sure it always has http:// on it 
+	if (preg_match('/^http[s]?\:\/\//', $app_url)==0){
+		$app_url = 'http://'.$app_url;
 	}
+
 	$gadget = $app->parseModulePrefs($app_url);
 	$gadget = $gadget[0];
 
