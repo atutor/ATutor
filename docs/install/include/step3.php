@@ -111,6 +111,12 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			$result = mysql_query($sql ,$db);
 		}
 
+		$_POST['just_social'] = intval($_POST['just_social']);
+		if ($_POST['just_social'] > 0){
+			$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('just_social', '1')";
+			$result = mysql_query($sql ,$db);
+		}
+
 		unset($_POST['admin_username']);
 		unset($_POST['form_admin_password_hidden']);
 		unset($_POST['admin_email']);
@@ -120,6 +126,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		unset($_POST['home_url']);
 		unset($_POST['email']);
 		unset($_POST['site_name']);
+		unset($_POST['just_social']);
 
 		unset($errors);
 		unset($_POST['submit']);
@@ -214,6 +221,14 @@ function encrypt_password()
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="cemail">Contact Email:</label></b><br />
 			The email that will be used as the return email when needed.</td>
 			<td class="row1"><input type="text" name="email" id="cemail" size="40" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" class="formfield" /></td>
+		</tr>
+		<tr>			
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="just_social">Just Social:</label></b><br />
+			Deploy ATutor as just a Social Networking platform? (without LMS)</td>
+			<td class="row1">
+				<label for="social_y">Just Social</label><input type="radio" name="just_social" id="social_y" value="1" class="formfield" <?php echo ($_POST['just_social']==1)?' checked="checked"':''; ?>/>
+				<label for="social_n">Social and LMC</label><input type="radio" name="just_social" id="social_n" value="0" class="formfield" <?php echo ($_POST['just_social']==0 || !isset($_POST['just_social']))?' checked="checked"':''; ?>/>
+			</td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="optional" title="Optional Field">?</div><b><label for="home_url">Optional 'Home' URL:</label></b><br />
