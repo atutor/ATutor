@@ -11,7 +11,12 @@ body {
 	font-size: small;
 	background-color: white;
 }
+.page_wrapper{
+border:thin solid black;
+width:97%;
+margin:auto;
 
+}
 p {
     margin: 0.5em 0em 1em 0em;
     text-align: justify;
