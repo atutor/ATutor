@@ -73,6 +73,14 @@ class Applications {
 	 */
 	function deleteApplications($ids){
 		global $db;
+
+		//foreach of these ids, delete all their associations
+		foreach ($ids as $id){
+			$app = new Application($id);
+			$app->deleteApplication();
+		}
+
+		//now delete it from the application table
 		$id_list = implode(', ', $ids);
 		$sql = 'DELETE FROM '.TABLE_PREFIX."social_applications WHERE id IN ($id_list)";
 		mysql_query($sql, $db);
