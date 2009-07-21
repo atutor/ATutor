@@ -9,9 +9,9 @@
 
 <h3><?php echo $this->app->getTitle(); ?></h3>
 <div class="gadgets-gadget-content"><iframe width="800px"
-	scrolling="<?=$this->gadget['scrolling'] || $this->gadget['scrolling'] == 'true' ? 'yes' : 'no'?>"
+	scrolling="<?php echo ($this->gadget['scrolling'] || $this->gadget['scrolling'] == 'true') ? 'yes' : 'no'?>"
 	height="<?php $app=$this->app; echo $app->getHeight();?>px"
 	frameborder="no" src="<?php echo $this->iframe_url;?>" class="gadgets-gadget"
 	name="remote_iframe_<?php echo $this->app->getId();?>"
-	id="remote_iframe_<?php echo $this->app->getId();?>"></iframe></div>
+	id="remote_iframe_<?php echo $this->app->getId();?>"></iframe>
 </div>
