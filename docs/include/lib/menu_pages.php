@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
+global $_config;
 global $_pages;
 
 /*
@@ -21,8 +21,8 @@ global $_pages;
 if (isset($_pages[AT_NAV_ADMIN])) {
 	array_unshift($_pages[AT_NAV_ADMIN], 'admin/index.php', 'admin/modules/index.php');
 }
-global $_config;
-if($_config['allow_browse']){
+
+if($_config['allow_browse'] && $_config['just_social'] != "1"){
 	$browse_tab = "browse.php";
 }
 if($_config['allow_registration']){
