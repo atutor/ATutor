@@ -188,6 +188,7 @@ function toggleToc(objId) {
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
 	<div id="top-links"> <!-- top help/search/login links -->
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
+			<?php if(!$this->just_social): ?>
 			<!-- start the jump menu -->
 			<?php if (empty($_GET)): ?>
 				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
@@ -204,6 +205,8 @@ function toggleToc(objId) {
 					</optgroup>
 				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" class="button" /> </form>
 			<!-- /end the jump menu -->
+			<?php endif; ?>
+
 			<?php if ($_SESSION['is_super_admin']): ?>
 				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
 			<?php endif; ?>
@@ -216,7 +219,10 @@ function toggleToc(objId) {
 				<?php endif; ?>
 			<?php endif; ?>
 		<?php endif; ?>
-		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> <a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+		<?php if(!$this->just_social): ?>
+			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> 
+		<?php endif; ?>
+		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	</div>
 	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
 		<a href="<?php echo $this->base_path.url_rewrite('index.php'); ?>"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	

@@ -48,6 +48,7 @@ $savant->assign('base_path', $_base_path);
 $savant->assign('base_tmpl_path', $_SERVER['HTTP_HOST']);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 $savant->assign('current_date', AT_date(_AT('announcement_date_format')));
+$savant->assign('just_social', $_config['just_social']);
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);

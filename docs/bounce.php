@@ -82,7 +82,7 @@ define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if($_config['just_social'] == 1){
-	header('Location: mods/_standard/social/index.php');
+	header('Location: mods/_standard/social/index_mystart.php');
 	exit;
 }
 $set_to_public = false;
