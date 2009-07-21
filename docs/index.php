@@ -73,6 +73,12 @@ jQuery(document).ready(function () {
 	});
 	
 });
+
+function remove_module(module)
+{
+	jQuery.post("'.AT_BASE_HREF.'move_module.php", { "remove":module, "from":"course_index" }, function(data) {});
+	$("div[id="+module+"]").slideUp("slow");
+}
 </script>
 	
 ';
