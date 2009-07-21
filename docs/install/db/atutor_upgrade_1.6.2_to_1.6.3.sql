@@ -254,6 +254,3 @@ ALTER TABLE `courses` add `home_view` tinyint NOT NULL DEFAULT 0;
 ALTER TABLE `fha_student_tools` add `home_view` tinyint NOT NULL DEFAULT 0;
 
 # END Adding feature of "detail view" and "icon view" on course home page
-
-# Add the Just Social themes for ATutor used only for social networking.
-INSERT INTO `themes` VALUES ('Just ATutor Social', '1.6.3', 'just_social', NOW(), 'Use this theme if ATutor is being used as a social networking environment, with all learning management tools turned off.', 1);
