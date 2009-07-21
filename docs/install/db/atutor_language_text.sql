@@ -237,6 +237,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DIR_NOT_EXIST','
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DIR_NOT_WRITEABLE','The SCORM RTE directory is not writeable. Please execute the command <code>chmod a+rwx sco</code> while in ATutor\'s top directory.','2005-05-10 11:00:08','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DISABLED','The SCORM 1.2 RTE has not been enabled by the Administrator.','2005-05-10 11:06:09','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SEARCH_TERM_REQUIRED','You must specify at least one search term.','2003-08-22 12:03:29','search form');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SECRET_ERROR','Letters or numbers entered from the CAPTCHA image are incorrect. Try again.','2009-07-16 09:01:08','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SELECT_ONE_ITEM','Only <em>one</em> item must be selected.','2007-02-21 14:07:53','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SENDING_ERROR','There was an error sending the email message.','2005-01-18 13:34:23','mail failed to be sent');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SEND_ENROL','You can only send a message to other members after you enroll in a course.','2003-05-16 13:42:17','error msg');
@@ -271,6 +272,8 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_APPROVAL_PENDING'
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ARCHIVE_EXTRACTED','Archive has been extracted successfully.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ASSIGNMENT_ADDED','Assignment was successfully added.','2006-04-20 14:42:13','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ASSIGNMENT_HANDED_IN','Assignment files submitted successfully.','2006-03-20 14:35:53','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ATUTOR_SOCIAL_LMS','ATutor is now configured as a learning management system (LMS) with social networking as a module.','2009-07-17 14:20:59','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ATUTOR_SOCIAL_ONLY','ATutor is now configured as a social networking environment. Learning management tools are turned off.','2009-07-17 14:22:01','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ATUTOR_UPDATE_AVAILABLE','An updated version of ATutor is available! View the <a href=\"http://atutor.ca/atutor/change_log.php\">Change Log</a> for details.','2005-11-21 12:36:30','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_AUTO_DISABLED','Auto-Login has been disabled','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_AUTO_ENABLED','Auto-Login has been enabled. Next time you enter ATutor using this computer, you will bypass the login screen. ','2003-05-16 13:47:01','feedback msg');
@@ -587,6 +590,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','atutor_version_tested_wit
 INSERT INTO `language_text` VALUES ('en', '_template','atutor_version_text','%s. <a href=\"http://atutor.ca/check_atutor_version.php?v=%s\">Check Latest Version</a>.','2007-07-26 13:52:25','');
 INSERT INTO `language_text` VALUES ('en', '_template','atutor_version_to_apply','ATutor Version to Apply','2008-04-21 15:11:31','');
 INSERT INTO `language_text` VALUES ('en', '_template','at_tools','ATutor Tools','2003-05-18 11:51:40','tracker column heading');
+INSERT INTO `language_text` VALUES ('en', '_template','audible_captcha','Audible Version of CAPTCHA','2009-07-16 08:50:02','');
 INSERT INTO `language_text` VALUES ('en', '_template','audio','Audio','2008-09-09 08:56:34','');
 INSERT INTO `language_text` VALUES ('en', '_template','auditory','Auditory','2008-09-08 14:18:54','');
 INSERT INTO `language_text` VALUES ('en', '_template','australian-auslan','Australian-Auslan','2008-09-09 09:01:12','');
@@ -645,6 +649,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','bold','Bold','2003-05-18 
 INSERT INTO `language_text` VALUES ('en', '_template','bottom','Bottom','2003-05-23 16:58:31','preference settings option');
 INSERT INTO `language_text` VALUES ('en', '_template','breadth_first','Breadth First (top-level topics first)','2008-09-09 09:03:56','');
 INSERT INTO `language_text` VALUES ('en', '_template','british-bsl','British-BSL','2008-09-09 09:01:12','');
+INSERT INTO `language_text` VALUES ('en', '_template','browse_all','Browse All','2009-07-16 10:57:49','browse all');
 INSERT INTO `language_text` VALUES ('en', '_template','browse_courses','Browse Courses','2003-05-18 12:13:27','control centre, about, login screens');
 INSERT INTO `language_text` VALUES ('en', '_template','browse_files','Browse Files','2008-07-22 16:43:56','For \"Browse Files\" button in Fluid\'\'s multiple file uploader');
 INSERT INTO `language_text` VALUES ('en', '_template','bt','<acronym title=\"Byte\">B</acronym>','2007-12-18 14:39:47','byte, file manager/storage');
@@ -1127,6 +1132,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','fill_groups','Fill Groups
 INSERT INTO `language_text` VALUES ('en', '_template','fill_groups_randomly','Fill groups randomly upon creation.','2006-03-22 11:53:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','filter','Filter','2005-03-30 14:52:33','');
 INSERT INTO `language_text` VALUES ('en', '_template','final_score','Final Score','2007-03-16 14:10:05','');
+INSERT INTO `language_text` VALUES ('en', '_template','find_gadgets','Find Gadgets','2009-07-13 14:55:51','');
 INSERT INTO `language_text` VALUES ('en', '_template','find_results_in','Find results in','2004-08-18 12:02:16','');
 INSERT INTO `language_text` VALUES ('en', '_template','first_name','First Name','2003-05-20 09:58:26','registration, profile');
 INSERT INTO `language_text` VALUES ('en', '_template','fix_content_ordering','Fix Content Ordering','2004-10-18 14:03:47','');
@@ -1275,7 +1281,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','illegal_file','Illegal Fi
 INSERT INTO `language_text` VALUES ('en', '_template','illegal_file_extensions','Illegal File Extensions','2005-03-03 10:52:15','');
 INSERT INTO `language_text` VALUES ('en', '_template','image','Image','2003-05-20 10:53:28','global code picker image code link text');
 INSERT INTO `language_text` VALUES ('en', '_template','image_intensive','Image-intensive','2008-09-09 09:03:56','');
-INSERT INTO `language_text` VALUES ('en', '_template','image_validation_text','In this image () there is a number displayed.  Please type this number into the following field.','2009-06-03 15:33:17','');
+INSERT INTO `language_text` VALUES ('en', '_template','image_validation_text','In the above image there are numbers and/or letters displayed.  Please type them into the following field.','2009-07-16 09:02:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','image_validation_text2','This helps ensure a live person is registering on this system.','2009-06-03 15:33:17','');
 INSERT INTO `language_text` VALUES ('en', '_template','import','Import','2003-05-20 11:56:51','instructor import/export screen');
 INSERT INTO `language_text` VALUES ('en', '_template','import_a_new_lang','Import a New Language','2003-06-04 15:34:43','admin language manager');
@@ -1350,6 +1356,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','join_group','Join Group',
 INSERT INTO `language_text` VALUES ('en', '_template','jump','Jump','2003-05-20 12:28:03','jump menu submit button text');
 INSERT INTO `language_text` VALUES ('en', '_template','jump_codes','Jump over the code picker','2003-05-20 12:29:53','alt text for bypass link to jump over the code picker');
 INSERT INTO `language_text` VALUES ('en', '_template','jump_redirect','Direct Jump','2004-11-30 10:03:55','preferecnes');
+INSERT INTO `language_text` VALUES ('en', '_template','just_social','Use just ATutor Social','2009-07-17 14:11:50','');
 INSERT INTO `language_text` VALUES ('en', '_template','kb','<acronym title=\"Kilobytes\">KB</acronym>','2007-12-09 12:56:24','');
 INSERT INTO `language_text` VALUES ('en', '_template','keep_email_private','Keep email hidden from others.','2006-03-28 11:29:07','');
 INSERT INTO `language_text` VALUES ('en', '_template','keep_it_short','Tip: Keep it short, no spaces.','2003-05-20 12:31:53','file manager suggestion for folder creation');
@@ -1766,6 +1773,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','recently_joined','Recentl
 INSERT INTO `language_text` VALUES ('en', '_template','recipient_address','Recipient Address','2004-12-06 12:20:03','admin/error_logging_bundle.php');
 INSERT INTO `language_text` VALUES ('en', '_template','red','Red','2003-05-21 12:32:57','global code picker');
 INSERT INTO `language_text` VALUES ('en', '_template','red_members','Red = Members','2003-05-21 12:33:55','instructor course statistics/details');
+INSERT INTO `language_text` VALUES ('en', '_template','refresh_image','Refresh Image','2009-07-16 08:51:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','regenerate','Regenerate','2007-02-16 14:00:06','');
 INSERT INTO `language_text` VALUES ('en', '_template','register','Register','2003-11-26 15:09:00','');
 INSERT INTO `language_text` VALUES ('en', '_template','registered_members','Registered Members','2008-10-06 13:42:00','');
@@ -1995,8 +2003,11 @@ INSERT INTO `language_text` VALUES ('en', '_template','smile_tired','tired','200
 INSERT INTO `language_text` VALUES ('en', '_template','smile_tongue','tongue','2004-02-12 12:20:27','');
 INSERT INTO `language_text` VALUES ('en', '_template','smile_wink','wink','2004-02-12 12:20:08','');
 INSERT INTO `language_text` VALUES ('en', '_template','social','Networking','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','social_and_lms','Use ATutor LMS with ATutor Social module','2009-07-17 14:12:34','');
 INSERT INTO `language_text` VALUES ('en', '_template','social_groups','Network Groups','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','social_profile','Network Profile','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','social_switch','Social Networking','2009-07-17 14:11:16','');
+INSERT INTO `language_text` VALUES ('en', '_template','social_switch_text','Choose to use ATutor as a social networking environment only, or as a learning management system with a social networking module.','2009-07-17 14:19:22','');
 INSERT INTO `language_text` VALUES ('en', '_template','social_text','Gather contacts, participate in interest groups, and create a social network.','2009-07-02 14:16:56','');
 INSERT INTO `language_text` VALUES ('en', '_template','spanish','Spanish','2008-09-09 09:01:12','');
 INSERT INTO `language_text` VALUES ('en', '_template','spanish-lse','Spanish-LSE','2008-09-09 09:01:13','');
