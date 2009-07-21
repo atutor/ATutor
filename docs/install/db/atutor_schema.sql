@@ -1202,6 +1202,7 @@ CREATE TABLE `social_applications` (
   `url` VARCHAR(255) NOT NULL DEFAULT '',
   `title` VARCHAR(255) NOT NULL,
   `height` INTEGER UNSIGNED, 
+  `scrolling` INTEGER UNSIGNED,
   `screenshot` VARCHAR(255) NOT NULL,
   `thumbnail` VARCHAR(255) NOT NULL,
   `author` VARCHAR(255) NOT NULL,

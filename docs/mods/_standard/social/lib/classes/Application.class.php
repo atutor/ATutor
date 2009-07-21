@@ -45,6 +45,7 @@ class Application extends Applications{
 		//TODO: Many more fields to add
 //		$id						= $gadget_obj['moduleId'];   //after i change the URL to the key.
 		$author					= $addslashes($gadget_obj->author);
+		$author_location		= $addslashes($gadget_obj->authorLocation);
 		$author_email			= $addslashes($gadget_obj->authorEmail);
 		$description			= $addslashes($gadget_obj->description);
 		$screenshot				= $addslashes($gadget_obj->screenshot);
@@ -55,6 +56,7 @@ class Application extends Applications{
 		$url					= $addslashes($gadget_obj->url);
 		$userPrefs				= $addslashes(serialize($gadget_obj->userPrefs));
 		$views					= $addslashes(serialize($gadget_obj->views));
+		$scrolling				= intval(($gadget_obj->scrolling=='true'?1:0));
 
 		//determine next id
 		$sql = 'SELECT MAX(id) AS max_id FROM '.TABLE_PREFIX.'social_applications';
@@ -67,7 +69,7 @@ class Application extends Applications{
 		}
 		$member_id = $_SESSION['member_id'];
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_applications (id, url, title, height, screenshot, thumbnail, author, author_email, description, settings, views, last_updated) VALUES ($id, '$url', '$title', $height, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views', NOW())";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_applications (id, url, title, height, scrolling, screenshot, thumbnail, author, author_email, description, settings, views, last_updated) VALUES ($id, '$url', '$title', $height, $scrolling, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views', NOW())";
 		$result = mysql_query($sql, $db);
 		
 		//This application is already in the database, get its ID out
@@ -82,7 +84,7 @@ class Application extends Applications{
 			//Use TIMESTAMP for now, but i perfer version #.
 			//If the gadget is SOCIAL_APPLICATION_UPDATE_SCHEDULE days old, update it
 			if (abs($row['last_updated']) < strtotime('-'.SOCIAL_APPLICATION_UPDATE_SCHEDULE.' day')){
-				$sql = 'UPDATE '.TABLE_PREFIX."social_applications SET title='$title', height=$height, screenshot='$screenshot', thumbnail='$thumbnail', author='$author', author_email='$author_email', description='$description', settings='$userPrefs', views='$views', last_updated=NOW() WHERE url='$url'";
+				$sql = 'UPDATE '.TABLE_PREFIX."social_applications SET title='$title', height=$height, scrolling=$scrolling, screenshot='$screenshot', thumbnail='$thumbnail', author='$author', author_email='$author_email', description='$description', settings='$userPrefs', views='$views', last_updated=NOW() WHERE url='$url'";
 				$result = mysql_query($sql, $db);
 				//echo $sql;
 			}
@@ -267,8 +269,16 @@ class Application extends Applications{
 		return $this->author_email;
 	}
 
+	function getAuthorLocation(){
+		return $this->author_location;
+	}
+
 	function getDescription(){
 		return $this->description;
+	}
+
+	function getScrolling(){
+		return ($this->scrolling==1?'yes':'no');
 	}
 
 	function getSettings(){
@@ -328,18 +338,18 @@ class Application extends Applications{
 //debug($securityToken);
 		$url = AT_SHINDIG_URL.'/gadgets/ifr?' 
 			. "synd=default" 
-			. "&container=default" 
-			. "&viewer=". $_SESSION['member_id']
-			. "&owner=" . $oid
-			. "&aid=" . $this->getId()			//application id
-			. "&mid=" . $this->getModuleId()	//not sure what mod_id is
-			. "&country=US" 
-			. "&lang=en" 
-			. "&view=" . $view	//canvas for this big thing, should be a variable
-			. "&parent=" . urlencode("http://" . $_SERVER['HTTP_HOST']) . $prefs . (isset($appParams) ? '&view-params=' . urlencode($appParams) : '') 
-			. "&st=" . urlencode(base64_encode($securityToken->toSerialForm())) 
-			. "&v=" . $this->getVersion()
-			. "&url=" . urlencode($this->getUrl()) . "#rpctoken=" . rand(0, getrandmax());
+			. SEP."container=default" 
+			. SEP."viewer=". $_SESSION['member_id']
+			. SEP."owner=" . $oid
+			. SEP."aid=" . $this->getId()			//application id
+			. SEP."mid=" . $this->getModuleId()	//not sure what mod_id is
+			. SEP."country=US" 
+			. SEP."lang=en" 
+			. SEP."view=" . $view	//canvas for this big thing, should be a variable
+			. SEP."parent=" . urlencode("http://" . $_SERVER['HTTP_HOST']) . $prefs . (isset($appParams) ? '&view-params=' . urlencode($appParams) : '') 
+			. SEP."st=" . urlencode(base64_encode($securityToken->toSerialForm())) 
+			. SEP."v=" . $this->getVersion()
+			. SEP."url=" . urlencode($this->getUrl()) . "#rpctoken=" . rand(0, getrandmax());
 		return $url;
 	}
 
@@ -365,6 +375,7 @@ class Application extends Applications{
 			$this->url			= $row['url'];
 			$this->title		= $row['title'];
 			$this->height		= $row['height'];
+			$this->scrolling	= $row['scrolling'];
 			$this->screenshot	= $row['screenshot'];
 			$this->thumbnail	= $row['thumbnail'];
 			$this->author		= $row['author'];
