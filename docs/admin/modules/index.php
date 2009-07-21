@@ -16,6 +16,8 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
 $dir_name = str_replace(array('.','..'), '', $_GET['mod_dir']);
 
 $args = '';
@@ -219,11 +221,11 @@ $keys = array_keys($module_list);
 </tr>
 </tfoot>
 <tbody>
-<?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; $i++?>
+<?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; $i++; $readme = get_readme(AT_INCLUDE_PATH.'../mods/'.$dir_name);?>
 
 	<tr onmousedown="document.form['t_<?php echo $i; ?>'].checked = true; rowselect(this);" id="r_<?php echo $i; ?>">
 		<td valign="top"><input type="radio" id="t_<?php echo $i; ?>" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $i; ?>"><?php echo $module->getName(); ?></label></td>
+		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $i; ?>"><?php echo $module->getName(); if ($readme <> '') echo '&nbsp;<a href="#" onclick="poptastic(\''.AT_BASE_HREF.'mods/'.$dir_name.'/'.$readme.'\');return false;">'._AT('view_readme').'</a>'; ?></label></td>
 		<td valign="top"><?php
 			if ($module->isCore()) {
 				echo '<strong>'._AT('core').'</strong>';

@@ -124,6 +124,8 @@ if (!file_exists('../../mods/'.$mod.'/module.xml')) {
 	exit;
 }
 
+$readme = get_readme('../../mods/'.$mod);
+
 $moduleParser->parse(file_get_contents('../../mods/'.$mod.'/module.xml'));
 
 $module =& $moduleFactory->getModule($mod);
@@ -149,7 +151,7 @@ $properties = $module->getProperties(array('maintainers', 'url', 'date', 'licens
 
 	<div class="row">
 		<?php echo _AT('description'); ?><br />
-		<?php echo nl2br($module->getDescription($_SESSION['lang'])); ?>
+		<?php echo nl2br($module->getDescription($_SESSION['lang'])); if ($readme <> '') echo '<br /><a href="#" onclick="poptastic(\''.AT_BASE_HREF.'mods/'.$mod.'/'.$readme.'\');return false;">'._AT('view_readme').'</a>'; ?>
 	</div>
 
 	<div class="row">

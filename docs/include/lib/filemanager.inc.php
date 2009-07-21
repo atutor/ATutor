@@ -401,4 +401,24 @@ function course_realpath_NEW_VERSION($file) {
 	}
 }
 
+/**
+* Returns the name of the readme file in the given directory
+* @access public
+* @param  string $dir_name the name of the directory
+* @return  string	the name of the readme file
+*/
+function get_readme($dir)
+{
+	if (!is_dir($dir)) return '';
+	
+	$dh = opendir($dir);
+	
+	while (($file = readdir($dh)) !== false) {
+		if (stristr($file, 'readme') && substr($file, -4) <> '.php')
+			return $file;
+	}
+	
+	closedir($dh);
+	return '';
+}
 ?>
