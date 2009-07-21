@@ -1,5 +1,6 @@
 html,body{
 	height:100%;
+
 }
 
 
@@ -9,13 +10,13 @@ body {
 	margin:0px;
 	margin-top: -10px;
 	font-size: small;
-	background-color: white;
+	background-color: #cccccc;
 }
 .page_wrapper{
-border:thin solid black;
-width:97%;
-margin:auto;
-
+	border:thin solid black;
+	width:97%;
+	margin:auto;
+	background-color: #ffffff;
 }
 p {
     margin: 0.5em 0em 1em 0em;
