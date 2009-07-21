@@ -16,7 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $_base_path;
 global $system_courses;
-
+global $_config;
 ?>
 <div align="center"><?php
 
@@ -29,9 +29,10 @@ global $system_courses;
 	   IN KEEPING WITH THE TERMS OF THE ATUTOR LICENCE AGREEMENT (GNU GPL), THE FOLLOWING
 	   COPYRIGHT LINES MAY NOT BE ALTERED IN ANY WAY.
 	*/
+
 ?>
 	<small><?php echo _AT('copyright').'. '; echo '<a href="'.$_base_path.'about.php">'._AT('about_atutor').'</a>.'; ?><br />
-	<?php if($_config['just_social'] == 1){ ?>
+	<?php if($_config['just_social'] != "1"){ ?>
 		<span id="howto"><?php echo _AT('general_help', AT_GUIDES_PATH.'index_list.php?lang='.$_SESSION['lang']);
 	?></span>
 	<?php } ?>
