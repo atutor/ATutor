@@ -20,7 +20,7 @@
 	if (!empty($this->activities)): ?>
 			<ul>
 				<?php foreach ($this->activities as $id=>$array): ?>
-				<li id="activity"><?php echo $array['created_date']. ' - '. printSocialName($array['member_id']).' '. $array['title']; ?></li>
+				<li class="activity"><?php echo $array['created_date']. ' - '. printSocialName($array['member_id']).' '. $array['title']; ?></li>
 				<?php endforeach; ?>
 			</ul>
 			<?php //little hack, show_all will only be displayed when the flag is used.
