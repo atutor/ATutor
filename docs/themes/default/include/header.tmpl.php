@@ -165,14 +165,15 @@ function toggleToc(objId) {
 	}
 	var showlink=document.getElementById(objId + 'showlink');
 	var hidelink=document.getElementById(objId + 'hidelink');
+
 	if (hidelink.style.display == 'none') {
 		document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-		toc.style.display = '';
+		$("[id="+objId+"]").slideDown("slow");
 		hidelink.style.display='';
 		showlink.style.display='none';
 	} else {
 		document.getElementById('contentcolumn_shiftright').id="contentcolumn";
-		toc.style.display = 'none';
+		$("[id="+objId+"]").slideUp("slow");
 		hidelink.style.display='none';
 		showlink.style.display='';
 	}
