@@ -14,7 +14,13 @@
 			<a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME."edit_profile.php");?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME;?>images/edit_profile.gif" alt="<?php echo _AT('edit_profile'); ?>" title="<?php echo _AT('edit_profile'); ?>" border="0"/></a>
 		</div>		
 		<?php endif; ?>
-		<a href="get_profile_img.php?id=<?php echo $this->profile['member_id'].SEP ;?>size=o"><?php echo printSocialProfileImg($this->profile['member_id'], 2, false); ?></a>
+		<?php 
+		//TODO: include this in the printSocialProfileImg function itself
+		if (profile_image_exists($this->profile['member_id'])): ?>
+			<a href="get_profile_img.php?id=<?php echo $this->profile['member_id'].SEP ;?>size=o"><?php echo printSocialProfileImg($this->profile['member_id'], 2, false); ?></a>
+		<?php else: ?>
+			<?php echo printSocialProfileImg($this->profile['member_id'], 2, false); ?>
+		<?php endif; ?>
 		<p><a href="inbox/send_message.php?id=<?php echo $this->profile['member_id']; ?>"><?php echo _AT('send_message'); ?></a></p>
 		<dl class="public-profile">
 			<?php if($this->profile['occupation']){ ?>
