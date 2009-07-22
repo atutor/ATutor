@@ -1,0 +1,40 @@
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+/* $Id$                        */
+
+/* header */
+body.headerbody { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: #EFEFEF;}
+h3 { font-family: Verdana, Arial, Helvetica, sans-serif; color: #384F89; }
+
+/* table of contents */
+ul { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color: gray;
+	font-size: small;
+}
+ul a { color:#384F89; }
+ul a:hover { text-decoration:none; }
+ul a:visited { color:black; }
+
+li {
+	margin-left: -10px;
+}
+
+/* body */
+body.contentbody { font-family: Verdana, Arial, Helvetica, sans-serif;}
+
+/* footer */
+body.footerbody { font-family: Verdana, Arial, Helvetica, sans-serif; background-color: #384F89; margin-top: 0px;}
+body.footerbody a { font-family: Verdana, Arial, Helvetica, sans-serif; color: white; }
+body.footerbody a:hover { font-family: Verdana, Arial, Helvetica, sans-serif; text-decoration:none; }
+.footer { font-family: Verdana, Arial, Helvetica, sans-serif; color: white; }
+

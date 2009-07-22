@@ -1,0 +1,33 @@
+phpCache v1.4 by nathan@0x00.org
+http://0x00.org/phpCache/
+
+NOTICE: I would like to hear success stories, please email me with any
+		timing results or whatever.  Before and after, duh.
+
+This is a little caching system for PHP, it allows you to cache blocks of
+code on pages.  There are four functions you need to worry about, all
+sorta documented in phpCache.inc.
+
+These are the basic functions (please see phpCache.inc for the rest):
+
+cache_all($cache_time);
+// Caches the block of code that follows scoped to everyone
+cache_session($cache_time);
+// Caches the block of code that follows scoped to the session
+
+cache($cache_time, $object_name, $object_key);
+// This is the primary function, both cache_all() and cache_session() call
+	this.  It allows you to tweak to storage settings so you can scope it
+	to different things.  If you don't understand this, don't use it.
+
+endcache($store);
+// This function *MUST* be called after all the cached data has been output.
+	It must be called in the block.  If $store is TRUE, the data will be
+	cached.  If it is false, it will not be cached.
+
+Note: All these functions (except endcache()) return 0 if the block needs to be executed.
+	ie: the cache has expired.
+
+Please see the scripts in the demo directory for samples.
+
+-nathan@0x00.org
