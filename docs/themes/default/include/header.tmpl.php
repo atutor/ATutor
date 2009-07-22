@@ -177,7 +177,7 @@ function toggleToc(objId) {
 		hidelink.style.display='none';
 		showlink.style.display='';
 	}
-	setcookie(objId, toc.style.display, 1);
+	setcookie(objId, hidelink.style.display, 1);
 }
 //-->
 </script>
