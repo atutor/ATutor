@@ -234,7 +234,7 @@ CREATE TABLE `member_login_attempt` (
   `attempt` tinyint(3) unsigned default NULL,
   `expiry` int(10) unsigned default NULL,
   PRIMARY KEY  (`login`)
-) ENGINE=MyISAM
+) ENGINE=MyISAM;
 
 # --------------------------------------------------------
 # Adding feature of blog subsription
