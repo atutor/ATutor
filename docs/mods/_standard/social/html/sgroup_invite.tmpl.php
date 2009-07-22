@@ -1,8 +1,7 @@
 <?php //debug($this->group_obj); ?>
 <div style="width:90%">
 	<div style="float:left;width:47%; clear:right;">
-		<div class="headingbox">
-			<h3><?php echo _AT('added_members'); ?></h3></div>
+		<div class="headingbox"><h3><?php echo _AT('added_members'); ?></h3></div>
 		<div class="contentbox">
 			<ul>
 			<?php foreach ($this->group_obj->getGroupMembers() as $k=>$person_obj): ?>
@@ -13,9 +12,8 @@
 	</div>
  	<div style="float:right;width:47%;">
 		<form class="input-form" method="POST" action="<?php echo AT_SOCIAL_BASENAME; ?>groups/invite.php">
-			<div class="headingbox">
-			<h3><?php echo _AT('not_added_members'); ?></h3></div>
-		<div class="contentbox">
+			<div class="headingbox"><h3><?php echo _AT('not_added_members'); ?></h3></div>
+			<div class="contentbox">
 			<!-- 
 			  -- To be implemented 
 			  --
@@ -42,6 +40,7 @@
 			</div>
 			<input type="hidden" name="id" value="<?php echo $_REQUEST['id']; ?>" />
 			<input class="button" type="submit" name="inviteMember" value="<?php echo _AT('invite');?>" />
+			</div>
 		</form>
 	</div>
 </div>

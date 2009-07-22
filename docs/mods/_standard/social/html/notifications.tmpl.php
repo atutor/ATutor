@@ -37,7 +37,7 @@ if(!empty($this->group_invitations)): ?>
 		<a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/invitation_handler.php?invitation=accept<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a> <a href="<?php echo AT_SOCIAL_BASENAME;?>groups/invitation_handler.php?invitation=reject<?php echo SEP;?>id=<?php echo $gobj->getID();?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a>
 	</div>
 	<ul>
-		<li class="activity"><?php echo _AT('has_invited_join', $name, $gobj->getID(), $gobj->getName()); ?></li>
+		<li class="activity"><?php echo _AT('has_invited_join', $name, '<a href="'.url_rewrite(AT_SOCIAL_BASENAME . 'groups/view.php?id='.$gobj->getID()).'">'.$gobj->getName().'</a>'); ?></li>
 	</ul>
 </div>
 <?php endforeach; ?><br />
@@ -61,7 +61,7 @@ foreach ($this->group_requests as $id=>$senders):
 			<a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/invitation_handler.php?request=accept<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/check_icon.gif" alt="<?php echo _AT('accept_request'); ?>" title="<?php echo _AT('accept_request'); ?>" border="0"/></a> <a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/invitation_handler.php?request=reject<?php echo SEP;?>id=<?php echo $gobj->getID().SEP;?>sender_id=<?php echo $sender_id;?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('reject_request'); ?>" title="<?php echo _AT('reject_request'); ?>" border="0"/></a>
 		</div>
 		<ul>
-			<li id="activity"><?php echo _AT('has_requested_to', $name, $gobj->getName()); ?></li>
+			<li id="activity"><?php echo _AT('has_requested_to', $name, '<a href="'.url_rewrite(AT_SOCIAL_BASENAME . 'groups/view.php?id='.$gobj->getID()).'">'.$gobj->getName().'</a>'); ?></li>
 		</ul>
 	</div>
 	<?php endforeach;?>

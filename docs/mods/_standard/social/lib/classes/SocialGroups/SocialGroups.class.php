@@ -50,7 +50,7 @@ class SocialGroups{
 			 $result = mysql_query($sql, $db);
 			 if ($result){
 				$act = new Activity();		
-				$str1 = ' has added the group, <a href="'.AT_SOCIAL_BASENAME.'groups/view.php?id='.$group_id.'">'.htmlentities_utf8($name).'</a>';
+				$str1 = _AT('has_added_group', '<a href="'. url_rewrite(AT_SOCIAL_BASENAME . 'groups/view.php?id='.$group_id).'">'.htmlentities_utf8($name)).'</a>';
 				$act->addActivity($member_id, $str1);
 				unset($act);
 			 }
@@ -125,7 +125,7 @@ class SocialGroups{
 		 $result = mysql_query($sql, $db);
 		 if ($result){
 			 $act = new Activity();		
-			 $str1 = ' has updated the group, <a href="'.AT_SOCIAL_BASENAME.'groups/view.php?id='.$group_id.'">'.htmlentities_utf8($name).'</a>';
+			 $str1 = _AT('has_updated_group', '<a href="'. url_rewrite(AT_SOCIAL_BASENAME . 'groups/view.php?id='.$group_id).'">'.htmlentities_utf8($name)).'</a>';
 			 $act->addActivity($member_id, $str1);
 			 unset($act);
 			 return true;

@@ -214,7 +214,8 @@ class SocialGroup {
 		if ($result){
 			//add a record to the activities
 			$act = new Activity();		
-			$str1 = printSocialName($friend_id).' has joined the group, <a href="social/groups/view.php?id='.$this->getID().'">'.htmlentities_utf8($this->getName()).'</a>';
+			$str1 = _AT('has_joined_group', '<a href="'. url_rewrite(AT_SOCIAL_BASENAME . 'groups/view.php?id='.$this->getID(), AT_PRETTY_URL_IS_HEADER).'">'.htmlentities_utf8($this->getName()).'</a>');
+
 			$act->addActivity($member_id, $str1);
 			unset($act);
 			return true;
