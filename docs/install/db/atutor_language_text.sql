@@ -1,4 +1,3 @@
-DROP TABLE language_text;
 # Table structure for table 'language_text'
 #
 
@@ -2225,6 +2224,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','view_log','View Activity 
 INSERT INTO `language_text` VALUES ('en', '_template','view_mark_test','View & Mark Test','2003-05-22 16:08:11','test manager');
 INSERT INTO `language_text` VALUES ('en', '_template','view_message','View Message','2005-03-14 11:48:21','');
 INSERT INTO `language_text` VALUES ('en', '_template','view_profile_bugs','View Profile Bugs','2004-12-06 11:51:58','admin/error_logging.php');
+INSERT INTO `language_text` VALUES ('en', '_template','view_readme','View Readme','2009-07-21 15:31:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','view_responses','View Responses','2004-08-25 11:53:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','view_results','View Results','2003-05-22 16:09:09','mytests, test manager');
 INSERT INTO `language_text` VALUES ('en', '_template','view_selected_bugs','View Selected Bugs','2004-12-06 12:06:26','');
