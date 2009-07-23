@@ -73,6 +73,11 @@ global $system_courses, $_custom_css,$db;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 <?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+	//<!--
+	jQuery.noConflict();
+	//-->
+	</script>
 <?php echo $this->custom_css; ?>
 </head>
 <body onload="<?php echo $this->onload; ?>">
@@ -168,12 +173,12 @@ function toggleToc(objId) {
 
 	if (hidelink.style.display == 'none') {
 		document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-		$("[id="+objId+"]").slideDown("slow");
+		jQuery("[id="+objId+"]").slideDown("slow");
 		hidelink.style.display='';
 		showlink.style.display='none';
 	} else {
 		document.getElementById('contentcolumn_shiftright').id="contentcolumn";
-		$("[id="+objId+"]").slideUp("slow");
+		jQuery("[id="+objId+"]").slideUp("slow");
 		hidelink.style.display='none';
 		showlink.style.display='';
 	}
