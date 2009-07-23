@@ -6,10 +6,9 @@ include_once(AT_INCLUDE_PATH.'../mods/_standard/social/lib/friends.inc.php');
 function substring($str, $length)
 {
 	preg_match_all("|(.*)((<[^>]+>)(.*)(</[^>]+>))|U", $str, $matches, PREG_SET_ORDER);
-//	print_r($matches);
+//	debug($matches);exit;
 	
 	$rtn = '';
-	
 	if (is_array($matches))
 	{
 		$curr_len = 0;
@@ -18,7 +17,7 @@ function substring($str, $length)
 			if (($curr_len + strlen($tag[1])) > $length)
 			{
 				$rtn .= substr($tag[1], 0, ($length - $curr_len)) . ' ...';
-				break;
+				return $rtn;
 			}
 			else
 			{
@@ -29,7 +28,7 @@ function substring($str, $length)
 			if (($curr_len + strlen($tag[4])) > $length)
 			{
 				$rtn .= $tag[3].substr($tag[4], 0, ($length - $curr_len)).'...'.$tag[5];
-				break;
+				return $rtn;
 			}
 			else
 			{
@@ -40,7 +39,7 @@ function substring($str, $length)
 		
 		$pos_after_last_match = strpos($str, $tag[0]) + strlen($tag[0]);
 		$str_after_last_match = substr($str, $pos_after_last_match);
-	
+
 		if (($curr_len + strlen($str_after_last_match)) > $length)
 			$rtn .= substr($str_after_last_match, 0, ($length - $curr_len)).' ...';
 		else
