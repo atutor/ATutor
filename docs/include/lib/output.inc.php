@@ -370,11 +370,6 @@ function _AT() {
 			}
 		}
 
-		if (isset($_config['latex_server']) && $_config['latex_server']) {
-			// see: http://www.forkosh.com/mimetex.html
-			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
-		}
-
 		if (query_bit($_field_formatting[$name], AT_FORMAT_QUOTES)) {
 			$input = str_replace('"', '&quot;', $input);
 		}
@@ -388,6 +383,10 @@ function _AT() {
 		} else {
 			$input = str_replace('<', '&lt;', $input);
 			$input = nl2br($input);
+		}
+
+		if (isset($_config['latex_server']) && $_config['latex_server']) {
+			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
 		}
 
 		/* this has to be here, only because AT_FORMAT_HTML is the only check that has an else-block */
