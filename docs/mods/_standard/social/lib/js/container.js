@@ -56,7 +56,7 @@ Container.prototype = {
 	
 	_getUrlForView: function(view, person, app, mod) {
 		if (view === 'home') {
-			return '/home';
+			return './mods/_standard/social/index.php';
 		} else if (view === 'profile') {
 			return '/sprofile.php?id='+person;
 		} else if (view === 'canvas') {

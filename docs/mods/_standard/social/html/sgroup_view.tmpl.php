@@ -44,8 +44,7 @@
 		</form><hr/>
 		
 		<!-- handles sliding -->
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script>
+		<script type="text/javascript">
 		  $(document).ready(function(){		
 			var h = $("#messages").height();
 			var line_of_height = 250;

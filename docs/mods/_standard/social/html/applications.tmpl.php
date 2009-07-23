@@ -1,10 +1,13 @@
 <!--  compressed with java -jar {$path}/yuicompressor-2.3.5.jar -o {$file}-min.js {$file}.js -->
 <script type="text/javascript"
 	src="<?php echo AT_SHINDIG_URL; ?>/gadgets/js/rpc.js?c=1"></script>
+<!-- header.inc.php has jscript/InfusionAll.js imported.  Jquery should be there with it
 <script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/jquery-1.3.2.js"></script>
+-->
 <script type="text/javascript"
 	src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/prototype.js"></script>
 <script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/container.js"></script>
+
 <div class="search_form">	
 		<div class="headingbox"><h3><?php echo _AT('add_application'); ?></h3></div>
 		<div class="contentbox">

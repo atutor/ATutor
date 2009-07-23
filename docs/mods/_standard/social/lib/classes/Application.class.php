@@ -336,20 +336,24 @@ class Application extends Applications{
 						urlencode($this->getUrl()), // app url
 						$this->getModuleId());// mod id
 //debug($securityToken);
+//TODO: 
+		//   all the & should be using the constant "SEP", however, shingdig isn't parsing ";", 
+		//   it only parses "&".  Once shindig fixed this, we gotta change it back to SEP
+		//@harris July 23, 2009
 		$url = AT_SHINDIG_URL.'/gadgets/ifr?' 
 			. "synd=default" 
-			. SEP."container=default" 
-			. SEP."viewer=". $_SESSION['member_id']
-			. SEP."owner=" . $oid
-			. SEP."aid=" . $this->getId()			//application id
-			. SEP."mid=" . $this->getModuleId()	//not sure what mod_id is
-			. SEP."country=US" 
-			. SEP."lang=en" 
-			. SEP."view=" . $view	//canvas for this big thing, should be a variable
-			. SEP."parent=" . urlencode("http://" . $_SERVER['HTTP_HOST']) . $prefs . (isset($appParams) ? '&view-params=' . urlencode($appParams) : '') 
-			. SEP."st=" . urlencode(base64_encode($securityToken->toSerialForm())) 
-			. SEP."v=" . $this->getVersion()
-			. SEP."url=" . urlencode($this->getUrl()) . "#rpctoken=" . rand(0, getrandmax());
+			. "&container=default" 
+			. "&viewer=". $_SESSION['member_id']
+			. "&owner=" . $oid
+			. "&aid=" . $this->getId()			//application id
+			. "&mid=" . $this->getModuleId()	//not sure what mod_id is
+			. "&country=US" 
+			. "&lang=en" 
+			. "&view=" . $view	//canvas for this big thing, should be a variable
+			. "&parent=" . urlencode("http://" . $_SERVER['HTTP_HOST']) . $prefs . (isset($appParams) ? '&view-params=' . urlencode($appParams) : '') 
+			. "&st=" . urlencode(base64_encode($securityToken->toSerialForm())) 
+			. "&v=" . $this->getVersion()
+			. "&url=" . urlencode($this->getUrl()) . "#rpctoken=" . rand(0, getrandmax());
 		return $url;
 	}
 
