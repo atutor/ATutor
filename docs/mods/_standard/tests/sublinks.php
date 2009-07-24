@@ -6,7 +6,12 @@ global $db;
 
 $tests_limit = 3;		//Numero massimo dei possibili sottocontenuti visualizzabili nella home-page
 
-$sql = "SELECT test_id, title, UNIX_TIMESTAMP(start_date) AS sd, UNIX_TIMESTAMP(end_date) AS ed FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY end_date DESC";
+$sql = "SELECT T.test_id, T.title, UNIX_TIMESTAMP(T.start_date) AS sd, UNIX_TIMESTAMP(T.end_date) AS ed 
+          FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_questions_assoc Q 
+         WHERE Q.test_id=T.test_id 
+           AND T.course_id=$_SESSION[course_id] 
+         GROUP BY T.test_id 
+         ORDER BY T.end_date DESC";
 $result = mysql_query($sql, $db);
 
 $cnt = 0;

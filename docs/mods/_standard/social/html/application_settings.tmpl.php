@@ -1,13 +1,13 @@
 <form method="post" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'applications.php');?>">
 <?php 
-  $html = '';
+  $html = '<div>';
   if (! empty($this->settings)) {
     $settings = $this->settings;
     foreach ($settings as $key => $setting) {
       $name = ! empty($setting->displayName) ? $setting->displayName : $key;
       $default = isset($setting->default) ? $setting->default : '';
 //      $value = isset($vars['application']['user_prefs'][$key]) ? $vars['application']['user_prefs'][$key] : $default;
-      $html .= "<div><div class=\"settings_label\">$name</div>";
+      $html .= "<div class=\"settings_label\">$name</div>";
       switch ($setting->type) {
         case 'ENUM':
           $html .= "<select name=\"$key\">\n";
@@ -37,9 +37,9 @@
 			} else {
 				$no = ' checked="checked"';
 			}
-			$html .= '<label for="'.$key.'_yes"/>'._AT('yes').'</label>';
+			$html .= '<label for="'.$key.'_yes">'._AT('yes').'</label>';
 			$html .= '<input id="'.$key.'_yes" type="radio" name="'.$key.'" value="true" '.$yes.' />';
-			$html .= '<label for="'.$key.'_no"/>'._AT('no').'</label>';
+			$html .= '<label for="'.$key.'_no">'._AT('no').'</label>';
 			$html .= '<input id="'.$key.'_no" type="radio" name="'.$key.'" value="false" '.$no.' />';			
 			break;
         case 'LIST':

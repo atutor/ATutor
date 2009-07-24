@@ -297,11 +297,7 @@ class Application extends Applications{
 	 * @param	string		extra application parameters
 	 * @return	iframe url
 	 */
-	function getIframeUrl($oid, $view='profile', $appParams=''){
-		//let view=profile as default option
-		if ($view!='profile' && $view!='canvas'){
-			$view = 'profile';
-		}
+	function getIframeUrl($oid, $view='default', $appParams=''){
 
 		$app_settings = $this->getSettings();
 		$user_settings = $this->getApplicationSettings($_SESSION['member_id']);
