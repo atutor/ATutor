@@ -168,7 +168,7 @@ if (isset($this_login, $this_password)) {
 
 			write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 			//clear login attempt on successful login
-			$sql = 'DELETE FROM '.TABLE_PREFIX." member_login_attempt WHERE login='$this_login'";
+			$sql = 'DELETE FROM '.TABLE_PREFIX."member_login_attempt WHERE login='$this_login'";
 			mysql_query($sql, $db);
 
 			$msg->addFeedback('LOGIN_SUCCESS');
