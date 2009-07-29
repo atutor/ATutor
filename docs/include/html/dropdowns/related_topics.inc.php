@@ -33,7 +33,7 @@ $_my_uri = isset($_my_uri) ? $_my_uri : '';
 
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
-$savant->assign('close_url', htmlspecialchars($_my_uri).'disable=PREF_RELATED'.SEP.'menu_jump=3');
+$savant->assign('close_url', htmlspecialchars($_my_uri).'disable=PREF_RELATED'.htmlentities(SEP).'menu_jump=3');
 $savant->assign('dropdown_close', _AT('close_related_topics'));
 
 $savant->assign('title', _AT('related_topics'));

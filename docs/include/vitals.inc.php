@@ -742,16 +742,16 @@ if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 		}
 
 		if (($_my_uri == '') && ($bits[$i] != '')) {
-			$_my_uri .= '?';
+			$_my_uri .= htmlentities('?');
 		} else if ($bits[$i] != ''){
-			$_my_uri .= SEP;
+			$_my_uri .= htmlentities(SEP);
 		}
 		$_my_uri .= $bits[$i];
 	}
 	if ($_my_uri == '') {
-		$_my_uri .= '?';
+		$_my_uri .= htmlentities('?');
 	} else {
-		$_my_uri .= SEP;
+		$_my_uri .= htmlentities(SEP);
 	}
 	$_my_uri = $_SERVER['PHP_SELF'].$_my_uri;
 

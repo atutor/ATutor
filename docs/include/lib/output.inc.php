@@ -818,7 +818,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 			} else {
 				$input = preg_replace
 						("/(\[\?\])$term(\[\/\?\])/i",
-						'\\2<sup><a class="tooltip" href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'"><span style="color: blue; text-decoration: none;font-size:small; font-weight:bolder;">?</span></a></sup>',$input);
+						'\\2<sup><a class="tooltip" href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'"><span style="color: blue; text-decoration: none;font-size:small; font-weight:bolder;">?</span></a></sup>',$input);
 			}
 		}
 	} else if (!$user_glossary) {
