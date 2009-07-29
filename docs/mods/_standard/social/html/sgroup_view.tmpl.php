@@ -45,31 +45,31 @@
 		
 		<!-- handles sliding -->
 		<script type="text/javascript">
-		  $(document).ready(function(){		
-			var h = $("#messages").height();
+		  jQuery(document).ready(function(){		
+			var h = jQuery("#messages").height();
 			var line_of_height = 250;
 
 			if (h>=500){
-				$('#buttonList').show();
-				$('#message_board').css({'height':'500px'});
+				jQuery('#buttonList').show();
+				jQuery('#message_board').css({'height':'500px'});
 			} else {
-				$('#buttonList').hide();
+				jQuery('#buttonList').hide();
 			}
 
-			$("#prevButton").click(function(event){
-			  if (h < $("#messages").height()){
-				  $("#messages").animate({"marginTop": "+="+line_of_height+"px"}, "slow");
+			jQuery("#prevButton").click(function(event){
+			  if (h < jQuery("#messages").height()){
+				  jQuery("#messages").animate({"marginTop": "+="+line_of_height+"px"}, "slow");
 				  h += line_of_height;
- 				  $("#temp").html(h);
+ 				  jQuery("#temp").html(h);
 			  }
 			  event.preventDefault();
 			});
 
-			$("#nextButton").click(function(event){
+			jQuery("#nextButton").click(function(event){
 			  if ( h >= line_of_height) {
-				  $("#messages").animate({"marginTop": "-="+line_of_height +"px"}, "slow");
+				  jQuery("#messages").animate({"marginTop": "-="+line_of_height +"px"}, "slow");
 				  h -= line_of_height ;
-				  $("#temp").html(h);
+				  jQuery("#temp").html(h);
 			  }
 			  event.preventDefault();
 			});

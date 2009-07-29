@@ -210,7 +210,7 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 <tfoot>
 <tr>
 	<td colspan="3" align="right">
-		<?php echo '<input class="button" type="submit" name="add" value="'._AT('add').'" class="button"/>';?>
+		<?php echo '<input type="submit" name="add" value="'._AT('add').'" class="button"/>';?>
 		
 	</td>
 </tr>

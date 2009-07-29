@@ -87,7 +87,7 @@ if (isset($_REQUEST['app_id'])){
 	if (isset($_GET['delete']) && intval($_GET['delete']) > 0) {
 		$app->deleteApplication();
 		$msg->addFeedback('GADGET_REMOVED_SUCCESSFULLY');
-		header('Location: '. url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '. $_SERVER['HTTP_REFERER']);
 		exit;
 	}
 

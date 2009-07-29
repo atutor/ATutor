@@ -124,8 +124,8 @@ global $_custom_head;
 $_custom_head = '
 	<script language="javascript" type="text/javascript">
 	//<!--
-	$(function() {
-	$(\'a.tooltip\').tooltip( { showBody: ": ", showURL: false } );
+	jQuery(function() {
+	jQuery(\'a.tooltip\').tooltip( { showBody: ": ", showURL: false } );
 	} );
 	//-->
 	</script>

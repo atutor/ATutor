@@ -46,7 +46,7 @@ else{
 	<input type="radio" name="alternatives" value="2" id="whole_page" onclick="openIt(2)" <?php if (($_POST['alternatives'] == 2) || ($_GET['alternatives'] == 2)) { echo 'checked="checked"'; } ?> />
 	<label for="whole_page"><?php echo _AT('define_alternatives_to_the_whole_page');  ?></label>
 <br/><br/> -->
-<?php echo '<input class="button" type="submit" name="save_types_and_language" value="'._AT('save_types_and_language').'" class="button"/>'; ?>
+<?php echo '<input type="submit" name="save_types_and_language" value="'._AT('save_types_and_language').'" class="button"/>'; ?>
 
 <div class="row_alternatives" id="nontextual_div" style="display: <?php if (($_POST['alternatives'] == 2) || ($_GET['alternatives'] == 2)) echo 'none'; else echo 'block';?>;">
   <div class="column_primary">
@@ -397,6 +397,9 @@ else
 	</div>
 	 
 </div>	
+
+<div style="clear:left"></div>
+</div>
 
 <script type="text/javascript" language="javascript">
 //<!--
