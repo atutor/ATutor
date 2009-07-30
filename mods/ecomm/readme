@@ -20,8 +20,7 @@ MiraPay Test Account
 #A test account is available. Enter the following information into the admin payments settings screen. You will need to setup a proper merchant account with Mirapay to actually use the system for collecting your own payments, but to test the module the test account works well enough. MiraPay has the advantage over PayPal of not requiring the customer to have an account on their system.
 
 Test Location:
-https://www3.eigendev.com/mirapay/secure_credit.php
-
+https://staging.eigendev.com/mirapay/secure_credit.php
 Test Vendor ID:
 e911ca205ec7c2a9436af9102c497fd4
 
