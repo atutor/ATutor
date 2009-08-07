@@ -122,6 +122,7 @@ acronym {
 <li><a href="#groups">Group Tools</a></li>
 <li><a href="#navigation">Navigation &amp; Hierarchy</a></li>
 <li><a href="#delete">Course Deletion</a></li>
+<li><a href="#content_format">Custom Content Manipulation</a></li>
 <li><a href="#backup">Backing-Up and Restoring</a></li>
 <ul>
 <li><a href="#directories">Directories</a></li>
@@ -799,6 +800,32 @@ function example_maker_delete($course) {
             WHERE course_id=$course";
     mysql_query($sql, $db);
 }
+?>
+</pre>
+<a name="content_format"></a>
+<h2>Custom content manipulation using <kbd>module_format_content.php</kbd></h2>
+	<p>The course content and the news at the course home page can be manipulated at display. For example, replace a special tag "[black]The font is black.[/black]" with html "&lt;span style="color: black;"&gt;The font is black.&lt;/span&gt;".</p>
+
+<pre>
+&lt;?php
+/*******
+ * This file extends the content string manipulation. 
+ * It affects the output of course content and news content at course home page.
+ * Input parameter: global variable $_input. This variable contains the input 
+ * content/news string.
+ * Output: $_input. Please make sure to assign the manipulated string back to $_input.
+ */
+
+/*******
+ * Global input string. DO NOT CHANGE.
+ */
+global $_input;
+
+/*******
+ * Example, replace special tag "[black][/black]" with html
+ */
+$_input = str_replace('[black]','<span style="color: black;">',$_input);
+$_input = str_replace('[/black]','</span>',$_input);
 ?>
 </pre>
 <a name="backup"></a>

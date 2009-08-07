@@ -117,11 +117,11 @@ while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
 
 if ($content_row['use_customized_head'] && strlen($content_row['head']) > 0)
 {
-	$_custom_head = $content_row['head'];
+	$_custom_head .= $content_row['head'];
 }
 
 global $_custom_head;
-$_custom_head = '
+$_custom_head .= '
 	<script language="javascript" type="text/javascript">
 	//<!--
 	jQuery(function() {

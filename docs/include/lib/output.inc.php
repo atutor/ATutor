@@ -753,6 +753,27 @@ function format_final_output($text, $nl2br = true) {
 	return image_replace(make_clickable(myCodes(' '.$text, true)));
 }
 
+// 
+function apply_customized_format($input) {
+	global $_input, $moduleFactory;
+	
+	$_input = $input;
+	$enabled_modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
+
+	if (is_array($enabled_modules))
+	{
+		foreach ($enabled_modules as $dir_name => $mod)
+		{
+			$module_content_format_file = AT_INCLUDE_PATH . '../mods/'.$dir_name.'/module_format_content.php';
+			if (file_exists($module_content_format_file))
+			{
+				include_once($module_content_format_file);
+			}
+		}
+	}
+	
+	return $_input;
+}
 /****************************************************************************************/
 /* @See: ./user/search.php & ./index.php */
 function highlight($input, $var) {//$input is the string, $var is the text to be highlighted
@@ -833,11 +854,11 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 	}
 
 	if ($html) {
-		$x = format_final_output($input, false);
+		$x = apply_customized_format(format_final_output($input, false));
 		return $x;
 	}
 
-	$output = format_final_output($input);
+	$output = apply_customized_format(format_final_output($input));
 
 	$output = '<p>'.$output.'</p>';
 
