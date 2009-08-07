@@ -83,7 +83,13 @@ function print_organizations($parent_id,
 				$content['content_path'] .= '/';
 			}
 
-			$link = $prevfix.'<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'">'."\n";
+			$link .= '<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'">'."\n";
+			$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n$prefix$space</item>\n";
+			if (!empty($_menu[$content['content_id']])){
+				$link .= $prefix.'<item identifier="MANIFEST01_FOLDER'.$content['content_id'].'">'."\n";
+				$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n";
+			}
+
 			$html_link = '<a href="resources/'.$content['content_path'].$content['content_id'].'.html" target="body">'.$content['title'].'</a>';
 			
 			/* save the content as HTML files */
@@ -278,8 +284,6 @@ function print_organizations($parent_id,
 			for ($i=0; $i<$depth; $i++) {
 				$link .= $space;
 			}
-			
-			$title = $prefix.$space.'<title>'.$content['title'].'</title>';
 
 			if ( is_array($_menu[$content['content_id']]) ) {
 				/* has children */
@@ -319,7 +323,7 @@ function print_organizations($parent_id,
 			}
 
 			echo $prefix.$link;
-			echo $title;
+//			echo $title;
 			echo "\n";
 
 			$string .= $html_link."\n";
@@ -337,7 +341,9 @@ function print_organizations($parent_id,
 			for ($i=0; $i<$depth; $i++) {
 				echo $space;
 			}
+			if (!empty($_menu[$content['content_id']])){
 			echo $prefix.'</item>';
+			}
 			echo "\n";
 		}  
 
@@ -387,7 +393,7 @@ $ims_template_xml['resource_glossary'] = '		<resource identifier="MANIFEST01_RES
 			<file href="GlossaryItem/glossary.xml"/>
 		</resource>
 '."\n";
-$ims_template_xml['resource_test'] = '		<resource identifier="MANIFEST01_RESOURCE_QTI{TEST_ID}" type="imsqti_xmlv1p2/imscc_xmlv1p0/assessment" href="QTI/{PATH}">
+$ims_template_xml['resource_test'] = '		<resource identifier="MANIFEST01_RESOURCE_QTI{TEST_ID}" type="imsqti_xmlv1p2/imscc_xmlv1p0/assessment">
 			<metadata/>
 			<file href="QTI/{PATH}"/>{FILES}
 		</resource>

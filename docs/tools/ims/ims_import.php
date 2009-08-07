@@ -38,6 +38,38 @@ $test_attributes = array();
 $character_data = '';
 $test_message = '';
 
+
+//function to take out the empty page node
+function rehash($items){
+	$old_parent = '';
+
+	foreach($items as $id => $content){
+		if (!isset($content['href'])) {
+			// this item doesn't have an identifierref. so create an empty page.
+			// what we called a folder according to v1.2 Content Packaging spec
+			// Take this page out, and replace its index and parent_id into all the entries
+			$node_parent_id = $content['parent_content_id'];
+			if ($old_parent != ''){
+				$node_parent_id = $old_parent;
+			}
+
+			unset($items[$id]);
+
+			foreach($items as $id2 => $content2){
+				//if this page uses a node as its parent page, replace it with the node's parent page.
+				if ($content2['parent_content_id'] == $id && isset($content2['href'])){
+					$items[$id2]['parent_content_id'] = $node_parent_id;
+				}
+			}
+		}
+		//always keep the id before going to the next loop
+		//so then folder can be referenced to it.
+		$old_parent = $id;
+	}
+	return $items;
+}
+
+
 	/* called at the start of en element */
 	/* builds the $path array which is the path from the root to the current element */
 	function startElement($parser, $name, $attrs) {
@@ -518,6 +550,9 @@ $sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE cour
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
+//reorder the items stack
+
+$items = rehash($items);
 
 foreach ($items as $item_id => $content_info) 
 {
@@ -533,6 +568,8 @@ foreach ($items as $item_id => $content_info)
 		}
 		if (!isset($content_info['href'])) {
 			// this item doesn't have an identifierref. so create an empty page.
+			// what we called a folder according to v1.2 Content Packaging spec
+			// Hop over
 			$content = '';
 			$ext = '';
 			$last_modified = date('Y-m-d H:i:s');
