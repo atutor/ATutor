@@ -32,6 +32,16 @@ if (!valid_forum_user($fid)) {
 	exit;
 }
 
+// set default thread display order to ascending
+if (!isset($_SESSION['thread_order']))
+{
+	$_SESSION['thread_order'] = 'a';
+}
+else if (isset($_GET['order']))
+{
+	$_SESSION['thread_order'] = $_GET['order'];
+}
+
 $forum_info = get_forum($fid);
 
 $_pages[url_rewrite('forum/index.php?fid='.$fid)]['title']    = get_forum_name($fid);
@@ -106,58 +116,79 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$parent_name = $post_row['subject'];
 
-	echo '<div class="forum-paginator">';
-	echo _AT('page').': ';
-	for ($i=1; $i<=$num_pages; $i++) {
-		if ($i == $page) {
-			echo '<span class="forum-paginator-active">'.$i.'</span>';
-		} else {
-			echo '<a href="'.url_rewrite($_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i).'">'.$i.'</a>';
-		}
-
-		if ($i<$num_pages){
-			echo ' <span class="spacer">|</span> ';
-		}
-	}
-	echo '</div>';
 	echo '<ul id="forum-thread">';
-
-	if ($page == 1) {
-		print_entry($post_row);
-		$subject   = $post_row['subject'];
-		if ($_GET['reply'] == $post_row['post_id']) {
-			$saved_post = $post_row;
-		}
-		$num_per_page--;
-	} else {
-		$start--;
+	print_entry($post_row);
+	$subject = $post_row['subject'];
+	if ($_GET['reply'] == $post_row['post_id']) {
+		$saved_post = $post_row;
 	}
-	$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$pid AND forum_id=$fid ORDER BY date ASC LIMIT $start, $num_per_page";
+	echo '
+	    </ul>
+	  <div class="forum-paginator" style="background-color:#F5F5F5;">&nbsp;
+	  </div><br />';
+
+	$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$pid AND forum_id=$fid ORDER BY date ";
+	if ($_SESSION['thread_order'] == 'a')
+		$sql .= "ASC LIMIT $start, $num_per_page";
+	else
+		$sql .= "DESC LIMIT $start, $num_per_page";
+	
 	$result	= mysql_query($sql, $db);
 
-	while ($row = mysql_fetch_assoc($result)) {
-		print_entry($row);
-		$subject = $row['subject'];
-		if ($_GET['reply'] == $row['post_id']) {
-			$saved_post = $row;
-		}
-	}
-	echo '</ul>';
+	if (mysql_num_rows($result) > 0)
+	{
+		echo '<div class="forum-paginator">';
+		echo '<div style="float:right;">';
+		if ($_SESSION['thread_order'] == 'a')
+			echo '<a href="'.url_rewrite($_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$page.SEP.'order=d').'">
+		          <img src="'.AT_BASE_HREF.'images/up.png" border="0" alt="">&nbsp;'._AT('recent_first').'
+		        </a>';
+		else
+			echo '<a href="'.url_rewrite($_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$page.SEP.'order=a').'">
+		          <img src="'.AT_BASE_HREF.'images/down.png" border="0" alt="">&nbsp;'._AT('recent_last').'
+		        </a>';
+		
+		echo '</div>';
+		
+		echo _AT('page').': ';
+		for ($i=1; $i<=$num_pages; $i++) {
+			if ($i == $page) {
+				echo '<span class="forum-paginator-active">'.$i.'</span>';
+			} else {
+				echo '<a href="'.url_rewrite($_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i.SEP.'order='.$_SESSION['thread_order']).'">'.$i.'</a>';
+			}
 	
-	echo '<div  class="forum-paginator">';
-	echo _AT('page').': ';
-	for ($i=1; $i<=$num_pages; $i++) {
-		if ($i == $page) {
-			echo '<span class="forum-paginator-active">'.$i.'</span>';
-		} else {
-			echo '<a href="'.url_rewrite($_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i).'">'.$i.'</a>';
+			if ($i<$num_pages){
+				echo ' <span class="spacer">|</span> ';
+			}
 		}
-
-		if ($i<$num_pages){
-			echo ' <span class="spacer">|</span> ';
+		echo '</div>';
+		echo '<ul id="forum-thread">';
+	
+		while ($row = mysql_fetch_assoc($result)) {
+			print_entry($row);
+			$subject = $row['subject'];
+			if ($_GET['reply'] == $row['post_id']) {
+				$saved_post = $row;
+			}
 		}
+		echo '</ul>';
+		
+		echo '<div  class="forum-paginator">';
+		echo _AT('page').': ';
+		for ($i=1; $i<=$num_pages; $i++) {
+			if ($i == $page) {
+				echo '<span class="forum-paginator-active">'.$i.'</span>';
+			} else {
+				echo '<a href="'.url_rewrite($_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'pid='.$pid.SEP.'page='.$i.SEP.'order='.$_SESSION['thread_order']).'">'.$i.'</a>';
+			}
+	
+			if ($i<$num_pages){
+				echo ' <span class="spacer">|</span> ';
+			}
+		}
+		echo '</div>';
 	}
-	echo '</div>';
 
 	$parent_id = $pid;
 	$body	   = '';
