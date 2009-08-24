@@ -39,19 +39,119 @@ $character_data = '';
 $test_message = '';
 
 
+/**
+ * function to get all the files out from the package.
+ * main purpose is to check if all the files are listed in the manifest.
+ * @param	string		the path of the directory that contains all the package files
+ * @return	boolean		true if every file exists in the manifest, false if any is missing.
+ */
+function checkResources($import_path){
+	global $items, $msg;
+
+	if (!is_dir($import_path)){
+		return;
+	}
+
+	//generate a file tree
+	$data = rscandir($import_path);
+
+	//check if every file is presented in the manifest
+	foreach($data as $filepath){
+		$filepath = substr($filepath, strlen($import_path));
+
+		if ($filepath == 'imsmanifest.xml'){
+			continue;
+		}
+
+		//validate xml via its xsd/dtds
+/*		if (preg_match('/(.*)\.xml/', $filepath)){
+			$dom = new DOMDocument();
+			$dom->load(realpath($import_path.$filepath));
+echo 			$dom->schemaValidate('ims_qtiasiv1p2_localised.xsd');
+exit;
+		}
+*/
+		$flag = false;
+		foreach($items as $name=>$fileinfo){			
+			if (is_array($fileinfo['file'])){
+				if(in_array($filepath, $fileinfo['file'])){
+					//validate the xml by its schema
+					if (preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
+						$qti = new QTIParser($fileinfo['type']);
+						$xml_content = @file_get_contents($import_path . $fileinfo['href']);
+						$qti->parse($xml_content);
+						if ($msg->containsErrors()){
+							$flag = false;
+						} else {
+							$flag = true;
+						}
+					} else {
+						$flag = true;
+					}
+				}
+			}
+		}
+		if ($flag == false){
+			//add an error message if it doesn't have any. 
+			if (!$msg->containsErrors()){
+				$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
+			}
+			return false;
+		}
+	}
+	return true;
+}
+
+/*
+ * @example rscandir(dirname(__FILE__).'/'));
+ * @param string $base
+ * @param array $omit
+ * @param array $data
+ * @return array
+ */
+function rscandir($base='', &$data=array()) {
+ 
+  $array = array_diff(scandir($base), array('.', '..')); # remove ' and .. from the array */
+  
+  foreach($array as $value) : /* loop through the array at the level of the supplied $base */
+ 
+    if (is_dir($base.$value)) : /* if this is a directory */
+//	  don't save the directory name
+//	  $data[] = $base.$value.'/'; /* add it to the $data array */
+      $data = rscandir($base.$value.'/', $data); /* then make a recursive call with the
+      current $value as the $base supplying the $data array to carry into the recursion */
+     
+    elseif (is_file($base.$value)) : /* else if the current $value is a file */
+      $data[] = $base.$value; /* just add the current $value to the $data array */
+     
+    endif;
+   
+  endforeach;
+ 
+  return $data; // return the $data array
+ 
+}
+
 //function to take out the empty page node
 function rehash($items){
+	global $order;
 	$old_parent = '';
+	$order_offset = array();;
 
 	foreach($items as $id => $content){
+		$items[$id]['ordering'] = $items[$id]['ordering'] - $order_offset[$content['parent_content_id']]; 
+
 		if (!isset($content['href'])) {
 			// this item doesn't have an identifierref. so create an empty page.
 			// what we called a folder according to v1.2 Content Packaging spec
 			// Take this page out, and replace its index and parent_id into all the entries
-			$node_parent_id = $content['parent_content_id'];
+			$node_parent_id = $content['parent_content_id'];			
+
 			if ($old_parent != ''){
 				$node_parent_id = $old_parent;
 			}
+			$order_offset[$content['parent_content_id']] += 1;
+			$order[$content['parent_content_id']] -= 1;
 
 			unset($items[$id]);
 
@@ -76,11 +176,28 @@ function rehash($items){
 		global $items, $path, $package_base_path;
 		global $element_path;
 		global $xml_base_path, $test_message;
-		global $current_identifier;
+		global $current_identifier, $msg;
+
+		//check if the xml is valid
+		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
+			//run the loop and check it thru the ns.inc.php
+		} elseif ($name == 'manifest' && !isset($attrs['xsi:schemaLocation'])) {
+			$msg->addError('MANIFEST_NOT_WELLFORM: NO NAMESPACE');
+		} else {
+			//error
+		}
+		//error if the tag names are wrong
+		if (preg_match('/^xsi\:/', $name) >= 1){
+			$msg->addError('MANIFEST_NOT_WELLFORM');
+		}
 
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
 			$xml_base_path = $attrs['xml:base'];
 		} else if ($name == 'file') {
+			// check if it misses file references
+			if(!isset($attrs['href']) || $attrs['href']==''){
+				$msg->addError('MANIFEST_NOT_WELLFORM');
+			}
 
 			// special case for webCT content packages that don't specify the `href` attribute 
 			// with the `<resource>` element.
@@ -119,6 +236,7 @@ function rehash($items){
 			$path[] = $attrs['identifier'];
 		} else if (($name == 'resource') && is_array($items[$attrs['identifier']]))  {
 			$current_identifier = $attrs['identifier'];
+			$items[$current_identifier]['type'] = $attrs['type'];
 
 			if ($attrs['href']) {
 				$attrs['href'] = urldecode($attrs['href']);
@@ -153,6 +271,8 @@ function rehash($items){
 		if ($name=='file'){
 			if (file_exists(AT_CONTENT_DIR .'import/'.$_SESSION['course_id'].'/'.$attrs['href'])){
 				$items[$current_identifier]['file'][] = $attrs['href'];
+			} else {
+				$msg->addError('IMS_FILES_MISSING');
 			}
 		}
 	array_push($element_path, $name);
@@ -503,6 +623,9 @@ if (file_exists($import_path . 'glossary.xml')){
 	}
 }
 
+// Check if all the files exists in the manifest
+checkResources($import_path);
+
 // Check if there are any errors during parsing.
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
@@ -543,7 +666,6 @@ if ($xml_base_path) {
 	mkdir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$xml_base_path);
 	$package_base_name = $xml_base_path . $package_base_name;
 }
-reset($items);
 
 /* get the top level content ordering offset */
 $sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
@@ -551,7 +673,6 @@ $result = mysql_query($sql, $db);
 $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 //reorder the items stack
-
 $items = rehash($items);
 
 foreach ($items as $item_id => $content_info) 
@@ -644,7 +765,7 @@ foreach ($items as $item_id => $content_info)
 
 			/* potential security risk? */
 			if ( strpos($content_info['href'], '..') === false && !preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href'])) {
-				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+//				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			}
 		} else if ($ext) {
 			/* non text file, and can't embed (example: PDF files) */
@@ -676,7 +797,8 @@ foreach ($items as $item_id => $content_info)
 	$content_info['test_message'] = addslashes($content_info['test_message']);
 
 	//if this file is a test_xml, create a blank page instead, for imscc.
-	if (preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href'])){
+	if (preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href']) 
+		|| preg_match('/imsqti\_(.*)/', $content_info['type'])) {
 		$content = '';
 	} else {
 		$content = addslashes($content);
@@ -719,15 +841,21 @@ foreach ($items as $item_id => $content_info)
 	$items[$item_id]['real_content_id'] = mysql_insert_id($db);
 
 	/* get the tests associated with this content */
-	if (!empty($items[$item_id]['tests'])){
+	if (!empty($items[$item_id]['tests']) || strpos($items[$item_id]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
 		$qti_import =& new QTIImport($import_path);
 
-		foreach ($items[$item_id]['tests'] as $array_id => $test_xml_file){
+		if (isset($items[$item_id]['tests'])){
+			$loop_var = $items[$item_id]['tests'];
+		} else {
+			$loop_var = $items[$item_id]['file'];
+		}
+
+		foreach ($loop_var as $array_id => $test_xml_file){
 			$tests_xml = $import_path.$test_xml_file;
 			
 			//Mimic the array for now.
 			$test_attributes['resource']['href'] = $test_xml_file;
-			$test_attributes['resource']['type'] = 'imsqti_xmlv1p1';
+			$test_attributes['resource']['type'] = isset($items[$item_id]['type'])?'imsqti_xmlv1p2':'imsqti_xmlv1p1';
 			$test_attributes['resource']['file'] = $items[$item_id]['file'];
 //			$test_attributes['resource']['file'] = array($test_xml_file);
 
@@ -788,7 +916,7 @@ if (is_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources')) {
 	}
 	closedir($handler);
 }
-if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
 		$msg->addError('IMPORT_FAILED');
 	}

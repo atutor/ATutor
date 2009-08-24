@@ -63,9 +63,11 @@ class QTIImport {
 	//Decide which question type to import based in the integer
 	function getQuestionType($question_type){
 		$qti_obj = TestQuestions::getQuestion($question_type);
-		$qid = $qti_obj->importQTI($this->qti_params);
-		if ($qid  > 0) {
-			$this->qid = $qid;
+		if ($qti_obj != null){
+			$qid = $qti_obj->importQTI($this->qti_params);
+			if ($qid  > 0) {
+				$this->qid = $qid;
+			}
 		}
 	}
 
@@ -82,17 +84,19 @@ class QTIImport {
 		$qids = array();
 
 		foreach($attributes as $resource=>$attrs){
-			if ($attrs['type'] == 'imsqti_xmlv1p1' || $attrs['type'] == 'imsqti_item_xmlv2p1'){
+			if (preg_match('/imsqti\_(.*)/', $attrs['type'])){
 				//Instantiate class obj
-				$xml =& new QTIParser();
-				$xml_content = @file_get_contents($this->import_path . $attrs['href']);						
+				$xml =& new QTIParser($attrs['type']);
+				$xml_content = @file_get_contents($this->import_path . $attrs['href']);
 				$xml->setRelativePath($package_base_name);
 
-				if (!$xml->parse($xml_content)){
+				if (!$xml->parse($xml_content)){	
 					$msg->addError('QTI_WRONG_PACKAGE');
 					break;
 				}
-
+//if ($attrs[href] =='56B1BEDC-A820-7AA8-A21D-F32017189445/56B1BEDC-A820-7AA8-A21D-F32017189445.xml'){
+//	debug($xml, 'attributes');
+//}
 				//import file, should we use file href? or jsut this href?
 				//Aug 25, use both, so then it can check for respondus media as well.
 				foreach($attrs['file'] as $file_id => $file_name){
@@ -151,13 +155,13 @@ class QTIImport {
 
 		//			unset($qti_import);
 					$this->constructParams($test_obj);
-
+//debug($xml->getQuestionType($loopcounter), 'lp_'.$loopcounter);
 					//Create questions
-					$this->getQuestionType($xml->getQuestionType($loopcounter));			
+					$this->getQuestionType($xml->getQuestionType($loopcounter));
 
 					//save question id 
 					$qids[] = $this->qid;
-			
+
 					//Dependency handling
 					if (!empty($attrs['dependency'])){
 						$xml_items = array_merge($xml_items, $xml->items);
@@ -178,7 +182,7 @@ class QTIImport {
 				$this->copyMedia($attrs['file'], $xml_items);
 			}
 		}
-
+//debug($qids, 'qids');
 		return $qids;
 	}
 

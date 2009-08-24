@@ -27,6 +27,7 @@ define('AT_QTI_REPONSE_STR',    3);
 class QTIParser {
 	// all private
 	var $parser; // the XML handler
+	var $qti_type; // QTI specification versoin, imsqti_xmlv1p1, imsqti_item_xmlv2p1, imsqti_xmlv1p2
 	var $character_data; // tmp variable for storing the data
 	var $element_path; // array of element paths (basically a stack)
 	var $title;	//title for this question test
@@ -51,7 +52,9 @@ class QTIParser {
 	var $answers_for_matching	= array();
 	var $weights		= array();	//the weight of each question
 
-	function QTIParser() {
+	//constructor
+	function QTIParser($qti_type='') {
+		$this->qti_type = $qti_type;
 		$this->parser = xml_parser_create(); 
 
 		xml_set_object($this->parser, $this);
@@ -85,6 +88,7 @@ class QTIParser {
 
 	// private
 	function startElement($parser, $name, $attributes) {
+		global $msg;
 //		debug($attributes, $name );
 		//save attributes.
 		switch($name) {
@@ -160,6 +164,11 @@ class QTIParser {
 				$this->attributes[$this->item_num][$name]['varname'] = $attributes['varname'];
 				$this->attributes[$this->item_num][$name]['action'] = $attributes['action'];
 				break;
+			case 'itemproc_extension':
+				if (preg_match('/imsqti_xmlv1p2\/imscc_xmlv1p0(.*)/', $this->qti_type)){
+					$msg->addError('QTI_WRONG_PACKAGE');
+				}
+				break;
 		}
 		array_push($this->element_path, $name);
    }
@@ -168,6 +177,7 @@ class QTIParser {
 	/* called when an element ends */
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
+		global $msg;
 		//check element path
 		$current_pos = count($this->element_path) - 1;
 		$last_element = $this->element_path[$current_pos - 1];
@@ -244,7 +254,7 @@ class QTIParser {
 
 				//If matching, then attribute = 'Respondus_correct'; otherwise it is 'que_score'
 				if ($this->getQuestionType($this->item_num) == 5){
-					if ($tv['answerAdded']!=true){					
+					if ($tv['answerAdded']!=true && !empty($tv['attribute'])){
 						foreach ($tv['attribute'] as $att_id => $att_value){
 							//Handles Respondus' (and blakcboard, angels, etc) responses schemas
 							if (strtolower($att_value)=='respondus_correct'){
@@ -252,7 +262,7 @@ class QTIParser {
 								if (!is_array($this->answers_for_matching[$this->item_num])){
 									$this->answers_for_matching[$this->item_num] = array();
 								}
-								//The condiction here is to check rather the answers have been duplicated, otherwise the indexing won't be right.
+								//The condition here is to check rather the answers have been duplicated, otherwise the indexing won't be right.
 								//sizeof[answers] != sizeof[questions], then the index matching is wrong.
 								//Created a problem though, which is then many-to-1 matching fails, cuz answers will be repeated.
 								//Sep 2,08, Fixed by adding a flag into the array
@@ -285,16 +295,26 @@ class QTIParser {
 				} 
 				break;
 			case 'fieldlabel':
-				// save this variable
-				$this->field_label[$this->item_num] = $this->character_data;
+				if (in_array('qtimetadatafield', $this->element_path) && in_array('qtimetadata', $this->element_path)){
+					// save this variable
+					$this->field_label[$this->item_num] = $this->character_data;
+				} else {
+					$msg->addError('QTI_WRONG_PACKAGE');
+				}
 				break;
 			case 'fieldentry':
-				$this->field_entry[$this->item_num][$this->field_label[$this->item_num]] = $this->character_data;
+				if (in_array('qtimetadatafield', $this->element_path) && in_array('qtimetadata', $this->element_path)){
+					$this->field_entry[$this->item_num][$this->field_label[$this->item_num]] = $this->character_data;
+				} else {
+					$msg->addError('QTI_WRONG_PACKAGE');
+				}
 				break;
 			case 'qmd_itemtype':
 				//Deprecated as of QTI 1.2.
-				if (empty($this->field_entry[$this->item_num][$name])){
+				if (empty($this->field_entry[$this->item_num][$name]) && !preg_match('/imsqti_xmlv1p2(.*)/', $this->qti_type)){
 					$this->field_entry[$this->item_num][$name] = $this->character_data;
+				} else {
+					$msg->addError('QTI_WRONG_PACKAGE');
 				}
 				break;
 			default:
