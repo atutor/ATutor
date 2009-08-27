@@ -767,7 +767,7 @@ function apply_customized_format($input) {
 			$module_content_format_file = AT_INCLUDE_PATH . '../mods/'.$dir_name.'/module_format_content.php';
 			if (file_exists($module_content_format_file))
 			{
-				include_once($module_content_format_file);
+				include($module_content_format_file);
 			}
 		}
 	}
