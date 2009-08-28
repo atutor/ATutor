@@ -20,6 +20,7 @@ require(AT_INCLUDE_PATH.'lib/qti.inc.php');
 //require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 require(AT_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
+require(AT_INCLUDE_PATH.'../tools/ims/ns.inc.php');	//namespace
 
 /* make sure we own this course that we're exporting */
 authenticate(AT_PRIV_CONTENT);
@@ -133,6 +134,7 @@ function rscandir($base='', &$data=array()) {
 }
 
 //function to take out the empty page node
+/*
 function rehash($items){
 	global $order;
 	$old_parent = '';
@@ -168,6 +170,7 @@ function rehash($items){
 	}
 	return $items;
 }
+*/
 
 
 	/* called at the start of en element */
@@ -189,6 +192,29 @@ function rehash($items){
 		//error if the tag names are wrong
 		if (preg_match('/^xsi\:/', $name) >= 1){
 			$msg->addError('MANIFEST_NOT_WELLFORM');
+		}
+
+		//validate namespaces
+		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
+			$schema_location = array();
+			$split_location = preg_split('/[\r\n\s]+/', trim($attrs['xsi:schemaLocation']));
+
+			//check if the namespace is actually right, have an array or some sort in IMS class
+			if(sizeof($split_location)%2==1){
+				//schema is not in the form of "The first URI reference in each pair is a namespace name,
+				//and the second is the location of a schema that describes that namespace."
+				$msg->addError('MANIFEST_NOT_WELLFORM');
+			}
+
+			//turn the xsi:schemaLocation URI into a schema that describe namespace.
+			//name = url
+			//http://msdn.microsoft.com/en-us/library/ms256100(VS.85).aspx
+			//http://www.w3.org/TR/xmlschema-1/
+			for($i=0; $i < sizeof($split_location);$i=$i+2){
+				$schema_location[$split_location[$i]] = $split_location[$i+1];
+			}
+		} else {
+			//throw error		
 		}
 
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
@@ -672,8 +698,8 @@ $sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE cour
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
-//reorder the items stack
-$items = rehash($items);
+//reorder the items stack, disabled Aug 25, 2009
+//$items = rehash($items);
 
 foreach ($items as $item_id => $content_info) 
 {

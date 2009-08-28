@@ -371,6 +371,23 @@ class QTIParser {
 				break;
 		}
 
+		//handles CC packages
+		switch ($this->field_entry[$item_num]['cc_profile']){
+			case 'cc.multiple_choice.v0p1':
+				return 1;
+				break;
+			case 'cc.true_false.v0p1':
+				return 2;
+				break;
+			case 'cc.fib.v0p1':
+				return 3;
+				break;
+			case 'cc.multiple_response.v0p1':
+				return 7;
+				break;
+		}
+	
+
 		//Check if this is an ordering, or matching
 		$response_obj;
 		switch ($this->response_type[$item_num]){
