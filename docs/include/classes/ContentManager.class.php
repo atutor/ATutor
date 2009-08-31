@@ -728,6 +728,8 @@ class ContentManager
 			$top_level = $this->_menu[$parent_id];
 			$counter = 1;
 			$num_items = count($top_level);
+			echo '<ul style="list-style-image:none;list-style-position:outside;list-style-type:none;margin:0;padding:0;">'."\n";
+			
 			foreach ($top_level as $garbage => $content) {
 				$link = '';
 				//tests do not have content id
@@ -783,6 +785,8 @@ class ContentManager
 					$on = true;
 				}
 
+				echo "<li>\n";
+				
 				if ( isset($this->_menu[$content['content_id']]) && is_array($this->_menu[$content['content_id']]) ) {
 					/* has children */
 					for ($i=0; $i<$depth; $i++) {
@@ -860,8 +864,8 @@ class ContentManager
 				
 				echo $link;
 				
-				echo '<br />';
-
+				echo "</li>\n\n";
+				
 				if ( $ignore_state || (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1)) {
 
 					$depth ++;
@@ -878,7 +882,8 @@ class ContentManager
 
 				}
 				$counter++;
-			}
+			} // end of foreach
+			echo "</ul>\n\n";
 		}
 	}
 
