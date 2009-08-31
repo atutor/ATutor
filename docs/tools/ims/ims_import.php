@@ -73,9 +73,13 @@ exit;
 		}
 */
 		$flag = false;
-		foreach($items as $name=>$fileinfo){			
+		$file_exists_in_manifest = false;
+
+		foreach($items as $name=>$fileinfo){
 			if (is_array($fileinfo['file'])){
 				if(in_array($filepath, $fileinfo['file'])){
+					$file_exists_in_manifest = true;
+
 					//validate the xml by its schema
 					if (preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
 						$qti = new QTIParser($fileinfo['type']);
@@ -90,8 +94,15 @@ exit;
 						$flag = true;
 					}
 				}
-			}
+			}			
 		}
+		
+		//check if all the files exists in the manifest, if not, throw error.
+		if (!$file_exists_in_manifest){
+			$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
+			break;
+		}
+
 		if ($flag == false){
 			//add an error message if it doesn't have any. 
 			if (!$msg->containsErrors()){
@@ -179,7 +190,7 @@ function rehash($items){
 		global $items, $path, $package_base_path;
 		global $element_path;
 		global $xml_base_path, $test_message;
-		global $current_identifier, $msg;
+		global $current_identifier, $msg, $ns;
 
 		//check if the xml is valid
 		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
@@ -211,7 +222,9 @@ function rehash($items){
 			//http://msdn.microsoft.com/en-us/library/ms256100(VS.85).aspx
 			//http://www.w3.org/TR/xmlschema-1/
 			for($i=0; $i < sizeof($split_location);$i=$i+2){
-				$schema_location[$split_location[$i]] = $split_location[$i+1];
+				if (isset($ns[$split_location[$i]]) && $ns[$split_location[$i]] != $split_location[$i+1]){
+					$msg->addError('MANIFEST_NOT_WELLFORM: SCHEMA');
+				}
 			}
 		} else {
 			//throw error		
@@ -650,7 +663,7 @@ if (file_exists($import_path . 'glossary.xml')){
 }
 
 // Check if all the files exists in the manifest
-checkResources($import_path);
+//checkResources($import_path);
 
 // Check if there are any errors during parsing.
 if ($msg->containsErrors()) {
