@@ -20,9 +20,9 @@
 */
 
 if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
-	define('CACHE_ON', 1); /* disable caching */
+	define('CACHE_ON', 1); /* enable caching */
 } else {
-	define('CACHE_ON', 0); /* enable caching */
+	define('CACHE_ON', 0); /* disable caching */
 }
 if (!defined('CACHE_DIR')) {
 	define('CACHE_DIR', '');
