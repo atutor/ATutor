@@ -38,6 +38,7 @@ $imported_glossary = array();
 $test_attributes = array();
 $character_data = '';
 $test_message = '';
+$content_type = '';
 
 
 /**
@@ -60,18 +61,16 @@ function checkResources($import_path){
 	foreach($data as $filepath){
 		$filepath = substr($filepath, strlen($import_path));
 
-		if ($filepath == 'imsmanifest.xml'){
-			continue;
-		}
-
 		//validate xml via its xsd/dtds
-/*		if (preg_match('/(.*)\.xml/', $filepath)){
+		if (preg_match('/(.*)\.xml/', $filepath)){
 			$dom = new DOMDocument();
 			$dom->load(realpath($import_path.$filepath));
-echo 			$dom->schemaValidate('ims_qtiasiv1p2_localised.xsd');
-exit;
+
+ 			if (!@$dom->schemaValidate('main.xsd')){
+				$msg->addError('MANIFEST_FAILED_VALIDATION - '.$filepath);
+			}
 		}
-*/
+
 		$flag = false;
 		$file_exists_in_manifest = false;
 
@@ -193,7 +192,7 @@ function rehash($items){
 		global $current_identifier, $msg, $ns;
 
 		//check if the xml is valid
-		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
+/*		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
 			//run the loop and check it thru the ns.inc.php
 		} elseif ($name == 'manifest' && !isset($attrs['xsi:schemaLocation'])) {
 			$msg->addError('MANIFEST_NOT_WELLFORM: NO NAMESPACE');
@@ -204,9 +203,10 @@ function rehash($items){
 		if (preg_match('/^xsi\:/', $name) >= 1){
 			$msg->addError('MANIFEST_NOT_WELLFORM');
 		}
+*/
 
 		//validate namespaces
-		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
+/*		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
 			$schema_location = array();
 			$split_location = preg_split('/[\r\n\s]+/', trim($attrs['xsi:schemaLocation']));
 
@@ -229,6 +229,7 @@ function rehash($items){
 		} else {
 			//throw error		
 		}
+*/
 
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
 			$xml_base_path = $attrs['xml:base'];
@@ -322,7 +323,7 @@ function rehash($items){
 	function endElement($parser, $name) {
 		global $path, $element_path, $my_data, $items;
 		global $current_identifier;
-		global $msg;
+		global $msg, $content_type;
 		static $resource_num = 0;
 		
 		if ($name == 'item') {
@@ -333,7 +334,8 @@ function rehash($items){
 		if ($name == 'schema'){
 			if (trim($my_data)=='IMS Question and Test Interoperability'){			
 				$msg->addError('IMPORT_FAILED');
-			}
+			} 
+			$content_type = trim($my_data);
 		}
 
 		//Handles A4a
@@ -662,8 +664,10 @@ if (file_exists($import_path . 'glossary.xml')){
 	}
 }
 
-// Check if all the files exists in the manifest
-//checkResources($import_path);
+// Check if all the files exists in the manifest, iff it's a IMS CC package.
+if ($content_type == 'IMS Common Cartridge') {
+	checkResources($import_path);
+}
 
 // Check if there are any errors during parsing.
 if ($msg->containsErrors()) {
