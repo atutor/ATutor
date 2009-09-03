@@ -69,6 +69,10 @@ function checkResources($import_path){
  			if (!@$dom->schemaValidate('main.xsd')){
 				$msg->addError('MANIFEST_FAILED_VALIDATION - '.$filepath);
 			}
+			//if this is the manifest file, we do not have to check for its existance.
+			if (preg_match('/(.*)imsmanifest\.xml/', $filepath)){
+				continue;
+			}
 		}
 
 		$flag = false;
@@ -93,9 +97,9 @@ function checkResources($import_path){
 						$flag = true;
 					}
 				}
-			}			
+			}
 		}
-		
+
 		//check if all the files exists in the manifest, if not, throw error.
 		if (!$file_exists_in_manifest){
 			$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
@@ -717,7 +721,6 @@ $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 //reorder the items stack, disabled Aug 25, 2009
 //$items = rehash($items);
-
 foreach ($items as $item_id => $content_info) 
 {
 	// remote href
@@ -861,7 +864,8 @@ foreach ($items as $item_id => $content_info)
 	          content_path, 
 	          title, 
 	          text,
-			  test_message) 
+			  test_message,
+			  content_type) 
 	       VALUES 
 			     ('.$_SESSION['course_id'].','															
 			     .intval($content_parent_id).','		
@@ -876,7 +880,8 @@ foreach ($items as $item_id => $content_info)
 			     .'"'.$content_info['new_path'].'",'
 			     .'"'.$content_info['title'].'",'
 			     .'"'.$content.'",'
-				 .'"'.$content_info['test_message'].'")';
+				 .'"'.$content_info['test_message'].'",'
+				 .($content==''?1:0).')';
 
 	$result = mysql_query($sql, $db) or die(mysql_error());
 
