@@ -154,7 +154,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
 			'editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
 	}
-	$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'editor/edit_content.php?pid='.$cid);
+	$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'editor/edit_content.php?pid='.$cid.'&amp;sub=1');
 	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'editor/delete_content.php?cid='.$cid);
 }
 $savant->assign('shortcuts', $shortcuts);

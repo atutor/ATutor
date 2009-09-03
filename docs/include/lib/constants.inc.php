@@ -260,6 +260,10 @@ define ('RL_TYPE_HANDOUT', 3);
 define ('RL_TYPE_AV', 4);
 define ('RL_TYPE_FILE', 5);
 
+// content type
+define ('CONTENT_TYPE_CONTENT',  0);
+define ('CONTENT_TYPE_FOLDER', 1);
+
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';
 $_rl_types[RL_TYPE_URL]		= 'rl_url';

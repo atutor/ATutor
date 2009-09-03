@@ -620,7 +620,7 @@ if (($current_tab == 0) || ($_current_tab == 5)) {
 		}
 	}
 	if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
-		$onload = ' document.form.ctitle.focus(); ';
+		$onload = "if (typeof document.form.ftitle != 'undefined') document.form.ftitle.focus(); else document.form.ctitle.focus(); ";
 	}
 }
 
@@ -711,6 +711,11 @@ $pid = intval($_REQUEST['pid']);
 //	echo '<input type="hidden" name="alternatives" value="$alternatives" />';
 	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
+	if ($_REQUEST['sub'] == 1)
+	{
+		echo '<input type="hidden" name="sub" value="1" />';
+		echo '<input type="hidden" name="folder_title" value="'.htmlspecialchars($stripslashes($_POST['folder_title'])).'" />';
+	}
 	echo '<input type="submit" name="submit" style="display:none;"/>';
 	if (($current_tab != 0) && (($_current_tab != 5))) {
 		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';

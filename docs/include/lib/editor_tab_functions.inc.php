@@ -107,6 +107,7 @@ function save_changes($redir, $current_tab) {
 		
 	if (!$msg->containsErrors()) {
 
+		$_POST['folder_title']	= $addslashes($_POST['folder_title']);
 		$_POST['title']			= $addslashes($_POST['title']);
 		$_POST['body_text']		= $addslashes($_POST['body_text']);
 		$_POST['head']  		= $addslashes($_POST['head']);
@@ -135,7 +136,8 @@ function save_changes($redir, $current_tab) {
 												  $_POST['head'],
 												  $_POST['use_customized_head'],
 												  $_POST['test_message'],
-												  $_POST['allow_test_export']);
+												  $_POST['allow_test_export'],
+												  $_POST['folder_title']);
 			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}

@@ -184,6 +184,19 @@ function toggleToc(objId) {
 	}
 	setcookie(objId, hidelink.style.display, 1);
 }
+
+function toggleFolder(cid)
+{
+	tree_collapse_icon = "<?php echo $this->base_path; ?>"+"images/tree/tree_disabled.gif";
+	tree_expand_icon = "<?php echo $this->base_path; ?>"+"images/tree/tree_expand.gif";
+
+	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) 
+		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
+	else
+		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
+	
+	jQuery("#folder"+cid).slideToggle();
+}
 //-->
 </script>
 <div class="page_wrapper">

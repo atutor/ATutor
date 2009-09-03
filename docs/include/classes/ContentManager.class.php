@@ -45,7 +45,10 @@ class ContentManager
 		if (!($this->course_id > 0)) {
 			return;
 		}
-		$sql = "SELECT content_id, content_parent_id, ordering, title, UNIX_TIMESTAMP(release_date) AS u_release_date FROM ".TABLE_PREFIX."content WHERE course_id=$this->course_id ORDER BY content_parent_id, ordering";
+		$sql = "SELECT content_id, content_parent_id, ordering, title, UNIX_TIMESTAMP(release_date) AS u_release_date, content_type 
+		          FROM ".TABLE_PREFIX."content 
+		         WHERE course_id=$this->course_id 
+		         ORDER BY content_parent_id, ordering";
 		$result = mysql_query($sql, $this->db);
 
 		/* x could be the ordering or even the content_id	*/
@@ -63,7 +66,8 @@ class ContentManager
 			$num_sections++;
 			$_menu[$row['content_parent_id']][] = array('content_id'=> $row['content_id'],
 														'ordering'	=> $row['ordering'], 
-														'title'		=> htmlspecialchars($row['title']));
+														'title'		=> htmlspecialchars($row['title']),
+														'content_type' => $row['content_type']);
 
 			$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
 													'title'				=> htmlspecialchars($row['title']),
@@ -142,56 +146,102 @@ class ContentManager
 	}
 
 
-	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $head = '', $use_customized_head = 0, $test_message = '', $allow_test_export = 1) {
+	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, 
+	                    $related, $formatting, $release_date, $head = '', $use_customized_head = 0, 
+	                    $test_message = '', $allow_test_export = 1, $folder_title = '') {
 		
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['course_id'] != -1)) {
 			return false;
 		}
 
-		// shift the new neighbouring content down
-		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
+		// insert the first sub-page
+		if ($folder_title <> '')
+		{
+			// insert folder for parent content
+			$sql = "SELECT content_parent_id, ordering, last_modified, title
+			          FROM ".TABLE_PREFIX."content
+			         WHERE content_id = ".$content_parent_id;
+			$result = mysql_query($sql, $this->db);
+			$parent_content_row = mysql_fetch_assoc($result);
+			
+			$sql = "INSERT INTO ".TABLE_PREFIX."content 
+			               (course_id, content_parent_id, ordering, last_modified, title, content_type)
+			        VALUES (".$course_id .",".
+			                  $parent_content_row['content_parent_id'].",". 
+			                  $parent_content_row['ordering'].", '".
+			                  $parent_content_row['last_modified']."', '".
+			                  $parent_content_row['title'] ."', ".CONTENT_TYPE_FOLDER.")";
+			$result = mysql_query($sql, $this->db);
+			
+			// update the parent_id of the parent content to parent_content_folder 
+			$parent_folder_id = mysql_insert_id();
+			
+			$sql = "UPDATE ".TABLE_PREFIX."content 
+			           SET content_parent_id = ".$parent_folder_id.",
+			               ordering = 1 
+			         WHERE content_id = ".$content_parent_id;
+			$result = mysql_query($sql, $this->db);
+			
+			// insert folder for new content
+			$sql = "INSERT INTO ".TABLE_PREFIX."content
+			               (course_id, content_parent_id, ordering, last_modified, revision, title, content_type)
+			        VALUES ($course_id, $parent_folder_id, 2, NOW(), 0, '$folder_title',".CONTENT_TYPE_FOLDER.")";
+			$err = mysql_query($sql, $this->db);
 
-		/* main topics all have minor_num = 0 */
-		$sql = "INSERT INTO ".TABLE_PREFIX."content
-		               (course_id,
-		                content_parent_id,
-		                ordering,
-		                last_modified,
-		                revision,
-		                formatting,
-		                release_date,
-		                head,
-		                use_customized_head,
-		                keywords,
-		                content_path,
-		                title,
-		                text,
-						test_message,
-						allow_test_export)
-		        VALUES ($course_id, 
-		                $content_parent_id, 
-		                $ordering, 
-		                NOW(), 
-		                0, 
-		                $formatting, 
-		                '$release_date', 
-		                '$head',
-		                $use_customized_head,
-		                '$keywords', 
-		                '', 
-		                '$title',
-		                '$text',
-						'$test_message',
-						$allow_test_export)";
-
-		$err = mysql_query($sql, $this->db);
-
-		/* insert the related content */
-		$sql = "SELECT LAST_INSERT_ID() AS insert_id";
-		$result = mysql_query($sql, $this->db);
-		$row = mysql_fetch_assoc($result);
-		$cid = $row['insert_id'];
+			// insert new content
+			$sql = "INSERT INTO ".TABLE_PREFIX."content
+			               (course_id, content_parent_id, ordering, last_modified, revision, formatting, release_date,
+			                head, use_customized_head, keywords, content_path, title, text, test_message, 
+			                allow_test_export, content_type)
+			        VALUES ($course_id, ".mysql_insert_id().", $ordering, NOW(), 0, $formatting, '$release_date', 
+			                '$head',$use_customized_head,'$keywords','','$title','$text','$test_message',
+							$allow_test_export,".CONTENT_TYPE_CONTENT.")";
+			$err = mysql_query($sql, $this->db);
+		}
+		else
+		{
+			// shift the new neighbouring content down
+			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
+			$result = mysql_query($sql, $this->db);
+	
+			/* main topics all have minor_num = 0 */
+			$sql = "INSERT INTO ".TABLE_PREFIX."content
+			               (course_id,
+			                content_parent_id,
+			                ordering,
+			                last_modified,
+			                revision,
+			                formatting,
+			                release_date,
+			                head,
+			                use_customized_head,
+			                keywords,
+			                content_path,
+			                title,
+			                text,
+							test_message,
+							allow_test_export,
+							content_type)
+			        VALUES ($course_id, 
+			                $content_parent_id, 
+			                $ordering, 
+			                NOW(), 
+			                0, 
+			                $formatting, 
+			                '$release_date', 
+			                '$head',
+			                $use_customized_head,
+			                '$keywords', 
+			                '', 
+			                '$title',
+			                '$text',
+							'$test_message',
+							$allow_test_export,".
+							CONTENT_TYPE_CONTENT.")";
+	
+			$err = mysql_query($sql, $this->db);
+		}
+		$cid = mysql_insert_id();
 
 		$sql = '';
 		if (is_array($related)) {
@@ -651,7 +701,7 @@ class ContentManager
 		$path         = '';
 		$children     = array();
 		$truncate     = true;
-		$ignore_state = false;
+		$ignore_state = true;
 
 		$this->start = true;
 		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
@@ -667,7 +717,7 @@ class ContentManager
 		$ignore_state = true;
 
 		$this->start = true;
-		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state, 'sitemap');
 	}
 
 	/* @See index.php */
@@ -698,7 +748,7 @@ class ContentManager
 
 	/* @See include/html/menu_menu.inc.php	*/
 	/* Access: PRIVATE */
-	function printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state) {
+	function printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state, $from = '') {
 		
 		global $cid, $_my_uri, $_base_path, $rtl, $substr, $strlen;
 		static $temp_path;
@@ -728,7 +778,7 @@ class ContentManager
 			$top_level = $this->_menu[$parent_id];
 			$counter = 1;
 			$num_items = count($top_level);
-			echo '<ul style="list-style-image:none;list-style-position:outside;list-style-type:none;margin:0;padding:0;">'."\n";
+			echo '<ul id="folder'.$parent_id.$from.'" style="list-style-image:none;list-style-position:outside;list-style-type:none;margin:0;padding:0;">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
 				$link = '';
@@ -741,7 +791,8 @@ class ContentManager
 
 				$on = false;
 
-				if ( ($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid) ) {
+				if ( (($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid)) && $content['content_type'] == CONTENT_TYPE_CONTENT) 
+				{ // non-current content nodes with content type "CONTENT_TYPE_CONTENT"
 					if (isset($highlighted[$content['content_id']])) {
 						$link .= '<strong>';
 						$on = true;
@@ -772,13 +823,30 @@ class ContentManager
 					if ($on) {
 						$link .= '</strong>';
 					}
-				} else {
-					$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'">'."\n";
-					if ($truncate && ($strlen($content['title']) > (26-$depth*4)) ) {
-						$content['title'] = rtrim($substr($content['title'], 0, (26-$depth*4)-4)).'...';
+				} 
+				else 
+				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
+					if ($content['content_type'] == CONTENT_TYPE_CONTENT)
+					{ // current content page
+//						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'">'."\n";
+						$link .= '<a href="#" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'">'."\n";
+						if ($truncate && ($strlen($content['title']) > (26-$depth*4)) ) {
+							$content['title'] = rtrim($substr($content['title'], 0, (26-$depth*4)-4)).'...';
+						}
+						$link .= trim($content['title']).'</strong>';
+						$on = true;
 					}
-					$link .= trim($content['title']).'</strong>';
-					$on = true;
+					else
+					{ // nodes with content type "CONTENT_TYPE_FOLDER"
+//						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
+						$link .= '<a href="#" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
+						
+						if ($truncate && ($strlen($content['title']) > (26-$depth*4)) ) {
+							$content['title'] = rtrim($substr($content['title'], 0, (26-$depth*4)-4)).'...';
+						}
+						$link .= trim($content['title']).'</strong>';
+//						echo '<div id="folder_content_'.$content['content_id'].'">';
+					}
 				}
 
 				if ($ignore_state) {
@@ -816,20 +884,20 @@ class ContentManager
 
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" />'."\n";
+							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
 
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" />'."\n";
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
 							echo '</a>'."\n";
 						}
 					} else {
 						if ($on) {
-							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" />'."\n";
+							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
 
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />';
 							echo '</a>'."\n";
 						}
 					}
@@ -875,7 +943,8 @@ class ContentManager
 										$path.$counter.'.', 
 										$children,
 										$truncate, 
-										$ignore_state);
+										$ignore_state,
+										$from);
 
 										
 					$depth--;
