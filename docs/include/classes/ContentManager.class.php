@@ -72,7 +72,8 @@ class ContentManager
 			$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
 													'title'				=> htmlspecialchars($row['title']),
 													'ordering'			=> $row['ordering'],
-													'u_release_date'    => $row['u_release_date']);
+													'u_release_date'    => $row['u_release_date'],
+													'content_type' => $row['content_type']);
 
 			/* 
 			 * add test content asscioations
@@ -82,7 +83,8 @@ class ContentManager
 			$test_rs = $this->getContentTestsAssoc($row['content_id']);
 			while ($test_row = mysql_fetch_assoc($test_rs)){
 				$_menu[$row['content_id']][] = array(	'test_id'	=> $test_row['test_id'],
-														'title'		=> htmlspecialchars($test_row['title']));
+														'title'		=> htmlspecialchars($test_row['title']),
+														'content_type' => CONTENT_TYPE_CONTENT);
 
 //				$_menu_info[$test_row['test_id']] = array(	'content_parent_id' => $row['content_id'],
 //															'title'				=> htmlspecialchars($test_row['title']));				
@@ -575,7 +577,7 @@ class ContentManager
 			}
 		}
 	}
-		
+			
 	/* Access: Private */
 	// functions getPreviousContent() & getNextContent() always skip tests associated with the content
 	function getNextContent($content_id, $order=0) {
@@ -601,10 +603,16 @@ class ContentManager
 		/* if this content has children, then take the first one. */
 		if ( isset($this->_menu[$content_id]) && is_array($this->_menu[$content_id]) && ($order==0) ) {
 			/* has children */
-			// if the child is a test, keep searching for the content id 
+			// if the child is a test or a folder, keep searching for the content id 
 			foreach ($this->_menu[$content_id] as $menuID => $menuContent)
 			{
 				if (!empty($menuContent['test_id'])) continue;
+				
+				// if the content node is a folder, search in the folder children
+				if ($menuContent['content_type'] == CONTENT_TYPE_FOLDER)
+				{
+					return $this->getNextContent($menuContent['content_id'], 0);
+				}
 				else 
 				{
 					$nextMenu = $this->_menu[$content_id][$menuID];
@@ -628,7 +636,13 @@ class ContentManager
 			/* no children */
 			if (isset($this->_menu[$myParent][$myOrder]) && $this->_menu[$myParent][$myOrder] != '') {
 				/* Has sibling */
-				return $this->_menu[$myParent][$myOrder];
+				// if the content node is a folder, search in the folder children
+				if ($this->_menu[$myParent][$myOrder]['content_type'] == CONTENT_TYPE_CONTENT) {
+					return $this->_menu[$myParent][$myOrder];
+				}
+				else {
+					return $this->getNextContent($this->_menu[$myParent][$myOrder]['content_id'], 0);
+				}	
 			} else {
 				/* No more siblings */
 				if ($myParent != 0) {
@@ -828,8 +842,7 @@ class ContentManager
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
 					if ($content['content_type'] == CONTENT_TYPE_CONTENT)
 					{ // current content page
-//						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'">'."\n";
-						$link .= '<a href="#" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'">'."\n";
+						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > (26-$depth*4)) ) {
 							$content['title'] = rtrim($substr($content['title'], 0, (26-$depth*4)-4)).'...';
 						}
@@ -839,7 +852,7 @@ class ContentManager
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
 //						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
-						$link .= '<a href="#" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
+						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'" style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
 						
 						if ($truncate && ($strlen($content['title']) > (26-$depth*4)) ) {
 							$content['title'] = rtrim($substr($content['title'], 0, (26-$depth*4)-4)).'...';
