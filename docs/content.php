@@ -87,7 +87,13 @@ if ($_SESSION['prefs']['PREF_NUMBERING']) {
 }
 
 $parent = 0;
-foreach ($path as $page) {
+foreach ($path as $i=>$page) {
+	// remove folder content from path
+	if ($contentManager->_menu_info[$page['content_id']]['content_type'] == CONTENT_TYPE_FOLDER) {
+		unset($path[$i]);
+		continue;
+	}
+	
 	if (!$parent) {
 		$_pages['content.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
 		$_pages['content.php?cid='.$page['content_id']]['parent']   = 'index.php';
