@@ -723,6 +723,11 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 //$items = rehash($items);
 foreach ($items as $item_id => $content_info) 
 {
+	//if this is any of the LTI tools, skip it. (ie. Discussion Tools, Weblinks, etc)
+	if ($content_info['type']=='imsdt_xmlv1p0' || $content_info['type']=='imswl_xmlv1p0'){
+		continue;
+	}
+
 	// remote href
 	if (preg_match('/^http.*:\/\//', trim($content_info['href'])) )
 	{
@@ -913,7 +918,7 @@ foreach ($items as $item_id => $content_info)
 			$qids = $qti_import->importQuestions($test_attributes);
 
 			//import test
-			$tid = $qti_import->importTest();
+			$tid = $qti_import->importTest($content_info['title']);
 
 			//associate question and tests
 			foreach ($qids as $order=>$qid){

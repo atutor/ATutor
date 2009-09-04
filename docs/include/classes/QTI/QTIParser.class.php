@@ -295,27 +295,16 @@ class QTIParser {
 				} 
 				break;
 			case 'fieldlabel':
-				if (in_array('qtimetadatafield', $this->element_path) && in_array('qtimetadata', $this->element_path)){
-					// save this variable
-					$this->field_label[$this->item_num] = $this->character_data;
-				} else {
-					$msg->addError('QTI_WRONG_PACKAGE');
-				}
+				$this->field_label[$this->item_num] = $this->character_data;
 				break;
 			case 'fieldentry':
-				if (in_array('qtimetadatafield', $this->element_path) && in_array('qtimetadata', $this->element_path)){
-					$this->field_entry[$this->item_num][$this->field_label[$this->item_num]] = $this->character_data;
-				} else {
-					$msg->addError('QTI_WRONG_PACKAGE');
-				}
+				$this->field_entry[$this->item_num][$this->field_label[$this->item_num]] = $this->character_data;
 				break;
 			case 'qmd_itemtype':
 				//Deprecated as of QTI 1.2.
-				if (empty($this->field_entry[$this->item_num][$name]) && !preg_match('/imsqti_xmlv1p2(.*)/', $this->qti_type)){
+				if (empty($this->field_entry[$this->item_num][$name])){
 					$this->field_entry[$this->item_num][$name] = $this->character_data;
-				} else {
-					$msg->addError('QTI_WRONG_PACKAGE');
-				}
+				} 
 				break;
 			default:
 				break;

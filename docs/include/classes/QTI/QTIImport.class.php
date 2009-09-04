@@ -188,14 +188,15 @@ class QTIImport {
 
 	/**
 	 * This function is to import a test and returns the test id.
+	 * @param	string	custmom test title
 	 *
 	 * @return	int		test id
 	 */
-	function importTest() {
+	function importTest($title='') {
 		global $msg, $db;
 
 		$missing_fields				= array();
-		$test_obj['title']			= $test_title;
+		$test_obj['title']			= $title;
 		$test_obj['description']	= '';
 		$test_obj['num_questions']	= 0;
 		$test_obj['num_takes']		= 0;
@@ -223,7 +224,7 @@ class QTIImport {
 			if ($this->title != '') {
 				$test_obj['title'] = $this->title;
 			} else {
-				$test_obj['title'] = '[' . _AT('tests') . ' ' . _AT('title') . ']';
+//				$test_obj['title'] = 'random title';
 				
 				//set marks to 0 if no title? 
 				$this->weights = array();
