@@ -389,7 +389,7 @@ function generate_release_date($now = false) {
 		$month	= intval($_POST['month']);
 		$year	= intval($_POST['year']);
 		$hour	= intval($_POST['hour']);
-		$min	= intval($_POST['minute']);
+		$min	= intval($_POST['min']);
 	}
 
 	if (!checkdate($month, $day, $year)) {

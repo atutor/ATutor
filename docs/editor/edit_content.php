@@ -674,7 +674,7 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['month'] = substr($content_row['release_date'], 5, 2);
 			$_POST['year']  = substr($content_row['release_date'], 0, 4);
 			$_POST['hour']  = substr($content_row['release_date'], 11, 2);
-			$_POST['minute']= substr($content_row['release_date'], 14, 2);
+			$_POST['min']= substr($content_row['release_date'], 14, 2);
 
 			$_POST['ordering'] = $_POST['new_ordering'] = $content_row['ordering'];
 			$_POST['related'] = $contentManager->getRelatedContent($cid);
@@ -691,7 +691,7 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['month']  = date('m');
 			$_POST['year'] = date('Y');
 			$_POST['hour'] = date('H');
-			$_POST['minute']  = 0;
+			$_POST['min']  = 0;
 
 			if (isset($_GET['pid'])) {
 				$pid = intval($_GET['pid']);
@@ -739,7 +739,8 @@ $pid = intval($_REQUEST['pid']);
 	echo '<input type="hidden" name="year" value="'.$_POST['year'].'" />';
 	echo '<input type="hidden" name="hour" value="'.$_POST['hour'].'" />';
 	echo '<input type="hidden" name="minute" value="'.$_POST['minute'].'" />';
-
+	echo '<input type="hidden" name="min" value="'.$_POST['min'].'" />';
+	
 	echo '<input type="hidden" name="alternatives" value="'.$_POST['alternatives'].'" />';
 	
 	echo '<input type="hidden" name="current_tab" value="'.$current_tab.'" />';
