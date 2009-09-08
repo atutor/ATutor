@@ -165,7 +165,8 @@ if (isset($_pages[$current_page]['title'])) {
 /* calculate the section_title: */
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	//Truncate course title if it's > 45.
-	$section_title = validate_length($_SESSION['course_title'], 45, VALIDATE_LENGTH_FOR_DISPLAY);
+	$session_course_title = htmlentities($_SESSION['course_title'], ENT_QUOTES, 'UTF-8');
+	$section_title = validate_length($session_course_title, 45, VALIDATE_LENGTH_FOR_DISPLAY);
 	// If there is an icon, display it on the header
 	$sql = 'SELECT icon FROM '.TABLE_PREFIX.'courses WHERE course_id='.$_SESSION['course_id'];
 	$result =  mysql_query($sql, $db);
@@ -223,6 +224,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 		$nav_courses = array(); /* the list of courses we're enrolled in or own */
 		while ($row = @mysql_fetch_assoc($result)) {
 			//Truncate course title if it's > 45.
+			$system_courses[$row['course_id']]['title'] = htmlentities($system_courses[$row['course_id']]['title'], ENT_QUOTES, 'UTF-8');
 			$nav_courses[$row['course_id']] = validate_length($system_courses[$row['course_id']]['title'], 45, VALIDATE_LENGTH_FOR_DISPLAY);
 		}
 

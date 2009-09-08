@@ -66,14 +66,14 @@
 							$course_icon = 'images/courses/'.$row['icon'];
 						}
 					?>
-						<a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  $row['title']; ?>" /> </a>	
+						<a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" /> </a>	
 					<?php } ?>
 				</dt>
-				<dd><h3 <?php echo $style_for_title; ?>><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo $row['title']; ?></a></h3></dd>
+				<dd><h3 <?php echo $style_for_title; ?>><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?></a></h3></dd>
 				
 			<?php if ($row['description']): ?>
 				<dt><?php echo _AT('description'); ?></dt>
-				<dd><?php echo nl2br($row['description']); ?>&nbsp;</dd>
+				<dd><?php echo nl2br(htmlentities($row['description'], ENT_QUOTES, 'UTF-8')); ?>&nbsp;</dd>
 			<?php endif; ?>
 
 			<?php if ($has_categories): ?>

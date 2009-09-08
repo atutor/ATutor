@@ -756,11 +756,7 @@ if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 	$_my_uri = $_SERVER['PHP_SELF'].$_my_uri;
 
 function my_add_null_slashes( $string ) {
-	$string = replaceTags($string);
     return mysql_real_escape_string(stripslashes($string));
-}
-function my_mysql_real_escape_string( $string ) {
-	return replaceTags($string);
 }
 function my_null_slashes($string) {
 	return $string;
@@ -770,15 +766,8 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes   = 'my_add_null_slashes';
 	$stripslashes = 'stripslashes';
 } else {
-	$addslashes   = 'my_mysql_real_escape_string';
+	$addslashes   = 'mysql_real_escape_string';
 	$stripslashes = 'my_null_slashes';
-}
-
-//bug #3924, for now, take out the sensitive tags.  Not the most briliant way of doing it, 
-//but should be the quickest and easiest way to deal with the hole, yet allow 
-//the mathematical expression to work still. 
-function replaceTags($input){
-	return preg_replace('/\<\s*meta/', '', $input);
 }
 
 

@@ -29,7 +29,7 @@
 		</div>
 			<div class="body">
 				<?php if ($row['icon'] == ''): ?>
-						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" alt="<?php echo $row['title']; ?>" />
+						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" alt="<?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" />
 				<?php else: 
 						echo $link;  
 
@@ -52,11 +52,11 @@
                     	$dir = "images/courses/".$row['icon'];
                 }
                 ?>
-				<img src="<?php echo $dir; ?>" class="icon" border="0" alt="<?php echo $row['title']; ?>" />
+				<img src="<?php echo $dir; ?>" class="icon" border="0" alt="<?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" />
 					<?php echo $link2; ?>
 				<?php endif; ?>
 
-				<strong><?php echo $link.$row['title'].$link2; ?></strong>
+				<strong><?php echo $link.htmlentities($row['title'], ENT_QUOTES, 'UTF-8').$link2; ?></strong>
 
 				<?php if ($row['member_id'] != $_SESSION['member_id']  && $_config['allow_unenroll'] == 1): ?>
 					- <a href="users/remove_course.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('unenroll_me'); ?></a>
