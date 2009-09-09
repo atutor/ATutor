@@ -31,10 +31,10 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 	$sql    = "SELECT creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
-		$code = substr(md5($_GET['e'] . $row['creation_date'] . $id), 0, 10);
+		$code = substr(md5($e . $row['creation_date'] . $id), 0, 10);
 
 		if ($code == $m) {
-			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$_GET[e]', last_login=NOW(), creation_date=creation_date WHERE member_id=$id";
+			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$e', last_login=NOW(), creation_date=creation_date WHERE member_id=$id";
 			$result = mysql_query($sql, $db);
 
 			$msg->addFeedback('CONFIRM_GOOD');

@@ -43,6 +43,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['display']	   = intval($_POST['display']);
 
 	// currently these options are ignored for tests:
+	$_POST['result_release'] = intval($_POST['result_release']); 
 	$_POST['format']       = intval($_POST['format']);
 	$_POST['order']	       = 1;  //intval($_POST['order']);
 	$_POST['difficulty']   = 0;  //intval($_POST['difficulty']); 	/* avman */

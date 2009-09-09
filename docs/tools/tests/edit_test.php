@@ -42,6 +42,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['allow_guests']      = $_POST['allow_guests'] ? 1 : 0;
 	$_POST['show_guest_form']   = $_POST['show_guest_form'] ? 1 : 0;
 	$_POST['instructions']      = $addslashes($_POST['instructions']);
+	$_POST['result_release']	= intval($_POST['result_release']); 
 
 	/* this doesn't actually get used: */
 	$_POST['difficulty'] = intval($_POST['difficulty']);

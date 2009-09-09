@@ -37,7 +37,16 @@ Notes:
 	
 */
 
+define('AT_INCLUDE_PATH', '../');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
+	authenticate(AT_PRIV_CONTENT);
+}
+
+
 // Code for Session Cookie workaround
+/*
 	if (isset($_POST["PHPSESSID"])) {
 		session_id($_POST["PHPSESSID"]);
 	} else if (isset($_GET["PHPSESSID"])) {
@@ -45,6 +54,7 @@ Notes:
 	}
 
 	session_start();
+*/
 
 // Check post_max_size (http://us3.php.net/manual/en/features.file-upload.php#73762)
 	$POST_MAX_SIZE = ini_get('post_max_size');
@@ -60,11 +70,17 @@ Notes:
 // Settings
 //	$save_path = "/home/elicochr/public_html/sos/uploads/";
 	$save_path = urldecode($_GET['path']);
+	$content_path = AT_CONTENT_DIR . $_SESSION['course_id'];
+	$pos = strpos(realpath($save_path), $content_path);
+	if ($pos === false){
+		HandleError("Error uploading a file.");
+		exit(0);
+	}
 	$upload_name = "Filedata";
 	$max_file_size_in_bytes = 2147483647;				// 2GB in bytes
 	//$extension_whitelist = array("jpg", "gif", "png");	// Allowed file extensions
 	$valid_chars_regex = '.A-Z0-9_ !@#$%^&()+={}\[\]\',~`-';				// Characters allowed in the file name (in a Regular Expression format)
-	
+
 // Other variables	
 	$MAX_FILENAME_LENGTH = 260;
 	$file_name = "";
@@ -114,7 +130,6 @@ Notes:
 		exit(0);
 	}
 
-
 // Validate that we won't over-write an existing file
 	if (file_exists($save_path . $file_name)) {
 		HandleError("File with this name already exists");
@@ -122,19 +137,16 @@ Notes:
 	}
 
 // Validate file extension
-/*	$path_info = pathinfo($_FILES[$upload_name]['name']);
-	$file_extension = $path_info["extension"];
-	$is_valid_extension = false;
-	foreach ($extension_whitelist as $extension) {
-		if ($file_extension == $extension) {
-			$is_valid_extension = true;
-			break;
-		}
-	}
-	if (!$is_valid_extension) {
-		HandleError("Invalid file extension");
-		exit(0);
-	}*/
+$path_parts = pathinfo($_FILES[$upload_name]['name']);
+$ext = $path_parts['extension'];
+
+/* check if this file extension is allowed: */
+/* $IllegalExtentions is defined in ./include/config.inc.php */
+if (in_array($ext, $IllegalExtentions)) {
+	HandleError("Invalid file extension");
+	exit(0);
+}
+
 
 // Validate file contents (extension and mime-type can't be trusted)
 	/*
