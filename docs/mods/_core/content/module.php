@@ -6,6 +6,9 @@ if (!defined('AT_PRIV_CONTENT')) {
 	define('AT_PRIV_CONTENT', $this->getPrivilege());
 }
 
+global $_custom_css;
+$_custom_css = AT_BASE_HREF."jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
+
 //side menu dropdowns
 $this->_stacks['menu_menu'] = array('title_var'=>'menu_menu', 'file'=>AT_INCLUDE_PATH.'html/dropdowns/menu_menu.inc.php');
 $this->_stacks['related_topics'] = array('title_var'=>'related_topics', 'file'=>AT_INCLUDE_PATH.'html/dropdowns/related_topics.inc.php');

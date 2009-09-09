@@ -718,7 +718,66 @@ class ContentManager
 		$ignore_state = true;
 
 		$this->start = true;
+		
+		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
+		{
+			echo "\n".'
+			<a href="javascript:void(0)" onclick="javascript:switchEditMode();" style="float:right;">
+				<img id="img_switch_edit_mode" src="'.AT_BASE_HREF.'images/edit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;margin-top:-1em;height:1.2em" />
+			</a>'."\n";
+		}
+		echo '<div id="editable_table">';
 		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
+		echo '</div>';
+		
+		// javascript for inline editor
+		echo '
+<script type="text/javascript">
+function switchEditMode() {
+	img_edit = "'.AT_BASE_HREF.'images/edit.gif";
+	title_edit = "'._AT("enter_edit_mode").'";
+	
+	img_view = "'.AT_BASE_HREF.'images/topic_lock.gif";
+	title_view = "'._AT("exit_edit_mode").'";
+	
+	if (jQuery("#img_switch_edit_mode").attr("src") == img_edit)
+	{
+		jQuery("#img_switch_edit_mode").attr("src", img_view);
+		jQuery("#img_switch_edit_mode").attr("alt", title_view);
+		jQuery("#img_switch_edit_mode").attr("title", title_view);
+		inlineEditsSetup();
+	}
+	else
+	{
+		jQuery("#img_switch_edit_mode").attr("src", img_edit);
+		jQuery("#img_switch_edit_mode").attr("alt", title_edit);
+		jQuery("#img_switch_edit_mode").attr("title", title_edit);
+		jQuery(".inlineEdits").removeAttr("role");
+		jQuery(".inlineEdits").removeAttr("tabindex");
+		jQuery(".inlineEdits").next.remove();
+	}
+}
+
+function inlineEditsSetup() {
+	var tableEdit = fluid.inlineEdits("#editable_table", {
+		selectors : {
+			text : ".inlineEdits",
+			editables : "li"
+		},
+		defaultViewText: "",
+		useTooltip: true,
+		listeners: {
+			onBeginEdit : function() {},
+			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
+				if (newValue != oldValue)
+					rtn = jQuery.post("'. AT_BASE_HREF. 'mods/_core/content/menu_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
+						          function(data) {handleResponse(data, viewNode, oldValue); }, "json");
+			}
+		}
+	});
+};
+</script>
+';
 	}
 
 	/* @See tools/sitemap/index.php */
@@ -829,13 +888,23 @@ class ContentManager
 
 					$link .= $content['title'].'">';
 
-					if ($truncate && ($strlen($content['title']) > (28-$depth*4)) ) {
-						$content['title'] = rtrim($substr($content['title'], 0, (28-$depth*4)-4)).'...';
+					if ($truncate && ($strlen($content['title']) > (24-$depth*4)) ) {
+						$content['title'] = rtrim($substr($content['title'], 0, (24-$depth*4)-4)).'...';
 					}
-					$link .= $content['title'];
+					
+					if (isset($content['test_id']))
+						$link .= $content['title'];
+					else
+						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'">'.$content['title'].'</span>';
+					
 					$link .= '</a>';
 					if ($on) {
 						$link .= '</strong>';
+					}
+					
+					// instructors have privilege to delete content
+					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id'])) {
+						$link .= '<a href="'.AT_BASE_HREF.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
 					}
 				} 
 				else 
@@ -843,10 +912,16 @@ class ContentManager
 					if ($content['content_type'] == CONTENT_TYPE_CONTENT)
 					{ // current content page
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
-						if ($truncate && ($strlen($content['title']) > (26-$depth*4)) ) {
-							$content['title'] = rtrim($substr($content['title'], 0, (26-$depth*4)-4)).'...';
+						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
+							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
 						}
-						$link .= trim($content['title']).'</strong>';
+						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'">'.trim($content['title']).'</span></strong>';
+						
+						// instructors have privilege to delete content
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+							$link .= '<a href="'.AT_BASE_HREF.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
+						}
+						
 						$on = true;
 					}
 					else
@@ -854,10 +929,15 @@ class ContentManager
 //						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
 						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'" style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
 						
-						if ($truncate && ($strlen($content['title']) > (26-$depth*4)) ) {
-							$content['title'] = rtrim($substr($content['title'], 0, (26-$depth*4)-4)).'...';
+						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
+							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
 						}
-						$link .= trim($content['title']).'</strong>';
+						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'">'.trim($content['title']).'</span></strong>'."\n";
+						
+						// instructors have privilege to delete content
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+							$link .= '<a href="'.AT_BASE_HREF.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
+						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';
 					}
 				}
