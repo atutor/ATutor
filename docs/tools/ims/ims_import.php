@@ -20,7 +20,7 @@ require(AT_INCLUDE_PATH.'lib/qti.inc.php');
 //require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 require(AT_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
-require(AT_INCLUDE_PATH.'../tools/ims/ns.inc.php');	//namespace
+//require(AT_INCLUDE_PATH.'../tools/ims/ns.inc.php');	//namespace, no longer needs, delete it after it's stable.
 
 /* make sure we own this course that we're exporting */
 authenticate(AT_PRIV_CONTENT);
@@ -193,7 +193,7 @@ function rehash($items){
 		global $items, $path, $package_base_path;
 		global $element_path;
 		global $xml_base_path, $test_message;
-		global $current_identifier, $msg, $ns;
+		global $current_identifier, $msg;
 
 		//check if the xml is valid
 /*		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
@@ -278,10 +278,10 @@ function rehash($items){
 			$path[] = $attrs['identifierref'];
 		} else if (($name == 'item') && ($attrs['identifier'])) {
 			$path[] = $attrs['identifier'];
-		} else if (($name == 'resource') && is_array($items[$attrs['identifier']]))  {
+//		} else if (($name == 'resource') && is_array($items[$attrs['identifier']]))  {
+		} else if (($name == 'resource'))  {
 			$current_identifier = $attrs['identifier'];
 			$items[$current_identifier]['type'] = $attrs['type'];
-
 			if ($attrs['href']) {
 				$attrs['href'] = urldecode($attrs['href']);
 
@@ -299,7 +299,6 @@ function rehash($items){
 					} else {
 						$package_base_path = array_intersect($package_base_path, $temp_path);
 					}
-	
 					$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 				}
 			}
@@ -308,16 +307,26 @@ function rehash($items){
 //			if (!isset($items[$current_identifier]['test_message'])){
 //				$items[$current_identifier]['test_message'] = $test_message;
 //			}
-		} 
+		} else if ($name=='dependency' && $attrs['identifierref']!='') {
+			//if there is a dependency, attach it to the item array['file']
+			$items[$current_identifier]['dependency'][] = $attrs['identifierref'];
+		}
 		if (($name == 'item') && ($attrs['parameters'] != '')) {
 			$items[$attrs['identifierref']]['test_message'] = $attrs['parameters'];
 		}
 		if ($name=='file'){
+			if(!isset($items[$current_identifier]) && $attrs['href']!=''){
+				$items[$current_identifier]['href']	 = $attrs['href'];
+			}
 			if (file_exists(AT_CONTENT_DIR .'import/'.$_SESSION['course_id'].'/'.$attrs['href'])){
 				$items[$current_identifier]['file'][] = $attrs['href'];
 			} else {
 				$msg->addError('IMS_FILES_MISSING');
 			}
+		}		
+		if ($name=='cc:authorizations'){
+			//don't have authorization setup.
+			$msg->addError('IMS_AUTHORIZATION_NOT_SUPPORT');
 		}
 	array_push($element_path, $name);
 }
@@ -379,7 +388,6 @@ function rehash($items){
 	/* constructs the $items array using the last entry in $path as the parent element */
 	function characterData($parser, $data){
 		global $path, $items, $order, $my_data, $element_path;
-
 		$str_trimmed_data = trim($data);
 				
 		if (!empty($str_trimmed_data)) {
@@ -407,7 +415,6 @@ function rehash($items){
 	
 				} else {
 					$order[$parent_item_id] ++;
-
 					$item_tmpl = array(	'title'			=> $data,
 										'parent_content_id' => $parent_item_id,
 										'ordering'			=> $order[$parent_item_id]-1);
@@ -595,6 +602,7 @@ if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 $items = array(); /* all the content pages */
 $order = array(); /* keeps track of the ordering for each content page */
 $path  = array();  /* the hierarchy path taken in the menu to get to the current item in the manifest */
+$dependency_files = array(); /* the file path for the dependency files */
 
 /*
 $items[content_id/resource_id] = array(
@@ -638,7 +646,8 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 }
 
 xml_parser_free($xml_parser);
-
+debug($items);
+debug($order);exit;
 
 /* check if the glossary terms exist */
 if (file_exists($import_path . 'glossary.xml')){
@@ -728,6 +737,22 @@ foreach ($items as $item_id => $content_info)
 		continue;
 	}
 
+	//if it has no title, most likely it is not a page but just a normal item, skip it
+	if (!isset($content_info['title'])){
+		continue;
+	}
+	
+	//handles dependency immediately, then handles it
+	$head = '';
+	if (is_array($content_info['dependency']) && !empty($content_info['dependency'])){
+		foreach($content_info['dependency'] as $dependency_ref){
+			//handle styles	
+			if (preg_match('/(.*)\.css$/', $items[$dependency_ref]['href'])){
+				$head = '<link rel="stylesheet" type="text/css" href="'.$items[$dependency_ref]['href'].'" />';
+			}
+		}
+	}
+
 	// remote href
 	if (preg_match('/^http.*:\/\//', trim($content_info['href'])) )
 	{
@@ -785,7 +810,7 @@ foreach ($items as $item_id => $content_info)
 			}
 
 			// get the contents of the 'head' element
-			$head = get_html_head_by_tag($content, $html_head_tags);
+			$head .= get_html_head_by_tag($content, $html_head_tags);
 			
 			// Specifically handle eXe package
 			// NOTE: THIS NEEDS WORK! TO FIND A WAY APPLY EXE .CSS FILES ONLY ON COURSE CONTENT PART.
@@ -821,7 +846,7 @@ foreach ($items as $item_id => $content_info)
 		} else if ($ext) {
 			/* non text file, and can't embed (example: PDF files) */
 			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
-		}
+		}	
 	}
 
 	$content_parent_id = $cid;
@@ -887,7 +912,6 @@ foreach ($items as $item_id => $content_info)
 			     .'"'.$content.'",'
 				 .'"'.$content_info['test_message'].'",'
 				 .($content==''?1:0).')';
-
 	$result = mysql_query($sql, $db) or die(mysql_error());
 
 	/* get the content id and update $items */
@@ -973,6 +997,11 @@ if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_
 	if (!$msg->containsErrors()) {
 		$msg->addError('IMPORT_FAILED');
 	}
+}
+//check if there are still resources missing
+foreach($items as $idetails){
+	$temp_path = pathinfo($idetails['href']);
+	@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$temp_path['dirname'], AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name . '/' . $temp_path['dirname']);
 }
 clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
