@@ -279,8 +279,9 @@ function rehash($items){
 		} else if (($name == 'item') && ($attrs['identifier'])) {
 			$path[] = $attrs['identifier'];
 //		} else if (($name == 'resource') && is_array($items[$attrs['identifier']]))  {
-		} else if (($name == 'resource'))  {
+		} else if (($name == 'resource')) {
 			$current_identifier = $attrs['identifier'];
+			
 			$items[$current_identifier]['type'] = $attrs['type'];
 			if ($attrs['href']) {
 				$attrs['href'] = urldecode($attrs['href']);
@@ -646,8 +647,6 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 }
 
 xml_parser_free($xml_parser);
-debug($items);
-debug($order);exit;
 
 /* check if the glossary terms exist */
 if (file_exists($import_path . 'glossary.xml')){
@@ -728,12 +727,14 @@ $sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE cour
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
+$lti_offset = 0;	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack, disabled Aug 25, 2009
 //$items = rehash($items);
 foreach ($items as $item_id => $content_info) 
 {
 	//if this is any of the LTI tools, skip it. (ie. Discussion Tools, Weblinks, etc)
 	if ($content_info['type']=='imsdt_xmlv1p0' || $content_info['type']=='imswl_xmlv1p0'){
+		$lti_offset++;
 		continue;
 	}
 
@@ -899,7 +900,7 @@ foreach ($items as $item_id => $content_info)
 	       VALUES 
 			     ('.$_SESSION['course_id'].','															
 			     .intval($content_parent_id).','		
-			     .($content_info['ordering'] + $my_offset + 1).','
+			     .($content_info['ordering'] + $my_offset - $lti_offset + 1).','
 			     .'"'.$last_modified.'",													
 			      0,
 			      1,
