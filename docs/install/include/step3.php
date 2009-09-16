@@ -227,7 +227,7 @@ function encrypt_password()
 			Deploy ATutor as just a Social Networking platform? (without LMS)</td>
 			<td class="row1">
 				<label for="social_y">Just Social</label><input type="radio" name="just_social" id="social_y" value="1" class="formfield" <?php echo ($_POST['just_social']==1)?' checked="checked"':''; ?>/>
-				<label for="social_n">Social and LMC</label><input type="radio" name="just_social" id="social_n" value="0" class="formfield" <?php echo ($_POST['just_social']==0 || !isset($_POST['just_social']))?' checked="checked"':''; ?>/>
+				<label for="social_n">Social and LMS</label><input type="radio" name="just_social" id="social_n" value="0" class="formfield" <?php echo ($_POST['just_social']==0 || !isset($_POST['just_social']))?' checked="checked"':''; ?>/>
 			</td>
 		</tr>
 		<tr>
