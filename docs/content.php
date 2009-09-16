@@ -88,8 +88,11 @@ if ($_SESSION['prefs']['PREF_NUMBERING']) {
 
 $parent = 0;
 foreach ($path as $i=>$page) {
-	// remove folder content from path
-	if ($contentManager->_menu_info[$page['content_id']]['content_type'] == CONTENT_TYPE_FOLDER) {
+	// When login is a student, remove content folder from breadcrumb path as content folders are
+	// just toggles for students. Keep content folder in breadcrumb path for instructors as they
+	// can edit content folder title. 
+	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && 
+	    $contentManager->_menu_info[$page['content_id']]['content_type'] == CONTENT_TYPE_FOLDER) {
 		unset($path[$i]);
 		continue;
 	}
@@ -137,9 +140,10 @@ $_custom_head .= '
 	</script>
 ';
 
+save_last_cid($cid);
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-save_last_cid($cid);
 if (isset($top_num) && $top_num != (int) $top_num) {
 	$top_num = substr($top_num, 0, strpos($top_num, '.'));
 }
@@ -155,12 +159,17 @@ if ((	($content_row['r_date'] <= $content_row['n_date'])
 
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	$shortcuts[] = array('title' => _AT('edit_this_page'),   'url' => $_base_href . 'editor/edit_content.php?cid='.$cid);
+	$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'editor/edit_content_folder.php');
+
+	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
+		$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
+			'editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+	}
 	$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'editor/edit_content.php');
 	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 		$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
 			'editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
 	}
-	$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'editor/edit_content.php?pid='.$cid.'&amp;sub=1');
 	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'editor/delete_content.php?cid='.$cid);
 }
 $savant->assign('shortcuts', $shortcuts);

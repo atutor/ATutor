@@ -263,6 +263,7 @@ define ('RL_TYPE_FILE', 5);
 // content type
 define ('CONTENT_TYPE_CONTENT',  0);
 define ('CONTENT_TYPE_FOLDER', 1);
+define ('CONTENT_TYPE_WEBLINK', 2);
 
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';

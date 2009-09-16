@@ -14,17 +14,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-// check if sub
-if ($_GET['sub'] == 1 || $_POST['sub'] == 1)
-{
 ?>
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ftitle"><?php echo _AT('folder_title');  ?></label><br />
-		<input type="text" name="folder_title" id="ftitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['folder_title']); ?>" /><br />
-		<small>&middot; <?php echo _AT('folder_title_note'); ?></small>
-	</div>
-<?php }?>
-	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('title');  ?></label><br />
 		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />

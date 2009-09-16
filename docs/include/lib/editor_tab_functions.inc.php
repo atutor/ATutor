@@ -91,7 +91,6 @@ function save_changes($redir, $current_tab) {
 	$_POST['body_text']	= trim($_POST['body_text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
 	$_POST['keywords']	= trim($_POST['keywords']);
-	$_POST['new_ordering']	= intval($_POST['new_ordering']);
 	$_POST['test_message'] = trim($_POST['test_message']);
 	$_POST['allow_test_export'] = intval($_POST['allow_test_export']);
 
@@ -106,27 +105,26 @@ function save_changes($redir, $current_tab) {
 	}
 		
 	if (!$msg->containsErrors()) {
-
-		$_POST['folder_title']	= $addslashes($_POST['folder_title']);
 		$_POST['title']			= $addslashes($_POST['title']);
 		$_POST['body_text']		= $addslashes($_POST['body_text']);
 		$_POST['head']  		= $addslashes($_POST['head']);
 		$_POST['keywords']		= $addslashes($_POST['keywords']);
 		$_POST['test_message']	= $addslashes($_POST['test_message']);		
 
+		// add or edit content
 		if ($_POST['cid']) {
 			/* editing an existing page */
-			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date, $_POST['head'], $_POST['use_customized_head'], $_POST['test_message'], $_POST['allow_test_export']);
-
-			unset($_POST['move']);
-			unset($_POST['new_ordering']);
+			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], 
+			                                    $_POST['keywords'], $_POST['related'], $_POST['formatting'], 
+			                                    $release_date, $_POST['head'], $_POST['use_customized_head'], 
+			                                    $_POST['test_message'], $_POST['allow_test_export']);
 			$cid = $_POST['cid'];
 		} else {
 			/* insert new */
 			
 			$cid = $contentManager->addContent($_SESSION['course_id'],
-												  $_POST['new_pid'],
-												  $_POST['new_ordering'],
+												  $_POST['pid'],
+												  $_POST['ordering'],
 												  $_POST['title'],
 												  $_POST['body_text'],
 												  $_POST['keywords'],
@@ -137,13 +135,12 @@ function save_changes($redir, $current_tab) {
 												  $_POST['use_customized_head'],
 												  $_POST['test_message'],
 												  $_POST['allow_test_export'],
-												  $_POST['folder_title']);
+												  CONTENT_TYPE_CONTENT);
 			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}
 	}
 
-	//debug($_POST['glossary_defs']);
 	/* insert glossary terms */
 	if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
 		global $glossary, $glossary_ids, $msg;
@@ -165,7 +162,6 @@ function save_changes($redir, $current_tab) {
 				$related_id = intval($_POST['related_term'][$old_w]);
 				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$w', '$d', $related_id)";
 
-				//debug($sql);
 				$result = mysql_query($sql, $db);
 				$glossary[$old_w] = $d;
 			}
@@ -214,158 +210,6 @@ function save_changes($redir, $current_tab) {
 	}
 	//End Add test
 
-	/*Added by Silvia 
-	if ($current_tab == 5) {
-		echo 'ci sono';
-		if(($_POST['alternatives']==1) || ($_GET['alternatives']==1)){
-			$sql	= "SELECT primary_resource_id FROM ".TABLE_PREFIX."primary_resources WHERE content_id='$cid'";
-	    	$result = mysql_query($sql, $db);
-
-	    	if (mysql_num_rows($result) > 0) {
-	   	 		while ($row = mysql_fetch_assoc($result)) {
-	   	 			$sql_type	 = "SELECT * FROM ".TABLE_PREFIX."resource_types";
-	    			$result_type = mysql_query($sql_type, $db);
-	    			
-     	 			if (mysql_num_rows($result_type) > 0) {
-	   	 				while ($type = mysql_fetch_assoc($result_type)) {
-	   	 					$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$row[primary_resource_id]' and type_id='$type[type_id]'";
-	   	 					$contr		= mysql_query($sql_contr, $db);	   
-	   	 					if (mysql_num_rows($contr) > 0) {
-	   	 						while ($control = mysql_fetch_assoc($contr)) {
-	   	 							if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary']))
-	   	 								continue;
-	   	 							else {
-	   	 								$sql_del = "DELETE FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$control[primary_resource_id]' and type_id='$control[type_id]'";
-										$result_del = mysql_query($sql_del, $db);
-		 							}
-	   	 						}	
-	   	 					}
-	   	 					else {
-	   	 						if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary'])){
-									$sql_ins	= "INSERT INTO ".TABLE_PREFIX."primary_resources_types VALUES ($row[primary_resource_id], $type[type_id])";
-									$ins 		= mysql_query($sql_ins, $db);
-									}	
-	   	 						
-	   	 						$sql_alt	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id='$row[primary_resource_id]'";
-		    					$result_alt = mysql_query($sql_alt, $db);
-	    					
-								if (mysql_num_rows($result_alt) > 0) {
-     		 						while ($alt = mysql_fetch_assoc($result_alt)) {
-										$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$alt[secondary_resource_id]' and type_id='$type[type_id]'";
-	   	 								$contr	= mysql_query($sql_contr, $db);	   
-	   	 								if (mysql_num_rows($contr) > 0) {
-	   	 									while ($control = mysql_fetch_assoc($contr)) {
-	   	 										if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary']))
-	   	 											continue;
-	   	 										else {
-	   	 											$sql_del = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$control[secondary_resource_id]' and type_id='$control[type_id]'";
-													$result_del = mysql_query($sql_del, $db);
-			 										}
-		   	 									}		
-	   		 								}
-	   	 								else {
-											if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary'])){
-												$sql_ins	= "INSERT INTO ".TABLE_PREFIX."secondary_resources_types VALUES ($alt[secondary_resource_id], $type[type_id])";
-												$ins 		= mysql_query($sql_ins, $db);
-	   	 										}
-	   	 									$lang=$_POST['lang_'.$alt[secondary_resource_id].'_secondary'];
-											$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET language_code='$lang' WHERE secondary_resource_id=$alt[secondary_resource_id]";
-											$up 	= mysql_query($sql_up, $db);
-		   	 							}	
-									}			
-								}
-						
-								$lang=$_POST['lang_'.$row[primary_resource_id].'_primary'];
-								$sql_up	= "UPDATE ".TABLE_PREFIX."primary_resources SET language_code='$lang' WHERE primary_resource_id=$row[primary_resource_id]";
-								$up 	= mysql_query($sql_up, $db);
-	   	 					}
-	   	 				}
-					}
-				}
-	    	}
-		}
-		else {
-			echo 'sono quaqua';
-			if ($changes_made)
-				$body_ins = $_POST['body_text'];
-			else {
-				$sql = "SELECT * FROM ".TABLE_PREFIX."content WHERE content_id='$cid'";
-				$result = mysql_query($sql, $db);
-				 //echo $sql;
-				while ($row = mysql_fetch_assoc($result)) {
-					$body_ins = addslashes($row['text']);
-					}
-				}
-			$sql	= "SELECT primary_resource_id FROM ".TABLE_PREFIX."primary_resources WHERE content_id='$cid' and resource='$body_ins'";
-	    	$result = mysql_query($sql, $db);
-
-			if (mysql_num_rows($result) > 0) {
-	   			while ($row = mysql_fetch_assoc($result)) {
-	   	 			$sql_type	 = "SELECT * FROM ".TABLE_PREFIX."resource_types";
-					$result_type = mysql_query($sql_type, $db);
-	    				
-     	 			if (mysql_num_rows($result_type) > 0) {
-	   	 				while ($type = mysql_fetch_assoc($result_type)) {
-	   	 					$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$row[primary_resource_id]' and type_id='$type[type_id]'";
-			   	 			$contr		= mysql_query($sql_contr, $db);	   
-	   			 			if (mysql_num_rows($contr) > 0) {
-	   	 						while ($control = mysql_fetch_assoc($contr)) {
-	   	 							if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary']))
-	   	 								continue;
-			   	 					else {
-	   			 						$sql_del = "DELETE FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$control[primary_resource_id]' and type_id='$control[type_id]'";
-										$result_del = mysql_query($sql_del, $db);
-		 								}
-	   	 							}	
-	   	 						}
-	   	 					else {
-	   	 						if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary'])){
-									$sql_ins	= "INSERT INTO ".TABLE_PREFIX."primary_resources_types VALUES ($row[primary_resource_id], $type[type_id])";
-									$ins 		= mysql_query($sql_ins, $db);
-									}	
-	   	 					
-	   	 						$sql_alt	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id='$row[primary_resource_id]'";
-	    						$result_alt = mysql_query($sql_alt, $db);
-	    					
-								if (mysql_num_rows($result_alt) > 0) {
-     	 							while ($alt = mysql_fetch_assoc($result_alt)) {
-										$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$alt[secondary_resource_id]' and type_id='$type[type_id]'";
-	   	 								$contr	= mysql_query($sql_contr, $db);	   
-				   	 					if (mysql_num_rows($contr) > 0) {
-	   	 									while ($control = mysql_fetch_assoc($contr)) {
-	   	 										if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary']))
-	   	 											continue;
-				   	 							else {
-	   	 											$sql_del = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$control[secondary_resource_id]' and type_id='$control[type_id]'";
-													$result_del = mysql_query($sql_del, $db);
-		 											}
-				   	 							}		
-	   	 									}
-	   	 								else {
-											if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary'])){
-												$sql_ins	= "INSERT INTO ".TABLE_PREFIX."secondary_resources_types VALUES ($alt[secondary_resource_id], $type[type_id])";
-												$ins 		= mysql_query($sql_ins, $db);
-	   	 										}
-					   	 					$lang   = $_POST['lang_'.$alt[secondary_resource_id].'_secondary'];
-											$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET language_code='$lang' WHERE secondary_resource_id=$alt[secondary_resource_id]";
-											$up 	= mysql_query($sql_up, $db);
-	   	 								}
-     	 							$lang=$_POST['lang_'.$row[primary_resource_id].'_primary'];
-									$sql_up	= "UPDATE ".TABLE_PREFIX."primary_resources SET language_code='$lang' WHERE primary_resource_id=$row[primary_resource_id]";
-									$up 	= mysql_query($sql_up, $db);
-	   	 							}
-								}
-							}
-	   	 				}
-					}
-	   			}
-			}
-		}
-	}
-
-	*/
-	//End Added by Silvia 
-	
 	if (!$msg->containsErrors() && $redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 		
@@ -468,15 +312,6 @@ function check_for_changes($row) {
 			$changes[1] = true;
 		}
 	} else if (!is_array($_POST['related']) && !empty($row_related)) {
-		$changes[1] = true;
-	}
-
-	/* ordering */
-	if ($cid && isset($_POST['move']) && ($_POST['move'] != -1) && ($_POST['move'] != $row['content_parent_id'])) {
-		$changes[1] = true;
-	}
-
-	if ($cid && (($_POST['new_ordering'] != $_POST['ordering']) || ($_POST['new_pid'] != $_POST['pid']))) {
 		$changes[1] = true;
 	}
 

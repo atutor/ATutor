@@ -29,7 +29,6 @@ if ($_POST) {
 	$do_check = FALSE;
 }
 
-
 require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 
 if ($_POST['close'] || $_GET['close']) {
@@ -44,7 +43,7 @@ if ($_POST['close'] || $_GET['close']) {
 	}
 	
 	if ($_REQUEST['cid'] == 0) {
-		header('Location: '.$_base_path.'content.php?cid='.intval($_REQUEST['new_pid']));
+		header('Location: '.AT_BASE_HREF.'tools/content/index.php');
 		exit;
 	}
 	header('Location: '.$_base_path.url_rewrite('content.php?cid='.intval($_REQUEST['cid'])));
@@ -620,7 +619,7 @@ if (($current_tab == 0) || ($_current_tab == 5)) {
 		}
 	}
 	if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
-		$onload = "if (typeof document.form.ftitle != 'undefined') document.form.ftitle.focus(); else document.form.ctitle.focus(); ";
+		$onload = "document.form.ctitle.focus(); ";
 	}
 }
 
@@ -676,10 +675,10 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['hour']  = substr($content_row['release_date'], 11, 2);
 			$_POST['min']= substr($content_row['release_date'], 14, 2);
 
-			$_POST['ordering'] = $_POST['new_ordering'] = $content_row['ordering'];
+			$_POST['ordering'] = $content_row['ordering'];
 			$_POST['related'] = $contentManager->getRelatedContent($cid);
-
-			$_POST['pid'] = $pid = $_POST['new_pid'] = $content_row['content_parent_id'];
+			
+			$_POST['pid'] = $pid = $content_row['content_parent_id'];
 
 			$_POST['related_term'] = $glossary_ids_related;
 		}
@@ -694,21 +693,15 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['min']  = 0;
 
 			if (isset($_GET['pid'])) {
-				$pid = intval($_GET['pid']);
-				$_POST['pid'] = 0;
-				$_POST['new_pid'] = $pid;
-				$_POST['ordering'] = count($contentManager->getContent(0))+1;
-				$_POST['new_ordering'] = count($contentManager->getContent($pid))+1;
+				$pid = $_POST['pid'] = intval($_GET['pid']);
+				$_POST['ordering'] = count($contentManager->getContent($pid))+1;
 			} else {
-				$_POST['pid'] = $_POST['new_pid'] = 0;
-				$_POST['ordering'] = $_POST['new_ordering'] = count($contentManager->getContent($pid))+1;
+				$_POST['pid'] = 0;
+				$_POST['ordering'] = count($contentManager->getContent(0))+1;
 			}
-			$pid = 0;
 		}
-		//$changes_made = check_for_changes($content_row);
 	}
-//	echo $alternatives;
-//	echo '<input type="hidden" name="alternatives" value="$alternatives" />';
+
 	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
 	if ($_REQUEST['sub'] == 1)
@@ -725,10 +718,6 @@ $pid = intval($_REQUEST['pid']);
 		echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
 		echo '<input type="hidden" name="settext" value="'.$_POST['settext'].'" />';		
 		echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
-	}
-	if ($current_tab != 1) {
-		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
-		echo '<input type="hidden" name="new_pid" value="'.$_POST['new_pid'].'" />';
 	}
 
 	echo '<input type="hidden" name="ordering" value="'.$_POST['ordering'].'" />';
@@ -750,7 +739,6 @@ $pid = intval($_REQUEST['pid']);
 			echo '<input type="hidden" name="related[]" value="'.$r_id.'" />';
 		}
 	}
-
 	echo '<input type="hidden" name="keywords" value="'.htmlspecialchars(stripslashes($_POST['keywords'])).'" />';
 
 	//content test association

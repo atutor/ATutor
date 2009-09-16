@@ -23,6 +23,9 @@ class ContentManager
 	/*	array		*/
 	var $_menu_info;
 
+	/*	array		*/
+	var $_menu_in_order;
+
 	/* int			*/
 	var $course_id;
 
@@ -85,9 +88,6 @@ class ContentManager
 				$_menu[$row['content_id']][] = array(	'test_id'	=> $test_row['test_id'],
 														'title'		=> htmlspecialchars($test_row['title']),
 														'content_type' => CONTENT_TYPE_CONTENT);
-
-//				$_menu_info[$test_row['test_id']] = array(	'content_parent_id' => $row['content_id'],
-//															'title'				=> htmlspecialchars($test_row['title']));				
 			}
 			/* End of add test content asscioations */
 
@@ -110,10 +110,81 @@ class ContentManager
 			$this->max_depth = 0;
 		}
 
+		// generate array of all the content ids in the same order that they appear in "content navigation"
+		$this->_menu_in_order[] = $next_content_id = $this->getNextContentID(0);
+		while ($next_content_id > 0)
+		{
+			$next_content_id = $this->getNextContentID($next_content_id);
+			
+			if (in_array($next_content_id, $this->_menu_in_order)) break;
+			else $this->_menu_in_order[] = $next_content_id;
+		}
+		
 		$this->content_length = count($_menu[0]);
 	}
 
-
+	// This function is called by initContent to construct $this->_menu_in_order, an array to 
+	// holds all the content ids in the same order that they appear in "content navigation"
+	function getNextContentID($content_id, $order=0) {
+		// return first root content when $content_id is not given
+		if (!$content_id) {
+			return $this->_menu[0][0]['content_id'];
+		}
+		
+		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
+		$myOrder  = $this->_menu_info[$content_id]['ordering'];
+		
+		// calculate $myOrder, add in the number of tests in front of this content page
+		if (is_array($this->_menu[$myParent])) {
+			$num_of_tests = 0;
+			foreach ($this->_menu[$myParent] as $menuContent) {
+				if ($menuContent['content_id'] == $content_id) break;
+				if (isset($menuContent['test_id'])) $num_of_tests++;
+			}
+		}
+		$myOrder += $num_of_tests;
+		// end of calculating $myOrder
+		
+		/* if this content has children, then take the first one. */
+		if ( isset($this->_menu[$content_id]) && is_array($this->_menu[$content_id]) && ($order==0) ) {
+			/* has children */
+			// if the child is a test, keep searching for the content id
+			foreach ($this->_menu[$content_id] as $menuID => $menuContent)
+			{
+				if (!empty($menuContent['test_id'])) continue;
+				else 
+				{
+					$nextMenu = $this->_menu[$content_id][$menuID]['content_id'];
+					break;
+				}
+			}
+			
+			// all children are tests
+			if (!isset($nextMenu))
+			{
+				if (isset($this->_menu[$myParent][$myOrder]['content_id'])) {
+					// has sibling
+					return $this->_menu[$myParent][$myOrder]['content_id'];
+				}
+				else { // no sibling
+					$nextMenu = $this->getNextContentID($myParent, 1);
+				}
+			}
+			return $nextMenu;
+		} else {
+			/* no children */
+			if (isset($this->_menu[$myParent][$myOrder]) && $this->_menu[$myParent][$myOrder] != '') {
+				/* Has sibling */
+				return $this->_menu[$myParent][$myOrder]['content_id'];
+			} else {
+				/* No more siblings */
+				if ($myParent != 0) {
+					return $this->getNextContentID($myParent, 1);
+				}
+			}
+		}
+	}
+	
 	function getContent($parent_id=-1, $length=-1) {
 		if ($parent_id == -1) {
 			$my_menu_copy = $this->_menu;
@@ -147,103 +218,63 @@ class ContentManager
 		}
 	}
 
-
 	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, 
 	                    $related, $formatting, $release_date, $head = '', $use_customized_head = 0, 
-	                    $test_message = '', $allow_test_export = 1, $folder_title = '') {
+	                    $test_message = '', $allow_test_export = 1, $content_type = CONTENT_TYPE_CONTENT) {
 		
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['course_id'] != -1)) {
 			return false;
 		}
 
-		// insert the first sub-page
-		if ($folder_title <> '')
-		{
-			// insert folder for parent content
-			$sql = "SELECT content_parent_id, ordering, last_modified, title
-			          FROM ".TABLE_PREFIX."content
-			         WHERE content_id = ".$content_parent_id;
-			$result = mysql_query($sql, $this->db);
-			$parent_content_row = mysql_fetch_assoc($result);
-			
-			$sql = "INSERT INTO ".TABLE_PREFIX."content 
-			               (course_id, content_parent_id, ordering, last_modified, title, content_type)
-			        VALUES (".$course_id .",".
-			                  $parent_content_row['content_parent_id'].",". 
-			                  $parent_content_row['ordering'].", '".
-			                  $parent_content_row['last_modified']."', '".
-			                  $parent_content_row['title'] ."', ".CONTENT_TYPE_FOLDER.")";
-			$result = mysql_query($sql, $this->db);
-			
-			// update the parent_id of the parent content to parent_content_folder 
-			$parent_folder_id = mysql_insert_id();
-			
-			$sql = "UPDATE ".TABLE_PREFIX."content 
-			           SET content_parent_id = ".$parent_folder_id.",
-			               ordering = 1 
-			         WHERE content_id = ".$content_parent_id;
-			$result = mysql_query($sql, $this->db);
-			
-			// insert folder for new content
-			$sql = "INSERT INTO ".TABLE_PREFIX."content
-			               (course_id, content_parent_id, ordering, last_modified, revision, title, content_type)
-			        VALUES ($course_id, $parent_folder_id, 2, NOW(), 0, '$folder_title',".CONTENT_TYPE_FOLDER.")";
-			$err = mysql_query($sql, $this->db);
+		// shift the new neighbouring content down
+		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 
+		         WHERE ordering>=$ordering 
+		           AND content_parent_id=$content_parent_id 
+		           AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $this->db);
 
-			// insert new content
-			$sql = "INSERT INTO ".TABLE_PREFIX."content
-			               (course_id, content_parent_id, ordering, last_modified, revision, formatting, release_date,
-			                head, use_customized_head, keywords, content_path, title, text, test_message, 
-			                allow_test_export, content_type)
-			        VALUES ($course_id, ".mysql_insert_id().", $ordering, NOW(), 0, $formatting, '$release_date', 
-			                '$head',$use_customized_head,'$keywords','','$title','$text','$test_message',
-							$allow_test_export,".CONTENT_TYPE_CONTENT.")";
-			$err = mysql_query($sql, $this->db);
-		}
-		else
-		{
-			// shift the new neighbouring content down
-			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $this->db);
-	
-			/* main topics all have minor_num = 0 */
-			$sql = "INSERT INTO ".TABLE_PREFIX."content
-			               (course_id,
-			                content_parent_id,
-			                ordering,
-			                last_modified,
-			                revision,
-			                formatting,
-			                release_date,
-			                head,
-			                use_customized_head,
-			                keywords,
-			                content_path,
-			                title,
-			                text,
-							test_message,
-							allow_test_export,
-							content_type)
-			        VALUES ($course_id, 
-			                $content_parent_id, 
-			                $ordering, 
-			                NOW(), 
-			                0, 
-			                $formatting, 
-			                '$release_date', 
-			                '$head',
-			                $use_customized_head,
-			                '$keywords', 
-			                '', 
-			                '$title',
-			                '$text',
-							'$test_message',
-							$allow_test_export,".
-							CONTENT_TYPE_CONTENT.")";
-	
-			$err = mysql_query($sql, $this->db);
-		}
-		$cid = mysql_insert_id();
+		/* main topics all have minor_num = 0 */
+		$sql = "INSERT INTO ".TABLE_PREFIX."content
+		               (course_id,
+		                content_parent_id,
+		                ordering,
+		                last_modified,
+		                revision,
+		                formatting,
+		                release_date,
+		                head,
+		                use_customized_head,
+		                keywords,
+		                content_path,
+		                title,
+		                text,
+						test_message,
+						allow_test_export,
+						content_type)
+		        VALUES ($course_id, 
+		                $content_parent_id, 
+		                $ordering, 
+		                NOW(), 
+		                0, 
+		                $formatting, 
+		                '$release_date', 
+		                '$head',
+		                $use_customized_head,
+		                '$keywords', 
+		                '', 
+		                '$title',
+		                '$text',
+						'$test_message',
+						$allow_test_export,
+						$content_type)";
+
+		$err = mysql_query($sql, $this->db);
+
+		/* insert the related content */
+		$sql = "SELECT LAST_INSERT_ID() AS insert_id";
+		$result = mysql_query($sql, $this->db);
+		$row = mysql_fetch_assoc($result);
+		$cid = $row['insert_id'];
 
 		$sql = '';
 		if (is_array($related)) {
@@ -267,33 +298,21 @@ class ContentManager
 
 		return $cid;
 	}
-
-
-	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date, $head, $use_customized_head, $test_message, $allow_test_export) {
+	
+	function editContent($content_id, $title, $text, $keywords,$related, $formatting, 
+	                     $release_date, $head, $use_customized_head, $test_message, 
+	                     $allow_test_export) {
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 			return FALSE;
 		}
 
-		/* first get the content to make sure it exists	*/
-		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
-		if (!($row = mysql_fetch_assoc($result)) ) {
-			return FALSE;
-		}
-		$old_ordering		= $row['ordering'];
-		$content_parent_id	= $row['content_parent_id'];
-		if (($content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
-			// remove the gap left by the moved content
-			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$old_ordering AND content_parent_id=$content_parent_id AND content_id<>$content_id AND course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $this->db);
-
-			// shift the new neighbouring content down
-			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 WHERE ordering>=$new_content_ordering AND content_parent_id=$new_content_parent_id AND content_id<>$content_id AND course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $this->db);
-		}
-
 		/* update the title, text of the newly moved (or not) content */
-		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', head='$head', use_customized_head=$use_customized_head, text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date', test_message='$test_message', allow_test_export=$allow_test_export WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+		$sql	= "UPDATE ".TABLE_PREFIX."content 
+		              SET title='$title', head='$head', use_customized_head=$use_customized_head, 
+		                  text='$text', keywords='$keywords', formatting=$formatting, 
+		                  revision=revision+1, last_modified=NOW(), release_date='$release_date', 
+		                  test_message='$test_message', allow_test_export=$allow_test_export 
+		            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
 
 		/* update the related content */
@@ -323,7 +342,66 @@ class ContentManager
 		}
 	}
 
+	function moveContent($content_id, $new_content_parent_id, $new_content_ordering) {
+		global $msg;
+		
+		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+			return FALSE;
+		}
 
+		/* first get the content to make sure it exists	*/
+		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+		$result	= mysql_query($sql, $this->db);
+		if (!($row = mysql_fetch_assoc($result)) ) {
+			return FALSE;
+		}
+		$old_ordering		= $row['ordering'];
+		$old_content_parent_id	= $row['content_parent_id'];
+		
+		if ($content_id == $new_content_parent_id) {
+			$msg->addError("NO_SELF_AS_PARENT");
+			return;
+		}
+		
+		if ($old_content_parent_id == $new_content_parent_id && $old_ordering == $new_content_ordering) {
+			$msg->addError("SAME_LOCATION");
+			return;
+		}
+		
+		$content_path = $this->getContentPath($new_content_parent_id);
+		foreach ($content_path as $parent){
+			if ($parent['content_id'] == $content_id) {
+				$msg->addError("NO_CHILD_AS_PARENT");
+				return;
+			}
+		}
+		
+		if (($content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
+			// remove the gap left by the moved content
+			$sql = "UPDATE ".TABLE_PREFIX."content 
+			           SET ordering=ordering-1 
+			         WHERE ordering>=$old_ordering 
+			           AND content_parent_id=$content_parent_id 
+			           AND content_id<>$content_id 
+			           AND course_id=$_SESSION[course_id]";
+			$result = mysql_query($sql, $this->db);
+
+			// shift the new neighbouring content down
+			$sql = "UPDATE ".TABLE_PREFIX."content 
+			           SET ordering=ordering+1 
+			         WHERE ordering>=$new_content_ordering 
+			           AND content_parent_id=$new_content_parent_id 
+			           AND content_id<>$content_id 
+			           AND course_id=$_SESSION[course_id]";
+			$result = mysql_query($sql, $this->db);
+
+			$sql	= "UPDATE ".TABLE_PREFIX."content 
+			              SET content_parent_id=$new_content_parent_id, ordering=$new_content_ordering 
+			            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+			$result	= mysql_query($sql, $this->db);
+		}
+	}
+	
 	function deleteContent($content_id) {
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 			return false;
@@ -505,153 +583,48 @@ class ContentManager
 		return $numbering;
 	}
 
-	/* Access: Private */
-	// functions getPreviousContent() & getNextContent() always skip tests associated with the content
-	function getPreviousContent($content_id, $order=0) {
-		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
-		$myOrder  = $this->_menu_info[$content_id]['ordering'];
-
-		if (isset($this->_menu[$myParent][$myOrder-2]) && ($this->_menu[$myParent][$myOrder-2] != '') && ($order==0)) {
-			// has sibling: checking if sibling has children
-			$mySibling = $this->_menu[$myParent][$myOrder-2];
-			
-			// if sibling is a test, return parent content. 
-			// Note that tests are always the first children of a content
-			if (isset($mySibling['test_id'])) {
-				return(array('content_id'	=> $myParent,
-				             'ordering'		=> $this->_menu_info[$myParent]['ordering'],
-				             'title'		=> $this->_menu_info[$myParent]['title']));
-			}
-			
-			if ( isset($this->_menu[$mySibling['content_id']]) && is_array($this->_menu[$mySibling['content_id']]) && ($order==0) ) {
-				$num_children = count($this->_menu[$mySibling['content_id']]);
-
-				// sibling has $num_children children
-				// if the sibling's last child is a test, which means there's no content page under this sibling, return the sibling itself
-				if (isset($this->_menu[$mySibling['content_id']][$num_children-1]['test_id'])){
-					return(array('content_id'	=> $mySibling['content_id'],
-					             'ordering'		=> $this->_menu_info[$mySibling['content_id']]['ordering'],
-					             'title'		=> $this->_menu_info[$mySibling['content_id']]['title']));
-				}
-				else {
-					return($this->getPreviousContent($this->_menu[$mySibling['content_id']][$num_children-1]['content_id'], 1));
-				}
-			} else {
-				// sibling has no children. return it
-				return($this->_menu[$myParent][$myOrder-2]);
-			}
-
-		} else {
-			if ($myParent == 0) {
-				/* we're at the top */
-				return '';
-			}
-
-			/* No more siblings */
-			if ($order == 0) {
-				return(array('content_id'	=> $myParent,
-					 		 'ordering'		=> $this->_menu_info[$myParent]['ordering'],
-							 'title'		=> $this->_menu_info[$myParent]['title']));
-			} else {
-				if ( isset($this->_menu[$content_id]) && is_array($this->_menu[$content_id]) ) {
-
-					$num_children = count($this->_menu[$content_id]);
-					
-					// when last child is a test, return the parent content
-					// Note that tests are always the first children of a content
-					if (isset($this->_menu[$content_id][$num_children-1]['test_id'])) {
-						return(array('content_id'	=> $content_id,
-				             'ordering'		=> $this->_menu_info[$content_id]['ordering'],
-				             'title'		=> $this->_menu_info[$content_id]['title']));
-					}
-					else {
-						return ($this->getPreviousContent($this->_menu[$content_id][$num_children-1]['content_id'], 1));
-					}
-
-				} else {
-					/* no children */
-					return(array('content_id'	=> $content_id,
-					 			 'ordering'		=> $this->_menu_info[$content_id]['ordering'],
-								 'title'		=> $this->_menu_info[$content_id]['title']));
-				}
-			}
-		}
-	}
-			
-	/* Access: Private */
-	// functions getPreviousContent() & getNextContent() always skip tests associated with the content
-	function getNextContent($content_id, $order=0) {
-		// return first root content when $content_id is not given
-		if (!$content_id) {
-			return $this->_menu[0][0];
-		}
-		
-		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
-		$myOrder  = $this->_menu_info[$content_id]['ordering'];
-		
-		// calculate $myOrder, add in the number of tests in front of this content page
-		if (is_array($this->_menu[$myParent])) {
-			$num_of_tests = 0;
-			foreach ($this->_menu[$myParent] as $menuContent) {
-				if ($menuContent['content_id'] == $content_id) break;
-				if (isset($menuContent['test_id'])) $num_of_tests++;
-			}
-		}
-		$myOrder += $num_of_tests;
-		// end of calculating $myOrder
-		
-		/* if this content has children, then take the first one. */
-		if ( isset($this->_menu[$content_id]) && is_array($this->_menu[$content_id]) && ($order==0) ) {
-			/* has children */
-			// if the child is a test or a folder, keep searching for the content id 
-			foreach ($this->_menu[$content_id] as $menuID => $menuContent)
+	function getPreviousContent($content_id) {
+		if (is_array($this->_menu_in_order))
+		{
+			foreach ($this->_menu_in_order as $content_location => $this_content_id)
 			{
-				if (!empty($menuContent['test_id'])) continue;
+				if ($this_content_id == $content_id) break;
+			}
+			
+			for ($i=$content_location-1; $i >= 0; $i--)
+			{
+				$content_type = $this->_menu_info[$this->_menu_in_order[$i]]['content_type'];
 				
-				// if the content node is a folder, search in the folder children
-				if ($menuContent['content_type'] == CONTENT_TYPE_FOLDER)
-				{
-					return $this->getNextContent($menuContent['content_id'], 0);
-				}
-				else 
-				{
-					$nextMenu = $this->_menu[$content_id][$menuID];
-					break;
-				}
-			}
-			
-			// all children are tests
-			if (!isset($nextMenu))
-			{
-				if (isset($this->_menu[$myParent][$myOrder]['content_id'])) {
-					// has sibling
-					return $this->_menu[$myParent][$myOrder];
-				}
-				else { // no sibling
-					$nextMenu = $this->getNextContent($myParent, 1);
-				}
-			}
-			return $nextMenu;
-		} else {
-			/* no children */
-			if (isset($this->_menu[$myParent][$myOrder]) && $this->_menu[$myParent][$myOrder] != '') {
-				/* Has sibling */
-				// if the content node is a folder, search in the folder children
-				if ($this->_menu[$myParent][$myOrder]['content_type'] == CONTENT_TYPE_CONTENT) {
-					return $this->_menu[$myParent][$myOrder];
-				}
-				else {
-					return $this->getNextContent($this->_menu[$myParent][$myOrder]['content_id'], 0);
-				}	
-			} else {
-				/* No more siblings */
-				if ($myParent != 0) {
-					return $this->getNextContent($myParent, 1);
-				}
+				if ($content_type == CONTENT_TYPE_CONTENT || $content_type == CONTENT_TYPE_WEBLINK)
+					return array('content_id'	=> $this->_menu_in_order[$i],
+				    	         'ordering'		=> $this->_menu_info[$this->_menu_in_order[$i]]['ordering'],
+				        	     'title'		=> $this->_menu_info[$this->_menu_in_order[$i]]['title']);
 			}
 		}
+		return NULL;
 	}
-
+	
+	function getNextContent($content_id) {
+		if (is_array($this->_menu_in_order))
+		{
+			foreach ($this->_menu_in_order as $content_location => $this_content_id)
+			{
+				if ($this_content_id == $content_id) break;
+			}
+			
+			for ($i=$content_location+1; $i < count($this->_menu_in_order); $i++)
+			{
+				$content_type = $this->_menu_info[$this->_menu_in_order[$i]]['content_type'];
+				
+				if ($content_type == CONTENT_TYPE_CONTENT || $content_type == CONTENT_TYPE_WEBLINK)
+					return(array('content_id'	=> $this->_menu_in_order[$i],
+				    	         'ordering'		=> $this->_menu_info[$this->_menu_in_order[$i]]['ordering'],
+				        	     'title'		=> $this->_menu_info[$this->_menu_in_order[$i]]['title']));
+			}
+		}
+		return NULL;
+	}
+	
 	/* @See include/header.inc.php */
 	function generateSequenceCrumbs($cid) {
 		global $_base_path;
@@ -708,8 +681,46 @@ class ContentManager
 		return $sequence_links;
 	}
 
+	/* Generate javascript to hide all root content folders, except the one with current content page */
+	function initMenu(){
+		global $_base_path;
+		
+		echo '
+tree_collapse_icon = "'.$_base_path.'images/tree/tree_collapse.gif";
+tree_expand_icon = "'.$_base_path.'images/tree/tree_expand.gif";
+		
+';
+		
+		$sql = "SELECT content_id
+		          FROM ".TABLE_PREFIX."content 
+		         WHERE course_id=$this->course_id
+		           AND content_parent_id = 0";
+		$result = mysql_query($sql, $this->db);
+
+		// collapse all root content folders
+		while ($row = mysql_fetch_assoc($result)) {
+			echo '
+jQuery("#folder"+'.$row['content_id'].').hide();
+jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_expand_icon);
+jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("expand").'");
+';
+		}
+		
+		// expand the content folder that has current content
+		if (isset($_SESSION['s_cid']) && $_SESSION['s_cid'] > 0) {
+			$current_content_path = $this->getContentPath($_SESSION['s_cid']);
+			echo '
+jQuery("#folder"+'.$current_content_path[0]['content_id'].').show();
+jQuery("#tree_icon"+'.$current_content_path[0]['content_id'].').attr("src", tree_collapse_icon);
+jQuery("#tree_icon"+'.$current_content_path[0]['content_id'].').attr("alt", "'._AT("collapse").'");
+';
+		}
+	}
+	
 	/* @See include/html/dropdowns/menu_menu.inc.php */
 	function printMainMenu( ) {
+		global $_base_path;
+		
 		$parent_id    = 0;
 		$depth        = 0;
 		$path         = '';
@@ -722,9 +733,17 @@ class ContentManager
 		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
 		{
 			echo "\n".'
-			<a href="javascript:void(0)" onclick="javascript:switchEditMode();" style="float:right;">
-				<img id="img_switch_edit_mode" src="'.AT_BASE_HREF.'images/edit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;margin-top:-1em;height:1.2em" />
-			</a>'."\n";
+			<div style="float:right;margin-top:-1em;">
+			<a href="'.$_base_path.'editor/edit_content_folder.php">
+				<img id="img_create_top_folder" src="'.$_base_path.'images/folder.gif" alt="'._AT("add_top_folder").'" title="'._AT("create_top_folder").'" style="border:0;height:1.2em" />
+			</a>'."\n".
+			'<a href="'.$_base_path.'editor/edit_content.php">
+				<img id="img_create_top_content" src="'.$_base_path.'images/glossary_small.gif" alt="'._AT("add_top_page").'" title="'._AT("create_top_content").'" style="border:0;height:1.2em" />
+			</a>'."\n".
+			'<a href="javascript:void(0)" onclick="javascript:switchEditMode();">
+				<img id="img_switch_edit_mode" src="'.$_base_path.'images/edit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;height:1.2em" />
+			</a>
+			</div>'."\n";
 		}
 		echo '<div id="editable_table">';
 		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
@@ -733,11 +752,16 @@ class ContentManager
 		// javascript for inline editor
 		echo '
 <script type="text/javascript">
+';
+		// only expand the content folder that has the current content page
+		$this->initMenu();
+		
+		echo '
 function switchEditMode() {
-	img_edit = "'.AT_BASE_HREF.'images/edit.gif";
+	img_edit = "'.$_base_path.'images/edit.gif";
 	title_edit = "'._AT("enter_edit_mode").'";
 	
-	img_view = "'.AT_BASE_HREF.'images/topic_lock.gif";
+	img_view = "'.$_base_path.'images/topic_lock.gif";
 	title_view = "'._AT("exit_edit_mode").'";
 	
 	if (jQuery("#img_switch_edit_mode").attr("src") == img_edit)
@@ -754,7 +778,7 @@ function switchEditMode() {
 		jQuery("#img_switch_edit_mode").attr("title", title_edit);
 		jQuery(".inlineEdits").removeAttr("role");
 		jQuery(".inlineEdits").removeAttr("tabindex");
-		jQuery(".inlineEdits").next.remove();
+//		jQuery(".inlineEdits").next().remove();
 	}
 }
 
@@ -762,15 +786,14 @@ function inlineEditsSetup() {
 	var tableEdit = fluid.inlineEdits("#editable_table", {
 		selectors : {
 			text : ".inlineEdits",
-			editables : "li"
+			editables : "li:has(span.inlineEdits)"
 		},
 		defaultViewText: "",
 		useTooltip: true,
 		listeners: {
-			onBeginEdit : function() {},
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
 				if (newValue != oldValue)
-					rtn = jQuery.post("'. AT_BASE_HREF. 'mods/_core/content/menu_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
+					rtn = jQuery.post("'. $_base_path. 'mods/_core/content/menu_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
 						          function(data) {handleResponse(data, viewNode, oldValue); }, "json");
 			}
 		}
@@ -904,7 +927,7 @@ function inlineEditsSetup() {
 					
 					// instructors have privilege to delete content
 					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id'])) {
-						$link .= '<a href="'.AT_BASE_HREF.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
+						$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
 					}
 				} 
 				else 
@@ -919,7 +942,7 @@ function inlineEditsSetup() {
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-							$link .= '<a href="'.AT_BASE_HREF.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
+							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
 						}
 						
 						$on = true;
@@ -927,16 +950,30 @@ function inlineEditsSetup() {
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
 //						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
-						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'" style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
+						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
+						
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?cid=".$content['content_id']).'"><strong title="'.$content['title'].'" >'."\n";
+						}
+						else {
+							$link .= '<strong title="'.$content['title'].'" style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
+						}
 						
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
 							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
 						}
-						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'">'.trim($content['title']).'</span></strong>'."\n";
+						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'">'.trim($content['title']).'</span>';
+						
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+							$link .= '</a></strong>'."\n";
+						}
+						else {
+							$link .= '</strong>'."\n";
+						}
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-							$link .= '<a href="'.AT_BASE_HREF.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
+							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
 						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';
 					}
@@ -977,7 +1014,7 @@ function inlineEditsSetup() {
 
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
+							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
 
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
@@ -986,7 +1023,7 @@ function inlineEditsSetup() {
 						}
 					} else {
 						if ($on) {
-							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
+							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
 
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
@@ -1025,7 +1062,7 @@ function inlineEditsSetup() {
 				
 				echo $link;
 				
-				echo "</li>\n\n";
+				echo "\n</li>\n\n";
 				
 				if ( $ignore_state || (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1)) {
 
@@ -1049,12 +1086,16 @@ function inlineEditsSetup() {
 		}
 	}
 
-	/* @See include/html/editor_tabs/properties.inc.php */
-	function printMoveMenu($menu, $parent_id, $depth, $path, $children) {
+	/* @See include/html/editor_tabs/properties.inc.php
+	   @See editor/arrange_content.php
+	   
+	    $print_type: "movable" or "related_content"
+	 */
+	function printActionMenu($menu, $parent_id, $depth, $path, $children, $print_type = 'movable') {
 		
 		global $cid, $_my_uri, $_base_path, $rtl;
 
-		static $end, $ignore;
+		static $end;
 
 		$top_level = $menu[$parent_id];
 
@@ -1066,41 +1107,51 @@ function inlineEditsSetup() {
 					continue;
 				}
 
-				$link = ' ';
+				$link = $buttons = '';
 
-				echo '<tr>';
-
-				if (($parent_id == $_POST['new_pid']) && ($content['ordering'] < $_POST['new_ordering'])) {
-					$text = _AT('before_topic', $content['title']);
-					$img = 'before.gif';
-				} else if ($parent_id != $_POST['new_pid']) {
-					$text = _AT('before_topic', $content['title']);
-					$img = 'before.gif';
-				} else {
-					$text = _AT('after_topic', $content['title']);
-					$img = 'after.gif';
-				}
-				if ($ignore && ($_POST['cid'] > 0)) {
-					$buttons = '<td><small>&nbsp;</small></td><td><small>&nbsp;</small></td><td>';
-				} else if ($_POST['new_pid'] == $content['content_id']) {
-					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/'.$img.'" alt="'.$text.'" title="'.$text.'" style="height:1.5em; width:1.9em;" /></small></td><td><small>&nbsp;</small></td><td>';
-				} else {
-
-					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/'.$img.'" alt="'.$text.'" title="'.$text.'" style="height:1.5em; width:1.9em;" /></small></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="'.$_base_path.'images/child_of.gif" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', $content['title']).'" title="'._AT('child_of', $content['title']).'" /></td><td>';
-
-				}
-
-				if (( $content['content_id'] == $cid ) || ($content['content_id'] == -1)) {
-					$ignore = true;
-					$link .= '<strong>'.trim($_POST['title']).' '._AT('current_location').'</strong>';
-					$buttons = '<td colspan="2"><small>&nbsp;</small></td><td>';
-				} else {
-					$link .= '<input type="checkbox" name="related[]" value="'.$content['content_id'].'" id="r'.$content['content_id'].'" ';
-					if (isset($_POST['related']) && in_array($content['content_id'], $_POST['related'])) {
-						$link .= ' checked="checked"';
+				echo '<tr>'."\n";
+				
+				if ($print_type == 'movable')
+				{
+					if ($content['content_id'] == $_POST['moved_cid']) {
+						$radio_selected = ' checked="checked" ';
 					}
-					$link .= ' /><label for="r'.$content['content_id'].'">'.$content['title'].'</label>';
+					else {
+						$radio_selected = '';
+					}
+				
+					$buttons = '<td align="center">'."\n".
+					           '   <small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', $content['title']).'" title="'._AT('before_topic', $content['title']).'" style="height:1.5em; width:1.9em;" /></small>'."\n".
+					           '</td>'."\n".
+					           '<td>';
+					
+					if ($content['content_type'] == CONTENT_TYPE_FOLDER)
+						$buttons .= '<input type="image" name="move['.$content['content_id'].'_1]" src="'.$_base_path.'images/child_of.gif" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', $content['title']).'" title="'._AT('child_of', $content['title']).'" />';
+					else
+						$buttons .= '&nbsp;';
+						
+					$buttons .= '</td>'."\n".
+					           '<td><input name="moved_cid" value="'.$content['content_id'].'" type="radio" id="r'.$content['content_id'].'" '.$radio_selected .'/></td>'."\n";
 				}
+				
+				$buttons .= '<td>'."\n";
+				if ($print_type == "related_content")
+				{
+					if ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)
+					{
+						$link .= '<input type="checkbox" name="related[]" value="'.$content['content_id'].'" id="r'.$content['content_id'].'" ';
+						if (isset($_POST['related']) && in_array($content['content_id'], $_POST['related'])) {
+							$link .= ' checked="checked"';
+						}
+						$link .= ' />'."\n";
+					}
+				}	
+				
+				if ($content['content_type'] == CONTENT_TYPE_FOLDER)
+				{
+					$link .= '<img src="'.$_base_path.'images/folder.gif" />';
+				}
+				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.$content['title'].'</label>'."\n";
 
 				if ( is_array($menu[$content['content_id']]) && !empty($menu[$content['content_id']]) ) {
 					/* has children */
@@ -1196,24 +1247,20 @@ function inlineEditsSetup() {
 				
 				echo $link;
 				
-				echo '</small></td></tr>';
+				echo '</small></td>'."\n".'</tr>'."\n";
 
-				$this->printMoveMenu($menu,
+				$this->printActionMenu($menu,
 									$content['content_id'],
 									++$depth, 
 									$path.$counter.'.', 
-									$children);
+									$children,
+									$print_type);
 				$depth--;
 
 				$counter++;
-
-				if ( $content['content_id'] == $cid ) {
-					$ignore =false;
-				}
 			}
 		}
 	}
-
 
 	/* returns the timestamp of release if this page has not yet been released, or is under a page that has not been released, true otherwise */
 	/* finds the max(timestamp) of all parents and returns that, true if less than now */

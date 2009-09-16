@@ -154,6 +154,7 @@ if (isset($_SESSION['member_id']) && $_SESSION['member_id']) {
 }
 
 $_path = array_reverse($_path);
+
 if (isset($_pages[$current_page]['title'])) {
 	$_page_title = $_pages[$current_page]['title'];
 } else {

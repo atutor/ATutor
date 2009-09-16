@@ -14,6 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_config;
 global $_pages;
+global $system_courses;
 
 /*
 	5 sections: public, my_start_page, course, admin, home

@@ -187,13 +187,14 @@ function toggleToc(objId) {
 
 function toggleFolder(cid)
 {
-	tree_collapse_icon = "<?php echo $this->base_path; ?>"+"images/tree/tree_disabled.gif";
-	tree_expand_icon = "<?php echo $this->base_path; ?>"+"images/tree/tree_expand.gif";
-
-	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) 
+	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
 		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
-	else
+		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
+	}
+	else {
 		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
+		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
+	}
 	
 	jQuery("#folder"+cid).slideToggle();
 }
