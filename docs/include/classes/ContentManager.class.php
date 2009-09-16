@@ -735,10 +735,10 @@ jQuery("#tree_icon"+'.$current_content_path[0]['content_id'].').attr("alt", "'._
 			echo "\n".'
 			<div style="float:right;margin-top:-1em;">
 			<a href="'.$_base_path.'editor/edit_content_folder.php">
-				<img id="img_create_top_folder" src="'.$_base_path.'images/folder.gif" alt="'._AT("add_top_folder").'" title="'._AT("create_top_folder").'" style="border:0;height:1.2em" />
+				<img id="img_create_top_folder" src="'.$_base_path.'images/folder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
 			</a>'."\n".
 			'<a href="'.$_base_path.'editor/edit_content.php">
-				<img id="img_create_top_content" src="'.$_base_path.'images/glossary_small.gif" alt="'._AT("add_top_page").'" title="'._AT("create_top_content").'" style="border:0;height:1.2em" />
+				<img id="img_create_top_content" src="'.$_base_path.'images/glossary_small.gif" alt="'._AT("add_top_page").'" title="'._AT("add_top_page").'" style="border:0;height:1.2em" />
 			</a>'."\n".
 			'<a href="javascript:void(0)" onclick="javascript:switchEditMode();">
 				<img id="img_switch_edit_mode" src="'.$_base_path.'images/edit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;height:1.2em" />
