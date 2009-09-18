@@ -52,10 +52,10 @@ if ($do_check) {
 	<div class="row">
 		<?php echo _AT('formatting'); ?><br />
 
-		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=true; switch_body_weblink();" />
+		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=true; switch_body_weblink(this.value);" />
 		<label for="text"><?php echo _AT('plain_text'); ?></label>
 
-		<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=false; switch_body_weblink();"/>
+		<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=false; switch_body_weblink(this.value);"/>
 
 		<label for="html"><?php echo _AT('html'); ?></label>
 
@@ -64,7 +64,7 @@ if ($do_check) {
 		<input type="hidden" name="settext" value="<?php if ($_POST['settext']==1 || $_REQUEST['settext']==1 || $_GET['settext']==1) echo '1'; else echo '0'; ?>" />
 		<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onclick="switch_body_editor()" class="button" />
 		
-		<input type="radio" name="formatting" value="2" id="weblink" <?php if ($_POST['formatting'] == 2) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=true; switch_body_weblink();"/>
+		<input type="radio" name="formatting" value="2" id="weblink" <?php if ($_POST['formatting'] == 2) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=true; switch_body_weblink(this.value);"/>
 		<label for="weblink"><?php echo _AT('weblink'); ?></label>
 
 
@@ -170,9 +170,8 @@ if ($do_check) {
 	}
 
 	//switch between weblinks.
-	function switch_body_weblink(){
-		alert(document.form.formatting.value);
-		if (document.form.formatting.value==2){
+	function switch_body_weblink(formatting){
+		if (formatting==2){
 			document.form.body_text.style.display = "none";
 			document.form.weblink_text.style.display = "inline";
 		} else {
