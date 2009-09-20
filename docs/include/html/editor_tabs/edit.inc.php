@@ -90,9 +90,18 @@ if ($do_check) {
 	$_POST['body_text'] = $stripslashes($_POST['body_text']);
 }
 
+//check if this is a weblink.
+$body_text_hidden = '';
+$weblink_text_hidden = 'display:none;';
+if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
+	$_POST['weblink_text'] = $_POST['body_text'];
+	$_POST['body_text'] = '';
+	$body_text_hidden = 'display:none;';
+	$weblink_text_hidden = '';
+}
 ?>
-		<textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']); ?></textarea>	
-		<input name="weblink_text" id="weblink_text" value="http://" style="display:none; width:60%;"/>
+		<textarea name="body_text" id="body_text" cols="" rows="20" style="<?php echo $body_text_hidden; ?>"><?php echo htmlspecialchars($_POST['body_text']); ?></textarea>	
+		<input name="weblink_text" id="weblink_text" value="<?php echo ($_POST['weblink_text']!=''?htmlspecialchars($_POST['weblink_text']):'http://'); ?>" style="width:60%; <?php echo $weblink_text_hidden; ?>"/>
 	</div>
 	
 	<div class="row">

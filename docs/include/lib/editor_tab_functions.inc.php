@@ -89,12 +89,16 @@ function save_changes($redir, $current_tab) {
 	$_POST['head']	= trim($_POST['head']);
 	$_POST['use_customized_head']	= isset($_POST['use_customized_head'])?$_POST['use_customized_head']:0;
 	$_POST['body_text']	= trim($_POST['body_text']);
+	$_POST['weblink_text'] = trim($_POST['weblink_text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
 	$_POST['keywords']	= trim($_POST['keywords']);
 	$_POST['test_message'] = trim($_POST['test_message']);
 	$_POST['allow_test_export'] = intval($_POST['allow_test_export']);
 
 	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
+
+	//if weblink is selected, use it
+	if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {$_POST['body_text'] = $_POST['weblink_text'];}
 
 	if (!($release_date = generate_release_date())) {
 		$msg->addError('BAD_DATE');
