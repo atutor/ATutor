@@ -247,26 +247,25 @@ function rehash($items){
 			// special case for webCT content packages that don't specify the `href` attribute 
 			// with the `<resource>` element.
 			// we take the `href` from the first `<file>` element.
-
 			if (isset($items[$current_identifier]) && ($items[$current_identifier]['href'] == '')) {
 				$attrs['href'] = urldecode($attrs['href']);
-
 				$items[$current_identifier]['href'] = $attrs['href'];
+			}
 
-				$items[$current_identifier]['href'] = $attrs['href'];
+			$temp_path = pathinfo($attrs['href']);
+			$temp_path = explode('/', $temp_path['dirname']);
 
-				$temp_path = pathinfo($attrs['href']);
-				$temp_path = explode('/', $temp_path['dirname']);
-
-				if ($package_base_path == '') {
+			//for IMSCC, assume that all resources lies in the same folder, except styles.css
+			if ($items[$current_identifier]['type']=='webcontent'){
+				if ($package_base_path=="") {
 					$package_base_path = $temp_path;
 				} 
-//				else {
+//				elseif (is_array($package_base_path)) {
 //					$package_base_path = array_intersect($package_base_path, $temp_path);
 //				}
-
-				$items[$current_identifier]['new_path'] = implode('/', $temp_path);
-			} 
+			}
+			$items[$current_identifier]['new_path'] = implode('/', $temp_path);
+			 
 
 			if (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
@@ -295,11 +294,12 @@ function rehash($items){
 				{
 					$temp_path = pathinfo($attrs['href']);
 					$temp_path = explode('/', $temp_path['dirname']);
-					if (!$package_base_path) {
+					if (empty($package_base_path)) {
 						$package_base_path = $temp_path;
-					} else {
-						$package_base_path = array_intersect($package_base_path, $temp_path);
-					}
+					} 
+//					else {
+//						$package_base_path = array_intersect($package_base_path, $temp_path);
+//					}
 					$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 				}
 			}
@@ -389,6 +389,8 @@ function rehash($items){
 	/* constructs the $items array using the last entry in $path as the parent element */
 	function characterData($parser, $data){
 		global $path, $items, $order, $my_data, $element_path;
+		global $current_identifier;
+
 		$str_trimmed_data = trim($data);
 				
 		if (!empty($str_trimmed_data)) {
@@ -419,7 +421,6 @@ function rehash($items){
 					$item_tmpl = array(	'title'			=> $data,
 										'parent_content_id' => $parent_item_id,
 										'ordering'			=> $order[$parent_item_id]-1);
-
 					//append other array values if it exists
 					if (is_array($items[$current_item_id])){
 						$items[$current_item_id] = array_merge($items[$current_item_id], $item_tmpl);
@@ -727,7 +728,7 @@ $sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE cour
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
-$lti_offset = 0;	//since we don't need lti tools, the ordering needs to be subtracted
+$lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack, disabled Aug 25, 2009
 //$items = rehash($items);
 //debug($items);exit;
@@ -735,7 +736,7 @@ foreach ($items as $item_id => $content_info)
 {
 	//if this is any of the LTI tools, skip it. (ie. Discussion Tools, Weblinks, etc)
 	if ($content_info['type']=='imsdt_xmlv1p0'){
-		$lti_offset++;
+		$lti_offset[$content_info['parent_content_id']]++;
 		continue;
 	}
 
@@ -918,7 +919,7 @@ foreach ($items as $item_id => $content_info)
 	       VALUES 
 			     ('.$_SESSION['course_id'].','															
 			     .intval($content_parent_id).','		
-			     .($content_info['ordering'] + $my_offset - $lti_offset + 1).','
+			     .($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1).','
 			     .'"'.$last_modified.'",													
 			      0,'
 			     .($content_formatting==2?2:1).' ,
