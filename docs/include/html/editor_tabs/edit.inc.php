@@ -51,7 +51,7 @@ if ($do_check) {
 
 	<div class="row">
 		<?php echo _AT('formatting'); ?><br />
-
+ 
 		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=true; switch_body_weblink(this.value);" />
 		<label for="text"><?php echo _AT('plain_text'); ?></label>
 
