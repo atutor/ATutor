@@ -887,7 +887,7 @@ function inlineEditsSetup() {
 
 				$on = false;
 
-				if ( (($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid)) && $content['content_type'] == CONTENT_TYPE_CONTENT) 
+				if ( (($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid)) && ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)) 
 				{ // non-current content nodes with content type "CONTENT_TYPE_CONTENT"
 					if (isset($highlighted[$content['content_id']])) {
 						$link .= '<strong>';
@@ -932,7 +932,7 @@ function inlineEditsSetup() {
 				} 
 				else 
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
-					if ($content['content_type'] == CONTENT_TYPE_CONTENT)
+					if ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)
 					{ // current content page
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {

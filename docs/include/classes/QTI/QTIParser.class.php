@@ -2,8 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li,			*/
-/* & Harris Wong												*/
+/* Copyright (c) 2002-2009										*/
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */

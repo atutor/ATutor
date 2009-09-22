@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2009										*/
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -809,6 +809,22 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 	if (!$html) {
 		$input = str_replace('<', '&lt;', $input);
 		$input = str_replace('&lt;?php', '<?php', $input); // for bug #2087
+	} elseif ($html==2) {
+		$output = '<iframe width="100%" frameborder="0" id="content_frame" marginheight="0" marginwidth="0" src="'.$input.'"></iframe>';
+		$output .=	'<script type="text/javascript">
+					function resizeIframe() {
+						var height = document.documentElement.clientHeight;
+						
+						// not sure how to get this dynamically
+						height -= 20; /* whatever you set your body bottom margin/padding to be */
+						
+						document.getElementById(\'content_frame\').style.height = height +"px";
+						
+					};
+					document.getElementById(\'content_frame\').onload = resizeIframe;
+					window.onresize = resizeIframe;
+					</script>';
+		return $output;
 	}
 
 	/* do the glossary search and replace: */

@@ -21,6 +21,7 @@ require(AT_INCLUDE_PATH.'lib/qti.inc.php');
 require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 require(AT_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
 //require(AT_INCLUDE_PATH.'../tools/ims/ns.inc.php');	//namespace, no longer needs, delete it after it's stable.
+require(AT_INCLUDE_PATH.'classes/Weblinks/WeblinksParser.class.php');
 
 /* make sure we own this course that we're exporting */
 authenticate(AT_PRIV_CONTENT);
@@ -281,7 +282,6 @@ function rehash($items){
 //		} else if (($name == 'resource') && is_array($items[$attrs['identifier']]))  {
 		} else if (($name == 'resource')) {
 			$current_identifier = $attrs['identifier'];
-			
 			$items[$current_identifier]['type'] = $attrs['type'];
 			if ($attrs['href']) {
 				$attrs['href'] = urldecode($attrs['href']);
@@ -730,10 +730,11 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 $lti_offset = 0;	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack, disabled Aug 25, 2009
 //$items = rehash($items);
+//debug($items);exit;
 foreach ($items as $item_id => $content_info) 
 {
 	//if this is any of the LTI tools, skip it. (ie. Discussion Tools, Weblinks, etc)
-	if ($content_info['type']=='imsdt_xmlv1p0' || $content_info['type']=='imswl_xmlv1p0'){
+	if ($content_info['type']=='imsdt_xmlv1p0'){
 		$lti_offset++;
 		continue;
 	}
@@ -868,6 +869,18 @@ foreach ($items as $item_id => $content_info)
 	} else {
 		$content_info['new_path'] = $package_base_name;
 	}
+
+	//handles weblinks
+	if ($content_info['type']=='imswl_xmlv1p0'){
+		$weblinks_parser = new WeblinksParser();
+		$xml_content = @file_get_contents($import_path . $content_info['href']);
+		$weblinks_parser->parse($xml_content);
+		$content_info['title'] = $weblinks_parser->getTitle();
+		$content = $weblinks_parser->getUrl();
+		$content_folder_type = CONTENT_TYPE_WEBLINK;
+		$content_formatting = 2;
+	}
+	
 	
 	$head = addslashes($head);
 	$content_info['title'] = addslashes($content_info['title']);
@@ -879,6 +892,11 @@ foreach ($items as $item_id => $content_info)
 		$content = '';
 	} else {
 		$content = addslashes($content);
+	}
+
+	//check for content_type
+	if ($content_formatting!=CONTENT_TYPE_WEBLINK){
+		$content_folder_type = ($content==''?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
 	}
 
 	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
@@ -902,8 +920,8 @@ foreach ($items as $item_id => $content_info)
 			     .intval($content_parent_id).','		
 			     .($content_info['ordering'] + $my_offset - $lti_offset + 1).','
 			     .'"'.$last_modified.'",													
-			      0,
-			      1,
+			      0,'
+			     .($content_formatting==2?2:1).' ,
 			      NOW(),"'
 			     . $head .'",
 			     1,
@@ -912,7 +930,7 @@ foreach ($items as $item_id => $content_info)
 			     .'"'.$content_info['title'].'",'
 			     .'"'.$content.'",'
 				 .'"'.$content_info['test_message'].'",'
-				 .($content==''?1:0).')';
+				 .$content_folder_type.')';
 	$result = mysql_query($sql, $db) or die(mysql_error());
 
 	/* get the content id and update $items */
