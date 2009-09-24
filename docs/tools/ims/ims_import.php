@@ -193,7 +193,7 @@ function rehash($items){
 	function startElement($parser, $name, $attrs) {
 		global $items, $path, $package_base_path;
 		global $element_path;
-		global $xml_base_path, $test_message;
+		global $xml_base_path, $test_message, $content_type;
 		global $current_identifier, $msg;
 
 		//check if the xml is valid
@@ -260,13 +260,14 @@ function rehash($items){
 				if ($package_base_path=="") {
 					$package_base_path = $temp_path;
 				} 
-//				elseif (is_array($package_base_path)) {
-//					$package_base_path = array_intersect($package_base_path, $temp_path);
-//				}
+				elseif (is_array($package_base_path) && $content_type != 'IMS Common Cartridge') {
+					//if this is a content package, we want only intersection
+					$package_base_path = array_intersect($package_base_path, $temp_path);
+					$temp_path = $package_base_path;
+				}
 			}
 			$items[$current_identifier]['new_path'] = implode('/', $temp_path);
-			 
-
+			
 			if (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
