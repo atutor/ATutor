@@ -734,7 +734,10 @@ $lti_offset = array();	//since we don't need lti tools, the ordering needs to be
 //$items = rehash($items);
 //debug($items);exit;
 foreach ($items as $item_id => $content_info) 
-{
+{	
+	//formatting field, default 1
+	$content_formatting = 1;	//CONTENT_TYPE_CONTENT
+
 	//if this is any of the LTI tools, skip it. (ie. Discussion Tools, Weblinks, etc)
 	if ($content_info['type']=='imsdt_xmlv1p0'){
 		$lti_offset[$content_info['parent_content_id']]++;
@@ -923,7 +926,7 @@ foreach ($items as $item_id => $content_info)
 			     .($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1).','
 			     .'"'.$last_modified.'",													
 			      0,'
-			     .($content_formatting==2?2:1).' ,
+			     .$content_formatting.' ,
 			      NOW(),"'
 			     . $head .'",
 			     1,
@@ -985,9 +988,9 @@ foreach ($items as $item_id => $content_info)
 					'VALUES (' . $items[$item_id]['real_content_id'] . ", $tid)";
 			$result = mysql_query($sql, $db);
 		
-			if (!$msg->containsErrors()) {
-				$msg->addFeedback('IMPORT_SUCCEEDED');
-			}
+//			if (!$msg->containsErrors()) {
+//				$msg->addFeedback('IMPORT_SUCCEEDED');
+//			}
 		}
 	}
 
