@@ -1,15 +1,15 @@
 <?php
-/********************************************************************/
-/* ATutor															*/
-/********************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li, & Harris Wong	*/
-/* Adaptive Technology Resource Centre / University of Toronto		*/
-/* http://atutor.ca													*/
-/*																	*/
-/* This program is free software. You can redistribute it and/or	*/
-/* modify it under the terms of the GNU General Public License		*/
-/* as published by the Free Software Foundation.					*/
-/********************************************************************/
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2009										*/
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
 // $Id$
 
 require_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');

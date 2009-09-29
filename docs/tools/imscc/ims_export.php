@@ -1,19 +1,20 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2002 - 2009                                            */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 // $Id: ims_export.php 8211 2008-11-11 22:55:40Z hwong $
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 require(AT_INCLUDE_PATH.'classes/A4a/A4aExport.class.php');
+require(AT_INCLUDE_PATH.'classes/Weblinks/Weblinks.class.php');
+require(AT_INCLUDE_PATH.'classes/Weblinks/WeblinksExport.class.php');
 
 /* content id of an optional chapter */
 $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : 0;
@@ -90,7 +91,6 @@ if (isset($_POST['cancel'])) {
 
 $zipfile = new zipfile(); 
 $zipfile->create_dir('resources/');
-$zipfile->create_dir('GlossaryItem/');
 
 /*
 	the following resources are to be identified:
@@ -213,12 +213,10 @@ ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 $organizations_str = ob_get_contents();
 ob_end_clean();
-
 if (count($used_glossary_terms)) {
 	$used_glossary_terms = array_unique($used_glossary_terms);
 	sort($used_glossary_terms);
 	reset($used_glossary_terms);
-
 	$terms_xml = '';
 	foreach ($used_glossary_terms as $term) {
 		$term_key = urlencode($term);
@@ -238,9 +236,14 @@ if (count($used_glossary_terms)) {
 	unset($glossary_xml);
 }
 
+if ($glossary_xml){
+	$glossary_manifest_xml = $ims_template_xml['glossary'];
+} else {
+	$glossary_manifest_xml = '';
+}
 /* append the Organizations and Resources to the imsmanifest */
 $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}', '{GLOSSARY}',	'{RESOURCES}', '{TEST_ITEMS}', '{COURSE_TITLE}'),
-									array($organizations_str, $ims_template_xml['glossary'],	$resources, $test_xml_items, $ims_course_title),
+									array($organizations_str, $glossary_manifest_xml,	$resources, $test_xml_items, $ims_course_title),
 									$ims_template_xml['final']);
 
 /* generate the vcard for the instructor/author */
@@ -262,6 +265,7 @@ if ($row = mysql_fetch_assoc($result)) {
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 
 if ($glossary_xml) {
+	$zipfile->create_dir('GlossaryItem/');
 	$zipfile->add_file($glossary_xml,  'GlossaryItem/glossary.xml');
 }
 $zipfile->close(); // this is optional, since send_file() closes it anyway

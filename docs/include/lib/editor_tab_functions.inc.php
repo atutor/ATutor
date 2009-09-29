@@ -98,7 +98,12 @@ function save_changes($redir, $current_tab) {
 	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
 
 	//if weblink is selected, use it
-	if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {$_POST['body_text'] = $_POST['weblink_text'];}
+	if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
+		$_POST['body_text'] = $_POST['weblink_text'];
+		$content_type_pref = CONTENT_TYPE_WEBLINK;
+	} else {
+		$content_type_pref = CONTENT_TYPE_CONTENT;
+	}
 
 	if (!($release_date = generate_release_date())) {
 		$msg->addError('BAD_DATE');
@@ -139,7 +144,7 @@ function save_changes($redir, $current_tab) {
 												  $_POST['use_customized_head'],
 												  $_POST['test_message'],
 												  $_POST['allow_test_export'],
-												  CONTENT_TYPE_CONTENT);
+												  $content_type_pref);
 			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}

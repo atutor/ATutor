@@ -1,15 +1,14 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2002 - 2009                                            */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 // $Id: ims_template.inc.php 8180 2008-11-07 17:17:25Z hwong $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
@@ -83,13 +82,30 @@ function print_organizations($parent_id,
 				$content['content_path'] .= '/';
 			}
 
-			$link .= '<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'">'."\n";
-			$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n$prefix$space</item>\n";
-			if (!empty($_menu[$content['content_id']])){
-				$link .= $prefix.'<item identifier="MANIFEST01_FOLDER'.$content['content_id'].'">'."\n";
-				$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n";
+			/* 
+			 * generate weblinks 
+			 * Reason to put it here is cause we don't want the content to be overwrittened.
+			 */
+			if ($content['content_type']==CONTENT_TYPE_WEBLINK){
+				$wl = new Weblinks($content['title'], $content['text']);
+				$wlexport = new WeblinksExport($wl);
+				$wl_xml = $wlexport->export();
+				$wl_filename = 'weblinks_'.$content['content_id'].'.xml';
+				$zipfile->add_file($wl_xml , 'Weblinks/'.$wl_filename, $content['u_ts']);
+				$resources .= str_replace(	array('{PATH}', '{CONTENT_ID}'), 
+											array($wl_filename, $content['content_id']), 
+											$ims_template_xml['resource_weblink']);
+				//Done.
+//				continue;
 			}
 
+			if ($content['content_type']==CONTENT_TYPE_FOLDER){
+				$link .= $prefix.'<item identifier="MANIFEST01_FOLDER'.$content['content_id'].'">'."\n";
+				$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n";
+			} else {
+				$link .= '<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'">'."\n";
+				$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n$prefix$space</item>\n";
+			}
 			$html_link = '<a href="resources/'.$content['content_path'].$content['content_id'].'.html" target="body">'.$content['title'].'</a>';
 			
 			/* save the content as HTML files */
@@ -143,11 +159,13 @@ function print_organizations($parent_id,
 					$paths[] = $content['content_path'];
 				}
 			}
-
-			$zipfile->add_file($content['text'], 'resources/'.$content['content_path'].$content['content_id'].'.html', $content['u_ts']);
+			//add the file iff it's a content file
+			if($content['content_type']==CONTENT_TYPE_CONTENT){
+				$zipfile->add_file($content['text'], 'resources/'.$content['content_path'].$content['content_id'].'.html', $content['u_ts']);
+			}
 			$content['title'] = htmlspecialchars($content['title']);
 
-			/* add the resource dependancies */
+			/* add the resource dependancies */			
 			if ($my_files == null) $my_files = array();
 			$content_files = "\n";
 			$parser->parse($content['text']);
@@ -276,10 +294,15 @@ function print_organizations($parent_id,
 			}
 
 			/******************************/
-			$resources .= str_replace(	array('{CONTENT_ID}', '{PATH}', '{FILES}'),
-										array($content['content_id'], $content['content_path'], $content_files),
-										$ims_template_xml['resource']); 
-
+			//add it to the resources section if it hasn't been added.  
+			//Weblinks have been added.
+			//Folders aren't resourecs, they shouldn't be added
+			if($content['content_type']==CONTENT_TYPE_CONTENT){
+				$resources .= str_replace(	array('{CONTENT_ID}', '{PATH}', '{FILES}'),
+											array($content['content_id'], $content['content_path'], $content_files),
+											$ims_template_xml['resource']); 
+			}
+			
 
 			for ($i=0; $i<$depth; $i++) {
 				$link .= $space;
@@ -398,7 +421,11 @@ $ims_template_xml['resource_test'] = '		<resource identifier="MANIFEST01_RESOURC
 			<file href="QTI/{PATH}"/>{FILES}
 		</resource>
 '."\n";
-
+$ims_template_xml['resource_weblink'] = '		<resource identifier="MANIFEST01_RESOURCE{CONTENT_ID}" type="imswl_xmlv1p0">
+			<metadata/>
+			<file href="Weblinks/{PATH}"/>
+		</resource>
+'."\n";
 $ims_template_xml['file'] = '			<file href="resources/{FILE}"/>'."\n";
 $ims_template_xml['xml'] = '			<file href="{FILE}"/>'."\n";
 $ims_template_xml['glossary'] = '			<item identifier="GlossaryItem" identifierref="MANIFEST01_RESOURCE_GLOSSARY">
