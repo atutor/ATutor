@@ -104,7 +104,7 @@ function print_organizations($parent_id,
 				$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n";
 			} else {
 				$link .= '<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'">'."\n";
-				$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n$prefix$space</item>\n";
+				$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n$prefix$space";
 			}
 			$html_link = '<a href="resources/'.$content['content_path'].$content['content_id'].'.html" target="body">'.$content['title'].'</a>';
 			
@@ -364,9 +364,10 @@ function print_organizations($parent_id,
 			for ($i=0; $i<$depth; $i++) {
 				echo $space;
 			}
-			if (!empty($_menu[$content['content_id']])){
+//debug($_menu, $content['content_id']);
+//			if (!empty($_menu[$content['content_id']])){
 			echo $prefix.'</item>';
-			}
+//			}
 			echo "\n";
 		}  
 
