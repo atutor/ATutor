@@ -164,7 +164,7 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 
 /* the URL to the AChecker server of choice. must include trailing slash. */
 //define('AT_ACHECKER_URL', 'http://checker.atrc.utoronto.ca/servlet/');
-define('AT_ACHECKER_URL', 'http://www.achecker.ca');
+define('AT_ACHECKER_URL', 'http://www.achecker.ca/');
 define('AT_ACHECKER_WEB_SERVICE_ID', '2f4149673d93b7f37eb27506905f19d63fbdfe2d');
 
 if (!isset($_SERVER['REQUEST_URI'])) {
