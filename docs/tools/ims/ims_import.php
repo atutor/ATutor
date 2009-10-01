@@ -732,7 +732,6 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack, disabled Aug 25, 2009
 //$items = rehash($items);
-//debug($items);exit;
 foreach ($items as $item_id => $content_info) 
 {	
 	//formatting field, default 1
@@ -859,6 +858,10 @@ foreach ($items as $item_id => $content_info)
 	$content_parent_id = $cid;
 	if ($content_info['parent_content_id'] !== 0) {
 		$content_parent_id = $items[$content_info['parent_content_id']]['real_content_id'];
+		//if it's not there, use $cid
+		if (!$content_parent_id){
+			$content_parent_id = $cid;
+		}
 	}
 
 	$my_offset = 0;
@@ -903,7 +906,6 @@ foreach ($items as $item_id => $content_info)
 	if ($content_formatting!=CONTENT_TYPE_WEBLINK){
 		$content_folder_type = ($content==''?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
 	}
-
 	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
 	      . '(course_id, 
 	          content_parent_id, 
