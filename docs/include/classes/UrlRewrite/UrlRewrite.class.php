@@ -277,7 +277,7 @@ class UrlRewrite  {
 
 				if (preg_match('/forum\/(index|view|list)\.php/', $front)==1) {
 					$pretty_url = $course_id.'/forum';
-					$obj =& new ForumsUrl();
+					$obj = new ForumsUrl();
 				} elseif (preg_match('/(content\.php)(\/cid(\/\d+))?/', $front, $matches)==1){
 					$pretty_url = $course_id.'/content';
 					//if there are other pretty url queries at the back, append it
@@ -285,16 +285,16 @@ class UrlRewrite  {
 					if (isset($matches[3]) && $matches[3] != ''){
 						$pretty_url .= $matches[3];
 					}
-					$obj =& new ContentUrl();
+					$obj = new ContentUrl();
 				} elseif (preg_match('/file_storage\/((index|revisions|comments)\.php)?/', $front, $matches)==1){
 					$pretty_url = $course_id.'/file_storage';
-					$obj =& new FileStorageUrl($matches[1]);
+					$obj = new FileStorageUrl($matches[1]);
 				} elseif (preg_match('/tools\/test_intro\.php/', $front)==1){
 					$pretty_url = $course_id.'/tests_surveys';
-					$obj =& new TestsUrl();
+					$obj = new TestsUrl();
 				} elseif (preg_match('/glossary\/index\.php/', $front)==1){
 					$pretty_url = $course_id.'/glossary';
-					$obj =& new GlossaryUrl();
+					$obj = new GlossaryUrl();
 				}
 			} else {
 				$pretty_url .= $front;

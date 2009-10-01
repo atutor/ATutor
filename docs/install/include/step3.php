@@ -30,7 +30,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$errors[] = 'Administrator username cannot be empty.';
 	} else {
 		/* check for special characters */
-		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['admin_username']))){
+		if (!(preg_match("/^[a-zA-Z0-9_]([a-zA-Z0-9_])*$/i", $_POST['admin_username']))){
 			$errors[] = 'Administrator username is not valid.';
 		}
 	}
@@ -39,7 +39,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 	if ($_POST['admin_email'] == '') {
 		$errors[] = 'Administrator email cannot be empty.';
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['admin_email'])) {
+	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['admin_email'])) {
 		$errors[] = 'Administrator email is not valid.';
 	}
 
@@ -49,7 +49,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 	if ($_POST['email'] == '') {
 		$errors[] = 'Contact email cannot be empty.';
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 		$errors[] = 'Contact email is not valid.';
 	}
 
@@ -58,7 +58,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$errors[] = 'Personal Account Username cannot be empty.';
 	} else {
 		/* check for special characters */
-		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['account_username']))){
+		if (!(preg_match("/^[a-zA-Z0-9_]([a-zA-Z0-9_])*$/i", $_POST['account_username']))){
 			$errors[] = 'Personal Account Username is not valid.';
 		} else {
 			if ($_POST['account_username'] == $_POST['admin_username']) {
@@ -71,7 +71,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 	if ($_POST['account_email'] == '') {
 		$errors[] = 'Personal Account email cannot be empty.';
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['account_email'])) {
+	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['account_email'])) {
 		$errors[] = 'Invalid Personal Account email is not valid.';
 	}
 

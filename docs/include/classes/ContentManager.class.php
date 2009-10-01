@@ -938,7 +938,7 @@ function inlineEditsSetup() {
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
 							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
 						}
-						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'">'.trim($content['title']).'</span></strong>';
+						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu|'.$content['content_id'].'">'.trim($content['title']).'</span></strong>';
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {

@@ -383,7 +383,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 			<option value="0"><?php echo _AT('empty'); ?></option>
 			<option value="1" selected="selected"><?php echo _AT('create_basic'); ?></option>
 			<?php 
-			$Backup =& new Backup($db);
+			$Backup = new Backup($db);
 
 			if ($isadmin) {
 				$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";

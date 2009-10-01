@@ -74,7 +74,7 @@ class LanguageManager {
 			if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) {
 				$row['status'] = AT_LANG_STATUS_PUBLISHED; // b/c the print drop down checks for it.				
 			}
-			$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
+			$this->availableLanguages[$row['language_code']][$row['char_set']] = new Language($row);
 		}
 		$this->numLanguages = count($this->availableLanguages);
 	}
@@ -277,9 +277,9 @@ class LanguageManager {
 
 		$language_xml = @file_get_contents($import_path.'language.xml');
 
-		$languageParser =& new LanguageParser();
+		$languageParser = new LanguageParser();
 		$languageParser->parse($language_xml);
-		$languageEditor =& $languageParser->getLanguageEditor(0);
+		$languageEditor = $languageParser->getLanguageEditor(0);
 
 		if (($languageEditor->getAtutorVersion() != VERSION) 
 			&& (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE)) 

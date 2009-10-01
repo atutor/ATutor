@@ -56,8 +56,8 @@ class ModuleFactory {
 			$sql	= "SELECT dir_name, privilege, admin_privilege, status, cron_interval, cron_last_run FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
 			$result = mysql_query($sql, $db);
 			while($row = mysql_fetch_assoc($result)) {
-				$module =& new Module($row);
-				$this->_modules[$row['dir_name']] =& $module;
+				$module = new Module($row);
+				$this->_modules[$row['dir_name']] = $module;
 				$module->load();
 			}
 		}
@@ -68,7 +68,7 @@ class ModuleFactory {
 	// type  := core | standard | extra
 	// sort  := true | false (by name only)
 	// the results of this method are not cached. call sparingly.
-	function & getModules($status, $type = 0, $sort = FALSE) {
+	function getModules($status, $type = 0, $sort = FALSE) {
 		global $db;
 
 		$modules     = array();
@@ -80,13 +80,14 @@ class ModuleFactory {
 
 		$sql	= "SELECT dir_name, privilege, admin_privilege, status, cron_interval, cron_last_run FROM ". TABLE_PREFIX . "modules";
 		$result = mysql_query($sql, $db);
+		
 		while($row = mysql_fetch_assoc($result)) {
 			if (!isset($this->_modules[$row['dir_name']])) {
-				$module =& new Module($row);
+				$module = new Module($row);
 			} else {
-				$module =& $this->_modules[$row['dir_name']];
+				$module = $this->_modules[$row['dir_name']];
 			}
-			$all_modules[$row['dir_name']] =& $module;
+			$all_modules[$row['dir_name']] = $module;
 		}
 
 		// small performance addition:
@@ -102,8 +103,8 @@ class ModuleFactory {
 				}
 
 				if (is_dir(AT_MODULE_PATH . $dir_name) && !isset($all_modules[$dir_name])) {
-					$module =& new Module($dir_name);
-					$all_modules[$dir_name] =& $module;
+					$module = new Module($dir_name);
+					$all_modules[$dir_name] = $module;
 				}
 			}
 			closedir($dir);
@@ -111,15 +112,16 @@ class ModuleFactory {
 
 		$keys = array_keys($all_modules);
 		foreach ($keys as $dir_name) {
-			$module =& $all_modules[$dir_name];
+			$module =$all_modules[$dir_name];
 			if ($module->checkStatus($status) && $module->checkType($type)) {
-				$modules[$dir_name] =& $module;
+				$modules[$dir_name] = $module;
 			}
 		}
 
 		if ($sort) {
 			uasort($modules, array($this, 'compare'));
 		}
+		
 		return $modules;
 	}
 
@@ -130,9 +132,9 @@ class ModuleFactory {
 			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE dir_name='$module_dir'";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				$module =& new Module($row);
+				$module = new Module($row);
 			} else {
-				$module =& new Module($module_dir);
+				$module = new Module($module_dir);
 			}
 			$this->_modules[$module_dir] =& $module;
 		}
@@ -251,7 +253,7 @@ class Module {
 	function _initModuleProperties() {
 		if (!isset($this->_properties)) {
 			require_once(dirname(__FILE__) . '/ModuleParser.class.php');
-			$moduleParser   =& new ModuleParser();
+			$moduleParser = new ModuleParser();
 			$moduleParser->parse(@file_get_contents(AT_MODULE_PATH . $this->_directoryName.'/module.xml'));
 			if ($moduleParser->rows[0]) {
 				$this->_properties = $moduleParser->rows[0];

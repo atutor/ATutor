@@ -58,7 +58,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	global $_config_defaults;
 	global $stripslashes;
 
-	$Backup =& new Backup($db);
+	$Backup = new Backup($db);
 	$missing_fields = array();
 
 	if ($_POST['title'] == '') {

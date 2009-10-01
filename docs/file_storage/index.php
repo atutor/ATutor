@@ -196,7 +196,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 	} else {
 		// zip multiple files and folders
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
-		$zipfile =& new zipfile();
+		$zipfile = new zipfile();
 
 		$zip_file_name = fs_get_workspace($owner_type, $owner_id); // want the name of the workspace
 		$zip_file_name = str_replace(" ","_",$zip_file_name );

@@ -99,7 +99,7 @@ class Backup {
 
 		$timestamp = time();
 
-		$zipfile =& new zipfile();
+		$zipfile = new zipfile();
 
 		$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';
 		$zipfile->add_file($package_identifier, 'atutor_backup_version', $timestamp);

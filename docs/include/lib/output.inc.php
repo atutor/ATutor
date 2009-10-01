@@ -718,27 +718,41 @@ function embed_media($text) {
 function make_clickable($text) {
 	$text = embed_media($text);
 
-	$text = eregi_replace("([[:space:]])(http[s]?)://([^[:space:]<]*)([[:alnum:]#?/&=])", "\\1<a href=\"\\2://\\3\\4\">\\3\\4</a>", $text);
+//	$text = eregi_replace("([[:space:]])(http[s]?)://([^[:space:]<]*)([[:alnum:]#?/&=])", "\\1<a href=\"\\2://\\3\\4\">\\3\\4</a>", $text);
+//
+//	$text = eregi_replace(	'([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
+//							'\@'.'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)',
+//							"<a href=\"mailto:\\1\">\\1</a>",
+//							$text);
 
-	$text = eregi_replace(	'([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
-							'\@'.'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)',
-							"<a href=\"mailto:\\1\">\\1</a>",
-							$text);
-
+	$text = preg_replace("/([\s])(http[s]?):\/\/([\^\s\<]*)([a-zA-Z0-9\#\?\/\&\=])/i", 
+	                     "\\1<a href=\"\\2://\\3\\4\">\\3\\4</a>", $text);
+	
+	$text = preg_replace('/([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
+						'\@'.'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)/i',
+						"<a href=\"mailto:\\1\">\\1</a>",
+						$text);
 	return $text;
 }
 
 function image_replace($text) {
 	/* image urls do not require http:// */
 	
-	$text = eregi_replace("\[image(\|)?([[:alnum:][:space:]]*)\]" .
-						 "[:space:]*" .
-						 "([[:alnum:]#?/&=:\"'_.-]+)" .
-						 "[:space:]*" .
-						 "((\[/image\])|(.*\[/image\]))",
+//	$text = eregi_replace("\[image(\|)?([[:alnum:][:space:]]*)\]" .
+//						 "[:space:]*" .
+//						 "([[:alnum:]#?/&=:\"'_.-]+)" .
+//						 "[:space:]*" .
+//						 "((\[/image\])|(.*\[/image\]))",
+//				  "<img src=\"\\3\" alt=\"\\2\" />",
+//				  $text);
+	 
+	$text = preg_replace("/\[image(\|)?([a-zA-Z0-9\s]*)\]".
+	                     "[\s]*".
+	                     "([a-zA-Z0-9\#\?\/\&\=\:\\\"\'\_\.\-]+)[\s]*".
+	                     "((\[\/image\])|(.*\[\/image\]))/i",
 				  "<img src=\"\\3\" alt=\"\\2\" />",
 				  $text);
-	 
+				  
 	return $text;
 }
 

@@ -943,7 +943,7 @@ foreach ($items as $item_id => $content_info)
 
 	/* get the tests associated with this content */
 	if (!empty($items[$item_id]['tests']) || strpos($items[$item_id]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
-		$qti_import =& new QTIImport($import_path);
+		$qti_import = new QTIImport($import_path);
 
 		if (isset($items[$item_id]['tests'])){
 			$loop_var = $items[$item_id]['tests'];

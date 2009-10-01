@@ -22,7 +22,7 @@ $keys = array_keys($module_list);
 
 echo '<ol id="tools">';
 foreach ($keys as $module_name) {
-	$module =& $module_list[$module_name];
+	$module = $module_list[$module_name];
 	if ($module->getPrivilege() && authenticate($module->getPrivilege(), AT_PRIV_RETURN) && ($parent = $module->getChildPage('tools/index.php'))) {
 		echo '<li class="top-tool"><a href="' . $parent . '">' . $module->getName() . '</a>  ';
 		if (isset($_pages[$parent]['children'])) {

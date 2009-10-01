@@ -72,7 +72,7 @@ function unregister_GLOBALS() {
 /***** 2. start session initilization block ****/
 	if (headers_sent()) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-		$err =& new ErrorHandler();
+		$err = new ErrorHandler();
 		trigger_error('VITAL#<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).' . '</strong></code><br /><hr /><br />', E_USER_ERROR);
 	}
 
@@ -84,7 +84,7 @@ function unregister_GLOBALS() {
 
 	if (headers_sent()) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-		$err =& new ErrorHandler();
+		$err = new ErrorHandler();
 		trigger_error('VITAL#<br /><code><strong>Headers already sent. ' .
 						'Cannot initialise session.</strong></code><br /><hr /><br />', E_USER_ERROR);
 		exit;
@@ -99,7 +99,7 @@ function unregister_GLOBALS() {
 
 	if ($str) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-		$err =& new ErrorHandler();
+		$err = new ErrorHandler();
 		trigger_error('VITAL#<br /><code><strong>Error initializing session. ' .
 						'Please varify that session.save_path is correctly set in your php.ini file ' .
 						'and the directory exists.</strong></code><br /><hr /><br />', E_USER_ERROR);
@@ -182,7 +182,7 @@ if ($_config['time_zone']) {
 /***** 7. start language block *****/
 	// set current language
 	require(AT_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
-	$languageManager =& new LanguageManager();
+	$languageManager = new LanguageManager();
 
 	$myLang =& $languageManager->getMyLanguage();
 
@@ -216,7 +216,7 @@ if ($_config['time_zone']) {
 	require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme and template management */
 
 	// set default template paths:
-	$savant =& new Savant2();
+	$savant = new Savant2();
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
 	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
@@ -1266,7 +1266,7 @@ function get_human_time($seconds) {
 
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
-$moduleFactory =& new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
+$moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
 
 if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 	if ($_SESSION['course_id'] == -1) {
