@@ -358,6 +358,11 @@ class ContentManager
 		$old_ordering		= $row['ordering'];
 		$old_content_parent_id	= $row['content_parent_id'];
 		
+		$sql	= "SELECT max(ordering) max_ordering FROM ".TABLE_PREFIX."content WHERE content_parent_id=$old_content_parent_id AND course_id=$_SESSION[course_id]";
+		$result	= mysql_query($sql, $this->db);
+		$row = mysql_fetch_assoc($result);
+		$max_ordering = $row['max_ordering'];
+		
 		if ($content_id == $new_content_parent_id) {
 			$msg->addError("NO_SELF_AS_PARENT");
 			return;
@@ -376,12 +381,18 @@ class ContentManager
 			}
 		}
 		
-		if (($content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
+		// if the new_content_ordering is greater than the maximum ordering of the parent content, 
+		// set the $new_content_ordering to the maximum ordering. This happens when move the content 
+		// to the last element under the same parent content.
+		if ($old_content_parent_id == $new_content_parent_id && $new_content_ordering > $max_ordering) 
+			$new_content_ordering = $max_ordering;
+		
+		if (($old_content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
 			// remove the gap left by the moved content
 			$sql = "UPDATE ".TABLE_PREFIX."content 
 			           SET ordering=ordering-1 
-			         WHERE ordering>=$old_ordering 
-			           AND content_parent_id=$content_parent_id 
+			         WHERE ordering>$old_ordering 
+			           AND content_parent_id=$old_content_parent_id 
 			           AND content_id<>$content_id 
 			           AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql, $this->db);
@@ -1102,7 +1113,7 @@ function inlineEditsSetup() {
 		if ( is_array($top_level) ) {
 			$counter = 1;
 			$num_items = count($top_level);
-			foreach ($top_level as $garbage => $content) {
+			foreach ($top_level as $current_num => $content) {
 				if (isset($content['test_id'])){
 					continue;
 				}
@@ -1120,8 +1131,14 @@ function inlineEditsSetup() {
 						$radio_selected = '';
 					}
 				
-					$buttons = '<td align="center">'."\n".
-					           '   <small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', $content['title']).'" title="'._AT('before_topic', $content['title']).'" style="height:1.5em; width:1.9em;" /></small>'."\n".
+					$buttons = '<td>'."\n".
+					           '   <small>'."\n".
+					           '      <input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', $content['title']).'" title="'._AT('before_topic', $content['title']).'" style="height:1.5em; width:1.9em;" />'."\n";
+
+					if ($current_num + 1 == count($top_level))
+						$buttons .= '      <input type="image" name="move['.$parent_id.'_'.($content['ordering']+1).']" src="'.$_base_path.'images/after.gif" alt="'._AT('after_topic', $content['title']).'" title="'._AT('after_topic', $content['title']).'" style="height:1.5em; width:1.9em;" />'."\n";
+					
+					$buttons .= '   </small>'."\n".
 					           '</td>'."\n".
 					           '<td>';
 					
@@ -1151,7 +1168,7 @@ function inlineEditsSetup() {
 				{
 					$link .= '<img src="'.$_base_path.'images/folder.gif" />';
 				}
-				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.$content['title'].'</label>'."\n";
+				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.$content['title'].'; '.$content['ordering'].'; '.$content['content_id'].'</label>'."\n";
 
 				if ( is_array($menu[$content['content_id']]) && !empty($menu[$content['content_id']]) ) {
 					/* has children */
