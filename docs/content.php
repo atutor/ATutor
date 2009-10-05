@@ -87,6 +87,7 @@ if ($_SESSION['prefs']['PREF_NUMBERING']) {
 }
 
 $parent = 0;
+
 foreach ($path as $i=>$page) {
 	// When login is a student, remove content folder from breadcrumb path as content folders are
 	// just toggles for students. Keep content folder in breadcrumb path for instructors as they
@@ -97,15 +98,20 @@ foreach ($path as $i=>$page) {
 		continue;
 	}
 	
+	if ($contentManager->_menu_info[$page['content_id']]['content_type'] == CONTENT_TYPE_FOLDER)
+		$content_url = 'editor/edit_content_folder.php?cid='.$page['content_id'];
+	else
+		$content_url = 'content.php?cid='.$page['content_id'];
+		
 	if (!$parent) {
-		$_pages['content.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
-		$_pages['content.php?cid='.$page['content_id']]['parent']   = 'index.php';
+		$_pages[$content_url]['title']    = $page['content_number'] . $page['title'];
+		$_pages[$content_url]['parent']   = 'index.php';
 	} else {
-		$_pages['content.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
-		$_pages['content.php?cid='.$page['content_id']]['parent']   = 'content.php?cid='.$parent;
+		$_pages[$content_url]['title']    = $page['content_number'] . $page['title'];
+		$_pages[$content_url]['parent']   = 'editor/edit_content_folder.php?cid='.$parent;
 	}
 
-	$_pages['content.php?cid='.$page['content_id']]['ignore'] = true;
+	$_pages[$content_url]['ignore'] = true;
 	$parent = $page['content_id'];
 }
 $last_page = array_pop($_pages);
