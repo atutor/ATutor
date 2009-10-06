@@ -1,7 +1,7 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-global $system_courses, $_custom_css;
+global $system_courses, $_custom_css, $_base_path;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="<?php echo $this->lang_code; ?>">
@@ -129,6 +129,42 @@ function toggleToc(objId) {
 		showlink.style.display='';
 	}
 	setcookie(objId, toc.style.display, 1);
+}
+
+//toggle content folder in side menu "content navigation"
+function toggleFolder(cid)
+{
+	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
+		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
+		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
+	}
+	else {
+		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
+		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
+	}
+	
+	jQuery("#folder"+cid).slideToggle();
+}
+
+// toggle elements in side menu
+function elementToggle(elem, title)
+{
+	element_collapse_icon = "<?php echo $_base_path; ?>images/mswitch_minus.gif";
+	element_expand_icon = "<?php echo $_base_path; ?>images/mswitch_plus.gif";
+	
+	if (jQuery(elem).attr("src") == element_collapse_icon) {
+		jQuery(elem).attr("src", element_expand_icon);
+		jQuery(elem).attr("alt", "<?php echo _AT('hide'). ' '; ?>"+ title);
+		jQuery(elem).attr("title", "<?php echo _AT('hide'). ' '; ?>"+ title);
+	}
+	else {
+		jQuery(elem).attr("src", element_collapse_icon);
+		jQuery(elem).attr("alt", "<?php echo _AT('collapse'); ?>");
+		jQuery(elem).attr("alt", "<?php echo _AT('show'). ' '; ?>"+ title);
+		jQuery(elem).attr("title", "<?php echo _AT('show'). ' '; ?>"+ title);
+	}
+	
+	jQuery(elem).parent().next().slideToggle();
 }
 //-->
 </script>
