@@ -542,16 +542,9 @@ $html_frame = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
 $glossary_xml = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
 <!--This is an ATutor Glossary terms document-->
 <!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
-
-<!DOCTYPE glossary [
-   <!ELEMENT item (term, definition)>
-   <!ELEMENT term (#PCDATA)>
-   <!ELEMENT definition (#PCDATA)>
-]>
-
-<glossary>
+<glossary:glossary xmlns:glossary="http://www.atutor.ca/xsd/glossary" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       {GLOSSARY_TERMS}
-</glossary>
+</glossary:glossary>
 ';
 
 $glossary_term_xml = '	<item>

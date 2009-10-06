@@ -9,7 +9,8 @@
     xmlns:cc        ="http://www.imsglobal.org/xsd/imsccauth_v1p0"
     xmlns:qti	    ="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
     xmlns:wl	    ="http://www.imsglobal.org/xsd/imswl_v1p0"
-    xmlns:dt	    ="http://www.imsglobal.org/xsd/imsdt_v1p0"
+    xmlns:dt	    ="http://www.imsglobal.org/xsd/imsdt_v1p0"	
+    xmlns:glossary  ="http://www.atutor.ca/xsd/glossary"	
     version="1.0"
     elementFormDefault  ="qualified"
     attributeFormDefault="unqualified"   
@@ -22,4 +23,5 @@
     <xs:import namespace ="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"   schemaLocation = "domainProfile_4/ims_qtiasiv1p2_localised.xsd" />
     <xs:import namespace ="http://www.imsglobal.org/xsd/imswl_v1p0"	  schemaLocation = "imswl_v1p0_localised.xsd"			  />    
     <xs:import namespace ="http://www.imsglobal.org/xsd/imsdt_v1p0"	  schemaLocation = "imsdt_v1p0_localised.xsd"			  />    
+    <xs:import namespace ="http://www.atutor.ca/xsd/glossary"		  schemaLocation = "glossary.xsd"				  />	
 </xs:schema>

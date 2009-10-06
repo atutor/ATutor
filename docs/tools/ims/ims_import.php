@@ -265,6 +265,10 @@ function rehash($items){
 					$package_base_path = array_intersect($package_base_path, $temp_path);
 					$temp_path = $package_base_path;
 				}
+				//added these 2 lines in so that pictures would load.  making the elseif above redundant.
+				//if there is a bug for pictures not load, then it's the next 2 lines.
+				$package_base_path = array_intersect($package_base_path, $temp_path);
+				$temp_path = $package_base_path;
 			}
 			$items[$current_identifier]['new_path'] = implode('/', $temp_path);
 			
@@ -651,8 +655,12 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 xml_parser_free($xml_parser);
 
 /* check if the glossary terms exist */
-if (file_exists($import_path . 'glossary.xml')){
-	$glossary_xml = @file_get_contents($import_path.'glossary.xml');
+$glossary_path = '';
+if ($content_type == 'IMS Common Cartridge'){
+	$glossary_path = 'GlossaryItem/';
+}
+if (file_exists($import_path . $glossary_path . 'glossary.xml')){
+	$glossary_xml = @file_get_contents($import_path.$glossary_path.'glossary.xml');
 	$element_path = array();
 
 	$xml_parser = xml_parser_create();
@@ -743,12 +751,17 @@ foreach ($items as $item_id => $content_info)
 		continue;
 	}
 
+	//don't want to display glossary as a page
+	if ($content_info['href']== $glossary_path . 'glossary.xml'){
+		continue;
+	}
+
 	//if it has no title, most likely it is not a page but just a normal item, skip it
 	if (!isset($content_info['title'])){
 		continue;
 	}
 	
-	//handles dependency immediately, then handles it
+	//check dependency immediately, then handles it
 	$head = '';
 	if (is_array($content_info['dependency']) && !empty($content_info['dependency'])){
 		foreach($content_info['dependency'] as $dependency_ref){
