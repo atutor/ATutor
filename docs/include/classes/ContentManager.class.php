@@ -741,24 +741,25 @@ jQuery("#tree_icon"+'.$current_content_path[0]['content_id'].').attr("alt", "'._
 
 		$this->start = true;
 		
+		// if change the location of this line, change function switchEditMode(), else condition accordingly
+		echo '<div id="editable_table">';
+		
 		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
 		{
 			echo "\n".'
 			<div style="float:right;margin-top:-1em;">
 			<a href="'.$_base_path.'editor/edit_content_folder.php">
-				<img id="img_create_top_folder" src="'.$_base_path.'images/folder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
+				<img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
 			</a>'."\n".
 			'<a href="'.$_base_path.'editor/edit_content.php">
-				<img id="img_create_top_content" src="'.$_base_path.'images/glossary_small.gif" alt="'._AT("add_top_page").'" title="'._AT("add_top_page").'" style="border:0;height:1.2em" />
+				<img id="img_create_top_content" src="'.$_base_path.'images/mpage.gif" alt="'._AT("add_top_page").'" title="'._AT("add_top_page").'" style="border:0;height:1.2em" />
 			</a>'."\n".
 			'<a href="javascript:void(0)" onclick="javascript:switchEditMode();">
-				<img id="img_switch_edit_mode" src="'.$_base_path.'images/edit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;height:1.2em" />
+				<img id="img_switch_edit_mode" src="'.$_base_path.'images/medit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;height:1.2em" />
 			</a>
 			</div>'."\n";
 		}
-		echo '<div id="editable_table">';
 		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
-		echo '</div>';
 		
 		// javascript for inline editor
 		echo '
@@ -769,11 +770,11 @@ jQuery("#tree_icon"+'.$current_content_path[0]['content_id'].').attr("alt", "'._
 		
 		echo '
 function switchEditMode() {
-	img_edit = "'.$_base_path.'images/edit.gif";
 	title_edit = "'._AT("enter_edit_mode").'";
+	img_edit = "'.$_base_path.'images/medit.gif";
 	
-	img_view = "'.$_base_path.'images/topic_lock.gif";
 	title_view = "'._AT("exit_edit_mode").'";
+	img_view = "'.$_base_path.'images/mlock.gif";
 	
 	if (jQuery("#img_switch_edit_mode").attr("src") == img_edit)
 	{
@@ -783,35 +784,42 @@ function switchEditMode() {
 		inlineEditsSetup();
 	}
 	else
-	{
-		jQuery("#img_switch_edit_mode").attr("src", img_edit);
-		jQuery("#img_switch_edit_mode").attr("alt", title_edit);
-		jQuery("#img_switch_edit_mode").attr("title", title_edit);
-		jQuery(".inlineEdits").removeAttr("role");
-		jQuery(".inlineEdits").removeAttr("tabindex");
-//		jQuery(".inlineEdits").next().remove();
+	{ // refresh the content navigation to exit the edit mode
+		jQuery.post("'. $_base_path. 'mods/_core/content/refresh_content_nav.php", {}, 
+					function(data) {jQuery("#editable_table").replaceWith(data); });
 	}
 }
 
 function inlineEditsSetup() {
+	jQuery("#editable_table").find(".inlineEdits").each(function() {
+		jQuery(this).text(jQuery(this).attr("alt"));
+	});
+	
 	var tableEdit = fluid.inlineEdits("#editable_table", {
 		selectors : {
 			text : ".inlineEdits",
 			editables : "li:has(span.inlineEdits)"
 		},
 		defaultViewText: "",
+		applyEditPadding: false,
 		useTooltip: true,
 		listeners: {
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
-				if (newValue != oldValue)
+				if (newValue != oldValue) 
+				{
 					rtn = jQuery.post("'. $_base_path. 'mods/_core/content/menu_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
 						          function(data) {handleResponse(data, viewNode, oldValue); }, "json");
+				}
 			}
 		}
 	});
+
+	jQuery(".fl-inlineEdit-edit").css("width", "80px")
+
 };
 </script>
 ';
+		echo '</div>';
 	}
 
 	/* @See tools/sitemap/index.php */
@@ -915,6 +923,7 @@ function inlineEditsSetup() {
 						$in_link = 'content.php?cid='.$content['content_id'];
 						$img_link = '';
 					}
+					$full_title = $content['title'];
 					$link .= $img_link . ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
 						$link .= $path.$counter.' ';
@@ -929,7 +938,7 @@ function inlineEditsSetup() {
 					if (isset($content['test_id']))
 						$link .= $content['title'];
 					else
-						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'">'.$content['title'].'</span>';
+						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'" alt="'.$full_title.'">'.$content['title'].'</span>';
 					
 					$link .= '</a>';
 					if ($on) {
@@ -945,11 +954,12 @@ function inlineEditsSetup() {
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
 					if ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)
 					{ // current content page
+						$full_title = $content['title'];
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
 							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
 						}
-						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu|'.$content['content_id'].'">'.trim($content['title']).'</span></strong>';
+						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu|'.$content['content_id'].'" alt="'.$full_title.'">'.trim($content['title']).'</span></strong>';
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
@@ -960,9 +970,9 @@ function inlineEditsSetup() {
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
-//						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
 						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
 						
+						$full_title = $content['title'];
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?cid=".$content['content_id']).'"><strong title="'.$content['title'].'" >'."\n";
 						}
@@ -973,7 +983,7 @@ function inlineEditsSetup() {
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
 							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
 						}
-						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'">'.trim($content['title']).'</span>';
+						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'" alt="'.$full_title.'">'.trim($content['title']).'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 							$link .= '</a></strong>'."\n";
@@ -1168,7 +1178,7 @@ function inlineEditsSetup() {
 				{
 					$link .= '<img src="'.$_base_path.'images/folder.gif" />';
 				}
-				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.$content['title'].'; '.$content['ordering'].'; '.$content['content_id'].'</label>'."\n";
+				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.$content['title'].'</label>'."\n";
 
 				if ( is_array($menu[$content['content_id']]) && !empty($menu[$content['content_id']]) ) {
 					/* has children */
