@@ -148,44 +148,63 @@ function rscandir($base='', &$data=array()) {
  
 }
 
-//function to take out the empty page node
-/*
+/**
+ * Function to restructure the $items.  So that old import will merge the top page into its children, and
+ * create a new folder on top of it
+ */
 function rehash($items){
 	global $order;
-	$old_parent = '';
-	$order_offset = array();;
-
+	$parent_page_maps = array();	//old=>new
+	$temp_popped_items = array();
+	$rehashed_items = array();	//the reconstructed array
 	foreach($items as $id => $content){
-		$items[$id]['ordering'] = $items[$id]['ordering'] - $order_offset[$content['parent_content_id']]; 
+		$parent_obj = $items[$content['parent_content_id']];
+		$rehashed_items[$id] = $content;	//copy
 
-		if (!isset($content['href'])) {
-			// this item doesn't have an identifierref. so create an empty page.
-			// what we called a folder according to v1.2 Content Packaging spec
-			// Take this page out, and replace its index and parent_id into all the entries
-			$node_parent_id = $content['parent_content_id'];			
-
-			if ($old_parent != ''){
-				$node_parent_id = $old_parent;
+		//first check if there exists a mapping for this item, if so, simply replace is and next.
+		if (isset($parent_page_maps[$content['parent_content_id']])){
+			$rehashed_items [$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+			$rehashed_items [$id]['ordering']++;
+		} 
+		//If its parent page is a top page and have an identiferref
+		else if (isset($parent_obj) && isset($parent_obj['href'])){			
+			if (!isset($parent_obj['href'])){
+				//check if this top page is already a folder, if so, next.
+				continue;
 			}
-			$order_offset[$content['parent_content_id']] += 1;
-			$order[$content['parent_content_id']] -= 1;
+			//else, make its parent page to a folder
+			$new_item['title'] = $parent_obj['title'];
+			$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
+			$new_item['ordering'] = $parent_obj['ordering'];
 
-			unset($items[$id]);
-
-			foreach($items as $id2 => $content2){
-				//if this page uses a node as its parent page, replace it with the node's parent page.
-				if ($content2['parent_content_id'] == $id && isset($content2['href'])){
-					$items[$id2]['parent_content_id'] = $node_parent_id;
-				}
+			//pops all the previous ones until it hits the parent
+			$popped_item = array_pop($rehashed_items);
+debug($popped_item);
+//todo: the pop won't work cuz the key is lost....
+// need to think about a new way.
+			while(key($popped_item)!=$content['parent_content_id']){
+				$temp_popped_items[key($popped_item)] = array_push($popped_item);
+				$popped_item = array_pop($rehashed_items);
 			}
+debug($temp_popped_items);exit;
+			//assign this new parent folder to the pending items array
+			$new_item_name = $content['parent_content_id'].'_FOLDER';
+			$rehashed_items[$new_item_name] = $new_item;
+			$parent_page_maps[$content['parent_content_id']] = $new_item_name;
+
+			//reconstruct the parent
+			$rehashed_items[$content['parent_content_id']]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+			$rehashed_items[$content['parent_content_id']]['ordering'] = 0; //always the first one.
+
+			//reconstruct itself
+			$rehashed_items[$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+			$rehashed_items[$id]['ordering']++;
+
 		}
-		//always keep the id before going to the next loop
-		//so then folder can be referenced to it.
-		$old_parent = $id;
 	}
-	return $items;
+
+	return $rehashed_items;
 }
-*/
 
 
 	/* called at the start of en element */
@@ -738,8 +757,9 @@ $result = mysql_query($sql, $db);
 $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
-//reorder the items stack, disabled Aug 25, 2009
-//$items = rehash($items);
+//reorder the items stack
+$items = rehash($items);
+debug($items);exit;
 foreach ($items as $item_id => $content_info) 
 {	
 	//formatting field, default 1
