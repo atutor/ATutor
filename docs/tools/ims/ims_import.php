@@ -177,20 +177,20 @@ function rehash($items){
 			$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
 			$new_item['ordering'] = $parent_obj['ordering'];
 
-			//pops all the previous ones until it hits the parent
-			$popped_item = array_pop($rehashed_items);
-debug($popped_item);
-//todo: the pop won't work cuz the key is lost....
-// need to think about a new way.
-			while(key($popped_item)!=$content['parent_content_id']){
-				$temp_popped_items[key($popped_item)] = array_push($popped_item);
-				$popped_item = array_pop($rehashed_items);
-			}
-debug($temp_popped_items);exit;
-			//assign this new parent folder to the pending items array
+    		//assign this new parent folder to the pending items array
 			$new_item_name = $content['parent_content_id'].'_FOLDER';
-			$rehashed_items[$new_item_name] = $new_item;
-			$parent_page_maps[$content['parent_content_id']] = $new_item_name;
+			//a not so brilliant way to append the folder in its appropriate position
+			$reordered_hashed_items = array();  //use to store the new rehashed item with the correct item order
+			foreach($rehashed_items as $rh_id=>$rh_content){
+			    if ($rh_id == $content['parent_content_id']){
+			        //add the folder in before the parent subpage.
+			        $reordered_hashed_items[$new_item_name] = $new_item;
+			    }
+			    $reordered_hashed_items[$rh_id] = $rh_content;  //clone
+			}
+			$rehashed_items = $reordered_hashed_items;  //replace it back
+			unset($reordered_hashed_items);
+			$parent_page_maps[$content['parent_content_id']] = $new_item_name;  //save this page on the hash map
 
 			//reconstruct the parent
 			$rehashed_items[$content['parent_content_id']]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
@@ -759,7 +759,7 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack
 $items = rehash($items);
-debug($items);exit;
+//debug($items);exit;
 foreach ($items as $item_id => $content_info) 
 {	
 	//formatting field, default 1
