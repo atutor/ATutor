@@ -71,7 +71,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_UNENROLL_STUDENT',
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ACCESS_DENIED','You do not have permission to access this area.','2005-06-15 15:13:59','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ACCOUNT_DISABLED','That account has been disabled.','2005-04-01 10:30:12','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ADMIN_EDIT_OWN_ACCOUNT','To edit your own account use the <a href=\"admin/admins/my_edit.php\">My Account</a> page.','2006-06-14 13:58:22','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ALREADY_ENROLED','You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.','2003-05-16 13:42:17','error msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ALREADY_ENROLED','You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notified when your request has been approved.','2009-09-17 14:47:14','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ALREADY_INSTALLED','Selected item appears to have been installed.','2008-10-21 15:41:53','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ALREADY_OWNED','You own this course, and cannot enroll.','2004-11-26 14:30:22','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ALREADY_UNINSTALLED','Selected item appears to have been uninstalled. Module directory does not exist.','2008-10-21 15:41:53','');
@@ -183,7 +183,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_ENROL','You mu
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_EXISTS','That login already exists, please choose another.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_TO_POST','You must be logged in to post.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOG_NOT_RESET','The error log could not be reset.','2005-03-10 15:54:03','error logging');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_ATTEMPTS','The test cannot be taken.  It is not available at this time, or you have reached the maximum number of attempts for this test.','2004-09-02 12:59:25','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_ATTEMPTS','The test cannot be taken.  It is not available at this time, or you have reached the maximum number of attempts for this test.  If you have already completed this test. Please visit the <a href=\"/tools/my_test.php\">Tests & Surveys</a> to see your results.','2009-09-24 11:16:48','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_LOGIN_ATTEMPT','Maximum login attempts has been reached. Login has been temporarily disabled for 1 hour.  Please try again later.','2009-06-17 11:59:49','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_LOGIN_ATTEMPT_1','Invalid username or password. You have one more attempt before the login page is disabled.','2009-06-26 16:37:13','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_MAX_LOGIN_ATTEMPT_2','You have entered an unrecognized login and password combination. You have two more attempts before the login page is disabled.','2009-06-26 16:35:44','');
@@ -199,6 +199,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NOT_OWNER','You do n
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NOT_RELEASED','This content has not yet been released. %s','2003-05-22 11:52:38','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_ACTION_SELECTED','No action selected.','2007-02-21 14:12:39','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_ASSIGNMENTS_FOUND','No assignments are due in this workspace. You might try another workspace.','2007-12-13 16:12:07','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_CHILD_AS_PARENT','Cannot move the content to be the child of its own children.','2009-09-16 13:14:12','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_CONTENT_SPACE','Not enough space to import content directory. %s KB over the limit.','2003-10-03 15:58:38','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_COURSE_FLOAT','Invalid Maximum Course Float value.','2005-06-20 10:44:45','Admin did not specify a float for course size.');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_FAQ_TOPICS','You must first add a topic.','2005-10-19 12:44:36','');
@@ -212,6 +213,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_MEMBERS','No user
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_PROFILE_SELECTED','You did not select a profile.','2004-11-23 16:01:27','admin/error_logging_details.php');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_QUESTIONS','No questions were found for this test.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_QUESTIONS_SELECTED','You did not select any questions to add to this test.','2004-11-23 11:56:45','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_SELF_AS_PARENT','Cannot move the content to be its own child.','2009-09-16 13:14:00','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_SPACE_LEFT','There is no more space in this course to extract this archive.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_STUDENT_SELECTED','You did not select any students.','2006-06-27 12:18:13','enrollment manager, no students selected');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_NO_SUCH_USER','The user you selected does not exist.','2005-03-17 15:34:30','veiwing profile but no such user');
@@ -232,6 +234,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_REMOVE_WRITE_PERMISS
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RESOURCE_NOT_DEFINED','You did not select a resource to add.','2008-09-08 14:44:09','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RESTORE_TOO_BIG','The course is too small to restore this backup into.','2004-10-15 16:42:23','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_RESULTS_NOT_RELEASED','You are not permitted to view these test results at this time.','2004-12-15 10:13:06','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SAME_LOCATION','The content is already at the moved location.','2009-09-16 13:14:24','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DIR_NOT_EXIST','The SCORM RTE directory does not exist. Please create a directory called <em>sco</em> in your installations top directory (example: <code>server.com/ATutor/sco</code>).','2005-05-10 10:58:58','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DIR_NOT_WRITEABLE','The SCORM RTE directory is not writeable. Please execute the command <code>chmod a+rwx sco</code> while in ATutor\'s top directory.','2005-05-10 11:00:08','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_SCO_DISABLED','The SCORM 1.2 RTE has not been enabled by the Administrator.','2005-05-10 11:06:09','');
@@ -267,7 +270,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ALREADY_ENROLLED'
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ALREADY_REQUESTED','You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.','2005-03-17 12:55:24','private enroll, already requested approval once');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ALTERNATIVE_ADDED','Alternate added. Be sure to define the resource type for the alternative.','2008-09-08 14:43:50','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ALTERNATIVE_DELETED','Alternative was successfully removed.','2008-09-08 14:56:39','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_APPROVAL_PENDING','Your request has been made. You will be notifed when your request has been approved.','2005-03-29 12:11:35','feedback msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_APPROVAL_PENDING','Your request has been made. You will be notified when your request has been approved.','2009-09-17 14:47:54','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ARCHIVE_EXTRACTED','Archive has been extracted successfully.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ASSIGNMENT_ADDED','Assignment was successfully added.','2006-04-20 14:42:13','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ASSIGNMENT_HANDED_IN','Assignment files submitted successfully.','2006-03-20 14:35:53','');
@@ -383,7 +386,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_404_BLURB','The page
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ACCESS_PUBLIC','This feature is only available for protected or private courses.','2007-02-13 15:55:47','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ACCOUNT_APPROVED','You have successfully upgraded to an instructor account.','2004-02-12 12:52:57','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ALREADY_ENROLLED','You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.','2004-11-05 10:29:01','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_APPROVAL_PENDING','Your request has been made. You will be notifed when your request has been approved.<br /><br />Return to <a href=\"users/index.php\">My Courses</a>.','2004-05-06 14:15:28','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_APPROVAL_PENDING','Your request has been made. You will be notified when your request has been approved.<br /><br />Return to <a href=\"users/index.php\">My Courses</a>.','2009-09-17 14:48:30','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ASSIGNMENT_FS_SUBMISSIONS','Assignments are submitted using the group File Storage tool. Assign to all students, or create a group and enable File Storage for that group, to add an assignment drop-box.','2006-06-29 14:50:22','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_CANNOT_CONNECT_PATCH_SERVER','Failed to connect to patch server: %s so patches provided by the patch server can not be listed. Please proceed with installing private patch.','2008-10-08 12:51:54','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_CANNOT_CONNECT_SVN_SERVER','Failed to connect to SVN server to determine if the files that will be modified by the patch script have previously been modified. So, to protect any customizations you\'ve made, all local scripts manipulated by patch are considered locally customized.','2008-10-08 12:55:18','');
@@ -476,6 +479,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','add_a_file','Add A File',
 INSERT INTO `language_text` VALUES ('en', '_template','add_a_new_language','Add a new language.','2004-10-28 13:05:59','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_code','Add Code','2004-05-06 12:22:57','Title for code tags in code picker');
 INSERT INTO `language_text` VALUES ('en', '_template','add_content','Create Content','2005-04-18 11:40:53','heading/submit button on Add Content screen');
+INSERT INTO `language_text` VALUES ('en', '_template','add_content_folder','Add Content Folder','2009-09-16 13:11:59','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_dependent_patch','Add A Dependent Patch','2008-04-21 15:11:31','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_external_test','Add External Assignments/Tests','2008-09-25 16:01:17','gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','add_file_folder','Add File or Folder','2008-07-22 16:45:15','Title text used in File Manager');
@@ -493,11 +497,14 @@ INSERT INTO `language_text` VALUES ('en', '_template','add_new_website','Add new
 INSERT INTO `language_text` VALUES ('en', '_template','add_poll','Add Poll','2004-06-14 14:41:26','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_question','Add Question','2005-10-19 12:44:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_questions','Add Questions','2003-05-18 10:27:45','test manager add questions screen');
+INSERT INTO `language_text` VALUES ('en', '_template','add_sibling_folder','Add Sibling Folder','2009-09-16 13:12:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_sibling_page','Add Sibling Page','2005-07-21 10:18:21','');
+INSERT INTO `language_text` VALUES ('en', '_template','add_sub_folder','Add Sub Folder','2009-09-16 13:13:00','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_sub_page','Add Sub Page','2005-03-31 14:17:33','content page shortcuts');
 INSERT INTO `language_text` VALUES ('en', '_template','add_term','Add Term','2003-05-18 10:28:38','glossary');
 INSERT INTO `language_text` VALUES ('en', '_template','add_tests','Add Tests/Assignments','2008-09-25 16:01:17','gradebook');
 INSERT INTO `language_text` VALUES ('en', '_template','add_topic','Add Topic','2005-10-19 12:43:01','');
+INSERT INTO `language_text` VALUES ('en', '_template','add_top_folder','Add Top Folder','2009-09-16 13:12:36','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_top_page','Add Top Page','2005-07-21 10:18:06','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_to_friends','Add to contacts','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_to_mygadgets','Add to My Gadgets','2009-05-27 12:01:11','');
@@ -514,6 +521,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','affected_entries','Affect
 INSERT INTO `language_text` VALUES ('en', '_template','after_topic','After: %s','2004-01-16 13:19:46','content editor');
 INSERT INTO `language_text` VALUES ('en', '_template','age','Age','2003-05-18 10:38:32','registration, profile');
 INSERT INTO `language_text` VALUES ('en', '_template','all','All','2003-05-18 11:35:37','glossary');
+INSERT INTO `language_text` VALUES ('en', '_template','allow_browse','Course Browser','2009-07-23 15:48:57','');
 INSERT INTO `language_text` VALUES ('en', '_template','allow_editing','Allow Editing','2007-02-20 10:30:01','');
 INSERT INTO `language_text` VALUES ('en', '_template','allow_guests','Allow Guests','2007-03-06 14:44:45','');
 INSERT INTO `language_text` VALUES ('en', '_template','allow_instructor_registration','Allow Instructors to Enroll Users from the System Registration List','2008-11-14 11:51:02','');
@@ -565,6 +573,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','approve','Approve','2003-
 INSERT INTO `language_text` VALUES ('en', '_template','approved','Approved','2005-02-23 12:17:50','');
 INSERT INTO `language_text` VALUES ('en', '_template','approve_request','Approve Request','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','archive_total','Archive Total','2003-05-18 11:42:55','file manager zip tool');
+INSERT INTO `language_text` VALUES ('en', '_template','arrange_content','Arrange Content','2009-09-16 13:13:12','');
 INSERT INTO `language_text` VALUES ('en', '_template','assigned_to','Assigned To','2005-06-02 12:18:18','');
 INSERT INTO `language_text` VALUES ('en', '_template','assignment','Assignment','2006-03-20 14:38:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','assignments','Assignments','2006-03-20 14:40:50','');
@@ -798,6 +807,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','contain_only','May contai
 INSERT INTO `language_text` VALUES ('en', '_template','content','Content','2003-05-18 13:32:22','sitemap/delete course');
 INSERT INTO `language_text` VALUES ('en', '_template','contents','Contents','2003-05-18 13:35:43','content page table of content menu heading');
 INSERT INTO `language_text` VALUES ('en', '_template','content_editor','Content Editor','2006-11-23 13:17:41','user prefs');
+INSERT INTO `language_text` VALUES ('en', '_template','content_folder_title','Content Folder Title','2009-09-16 13:11:45','');
 INSERT INTO `language_text` VALUES ('en', '_template','content_navigation','Content Navigation','2005-03-29 12:18:45','menu content nav drop down');
 INSERT INTO `language_text` VALUES ('en', '_template','content_package','Content Package','2008-12-02 11:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','content_packaging','Import/Export Content','2005-04-18 11:39:46','');
@@ -1012,7 +1022,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','duration_sec','Duration (
 INSERT INTO `language_text` VALUES ('en', '_template','e','E','2007-01-10 13:48:09','');
 INSERT INTO `language_text` VALUES ('en', '_template','edit','Edit','2004-05-26 18:31:10','');
 INSERT INTO `language_text` VALUES ('en', '_template','editor','Editor','2003-10-22 15:01:19','');
-INSERT INTO `language_text` VALUES ('en', '_template','editor_properties_instructions','Use the %1$s and %2$s buttons to place this topic after or before the selected location, respectively. Use the %3$s button to add this topic as a child of the selected location.','2004-02-11 12:22:15','');
+INSERT INTO `language_text` VALUES ('en', '_template','editor_properties_instructions','Select the radio button of the content you want to move. Use the %1$s and %2$s buttons to place this topic after or before the selected location, respectively. Use the %3$s button to add this topic as a child of the selected location.','2009-09-16 13:13:40','');
 INSERT INTO `language_text` VALUES ('en', '_template','editor_properties_insturctions_related','Add Related Topics by selecting the topic from the list.','2004-02-11 12:33:28','editor properties instructions');
 INSERT INTO `language_text` VALUES ('en', '_template','edit_admin','Edit Administrator Account','2005-03-03 11:06:16','');
 INSERT INTO `language_text` VALUES ('en', '_template','edit_after_upload',' After uploaded use the fields below to edit the content.','2003-05-19 18:47:10','cotent editor');
@@ -1077,11 +1087,13 @@ INSERT INTO `language_text` VALUES ('en', '_template','enrol_msg','A new enrollm
 INSERT INTO `language_text` VALUES ('en', '_template','entertainment_arts','Arts and Entertainment','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','enter_chat','Enter the Chat','2003-05-27 14:20:24','achat entry page');
 INSERT INTO `language_text` VALUES ('en', '_template','enter_course','Enter Course','2005-03-14 15:15:57','');
+INSERT INTO `language_text` VALUES ('en', '_template','enter_edit_mode','Enter Edit Mode','2009-09-16 13:12:12','');
 INSERT INTO `language_text` VALUES ('en', '_template','entire_course','Entire Course','2006-07-24 10:44:01','');
 INSERT INTO `language_text` VALUES ('en', '_template','error','Error','2003-05-19 20:20:07','global error label');
 INSERT INTO `language_text` VALUES ('en', '_template','error_logging','Error Logging','2005-02-07 16:11:55','');
 INSERT INTO `language_text` VALUES ('en', '_template','everyone','Everyone','2004-12-07 17:54:16','');
 INSERT INTO `language_text` VALUES ('en', '_template','existing_type','Existing Type:','2006-03-22 15:11:15','');
+INSERT INTO `language_text` VALUES ('en', '_template','exit_edit_mode','Exit Edit Mode','2009-09-16 13:12:24','');
 INSERT INTO `language_text` VALUES ('en', '_template','expand','Expand','2003-05-19 20:20:35','menu toggle alt text');
 INSERT INTO `language_text` VALUES ('en', '_template','experimental','Experimental','2008-12-02 11:58:25','');
 INSERT INTO `language_text` VALUES ('en', '_template','expertise','Expertise','2009-05-27 12:01:11','');
@@ -1248,8 +1260,11 @@ INSERT INTO `language_text` VALUES ('en', '_template','h','H','2007-01-10 13:48:
 INSERT INTO `language_text` VALUES ('en', '_template','handout_to_read','Handout to Read','2006-04-13 11:58:39','');
 INSERT INTO `language_text` VALUES ('en', '_template','hand_in','Hand In','2006-03-20 14:36:56','');
 INSERT INTO `language_text` VALUES ('en', '_template','has_added_app','has added the <a href=\"%s\">%s</a>  gadget','2009-05-27 12:01:11','');
-INSERT INTO `language_text` VALUES ('en', '_template','has_invited_join','%s has invited you to join <a href=\"mods/social/groups/view.php?id=%s\">%s</a>.','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','has_added_group','has added the group %s.','2009-07-22 14:35:24','');
+INSERT INTO `language_text` VALUES ('en', '_template','has_invited_join','%s has invited you to join the group %s.','2009-07-22 14:36:55','');
+INSERT INTO `language_text` VALUES ('en', '_template','has_joined_group','has joined the group %s.','2009-07-22 14:35:05','');
 INSERT INTO `language_text` VALUES ('en', '_template','has_requested_to','%s has requested to join the group %s.','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','has_updated_group','has updated the group %s.','2009-07-22 14:35:56','');
 INSERT INTO `language_text` VALUES ('en', '_template','have','Have','2007-02-21 13:22:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','have_not','Have not','2007-02-21 14:06:25','');
 INSERT INTO `language_text` VALUES ('en', '_template','help','Help','2003-05-20 10:41:08','global help label');
@@ -1769,6 +1784,8 @@ INSERT INTO `language_text` VALUES ('en', '_template','read_lock','Locked from p
 INSERT INTO `language_text` VALUES ('en', '_template','real_name','Real Name','2003-10-20 11:33:14','course properties');
 INSERT INTO `language_text` VALUES ('en', '_template','reapply_default','Reset to System Defaults','2008-10-29 12:18:43','');
 INSERT INTO `language_text` VALUES ('en', '_template','recently_joined','Recently Joined','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','recent_first','Recent First','2009-09-08 13:34:27','');
+INSERT INTO `language_text` VALUES ('en', '_template','recent_last','Recent Last','2009-09-08 13:34:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','recipient_address','Recipient Address','2004-12-06 12:20:03','admin/error_logging_bundle.php');
 INSERT INTO `language_text` VALUES ('en', '_template','red','Red','2003-05-21 12:32:57','global code picker');
 INSERT INTO `language_text` VALUES ('en', '_template','red_members','Red = Members','2003-05-21 12:33:55','instructor course statistics/details');
@@ -2104,7 +2121,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','tile_progress','TILE Impo
 INSERT INTO `language_text` VALUES ('en', '_template','tile_search','TILE Repository Search','2004-03-25 09:48:17','');
 INSERT INTO `language_text` VALUES ('en', '_template','tile_search_text','Search the content repository for additional learning materials.','2009-07-02 14:15:04','');
 INSERT INTO `language_text` VALUES ('en', '_template','tile_technical_format','Technical Format','2004-05-03 13:14:51','');
-INSERT INTO `language_text` VALUES ('en', '_template','times','Times','2009-06-03 15:33:17','');
+INSERT INTO `language_text` VALUES ('en', '_template','times','次数','2009-07-24 13:08:36','');
 INSERT INTO `language_text` VALUES ('en', '_template','timestamp','Timestamp','2004-12-06 12:04:30','');
 INSERT INTO `language_text` VALUES ('en', '_template','time_spent','Time Spent','2007-07-09 12:32:33','');
 INSERT INTO `language_text` VALUES ('en', '_template','time_zone','Time Zone Offset','2008-09-09 11:06:53','appears on the config page');

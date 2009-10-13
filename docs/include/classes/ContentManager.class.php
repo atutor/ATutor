@@ -705,25 +705,37 @@ tree_expand_icon = "'.$_base_path.'images/tree/tree_expand.gif";
 		$sql = "SELECT content_id
 		          FROM ".TABLE_PREFIX."content 
 		         WHERE course_id=$this->course_id
-		           AND content_parent_id = 0";
+		           AND content_type = ".CONTENT_TYPE_FOLDER;
 		$result = mysql_query($sql, $this->db);
 
 		// collapse all root content folders
 		while ($row = mysql_fetch_assoc($result)) {
 			echo '
-jQuery("#folder"+'.$row['content_id'].').hide();
-jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_expand_icon);
-jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("expand").'");
+if (getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
+{
+	jQuery("#folder"+'.$row['content_id'].').show();
+	jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
+	jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("collapse").'");
+}
+else
+{
+	jQuery("#folder"+'.$row['content_id'].').hide();
+	jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_expand_icon);
+	jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("expand").'");
+}
 ';
 		}
 		
 		// expand the content folder that has current content
 		if (isset($_SESSION['s_cid']) && $_SESSION['s_cid'] > 0) {
 			$current_content_path = $this->getContentPath($_SESSION['s_cid']);
-			echo '
-jQuery("#folder"+'.$current_content_path[0]['content_id'].').show();
-jQuery("#tree_icon"+'.$current_content_path[0]['content_id'].').attr("src", tree_collapse_icon);
-jQuery("#tree_icon"+'.$current_content_path[0]['content_id'].').attr("alt", "'._AT("collapse").'");
+			
+			for ($i=0; $i < count($current_content_path)-1; $i++)
+				echo '
+jQuery("#folder"+'.$current_content_path[$i]['content_id'].').show();
+jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("src", tree_collapse_icon);
+jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("alt", "'._AT("collapse").'");
+setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
 ';
 		}
 	}
@@ -747,7 +759,7 @@ jQuery("#tree_icon"+'.$current_content_path[0]['content_id'].').attr("alt", "'._
 		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
 		{
 			echo "\n".'
-			<div style="float:right;margin-top:-1em;">
+			<div style="float:right;margin-top:-1.3em;">
 			<a href="'.$_base_path.'editor/edit_content_folder.php">
 				<img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
 			</a>'."\n".

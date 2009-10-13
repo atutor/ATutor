@@ -137,10 +137,12 @@ function toggleFolder(cid)
 	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
 		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
+		setcookie("c<?php echo $_SESSION['course_id'];?>_"+cid, null, 1);
 	}
 	else {
 		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
+		setcookie("c<?php echo $_SESSION['course_id'];?>_"+cid, "1", 1);
 	}
 	
 	jQuery("#folder"+cid).slideToggle();
