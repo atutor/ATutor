@@ -56,12 +56,14 @@ class A4aImport extends A4a {
 
 					//insert secondary resource
 					$secondary_resources = $resource['hasAdaptation'];	//uri array
-
 					foreach ($secondary_resources as $secondary_resource){
+						//some paths will reference files above this directory, as a result
+						//we will see ../, but since everything is under 'resources/', the relative_path
+						//we can safely take it out.
+//						preg_replace('/..\//');
 						$secondary_files = $items[$this->relative_path.$secondary_resource];
 						//check if this secondary file is the adaptation of 
 						// this primary file 
-
 						foreach($secondary_files as $secondary_file){
 							//isAdaptation is 1-to-1 mapping, save to use [0]
 							if(($this->relative_path.$secondary_file['isAdaptationOf'][0]) == $file_path){
@@ -74,7 +76,7 @@ class A4aImport extends A4a {
 								//insert secondary resource type associations
 								foreach ($secondary_attr as $secondary_resource_type_id){
 									$this->setSecondaryResourceType($secondary_id, $secondary_resource_type_id);
-								}
+ 								}
 								break;	//1-to-1 mapping, no need to go further
 							}
 						}
