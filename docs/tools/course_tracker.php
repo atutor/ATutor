@@ -84,8 +84,8 @@ if($_GET['csv']=='1'){
 
 	}
 
-	$name=ereg_replace(" ", "_", $_SESSION['course_title']);
-	$name=ereg_replace("'", "", $name);
+	$name=str_replace(" ", "_", $_SESSION['course_title']);
+	$name=str_replace("'", "", $name);
 	header('Content-Type: text/csv');
 	header('Content-Disposition: inline; filename="'.$name.'_tracking.csv"');
 	header('Expires: 0');

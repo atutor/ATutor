@@ -167,19 +167,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="submit" name="preset" value="<?php echo _AT('set_preset'); ?>" class="button" />
 	</div>
 	</fieldset>
-</div>
 
-<br />
-<div class="input-form">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('grade_scale'); ?></legend>
+	<fieldset  class="group_form"><legend class="group_form"><?php echo _AT('grade_scale'); ?></legend>
 	
-	<div class="row">
+	<div>
 		<label for="scale_name"><?php echo _AT('name'); ?></label><br />
-		<input type="text" id="scale_name" size="40" name="scale_name" value="<?php echo htmlspecialchars(stripslashes($_POST['scale_name'])); ?>" />
+		<input type="text" id="scale_name" size="30" name="scale_name" value="<?php echo htmlspecialchars(stripslashes($_POST['scale_name'])); ?>" /><br /><br />
 	</div>
-
-	<div class="row">
-		<table style="width:100%">
+		<table>
 <?php for ($i=0; $i<10; $i++) { ?>
 		<tr>
 			<td>
@@ -209,12 +204,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<tr>
 			<td><?php echo $i+1; ?></td>
 			<td><input type="text" id="scale_value_<?php echo $i; ?>" size="40" name="scale_value[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['scale_value'][$i])); ?>" /></td>
-			<td><input type="text" id="percentage_from_<?php echo $i; ?>" size="40" name="percentage_from[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['percentage_from'][$i])); ?>" />%</td>
-			<td><input type="text" id="percentage_to_<?php echo $i; ?>" size="40" name="percentage_to[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['percentage_to'][$i])); ?>" />%</td>
+			<td><input type="text" id="percentage_from_<?php echo $i; ?>" size="10" name="percentage_from[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['percentage_from'][$i])); ?>" />%</td>
+			<td><input type="text" id="percentage_to_<?php echo $i; ?>" size="10" name="percentage_to[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['percentage_to'][$i])); ?>" />%</td>
 		</tr>
 <?php } ?>
 		</table>
-	</div>
 
 	<div class="row buttons">
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />

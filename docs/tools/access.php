@@ -75,7 +75,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($system_courses[$_SESSION['course_id']]['access'] == 'public') { 
 	// if this course is public, then we can't use this feature
+	echo '<div class="toolcontainer">';
 	$msg->printInfos('ACCESS_PUBLIC');
+	echo '</div>';
 	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }

@@ -230,7 +230,10 @@ function delete_forum($forum_id) {
 
 	$sql    = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
 	$result = mysql_query($sql, $db);
-	
+
+	$sql    = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE forum_id=$forum_id";
+	$result = mysql_query($sql, $db);
+
 	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 	$result = mysql_query($sql, $db);
 

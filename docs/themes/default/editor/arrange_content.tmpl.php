@@ -16,7 +16,7 @@ global $contentManager;
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
-
+<div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF']; if ($this->cid > 0) echo '?cid='.$this->cid; else if ($this->pid > 0) echo '?pid='.$this->pid;?>" method="post" name="form"> 
 	<input type="hidden" name="button_1" value="-1" />
 <?php
@@ -46,5 +46,5 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 	</table>
 </form>
-
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

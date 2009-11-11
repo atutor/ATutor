@@ -14,6 +14,8 @@
     $_pages['chat.php']                          = 'Chat';
     $_pages['content.php']                       = 'Content';
     $_pages['creating_editing_content.php']      = 'Creating &amp; Editing Content';
+    $_pages['creating_editing_content_folder.php'] = 'Create/Edit Content Folders';
+    $_pages['arrange_content.php']    		 = 'Arrange Content';
     $_pages['content_edit.php']                  = 'Edit Content';
     $_pages['content_properties.php']            = 'Content Properties';
     $_pages['glossary_terms.php']                = 'Glossary Terms';

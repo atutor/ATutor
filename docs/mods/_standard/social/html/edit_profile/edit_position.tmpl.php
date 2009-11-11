@@ -23,7 +23,7 @@
 		<dt><label for="company"><?php echo _AT('company'); ?></label></dt>
 		<dd><input type="text" id="company" name="company" value="<?php echo $company; ?>" /></dd>
 	
-		<dt><label for="title"><?php echo _AT('title'); ?></label></dt>
+		<dt><label for="title"><?php echo _AT('position'); ?></label></dt>
 		<dd><input type="text" id="title" name="title" value="<?php echo $title; ?>" /></dd>
 	
 		<dt><label for="from"><?php echo _AT('from'); ?></label></dt>

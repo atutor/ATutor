@@ -29,7 +29,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$errors[] = 'Username cannot be empty.';
 	} else {
 		/* check for special characters */
-		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['username']))){
+		if (!(preg_match("/^[a-zA-Z0-9_]([a-zA-Z0-9_])*$/i", $_POST['username']))){
 			$errors[] = 'Username is not valid.';
 		} else {
 			if ($_POST['username'] == $_POST['step3']['admin_username']) {
@@ -44,7 +44,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 	if ($_POST['email'] == '') {
 		$errors[] = 'Email cannot be empty.';
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 		$errors[] = 'Invalid email format.';
 	}
 	

@@ -87,11 +87,11 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 				<input type="radio" name="export_as" id="to_cp" value="1" checked="checked" onclick="changeFormAction('cp');" />
 				<label for="to_cp"><?php echo _AT('content_package'); ?></label> <br />
 				<input type="radio" name="export_as" id="to_cc" value="1" onclick="changeFormAction('cc');" />
-				<label for="to_cc"><?php echo _AT('common_cartridge'); ?> (<span style="color:red;"><?php echo _AT('experimental'); ?>)</label>
+				<label for="to_cc"><?php echo _AT('common_cartridge'); ?> </label>
 			</div>
 			<div class="row">
-				<input type="checkbox" name="to_tile" id="to_tile" value="1" />
-				<label for="to_tile"><?php echo _AT('tile_export'); ?></label> <br />
+				<!--<input type="checkbox" name="to_tile" id="to_tile" value="1" />
+				<label for="to_tile"><?php echo _AT('tile_export'); ?></label> <br /> -->
 				<input type="checkbox" name="to_a4a" id="to_a4a" value="1" />
 				<label for="to_a4a"><?php echo _AT('a4a_export'); ?></label>
 			</div>

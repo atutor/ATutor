@@ -50,7 +50,7 @@ if (isset($_POST['submit_no']))
 else if (isset($_POST['submit_yes'])) 
 {
 	// install module
-	$module =& $moduleFactory->getModule($_POST['mod']);
+	$module = $moduleFactory->getModule($_POST['mod']);
 	$module->load();
 	$module->install();
 
@@ -93,7 +93,7 @@ if (isset($mod) && !isset($_GET['mod_in']))
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$moduleParser =& new ModuleParser();
+$moduleParser = new ModuleParser();
 
 if (!file_exists('../../mods/'.$mod.'/module.xml')) {
 ?>
@@ -128,7 +128,7 @@ $readme = get_readme('../../mods/'.$mod);
 
 $moduleParser->parse(file_get_contents('../../mods/'.$mod.'/module.xml'));
 
-$module =& $moduleFactory->getModule($mod);
+$module = $moduleFactory->getModule($mod);
 
 $properties = $module->getProperties(array('maintainers', 'url', 'date', 'license', 'state', 'notes', 'version'));
 ?>

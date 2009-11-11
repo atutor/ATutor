@@ -30,10 +30,10 @@ function add_test($test_id, $title)
 	
 	$studs_take_num = get_studs_take_more_than_once($_SESSION["course_id"], $test_id);
 	
-	foreach ($studs_take_num as $student => $num)
+	foreach ($studs_take_num as $member_id => $num)
 	{
 		if ($no_error) $no_error = false;
-		$error_msg .= $student . ": " . $num . " times<br>";
+		$error_msg .= get_display_name($member_id) . ": " . $num . " times<br>";
 	}
 	
 	if (!$no_error)

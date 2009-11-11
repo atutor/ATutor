@@ -45,7 +45,7 @@ $result  = mysql_query($sql, $db);
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<table class="data" style="width: 60%;">
+<table class="data" style="width: 90%;">
 <thead>
 <tr>
 	<th>&nbsp;</th>

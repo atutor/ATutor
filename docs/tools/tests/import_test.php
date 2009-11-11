@@ -308,7 +308,7 @@ if (!$overwrite && !empty($existing_files)){
 
 //Get the XML file out and start importing them into our database.
 //TODO: See question_import.php 287-289.
-$qti_import =& new QTIImport($import_path);
+$qti_import = new QTIImport($import_path);
 $qids = $qti_import->importQuestions($attributes);
 
 //import test

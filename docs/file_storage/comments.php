@@ -160,7 +160,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 				<div class="row">
 					<h4><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('filemanager_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h4>
 					<p><?php echo nl2br(htmlspecialchars($row['comment'])); ?></p>
-						<?php if ($row['member_id'] == $_SESSION['member_id']): ?>
+						<?php if ($row['member_id'] == $_SESSION['member_id'] || $current_file['member_id'] == $_SESSION['member_id']): ?>
 							<div style="text-align:right; font-size: smaller">
 								<a href="<?php echo url_rewrite('file_storage/comments.php'.$owner_arg_prefix.'id='.$id.SEP.'comment_id='.$row['comment_id'].'#c'.$row['comment_id']); ?>"><?php echo _AT('edit'); ?></a> | <a href="file_storage/delete_comment.php<?php echo $owner_arg_prefix . 'file_id='.$id.SEP; ?>id=<?php echo $row['comment_id']; ?>"><?php echo _AT('delete'); ?></a>
 							</div>
@@ -177,6 +177,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 	</div>
 <?php endif; ?>
 
+<?php if ($_SESSION['is_guest'] == 0): ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].$owner_arg_prefix; ?>id=<?php echo $id; ?>">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <input type="hidden" name="folder" value="<?php echo $current_file['folder_id']; ?>" />
@@ -192,5 +193,6 @@ if ($row = mysql_fetch_assoc($result)): ?>
 	</div>
 </div>
 </form>
+<?php endif; ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -30,7 +30,7 @@ function checkUserInfo($record) {
 	/* email check */
 	if ($record['email'] == '') {
 		$record['err_email'] = _AT('import_err_email_missing');
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $record['email'])) {
+	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $record['email'])) {
 		$record['err_email'] = _AT('import_err_email_invalid');
 	} else if (isset($email_list[$record['email']])) {
 		$record['err_email'] = _AT('import_err_email_exists');
@@ -60,7 +60,7 @@ function checkUserInfo($record) {
 
 	$record['uname'] = preg_replace("{[^a-zA-Z0-9._-]}","", trim($record['uname']));
 
-	if (!(eregi("^[a-zA-Z0-9._-]([a-zA-Z0-9._-])*$", $record['uname']))) {
+	if (!(preg_match("/^[a-zA-Z0-9._-]([a-zA-Z0-9._-])*$/i", $record['uname']))) {
 		$record['err_uname'] = _AT('import_err_username_invalid');
 	} 
 

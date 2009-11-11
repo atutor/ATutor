@@ -13,6 +13,7 @@
 // $Id: content.php 8784 2009-09-04 20:02:32Z cindy $
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 
 if (isset($_GET['cid'])) $cid = intval($_GET['cid']);
 if (isset($_GET['pid'])) $pid = intval($_GET['pid']);
@@ -21,6 +22,68 @@ if ($cid > 0)
 {
 	$result = $contentManager->getContentPage($cid);
 	$content_row = mysql_fetch_assoc($result);
+}
+
+// save changes
+if ($_POST['submit'])
+{
+	if ($_POST['title'] == '') {
+		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
+	}
+		
+	if (!($release_date = generate_release_date())) {
+		$msg->addError('BAD_DATE');
+	}
+	
+	if (!$msg->containsErrors()) 
+	{
+		$_POST['title']	= $content_row['title'] = $addslashes($_POST['title']);
+	
+		if ($cid > 0)
+		{ // edit existing content
+			$err = $contentManager->editContent($cid, 
+			                                    $_POST['title'], 
+			                                    '', 
+			                                    '', 
+			                                    '', 
+			                                    $content_row['formatting'], 
+			                                    $release_date, 
+			                                    '', 
+			                                    $content_row['use_customized_head'], 
+			                                    '', 
+			                                    $content_row['allow_test_export']);
+		}
+		else
+		{ // add new content
+			// find out ordering and content_parent_id
+			if ($pid)
+			{ // insert sub content folder
+				$ordering = count($contentManager->getContent($pid))+1;
+			}
+			else
+			{ // insert a top content folder
+				$ordering = count($contentManager->getContent(0)) + 1;
+				$pid = 0;
+			}
+			
+			$cid = $contentManager->addContent($_SESSION['course_id'],
+			                                   $pid,
+			                                   $ordering,
+			                                   $_POST['title'],
+			                                   '',
+			                                   '',
+			                                   '',
+			                                   0,
+			                                   $release_date,
+			                                   '',
+			                                   0,
+			                                   '',
+			                                   1,
+			                                   CONTENT_TYPE_FOLDER);
+		}
+	}
+	header('Location: '.$_base_path.'editor/edit_content_folder.php?cid='.$cid);
+	exit;
 }
 
 if ($cid > 0)
@@ -130,69 +193,21 @@ if ($cid > 0)
 		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'editor/edit_content.php?pid='.$cid);
 		$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'editor/delete_content.php?cid='.$cid);
 	}
+	
+	$_POST['day']   = substr($content_row['release_date'], 8, 2);
+	$_POST['month'] = substr($content_row['release_date'], 5, 2);
+	$_POST['year']  = substr($content_row['release_date'], 0, 4);
+	$_POST['hour']  = substr($content_row['release_date'], 11, 2);
+	$_POST['min']= substr($content_row['release_date'], 14, 2);
+
 	$savant->assign('shortcuts', $shortcuts);
 	$savant->assign('ftitle', $content_row['title']);
 	$savant->assign('cid', $cid);
 }
 //debug($contentManager->getContent($pid));
-// save changes
-if ($_POST['submit'])
-{
-	$_POST['title']	= $content_row['title'] = $addslashes($_POST['title']);
-
-	if ($cid > 0)
-	{ // edit existing content
-		$err = $contentManager->editContent($cid, 
-		                                    $_POST['title'], 
-		                                    '', 
-		                                    '', 
-		                                    '', 
-		                                    $content_row['formatting'], 
-		                                    $content_row['release_date'], 
-		                                    '', 
-		                                    $content_row['use_customized_head'], 
-		                                    '', 
-		                                    $content_row['allow_test_export']);
-	}
-	else
-	{ // add new content
-		// find out ordering and content_parent_id
-		if ($pid)
-		{ // insert sub content folder
-			$ordering = count($contentManager->getContent($pid))+1;
-		}
-		else
-		{ // insert a top content folder
-			$ordering = count($contentManager->getContent(0)) + 1;
-			$pid = 0;
-		}
-		
-//		debug($ordering);exit;
-		$cid = $contentManager->addContent($_SESSION['course_id'],
-		                                   $pid,
-		                                   $ordering,
-		                                   $_POST['title'],
-		                                   '',
-		                                   '',
-		                                   '',
-		                                   0,
-		                                   date('Y-m-d H:i:s'),
-		                                   '',
-		                                   0,
-		                                   '',
-		                                   1,
-		                                   CONTENT_TYPE_FOLDER);
-	}
-//	header('Location: editor/edit_content_folder.php?cid='.$cid);
-//	debug($_base_path.'edit_content_folder.php?cid='.$cid);
-	header('Location: '.$_base_path.'editor/edit_content_folder.php?cid='.$cid);
-}
-
 if ($pid > 0) $savant->assign('pid', $pid);
 $savant->display('editor/edit_content_folder.tmpl.php');
 
 //save last visit page.
 $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

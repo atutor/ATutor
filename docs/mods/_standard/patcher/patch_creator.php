@@ -49,7 +49,7 @@ if ($_POST['create'] || $_POST['save'])
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
-	if (!(eregi("^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$", $_POST['atutor_patch_id'])))
+	if (!(preg_match("/^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$/i", $_POST['atutor_patch_id'])))
 		$msg->addError('LOGIN_CHARS');
 
 	// main process
@@ -117,7 +117,7 @@ if ($_POST['create'] || $_POST['save'])
 
 		require_once("classes/PatchCreator.class.php");
 		
-		$patch_creator =& new PatchCreator($patch_info, $patch_id);
+		$patch_creator = new PatchCreator($patch_info, $patch_id);
 		
 		if ($_POST['create'])
 			$patch_creator->create_patch();

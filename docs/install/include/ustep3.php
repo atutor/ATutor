@@ -35,7 +35,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			$errors[] = 'Administrator username cannot be empty.';
 		} else {
 			/* check for special characters */
-			if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['admin_username']))){
+			if (!(preg_match("/^[a-zA-Z0-9_]([a-zA-Z0-9_])*$/i", $_POST['admin_username']))){
 				$errors[] = 'Administrator username is not valid.';
 			}
 		}
@@ -44,14 +44,14 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		}
 		if ($_POST['admin_email'] == '') {
 			$errors[] = 'Administrator email cannot be empty.';
-		} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['admin_email'])) {
+		} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['admin_email'])) {
 			$errors[] = 'Administrator email is not valid.';
 		}
 
 		/* System Preferences checking: */
 		if ($_POST['email'] == '') {
 			$errors[] = 'Contact email cannot be empty.';
-		} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+		} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 			$errors[] = 'Contact email is not valid.';
 		}
 
@@ -159,6 +159,26 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	if (version_compare($_POST['step1']['old_version'], '1.5.5', '<')) {
 		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."tests_results SET status=1, date_taken=date_taken, end_time=date_taken";
 		mysql_query($sql, $db);
+	}
+	if (version_compare($_POST['step1']['old_version'], '1.6.4', '<')) {
+		/* convert all content nodes to the IMS standard. (adds null nodes for all top pages) */
+		include('ustep_content_conversion.php');
+
+		/* Convert db to a tree */
+		$sql = 'SELECT * FROM '.$_POST['step1']['tb_prefix'].'content';
+		$result = mysql_query($sql, $db);
+		$content_array = array(); 
+
+		while ($row = mysql_fetch_assoc($result)){
+			$content_array[$row['content_parent_id']][$row['ordering']] = $row['content_id'];
+		}
+		$tree = buildTree($content_array[0], $content_array);
+
+		/* Restructure the tree */
+		$tree = rebuild($tree);
+
+		/* Update the Db based on this new tree */
+		reconstruct($tree, '', 0);
 	}
 
 	/* deal with the extra modules: */

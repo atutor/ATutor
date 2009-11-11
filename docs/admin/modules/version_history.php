@@ -49,7 +49,7 @@ $module_list_xml = @file_get_contents($module_folder . 'module_list.xml');
 
 if ($module_list_xml) 
 {
-	$moduleListParser =& new ModuleListParser();
+	$moduleListParser = new ModuleListParser();
 	$moduleListParser->parse($module_list_xml);
 	$module_list_array = $moduleListParser->getParsedArray();
 }

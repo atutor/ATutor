@@ -962,7 +962,7 @@ class Savant2 {
 	* 
 	* <code>
 	* 
-	* $Savant2 =& new Savant2();
+	* $Savant2 = new Savant2();
 	* 
 	* // assign directly
 	* $Savant2->var1 = 'something';

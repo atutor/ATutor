@@ -73,7 +73,11 @@ function rowselectbox(obj, checked, handler) {
 </script>
 <?php
 
+//TODO******************BOLOGNA***************REMOVE ME ***********************/
 if ($framed || $popup) {
+    if(isset($tool_flag) && ($tool_flag))                    //footer for the toolmanager
+        $savant->display('include/tm_footer.tmpl.php');
+    else
 	$savant->display('include/fm_footer.tmpl.php');
 } else {
 	$savant->display('include/footer.tmpl.php');

@@ -102,7 +102,7 @@ class TestQuestions {
 
 		if (isset($question_classes[$question_type])) {
 			global $savant;
-			$objs[$question_type] =& new $question_classes[$question_type]($savant);
+			$objs[$question_type] = new $question_classes[$question_type]($savant);
 		} else {
 			return FALSE;
 		}
@@ -490,6 +490,7 @@ function TestQuestionCounter($increment = FALSE) {
 		$this->displayHeader($row['weight']);
 
 		// print the question specific template
+		$row['question'] = format_content($row['question'], 1, '');
 		$this->assignDisplayVariables($row, $response);
 		$this->savant->display('test_questions/' . $this->sPrefix . '.tmpl.php');
 		

@@ -113,7 +113,7 @@
 				<table class="data static">	
 					<thead><tr>
 						<th><?php echo _AT('company'); ?></th>
-						<th><?php echo _AT('title'); ?></th>
+						<th><?php echo _AT('position'); ?></th>
 						<th><?php echo _AT('year'); ?></th>
 					</tr></thead>
 					<tbody>

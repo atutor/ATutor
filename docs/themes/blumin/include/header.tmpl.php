@@ -106,17 +106,41 @@ function elementToggle(elem, title)
 	
 	if (jQuery(elem).attr("src") == element_collapse_icon) {
 		jQuery(elem).attr("src", element_expand_icon);
-		jQuery(elem).attr("alt", "<?php echo _AT('hide'). ' '; ?>"+ title);
-		jQuery(elem).attr("title", "<?php echo _AT('hide'). ' '; ?>"+ title);
+		jQuery(elem).attr("alt", "<?php echo _AT('show'). ' '; ?>"+ title);
+		jQuery(elem).attr("title", "<?php echo _AT('show'). ' '; ?>"+ title);
+		setcookie("m_"+title, 0, 1);
 	}
 	else {
 		jQuery(elem).attr("src", element_collapse_icon);
 		jQuery(elem).attr("alt", "<?php echo _AT('collapse'); ?>");
-		jQuery(elem).attr("alt", "<?php echo _AT('show'). ' '; ?>"+ title);
-		jQuery(elem).attr("title", "<?php echo _AT('show'). ' '; ?>"+ title);
+		jQuery(elem).attr("alt", "<?php echo _AT('hide'). ' '; ?>"+ title);
+		jQuery(elem).attr("title", "<?php echo _AT('hide'). ' '; ?>"+ title);
+		setcookie("m_"+title, null, 1);;
 	}
 	
 	jQuery(elem).parent().next().slideToggle();
+}
+
+function printSubmenuHeader(title)
+{
+	if (getcookie("m_"+title) == "0")
+	{
+		image = "<?php echo $_base_path?>images/mswitch_plus.gif";
+		alt_text = "<?php echo _AT('show'); ?>" + title;
+	}
+	else
+	{
+		image = "<?php echo $_base_path?>images/mswitch_minus.gif";
+		alt_text = "<?php echo _AT('hide'); ?>" + title;
+	}
+	
+	document.writeln('<h4 class="box">'+
+	'	<input src="'+image+'"' + 
+	'	       onclick="elementToggle(this, \''+title+'\'); return false;"' +
+	'	       alt="'+ alt_text + '" ' +
+	'	       title="'+ alt_text + '"' +
+	'	       style="float:right" type="image" />'+ title +
+	'</h4>');
 }
 //-->
 </script>

@@ -56,6 +56,8 @@ function print_organizations($parent_id,
 	static $paths, $zipped_files;
 	global $glossary;
 	global $test_zipped_files, $test_files, $test_xml_items, $use_a4a;
+        /* added by bologna*///TODO***********BOLOGNA**************REMOVE ME*****************/
+        global $db,$forum_list;//forum_list contiene tutti i forum distinti associati ai contenuti. poich� la funzione in questione � ricorsiva deve essere globale in modo che in fase di creazione dell'archivio zip i file descrittori dei forum non vengano ripetuti
 
 	$space  = '    ';
 	$prefix = '                    ';
@@ -74,7 +76,7 @@ function print_organizations($parent_id,
 		
 		$counter = 1;
 		$num_items = count($top_level);
-
+                
 		foreach ($top_level as $garbage => $content) {
 			$link = '';
 				
@@ -119,6 +121,39 @@ function print_organizations($parent_id,
 				}
 			}
 
+
+                    //TODO**************BOLOGNA****************REMOVE ME************/
+                    $f_count = count($forum_list); //count all distinct forum_id associated to a content page
+                                                //la funzione è ricorsiva quindi lo devo ricavare attraverso la variabile globale forum_list
+
+                    /* TODO *************BOLOGNA*************REMOVE ME*********/
+                    //recupero i forum associati al contenuto corrente
+                    $sql = "SELECT cf.forum_id, f.title, f.description FROM (SELECT * FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content[content_id]) AS cf LEFT JOIN ".TABLE_PREFIX."forums f ON cf.forum_id=f.forum_id";
+                    $result_cf = mysql_query($sql,$db);
+                    $cf_count = mysql_num_rows($result_cf);
+   
+                    //per ogni forum ottenuto controllo se è già stato caricato nell'array
+                    //necessario mantenerlo distinto poichè NON si prevedono funzioni sul
+                    //controllo dei nomi nell'inserimento di file nell'archivio.
+                    $find=false;
+                    $forums_dependency='';  //template for associate Discussion Topic to the current content into the manifest
+                    while($current_forum = mysql_fetch_assoc($result_cf)) {
+                        for($j=0;$j<$f_count;$j++) {
+                            if($forum_list[$j]['id'] == $current_forum['forum_id'])
+                                $find= true;
+                        }
+                        if(!$find) {
+
+                            $forum_list[$f_count]['id']=$current_forum['forum_id'];
+                            $forum_list[$f_count]['title']=$current_forum['title'];
+                            $forum_list[$f_count]['description']=$current_forum['description'];
+                            $find=false;
+                            $f_count++;
+                        }
+			$forums_dependency .= $prefix.$space.'<dependency identifierref="Forum'.$current_forum['forum_id'].'_R" />';
+                    }
+
+                     
 			/* calculate how deep this page is: */
 			$path = '../';
 			if ($content['content_path']) {
@@ -298,8 +333,8 @@ function print_organizations($parent_id,
 			//Weblinks have been added.
 			//Folders aren't resourecs, they shouldn't be added
 			if($content['content_type']==CONTENT_TYPE_CONTENT){
-				$resources .= str_replace(	array('{CONTENT_ID}', '{PATH}', '{FILES}'),
-											array($content['content_id'], $content['content_path'], $content_files),
+				$resources .= str_replace(	array('{CONTENT_ID}', '{PATH}', '{FILES}','{DEPENDENCY}'),
+											array($content['content_id'], $content['content_path'], $content_files, $forums_dependency),
 											$ims_template_xml['resource']); 
 			}
 			
@@ -379,6 +414,69 @@ function print_organizations($parent_id,
 	}
 }
 
+
+//TODO***************BOLOGNA******************REMOVE ME***************/
+/* Export Forum */
+function print_resources_forum() {
+
+    global $forum_list, $zipfile, $resources;           //$forum_list contiene tutti i forum DISTINTI associati ai contenuti. caricato in print_organizations()
+
+    $ims_template_xml['resource_forum'] =
+
+        '<resource identifier="Forum{FORUMID}_R" type="imsdt_xmlv1p0">
+            <metadata/>
+            <file href="Forum{FORUMID}/FileDescriptorForum{FORUMID}.xml"/>
+        </resource>
+	'."\n";
+
+    foreach ($forum_list as $f){
+    // per ogni forum associato ad uno o pi� contenuti del corso viene aggiunto un elemento resource in imsmanifest.xml
+        $resources .= str_replace("{FORUMID}", $f['id'], $ims_template_xml['resource_forum']);
+
+        //viene generato il file descrittore
+        //file Descrittore con la descrzione del forum
+        $fileDesDT_D = '<?xml version="1.0" encoding="UTF-8"?>
+
+                    <dt:topic
+
+                        xmlns:dt="http://www.imsglobal.org/xsd/imsdt_v1p0"
+
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+                        <title>{TitleDiscussionTopic}</title>
+
+                        <text texttype="text/plain">{DescriptionDiscussionTopic}</text>
+
+                    </dt:topic>';
+
+        //file Descrittore senza la descrizione del forum
+        $fileDesDT = '<?xml version="1.0" encoding="UTF-8"?>
+
+                    <dt:topic
+
+                        xmlns:dt="http://www.imsglobal.org/xsd/imsdt_v1p0"
+
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+                        <title>{TitleDiscussionTopic}</title>
+
+                        <text/>
+
+                    </dt:topic>';
+
+		$f['title'] = htmlspecialchars($f['title']);
+		$f['description'] = htmlspecialchars($f['description']);
+        if (empty($f['description']))
+            $text_file_des_xml = str_replace (array('{TitleDiscussionTopic}', '{DescriptionDiscussionTopic}'), array($f['title'], $f['description']), $fileDesDT);
+        else
+            $text_file_des_xml = str_replace (array('{TitleDiscussionTopic}', '{DescriptionDiscussionTopic}'), array($f['title'], $f['description']), $fileDesDT_D);
+
+        $zipfile->add_file($text_file_des_xml,  'Forum'.$f['id'].'/'.'FileDescriptorForum'.$f['id'].'.xml');
+    }
+    //$zipfile->add_file(file_get_contents('../../images/home-forums_sm.png'),  'resources/home-forums_sm.png');
+}
+
+
 $ims_template_xml['header'] = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
 <!--This is an ATutor 1.0 Common Cartridge document-->
 <!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
@@ -410,6 +508,7 @@ $ims_template_xml['header'] = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LAN
 $ims_template_xml['resource'] = '		<resource identifier="MANIFEST01_RESOURCE{CONTENT_ID}" type="webcontent" href="resources/{PATH}{CONTENT_ID}.html">
 			<metadata/>
 			<file href="resources/{PATH}{CONTENT_ID}.html"/>{FILES}
+                        {DEPENDENCY}
 		</resource>
 '."\n";
 $ims_template_xml['resource_glossary'] = '		<resource identifier="MANIFEST01_RESOURCE_GLOSSARY" type="associatedcontent/imscc_xmlv1p0/learning-application-resource" href="GlossaryItem/glossary.xml">

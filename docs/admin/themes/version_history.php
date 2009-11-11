@@ -49,7 +49,7 @@ $theme_list_xml = @file_get_contents($theme_folder . 'theme_list.xml');
 
 if ($theme_list_xml) 
 {
-	$themeListParser =& new ThemeListParser();
+	$themeListParser = new ThemeListParser();
 	$themeListParser->parse($theme_list_xml);
 	$theme_list_array = $themeListParser->getParsedArray();
 }

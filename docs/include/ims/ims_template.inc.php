@@ -75,7 +75,7 @@ function print_organizations($parent_id,
 		
 		$counter = 1;
 		$num_items = count($top_level);
-
+               
 		foreach ($top_level as $garbage => $content) {
 			$link = '';
 				

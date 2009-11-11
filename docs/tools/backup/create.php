@@ -18,7 +18,7 @@ authenticate(AT_PRIV_ADMIN);
 
 $course = $_SESSION['course_id'];
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-$Backup =& new Backup($db, $_SESSION['course_id']);
+$Backup = new Backup($db, $_SESSION['course_id']);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

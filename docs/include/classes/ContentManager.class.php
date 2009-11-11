@@ -452,6 +452,10 @@ class ContentManager
 		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
 
+		/* delete the content forum association */
+		$sql	= "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content_id";
+		$result = mysql_query($sql, $this->db);
+
 		/* Delete all AccessForAll contents */
 		require_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 		$a4a = new A4a($content_id);
@@ -498,7 +502,7 @@ class ContentManager
 		$result = mysql_query($sql, $this->db);
 	}
 
-	function & getContentPage($content_id) {
+	function getContentPage($content_id) {
 		$sql	= "SELECT *, DATE_FORMAT(release_date, '%Y-%m-%d %H:%i:00') AS release_date, release_date+0 AS r_date, NOW()+0 AS n_date FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
 
@@ -546,6 +550,12 @@ class ContentManager
 		return $result;
 	}
 
+        /*TODO***************BOLOGNA***************REMOVE ME**********/
+        function & getContentForumsAssoc($content_id){
+		$sql	= "SELECT cf.forum_id, f.title FROM (SELECT * FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content_id) AS cf LEFT JOIN ".TABLE_PREFIX."forums f ON cf.forum_id=f.forum_id";
+		$result = mysql_query($sql, $this->db);
+		return $result;
+	}
 
 	function & cleanOutput($value) {
 		return stripslashes(htmlspecialchars($value));
@@ -905,6 +915,9 @@ function inlineEditsSetup() {
 			$top_level = $this->_menu[$parent_id];
 			$counter = 1;
 			$num_items = count($top_level);
+			
+			if ($parent_id <> 0) echo '<li>';
+			
 			echo '<ul id="folder'.$parent_id.$from.'" style="list-style-image:none;list-style-position:outside;list-style-type:none;margin:0;padding:0;">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
@@ -950,7 +963,7 @@ function inlineEditsSetup() {
 					if (isset($content['test_id']))
 						$link .= $content['title'];
 					else
-						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'" alt="'.$full_title.'">'.$content['title'].'</span>';
+						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$content['title'].'</span>';
 					
 					$link .= '</a>';
 					if ($on) {
@@ -959,7 +972,7 @@ function inlineEditsSetup() {
 					
 					// instructors have privilege to delete content
 					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id'])) {
-						$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
+						$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 					}
 				} 
 				else 
@@ -971,11 +984,11 @@ function inlineEditsSetup() {
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
 							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
 						}
-						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu|'.$content['content_id'].'" alt="'.$full_title.'">'.trim($content['title']).'</span></strong>';
+						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span></strong>';
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
+							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 						
 						$on = true;
@@ -995,10 +1008,10 @@ function inlineEditsSetup() {
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
 							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
 						}
-						$link .= '<span class="inlineEdits" id="menu|'.$content['content_id'].'" alt="'.$full_title.'">'.trim($content['title']).'</span>';
+						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-							$link .= '</a></strong>'."\n";
+							$link .= '</strong></a>'."\n";
 						}
 						else {
 							$link .= '</strong>'."\n";
@@ -1006,7 +1019,7 @@ function inlineEditsSetup() {
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10"></a>';
+							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';
 					}
@@ -1115,7 +1128,8 @@ function inlineEditsSetup() {
 				}
 				$counter++;
 			} // end of foreach
-			echo "</ul>\n\n";
+			echo "</ul>";
+			if ($parent_id <> 0) print "</li>\n\n";
 		}
 	}
 

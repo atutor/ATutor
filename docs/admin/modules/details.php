@@ -24,7 +24,7 @@ if (isset($_POST['submit_no'])) {
 	header('Location: '.AT_BASE_HREF.'admin/modules/add_new.php');
 	exit;
 } else if (isset($_POST['mod']) && isset($_POST['submit_yes'])) {
-	$module =& $moduleFactory->getModule($_POST['mod']);
+	$module = $moduleFactory->getModule($_POST['mod']);
 	$module->load();
 	$module->install();
 
@@ -51,7 +51,7 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$moduleParser =& new ModuleParser();
+$moduleParser = new ModuleParser();
 
 $_REQUEST['mod'] = str_replace(array('.','..'), '', $_REQUEST['mod']);
 
@@ -85,7 +85,7 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 
 $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
 
-$module =& $moduleFactory->getModule($_GET['mod']);
+$module = $moduleFactory->getModule($_GET['mod']);
 
 $properties = $module->getProperties(array('maintainers', 'url', 'date', 'license', 'state', 'notes', 'version'));
 ?>

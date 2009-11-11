@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
 		$warnings = array('CHAT_TRAN_EXISTS', $_POST['tranFile']); //'file already exists';
 		$msg->addWarning($warnings);
 	} else if ($_POST['function'] == 'startTran') {
-		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['tranFile']))){
+		if (!(preg_match("/^[a-zA-Z0-9_]([a-zA-Z0-9_])*$/i", $_POST['tranFile']))){
 			$msg->addError('CHAT_TRAN_REJECTED');
 		} else {
 			$admin['produceTran'] = 1;

@@ -223,12 +223,12 @@ class AbstractTable {
 	*/
 	function AbstractTable($version, $db, $course_id, $import_dir, &$old_ids_to_new_ids) {
 		global $db;
-		$this->db =& $db;
+		$this->db = $db;
 		$this->course_id = $course_id;
 		$this->version = $version;
 		$this->import_dir = $import_dir;
 
-		$this->old_ids_to_new_ids =& $old_ids_to_new_ids;
+		$this->old_ids_to_new_ids = $old_ids_to_new_ids;
 
 		if (!isset($this->old_ids_to_new_ids[$this->tableName])) {
 			$this->old_ids_to_new_ids[$this->tableName] = array();

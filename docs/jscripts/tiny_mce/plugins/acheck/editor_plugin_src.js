@@ -26,7 +26,7 @@
 					theCode += '<h1>Submitting Code for Accessibility Checking.....</h1>\n';
 					theCode += '<form action="http://achecker.ca/checker/index.php" name="accessform" method="post"> \n';
 					theCode += '<input type="hidden" name="gid[]" value="8" /> \n';
-					theCode += '<textarea name="validate_content">' + tinyMCE.activeEditor.getContent({format : 'raw'}) + '</textarea>\n';
+					theCode += '<textarea name="validate_content">' + tinyMCE.activeEditor.getContent() + '</textarea>\n';
 					theCode += '<input type="submit" /></form> \n';  
 					theCode += '</body></html> \n';
 					accessWin = window.open('', 'accessWin',  '');

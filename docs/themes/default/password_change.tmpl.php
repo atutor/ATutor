@@ -35,7 +35,7 @@ function encrypt_password()
 	<input type="hidden" name="form_password_hidden" value="" />
 	<input type="hidden" name="password_error" value="" />
 
-	<div class="input-form" style="max-width: 400px;">
+	<div class="input-form" style="width: 400px;">
 		<div class="row">
 			<?php echo _AT('password_new_blurb'); ?>
 		</div>

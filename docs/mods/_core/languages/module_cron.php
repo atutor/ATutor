@@ -11,7 +11,7 @@ function languages_cron() {
 	require(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
 	require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 
-	$remoteLanguageManager =& new RemoteLanguageManager();
+	$remoteLanguageManager = new RemoteLanguageManager();
 
 	$languages = $remoteLanguageManager->getAvailableLanguages();
 

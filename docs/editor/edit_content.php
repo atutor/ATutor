@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 
-global $db;
+global $db, $associated_forum;
 
 $get_related_glossary = true;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -226,7 +226,7 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$_POST['dirname'] = trim($_POST['dirname']);
 
 	/* anything else should be okay, since we're on *nix..hopefully */
-	$_POST['dirname'] = ereg_replace('[^a-zA-Z0-9._]', '', $_POST['dirname']);
+	$_POST['dirname'] = preg_replace('/[^a-zA-Z0-9._]/', '', $_POST['dirname']);
 
 	if ($_POST['dirname'] == '') {
 		$msg->addError(array('FOLDER_NOT_CREATED', $_POST['dirname'] ));
@@ -645,6 +645,36 @@ if ($current_tab == 5)
 {
 	load_editor(false, "none");
 }
+
+
+//TODO*************BOLOGNA****************REMOVE ME**************/
+//loading toolbar for insert discussion topic or web link into the content
+if ($current_tab == 0){
+    if(authenticate(AT_PRIV_CONTENT,AT_PRIV_RETURN)){
+        $home_links = get_home_navigation();                        //vengono lette le caratteristiche di ogni modulo attivato nella home page.
+        $main_links = get_main_navigation($current_page);           //vengono lette le caratteristiche di ogni modulo attivo nel main navigation
+
+        $num = count($main_links);                                  //necessario elminare il primo e l'utlimo elemento poichè sono rispettivamente "Home" e "Manage"
+        unset($main_links[0]);                                      //"Home" label
+        unset($main_links[$num-1]);                                 //"Manage" label
+
+        $all_tools = $home_links;                                   //$all_tools represent a merge between $home_links and main_links without repetitions.
+        $check=false;
+        foreach($main_links as $main) {
+            foreach($home_links as $home) {
+                if($home['title'] == $main['title']) {
+                    $check=true;
+                    break;
+                }
+            }
+            if(!$check)
+                $all_tools[]=$main;
+            else
+                $check=false;
+        }
+    }
+}
+
 
 $cid = intval($_REQUEST['cid']);
 $pid = intval($_REQUEST['pid']);

@@ -89,7 +89,7 @@ class MyHandler {
 
 /* get all the content */
 $handler=new MyHandler();
-$parser =& new XML_HTMLSax();
+$parser = new XML_HTMLSax();
 $parser->set_object($handler);
 $parser->set_element_handler('openHandler','closeHandler');
 

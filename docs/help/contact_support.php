@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['from_email'] == '') {
 		$missing_fields[] = _AT('from_email');
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['from_email'])) {
+	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['from_email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
 

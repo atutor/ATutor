@@ -29,7 +29,7 @@ if (isset($_GET['edit'])) {
 	header('Location: '.url_rewrite('file_storage/index.php?ot='.WORKSPACE_ASSIGNMENT.SEP.'oid='.$_GET['assignment'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
-
+$msg->addInfo('ASSIGNMENT_FS_SUBMISSIONS'); 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 // sort order of table
@@ -50,7 +50,7 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[cour
 $result = mysql_query($sql, $db);
 ?>
 
-<?php $msg->printInfos('ASSIGNMENT_FS_SUBMISSIONS'); ?>
+
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <table class="data" style="width: 90%;" rules="cols">

@@ -26,8 +26,8 @@ if (isset($_POST['submit_no'])) {
 if (isset($_POST['submit_yes'])) {
 	require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php');
 
-	$lang =& $languageManager->getLanguage($_POST['lang_code']);
-	$languageEditor =& new LanguageEditor($lang);
+	$lang = $languageManager->getLanguage($_POST['lang_code']);
+	$languageEditor = new LanguageEditor($lang);
 	$languageEditor->deleteLanguage();
 
 	$msg->addFeedback('LANG_DELETED');
@@ -36,7 +36,7 @@ if (isset($_POST['submit_yes'])) {
 }
 
 
-$language =& $languageManager->getLanguage($_GET['lang_code']);
+$language = $languageManager->getLanguage($_GET['lang_code']);
 if ($language === FALSE) {
 	$msg->addError('ITEM_NOT_FOUND'); // Originally AT_LANG_NOT_FOUND, make error code
 

@@ -37,7 +37,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$Backup =& new Backup($db, $_POST['in_course']);
+		$Backup = new Backup($db, $_POST['in_course']);
 		$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id'], $_POST['course']);
 
 		$msg->addFeedBack('ACTION_COMPLETED_SUCCESSFULLY');
@@ -48,7 +48,7 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$Backup =& new Backup($db, $_REQUEST['course']);
+$Backup = new Backup($db, $_REQUEST['course']);
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
 

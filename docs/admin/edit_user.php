@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 	/* email check */
 	if ($_POST['email'] == '') {
 		$missing_fields[] = _AT('email');
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
 	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]' AND member_id <> $id",$db);
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 		if (isset($_POST['profile_pic_delete'])) {
 			profile_image_delete($id);
 		}
-		if (($_POST['website']) && (!ereg("://",$_POST['website']))) { 
+		if (($_POST['website']) && (!strstr($_POST['website'], "://"))) { 
 			$_POST['website'] = "http://".$_POST['website']; 
 		}
 		if ($_POST['website'] == 'http://') { 

@@ -137,7 +137,7 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$_POST['dirname'] = trim($_POST['dirname']);
 
 	/* anything else should be okay, since we're on *nix..hopefully */
-	$_POST['dirname'] = ereg_replace('[^a-zA-Z0-9._]', '', $_POST['dirname']);
+	$_POST['dirname'] = preg_replace('/[^a-zA-Z0-9._]/', '', $_POST['dirname']);
 
 	if ($_POST['dirname'] == '') {
 		$msg->addError(array('FOLDER_NOT_CREATED', $_POST['dirname'] ));

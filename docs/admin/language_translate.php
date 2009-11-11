@@ -57,7 +57,7 @@ if (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE) {
 			<div class="row">
 				<?php
 					require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
-					$remoteLanguageManager =& new RemoteLanguageManager();
+					$remoteLanguageManager = new RemoteLanguageManager();
 					$remoteLanguageManager->printDropdown($_SESSION['lang'], 'import_lang', 'import_lang');
 				?>
 			</div>

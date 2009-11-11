@@ -114,7 +114,7 @@ if ($_config['check_version']) {
 		if ($patch_list_xml) 
 		{
 			require_once('../mods/_standard/patcher/classes/PatchListParser.class.php');
-			$patchListParser =& new PatchListParser();
+			$patchListParser = new PatchListParser();
 			$patchListParser->parse($patch_list_xml);
 			$patch_list_array = $patchListParser->getMyParsedArrayForVersion(VERSION);
 			

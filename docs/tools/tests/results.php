@@ -15,6 +15,14 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_TESTS);
 
+function sortByFullName($cell1, $cell2)
+{
+	global $order;
+	
+	if ($order == 'asc') return (strcmp($cell1['full_name'], $cell2['full_name']) > 0) ? 1 : -1;
+	else return (strcmp($cell1['full_name'], $cell2['full_name']) < 0) ? 1 : -1;
+}
+
 $tid = intval($_REQUEST['tid']);
 
 if (isset($_GET['delete'], $_GET['id'])) {
@@ -97,24 +105,39 @@ $num_sub = $row['cnt'];
 //get results based on filtre and sorting
 if ($anonymous == 1) {
 	// Keep login, full_name and fs fields even if not used: ORDER BY relies upon them
-	$sql	= "SELECT R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, '' AS login, '' AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order";
+	$sql	= "SELECT R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, '' AS login, '' AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.status=1 $status ";
 } else {	
 //	$sql	= "SELECT R.*, M.login, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, CONCAT(M.first_name, ' ', M.second_name, ' ', M.last_name) AS full_name, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
 	//added by Indirect
-	$sql	= "SELECT R.*, login, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ORDER BY $col $order, R.final_score $order";
+	$sql	= "SELECT R.*, login, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS time_spent, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R LEFT JOIN  ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1 $status ";
+}
+
+// handle order by full_name separately
+if ($col <> 'full_name') $sql .= " ORDER BY $col $order";
+
+if ($anonymous <> 1) 
+{
+	if ($col <> 'full_name')
+		$sql .= ", R.final_score $order";
+	else
+		$sql .= " ORDER BY R.final_score $order";
 }
 
 $result = mysql_query($sql, $db);
+
 if ($anonymous == 1) {
 	$guest_text = '<em>'._AT('anonymous').'</em>';
 } else {
 	$guest_text = '- '._AT('guest').' -';
 }
 while ($row = mysql_fetch_assoc($result)) {
-	$row['full_name'] = $row['full_name'] ? $row['full_name'] : $guest_text;
+	$full_name = AT_print(get_display_name($row['member_id']), 'members.full_name');
+	$row['full_name'] = $full_name ? $full_name : $guest_text;
 	$row['login']     = $row['login']     ? $row['login']     : $guest_text;
 	$rows[$row['result_id']] = $row;
 }
+
+if ($col == "full_name") usort($rows, "sortByFullName");
 
 $num_results = mysql_num_rows($result);
 
@@ -212,7 +235,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 			<td><?php echo $row['login']; ?></td>
 			<td><?php 
 				if ($anonymous == 0 && $row['member_id']){
-					echo AT_print(get_display_name($row['member_id']), 'members.full_name'); /*$row['full_name'] */ 
+					echo $row['full_name']; 
 				} else {
 					echo $guest_text; // no need in AT_print(): $guest_text is a trusted _AT() output
 				}

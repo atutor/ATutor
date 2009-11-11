@@ -184,7 +184,7 @@ $home_defaults = array_filter($home_defaults); // remove empties
 </tfoot>
 <tbody>
 <?php 
-$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
+$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
 $keys = array_keys($module_list);
 
 foreach ($keys as $dir_name) {

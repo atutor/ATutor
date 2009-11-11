@@ -237,14 +237,16 @@ function elementToggle(elem, title)
 	
 	if (jQuery(elem).attr("src") == element_collapse_icon) {
 		jQuery(elem).attr("src", element_expand_icon);
-		jQuery(elem).attr("alt", "<?php echo _AT('hide'). ' '; ?>"+ title);
-		jQuery(elem).attr("title", "<?php echo _AT('hide'). ' '; ?>"+ title);
+		jQuery(elem).attr("alt", "<?php echo _AT('show'). ' '; ?>"+ title);
+		jQuery(elem).attr("title", "<?php echo _AT('show'). ' '; ?>"+ title);
+		setcookie("m_"+title, 0, 1);
 	}
 	else {
 		jQuery(elem).attr("src", element_collapse_icon);
 		jQuery(elem).attr("alt", "<?php echo _AT('collapse'); ?>");
-		jQuery(elem).attr("alt", "<?php echo _AT('show'). ' '; ?>"+ title);
-		jQuery(elem).attr("title", "<?php echo _AT('show'). ' '; ?>"+ title);
+		jQuery(elem).attr("alt", "<?php echo _AT('hide'). ' '; ?>"+ title);
+		jQuery(elem).attr("title", "<?php echo _AT('hide'). ' '; ?>"+ title);
+		setcookie("m_"+title, null, 1);;
 	}
 	
 	jQuery(elem).parent().next().slideToggle();

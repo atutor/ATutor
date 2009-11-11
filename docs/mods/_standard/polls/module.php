@@ -11,7 +11,7 @@ $this->_stacks['poll'] = array('title_var'=>'poll','file'=>AT_INCLUDE_PATH.'html
 $this->_list['polls'] = array('title_var'=>'polls','file'=>'mods/_standard/polls/sublinks.php');
 
 //tool manager
-$this->_tool['polls'] = array('title_var'=>'polls','file'=>'polls_tool.php');
+//$this->_tool['polls'] = array('title_var'=>'polls','file'=>'polls_tool.php');
 
 // if this module is to be made available to students on the Home or Main Navigation
 $_student_tool = 'polls/index.php';
@@ -25,14 +25,14 @@ $this->_pages['tools/polls/index.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/polls/index.php']['children']  = array('tools/polls/add.php');
 $this->_pages['tools/polls/index.php']['guide']     = 'instructor/?p=polls.php';
 
-	$this->_pages['tools/polls/add.php']['title_var'] = 'add_poll';
-	$this->_pages['tools/polls/add.php']['parent']    = 'tools/polls/index.php';
+$this->_pages['tools/polls/add.php']['title_var'] = 'add_poll';
+$this->_pages['tools/polls/add.php']['parent']    = 'tools/polls/index.php';
 
-	$this->_pages['tools/polls/edit.php']['title_var'] = 'edit_poll';
-	$this->_pages['tools/polls/edit.php']['parent']    = 'tools/polls/index.php';
+$this->_pages['tools/polls/edit.php']['title_var'] = 'edit_poll';
+$this->_pages['tools/polls/edit.php']['parent']    = 'tools/polls/index.php';
 
-	$this->_pages['tools/polls/delete.php']['title_var'] = 'delete_poll';
-	$this->_pages['tools/polls/delete.php']['parent']    = 'tools/polls/index.php';
+$this->_pages['tools/polls/delete.php']['title_var'] = 'delete_poll';
+$this->_pages['tools/polls/delete.php']['parent']    = 'tools/polls/index.php';
 
 
 ?>

@@ -185,7 +185,7 @@ if (!$db) {
 				} elseif (version_compare($_POST['step1']['old_version'], '1.6.1', '<') === TRUE) {
 					//Check if version#=1.6 if so, then this 1.6 database must already been upgraded before.
 					//change all table to utf-8.
-					$conversionDriver =& new ConversionDriver($_POST['tb_prefix']);
+					$conversionDriver = new ConversionDriver($_POST['tb_prefix']);
 					$conversionDriver->alter_all_charset();
 					unset($progress);
 					$progress[] = "All tables' charset are now in UTF-8.";
@@ -267,7 +267,7 @@ if (!$db) {
 				unset($errors);
 				foreach($_SESSION['redo_conversion'] as $course_title=>$class_obj){
 					foreach($class_obj as $class_name=>$class_param){
-						$temp_table =& new $class_name ($class_param[0], $class_param[1], $class_param[2], $class_param[3]);
+						$temp_table = new $class_name ($class_param[0], $class_param[1], $class_param[2], $class_param[3]);
 						if (!$temp_table->convert()){
 							$errors[]= $course_title.': '.$class_param[0].$class_param[1].' was not converted.';
 						} else {
@@ -281,7 +281,7 @@ if (!$db) {
 				 * Convert course independent materials such as user information, categories 
 				 * Decide which language to use
 				 */
-				$conversionDriver =& new ConversionDriver($_POST['tb_prefix']);
+				$conversionDriver = new ConversionDriver($_POST['tb_prefix']);
 				if (version_compare($_POST['step1']['old_version'], '1.6', '<') === TRUE) {
 					$conversionDriver->convertTableBySysDefault();
 				} 

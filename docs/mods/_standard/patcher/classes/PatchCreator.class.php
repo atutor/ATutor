@@ -335,7 +335,7 @@ class PatchCreator {
 	{
 		require_once(AT_INCLUDE_PATH . '/classes/zipfile.class.php');
 
-		$zipfile =& new zipfile();
+		$zipfile = new zipfile();
 	
 		$zipfile->add_file(file_get_contents($this->patch_xml_file), 'patch.xml');
 

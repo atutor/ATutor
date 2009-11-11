@@ -59,12 +59,12 @@ else if (!empty($_POST) && !isset($_POST['grade_scale_id'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
-
+<div class="toolcontainer">
 <form name="form" method="post" action="mods/_standard/gradebook/grade_scale.php">
 
 <h3 align="center"><?php echo _AT('custom_grade_scale'); ?></h3>
 
-<table summary="" class="data" rules="cols" align="center" style="width: 70%;">
+<table summary="" class="data" rules="cols" align="center" style="width: 90%;">
 
 <thead>
 <tr>
@@ -131,7 +131,7 @@ else
 </form>
 
 <h3 align="center"><?php echo _AT('preset_grade_scale'); ?></h3>
-<table summary="" class="data" rules="cols" align="center" style="width: 70%;">
+<table summary="" class="data" rules="cols" align="center" style="width: 90%;">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('name'); ?></th>
@@ -182,5 +182,5 @@ else
 
 </tbody>
 </table>
-
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

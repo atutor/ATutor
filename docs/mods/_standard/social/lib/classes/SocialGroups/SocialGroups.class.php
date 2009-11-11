@@ -226,12 +226,14 @@ class SocialGroups{
 				$search_result[$row['id']]['weight'] = $this->inQuery($words, $row['name']);
 			}
 		 }
-		 uasort($search_result, array($this, 'search_cmp'));
-		 $search_result = array_reverse($search_result);
+		 if (!empty($search_result)){
+			 uasort($search_result, array($this, 'search_cmp'));
+			 $search_result = array_reverse($search_result);
 
-		 //for paginator
-		 if ($offset >= 0){
-			$search_result = array_slice($search_result, $offset, SOCIAL_GROUP_MAX);
+			 //for paginator
+			 if ($offset >= 0){
+				$search_result = array_slice($search_result, $offset, SOCIAL_GROUP_MAX);
+			 }
 		 }
 
 		 return $search_result;

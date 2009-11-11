@@ -22,6 +22,9 @@ require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 require(AT_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
 //require(AT_INCLUDE_PATH.'../tools/ims/ns.inc.php');	//namespace, no longer needs, delete it after it's stable.
 require(AT_INCLUDE_PATH.'classes/Weblinks/WeblinksParser.class.php');
+require(AT_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsParser.class.php');
+require(AT_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsImport.class.php');
+
 
 /* make sure we own this course that we're exporting */
 authenticate(AT_PRIV_CONTENT);
@@ -36,23 +39,29 @@ $package_base_path = '';
 $xml_base_path = '';
 $element_path = array();
 $imported_glossary = array();
-$test_attributes = array();
 $character_data = '';
 $test_message = '';
 $content_type = '';
-
+$skip_ims_validation = false;
+$added_dt = array();	//the mapping of discussion tools that are added
+$avail_dt = array();	//list of discussion tools that have not been handled
 
 /**
- * function to get all the files out from the package.
- * main purpose is to check if all the files are listed in the manifest.
+ * Validate all the XML in the package, including checking XSDs, missing data.
  * @param	string		the path of the directory that contains all the package files
  * @return	boolean		true if every file exists in the manifest, false if any is missing.
  */
 function checkResources($import_path){
-	global $items, $msg;
+	global $items, $msg, $skip_ims_validation, $avail_dt;
 
 	if (!is_dir($import_path)){
 		return;
+	}
+
+	//if the package has access for all content, skip validation for now. 
+	//todo: import the XSD into our validator
+	if ($skip_ims_validation){
+		return true;
 	}
 
 	//generate a file tree
@@ -79,25 +88,34 @@ function checkResources($import_path){
 		$flag = false;
 		$file_exists_in_manifest = false;
 
+		//check if every file in manifest indeed exists
 		foreach($items as $name=>$fileinfo){
 			if (is_array($fileinfo['file'])){
-				if(in_array($filepath, $fileinfo['file'])){
-					$file_exists_in_manifest = true;
+				foreach($fileinfo['file'] as $fileinfo_path){
+					//solves the problem of having relative paths in $fileinfo[]
+					if (realpath($import_path.$filepath) == realpath($import_path.$fileinfo_path)){
+						$file_exists_in_manifest = true;
 
-					//validate the xml by its schema
-					if (preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
-						$qti = new QTIParser($fileinfo['type']);
-						$xml_content = @file_get_contents($import_path . $fileinfo['href']);
-						$qti->parse($xml_content);
-						if ($msg->containsErrors()){
-							$flag = false;
+						//validate the xml by its schema
+						if (preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
+							$qti = new QTIParser($fileinfo['type']);
+							$xml_content = @file_get_contents($import_path . $fileinfo['href']);
+							$qti->parse($xml_content);
+							if ($msg->containsErrors()){
+								$flag = false;
+							} else {
+								$flag = true;
+							}
 						} else {
 							$flag = true;
 						}
-					} else {
-						$flag = true;
 					}
 				}
+			}
+
+			//add all dependent discussion tools to a list
+			if(isset($fileinfo['dependency']) && !empty($fileinfo['dependency'])){
+				$avail_dt = array_merge($avail_dt, $fileinfo['dependency']);
 			}
 		}
 
@@ -174,7 +192,12 @@ function rehash($items){
 			}
 			//else, make its parent page to a folder
 			$new_item['title'] = $parent_obj['title'];
-			$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
+			//check if this parent has been modified, if so, chnage it
+			if (isset($parent_page_maps[$parent_obj['parent_content_id']])){
+			    $new_item['parent_content_id'] = $parent_page_maps[$parent_obj['parent_content_id']];
+			} else {
+    			$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
+            }
 			$new_item['ordering'] = $parent_obj['ordering'];
 
     		//assign this new parent folder to the pending items array
@@ -205,6 +228,32 @@ function rehash($items){
 
 	return $rehashed_items;
 }
+
+
+/** 
+ * This function will take the test accessment XML and add these to the database.
+ * @param	string	The path of the XML, without the import_path.
+ * @param	mixed	An item singleton.  Contains the info of this item, namely, the accessment details.
+ *					The item must be an object created by the ims class.
+ * @param	string	the import path
+ * @return	mixed	An Array that contains all the question IDs that have been imported.
+ */
+ function addQuestions($xml, $item, $import_path){
+	$qti_import = new QTIImport($import_path);
+
+	$tests_xml = $import_path.$xml;
+	
+	//Mimic the array for now.
+	$test_attributes['resource']['href'] = $item['href'];
+	$test_attributes['resource']['type'] = preg_match('/imsqti_xmlv1p2/', $item['type'])==1?'imsqti_xmlv1p2':'imsqti_xmlv1p1';
+	$test_attributes['resource']['file'] = $item['file'];
+
+	//Get the XML file out and start importing them into our database.
+	//TODO: See question_import.php 287-289.
+	$qids = $qti_import->importQuestions($test_attributes);
+
+	return $qids;
+ }
 
 
 	/* called at the start of en element */
@@ -276,6 +325,7 @@ function rehash($items){
 
 			//for IMSCC, assume that all resources lies in the same folder, except styles.css
 			if ($items[$current_identifier]['type']=='webcontent'){
+//debug($temp_path);
 				if ($package_base_path=="") {
 					$package_base_path = $temp_path;
 				} 
@@ -289,8 +339,8 @@ function rehash($items){
 				$package_base_path = array_intersect($package_base_path, $temp_path);
 				$temp_path = $package_base_path;
 			}
-			$items[$current_identifier]['new_path'] = implode('/', $temp_path);
-			
+
+			$items[$current_identifier]['new_path'] = implode('/', $temp_path);	
 			if (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
@@ -353,15 +403,15 @@ function rehash($items){
 			//don't have authorization setup.
 			$msg->addError('IMS_AUTHORIZATION_NOT_SUPPORT');
 		}
-	array_push($element_path, $name);
-}
+		array_push($element_path, $name);
+	}
 
 	/* called when an element ends */
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
 		global $path, $element_path, $my_data, $items;
-		global $current_identifier;
-		global $msg, $content_type;
+		global $current_identifier, $skip_ims_validation;
+		global $msg, $content_type;		
 		static $resource_num = 0;
 		
 		if ($name == 'item') {
@@ -381,7 +431,7 @@ function rehash($items){
 			$my_data = trim($my_data);
 			$last_file_name = $items[$current_identifier]['file'][(sizeof($items[$current_identifier]['file']))-1];
 
-			if ($name=='originalAccessMode'){
+			if ($name=='originalAccessMode'){				
 				if (in_array('accessModeStatement', $element_path)){
 					$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['access_stmt_originalAccessMode'][] = $my_data;
 				} elseif (in_array('adaptationStatement', $element_path)){
@@ -394,6 +444,13 @@ function rehash($items){
 			} elseif ($name=='isAdaptationOf'){
 				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['isAdaptationOf'][] = $my_data;
 			} elseif ($name=='accessForAllResource'){
+				/* the head node of accessForAll Metadata, if this exists in the manifest. Skip XSD validation,
+				 * because A4a doesn't have a xsd yet.  Our access for all is based on ISO which will not pass 
+				 * the current IMS validation.  
+				 * Also, since ATutor is the only one (as of Oct 21, 2009) that exports IMS with access for all
+				 * content, we can almost assume that any ims access for all content is by us, and is valid. 
+				 */
+				$skip_ims_validation = true;
 				$resource_num++;
 			} elseif($name=='file'){
 				$resource_num = 0;	//reset resournce number to 0 when the file tags ends
@@ -442,7 +499,7 @@ function rehash($items){
 	
 				} else {
 					$order[$parent_item_id] ++;
-					$item_tmpl = array(	'title'			=> $data,
+					$item_tmpl = array(	'title'				=> $data,
 										'parent_content_id' => $parent_item_id,
 										'ordering'			=> $order[$parent_item_id]-1);
 					//append other array values if it exists
@@ -672,7 +729,6 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 }
 
 xml_parser_free($xml_parser);
-
 /* check if the glossary terms exist */
 $glossary_path = '';
 if ($content_type == 'IMS Common Cartridge'){
@@ -765,15 +821,27 @@ foreach ($items as $item_id => $content_info)
 	//formatting field, default 1
 	$content_formatting = 1;	//CONTENT_TYPE_CONTENT
 
-	//if this is any of the LTI tools, skip it. (ie. Discussion Tools, Weblinks, etc)
-	if ($content_info['type']=='imsdt_xmlv1p0'){
-		$lti_offset[$content_info['parent_content_id']]++;
-		continue;
-	}
-
 	//don't want to display glossary as a page
 	if ($content_info['href']== $glossary_path . 'glossary.xml'){
 		continue;
+	}
+
+	//if discussion tools, add it to the list of unhandled dts
+	if ($content_info['type']=='imsdt_xmlv1p0'){
+		//if it will be taken care after (has dependency), then move along.
+		if (in_array($item_id, $avail_dt)){
+			$lti_offset[$content_info['parent_content_id']]++;
+			continue;
+		}
+	}
+
+	//handle the special case of cc import, where there is no content association. The resource should
+	//still be imported.
+	if(!isset($content_info['parent_content_id'])){
+		//if this is a question bank 
+		if ($content_info['type']=="imsqti_xmlv1p2/imscc_xmlv1p0/question-bank"){
+			addQuestions($content_info['href'], $content_info, $import_path);
+		}
 	}
 
 	//if it has no title, most likely it is not a page but just a normal item, skip it
@@ -787,7 +855,13 @@ foreach ($items as $item_id => $content_info)
 		foreach($content_info['dependency'] as $dependency_ref){
 			//handle styles	
 			if (preg_match('/(.*)\.css$/', $items[$dependency_ref]['href'])){
-				$head = '<link rel="stylesheet" type="text/css" href="'.$items[$dependency_ref]['href'].'" />';
+				//calculate where this is based on our current base_href. 
+				//assuming the dependency folders are siblings of the item
+				$head = '<link rel="stylesheet" type="text/css" href="../'.$items[$dependency_ref]['href'].'" />';
+			}
+			//check if this is a discussion tool dependency
+			if ($items[$dependency_ref]['type']=='imsdt_xmlv1p0'){
+				$items[$item_id]['forum'][$dependency_ref] = $items[$dependency_ref]['href'];
 			}
 		}
 	}
@@ -834,6 +908,23 @@ foreach ($items as $item_id => $content_info)
             /* Using default size of 550 x 400 */
 
 			$content = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="550" height="400" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="'. $content_info['href'] . '" /><param name="autoplay" value="true" /><param name="controller" value="true" /><embed src="' . $content_info['href'] .'" width="550" height="400" controller="true" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>';
+
+		/* Oct 19, 2009
+		 * commenting this whole chunk out.  It's part of my test import codes, not sure why it's here, 
+		 * and I don't think it should be here.  Remove this whole comment after further testing and confirmation.
+		 * @harris
+		 *
+			//Mimic the array for now.
+			$test_attributes['resource']['href'] = $test_xml_file;
+			$test_attributes['resource']['type'] = isset($items[$item_id]['type'])?'imsqti_xmlv1p2':'imsqti_xmlv1p1';
+			$test_attributes['resource']['file'] = $items[$item_id]['file'];
+//			$test_attributes['resource']['file'] = array($test_xml_file);
+
+			//Get the XML file out and start importing them into our database.
+			//TODO: See question_import.php 287-289.
+			$qids = $qti_import->importQuestions($test_attributes);
+		
+		 */
 		} else if ($ext == 'mp3') {
 			$content = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="200" height="15" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="'. $content_info['href'] . '" /><param name="autoplay" value="false" /><embed src="' . $content_info['href'] .'" width="200" height="15" autoplay="false" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>';
 		} else if (in_array($ext, array('wav', 'au'))) {
@@ -882,12 +973,25 @@ foreach ($items as $item_id => $content_info)
 			if ( strpos($content_info['href'], '..') === false && !preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href'])) {
 //				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			}
+
+			/* overwrite content if this is discussion tool. */
+			if ($content_info['type']=='imsdt_xmlv1p0'){
+				$dt_parser = new DiscussionToolsParser();
+				$xml_content = @file_get_contents($import_path . $content_info['href']);
+				$dt_parser->parse($xml_content);
+				$forum_obj = $dt_parser->getDt();
+				$content = $forum_obj->getText();
+				if ($content==''){
+					$content = ' ';
+				}
+				unset($forum_obj);
+				$dt_parser->close();
+			}
 		} else if ($ext) {
 			/* non text file, and can't embed (example: PDF files) */
 			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
 		}	
 	}
-
 	$content_parent_id = $cid;
 	if ($content_info['parent_content_id'] !== 0) {
 		$content_parent_id = $items[$content_info['parent_content_id']]['real_content_id'];
@@ -904,13 +1008,14 @@ foreach ($items as $item_id => $content_info)
 
 	/* replace the old path greatest common denomiator with the new package path. */
 	/* we don't use str_replace, b/c there's no knowing what the paths may be	  */
-	/* we only want to replace the first part of the path.						  */
+	/* we only want to replace the first part of the path.	
+	*/
 	if ($package_base_path != '') {
-		$content_info['new_path']	= $package_base_name . substr($content_info['new_path'], strlen($package_base_path));
+		$content_info['new_path'] = $package_base_name . substr($content_info['new_path'], strlen($package_base_path));
 	} else {
-		$content_info['new_path'] = $package_base_name;
+		$content_info['new_path'] = $package_base_name . '/' . $content_info['new_path'];
 	}
-
+//debug($content_info, $package_base_path);
 	//handles weblinks
 	if ($content_info['type']=='imswl_xmlv1p0'){
 		$weblinks_parser = new WeblinksParser();
@@ -921,8 +1026,6 @@ foreach ($items as $item_id => $content_info)
 		$content_folder_type = CONTENT_TYPE_WEBLINK;
 		$content_formatting = 2;
 	}
-	
-	
 	$head = addslashes($head);
 	$content_info['title'] = addslashes($content_info['title']);
 	$content_info['test_message'] = addslashes($content_info['test_message']);
@@ -939,6 +1042,7 @@ foreach ($items as $item_id => $content_info)
 	if ($content_formatting!=CONTENT_TYPE_WEBLINK){
 		$content_folder_type = ($content==''?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
 	}
+
 	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
 	      . '(course_id, 
 	          content_parent_id, 
@@ -971,6 +1075,7 @@ foreach ($items as $item_id => $content_info)
 			     .'"'.$content.'",'
 				 .'"'.$content_info['test_message'].'",'
 				 .$content_folder_type.')';
+
 	$result = mysql_query($sql, $db) or die(mysql_error());
 
 	/* get the content id and update $items */
@@ -987,19 +1092,9 @@ foreach ($items as $item_id => $content_info)
 		}
 
 		foreach ($loop_var as $array_id => $test_xml_file){
-			$tests_xml = $import_path.$test_xml_file;
+			//call subrountine to add the questions.
+			$qids = addQuestions($test_xml_file, $items[$item_id], $import_path);
 			
-			//Mimic the array for now.
-			$test_attributes['resource']['href'] = $test_xml_file;
-			$test_attributes['resource']['type'] = isset($items[$item_id]['type'])?'imsqti_xmlv1p2':'imsqti_xmlv1p1';
-			$test_attributes['resource']['file'] = $items[$item_id]['file'];
-//			$test_attributes['resource']['file'] = array($test_xml_file);
-
-
-			//Get the XML file out and start importing them into our database.
-			//TODO: See question_import.php 287-289.
-			$qids = $qti_import->importQuestions($test_attributes);
-
 			//import test
 			$tid = $qti_import->importTest($content_info['title']);
 
@@ -1034,6 +1129,37 @@ foreach ($items as $item_id => $content_info)
 		$a4a_import = new A4aImport($items[$item_id]['real_content_id']);
 		$a4a_import->setRelativePath($items[$item_id]['new_path']);
 		$a4a_import->importA4a($items[$item_id]['a4a']);
+	}
+
+	/* get the discussion tools (dependent to content)*/
+	if (isset($items[$item_id]['forum']) && !empty($items[$item_id]['forum'])){
+		foreach($items[$item_id]['forum'] as $forum_ref => $forum_link){
+			$dt_parser = new DiscussionToolsParser();
+			$dt_import = new DiscussionToolsImport();
+
+			//if this forum has not been added, parse it and add it.
+			if (!isset($added_dt[$forum_ref])){
+				$xml_content = @file_get_contents($import_path . $forum_link);
+				$dt_parser->parse($xml_content);
+				$forum_obj = $dt_parser->getDt();
+				$dt_import->import($forum_obj, $items[$item_id]['real_content_id']);
+				$added_dt[$forum_ref] = $dt_import->getFid();				
+			}
+			//associate the fid and content id
+			$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$forum_ref]);
+		}
+	} elseif ($items[$item_id]['type']=='imsdt_xmlv1p0'){
+		//otptimize this, repeated codes as above
+		$dt_parser = new DiscussionToolsParser();
+		$dt_import = new DiscussionToolsImport();
+		$xml_content = @file_get_contents($import_path . $content_info['href']);
+		$dt_parser->parse($xml_content);
+		$forum_obj = $dt_parser->getDt();
+		$dt_import->import($forum_obj, $items[$item_id]['real_content_id']);
+		$added_dt[$item_id] = $dt_import->getFid();				
+
+		//associate the fid and content id
+		$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$item_id]);
 	}
 }
 

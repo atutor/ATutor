@@ -30,7 +30,7 @@ if (isset($_POST['submit_yes'])) {
 		$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
 		$result = mysql_query($sql, $db);
 		if (!mysql_fetch_assoc($result)) {
-			$sql2 = "UPDATE ".TABLE_PREFIX."members SET status=".$status." WHERE member_id=$id";
+			$sql2 = "UPDATE ".TABLE_PREFIX."members SET status=".$status.", creation_date = creation_date WHERE member_id=$id";
 			$result2 = mysql_query($sql2,$db);
 		}
 	}

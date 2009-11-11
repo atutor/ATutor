@@ -47,7 +47,7 @@
 		<?php echo $app_obj->getAppLink('<img src="'.$app_obj->getThumbnail().'"/>', $id); ?><br/>
 		<?php echo _AT('by'); ?> 
 		<?php if ($app_obj->getAuthorEmail()!=''): ?>
-			<a href="<?php echo $app_obj->getAuthorEmail(); ?>"><?php echo $author; ?></a>
+			<a href="mailto:<?php echo $app_obj->getAuthorEmail(); ?>"><?php echo $author; ?></a>
 		<?php else: echo $author; ?>
 		<?php endif; ?>			
 	</div>
@@ -80,7 +80,7 @@
 		<?php echo $app_obj->getAppLink('<img src="'.$app_obj->getThumbnail().'"/>', $id); ?><br/>
 		<?php echo _AT('by'); ?> 
 		<?php if ($app_obj->getAuthorEmail()!=''): ?>
-			<a href="<?php echo $app_obj->getAuthorEmail(); ?>"><?php echo $author; ?></a>
+			<a href="mailto:<?php echo $app_obj->getAuthorEmail(); ?>"><?php echo $author; ?></a>
 		<?php else: echo $author; ?>
 		<?php endif; ?>			
 	</div>

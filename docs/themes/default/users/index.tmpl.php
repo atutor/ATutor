@@ -5,7 +5,7 @@
 <?php elseif (!$this->courses): ?>
 	<?php global $msg; $msg->printInfos('NO_COURSES'); ?>
 <?php endif; ?>
-
+<div class="container" style="width:95%; margin:auto;border:thin solid #e8e8e8;">
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">
 		<div style="font-size:smaller;" align="right"><?php
@@ -88,5 +88,5 @@
 			</div>
 	</div>
 <?php endforeach; ?>
-
+<br style="clear:both;"/></div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

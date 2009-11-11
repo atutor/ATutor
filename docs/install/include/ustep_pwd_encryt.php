@@ -24,7 +24,7 @@ while ($row = mysql_fetch_assoc($result))
 	if (strlen($row["password"]) < 40)
 	{
 		print "updating member ".$row["first_name"]." ".$row["last_name"].": from ".$row["password"]." to " .sha1($row["password"])."<br>";
-		$sql_update = "UPDATE ".TABLE_PREFIX."members set password = '".sha1($row["password"])."' WHERE member_id=".$row["member_id"];
+		$sql_update = "UPDATE ".TABLE_PREFIX."members set password = '".sha1($row["password"])."', creation_date = creation_date WHERE member_id=".$row["member_id"];
 		$result_update = mysql_query($sql_update, $db);
 	}
 }

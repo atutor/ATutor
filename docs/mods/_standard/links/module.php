@@ -11,7 +11,7 @@ $_group_tool = $_student_tool = 'links/index.php';
 $this->_list['links'] = array('title_var'=>'links','file'=>'mods/_standard/links/sublinks.php');
 
 //tool manager
-$this->_tool['links'] = array('title_var'=>'links','file'=>'links_tool.php');
+//$this->_tool['links'] = array('title_var'=>'links','file'=>'links_tool.php');
 
 /*$this->_pages['tools/links/index.php']['title_var'] = 'links';
 $this->_pages['tools/links/index.php']['parent']    = 'tools/index.php';

@@ -58,7 +58,8 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 } else {
 	$get_file = 'content/' . $_SESSION['course_id'] . '/';
 }
-
+function fm_path(){
+	global $pathext;
 echo '<p>'._AT('current_path').' ';
 
 if (isset($pathext) && $pathext != '') {
@@ -95,7 +96,7 @@ if ($pathext != '') {
 }
 echo '</p>';
 
-
+}
 
 if ($popup == TRUE) {
 	$totalcol = 6;
@@ -133,7 +134,7 @@ if (TRUE || $framed != TRUE) {
 	echo '		<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext != '') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup='.$popup.'">'."\n";
 	if( $MakeDirOn ) {
 		if ($depth < $MaxDirDepth) {
-			echo '		<label for="dirname">To create a folder, enter name here:</label><br />'."\n";
+			echo '		<label for="dirname">'._AT('create_folder_here').'</label><br />'."\n";
 			echo '		&nbsp;<small class="spacer">'._AT('keep_it_short').'</small><br />'."\n";
 			echo '		<input type="text" name="dirname" id="dirname" size="20" /> '."\n";
 			echo '		<input type="hidden" name="mkdir_value" value="true" /> '."\n";
@@ -276,19 +277,16 @@ if (TRUE || $framed != TRUE) {
 // Directory and File listing 
 
 
-//<<<<<<< .working
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
-//=======
-
-//echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP.'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
-//>>>>>>> .merge-right.r7847
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
-
-
-
 ?>
 <table class="data static" summary="" border="0" rules="groups" style="width: 90%">
 <thead>
+<tr>
+<td colspan="5">
+<?php fm_path(); ?>
+</td>
+</tr>
 <tr>
 	<th scope="col"><input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" title="<?php echo _AT('select_all'); ?>" /></th>
 	<th>&nbsp;</th>

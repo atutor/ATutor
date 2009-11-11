@@ -46,7 +46,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="prefs">
-<div class="input-form" style="width:60%">
+<div class="input-form" style="width:90%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('side_menu'); ?></legend>
 	<div class="row">
 		<p><?php echo _AT('side_menu_text'); ?></p>

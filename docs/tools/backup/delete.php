@@ -26,7 +26,7 @@ $_section[2][0] = _AT('delete');
 
 if (isset($_POST['submit_yes'])) {
 	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-	$Backup =& new Backup($db, $_SESSION['course_id']);
+	$Backup = new Backup($db, $_SESSION['course_id']);
 	$Backup->delete($_POST['backup_id']);
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');

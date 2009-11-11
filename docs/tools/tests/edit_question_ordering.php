@@ -55,6 +55,7 @@ if (isset($_POST['cancel'])) {
 	}
 	if (!$msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);
+		$_POST['feedback'] = $addslashes($_POST['feedback']);
 
 		$choice_new = array(); // stores the non-blank choices
 		$answer_new = array(); // stores the non-blank answers

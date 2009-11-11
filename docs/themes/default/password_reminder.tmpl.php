@@ -7,7 +7,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_password_reminder" value="true" />
-	<div class="input-form" style="max-width: 400px;">
+	<div class="input-form" style="width: 90%;">zzz
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('password_reminder'); ?></legend>
 		<div class="row">
 			<?php echo _AT('password_blurb'); ?>

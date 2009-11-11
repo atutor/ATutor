@@ -173,7 +173,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['custom_path'] = str_replace(' ', '_', $_POST['custom_path']);
 
 		/* anything else should be okay, since we're on *nix.. hopefully */
-		$_POST['custom_path'] = ereg_replace('[^a-zA-Z0-9._/]', '', $_POST['custom_path']);
+		$_POST['custom_path'] = preg_replace('/[^a-zA-Z0-9._\/]/', '', $_POST['custom_path']);
 
 		if (strpos($_POST['pathext'].$_POST['custom_path'], '..') !== false) {
 			$msg->addError('UNKNOWN');

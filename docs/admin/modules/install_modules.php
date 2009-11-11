@@ -58,7 +58,7 @@ else
 	
 	if ($module_list_xml) 
 	{
-		$moduleListParser =& new ModuleListParser();
+		$moduleListParser = new ModuleListParser();
 		$moduleListParser->parse($module_list_xml);
 		$module_list_array = $moduleListParser->getParsedArray();
 	}
@@ -210,7 +210,7 @@ $msg->printAll();
 		</div>
 		
 		<div class="row buttons">
-			<input type="submit" name="install_upload" value="Install" onclick="javascript: return validate_filename(); " class="submit" />
+			<input type="submit" name="install_upload" value="<?php echo _AT('install'); ?>" onclick="javascript: return validate_filename(); " class="submit" />
 			<input type="hidden" name="uploading" value="1" />
 		</div>
 </div>

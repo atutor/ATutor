@@ -14,7 +14,7 @@
 		<div class="profile_container">
 			<div class="top_right" style="border:thin #cccccc solid;"><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?edit=position'.SEP.'id='.$row['id']); ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/edit_profile.gif" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>" border="0" /></a>  <a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?delete=position'.SEP.'id='.$row['id']); ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('remove'); ?>" title="<?php echo _AT('remove'); ?>" border="0" /></a></div>
 			<div><?php echo _AT('company') . ': ' . htmlentities_utf8($row['company']); ?></div>
-			<div><?php echo _AT('title') . ': ' . htmlentities_utf8($row['title']); ?></div>
+			<div><?php echo _AT('position') . ': ' . htmlentities_utf8($row['title']); ?></div>
 			<div><?php echo _AT('from') . ': ' . htmlentities_utf8($row['from']);?></div>
 			<div><?php echo _AT('to') . ': ' . htmlentities_utf8($row['to']); ?></div>
 			<div><?php echo _AT('description') . ': ' . htmlentities_utf8($row['description']); ?></div>

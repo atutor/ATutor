@@ -17,7 +17,7 @@ function encrypt_password()
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_password_hidden" value="" />
 
-	<div class="input-form" style="max-width: 400px;">
+	<div class="input-form" style="width:90%;">
 
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password"><?php echo _AT('password'); ?></label><br />

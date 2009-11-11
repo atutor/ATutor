@@ -16,6 +16,7 @@
 // $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 function delete_user($id) {
@@ -117,7 +118,6 @@ function delete_user($id) {
 	write_to_log(AT_ADMIN_LOG_DELETE, 'member_track', mysql_affected_rows($db), $sql);
 	
 	// delete personal files from file storage
-	require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
 	fs_delete_workspace(WORKSPACE_PERSONAL, $id);
 
 

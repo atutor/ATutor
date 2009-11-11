@@ -303,7 +303,7 @@ if (!$overwrite && !empty($existing_files)){
 //TODO:	import_test.php shares approx. the same code as below, just that import_test.php has 
 //		an extra line of code that uses a stack to remember the question #.  Might want to 
 //		create a function for this.
-$qti_import =& new QTIImport($import_path);
+$qti_import = new QTIImport($import_path);
 $qti_import->importQuestions($attributes);
 
 //debug('done');

@@ -259,22 +259,25 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 
 /* Register our Errorhandler on everypage */
 //require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-//$err =& new ErrorHandler();
+//$err = new ErrorHandler();
 
 
-
+//TODO*******************BOLOGNA*******************REMOVE ME*******************/
 // if filemanager is a inside a popup or a frame
 // i don't like this code. i don't know were these two variables are coming from
 // anyone can add ?framed=1 to a URL to alter the behaviour.
 if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['popup']) && $_REQUEST['popup'])) {
-	$savant->assign('framed', 1);
-	$savant->assign('popup', 1);
-	$savant->display('include/fm_header.tmpl.php');
+    $savant->assign('framed', 1);
+    $savant->assign('popup', 1);
+
+    if(isset($tool_flag) && ($tool_flag))
+        $savant->display('include/tm_header.tmpl.php');         //header for toolmanager
+    else
+        $savant->display('include/fm_header.tmpl.php');
+
 } else {
-
-//	$savant->assign('opensocial', open_social_libs($_base_href));
-	$savant->display('include/header.tmpl.php');
-
+    //$savant->assign('opensocial', open_social_libs($_base_href));
+    $savant->display('include/header.tmpl.php');
 }
 
 

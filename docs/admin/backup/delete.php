@@ -22,7 +22,7 @@ $_user_location = 'admin';
 if (isset($_POST['submit_yes'])) {
 	require_once(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
-	$Backup =& new Backup($db, $_POST['course']);
+	$Backup = new Backup($db, $_POST['course']);
 	$Backup->delete($_POST['backup_id']);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

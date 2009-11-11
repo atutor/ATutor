@@ -29,7 +29,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } 
 
-$Backup =& new Backup($db, $_REQUEST['course']);
+$Backup = new Backup($db, $_REQUEST['course']);
 $backup_row = $Backup->getRow($_REQUEST['backup_id']);
 
 if (isset($_POST['edit'])) {

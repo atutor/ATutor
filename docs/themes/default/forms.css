@@ -18,6 +18,11 @@ div.input-form div.row {
 	padding:8px;
 }
 
+/*<img> and <a> tags: on mouse hover the color of the background will keep the same!*/
+div.input-form div.row img,a:hover{
+    background-color:#F8F8F8;
+}
+
 div.input-form .footer {
 	border-top: 1px solid #F9F6F2;
 }

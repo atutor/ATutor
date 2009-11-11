@@ -191,7 +191,7 @@ function save_changes($redir, $current_tab) {
 		$db_test_array[] = $row['test_id'];
 	}
 
-	if (is_array($_POST['tid']) && sizeof($_POST['tid']) > 0){
+        if (is_array($_POST['tid']) && sizeof($_POST['tid']) > 0){
 		$toBeDeleted = array_diff($db_test_array, $_POST['tid']);
 		$toBeAdded = array_diff($_POST['tid'], $db_test_array);
 		//Delete entries
@@ -217,7 +217,25 @@ function save_changes($redir, $current_tab) {
 		$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid]";
 		$result = mysql_query($sql, $db);
 	}
-	//End Add test
+	//End Add test       
+
+        //TODO*******************BOLOGNA****************REMOVE ME**************/
+         if(isset($_SESSION['associated_forum']) && !$msg->containsErrors()){
+            if($_SESSION['associated_forum']=='none'){
+                $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
+                mysql_query($sql,$db);
+            } else {
+                $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
+                mysql_query($sql,$db);
+                $associated_forum = $_SESSION['associated_forum'];
+                for($i=0; $i<count($associated_forum); $i++){
+                    $sql="INSERT INTO ".TABLE_PREFIX."content_forums_assoc SET content_id='$_POST[cid]',forum_id='$associated_forum[$i]'";
+                    mysql_query($sql,$db);
+                }
+            }
+            unset($_SESSION['associated_forum']);
+         }
+
 
 	if (!$msg->containsErrors() && $redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
@@ -438,32 +456,32 @@ function write_temp_file() {
 	$file_name = $_POST['cid'].'.html';
 
 	if ($handle = fopen(AT_CONTENT_DIR . $file_name, 'wb+')) {
-		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
-
-		if ($_POST['body_text'] != '') {
-			$temp_content .= format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
-		}
-		$temp_title = $_POST['title'];
-
-		$html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-		<head>
-			<base href="{BASE_HREF}" />
-			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-			<title>{TITLE}</title>
-			<meta name="Generator" content="ATutor accessibility checker file - can be deleted">
-		</head>
-		<body>
-		{CONTENT}
-		</body>
-		</html>';
-
-		$page_html = str_replace(	array('{BASE_HREF}', '{TITLE}', '{CONTENT}'),
-									array($content_base, $temp_title, $temp_content),
-									$html_template);
+//		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
+//
+//		if ($_POST['body_text'] != '') {
+//			$temp_content .= format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
+//		}
+//		$temp_title = $_POST['title'];
+//
+//		$html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+//			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+//		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+//		<head>
+//			<base href="{BASE_HREF}" />
+//			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+//			<title>{TITLE}</title>
+//			<meta name="Generator" content="ATutor accessibility checker file - can be deleted">
+//		</head>
+//		<body>
+//		{CONTENT}
+//		</body>
+//		</html>';
+//
+//		$page_html = str_replace(	array('{BASE_HREF}', '{TITLE}', '{CONTENT}'),
+//									array($content_base, $temp_title, $temp_content),
+//									$html_template);
 		
-		if (!@fwrite($handle, $page_html)) {
+		if (!@fwrite($handle, stripslashes($_POST['body_text']))) {
 			$msg->addError('FILE_NOT_SAVED');       
 	   }
 	} else {

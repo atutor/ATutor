@@ -30,11 +30,11 @@ if ( (isset($_POST['delete']) || isset($_POST['export']) || isset($_POST['edit']
 		exit;
 	}
 } else if (isset($_POST['export'])) {
-	$language =& $languageManager->getLanguage($_POST['id']);
+	$language = $languageManager->getLanguage($_POST['id']);
 	if ($language === FALSE) {
 		$msg->addError('ITEM_NOT_FOUND');
 	} else {
-		$languageEditor =& new LanguageEditor($language);
+		$languageEditor = new LanguageEditor($language);
 		$languageEditor->export();
 	}
 } else if (isset($_POST['edit'])) {

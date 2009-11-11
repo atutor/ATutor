@@ -54,9 +54,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
 $result = mysql_query($sql, $db);
 ?>
-
+<div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
-<fieldset class="group_form" style="width: 60%; margin:auto;"><legend class="group_form"><?php echo _AT('groups'); ?></legend>
+<fieldset class="group_form" margin:auto;"><legend class="group_form"><?php echo _AT('groups'); ?></legend>
 <table class="data" summary="" rules="cols" style="width: 80%">
 <tfoot>
 <tr>
@@ -108,6 +108,6 @@ $result = mysql_query($sql, $db);
 </tbody>
 </table>
 </fieldset>
-</form>
-
+</form><br />
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

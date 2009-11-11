@@ -27,7 +27,7 @@ $_SESSION['done'] = 1;
 
 if (isset($_POST['submit_import'])) {
 	require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
-	$remoteLanguageManager =& new RemoteLanguageManager();
+	$remoteLanguageManager = new RemoteLanguageManager();
 	$remoteLanguageManager->import($_POST['language']);
 
 	header('Location: language_import.php');
@@ -73,7 +73,7 @@ if (isset($_POST['submit_import'])) {
 	<div class="row">
 		<?php
 			require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
-			$remoteLanguageManager =& new RemoteLanguageManager();
+			$remoteLanguageManager = new RemoteLanguageManager();
 			if ($remoteLanguageManager->getNumLanguages()) {
 				$found = false;
 				foreach ($remoteLanguageManager->getAvailableLanguages() as $codes){

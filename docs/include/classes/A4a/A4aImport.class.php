@@ -60,7 +60,7 @@ class A4aImport extends A4a {
 						//some paths will reference files above this directory, as a result
 						//we will see ../, but since everything is under 'resources/', the relative_path
 						//we can safely take it out.
-//						preg_replace('/..\//');
+						$secondary_resource = preg_replace('/^\.\.\//', '', $secondary_resource);
 						$secondary_files = $items[$this->relative_path.$secondary_resource];
 						//check if this secondary file is the adaptation of 
 						// this primary file 

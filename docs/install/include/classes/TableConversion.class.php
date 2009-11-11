@@ -52,13 +52,13 @@ define('LINK_CAT_SELF',		3);
 	 function convertTableBySysDefault(){
 		global $errors;
 
-		$temp_table =& new CourseCategoriesTable($this->table_prefix, 'course_cats', $this->sys_default_lang);
+		$temp_table = new CourseCategoriesTable($this->table_prefix, 'course_cats', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'course_cats was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['CourseCategoriesTable'] = array($this->table_prefix, 'course_cats', $char_set, $course_id);
 		}
 
-		$temp_table =& new MembersTable($this->table_prefix, 'members', $this->sys_default_lang);
+		$temp_table = new MembersTable($this->table_prefix, 'members', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'members was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['MembersTable'] = array($this->table_prefix, 'members', $char_set, $course_id);
@@ -72,181 +72,181 @@ define('LINK_CAT_SELF',		3);
 	function convertTableBySysDefault_161(){
 		global $errors;
 
-		$temp_table =& new AdminsTable($this->table_prefix, 'admins', $this->sys_default_lang);
+		$temp_table = new AdminsTable($this->table_prefix, 'admins', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'admins was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['AdminsTable'] = array($this->table_prefix, 'admins', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new AdminLogTable($this->table_prefix, 'admin_log', $this->sys_default_lang);
+		$temp_table = new AdminLogTable($this->table_prefix, 'admin_log', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'admin_log was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['AdminLogTable'] = array($this->table_prefix, 'admin_log', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new AutoEnrollTable($this->table_prefix, 'auto_enroll', $this->sys_default_lang);
+		$temp_table = new AutoEnrollTable($this->table_prefix, 'auto_enroll', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'auto_enroll was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['AutoEnrollTable'] = array($this->table_prefix, 'auto_enroll', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new AutoEnrollCoursesTable($this->table_prefix, 'auto_enroll_courses', $this->sys_default_lang);
+		$temp_table = new AutoEnrollCoursesTable($this->table_prefix, 'auto_enroll_courses', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'auto_enroll_courses was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['AutoEnrollCourses'] = array($this->table_prefix, 'auto_enroll_courses', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new ConfigTable($this->table_prefix, 'config', $this->sys_default_lang);
+		$temp_table = new ConfigTable($this->table_prefix, 'config', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'config was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ConfigTable'] = array($this->table_prefix, 'config', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new CourseAccessTable($this->table_prefix, 'course_access', $this->sys_default_lang);
+		$temp_table = new CourseAccessTable($this->table_prefix, 'course_access', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'course_access was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['CourseAccessTable'] = array($this->table_prefix, 'course_access', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new CourseStatsTable($this->table_prefix, 'course_stats', $this->sys_default_lang);
+		$temp_table = new CourseStatsTable($this->table_prefix, 'course_stats', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'course_stats was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['CourseStatsTable'] = array($this->table_prefix, 'course_stats', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new FeedsTable($this->table_prefix, 'feeds', $this->sys_default_lang);
+		$temp_table = new FeedsTable($this->table_prefix, 'feeds', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'feeds was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['FeedsTable'] = array($this->table_prefix, 'feeds', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new FileStorageGroupsTable($this->table_prefix, 'file_storage_groups', $this->sys_default_lang);
+		$temp_table = new FileStorageGroupsTable($this->table_prefix, 'file_storage_groups', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'file_storage_groups was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['FileStorageGroupsTable'] = array($this->table_prefix, 'file_storage_groups', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new ForumsAccessedTable($this->table_prefix, 'forums_accessed', $this->sys_default_lang);
+		$temp_table = new ForumsAccessedTable($this->table_prefix, 'forums_accessed', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'forums_accessed was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ForumsAccessedTable'] = array($this->table_prefix, 'forums_accessed', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new ForumsCoursesTable($this->table_prefix, 'forums_courses', $this->sys_default_lang);
+		$temp_table = new ForumsCoursesTable($this->table_prefix, 'forums_courses', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'forums_courses was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ForumsCoursesTable'] = array($this->table_prefix, 'forums_courses', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new ForumsGroupsTable($this->table_prefix, 'forums_groups', $this->sys_default_lang);
+		$temp_table = new ForumsGroupsTable($this->table_prefix, 'forums_groups', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'forums_groups was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ForumsGroupsTable'] = array($this->table_prefix, 'forums_groups', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new ForumsSubscriptionsTable($this->table_prefix, 'forums_subscriptions', $this->sys_default_lang);
+		$temp_table = new ForumsSubscriptionsTable($this->table_prefix, 'forums_subscriptions', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'forums_subscriptions was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ForumsSubscriptionsTable'] = array($this->table_prefix, 'forums_subscriptions', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new GroupsMembersTable($this->table_prefix, 'groups_members', $this->sys_default_lang);
+		$temp_table = new GroupsMembersTable($this->table_prefix, 'groups_members', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'groups_members was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['GroupsMembersTable'] = array($this->table_prefix, 'groups_members', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new HandbookNotesTable($this->table_prefix, 'handbook_notes', $this->sys_default_lang);
+		$temp_table = new HandbookNotesTable($this->table_prefix, 'handbook_notes', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'handbook_notes was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['HandbookNotesTable'] = array($this->table_prefix, 'handbook_notes', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new InstructorApprovalsTable($this->table_prefix, 'instructor_approvals', $this->sys_default_lang);
+		$temp_table = new InstructorApprovalsTable($this->table_prefix, 'instructor_approvals', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'instructor_approvals was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['InstructorApprovalsTable'] = array($this->table_prefix, 'instructor_approvals', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new LanguagesTable($this->table_prefix, 'languages', $this->sys_default_lang);
+		$temp_table = new LanguagesTable($this->table_prefix, 'languages', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'languages was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['LanguagesTable'] = array($this->table_prefix, 'languages', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new LanguagePagesTable($this->table_prefix, 'language_pages', $this->sys_default_lang);
+		$temp_table = new LanguagePagesTable($this->table_prefix, 'language_pages', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'language_pages was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['LanguagePagesTable'] = array($this->table_prefix, 'language_pages', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new LanguageTextTable($this->table_prefix, 'language_text', $this->sys_default_lang);
+		$temp_table = new LanguageTextTable($this->table_prefix, 'language_text', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'language_text was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['LanguageTextTable'] = array($this->table_prefix, 'language_text', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new MailQueueTable($this->table_prefix, 'mail_queue', $this->sys_default_lang);
+		$temp_table = new MailQueueTable($this->table_prefix, 'mail_queue', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'mail_queue was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['MailQueueTable'] = array($this->table_prefix, 'mail_queue', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new MasterListTable($this->table_prefix, 'master_list', $this->sys_default_lang);
+		$temp_table = new MasterListTable($this->table_prefix, 'master_list', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'master_list was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['MasterListTable'] = array($this->table_prefix, 'master_list', $this->sys_default_lang, $course_id);
 		}
 	
-		$temp_table =& new MemberTrackTable($this->table_prefix, 'member_track', $this->sys_default_lang);
+		$temp_table = new MemberTrackTable($this->table_prefix, 'member_track', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'member_track was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['MemberTrackTable'] = array($this->table_prefix, 'member_track', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new ModulesTable($this->table_prefix, 'modules', $this->sys_default_lang);
+		$temp_table = new ModulesTable($this->table_prefix, 'modules', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'modules was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ModulesTable'] = array($this->table_prefix, 'modules', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new PollsMembersTable($this->table_prefix, 'polls_members', $this->sys_default_lang);
+		$temp_table = new PollsMembersTable($this->table_prefix, 'polls_members', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'polls_members was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['PollsMembersTable'] = array($this->table_prefix, 'polls_members', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new RelatedContentTable($this->table_prefix, 'related_content', $this->sys_default_lang);
+		$temp_table = new RelatedContentTable($this->table_prefix, 'related_content', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'related_content was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['RelatedContentTable'] = array($this->table_prefix, 'related_content', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new TestsGroupsTable($this->table_prefix, 'tests_groups', $this->sys_default_lang);
+		$temp_table = new TestsGroupsTable($this->table_prefix, 'tests_groups', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'tests_groups was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['TestsGroupsTable'] = array($this->table_prefix, 'tests_groups', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new TestsQuestionsAssocTable($this->table_prefix, 'tests_questions_assoc', $this->sys_default_lang);
+		$temp_table = new TestsQuestionsAssocTable($this->table_prefix, 'tests_questions_assoc', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'tests_questions_assoc was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['TestsQuestionsAssocTable'] = array($this->table_prefix, 'tests_questions_assoc', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new TestsResultsTable($this->table_prefix, 'tests_results', $this->sys_default_lang);
+		$temp_table = new TestsResultsTable($this->table_prefix, 'tests_results', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'tests_results was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['TestsResultsTable'] = array($this->table_prefix, 'tests_results', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new ThemesTable($this->table_prefix, 'themes', $this->sys_default_lang);
+		$temp_table = new ThemesTable($this->table_prefix, 'themes', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'themes was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ThemesTable'] = array($this->table_prefix, 'themes', $this->sys_default_lang, $course_id);
 		}
 
-		$temp_table =& new UsersOnlineTable($this->table_prefix, 'users_online', $this->sys_default_lang);
+		$temp_table = new UsersOnlineTable($this->table_prefix, 'users_online', $this->sys_default_lang);
 		if (!$temp_table->convert()){
 			$errors[]= $this->table_prefix.'users_online was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['UsersOnlineTable'] = array($this->table_prefix, 'users_online', $this->sys_default_lang, $course_id);
@@ -260,133 +260,133 @@ define('LINK_CAT_SELF',		3);
 		 global $errors;
 		//Run through all ATutor table and convert only those rows with the above courses.
 		//todo: implement a driver class inside the TableConversion class.
-		$temp_table =& new AssignmentsTable($this->table_prefix, 'assignments', $char_set, $course_id);
+		$temp_table = new AssignmentsTable($this->table_prefix, 'assignments', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'assignments was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['AssignmentsTable'] = array($this->table_prefix, 'assignments', $char_set, $course_id);
 		}
 
-		$temp_table =& new BackupsTable($this->table_prefix, 'backups', $char_set, $course_id);
+		$temp_table = new BackupsTable($this->table_prefix, 'backups', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'backups was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['BackupsTable'] = array($this->table_prefix, 'backups', $char_set, $course_id);
 		}
 
-		$temp_table =& new BlogPostsTable($this->table_prefix, 'blog_posts', $char_set, $course_id);
+		$temp_table = new BlogPostsTable($this->table_prefix, 'blog_posts', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'blog_posts was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['BlogPostsTable'] = array($this->table_prefix, 'blog_posts', $char_set, $course_id);
 		}
 		
-		$temp_table =& new ContentTable($this->table_prefix, 'content', $char_set, $course_id);
+		$temp_table = new ContentTable($this->table_prefix, 'content', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'content was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ContentTable'] = array($this->table_prefix, 'content', $char_set, $course_id);
 		}
 		
-		$temp_table =& new CoursesTable($this->table_prefix, 'courses', $char_set, $course_id);
+		$temp_table = new CoursesTable($this->table_prefix, 'courses', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'courses was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['CoursesTable'] = array($this->table_prefix, 'courses', $char_set, $course_id);
 		}
 		
-		$temp_table =& new CourseEnrollmentTable($this->table_prefix, 'course_enrollment', $char_set, $course_id);
+		$temp_table = new CourseEnrollmentTable($this->table_prefix, 'course_enrollment', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'course_enrollment was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['CourseEnrollmentTable'] = array($this->table_prefix, 'course_enrollment', $char_set, $course_id);
 		}
 
-		$temp_table =& new ExternalResourcesTable($this->table_prefix, 'external_resources', $char_set, $course_id);
+		$temp_table = new ExternalResourcesTable($this->table_prefix, 'external_resources', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'external_resources was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ExternalResourcesTable'] = array($this->table_prefix, 'external_resources', $char_set, $course_id);
 		}
 
-		$temp_table =& new FaqTopicsTable($this->table_prefix, 'faq_topics', $char_set, $course_id);
+		$temp_table = new FaqTopicsTable($this->table_prefix, 'faq_topics', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'faq_topics was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['FaqTopicsTable'] = array($this->table_prefix, 'faq_topics', $char_set, $course_id);
 		}
 		
-		$temp_table =& new FoldersTable($this->table_prefix, 'folders', $char_set, $course_id);
+		$temp_table = new FoldersTable($this->table_prefix, 'folders', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'folders was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['FoldersTable'] = array($this->table_prefix, 'folders', $char_set, $course_id);
 		}
 
-		$temp_table =& new FilesTable($this->table_prefix, 'files', $char_set, $course_id);
+		$temp_table = new FilesTable($this->table_prefix, 'files', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'files was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['FilesTable'] = array($this->table_prefix, 'files', $char_set, $course_id);
 		}
 		
-		$temp_table =& new ForumsTable($this->table_prefix, 'forums', $char_set, $course_id);
+		$temp_table = new ForumsTable($this->table_prefix, 'forums', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'forums was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ForumsTable'] = array($this->table_prefix, 'forums', $char_set, $course_id);
 		}
 
-		$temp_table =& new GlossaryTable($this->table_prefix, 'glossary', $char_set, $course_id);
+		$temp_table = new GlossaryTable($this->table_prefix, 'glossary', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'glossary was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['GlossaryTable'] = array($this->table_prefix, 'glossary', $char_set, $course_id);
 		}
 
-		$temp_table =& new GroupsTypesTable($this->table_prefix, 'groups_types', $char_set, $course_id);
+		$temp_table = new GroupsTypesTable($this->table_prefix, 'groups_types', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'groups_types was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['GroupsTypesTable'] = array($this->table_prefix, 'groups_types', $char_set, $course_id);
 		}
 
-		$temp_table =& new LinksCategoriesTable($this->table_prefix, 'links_categories', $char_set, $course_id);
+		$temp_table = new LinksCategoriesTable($this->table_prefix, 'links_categories', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'links_categories was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['LinksCategoriesTable'] = array($this->table_prefix, 'links_categories', $char_set, $course_id);
 		}
 
-		$temp_table =& new MessagesTable($this->table_prefix, 'messages', $char_set, $course_id);
+		$temp_table = new MessagesTable($this->table_prefix, 'messages', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'messages was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['MessagesTable'] = array($this->table_prefix, 'messages', $char_set, $course_id);
 		}
 
-		$temp_table =& new MessagesSentTable($this->table_prefix, 'messages_sent', $char_set, $course_id);
+		$temp_table = new MessagesSentTable($this->table_prefix, 'messages_sent', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'messages_sent was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['MessagesSentTable'] = array($this->table_prefix, 'messages_sent', $char_set, $course_id);
 		}
 
-		$temp_table =& new NewsTable($this->table_prefix, 'news', $char_set, $course_id);
+		$temp_table = new NewsTable($this->table_prefix, 'news', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'news was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['NewsTable'] = array($this->table_prefix, 'news', $char_set, $course_id);
 		}
 
-		$temp_table =& new PollsTable($this->table_prefix, 'polls', $char_set, $course_id);
+		$temp_table = new PollsTable($this->table_prefix, 'polls', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'polls was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['PollsTable'] = array($this->table_prefix, 'polls', $char_set, $course_id);
 		}
 
-		$temp_table =& new ReadingListTable($this->table_prefix, 'reading_list', $char_set, $course_id);
+		$temp_table = new ReadingListTable($this->table_prefix, 'reading_list', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'reading_list was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['ReadingListTable'] = array($this->table_prefix, 'reading_list', $char_set, $course_id);
 		}
 
-		$temp_table =& new TestsTable($this->table_prefix, 'tests', $char_set, $course_id);
+		$temp_table = new TestsTable($this->table_prefix, 'tests', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'tests was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['TestsTable'] = array($this->table_prefix, 'tests', $char_set, $course_id);
 		}
 
-		$temp_table =& new TestQuestionsTable($this->table_prefix, 'tests_questions', $char_set, $course_id);
+		$temp_table = new TestQuestionsTable($this->table_prefix, 'tests_questions', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'tests_questions was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['TestQuestionsTable'] = array($this->table_prefix, 'tests_questions', $char_set, $course_id);
 		}
 
-		$temp_table =& new TestsQuestionsCategoriesTable($this->table_prefix, 'tests_questions_categories', $char_set, $course_id);
+		$temp_table = new TestsQuestionsCategoriesTable($this->table_prefix, 'tests_questions_categories', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'tests_questions_categories was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['TestsQuestionsCategoriesTable'] = array($this->table_prefix, 'tests_questions_categories', $char_set, $course_id);
@@ -401,7 +401,7 @@ define('LINK_CAT_SELF',		3);
 		 global $errors;
 		//Run through all ATutor table and convert only those rows with the above courses.
 		//todo: implement a driver class inside the TableConversion class.
-/*		$temp_table =& new MessagesTable($this->table_prefix, 'messages', $char_set, $course_id);
+/*		$temp_table = new MessagesTable($this->table_prefix, 'messages', $char_set, $course_id);
 		if (!$temp_table->convert()){
 			$errors[]= $course_title.': '.$this->table_prefix.'messages was not converted.';
 			$_SESSION['redo_conversion'][$course_title]['MessagesTable'] = array($this->table_prefix, 'messages', $char_set, $course_id);
@@ -613,10 +613,10 @@ class AssignmentsTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 
 			//Convert Folders table, that is related to assignments.
-			$folders =& new FoldersTable($this->table_prefix, 'folders', $this->from_encoding, $row[$key_col]);
+			$folders = new FoldersTable($this->table_prefix, 'folders', $this->from_encoding, $row[$key_col]);
 			$result &= $folders->convert(WORKSPACE_ASSIGNMENT);
 			//Convert Files table, that is related to assignments.
-			$files_table =& new FilesTable($this->table_prefix, 'files', $this->from_encoding, $row[$key_col]);
+			$files_table = new FilesTable($this->table_prefix, 'files', $this->from_encoding, $row[$key_col]);
 			$result &= $files_table->convert(WORKSPACE_ASSIGNMENT);
 
 			//Generate SQL
@@ -708,7 +708,7 @@ class BlogPostsTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['body'] = mb_convert_encoding($row['body'], $this->to_encoding, $this->from_encoding);
 			//Convert sub post comment.
-			$commentPosts =& new BlogPostsCommentsTable($this->table_prefix, 'blog_posts_comments', $this->from_encoding, $row[$key_col]);
+			$commentPosts = new BlogPostsCommentsTable($this->table_prefix, 'blog_posts_comments', $this->from_encoding, $row[$key_col]);
 			$result &= $commentPosts->convert();
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
@@ -930,7 +930,7 @@ class FaqTopicsTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['name'] = mb_convert_encoding($row['name'], $this->to_encoding, $this->from_encoding);
 			//Convert faq entries
-			$faqEntries =& new FaqEntriesTable($this->table_prefix, 'faq_entries', $this->from_encoding, $row[$key_col]);
+			$faqEntries = new FaqEntriesTable($this->table_prefix, 'faq_entries', $this->from_encoding, $row[$key_col]);
 			$faqEntries->convert();
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
@@ -1027,7 +1027,7 @@ class ForumsTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
 			//Convert faq entries
-			$forumThread=& new ForumsThreadsTable($this->table_prefix, 'forums_threads', $this->from_encoding, $row[$key_col]);
+			$forumThread= new ForumsThreadsTable($this->table_prefix, 'forums_threads', $this->from_encoding, $row[$key_col]);
 			$result &= $forumThread->convert();
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
@@ -1195,7 +1195,7 @@ class ForumsThreadsTable extends ATutorTable{
 			$value_array['file_name'] = mb_convert_encoding($row['file_name'], $this->to_encoding, $this->from_encoding);
 			$value_array['description'] = mb_convert_encoding($row['description'], $this->to_encoding, $this->from_encoding);
 			//Convert faq entries
-			$filesComments=& new FilesCommentsTable($this->table_prefix, 'files_comments', $this->from_encoding, $row[$key_col]);
+			$filesComments= new FilesCommentsTable($this->table_prefix, 'files_comments', $this->from_encoding, $row[$key_col]);
 			$result &= $filesComments->convert();
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
@@ -1291,16 +1291,16 @@ class GroupsTypesTable extends ATutorTable{
 			$value_array['title'] = mb_convert_encoding($row['title'], $this->to_encoding, $this->from_encoding);
 			
 			//Convert group table
-			$groups =& new GroupsTable($this->table_prefix, 'groups', $this->from_encoding, $row[$key_col]);
+			$groups = new GroupsTable($this->table_prefix, 'groups', $this->from_encoding, $row[$key_col]);
 			$result &= $groups->convert();
 			//Convert links table, that has owner_type=group
-			$linkscats =& new LinksCategoriesTable($this->table_prefix, 'links_categories', $this->from_encoding, $row[$key_col]);
+			$linkscats = new LinksCategoriesTable($this->table_prefix, 'links_categories', $this->from_encoding, $row[$key_col]);
 			$result &= $linkscats->convert(LINK_CAT_GROUP);
 			//Convert folder tables, that has owner_type=group
-			$folders =& new FoldersTable($this->table_prefix, 'folders', $this->from_encoding, $row[$key_col]);
+			$folders = new FoldersTable($this->table_prefix, 'folders', $this->from_encoding, $row[$key_col]);
 			$result &= $folders->convert(WORKSPACE_GROUP);
 			//Convert file tables, that has owner_type=group
-			$files_table =& new FilesTable($this->table_prefix, 'files', $this->from_encoding, $row[$key_col]);
+			$files_table = new FilesTable($this->table_prefix, 'files', $this->from_encoding, $row[$key_col]);
 			$result &= $files_table->convert(WORKSPACE_GROUP);
 
 			//Generate SQL
@@ -1476,7 +1476,7 @@ class LinksCategoriesTable extends ATutorTable{
 			//Convert all neccessary entries
 			$value_array['name'] = mb_convert_encoding($row['name'], $this->to_encoding, $this->from_encoding);
 			//Convert links table
-			$linkscats =& new LinksTable($this->table_prefix, 'links', $this->from_encoding, $row[$key_col]);
+			$linkscats = new LinksTable($this->table_prefix, 'links', $this->from_encoding, $row[$key_col]);
 			$result &= $linkscats->convert();
 			//Generate SQL
 			//echo $this->generate_sql($value_array, $key_col, $row[$key_col]);
@@ -1813,7 +1813,7 @@ class TestQuestionsTable extends ATutorTable{
 			$value_array['option_9'] = mb_convert_encoding($row['option_9'], $this->to_encoding, $this->from_encoding);
 
 			//Convert links table
-			$tests_answers =& new TestsAnswersTable($this->table_prefix, 'tests_answers', $this->from_encoding, $row[$key_col]);
+			$tests_answers = new TestsAnswersTable($this->table_prefix, 'tests_answers', $this->from_encoding, $row[$key_col]);
 			$result &= $tests_answers->convert();
 
 			//Generate SQL

@@ -30,7 +30,7 @@ if (isset($_POST['restore'], $backup_id)) {
 	exit;
 
 } else if (isset($_POST['download'], $backup_id)) {
-	$Backup =& new Backup($db, $course);
+	$Backup = new Backup($db, $course);
 	$Backup->download($backup_id);
 	exit; // never reached
 
@@ -72,7 +72,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tbody>
 <?php
 	$num_backups = 0;
-	$Backup =& new Backup($db);
+	$Backup = new Backup($db);
 
 	if (isset($_REQUEST['course']) && $_REQUEST['course']) {
 		$course = intval($_REQUEST['course']);

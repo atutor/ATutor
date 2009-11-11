@@ -22,7 +22,7 @@ $_user_location = 'admin';
 $course = $_POST['course'];
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
-$Backup =& new Backup($db);
+$Backup = new Backup($db);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

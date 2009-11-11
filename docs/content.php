@@ -127,6 +127,14 @@ while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
 	$content_test_ids[] = $content_test_row;
 }
 
+/*TODO***************BOLOGNA***************REMOVE ME**********/
+/* the content forums extension page*/
+$content_forum_ids = array();	//the html
+$content_forum_rs = $contentManager->getContentForumsAssoc($cid);
+while ($content_forum_row = mysql_fetch_assoc($content_forum_rs)){
+	$content_forum_ids[] = $content_forum_row;
+}
+
 // use any styles that were part of the imported document
 // $_custom_css = $_base_href.'headstuff.php?cid='.$cid.SEP.'path='.urlEncode($_base_href.$course_base_href.$content_base_href);
 
@@ -201,6 +209,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 		//Silvia: to provide appropriated content on the basis of users' preferences
 
 		$content = provide_alternatives($cid, $content_row['text']);
+                
 		$content = format_content($content, $content_row['formatting'], $glossary);
 
 		$content_array = get_content_table($content);
@@ -216,7 +225,16 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			$savant->assign('test_message', '');
 			$savant->assign('test_ids', array());
 		}
-					
+
+                /*TODO***************BOLOGNA***************REMOVE ME**********/
+                //assign forum pages if there are forums associated with this content page
+		if (!empty($content_forum_ids)){
+			$savant->assign('forum_message','');
+			$savant->assign('forum_ids', $content_forum_ids);
+		} else {
+			$savant->assign('forum_message', '');
+			$savant->assign('forum_ids', array());
+		}
 				
 	}
 } else {

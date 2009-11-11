@@ -101,7 +101,7 @@ if ($server_connected)
 	
 	if ($patch_list_xml) 
 	{
-		$patchListParser =& new PatchListParser();
+		$patchListParser = new PatchListParser();
 		$patchListParser->parse($patch_list_xml);
 		$patch_list_array = $patchListParser->getMyParsedArrayForVersion(VERSION);
 	}
@@ -160,7 +160,7 @@ if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_v
 			require_once('classes/PatchParser.class.php');
 			require_once('classes/Patch.class.php');
 			
-			$patchParser =& new PatchParser();
+			$patchParser = new PatchParser();
 			$patchParser->parse($patch_xml);
 			
 			$patch_array = $patchParser->getParsedArray();
@@ -189,7 +189,7 @@ if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_v
 				$msg->addError('PATCH_ALREADY_INSTALLED');
 			else
 			{
-				$patch = & new Patch($patch_array, $current_patch_list, $skipFilesModified, $patchURL);
+				$patch = new Patch($patch_array, $current_patch_list, $skipFilesModified, $patchURL);
 			
 				if ($patch->applyPatch())  $patch_id = $patch->getPatchID();
 			}

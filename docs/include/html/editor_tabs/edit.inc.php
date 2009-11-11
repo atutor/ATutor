@@ -67,7 +67,6 @@ if ($do_check) {
 		<input type="radio" name="formatting" value="2" id="weblink" <?php if ($_POST['formatting'] == 2) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=true; switch_body_weblink(this.value);"/>
 		<label for="weblink"><?php echo _AT('weblink'); ?></label>
 
-
 		<script type="text/javascript" language="javascript">
 		//<!--
 			document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>tools/filemanager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $content_row['content_path']; ?>','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><?php echo _AT('open_file_manager'); ?> </a>");
@@ -77,6 +76,38 @@ if ($do_check) {
 			<a href="<?php echo AT_BASE_HREF; ?>tools/filemanager/index.php?framed=1"><?php echo _AT('open_file_manager'); ?></a>
 		</noscript>			
 	</div>
+
+<!-- ******** Tool Manager ******* -->
+<div class="row">
+    <?php //TODO***************BOLOGNA******************REMOVE ME***********/
+    echo _AT('tools_manager').'<br/>';
+    $count = 0;
+    foreach($all_tools as $tool) {
+        if($tool['tool_file'] != '' && $tool['table'] != '') {
+            $sql_assoc = "SELECT * FROM ".TABLE_PREFIX.$tool['table']." WHERE content_id='$cid'";
+            $result_assoc = mysql_query($sql_assoc,$db);
+            if($num_row = mysql_num_rows($result_assoc)){
+                $tool['style']='border:solid; border-color:#43addb';
+                $tool['alt'] = $tool['title'].' added';
+            } else {
+                $tool['style']='';
+                $tool['alt'] = $tool['title'].' noen';
+            }
+
+            $count++; ?>
+            <script type="text/javascript" language="javascript">
+                document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>tools/toolmanager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>tool_file=<?php echo $tool['tool_file'].SEP;?>cid=<?php echo $cid;?>','newWin2','menubar=0,scrollbars=1,resizable=1,width=600,height=400'); return false;\"><img id=\"<?php echo $tool['title'];?>\" style=\"<?php echo $tool['style'];?>\" src='<?php echo $tool['img']; ?>' alt='<?php echo $tool['alt'];?>' title='<?php echo $tool['title'];?>' height='30' hspace='2' border='0'/></a>");
+            </script>
+        <?php }
+    }
+    if($count == 0){
+        echo '<em>'._AT('none_found').'</em>';
+    } ?>
+</div>
+<br/>
+<!-- ****** end Tool Manager ***** -->
+
+
 	<div class="row">
 		<label for="body_text"><?php echo _AT('body');  ?></label><br />
 
@@ -170,17 +201,18 @@ if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
 		}
 		else
 		{
-			tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
-			document.form.setvisual.value=0;
-			document.form.settext.value=1;
-			document.form.formatting[0].disabled = "";
-			document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
+			disable_visual_txt();
 		}
 	}
 
 	//switch between weblinks.
 	function switch_body_weblink(formatting){
 		if (formatting==2){
+			if (document.form.setvisualbutton.value=="<?php echo _AT('switch_text'); ?>"){
+				//take out the visual editor
+				disable_visual_txt();
+			}
+
 			document.form.body_text.style.display = "none";
 			document.form.weblink_text.style.display = "inline";
 		} else {
@@ -188,5 +220,15 @@ if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
 			document.form.weblink_text.style.display = "none";
 		}
 	}
+
+	//disabling the text box.
+	function disable_visual_txt(){
+		tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
+		document.form.setvisual.value=0;
+		document.form.settext.value=1;
+		document.form.formatting[0].disabled = "";
+		document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
+	}
+
 	//-->
 	</script>

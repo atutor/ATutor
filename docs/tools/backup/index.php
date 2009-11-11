@@ -29,7 +29,7 @@ if (isset($_POST['restore'], $_POST['backup_id'])) {
 	header('Location: restore.php?backup_id=' . $_POST['backup_id']);
 	exit;
 } else if (isset($_POST['download'], $_POST['backup_id'])) {
-	$Backup =& new Backup($db, $_SESSION['course_id']);
+	$Backup = new Backup($db, $_SESSION['course_id']);
 	$Backup->download($_POST['backup_id']);
 	exit; // never reached
 } else if (isset($_POST['delete'], $_POST['backup_id'])) {
@@ -44,7 +44,7 @@ if (isset($_POST['restore'], $_POST['backup_id'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$Backup =& new Backup($db, $_SESSION['course_id']);
+$Backup = new Backup($db, $_SESSION['course_id']);
 $list = $Backup->getAvailableList();
 
 ?>

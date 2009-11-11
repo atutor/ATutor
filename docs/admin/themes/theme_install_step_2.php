@@ -47,7 +47,7 @@ if (isset($_GET["theme"]))
 	else 
 	{
 		//parse information
-		$xml_parser =& new ThemeParser();
+		$xml_parser = new ThemeParser();
 		$xml_parser->parse($theme_xml);
 
 		$version      = $xml_parser->theme_rows['version'];

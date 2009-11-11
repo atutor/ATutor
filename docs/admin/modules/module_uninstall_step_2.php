@@ -36,7 +36,7 @@ if (isset($_POST['submit_no']))
 } 
 else if (isset($_POST['submit_yes'], $_POST['mod'])) 
 {
-	$module =& $moduleFactory->getModule($_POST['mod']);
+	$module = $moduleFactory->getModule($_POST['mod']);
 	$module->uninstall($_POST['del_data']);
 
 	if ($_POST['permission_granted']==1)

@@ -424,7 +424,7 @@ class Backup {
 			}
 			
 			// restore modules
-			$module =& $moduleFactory->getModule($module_name);
+			$module = $moduleFactory->getModule($module_name);
 			$module->restore($this->course_id, $this->version, $this->import_dir);
 		}
 		clr_dir($this->import_dir);

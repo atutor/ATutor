@@ -19,7 +19,7 @@ if (!AT_DEVEL_TRANSLATE) { exit; }
 
 require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php'); 
 
-$lang =& $languageManager->getLanguage($_GET['lang_code']);
+$lang = $languageManager->getLanguage($_GET['lang_code']);
 if ($lang === FALSE) {
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	echo '<h3>'._AT('edit_language').'</h3>';
@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: language.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	$languageEditor =& new LanguageEditor($_GET['lang_code']);
+	$languageEditor = new LanguageEditor($_GET['lang_code']);
 	$state = $languageEditor->updateLanguage($_POST, $languageManager->exists($_POST['code'], $_POST['locale']));
 
 	if (!$msg->containsErrors() && $state !== FALSE) {

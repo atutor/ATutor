@@ -61,6 +61,7 @@ $sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, 
 $result = mysql_query($sql, $db);
 
 ?>
+<div class="toolcontainer">
 <div class="paging">
 	<ul>
 	<?php for ($i=1; $i<=$num_pages; $i++): ?>
@@ -124,5 +125,5 @@ $result = mysql_query($sql, $db);
 <?php endif; ?>
 </tbody>
 </table>
-
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

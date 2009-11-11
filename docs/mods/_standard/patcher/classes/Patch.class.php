@@ -486,7 +486,7 @@ class Patch {
 		fclose($fp);
 
 		require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
-		$sqlUtility =& new SqlUtility();
+		$sqlUtility = new SqlUtility();
 	
 		$sqlUtility->queryFromFile($patch_sql_file, TABLE_PREFIX);
 		

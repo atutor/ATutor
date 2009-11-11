@@ -16,9 +16,9 @@
 function get_html_resources($text) {
 	$resources = array();
 
-	$handler =& new XML_HTMLSax_Handler();
+	$handler = new XML_HTMLSax_Handler();
 
-	$parser =& new XML_HTMLSax();
+	$parser = new XML_HTMLSax();
 	$parser->set_object($handler);
 	$parser->set_element_handler('openHandler','closeHandler');
 

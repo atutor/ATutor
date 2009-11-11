@@ -38,7 +38,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table summary="" class="data" rules="cols" align="center" style="width: 70%;">
+<table summary="" class="data" rules="cols" align="center" style="width: 90%;">
 
 <thead>
 <tr>

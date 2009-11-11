@@ -24,7 +24,7 @@ if (isset($_POST['cancel']) || !isset($_REQUEST['backup_id'])) {
 	exit;
 }
 
-$Backup =& new Backup($db, $_SESSION['course_id']);
+$Backup = new Backup($db, $_SESSION['course_id']);
 
 if (isset($_POST['edit'])) {
 	$Backup->edit($_POST['backup_id'], $_POST['new_description']);

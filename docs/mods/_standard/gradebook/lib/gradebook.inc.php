@@ -193,11 +193,11 @@ function get_studs_take_more_than_once($course_id, $test_id)
 	
 	$rtn_array = array();
 	
-	$sql = "SELECT m.first_name, m.last_name, count(result_id) num FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e, ".TABLE_PREFIX."tests_results t WHERE m.member_id = e.member_id AND e.course_id = ".$course_id." AND e.approved='y' AND e.role <> 'Instructor' AND e.member_id=t.member_id AND t.test_id=".$test_id." GROUP BY m.first_name, m.last_name having count(*) > 1";
+	$sql = "SELECT m.member_id, count(result_id) num FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e, ".TABLE_PREFIX."tests_results t WHERE m.member_id = e.member_id AND e.course_id = ".$course_id." AND e.approved='y' AND e.role <> 'Instructor' AND e.member_id=t.member_id AND t.test_id=".$test_id." GROUP BY m.first_name, m.last_name having count(*) > 1";
 	$result = mysql_query($sql, $db) or die(mysql_error());
 	
 	while ($row = mysql_fetch_assoc($result))
-		$rtn_array[$row["first_name"]. " " . $row["last_name"]] = $row["num"];
+		$rtn_array[$row["member_id"]. " " . $row["last_name"]] = $row["num"];
 
 	return $rtn_array;
 }

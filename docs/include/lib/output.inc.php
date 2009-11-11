@@ -820,7 +820,7 @@ function highlight($input, $var) {//$input is the string, $var is the text to be
 function format_content($input, $html = 0, $glossary, $simple = false) {
 	global $_base_path, $_config;
 
-	if (!$html) {
+      	if (!$html) {
 		$input = str_replace('<', '&lt;', $input);
 		$input = str_replace('&lt;?php', '<?php', $input); // for bug #2087
 	} elseif ($html==2) {
@@ -875,7 +875,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 	} else if (!$user_glossary) {
 		$input = str_replace(array('[?]','[/?]'), '', $input);
 	}
-
+        
 	$input = str_replace('CONTENT_DIR', '', $input);
 
 	if (isset($_config['latex_server']) && $_config['latex_server']) {

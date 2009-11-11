@@ -68,7 +68,7 @@ else if (isset($_POST['reverse']))
 			$pg_url = AT_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
 
 			$checker_url = AT_ACHECKER_URL.'checkacc.php?uri='.urlencode($pg_url).'&id='.AT_ACHECKER_WEB_SERVICE_ID
-							. '&guide=WCAG2-L2&output=html&offset=10';
+							. '&guide=WCAG2-L2&output=html';
 
 			$report = @file_get_contents($checker_url);
 

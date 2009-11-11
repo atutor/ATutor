@@ -90,10 +90,10 @@ while ($row = mysql_fetch_assoc($result))
 	{
 		$studs_take_num = get_studs_take_more_than_once($_SESSION["course_id"], $row["id"]);
 		
-		foreach ($studs_take_num as $student => $num)
+		foreach ($studs_take_num as $member_id => $num)
 		{
 			if ($no_error) $no_error = false;
-			$error_msg .= $student . ": " . $num . " times<br>";
+			$error_msg .= get_display_name($member_id) . ": " . $num . " times<br>";
 		}
 				
 		if (!$no_error)
@@ -325,7 +325,7 @@ $msg->printFeedbacks();
 
 if (count($selected_tests)==0)
 {
-	echo _AT('empty_gradebook');
+	echo '<div class="toolcontainer">'._AT('empty_gradebook').'</div>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -381,7 +381,7 @@ if (count($selected_tests)==0)
 <input type="hidden" name="filter" value="<?php echo $_GET[filter]?>" />
 <input type="hidden" name="gradebook_test_id" value="<?php echo $_GET[gradebook_test_id]?>" />
 <input type="hidden" name="member_id" value="<?php echo $_GET[member_id]?>" />
-
+<input type="hidden" name="p" value="<?php echo $page; ?>" />
 
 <?php print_paginator($page, $num_students, $sql_students, $results_per_page); ?>
 

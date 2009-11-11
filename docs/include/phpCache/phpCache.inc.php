@@ -416,8 +416,8 @@ if (!defined('CACHE_DIR')) {
 
 	/* This function hashes the cache object and places it in a cache dir.  This function also handles the GC probability (note that it is run on only *ONE* dir to save time. */
 	function cache_storage($object, $key) {
-		$newobject=eregi_replace("[^A-Z,0-9,=]", 'X', $object);
-		$newkey=eregi_replace("[^A-Z,0-9,=]", 'X', $key);
+		$newobject=preg_replace("/[^A-Z,0-9,=]/i", 'X', $object);
+		$newkey=preg_replace("/[^A-Z,0-9,=]/i", 'X', $key);
 		$temp="${newobject}=${newkey}";
 		if (strlen($temp)>=CACHE_MAX_FILENAME_LEN) $temp="HUGE." . md5($temp);
 		$cacheobject = 'phpCache.' . $temp;
@@ -477,7 +477,7 @@ if (!defined('CACHE_DIR')) {
 				continue;
 			}
 
-			if (eregi("^phpCache.", $de)) {
+			if (preg_match("/^phpCache./i", $de)) {
 				$files++;
 				$absfile=$de;
 				$cachestuff=cache_read($absfile);

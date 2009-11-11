@@ -60,7 +60,7 @@ $num_tests = mysql_num_rows($result);
 $cols=6;
 ?>
 <form method="post" action="<?php echo 'tools/tests/import_test.php'; ?>" enctype="multipart/form-data" >
-<div class="input-form" style="width: 40%">
+<div class="input-form" style="width: 90%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_test'); ?></legend>
 	<div class="row">
 		<label for="to_file"><?php echo _AT('upload_test'); ?></label><br />

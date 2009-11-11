@@ -44,9 +44,9 @@ $sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE 
 $result = mysql_query($sql, $db);
 $num_books = mysql_num_rows($result);
 ?>
-
+<div class="input-form" style="width: 90%">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create'); ?></legend>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<div class="input-form" style="width: 30%">
 	<div class="row">
 		<label for="question"><?php echo _AT('rl_type_of_resource'); ?></label><br />
 		<select name="new_resource" class="dropdown" id="type">
@@ -61,9 +61,9 @@ $num_books = mysql_num_rows($result);
 	<div class="row buttons">
 		<input type="submit" name="create" value="<?php echo _AT('create'); ?>" />
 	</div>
-</div>
 </form>
-
+</fieldset>
+</div>
 <?php
 $sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] ORDER BY type";
 $result = mysql_query($sql, $db);

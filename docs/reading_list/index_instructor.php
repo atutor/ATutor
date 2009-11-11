@@ -63,7 +63,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<div class="input-form" style="width: 50%">
+<div class="input-form" style="width: 90%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create'); ?></legend>
 	<div class="row">
 		<label for="question"><?php echo _AT('rl_type_of_reading'); ?></label><br />

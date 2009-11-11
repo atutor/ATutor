@@ -1,8 +1,8 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-
+<div class="input-form" style="width:90%;">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('filter'); ?></legend>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-		<div class="input-form">
+		
 			<div class="row">
 				<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
 			</div>
@@ -42,16 +42,19 @@
 				<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>"/>
 				<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>"/>
 			</div>
-		</div>
+		
 	</form>
 </fieldset>
-	<ul style=" padding: 0px; margin: 0px">
+</div>
+<div style="width:90%;margin:auto;">
 	<?php while ($row = mysql_fetch_assoc($this->courses_result)): ?>
-		<li style="list-style: none; width: 80%">
+		<div style="float:left;" class="browse-course">
+
 			<dl class="browse-course">
-				<dt>
+
+				
 					<?php if ($row['icon']) { // if a course icon is available, display it here.  
-						$style_for_title = 'style="height: 79px;"'; 
+						$style_for_title = 'style="height: 1.5em;"'; 
 
 						//Check if this is a custom icon, if so, use get_course_icon.php to get it
 						//Otherwise, simply link it from the images/
@@ -66,29 +69,32 @@
 							$course_icon = 'images/courses/'.$row['icon'];
 						}
 					?>
-						<a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" /> </a>	
+						<a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" style="float:left;margin-right:.5em;"/></a>
 					<?php } ?>
-				</dt>
-				<dd><h3 <?php echo $style_for_title; ?>><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?></a></h3></dd>
 				
-			<?php if ($row['description']): ?>
-				<dt><?php echo _AT('description'); ?></dt>
-				<dd><?php echo nl2br(htmlentities($row['description'], ENT_QUOTES, 'UTF-8')); ?>&nbsp;</dd>
-			<?php endif; ?>
+				<h3><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?></a></h3>
 
+			<?php if ($row['description']): ?>
+				<div style="height:6.4em;" title="<?php echo htmlentities($row['description']);?>"><?php echo substr(nl2br(htmlentities($row['description'], ENT_QUOTES, 'UTF-8')),0,150); 
+				if(strlen($row['description']) > 150){
+				echo "...";
+				}
+				?>&nbsp;</div>
+			<?php else: ?>
+				<div style="height:6.4em;clear:right;" title="<?php echo htmlentities($row['description']);?>">&nbsp;</div>
+			<?php endif; ?>
+			<dl class="browse-course">
 			<?php if ($has_categories): ?>
 				<dt><?php echo _AT('category'); ?></dt>
 				<dd><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$page_string.SEP; ?>category=<?php echo $row['cat_id']; ?>"><?php echo $cats[$row['cat_id']]; ?></a>&nbsp;</dd>
 			<?php endif; ?>
-				
 				<dt><?php echo _AT('instructor'); ?></dt>
 				<dd><a href="<?php echo AT_BASE_HREF; ?>contact_instructor.php?id=<?php echo $row['course_id']; ?>"><?php echo get_display_name($row['member_id']); ?></a></dd>
-
 				<dt><?php echo _AT('access'); ?></dt>
 				<dd><?php echo _AT($row['access']); ?></dd>
 			</dl>
-		</li>
+		</div>
 	<?php endwhile; ?>
-	</ul>
+</div>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

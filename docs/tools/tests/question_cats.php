@@ -55,7 +55,9 @@ if ($row = mysql_fetch_assoc($result)) {
 <?php
 
 	} else {
-		echo '<p>'._AT('cats_no_categories').'</p>';
+	echo '<div class="input-form">';
+		echo '<p>&nbsp;'._AT('cats_no_categories').'</p>';
+	echo'</div>';
 	}
 ?>
 

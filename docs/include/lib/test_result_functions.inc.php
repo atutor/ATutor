@@ -170,7 +170,7 @@ function print_question_cats($cat_id = 0) {
 		if ($row['category_id'] == $cat_id) {
 			echo ' selected="selected"';
 		}
-		echo '>'.$row['title'].'</option>\n';
+		echo '>'.$row['title'].'</option>'."\n";
 	}
 }
 

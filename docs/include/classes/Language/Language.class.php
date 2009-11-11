@@ -68,12 +68,12 @@ class Language {
 
 	// returns whether or not the $search_string matches the regular expression
 	function isMatchHttpAcceptLanguage($search_string) {
-		return eregi('^(' . $this->regularExpression . ')(;q=[0-9]\\.[0-9])?$', $search_string);
+		return preg_match('/^(' . $this->regularExpression . ')(;q=[0-9]\\.[0-9])?$/', $search_string);
 	}
 
 	// returns boolean whether or not $search_string is in HTTP_USER_AGENT
 	function isMatchHttpUserAgent($search_string) {
-		return eregi('(\(|\[|;[[:space:]])(' . $this->regularExpression . ')(;|\]|\))', $search_string);
+		return preg_match('/(\(|\[|;[\s])(' . $this->regularExpression . ')(;|\]|\))/', $search_string);
 
 	}
 

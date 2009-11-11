@@ -64,7 +64,7 @@ if (isset($_POST['cancel'])) {
 		$missing_fields[] = _AT('login_name');
 	} else {
 		/* check for special characters */
-		if (!(eregi("^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$", $_POST['login']))) {
+		if (!(preg_match("/^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$/i", $_POST['login']))) {
 			$msg->addError('LOGIN_CHARS');
 		} else {
 			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$chk_login'",$db);
@@ -95,7 +95,7 @@ if (isset($_POST['cancel'])) {
 
 	if ($_POST['email'] == '') {
 		$missing_fields[] = _AT('email');
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
+	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
 	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$chk_email'",$db);
@@ -179,7 +179,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		if (($_POST['website']) && (!ereg("://",$_POST['website']))) { 
+		if (($_POST['website']) && (!strstr($_POST['website'],"://"))) { 
 			$_POST['website'] = "http://".$_POST['website']; 
 		}
 		if ($_POST['website'] == 'http://') { 

@@ -37,7 +37,7 @@ function encrypt_password()
 	<input type="hidden" name="form_old_password_hidden" value="" />
 	<input type="hidden" name="form_password_hidden" value="" />
 
-	<div class="input-form" style="max-width: 400px;">
+	<div class="input-form" style="width:90%;">
 
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="old_password"><?php echo _AT('password_old'); ?></label><br />

@@ -19,7 +19,7 @@ global $db;
 
 if (trim($_POST['field']) <> "" && trim($_POST['value']) <> "")
 {
-	$fields = explode('|', $_POST['field']);
+	$fields = explode('-', $_POST['field']);
 	$content_id = intval($fields[1]);
 	
 	if ($content_id > 0)

@@ -11,10 +11,6 @@
 /************************************************************************/
 // $Id: ims_export.php 8211 2008-11-11 22:55:40Z hwong $
 define('AT_INCLUDE_PATH', '../../include/');
-require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
-require(AT_INCLUDE_PATH.'classes/A4a/A4aExport.class.php');
-require(AT_INCLUDE_PATH.'classes/Weblinks/Weblinks.class.php');
-require(AT_INCLUDE_PATH.'classes/Weblinks/WeblinksExport.class.php');
 
 /* content id of an optional chapter */
 $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : 0;
@@ -60,11 +56,16 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$course_id = $_SESSION['course_id'];
 }
+//load the following after vitals is included
+require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
+require(AT_INCLUDE_PATH.'classes/A4a/A4aExport.class.php');
+require(AT_INCLUDE_PATH.'classes/Weblinks/Weblinks.class.php');
+require(AT_INCLUDE_PATH.'classes/Weblinks/WeblinksExport.class.php');
 
 $use_cc			 = true;
 $instructor_id   = $system_courses[$course_id]['member_id'];
-$course_desc     = $system_courses[$course_id]['description'];
-$course_title    = $system_courses[$course_id]['title'];
+$course_desc     = htmlspecialchars($system_courses[$course_id]['description'], ENT_QUOTES, 'UTF-8');
+$course_title    = htmlspecialchars($system_courses[$course_id]['title'], ENT_QUOTES, 'UTF-8');
 $course_language = $system_courses[$course_id]['primary_language'];
 
 $courseLanguage =& $languageManager->getLanguage($course_language);
@@ -160,7 +161,7 @@ $paths	 = array();
 $top_content_parent_id = 0;
 
 $handler=new MyHandler();
-$parser =& new XML_HTMLSax();
+$parser = new XML_HTMLSax();
 $parser->set_object($handler);
 $parser->set_element_handler('openHandler','closeHandler');
 
@@ -207,10 +208,19 @@ $first = $content[$top_content_parent_id][0];
 
 $test_ids = array();	//global array to store all the test ids
 
+//TODO**************BOLOGNA***************REMOVE ME***************************/
+//Exoprt Forum:
+global $forum_list;
+$forum_list = array();
+
 /* generate the resources and save the HTML files */
 $used_glossary_terms = array();
 ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
+
+//Exoprt Forum:
+print_resources_forum();
+
 $organizations_str = ob_get_contents();
 ob_end_clean();
 if (count($used_glossary_terms)) {

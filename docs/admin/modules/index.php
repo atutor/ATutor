@@ -36,7 +36,7 @@ if (isset($_GET['reset_filter'])) {
 }
 
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
-	$module =& $moduleFactory->getModule($_GET['mod_dir']);
+	$module = $moduleFactory->getModule($_GET['mod_dir']);
 	if (!$module->isEnabled() && !$module->isCore() && !$module->isMissing() && !$module->isPartiallyUninstalled()) {
 		$module->enable();
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -45,7 +45,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	header('Location: '.$_SERVER['PHP_SELF'] . '?' . $args);
 	exit;
 } else if (isset($_GET['mod_dir'], $_GET['disable'])) {
-	$module =& $moduleFactory->getModule($_GET['mod_dir']);
+	$module = $moduleFactory->getModule($_GET['mod_dir']);
 	if ($module->isCore()) {
 		// core modules cannot be disabled!
 		$msg->addError('DISABLE_CORE_MODULE');
@@ -64,7 +64,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	exit;
 
 } else if (isset($_GET['mod_dir'], $_GET['uninstall'])) {
-	$module =& $moduleFactory->getModule($_GET['mod_dir']);
+	$module = $moduleFactory->getModule($_GET['mod_dir']);
 
 	$module_folder = '../../mods/'.$_GET['mod_dir'];
 	// check if the module has been un-installed
@@ -91,7 +91,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	}
 
 } else if (isset($_GET['mod_dir'], $_GET['export'])) {
-	$module =& $moduleFactory->getModule($_GET['mod_dir']);
+	$module = $moduleFactory->getModule($_GET['mod_dir']);
 
 	$module_folder = '../../mods/'.$_GET['mod_dir'];
 	// check if the module has been un-installed

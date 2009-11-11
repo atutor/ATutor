@@ -89,14 +89,18 @@ class SqlUtility
         	} // end else if (is start of string)
 
         	// for start of a comment (and remove this comment if found)...
-        	else if ($char == '#' || ($char == ' ' && $i > 1 && $sql[$i-2] . $sql[$i-1] == '--')) {
+        	// the comment signs can be "# ", "/*", "--". The comment start signs must be at the begining of a line.
+        	else if ($char == '#' || ($char == '/' && $sql[$i+1] == '*') || ($char == ' ' && $i > 1 && $sql[$i-2] . $sql[$i-1] == '--')) {
             	// starting position of the comment depends on the comment type
-           		$start_of_comment = (($sql[$i] == '#') ? $i : $i-2);
+        		$start_of_comment = (($char == '#' || ($char == '/' && $sql[$i+1] == '*')) ? $i : $i-2);
             	// if no "\n" exits in the remaining string, checks for "\r"
             	// (Mac eol style)
-           		$end_of_comment   = (strpos(' ' . $sql, "\012", $i+2))
-                              ? strpos(' ' . $sql, "\012", $i+2)
-                              : strpos(' ' . $sql, "\015", $i+2);
+           		if ($char == '/' && $sql[$i+1] == '*')
+           			$end_of_comment = strpos($sql, "*/", $i+2) + 2;
+           		else
+	           		$end_of_comment   = (strpos(' ' . $sql, "\012", $i+2))
+	                              ? strpos(' ' . $sql, "\012", $i+2)
+	                              : strpos(' ' . $sql, "\015", $i+2);
            		if (!$end_of_comment) {
                 // no eol found after '#', add the parsed part to the returned
                 // array and exit
