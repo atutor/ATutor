@@ -55,7 +55,7 @@ function print_organizations($parent_id,
 	global $used_glossary_terms, $course_id, $course_language_charset, $course_language_code;
 	static $paths, $zipped_files;
 	global $glossary;
-	global $test_zipped_files, $test_files, $test_xml_items, $use_a4a;
+	global $test_list, $test_zipped_files, $test_files, $test_xml_items, $use_a4a;
         /* added by bologna*///TODO***********BOLOGNA**************REMOVE ME*****************/
         global $db,$forum_list;//forum_list contiene tutti i forum distinti associati ai contenuti. poich� la funzione in questione � ricorsiva deve essere globale in modo che in fase di creazione dell'archivio zip i file descrittori dei forum non vengano ripetuti
 
@@ -153,7 +153,15 @@ function print_organizations($parent_id,
 			$forums_dependency .= $prefix.$space.'<dependency identifierref="Forum'.$current_forum['forum_id'].'_R" />';
                     }
 
-                     
+                     /** Test dependency **/
+					 $sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
+					 $result = mysql_query($sql, $db);
+					 while ($row = mysql_fetch_assoc($result)){
+						//add test dependency ontop to forums dependency
+						$forums_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
+					 }
+
+
 			/* calculate how deep this page is: */
 			$path = '../';
 			if ($content['content_path']) {
@@ -226,10 +234,11 @@ function print_organizations($parent_id,
 					$resources .= str_replace(	array('{TEST_ID}', '{PATH}', '{FILES}'),
 												array($content_test_row['test_id'], 'tests_'.$content_test_row['test_id'].'.xml', $added_files_xml),
 												$ims_template_xml['resource_test']); 
+/*	Taken out since we are gonna use dependency instead
 					$test_xml_items .= str_replace(	array('{TEST_ID}'),
 												array($content_test_row['test_id']),
 												$ims_template_xml['test']); 
-
+*/
 					foreach($test_files as $filename=>$realfilepath){
 						$zipfile->add_file(@file_get_contents($realfilepath), 'QTI/'.$filename, filemtime($realfilepath));
 					}
@@ -543,14 +552,12 @@ $ims_template_xml['file_meta'] = '			<file href="{FILE}">
 $ims_template_xml['final'] = '
 	<organizations>
 		<organization identifier="MANIFEST01_ORG1" structure="rooted-hierarchy">
-			<item identifier="ShellItem">
+		
 				<item identifier="resources">
 					<title>{COURSE_TITLE}</title>
 		{ORGANIZATIONS}
 				</item>
-		{GLOSSARY}
-		{TEST_ITEMS}
-			</item>
+		
 		</organization>
 	</organizations>
 	<resources>

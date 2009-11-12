@@ -95,6 +95,10 @@ class QTIImport {
 					$msg->addError('QTI_WRONG_PACKAGE');
 					break;
 				}
+
+				//set test title
+				$this->title = $xml->title;
+
 //if ($attrs[href] =='56B1BEDC-A820-7AA8-A21D-F32017189445/56B1BEDC-A820-7AA8-A21D-F32017189445.xml'){
 //	debug($xml, 'attributes');
 //}
@@ -197,7 +201,7 @@ class QTIImport {
 		global $msg, $db;
 
 		$missing_fields				= array();
-		$test_obj['title']			= $title;
+		$test_obj['title']			= ($title=='')?$this->title:$title;
 		$test_obj['description']	= '';
 		$test_obj['num_questions']	= 0;
 		$test_obj['num_takes']		= 0;

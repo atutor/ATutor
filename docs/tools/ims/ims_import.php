@@ -41,6 +41,7 @@ $element_path = array();
 $imported_glossary = array();
 $character_data = '';
 $test_message = '';
+$test_title = '';
 $content_type = '';
 $skip_ims_validation = false;
 $added_dt = array();	//the mapping of discussion tools that are added
@@ -225,7 +226,6 @@ function rehash($items){
 
 		}
 	}
-
 	return $rehashed_items;
 }
 
@@ -239,6 +239,7 @@ function rehash($items){
  * @return	mixed	An Array that contains all the question IDs that have been imported.
  */
  function addQuestions($xml, $item, $import_path){
+	global $test_title;
 	$qti_import = new QTIImport($import_path);
 
 	$tests_xml = $import_path.$xml;
@@ -251,6 +252,7 @@ function rehash($items){
 	//Get the XML file out and start importing them into our database.
 	//TODO: See question_import.php 287-289.
 	$qids = $qti_import->importQuestions($test_attributes);
+	$test_title = $qti_import->title;
 
 	return $qids;
  }
@@ -863,6 +865,10 @@ foreach ($items as $item_id => $content_info)
 			if ($items[$dependency_ref]['type']=='imsdt_xmlv1p0'){
 				$items[$item_id]['forum'][$dependency_ref] = $items[$dependency_ref]['href'];
 			}
+			//check if this is a QTI dependency
+			if (strpos($items[$dependency_ref]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
+				$items[$item_id]['tests'][$dependency_ref] = $items[$dependency_ref]['href'];
+			}
 		}
 	}
 
@@ -1092,11 +1098,19 @@ foreach ($items as $item_id => $content_info)
 		}
 
 		foreach ($loop_var as $array_id => $test_xml_file){
+			//check if this item is the qti item object, or it is the content item obj
+			//switch it to qti obj if it's content item obj
+			if ($items[$item_id]['type'] == 'webcontent'){
+				$item_qti = $items[$array_id];
+			} else {
+				$item_qti = $items[$item_id];
+			}
+			
 			//call subrountine to add the questions.
-			$qids = addQuestions($test_xml_file, $items[$item_id], $import_path);
+			$qids = addQuestions($test_xml_file, $item_qti, $import_path);
 			
 			//import test
-			$tid = $qti_import->importTest($content_info['title']);
+			$tid = $qti_import->importTest($test_title);
 
 			//associate question and tests
 			foreach ($qids as $order=>$qid){
@@ -1149,7 +1163,7 @@ foreach ($items as $item_id => $content_info)
 			$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$forum_ref]);
 		}
 	} elseif ($items[$item_id]['type']=='imsdt_xmlv1p0'){
-		//otptimize this, repeated codes as above
+		//optimize this, repeated codes as above
 		$dt_parser = new DiscussionToolsParser();
 		$dt_import = new DiscussionToolsImport();
 		$xml_content = @file_get_contents($import_path . $content_info['href']);
@@ -1162,7 +1176,7 @@ foreach ($items as $item_id => $content_info)
 		$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$item_id]);
 	}
 }
-
+//exit;//harris
 if ($package_base_path == '.') {
 	$package_base_path = '';
 }
