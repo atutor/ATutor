@@ -172,7 +172,6 @@ function rscandir($base='', &$data=array()) {
  * create a new folder on top of it
  */
 function rehash($items){
-    debug($items);
 	global $order;
 	$parent_page_maps = array();	//old=>new
 	$temp_popped_items = array();
@@ -235,7 +234,6 @@ function rehash($items){
 
 		}
 	}
-	debug($rehashed_items);exit;
 	return $rehashed_items;
 }
 
