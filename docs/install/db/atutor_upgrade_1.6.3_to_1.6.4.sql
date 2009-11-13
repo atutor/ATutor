@@ -113,3 +113,14 @@ ALTER TABLE `social_user_settings` MODIFY `app_settings` TEXT;
 
 # added by Bologna CC. 
 INSERT INTO `modules` VALUES ('_core/tool_manager', 2, 0, 0, 0, 0);
+
+# --------------------------------------------------------
+# Adding feature of content pre-requisites
+# Table structure for table `content_prerequisites`
+# since 1.6.4
+CREATE TABLE `content_prerequisites` (
+  `content_id` MEDIUMINT NOT NULL,
+  `type` varchar(50) NOT NULL DEFAULT '',
+  `item_id` MEDIUMINT NOT NULL,
+  PRIMARY KEY (content_id,type, item_id)
+) TYPE=MyISAM;

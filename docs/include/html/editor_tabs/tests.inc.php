@@ -154,6 +154,7 @@ while ($row = mysql_fetch_assoc($result)) {
 <?php print_test_table($results, $_POST['pre_tid'], 'pre_');?>
 
 <?php function print_test_table($results, $post_tids, $id_prefix='') {?>
+	<div>
 	<table class="data" summary="" style="width: 90%" rules="cols">
 	<thead>
 	<tr>
@@ -188,7 +189,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	<?php } ?>
 	</tbody>
 	</table>
-	<br />
+	</div>
 <?php }?>
 
 <script language="javascript" type="text/javascript">

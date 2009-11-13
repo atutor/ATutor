@@ -1449,7 +1449,7 @@ CREATE TABLE `blog_subscription` (
 # --------------------------------------------------------
 # Adding feature of content pre-requisites
 # Table structure for table `content_prerequisites`
-# since 1.6.3
+# since 1.6.4
 CREATE TABLE `content_prerequisites` (
   `content_id` MEDIUMINT NOT NULL,
   `type` varchar(50) NOT NULL DEFAULT '',

@@ -57,6 +57,7 @@ if ($this->shortcuts):
 		<?php echo _AT('applies_to_all_sub_pages');?>
 	</div>
 
+	<div class="row">
 	<table class="data" summary="" style="width: 90%" rules="cols">
 	<thead>
 	<tr>
@@ -91,7 +92,7 @@ if ($this->shortcuts):
 	<?php } ?>
 	</tbody>
 	</table>
-	<br />
+	</div>
 <?php }?>
 
 	<div class="row buttons">
