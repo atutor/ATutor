@@ -1,10 +1,5 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<?php if (!$this->courses && get_instructor_status()): ?>
-	<?php global $msg; $msg->printInfos('NO_COURSES_INST'); ?>
-<?php elseif (!$this->courses): ?>
-	<?php global $msg; $msg->printInfos('NO_COURSES'); ?>
-<?php endif; ?>
 <div class="container" style="width:95%; margin:auto;border:thin solid #e8e8e8;">
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">

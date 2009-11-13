@@ -18,6 +18,11 @@ require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 $tid = intval($_REQUEST['tid']);
 if (isset($_REQUEST['gid'])) $gid = $addslashes($_REQUEST['gid']);
+if (isset($_REQUEST['cid']))
+{
+	$cid = $addslashes($_REQUEST['cid']);
+	$cid_url = SEP.'cid='.$cid;
+}
 
 //make sure max attempts not reached, and still on going
 $sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
@@ -39,7 +44,7 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 
 // checks one/all questions per page, and forward user to the correct one
 if ($test_row['display']) {
-	header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid, AT_PRETTY_URL_IS_HEADER));
+	header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid.$cid_url, AT_PRETTY_URL_IS_HEADER));
 } 
 
 $out_of = $test_row['out_of'];
@@ -107,12 +112,14 @@ if (isset($_POST['submit'])) {
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	if (!$_SESSION['enroll'] || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
-		header('Location: '.url_rewrite('tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id, AT_PRETTY_URL_IS_HEADER));
+	if ((!$_SESSION['enroll'] && !isset($cid)) || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
+		header('Location: '.url_rewrite('tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url, AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
-	header('Location: '.url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER));
-	exit;		
+	
+	if (isset($cid)) header('Location: '.url_rewrite('content.php?cid='.$cid, AT_PRETTY_URL_IS_HEADER));
+	else header('Location: '.url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+	exit;
 }
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
@@ -198,9 +205,8 @@ if (!isset($_REQUEST['gid']) && !$in_progress) {
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<?php if (isset($_REQUEST['gid'])): ?>
-<input type="hidden" name="gid" value="<?php echo $gid; ?>" />
-<?php endif; ?>
+<?php if (isset($_REQUEST['gid'])): ?> <input type="hidden" name="gid" value="<?php echo $gid; ?>" /> <?php endif; ?>
+<?php if (isset($_REQUEST['cid'])): ?> <input type="hidden" name="cid" value="<?php echo $cid; ?>" /> <?php endif; ?>
 
 <div class="input-form" style="width:80%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo $title ?></legend>

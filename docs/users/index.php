@@ -97,6 +97,11 @@ function get_category_name($cat_id) {
 	return $row['cat_name'];
 }
 
+if (!$courses && get_instructor_status())
+	$msg->addInfo('NO_COURSES_INST');
+elseif (!$courses)
+	$msg->addInfo('NO_COURSES');
+
 $savant->assign('courses', $courses);
 
 $savant->display('users/index.tmpl.php');

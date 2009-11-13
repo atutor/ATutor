@@ -265,6 +265,9 @@ define ('CONTENT_TYPE_CONTENT',  0);
 define ('CONTENT_TYPE_FOLDER', 1);
 define ('CONTENT_TYPE_WEBLINK', 2);
 
+// content pre-requisite type
+define ('CONTENT_PRE_TEST',  'test');
+
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';
 $_rl_types[RL_TYPE_URL]		= 'rl_url';

@@ -156,8 +156,6 @@ $_custom_head .= '
 
 save_last_cid($cid);
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
 if (isset($top_num) && $top_num != (int) $top_num) {
 	$top_num = substr($top_num, 0, strpos($top_num, '.'));
 }
@@ -193,14 +191,17 @@ $released_status = $contentManager->isReleased($cid);
 if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	if ($content_row['text'] == '') {
 		$msg->addInfo('NO_PAGE_CONTENT');
-		$msg->printAll();
 		$savant->assign('body', '');
 	} else {
+		$pre_test_id = $contentManager->getPretest($cid);
+		
+		if (intval($pre_test_id) > 0)
+			header('Location: '.url_rewrite('tools/test_intro.php?tid='.$pre_test_id.SEP.'cid='.$cid, AT_PRETTY_URL_IS_HEADER));
+		
 		if ($released_status !== TRUE) {
 			/* show the instructor that this content hasn't been released yet */
 			$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_UNIX_TIMESTAMP));
 			$msg->addInfo($infos);
-			$msg->printAll();
 			unset($infos);
 		}
 
@@ -240,11 +241,12 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 } else {
 	$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_UNIX_TIMESTAMP));
 	$msg->addInfo($infos);
-	$msg->printAll();
 	unset($infos);
 }
 
 $savant->assign('content_info', _AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)));
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 $savant->display('content.tmpl.php');
 

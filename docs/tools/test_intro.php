@@ -21,6 +21,12 @@ if (isset($_GET['tid']))
 else if (isset($_POST['tid']))
 	$tid = intval($_POST['tid']);
 
+if (isset($_REQUEST['cid']))
+{
+	$cid = intval($_REQUEST['cid']);
+	$msg->addInfo('PRETEST');
+}
+
 // make sure max attempts not reached, and still on going
 $sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date2, UNIX_TIMESTAMP(end_date) AS end_date2 FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
 $result = mysql_query($sql, $db);
@@ -40,6 +46,13 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 // checks one/all questions per page, and forward user to the correct one
 if (isset($_POST['cancel'])) 
 {
+	if (isset($cid))
+	{
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$msg->printInfos(array('PRETEST_FAILED', $test_row['title']));
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
 	//Retrieve last visited page
 	if (isset($_SESSION['last_visited_page'])){
 		$_last_visited_page = $_SESSION['last_visited_page'];
@@ -70,6 +83,7 @@ else if (isset($_POST['submit']))
 		$result_id = mysql_insert_id($db);
 	}
 	$gid_str = (isset($guest_id)) ? SEP."gid=".$guest_id : "";
+	if (isset($cid)) $gid_str .= SEP.'cid='.$cid;
 
 	if ($test_row['display']) {
 		header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid.$gid_str, AT_PRETTY_URL_IS_HEADER));
@@ -115,6 +129,7 @@ if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) 
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+<?php if (isset($cid)) { ?><input type="hidden" name="cid" value="<?php echo $cid; ?>" /> <?php } ?>
 
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo $test_row['title']; ?></legend><div class="row">

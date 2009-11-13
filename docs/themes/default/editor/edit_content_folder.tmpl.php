@@ -50,10 +50,67 @@ if ($this->shortcuts):
 		<?php echo _AT('applies_to_all_sub_pages'); ?>
 	</div>
 
+	<?php if (isset($this->pretests)) {?>
+	<div class="row">
+		<span style="font-weight:bold"><?php echo _AT('define_pretest'); ?></span><br />
+		<small>&middot; <?php echo _AT('about_pretest'); ?></small><br />
+		<?php echo _AT('applies_to_all_sub_pages');?>
+	</div>
+
+	<table class="data" summary="" style="width: 90%" rules="cols">
+	<thead>
+	<tr>
+		<th scope="col">&nbsp;</th>
+		<th scope="col"><?php echo _AT('title');          ?></th>
+		<th scope="col"><?php echo _AT('status');         ?></th>
+		<th scope="col"><?php echo _AT('availability');   ?></th>
+		<th scope="col"><?php echo _AT('result_release'); ?></th>
+		<th scope="col"><?php echo _AT('submissions');	  ?></th>
+		<th scope="col"><?php echo _AT('pass_score');	  ?></th>
+		<th scope="col"><?php echo _AT('assigned_to');	  ?></th>
+	</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($this->pretests as $row) { ?>
+	<?php
+		$checkMe = '';
+		if (is_array($_POST['pre_tid']) && in_array($row['test_id'], $_POST['pre_tid'])){
+			$checkMe = ' checked="checked"';
+		} 
+	?>
+	<tr onmousedown="toggleTestSelect('r_<?php echo $row['test_id']; ?>');rowselect(this);" id="r_<?php echo $row['test_id']; ?>">
+		<td><input type="checkbox" name="tid[]" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" <?php echo $checkMe; ?> onmouseup="this.checked=!this.checked" /></td>
+		<td><?php echo $row['title']; ?></td>
+		<td><?php echo $row['status']; ?></td>
+		<td><?php echo $row['availability']; ?></td>
+		<td><?php echo $row['result_release']; ?></td>
+		<td><?php echo $row['submissions']; ?></td>
+		<td><?php echo $row['pass_score']; ?></td>
+		<td><?php echo $row['assign_to']; ?></td>
+	</tr>
+	<?php } ?>
+	</tbody>
+	</table>
+	<br />
+<?php }?>
+
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" />
 	</div>
 </div>
 </form>
+
+<script language="javascript" type="text/javascript">
+	function toggleTestSelect(r_id){
+		var row = document.getElementById(r_id);
+		var checkBox = row.cells[0].firstChild;
+
+		if (checkBox.checked == true){
+			checkBox.checked = false;
+		} else {
+			checkBox.checked = true;
+		}
+	}
+</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php');?>

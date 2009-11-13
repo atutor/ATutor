@@ -191,7 +191,7 @@ function save_changes($redir, $current_tab) {
 		$db_test_array[] = $row['test_id'];
 	}
 
-        if (is_array($_POST['tid']) && sizeof($_POST['tid']) > 0){
+	if (is_array($_POST['tid']) && sizeof($_POST['tid']) > 0){
 		$toBeDeleted = array_diff($db_test_array, $_POST['tid']);
 		$toBeAdded = array_diff($_POST['tid'], $db_test_array);
 		//Delete entries
@@ -200,7 +200,7 @@ function save_changes($redir, $current_tab) {
 			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid] AND test_id IN ($tids)";
 			$result = mysql_query($sql, $db);
 		}
-
+	
 		//Add entries
 		if (!empty($toBeAdded)){
 			foreach ($toBeAdded as $i => $tid){
@@ -217,7 +217,24 @@ function save_changes($redir, $current_tab) {
 		$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid]";
 		$result = mysql_query($sql, $db);
 	}
-	//End Add test       
+	//End Add test
+
+	// add pre-tests
+	$sql = "DELETE FROM ". TABLE_PREFIX . "content_prerequisites 
+	         WHERE content_id=".$_POST[cid]." AND type='".CONTENT_PRE_TEST."'";
+	$result = mysql_query($sql, $db);
+	
+	if (is_array($_POST['pre_tid']) && sizeof($_POST['pre_tid']) > 0)
+	{
+		foreach ($_POST['pre_tid'] as $i => $tid){
+			$tid = intval($tid);
+			$sql = "INSERT INTO ". TABLE_PREFIX . "content_prerequisites 
+			           SET content_id=".$_POST[cid].", type='".CONTENT_PRE_TEST."', item_id=$tid";
+			$result = mysql_query($sql, $db);
+			
+			if ($result===false) $msg->addError('MYSQL_FAILED');
+		}
+	}
 
         //TODO*******************BOLOGNA****************REMOVE ME**************/
          if(isset($_SESSION['associated_forum']) && !$msg->containsErrors()){

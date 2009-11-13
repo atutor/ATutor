@@ -192,6 +192,22 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
         }
     }
 
+/* global pages */
+$_pages['about.php']['title_var']  = 'about_atutor';
+
+$_pages['404.php']['title_var']  = '404';
+
+$_pages['help/index.php']['title_var']  = 'help';
+$_pages['help/index.php']['children'] = array_merge(array('help/accessibility.php', 'help/contact_support.php'), isset($_pages['help/index.php']['children']) ? $_pages['help/index.php']['children'] : array());
+
+$_pages['help/accessibility.php']['title_var']  = 'accessibility';
+$_pages['help/accessibility.php']['parent'] = 'help/index.php';
+
+$_pages['help/contact_support.php']['title_var']  = 'contact_support';
+$_pages['help/contact_support.php']['parent'] = 'help/index.php';
+
+
+$_pages['contact_instructor.php']['title_var']  = 'contact_instructor';
 
 /* public pages */
 $_pages['registration.php']['title_var'] = 'register';
@@ -224,8 +240,8 @@ $_pages['users/index.php']['title_var'] = 'my_courses';
 $_pages['users/index.php']['parent']    = AT_NAV_START;
 $_pages['users/index.php']['guide']     = 'general/?p=my_courses.php';
 if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION['course_id']) || !$_SESSION['course_id'])) {
-    if ((get_instructor_status() === FALSE) && (!defined('ALLOW_INSTRUCTOR_REQUESTS') || !ALLOW_INSTRUCTOR_REQUESTS)) {
-        $_pages['users/index.php']['children']  = array_merge(array('users/browse.php'), (array) $_pages['users/index.php']['children']);
+    if (get_instructor_status() === FALSE) {
+        $_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'help/contact_support.php'), (array) $_pages['users/index.php']['children']);
     } else {
         $_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
     }
@@ -235,9 +251,17 @@ $_pages['users/browse.php']['title_var'] = 'browse_courses';
 $_pages['users/browse.php']['parent']    = 'users/index.php';
 $_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
 
-$_pages['users/create_course.php']['title_var'] = 'create_course';
-$_pages['users/create_course.php']['parent']    = 'users/index.php';
-$_pages['users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
+if (get_instructor_status() === TRUE)	
+{
+	$_pages['users/create_course.php']['title_var'] = 'create_course';
+	$_pages['users/create_course.php']['parent']    = 'users/index.php';
+	$_pages['users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
+}
+else if (defined('ALLOW_INSTRUCTOR_REQUESTS') || ALLOW_INSTRUCTOR_REQUESTS)
+{
+	$_pages['help/contact_support.php']['title_var'] = 'request_instructor_priv';
+	$_pages['help/contact_support.php']['parent']    = 'users/index.php';
+}
 
 $_pages['users/private_enroll.php']['title_var'] = 'enroll';
 $_pages['users/private_enroll.php']['parent']    = 'users/index.php';
@@ -288,23 +312,6 @@ $_pages['inbox/export.php']['parent']    = 'inbox/index.php';
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent']    = 'index.php';
 
-
-/* global pages */
-$_pages['about.php']['title_var']  = 'about_atutor';
-
-$_pages['404.php']['title_var']  = '404';
-
-$_pages['help/index.php']['title_var']  = 'help';
-$_pages['help/index.php']['children'] = array_merge(array('help/accessibility.php', 'help/contact_support.php'), isset($_pages['help/index.php']['children']) ? $_pages['help/index.php']['children'] : array());
-
-$_pages['help/accessibility.php']['title_var']  = 'accessibility';
-$_pages['help/accessibility.php']['parent'] = 'help/index.php';
-
-$_pages['help/contact_support.php']['title_var']  = 'contact_support';
-$_pages['help/contact_support.php']['parent'] = 'help/index.php';
-
-
-$_pages['contact_instructor.php']['title_var']  = 'contact_instructor';
 
 $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
 

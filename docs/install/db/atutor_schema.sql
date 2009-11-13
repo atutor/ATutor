@@ -1452,9 +1452,9 @@ CREATE TABLE `blog_subscription` (
 # since 1.6.3
 CREATE TABLE `content_prerequisites` (
   `content_id` MEDIUMINT NOT NULL,
-  `prerequisite_type` varchar(50) NOT NULL DEFAULT '',
-  `id` MEDIUMINT NOT NULL,
-  PRIMARY KEY (content_id,prerequisite_type, id)
+  `type` varchar(50) NOT NULL DEFAULT '',
+  `item_id` MEDIUMINT NOT NULL,
+  PRIMARY KEY (content_id,type, item_id)
 ) TYPE=MyISAM;
 
 # END Adding feature of content pre-requisites

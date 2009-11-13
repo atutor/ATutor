@@ -17,6 +17,11 @@ require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
 
 $tid = intval($_REQUEST['tid']);
+if (isset($_REQUEST['cid']))
+{
+	$cid = intval($_REQUEST['cid']);
+	$cid_url = SEP.'cid='.$cid;
+}
 
 if (isset($_REQUEST['gid']))
 	$mid = $addslashes($_REQUEST['gid']);
@@ -43,7 +48,7 @@ if (!$test_row['guests'] && !authenticate_test($tid)) {
 
 // checks one/all questions per page, and forward user to the correct one
 if (!$test_row['display']) {
-	header('Location: '.url_rewrite('tools/take_test.php?tid='.$tid, AT_PRETTY_URL_IS_HEADER));
+	header('Location: '.url_rewrite('tools/take_test.php?tid='.$tid.$cid_url, AT_PRETTY_URL_IS_HEADER));
 }
 
 $out_of = $test_row['out_of'];
@@ -55,7 +60,7 @@ if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) 
 	$test_row['num_questions'] = $row['num_questions'];
 }
 
-$sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$mid."'";
+$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$mid."'";
 $takes_result= mysql_query($sql, $db) or die(mysql_error());
 $takes = mysql_fetch_assoc($takes_result);	
 
@@ -185,15 +190,17 @@ if ($result_id == 0) {
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		if (!$_SESSION['enroll'] || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
-			header('Location: '.url_rewrite('tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id, AT_PRETTY_URL_IS_HEADER));
+		if ((!$_SESSION['enroll'] && !isset($cid)) || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
+			header('Location: '.url_rewrite('tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url, AT_PRETTY_URL_IS_HEADER));
 			exit;
 		}
-		header('Location: '.url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+		
+		if (isset($cid)) header('Location: '.url_rewrite('content.php?cid='.$cid, AT_PRETTY_URL_IS_HEADER));
+		else header('Location: '.url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	} // else:
 	
-	header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid.SEP.'pos='.$pos.SEP.'efs='.$_REQUEST['efs'], AT_PRETTY_URL_IS_HEADER));
+	header('Location: '.url_rewrite('tools/take_test_q.php?tid='.$tid.SEP.'pos='.$pos.SEP.'efs='.$_REQUEST['efs'].$cid_url, AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -238,6 +245,8 @@ if (!$result || !$question_row) {
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?pos=<?php echo $pos; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+<?php if (isset($_REQUEST['cid'])) {?> <input type="hidden" name="cid" value="<?php echo $cid; ?>" /> <?php }?>
+
 <div class="input-form" style="width:80%">
 
 	<fieldset class="group_form"><legend class="group_form"><?php echo $title ?> (<?php echo _AT('question').' '. ($pos+1).'/'.$test_row['num_questions']; ?>)</legend>

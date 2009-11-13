@@ -957,7 +957,7 @@ function inlineEditsSetup() {
 					$link .= $content['title'].'">';
 
 					if ($truncate && ($strlen($content['title']) > (24-$depth*4)) ) {
-						$content['title'] = rtrim($substr($content['title'], 0, (24-$depth*4)-4)).'...';
+						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, (24-$depth*4)-4))).'...';
 					}
 					
 					if (isset($content['test_id']))
@@ -982,7 +982,7 @@ function inlineEditsSetup() {
 						$full_title = $content['title'];
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
-							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
+							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, (21-$depth*4)-4))).'...';
 						}
 						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span></strong>';
 						
@@ -1006,7 +1006,7 @@ function inlineEditsSetup() {
 						}
 						
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
-							$content['title'] = rtrim($substr($content['title'], 0, (21-$depth*4)-4)).'...';
+							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, (21-$depth*4)-4))).'...';
 						}
 						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span>';
 						
@@ -1339,6 +1339,93 @@ function inlineEditsSetup() {
 		} else {
 			return $this->_menu_info[$cid]['u_release_date'];
 		}
+	}
+
+	/* returns the first test_id if this page has pre-test(s) to be passed, 
+	 * or is under a page that has pre-test(s) to be passed, 
+	 * true otherwise
+	 * Access: public 
+	 */
+	function getPretest($cid) {
+		$this_pre_test_id = $this->getOnePretest($cid);
+		
+		if ($this->_menu_info[$cid]['content_parent_id'] == 0) {
+			// this $cid has no parent, so we check its release date directly
+			return ($pre_test_id > 0) ? $pre_test_id : 0;
+		}
+		// this is a sub page, need to check ALL its parents
+		$parent_pre_test_id = $this->getOnePretest($this->_menu_info[$cid]['content_parent_id']);
+		if ($this_pre_test_id > 0)
+			return $this_pre_test_id;
+		else if ($parent_pre_test_id > 0)
+			return $parent_pre_test_id;
+		else
+			return 0;
+	}
+
+	/* returns the first test_id if this page has pre-test(s) to be passed, 
+	 * 0 otherwise
+	 * Access: public 
+	 */
+	function getOnePretest($cid) {
+		global $db, $msg;
+		include_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+		
+		$sql = "SELECT *, UNIX_TIMESTAMP(t.start_date) AS start_date, UNIX_TIMESTAMP(t.end_date) AS end_date 
+		          FROM ".TABLE_PREFIX."tests t, ".TABLE_PREFIX."content_prerequisites cp
+		         WHERE cp.content_id=".$cid."
+		           AND cp.type = '".CONTENT_PRE_TEST."'
+		           AND cp.item_id=t.test_id";
+		$result= mysql_query($sql, $db);
+		
+		while ($row = mysql_fetch_assoc($result))
+		{
+			// check to make sure we can access this test
+			if (!$row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS)) {
+				$msg->addInfo('NOT_ENROLLED');
+			}
+			
+			if (!$row['guests'] && !authenticate_test($row['test_id'])) {
+				$msg->addInfo(array('PRETEST_NO_PRIV',$row['title']));
+			}
+			
+			// skip the test if the test is not release
+			if ($row['start_date'] > time() || $row['end_date'] < time()) continue;
+			
+			$sql = "SELECT tr.result_id, count(*) num_of_questions, sum(ta.score) score, sum(tqa.weight) total_weight
+			          FROM ".TABLE_PREFIX."tests_results tr, ".TABLE_PREFIX."tests_answers ta, ".TABLE_PREFIX."tests_questions_assoc tqa 
+			         WHERE tr.test_id = ".$row['test_id']."
+			           AND tr.member_id = ".$_SESSION['member_id']."
+			           AND tr.result_id = ta.result_id
+			           AND tr.test_id = tqa.test_id
+			           AND ta.question_id = tqa.question_id
+			         GROUP BY tr.result_id";
+			$result_score = mysql_query($sql, $db);
+			
+			$num_of_attempts = 0;
+			while ($row_score = mysql_fetch_assoc($result_score))
+			{
+				// skip the test when:
+				// 1. no pass score is defined. this is a survey.
+				// 2. the student has passed the test 
+				// 3. the test has no question
+				if (($row['passscore'] == 0 && $row['passpercent'] == 0) ||
+				    $row_score['num_of_questions'] == 0 ||
+				    ($row['passscore']<>0 && $row_score['score']>=$row['passscore']) || 
+				    ($row['passpercent']<>0 && ($row_score['score']/$row_score['total_weight']*100)>=$row['passpercent']))
+				    continue 2;
+				
+				$num_of_attempts++;
+			}
+			
+			if ($row['num_takes'] != AT_TESTS_TAKE_UNLIMITED && $num_of_attempts >= $row['num_takes'])
+			{
+				$msg->addInfo(array('PRETEST_FAILED',$row['title']));
+			}
+			else
+				return $row['test_id'];
+		}
+		return 0;
 	}
 
 	/** 

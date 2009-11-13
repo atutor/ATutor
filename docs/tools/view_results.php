@@ -23,10 +23,22 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
 }
 
+if (isset($_REQUEST['goto_content']))
+{
+	header('Location: '.url_rewrite('content.php?cid='.$cid, AT_PRETTY_URL_IS_HEADER));
+	exit;
+}
+if (isset($_REQUEST['back']))
+{
+	header('Location: '.url_rewrite('tools/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+	exit;
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $tid = intval($_GET['tid']);
 $rid = intval($_GET['rid']);
+if (isset($_REQUEST['cid'])) $cid = $_REQUEST['cid'];
 
 $sql	= "SELECT title, random, passfeedback, failfeedback, passscore, passpercent FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
@@ -105,7 +117,9 @@ while ($row = mysql_fetch_assoc($result)) {
 	$this_total += $row['weight'];
 }
 ?>
-<form method="get" action="<?php echo AT_BASE_HREF; ?>tools/my_tests.php">
+<form method="get" action="<?php echo $_REQUEST['PHP_SELF']; ?>">
+<?php if (isset($_REQUEST['cid'])) {?> <input type="hidden" name="cid" value="<?php echo $cid; ?>" /> <?php }?>
+
 <div class="input-form">
 	<div class="row">
 		<h2><?php echo AT_print($test_title, 'tests.title'); ?></h2>
@@ -170,7 +184,11 @@ while ($row = mysql_fetch_assoc($result)) {
 	<?php endif; ?>
 
 	<div class="row buttons">
+		<?php if (isset($cid)) {?>
+		<input type="submit" value="<?php echo _AT('goto_content'); ?>" name="goto_content" />
+		<?php } else {?>
 		<input type="submit" value="<?php echo _AT('back'); ?>" name="back" />
+		<?php }?>
 	</div>
 </div>
 </form>
