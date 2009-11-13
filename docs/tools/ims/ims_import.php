@@ -180,7 +180,7 @@ function rehash($items){
 		$parent_obj = $items[$content['parent_content_id']];
 		$rehashed_items[$id] = $content;	//copy
         //first check if this is the top folder of the archieve, we don't want the top folder, remove it.
-        if (isset($content['parent_content_id']) && !isset($parent_obj) && isset($content['type'])){
+        if (isset($content['parent_content_id']) && !isset($parent_obj) && !isset($content['type'])){
             //if we can get into here, it means the parent_content_id of this is empty
             //implying this is the first folder.
             //note: it checks content[type] cause it could be a webcontent. In that case, 
