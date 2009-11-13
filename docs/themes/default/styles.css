@@ -1799,8 +1799,9 @@ div.home_box {
 /*****************************/
 	
 div#subnavlistcontainer {
-	width:90%;
+	width:95%;
 	margin:auto;
+
 
 
 }
@@ -1815,7 +1816,6 @@ padding-bottom:1em;
 ul#subnavlist {
 	padding-top: 5px;
 	margin-top: 0px;
-	margin-left:5px;
 	font-family: Verdana,Helvetica,Arial,serif;
 }
 
@@ -1825,26 +1825,24 @@ ul#subnavlist li {
 	list-style: none;
 	display: inline;
 	margin: 0px;
-	font-weight:bold;
+	font-weight:500;
 	text-align:center;
 	border:thin solid #cccccc;
-	padding:0em 2em 0em;
-
+	padding:0em 1em 0em;
 }
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{
-
   	color: black;
-	text-decoration:none;
+text-decoration:none;
 }
 
 ul#subnavlist li a {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     	height: 1.5em;
-   	text-decoration:none;
+   	text-decoration:underline;
 	background-color:white;
-	font-weight:500;
+
 }
 
 ul#subnavlist li a.selected {
