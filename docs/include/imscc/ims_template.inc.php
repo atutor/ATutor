@@ -552,12 +552,12 @@ $ims_template_xml['file_meta'] = '			<file href="{FILE}">
 $ims_template_xml['final'] = '
 	<organizations>
 		<organization identifier="MANIFEST01_ORG1" structure="rooted-hierarchy">
-		
+			<item identifier="ShellItem">		
 				<item identifier="resources">
 					<title>{COURSE_TITLE}</title>
 		{ORGANIZATIONS}
 				</item>
-		
+		    </item>
 		</organization>
 	</organizations>
 	<resources>

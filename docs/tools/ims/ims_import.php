@@ -172,6 +172,7 @@ function rscandir($base='', &$data=array()) {
  * create a new folder on top of it
  */
 function rehash($items){
+    debug($items);
 	global $order;
 	$parent_page_maps = array();	//old=>new
 	$temp_popped_items = array();
@@ -179,14 +180,22 @@ function rehash($items){
 	foreach($items as $id => $content){
 		$parent_obj = $items[$content['parent_content_id']];
 		$rehashed_items[$id] = $content;	//copy
-
-		//first check if there exists a mapping for this item, if so, simply replace is and next.
-		if (isset($parent_page_maps[$content['parent_content_id']])){
+        //first check if this is the top folder of the archieve, we don't want the top folder, remove it.
+        if (isset($content['parent_content_id']) && !isset($parent_obj) && isset($content['type'])){
+            //if we can get into here, it means the parent_content_id of this is empty
+            //implying this is the first folder.
+            //note: it checks content[type] cause it could be a webcontent. In that case, 
+            //      we do want to keep it.  
+            unset($rehashed_items[$id]);
+            continue;
+        }
+		//then check if there exists a mapping for this item, if so, simply replace is and next.
+		elseif (isset($parent_page_maps[$content['parent_content_id']])){
 			$rehashed_items [$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
 			$rehashed_items [$id]['ordering']++;
 		} 
 		//If its parent page is a top page and have an identiferref
-		else if (isset($parent_obj) && isset($parent_obj['href'])){			
+		elseif (isset($parent_obj) && isset($parent_obj['href'])){			
 			if (!isset($parent_obj['href'])){
 				//check if this top page is already a folder, if so, next.
 				continue;
@@ -226,6 +235,7 @@ function rehash($items){
 
 		}
 	}
+	debug($rehashed_items);exit;
 	return $rehashed_items;
 }
 
