@@ -45,6 +45,7 @@ if(isset($tool_list)) {?>
         </thead>
         <tbody>
             <?php foreach($tool_list as $tool) {
+		    $i = $i+1;
                     $result = mysql_query($sql, $db);
                     while($row = mysql_fetch_assoc($result)){
                         if($tool['id'] == $row['forum_id']){
@@ -58,12 +59,13 @@ if(isset($tool_list)) {?>
             <tr>
                 <td valign="top">
                     <!--<input name='checkAll' type='checkbox' onClick="checkAll();">-->
-                    <input name="check[]" value="<?php echo $tool['id'];?>" type="checkbox" <?php echo $checked;?> onClick="chkBoxes();" />
-                    &nbsp<?php echo $files;?>
+                    <input name="check[]" value="<?php echo $tool['id'];?>" id="<?php echo $i; ?>" type="checkbox" <?php echo $checked;?> onClick="chkBoxes();" />
+                    &nbsp;<?php echo $files;?>
                 </td>
-                <td valign="top"><?php echo $tool['title']; ?></td>
+                <td valign="top"><label for="<?php echo $i; ?>"><?php echo $tool['title']; ?></label></td>
             </tr>
-                <?php }?>
+                <?php }
+		$i=0;?>
         </tbody>
     </table>
     <br><br><br>
@@ -81,7 +83,7 @@ if(isset($tool_list)) {?>
 /*##############################*/?>
 
 
-<SCRIPT language=javascript>
+<script language=javascript>
     function checkAll() {
         check=true;
         for (i=0;i<document.datagrid.check.length;i++) {
@@ -100,4 +102,4 @@ if(isset($tool_list)) {?>
         if (i == myCheckBoxes.length)
             document.datagrid.del_selected.disabled=true;
     }
-</SCRIPT>
+</script>

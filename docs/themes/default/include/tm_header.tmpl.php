@@ -38,6 +38,6 @@ global $system_courses;
 	
 </head>
 <body onload="<?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('CloseToolManager');?></a></div>
+<br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('close_window');?></a></div>
 <a name="content"></a>
 <?php global $msg; $msg->printAll();?>
