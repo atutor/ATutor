@@ -172,6 +172,7 @@ function rscandir($base='', &$data=array()) {
  * create a new folder on top of it
  */
 function rehash($items){
+//	debug($items);
 	global $order;
 	$parent_page_maps = array();	//old=>new
 	$temp_popped_items = array();
@@ -234,6 +235,7 @@ function rehash($items){
 
 		}
 	}
+//	debug($rehashed_items, 'after');
 	return $rehashed_items;
 }
 
@@ -538,10 +540,12 @@ function rehash($items){
 		global $element_path, $my_data, $imported_glossary;
 		static $current_term;
 
-		if ($element_path === array('glossary', 'item', 'term')) {
+		if ($element_path === array('glossary', 'item', 'term') || 
+			$element_path === array('glossary:glossary', 'item', 'term')) {
 			$current_term = $my_data;
 
-		} else if ($element_path === array('glossary', 'item', 'definition')) {
+		} else if ($element_path === array('glossary', 'item', 'definition') || 
+				   $element_path === array('glossary:glossary', 'item', 'definition')) {
 			$imported_glossary[trim($current_term)] = trim($my_data);
 		}
 
@@ -747,7 +751,6 @@ if ($content_type == 'IMS Common Cartridge'){
 if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 	$glossary_xml = @file_get_contents($import_path.$glossary_path.'glossary.xml');
 	$element_path = array();
-
 	$xml_parser = xml_parser_create();
 
 	/* insert the glossary terms into the database (if they're not in there already) */
@@ -764,7 +767,7 @@ if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 	xml_parser_free($xml_parser);
 	$contains_glossary_terms = true;
 	foreach ($imported_glossary as $term => $defn) {
-		if (!$glossary[urlencode($term)]) {
+		if (!$glossary[urldecode($term)]) {
 			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$term', '$defn', 0)";
 			mysql_query($sql, $db);	
 		}

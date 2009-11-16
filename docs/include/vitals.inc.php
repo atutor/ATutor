@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 1);
 
@@ -362,7 +362,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$glossary_ids = array();
 	while ($row_g = mysql_fetch_assoc($result)) {
 		
-		$row_g['word'] = urlencode($row_g['word']);
+		$row_g['word'] = urldecode($row_g['word']);
 
 		$glossary[$row_g['word']] = str_replace("'", "\'",$row_g['definition']);
 		$glossary_ids[$row_g['word_id']] = $row_g['word'];
