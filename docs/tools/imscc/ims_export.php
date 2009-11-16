@@ -233,7 +233,7 @@ if (count($used_glossary_terms)) {
 		$glossary[$term_key] = htmlentities($glossary[$term_key], ENT_QUOTES, 'UTF-8');
 		$glossary[$term_key] = str_replace('&', '&amp;', $glossary[$term_key]);
 		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
-									array($escaped_term, $glossary[$term_key]),
+									array($term_key, $glossary[$term_key]),
 									$glossary_term_xml);
 	}
 
