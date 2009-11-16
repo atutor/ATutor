@@ -162,20 +162,20 @@ if ($cid > 0)
 	}
 	
 	$parent = 0;
-	foreach ($path as $i=>$page) {
-		if (!$parent) {
-			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
-			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['parent']   = 'index.php';
-		} else {
-			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
-			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['parent']   = 'editor/edit_content_folder.php?cid='.$parent;
-		}
-	
-		$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['ignore'] = true;
-		$parent = $page['content_id'];
-	}
-	$last_page = array_pop($_pages);
-	$_pages['editor/edit_content_folder.php'] = $last_page;
+//	foreach ($path as $i=>$page) {
+//		if (!$parent) {
+//			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
+//			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['parent']   = 'index.php';
+//		} else {
+//			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
+//			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['parent']   = 'editor/edit_content_folder.php?cid='.$parent;
+//		}
+//	
+//		$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['ignore'] = true;
+//		$parent = $page['content_id'];
+//	}
+//	$last_page = array_pop($_pages);
+//	$_pages['editor/edit_content_folder.php'] = $last_page;
 	
 	reset($path);
 	$first_page = current($path);
