@@ -34,7 +34,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<table border="0" align="center">
 	<tr>
 		<th colspan="3"><?php echo _AT('move'); ?></th>
-		<th><?php echo _AT('related_topics'); ?></th>
+		<th><?php echo _AT('content'); ?></th>
 	</tr>
 	<tr>
 		<td colspan="3">&nbsp;</td>
