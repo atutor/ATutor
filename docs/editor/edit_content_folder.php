@@ -99,6 +99,7 @@ if ($_POST['submit'])
 			}
 		}
 	}
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_base_path.'editor/edit_content_folder.php?cid='.$cid);
 	exit;
 }
