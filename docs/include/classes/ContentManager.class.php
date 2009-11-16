@@ -977,6 +977,11 @@ function inlineEditsSetup() {
 				} 
 				else 
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
+					if (isset($highlighted[$content['content_id']])) {
+						$link .= '<strong>';
+						$on = true;
+					}
+
 					if ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)
 					{ // current content page
 						$full_title = $content['title'];
@@ -990,8 +995,6 @@ function inlineEditsSetup() {
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
-						
-						$on = true;
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
@@ -999,10 +1002,10 @@ function inlineEditsSetup() {
 						
 						$full_title = $content['title'];
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?cid=".$content['content_id']).'"><strong title="'.$content['title'].'" >'."\n";
+							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?cid=".$content['content_id']).'">'."\n";
 						}
 						else {
-							$link .= '<strong title="'.$content['title'].'" style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
+							$link .= '<span style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
 						}
 						
 						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
@@ -1011,10 +1014,10 @@ function inlineEditsSetup() {
 						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-							$link .= '</strong></a>'."\n";
+							$link .= '</a>'."\n";
 						}
 						else {
-							$link .= '</strong>'."\n";
+							$link .= '</span>'."\n";
 						}
 						
 						// instructors have privilege to delete content
@@ -1022,6 +1025,10 @@ function inlineEditsSetup() {
 							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';
+					}
+					
+					if ($on) {
+						$link .= '</strong>';
 					}
 				}
 
