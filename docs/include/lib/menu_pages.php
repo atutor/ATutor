@@ -240,10 +240,10 @@ $_pages['users/index.php']['title_var'] = 'my_courses';
 $_pages['users/index.php']['parent']    = AT_NAV_START;
 $_pages['users/index.php']['guide']     = 'general/?p=my_courses.php';
 if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION['course_id']) || !$_SESSION['course_id'])) {
-    if (get_instructor_status() === FALSE) {
-        $_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'help/contact_support.php'), (array) $_pages['users/index.php']['children']);
-    } else {
+    if (isset($_SESSION['member_id']) && get_instructor_status() === TRUE) {
         $_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
+    } else {
+    	$_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'help/contact_support.php'), (array) $_pages['users/index.php']['children']);
     }
 }
 
@@ -251,13 +251,13 @@ $_pages['users/browse.php']['title_var'] = 'browse_courses';
 $_pages['users/browse.php']['parent']    = 'users/index.php';
 $_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
 
-if (get_instructor_status() === TRUE)	
+if (isset($_SESSION['member_id']) && get_instructor_status() === TRUE)	
 {
 	$_pages['users/create_course.php']['title_var'] = 'create_course';
 	$_pages['users/create_course.php']['parent']    = 'users/index.php';
 	$_pages['users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
 }
-else if (defined('ALLOW_INSTRUCTOR_REQUESTS') || ALLOW_INSTRUCTOR_REQUESTS)
+else if (isset($_SESSION['member_id']) && defined('ALLOW_INSTRUCTOR_REQUESTS') || ALLOW_INSTRUCTOR_REQUESTS)
 {
 	$_pages['help/contact_support.php']['title_var'] = 'request_instructor_priv';
 	$_pages['help/contact_support.php']['parent']    = 'users/index.php';
