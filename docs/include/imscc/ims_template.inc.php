@@ -80,7 +80,7 @@ function print_organizations($parent_id,
 		foreach ($top_level as $garbage => $content) {
 			$link = '';
 			//XSL characters handling
-			$content['title'] = htmlspecialchars($content['titile']);
+			$content['title'] = htmlspecialchars($content['title']);
 			$content['text'] = htmlspecialchars($content['text']);
 				
 			if ($content['content_path']) {
