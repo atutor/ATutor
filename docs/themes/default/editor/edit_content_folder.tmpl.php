@@ -29,7 +29,7 @@ if ($this->shortcuts):
 <?php endif; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; if ($this->cid > 0) echo '?cid='.$this->cid; else if ($this->pid > 0) echo '?pid='.$this->pid;?>" method="post" name="form"> 
-<div class="input-form" style="width:80%;margin-left:1.5em;">
+<div class="input-form" style="width:<?php if ($this->cid > 0) echo "80%"; else echo "95%"; ?>;margin-left:1.5em;">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><div style="font-weight:bold;"><label for="ftitle"><?php echo _AT('content_folder_title');  ?></label></div>
 		<input type="text" name="title" id="ftitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($this->ftitle); ?>" />
