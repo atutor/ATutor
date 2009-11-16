@@ -196,8 +196,10 @@ class LanguageManager {
 
 		// else pick one at random:
 		reset($this->availableLanguages);
+		
 		$unknown_language = current($this->availableLanguages);
-		if ($unknown_language) {
+		
+		if (!$unknown_language) {
 			return FALSE;
 		}
 
