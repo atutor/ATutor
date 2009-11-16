@@ -16,13 +16,19 @@
 		<dt>Formatting: HTML</dt>
 		<dd><p>If using HTML mode, you can type HTML tags in the Body window along with your text. If you are unfamiliar with HTML, you can use the visual editor by clicking the <code>Switch to visual editor</code> button.</p></dd>
 
+		<dt>Formatting: Web Link</dt>
+		<dd><p>Selecting Web Link replaces the content editor window with a text field into which a URL to an external Web site can be entered. When a student views a content page formatted as a Web Link, the content of the external site becomes the content of the ATutor page.</p></dd>
+
 		<dt>File Manager</dt>
 		<dd>
 			<p>The File Manager is a tool that allows you to upload files from your local system to be used in your course. The popup File Manager can be open alongside the Content Editor by selecting <kbd>Open File Manager</kbd>.</p>
 			
 			<p>See the <a href="file_manager.php">File Manager</a> section for details.</p>
 		</dd>
-
+		<dt>Add Activity</dt>
+		<dd>
+			<p>Choose from the available tools (currently only forum discussions) to associate an activity with the content being created/edited. The activity being added must first exist, having been created using the tool's manager screen. For example, create a forum first, then associate it with your content. In future versions of ATutor, any tool available in a course can be used to add activities to content, based on the IMS Learning Tool Interoperability (LTI) standard.</p>
+		</dd>
 		<dt>Terms</dt>
 		<dd>
 			<p>In either plain text or HTML formatting mode, you can insert <em>terms</em> to tell the ATutor system which words you wish to mark as glossary terms.</p>
@@ -52,7 +58,7 @@
 		<dd><p>Use <kbd>[tex][/tex]</kbd> to embed LaTeX equations into your content.</p></dd>
 
 		<dt>Multimedia</dt>
-		<dd><p>Use <kbd>[media][/media]</kbd> to embed multimedia into your content. Supported formats currently include: mpeg, mov, wmv, swf, mp3, wav, ogg, mid, and YouTube hosted videos. The media tag can take two parameters to define the width and height of the play when it displays <kbd>[media|640|480]http://www.youtube.com/watch?v=bxcZ-dFffHA[/media]</kbd>. If the parameters are not defined, the player size will default to 425x350</p></dd>
+		<dd><p>Use the Add Media link to insert the <kbd>[media][/media]</kbd> tags used to embed multimedia into your content. Supported formats currently include: mpeg, mov, wmv, swf, mp3, wav, ogg, mid, flv, and YouTube hosted videos. The media tag can take two parameters to define the width and height of the play when it displays <kbd>[media|640|480]http://www.youtube.com/watch?v=bxcZ-dFffHA[/media]</kbd>. If the parameters are not defined, the player size will default to 425x350</p></dd>
 
 		<dt>Paste from File</dt>
 		<dd><p>Rather than typing out content, it can be uploaded from a text or HTML file on your local file system. Once uploaded, the content of that file will be displayed in the <em>Body</em> window. Keep in mind that uploading in this manner will replace any existing content in the <em>Body</em> window.</p></dd>
