@@ -447,7 +447,6 @@ table.etabbed-table	{
 a#my-start-page {
 	padding: 2px;
 	padding-left: 15px;
-	background-image: url(http://www.gris.uni-tuebingen.de/images/start.gif);
 	background-repeat: no-repeat;
 	background-position: 2px 5px;
 }
@@ -475,54 +474,6 @@ h2.page-title {
 h1 {
 	margin-bottom: 5px;
 }
-/*
-div#sub-navigation {
-	width:90%;
-	border-bottom:thin solid #eeeeee;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom:-1px;
-
-}
-
-ul#subnavlist {
-	padding-top: 5px;
-	margin-top: 0px;
-	margin-left:5px;
-
-}
-
-ul#subnavlist li {
-
-	list-style: none;
-	white-space: nowrap;
-	display: inline;
-	margin: 0px;
-	border-top:thin #cccccc solid;
-	border-left:thin #cccccc solid;
-	border-right:thin #cccccc solid;
-	font-size:0.8em;
- 	padding: 0em 0em 0em;
-
-}
-
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active, ul#subnavlist strong {
- 	background-color: #eeeeee;
-	padding:0em 2em 0em;
-	text-decoration:none;
-
-
-}
-
-ul#subnavlist li a {
-	font-weight:bold;
-  	height: 1.5em;
-	padding:0em 2em 0em;
-   	text-decoration:none;
-}
-*/
-
-
 
 
 div#help {
@@ -1825,7 +1776,7 @@ ul#subnavlist li {
 	list-style: none;
 	display: inline;
 	margin: 0px;
-	font-weight:500;
+	font-weight:700;
 	text-align:center;
 	border:thin solid #cccccc;
 	padding:0em 1em 0em;
@@ -1833,7 +1784,7 @@ ul#subnavlist li {
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{
   	color: black;
-text-decoration:none;
+	text-decoration:none;
 }
 
 ul#subnavlist li a {
@@ -1842,11 +1793,7 @@ ul#subnavlist li a {
     	height: 1.5em;
    	text-decoration:underline;
 	background-color:white;
+	font-weight:500;
 
 }
 
-ul#subnavlist li a.selected {
-    /* The selected tab. There's only one of these */
-    color: #555;
-    font-weight: normal;
-}
