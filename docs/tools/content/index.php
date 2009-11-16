@@ -15,14 +15,30 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
 
+global $contentManager;
+
 if (isset($_GET['edit'], $_GET['ctid'])) {
-	header('Location: '.AT_BASE_HREF.'editor/edit_content.php?cid='.intval($_GET['ctid']));
+	$cid = intval($_GET['ctid']);
+	$result = $contentManager->getContentPage($cid);
+	$row = mysql_fetch_assoc($result);
+
+	if ($row['content_type'] == CONTENT_TYPE_CONTENT)
+		header('Location: '.AT_BASE_HREF.'editor/edit_content.php?cid='.$cid);
+	else if ($row['content_type'] == CONTENT_TYPE_FOLDER)
+		header('Location: '.AT_BASE_HREF.'editor/edit_content_folder.php?cid='.$cid);
 	exit;
 } else if (isset($_GET['delete'], $_GET['ctid'])) {
 	header('Location: '.AT_BASE_HREF.'editor/delete_content.php?cid='.intval($_GET['ctid']));
 	exit;
 } else if (isset($_GET['view'], $_GET['ctid'])) {
-	header('Location: '.AT_BASE_HREF.'content.php?cid='.intval($_GET['ctid']));
+	$cid = intval($_GET['ctid']);
+	$result = $contentManager->getContentPage($cid);
+	$row = mysql_fetch_assoc($result);
+
+	if ($row['content_type'] == CONTENT_TYPE_CONTENT)
+		header('Location: '.AT_BASE_HREF.'content.php?cid='.intval($_GET['ctid']));
+	else if ($row['content_type'] == CONTENT_TYPE_FOLDER)
+		header('Location: '.AT_BASE_HREF.'editor/edit_content_folder.php?cid='.$cid);
 	exit;
 } else if (isset($_GET['usage'], $_GET['ctid'])) {
 	header('Location: '.AT_BASE_HREF.'tools/tracker/page_student_stats.php?content_id='.intval($_GET['ctid']));
