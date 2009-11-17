@@ -81,6 +81,26 @@ function poptastic(url) {
 	newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
 	if (window.focus) {newwindow.focus()}
 }
+
+function setcookie(name,value,duration){
+	cookiestring=name+"="+escape(value)+";path=/;expires="+getexpirydate(duration);
+	document.cookie=cookiestring;
+	if(!getcookie(name)){
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function getcookie(cookiename) {
+	var cookiestring=""+document.cookie;
+	var index1=cookiestring.indexOf(cookiename);
+	if (index1==-1 || cookiename=="") return ""; 
+	var index2=cookiestring.indexOf(';',index1);
+	if (index2==-1) index2=cookiestring.length; 
+	return unescape(cookiestring.substring(index1+cookiename.length+1,index2));
+}
+
 //toggle content folder in side menu "content navigation"
 function toggleFolder(cid)
 {
