@@ -448,6 +448,13 @@ class Module {
 				$CSVImport->import($table_name, $import_dir, $course_id, $version);
 			}
 		}
+		if ($this->_directoryName == '_core/content')
+		{
+			if (version_compare($_POST['step1']['old_version'], '1.6.4', '<')) {
+				$this->convertContent164($course_id);
+			}
+		}
+		
 		if (isset($dirs)) {
 			foreach ($dirs as $src => $dest) {
 				$dest = str_replace('?', $course_id, $dest);
@@ -652,6 +659,30 @@ class Module {
 		$sql = "UPDATE ".TABLE_PREFIX."modules SET cron_last_run=".time()." WHERE dir_name='$this->_directoryName'";
 		mysql_query($sql, $db);
 
+	}
+	
+	private function convertContent164($course_id) {
+		global $db;
+		
+		/* convert all content nodes to the IMS standard. (adds null nodes for all top pages) */
+		include(AT_INCLUDE_PATH.'../install/include/ustep_content_conversion.php');
+
+		/* Convert db to a tree */
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content where course_id='.$course_id;
+		
+		$result = mysql_query($sql, $db);
+		$content_array = array(); 
+
+		while ($row = mysql_fetch_assoc($result)){
+			$content_array[$row['content_parent_id']][$row['ordering']] = $row['content_id'];
+		}
+		$tree = buildTree($content_array[0], $content_array);
+
+		/* Restructure the tree */
+		$tree = rebuild($tree);
+
+		/* Update the Db based on this new tree */
+		reconstruct($tree, '', 0, TABLE_PREFIX);
 	}
 }
 

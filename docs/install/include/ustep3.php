@@ -178,7 +178,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$tree = rebuild($tree);
 
 		/* Update the Db based on this new tree */
-		reconstruct($tree, '', 0);
+		reconstruct($tree, '', 0, $_POST['step1']['tb_prefix']);
 	}
 
 	/* deal with the extra modules: */

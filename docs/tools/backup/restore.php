@@ -35,7 +35,6 @@ if (isset($_POST['cancel'])) {
 		$msg->addError(array('EMPTY_FIELDS', _AT('material')));
 	} else {
 		$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
-
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;

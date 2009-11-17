@@ -81,12 +81,12 @@ function rebuild($tree, $node=''){
  * @param	int		parent content id
  * @return	null (nothing to return, it updates the db only)
  */
-function reconstruct($tree, $order, $content_parent_id){
+function reconstruct($tree, $order, $content_parent_id, $table_prefix){
 	global $db;
 
 	//a content page.
 	if (!is_array($tree)){
-		$sql = 'UPDATE '.$_POST['step1']['tb_prefix']."content SET ordering=$order, content_parent_id=$content_parent_id WHERE content_id=$tree";
+		$sql = 'UPDATE '.$table_prefix."content SET ordering=$order, content_parent_id=$content_parent_id WHERE content_id=$tree";
 		if (!mysql_query($sql, $db)){
 			//throw error
 			echo mysql_error();
@@ -96,13 +96,13 @@ function reconstruct($tree, $order, $content_parent_id){
 	foreach ($tree as $k=>$v){
         if (preg_match('/order\_([\d]+)/', $k, $match)==1){
 			//order layer
-			reconstruct($v, $match[1], $content_parent_id);	//inherit the previous layer id
+			reconstruct($v, $match[1], $content_parent_id, $table_prefix);	//inherit the previous layer id
 		} else {
 			//content folder layer
-			$sql = 'SELECT * FROM '.$_POST['step1']['tb_prefix']."content WHERE content_id=$k";
+			$sql = 'SELECT * FROM '.$table_prefix."content WHERE content_id=$k";
 			$result = mysql_query($sql, $db);
 			$old_content_row = mysql_fetch_assoc($result);
-			$sql = 'INSERT INTO '.$_POST['step1']['tb_prefix'].'content (course_id, content_parent_id, ordering, last_modified, revision, formatting, release_date, keywords, content_path, title, use_customized_head, allow_test_export, content_type) VALUES ('
+			$sql = 'INSERT INTO '.$table_prefix.'content (course_id, content_parent_id, ordering, last_modified, revision, formatting, release_date, keywords, content_path, title, use_customized_head, allow_test_export, content_type) VALUES ('
 				.$old_content_row['course_id'] . ', '
 				.$content_parent_id . ', '
 				.$order . ', '
@@ -116,10 +116,10 @@ function reconstruct($tree, $order, $content_parent_id){
 				.$old_content_row['use_customized_head'] . ', '
 				.$old_content_row['allow_test_export'] . ', '
 				. '1)';
-			echo $sql;
+			
 			if (mysql_query($sql, $db)){
 				$folder_id = mysql_insert_id();
-				reconstruct($v, '', $folder_id);
+				reconstruct($v, '', $folder_id, $table_prefix);
 			} else {
 				//throw error
 				echo mysql_error();
