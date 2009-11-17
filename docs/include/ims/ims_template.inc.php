@@ -1,15 +1,14 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2002 - 2009                                            */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
@@ -56,7 +55,7 @@ function print_organizations($parent_id,
 	global $used_glossary_terms, $course_id, $course_language_charset, $course_language_code;
 	static $paths, $zipped_files;
 	global $glossary;
-	global $test_zipped_files, $use_a4a;
+	global $test_zipped_files, $use_a4a, $db;
 
 	$space  = '    ';
 	$prefix = '                    ';
@@ -99,6 +98,15 @@ function print_organizations($parent_id,
 				foreach ($terms[2] as $term) {
 					$used_glossary_terms[] = $term;
 				}
+			}
+
+			/** Test dependency **/
+			$test_dependency = '';	//Template for test
+			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)){
+				//add test dependency ontop to forums dependency
+				$test_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
 			}
 
 			/* calculate how deep this page is: */
@@ -172,6 +180,11 @@ function print_organizations($parent_id,
 							}
 						}
 					}
+
+					//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
+					$resources .= str_replace(	array('{TEST_ID}', '{PATH}', '{FILES}'),
+												array($content_test_row['test_id'], 'tests_'.$content_test_row['test_id'].'.xml', $added_files_xml),
+												$ims_template_xml['resource_test']); 
 				}
 			}
 
@@ -271,15 +284,17 @@ function print_organizations($parent_id,
 				/* check if this file is one of the test xml file, if so, we need to add the dependency
 				 * Note:  The file has already been added to the archieve before this is called.
 				 */
+/* taken out as of nov 17th, used dependency instead
 				if (preg_match('/tests\_[0-9]+\.xml$/', $file) && !in_array($file, $test_zipped_files)){
 					$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
 					$test_zipped_files[] = $file;
 				}
+*/
 			}
 
 			/******************************/
-			$resources .= str_replace(	array('{CONTENT_ID}', '{PATH}', '{FILES}'),
-										array($content['content_id'], $content['content_path'], $content_files),
+			$resources .= str_replace(	array('{CONTENT_ID}', '{PATH}', '{FILES}', '{DEPENDENCY}'),
+										array($content['content_id'], $content['content_path'], $content_files, $test_dependency),
 										$ims_template_xml['resource']);
 
 
@@ -409,6 +424,12 @@ version = "CP 1.1.4">
 $ims_template_xml['resource'] = '		<resource identifier="MANIFEST01_RESOURCE{CONTENT_ID}" type="webcontent" href="resources/{PATH}{CONTENT_ID}.html"  adlcp:scormtype="asset">
 			<metadata/>
 			<file href="resources/{PATH}{CONTENT_ID}.html"/>{FILES}
+			{DEPENDENCY}
+		</resource>
+'."\n";
+$ims_template_xml['resource_test'] = '		<resource identifier="MANIFEST01_RESOURCE_QTI{TEST_ID}" type="imsqti_xmlv1p2/imscc_xmlv1p0/assessment">
+			<metadata/>
+			<file href="{PATH}"/>{FILES}
 		</resource>
 '."\n";
 

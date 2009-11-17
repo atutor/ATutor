@@ -1,15 +1,14 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2002 - 2009                                            */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 // $Id$
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -78,7 +77,8 @@ function checkResources($import_path){
 			$dom->load(realpath($import_path.$filepath));
 
  			if (!@$dom->schemaValidate('main.xsd')){
-				$msg->addError('MANIFEST_FAILED_VALIDATION - '.$filepath);
+				//$msg->addError('MANIFEST_FAILED_VALIDATION - '.$filepath);
+				$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			}
 			//if this is the manifest file, we do not have to check for its existance.
 			if (preg_match('/(.*)imsmanifest\.xml/', $filepath)){
@@ -122,14 +122,16 @@ function checkResources($import_path){
 
 		//check if all the files exists in the manifest, if not, throw error.
 		if (!$file_exists_in_manifest){
-			$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
+			//$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
+			$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			break;
 		}
 
 		if ($flag == false){
 			//add an error message if it doesn't have any. 
 			if (!$msg->containsErrors()){
-				$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
+				//$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
+				$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			}
 			return false;
 		}
@@ -321,7 +323,8 @@ function rehash($items){
 		} else if ($name == 'file') {
 			// check if it misses file references
 			if(!isset($attrs['href']) || $attrs['href']==''){
-				$msg->addError('MANIFEST_NOT_WELLFORM');
+				//$msg->addError('MANIFEST_NOT_WELLFORM');
+				$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			}
 
 			// special case for webCT content packages that don't specify the `href` attribute 
@@ -408,12 +411,14 @@ function rehash($items){
 			if (file_exists(AT_CONTENT_DIR .'import/'.$_SESSION['course_id'].'/'.$attrs['href'])){
 				$items[$current_identifier]['file'][] = $attrs['href'];
 			} else {
-				$msg->addError('IMS_FILES_MISSING');
+				//$msg->addError('IMS_FILES_MISSING');
+				$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			}
 		}		
 		if ($name=='cc:authorizations'){
 			//don't have authorization setup.
-			$msg->addError('IMS_AUTHORIZATION_NOT_SUPPORT');
+			//$msg->addError('IMS_AUTHORIZATION_NOT_SUPPORT');
+			$msg->addError('IMPORT_CARTRIDGE_FAILED');
 		}
 		array_push($element_path, $name);
 	}
@@ -433,7 +438,8 @@ function rehash($items){
 		//check if this is a test import
 		if ($name == 'schema'){
 			if (trim($my_data)=='IMS Question and Test Interoperability'){			
-				$msg->addError('IMPORT_FAILED');
+				//$msg->addError('IMPORT_FAILED');
+				$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			} 
 			$content_type = trim($my_data);
 		}
@@ -1116,7 +1122,7 @@ foreach ($items as $item_id => $content_info)
 			} else {
 				$item_qti = $items[$item_id];
 			}
-			
+
 			//call subrountine to add the questions.
 			$qids = addQuestions($test_xml_file, $item_qti, $import_path);
 			

@@ -275,7 +275,6 @@ function print_organizations($parent_id,
 				}
 
 
-
 				$file_path = realpath(AT_CONTENT_DIR . $course_id . '/' . $content['content_path'] . $file);
 
 				/* check if this file exists in the content dir, if not don't include it */
