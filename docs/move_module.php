@@ -19,7 +19,7 @@ global $addslashes;
 if (isset($_POST['from']))
 {
 	$from = $_POST['from'];
-	if ($_POST['moved_modules'] <> '') $final_home_links = $addslashes($_POST['moved_modules']);
+	if ($_POST['moved_modules'] <> '') $final_home_links = $addslashes(str_replace('-', '/', $_POST['moved_modules']));
 }
 
 // handle ajax post request to remove module from course index page and student tools index page

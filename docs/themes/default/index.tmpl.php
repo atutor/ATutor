@@ -42,7 +42,7 @@ if($this->view_mode==0){
 	if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && is_array($this->home_links)){		// display enabled course tool
 		foreach ($this->home_links as $link){ 
 ?>
-		<div class="home_box" id="<?php echo substr($link['url'], strlen($_base_path)); ?>"> 
+		<div class="home_box" id="<?php echo str_replace('/', '-', substr($link['url'], strlen($_base_path))); ?>"> 
 <?php print_sublinks($link); 						// display each module ?>
 		</div>
 <?php
