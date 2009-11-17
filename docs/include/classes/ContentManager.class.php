@@ -941,7 +941,7 @@ function inlineEditsSetup() {
 					//content test extension  @harris
 					//if this is a test link.
 					if (isset($content['test_id'])){
-						$title_n_alt = _AT('tests') . ' - ' . $content['title'];
+						$title_n_alt =  $content['title'];
 						$in_link = 'tools/test_intro.php?tid='.$content['test_id'];
 						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$title_n_alt.'" alt="'.$title_n_alt.'" />';
 					} else {
