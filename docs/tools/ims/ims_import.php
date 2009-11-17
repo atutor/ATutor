@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'lib/qti.inc.php');
 //require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 require(AT_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
-//require(AT_INCLUDE_PATH.'../tools/ims/ns.inc.php');	//namespace, no longer needs, delete it after it's stable.
+require(AT_INCLUDE_PATH.'../tools/ims/ns.inc.php');	//namespace, no longer needs, delete it after it's stable.
 require(AT_INCLUDE_PATH.'classes/Weblinks/WeblinksParser.class.php');
 require(AT_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsParser.class.php');
 require(AT_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsImport.class.php');
@@ -276,24 +276,28 @@ function rehash($items){
 		global $items, $path, $package_base_path;
 		global $element_path;
 		global $xml_base_path, $test_message, $content_type;
-		global $current_identifier, $msg;
+		global $current_identifier, $msg, $ns;
 
 		//check if the xml is valid
-/*		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
+/*
+		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
 			//run the loop and check it thru the ns.inc.php
 		} elseif ($name == 'manifest' && !isset($attrs['xsi:schemaLocation'])) {
-			$msg->addError('MANIFEST_NOT_WELLFORM: NO NAMESPACE');
+			//$msg->addError('MANIFEST_NOT_WELLFORM: NO NAMESPACE');
+			$msg->addError('IMPORT_CARTRIDGE_FAILED');
 		} else {
 			//error
 		}
 		//error if the tag names are wrong
 		if (preg_match('/^xsi\:/', $name) >= 1){
-			$msg->addError('MANIFEST_NOT_WELLFORM');
+			//$msg->addError('MANIFEST_NOT_WELLFORM');
+			$msg->addError('IMPORT_CARTRIDGE_FAILED');
 		}
 */
 
+
 		//validate namespaces
-/*		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
+		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
 			$schema_location = array();
 			$split_location = preg_split('/[\r\n\s]+/', trim($attrs['xsi:schemaLocation']));
 
@@ -301,7 +305,8 @@ function rehash($items){
 			if(sizeof($split_location)%2==1){
 				//schema is not in the form of "The first URI reference in each pair is a namespace name,
 				//and the second is the location of a schema that describes that namespace."
-				$msg->addError('MANIFEST_NOT_WELLFORM');
+				//$msg->addError('MANIFEST_NOT_WELLFORM');
+				$msg->addError('IMPORT_CARTRIDGE_FAILED - shcema');
 			}
 
 			//turn the xsi:schemaLocation URI into a schema that describe namespace.
@@ -309,14 +314,21 @@ function rehash($items){
 			//http://msdn.microsoft.com/en-us/library/ms256100(VS.85).aspx
 			//http://www.w3.org/TR/xmlschema-1/
 			for($i=0; $i < sizeof($split_location);$i=$i+2){
+				/*
 				if (isset($ns[$split_location[$i]]) && $ns[$split_location[$i]] != $split_location[$i+1]){
-					$msg->addError('MANIFEST_NOT_WELLFORM: SCHEMA');
+					//$msg->addError('MANIFEST_NOT_WELLFORM: SCHEMA');
+					$msg->addError('IMPORT_CARTRIDGE_FAILED');
+				}
+				*/
+				//if the key of the namespace is not defined. Throw error.
+				if(!isset($ns[$split_location[$i]])){
+					$msg->addError('IMPORT_CARTRIDGE_FAILED - schema');
 				}
 			}
 		} else {
 			//throw error		
 		}
-*/
+
 
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
 			$xml_base_path = $attrs['xml:base'];
