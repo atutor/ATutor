@@ -60,12 +60,12 @@ if (isset($_POST['cancel'])) {
 		$_POST['title'] = validate_length($_POST['title'], 64);
 		$_POST['description'] = validate_length($_POST['description'], 250);
 
-		$name = get_display_name($_SESSION['member_id']);
+//		$name = get_display_name($_SESSION['member_id']);
 		$email = '';
 
 		//check if new cat is auth? -- shouldn't be a prob. since cat dropdown is already filtered
 
-		$sql	= "UPDATE ".TABLE_PREFIX."links SET cat_id=$_POST[cat], Url='$_POST[url]', LinkName='$_POST[title]', Description='$_POST[description]', SubmitName='$name', Approved=$_POST[approved] WHERE link_id=".$link_id;
+		$sql	= "UPDATE ".TABLE_PREFIX."links SET cat_id=$_POST[cat], Url='$_POST[url]', LinkName='$_POST[title]', Description='$_POST[description]', Approved=$_POST[approved] WHERE link_id=".$link_id;
 		mysql_query($sql, $db);
 	
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
