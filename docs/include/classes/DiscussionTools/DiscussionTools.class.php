@@ -33,7 +33,11 @@ class DiscussionTools {
 	}
 
 	function getText(){
-		return htmlspecialchars(trim($this->text));
+		//change the $IMS-CC-FILEBASE$ to the base of this directory
+		//TODO: The returned value may contains HTML, ATutor doesn't check 
+		//		if it contains malicious javascript at this point.
+		$this->text = preg_replace('/\$IMS\-CC\-FILEBASE\$/', '', $this->text);
+		return trim(html_entity_decode($this->text));
 	}
 }
 ?>
