@@ -450,7 +450,7 @@ class Module {
 		}
 		if ($this->_directoryName == '_core/content')
 		{
-			if (version_compare($_POST['step1']['old_version'], '1.6.4', '<')) {
+			if (version_compare($version, '1.6.4', '<')) {
 				$this->convertContent164($course_id);
 			}
 		}

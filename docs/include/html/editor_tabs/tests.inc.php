@@ -190,6 +190,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	</tbody>
 	</table>
 	</div>
+	<br />
 <?php }?>
 
 <script language="javascript" type="text/javascript">

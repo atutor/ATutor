@@ -11,11 +11,16 @@ $sql['tests_questions'] = 'SELECT question_id, category_id, type, feedback, ques
 $sql['tests_questions_assoc'] = 'SELECT TQ.test_id, question_id, weight, ordering, required FROM '.TABLE_PREFIX.'tests_questions_assoc TQ, '.TABLE_PREFIX.'tests T WHERE T.course_id=? AND T.test_id=TQ.test_id ORDER BY TQ.test_id';
 
 /* 
- * The content test association cannot be put into the content/module_backup.php, because the $table_id_map does not include
- * the test hash mapping until this is reached
- * @harris Sep 25, 08
+ * The content test association & content prerequisites cannot be put into the content/module_backup.php, because the $table_id_map does not include
+ * the test hash mapping until this is reached.
+ * And, for different content prerequisite type, the backup should be separated into different modules to 
+ * find out the correct mapping id. For example, test prerequistes go into "tests" module backup, content 
+ * prerequisites go into "content" module backup.
+ * @harris Sep 25, 08, cindy Nov 17, 2009
  */
 $sql['content_tests_assoc'] = 'SELECT cta.content_id, cta.test_id FROM '.TABLE_PREFIX.'content c, '.TABLE_PREFIX.'content_tests_assoc cta WHERE c.content_id = cta.content_id AND c.course_id = ? ORDER BY c.content_id';
+
+$sql['content_prerequisites'] = 'SELECT cp.content_id, cp.type, cp.item_id FROM '.TABLE_PREFIX.'content c, '.TABLE_PREFIX.'content_prerequisites cp WHERE c.content_id = cp.content_id AND c.course_id = ? ORDER BY c.content_id';
 
 function tests_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
@@ -130,6 +135,13 @@ function tests_questions_assoc_convert($row, $course_id, $table_id_map, $version
 function content_tests_assoc_convert($row, $course_id, $table_id_map, $version) {
 	$new_row[0] = $table_id_map['content'][$row[0]];
 	$new_row[1] = $table_id_map['tests'][$row[1]];
+	return $new_row;
+}
+
+function content_prerequisites_convert($row, $course_id, $table_id_map, $version) {
+	$new_row[0] = $table_id_map['content'][$row[0]];
+	$new_row[1] = $row[1];
+	$new_row[2] = $table_id_map['tests'][$row[2]];
 	return $new_row;
 }
 ?>
