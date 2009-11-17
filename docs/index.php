@@ -44,6 +44,7 @@ if ($home_view == 1 && authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
 <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/components/reorderer/css/Reorderer.css" />
 
 <script type="text/javascript">
+//<!--
 jQuery(document).ready(function () {
 	var reorder_example_grid = fluid.reorderGrid("#details_view",  {
 		selectors : {
@@ -79,6 +80,7 @@ function remove_module(module)
 	jQuery.post("'.AT_BASE_HREF.'move_module.php", { "remove":module, "from":"course_index" }, function(data) {});
 	jQuery("div[id="+module+"]").slideUp("slow");
 }
+//-->
 </script>
 	
 ';
