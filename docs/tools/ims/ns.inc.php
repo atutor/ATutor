@@ -51,7 +51,8 @@ $ns['http://ltsc.ieee.org/xsd/LOM/unique'] =		'http://www.imsglobal.org/profile/
 $ns['http://ltsc.ieee.org/xsd/LOM/vocab'] = 		'http://www.imsglobal.org/profile/cc/ccv1p0/domainProfile_2/vocab/loose.xsd';
 $ns['http://ltsc.ieee.org/xsd/LOM/extend'] = 		'http://www.imsglobal.org/profile/cc/ccv1p0/domainProfile_2/extend/custom.xsd';
 $ns['http://www.imsglobal.org/xsd/imscp_extensionv1p2'] = 'http://www.imsglobal.org/profile/cc/ccv1p0/domainProfile_3/imscp_extensionv1p2_localised.xsd';
-$ns['http://www.imsglobal.org/xsd/ims_qtiasiv1p2'] =	'http://www.imsglobal.org/profile/cc/ccv1p0/domainProfile_4/ims_qtiasiv1p2_localised.xsd';
+$ns['http://www.imsglobal.org/xsd/ims_qtiasiv1p2'] =	'http://www.imsglobal.org/profile/cc/ccv1p0/domainProfile_4/ims_qtiasiv1p2_localised.xsdhttp://www.imsglobal.org/profile/cc/ccv1p0
+/derived_schema/domainProfile_4/ims_qtiasiv1p2_localised.xsd ';
 $ns['http://www.imsglobal.org/xsd/imswl_v1p0'] = 	'http://www.imsglobal.org/profile/cc/ccv1p0/domainProfile_5/imswl_v1p0_localised.xsd';
 $ns['http://www.imsglobal.org/xsd/imsdt_v1p0'] = 	'http://www.imsglobal.org/profile/cc/ccv1p0/domainProfile_6/imsdt_v1p0_localised.xsd';
 

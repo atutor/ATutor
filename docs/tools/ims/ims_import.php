@@ -253,7 +253,6 @@ function rehash($items){
  function addQuestions($xml, $item, $import_path){
 	global $test_title;
 	$qti_import = new QTIImport($import_path);
-
 	$tests_xml = $import_path.$xml;
 	
 	//Mimic the array for now.
@@ -306,7 +305,7 @@ function rehash($items){
 				//schema is not in the form of "The first URI reference in each pair is a namespace name,
 				//and the second is the location of a schema that describes that namespace."
 				//$msg->addError('MANIFEST_NOT_WELLFORM');
-				$msg->addError('IMPORT_CARTRIDGE_FAILED - shcema');
+				$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			}
 
 			//turn the xsi:schemaLocation URI into a schema that describe namespace.
@@ -322,7 +321,7 @@ function rehash($items){
 				*/
 				//if the key of the namespace is not defined. Throw error.
 				if(!isset($ns[$split_location[$i]])){
-					$msg->addError('IMPORT_CARTRIDGE_FAILED - schema');
+					$msg->addError('IMPORT_CARTRIDGE_FAILED');
 				}
 			}
 		} else {
@@ -1119,7 +1118,6 @@ foreach ($items as $item_id => $content_info)
 	/* get the tests associated with this content */
 	if (!empty($items[$item_id]['tests']) || strpos($items[$item_id]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
 		$qti_import = new QTIImport($import_path);
-
 		if (isset($items[$item_id]['tests'])){
 			$loop_var = $items[$item_id]['tests'];
 		} else {
@@ -1134,11 +1132,14 @@ foreach ($items as $item_id => $content_info)
 			} else {
 				$item_qti = $items[$item_id];
 			}
-
 			//call subrountine to add the questions.
 			$qids = addQuestions($test_xml_file, $item_qti, $import_path);
-			
+
 			//import test
+			if ($test_title==''){
+				$test_title = $content_info['title'];
+			}
+
 			$tid = $qti_import->importTest($test_title);
 
 			//associate question and tests
