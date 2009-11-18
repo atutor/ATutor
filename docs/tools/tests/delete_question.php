@@ -43,7 +43,7 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$these_questions= split(",", $_REQUEST['qid']);
+$these_questions= explode(",", $_REQUEST['qid']);
 
 foreach($these_questions as $this_question){
 	$this_question = intval($this_question);

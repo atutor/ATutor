@@ -373,7 +373,7 @@ class QTIImport {
 						//check if there is just one level of directory in this extra path.
 						//based on the assumption that most installation are just using 'resources/' or '{FOLDER_NAME}/'
 						$shortened = substr($file_loc, 0, $pos);
-						$num_of_occurrences = split('/', $shortened);
+						$num_of_occurrences = explode('/', $shortened);
 						if (sizeof($num_of_occurrences) == 2){
 							$new_file_loc = $xv;
 							break;

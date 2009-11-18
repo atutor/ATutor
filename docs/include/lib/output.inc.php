@@ -1146,7 +1146,7 @@ function provide_alternatives($cid, $content_page){
 										{
 											if (($_SESSION['prefs']['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE']=='replace'))
 											{
-												$before  = split($row['resource'], $content);
+												$before  = explode($row['resource'], $content);
 												$last_c  = substr($before[0], -1, 1);
 												if ($last_c=="]")
 													$shift   = strripos($before[0], '[');
@@ -1192,7 +1192,7 @@ function provide_alternatives($cid, $content_page){
 											}
 											else
 											{
-												$before    = split($row['resource'], $content);
+												$before = explode($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
 												$last_c  = substr($before[0], -1, 1);
 												$ext     = substr($row_audio['secondary_resource'], -3);
@@ -1257,7 +1257,7 @@ function provide_alternatives($cid, $content_page){
 										{
 											if ($_SESSION['prefs']['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE']=='replace')
 											{
-												$before  = split($row['resource'], $content);
+												$before  = explode($row['resource'], $content);
 												$shift   = strripos($before[0], '<');
 												$len     = strlen($before[0]);
 												$shift   = $len-$shift;
@@ -1305,7 +1305,7 @@ function provide_alternatives($cid, $content_page){
 											}
 											else 
 											{
-												$before    = split($row['resource'], $content);
+												$before    = explode($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
 												$ext       = substr($row_text['secondary_resource'], -3);
 												if (in_array($ext, $vidoe_exts))
@@ -1380,7 +1380,7 @@ function provide_alternatives($cid, $content_page){
 										{
 											if ($_SESSION['prefs']['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE']=='replace')
 											{
-												$before  = split($row['resource'], $content);
+												$before  = explode($row['resource'], $content);
 												$last_c  = substr($before[0], -1, 1);
 												if ($last_c=="]"){
 													$shift   = strripos($before[0], '[');
@@ -1431,7 +1431,7 @@ function provide_alternatives($cid, $content_page){
 											}
 											else 
 											{
-												$before    = split($row['resource'], $content);
+												$before    = explode($row['resource'], $content);
 												$content   = $before[0].$row['resource'];
 												$last_c    = substr($before[0], -1, 1);
  												$ext       = substr($row_visual['secondary_resource'], -3);
