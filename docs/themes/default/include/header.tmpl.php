@@ -501,8 +501,11 @@ function printSubmenuHeader(title)
 				<?php else: ?>
 					<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 				<?php endif; ?>
-				<?php if ($i < $num_pages-1): ?>
-					&nbsp;
+				<?php if ($i < $num_pages-1): 
+					echo " ";
+	
+?>
+					
 				<?php endif; ?>
 			<?php endfor; ?>
 			</ul>
