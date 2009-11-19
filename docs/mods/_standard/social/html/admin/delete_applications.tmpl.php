@@ -1,10 +1,10 @@
-<form class="input-form" action="<?php echo AT_SOCIAL_BASENAME;?>admin/delete_applications.php" method="POST">
+<form class="input-form" action="<?php echo AT_SOCIAL_BASENAME;?>admin/delete_applications.php" method="post">
 <div class="gadget_wrapper">
 <div class="headingbox"><h3><?php echo _AT('available_applications'); ?></h3></div>
-
-<div class="contentbox" style="padding:1em;">	
+<div class="contentbox" style="padding:1em;">
+	
 <?php if (!empty($this->all_apps)): ?>
-<?php	
+<?php
 	foreach ($this->all_apps as $id=>$app_obj): 
 	//skip the ones that are installed already
 	if ($this->list_of_my_apps[$id]!=null){
@@ -15,7 +15,7 @@
 	<div>
 		<div style="float:left; ">
 			<?php echo $app_obj->getAppLink($app_obj->getTitle(), $id); ?><br/>
-			<?php echo $app_obj->getAppLink('<img src="'.$app_obj->getThumbnail().'"/>', $id); ?><br/>
+			<?php echo $app_obj->getAppLink('<img src="'.$app_obj->getThumbnail().'" alt=""/>', $id); ?><br/>
 			<?php echo _AT('by'); ?> 
 			<?php if ($app_obj->getAuthorEmail()!=''): ?>
 				<a href="<?php echo $app_obj->getAuthorEmail(); ?>"><?php echo $author; ?></a>
@@ -37,6 +37,6 @@
 <?php else: ?>
 <?php echo _AT('no_gadgets_installed'); ?>
 <?php endif; ?>
-</div>
+</div></div>
 <div class="row" style="float: right;"><input class="button" type="submit" name="delete" value="<?php echo _AT('delete');?>"/></div>
 </form>
