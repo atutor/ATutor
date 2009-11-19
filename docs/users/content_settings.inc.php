@@ -21,7 +21,7 @@
 		<input type="radio" name="use_alternative_to_text" id="uat_no" value="0" <?php echo $no; ?> /><label for="uat_no"><?php echo _AT('no'); ?></label>		
 	</div>
 
-	<div class="row">aaa
+	<div class="row">
 		<label for="preferred_alt_to_text"><?php echo _AT('prefer_alt'); ?></label><br />
 			<select name="preferred_alt_to_text" id="preferred_alt_to_text"><?php
 				if (isset($_POST['preferred_alt_to_text']))
