@@ -59,7 +59,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="prefs">
-<div class="input-form" style="width:50%">
+<div class="input-form" style="width:95%">
 	<div class="row">
 		<p><?php echo _AT('side_menu_text'); ?></p>
 	</div>
