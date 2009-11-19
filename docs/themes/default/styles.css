@@ -1391,7 +1391,7 @@ ul#topnavlist li a {
 	font-weight:bold;
     height: 1.5em;
     padding: 0em 2em 0em;
-   	text-decoration:none;
+   	text-decoration:underline;
 	background-color:white;
 }
 
