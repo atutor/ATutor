@@ -1062,7 +1062,7 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 * @see		$db			        in include/vitals.inc.php
 * @author	Silvia Mirri
 */
-function provide_alternatives($cid, $content_page){
+function provide_alternatives1($cid, $content_page){
 	global $db;
 	
 	$vidoe_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid");
@@ -1491,6 +1491,125 @@ function provide_alternatives($cid, $content_page){
 	}
 }	
 	
+/**
+* replace source object with alternatives according to user's preferences
+* @access	public
+* @param	$cid: 				content id.
+* @param	$content:	 		the original content page ($content_row['text'], from content.php).
+* @return	string				$content: the content page with the appropriated resources.
+* @see		$db			        from include/vitals.inc.php
+* @author	Cindy Qi Li
+*/
+function provide_alternatives($cid, $content){
+	global $db;
+	
+	$vidoe_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid");
+	$txt_exts = array("txt", "html", "htm");
+	
+	if (($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) && ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) && ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0)) 
+	{
+		//No user's preferences related to content format are declared
+		return $content;
+	}
+
+	// get all relations between primary resources and their alternatives
+	$sql = "SELECT pr.resource, prt.type_id primary_type, sr.secondary_resource, srt.type_id secondary_type
+	          FROM ".TABLE_PREFIX."primary_resources pr, ".
+	                 TABLE_PREFIX."primary_resources_types prt,".
+	                 TABLE_PREFIX."secondary_resources sr,".
+	                 TABLE_PREFIX."secondary_resources_types srt
+	         WHERE pr.content_id=".$cid."
+		       AND pr.primary_resource_id = prt.primary_resource_id
+		       AND pr.primary_resource_id = sr.primary_resource_id
+		       AND sr.language_code='".$_SESSION['prefs']['PREF_ALT_AUDIO_PREFER_LANG']."'
+		       AND sr.secondary_resource_id = srt.secondary_resource_id
+		     ORDER BY pr.primary_resource_id, prt.type_id";
+	$result = mysql_query($sql, $db);
+
+	if (mysql_num_rows($result) == 0) return $content;
+	
+	while ($row = mysql_fetch_assoc($result)) 
+	{
+		if (($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==1 && $row['primary_type']==3 &&
+		    ($_SESSION['prefs']['PREF_ALT_TO_TEXT']=="audio" && $row['secondary_type']==1 || 
+		     $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="visual" && $row['secondary_type']==4 || 
+		     $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="sign_lang" && $row['secondary_type']==2)) ||
+		     
+		     ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==1 && $row['primary_type']==1 &&
+		     ($_SESSION['prefs']['PREF_ALT_TO_AUDIO']=="visual" && $row['secondary_type']==4 || 
+		      $_SESSION['prefs']['PREF_ALT_TO_AUDIO']=="text" && $row['secondary_type']==3 || 
+		      $_SESSION['prefs']['PREF_ALT_TO_AUDIO']=="sign_lang" && $row['secondary_type']==2)) ||
+		      
+		     ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==1 && $row['primary_type']==4 &&
+		     ($_SESSION['prefs']['PREF_ALT_TO_VISUAL']=="audio" && $row['secondary_type']==1 || 
+		      $_SESSION['prefs']['PREF_ALT_TO_VISUAL']=="text" && $row['secondary_type']==3 || 
+		      $_SESSION['prefs']['PREF_ALT_TO_VISUAL']=="sign_lang" && $row['secondary_type']==2))
+		    )
+		{
+			$ext = substr($row['secondary_resource'], strrpos($row['secondary_resource'], '.')+1);
+			
+			// alternative is video
+			if (in_array($ext, $vidoe_exts))
+				$target = '[media]'.$row['secondary_resource'].'[/media]';
+			// a text primary to be replaced by a visual alternative 
+			else if (in_array($ext, $txt_exts))
+			{
+				if (substr($row['secondary_resource'], 0, 2) == '..') 
+					$file_location = substr($row['secondary_resource'], 3);
+				else 
+					$file_location = $row['secondary_resource'];
+				$file .= $file_location;
+				
+				$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
+				$target = file_get_contents($file);
+				
+				// check whether html file
+				if (preg_match('/.*\<html.*\<\/html\>.*/s', $target))
+				{ // is a html file, use iframe to display
+					// get real path to the text file
+					if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+						$course_base_href = 'get.php/';
+					} else {
+						$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+					}
+	
+					$file = AT_BASE_HREF . $course_base_href.$file_location;
+						
+					$target = '<iframe width="100%" frameborder="0" class="autoHeight" scrolling="auto" src="'.$file.'"></iframe>';
+				}
+				else
+				{ // is a text file, insert/replace into content
+					$target = nl2br($target);
+				}
+			} 
+			else if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==1 
+			         && $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="visual")
+				$target = '<img border="0" alt="Alternate Text" src="'.$row['secondary_resource'].'"/>';
+			// otherwise
+			else
+				$target = '<p><a href="'.$row['secondary_resource'].'">'.$row['secondary_resource'].'</a></p>';
+			
+			// replace or append the target alternative to the source
+			if (($_SESSION['prefs']['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE']=='replace'))
+				$pattern_replace_to = '${1}'.$target.'${3}';
+			else
+				$pattern_replace_to = '${1}${2}'.$target.'${3}';
+				
+			// append target alternative to [media]source[/media]
+			$content = preg_replace("/(.*)(".preg_quote("[media]".$row['resource']."[/media]", "/").")(.*)/", 
+			             $pattern_replace_to, $content);
+			
+			// append target alternative to <a>...source...</a> or <a ...source...>...</a>
+			if (preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/", $content))
+			{
+				$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/", 
+		                                $pattern_replace_to, $content);
+			}
+		}
+	}
+	return $content;
+}	
+		
 /**
 * apply_timezone
 * converts a unix timestamp into another UNIX timestamp with timezone offset added up.
