@@ -180,10 +180,10 @@ if (!$_POST['extension']) {
 
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
-			<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+			<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
 			<label for="text"><?php echo _AT('plain_text'); ?></label>
 	
-			, <input type="radio" name="extension" value="html" id="html" <?php if ($_POST['formatting'] ==1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+			, <input type="radio" name="extension" value="html" id="html" <?php if ($_POST['formatting'] ==1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=false;"/>
 			<label for="html"><?php echo _AT('html'); ?></label>
 	
 			<input type="hidden" name="setvisual" value="<?php echo $_POST['setvisual']; ?>" />
