@@ -77,64 +77,45 @@ function checkResources($import_path){
 			$dom->load(realpath($import_path.$filepath));
 
  			if (!@$dom->schemaValidate('main.xsd')){
-				//$msg->addError('MANIFEST_FAILED_VALIDATION - '.$filepath);
-				$msg->addError('IMPORT_CARTRIDGE_FAILED');
+				$msg->addError('MANIFEST_FAILED_VALIDATION - '.$filepath);
+				//$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			}
 			//if this is the manifest file, we do not have to check for its existance.
 			if (preg_match('/(.*)imsmanifest\.xml/', $filepath)){
 				continue;
 			}
 		}
+	}
 
-		$flag = false;
-		$file_exists_in_manifest = false;
-
-		//check if every file in manifest indeed exists
-		foreach($items as $name=>$fileinfo){
-			if (is_array($fileinfo['file'])){
-				foreach($fileinfo['file'] as $fileinfo_path){
-					//solves the problem of having relative paths in $fileinfo[]
-					if (realpath($import_path.$filepath) == realpath($import_path.$fileinfo_path)){
-						$file_exists_in_manifest = true;
-
-						//validate the xml by its schema
-						if (preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
-							$qti = new QTIParser($fileinfo['type']);
-							$xml_content = @file_get_contents($import_path . $fileinfo['href']);
-							$qti->parse($xml_content);
-							if ($msg->containsErrors()){
-								$flag = false;
-							} else {
-								$flag = true;
-							}
-						} else {
-							$flag = true;
-						}
-					}
+	//Create an array that mimics the structure of the data array, based on the xml items
+	$filearray = array();
+	foreach($items as $name=>$fileinfo){
+		if(isset($fileinfo['file']) && is_array($fileinfo['file']) && !empty($fileinfo['file'])){
+			foreach($fileinfo['file'] as $fn){
+				if (!in_array(realpath($import_path.$fn), $filearray)){
+					$filearray[] = realpath($import_path. $fn);
 				}
 			}
-
-			//add all dependent discussion tools to a list
-			if(isset($fileinfo['dependency']) && !empty($fileinfo['dependency'])){
-				$avail_dt = array_merge($avail_dt, $fileinfo['dependency']);
-			}
 		}
 
-		//check if all the files exists in the manifest, if not, throw error.
-		if (!$file_exists_in_manifest){
-			//$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
-			$msg->addError('IMPORT_CARTRIDGE_FAILED');
-			break;
-		}
+		//validate the xml by its schema
+		if (preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
+			$qti = new QTIParser($fileinfo['type']);
+			$xml_content = @file_get_contents($import_path . $fileinfo['href']);
+			$qti->parse($xml_content); //will add error to $msg if failed			
+		} 
 
-		if ($flag == false){
-			//add an error message if it doesn't have any. 
-			if (!$msg->containsErrors()){
-				//$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
-				$msg->addError('IMPORT_CARTRIDGE_FAILED');
-			}
-			return false;
+		//add all dependent discussion tools to a list
+		if(isset($fileinfo['dependency']) && !empty($fileinfo['dependency'])){
+			$avail_dt = array_merge($avail_dt, $fileinfo['dependency']);
 		}
+	}
+
+	//check if all files in the xml is presented in the archieve
+	$result = array_diff($filearray, $data);
+	if (!empty($result)){
+		//$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
+		$msg->addError('IMPORT_CARTRIDGE_FAILED');
 	}
 	return true;
 }
@@ -159,7 +140,7 @@ function rscandir($base='', &$data=array()) {
       current $value as the $base supplying the $data array to carry into the recursion */
      
     elseif (is_file($base.$value)) : /* else if the current $value is a file */
-      $data[] = $base.$value; /* just add the current $value to the $data array */
+      $data[] = realpath($base.$value); /* just add the current $value to the $data array */
      
     endif;
    
@@ -174,7 +155,6 @@ function rscandir($base='', &$data=array()) {
  * create a new folder on top of it
  */
 function rehash($items){
-//	debug($items);
 	global $order;
 	$parent_page_maps = array();	//old=>new
 	$temp_popped_items = array();
@@ -237,7 +217,6 @@ function rehash($items){
 
 		}
 	}
-//	debug($rehashed_items, 'after');
 	return $rehashed_items;
 }
 
@@ -305,7 +284,7 @@ function rehash($items){
 				//schema is not in the form of "The first URI reference in each pair is a namespace name,
 				//and the second is the location of a schema that describes that namespace."
 				//$msg->addError('MANIFEST_NOT_WELLFORM');
-				$msg->addError('IMPORT_CARTRIDGE_FAILED');
+				$msg->addError('IMPORT_CARTRIDGE_FAILED - SIZE NOT RIGHT');
 			}
 
 			//turn the xsi:schemaLocation URI into a schema that describe namespace.
@@ -321,7 +300,7 @@ function rehash($items){
 				*/
 				//if the key of the namespace is not defined. Throw error.
 				if(!isset($ns[$split_location[$i]])){
-					$msg->addError('IMPORT_CARTRIDGE_FAILED');
+					$msg->addError('IMPORT_CARTRIDGE_FAILED - SCHEMA');
 				}
 			}
 		} else {
@@ -348,10 +327,25 @@ function rehash($items){
 
 			$temp_path = pathinfo($attrs['href']);
 			$temp_path = explode('/', $temp_path['dirname']);
+			if (!is_array($package_base_path)){
+			    $package_base_path = $temp_path;
+            }
+			$package_base_path = array_intersect($package_base_path, $temp_path);
 
 			//for IMSCC, assume that all resources lies in the same folder, except styles.css
 			if ($items[$current_identifier]['type']=='webcontent'){
-//debug($temp_path);
+				//find the intersection of each item's related files, then that intersection is the content_path
+				if (isset($items[$current_identifier]['file'])){
+					foreach ($items[$current_identifier]['file'] as $resource_path){
+						$temp_path = pathinfo($resource_path);
+						$temp_path = explode('/', $temp_path['dirname']);
+						$package_base_path = array_intersect($package_base_path, $temp_path);
+					}
+				}
+			}
+			$items[$current_identifier]['new_path'] = implode('/', $package_base_path);	
+/* 
+ * @harris, reworked the package_base_path 
 				if ($package_base_path=="") {
 					$package_base_path = $temp_path;
 				} 
@@ -365,8 +359,8 @@ function rehash($items){
 				$package_base_path = array_intersect($package_base_path, $temp_path);
 				$temp_path = $package_base_path;
 			}
-
 			$items[$current_identifier]['new_path'] = implode('/', $temp_path);	
+*/
 			if (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
@@ -394,9 +388,9 @@ function rehash($items){
 				{
 					$temp_path = pathinfo($attrs['href']);
 					$temp_path = explode('/', $temp_path['dirname']);
-					if (empty($package_base_path)) {
+//					if (empty($package_base_path)) {
 						$package_base_path = $temp_path;
-					} 
+//					} 
 //					else {
 //						$package_base_path = array_intersect($package_base_path, $temp_path);
 //					}
@@ -449,8 +443,8 @@ function rehash($items){
 		//check if this is a test import
 		if ($name == 'schema'){
 			if (trim($my_data)=='IMS Question and Test Interoperability'){			
-				//$msg->addError('IMPORT_FAILED');
-				$msg->addError('IMPORT_CARTRIDGE_FAILED');
+				$msg->addError('IMPORT_FAILED');
+				//$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			} 
 			$content_type = trim($my_data);
 		}
@@ -758,12 +752,12 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 				xml_error_string(xml_get_error_code($xml_parser)),
 				xml_get_current_line_number($xml_parser)));
 }
-
 xml_parser_free($xml_parser);
 /* check if the glossary terms exist */
 $glossary_path = '';
 if ($content_type == 'IMS Common Cartridge'){
 	$glossary_path = 'GlossaryItem/';
+	$package_base_path = '';
 }
 if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 	$glossary_xml = @file_get_contents($import_path.$glossary_path.'glossary.xml');
@@ -1044,12 +1038,13 @@ foreach ($items as $item_id => $content_info)
 	/* we don't use str_replace, b/c there's no knowing what the paths may be	  */
 	/* we only want to replace the first part of the path.	
 	*/
+
 	if ($package_base_path != '') {
 		$content_info['new_path'] = $package_base_name . substr($content_info['new_path'], strlen($package_base_path));
 	} else {
 		$content_info['new_path'] = $package_base_name . '/' . $content_info['new_path'];
 	}
-//debug($content_info, $package_base_path);
+
 	//handles weblinks
 	if ($content_info['type']=='imswl_xmlv1p0'){
 		$weblinks_parser = new WeblinksParser();
