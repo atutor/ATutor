@@ -327,13 +327,12 @@ function rehash($items){
 
 			$temp_path = pathinfo($attrs['href']);
 			$temp_path = explode('/', $temp_path['dirname']);
-			if (!is_array($package_base_path)){
+			if (empty($package_base_path)){
 			    $package_base_path = $temp_path;
             }
 			$package_base_path = array_intersect($package_base_path, $temp_path);
-
 			//for IMSCC, assume that all resources lies in the same folder, except styles.css
-			if ($items[$current_identifier]['type']=='webcontent'){
+			if ($items[$current_identifier]['type']=='webcontent' || $items[$current_identifier]['type']=='imsdt_xmlv1p0'){
 				//find the intersection of each item's related files, then that intersection is the content_path
 				if (isset($items[$current_identifier]['file'])){
 					foreach ($items[$current_identifier]['file'] as $resource_path){
