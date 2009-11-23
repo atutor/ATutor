@@ -351,7 +351,10 @@ function get_main_navigation($current_page) {
                 if(isset($_tool[$_pages[$page]['title_var']])){                 //viene prelevato il file nel caso in cui lo strumento sia valodo per essere inserito nella toolbar in fase di editing dei conenuti del corso
                     $tool_file = $_tool[$_pages[$page]['title_var']]['file'];
                     $table = $_tool[$_pages[$page]['title_var']]['table'];
-                }
+                } else {
+					$tool_file = '';
+					$table = '';
+				}
 
                 $_top_level_pages[] = array('url' => $_base_path . url_rewrite($page), 'title' => $_page_title, 'img' => $_base_path.$_pages[$page]['img'], 'tool_file' => $tool_file, 'table' => $table);
             }
