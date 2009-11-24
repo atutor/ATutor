@@ -893,6 +893,18 @@ foreach ($items as $item_id => $content_info)
 		}
 	}
 
+	//check file array, see if there are css.
+	if (is_array($content_info['file']) && !empty($content_info['file'])){
+		foreach($content_info['file'] as $dependency_ref){
+			//handle styles	
+			if (preg_match('/(.*)\.css$/', $dependency_ref)){
+				//calculate where this is based on our current base_href. 
+				//assuming the dependency folders are siblings of the item
+				$head = '<link rel="stylesheet" type="text/css" href="'.$dependency_ref.'" />';
+			}
+		}
+	}
+
 	// remote href
 	if (preg_match('/^http.*:\/\//', trim($content_info['href'])) )
 	{
