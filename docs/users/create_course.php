@@ -20,10 +20,6 @@ require(AT_INCLUDE_PATH.'lib/course.inc.php');
 /* verify that this user has status to create courses */
 
 if (get_instructor_status() === FALSE) {
-	if (!$msg->containsErrors()) {
-		$msg->addError('CREATE_NOPERM');
-	}
-
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	if (defined('ALLOW_INSTRUCTOR_REQUESTS') && ALLOW_INSTRUCTOR_REQUESTS) {
