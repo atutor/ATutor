@@ -171,6 +171,28 @@ function elementToggle(elem, title)
 	
 	jQuery(elem).parent().next().slideToggle();
 }
+
+function printSubmenuHeader(title)
+{
+	if (getcookie("m_"+title) == "0")
+	{
+		image = "<?php echo $_base_path?>images/mswitch_plus.gif";
+		alt_text = "<?php echo _AT('show'); ?>" + title;
+	}
+	else
+	{
+		image = "<?php echo $_base_path?>images/mswitch_minus.gif";
+		alt_text = "<?php echo _AT('hide'); ?>" + title;
+	}
+	
+	document.writeln('<h4 class="box">'+
+	'	<input src="'+image+'"' + 
+	'	       onclick="elementToggle(this, \''+title+'\'); return false;"' +
+	'	       alt="'+ alt_text + '" ' +
+	'	       title="'+ alt_text + '"' +
+	'	       style="float:right" type="image" />'+ title +
+	'</h4>');
+}
 //-->
 </script>
 
