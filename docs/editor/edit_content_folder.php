@@ -209,7 +209,7 @@ if ($cid > 0)
 		}
 	
 		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'editor/edit_content.php?pid='.$cid);
-		$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'editor/delete_content.php?cid='.$cid);
+		$shortcuts[] = array('title' => _AT('delete_this_folder'), 'url' => $_base_href . 'editor/delete_content.php?cid='.$cid);
 	}
 
 	$release_date = $content_row['release_date'];
