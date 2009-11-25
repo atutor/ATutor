@@ -55,3 +55,26 @@ ul#subnavlist li {
 	zoom:100%;
 border-bottom:none;
 }
+fieldset.group_form{
+	padding:.5em;
+}
+ul.folders {
+	list-style: disc url(../../images/folder.gif) outside;
+	font-family: Verdana, Helevetica, Arial, sans-serif;
+	margin-bottom: 5em;;
+	margin-top: 0px;
+	margin-right: 0px;
+}
+
+li.folders .disabled {
+	color: #B8AE9C;
+}
+ul.folder{
+margin-bottom:0em;
+
+}
+
+li.pages{
+	padding:0em;
+}
+

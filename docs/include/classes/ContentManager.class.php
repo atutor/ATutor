@@ -769,7 +769,7 @@ setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id']
 		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
 		{
 			echo "\n".'
-			<div style="float:right;margin-top:-1.3em;">
+			<div class="menuedit">
 			<a href="'.$_base_path.'editor/edit_content_folder.php">
 				<img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
 			</a>'."\n".
@@ -918,7 +918,7 @@ function inlineEditsSetup() {
 			
 			if ($parent_id <> 0) echo '<li>';
 			
-			echo '<ul id="folder'.$parent_id.$from.'" style="list-style-image:none;list-style-position:outside;list-style-type:none;margin:0;padding:0;">'."\n";
+			echo '<ul id="folder'.$parent_id.$from.'" class="folder">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
 				$link = '';
@@ -1036,7 +1036,7 @@ function inlineEditsSetup() {
 					$on = true;
 				}
 
-				echo "<li>\n";
+				echo '<li class="pages">'."\n";
 				
 				if ( isset($this->_menu[$content['content_id']]) && is_array($this->_menu[$content['content_id']]) ) {
 					/* has children */

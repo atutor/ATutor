@@ -114,6 +114,15 @@ li.folders .disabled {
 	color: #B8AE9C;
 }
 
+ul.folder{
+
+list-style-image:none;
+list-style-position:outside;
+list-style-type:none;
+margin:0em;
+padding:0em;
+
+}
 /* link attributes */
 a:link, a:visited  {
 	color: #1A4A72;
@@ -245,6 +254,7 @@ a .highlight{
 	text-decoration: none;
 	text-align: center;
 	font-weight: bold;
+
 	
 }
 .buttontab selected {
@@ -276,6 +286,7 @@ td.selected{
 .tab a:link, .etab a:visited {
 	color: black;
 	background-color: white;
+
 }
 .tab a:hover {
 	color: black;
@@ -382,7 +393,6 @@ p.search-description {
 }
 
 /***************************************************************/
-/* NEW STUFF */
 
 table.tabbed-table {
 	width: 100%;
@@ -444,6 +454,7 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 table.etabbed-table	{
 	width: 90%;
 }
+
 a#my-start-page {
 	padding: 2px;
 	padding-left: 15px;
@@ -1797,3 +1808,9 @@ ul#subnavlist li a {
 
 }
 
+div.menuedit{
+float:right;
+margin-top:-1.2em; 
+border:1px solid #cccccc;"
+
+}

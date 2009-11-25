@@ -22,21 +22,21 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 /***
 * Remove comments below to enable a remote login form.
 */
-//if (isset($_POST['token']))
-//{
-//	$_SESSION['token'] = $_POST['token'];
-//}
-//else
-//{
-//	if (!isset($_SESSION['token']))
-//		$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
-//}
+if (isset($_POST['token']))
+{
+	$_SESSION['token'] = $_POST['token'];
+}
+else
+{
+	if (!isset($_SESSION['token']))
+		$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
+}
 
 /***
 * Add comments 2 lines below to enable a remote login form.
 */
-if (!isset($_SESSION['token']))
-	$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
+//if (!isset($_SESSION['token']))
+//	$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
 
 if (isset($_GET['course'])) {
 	$_GET['course'] = intval($_GET['course']);
