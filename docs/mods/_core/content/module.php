@@ -34,7 +34,10 @@ $this->_pages['editor/edit_content.php']['title_var'] = 'edit_content';
 $this->_pages['editor/edit_content.php']['parent']    = 'tools/content/index.php';
 $this->_pages['editor/edit_content.php']['guide']     = 'instructor/?p=creating_editing_content.php';
 
-$this->_pages['editor/edit_content_folder.php']['title_var'] = 'add_content_folder';
+if (!isset($_GET['cid']) && !isset($_POST['cid']))
+	$this->_pages['editor/edit_content_folder.php']['title_var'] = 'add_content_folder';
+else
+	$this->_pages['editor/edit_content_folder.php']['title_var'] = 'edit_content_folder';
 $this->_pages['editor/edit_content_folder.php']['parent']    = 'tools/content/index.php';
 $this->_pages['editor/edit_content_folder.php']['guide']     = 'instructor/?p=creating_editing_content_folder.php';
 
