@@ -19,6 +19,11 @@ admin_authenticate();
 if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) { 
 	$msg->addWarning('TRANSLATE_ON');	
 }
+$smtp_server = ini_get('SMTP');
+if (($smtp_server == '' || $smtp_server == 'localhost') && ini_get('sendmail_path') == '') {
+	$msg->addWarning('MAIL_NOT_ON');
+}
+
 // Social networking only switch
 if (isset($_POST['social_submit'])) {
 	$_POST['just_social']          = intval($_POST['just_social']);

@@ -32,10 +32,25 @@ error_reporting(E_ALL ^ E_NOTICE);
 require(AT_INCLUDE_PATH.'header.php');
 $bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="Bad" title="Bad" />';
 $good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="Good" title="Good" />';
+$warning = '<img src="images/warning.png" width="16" height="16" border="0" alt="Warning" title="Warning" />';
 
 $no_good = FALSE;
 $not_as_good = FALSE;
 ?>
+<table style="float: right;
+	background-color: #FEFDEF;
+	border: 1pt solid #B8AE9C;
+	margin: 20pt 5pt 5pt 5pt;
+	padding-right: 10pt;
+	padding-bottom: 5pt;
+	padding-left: 10pt;
+">
+	<tr style="align:center;"><th colspan="2" style="background-color:transparent;">Icon Legend</th></tr>
+	<tr><td><?php echo $good;?></td><td>Pass, can proceed</td></tr>
+	<tr><td><?php echo $warning;?></td><td>Warning but can proceed</td></tr>
+	<tr><td><?php echo $bad;?></td><td>Failed, can not proceed</td></tr>
+</table>
+
 <h3>Welcome to the ATutor Installation</h3>
 <p>This process will step you through your ATutor installation or upgrade.</p>
 <p>During this process be sure not to use your browser's <em>Refresh</em> or <em>Reload</em> feature as it may complicate the installation process.</p>
@@ -251,6 +266,19 @@ $not_as_good = FALSE;
 					echo 'Disabled</td><td align="center">';
 					echo $bad;
 					$no_good = TRUE;					
+				}
+			?></td>
+		</tr>
+		<tr>
+			<td>Mail configuration</td>
+			<td><?php
+			$smtp_server = ini_get('SMTP');
+			if (($smtp_server == '' || $smtp_server == 'localhost') && ini_get('sendmail_path') == '') {
+					echo 'Disabled</td><td align="center">';
+					echo $warning;
+				} else {
+					echo 'Enabled</td><td align="center">';
+					echo $good;
 				}
 			?></td>
 		</tr>
