@@ -256,6 +256,18 @@ $not_as_good = FALSE;
 			?></td>
 		</tr>
 		<tr>
+			<td><kbd>curl</kbd></td>
+			<td><?php
+				if (extension_loaded('curl')){
+					echo 'Enabled</td><td align="center">';
+					echo $good;
+				} else {
+					echo 'Disabled</td><td align="center">';
+					echo $warning;
+				}
+			?></td>
+		</tr>
+		<tr>
 			<td><kbd>.</kbd> in <kbd>include_path</kbd></td>
 			<td><?php
 				$include_path = explode(PATH_SEPARATOR, ini_get('include_path'));
