@@ -35,6 +35,7 @@ $_SESSION['done'] = 1;
 $html_head_tags = array("style", "script", "link");
 
 $package_base_path = '';
+$all_package_base_path = array();
 $xml_base_path = '';
 $element_path = array();
 $imported_glossary = array();
@@ -251,7 +252,7 @@ function rehash($items){
 	/* called at the start of en element */
 	/* builds the $path array which is the path from the root to the current element */
 	function startElement($parser, $name, $attrs) {
-		global $items, $path, $package_base_path;
+		global $items, $path, $package_base_path, $all_package_base_path;
 		global $element_path;
 		global $xml_base_path, $test_message, $content_type;
 		global $current_identifier, $msg, $ns;
@@ -330,7 +331,26 @@ function rehash($items){
 			if (empty($package_base_path)){
 			    $package_base_path = $temp_path;
             }
-			$package_base_path = array_intersect($package_base_path, $temp_path);
+			if ($all_package_base_path!='' && empty($all_package_base_path)){
+				$all_package_base_path = $temp_path;
+			}
+			$package_base_path = array_intersect_assoc($package_base_path, $temp_path);
+			
+			//calculate the depths of relative paths
+			if ($all_package_base_path!=''){
+				$no_relative_temp_path = $temp_path;
+				foreach($no_relative_temp_path as $path_node){
+					if ($path_node=='..'){
+						array_pop($no_relative_temp_path);
+						array_pop($no_relative_temp_path); //not a typo, have to pop twice, both itself('..'), and the one before.
+					}
+				}
+				$all_package_base_path = array_intersect_assoc($all_package_base_path, $no_relative_temp_path);
+				if (empty($all_package_base_path)){
+					$all_package_base_path = '';	//unset it, there is no intersection.
+				}
+			}
+
 			//for IMSCC, assume that all resources lies in the same folder, except styles.css
 			if ($items[$current_identifier]['type']=='webcontent' || $items[$current_identifier]['type']=='imsdt_xmlv1p0'){
 				//find the intersection of each item's related files, then that intersection is the content_path
@@ -338,7 +358,7 @@ function rehash($items){
 					foreach ($items[$current_identifier]['file'] as $resource_path){
 						$temp_path = pathinfo($resource_path);
 						$temp_path = explode('/', $temp_path['dirname']);
-						$package_base_path = array_intersect($package_base_path, $temp_path);
+						$package_base_path = array_intersect_assoc($package_base_path, $temp_path);
 					}
 				}
 			}
@@ -756,7 +776,7 @@ xml_parser_free($xml_parser);
 $glossary_path = '';
 if ($content_type == 'IMS Common Cartridge'){
 	$glossary_path = 'GlossaryItem/';
-	$package_base_path = '';
+//	$package_base_path = '';
 }
 if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 	$glossary_xml = @file_get_contents($import_path.$glossary_path.'glossary.xml');
@@ -1053,9 +1073,12 @@ foreach ($items as $item_id => $content_info)
 	/* we don't use str_replace, b/c there's no knowing what the paths may be	  */
 	/* we only want to replace the first part of the path.	
 	*/
+	if(is_array($all_package_base_path)){
+		$all_package_base_path = implode('/', $all_package_base_path);
+	}
 
-	if ($package_base_path != '') {
-		$content_info['new_path'] = $package_base_name . substr($content_info['new_path'], strlen($package_base_path));
+	if ($all_package_base_path != '') {
+		$content_info['new_path'] = $package_base_name . substr($content_info['new_path'], strlen($all_package_base_path));
 	} else {
 		$content_info['new_path'] = $package_base_name . '/' . $content_info['new_path'];
 	}
@@ -1232,7 +1255,7 @@ if (is_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources')) {
 	}
 	closedir($handler);
 }
-if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
 		$msg->addError('IMPORT_FAILED');
 	}
