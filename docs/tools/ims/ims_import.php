@@ -32,7 +32,7 @@ authenticate(AT_PRIV_CONTENT);
 @set_time_limit(0);
 $_SESSION['done'] = 1;
 
-$html_head_tags = array("style", "script");
+$html_head_tags = array("style", "script", "link");
 
 $package_base_path = '';
 $xml_base_path = '';
@@ -893,7 +893,10 @@ foreach ($items as $item_id => $content_info)
 		}
 	}
 
-	//check file array, see if there are css.
+	//check file array, see if there are css. 
+	//edited nov 26, harris
+	//removed cuz i added link to the html_tags
+	/*
 	if (is_array($content_info['file']) && !empty($content_info['file'])){
 		foreach($content_info['file'] as $dependency_ref){
 			//handle styles	
@@ -904,6 +907,7 @@ foreach ($items as $item_id => $content_info)
 			}
 		}
 	}
+	*/
 
 	// remote href
 	if (preg_match('/^http.*:\/\//', trim($content_info['href'])) )
