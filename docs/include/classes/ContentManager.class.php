@@ -918,6 +918,7 @@ function inlineEditsSetup() {
 			
 //			if ($parent_id <> 0) echo '<li>';
 			
+//			echo '<ul id="folder'.$parent_id.$from.'">'."\n";
 			echo '<span id="folder'.$parent_id.$from.'">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
@@ -1036,6 +1037,7 @@ function inlineEditsSetup() {
 					$on = true;
 				}
 
+//				echo '<li>'."\n";
 				echo '<span>'."\n";
 				
 				if ( isset($this->_menu[$content['content_id']]) && is_array($this->_menu[$content['content_id']]) ) {
@@ -1136,7 +1138,7 @@ function inlineEditsSetup() {
 				$counter++;
 			} // end of foreach
 //			echo "</ul>";
-//			if ($parent_id <> 0) 
+//			if ($parent_id <> 0) print "</li>\n\n";
 			print "</span>\n\n";
 		}
 	}
