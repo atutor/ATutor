@@ -465,7 +465,6 @@ function printSubmenuHeader(title)
 
 	<?php if (count($this->sub_level_pages) > 0): ?>
 
-
 <!-- <div id="topnavlistcontainer">
 	<ul id="topnavlist">
 		<?php $accesscounter = 0; //initialize ?>
@@ -483,17 +482,15 @@ function printSubmenuHeader(title)
 	</ul>
 </div> -->
 
-
-
-
-
 		<div id="subnavlistcontainer">
-			<ul id="subnavlist">
+			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
 				<a href="<?php echo $this->back_to_page['url']; ?>">
 				<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
 			<?php endif; ?>
+			</div>
 
+			<ul id="subnavlist">
 			<?php $num_pages = count($this->sub_level_pages); ?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 				
@@ -503,16 +500,11 @@ function printSubmenuHeader(title)
 					<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 				<?php endif; ?>
 				<?php if ($i < $num_pages-1): 
-					echo " ";
-	
-?>
-					
+					echo " ";?>
 				<?php endif; ?>
 			<?php endfor; ?>
 			</ul>
 		</div>
-
 	<?php endif; ?>
-
 
 <!-- the main navigation. in our case, tabs -->
