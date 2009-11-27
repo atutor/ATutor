@@ -916,9 +916,9 @@ function inlineEditsSetup() {
 			$counter = 1;
 			$num_items = count($top_level);
 			
-			if ($parent_id <> 0) echo '<li>';
+//			if ($parent_id <> 0) echo '<li>';
 			
-			echo '<ul id="folder'.$parent_id.$from.'" class="folder">'."\n";
+			echo '<span id="folder'.$parent_id.$from.'">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
 				$link = '';
@@ -1036,7 +1036,7 @@ function inlineEditsSetup() {
 					$on = true;
 				}
 
-				echo '<li class="pages">'."\n";
+				echo '<span>'."\n";
 				
 				if ( isset($this->_menu[$content['content_id']]) && is_array($this->_menu[$content['content_id']]) ) {
 					/* has children */
@@ -1115,7 +1115,7 @@ function inlineEditsSetup() {
 				
 				echo $link;
 				
-				echo "\n</li>\n\n";
+				echo "\n<br /></span>\n\n";
 				
 				if ( $ignore_state || (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1)) {
 
@@ -1135,8 +1135,9 @@ function inlineEditsSetup() {
 				}
 				$counter++;
 			} // end of foreach
-			echo "</ul>";
-			if ($parent_id <> 0) print "</li>\n\n";
+//			echo "</ul>";
+//			if ($parent_id <> 0) 
+			print "</span>\n\n";
 		}
 	}
 
