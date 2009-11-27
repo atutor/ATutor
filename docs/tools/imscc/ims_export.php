@@ -170,6 +170,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 } else {
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 }
+$cid = $_REQUEST['cid'];
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
@@ -229,11 +230,11 @@ if (count($used_glossary_terms)) {
 	reset($used_glossary_terms);
 	$terms_xml = '';
 	foreach ($used_glossary_terms as $term) {
-		$term_key = urlencode($term);
+		$term_key = ($term);
 		$glossary[$term_key] = htmlentities($glossary[$term_key], ENT_QUOTES, 'UTF-8');
 		$glossary[$term_key] = str_replace('&', '&amp;', $glossary[$term_key]);
 		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
-									array($term_key, $glossary[$term_key]),
+									array(urlencode($term_key), $glossary[$term_key]),
 									$glossary_term_xml);
 	}
 
@@ -275,8 +276,8 @@ if ($row = mysql_fetch_assoc($result)) {
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 
 if ($glossary_xml) {
-	$zipfile->create_dir('GlossaryItem/');
-	$zipfile->add_file($glossary_xml,  'GlossaryItem/glossary.xml');
+	$zipfile->create_dir('resources/GlossaryItem/');
+	$zipfile->add_file($glossary_xml,  'resources/GlossaryItem/glossary.xml');
 }
 $zipfile->close(); // this is optional, since send_file() closes it anyway
 
