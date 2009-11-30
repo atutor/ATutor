@@ -188,16 +188,12 @@ $savant->assign('shortcuts', $shortcuts);
 
 /* if i'm an admin then let me see content, otherwise only if released */
 $released_status = $contentManager->isReleased($cid);
+
 if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	if ($content_row['text'] == '') {
 		$msg->addInfo('NO_PAGE_CONTENT');
 		$savant->assign('body', '');
 	} else {
-		$pre_test_id = $contentManager->getPretest($cid);
-		
-		if (intval($pre_test_id) > 0)
-			header('Location: '.url_rewrite('tools/test_intro.php?tid='.$pre_test_id.SEP.'cid='.$cid, AT_PRETTY_URL_IS_HEADER));
-		
 		if ($released_status !== TRUE) {
 			/* show the instructor that this content hasn't been released yet */
 			$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_UNIX_TIMESTAMP));
@@ -205,38 +201,50 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			unset($infos);
 		}
 
-		/* @See: include/lib/output.inc.php */
+		$pre_test_id = $contentManager->getPretest($cid);
 		
-		//Silvia: to provide appropriated content on the basis of users' preferences
-
-		$content = provide_alternatives($cid, $content_row['text']);
-                
-		$content = format_content($content, $content_row['formatting'], $glossary);
-
-		$content_array = get_content_table($content);
+		if (intval($pre_test_id) > 0)
+		{
+			if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+				$msg->addInfo('PRETEST');
+			}
+			else {
+				header('Location: '.url_rewrite('tools/test_intro.php?tid='.$pre_test_id.SEP.'cid='.$cid, AT_PRETTY_URL_IS_HEADER));
+			}
+		}
 		
-		$savant->assign('content_table', $content_array[0]);
-		$savant->assign('body', $content_array[1]);
-
-		//assign test pages if there are tests associated with this content page
-		if (!empty($content_test_ids)){
-			$savant->assign('test_message', $content_row['test_message']);
-			$savant->assign('test_ids', $content_test_ids);
-		} else {
-			$savant->assign('test_message', '');
-			$savant->assign('test_ids', array());
-		}
-
-                /*TODO***************BOLOGNA***************REMOVE ME**********/
-                //assign forum pages if there are forums associated with this content page
-		if (!empty($content_forum_ids)){
-			$savant->assign('forum_message','');
-			$savant->assign('forum_ids', $content_forum_ids);
-		} else {
-			$savant->assign('forum_message', '');
-			$savant->assign('forum_ids', array());
-		}
-				
+		// if one of the prerequisite test(s) has expired, student cannot view the content 
+		if (intval($pre_test_id) != -1 || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN))
+		{
+			//Silvia: to provide appropriated content on the basis of users' preferences
+			$content = provide_alternatives($cid, $content_row['text']);
+	                
+			$content = format_content($content, $content_row['formatting'], $glossary);
+	
+			$content_array = get_content_table($content);
+			
+			$savant->assign('content_table', $content_array[0]);
+			$savant->assign('body', $content_array[1]);
+	
+			//assign test pages if there are tests associated with this content page
+			if (!empty($content_test_ids)){
+				$savant->assign('test_message', $content_row['test_message']);
+				$savant->assign('test_ids', $content_test_ids);
+			} else {
+				$savant->assign('test_message', '');
+				$savant->assign('test_ids', array());
+			}
+	
+	                /*TODO***************BOLOGNA***************REMOVE ME**********/
+	                //assign forum pages if there are forums associated with this content page
+			if (!empty($content_forum_ids)){
+				$savant->assign('forum_message','');
+				$savant->assign('forum_ids', $content_forum_ids);
+			} else {
+				$savant->assign('forum_message', '');
+				$savant->assign('forum_ids', array());
+			}
+		}	
 	}
 } else {
 	$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_UNIX_TIMESTAMP));

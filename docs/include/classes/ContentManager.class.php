@@ -1353,7 +1353,8 @@ function inlineEditsSetup() {
 
 	/* returns the first test_id if this page has pre-test(s) to be passed, 
 	 * or is under a page that has pre-test(s) to be passed, 
-	 * true otherwise
+	 * 0 if has no pre-test(s) to be passed
+	 * -1 if one of the pre-test(s) has expired, the content should not be displayed in this case
 	 * Access: public 
 	 */
 	function getPretest($cid) {
@@ -1361,20 +1362,23 @@ function inlineEditsSetup() {
 		
 		if ($this->_menu_info[$cid]['content_parent_id'] == 0) {
 			// this $cid has no parent, so we check its release date directly
-			return ($pre_test_id > 0) ? $pre_test_id : 0;
+			return $this_pre_test_id;
 		}
+		
 		// this is a sub page, need to check ALL its parents
 		$parent_pre_test_id = $this->getOnePretest($this->_menu_info[$cid]['content_parent_id']);
-		if ($this_pre_test_id > 0)
+		
+		if ($this_pre_test_id > 0 || $this_pre_test_id == -1)
 			return $this_pre_test_id;
-		else if ($parent_pre_test_id > 0)
+		else if ($parent_pre_test_id > 0 || $parent_pre_test_id == -1)
 			return $parent_pre_test_id;
 		else
 			return 0;
 	}
 
-	/* returns the first test_id if this page has pre-test(s) to be passed, 
-	 * 0 otherwise
+	/* returns the first test_id if this content has pre-test(s) to be passed, 
+	 * 0 if has no pre-test(s) to be passed
+	 * -1 if one of the pre-test(s) has expired, the content should not be displayed in this case
 	 * Access: public 
 	 */
 	function getOnePretest($cid) {
@@ -1399,8 +1403,11 @@ function inlineEditsSetup() {
 				$msg->addInfo(array('PRETEST_NO_PRIV',$row['title']));
 			}
 			
-			// skip the test if the test is not release
-			if ($row['start_date'] > time() || $row['end_date'] < time()) continue;
+			// if the test is not release, not allow student to view the content
+			if ($row['start_date'] > time() || $row['end_date'] < time()) {
+				$msg->addInfo(array('PRETEST_EXPIRED',$row['title']));
+				return -1;
+			}
 			
 			$sql = "SELECT tr.result_id, count(*) num_of_questions, sum(ta.score) score, sum(tqa.weight) total_weight
 			          FROM ".TABLE_PREFIX."tests_results tr, ".TABLE_PREFIX."tests_answers ta, ".TABLE_PREFIX."tests_questions_assoc tqa 
