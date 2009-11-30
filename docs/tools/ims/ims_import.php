@@ -156,6 +156,7 @@ function rscandir($base='', &$data=array()) {
  * create a new folder on top of it
  */
 function rehash($items){
+//	debug($items, 'before');
 	global $order;
 	$parent_page_maps = array();	//old=>new
 	$temp_popped_items = array();
@@ -164,16 +165,18 @@ function rehash($items){
 		$parent_obj = $items[$content['parent_content_id']];
 		$rehashed_items[$id] = $content;	//copy
         //first check if this is the top folder of the archieve, we don't want the top folder, remove it.
-        if (isset($content['parent_content_id']) && !isset($parent_obj) && !isset($content['type'])){
+/*        if (isset($content['parent_content_id']) && !isset($parent_obj) && !isset($content['type'])){
             //if we can get into here, it means the parent_content_id of this is empty
             //implying this is the first folder.
             //note: it checks content[type] cause it could be a webcontent. In that case, 
             //      we do want to keep it.  
+			debug($content, 'hit');
             unset($rehashed_items[$id]);
             continue;
         }
 		//then check if there exists a mapping for this item, if so, simply replace is and next.
-		elseif (isset($parent_page_maps[$content['parent_content_id']])){
+		else
+*/		if (isset($parent_page_maps[$content['parent_content_id']])){
 			$rehashed_items [$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
 			$rehashed_items [$id]['ordering']++;
 		} 
@@ -775,7 +778,7 @@ xml_parser_free($xml_parser);
 /* check if the glossary terms exist */
 $glossary_path = '';
 if ($content_type == 'IMS Common Cartridge'){
-	$glossary_path = 'GlossaryItem/';
+	$glossary_path = 'resources/GlossaryItem/';
 //	$package_base_path = '';
 }
 if (file_exists($import_path . $glossary_path . 'glossary.xml')){
@@ -797,7 +800,7 @@ if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 	xml_parser_free($xml_parser);
 	$contains_glossary_terms = true;
 	foreach ($imported_glossary as $term => $defn) {
-		if (!$glossary[urldecode($term)]) {
+		if (!$glossary[$term]) {
 			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$term', '$defn', 0)";
 			mysql_query($sql, $db);	
 		}
@@ -1111,7 +1114,7 @@ foreach ($items as $item_id => $content_info)
 	//if this file is a test_xml, create a blank page instead, for imscc.
 	if (preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href']) 
 		|| preg_match('/imsqti\_(.*)/', $content_info['type'])) {
-		$content = '';
+		$content = ' ';
 	} else {
 		$content = addslashes($content);
 	}

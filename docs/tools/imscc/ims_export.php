@@ -170,7 +170,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 } else {
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 }
-$cid = $_REQUEST['cid'];
+$cid = $_REQUEST['cid'];  //takes care of some system which lost the REQUEST[cid]
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {

@@ -155,13 +155,13 @@ function print_organizations($parent_id,
 			$forums_dependency .= $prefix.$space.'<dependency identifierref="Forum'.$current_forum['forum_id'].'_R" />';
                     }
 
-                     /** Test dependency **/
-					 $sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
-					 $result = mysql_query($sql, $db);
-					 while ($row = mysql_fetch_assoc($result)){
-						//add test dependency ontop to forums dependency
-						$forums_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
-					 }
+			 /** Test dependency **/
+			 $sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
+			 $result = mysql_query($sql, $db);
+			 while ($row = mysql_fetch_assoc($result)){
+				//add test dependency on top of forum dependency
+				$forums_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
+			 }
 
 
 			/* calculate how deep this page is: */
@@ -553,11 +553,8 @@ $ims_template_xml['file_meta'] = '			<file href="{FILE}">
 $ims_template_xml['final'] = '
 	<organizations>
 		<organization identifier="MANIFEST01_ORG1" structure="rooted-hierarchy">
-			<item identifier="ShellItem">		
-				<item identifier="resources">
-					<title>{COURSE_TITLE}</title>
+			<item identifier="resources">		
 		{ORGANIZATIONS}
-				</item>
 		    </item>
 		</organization>
 	</organizations>

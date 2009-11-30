@@ -299,12 +299,13 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	while (($question_row = mysql_fetch_assoc($result)) != false){
 		$question_ids[] = $question_row['question_id'];
 	}
-	$question_ids_delim = implode(',',$question_ids);
-	
+
 	//No questions in the test
-	if (sizeof($question_ids_delim)==0){
+	if (sizeof($question_ids)==0){
 		return;
 	}
+
+	$question_ids_delim = implode(',',$question_ids);	
 
 	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
 	$sql = "SELECT TQ.*, TQA.weight, TQA.test_id FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQA.test_id=$tid AND TQ.question_id IN($question_ids_delim) ORDER BY TQA.ordering, TQA.question_id";
