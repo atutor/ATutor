@@ -208,8 +208,6 @@ if (isset($_POST['cancel'])) {
 
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
 			$status = AT_STATUS_UNCONFIRMED;
-		} else if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
-			$status = AT_STATUS_INSTRUCTOR;
 		} else {
 			$status = AT_STATUS_STUDENT;
 		}
