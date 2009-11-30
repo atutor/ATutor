@@ -309,6 +309,10 @@ if (isset($_POST['cancel'])) {
 
 			require (AT_INCLUDE_PATH.'html/auto_enroll_courses.inc.php');
 			
+			// update last_login
+			$sql = "UPDATE ".TABLE_PREFIX."members SET last_login=now() WHERE member_id=".$member_id;
+			mysql_query($sql, $db);
+			
 			// auto login
 			$_SESSION['valid_user'] = true;
 			$_SESSION['member_id']	= $m_id;
