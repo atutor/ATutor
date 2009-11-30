@@ -936,6 +936,12 @@ foreach ($items as $item_id => $content_info)
 	}
 	else
 	{
+		if ($content_type == 'IMS Common Cartridge'){
+			//to handle import with purely images but nothing else
+			//don't need a content base path for it.
+			$content_new_path = $content_info['new_path'];
+			$content_info['new_path'] = '';
+		}
 		if (isset($content_info['href'], $xml_base_path)) {
 			$content_info['href'] = $xml_base_path . $content_info['href'];
 		}
@@ -959,6 +965,7 @@ foreach ($items as $item_id => $content_info)
 		}
 		if (in_array($ext, array('gif', 'jpg', 'bmp', 'png', 'jpeg'))) {
 			/* this is an image */
+
 			$content = '<img src="'.$content_info['href'].'" alt="'.$content_info['title'].'" />';
 		} else if ($ext == 'swf') {
 			/* this is flash */
@@ -994,6 +1001,10 @@ foreach ($items as $item_id => $content_info)
 			$content = '<embed SRC="'.$content_info['href'].'" autostart="false" width="145" height="60"><noembed><bgsound src="'.$content_info['href'].'"></noembed></embed>';
 
 		} else if (in_array($ext, array('txt', 'css', 'html', 'htm', 'csv', 'asc', 'tsv', 'xml', 'xsl'))) {
+			if ($content_type == 'IMS Common Cartridge'){
+				$content_info['new_path'] = $content_new_path;
+			}
+
 			/* this is a plain text file */
 			$content = file_get_contents(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			if ($content === false) {
