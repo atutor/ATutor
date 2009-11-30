@@ -2,7 +2,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-global $db;
+global $db, $contentManager;
 
 $record_limit = 3;		// number of sublinks to display at module home "detail view"
 
