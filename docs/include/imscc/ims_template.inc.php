@@ -82,7 +82,7 @@ function print_organizations($parent_id,
 			//XSL characters handling
 			$content['title'] = str_replace('&', '&amp;', $content['title']);
 				
-			if ($content['content_path']) {
+			if ($content['content_path'] && (substr($content['content_path'],-1)!='/')) {
 				$content['content_path'] .= '/';
 			}
 
@@ -521,9 +521,9 @@ $ims_template_xml['resource'] = '		<resource identifier="MANIFEST01_RESOURCE{CON
                         {DEPENDENCY}
 		</resource>
 '."\n";
-$ims_template_xml['resource_glossary'] = '		<resource identifier="MANIFEST01_RESOURCE_GLOSSARY" type="associatedcontent/imscc_xmlv1p0/learning-application-resource" href="GlossaryItem/glossary.xml">
+$ims_template_xml['resource_glossary'] = '		<resource identifier="MANIFEST01_RESOURCE_GLOSSARY" type="associatedcontent/imscc_xmlv1p0/learning-application-resource" href="resources/GlossaryItem/glossary.xml">
 			<metadata/>
-			<file href="GlossaryItem/glossary.xml"/>
+			<file href="resources/GlossaryItem/glossary.xml"/>
 		</resource>
 '."\n";
 $ims_template_xml['resource_test'] = '		<resource identifier="MANIFEST01_RESOURCE_QTI{TEST_ID}" type="imsqti_xmlv1p2/imscc_xmlv1p0/assessment">
