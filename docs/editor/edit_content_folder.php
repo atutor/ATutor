@@ -98,10 +98,10 @@ if ($_POST['submit'])
 				if ($result===false) $msg->addError('MYSQL_FAILED');
 			}
 		}
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		header('Location: '.$_base_path.'editor/edit_content_folder.php?cid='.$cid);
+		exit;
 	}
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.$_base_path.'editor/edit_content_folder.php?cid='.$cid);
-	exit;
 }
 
 if ($cid > 0)
