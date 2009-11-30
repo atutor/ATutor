@@ -951,14 +951,16 @@ function inlineEditsSetup() {
 					}
 					$full_title = $content['title'];
 					$link .= $img_link . ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
+					$base_title_length = 29;
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
 						$link .= $path.$counter.' ';
+						$base_title_length = 24;
 					}
 
 					$link .= $content['title'].'">';
 
-					if ($truncate && ($strlen($content['title']) > (24-$depth*4)) ) {
-						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, (24-$depth*4)-4))).'...';
+					if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
+						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 					}
 					
 					if (isset($content['test_id']))
@@ -978,6 +980,12 @@ function inlineEditsSetup() {
 				} 
 				else 
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
+					$base_title_length = 26;
+					if ($_SESSION['prefs']['PREF_NUMBERING']) {
+						$link .= $path.$counter.' ';
+						$base_title_length = 21;
+					}
+					
 					if (isset($highlighted[$content['content_id']])) {
 						$link .= '<strong>';
 						$on = true;
@@ -987,8 +995,8 @@ function inlineEditsSetup() {
 					{ // current content page
 						$full_title = $content['title'];
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
-						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
-							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, (21-$depth*4)-4))).'...';
+						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
+							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
 						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span></strong>';
 						
@@ -1009,8 +1017,8 @@ function inlineEditsSetup() {
 							$link .= '<span style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
 						}
 						
-						if ($truncate && ($strlen($content['title']) > (21-$depth*4)) ) {
-							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, (21-$depth*4)-4))).'...';
+						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
+							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
 						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span>';
 						
