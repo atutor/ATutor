@@ -254,7 +254,7 @@ if (isset($_POST['cancel'])) {
 		               '$_POST[phone]', 
 		               $status, 
 		               '$_config[pref_defaults]', 
-		               '$now',
+		               now(),
 		               '$_SESSION[lang]', 
 		               $_config[pref_inbox_notify], 
 		               $_POST[private_email], 
@@ -310,7 +310,9 @@ if (isset($_POST['cancel'])) {
 			require (AT_INCLUDE_PATH.'html/auto_enroll_courses.inc.php');
 			
 			// update last_login
-			$sql = "UPDATE ".TABLE_PREFIX."members SET last_login=now() WHERE member_id=".$member_id;
+			$sql = "UPDATE ".TABLE_PREFIX."members 
+			           SET last_login=now(), creation_date=creation_date 
+			         WHERE member_id=".$member_id;
 			mysql_query($sql, $db);
 			
 			// auto login
