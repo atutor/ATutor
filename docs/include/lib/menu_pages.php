@@ -183,8 +183,14 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
             $_pages['admin/auto_enroll.php']['children']  = array_merge(array('admin/auto_enroll_edit.php'));
             $_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/auto_enroll.php'));
 
+
+
+
+
+
             $_pages['admin/auto_enroll_edit.php']['title_var'] = 'auto_enroll_edit';
             $_pages['admin/auto_enroll_edit.php']['parent']    = 'admin/auto_enroll.php';
+            $_pages['admin/auto_enroll_edit.php']['guide']     = 'admin/?p=auto_enroll.php';
 
             $_pages['admin/auto_enroll_delete.php']['title_var'] = 'auto_enroll_delete';
             $_pages['admin/auto_enroll_delete.php']['parent']    = 'admin/auto_enroll.php';
