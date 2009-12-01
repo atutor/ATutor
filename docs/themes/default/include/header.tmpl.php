@@ -231,12 +231,12 @@ function printSubmenuHeader(title)
 	if (getcookie("m_"+title) == "0")
 	{
 		image = "<?php echo $_base_path?>images/mswitch_plus.gif";
-		alt_text = "<?php echo _AT('show'); ?>" + title;
+		alt_text = "<?php echo _AT('show'); ?> " + title;
 	}
 	else
 	{
 		image = "<?php echo $_base_path?>images/mswitch_minus.gif";
-		alt_text = "<?php echo _AT('hide'); ?>" + title;
+		alt_text = "<?php echo _AT('hide'); ?> " + title;
 	}
 	
 	document.writeln('<h4 class="box">'+
@@ -244,7 +244,7 @@ function printSubmenuHeader(title)
 	'	       onclick="elementToggle(this, \''+title+'\'); return false;"' +
 	'	       alt="'+ alt_text + '" ' +
 	'	       title="'+ alt_text + '"' +
-	'	       style="float:right" type="image" />'+ title +
+	'	       style="float:right" type="image" /> '+ title +
 	'</h4>');
 }
 //-->
