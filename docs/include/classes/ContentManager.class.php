@@ -982,7 +982,6 @@ function inlineEditsSetup() {
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
 					$base_title_length = 26;
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
-						$link .= $path.$counter.' ';
 						$base_title_length = 21;
 					}
 					
