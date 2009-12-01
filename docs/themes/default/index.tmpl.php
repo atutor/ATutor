@@ -13,7 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path;
 
-if ($this->banner): ?><?php echo $this->banner; ?><?php endif;
+if ($this->banner): ?><?php echo $this->banner; ?><br /><?php endif;
 
 // positioning switch of home ONLY FOR INSTRUCTORS. two icons will be used for identification to distinguish the two different views of the home.
 if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && count($this->home_links) > 0){
