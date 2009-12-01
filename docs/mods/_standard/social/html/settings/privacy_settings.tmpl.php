@@ -79,7 +79,7 @@
 </div>
 </fieldset>
 
-<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search_control'); ?>Search Control</legend>
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search_control'); ?></legend>
 <div class="row">
 	<label for="search_visibility"><?php echo _AT('search_visibility'); ?></label>
 		<div>
