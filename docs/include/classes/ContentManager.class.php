@@ -814,13 +814,13 @@ function switchEditMode() {
 
 function inlineEditsSetup() {
 	jQuery("#editable_table").find(".inlineEdits").each(function() {
-		jQuery(this).text(jQuery(this).attr("alt"));
+		jQuery(this).text(jQuery(this).attr("title"));
 	});
 	
 	var tableEdit = fluid.inlineEdits("#editable_table", {
 		selectors : {
 			text : ".inlineEdits",
-			editables : "li:has(span.inlineEdits)"
+			editables : "span:has(span.inlineEdits)"
 		},
 		defaultViewText: "",
 		applyEditPadding: false,
@@ -919,7 +919,7 @@ function inlineEditsSetup() {
 //			if ($parent_id <> 0) echo '<li>';
 			
 //			echo '<ul id="folder'.$parent_id.$from.'">'."\n";
-			echo '<span id="folder'.$parent_id.$from.'">'."\n";
+			echo '<div id="folder'.$parent_id.$from.'">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
 				$link = '';
@@ -1146,7 +1146,7 @@ function inlineEditsSetup() {
 			} // end of foreach
 //			echo "</ul>";
 //			if ($parent_id <> 0) print "</li>\n\n";
-			print "</span>\n\n";
+			print "</div>\n\n";
 		}
 	}
 
