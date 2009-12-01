@@ -156,7 +156,6 @@ function rscandir($base='', &$data=array()) {
  * create a new folder on top of it
  */
 function rehash($items){
-//	debug($items, 'before');
 	global $order;
 	$parent_page_maps = array();	//old=>new
 	$temp_popped_items = array();
@@ -173,7 +172,7 @@ function rehash($items){
 			debug($content, 'hit');
             unset($rehashed_items[$id]);
             continue;
-        }
+        }		
 		//then check if there exists a mapping for this item, if so, simply replace is and next.
 		else
 */		if (isset($parent_page_maps[$content['parent_content_id']])){
@@ -194,7 +193,12 @@ function rehash($items){
 			} else {
     			$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
             }
+			//all ordering needs to be +1 because we are creating a new folder on top of
+			//everything, except the first page.
 			$new_item['ordering'] = $parent_obj['ordering'];
+			if ($new_item['parent_content_id']!='0'){
+				$new_item['ordering']++;
+			} 
 
     		//assign this new parent folder to the pending items array
 			$new_item_name = $content['parent_content_id'].'_FOLDER';
@@ -258,7 +262,7 @@ function rehash($items){
 		global $items, $path, $package_base_path, $all_package_base_path;
 		global $element_path;
 		global $xml_base_path, $test_message, $content_type;
-		global $current_identifier, $msg, $ns;
+		global $current_identifier, $msg, $ns, $ns_cp;
 
 		//check if the xml is valid
 /*
@@ -279,6 +283,7 @@ function rehash($items){
 
 
 		//validate namespaces
+
 		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
 			$schema_location = array();
 			$split_location = preg_split('/[\r\n\s]+/', trim($attrs['xsi:schemaLocation']));
@@ -303,9 +308,10 @@ function rehash($items){
 				}
 				*/
 				//if the key of the namespace is not defined. Throw error.
-				if(!isset($ns[$split_location[$i]])){
+				if(!isset($ns[$split_location[$i]]) && !isset($ns_cp[$split_location[$i]])){
 					$msg->addError('IMPORT_CARTRIDGE_FAILED - SCHEMA');
 				}
+
 			}
 		} else {
 			//throw error		
@@ -1058,9 +1064,6 @@ foreach ($items as $item_id => $content_info)
 				$dt_parser->parse($xml_content);
 				$forum_obj = $dt_parser->getDt();
 				$content = $forum_obj->getText();
-				if ($content==''){
-					$content = ' ';
-				}
 				unset($forum_obj);
 				$dt_parser->close();
 			}
@@ -1121,7 +1124,7 @@ foreach ($items as $item_id => $content_info)
 
 	//check for content_type
 	if ($content_formatting!=CONTENT_TYPE_WEBLINK){
-		$content_folder_type = ($content==''?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
+		$content_folder_type = (!isset($content_info['type'])?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
 	}
 
 	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'

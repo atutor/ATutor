@@ -57,8 +57,11 @@ $ns['http://www.imsglobal.org/xsd/imsdt_v1p0'] = 	'http://www.imsglobal.org/prof
 
 
 //Content packages
-$ns['http://www.imsproject.org/xsd/imscp_rootv1p1p2'] = 'imscp_rootv1p1p2.xsd';
-$ns['http://www.imsglobal.org/xsd/imsmd_rootv1p2p1'] = 'imsmd_rootv1p2p1.xsd';
-$ns['http://www.adlnet.org/xsd/adlcp_rootv1p2'] = 'adlcp_rootv1p2.xsd';
+$ns_cp['http://www.imsproject.org/xsd/imscp_rootv1p1p2'] = 'imscp_rootv1p1p2.xsd';
+$ns_cp['http://www.imsglobal.org/xsd/imsmd_rootv1p2p1'] = 'imsmd_rootv1p2p1.xsd';
+$ns_cp['http://www.adlnet.org/xsd/adlcp_rootv1p2'] = 'adlcp_rootv1p2.xsd';
+$ns_cp['http://www.imsglobal.org/xsd/imscp_v1p1'] = 'http://www.imsglobal.org/xsd/imscp_v1p1p4.xsd';
+$ns_cp['http://www.imsglobal.org/xsd/imsmd_v1p2'] = 'http://www.imsglobal.org/xsd/imsmd_v1p2p2.xsd';
+$ns_cp['http://www.imsglobal.org/xsd/imsqti_item_v2p0'] = 'http://www.imsglobal.org/xsd/imsqti_item_v2p0.xsd';
 
 ?>

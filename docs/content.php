@@ -190,7 +190,8 @@ $savant->assign('shortcuts', $shortcuts);
 $released_status = $contentManager->isReleased($cid);
 
 if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-	if ($content_row['text'] == '') {
+	//if it has test and forum associated with it, still display it even if the content is empty
+	if ($content_row['text'] == '' && (empty($content_test_ids) && empty($content_forum_ids))){
 		$msg->addInfo('NO_PAGE_CONTENT');
 		$savant->assign('body', '');
 	} else {
