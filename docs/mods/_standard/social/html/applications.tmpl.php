@@ -68,7 +68,7 @@
 </div>
 <?php else: ?>
 
-<div class="gadget_wrapper">
+<div class="gadget_wrapper">ssss
 <div class="headingbox"><h3><?php echo _AT('your_applications'); ?></h3></div>
 <?php	
 	foreach ($this->list_of_my_apps as $id=>$app_obj): 

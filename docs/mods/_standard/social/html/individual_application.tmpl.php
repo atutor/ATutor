@@ -9,7 +9,7 @@
 <script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/container.js"></script>
 
 <h3><?php echo $this->app->getTitle(); ?></h3>
-<div class="gadgets-gadget-content"><iframe width="800px"
+<div class="gadgets-gadget-content"><iframe width="95%"
 	scrolling="<?php echo $this->app->getScrolling(); ?>"
 	height="<?php $app=$this->app; echo $app->getHeight();?>px"
 	frameborder="0" src="<?php echo $this->iframe_url;?>" class="gadgets-gadget"

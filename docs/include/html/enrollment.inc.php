@@ -321,7 +321,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </ul>
 </div>
 
-<table class="data" style="width:95%;" summary="" rules="cols">
+<table class="data" style="width:95%;" summary="" rules="cols" >
 <colgroup>
 	<?php if ($col == 'login'): ?>
 		<col />

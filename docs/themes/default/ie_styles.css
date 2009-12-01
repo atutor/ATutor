@@ -20,8 +20,16 @@ label {
 
 table.data tfoot input {
 	min-width:0px;
+
+}
+table.data {
+float:left;
+clear:right;
+margin-left:2em;
+
 }
 
+}
 #topnavlistcontainer {
 	margin-bottom:-1px;
 }
@@ -68,4 +76,9 @@ ul.folders {
 
 li.folders .disabled {
 	color: #B8AE9C;
+}
+table.etabbed-table{
+float:left;
+clear:right;
+margin-left:1.5em;
 }
