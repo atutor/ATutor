@@ -15,6 +15,8 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
+global $db;
+
 if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 	authenticate(AT_PRIV_CONTENT);
 }
@@ -51,8 +53,43 @@ if (isset($_POST['submit_yes'])) {
 				break;
 			}			
 		}
-		if ($result) 
+		if ($result)
+		{ 
+			// delete according definition of primary resources and alternatives for adapted content
+			$filename = '../'.$pathext.$filename;
+			
+			// 1. delete secondary resources types
+			$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types
+			         WHERE secondary_resource_id in (SELECT secondary_resource_id 
+			                      FROM ".TABLE_PREFIX."secondary_resources
+			                     WHERE secondary_resource = '".$filename."'
+			                        OR primary_resource_id in (SELECT primary_resource_id
+			                                      FROM ".TABLE_PREFIX."primary_resources
+			                                     WHERE resource='".$filename."'))";
+			$result = mysql_query($sql, $db);
+			
+			// 2. delete secondary resources 
+			$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources
+			         WHERE secondary_resource = '".$filename."'
+			            OR primary_resource_id in (SELECT primary_resource_id
+			                     FROM ".TABLE_PREFIX."primary_resources
+			                    WHERE resource='".$filename."')";
+			$result = mysql_query($sql, $db);
+			
+			// 3. delete primary resources types
+			$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
+			         WHERE primary_resource_id in (SELECT primary_resource_id 
+			                      FROM ".TABLE_PREFIX."primary_resources
+			                     WHERE resource = '".$filename."')";
+			$result = mysql_query($sql, $db);
+			
+			// 4. delete primary resources 
+			$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources
+			         WHERE resource = '".$filename."'";
+			$result = mysql_query($sql, $db);
+			
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		}
 	}
 	/* delete directory */
 	if (isset($_POST['listofdirs'])) {
