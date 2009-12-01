@@ -49,14 +49,12 @@ if ($this->shortcuts):
 				$today_min   = $_POST['min'];		
 		}?>
 		<?php require(AT_INCLUDE_PATH.'html/release_date.inc.php');	?>
-		<?php echo _AT('applies_to_all_sub_pages'); ?>
 	</div>
 
 	<?php if (isset($this->pretests)) {?>
 	<div class="row">
 		<div style="font-weight:bold;"><?php echo _AT('define_pretest'); ?></div>
 		<p><?php echo _AT('about_pretest'); ?></p>
-		<?php echo "*". _AT('applies_to_all_sub_pages');?>
 	</div>
 
 	<div class="row">
@@ -66,7 +64,6 @@ if ($this->shortcuts):
 		<th scope="col">&nbsp;</th>
 		<th scope="col"><?php echo _AT('title');          ?></th>
 		<th scope="col"><?php echo _AT('status');         ?></th>
-		<!-- <th scope="col"><?php echo _AT('availability');   ?></th> -->
 		<th scope="col"><?php echo _AT('result_release'); ?></th>
 		<th scope="col"><?php echo _AT('pass_score');	  ?></th>
 		<th scope="col"><?php echo _AT('assigned_to');	  ?></th>
