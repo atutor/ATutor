@@ -141,7 +141,10 @@ if (!empty($_REQUEST['pu'])) {
 		//http://www.atutor.ca/atutor/mantis/view.php?id=3426
 		$page = url_rewrite($_REQUEST['pu'], AT_PRETTY_URL_NOT_HEADER, true) . '/ib/1';
 	} else {
-		$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'] . SEP .'ib=1';
+		if ($_config['pretty_url'])
+			$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'] .'ib/1/';
+		else
+			$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'] . SEP .'ib=1';
 	}
 } elseif (!empty($_REQUEST['p'])) {
 	//For search
