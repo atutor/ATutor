@@ -291,8 +291,24 @@ function print_organizations($parent_id,
 
 					$file_info = stat( $file_path );
 
-					$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
-					
+					//remove relative path in the content_path.	
+					$filepath_array = explode('/', 'resources/' . $content['content_path'] . $file);
+					$new_filepath_array = array();
+					if (in_array('..', $filepath_array)){
+						while (!empty($filepath_array)){
+							$temp = array_shift($filepath_array);
+							if ($temp == '..'){
+								array_pop($new_filepath_array);
+							} else {
+								array_push($new_filepath_array, $temp);
+							}
+						}
+						$zip_path = implode('/', $new_filepath_array);
+					} else {
+						$zip_path = 'resources/' . $content['content_path'] . $file;
+					}
+
+					$zipfile->add_file(@file_get_contents($file_path), $zip_path, $file_info['mtime']);
 
 					//a4a secondary files have mapping, save the ones that we want in order to add the tag in
 					$a4a_secondary_files = array();
@@ -568,10 +584,6 @@ $html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}" lang="{COURSE_PRIMARY_LANGUAGE_CODE}">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset={COURSE_PRIMARY_LANGUAGE_CHARSET}" />
-	<style type="text/css">
-	body { font-family: Verdana, Arial, Helvetica, sans-serif;}
-	a.at-term {	font-style: italic; }
-	</style>
 	<title>{TITLE}</title>
 	<meta name="Generator" content="ATutor">
 	<meta name="Keywords" content="{KEYWORDS}">

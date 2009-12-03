@@ -35,6 +35,7 @@ $_SESSION['done'] = 1;
 $html_head_tags = array("style", "script", "link");
 
 $package_base_path = '';
+$package_real_base_path = '';	//the path to save the contents
 $all_package_base_path = array();
 $xml_base_path = '';
 $element_path = array();
@@ -294,7 +295,7 @@ function rehash($items){
 	/* called at the start of en element */
 	/* builds the $path array which is the path from the root to the current element */
 	function startElement($parser, $name, $attrs) {
-		global $items, $path, $package_base_path, $all_package_base_path;
+		global $items, $path, $package_base_path, $all_package_base_path, $package_real_base_path;
 		global $element_path;
 		global $xml_base_path, $test_message, $content_type;
 		global $current_identifier, $msg, $ns, $ns_cp;
@@ -395,6 +396,11 @@ function rehash($items){
 				}
 			}
 
+			//save the actual content base path
+			if (in_array('..', $temp_path)){
+				$sizeofrp = array_count_values($temp_path);
+			}
+
 			//for IMSCC, assume that all resources lies in the same folder, except styles.css
 			if ($items[$current_identifier]['type']=='webcontent' || $items[$current_identifier]['type']=='imsdt_xmlv1p0'){
 				//find the intersection of each item's related files, then that intersection is the content_path
@@ -402,8 +408,15 @@ function rehash($items){
 					foreach ($items[$current_identifier]['file'] as $resource_path){
 						$temp_path = pathinfo($resource_path);
 						$temp_path = explode('/', $temp_path['dirname']);
-						$package_base_path = array_intersect_assoc($package_base_path, $temp_path);
+						$package_base_path = array_intersect_assoc($package_base_path, $temp_path);						
 					}
+				}
+			}
+
+			//real content path
+			if($sizeofrp['..'] > 0){
+				for ($i=0; $i<$sizeofrp['..']; $i++){
+					array_pop($all_package_base_path);
 				}
 			}
 			$items[$current_identifier]['new_path'] = implode('/', $package_base_path);	
@@ -505,7 +518,7 @@ function rehash($items){
 
 		//check if this is a test import
 		if ($name == 'schema'){
-			if (trim($my_data)=='IMS Question and Test Interoperability'){			
+			if (trim($my_data)=='IMS Question and Test Interoperability'){
 				$msg->addError('IMPORT_FAILED');
 			} 
 			$content_type = trim($my_data);
@@ -1306,6 +1319,7 @@ if (is_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources')) {
 	}
 	closedir($handler);
 }
+
 if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
 		$msg->addError('IMPORT_FAILED');
