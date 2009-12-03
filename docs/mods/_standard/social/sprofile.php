@@ -90,6 +90,7 @@ if (isset($_GET['delete'])){
 
 // Display
 include(AT_INCLUDE_PATH.'header.inc.php');
+
 $savant->display('pubmenu.tmpl.php');
 if (!empty($mutual_friends)){
 	$savant->assign('mutual_friends', $mutual_friends);
@@ -103,6 +104,8 @@ $savant->assign('friends', $friends);
 $savant->assign('activities', $activities);
 $savant->assign('prefs', $profile_prefs);
 $savant->assign('relationship', $relationship);
+$savant->assign('representation', $profile->getRepresentation());
+$savant->assign('contact', $profile->getContact());
 $savant->display('sprofile.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

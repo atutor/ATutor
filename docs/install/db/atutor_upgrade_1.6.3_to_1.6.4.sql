@@ -124,3 +124,26 @@ CREATE TABLE `content_prerequisites` (
   `item_id` MEDIUMINT NOT NULL,
   PRIMARY KEY (content_id,type, item_id)
 ) TYPE=MyISAM;
+
+# New Social Tables
+CREATE TABLE `social_member_contact` (
+  `contact_id` int(10) unsigned NOT NULL auto_increment,
+  `member_id` int(10) unsigned NOT NULL,
+  `con_name` varchar(200) NOT NULL,
+  `con_phone` varchar(15) NOT NULL,
+  `con_email` varchar(50) NOT NULL,
+  `con_address` text NOT NULL,
+  PRIMARY KEY  (`contact_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+
+
+CREATE TABLE `social_member_representation` (
+  `rep_id` int(10) unsigned NOT NULL auto_increment,
+  `member_id` int(10) unsigned NOT NULL,
+  `rep_name` varchar(200) NOT NULL,
+  `rep_title` varchar(50) NOT NULL,
+  `rep_phone` varchar(15) NOT NULL,
+  `rep_email` varchar(50) NOT NULL,
+  `rep_address` text NOT NULL,
+  PRIMARY KEY  (`rep_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  ;

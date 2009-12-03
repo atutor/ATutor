@@ -1327,6 +1327,31 @@ CREATE TABLE `social_member_additional_information` (
 )
 ENGINE = MyISAM;
 
+# New Social Tables
+CREATE TABLE `social_member_contact` (
+  `contact_id` int(10) unsigned NOT NULL auto_increment,
+  `member_id` int(10) unsigned NOT NULL,
+  `con_name` varchar(200) NOT NULL,
+  `con_phone` varchar(15) NOT NULL,
+  `con_email` varchar(50) NOT NULL,
+  `con_address` text NOT NULL,
+  PRIMARY KEY  (`contact_id`)
+) ENGINE=MyISAM ;
+
+
+CREATE TABLE `social_member_representation` (
+  `rep_id` int(10) unsigned NOT NULL auto_increment,
+  `member_id` int(10) unsigned NOT NULL,
+  `rep_name` varchar(200) NOT NULL,
+  `rep_title` varchar(50) NOT NULL,
+  `rep_phone` varchar(15) NOT NULL,
+  `rep_email` varchar(50) NOT NULL,
+  `rep_address` text NOT NULL,
+  PRIMARY KEY  (`rep_id`)
+) ENGINE=MyISAM ;
+
+
+
 # Privacy Control Preferences
 CREATE TABLE `social_privacy_preferences` (
   `member_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,

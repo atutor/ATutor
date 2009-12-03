@@ -96,4 +96,47 @@
 		<p><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?add=awards'); ?>"><?php echo _AT('add_new_award'); ?></a></p>
 		<?php endif; ?>
 	</li>
+	<li>
+		<strong><?php echo _AT('representation'); ?></strong><br/>
+		<?php if (!empty($this->representation)): ?>
+		<div class="profile_container">
+			<div class="top_right" style="border:thin #cccccc solid;">
+			<?php foreach($this->representation as $row=>$value){  ?>
+			<a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?edit=representation'.SEP.'id='.$value['rep_id']); ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/edit_profile.gif" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>" border="0" /></a>  <a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?delete=representation'); ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('remove'); ?> ?>" title="<?php echo _AT('remove'); ?>" border="0" /></a></div>
+
+				<dl class="public-profile">
+				<dt><?php echo _AT('name') . ':' ?></dt> <dd> <?php echo htmlentities_utf8($value['rep_name']); ?></dd>
+				<dt><?php echo _AT('title') . ': ' ?></dt> <dd> <?php echo htmlentities_utf8($value['rep_title']); ?></dd>
+				<dt><?php echo _AT('phone') . ':' ?></dt> <dd> <?php echo htmlentities_utf8($value['rep_phone']);?></dd>
+				<dt><?php echo _AT('email') . ': ' ?></dt> <dd> <?php echo  htmlentities_utf8($value['rep_email']); ?></dd>
+				<dt><?php echo _AT('street_address') . ': ' ?></dt> <dd> <?php echo htmlentities_utf8($value['rep_address']); ?></dd>
+				</dl>
+			<?php } ?>
+		</div>
+		<?php else: ?>
+		<p><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?add=representation'); ?>"><?php echo _AT('add_new_representation'); ?></a></p>
+		<?php endif; ?>
+
+	</li>
+	<li>
+		<strong><?php echo _AT('alt_contact'); ?></strong><br/>
+		<?php if (!empty($this->contact)): ?>
+		<div class="profile_container">
+			<div class="top_right" style="border:thin #cccccc solid;">
+			<?php foreach($this->contact as $row=>$value){  ?>
+
+			<a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?edit=contact'.SEP.'id='.$value['contact_id']); ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/edit_profile.gif" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>" border="0" /></a>  <a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?delete=contact'); ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/b_drop.png" alt="<?php echo _AT('remove'); ?> ?>" title="<?php echo _AT('remove'); ?>" border="0" /></a></div>
+
+				<dl class="public-profile">
+				<dt><?php echo _AT('name') . ':' ?></dt> <dd> <?php echo htmlentities_utf8($value['con_name']); ?></dd>
+				<dt><?php echo _AT('phone') . ':' ?></dt> <dd> <?php echo htmlentities_utf8($value['con_phone']);?></dd>
+				<dt><?php echo _AT('email') . ': ' ?></dt> <dd> <?php echo  htmlentities_utf8($value['con_email']); ?></dd>
+				<dt><?php echo _AT('street_address') . ': ' ?></dt> <dd> <?php echo htmlentities_utf8($value['con_address']); ?></dd>
+				</dl>
+			<?php } ?>
+		</div>
+		<?php else: ?>
+		<p><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php?add=contact'); ?>"><?php echo _AT('add_new_contact'); ?></a></p>
+		<?php endif; ?>
+	</li>
 </ul>

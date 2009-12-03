@@ -75,6 +75,43 @@
 			<?php }?>
 			</dl>
 		</div>
+		<?php if (!empty($this->representation)){ ?>
+			<br /><div  class="headingbox" style="margin-right:1em;"><h4><?php echo _AT('representation'); ?></h4></div>
+			<div class="contentbox" style="margin-right:1em;">
+
+				<?php 	foreach($this->representation as $row=>$value){  ?>
+				<dl class="public-profile">
+				<dt><?php echo _AT('name') . ':' ?></dt> <dd> <?php echo htmlentities_utf8($value['rep_name']); ?></dd>
+
+				<dt><?php echo _AT('title') . ': ' ?></dt> <dd> <?php echo htmlentities_utf8($value['rep_title']); ?></dd>
+				<dt><?php echo _AT('phone') . ':' ?></dt> <dd> <?php echo htmlentities_utf8($value['rep_phone']);?></dd>
+				<dt><?php echo _AT('email') . ': ' ?></dt> <dd> <?php echo  htmlentities_utf8($value['rep_email']); ?></dd>
+				<dt><?php echo _AT('street_address') . ': ' ?></dt> <dd> <?php echo htmlentities_utf8($value['rep_address']); ?></dd>
+				</dl>
+			
+			<?php } ?>
+			</div>
+			<?php } ?>
+
+		<?php if (!empty($this->contact)){ ?>
+			<br /><div  class="headingbox" style="margin-right:1em;"><h4><?php echo _AT('alt_contact'); ?></h4></div>
+			<div class="contentbox" style="margin-right:1em;">
+
+				<?php 	foreach($this->contact as $row=>$value){  ?>
+				<dl class="public-profile">
+				<dt><?php echo _AT('name') . ':' ?></dt> <dd> <?php echo htmlentities_utf8($value['con_name']); ?></dd>
+				<dt><?php echo _AT('phone') . ':' ?></dt> <dd> <?php echo htmlentities_utf8($value['con_phone']);?></dd>
+				<dt><?php echo _AT('email') . ': ' ?></dt> <dd> <?php echo  htmlentities_utf8($value['con_email']); ?></dd>
+				<dt><?php echo _AT('street_address') . ': ' ?></dt> <dd> <?php echo htmlentities_utf8($value['con_address']); ?></dd>
+				</dl>
+			
+			<?php } ?>
+			</div>
+			<br/>
+			<?php } ?>
+
+
+
 	</div>
 
 	<div style="float:left; width:59%;">	
@@ -218,7 +255,11 @@
 			<?php endforeach; ?>
 		</div>
 		<?php endif; //this->mutual_friends != empty ?>
-		<?php endif; ?>
+	
+	<?php endif; ?>
+
+
+			
 	</div>
 </div>
 

@@ -40,7 +40,7 @@ if ($_POST['social_profile']){
 if (isset($_POST['submit'])){
 	//where was this request sent from
 	if (isset($_POST['edit'])){
-			$id			 = intval($_POST['id']);
+			$id		 = intval($_POST['id']);
 		if ($_POST['edit']=='position'){
 			$company	 = $_POST['company'];
 			$title		 = $_POST['title'];
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])){
 			$degree		 = $_POST['degree'];
 			$field		 = $_POST['field'];
 			$from		 = $_POST['from'];
-			$to			 = $_POST['to'];
+			$to			= $_POST['to'];
 			$description = $_POST['description'];
 			$member->updateEducation($id, $university, $from, $to, $country, $province, $degree, $field, $description);
 		} elseif ($_POST['edit']=='websites'){
@@ -70,6 +70,19 @@ if (isset($_POST['submit'])){
 			$expertise		= isset($_POST['expertise'])&&$_POST['expertise']==''? _AT('na'): $_POST['expertise'];
 			$others			= isset($_POST['others'])&&$_POST['others']==''? _AT('na'): $_POST['others'];
 			$member->updateAdditionalInformation($interests, $associations, $awards, $expertise, $others);
+		} elseif ($_POST['edit']=='representation'){
+			$rep_name 		= $_POST['rep_name'];
+			$rep_title		= $_POST['rep_title'];
+			$rep_phone		= $_POST['rep_phone'];
+			$rep_email		= $_POST['rep_email'];
+			$rep_address		= $_POST['rep_address'];
+			$member->updateRepresentation($id, $rep_name, $rep_title, $rep_phone, $rep_email, $rep_address);
+		} elseif ($_POST['edit']=='contact'){
+			$rep_name 		= $_POST['con_name'];
+			$rep_phone		= $_POST['con_phone'];
+			$rep_email		= $_POST['con_email'];
+			$rep_address		= $_POST['con_address'];
+			$member->updateContact($id, $con_name, $con_phone, $con_email, $con_address);
 		}
 	} 
 	elseif (isset($_POST['add'])) {
@@ -103,7 +116,20 @@ if (isset($_POST['submit'])){
 		} elseif ($_POST['add']=='awards'){
 			$awards		= $_POST['awards'];
 			$member->addAwards($awards);
-		} 
+		} elseif ($_POST['add']=='representation'){
+			$rep_name 		= $_POST['rep_name'];
+			$rep_title		= $_POST['rep_title'];
+			$rep_phone		= $_POST['rep_phone'];
+			$rep_email		= $_POST['rep_email'];
+			$rep_address		= $_POST['rep_address'];
+			$member->addRepresentation( $rep_name, $rep_title, $rep_phone, $rep_email, $rep_address);
+		} elseif ($_POST['add']=='contact'){
+			$con_name 		= $_POST['con_name'];
+			$con_phone		= $_POST['con_phone'];
+			$con_email		= $_POST['con_email'];
+			$con_address		= $_POST['con_address'];
+			$member->addContact($con_name, $con_phone, $con_email, $con_address);
+		}
 	}
 }
 
@@ -121,7 +147,11 @@ if (isset($_GET['add'])){
 	} elseif ($_GET['add']=='interests' || $_GET['add']=='associations' || $_GET['add']=='awards'){
 		$savant->assign('title', $_GET['add']);
 		$savant->display('edit_profile/edit_additional.tmpl.php');
-	} 
+	} elseif ($_GET['add']=='representation'){
+		$savant->display('edit_profile/edit_representation.tmpl.php');
+	} elseif ($_GET['add']=='contact'){
+		$savant->display('edit_profile/edit_contact.tmpl.php');
+	}
 	//footer
 	include(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -198,7 +228,33 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('awards', $row['awards']);
 		$savant->assign('title', 'awards');
 		$savant->display('edit_profile/edit_additional.tmpl.php');
-	} 
+	} elseif ($_GET['edit']=='representation'){
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_representation WHERE member_id='.$_SESSION['member_id'];
+		$rs = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($rs);
+
+		//Template
+		$savant->assign('rep_name', $row['rep_name']);
+		$savant->assign('rep_title', $row['rep_title']);
+		$savant->assign('rep_phone', $row['rep_phone']);
+		$savant->assign('rep_email', $row['rep_email']);
+		$savant->assign('rep_address', $row['rep_address']);
+		$savant->display('edit_profile/edit_representation.tmpl.php');
+
+	}elseif ($_GET['edit']=='contact'){
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_contact WHERE member_id='.$_SESSION['member_id'];
+		$rs = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($rs);
+
+		//Template
+		$savant->assign('con_name', $row['con_name']);
+		$savant->assign('con_title', $row['con_title']);
+		$savant->assign('con_phone', $row['con_phone']);
+		$savant->assign('con_email', $row['con_email']);
+		$savant->assign('con_address', $row['con_address']);
+		$savant->display('edit_profile/edit_contact.tmpl.php');
+
+	}
 	//footer
 	include(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -220,6 +276,10 @@ if (isset($_GET['delete'])){
 		$member->deleteAssociations($id);
 	} elseif ($_GET['delete']=='awards'){
 		$member->deleteAwards($id);
+	} elseif ($_GET['delete']=='representation'){
+		$member->deleteRepresentation($id);
+	} elseif ($_GET['delete']=='contact'){
+		$member->deleteContact($id);
 	}
 }
 
@@ -231,6 +291,8 @@ $savant->assign('profile', $member->getDetails());
 $savant->assign('position', $member->getPosition());
 $savant->assign('education', $member->getEducation());
 $savant->assign('websites', $member->getWebsites());
+$savant->assign('representation', $member->getRepresentation());
+$savant->assign('contact', $member->getContact());
 $savant->display('edit_profile.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

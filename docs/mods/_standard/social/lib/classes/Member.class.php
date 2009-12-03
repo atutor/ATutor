@@ -120,8 +120,54 @@ class Member {
 	function addAwards($awards){
 		$this->updateAdditionalInformation('', '', $awards);
 	}
+	/**
+	 * Add a new representation
+	 * Special field for LCA to add a represetnative or agent.
+	 * 
+	 * @param	string		The represetnative full name
+	 * @param	string		The title of the representative
+	 * @param	string		The represetnative's phone number
+	 * @param	string		The representativ's email address
+	 * @param	string		The representative's mailing address
+	 */
+	function addRepresentation($rep_name, $rep_title, $rep_phone, $rep_email, $rep_address){ 
+		global $addslashes, $db;
+		$member_id			= $this->id;
+		$rep_name			= $addslashes($rep_name);
+		$rep_title			= $addslashes($rep_title);
+		$rep_phone			= $addslashes($rep_phone);
+		$rep_email			= $addslashes($rep_email);
+		$rep_address			= $addslashes($rep_address);
+		
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_representation (member_id, rep_name, rep_title, rep_phone, rep_email, rep_address) VALUES ($member_id, '$rep_name', '$rep_title', '$rep_phone', '$rep_email', '$rep_address')";
+		mysql_query($sql, $db);
+		header('Location:edit_profile.php');
+		exit;
+	}
 
+	/**
+	 * Add a new contact person
+	 * Special field for LCA to add a contact such as a parent or gaurdian.
+	 * 
+	 * @param	string		The contact full name
+	 * @param	string		The contact's phone number
+	 * @param	string		The contact's email address
+	 * @param	string		The contact's mailing address
+	 */
 
+	function addContact($con_name, $con_phone, $con_email, $con_address){ 
+		global $addslashes, $db;
+		$member_id			= $this->id;
+		$con_name			= $addslashes($con_name);
+		$con_phone			= $addslashes($con_phone);
+		$con_email			= $addslashes($con_email);
+		$con_address			= $addslashes($con_address);
+		
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_contact (member_id, con_name, con_phone, con_email, con_address) VALUES ($member_id, '$con_name', '$con_phone', '$con_email', '$con_address')";
+		mysql_query($sql, $db);
+		header('Location:edit_profile.php');
+		exit;
+	}
 	/** 
 	 * Add additional information, including interest, awards, associations.
 	 * @param	string		CSV format of interests, ie. camping, biking, etc
@@ -267,7 +313,50 @@ class Member {
 		$sql2 = 'INSERT INTO '.TABLE_PREFIX."social_member_additional_information SET ".$sql.", member_id=".$_SESSION['member_id'] . " ON DUPLICATE KEY UPDATE ".$sql;
 		mysql_query($sql2, $db);
 	}
+	/**
+	 * Edit representation
+	 * Special field for LCA to add a represetnative or agent.
+	 * 
+	 * @param	string		The represetnative full name
+	 * @param	string		The title of the representative
+	 * @param	string		The represetnative's phone number
+	 * @param	string		The representativ's email address
+	 * @param	string		The representative's mailing address
+	 */
+	function updateRepresentation($id, $rep_name, $rep_title, $rep_phone, $rep_email, $rep_address){ 
+		global $addslashes, $db;
+		$member_id			= $this->id;
+		$rep_name			= $addslashes($rep_name);
+		$rep_title			= $addslashes($rep_title);
+		$rep_phone			= $addslashes($rep_phone);
+		$rep_email			= $addslashes($rep_email);
+		$rep_address			= $addslashes($rep_address);
+		
+		$sql = "UPDATE ".TABLE_PREFIX."social_member_representation SET rep_name='$rep_name', rep_title='$rep_title', rep_phone='$rep_phone', rep_email='$rep_email', rep_address='$rep_address' WHERE id='$id'";
+		mysql_query($sql, $db);
+	}
 
+	/**
+	 * Edit contact person
+	 * Special field for LCA to add a contact such as a parent or gaurdian.
+	 * 
+	 * @param	string		The contact full name
+	 * @param	string		The contact's phone number
+	 * @param	string		The contact's email address
+	 * @param	string		The contact's mailing address
+	 */
+
+	function updateContact($con_name, $con_phone, $con_email, $con_address){ 
+		global $addslashes, $db;
+		$member_id			= $this->id;
+		$con_name			= $addslashes($con_name);
+		$con_phone			= $addslashes($con_phone);
+		$con_email			= $addslashes($con_email);
+		$con_address			= $addslashes($con_address);
+		
+		$sql = "UPDATE ".TABLE_PREFIX."social_member_contact SET con_name='$con_name', con_phone='$con_phone', con_email='$con_email', con_address='con_address' WHERE id='$id'";
+		mysql_query($sql, $db);
+	}
 
 	/**
 	 * Get member info
@@ -361,6 +450,42 @@ class Member {
 			}
 		}
 		return $websites;
+	}
+
+
+	/**
+	 * Get member's representative info 
+	 * @return	the array of representative's details
+	 */
+	function getRepresentation(){
+		global $db;
+		$representation = array();
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_representation WHERE member_id='.$this->id;
+		$result = mysql_query($sql, $db);
+		if ($result){
+			while($row = mysql_fetch_assoc($result)){
+				$representation[] = $row;
+			}
+		}
+		return $representation;
+	}
+	/**
+	 * Get member's alternate contact info 
+	 * @return	the array of contact's details
+	 */
+	function getContact(){
+		global $db;
+		$contact = array();
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_contact WHERE member_id='.$this->id;
+		$result = mysql_query($sql, $db);
+		if ($result){
+			while($row = mysql_fetch_assoc($result)){
+				$contact[] = $row;
+			}
+		}
+		return $contact;
 	}
 
 
@@ -470,6 +595,26 @@ class Member {
 		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET awards='' WHERE member_id=".$this->getID();
 		$result = mysql_query($sql, $db);
 	}
+
+	/**
+	 * Delete representation
+	 */
+	function deleteRepresentation($member_id){
+		global $db;
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_representation WHERE member_id='.$this->getID();
+		$result = mysql_query($sql, $db);
+
+	}
+	/**
+	 * Delete contact
+	 */
+	function deleteContact(){
+		global $db;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_contact WHERE member_id='.$this->getID();
+		$result = mysql_query($sql, $db);
+	}
+
 
 
 	/**
