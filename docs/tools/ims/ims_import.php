@@ -47,6 +47,35 @@ $skip_ims_validation = false;
 $added_dt = array();	//the mapping of discussion tools that are added
 $avail_dt = array();	//list of discussion tools that have not been handled
 
+
+/*
+ * return the error messages represented by the given array 
+ * @author	Mike A.
+ * @ref		http://ca3.php.net/manual/en/domdocument.schemavalidate.php
+ */
+function libxml_display_error($error)
+{
+    $return = "<br/>\n";
+    switch ($error->level) {
+        case LIBXML_ERR_WARNING:
+            $return .= "<b>Warning $error->code</b>: ";
+            break;
+        case LIBXML_ERR_ERROR:
+            $return .= "<b>Error $error->code</b>: ";
+            break;
+        case LIBXML_ERR_FATAL:
+            $return .= "<b>Fatal Error $error->code</b>: ";
+            break;
+    }
+    $return .= trim($error->message);
+    if ($error->file) {
+        $return .=    " in <b>$error->file</b>";
+    }
+    $return .= " on line <b>$error->line</b>\n";
+
+    return $return;
+}
+
 /**
  * Validate all the XML in the package, including checking XSDs, missing data.
  * @param	string		the path of the directory that contains all the package files
@@ -74,12 +103,19 @@ function checkResources($import_path){
 
 		//validate xml via its xsd/dtds
 		if (preg_match('/(.*)\.xml/', $filepath)){
+			libxml_use_internal_errors(true);
 			$dom = new DOMDocument();
 			$dom->load(realpath($import_path.$filepath));
-
  			if (!@$dom->schemaValidate('main.xsd')){
-				$msg->addError('MANIFEST_FAILED_VALIDATION - '.$filepath);
-				//$msg->addError('IMPORT_CARTRIDGE_FAILED');
+				$errors = libxml_get_errors();
+				foreach ($errors as $error) {
+					//suppress warnings
+					if ($error->level==LIBXML_ERR_WARNING){
+						continue;
+					}
+					$msg->addError(array('IMPORT_CARTRIDGE_FAILED', libxml_display_error($error)));
+				}
+				libxml_clear_errors();
 			}
 			//if this is the manifest file, we do not have to check for its existance.
 			if (preg_match('/(.*)imsmanifest\.xml/', $filepath)){
@@ -115,8 +151,7 @@ function checkResources($import_path){
 	//check if all files in the xml is presented in the archieve
 	$result = array_diff($filearray, $data);
 	if (!empty($result)){
-		//$msg->addError('MANIFEST_NOT_WELLFORM: MISSING REFERENCES');
-		$msg->addError('IMPORT_CARTRIDGE_FAILED');
+		$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('MISSING_REFERENCE')));
 	}
 	return true;
 }
@@ -293,7 +328,7 @@ function rehash($items){
 				//schema is not in the form of "The first URI reference in each pair is a namespace name,
 				//and the second is the location of a schema that describes that namespace."
 				//$msg->addError('MANIFEST_NOT_WELLFORM');
-				$msg->addError('IMPORT_CARTRIDGE_FAILED - SIZE NOT RIGHT');
+				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('SCHEMA_ERROR')));
 			}
 
 			//turn the xsi:schemaLocation URI into a schema that describe namespace.
@@ -309,7 +344,7 @@ function rehash($items){
 				*/
 				//if the key of the namespace is not defined. Throw error.
 				if(!isset($ns[$split_location[$i]]) && !isset($ns_cp[$split_location[$i]])){
-					$msg->addError('IMPORT_CARTRIDGE_FAILED - SCHEMA');
+					$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('SCHEMA_ERROR')));
 				}
 
 			}
@@ -324,7 +359,7 @@ function rehash($items){
 			// check if it misses file references
 			if(!isset($attrs['href']) || $attrs['href']==''){
 				//$msg->addError('MANIFEST_NOT_WELLFORM');
-				$msg->addError('IMPORT_CARTRIDGE_FAILED');
+				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('MANIFEST_NOT_WELLFORM')));
 			}
 
 			// special case for webCT content packages that don't specify the `href` attribute 
@@ -444,14 +479,14 @@ function rehash($items){
 			if (file_exists(AT_CONTENT_DIR .'import/'.$_SESSION['course_id'].'/'.$attrs['href'])){
 				$items[$current_identifier]['file'][] = $attrs['href'];
 			} else {
-				//$msg->addError('IMS_FILES_MISSING');
-				$msg->addError('IMPORT_CARTRIDGE_FAILED');
+				//$msg->addError('');
+				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('IMS_FILES_MISSING')));
 			}
 		}		
 		if ($name=='cc:authorizations'){
 			//don't have authorization setup.
-			//$msg->addError('IMS_AUTHORIZATION_NOT_SUPPORT');
-			$msg->addError('IMPORT_CARTRIDGE_FAILED');
+			//$msg->addError('');
+			$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('IMS_AUTHORIZATION_NOT_SUPPORT')));
 		}
 		array_push($element_path, $name);
 	}
@@ -472,7 +507,6 @@ function rehash($items){
 		if ($name == 'schema'){
 			if (trim($my_data)=='IMS Question and Test Interoperability'){			
 				$msg->addError('IMPORT_FAILED');
-				//$msg->addError('IMPORT_CARTRIDGE_FAILED');
 			} 
 			$content_type = trim($my_data);
 		}
