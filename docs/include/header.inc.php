@@ -36,7 +36,7 @@ global $_stacks;
 global $framed, $popup;
 global $_custom_css;
 global $_custom_head;
-global $substr, $strlen;
+global $substr, $strlen, $course_id;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 require(AT_INCLUDE_PATH . 'lib/pref_functions.inc.php');
@@ -266,6 +266,13 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 // if filemanager is a inside a popup or a frame
 // i don't like this code. i don't know were these two variables are coming from
 // anyone can add ?framed=1 to a URL to alter the behaviour.
+
+// global $course_id is set when a guest accessing a public course. 
+// This is to solve the issue that the google indexing fails as the session vars are lost.
+if (isset($_SESSION['course_id'])) $course_id = $_SESSION['course_id'];
+
+$savant->assign('course_id', $course_id);
+
 if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['popup']) && $_REQUEST['popup'])) {
     $savant->assign('framed', 1);
     $savant->assign('popup', 1);

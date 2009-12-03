@@ -18,16 +18,21 @@ if (isset($_GET['cid'])) {
 	exit;
 }
 
+if (isset($_SESSION['course_id'])) 
+	$course_id = $_SESSION['course_id'];
+else
+	$course_id = $_GET['course'];
+
 require(AT_INCLUDE_PATH . 'lib/test_result_functions.inc.php');
 	
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$course_base_href = 'get.php/';
 } else {
-	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+	$course_base_href = 'content/' . $course_id . '/';
 }
 
 //query reading the type of home viewable. 0: icon view   1: detail view
-$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $_SESSION[course_id]";
+$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $course_id";
 $result = mysql_query($sql,$db);
 $row= mysql_fetch_assoc($result);
 $home_view = $row['home_view'];
@@ -106,7 +111,7 @@ if (!$module->isEnabled()) {
 	$result = FALSE;
 	$news = array();
 } else {
-	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."news WHERE course_id=$_SESSION[course_id]";
+	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."news WHERE course_id=$course_id";
 	$result = mysql_query($sql, $db);
 }
 
@@ -121,7 +126,7 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 
 	$sql = "SELECT N.*, DATE_FORMAT(N.date, '%Y-%m-%d %H:%i:%s') AS date, first_name, last_name 
 	          FROM ".TABLE_PREFIX."news N, ".TABLE_PREFIX."members M 
-	         WHERE N.course_id=$_SESSION[course_id] 
+	         WHERE N.course_id=$course_id 
 	           AND N.member_id = M.member_id
 	         ORDER BY date DESC LIMIT $offset, $results_per_page";
 	
@@ -140,7 +145,7 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 	}
 }
 
-$sql = "SELECT banner FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
+$sql = "SELECT banner FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
 	$savant->assign('banner', AT_print($row['banner'], 'courses.banner'));

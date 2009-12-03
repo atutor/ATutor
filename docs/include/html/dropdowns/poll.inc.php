@@ -17,6 +17,11 @@ global $_base_path, $include_all, $include_one;
 global $savant;
 global $db;
 
+// global $course_id is set when a guest accessing a public course. 
+// This is to solve the issue that the google indexing fails as the session vars are lost.
+global $course_id;
+if (isset($_SESSION['course_id'])) $course_id = $_SESSION['course_id'];
+
 if (isset($_POST['poll_submit'], $_POST['choice'])) {
 	$poll_id = intval($_POST['poll_id']);
 
@@ -24,7 +29,7 @@ if (isset($_POST['poll_submit'], $_POST['choice'])) {
 	if ($result = mysql_query($sql, $db)) {
 		$n = intval($_POST['choice']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."polls SET count$n=count$n+1, total=total+1 WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."polls SET count$n=count$n+1, total=total+1 WHERE poll_id=$poll_id AND course_id=$course_id";
 		$result = mysql_query($sql, $db);
 	}
 }
@@ -35,7 +40,7 @@ if (!isset($include_all, $include_one)) {
 	$include_one = ' checked="checked"';
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id] ORDER BY created_date DESC LIMIT 1";
+$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$course_id ORDER BY created_date DESC LIMIT 1";
 $result = mysql_query($sql, $db);
 
 if ($row = mysql_fetch_assoc($result)) {

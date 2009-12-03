@@ -70,9 +70,9 @@ global $system_courses, $_custom_css, $db, $_base_path;
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>infusion/framework/fss/css/fss-layout.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>infusion/components/reorderer/Reorderer.css" />
 	<?php echo $this->rtl_css; ?>
-	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
+	<?php if ($system_courses[$this->course_id]['rss']): ?>
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 	<?php endif; ?>
 	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
@@ -219,12 +219,12 @@ function toggleFolder(cid)
 	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
 		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
-		setcookie("c<?php echo $_SESSION['course_id'];?>_"+cid, null, 1);
+		setcookie("c<?php echo $this->course_id;?>_"+cid, null, 1);
 	}
 	else {
 		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
-		setcookie("c<?php echo $_SESSION['course_id'];?>_"+cid, "1", 1);
+		setcookie("c<?php echo $this->course_id;?>_"+cid, "1", 1);
 	}
 	
 	jQuery("#folder"+cid).slideToggle();
@@ -303,7 +303,7 @@ function printSubmenuHeader(title)
 			<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
 		<?php endif; ?>
 
-		<?php if ($_SESSION['course_id'] > -1): ?>
+		<?php if ($this->course_id > -1): ?>
 			<?php if (get_num_new_messages()): ?>
 				<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a> 
 			<?php else: ?>
@@ -317,7 +317,7 @@ function printSubmenuHeader(title)
 <div id="header">
 	<?php
 	// If there is a custom course banner in the file manager called banner.html, display it here
-	@readfile(AT_CONTENT_DIR . $_SESSION['course_id'].'/banner.txt'); 
+	@readfile(AT_CONTENT_DIR . $this->course_id.'/banner.txt'); 
 
 	/*
 	and example banner.html file might look like:
@@ -335,8 +335,8 @@ function printSubmenuHeader(title)
 			echo '<span style="color:black;font-size:small;font-weight:bold;">'.stripslashes(SITE_NAME).'</span><br />'; 	
 		endif; ?>	
 		<?php echo $this->section_title; ?>
-		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
-			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+		<?php if (($this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
+			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
 	</h1>
 	
@@ -366,7 +366,7 @@ function printSubmenuHeader(title)
 		<?php if ($_SESSION['valid_user']): ?>					
 			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
-			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
+			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
 		<?php endif; ?>
 	</div>
 
@@ -394,14 +394,14 @@ function printSubmenuHeader(title)
 </div>
 
 <div id="contentwrapper" class="fluid-horizontal-order">
-	<?php if (($_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['side_menu'] && ($_SESSION['prefs']['PREF_MENU']!="right")): ?>
+	<?php if (($this->course_id > 0) && $system_courses[$this->course_id]['side_menu'] && ($_SESSION['prefs']['PREF_MENU']!="right")): ?>
 	<div id="side-menu" class="orderable" style="display:inline; float:left">
 		<div class="grab"><img src="<?php echo $this->img; ?>layers.png" alt="<?php echo _AT('drag'); ?>" /></div>
 		<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 	</div>
 	<?php endif; ?>
 
-	<div class="orderable" style="display:inline; float:left; margin-left: 10px; margin-right: 10px; <?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu) { ?> width:99%; <?php } else { ?> width:76.5%; <?php } ?>">
+	<div class="orderable" style="display:inline; float:left; margin-left: 10px; margin-right: 10px; <?php if (($this->course_id <= 0) && !$this->side_menu) { ?> width:99%; <?php } else { ?> width:76.5%; <?php } ?>">
 	
 		<div class="grab">
 			<div><img src="<?php echo $this->img; ?>layers.png" style="float:left;margin:3px;" alt="<?php echo _AT('drag'); ?>" /></div>
@@ -417,7 +417,7 @@ function printSubmenuHeader(title)
 	<?php } ?>
 		</div>
 		
-		<?php if ($_SESSION['course_id'] > 0): ?>
+		<?php if ($this->course_id > 0): ?>
 		<a href=""></a>
 		<div id="sequence-links">
 		<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>

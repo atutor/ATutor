@@ -21,9 +21,9 @@ global $system_courses, $_custom_css, $_base_path;
 
 	<?php echo $this->rtl_css; ?>
 	<style type="text/css"><?php echo $this->banner_style; ?></style>
-	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
+	<?php if ($system_courses[$this->course_id]['rss']): ?>
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 	<?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
@@ -138,12 +138,12 @@ function toggleFolder(cid)
 	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
 		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
-		setcookie("c<?php echo $_SESSION['course_id'];?>_"+cid, null, 1);
+		setcookie("c<?php echo $this->course_id;?>_"+cid, null, 1);
 	}
 	else {
 		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
-		setcookie("c<?php echo $_SESSION['course_id'];?>_"+cid, "1", 1);
+		setcookie("c<?php echo $this->course_id;?>_"+cid, "1", 1);
 	}
 	
 	jQuery("#folder"+cid).slideToggle();
@@ -209,7 +209,7 @@ function printSubmenuHeader(title)
 		
 		<span style="font-weight:bold;"><?php echo get_display_name($_SESSION['member_id']); ?></span>  | 
 
-		<?php if ($_SESSION['course_id'] > -1): ?>
+		<?php if ($this->course_id > -1): ?>
 			<?php if (get_num_new_messages()): ?>
 				<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> - <?php echo get_num_new_messages(); ?></a> | 
 			<?php else: ?>
@@ -220,13 +220,13 @@ function printSubmenuHeader(title)
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
 		<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 	<?php else: ?>
-		<a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | 
+		<a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('login'); ?></a> | 
 		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	<?php endif; ?>
 </div>
 <div style="float: right;">
-	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
+	<?php if (isset($this->course_id) && ($this->course_id >= 0)): ?>
 		<!-- start the jump menu -->
 		<?php if (empty($_GET)): ?>
 			<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
@@ -271,8 +271,8 @@ function printSubmenuHeader(title)
 		<?php endif; ?> 
 		<!-- section title -->
 		<?php echo $this->section_title; ?>
-		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
-			- <a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+		<?php if (($this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
+			- <a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?></h1>
 	</div>
 
@@ -324,7 +324,7 @@ function printSubmenuHeader(title)
 
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
-		<?php if ($_SESSION['course_id'] > 0): ?>
+		<?php if ($this->course_id > 0): ?>
 			<td valign="top" width="100%">
 		<?php else: ?>
 			<td valign="top" width="100%" colspan="2">
@@ -336,7 +336,7 @@ function printSubmenuHeader(title)
 			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 
-		<?php if ($_SESSION['course_id'] > 0): ?>
+		<?php if ($this->course_id > 0): ?>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
 			var state = getcookie("side-menu");

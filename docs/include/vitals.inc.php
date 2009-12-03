@@ -259,7 +259,7 @@ if ($_config['time_zone']) {
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 	$msg = new Message($savant);
 
-	$contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : 0);
+	$contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : $_GET['course']);
 	$contentManager->initContent();
 /**************************************************/
 

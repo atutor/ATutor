@@ -142,7 +142,10 @@ if (!empty($_REQUEST['pu'])) {
 		$page = url_rewrite($_REQUEST['pu'], AT_PRETTY_URL_NOT_HEADER, true) . '/ib/1';
 	} else {
 		if ($_config['pretty_url'])
-			$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'] .'ib/1/';
+		{
+			$orig_url = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'];
+			$page = (substr($_REQUEST['pu'], -1) == '/') ? ($orig_url. 'ib/1/') : ($orig_url .'/ib/1/');
+		}
 		else
 			$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'] . SEP .'ib=1';
 	}
@@ -243,6 +246,11 @@ if ($set_to_public) {
 
 switch ($row['access']){
 	case 'public':
+		if ($_GET['f']) {
+			$dest = './'.$page.'?f='.$addslashes($_GET['f']);
+		} /* else */
+		$dest = './'.$page;
+		
 		apply_category_theme($row['cat_id']);
 
 		if (!$_SESSION['valid_user'] && ($row['u_release_date'] < time()) && (!$row['u_end_date'] || $row['u_end_date'] > time())) {
@@ -256,6 +264,12 @@ switch ($row['access']){
 
 			/* add guest login to counter: */
 			count_login();
+			if ($_config['pretty_url'])
+			{
+				if (!strpos($dest, '/course/')) $dest .= '/course/'.$course;
+				header('Location: '.$dest);
+				exit;
+			}
 		} else if (!$_SESSION['valid_user']) {
 			if ($row['u_release_date'] > time()) {
 				$msg->addError(array('COURSE_NOT_RELEASED', AT_Date(_AT('announcement_date_format'), $row['u_release_date'], AT_DATE_UNIX_TIMESTAMP)));
@@ -313,11 +327,7 @@ switch ($row['access']){
 
 		$_SESSION['groups'] = get_groups($course);
 
-		if ($_GET['f']) {
-			header('Location: ./'.$page.'?f='.$addslashes($_GET['f']));
-			exit;
-		} /* else */
-		header('Location: ./'.$page);
+		header('Location: '.$dest);
 		exit;
 
 		break;

@@ -67,9 +67,9 @@ global $system_courses, $_custom_css, $_base_path;
 	<![endif]-->
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<?php echo $this->rtl_css; ?>
-	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
+	<?php if ($system_courses[$this->course_id]['rss']): ?>
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 	<?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
@@ -185,12 +185,12 @@ function toggleFolder(cid)
 	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
 		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
-		setcookie("c<?php echo $_SESSION['course_id'];?>_"+cid, null, 1);
+		setcookie("c<?php echo $this->course_id;?>_"+cid, null, 1);
 	}
 	else {
 		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
-		setcookie("c<?php echo $_SESSION['course_id'];?>_"+cid, "1", 1);
+		setcookie("c<?php echo $this->course_id;?>_"+cid, "1", 1);
 	}
 	
 	jQuery("#folder"+cid).slideToggle();
@@ -243,8 +243,8 @@ function printSubmenuHeader(title)
 //-->
 </script>
 <!-- section title -->
-<div><a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a><h1 id="section-title"><?php echo $this->section_title; ?><?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
-		- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+<div><a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a><h1 id="section-title"><?php echo $this->section_title; ?><?php if (($this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
+		- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 	<?php endif; ?></h1>
 </div>
 
@@ -272,7 +272,7 @@ function printSubmenuHeader(title)
 			<img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
 		<?php endif; ?>
 
-		<?php if ($_SESSION['course_id'] > -1): ?>
+		<?php if ($this->course_id > -1): ?>
 			<?php if (get_num_new_messages()): ?>
 				<img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a>
 			<?php else: ?>
@@ -305,7 +305,7 @@ function printSubmenuHeader(title)
 	<?php if ($_SESSION['valid_user']): ?>					
 		<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 	<?php else: ?>
-		 <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
+		 <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('login'); ?></a> &nbsp; <img src="<?php echo $this->img; ?>/linkOpaque.gif" alt="" /> <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
 	<?php endif; ?>
 </div>
 
@@ -347,7 +347,7 @@ function printSubmenuHeader(title)
 
 <div id="contentwrapper">
 <div id="contentcolumn"
-	<?php if (($_SESSION['course_id'] <= 0) && !$this->side_menu): ?>
+	<?php if (($this->course_id <= 0) && !$this->side_menu): ?>
 		style="margin-right:0px;width:99%;"
 	<?php endif; ?>
 	>
@@ -361,7 +361,7 @@ function printSubmenuHeader(title)
 		<?php endif; ?>
 	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float:left ; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
 
-		<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
+		<?php if ($this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
 			var state = getcookie("side-menu");

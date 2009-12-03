@@ -22,7 +22,12 @@ $post_limit = 5;
 	
 ob_start();
 
-$forum_list = get_group_concat('forums_courses', 'forum_id', "course_id={$_SESSION['course_id']}");
+// global $course_id is set when a guest accessing a public course. 
+// This is to solve the issue that the google indexing fails as the session vars are lost.
+global $course_id;
+if (isset($_SESSION['course_id'])) $course_id = $_SESSION['course_id'];
+
+$forum_list = get_group_concat('forums_courses', 'forum_id', "course_id={$course_id}");
 if ($forum_list != 0) {
 	$sql = "SELECT subject, post_id, forum_id, member_id FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id IN ($forum_list) ORDER BY last_comment DESC LIMIT $post_limit";
 	$result = mysql_query($sql, $db);
