@@ -1621,6 +1621,13 @@ function provide_alternatives($cid, $content){
 				$content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/s", 
 		                                $pattern_replace_to, $content);
 			}
+
+			// append/replace target alternative to <embed ... source ...>
+			if (preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/s", $content))
+			{
+				$content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/s", 
+		                                $pattern_replace_to, $content);
+			}
 		}
 	}
 	return $content;
