@@ -1590,19 +1590,35 @@ function provide_alternatives($cid, $content){
 				$target = '<p><a href="'.$row['secondary_resource'].'">'.$row['secondary_resource'].'</a></p>';
 			
 			// replace or append the target alternative to the source
-			if (($_SESSION['prefs']['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE']=='replace'))
+			if (($row['primary_type']==3 && $_SESSION['prefs']['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE'] == 'replace') ||
+				($row['primary_type']==1 && $_SESSION['prefs']['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE']=='replace') ||
+				($row['primary_type']==4 && $_SESSION['prefs']['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE']=='replace'))
 				$pattern_replace_to = '${1}'.$target.'${3}';
 			else
 				$pattern_replace_to = '${1}${2}'.$target.'${3}';
 				
-			// append target alternative to [media]source[/media]
-			$content = preg_replace("/(.*)(".preg_quote("[media]".$row['resource']."[/media]", "/").")(.*)/", 
+			// append/replace target alternative to [media]source[/media]
+			$content = preg_replace("/(.*)(".preg_quote("[media]".$row['resource']."[/media]", "/").")(.*)/s", 
 			             $pattern_replace_to, $content);
 			
-			// append target alternative to <a>...source...</a> or <a ...source...>...</a>
-			if (preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/", $content))
+			// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
+			if (preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/s", $content))
 			{
-				$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/", 
+				$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/s", 
+		                                $pattern_replace_to, $content);
+			}
+
+			// append/replace target alternative to <img ... src="source" ...></a>
+			if (preg_match("/\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>/s", $content))
+			{
+				$content = preg_replace("/(.*)(\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>)(.*)/s", 
+		                                $pattern_replace_to, $content);
+			}
+			
+			// append/replace target alternative to <object ... source ...></object>
+			if (preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/s", $content))
+			{
+				$content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/s", 
 		                                $pattern_replace_to, $content);
 			}
 		}
