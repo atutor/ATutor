@@ -1021,7 +1021,6 @@ foreach ($items as $item_id => $content_info)
 		}
 		if (in_array($ext, array('gif', 'jpg', 'bmp', 'png', 'jpeg'))) {
 			/* this is an image */
-
 			$content = '<img src="'.$content_info['href'].'" alt="'.$content_info['title'].'" />';
 		} else if ($ext == 'swf') {
 			/* this is flash */
