@@ -1320,6 +1320,10 @@ if (is_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources')) {
 	}
 	closedir($handler);
 }
+//takes care of the condition where the whole package doesn't have any contents but question banks
+if(is_array($all_package_base_path)){
+	$all_package_base_path = implode('/', $all_package_base_path);
+}
 
 if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
