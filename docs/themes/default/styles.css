@@ -1296,6 +1296,7 @@ ul#home-links li a img {
 
 dl#public-profile {
 	width: 100%;
+	
 }
 dl#public-profile dt {
 	float: left;
@@ -1308,8 +1309,21 @@ dl#public-profile dt {
 }
 dl#public-profile dd {
 	margin-bottom: 5px;
+	float:right;
 	clear: right;
 	padding: 5px 0px 5px 5px;
+}
+
+div.social-right{
+	width:65%;
+	float:left;
+	clear:right;
+	margin-left:.5em;
+}
+div.social-left{
+	width:29%;
+	margin-left:.5em;
+	float:left;
 }
 
 /* floating layout */

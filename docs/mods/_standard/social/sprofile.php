@@ -106,6 +106,8 @@ $savant->assign('prefs', $profile_prefs);
 $savant->assign('relationship', $relationship);
 $savant->assign('representation', $profile->getRepresentation());
 $savant->assign('contact', $profile->getContact());
+$savant->assign('personal', $profile->getPersonal());
+
 $savant->display('sprofile.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

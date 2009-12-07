@@ -83,6 +83,15 @@ if (isset($_POST['submit'])){
 			$rep_email		= $_POST['con_email'];
 			$rep_address		= $_POST['con_address'];
 			$member->updateContact($id, $con_name, $con_phone, $con_email, $con_address);
+		} elseif ($_POST['edit']=='personal'){
+			$per_weight		= $_POST['per_weight'];
+			$per_height		= $_POST['per_height'];
+			$per_hair		= $_POST['per_hair'];
+			$per_eyes 		= $_POST['per_eyes'];
+			$per_ethnicity		= $_POST['per_ethnicity'];
+			$per_languages		= $_POST['per_languages'];
+			$per_disabilities	= $_POST['per_disabilities'];
+			$member->updatePersonal($per_weight, $per_height, $per_hair, $per_eyes, $per_ethnicity, $per_languages, $per_disabilities);
 		}
 	} 
 	elseif (isset($_POST['add'])) {
@@ -129,6 +138,15 @@ if (isset($_POST['submit'])){
 			$con_email		= $_POST['con_email'];
 			$con_address		= $_POST['con_address'];
 			$member->addContact($con_name, $con_phone, $con_email, $con_address);
+		} elseif ($_POST['add']=='personal'){
+			$per_weight		= $_POST['per_weight'];
+			$per_height		= $_POST['per_height'];
+			$per_hair		= $_POST['per_hair'];
+			$per_eyes 		= $_POST['per_eyes'];
+			$per_ethnicity		= $_POST['per_ethnicity'];
+			$per_languages		= $_POST['per_languages'];
+			$per_disabilities		= $_POST['per_disabilities'];
+			$member->addPersonal($per_weight, $per_height, $per_hair, $per_eyes, $per_ethnicity, $per_languages, $per_disabilities);
 		}
 	}
 }
@@ -151,6 +169,8 @@ if (isset($_GET['add'])){
 		$savant->display('edit_profile/edit_representation.tmpl.php');
 	} elseif ($_GET['add']=='contact'){
 		$savant->display('edit_profile/edit_contact.tmpl.php');
+	} elseif ($_GET['add']=='personal'){
+		$savant->display('edit_profile/edit_personal.tmpl.php');
 	}
 	//footer
 	include(AT_INCLUDE_PATH.'footer.inc.php');
@@ -254,7 +274,22 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('con_address', $row['con_address']);
 		$savant->display('edit_profile/edit_contact.tmpl.php');
 
+	}elseif ($_GET['edit']=='personal'){
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_personal WHERE member_id='.$_SESSION['member_id'];
+		$rs = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($rs);
+
+		//Template
+		$savant->assign('per_weight', $row['per_weight']);
+		$savant->assign('per_height', $row['per_height']);
+		$savant->assign('per_hair', $row['per_hair']);
+		$savant->assign('per_eyes', $row['per_eyes']);
+		$savant->assign('per_ethnicity', $row['per_ethnicity']);
+		$savant->assign('per_languages', $row['per_languages']);
+		$savant->assign('per_disabilities', $row['per_disabilities']);
+		$savant->display('edit_profile/edit_personal.tmpl.php');
 	}
+
 	//footer
 	include(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -280,6 +315,8 @@ if (isset($_GET['delete'])){
 		$member->deleteRepresentation($id);
 	} elseif ($_GET['delete']=='contact'){
 		$member->deleteContact($id);
+	} elseif ($_GET['delete']=='personal'){
+		$member->deletePersonal($id);
 	}
 }
 
@@ -293,6 +330,7 @@ $savant->assign('education', $member->getEducation());
 $savant->assign('websites', $member->getWebsites());
 $savant->assign('representation', $member->getRepresentation());
 $savant->assign('contact', $member->getContact());
+$savant->assign('personal', $member->getPersonal());
 $savant->display('edit_profile.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

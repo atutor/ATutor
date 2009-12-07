@@ -168,6 +168,38 @@ class Member {
 		header('Location:edit_profile.php');
 		exit;
 	}
+	/**
+	 * Add personal characteristics
+	 * Special field for LCA to add a contact such as a parent or gaurdian.
+	 * 
+	 * @param	string		person's weight
+	 * @param	string		person's height
+	 * @param	string		person's hair colour
+	 * @param	string		person's eye colour
+	 * @param	string		person's ethnicity
+	 * @param	string		person's languages spoken
+	 * @param	string		person's disbailities
+	 */
+
+	function addPersonal($per_weight, $per_height, $per_hair, $per_eyes, $per_ethnicity, $per_languages, $per_disabilities){ 
+		global $addslashes, $db;
+		$member_id			= $this->id;
+		$per_weight			= $addslashes($per_weight);
+		$per_height			= $addslashes($per_height);
+		$per_hair			= $addslashes($per_hair);
+		$per_eyes			= $addslashes($per_eyes);
+		$per_ethnicity			= $addslashes($per_ethnicity);
+		$per_languages			= $addslashes($per_languages);
+		$per_disabilities		= $addslashes($per_disabilities);
+
+		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_personal (member_id, per_weight, per_height, per_hair, per_eyes, per_ethnicity, per_languages, per_disabilities) VALUES ($member_id, '$per_weight', '$per_height', '$per_hair', '$per_eyes','$per_ethnicity','$per_languages','$per_disabilities')";
+		mysql_query($sql, $db);
+		header('Location:edit_profile.php');
+		exit;
+	}
+
+
+
 	/** 
 	 * Add additional information, including interest, awards, associations.
 	 * @param	string		CSV format of interests, ie. camping, biking, etc
@@ -359,6 +391,37 @@ class Member {
 	}
 
 	/**
+	 * Update personal characteristics
+	 * Special field for LCA to add a contact such as a parent or gaurdian.
+	 * 
+	 * @param	string		person's weight
+	 * @param	string		person's height
+	 * @param	string		person's hair colour
+	 * @param	string		person's eye colour
+	 * @param	string		person's ethnicity
+	 * @param	string		person's languages spoken
+	 * @param	string		person's disbailities
+	 */
+
+	function updatePersonal($per_weight, $per_height, $per_hair, $per_eyes, $per_ethnicity, $per_languages, $per_disabilities){ 
+		global $addslashes, $db;
+		$member_id			= $this->id;
+		$per_weight			= $addslashes($per_weight);
+		$per_height			= $addslashes($per_height);
+		$per_hair			= $addslashes($per_hair);
+		$per_eyes			= $addslashes($per_eyes);
+		$per_ethnicity			= $addslashes($per_ethnicity);
+		$per_languages			= $addslashes($per_languages);
+		$per_disabilities		= $addslashes($per_disabilities);
+
+		$sql = "UPDATE ".TABLE_PREFIX."social_member_personal SET per_weight = '$per_weight', per_height = '$per_height', per_hair = '$per_hair', per_eyes = '$per_eyes', per_ethnicity = '$per_ethnicity', per_languages = '$per_languages', per_disabilities = '$per_disabilities' WHERE member_id = '$member_id'";
+		mysql_query($sql, $db);
+		header('Location:edit_profile.php');
+		exit;
+	}
+
+
+	/**
 	 * Get member info
 	 * This method tends to be have a negative impact on system run time.  
 	 */
@@ -488,6 +551,24 @@ class Member {
 		return $contact;
 	}
 
+	/**
+	 * Get member's personal info 
+	 * @return	the array of personal characteristics
+	 */
+	function getPersonal(){
+		global $db;
+		$personal = array();
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_personal WHERE member_id='.$this->id;
+
+
+		$result = mysql_query($sql, $db);
+		if ($result){
+			$personal = mysql_fetch_assoc($result);
+		}
+		return $personal;
+
+	}
 
 	/**
 	 * Get visitor counts within a month, the resultant array contains a daily, weekly, monthly, and a total count.
@@ -615,6 +696,14 @@ class Member {
 		$result = mysql_query($sql, $db);
 	}
 
+	/**
+	 * Delete personal information
+	 */
+	function deletePersonal(){
+		global $db;
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_personal WHERE member_id='.$this->getID();
+		$result = mysql_query($sql, $db);
+	}
 
 
 	/**

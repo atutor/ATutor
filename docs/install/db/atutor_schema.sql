@@ -1352,6 +1352,19 @@ CREATE TABLE `social_member_representation` (
 
 
 
+CREATE TABLE `social_member_personal` (
+  `per_id` int(10) unsigned NOT NULL auto_increment,
+  `member_id` int(10) unsigned NOT NULL,
+  `per_weight` varchar(200) NOT NULL,
+  `per_height` varchar(50) NOT NULL,
+  `per_hair` varchar(15) NOT NULL,
+  `per_eyes` varchar(50) NOT NULL,
+  `per_ethnicity` varchar(50) NOT NULL,
+  `per_languages` varchar(255) NOT NULL,
+  `per_disabilities` varchar(255) NOT NULL,
+  PRIMARY KEY  (`per_id`)
+) ENGINE=MyISAM;
+
 # Privacy Control Preferences
 CREATE TABLE `social_privacy_preferences` (
   `member_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
