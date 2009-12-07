@@ -151,8 +151,13 @@ function checkResources($import_path){
 
 	//check if all files in the xml is presented in the archieve
 	$result = array_diff($filearray, $data);
-	if (!empty($result)){
-		$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('MISSING_REFERENCE')));
+	//using sizeof because array_diff only 
+	//returns an array containing all the entries from array1  that are not present in any of the 
+	//other arrays. 
+	//Using sizeof make sure it's not a subset of array2.
+	//-1 on data because it always contain the imsmanifest.xml file
+	if (!empty($result) || sizeof($data)-1>sizeof($filearray)){
+		$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('ims_missing_references')));
 	}
 	return true;
 }
@@ -329,7 +334,7 @@ function rehash($items){
 				//schema is not in the form of "The first URI reference in each pair is a namespace name,
 				//and the second is the location of a schema that describes that namespace."
 				//$msg->addError('MANIFEST_NOT_WELLFORM');
-				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('SCHEMA_ERROR')));
+				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('schema_error')));
 			}
 
 			//turn the xsi:schemaLocation URI into a schema that describe namespace.
@@ -345,7 +350,7 @@ function rehash($items){
 				*/
 				//if the key of the namespace is not defined. Throw error.
 				if(!isset($ns[$split_location[$i]]) && !isset($ns_cp[$split_location[$i]])){
-					$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('SCHEMA_ERROR')));
+					$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('schema_error')));
 				}
 
 			}
@@ -360,7 +365,7 @@ function rehash($items){
 			// check if it misses file references
 			if(!isset($attrs['href']) || $attrs['href']==''){
 				//$msg->addError('MANIFEST_NOT_WELLFORM');
-				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('MANIFEST_NOT_WELLFORM')));
+				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('ims_missing_reference')));
 			}
 
 			// special case for webCT content packages that don't specify the `href` attribute 
@@ -493,7 +498,7 @@ function rehash($items){
 				$items[$current_identifier]['file'][] = $attrs['href'];
 			} else {
 				//$msg->addError('');
-				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('IMS_FILES_MISSING')));
+				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT(array('ims_files_missing', $attrs['href']))));
 			}
 		}		
 		if ($name=='cc:authorizations'){
