@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 1);
 
@@ -433,7 +433,6 @@ function get_html_head_by_tag($text, $tags)
 	{
 		$tags = array(trim($tags));
 	}
-	
 	foreach ($tags as $tag)
 	{
 		$tag = strtolower($tag);
@@ -461,8 +460,15 @@ function get_html_head_by_tag($text, $tags)
 			else  // match /> as ending tag if </tag> is not found
 			{
 				$end_pos	= strpos($temp_text, '/>');
-				$end_pos += strlen('/>');
 				
+				if($end_pos === false && strpos($temp_text, $tag.'>')===false){
+					//if /> is not found, then this is not a valid XHTML
+					//text iff it's not tag>
+					$end_pos = strpos($temp_text, '>');
+					$end_pos += strlen('>');
+				} else {
+					$end_pos += strlen('/>');
+				}
 				// add an empty line after each tag information
 				$rtn_text .= trim(substr($temp_text, 0, $end_pos)) . '
 	
@@ -474,7 +480,6 @@ function get_html_head_by_tag($text, $tags)
 			$start_pos = strpos($temp_head, '<'.$tag);
 		}
 	}
-	
 	return $rtn_text;
 }
 

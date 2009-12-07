@@ -953,11 +953,13 @@ foreach ($items as $item_id => $content_info)
 	if (is_array($content_info['dependency']) && !empty($content_info['dependency'])){
 		foreach($content_info['dependency'] as $dependency_ref){
 			//handle styles	
+			/** handled by get_html_head in vitals.inc.php
 			if (preg_match('/(.*)\.css$/', $items[$dependency_ref]['href'])){
 				//calculate where this is based on our current base_href. 
 				//assuming the dependency folders are siblings of the item
 				$head = '<link rel="stylesheet" type="text/css" href="../'.$items[$dependency_ref]['href'].'" />';
 			}
+			*/
 			//check if this is a discussion tool dependency
 			if ($items[$dependency_ref]['type']=='imsdt_xmlv1p0'){
 				$items[$item_id]['forum'][$dependency_ref] = $items[$dependency_ref]['href'];
