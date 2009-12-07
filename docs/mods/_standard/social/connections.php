@@ -84,7 +84,7 @@ if (isset($_GET['id'])){
 
 		if ($row_notify['email'] != '') {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-			$body = _AT('notification_new_contact', get_display_name($_SESSION['member_id']), $_base_href.AT_SOCIAL_BASENAME.'index_mystart.php');
+			$body = _AT('notification_new_contact', get_display_name($_SESSION['member_id']), $_base_href.AT_SOCIAL_BASENAME.'index.php');
 			$sender = get_display_name($_SESSION['member_id']);
 			$mail = new ATutorMailer;
 			$mail->AddAddress($row_notify['email'], $sender);
