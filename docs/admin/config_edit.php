@@ -16,6 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
+global $stripslashes;
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -105,11 +106,11 @@ if (isset($_POST['cancel'])) {
 
 		foreach ($_config as $name => $value) {
 			// the isset() is needed to avoid overridding settings that don't get set here (ie. modules)
-			if (isset($_POST[$name]) && (stripslashes($_POST[$name]) != $value) && (stripslashes($_POST[$name]) != $_config_defaults[$name])) {
+			if (isset($_POST[$name]) && ($stripslashes($_POST[$name]) != $value) && ($stripslashes($_POST[$name]) != $_config_defaults[$name])) {
 				$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('$name', '$_POST[$name]')";
 				mysql_query($sql, $db);
 				write_to_log(AT_ADMIN_LOG_REPLACE, 'config', mysql_affected_rows($db), $sql);
-			} else if (isset($_POST[$name]) && (stripslashes($_POST[$name]) == $_config_defaults[$name])) {
+			} else if (isset($_POST[$name]) && ($stripslashes($_POST[$name]) == $_config_defaults[$name])) {
 				$sql = "DELETE FROM ".TABLE_PREFIX."config WHERE name='$name'";
 				mysql_query($sql, $db);
 				write_to_log(AT_ADMIN_LOG_DELETE, 'config', mysql_affected_rows($db), $sql);
