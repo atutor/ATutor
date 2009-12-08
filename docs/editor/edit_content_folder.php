@@ -311,7 +311,10 @@ $_POST['hour']  = substr($release_date, 11, 2);
 $_POST['min']= substr($release_date, 14, 2);
 
 if ($pid > 0) $savant->assign('pid', $pid);
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 $savant->display('editor/edit_content_folder.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 
 //save last visit page.
 $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
