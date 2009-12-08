@@ -138,7 +138,7 @@ if ($categories_select != '<option value="0"></option>') {
 		</div>
 
 		<div class="row">
-		<table summary="" class="data" rules="cols" align="left" style="width: 95%;">
+		<table summary="" class="data" rules="cols" style="width: 95%; margin:auto;">
 		
 		<thead>
 		<tr>
@@ -189,6 +189,7 @@ else if ($row = mysql_fetch_assoc($courses_result))
 	<div class="row">
 		&nbsp;
 	</div>
+<br style="clear:both;" />
 </div>
 
 <script language="JavaScript" type="text/javascript">
