@@ -27,6 +27,9 @@ if (trim($_POST['field']) <> "" && trim($_POST['value']) <> "")
 		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='".$addslashes($_POST['value'])."' WHERE content_id=$content_id";
 		$result = mysql_query($sql, $db);
 		$row	= mysql_fetch_array($result);
+		
+		// force side menu "content navigation" to refresh. @See include/classes/ContentManager.class.php
+		$_SESSION['refresh_content_nav'] = 1; 
 	}
 }
 ?>

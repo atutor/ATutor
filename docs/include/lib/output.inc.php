@@ -203,13 +203,11 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 *										$args[1..x] = optional arguments to the formatting string 
 * @return	string|array		full resulting message
 * @see		$db			        in include/vitals.inc.php
-* @see		cache()				in include/phpCache/phpCache.inc.php
-* @see		cache_variable()	in include/phpCache/phpCache.inc.php
-* @author	Joel Kronenberg
+* @see		cacheLite			in include/classes/cacheLite/cacheLite.inc.php
+* @author	Joel Kronenberg, modified by Cindy Qi Li onDec 8, 2009 to replace phpCache with cacheLite
 */
 function _AT() {
-	global $_cache_template, $lang_et, $_rel_url;
-	static $_template;
+	global $lang_et, $_rel_url;
 	
 	$args = func_get_args();
 	
@@ -253,78 +251,37 @@ function _AT() {
 		}
 	}
 	
-	// a template variable
-	if (!isset($_template)) {
-		$url_parts = parse_url(AT_BASE_HREF);
-		$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
-
-		if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {
-			global $db;
-
-			/* get $_template from the DB */
-			
-			$sql = "SELECT L.* FROM ".TABLE_PREFIX."language_text L, ".TABLE_PREFIX."language_pages P WHERE L.language_code='{$_SESSION['lang']}' AND L.variable<>'_msgs' AND L.term=P.term AND P.page='$_rel_url' ORDER BY L.variable ASC";
-			$result	= mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
-				//Do not overwrite the variable that existed in the cache_template already.
-				//The edited terms (_c_template) will always be at the top of the resultset
-				//0003279
-				if (isset($_cache_template[$row['term']])){
-					continue;
-				}
-
-				// saves us from doing an ORDER BY
-				if ($row['language_code'] == $_SESSION['lang']) {
-					$_cache_template[$row['term']] = stripslashes($row['text']);
-				} else if (!isset($_cache_template[$row['term']])) {
-					$_cache_template[$row['term']] = stripslashes($row['text']);
-				}
-			}
-		
-			cache_variable('_cache_template');
-			endcache(true, false);
-		}
-		$_template = $_cache_template;
-	}
 	$num_args = func_num_args();
 	if (is_array($args[0])) {
 		$args = $args[0];
 		$num_args = count($args);
 	}
 	$format	  = array_shift($args);
+	$url_parts = parse_url(AT_BASE_HREF);
+	$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
+	$cache_group = $_SESSION['lang'].'_'.$name;
 
-	if (isset($_template[$format])) {
-		/*
-		var_dump($_template);
-		var_dump($format);
-		var_dump($args);
-		exit;
-		*/
-		$outString	= vsprintf($_template[$format], $args);
-		$str = ob_get_contents();
-	} else {
-		$outString = '';
-	}
-
-
-	if ($outString === false) {
-		return ('[Error parsing language. Variable: <code>'.$format.'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
-	}
-
-	if (empty($outString)) {
+	$outString = cacheLite::get($format, $cache_group);
+	if (!$outString) {
+		
 		global $db;
 		$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'language_text L WHERE L.language_code="'.$_SESSION['lang'].'" AND L.variable<>"_msgs" AND L.term="'.$format.'"';
 
 		$result	= mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 
-		$_template[$row['term']] = stripslashes($row['text']);
-		$outString = $_template[$row['term']];
-		if (empty($outString)) {
+		$text = stripslashes($row['text']);
+		if (empty($text)) {
 			return ('[ '.$format.' ]');
 		}
-		$outString = $_template[$row['term']];
-		$outString = vsprintf($outString, $args);
+		else
+		{
+			$outString = vsprintf($text, $args);
+			// do NOT cache the string that needs pass-in parameter
+			if (!strstr($format,'%') && !strstr($outString, '%') && !strstr($text, '%')) {
+				cacheLite::save($outString, $format, $cache_group);
+			}
+		}
 
 		/* update the locations */
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'language_pages (`term`, `page`) VALUES ("'.$format.'", "'.$_rel_url.'")';
@@ -934,75 +891,6 @@ function find_terms($find_text) {
 	@See /include/Classes/Message/Message.class.php
 	Jacek Materna
 */
-
-/**
-* Take a code as input and grab its language specific message. Also cache the resulting 
-* message. Return the message. Same as get_message but key value in cache is string
-* @access  public
-* @param   string $codes 	Message Code to translate - > 'term' field in DB
-* @return  string 			The translated language specific message for code $code
-* @author  Jacek Materna
-*/
-function getTranslatedCodeStr($codes) {
-	
-	/* this is where we want to get the msgs from the database inside a static variable */
-	global $_cache_msgs_new;
-	static $_msgs_new;
-
-	if (!isset($_msgs_new)) {
-		if ( !($lang_et = cache(120, 'msgs_new', $_SESSION['lang'])) ) {
-			global $db, $_base_path;
-
-			$parent = Language::getParentCode($_SESSION['lang']);
-
-			/* get $_msgs_new from the DB */
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
-			$result	= @mysql_query($sql, $db);
-			$i = 1;
-			while ($row = @mysql_fetch_assoc($result)) {
-				// do not cache key as a digit (no contstant(), use string)
-				$_cache_msgs_new[$row['term']] = str_replace('SITE_URL/', $_base_path, $row['text']);
-				if (AT_DEVEL) {
-					$_cache_msgs_new[$row['term']] .= ' <small><small>('.$row['term'].')</small></small>';
-				}
-			}
-
-			cache_variable('_cache_msgs_new');
-			endcache(true, false);
-		}
-		$_msgs_new = $_cache_msgs_new;
-	}
-
-	if (is_array($codes)) {
-		/* this is an array with terms to replace */		
-		$code		= array_shift($codes);
-
-		$message	= $_msgs_new[$code];
-		$terms		= $codes;
-
-		/* replace the tokens with the terms */
-		$message	= vsprintf($message, $terms);
-
-	} else {
-		$message = $_msgs_new[$codes];
-
-		if ($message == '') {
-			/* the language for this msg is missing: */
-		
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX.'language_text WHERE variable="_msgs"';
-			$result	= @mysql_query($sql, $db);
-			$i = 1;
-			while ($row = @mysql_fetch_assoc($result)) {
-				if (($row['term']) === $codes) {
-					$message = '['.$row['term'].']';
-					break;
-				}
-			}
-		}
-		$code = $codes;
-	}
-	return $message;
-}
 
 function html_get_list($array) {
 	$list = '';

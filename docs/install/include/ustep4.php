@@ -90,6 +90,16 @@ if (!is_dir($content_dir.'/theme')) {
 }
 ////////////////////////
 
+// Create the cache directory
+if (!is_dir($content_dir.'/cache')) {
+	if (!@mkdir($content_dir.'/cache')) {
+		$errors[] = '<strong>'.$content_dir.'/cache</strong> directory does not exist and cannot be created.';  
+	}
+} else if (!is_writable($content_dir.'/theme')){
+	$errors[] = '<strong>'.$content_dir.'/cache</strong> directory is not writable.';
+}
+////////////////////////
+
 echo '<br />';
 if (isset($progress)) {
 	print_feedback($progress);
@@ -98,12 +108,12 @@ if (isset($errors)) {
 	print_errors($errors);
 }
 
-if ($_POST['step1']['cache_dir'] != '') {
-	define('CACHE_DIR', urldecode($_POST['step1']['cache_dir']));
-	define('CACHE_ON', 1);
-	require('../include/phpCache/phpCache.inc.php');
-	cache_gc(NULL, 1, true);
-}
+//if ($_POST['step1']['cache_dir'] != '') {
+//	define('CACHE_DIR', urldecode($_POST['step1']['cache_dir']));
+//	define('CACHE_ON', 1);
+//	require('../include/phpCache/phpCache.inc.php');
+//	cache_gc(NULL, 1, true);
+//}
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
