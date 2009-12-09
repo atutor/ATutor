@@ -225,7 +225,7 @@ class ContentManager
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['course_id'] != -1)) {
 			return false;
 		}
-		
+
 		// shift the new neighbouring content down
 		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 
 		         WHERE ordering>=$ordering 
@@ -270,9 +270,6 @@ class ContentManager
 
 		$err = mysql_query($sql, $this->db);
 
-		// force side menu "content navigation" to refresh. @See include/classes/ContentManager.class.php
-		$_SESSION['refresh_content_nav'] = 1;
-		
 		/* insert the related content */
 		$sql = "SELECT LAST_INSERT_ID() AS insert_id";
 		$result = mysql_query($sql, $this->db);
@@ -318,9 +315,6 @@ class ContentManager
 		            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
 
-		// force side menu "content navigation" to refresh. @See include/classes/ContentManager.class.php
-		$_SESSION['refresh_content_nav'] = 1;
-		
 		/* update the related content */
 		$result	= mysql_query("DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id", $this->db);
 		$sql = '';
@@ -475,10 +469,7 @@ class ContentManager
 		/* remove the "resume" to this page, b/c it was deleted */
 		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=0 WHERE course_id=$_SESSION[course_id] AND last_cid=$content_id";
 		$result = mysql_query($sql, $this->db);
-		
-		// force side menu "content navigation" to refresh. @See include/classes/ContentManager.class.php
-		$_SESSION['refresh_content_nav'] = 1;
-		
+
 		return true;
 	}
 
@@ -509,9 +500,6 @@ class ContentManager
 		/* delete the content tests association */
 		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
-		
-		// force side menu "content navigation" to refresh. @See include/classes/ContentManager.class.php
-		$_SESSION['refresh_content_nav'] = 1;
 	}
 
 	function getContentPage($content_id) {
@@ -765,7 +753,6 @@ setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id']
 	
 	/* @See include/html/dropdowns/menu_menu.inc.php */
 	function printMainMenu( ) {
-		// set $contentNavUpdated to true if wanna refresh cache value of content navigation
 		global $_base_path;
 		
 		$parent_id    = 0;
@@ -795,16 +782,7 @@ setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id']
 			</a>
 			</div>'."\n";
 		}
-		
-		$content_nav = cacheLite::get($_SESSION['course_id'], 'contentNavigation');
-		// content_nav_updated is set to true when one of content titles is added/updated/deleted
-		if (!$content_nav || $_SESSION['refresh_content_nav'])
-		{
-			$content_nav = $this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
-			cacheLite::save($content_nav, $_SESSION['course_id'], 'contentNavigation');
-			$_SESSION['refresh_content_nav'] = 0;
-		}
-		echo $content_nav;
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
 		
 		// javascript for inline editor
 		echo '
@@ -877,7 +855,7 @@ function inlineEditsSetup() {
 		$ignore_state = true;
 
 		$this->start = true;
-		echo $this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state, 'sitemap');
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state, 'sitemap');
 	}
 
 	/* @See index.php */
@@ -890,7 +868,7 @@ function inlineEditsSetup() {
 		$ignore_state = false;
 
 		$this->start = true;
-		echo $this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
 	}
 
 	/* @See index.php include/html/dropdowns/local_menu.inc.php */
@@ -903,13 +881,11 @@ function inlineEditsSetup() {
 		$ignore_state = false;
 	
 		$this->start = true;
-		echo $this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
 	}
 
-	/* Return the string of html for side menu
-	 * @See include/html/menu_menu.inc.php
-	 * Access: PRIVATE 
-	 */
+	/* @See include/html/menu_menu.inc.php	*/
+	/* Access: PRIVATE */
 	function printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state, $from = '') {
 		global $cid, $_my_uri, $_base_path, $rtl, $substr, $strlen;
 		static $temp_path;
@@ -940,10 +916,10 @@ function inlineEditsSetup() {
 			$counter = 1;
 			$num_items = count($top_level);
 			
-//			if ($parent_id <> 0) $rtn .= '<li>';
+//			if ($parent_id <> 0) echo '<li>';
 			
-//			$rtn .= '<ul id="folder'.$parent_id.$from.'">'."\n";
-			$rtn = '<div id="folder'.$parent_id.$from.'">'."\n";
+//			echo '<ul id="folder'.$parent_id.$from.'">'."\n";
+			echo '<div id="folder'.$parent_id.$from.'">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
 				$link = '';
@@ -1057,7 +1033,7 @@ function inlineEditsSetup() {
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
-//						$rtn .= '<div id="folder_content_'.$content['content_id'].'">';
+//						echo '<div id="folder_content_'.$content['content_id'].'">';
 					}
 					
 					if ($on) {
@@ -1069,27 +1045,27 @@ function inlineEditsSetup() {
 					$on = true;
 				}
 
-//				$rtn .= '<li>'."\n";
-				$rtn .= '<span>'."\n";
+//				echo '<li>'."\n";
+				echo '<span>'."\n";
 				
 				if ( isset($this->_menu[$content['content_id']]) && is_array($this->_menu[$content['content_id']]) ) {
 					/* has children */
 					for ($i=0; $i<$depth; $i++) {
 						if ($children[$i] == 1) {
-							$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						} else {
-							$rtn .= '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						}
 					}
 
 					if (($counter == $num_items) && ($depth > 0)) {
-						$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						$children[$depth] = 0;
 					} else if ($counter == $num_items) {
-						$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						$children[$depth] = 0;
 					} else {
-						$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						$children[$depth] = 1;
 					}
 
@@ -1101,21 +1077,21 @@ function inlineEditsSetup() {
 
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-							$rtn .= '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
+							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
 
 						} else {
-							$rtn .= '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
-							$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
-							$rtn .= '</a>'."\n";
+							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
+							echo '</a>'."\n";
 						}
 					} else {
 						if ($on) {
-							$rtn .= '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
+							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
 
 						} else {
-							$rtn .= '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
-							$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />';
-							$rtn .= '</a>'."\n";
+							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />';
+							echo '</a>'."\n";
 						}
 					}
 
@@ -1124,38 +1100,38 @@ function inlineEditsSetup() {
 					if ($counter == $num_items) {
 						for ($i=0; $i<$depth; $i++) {
 							if ($children[$i] == 1) {
-								$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 							} else {
-								$rtn .= '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 							}
 						}
-						$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="img-size-tree" />'."\n";
 					} else {
 						for ($i=0; $i<$depth; $i++) {
 							if ($children[$i] == 1) {
-								$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 							} else {
-								$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 							}
 						}
-						$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 					}
-					$rtn .= '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 				}
 
 				if ($_SESSION['prefs']['PREF_NUMBERING']) {
-					$rtn .= $path.$counter;
+					echo $path.$counter;
 				}
 				
-				$rtn .= $link;
+				echo $link;
 				
-				$rtn .= "\n<br /></span>\n\n";
+				echo "\n<br /></span>\n\n";
 				
 				if ( $ignore_state || (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1)) {
 
 					$depth ++;
 
-					$rtn .= $this->printMenu($content['content_id'],
+					$this->printMenu($content['content_id'],
 										$depth, 
 										$path.$counter.'.', 
 										$children,
@@ -1169,12 +1145,10 @@ function inlineEditsSetup() {
 				}
 				$counter++;
 			} // end of foreach
-//			$rtn .= "</ul>";
-//			if ($parent_id <> 0) $rtn .= "</li>\n\n";
-			$rtn.= "</div>\n\n";
+//			echo "</ul>";
+//			if ($parent_id <> 0) print "</li>\n\n";
+			print "</div>\n\n";
 		}
-		
-		return $rtn;
 	}
 
 	/* @See include/html/editor_tabs/properties.inc.php

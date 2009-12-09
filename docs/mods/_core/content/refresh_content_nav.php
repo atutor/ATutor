@@ -16,8 +16,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 global $contentManager;
 
-// force side menu "content navigation" to refresh. @See include/classes/ContentManager.class.php
-$_SESSION['refresh_content_nav'] = 1;
 // save updated content navigation menu into cache
 echo $contentManager->printMainMenu();
 ?>

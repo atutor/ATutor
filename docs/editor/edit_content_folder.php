@@ -27,8 +27,6 @@ if ($cid > 0)
 // save changes
 if ($_POST['submit'])
 {
-	$_SESSION['refresh_content_nav'] = 1; // force side menu "content navigation" to refresh
-	
 	if ($_POST['title'] == '') {
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
