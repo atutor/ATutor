@@ -727,12 +727,14 @@ if (getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
 	jQuery("#folder"+'.$row['content_id'].').show();
 	jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
 	jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("collapse").'");
+	jQuery("#tree_icon"+'.$row['content_id'].').attr("title", "'._AT("collapse").'");
 }
 else
 {
 	jQuery("#folder"+'.$row['content_id'].').hide();
 	jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_expand_icon);
 	jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("expand").'");
+	jQuery("#tree_icon"+'.$row['content_id'].').attr("title", "'._AT("expand").'");
 }
 ';
 		}
@@ -1007,11 +1009,11 @@ function inlineEditsSetup() {
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
-						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
+//						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
 						
 						$full_title = $content['title'];
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?cid=".$content['content_id']).'">'."\n";
+							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?cid=".$content['content_id']).'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
 						else {
 							$link .= '<span style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
@@ -1077,8 +1079,9 @@ function inlineEditsSetup() {
 
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
-
+//							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
 							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
@@ -1086,8 +1089,9 @@ function inlineEditsSetup() {
 						}
 					} else {
 						if ($on) {
-							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
-
+//							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" />'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
 							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />';
