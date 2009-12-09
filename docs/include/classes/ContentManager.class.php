@@ -956,7 +956,7 @@ function inlineEditsSetup() {
 					$link .= $img_link . ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
 					$base_title_length = 29;
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
-						$link .= $path.$counter.' ';
+//						$link .= $path.$counter.' ';
 						$base_title_length = 24;
 					}
 
@@ -965,11 +965,12 @@ function inlineEditsSetup() {
 					if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 					}
+//					$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, $base_title_length-4))).'...';
 					
 					if (isset($content['test_id']))
 						$link .= $content['title'];
 					else
-						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$content['title'].'</span>';
+						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span>';
 					
 					$link .= '</a>';
 					if ($on) {
@@ -1000,7 +1001,8 @@ function inlineEditsSetup() {
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
-						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span></strong>';
+//						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, $base_title_length-4))).'...';
+						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
@@ -1022,7 +1024,8 @@ function inlineEditsSetup() {
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
-						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.trim($content['title']).'</span>';
+//						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, $base_title_length-4))).'...';
+						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 							$link .= '</a>'."\n";
@@ -1123,9 +1126,9 @@ function inlineEditsSetup() {
 					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 				}
 
-				if ($_SESSION['prefs']['PREF_NUMBERING']) {
-					echo $path.$counter;
-				}
+//				if ($_SESSION['prefs']['PREF_NUMBERING']) {
+//					echo $path.$counter;
+//				}
 				
 				echo $link;
 				
