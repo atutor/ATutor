@@ -997,7 +997,7 @@ function inlineEditsSetup() {
 					if ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)
 					{ // current content page
 						$full_title = $content['title'];
-						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
+						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$path.$counter.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
