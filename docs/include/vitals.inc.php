@@ -403,20 +403,20 @@ function get_html_body($text) {
 
 function get_html_head ($text) {
 	/* make all text lower case */
-	$text = strtolower($text);
+//	$text = strtolower($text);
 
 	/* strip everything before <head> */
-	$start_pos	= strpos($text, '<head');
+	$start_pos	= stripos($text, '<head');
 	if ($start_pos !== false) {
 		$start_pos	+= strlen('<head');
-		$end_pos	= strpos($text, '>', $start_pos);
+		$end_pos	= stripos($text, '>', $start_pos);
 		$end_pos	+= strlen('>');
 
 		$text = substr($text, $end_pos);
 	}
 
 	/* strip everything after </head> */
-	$end_pos	= strpos($text, '</head');
+	$end_pos	= stripos($text, '</head');
 	if ($end_pos !== false) {
 		$text = trim(substr($text, 0, $end_pos));
 	}
@@ -444,7 +444,7 @@ function get_html_head_by_tag($text, $tags)
 		$tag = strtolower($tag);
 
 		/* strip everything before <{tag}> */
-		$start_pos	= strpos($head, '<'.$tag);
+		$start_pos	= stripos($head, '<'.$tag);
 		$temp_head = $head;
 		
 		while ($start_pos !== false) 
@@ -452,7 +452,7 @@ function get_html_head_by_tag($text, $tags)
 			$temp_text = substr($temp_head, $start_pos);
 	
 			/* strip everything after </{tag}> or />*/
-			$end_pos	= strpos($temp_text, '</' . $tag . '>');
+			$end_pos	= stripos($temp_text, '</' . $tag . '>');
 	
 			if ($end_pos !== false) 
 			{
@@ -465,12 +465,12 @@ function get_html_head_by_tag($text, $tags)
 			}
 			else  // match /> as ending tag if </tag> is not found
 			{
-				$end_pos	= strpos($temp_text, '/>');
+				$end_pos	= stripos($temp_text, '/>');
 				
-				if($end_pos === false && strpos($temp_text, $tag.'>')===false){
+				if($end_pos === false && stripos($temp_text, $tag.'>')===false){
 					//if /> is not found, then this is not a valid XHTML
 					//text iff it's not tag>
-					$end_pos = strpos($temp_text, '>');
+					$end_pos = stripos($temp_text, '>');
 					$end_pos += strlen('>');
 				} else {
 					$end_pos += strlen('/>');
@@ -483,7 +483,7 @@ function get_html_head_by_tag($text, $tags)
 			
 			// initialize vars for next round of matching
 			$temp_head = substr($temp_text, $end_pos);
-			$start_pos = strpos($temp_head, '<'.$tag);
+			$start_pos = stripos($temp_head, '<'.$tag);
 		}
 	}
 	return $rtn_text;
