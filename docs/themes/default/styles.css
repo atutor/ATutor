@@ -1309,8 +1309,6 @@ dl#public-profile dt {
 }
 dl#public-profile dd {
 	margin-bottom: 5px;
-	float:right;
-	clear: right;
 	padding: 5px 0px 5px 5px;
 }
 
