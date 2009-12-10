@@ -1513,16 +1513,18 @@ function provide_alternatives($cid, $content){
 	}
 
 	// get all relations between primary resources and their alternatives
-	$sql = "SELECT pr.resource, prt.type_id primary_type, sr.secondary_resource, srt.type_id secondary_type
+	$sql = "SELECT c.content_path, pr.resource, prt.type_id primary_type, sr.secondary_resource, srt.type_id secondary_type
 	          FROM ".TABLE_PREFIX."primary_resources pr, ".
 	                 TABLE_PREFIX."primary_resources_types prt,".
 	                 TABLE_PREFIX."secondary_resources sr,".
-	                 TABLE_PREFIX."secondary_resources_types srt
+	                 TABLE_PREFIX."secondary_resources_types srt,".
+	                 TABLE_PREFIX."content c
 	         WHERE pr.content_id=".$cid."
 		       AND pr.primary_resource_id = prt.primary_resource_id
 		       AND pr.primary_resource_id = sr.primary_resource_id
 		       AND sr.language_code='".$_SESSION['prefs']['PREF_ALT_AUDIO_PREFER_LANG']."'
 		       AND sr.secondary_resource_id = srt.secondary_resource_id
+	           AND pr.content_id = c.content_id
 		     ORDER BY pr.primary_resource_id, prt.type_id";
 	$result = mysql_query($sql, $db);
 
@@ -1560,7 +1562,12 @@ function provide_alternatives($cid, $content){
 					$file_location = $row['secondary_resource'];
 				$file .= $file_location;
 				
-				$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
+				if ($row['content_path'] <> '') {
+					$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$row['content_path'].'/'.$file_location;
+				}
+				else {
+					$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
+				}
 				$target = file_get_contents($file);
 				
 				// check whether html file
