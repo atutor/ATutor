@@ -365,7 +365,7 @@ function rehash($items){
 			// check if it misses file references
 			if(!isset($attrs['href']) || $attrs['href']==''){
 				//$msg->addError('MANIFEST_NOT_WELLFORM');
-				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('ims_missing_reference')));
+				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('ims_missing_references')));
 			}
 
 			// special case for webCT content packages that don't specify the `href` attribute 
@@ -419,7 +419,7 @@ function rehash($items){
 			}
 
 			//real content path
-			if($sizeofrp['..'] > 0){
+			if($sizeofrp['..'] > 0 && !empty($all_package_base_path)){
 				for ($i=0; $i<$sizeofrp['..']; $i++){
 					array_pop($all_package_base_path);
 				}
@@ -504,7 +504,7 @@ function rehash($items){
 		if ($name=='cc:authorizations'){
 			//don't have authorization setup.
 			//$msg->addError('');
-			$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('IMS_AUTHORIZATION_NOT_SUPPORT')));
+			$msg->addError('IMS_AUTHORIZATION_NOT_SUPPORT');
 		}
 		array_push($element_path, $name);
 	}
@@ -803,7 +803,29 @@ $items[content_id/resource_id] = array(
 */
 
 $ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
+//scan for manifest xml if it's not on the top level.
+if ($ims_manifest_xml === false){
+	$data = rscandir($import_path);
+	$manifest_array = array();
+	foreach($data as $scanned_file){
+		$scanned_file = realpath($scanned_file);
+		//change the file string to an array
+		$this_file_array = explode(DIRECTORY_SEPARATOR, $scanned_file);
+		if(empty($manifest_array)){
+			$manifest_array = $this_file_array;
+		}
+		$manifest_array = array_intersect_assoc($this_file_array, $manifest_array);
 
+		if (strpos($scanned_file, 'imsmanifest')!==false){
+			$ims_manifest_xml = @file_get_contents($scanned_file);
+		}
+	}
+	if ($ims_manifest_xml !== false){
+		$import_path = implode(DIRECTORY_SEPARATOR, $manifest_array);
+	}
+}
+
+//if no imsmanifest.xml found in the entire package, throw error.
 if ($ims_manifest_xml === false) {
 	$msg->addError('NO_IMSMANIFEST');
 
