@@ -1049,6 +1049,7 @@ INSERT INTO `themes` VALUES ('ATutor Classic', '1.6.3', 'default_classic', NOW()
 INSERT INTO `themes` VALUES ('Blumin', '1.6.3', 'blumin', NOW(), 'This is the plone look-alike theme.', 1);
 INSERT INTO `themes` VALUES ('Greenmin', '1.6.3', 'greenmin', NOW(), 'This is the plone look-alike theme in green.', 1);
 INSERT INTO `themes` VALUES ('ATutor 1.5', '1.6.3', 'default15', NOW(), 'This is the 1.5 series default theme.', 1);
+INSERT INTO `themes` VALUES ('Mobile', '1.6.4', 'mobile', NOW(), 'This is the default theme for mobile devices.', 1);
 
 # --------------------------------------------------------
 # Table structure for table `users_online`

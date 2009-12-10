@@ -160,3 +160,6 @@ CREATE TABLE `social_member_personal` (
   `per_disabilities` varchar(255) NOT NULL,
   PRIMARY KEY  (`per_id`)
 ) ENGINE=MyISAM;
+
+# Add mobile theme
+INSERT INTO `themes` VALUES ('Mobile', '1.6.4', 'mobile', NOW(), 'This is the default theme for mobile devices.', 1);

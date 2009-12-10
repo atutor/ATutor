@@ -219,7 +219,13 @@ if ($_config['time_zone']) {
 	$savant = new Savant2();
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
-	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
+	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
+	// When more mobile themes come in, this should be changed.
+	if (stripos($_SERVER['HTTP_USER_AGENT'], 'mobile')) {
+		$_SESSION['prefs']['PREF_THEME'] = 'mobile';
+		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+	}
+	else if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 
 		if ($_SESSION['course_id'] == -1) {
 			if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
