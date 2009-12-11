@@ -143,7 +143,7 @@ $result = mysql_query($sql,$db);
 		<?php else: ?>
 			<tr onmousedown="document.form['m<?php echo $row['message_id']; ?>'].checked = !document.form['m<?php echo $row['message_id']; ?>'].checked; rowselectbox(this, document.form['m<?php echo $row['message_id']; ?>'].checked, '');" id="r_<?php echo $row['message_id']; ?>_1">
 		<?php endif; ?>
-		<td><input type="checkbox" name="id[]" value="<?php echo $row['message_id']; ?>" id="m<?php echo $row['message_id']; ?>" <?php if (isset($_POST['id']) && in_array($row['message_id'], $_POST['id'])) { echo 'checked="checked"'; } ?> title="<?php echo _AT('delete').': '.AT_print($row['subject'], 'messages.subject');?>"/></td>
+		<td><input type="checkbox" name="id[]" value="<?php echo $row['message_id']; ?>" id="m<?php echo $row['message_id']; ?>" <?php if (isset($_POST['id']) && in_array($row['message_id'], $_POST['id'])) { echo 'checked="checked"'; } ?> title="<?php echo _AT('delete').': '.AT_print($row['subject'], 'messages.subject');?>" onmouseup="this.checked=!this.checked" /></td>
 		<?php
 
 		$name = get_display_name($row['to_member_id']);
