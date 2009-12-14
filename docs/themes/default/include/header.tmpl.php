@@ -49,7 +49,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  */
 
 // will have to be moved to the header.inc.php
-global $system_courses, $_custom_css, $db, $_base_path;
+global $system_courses, $_custom_css, $db;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -206,8 +206,8 @@ function toggleFolder(cid)
 // toggle elements in side menu
 function elementToggle(elem, title)
 {
-	element_collapse_icon = "<?php echo $_base_path; ?>images/mswitch_minus.gif";
-	element_expand_icon = "<?php echo $_base_path; ?>images/mswitch_plus.gif";
+	element_collapse_icon = "<?php echo $this->base_path; ?>images/mswitch_minus.gif";
+	element_expand_icon = "<?php echo $this->base_path; ?>images/mswitch_plus.gif";
 	
 	if (jQuery(elem).attr("src") == element_collapse_icon) {
 		jQuery(elem).attr("src", element_expand_icon);
@@ -230,12 +230,12 @@ function printSubmenuHeader(title)
 {
 	if (getcookie("m_"+title) == "0")
 	{
-		image = "<?php echo $_base_path?>images/mswitch_plus.gif";
+		image = "<?php echo $this->base_path?>images/mswitch_plus.gif";
 		alt_text = "<?php echo _AT('show'); ?> " + title;
 	}
 	else
 	{
-		image = "<?php echo $_base_path?>images/mswitch_minus.gif";
+		image = "<?php echo $this->base_path?>images/mswitch_minus.gif";
 		alt_text = "<?php echo _AT('hide'); ?> " + title;
 	}
 	
