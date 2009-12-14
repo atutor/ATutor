@@ -119,9 +119,9 @@ function checkResources($import_path){
 				libxml_clear_errors();
 			}
 			//if this is the manifest file, we do not have to check for its existance.
-			if (preg_match('/(.*)imsmanifest\.xml/', $filepath)){
-				continue;
-			}
+//			if (preg_match('/(.*)imsmanifest\.xml/', $filepath)){
+//				continue;
+//			}
 		}
 	}
 
@@ -170,9 +170,7 @@ function checkResources($import_path){
  * @return array
  */
 function rscandir($base='', &$data=array()) {
- 
   $array = array_diff(scandir($base), array('.', '..')); # remove ' and .. from the array */
-  
   foreach($array as $value) : /* loop through the array at the level of the supplied $base */
  
     if (is_dir($base.$value)) : /* if this is a directory */
@@ -187,7 +185,6 @@ function rscandir($base='', &$data=array()) {
     endif;
    
   endforeach;
- 
   return $data; // return the $data array
  
 }
@@ -301,7 +298,7 @@ function rehash($items){
 	/* builds the $path array which is the path from the root to the current element */
 	function startElement($parser, $name, $attrs) {
 		global $items, $path, $package_base_path, $all_package_base_path, $package_real_base_path;
-		global $element_path;
+		global $element_path, $import_path;
 		global $xml_base_path, $test_message, $content_type;
 		global $current_identifier, $msg, $ns, $ns_cp;
 
@@ -324,7 +321,6 @@ function rehash($items){
 
 
 		//validate namespaces
-
 		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
 			$schema_location = array();
 			$split_location = preg_split('/[\r\n\s]+/', trim($attrs['xsi:schemaLocation']));
@@ -352,7 +348,6 @@ function rehash($items){
 				if(!isset($ns[$split_location[$i]]) && !isset($ns_cp[$split_location[$i]])){
 					$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('schema_error')));
 				}
-
 			}
 		} else {
 			//throw error		
@@ -494,7 +489,7 @@ function rehash($items){
 			if(!isset($items[$current_identifier]) && $attrs['href']!=''){
 				$items[$current_identifier]['href']	 = $attrs['href'];
 			}
-			if (file_exists(AT_CONTENT_DIR .'import/'.$_SESSION['course_id'].'/'.$attrs['href'])){
+			if (file_exists($import_path.$attrs['href'])){
 				$items[$current_identifier]['file'][] = $attrs['href'];
 			} else {
 				//$msg->addError('');
@@ -801,7 +796,6 @@ $items[content_id/resource_id] = array(
 									'ordering'
 									);
 */
-
 $ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
 //scan for manifest xml if it's not on the top level.
 if ($ims_manifest_xml === false){
@@ -821,7 +815,7 @@ if ($ims_manifest_xml === false){
 		}
 	}
 	if ($ims_manifest_xml !== false){
-		$import_path = implode(DIRECTORY_SEPARATOR, $manifest_array);
+		$import_path = implode(DIRECTORY_SEPARATOR, $manifest_array) . DIRECTORY_SEPARATOR;
 	}
 }
 
@@ -832,7 +826,6 @@ if ($ims_manifest_xml === false) {
 	if (file_exists($import_path . 'atutor_backup_version')) {
 		$msg->addError('NO_IMS_BACKUP');
 	}
-
 	clr_dir($import_path);
 
 	if (isset($_GET['tile'])) {
@@ -1038,12 +1031,14 @@ foreach ($items as $item_id => $content_info)
 			$ext = '';
 			$last_modified = date('Y-m-d H:i:s');
 		} else {
-			$file_info = @stat(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$file_info = @stat(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			$file_info = @stat($import_path.$content_info['href']);
 			if ($file_info === false) {
 				continue;
 			}
 		
-			$path_parts = pathinfo(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$path_parts = pathinfo(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			$path_parts = pathinfo($import_path.$content_info['href']);
 			$ext = strtolower($path_parts['extension']);
 
 			$last_modified = date('Y-m-d H:i:s', $file_info['mtime']);
@@ -1090,7 +1085,8 @@ foreach ($items as $item_id => $content_info)
 			}
 
 			/* this is a plain text file */
-			$content = file_get_contents(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$content = file_get_contents(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			$content = file_get_contents($import_path.$content_info['href']);
 			if ($content === false) {
 				/* if we can't stat() it then we're unlikely to be able to read it */
 				/* so we'll never get here. */
@@ -1325,7 +1321,7 @@ foreach ($items as $item_id => $content_info)
 		$dt_parser->parse($xml_content);
 		$forum_obj = $dt_parser->getDt();
 		$dt_import->import($forum_obj, $items[$item_id]['real_content_id']);
-		$added_dt[$item_id] = $dt_import->getFid();				
+		$added_dt[$item_id] = $dt_import->getFid();
 
 		//associate the fid and content id
 		$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$item_id]);
@@ -1352,7 +1348,7 @@ if(is_array($all_package_base_path)){
 	$all_package_base_path = implode('/', $all_package_base_path);
 }
 
-if (@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+if (@rename($import_path.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
 		$msg->addError('IMPORT_FAILED');
 	}
