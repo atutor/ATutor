@@ -708,8 +708,9 @@ class ContentManager
 		global $_base_path;
 		
 		echo '
-tree_collapse_icon = "'.$_base_path.'images/tree/tree_collapse.gif";
-tree_expand_icon = "'.$_base_path.'images/tree/tree_expand.gif";
+function initContentMenu() {
+	tree_collapse_icon = "'.$_base_path.'images/tree/tree_collapse.gif";
+	tree_expand_icon = "'.$_base_path.'images/tree/tree_expand.gif";
 		
 ';
 		
@@ -722,20 +723,20 @@ tree_expand_icon = "'.$_base_path.'images/tree/tree_expand.gif";
 		// collapse all root content folders
 		while ($row = mysql_fetch_assoc($result)) {
 			echo '
-if (getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
-{
-	jQuery("#folder"+'.$row['content_id'].').show();
-	jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
-	jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("collapse").'");
-	jQuery("#tree_icon"+'.$row['content_id'].').attr("title", "'._AT("collapse").'");
-}
-else
-{
-	jQuery("#folder"+'.$row['content_id'].').hide();
-	jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_expand_icon);
-	jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("expand").'");
-	jQuery("#tree_icon"+'.$row['content_id'].').attr("title", "'._AT("expand").'");
-}
+	if (getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
+	{
+		jQuery("#folder"+'.$row['content_id'].').show();
+		jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
+		jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("collapse").'");
+		jQuery("#tree_icon"+'.$row['content_id'].').attr("title", "'._AT("collapse").'");
+	}
+	else
+	{
+		jQuery("#folder"+'.$row['content_id'].').hide();
+		jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_expand_icon);
+		jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("expand").'");
+		jQuery("#tree_icon"+'.$row['content_id'].').attr("title", "'._AT("expand").'");
+	}
 ';
 		}
 		
@@ -745,12 +746,13 @@ else
 			
 			for ($i=0; $i < count($current_content_path)-1; $i++)
 				echo '
-jQuery("#folder"+'.$current_content_path[$i]['content_id'].').show();
-jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("src", tree_collapse_icon);
-jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("alt", "'._AT("collapse").'");
-setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
+	jQuery("#folder"+'.$current_content_path[$i]['content_id'].').show();
+	jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("src", tree_collapse_icon);
+	jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("alt", "'._AT("collapse").'");
+	setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
 ';
 		}
+		echo '}'; // end of javascript function initContentMenu()
 	}
 	
 	/* @See include/html/dropdowns/menu_menu.inc.php */
@@ -811,7 +813,7 @@ function switchEditMode() {
 	else
 	{ // refresh the content navigation to exit the edit mode
 		jQuery.post("'. $_base_path. 'mods/_core/content/refresh_content_nav.php", {}, 
-					function(data) {jQuery("#editable_table").replaceWith(data); });
+					function(data) {jQuery("#editable_table").replaceWith(data); initContentMenu();});
 	}
 }
 
@@ -833,7 +835,7 @@ function inlineEditsSetup() {
 				if (newValue != oldValue) 
 				{
 					rtn = jQuery.post("'. $_base_path. 'mods/_core/content/menu_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
-						          function(data) {handleResponse(data, viewNode, oldValue); }, "json");
+						          function(data) {}, "json");
 				}
 			}
 		}
@@ -842,6 +844,8 @@ function inlineEditsSetup() {
 	jQuery(".fl-inlineEdit-edit").css("width", "80px")
 
 };
+
+initContentMenu();
 </script>
 ';
 		echo '</div>';
