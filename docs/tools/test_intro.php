@@ -101,7 +101,7 @@ $sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1
 if ( (($test_row['start_date2'] > time()) || ($test_row['end_date2'] < time())) || 
    ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('MAX_ATTEMPTS');
+	$msg->printInfos('MAX_ATTEMPTS');
 	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;

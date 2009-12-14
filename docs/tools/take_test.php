@@ -56,7 +56,7 @@ $takes = mysql_fetch_assoc($takes_result);
 if ( (($test_row['start_date'] > time()) || ($test_row['end_date'] < time())) || 
    ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('MAX_ATTEMPTS');
+	$msg->printInfos('MAX_ATTEMPTS');
 	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
