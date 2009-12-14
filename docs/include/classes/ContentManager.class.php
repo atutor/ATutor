@@ -769,7 +769,7 @@ setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id']
 		// if change the location of this line, change function switchEditMode(), else condition accordingly
 		echo '<div id="editable_table">';
 		
-		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
+		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && !is_mobile_theme())
 		{
 			echo "\n".'
 			<div class="menuedit">
@@ -978,7 +978,7 @@ function inlineEditsSetup() {
 					}
 					
 					// instructors have privilege to delete content
-					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id'])) {
+					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id']) && !is_mobile_theme()) {
 						$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 					}
 				} 
@@ -1005,7 +1005,7 @@ function inlineEditsSetup() {
 						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
 							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 					}
@@ -1014,7 +1014,7 @@ function inlineEditsSetup() {
 //						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
 						
 						$full_title = $content['title'];
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
 							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?cid=".$content['content_id']).'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
 						else {
@@ -1027,7 +1027,7 @@ function inlineEditsSetup() {
 //						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, $base_title_length-4))).'...';
 						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span>';
 						
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
 							$link .= '</a>'."\n";
 						}
 						else {
@@ -1035,7 +1035,7 @@ function inlineEditsSetup() {
 						}
 						
 						// instructors have privilege to delete content
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
 							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';
