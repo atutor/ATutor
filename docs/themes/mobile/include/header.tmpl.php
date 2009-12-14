@@ -58,7 +58,7 @@ jQuery(document).click(function () {jQuery('#content').hide('slow');});
 
 jQuery('#content_link').click(function(e) {
   e.stopPropagation();
-  jQuery('#content').show('slow');  
+  jQuery('#content').slideToggle();
 });
 ";
 
