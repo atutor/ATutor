@@ -99,7 +99,7 @@ $this->_pages[AT_SOCIAL_BASENAME.'applications.php']['parent'] = AT_SOCIAL_BASEN
 $this->_pages[AT_SOCIAL_BASENAME.'applications.php']['guide']     = 'general/?p=my_gadgets.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'connections.php']['title_var'] = 'connections';
-$this->_pages[AT_SOCIAL_BASENAME.'connections.php']['parent'] = AT_SOCIAL_BASENAME.'index_mystart.php';
+$this->_pages[AT_SOCIAL_BASENAME.'connections.php']['parent'] = AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX;
 $this->_pages[AT_SOCIAL_BASENAME.'connections.php']['guide']     = 'general/?p=my_contacts.php';
 //	$this->_pages['mods/social/add_friends.php']['title_var'] = 'add_friends';
 //	$this->_pages['mods/social/add_friends.php']['parent'] = 'mods/social/connections.php';
