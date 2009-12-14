@@ -366,10 +366,8 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$result = mysql_query($sql, $db);
 	$glossary = array();
 	$glossary_ids = array();
-	while ($row_g = mysql_fetch_assoc($result)) {
-		
-		$row_g['word'] = urldecode($row_g['word']);
-
+	while ($row_g = mysql_fetch_assoc($result)) {		
+		$row_g['word'] = htmlspecialchars($row_g['word'], ENT_QUOTES, 'UTF-8');
 		$glossary[$row_g['word']] = str_replace("'", "\'",$row_g['definition']);
 		$glossary_ids[$row_g['word_id']] = $row_g['word'];
 

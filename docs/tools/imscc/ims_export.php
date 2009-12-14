@@ -230,14 +230,13 @@ if (count($used_glossary_terms)) {
 	reset($used_glossary_terms);
 	$terms_xml = '';
 	foreach ($used_glossary_terms as $term) {
-		$term_key = ($term);
+		$term_key = htmlspecialchars($term, ENT_QUOTES, 'UTF-8');
 		$glossary[$term_key] = htmlentities($glossary[$term_key], ENT_QUOTES, 'UTF-8');
 		$glossary[$term_key] = str_replace('&', '&amp;', $glossary[$term_key]);
 		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
 									array($term_key, $glossary[$term_key]),
 									$glossary_term_xml);
 	}
-
 	$glossary_xml = str_replace(array('{GLOSSARY_TERMS}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}'),
 							    array($terms_xml, $course_language_charset),
 								$glossary_xml);
