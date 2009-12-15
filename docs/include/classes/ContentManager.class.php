@@ -703,7 +703,10 @@ class ContentManager
 		return $sequence_links;
 	}
 
-	/* Generate javascript to hide all root content folders, except the one with current content page */
+	/** Generate javascript to hide all root content folders, except the one with current content page
+	 * access: private
+	 * @return print out javascript function initContentMenu()
+	 */
 	function initMenu(){
 		global $_base_path;
 		
@@ -757,6 +760,10 @@ function initContentMenu() {
 	
 	/* @See include/html/dropdowns/menu_menu.inc.php */
 	function printMainMenu( ) {
+		if (!($this->course_id > 0)) {
+			return;
+		}
+		
 		global $_base_path;
 		
 		$parent_id    = 0;
@@ -1029,7 +1036,10 @@ initContentMenu();
 							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
 //						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, $base_title_length-4))).'...';
-						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span>';
+						if (isset($content['test_id']))
+							$link .= $content['title'];
+						else
+							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
 							$link .= '</a>'."\n";
