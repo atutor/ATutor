@@ -20,6 +20,23 @@ if (isset($_POST['from']))
 {
 	$from = $_POST['from'];
 	if ($_POST['moved_modules'] <> '') $final_home_links = $addslashes(str_replace('-', '/', $_POST['moved_modules']));
+	
+	// when pretty url is turned on, revert the pretty urls back to regular urls
+	if ($_config['pretty_url'] > 0)
+	{
+		$home_links = explode('|', $final_home_links);
+		$final_home_links = '';
+		if (is_array($home_links))
+		{
+			foreach ($home_links as $link)
+			{
+				$url_parser = new UrlParser($link);
+				$pathinfo = $url_parser->getPathArray();
+				$final_home_links .= $pathinfo[1]->getPath(). $pathinfo[1]->getFileName(). '|';
+			}
+			$final_home_links = substr($final_home_links, 0, -1);
+		}
+	}
 }
 
 // handle ajax post request to remove module from course index page and student tools index page
@@ -27,6 +44,16 @@ if ($_POST['remove'] <> '')
 {
 	$remove_module = $_POST['remove'];
 	
+	// when pretty url is turned on, revert the pretty url back to regular url
+	if ($_config['pretty_url'] > 0)
+	{
+		if (substr($remove_module, 0, 6) == 'go.php') $remove_module = substr($remove_module, 6);
+		
+		$url_parser = new UrlParser($remove_module);
+		$pathinfo = $url_parser->getPathArray();
+		$remove_module = $pathinfo[1]->getPath(). $pathinfo[1]->getFileName();
+	}
+
 	if ($from == 'course_index')
 		$sql = "SELECT home_links links FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
 	else if ($from == 'student_tools')
