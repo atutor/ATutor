@@ -1492,6 +1492,7 @@ div.browse-course {
 	background-color: #fffaf0;
 	border:1px #6F7172 solid;
 	font-size:9pt;
+	min-height:18em;
 	margin:auto;
 	margin-left:1em;
 	margin-top:1em;
