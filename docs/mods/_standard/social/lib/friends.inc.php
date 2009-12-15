@@ -264,6 +264,7 @@ function removeFriend($friend_id){
  * This function will return a list of people from the network with the given name.  
  * @param	string	to be searched in the members table, can have space.
  * @param	[OPTIONAL] boolean	if true, will search only within this member.
+ * @param	int		the number of entries to skip over from the result set. 
  * @return	array of friends of this member; id=>[first name, last name, profile picture]
  *
  * TODO: search needs work.  Order by the most matches to the least matches
@@ -293,7 +294,7 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 		} else {
 			$match_piece = "LIKE '%$piece%' ";
 		}
-		$query .= "(first_name $match_piece OR second_name $match_piece OR last_name $match_piece OR email LIKE '$piece') AND ";
+		$query .= "(first_name $match_piece OR second_name $match_piece OR last_name $match_piece OR login $match_piece ) AND ";
 	}
 	//trim back the extra "AND "
 	$query = substr($query, 0, -4);

@@ -21,6 +21,31 @@ require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 $_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
+/*
+ * customized print_name for connection and its search
+ * will add login name if $_config[display_name_format]=1
+ * will print only "first_name last_name" for the onlcick javascript
+ */
+function printSocialNameForConnection($id, $trigger){
+	global $_config, $display_name_formats, $db;		
+	$display_name_format = $_config['display_name_format'];
+
+	//if trigger = true, it's for the drop down ajax
+	if($trigger==true){
+		if($display_name_format>1){
+			$display_name_format = 1;
+		}
+	} else {
+		if($display_name_format==1){
+			$display_name_format = 2;
+		}
+	}
+
+	$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
+	$result	= mysql_query($sql, $db);
+	$row	= mysql_fetch_assoc($result);
+	return _AT($display_name_formats[$display_name_format], $row['login'], $row['first_name'], $row['second_name'], $row['last_name']);
+}
 
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -64,7 +89,7 @@ if (isset($_GET['q'])){
 				break;
 			}
 
-			echo '<a href="javascript:void(0);" onclick="document.getElementById(\'search_friends\').value=\''.printSocialName($member_id, false).'\'; document.getElementById(\'search_friends_form\').submit();">'.printSocialName($member_id, false).'</a><br/>';
+			echo '<a href="javascript:void(0);" onclick="document.getElementById(\'search_friends\').value=\''.printSocialNameForConnection($member_id, true).'\'; document.getElementById(\'search_friends_form\').submit();">'.printSocialNameForConnection($member_id, false).'</a><br/>';
 			$counter++;
 		}
 		echo '</div>';
