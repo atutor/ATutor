@@ -329,9 +329,8 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 	$_POST['comments'] = trim($_POST['comments']);
 
 	$parent_folder_id = abs($_POST['folder']);
-	$my_MaxFileSize = megabytes_to_bytes(substr(ini_get('upload_max_filesize'), 0, -1));	
 	
-	if ($_FILES['file']['error'] == UPLOAD_ERR_INI_SIZE || $_FILES['file']['size'] > $my_MaxFileSize) {
+	if ($_FILES['file']['error'] == UPLOAD_ERR_INI_SIZE) {
 		$msg->addError(array('FILE_TOO_BIG', get_human_size($my_MaxFileSize)));
 
 	} else if (!isset($_FILES['file']['name']) || ($_FILES['file']['error'] == UPLOAD_ERR_NO_FILE) || ($_FILES['file']['size'] == 0)) {
