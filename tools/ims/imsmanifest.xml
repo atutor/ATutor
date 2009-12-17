@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="_37634FB7-01E4-C5F3-582A-F55E1A824A63" xmlns="http://www.imsglobal.org/xsd/_imscp_v1p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p1.xsd http://ltsc.ieee.org/xsd/LOM domainProfile_0/lomStrict_localised.xsd">
+	<metadata>
+		<schema>IMS Common Cartridge</schema>
+		<schemaversion>1.0.0</schemaversion>
+	</metadata>
+	<organizations>
+		<organization identifier="_FE501A0A-9129-D906-B763-83050C0FA8D5" structure="rooted-hierarchy">
+			<item identifier="_42F6AF00-DA58-4682-104C-26CF58CE5FF0">
+				<item identifier="_0C3A14A9-E414-2C85-3450-33A5DB6B8F3C">
+					<title>Common Cartridge Sample Course</title>
+					<item identifier="_4278D199-B977-FBC4-2AA1-0DA6D2975BFB" identifierref="_33C55BF7-B5FC-D87B-7280-42BF7AD8577B">
+						<title>Generate Unique ID Values</title>
+					</item>
+					<item identifier="_2A8C2679-0124-149B-06AA-6E70D16BE38F" identifierref="_74D675B3-AE6D-36E4-841C-C0FE9460725E" isvisible="false">
+						<title>Test Bank</title>
+					</item>
+					<item identifier="_928A181C-113F-B1BA-B3B8-321B4EBF4024" identifierref="_56B1BEDC-A820-7AA8-A21D-F32017189445">
+						<title>Quiz</title>
+					</item>
+					<item identifier="_7B1E5C0E-8102-6D92-6DE0-DD372CF183B8" identifierref="_5923CEF3-7885-E805-59BC-858B9549B80E">
+						<title>WebLink - Google Site</title>
+					</item>
+					<item identifier="_7D7CB887-3570-759B-9E2F-9F6919B67B47" identifierref="_DB2AE381-2B95-D659-859E-ECAA65352912">
+						<title>Arctic Fox</title>
+					</item>
+				</item>
+			</item>
+		</organization>
+	</organizations>
+	<resources>
+		<resource identifier="_33C55BF7-B5FC-D87B-7280-42BF7AD8577B" type="webcontent" href="33C55BF7-B5FC-D87B-7280-42BF7AD8577B/33C55BF7-B5FC-D87B-7280-42BF7AD8577B.html">
+			<file href="33C55BF7-B5FC-D87B-7280-42BF7AD8577B/33C55BF7-B5FC-D87B-7280-42BF7AD8577B.html"/>
+		</resource>
+		<resource identifier="_74D675B3-AE6D-36E4-841C-C0FE9460725E" type="imsqti_xmlv1p2/imscc_xmlv1p0/question-bank">
+			<file href="74D675B3-AE6D-36E4-841C-C0FE9460725E/74D675B3-AE6D-36E4-841C-C0FE9460725E.xml"/>
+		</resource>
+		<resource identifier="_56B1BEDC-A820-7AA8-A21D-F32017189445" type="imsqti_xmlv1p2/imscc_xmlv1p0/assessment">
+			<file href="56B1BEDC-A820-7AA8-A21D-F32017189445/56B1BEDC-A820-7AA8-A21D-F32017189445.xml"/>
+		</resource>
+		<resource identifier="_5923CEF3-7885-E805-59BC-858B9549B80E" type="imswl_xmlv1p0">
+			<file href="5923CEF3-7885-E805-59BC-858B9549B80E/5923CEF3-7885-E805-59BC-858B9549B80E.xml"/>
+		</resource>
+		<resource identifier="_DB2AE381-2B95-D659-859E-ECAA65352912" type="imsdt_xmlv1p0">
+			<file href="DB2AE381-2B95-D659-859E-ECAA65352912/DB2AE381-2B95-D659-859E-ECAA65352912.xml"/>
+			<dependency identifierref="_E2F2AA0E-4B4A-9DD1-20A7-90034AF71745"/>
+			<dependency identifierref="_71E08B51-4D95-8FEC-BD8F-D7E3253E9843"/>
+		</resource>
+		<resource identifier="_E2F2AA0E-4B4A-9DD1-20A7-90034AF71745" type="associatedcontent/imscc_xmlv1p0/learning-application-resource">
+			<file href="images/arcticfoxsmall.jpg"/>
+		</resource>
+		<resource identifier="_71E08B51-4D95-8FEC-BD8F-D7E3253E9843" type="webcontent">
+			<file href="images/arcticfoxfull.jpg"/>
+		</resource>
+	</resources>
+</manifest>

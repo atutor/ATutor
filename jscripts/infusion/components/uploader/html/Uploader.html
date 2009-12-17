@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Uploader Template</title>
+  
+        <link href="../../../framework/fss/css/fss-reset.css" rel="stylesheet" type="text/css" />
+        <link href="../../../framework/fss/css/fss-layout.css" rel="stylesheet" type="text/css" />
+        <link href="../css/Uploader.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Fluid and jQuery Dependencies -->
+        <script src="../../../lib/jquery/core/js/jquery.js" type="text/javascript"></script>
+        <script src="../../../lib/jquery/ui/js/ui.core.js" type="text/javascript"></script>
+        <script src="../../../framework/core/js/jquery.keyboard-a11y.js" type="text/javascript"></script>
+        <script src="../../../lib/swfobject/js/swfobject.js" type="text/javascript"></script>
+        <script src="../../../lib/swfupload/js/swfupload.js" type="text/javascript"></script>
+        <script src="../../../framework/core/js/Fluid.js" type="text/javascript"></script>
+        <script src="../../../framework/core/js/ProgressiveEnhancement.js" type="text/javascript"></script>
+        
+        <!-- Uploader dependencies; these will be merged into a new Uploader.js at the end -->
+        <script src="../js/FileQueue.js" type="text/javascript"></script>
+        <script src="../js/DemoUploadManager.js" type="text/javascript"></script>
+        <script src="../js/SWFUploadManager.js" type="text/javascript"></script>
+        <script src="../js/Scroller.js" type="text/javascript"></script>
+        <script src="../../progress/js/Progress.js" type="text/javascript"></script>
+        <script src="../js/Uploader.js" type="text/javascript"></script>
+    </head>
+    
+    <body>
+        <div id="uploader-contents">
+            
+            <!-- This form will be progressively enhanced by the Fluid Uploader component. -->
+            <form method="post" enctype="multipart/form-data" class="fl-uploader fl-progEnhance-basic">
+                <p>Browse to upload a file.</p>
+                <input name="fileData" type="file" />
+                <div><input type="submit" value="Save"/></div>
+            </form>
+            
+            <!-- This is the markup for the Fluid Uploader component itself. -->
+            <form class="flc-uploader fl-uploader fl-progEnhance-enhanced" 
+                  method="get" 
+                  enctype="multipart/form-data">
+                      
+                <!-- The file queue -->
+                <div class="fl-uploader-queue-wrapper">
+                    
+                    <!-- Top of the queue -->
+                    <div class="fl-uploader-queue-header">
+                        <table cellspacing="0" cellpadding="0" summary="Headers for the file queue.">
+                            <caption>File Upload Queue:</caption>
+
+                                <tr>
+                                    <th scope="col" class="fl-uploader-file-name">File Name</th>
+                                    <th scope="col" class="fl-uploader-file-size">Size&nbsp;&nbsp;</th>
+                                    <th scope="col" class="fl-uploader-file-actions">&nbsp;</th>
+                                </tr>
+
+                        </table>
+                    </div>
+                    
+                    <!-- Scrollable view -->
+                    <div class="flc-scroller fl-scroller">
+                        <div class="fl-scroller-inner">
+                            <table cellspacing="0" class="flc-uploader-queue fl-uploader-queue" summary="Queue of files to upload.">
+                                <tbody>
+                                    <!-- Rows will be rendered in here. -->
+                                    
+                                    <!-- Template markup for the file queue rows -->
+                                    <tr class="flc-uploader-file-tmplt flc-uploader-file fl-uploader-hidden-templates">
+                                        <th class="flc-uploader-file-name fl-uploader-file-name" scope="row">File Name Placeholder</th>
+                                        <td class="flc-uploader-file-size fl-uploader-file-size">0 KB</td>
+                                        <td class="fl-uploader-file-actions">
+                                            <button type="button" class="flc-uploader-file-action fl-uploader-file-action" title="Remove File" tabindex="-1">
+                                                <span class="fl-uploader-button-text fl-uploader-hidden">Remove file from queue</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- Template for the file error info rows -->
+                                    <tr class="flc-uploader-file-error-tmplt fl-uploader-file-error fl-uploader-hidden-templates">
+                                        <td colspan="3" class="flc-uploader-file-error"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="flc-uploader-file-progressor-tmplt fl-uploader-file-progress"><span class="fl-uploader-file-progress-text fl-uploader-hidden">76%</span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flc-uploader-browse-instructions fl-uploader-browse-instructions">
+                        Choose <em>Browse files</em> to add files to the queue 
+                    </div>
+        
+                    <!-- Foot of the queue -->
+                    <div class="flc-uploader-queue-footer fl-uploader-queue-footer">
+                        <table cellspacing="0" cellpadding="0" summary="Status of file queue.">
+
+                                <tr>
+                                    <td class="flc-uploader-total-progress-text">
+                                        Total: <span class="fl-uploader-totalFiles">0</span> files 
+                                        (<span class="fl-uploader-totalBytes">0 KB</span>)
+                                    </td>
+                                    <td class=".fl-uploader-footer-buttons" align="right" >
+                                        <a href="#" class="flc-uploader-button-browse fl-uploader-browse">Browse files</a>
+                                    </td>
+                                </tr>
+
+                        </table>
+                        <div class="flc-uploader-total-progress fl-uploader-total-progress-okay">&nbsp;</div>
+                    </div>
+                </div>
+                
+                <!-- Action buttons -->
+                <div class="fl-uploader-btns">
+                    <button type="button" class="flc-uploader-button-pause fl-uploader-pause fl-uploader-hidden">Stop Upload</button><button type="button" class="flc-uploader-button-upload fl-uploader-upload fl-uploader-button-default fl-uploader-dim" disabled="disabled">Upload</button>
+                </div>
+            </form>
+        
+        </div>
+            
+        <script type="text/javascript">
+            var myUploader = fluid.progressiveEnhanceableUploader(".flc-uploader", ".fl-progEnhance-basic", {
+                demo: true,
+                uploadManager: "fluid.swfUploadManager"
+            });
+        </script> 
+    </body>
+</html>
