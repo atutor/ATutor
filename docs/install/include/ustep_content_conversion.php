@@ -110,9 +110,9 @@ function reconstruct($tree, $order, $content_parent_id, $table_prefix){
 				.$old_content_row['revision'] . ', '
 				.$old_content_row['formatting'] . ', '
 				.'\''. $old_content_row['release_date'] . '\', '
-				.'\''. $old_content_row['keywords'] . '\', '
-				.'\''. $old_content_row['content_path'] . '\', '
-				.'\''. $old_content_row['title'] . '\', '
+				.'\''. mysql_real_escape_string($old_content_row['keywords']) . '\', '
+				.'\''. mysql_real_escape_string($old_content_row['content_path']) . '\', '
+				.'\''. mysql_real_escape_string($old_content_row['title']) . '\', '
 				.$old_content_row['use_customized_head'] . ', '
 				.$old_content_row['allow_test_export'] . ', '
 				. '1)';
