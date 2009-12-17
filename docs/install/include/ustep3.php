@@ -164,21 +164,52 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		/* convert all content nodes to the IMS standard. (adds null nodes for all top pages) */
 		include('ustep_content_conversion.php');
 
-		/* Convert db to a tree */
-		$sql = 'SELECT * FROM '.$_POST['step1']['tb_prefix'].'content';
+		// fix all the wrong ordering
+		$sql    = "SELECT content_id, content_parent_id, ordering, course_id FROM ".$_POST['step1']['tb_prefix']."content ORDER BY course_id, content_parent_id, ordering";
 		$result = mysql_query($sql, $db);
-		$content_array = array(); 
-
-		while ($row = mysql_fetch_assoc($result)){
-			$content_array[$row['content_parent_id']][$row['ordering']] = $row['content_id'];
+		while ($row = mysql_fetch_assoc($result)) {
+			if ($current_course_id != $row['course_id']) {
+				$current_course_id = $row['course_id'];
+				unset($current_parent_id);
+				unset($ordering);
+			}
+			if ($current_parent_id != $row['content_parent_id']) {
+				$current_parent_id = $row['content_parent_id'];
+				$ordering = 1;
+			}
+		
+			if ($row['ordering'] != $ordering) {
+				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."content SET ordering=$ordering WHERE content_id=$row[content_id]";
+				mysql_query($sql, $db);
+			}
+		
+			 echo "\n";
+		
+			$ordering++;
 		}
-		$tree = buildTree($content_array[0], $content_array);
+		
+		/* Convert db to a tree */
+		$sql = 'SELECT distinct course_id FROM '.$_POST['step1']['tb_prefix'].'content';
+		$result_course = mysql_query($sql, $db);
+		while ($row_course = mysql_fetch_assoc($result_course)){
+			
+			$sql = 'SELECT * FROM '.$_POST['step1']['tb_prefix'].'content WHERE course_id='.$row_course['course_id'];
+			$result = mysql_query($sql, $db);
+			$content_array = array(); 
+	
+			while ($row = mysql_fetch_assoc($result)){
+				$content_array[$row['content_parent_id']][$row['ordering']] = $row['content_id'];
+			}
 
-		/* Restructure the tree */
-		$tree = rebuild($tree);
+			$tree = buildTree($content_array[0], $content_array);
 
-		/* Update the Db based on this new tree */
-		reconstruct($tree, '', 0, $_POST['step1']['tb_prefix']);
+			/* Restructure the tree */
+			$tree = rebuild($tree);
+
+			
+			/* Update the Db based on this new tree */
+			reconstruct($tree, '', 0, $_POST['step1']['tb_prefix']);
+		}
 	}
 
 	/* deal with the extra modules: */
