@@ -597,7 +597,7 @@ function printSocialName($id, $link=true){
 function printSocialProfileImg($id, $type=1, $link=true) {
 	global $moduleFactory;
 	$str = '';
-	$username = AT_print(get_display_name($id), 'members.full_name');
+	$username = htmlspecialchars(AT_print(get_display_name($id), 'members.full_name'), ENT_QUOTES, 'UTF-8');
 	$mod = $moduleFactory->getModule('_standard/profile_pictures');
 	if ($mod->isEnabled() === FALSE) {
 		return;
