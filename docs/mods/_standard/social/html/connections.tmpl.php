@@ -8,7 +8,7 @@
 	} elseif(isset($_GET['search_friends'])) {
 		$last_search = htmlentities_utf8($_GET['search_friends']);
 	} else {
-		$last_search = $_POST['search_friends_'.$rand];	
+		$last_search = html_entity_decode($_POST['search_friends_'.$rand]);
 	}
 	//take out double quotes until there is a way to escape XSS from the ajax script.
 	$last_search = preg_replace('/\"/', '', $last_search);

@@ -44,7 +44,7 @@ function printSocialNameForConnection($id, $trigger){
 	$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
 	$result	= mysql_query($sql, $db);
 	$row	= mysql_fetch_assoc($result);
-	return _AT($display_name_formats[$display_name_format], $row['login'], $row['first_name'], $row['second_name'], $row['last_name']);
+	return htmlentities_utf8(_AT($display_name_formats[$display_name_format], $row['login'], $row['first_name'], $row['second_name'], $row['last_name']));	
 }
 
 if (!$_SESSION['valid_user']) {
@@ -88,8 +88,8 @@ if (isset($_GET['q'])){
 			if ($counter > 10){
 				break;
 			}
-
-			echo '<a href="javascript:void(0);" onclick="document.getElementById(\'search_friends\').value=\''.printSocialNameForConnection($member_id, true).'\'; document.getElementById(\'search_friends_form\').submit();">'.printSocialNameForConnection($member_id, false).'</a><br/>';
+			//double encode the value because the .submit() function will decode the first level. 
+			echo '<a href="javascript:void(0);" onclick="document.getElementById(\'search_friends\').value=\''.htmlentities(printSocialNameForConnection($member_id, true)).'\'; document.getElementById(\'search_friends_form\').submit();">'.printSocialNameForConnection($member_id, false).'</a><br/>';
 			$counter++;
 		}
 		echo '</div>';
@@ -136,6 +136,7 @@ if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET[
 		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'connections.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
+
 	//to adapt paginator GET queries
 	//don't need to apply addslashes here cause searchFriends will do it.
 	if($_GET['search_friends']){
@@ -143,6 +144,9 @@ if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET[
 	} else {
 		$search_field = $_POST['search_friends_'.$rand_key];
 	}
+	//take outs all htmlencode including slashes
+	$search_field = html_entity_decode($search_field, ENT_QUOTES, 'UTF-8');
+
 	if (isset($_POST['myFriendsOnly'])){
 		//retrieve a list of my friends
 		$friends = searchFriends($search_field, true);
