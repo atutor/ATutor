@@ -43,7 +43,7 @@ class RemoteLanguageManager extends LanguageManager {
 			for ($i = 0; $i < $this->numLanguages; $i++) {
 				$thisLanguage = new Language($languageParser->getLanguage($i));
 
-				$this->availableLanguages[$thisLanguage->getCode()][$thisLanguage->getCharacterSet()] =& $thisLanguage;
+				$this->availableLanguages[$thisLanguage->getCode()][$thisLanguage->getCharacterSet()] = $thisLanguage;
 			}
 		} else {
 			$this->numLanguages = 0;
