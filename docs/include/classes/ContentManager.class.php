@@ -974,9 +974,9 @@ initContentMenu();
 					$link .= $content['title'].'">';
 
 					if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
+						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 					}
-//					$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, $base_title_length-4))).'...';
+//					$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
 					
 					if (isset($content['test_id']))
 						$link .= $content['title'];
@@ -1010,9 +1010,9 @@ initContentMenu();
 						$full_title = $content['title'];
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$path.$counter.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
+							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
-//						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, $base_title_length-4))).'...';
+//						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
 						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
@@ -1033,9 +1033,9 @@ initContentMenu();
 						}
 						
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-							$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
+							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
-//						$content['title'] = htmlentities(rtrim($substr(html_entity_decode($content['title']), 0, $base_title_length-4))).'...';
+//						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
 						if (isset($content['test_id']))
 							$link .= $content['title'];
 						else
