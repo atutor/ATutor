@@ -571,6 +571,10 @@ function myCodes($text, $html = false) {
 	$text = str_replace('[cid]',$_base_path.'content.php?cid='.$_SESSION['s_cid'],$text);
 
 	global $sequence_links;
+	if ($_SESSION['course_id'] > 0 && !isset($sequence_links)) {
+		global $contentManager;
+		$sequence_links = $contentManager->generateSequenceCrumbs($cid);
+	}
 	if (isset($sequence_links['previous']) && $sequence_links['previous']['url']) {
 		$text = str_replace('[pid]', $sequence_links['previous']['url'], $text);
 	}
