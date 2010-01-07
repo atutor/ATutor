@@ -36,7 +36,7 @@ if($_config['just_social']) {
 
 }else {
 
-    $_pages[AT_NAV_START]  = array_merge(array('users/index.php' , 'users/profile.php', 'users/preferences.php'), (isset($_pages[AT_NAV_START]) ? (array) $_pages[AT_NAV_START] : array()));
+    $_pages[AT_NAV_START]  = array_merge(array('users/index.php' , $browse_tab, 'users/profile.php', 'users/preferences.php'), (isset($_pages[AT_NAV_START]) ? (array) $_pages[AT_NAV_START] : array()));
 
 }
 $_pages[AT_NAV_PUBLIC] = array_merge(array('login.php',$reg_tab,$browse_tab), (isset($_pages[AT_NAV_PUBLIC]) ? $_pages[AT_NAV_PUBLIC] : array()));
@@ -246,7 +246,7 @@ $_pages['users/index.php']['title_var'] = 'my_courses';
 $_pages['users/index.php']['parent']    = AT_NAV_START;
 $_pages['users/index.php']['guide']     = 'general/?p=my_courses.php';
 if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION['course_id']) || !$_SESSION['course_id'])) {
-	$_pages['users/index.php']['children']  = array_merge(array('users/browse.php', 'users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
+	$_pages['users/index.php']['children']  = array_merge(array('users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
 }
 
 $_pages['users/browse.php']['title_var'] = 'browse_courses';
