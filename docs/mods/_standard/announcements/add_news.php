@@ -10,8 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id$
-define('AT_INCLUDE_PATH', '../include/');
+// $Id: add_news.php 8524 2009-06-08 19:46:34Z hwong $
+define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 
@@ -25,7 +25,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'tools/news/index.php');
+	header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
 	exit;
 } 
 
@@ -71,7 +71,7 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 			@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml');
 		}
 
-		header('Location: '.AT_BASE_HREF.'tools/news/index.php');
+		header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
 		exit;
 	}
 }

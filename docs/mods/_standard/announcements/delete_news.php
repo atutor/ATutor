@@ -11,14 +11,14 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'tools/news/index.php');
+	header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['form_news_id'] = intval($_POST['form_news_id']);
@@ -35,7 +35,7 @@ if (isset($_POST['submit_no'])) {
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.AT_BASE_HREF.'tools/news/index.php');
+	header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
 	exit;
 }
 

@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 
@@ -25,7 +25,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'tools/news/index.php');
+	header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
 	exit;
 } else if ($_POST['edit_news']) {
 	$_POST['title'] = trim($_POST['title']);
@@ -55,7 +55,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.AT_BASE_HREF.'tools/news/index.php');
+		header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
 		exit;
 	}
 }

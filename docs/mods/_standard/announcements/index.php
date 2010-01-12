@@ -10,18 +10,18 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id$
+// $Id: index.php 7981 2008-10-01 19:34:17Z cindy $
 
 $page = 'tools';
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
 if (isset($_GET['edit'], $_GET['aid'])) {
-	header('Location: '.AT_BASE_HREF.'editor/edit_news.php?aid='.intval($_GET['aid']));
+	header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/edit_news.php?aid='.intval($_GET['aid']));
 	exit;
 } else if (isset($_GET['delete'], $_GET['aid'])) {
-	header('Location: '.AT_BASE_HREF.'editor/delete_news.php?aid='.intval($_GET['aid']));
+	header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/delete_news.php?aid='.intval($_GET['aid']));
 	exit;
 } else if ((isset($_GET['edit']) || isset($_GET['delete']))) {
 	$msg->addError('NO_ITEM_SELECTED');
@@ -63,8 +63,8 @@ $result = mysql_query($sql, $db);
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><a href="tools/news/index.php?<?php echo $orders[$order]; ?>=title"><?php echo _AT('title'); ?></a></th>
-	<th scope="col"><a href="tools/news/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th>
+	<th scope="col"><a href="mods/_standard/announcements/index.php?<?php echo $orders[$order]; ?>=title"><?php echo _AT('title'); ?></a></th>
+	<th scope="col"><a href="mods/_standard/announcements/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th>
 </tr>
 </thead>
 <tfoot>
