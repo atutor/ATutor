@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
+// $Id: file_storage.inc.php 8352 2009-03-30 14:57:46Z cindy $
 
 /**
  * Additional constants are found in /include/lib/constants.inc.php (for the work spaces)
