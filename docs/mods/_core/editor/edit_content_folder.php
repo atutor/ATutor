@@ -13,7 +13,7 @@
 // $Id: content.php 8784 2009-09-04 20:02:32Z cindy $
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tab_functions.inc.php');
 
 if (isset($_GET['cid'])) $cid = intval($_GET['cid']);
 if (isset($_GET['pid'])) $pid = intval($_GET['pid']);
@@ -99,7 +99,7 @@ if ($_POST['submit'])
 			}
 		}
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.$_base_path.'editor/edit_content_folder.php?cid='.$cid);
+		header('Location: '.$_base_path.'mods/_core/editor/edit_content_folder.php?cid='.$cid);
 		exit;
 	}
 }
@@ -107,9 +107,9 @@ if ($_POST['submit'])
 if ($cid > 0)
 { // edit existing content folder
 	if (!$content_row) {
-		$_pages['editor/edit_content_folder.php']['title_var'] = 'missing_content';
-		$_pages['editor/edit_content_folder.php']['parent']    = 'index.php';
-		$_pages['editor/edit_content_folder.php']['ignore']	= true;
+		$_pages['mods/_core/editor/edit_content_folder.php']['title_var'] = 'missing_content';
+		$_pages['mods/_core/editor/edit_content_folder.php']['parent']    = 'index.php';
+		$_pages['mods/_core/editor/edit_content_folder.php']['ignore']	= true;
 
 		require(AT_INCLUDE_PATH.'header.inc.php');
 	
@@ -193,23 +193,23 @@ if ($cid > 0)
 	}
 	
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'editor/edit_content_folder.php');
+		$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php');
 	
 		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 			$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
-				'editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+				'mods/_core/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
 		}
 		
-		$shortcuts[] = array('title' => _AT('add_sub_folder'),   'url' => $_base_href . 'editor/edit_content_folder.php?pid='.$cid);
+		$shortcuts[] = array('title' => _AT('add_sub_folder'),   'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php?pid='.$cid);
 		
-		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'editor/edit_content.php');
+		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'mods/_core/editor/edit_content.php');
 		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 			$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
-				'editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+				'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
 		}
 	
-		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'editor/edit_content.php?pid='.$cid);
-		$shortcuts[] = array('title' => _AT('delete_this_folder'), 'url' => $_base_href . 'editor/delete_content.php?cid='.$cid);
+		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'mods/_core/editor/edit_content.php?pid='.$cid);
+		$shortcuts[] = array('title' => _AT('delete_this_folder'), 'url' => $_base_href . 'mods/_core/editor/delete_content.php?cid='.$cid);
 	}
 
 	$release_date = $content_row['release_date'];

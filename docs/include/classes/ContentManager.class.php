@@ -990,7 +990,7 @@ initContentMenu();
 					
 					// instructors have privilege to delete content
 					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id']) && !is_mobile_theme()) {
-						$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+						$link .= '<a href="'.$_base_path.'/mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 					}
 				} 
 				else 
@@ -1017,7 +1017,7 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
-							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 					}
 					else
@@ -1026,7 +1026,7 @@ initContentMenu();
 						
 						$full_title = $content['title'];
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
-							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?cid=".$content['content_id']).'" title="'.$full_title. _AT('click_edit').'">'."\n";
+							$link .= '<a href="'.$_base_path.url_rewrite("mods/_core/editor/edit_content_folder.php?cid=".$content['content_id']).'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
 						else {
 							$link .= '<span style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
@@ -1050,7 +1050,7 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
-							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';
 					}

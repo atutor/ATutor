@@ -99,7 +99,7 @@ foreach ($path as $i=>$page) {
 	}
 	
 	if ($contentManager->_menu_info[$page['content_id']]['content_type'] == CONTENT_TYPE_FOLDER)
-		$content_url = 'editor/edit_content_folder.php?cid='.$page['content_id'];
+		$content_url = 'mods/_core/editor/edit_content_folder.php?cid='.$page['content_id'];
 	else
 		$content_url = 'content.php?cid='.$page['content_id'];
 		
@@ -108,7 +108,7 @@ foreach ($path as $i=>$page) {
 		$_pages[$content_url]['parent']   = 'index.php';
 	} else {
 		$_pages[$content_url]['title']    = $page['content_number'] . $page['title'];
-		$_pages[$content_url]['parent']   = 'editor/edit_content_folder.php?cid='.$parent;
+		$_pages[$content_url]['parent']   = 'mods/_core/editor/edit_content_folder.php?cid='.$parent;
 	}
 
 	$_pages[$content_url]['ignore'] = true;
@@ -170,19 +170,19 @@ if ((	($content_row['r_date'] <= $content_row['n_date'])
 }
 
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-	$shortcuts[] = array('title' => _AT('edit_this_page'),   'url' => $_base_href . 'editor/edit_content.php?cid='.$cid);
-	$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'editor/edit_content_folder.php');
+	$shortcuts[] = array('title' => _AT('edit_this_page'),   'url' => $_base_href . 'mods/_core/editor/edit_content.php?cid='.$cid);
+	$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php');
 
 	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 		$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
-			'editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+			'mods/_core/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
 	}
-	$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'editor/edit_content.php');
+	$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'mods/_core/editor/edit_content.php');
 	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 		$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
-			'editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+			'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
 	}
-	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'editor/delete_content.php?cid='.$cid);
+	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'mods/_core/editor/delete_content.php?cid='.$cid);
 }
 $savant->assign('shortcuts', $shortcuts);
 
