@@ -6,7 +6,7 @@ define('AT_PRIV_FORUMS',       $this->getPrivilege() );
 define('AT_ADMIN_PRIV_FORUMS', $this->getAdminPrivilege() );
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_group_tool = $_student_tool = 'forum/list.php';
+$_group_tool = $_student_tool = 'mods/_standard/forums/forum/list.php';
 
 //side dropdown
 $this->_stacks['posts'] = array('title_var'=>'posts','file'=>AT_INCLUDE_PATH.'html/dropdowns/posts.inc.php');
@@ -18,29 +18,40 @@ $this->_list['forums'] = array('title_var'=>'forums','file'=>'mods/_standard/for
 $this->_tool['forums'] = array('title_var'=>'forums','file'=>'tools/toolmanager/forums_tool.php','table'=>'content_forums_assoc');
 
 //instructor pages
-$this->_pages['tools/forums/index.php']['title_var'] = 'forums';
-$this->_pages['tools/forums/index.php']['parent']    = 'tools/index.php';
-$this->_pages['tools/forums/index.php']['guide']     = 'instructor/?p=forums.php';
-$this->_pages['tools/forums/index.php']['children']  = array('editor/add_forum.php');
+$this->_pages['mods/_standard/forums/index.php']['title_var'] = 'forums';
+$this->_pages['mods/_standard/forums/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_standard/forums/index.php']['guide']     = 'instructor/?p=forums.php';
+$this->_pages['mods/_standard/forums/index.php']['children']  = array('mods/_standard/forums/add_forum.php');
 
-	$this->_pages['editor/add_forum.php']['title_var']  = 'create_forum';
-	$this->_pages['editor/add_forum.php']['parent'] = 'tools/forums/index.php';
+	$this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
+	$this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/index.php';
 
-	$this->_pages['editor/delete_forum.php']['title_var']  = 'delete_forum';
-	$this->_pages['editor/delete_forum.php']['parent'] = 'tools/forums/index.php';
+	$this->_pages['mods/_standard/forums/delete_forum.php']['title_var']  = 'delete_forum';
+	$this->_pages['mods/_standard/forums/delete_forum.php']['parent'] = 'mods/_standard/forums/forums/index.php';
 
-	$this->_pages['editor/edit_forum.php']['title_var']  = 'edit_forum';
-	$this->_pages['editor/edit_forum.php']['parent'] = 'tools/forums/index.php';
+	$this->_pages['mods/_standard/forums/edit_forum.php']['title_var']  = 'edit_forum';
+	$this->_pages['mods/_standard/forums/edit_forum.php']['parent'] = 'mods/_standard/forums/index.php';
 
+/*
+$_pages['mods/_standard/forums/index.php']['title']    = get_forum_name($fid);
+$_pages['mods/_standard/forums/index.php']['parent']   = 'mods/_standard/forums/forum/list.php';
+$_pages['mods/_standard/forums/index.php']['children'] = array('mods/_standard/forums/forum/new_thread.php?fid='.$fid, 'search.php?search_within[]=forums');
+
+$_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
+$_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['parent']    = 'mods/_standard/forums/forum/index.php';
+
+$_pages['search.php?search_within[]=forums']['title_var'] = 'search';
+$_pages['search.php?search_within[]=forums']['parent']    = 'mods/_standard/forums/forum/index.php';
+*/
 //student pages
-$this->_pages['forum/list.php']['title_var']  = 'forums';
-$this->_pages['forum/list.php']['img']        = 'images/home-forums.png';
-$this->_pages['forum/list.php']['icon']		  = 'images/home-forums_sm.png';						//added favicon
-$this->_pages['forum/list.php']['text']		  = 'Sezione Forum';									//added text
-$this->_pages['forum/list.php']['children']        = array('search.php?search_within[]=forums');
+$this->_pages['mods/_standard/forums/forum/list.php']['title_var']  = 'forums';
+$this->_pages['mods/_standard/forums/forum/list.php']['img']        = 'images/home-forums.png';
+$this->_pages['mods/_standard/forums/forum/list.php']['icon']		  = 'images/home-forums_sm.png';		//added favicon
+//$this->_pages['forum/list.php']['text']		  = 'Sezione Forum';				//added text
+$this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums');
 	//list.php's children
 	$this->_pages['search.php?search_within[]=forums']['title_var'] = 'search';
-	$this->_pages['search.php?search_within[]=forums']['parent']    = 'forum/index.php';
+	$this->_pages['search.php?search_within[]=forums']['parent']    = 'mods/_standard/forums/index.php';
 
 // for admin
 if (admin_authenticate(AT_ADMIN_PRIV_FORUMS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
@@ -72,6 +83,6 @@ function forums_get_group_url($group_id) {
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
-	return 'forum/index.php?fid='.$row['forum_id'];
+	return 'mods/_standard/forums/forum/index.php?fid='.$row['forum_id'];
 }
 ?>

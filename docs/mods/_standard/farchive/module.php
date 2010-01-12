@@ -20,9 +20,9 @@ define('AT_PRIV_FARCHIVE',       $this->getPrivilege());
  */
 
 $this->_pages['mods/_standard/farchive/index_instructor.php']['title_var'] = 'farchive_export';
-$this->_pages['mods/_standard/farchive/index_instructor.php']['parent']    = 'tools/forums/index.php';
+$this->_pages['mods/_standard/farchive/index_instructor.php']['parent']    = 'mods/_standard/forums/index.php';
 $this->_pages['mods/_standard/farchive/index_instructor.php']['guide']    = 'instructor/?p=forum_export.php';
-$this->_pages['tools/forums/index.php']['children']  = array('mods/_standard/farchive/index_instructor.php');
+$this->_pages['mods/_standard/forums/index.php']['children']  = array('mods/_standard/farchive/index_instructor.php');
 
 
 ?>
