@@ -206,7 +206,7 @@ if ($pathext != '') {
 			$bit_path .= $bit;
 
 			$_section[$start_at][0] = $bit;
-			$_section[$start_at][1] = '../filemanager/index.php?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed;
+			$_section[$start_at][1] = 'mods/_core/file_manager/filemanager/index.php?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed;
 
 			$start_at++;
 		}
