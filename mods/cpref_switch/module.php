@@ -12,8 +12,6 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 /*******
  * create a side menu box/stack.
  */
-$this->_stacks['cpref_switch'] = array('title_var'=>'cpref_switch', 'file'=>'mods/cpref_switch/side_menu.inc.php');
-// ** possible alternative: **
-// $this->addStack('cpref_switch', array('title_var' => 'cpref_switch', 'file' => './side_menu.inc.php');
+$this->_stacks['cpref_switch'] = array('title_var'=>'cpref_switch', 'file'=>dirname(__FILE__).'/side_menu.inc.php');
 
 ?>
