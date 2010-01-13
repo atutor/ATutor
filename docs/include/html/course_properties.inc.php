@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 //require_once(AT_INCLUDE_PATH.'lib/course_icon.inc.php');

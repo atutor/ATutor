@@ -302,7 +302,7 @@ function print_search_pages($result) {
 			if ($_SESSION['course_id'] != $items['course_id']) {
 				echo '<a href="bounce.php?course='.$items['course_id'].SEP.'p='.urlencode('forum/view.php?fid='.$items['forum_id'].SEP.'pid='.$items['post_id'].SEP.'words='.$_GET['words']).'">'.$items['forum_title'].' - '.$items['subject'].'</a> ';
 			} else {
-				echo '<a href="'.url_rewrite('forum/view.php?fid='.$items['forum_id'].SEP.'pid='.$items['post_id'].SEP.'words='.$_GET['words']).'">'.$items['forum_title'].' - '.$items['subject'].'</a> ';
+				echo '<a href="'.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$items['forum_id'].SEP.'pid='.$items['post_id'].SEP.'words='.$_GET['words']).'">'.$items['forum_title'].' - '.$items['subject'].'</a> ';
 			}
 			echo '</h5>'."\n";
 
