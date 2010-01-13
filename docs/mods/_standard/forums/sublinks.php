@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 global $db;
 

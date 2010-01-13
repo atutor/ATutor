@@ -11,9 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
@@ -70,13 +70,13 @@ if($_REQUEST['t']){
 
 if ($_GET['us'] == '1') {
 	$msg->addFeedback(array('THREAD_UNSUBSCRIBED', $thread_name));
-	header('Location: '.AT_BASE_HREF.'forum/'.$this_pid);
+	header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/'.$this_pid);
 	exit;
 }
 
 /* else: */
 	$msg->addFeedback(array('THREAD_SUBSCRIBED', $thread_name ));
-	header('Location: '.AT_BASE_HREF.'forum/'.$this_pid);
+	header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/'.$this_pid);
 	exit;
 
 ?>
