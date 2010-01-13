@@ -136,7 +136,7 @@ if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
 	</div>
 	
 	<div class="row">
-		<?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?>
+		<?php require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tabs/content_code_picker.inc.php'); ?>
 	</div>
 
 	<div class="row">
