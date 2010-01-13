@@ -1,0 +1,23 @@
+/* Content preferences switcher styles */
+/* These styles need to be moved to styles.css 8?
+.cpref_switch div {
+    position: relative;
+    padding: 1em;
+    height: 15.5em;
+}
+
+.cpref_switch label {
+    display: block;
+    margin-bottom: 0.25em;
+}
+
+.cpref_switch select {
+    margin-bottom: 1em;
+    margin-left: 1em;
+}
+
+.cpref_switch input {
+    position: absolute;
+    right: 2em;
+    bottom: 1em;
+}
