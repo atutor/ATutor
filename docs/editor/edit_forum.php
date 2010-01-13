@@ -17,7 +17,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
 
-require (AT_INCLUDE_PATH.'lib/forums.inc.php');
+include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

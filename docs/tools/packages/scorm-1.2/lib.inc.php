@@ -21,7 +21,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 class package_handler_scorm_1_2 {
 

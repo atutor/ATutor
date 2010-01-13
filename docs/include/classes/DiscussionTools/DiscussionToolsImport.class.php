@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: DiscussionToolsImport.class.php 8894 2009-11-09 20:03:12Z hwong $
 
-include(AT_INCLUDE_PATH.'lib/forums.inc.php');
+include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 /**
  * A class for DiscussionToolsParser
  * based on:

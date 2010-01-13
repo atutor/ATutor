@@ -27,7 +27,7 @@ if (isset($_GET['edit'], $_GET['id'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

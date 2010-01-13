@@ -363,8 +363,8 @@ class SocialGroup {
 	 */
 	function removeGroupForums(){
 		global $db;
-		include(AT_INCLUDE_PATH.'lib/forums.inc.php');
-
+		include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
+		
 		//delete all forums for this social group
 		$sql = 'SELECT forum_id FROM '.TABLE_PREFIX.'social_groups_forums WHERE group_id='.$this->group_id;
 		$result = mysql_query($sql, $db);

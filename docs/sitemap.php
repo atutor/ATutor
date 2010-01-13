@@ -15,7 +15,7 @@
 $page = 'sitemap';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

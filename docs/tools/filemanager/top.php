@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 //require(AT_INCLUDE_PATH.'vitals.inc.php');
-//require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+//require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;

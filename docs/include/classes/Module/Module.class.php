@@ -607,8 +607,8 @@ class Module {
 
 		if (!$msg->containsErrors()) 
 		{
-			require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-			
+			require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+						
 			if (!clr_dir(AT_MODULE_PATH . $this->_directoryName))
 				$msg->addError(array('MODULE_UNINSTALL', '<li>'.AT_MODULE_PATH . $this->_directoryName.' can not be removed. Please manually remove it.</li>'));
 		}

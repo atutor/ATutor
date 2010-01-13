@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 require(AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
 
 // theme content folder

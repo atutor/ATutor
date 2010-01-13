@@ -23,7 +23,7 @@ $_section[1][1] = 'tools/';
 authenticate(AT_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 if (isset($_POST['restore'], $_POST['backup_id'])) {
 	header('Location: restore.php?backup_id=' . $_POST['backup_id']);

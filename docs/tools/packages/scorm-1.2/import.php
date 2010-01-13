@@ -29,7 +29,7 @@ if (!isset ($_POST['type'])) {
 @set_time_limit(0);
 $_SESSION['done'] = 1;
 
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); 
+require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 
 authenticate(AT_PRIV_PACKAGES);

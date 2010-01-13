@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 print_progress($step);
 
 /* try copying the content over from the old dir to the new one */
-require('../include/lib/filemanager.inc.php'); // for copys()
+require('../mods/_core/file_manager/filemanager.inc.php'); // for copys()
 
 $content_dir = urldecode(trim($_POST['step5']['content_dir']));
 $_POST['step5']['copy_from'] = urldecode(trim($_POST['step5']['copy_from'])) . DIRECTORY_SEPARATOR;

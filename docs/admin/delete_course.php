@@ -23,7 +23,7 @@ if (isset($_POST['submit_no'])) {
 	header('Location: courses.php');
 	exit;
 } else if (isset($_POST['step']) && ($_POST['step'] == 2) && isset($_POST['submit_yes'])) {
-	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+	require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 	require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
 	delete_course($course, $entire_course = true, $rel_path = '../'); // delete the course

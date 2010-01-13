@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 	authenticate(AT_PRIV_CONTENT);

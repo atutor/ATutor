@@ -340,8 +340,8 @@ class Backup {
 	function restore($material, $action, $backup_id, $from_course_id = 0) {
 		global $moduleFactory;
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
-		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-
+		require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+		
 		if (!$from_course_id) {
 			$from_course_id = $this->course_id;
 		}
