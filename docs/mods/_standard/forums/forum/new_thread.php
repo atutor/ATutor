@@ -137,7 +137,7 @@ if (isset($_POST['cancel'])) {
 			foreach ($subscriber_email_list as $subscriber){
 				$mail = new ATutorMailer;
 				$mail->AddAddress($subscriber['email'], get_display_name($subscriber['member_id']));
-				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  AT_BASE_HREF.'forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['parent_id']);
+				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  AT_BASE_HREF.'mods/_standard/forums/forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['parent_id']);
 				$body .= "\n----------------------------------------------\n";
 				$body .= _AT('posted_by').": ".get_display_name($_SESSION['member_id'])."\n";
 				$body .= $_POST['body']."\n";
@@ -179,7 +179,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.url_rewrite('forum/view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id'].SEP.'page='.$_POST['page'], AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id'].SEP.'page='.$_POST['page'], AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 }

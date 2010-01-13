@@ -244,7 +244,7 @@ function print_entry($row) {
 	static $counter;
 	$counter++;
 
-	$reply_link = '<a href="mods/_standard/forums/forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
+	$reply_link = '<a href="mods/_standard/forums/forum/zzzzview.php?fid='.$row['forum_id'].SEP.'pid=';
 	if ($row['parent_id'] == 0) {
 		$reply_link .= $row['post_id'];
 	} else {

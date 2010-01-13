@@ -56,7 +56,7 @@ if ($num_shared || $num_nonshared || $num_groups) {
 
 		foreach ($forums as $row) : ?>
 			<tr>
-				<td><a href="<?php echo url_rewrite('mods/_standard/forums/index.php?fid='.$row['forum_id']); ?>"><?php echo $row['title']; ?></a> <?php
+				<td><a href="<?php echo url_rewrite('mods/_standard/forums/forum/index.php?fid='.$row['forum_id']); ?>"><?php echo $row['title']; ?></a> <?php
 					// patch has added the two icons below
 					if ($_SESSION['enroll']) {
 						$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";

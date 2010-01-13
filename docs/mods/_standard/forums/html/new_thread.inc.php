@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 
 ?>
 <a name="post"></a>
-<form action="forum/new_thread.php" method="post" name="form">
+<form action="mods/_standard/forums/forum/new_thread.php" method="post" name="form">
 <input name="parent_id" type="hidden" value="<?php echo $parent_id; ?>" />
 <input name="fid" type="hidden" value="<?php echo $fid; ?>" />
 <input name="page" type="hidden" value="<?php echo $_GET['page']; ?>" />
