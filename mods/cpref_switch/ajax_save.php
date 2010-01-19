@@ -71,14 +71,17 @@ $alt_to_text = check_post_var($addslashes($_POST[AT_POST_ALT_TO_TEXT]), array(AT
 $alt_to_audio = check_post_var($addslashes($_POST[AT_POST_ALT_TO_AUDIO]), array(AT_PREF_NONE, AT_PREF_TEXT, AT_PREF_VISUAL, AT_PREF_SIGN));
 $alt_to_visual = check_post_var($addslashes($_POST[AT_POST_ALT_TO_VISUAL]), array(AT_PREF_NONE, AT_PREF_TEXT, AT_PREF_AUDIO, AT_PREF_SIGN));
 
-//if preferences have changed then change $_SESSION variable and save new settings
+//if preferences have changed then change $_SESSION variable
+//save settings if user is student
 $temp_prefs = $_SESSION['prefs'];
 $is_preferences_changed = changePreference($temp_prefs, $alt_to_text, "TEXT") ||
                           changePreference($temp_prefs, $alt_to_audio, "AUDIO") || 
                           changePreference($temp_prefs, $alt_to_visual, "VISUAL");
 if ($is_preferences_changed) {
-        assign_session_prefs($temp_prefs);
-        save_prefs(); //we only want to do this if user is a student - but for now this is good.
+    assign_session_prefs($temp_prefs);
+    if (!get_instructor_status()) { //is student
+        save_prefs(); 
+    }
 }
 
 echo $is_preferences_changed;
