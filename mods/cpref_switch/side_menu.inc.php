@@ -10,7 +10,7 @@ ob_start(); ?>
 var ATutor = ATutor || {};
 
 (function ($, ATutor) {
-	ATutor.cf_switch_doPost = function () {
+	ATutor.cpref_switch_doPost = function () {
 		//synchronous request - remeber that next line will be executed 
 		//immediately after post whether or not post is successful.
         jQuery.post("<?php echo AT_BASE_HREF; ?>mods/cpref_switch/ajax_save.php", 
@@ -87,7 +87,7 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
 </select>
 
 <input class="button" type="button" value="<?php echo _AT('apply') ?>" 
-       onclick="ATutor.cf_switch_doPost();" />
+       onclick="ATutor.cpref_switch_doPost();" />
 </div>
 </form>
 
