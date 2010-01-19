@@ -23,7 +23,7 @@ if (isset($_GET['view'], $_GET['id'])) {
 	header('Location: edit_course.php?course='.$_GET['id']);
 	exit;
 } else if (isset($_GET['backups'], $_GET['id'])) {
-	header('Location: backup/index.php?course='.$_GET['id']);
+	header('Location: ../mods/_core/backups/admin/index.php?course='.$_GET['id']);
 	exit;
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: delete_course.php?course='.$_GET['id']);

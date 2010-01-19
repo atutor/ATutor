@@ -6,56 +6,56 @@ define('AT_ADMIN_PRIV_BACKUPS', $this->getAdminPrivilege());
 
 if (admin_authenticate(AT_ADMIN_PRIV_BACKUPS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-		$this->_pages['admin/courses.php']['children'] = array('admin/backup/index.php');
-		$this->_pages['admin/backup/index.php']['parent']    = 'admin/courses.php';
+		$this->_pages['mods/_core/backups/admin/courses.php']['children'] = array('mods/_core/backups/admin/index.php');
+		$this->_pages['mods/_core/backups/admin/index.php']['parent']    = 'mods/_core/backups/admin/courses.php';
 	} else {
-		$this->_pages[AT_NAV_ADMIN] = array('admin/backup/index.php');
-		$this->_pages['admin/backup/index.php']['parent'] = AT_NAV_ADMIN;
+		$this->_pages[AT_NAV_ADMIN] = array('mods/_core/backups/admin/index.php');
+		$this->_pages['mods/_core/backups/admin/index.php']['parent'] = AT_NAV_ADMIN;
 	}
 
-	$this->_pages['admin/backup/index.php']['title_var'] = 'backups';
-	$this->_pages['admin/backup/index.php']['guide']     = 'admin/?p=backups.php';
-	$this->_pages['admin/backup/index.php']['children']  = array('admin/backup/create.php');
+	$this->_pages['mods/_core/backups/admin/index.php']['title_var'] = 'backups';
+	$this->_pages['mods/_core/backups/admin/index.php']['guide']     = 'mods/_core/backups/admin/?p=backups.php';
+	$this->_pages['mods/_core/backups/admin/index.php']['children']  = array('mods/_core/backups/admin/create.php');
 
-		$this->_pages['admin/backup/create.php']['title_var'] = 'create_backup';
-		$this->_pages['admin/backup/create.php']['parent']    = 'admin/backup/index.php';
-		$this->_pages['admin/backup/create.php']['guide']     = 'admin/?p=backups.php';
+	$this->_pages['mods/_core/backups/admin/create.php']['title_var'] = 'create_backup';
+	$this->_pages['mods/_core/backups/admin/create.php']['parent']    = 'mods/_core/backups/admin/index.php';
+	$this->_pages['mods/_core/backups/admin/create.php']['guide']     = 'mods/_core/backups/admin/?p=backups.php';
 
-		// this item is a bit iffy:
-		$this->_pages['admin/backup/restore.php']['title_var'] = 'restore';
-		$this->_pages['admin/backup/restore.php']['parent']    = 'admin/backup/index.php';
-		$this->_pages['admin/backup/restore.php']['guide']     = 'admin/?p=backups.php';
+	// this item is a bit iffy:
+	$this->_pages['mods/_core/backups/admin/restore.php']['title_var'] = 'restore';
+	$this->_pages['mods/_core/backups/admin/restore.php']['parent']    = 'mods/_core/backups/admin/index.php';
+	$this->_pages['mods/_core/backups/admin/restore.php']['guide']     = 'mods/_core/backups/admin/?p=backups.php';
 
-		$this->_pages['admin/backup/delete.php']['title_var'] = 'delete';
-		$this->_pages['admin/backup/delete.php']['parent']    = 'admin/backup/index.php';
+	$this->_pages['mods/_core/backups/admin/delete.php']['title_var'] = 'delete';
+	$this->_pages['mods/_core/backups/admin/delete.php']['parent']    = 'mods/_core/backups/admin/index.php';
 
-		$this->_pages['admin/backup/edit.php']['title_var'] = 'edit';
-		$this->_pages['admin/backup/edit.php']['parent']    = 'admin/backup/index.php';
+	$this->_pages['mods/_core/backups/admin/edit.php']['title_var'] = 'edit';
+	$this->_pages['mods/_core/backups/admin/edit.php']['parent']    = 'mods/_core/backups/admin/index.php';
 }
-//instructor pages
-$this->_pages['tools/backup/index.php']['title_var'] = 'backups';
-$this->_pages['tools/backup/index.php']['guide']     = 'instructor/?p=backups.php';
-$this->_pages['tools/backup/index.php']['parent']    = 'tools/index.php';
-$this->_pages['tools/backup/index.php']['children']  = array('tools/backup/create.php', 'tools/backup/upload.php');
+	//instructor pages
+	$this->_pages['mods/_core/backups/index.php']['title_var'] = 'backups';
+	$this->_pages['mods/_core/backups/index.php']['guide']     = 'instructor/?p=backups.php';
+	$this->_pages['mods/_core/backups/index.php']['parent']    = 'tools/index.php';
+	$this->_pages['mods/_core/backups/index.php']['children']  = array('mods/_core/backups/create.php', 'mods/_core/backups/upload.php');
 
-	$this->_pages['tools/backup/create.php']['title_var'] = 'create';
-	$this->_pages['tools/backup/create.php']['parent']    = 'tools/backup/index.php';
-	$this->_pages['tools/backup/create.php']['guide']     = 'instructor/?p=creating_restoring.php';
+	$this->_pages['mods/_core/backups/create.php']['title_var'] = 'create';
+	$this->_pages['mods/_core/backups/create.php']['parent']    = 'mods/_core/backups/index.php';
+	$this->_pages['mods/_core/backups/create.php']['guide']     = 'instructor/?p=creating_restoring.php';
 
-	$this->_pages['tools/backup/upload.php']['title_var']  = 'upload';
-	$this->_pages['tools/backup/upload.php']['parent'] = 'tools/backup/index.php';
-	$this->_pages['tools/backup/upload.php']['guide'] = 'instructor/?p=downloading_uploading.php';
+	$this->_pages['mods/_core/backups/upload.php']['title_var']  = 'upload';
+	$this->_pages['mods/_core/backups/upload.php']['parent'] = 'mods/_core/backups/index.php';
+	$this->_pages['mods/_core/backups/upload.php']['guide'] = 'instructor/?p=downloading_uploading.php';
 
-	$this->_pages['tools/backup/restore.php']['title_var']  = 'restore';
-	$this->_pages['tools/backup/restore.php']['parent'] = 'tools/backup/index.php';
-	$this->_pages['tools/backup/restore.php']['guide'] = 'instructor/?p=creating_restoring.php';
+	$this->_pages['mods/_core/backups/restore.php']['title_var']  = 'restore';
+	$this->_pages['mods/_core/backups/restore.php']['parent'] = 'mods/_core/backups/index.php';
+	$this->_pages['mods/_core/backups/restore.php']['guide'] = 'instructor/?p=creating_restoring.php';
 
-	$this->_pages['tools/backup/edit.php']['title_var']  = 'edit';
-	$this->_pages['tools/backup/edit.php']['parent'] = 'tools/backup/index.php';
-	$this->_pages['tools/backup/edit.php']['guide'] = 'instructor/?p=editing_deleting.php';
+	$this->_pages['mods/_core/backups/edit.php']['title_var']  = 'edit';
+	$this->_pages['mods/_core/backups/edit.php']['parent'] = 'mods/_core/backups/index.php';
+	$this->_pages['mods/_core/backups/edit.php']['guide'] = 'instructor/?p=editing_deleting.php';
 
-	$this->_pages['tools/backup/delete.php']['title_var']  = 'delete';
-	$this->_pages['tools/backup/delete.php']['parent'] = 'tools/backup/index.php';				
-	$this->_pages['tools/backup/delete.php']['guide'] = 'instructor/?p=editing_deleting.php';
+	$this->_pages['mods/_core/backups/delete.php']['title_var']  = 'delete';
+	$this->_pages['mods/_core/backups/delete.php']['parent'] = 'mods/_core/backups/index.php';				
+	$this->_pages['mods/_core/backups/delete.php']['guide'] = 'instructor/?p=editing_deleting.php';
 
 ?>

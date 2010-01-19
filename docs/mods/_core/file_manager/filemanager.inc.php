@@ -21,6 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 * @link	   http://www.php.net/copy
 * @author  www at w8c dot com
 */
+
 function copys($source,$dest)
 {
 	if (!is_dir($source)) {
