@@ -10,19 +10,23 @@ ob_start(); ?>
 var ATutor = ATutor || {};
 
 (function ($, ATutor) {
+	/**
+	* Sends the alternative content request to the server and reloads the page on successful completion.
+	* Perhaps change this to a .ajax request so that we can display a fail message if it doesn't work.
+	*/
 	ATutor.cpref_switch_doPost = function () {
-		//synchronous request - remeber that next line will be executed 
-		//immediately after post whether or not post is successful.
         jQuery.post("<?php echo AT_BASE_HREF; ?>mods/cpref_switch/ajax_save.php", 
                 { "<?php echo AT_POST_ALT_TO_TEXT; ?>": jQuery("#cs_preferred_alt_to_text").val(),
                   "<?php echo AT_POST_ALT_TO_AUDIO; ?>": jQuery("#cs_preferred_alt_to_audio").val(),
                   "<?php echo AT_POST_ALT_TO_VISUAL; ?>": jQuery("#cs_preferred_alt_to_visual").val()
+                 },
+                 function (data) {
+                     if ((location.href.indexOf("content.php") > -1) && (location.href.indexOf("cid") > -1) && data === '1') {
+                         location.reload(true);
+                     }
+                     //perhaps insert a message on the screen for successful completion
                  }
-       );
-
-        //location.reload(true) will reload the page?? We could do this in the success callback if
-        //cid exists (ie. if there is content on the page) and only if a change was actually made
-        
+       );        
     };
 })(jQuery, ATutor);
 </script>
@@ -51,6 +55,7 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
 }
 
 ?>
+<!-- form class="cpref_switch" name="cpref_switch_form" action="/atutor/mods/cpref_switch/ajax_save.php" method="post"-->
 <form class="cpref_switch" method="post" name="cpref_switch_form">
 <div>
 <label for="cs_preferred_alt_to_text"><?php echo _AT("alt_to_text") ?></label>
@@ -86,8 +91,9 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
     ?>
 </select>
 
-<input class="button" type="button" value="<?php echo _AT('apply') ?>" 
-       onclick="ATutor.cpref_switch_doPost();" />
+<!-- input type="hidden" /-->
+<!-- input type="submit" value="<?php echo _AT('apply') ?>" /-->
+<input class="button" type="button" value="<?php echo _AT('apply') ?>" onclick="ATutor.cpref_switch_doPost();" />
 </div>
 </form>
 
