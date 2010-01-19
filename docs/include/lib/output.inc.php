@@ -570,10 +570,11 @@ function myCodes($text, $html = false) {
 
 	$text = str_replace('[cid]',$_base_path.'content.php?cid='.$_SESSION['s_cid'],$text);
 
+	// fix for http://www.atutor.ca/atutor/mantis/view.php?id=4104
 	global $sequence_links;
-	if ($_SESSION['course_id'] > 0 && !isset($sequence_links)) {
+	if ($_SESSION['course_id'] > 0 && !isset($sequence_links) && $_REQUEST['cid'] > 0) {
 		global $contentManager;
-		$sequence_links = $contentManager->generateSequenceCrumbs($cid);
+		$sequence_links = $contentManager->generateSequenceCrumbs($_REQUEST['cid']);
 	}
 	if (isset($sequence_links['previous']) && $sequence_links['previous']['url']) {
 		$text = str_replace('[pid]', $sequence_links['previous']['url'], $text);
