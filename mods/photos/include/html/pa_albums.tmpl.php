@@ -13,7 +13,7 @@
 
 	<div class="add_photo">
 		<div>
-			<form action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data" name="add_photos" class="input-form" method="post">
+			<form action="<?php echo AT_PA_BASENAME;?>albums.php" enctype="multipart/form-data" name="add_photos" class="input-form" method="post">
 				<div class="row">
 					<p><?php echo _AT('add_more_photos');?></p>
 				</div>
@@ -72,7 +72,8 @@
 			<div>
 				<form action="<?php echo AT_PA_BASENAME;?>addComment.php" method="post" class="input-form">
 					<div class="row"><label for="comments"><?php echo _AT('comments');?></label></div>
-					<div class="row"><textarea name="comment" id="comment">Write a comment...</textarea></div>		
+					<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();">Write a comment...</textarea></div>
+					<div class="row"><textarea name="comment" id="comment" style="display:none;"></textarea></div>
 					<div class="row">
 						<input type="hidden" name="aid" value="<?php echo $this->album_info['id'];?>" />
 						<input type="submit" name="submit" value="<?php echo _AT('comment');?>" class="button"/>

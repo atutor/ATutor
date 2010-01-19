@@ -40,19 +40,21 @@ if($pa->checkPhotoPriv($pid, $_SESSION['member_id']) || $pa->checkAlbumPriv($_SE
 }
 
 //run a quick query to get the next and previous id
-$sql = 'SELECT id, ordering FROM '.TABLE_PREFIX.'pa_photos WHERE album_id='.$aid.' AND (ordering='.($photo_info['ordering']-1).' OR ordering='.($photo_info['ordering']+1).') ORDER BY ordering';
-$result = mysql_query($sql, $db);
-if ($result){
-	$prev = mysql_fetch_assoc($result);
-	$next = mysql_fetch_assoc($result);
+if (sizeof($photos) > 1){
+	$sql = 'SELECT id, ordering FROM '.TABLE_PREFIX.'pa_photos WHERE album_id='.$aid.' AND (ordering='.($photo_info['ordering']-1).' OR ordering='.($photo_info['ordering']+1).') ORDER BY ordering';
+	$result = mysql_query($sql, $db);
+	if ($result){
+		$prev = mysql_fetch_assoc($result);
+		$next = mysql_fetch_assoc($result);
 
-	//then reassign prev and next
-	if (empty($next)){
-		if ($prev['ordering'] > $photo_info['ordering']){
-			$next = $prev;
-			unset($prev);
-		} else {
-			unset($next);
+		//then reassign prev and next
+		if (empty($next)){
+			if ($prev['ordering'] > $photo_info['ordering']){
+				$next = $prev;
+				unset($prev);
+			} else {
+				unset($next);
+			}
 		}
 	}
 }

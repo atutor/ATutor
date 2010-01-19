@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * add savant variable
  */
 global $savant;
-require(AT_INCLUDE_PATH.'../mods/photo_album/include/constants.inc.php');	//load constant file right away.
+require(AT_INCLUDE_PATH.'../mods/photos/include/constants.inc.php');	//load constant file right away.
 $savant->addPath('template', AT_PA_INCLUDE.'html/');
 
 /******
@@ -38,7 +38,7 @@ define('AT_ADMIN_PRIV_PHOTO_ALBUM', $this->getAdminPrivilege());
 /*******
  * create a side menu box/stack.
  */
-$this->_stacks['photo_album'] = array('title_var'=>'photo_album', 'file'=>AT_INCLUDE_PATH.'../mods/photo_album/side_menu.inc.php');
+$this->_stacks['photo_album'] = array('title_var'=>'photo_album', 'file'=>AT_INCLUDE_PATH.'../mods/photos/side_menu.inc.php');
 // ** possible alternative: **
 // $this->addStack('social', array('title_var' => 'social', 'file' => './side_menu.inc.php');
 
@@ -84,6 +84,10 @@ $this->_pages[AT_PA_BASENAME.'index.php']['img']       = AT_PA_BASENAME.'images/
 $this->_pages[AT_PA_BASENAME.'create_album.php']['title_var'] = 'create_album';
 $this->_pages[AT_PA_BASENAME.'create_album.php']['parent'] = AT_PA_BASENAME.'index.php';
 $this->_pages[AT_PA_BASENAME.'create_album.php']['guide']     = 'general/?p=photo_album.php';
+
+$this->_pages[AT_PA_BASENAME.'profile_gallery.php']['title_var'] = 'profile_gallery';
+$this->_pages[AT_PA_BASENAME.'profile_gallery.php']['parent'] = AT_PA_BASENAME.'index.php';
+$this->_pages[AT_PA_BASENAME.'profile_gallery.php']['guide']     = 'general/?p=photo_album.php';
 
 $this->_pages[AT_PA_BASENAME.'edit_album.php']['title_var'] = 'edit_album';
 $this->_pages[AT_PA_BASENAME.'edit_album.php']['parent'] = AT_PA_BASENAME.'index.php';

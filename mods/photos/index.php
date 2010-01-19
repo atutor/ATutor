@@ -19,7 +19,7 @@ $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom styl
 
 //instantiate obj
 $pa = new PhotoAlbum();
-$type = intval($_GET['album_type']);
+$type = intval($_GET['type']);
 $albums = $pa->getAlbums($_SESSION['member_id'], $type);
 
 include (AT_INCLUDE_PATH.'header.inc.php'); 

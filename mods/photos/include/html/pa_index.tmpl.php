@@ -2,9 +2,9 @@
 	<!-- Photo album options and page numbers -->
 	<div class="topbar">
 		<div class="summary">
-				<a><?php echo _AT('profile_gallery'); ?></a> | 
-				<a><?php echo _AT('my_albums'); ?></a> | 
-				<a><?php echo _AT('course_albums'); ?></a> |
+				<a href="<?php echo AT_PA_BASENAME.'profile_gallery.php';?>"><?php echo _AT('profile_gallery'); ?></a> | 
+				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM;?>"><?php echo _AT('my_albums'); ?></a> | 
+				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM;?>"><?php echo _AT('course_albums'); ?></a> |
 				<a href="<?php echo AT_PA_BASENAME; ?>create_album.php"><?php echo _AT('create_album');?></a>
 		</div>
 		<div class="paginator">
@@ -24,12 +24,14 @@
 		<?php foreach($this->albums as $index=>$row): ?>
 		<div class="album">
 			<!-- TODO: If photo is not presense, print another image? -->
+			<div class="image">
 			<?php 
 			$photo_info = $pa->getPhotoInfo($row['photo_id']); 
 			if (!empty($photo_info)):
 			?>
-			<div class="image"><a><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf8($photo_info['description']); ?>" alt="<?php echo htmlentities_utf8($photo_info['alt_text']); ?>" /></a></div>
+			<a><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf8($photo_info['description']); ?>" alt="<?php echo htmlentities_utf8($photo_info['alt_text']); ?>" /></a>
 			<?php endif; //image ?>
+			</div>
 			<div class="info">
 				<h4><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><?php echo htmlentities_utf8($row['name']); ?></a></h4>
 				<p><?php echo htmlentities_utf8($row['description']); ?></p>

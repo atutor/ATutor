@@ -24,7 +24,7 @@ if(isset($_POST['aid'])){
 $pid = intval($_GET['pid']);
 
 //breadcrumbs
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = 'albums';
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('albums');
 $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
 //$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children'] = array(AT_PA_BASENAME.'edit_photos.php');
 $_pages[AT_PA_BASENAME.'edit_photos.php']['parent'] = AT_PA_BASENAME.'albums.php?id='.$aid;

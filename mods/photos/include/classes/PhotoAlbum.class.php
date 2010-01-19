@@ -132,7 +132,7 @@ class PhotoAlbum {
 	}
 
 	/** */
-	function createAlbum($name, $location, $description, $type, $member_id, $photo_id){
+	function createAlbum($name, $location, $description, $type, $member_id, $photo_id=0){
 		global $addslashes, $db;
 
 		//handle input

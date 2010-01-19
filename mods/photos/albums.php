@@ -24,6 +24,8 @@ $id = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
 
+//TODO: Validate users, course and my albums.
+
 //TODO: handle add_photo
 if(isset($_POST['upload'])){
 	debug($_FILES);
@@ -61,16 +63,25 @@ if(isset($_POST['upload'])){
 	$image_w = $si->getWidth();
 	$image_h = $si->getHeight();
 
-	//picture is horizontal
-	if($image_w > $image_h){		
-		$si->resizeToWidth(604);
-		$si->save(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
-		$si->resizeToWidth(130);
+	//picture is horizontal	
+	if($image_w > $image_h){
+		//don't stretch images
+		if ($image_w > AT_PA_IMAGE){
+			$si->resizeToWidth(AT_PA_IMAGE);
+			$si->save(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+		} else {
+			move_uploaded_file($_FILES['photo']['tmp_name'], AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+		}
+		$si->resizeToWidth(AT_PA_IMAGE_THUMB);
 		$si->save(AT_PA_CONTENT_DIR.$album_file_path_tn.$photo_file_path);
 	} else {
-		$si->resizeToHeight(604);
-		$si->save(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
-		$si->resizeToHeight(130);
+		if ($image_h > AT_PA_IMAGE){
+			$si->resizeToHeight(AT_PA_IMAGE);
+			$si->save(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+		} else {
+			move_uploaded_file($_FILES['photo']['tmp_name'], AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+		}
+		$si->resizeToHeight(AT_PA_IMAGE_THUMB);
 		$si->save(AT_PA_CONTENT_DIR.$album_file_path_tn.$photo_file_path);
 	}
 
