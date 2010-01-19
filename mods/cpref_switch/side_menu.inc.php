@@ -2,6 +2,7 @@
 global $savant;
 global $_base_path;
 
+include_once('module.inc.php');
 /* start output buffering: */
 ob_start(); ?>
 
@@ -13,9 +14,9 @@ var ATutor = ATutor || {};
 		//synchronous request - remeber that next line will be executed 
 		//immediately after post whether or not post is successful.
         jQuery.post("<?php echo AT_BASE_HREF; ?>mods/cpref_switch/ajax_save.php", 
-                { "alt_to_text": jQuery("#cs_preferred_alt_to_text").val(),
-                  "alt_to_audio": jQuery("#cs_preferred_alt_to_audio").val(),
-                  "alt_to_visual": jQuery("#cs_preferred_alt_to_visual").val()
+                { "<?php echo AT_POST_ALT_TO_TEXT; ?>": jQuery("#cs_preferred_alt_to_text").val(),
+                  "<?php echo AT_POST_ALT_TO_AUDIO; ?>": jQuery("#cs_preferred_alt_to_audio").val(),
+                  "<?php echo AT_POST_ALT_TO_VISUAL; ?>": jQuery("#cs_preferred_alt_to_visual").val()
                  }
        );
 
@@ -27,12 +28,6 @@ var ATutor = ATutor || {};
 </script>
 
 <?php
-define('AT_PREF_NONE', 'none');
-define('AT_PREF_TEXT', 'text');
-define('AT_PREF_AUDIO', 'audio');
-define('AT_PREF_VISUAL', 'visual');
-define('AT_PREF_SIGN', 'sign_lang');
-
 $alt_to_text_values = array(AT_PREF_NONE, AT_PREF_AUDIO, AT_PREF_VISUAL, AT_PREF_SIGN);
 $alt_to_text_labels = array("", _AT(AT_PREF_AUDIO), _AT(AT_PREF_VISUAL), _AT(AT_PREF_SIGN));
 $alt_to_text = AT_PREF_NONE;
