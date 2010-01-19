@@ -20,7 +20,7 @@ $this->_pages['search.php']['title_var']      = 'search';
 $this->_pages['tools/content/index.php']['title_var'] = 'content';
 $this->_pages['tools/content/index.php']['parent']    = 'tools/index.php';
 $this->_pages['tools/content/index.php']['guide']     = 'instructor/?p=content.php';
-$this->_pages['tools/content/index.php']['children']  = array('mods/_core/editor/add_content.php', 'mods/_core/editor/arrange_content.php', 'tools/ims/index.php');
+$this->_pages['tools/content/index.php']['children']  = array('mods/_core/editor/add_content.php', 'mods/_core/editor/arrange_content.php', 'mods/_core/imscp/index.php');
 
 $this->_pages['mods/_core/editor/add_content.php']['title_var']    = 'add_content';
 $this->_pages['mods/_core/editor/add_content.php']['parent']   = 'tools/content/index.php';

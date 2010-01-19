@@ -189,7 +189,7 @@ if ($cid > 0)
 	$shortcuts = array();
 	if (((!$content_row['content_parent_id'] && $_SESSION['packaging'] == 'top') || $_SESSION['packaging'] == 'all') 
 	    || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'tools/ims/ims_export.php?cid='.$cid);
+		$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'mods/_core/imscp/ims_export.php?cid='.$cid);
 	}
 	
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
