@@ -1,0 +1,184 @@
+div.topbar{
+	float:left;
+	width: 95%;
+}
+div.paginator{
+	float: right;
+	margin: 0px;
+}
+.paginator ul li{
+	list-style: none;
+}
+.paginator li{
+	padding-right: 0.5em;
+	float: left;
+}
+
+div.summary{
+	float: left;
+	margin-top: 0.5em;
+	width:70%;
+}
+
+div.album_panel{
+	float: left;
+	background: #F7F7F7;
+	border: 1px solid #D2D2D2;	
+	width: 95%;
+}
+div.album_panel .photo_frame{
+	float: left;
+	margin: 0.2em;
+	min-height: 140px;
+	min-width: 140px;
+	text-align: center;
+}
+div.album_panel .photo_frame a:hover{
+	cursor: pointer;
+	float:left;
+	min-width: 140px;
+	text-align: center;
+	border: 1px solid #000099;
+}
+div.album_panel .photo_frame img{
+	background: #FFFFFF;
+	border: 1px solid #D2D2D2;
+	padding: 0.2em;
+}
+div.album {
+	background: #FFFFFF;
+	border: 1px solid #D2D2D2;	
+	width: 95%;
+	margin: 0.5em;
+	float: left;
+}
+div.album .image{
+	float: left;
+	margin: 0.5em;
+	min-width: 140px;
+}
+div.album .info{
+	float: left;
+}
+div.album .info span{
+	float: left;
+	color: #666666;
+}
+div.album .info p{
+	font-size: 0.85em;
+	margin: 0;
+}
+
+div.add_photo{
+	float: left;
+	background: #F7F7F7;
+	border: 1px solid #D2D2D2;	
+	width: 95%;
+}
+
+div.photo_panel{
+	background: #F7F7F7;
+	float: left;
+	border: 1px solid #D2D2D2;
+	text-align: center;
+	width: 95%;
+}
+div.photo_panel img{
+	background: #FFFFFF;
+	border: 1px solid #D2D2D2;
+	padding: 0.2em;
+}
+div.photo_panel p{
+	width: 60%;
+}
+div.comment_panel{
+	background: #FFFFFF;
+	float: left;
+	border: 1px solid #D2D2D2;
+	width: 95%;
+}
+div.comment_panel .comment_feeds{
+	float: left;
+	width: 50%;
+}
+div.comment_panel .photo_actions{
+	margin: 0.5em;
+	max-width: 49%;
+	background: #F7F7F7;
+	float:right;
+}
+
+div.comment_panel textarea{
+	width:100%;
+}
+
+div.comment_box{
+	float:left;
+	width:100%;
+	margin: 0.5em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	background: #F7F7F7;
+}
+div.comment_box .comment_actions{
+	float: left;
+	margin-top: 1em;
+	font-size: 0.8em; 
+	color: #666666;
+}
+
+div.edit_photo_frame{
+	width: 60%;	
+	float: left;
+	padding: 0.2em;
+	background: #F7F7F7;
+}
+div.edit_photo_box{	
+	float: left;
+	border: 1px solid #D2D2D2;
+	background: white;
+	margin: 0.2em;
+	margin-bottom: 0.8em;
+	padding: 0.8em;
+	width: 94%;
+}
+div.edit_photo_box .info{
+	float: left;
+	width: 60%;
+}
+div.edit_photo_box .info textarea.alt_text{
+	height: 2.5em;
+}
+div.edit_photo_box .info textarea{
+	width: 100%;
+}
+div.edit_photo_box .action{
+	float: right;
+	background: #F7F7F7;
+	min-width: 140px;
+}
+
+
+.fl-reorderer-movable-default{
+}
+.fl-reorderer-movable-selected{
+	border-left: 2px solid red;
+	border-right: 2px solid red;
+}
+.fl-reorderer-dropMarker {
+	border: 2px solid red;
+	min-height: 100px;
+	float: left;
+}
+.fl-reorderer-avatar {
+	opacity: 0.6;
+	filter:alpha(opacity=60);
+}
+
+.fl-inlineEdit-invitation {
+   background-color: #FFECB3 !important;
+   border: 1px solid #CCC !important;
+}
+.fl-inlineEdit-focus {
+    border: 2px solid #777777;
+}
