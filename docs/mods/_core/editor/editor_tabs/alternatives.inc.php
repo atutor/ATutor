@@ -52,7 +52,7 @@ else{
   <div class="column_primary">
 		
 <?php 
-	require(AT_INCLUDE_PATH.'html/resources_parser.inc.php');
+	require(AT_INCLUDE_PATH.'../mods/_core/imsafa/html/resources_parser.inc.php');
 
 	$n=count($resources);
 				

@@ -264,12 +264,12 @@ function print_organizations($parent_id,
 								$all_secondary_files_md .= $a4a_xml_array[$v];	//all the meta data								
 							}
 							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
-															array('resources/'.$file_save_path, $all_secondary_files_md), 
-															$ims_template_xml['file_meta']);
+							array('resources/'.$file_save_path, $all_secondary_files_md), 
+							$ims_template_xml['file_meta']);
 						} else {	
 							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
-															array('resources/'.$file_save_path, $a4a_xml_array[$file]), 
-															$ims_template_xml['file_meta']);
+							array('resources/'.$file_save_path, $a4a_xml_array[$file]), 
+							$ims_template_xml['file_meta']);
 						}
 					} else {
 						//if this file is in the test array, add an extra link to the direct file, 

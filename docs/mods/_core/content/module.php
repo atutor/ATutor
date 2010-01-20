@@ -5,7 +5,7 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 if (!defined('AT_PRIV_CONTENT')) {
 	define('AT_PRIV_CONTENT', $this->getPrivilege());
 }
-
+$_student_tool = 'export.php';
 global $_custom_css;
 $_custom_css = AT_BASE_HREF."jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
 
@@ -33,6 +33,19 @@ $this->_pages['mods/_core/editor/arrange_content.php']['guide']     = 'instructo
 $this->_pages['mods/_core/editor/edit_content.php']['title_var'] = 'edit_content';
 $this->_pages['mods/_core/editor/edit_content.php']['parent']    = 'tools/content/index.php';
 $this->_pages['mods/_core/editor/edit_content.php']['guide']     = 'instructor/?p=creating_editing_content.php';
+
+
+//instructors
+$this->_pages['mods/_core/imscp/index.php']['title_var'] = 'content_packaging';
+$this->_pages['mods/_core/imscp/index.php']['parent']    = 'tools/content/index.php';
+$this->_pages['mods/_core/imscp/index.php']['guide']     = 'instructor/?p=content_packages.php';
+
+//students
+$this->_pages['export.php']['title_var'] = 'export_content';
+$this->_pages['export.php']['img']       = 'images/home-export_content.png';
+$this->_pages['export.php']['text']      = _AT('export_content_text');
+$this->_pages['export.php']['guide']     = 'general/?p=export_content.php';
+
 
 if (!isset($_GET['cid']) && !isset($_POST['cid']))
 	$this->_pages['mods/_core/editor/edit_content_folder.php']['title_var'] = 'add_content_folder';

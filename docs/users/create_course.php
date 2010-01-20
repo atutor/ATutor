@@ -14,7 +14,7 @@
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
 /* verify that this user has status to create courses */
