@@ -401,17 +401,17 @@ while (false !== ($file = readdir($dir)) ) {
 		if ($framed) {
 			$files[$file1] .= '<a href="'.$get_file.$pathext.urlencode($filename).'">'.$filename.'</a>';
 		} else {
-			$files[$file1] .= '<a href="tools/filemanager/preview.php?file='.$pathext.$filename.SEP.'pathext='.urlencode($pathext).SEP.'popup='.$popup.'">'.$filename.'</a>';
+			$files[$file1] .= '<a href="mods/_core/file_manager/preview.php?file='.$pathext.$filename.SEP.'pathext='.urlencode($pathext).SEP.'popup='.$popup.'">'.$filename.'</a>';
 		}
 
 		if ($ext == 'zip') {
-			$files[$file1] .= ' <a href="tools/filemanager/zip.php?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : ''). 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">';
+			$files[$file1] .= ' <a href="mods/_core/file_manager/zip.php?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : ''). 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">';
 			$files[$file1] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="img-size-fm3" />';
 			$files[$file1] .= '</a>';
 		}
 
 		if (in_array($ext, $editable_file_types)) {
-			$files[$file1] .= ' <a href="tools/filemanager/edit.php?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">';
+			$files[$file1] .= ' <a href="mods/_core/file_manager/edit.php?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">';
 			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'" height="15" width="18" class="img-size-fm4" />';
 			$files[$file1] .= '</a>';
 		}
