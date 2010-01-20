@@ -79,9 +79,7 @@ $is_preferences_changed = changePreference($temp_prefs, $alt_to_text, "TEXT") ||
                           changePreference($temp_prefs, $alt_to_visual, "VISUAL");
 if ($is_preferences_changed) {
     assign_session_prefs($temp_prefs);
-    if (!get_instructor_status()) { //is student
-        save_prefs(); 
-    }
+    save_prefs(); 
 }
 
 echo $is_preferences_changed;
