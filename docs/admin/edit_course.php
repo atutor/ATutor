@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_COURSES);
 
-require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
