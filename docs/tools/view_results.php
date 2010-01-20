@@ -163,7 +163,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 		if ($row['feedback']) {
 			echo '<div class="row"><p><strong>'._AT('feedback').':</strong> ';
-			echo nl2br($row['feedback']).'</p></div>';
+			echo AT_print(nl2br($row['feedback']), 'tests_questions.feedback').'</p></div>';
 		}
 	}
 	?>

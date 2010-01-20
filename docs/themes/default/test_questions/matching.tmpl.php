@@ -12,7 +12,7 @@
 						<option value="<?php echo $j; ?>" <?php if (is_numeric($this->response[$i]) && $j == $this->response[$i]): ?>selected="selected"<?php endif; ?>><?php echo $this->letters[$j]; ?></option>
 					<?php endfor; ?>
 				</select>
-				<?php echo $this->row['choice_'. $i]; ?>
+				<?php echo AT_print($this->row['choice_'. $i], 'tests_questions.choice_'.$i); ?>
 				</li>
 			<?php endfor; ?>
 		</ul>
@@ -20,7 +20,7 @@
 	<td valign="top">
 		<ul style="list-style-type: none; margin: 0px; padding: 0px">
 			<?php for ($i=0; $i < $this->num_options; $i++): ?>
-				<li style="padding: 4px"><?php echo $this->letters[$i]; ?>. <?php echo $this->row['option_'. $i]; ?></li>
+				<li style="padding: 4px"><?php echo $this->letters[$i]; ?>. <?php echo AT_print($this->row['option_'. $i], 'tests_questions.option_'.$i); ?></li>
 			<?php endfor; ?>
 		</ul>
 	</td>
