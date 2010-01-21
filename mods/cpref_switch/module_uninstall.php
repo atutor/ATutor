@@ -24,21 +24,4 @@ if (is_dir($directory)) {
 		$msg->addError(array('MODULE_UNINSTALL', '<li>'.$directory.' can not be removed. Please manually remove it.</li>'));
 }
 
-/******
- * the following code checks if there are any errors (generated previously)
- * then uses the SqlUtility to run reverted database queries of module.sql, 
- * ie. "create table" statement in module.sql is run as drop according table.
- */
-if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
-	// deal with the SQL file:
-	require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
-	$sqlUtility =& new SqlUtility();
-
-	/*
-	 * the SQL file could be stored anywhere, and named anything, "module.sql" is simply
-	 * a convention we're using.
-	 */
-	$sqlUtility->revertQueryFromFile(dirname(__FILE__) . '/module.sql', TABLE_PREFIX);
-}
-
 ?>
