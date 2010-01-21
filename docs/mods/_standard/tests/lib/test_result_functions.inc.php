@@ -109,8 +109,6 @@ function get_total_weight($tid, $num_questions = null) {
 
 // returns T/F whether or not this member can view this test:
 function authenticate_test($tid) {
-
-echo "something";
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		return TRUE;
 	}

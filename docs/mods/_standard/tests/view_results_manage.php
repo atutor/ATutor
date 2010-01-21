@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: view_results.php 8979 2009-11-30 20:11:07Z cindy $
+// $Id: view_results_manage.php 8979 2009-11-30 20:11:07Z cindy $
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_TESTS);
@@ -23,8 +23,8 @@ if ($tid == 0){
 	$tid = intval($_POST['tid']);
 }
 
-$_pages['mods/_standard/tests/view_results.php']['title_var']  = 'view_results';
-$_pages['mods/_standard/tests/view_results.php']['parent'] = 'mods/_standard/tests/results.php?tid='.$tid;
+$_pages['mods/_standard/tests/view_results_manage.php']['title_var']  = 'view_results';
+$_pages['mods/_standard/tests/view_results_manage.php']['parent'] = 'mods/_standard/tests/results.php?tid='.$tid;
 
 $_pages['mods/_standard/tests/results.php?tid='.$tid]['title_var'] = 'submissions';
 $_pages['mods/_standard/tests/results.php?tid='.$tid]['parent'] = 'mods/_standard/tests/index.php';

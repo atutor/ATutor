@@ -33,7 +33,7 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	if (count($_GET['id']) > 1) {
 		$msg->addError('SELECT_ONE_ITEM');
 	} else {
-		header('Location:view_results.php?tid='.$tid.SEP.'rid='.$_GET['id'][0]);
+		header('Location:view_results_manage.php?tid='.$tid.SEP.'rid='.$_GET['id'][0]);
 		exit;
 	}
 } else if ((isset($_GET['edit']) || isset($_GET['delete'])) && !$_GET['id'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {

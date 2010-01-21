@@ -191,7 +191,7 @@ if ($result_id == 0) {
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		if ((!$_SESSION['enroll'] && !isset($cid)) || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
-			header('Location: '.url_rewrite('tools/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url, AT_PRETTY_URL_IS_HEADER));
+			header('Location: '.url_rewrite('mods/_standard/tests/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url, AT_PRETTY_URL_IS_HEADER));
 			exit;
 		}
 		
