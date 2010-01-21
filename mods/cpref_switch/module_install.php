@@ -29,8 +29,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  *    set to 0 or not set to disable.
  */
 $_course_privilege = TRUE; // possible values: FALSE | AT_PRIV_ADMIN | TRUE
-$_admin_privilege  = TRUE; // possible values: FALSE | TRUE
-$_cron_interval    = 35; // run every 30 minutes
 
 
 /********
