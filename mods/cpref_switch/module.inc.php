@@ -1,4 +1,6 @@
 <?php
+/* Content preferences switcher constants */
+/* These constants need to be moved to constants.inc.php */
 define('AT_INCLUDE_PATH', '../../include/');
 
 define('AT_PREF_NONE', 'none');
