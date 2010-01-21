@@ -55,11 +55,11 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
 }
 
 ?>
-<!-- form class="cpref_switch" name="cpref_switch_form" action="/atutor/mods/cpref_switch/ajax_save.php" method="post"-->
+
 <form class="cpref_switch" method="post" name="cpref_switch_form">
-<div>
-<label for="cs_preferred_alt_to_text"><?php echo _AT("alt_to_text") ?></label>
-<select name="cs_preferred_alt_to_text" id="cs_preferred_alt_to_text">
+<div style="position: relative;padding: 1em;height: 15.5em;">
+<label style="display:block;margin-bottom:0.25em;" for="cs_preferred_alt_to_text"><?php echo _AT("alt_to_text") ?></label>
+<select style="margin-bottom:1em;margin-left:1em;" name="cs_preferred_alt_to_text" id="cs_preferred_alt_to_text">
     <?php 
         foreach ($alt_to_text_values as $key => $value) {
             echo '<option value="'.$value.'"';
@@ -69,8 +69,8 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
     ?>
 </select>
 
-<label for="cs_preferred_alt_to_audio"><?php echo _AT("alt_to_audio") ?></label>
-<select name="cs_preferred_alt_to_audio" id="cs_preferred_alt_to_audio">
+<label style="display:block;margin-bottom:0.25em;" for="cs_preferred_alt_to_audio"><?php echo _AT("alt_to_audio") ?></label>
+<select style="margin-bottom:1em;margin-left:1em;"name="cs_preferred_alt_to_audio" id="cs_preferred_alt_to_audio">
     <?php 
         foreach ($alt_to_audio_values as $key => $value) {
             echo '<option value="'.$value.'" ';
@@ -80,8 +80,8 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
     ?>
 </select>
 
-<label for="cs_preferred_alt_to_visual"><?php echo _AT("alt_to_visual") ?></label>
-<select name="cs_preferred_alt_to_visual" id="cs_preferred_alt_to_visual">
+<label style="display:block;margin-bottom:0.25em;" for="cs_preferred_alt_to_visual"><?php echo _AT("alt_to_visual") ?></label>
+<select style="margin-bottom:1em;margin-left:1em;"name="cs_preferred_alt_to_visual" id="cs_preferred_alt_to_visual">
     <?php 
         foreach ($alt_to_visual_values as $key => $value) {
             echo '<option value="'.$value.'" ';
@@ -91,9 +91,7 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
     ?>
 </select>
 
-<!-- input type="hidden" /-->
-<!-- input type="submit" value="<?php echo _AT('apply') ?>" /-->
-<input class="button" type="button" value="<?php echo _AT('apply') ?>" onclick="ATutor.cpref_switch_doPost();" />
+<input style="position:absolute;right:2em;bottom:1em;" class="button" type="button" value="<?php echo _AT('apply') ?>" onclick="ATutor.cpref_switch_doPost();" />
 </div>
 </form>
 
