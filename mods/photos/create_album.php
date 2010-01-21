@@ -16,12 +16,13 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 
-debug($_FILES);
 //instantiate obj
 $pa = new PhotoAlbum();
 
 //handles submit
 if(isset($_POST['submit'])){
+	//TODO: Check if the user have permission to add a course album
+	//		TA and Instructors can
 	if (isset($_POST['album_type'])){
 		$album_type	= (intval($_POST['album_type'])==AT_PA_TYPE_MY_ALBUM)?AT_PA_TYPE_MY_ALBUM:AT_PA_TYPE_COURSE_ALBUM;
 	} else {
@@ -41,8 +42,10 @@ if(isset($_POST['submit'])){
 		//album name can't be empty
 		//TODO: user input failure
 		$msg->addError();
-
 	}
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	header('Location: index.php');
+	exit;
 } elseif (isset($_POST['cancel'])){
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.AT_PA_BASE);

@@ -37,6 +37,10 @@
 			<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$this->album_info['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf8($photo['description'], false); ?>" alt="<?php echo htmlentities_utf8($photo['alt_text']);?>" /></a>
 		</div>
 		<?php endforeach; ?>
+		<div class="album_description">
+			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.$this->album_info['location'] .'<br/>';?>
+			<?php echo $this->album_info['description'];?></p>
+		</div>
 		<!-- end loop -->
 	</div>
 
@@ -52,19 +56,23 @@
 		<div class="comment_feeds">
 			<?php if (!empty($this->comments)): ?>
 			<?php foreach($this->comments as $k=>$comment_array): ?>
-				<div class="comment_box">
+				<div class="comment_box" id="comment_box">
 					<!-- TODO: Profile link and img -->
-					<div><a href=""><strong><?php echo htmlentities_utf8(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong> <?php echo htmlentities_utf8($comment_array['comment']); ?></div>
-					<div>
-						<div class="comment_text"></div>
-						<div class="comment_actions">
-							<!-- TODO: if author, add in-line "edit" -->
-							<?php echo AT_date(_AT('forum_date_format'), $comment_array['created_date'], AT_DATE_MYSQL_DATETIME);?>
-							<?php if ($this->action_permission): ?>
-							<a href=""><?php echo _AT('edit');?></a>							
-							<a href="<?php echo AT_PA_BASENAME.'delete_comment.php?aid='.$this->album_info['id'].SEP.'comment_id='.$comment_array['id']?>"><?php echo _AT('delete');?></a>
-							<?php endif; ?>
-						</div>
+					<div class="flc-inlineEditable"><a href=""><strong><?php echo htmlentities_utf8(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
+						<?php 
+							if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']){
+								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf8($comment_array['comment']).'</span>'; 
+							} else {
+								echo htmlentities_utf8($comment_array['comment']); 
+							}
+						?>
+					</div>
+					<div class="comment_actions">
+						<!-- TODO: if author, add in-line "edit" -->
+						<?php echo AT_date(_AT('forum_date_format'), $comment_array['created_date'], AT_DATE_MYSQL_DATETIME);?>
+						<?php if ($this->action_permission): ?>
+						<a href="<?php echo AT_PA_BASENAME.'delete_comment.php?aid='.$this->album_info['id'].SEP.'comment_id='.$comment_array['id']?>"><?php echo _AT('delete');?></a>
+						<?php endif; ?>
 					</div>
 				</div>
 			<?php endforeach; endif;?>
@@ -83,3 +91,28 @@
 		</div>		
 	</div>
 </div>
+
+
+<script type="text/javascript">
+jQuery(document).ready(function () {
+	fluid.inlineEdits(".comment_feeds", {
+		componentDecorators: {
+			type: "fluid.undoDecorator"
+		},
+		useTooltip: true,
+		listeners: {
+			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
+				if (newValue != oldValue){
+					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_comment.php';?>", 
+							{"submit":"submit",
+							 "aid":<?php echo $this->album_info['id'];?>, 
+							 "cid":viewNode.id, 
+							 "comment":newValue},
+							  function(data){}, 
+							  "json");
+				}
+			}
+		}
+	});
+});
+</script>

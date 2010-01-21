@@ -30,9 +30,20 @@ $_pages[AT_PA_BASENAME.'photo.php']['parent']    = AT_PA_BASENAME.'albums.php?id
 $pa = new PhotoAlbum($aid);
 
 //get details
+$info = $pa->getAlbumInfo();
 $photos = $pa->getAlbumPhotos();
 $photo_info = $pa->getPhotoInfo($pid);
 $comments = $pa->getComments($pid, true);
+
+//TODO: Validate users, course and my albums.
+$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
+if(!isset($visible_albums[$aid]) || $photo_info['album_id']!=$aid){
+	//TODO msg;
+	$msg->addError("You can't see this album");
+	header('location: index.php');
+	exit;
+}
+
 if($pa->checkPhotoPriv($pid, $_SESSION['member_id']) || $pa->checkAlbumPriv($_SESSION['member_id'])){
 	$action_permission = true;
 } else {

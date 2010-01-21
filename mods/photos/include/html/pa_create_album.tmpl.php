@@ -1,5 +1,5 @@
 <div class="input-form">
-<form action="<?php echo $_SERVER['PHP_SELF'];?>" enctype="multipart/form-data" name="create_album" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF'];?>" name="create_album" method="post">
 	<div class="row">
 		<div class="left_row"><label for="album_name"><?php echo _AT('album_name'); ?></label></div>
 		<input id="album_name" name="album_name" type="text" />
@@ -22,10 +22,12 @@
 		<div class="left_row"<label for="album_description"><?php echo _AT('album_description'); ?></label></div>
 		<textarea id="album_description" name="album_description"></textarea>
 	</div>
+	<!--
 	<div class="row">
 		<div class="left_row"><label for="album_photos"><?php echo _AT('album_photos'); ?></label></div>
 		<input id="album_photos" name="album_photos" type="file" />
 	</div>
+	-->
 	<div class="row">
 		<input name="submit" type="submit" value="<?php echo _AT('create_album');?>" class="button"/>
 		<input name="cancel" type="submit" value="<?php echo _AT('cancel');?>" class="button"/>

@@ -45,6 +45,11 @@ div.album_panel .photo_frame img{
 	border: 1px solid #D2D2D2;
 	padding: 0.2em;
 }
+div.album_panel .album_description{
+	width: 60%;
+	float: left;
+}
+
 div.album {
 	background: #FFFFFF;
 	border: 1px solid #D2D2D2;	
@@ -87,9 +92,6 @@ div.photo_panel img{
 	background: #FFFFFF;
 	border: 1px solid #D2D2D2;
 	padding: 0.2em;
-}
-div.photo_panel p{
-	width: 60%;
 }
 div.comment_panel{
 	background: #FFFFFF;

@@ -25,10 +25,16 @@ $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
 
 //TODO: Validate users, course and my albums.
+$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
+if(!isset($visible_albums[$id])){
+	//TODO msg;
+	$msg->addError("You can't see this album");
+	header('location: index.php');
+	exit;
+}
 
 //TODO: handle add_photo
 if(isset($_POST['upload'])){
-	debug($_FILES);
 	//check file size, filename, and extension
 	$_FILES['photo'] = checkPhoto($_FILES['photo']);
 

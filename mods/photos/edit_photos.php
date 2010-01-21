@@ -32,6 +32,11 @@ $_pages[AT_PA_BASENAME.'edit_photos.php']['parent'] = AT_PA_BASENAME.'albums.php
 //initialization
 $pa = new PhotoAlbum($aid);
 
+if (!$pa->checkAlbumPriv($_SESSION['member_id'])){
+	header('location: albums.php?id='.$aid);
+	exit;
+}
+
 //get details
 if ($pid > 0){
 	//get only 1 photo
@@ -66,7 +71,7 @@ if(isset($_GET['org'])){
 }
 
 //handle Edit.
-if (isset($_POST['submit']) && $pa->checkAlbumPriv($_SESSION['member_id'])){
+if (isset($_POST['submit'])){
 	//update photo description
 	foreach($photos as $index=>$photo_array){
 		$alt_text = $_POST['alt_text_'.$photo_array['id']];

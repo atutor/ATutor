@@ -146,6 +146,13 @@ class PhotoAlbum {
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."pa_albums (name, location, description, type_id, member_id, photo_id, created_date, last_updated) VALUES ('$name', '$location', '$description', $type, $member_id, $photo_id, NOW(), NOW())";
 		$result = mysql_query($sql, $db);
+
+		//if course album, add a record.
+		if ($type==AT_PA_TYPE_COURSE_ALBUM){
+			$aid = mysql_insert_id();
+			$sql = "INSERT INTO ".TABLE_PREFIX."pa_course_album (course_id, album_id) VALUES ($_SESSION[course_id], $aid)";
+			$result = mysql_query($sql, $db);
+		}
 		return $result;
 	}
 
@@ -281,13 +288,22 @@ class PhotoAlbum {
 		$member_id = intval($member_id);
 
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pa_albums WHERE member_id=$member_id";
-		if($type_id > 0){
+		if($type_id==AT_PA_TYPE_COURSE_ALBUM){
+			$sql = 'SELECT albums.* FROM '.TABLE_PREFIX.'pa_albums albums, 
+						(SELECT ca.* FROM '.TABLE_PREFIX.'course_enrollment enrollments
+							RIGHT JOIN '.TABLE_PREFIX."pa_course_album ca 
+							ON enrollments.course_id=ca.course_id
+							WHERE member_id=$member_id AND ca.course_id=$_SESSION[course_id]
+						) AS allowed_albums
+						WHERE albums.id=allowed_albums.album_id";
+		}
+		elseif($type_id > 0){
 			$sql .= " AND type_id=$type_id";
 		}
 		$result = mysql_query($sql, $db);
 		if($result){
 			while($row = mysql_fetch_assoc($result)){
-				$rows[] = $row;
+				$rows[$row['id']] = $row;
 			}
 		}
 		return $rows;
@@ -347,7 +363,6 @@ class PhotoAlbum {
 		} else {
 			$sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_album_comments WHERE id=$comment_id";
 		}
-
 		$result = mysql_query($sql, $db);
 		if ($result){
 			$row = mysql_fetch_assoc($result);
@@ -374,6 +389,28 @@ class PhotoAlbum {
 			$sql =	'INSERT INTO '.TABLE_PREFIX."pa_album_comments (album_id, comment, member_id, created_date) VALUES ($id, '$comment', $member_id, NOW())";
 		} else {
 			$sql =	'INSERT INTO '.TABLE_PREFIX."pa_photo_comments (photo_id, comment, member_id, created_date) VALUES ($id, '$comment', $member_id, NOW())";
+		}
+		$result = mysql_query($sql, $db);
+		return $result;
+	}
+
+	/**
+	 * Edit comment
+	 * @param	int		comment id
+	 * @param	string	comment
+	 * @param	boolean	true if it is photo_id, false otherwise
+	 * @precondition	this->member_id has the privilige to edit comment.
+	 */
+	function editComment($id, $comment, $isPhoto){
+		global $addslashes, $db;
+
+		$id = intval($id);
+		$comment = $addslashes($comment);
+
+		if (!$isPhoto){
+			$sql = 'UPDATE '.TABLE_PREFIX."pa_album_comments SET comment='$comment' WHERE id=$id";
+		} else {
+			$sql = 'UPDATE '.TABLE_PREFIX."pa_photo_comments SET comment='$comment' WHERE id=$id";
 		}
 		$result = mysql_query($sql, $db);
 		return $result;

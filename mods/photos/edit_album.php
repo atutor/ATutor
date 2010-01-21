@@ -18,6 +18,12 @@ $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom styl
 
 $aid = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($aid);
+
+if (!$pa->checkAlbumPriv($_SESSION['member_id'])){
+	header('location: index.php');
+	exit;
+}
+
 $album_info = $pa->getAlbumInfo();
 
 //handle Edit album info.
