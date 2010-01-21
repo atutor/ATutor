@@ -75,8 +75,4 @@ $all_forums = get_forums($_SESSION['course_id']);
 </table>
 </form>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php');
-debug($_pages);
-
-
- ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
