@@ -12,7 +12,7 @@
 /****************************************************************************/
 // $Id: restore.php 9081 2010-01-13 20:26:03Z cindy $
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ADMIN); 
