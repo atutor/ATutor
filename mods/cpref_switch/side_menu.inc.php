@@ -33,7 +33,7 @@ var ATutor = ATutor || {};
 
 <?php
 $alt_to_text_values = array(AT_PREF_NONE, AT_PREF_AUDIO, AT_PREF_VISUAL, AT_PREF_SIGN);
-$alt_to_text_labels = array("", _AT(AT_PREF_AUDIO), _AT(AT_PREF_VISUAL), _AT(AT_PREF_SIGN));
+$alt_to_text_labels = array(_AT(AT_PREF_NONE), _AT(AT_PREF_AUDIO), _AT(AT_PREF_VISUAL), _AT(AT_PREF_SIGN));
 $alt_to_text = AT_PREF_NONE;
 if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT'] == 1) {
     $alt_to_text = $_SESSION['prefs']['PREF_ALT_TO_TEXT'];
@@ -41,14 +41,14 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT'] == 1) {
 
 
 $alt_to_audio_values = array(AT_PREF_NONE, AT_PREF_TEXT, AT_PREF_VISUAL, AT_PREF_SIGN);
-$alt_to_audio_labels = array("", _AT(AT_PREF_TEXT), _AT(AT_PREF_VISUAL), _AT(AT_PREF_SIGN));
+$alt_to_audio_labels = array(_AT(AT_PREF_NONE), _AT(AT_PREF_TEXT), _AT(AT_PREF_VISUAL), _AT(AT_PREF_SIGN));
 $alt_to_audio = AT_PREF_NONE;
 if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO'] == 1) {
     $alt_to_audio = $_SESSION['prefs']['PREF_ALT_TO_AUDIO'];
 }
 
 $alt_to_visual_values = array(AT_PREF_NONE, AT_PREF_TEXT, AT_PREF_AUDIO, AT_PREF_SIGN);
-$alt_to_visual_labels = array("", _AT(AT_PREF_TEXT), _AT(AT_PREF_AUDIO), _AT(AT_PREF_SIGN));
+$alt_to_visual_labels = array(_AT(AT_PREF_NONE), _AT(AT_PREF_TEXT), _AT(AT_PREF_AUDIO), _AT(AT_PREF_SIGN));
 $alt_to_visual = AT_PREF_NONE;
 if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
     $alt_to_visual = $_SESSION['prefs']['PREF_ALT_TO_VISUAL'];
@@ -101,6 +101,6 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
 
-$savant->assign('title', _AT('cpref_switch')); // the box title
+$savant->assign('title', _AT('content_settings')); // the box title
 $savant->display('include/box.tmpl.php');
 ?>
