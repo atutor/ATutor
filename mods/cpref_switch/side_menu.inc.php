@@ -20,8 +20,8 @@ var ATutor = ATutor || {};
                   "<?php echo AT_POST_ALT_TO_AUDIO; ?>": jQuery("#cs_preferred_alt_to_audio").val(),
                   "<?php echo AT_POST_ALT_TO_VISUAL; ?>": jQuery("#cs_preferred_alt_to_visual").val()
                  },
-                 function (data) {
-                     if ((location.href.indexOf("content.php") > -1) && (location.href.indexOf("cid") > -1) && data === '1') {
+                 function (isPrefsChanged) {
+                     if ((location.href.indexOf("content.php") > -1) && (location.href.indexOf("cid") > -1) && isPrefsChanged === '1') {
                          location.reload(true);
                      }
                      //perhaps insert a message on the screen for successful completion
