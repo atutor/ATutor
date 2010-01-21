@@ -154,7 +154,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '<td>';
 
 		if ( ($row['result_release']==AT_RELEASE_IMMEDIATE) || (($row['final_score'] != '') && ($row['result_release']==AT_RELEASE_MARKED)) ) {
-			echo '<a href="tools/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].'">'._AT('view_results').'</a>';
+			echo '<a href="mods/_standard/tests/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].'">'._AT('view_results').'</a>';
 		} else {
 			echo '<em>'._AT('no_results_yet').'</em>';
 		}

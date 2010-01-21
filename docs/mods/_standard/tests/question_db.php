@@ -119,6 +119,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <?php $tid = 0; ?>
 
-<?php require(AT_INCLUDE_PATH.'mods/_standard/tests/html/tests_questions.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'../mods/_standard/tests/html/tests_questions.inc.php'); ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

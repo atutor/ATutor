@@ -8,7 +8,7 @@ define('AT_PRIV_TESTS', $this->getPrivilege());
 $this->_list['my_tests'] = array('title_var'=>'my_tests','file'=>'mods/_standard/tests/sublinks.php');
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tool = 'tools/my_tests.php';
+$_student_tool = 'mods/_standard/tests/my_tests.php';
 
 $this->_pages['mods/_standard/tests/index.php']['title_var'] = 'tests';
 $this->_pages['mods/_standard/tests/index.php']['parent']    = 'tools/index.php';
@@ -66,9 +66,9 @@ $this->_pages['mods/_standard/tests/results_all_quest.php']['guide']     = 'inst
 $this->_pages['mods/_standard/tests/delete_test.php']['title_var'] = 'delete_test';
 $this->_pages['mods/_standard/tests/delete_test.php']['parent']    = 'mods/_standard/tests/index.php';
 
-$this->_pages['tools/view_results.php']['title_var'] = 'view_results';
-$this->_pages['tools/view_results.php']['parent']    = 'tools/my_tests.php';
-$this->_pages['tools/view_results.php']['children']  = array(); // to create the "back to tests" link
+$this->_pages['mods/_standard/tests/view_results.php']['title_var'] = 'view_results';
+$this->_pages['mods/_standard/tests/view_results.php']['parent']    = 'mods/_standard/tests/my_tests.php';
+$this->_pages['mods/_standard/tests/view_results.php']['children']  = array(); // to create the "back to tests" link
 
 	// test questions
 	$this->_pages['mods/_standard/tests/create_question_tf.php']['title_var'] = 'create_new_question';

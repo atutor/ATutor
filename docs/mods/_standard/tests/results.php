@@ -40,7 +40,7 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-require(AT_INCLUDE_PATH.'mods/_standard/tests/lib/test_result_functions.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 
 if ($_GET['reset_filter']) {
 	unset($_GET);
