@@ -93,6 +93,10 @@ div.photo_panel img{
 	border: 1px solid #D2D2D2;
 	padding: 0.2em;
 }
+div.photo_panel div{
+	width: 604px;
+	margin: 0 auto;
+}
 div.comment_panel{
 	background: #FFFFFF;
 	float: left;
