@@ -14,4 +14,8 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
  */
 $this->_stacks['cpref_switch'] = array('title_var'=>'cpref_switch', 'file'=>dirname(__FILE__).'/side_menu.inc.php');
 
+global $_custom_css, $_base_path;
+
+$_custom_css = $_base_path . 'mods/cpref_switch/module.css'; // use a custom stylesheet
+
 ?>
