@@ -8,13 +8,14 @@ ob_start(); ?>
 
 <script type="text/javascript">
 var ATutor = ATutor || {};
+ATutor.cpref_switch = ATutor.cpref_switch || {};
 
 (function ($, ATutor) {
 	/**
 	* Sends the alternative content request to the server and reloads the page on successful completion.
 	* Perhaps change this to a .ajax request so that we can display a fail message if it doesn't work.
 	*/
-	ATutor.cpref_switch_doPost = function () {
+	ATutor.cpref_switch.doPost = function () {
         jQuery.post("<?php echo AT_BASE_HREF; ?>mods/cpref_switch/ajax_save.php", 
                 { "<?php echo AT_POST_ALT_TO_TEXT; ?>": jQuery("#cs_preferred_alt_to_text").val(),
                   "<?php echo AT_POST_ALT_TO_AUDIO; ?>": jQuery("#cs_preferred_alt_to_audio").val(),
@@ -91,7 +92,7 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
     ?>
 </select>
 
-<input style="position:absolute;right:2em;bottom:1em;" class="button" type="button" value="<?php echo _AT('apply') ?>" onclick="ATutor.cpref_switch_doPost();" />
+<input style="position:absolute;right:2em;bottom:1em;" class="button" type="button" value="<?php echo _AT('apply') ?>" onclick="ATutor.cpref_switch.doPost();" />
 </div>
 </form>
 
