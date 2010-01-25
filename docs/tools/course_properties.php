@@ -15,8 +15,8 @@
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
-require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php');
 
 authenticate(AT_PRIV_ADMIN);
 
