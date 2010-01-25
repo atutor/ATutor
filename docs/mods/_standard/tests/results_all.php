@@ -152,7 +152,7 @@ if ($end_date != "" && !isValidDate($end_date)) {
 $table_content = "";
 $csv_content = "";
 
-require(AT_INCLUDE_PATH.'mods/_standard/tests/lib/test_result_functions.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 
 $sql	= "SELECT title, out_of, result_release, randomize_order, passscore, passpercent FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result	= mysql_query($sql, $db);

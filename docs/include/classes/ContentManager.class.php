@@ -1412,7 +1412,7 @@ initContentMenu();
 	 */
 	function getOnePretest($cid) {
 		global $db, $msg;
-		include_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+		include_once(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 		
 		$sql = "SELECT *, UNIX_TIMESTAMP(t.start_date) AS start_date, UNIX_TIMESTAMP(t.end_date) AS end_date 
 		          FROM ".TABLE_PREFIX."tests t, ".TABLE_PREFIX."content_prerequisites cp

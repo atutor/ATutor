@@ -16,7 +16,7 @@
 // $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/file_storage.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 function delete_user($id) {

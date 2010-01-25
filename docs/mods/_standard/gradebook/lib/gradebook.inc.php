@@ -156,7 +156,7 @@ function get_member_grade($test_id, $member_id, $grade_scale_id)
 {
 	global $db;
 
-	require_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+	require_once(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 	
 	$grade = "";
 	
@@ -432,7 +432,7 @@ function get_class_avg($gradebook_test_id)
 	
 	if ($row["id"]<>0)  // internal atutor test
 	{
-		require_once (AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+		require_once (AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 
 		$sql_test = "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=".$row["id"];
 		$result_test = mysql_query($sql_test, $db) or die(mysql_error());
