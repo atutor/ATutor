@@ -20,7 +20,7 @@ function encrypt_password() {
 	<div class="column" style="margin-top:0;">
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="form_login_action" value="true" />
-		<input type="hidden" name="form_course_id" value="<?php echo $this->course_id; ?>" />
+		<input type="hidden" name="form_course_id" value="<?php echo $this->form_course_id; ?>" />
 		<input type="hidden" name="form_password_hidden" value="" />
 		<div class="input-form" style="background-color:white;">
 			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
