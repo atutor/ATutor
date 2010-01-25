@@ -10,26 +10,34 @@ ob_start(); ?>
 var ATutor = ATutor || {};
 ATutor.cpref_switch = ATutor.cpref_switch || {};
 
-(function ($, ATutor) {
+(function (ATutor) {
 	/**
 	* Sends the alternative content request to the server and reloads the page on successful completion.
 	* Perhaps change this to a .ajax request so that we can display a fail message if it doesn't work.
 	*/
 	ATutor.cpref_switch.doPost = function () {
+		
         jQuery.post("<?php echo AT_BASE_HREF; ?>mods/cpref_switch/ajax_save.php", 
                 { "<?php echo AT_POST_ALT_TO_TEXT; ?>": jQuery("#cs_preferred_alt_to_text").val(),
                   "<?php echo AT_POST_ALT_TO_AUDIO; ?>": jQuery("#cs_preferred_alt_to_audio").val(),
                   "<?php echo AT_POST_ALT_TO_VISUAL; ?>": jQuery("#cs_preferred_alt_to_visual").val()
                  },
                  function (isPrefsChanged) {
-                     if ((location.href.indexOf("content.php") > -1) && (location.href.indexOf("cid") > -1) && isPrefsChanged === '1') {
-                         location.reload(true);
+                     if (isPrefsChanged) {
+                         //provide feedback
+                         jQuery("#cpref_switch_feedback").show();
                      }
-                     //perhaps insert a message on the screen for successful completion
+                     else {
+                    	 jQuery("#cpref_switch_feedback").hide();
+                     }
+                     if ((location.href.indexOf("content.php") > -1) && (location.href.indexOf("cid") > -1) && isPrefsChanged === '1') {
+                    	//if page is reloaded, the ajax stops running - no feedback is possible
+                         location.reload(true);  
+                     }
                  }
-       );        
-    };
-})(jQuery, ATutor);
+        );        
+    };   
+})(ATutor);
 </script>
 
 <?php
@@ -92,6 +100,7 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
     ?>
 </select>
 
+<div style="color:#17B506;position:absolute;left:1em;right:3em;display:none" id="cpref_switch_feedback" role="region" aria-live="polite" aria-relevant="all"><?php echo _AT("AT_FEEDBACK_ACTION_COMPLETED_SUCCESSFULLY")?></div>
 <input style="position:absolute;right:2em;bottom:1em;" class="button" type="button" value="<?php echo _AT('apply') ?>" onclick="ATutor.cpref_switch.doPost();" />
 </div>
 </form>
