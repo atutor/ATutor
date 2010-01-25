@@ -23,7 +23,7 @@ if (isset($_SESSION['course_id']))
 else
 	$course_id = $_GET['course'];
 
-require(AT_INCLUDE_PATH . 'lib/test_result_functions.inc.php');
+require(AT_INCLUDE_PATH . '../mods/_standard/tests/lib/test_result_functions.inc.php');
 	
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$course_base_href = 'get.php/';
