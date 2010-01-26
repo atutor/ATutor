@@ -18,12 +18,14 @@ include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 include (AT_PA_INCLUDE.'classes/SimpleImage.class.php');
 include (AT_PA_INCLUDE.'lib.inc.php');
 $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
+$_custom_head .= '<script src="'.$_base_path . AT_PA_BASENAME . 'include/ajaxupload.js" type="text/javascript"></script>';
 
 $id = intval($_REQUEST['id']);
 
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
 
+/*
 //TODO: Validate users, course and my albums.
 $visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
 if(!isset($visible_albums[$id])){
@@ -32,6 +34,7 @@ if(!isset($visible_albums[$id])){
 	header('location: index.php');
 	exit;
 }
+*/
 
 //TODO: handle add_photo
 if(isset($_POST['upload'])){
@@ -89,6 +92,17 @@ if(isset($_POST['upload'])){
 		}
 		$si->resizeToHeight(AT_PA_IMAGE_THUMB);
 		$si->save(AT_PA_CONTENT_DIR.$album_file_path_tn.$photo_file_path);
+	}
+	if ($_POST['upload'] == 'ajax'){
+		$photo_file_hash = getPhotoFilePath($added_photo_id, '', $photo_info['created_date']);
+		//return JSON, relying on jQuery to convert entries to html entities.
+		echo json_encode(array(
+					'aid'=>$id,
+					'pid'=>$added_photo_id,
+					'ph'=>$photo_file_hash,
+					'title'=>$photo_info['title'],
+					'alt'=>$photo_info['alt']));
+		exit;
 	}
 
 	header('location: albums.php?id='.$id);

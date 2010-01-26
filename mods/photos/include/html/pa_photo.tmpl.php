@@ -107,7 +107,16 @@ jQuery(document).ready(function () {
 		useTooltip: true,
 		listeners: {
 			modelChanged: function(model, oldModel, source){
-				if (model != oldModel){
+				if (model != oldModel && source != undefined){
+					viewNode = source.component.container.children('.flc-inlineEdit-text')[0];
+					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_comment.php';?>", 
+						{"submit":"submit",
+						 "pid":<?php echo $this->photo_info['id'];?>, 
+						 "aid":<?php echo $this->aid;?>, 
+						 "cid":viewNode.id, 
+						 "comment":model.value},
+						  function(data){}, 
+						  "json");
 				}
 			},
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {

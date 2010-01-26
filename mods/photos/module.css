@@ -80,6 +80,9 @@ div.add_photo{
 	border: 1px solid #D2D2D2;	
 	width: 95%;
 }
+div.add_photo ol.files img {
+	width: 50px;
+}
 
 div.photo_panel{
 	background: #F7F7F7;

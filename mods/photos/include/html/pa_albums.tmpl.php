@@ -1,4 +1,4 @@
-<div>
+<div id="uploader-contents">
 	<!-- Photo album options and page numbers -->
 	<div class="topbar">
 		<div class="summary">
@@ -12,21 +12,33 @@
 	</div>
 
 	<div class="add_photo">
-		<div>
-			<form action="<?php echo AT_PA_BASENAME;?>albums.php" enctype="multipart/form-data" name="add_photos" class="input-form" method="post">
+		<!--
+		<div class="input-form">
+			<form action="<?php echo AT_PA_BASENAME;?>albums.php" enctype="multipart/form-data" name="add_photos" method="post">
 				<div class="row">
 					<p><?php echo _AT('add_more_photos');?></p>
 				</div>
 				<div class="row">
-					<label for="photo_comment"><?php echo _AT('comment'); ?></label><br/>
-					<textarea name="photo_comment" id="photo_comment"></textarea>
-				</div>
-				<div class="row">
 					<input type="file" name="photo" />
+					
 					<input type="hidden" name="id" value="<?php echo $this->album_info['id'];?>" />
-					<input type="submit" name="upload" value="<?php echo _AT("upload");?>"class="button"/>
+					<input type="submit" name="upload" value="<?php echo _AT("upload");?>"class="button"/> 
 				</div>
 			</form>
+		</div>
+		-->
+		<div class="input-form" id="ajax_uploader">
+			<div class="row">
+				<p><?php echo _AT('upload_blub');?></p>
+				<input id="upload_button" type="file" class="button"/>
+			</div>
+			<div class="row" id="files_pending" style="display:none;">
+				<img src="<?php echo AT_PA_BASENAME; ?>images/loading.gif" alt="loading" title="loading"/>
+				<span></span>
+			</div>
+			<div class="row">
+				<ol class="files"></ol>
+			</div>
 		</div>
 	</div>
 
@@ -94,6 +106,7 @@
 
 
 <script type="text/javascript">
+/* Fluid inline editor */
 jQuery(document).ready(function () {
 	fluid.inlineEdits(".comment_feeds", {
 		componentDecorators: {
@@ -115,4 +128,101 @@ jQuery(document).ready(function () {
 		}
 	});
 });
+
+
+/* Ajax Uploader */
+var upload_pending  = 0; //counter
+var ajax_upload = new AjaxUpload('upload_button', {
+  // Location of the server-side upload script
+  // NOTE: You are not allowed to upload files to another domain
+  action: '<?php echo $_base_path. AT_PA_BASENAME; ?>albums.php',
+  // File upload name
+  name: 'photo',
+  // Additional data to send
+  data: {
+    upload : 'ajax',
+    id : '<?php echo $this->album_info['id'];?>'
+  },
+  // Submit file after selection
+  autoSubmit: true,
+  // The type of data that you're expecting back from the server.
+  // HTML (text) and XML are detected automatically.
+  // Useful when you are using JSON data as a response, set to "json" in that case.
+  // Also set server response type to text/html, otherwise it will not work in IE6
+  responseType: false,
+  // Fired after the file is selected
+  // Useful when autoSubmit is disabled
+  // You can return false to cancel upload
+  // @param file basename of uploaded file
+  // @param extension of that file
+  onChange: function(file, extension){},
+  // Fired before the file is uploaded
+  // You can return false to cancel upload
+  // @param file basename of uploaded file
+  // @param extension of that file
+  onSubmit: function(file, extension) {
+	  upload_pending++;
+	  if (upload_pending > 0){
+		jQuery('#files_pending').show();
+	  }
+	  jQuery('#files_pending').children('span').text('Loading... '+ (upload_pending)+' Remaining')
+  },
+  // Fired when file upload is completed
+  // WARNING! DO NOT USE "FALSE" STRING AS A RESPONSE!
+  // @param file basename of uploaded file
+  // @param response server response
+  onComplete: function(file, response) {
+	 console.debug(response);
+	 // add file to the list
+	 response_array = JSON.parse(response);
+	 img = jQuery('<img>').attr('src', '<?php echo $_base_href . AT_PA_BASENAME; ?>get_photo.php?aid='+response_array.aid+'&pid='+response_array.pid+'&ph='+response_array.ph);	 
+	 img.attr('alt', response_array.alt);
+	 li = jQuery('<li></li>');
+	 li.appendTo('#ajax_uploader .files');
+	 img.appendTo(li);
+	 jQuery('<span></span>').appendTo(li).text(file);
+	 a_delete = jQuery('<a>'); //deletion link
+	 a_delete.text('<?php echo _AT("remove");?>');
+	 a_delete.attr('href', '<?php echo $_SERVER["REQUEST_URI"]; ?>#');
+	 a_delete.attr('title', file);
+	 a_delete.attr('onClick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this)');
+	 a_delete.appendTo(li);
+	 jQuery('#files_pending').children('span').text('Loading... '+ (--upload_pending)+' Remaining')
+	 if (upload_pending == 0){
+		jQuery('#files_pending').hide("slow");
+	  }
+  }
+});
+
+//Ajax delete
+function deletePhoto(aid, pid, thisobj) {
+	var thisobj = thisobj;
+	xmlhttp=GetXmlHttpObject();
+	if (xmlhttp==null) {
+	  alert ("Your browser does not support AJAX!");
+	  return;
+	}
+	var url='<?php echo $_base_href . AT_PA_BASENAME; ?>remove_uploaded_photo.php?aid='+aid+'&pid='+pid;
+	xmlhttp.onreadystatechange=function(){
+		console.debug(xmlhttp);
+		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			jQuery(thisobj).parent().remove();	//delete from DOM tree.
+		}
+	};
+	xmlhttp.open("GET",url,true);
+	xmlhttp.send(null);
+}
+
+function GetXmlHttpObject() {
+	if (window.XMLHttpRequest) {
+	  // code for IE7+, Firefox, Chrome, Opera, Safari
+	  return new XMLHttpRequest();
+	  }
+	if (window.ActiveXObject){
+	  // code for IE6, IE5
+	  return new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	return null;
+}
+
 </script>

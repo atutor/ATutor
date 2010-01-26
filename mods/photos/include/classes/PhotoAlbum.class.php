@@ -129,6 +129,8 @@ class PhotoAlbum {
 		//delete the photo from db
 		$sql = "DELETE FROM ".TABLE_PREFIX."pa_photos WHERE id=$id";
 		mysql_query($sql, $db);
+		
+		return true;
 	}
 
 	/** */
