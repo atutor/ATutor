@@ -66,7 +66,9 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
 ?>
 
 <form class="cpref_switch" method="post" name="cpref_switch_form">
-<div style="position: relative;padding: 1em;height: 15.5em;">
+<fieldset style="position: relative;padding: 1em;height: 15.5em; margin:0.5em">
+<legend style="display:none"><?php echo _AT('content_settings') ?></legend>
+
 <label style="display:block;margin-bottom:0.25em;" for="cs_preferred_alt_to_text"><?php echo _AT("alt_to_text") ?></label>
 <select style="margin-bottom:1em;margin-left:1em;" name="cs_preferred_alt_to_text" id="cs_preferred_alt_to_text">
     <?php 
@@ -101,8 +103,9 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
 </select>
 
 <div style="color:#17B506;position:absolute;left:1em;right:3em;display:none" id="cpref_switch_feedback" role="region" aria-live="polite" aria-relevant="all"><?php echo _AT("AT_FEEDBACK_ACTION_COMPLETED_SUCCESSFULLY")?></div>
-<input style="position:absolute;right:2em;bottom:1em;" class="button" type="button" value="<?php echo _AT('apply') ?>" onclick="ATutor.cpref_switch.doPost();" />
-</div>
+<input style="position:absolute;right:2em;bottom:2em;" class="button" type="button" value="<?php echo _AT('apply') ?>" onclick="ATutor.cpref_switch.doPost();" />
+
+</fieldset>
 </form>
 
 <?php
