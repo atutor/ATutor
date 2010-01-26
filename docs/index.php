@@ -20,9 +20,11 @@ if (isset($_GET['cid'])) {
 
 if (isset($_SESSION['course_id'])) 
 	$course_id = $_SESSION['course_id'];
-else
+else if (isset($_GET['p_course'])) // is set when pretty url is turned on and a public course is accessed
+	$course_id = $_GET['p_course'];
+else // is set when guests access protected course
 	$course_id = $_GET['course'];
-
+	
 require(AT_INCLUDE_PATH . '../mods/_standard/tests/lib/test_result_functions.inc.php');
 	
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {

@@ -36,7 +36,7 @@ global $_stacks;
 global $framed, $popup;
 global $_custom_css;
 global $_custom_head;
-global $substr, $strlen, $course_id;
+global $substr, $strlen, $_course_id;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 require(AT_INCLUDE_PATH . 'lib/pref_functions.inc.php');
@@ -267,11 +267,14 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 // i don't like this code. i don't know were these two variables are coming from
 // anyone can add ?framed=1 to a URL to alter the behaviour.
 
-// global $course_id is set when a guest accessing a public course. 
+// global $_course_id is set when a guest accessing a public course. 
 // This is to solve the issue that the google indexing fails as the session vars are lost.
-if (isset($_SESSION['course_id'])) $course_id = $_SESSION['course_id'];
+if (isset($_SESSION['course_id'])) 
+	$_course_id = $_SESSION['course_id'];
+else if (isset($_GET['p_course'])) // p_course is set when pretty url is turned on and public course is accessed
+	$_course_id = $_GET['p_course'];
 
-$savant->assign('course_id', $course_id);
+$savant->assign('course_id', $_course_id);
 
 if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['popup']) && $_REQUEST['popup'])) {
     $savant->assign('framed', 1);

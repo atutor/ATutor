@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id: footer.inc.php 6614 2006-09-27 19:32:29Z joel $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $next_prev_links;
@@ -18,19 +19,18 @@ global $_base_path, $_my_uri;
 global $_stacks, $db;
 global $system_courses;
 global $savant;
-global $course_id;
 
-// $course_id is set when a guest accessing a public course. 
+// $_course_id is set when a guest accessing a public course. 
 // This is to solve the issue that the google indexing fails as the session vars are lost.
-global $course_id;
-if (isset($_SESSION['course_id'])) $course_id = $_SESSION['course_id'];
+global $_course_id;
+if (isset($_SESSION['course_id'])) $_course_id = $_SESSION['course_id'];
 
-$savant->assign('course_id', $course_id);
+$savant->assign('course_id', $_course_id);
 
 $side_menu = array();
 $stack_files = array();
 
-if ($course_id > 0) {
+if ($_course_id > 0) {
 	$savant->assign('my_uri', $_my_uri);
 
 	$savant->assign('right_menu_open', TRUE);
@@ -41,7 +41,7 @@ if ($course_id > 0) {
 
 	//copyright can be found in include/html/copyright.inc.php
 
-	$side_menu = explode('|', $system_courses[$course_id]['side_menu']);
+	$side_menu = explode('|', $system_courses[$_course_id]['side_menu']);
 
 	foreach ($side_menu as $side) {
 		if (isset($_stacks[$side])) {

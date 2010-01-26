@@ -265,7 +265,7 @@ if ($_config['time_zone']) {
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 	$msg = new Message($savant);
 
-	$contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : $_GET['course']);
+	$contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : $_GET['p_course']);
 	$contentManager->initContent();
 /**************************************************/
 
@@ -360,9 +360,11 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 /*																	*/
 /********************************************************************/
-
-if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$_SESSION['course_id'].' ORDER BY word';
+// p_course is set when pretty url is on and guests access a public course. @see bounce.php
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0 || $_REQUEST['p_course'] > 0) {
+	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary 
+	         WHERE course_id='.($_SESSION['course_id']>0 ? $_SESSION['course_id'] : $_REQUEST['p_course']).' 
+	         ORDER BY word';
 	$result = mysql_query($sql, $db);
 	$glossary = array();
 	$glossary_ids = array();
@@ -966,9 +968,12 @@ function url_rewrite($url, $is_rewriting_header=AT_PRETTY_URL_NOT_HEADER, $force
 			} elseif (isset($_REQUEST['course'])){
 				//jump menu
 				$course_id = $url_parser->getCourseDirName($_REQUEST['course']);
+			} elseif (isset($_REQUEST['p_course'])){
+				// is set when guests access public course. @see bounce.php
+				$course_id = $url_parser->getCourseDirName($_REQUEST['p_course']);
 			} elseif (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0){
 				$course_id = $url_parser->getCourseDirName($_SESSION['course_id']);
-			}
+			} 
 		} else {
 			$course_id = $_SESSION['course_id'];
 		}
@@ -981,6 +986,9 @@ function url_rewrite($url, $is_rewriting_header=AT_PRETTY_URL_NOT_HEADER, $force
 			$course_id = $url_parser->getCourseDirName($matches[1]);
 		} elseif (isset($_REQUEST['course'])){
 			$course_id = $url_parser->getCourseDirName($_REQUEST['course']);
+		} elseif (isset($_REQUEST['p_course'])){
+			// is set when guests access public course. @see bounce.php
+			$course_id = $url_parser->getCourseDirName($_REQUEST['p_course']);
 		} elseif (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0){
 			$course_id = $url_parser->getCourseDirName($_SESSION['course_id']);
 		} 

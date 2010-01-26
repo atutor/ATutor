@@ -180,10 +180,10 @@ if ($_SESSION['course_id'] == -1) {
 	unset($_SESSION['course_id']);
 }
 
-if (isset($_GET['course'])) {
-	$course	= abs($_GET['course']);
-} else if (isset($_POST['course'])) {
-	$course	= abs($_POST['course']);
+if (isset($_REQUEST['course'])) { // is set guests access protected course
+	$course	= abs($_REQUEST['course']);
+} else if (isset($_REQUEST['p_course'])) { // is set when pretty url is turned on, access public course
+	$course	= abs($_REQUEST['p_course']);
 } else {
 	$course = 0;
 }
@@ -266,7 +266,7 @@ switch ($row['access']){
 			count_login();
 			if ($_config['pretty_url'])
 			{
-				if (!strpos($dest, '/course/')) $dest .= '/course/'.$course;
+				if (!strpos($dest, '/p_course/')) $dest .= '/p_course/'.$course;
 				header('Location: '.$dest);
 				exit;
 			}
