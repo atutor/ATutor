@@ -3,7 +3,7 @@
 	<div class="topbar">
 		<div class="summary">
 				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>"><?php echo _AT('edit_photos');?></a> | 
-				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('organize_photos');?></a> | 
+				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('organize_photos');?></a> |
 				<a>Add More Photos</a> |
 		</div>
 		<div class="paginator">
@@ -30,7 +30,7 @@
 		<div class="input-form" id="ajax_uploader">
 			<div class="row">
 				<p><?php echo _AT('upload_blub');?></p>
-				<input id="upload_button" type="file" class="button"/>
+				<input id="upload_button" type="button" class="button"/>
 			</div>
 			<div class="row" id="files_pending" style="display:none;">
 				<img src="<?php echo AT_PA_BASENAME; ?>images/loading.gif" alt="loading" title="loading"/>

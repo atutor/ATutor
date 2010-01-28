@@ -21,6 +21,7 @@ CREATE TABLE `pa_photos` (
   `description` TEXT,
   `alt_text` TEXT,
   `member_id` INTEGER UNSIGNED NOT NULL,
+  `album_id` INTEGER UNSIGNED NOT NULL,
   `ordering` SMALLINT UNSIGNED NOT NULL,
   `created_date` DATETIME NOT NULL,
   `last_updated` DATETIME NOT NULL,

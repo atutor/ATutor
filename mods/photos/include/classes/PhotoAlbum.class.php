@@ -37,9 +37,9 @@ class PhotoAlbum {
 		$result = mysql_query($sql, $db);
 		if ($result){
 			$row = mysql_fetch_assoc($result);
-			$ordering = $row['ordering'] + 1;
+			$ordering = intval($row['ordering']) + 1;
 		} else {
-			return false;
+			$ordering = 1;
 		}
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pa_photos (name, description, member_id, album_id, ordering, created_date, last_updated) VALUES ('$name', '$comment', $member_id, $album_id, $ordering, NOW(), NOW())";

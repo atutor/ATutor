@@ -466,7 +466,7 @@ console.debug(self);
                                 
             });
 
-			addEvent(self._button, 'keypress', function(){
+			addEvent(self._button, 'change', function(){
                 if (self._disabled){
                     return;
                 }
