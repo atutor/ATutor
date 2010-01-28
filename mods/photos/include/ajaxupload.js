@@ -154,13 +154,13 @@
     function copyLayout(from, to){
 	    var box = getBox(from);
         
-        addStyles(to, {
+/*        addStyles(to, {
 	        position: 'absolute',                    
 	        left : box.left + 'px',
 	        top : box.top + 'px',
 	        width : from.offsetWidth + 'px',
 	        height : from.offsetHeight + 'px'
-	    });        
+	    });   */     
     }
 
     /**
@@ -236,6 +236,8 @@
             action: 'upload.php',
             // File upload name
             name: 'userfile',
+			// File Title 
+			title: '',
             // Additional data to send
             data: {},
             // Submit file as soon as it's selected
@@ -331,7 +333,7 @@
                 // We use visibility instead of display to fix problem with Safari 4
                 // The problem is that the value of input doesn't change if it 
                 // has display none when user selects a file           
-                this._input.parentNode.style.visibility = 'hidden';
+//                this._input.parentNode.style.visibility = 'hidden';
             }
         },
         enable: function(){
@@ -347,28 +349,31 @@
          */
         _createInput: function(){ 
             var self = this;
+                        
             var input = document.createElement("input");
-
+//			var input = document.getElementById("upload_button");
+			var div = document.getElementById("upload_button_div");
             input.setAttribute('type', 'file');
             input.setAttribute('name', this._settings.name);
-console.debug(input);            
+			input.setAttribute('title', this._settings.title);
+            
             addStyles(input, {
-                'position' : 'absolute',
+//                'position' : 'absolute',
                 // in Opera only 'browse' button
                 // is clickable and it is located at
                 // the right side of the input
-                'right' : 0,
-                'margin' : 0,
-                'padding' : 0,
-                'fontSize' : '480px',                
+//                'right' : 0,
+  //              'margin' : 0,
+    //            'padding' : 0,
+//                'fontSize' : '480px',                			     
                 'cursor' : 'pointer'
             });            
 
-            var div = document.createElement("div");                        
-            addStyles(div, {
+//            var div = document.createElement("div");                        
+/*            addStyles(div, {
                 'display' : 'block',
                 'position' : 'absolute',
-                'overflow' : 'hidden',
+//                'overflow' : 'hidden',
                 'margin' : 0,
                 'padding' : 0,                
                 'opacity' : 0,
@@ -377,18 +382,19 @@ console.debug(input);
                 'direction' : 'ltr',
                 //Max zIndex supported by Opera 9.0-9.2
                 'zIndex': 2147483583
-            });
-console.debug(div);            
+            });*/
+console.debug(input);            
             // Make sure that element opacity exists.
             // Otherwise use IE filter            
-            if ( div.style.opacity !== "0") {
+/*            if ( div.style.opacity !== "0") {
                 if (typeof(div.filters) == 'undefined'){
                     throw new Error('Opacity not supported by the browser');
                 }
                 div.style.filter = "alpha(opacity=0)";
             }            
-            
+*/            
             addEvent(input, 'change', function(){
+                 
                 if ( ! input || input.value === ''){                
                     return;                
                 }
@@ -418,12 +424,14 @@ console.debug(div);
                 // We use visibility instead of display to fix problem with Safari 4
                 // The problem is that the value of input doesn't change if it 
                 // has display none when user selects a file           
-                input.parentNode.style.visibility = 'hidden';
+//                input.parentNode.style.visibility = 'hidden';
 
             });   
                         
 	        div.appendChild(input);
-            document.body.appendChild(div);
+//			ajax_uploader = document.getElementById('ajax_uploader');
+//            document.body.appendChild(div);
+//			ajax_uploader.appendChild(div);
               
             this._input = input;
         },
@@ -449,7 +457,8 @@ console.debug(div);
             // IE will later display 'access denied' error
             // if you use using self._input.click()
             // other browsers just ignore click()
-
+			
+			/* Accessibility, use onClick
             addEvent(self._button, 'mouseover', function(){
                 if (self._disabled){
                     return;
@@ -460,13 +469,14 @@ console.debug(div);
                 }
                 
                 var div = self._input.parentNode;                            
-console.debug(self);
                 copyLayout(self._button, div);
                 div.style.visibility = 'visible';
                                 
             });
+			*/
 
-			addEvent(self._button, 'change', function(){
+
+			addEvent(self._button, 'click', function(){
                 if (self._disabled){
                     return;
                 }
@@ -476,11 +486,11 @@ console.debug(self);
                 }
                 
                 var div = self._input.parentNode;                            
-console.debug(self);
                 copyLayout(self._button, div);
                 div.style.visibility = 'visible';
                                 
             });
+
             
             
             // commented because we now hide input on mouseleave
@@ -668,7 +678,7 @@ console.debug(self);
             
             // assuming following structure
             // div -> input type='file'
-            removeNode(this._input.parentNode);            
+//            removeNode(this._input.parentNode);            
             removeClass(self._button, self._settings.hoverClass);
                         
             form.appendChild(this._input);
@@ -684,6 +694,7 @@ console.debug(self);
 
             // get ready for next request            
             this._createInput();
+			jQuery('#upload_button').focus();
         }
     };
 })(); 

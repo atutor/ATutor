@@ -57,6 +57,8 @@ class PhotoAlbum {
 		$result = mysql_query($sql, $db);
 		if ($result){
 			$row = mysql_fetch_assoc($result);
+		} else {
+			return false;
 		}
 		return $row;
 	}
@@ -250,7 +252,7 @@ class PhotoAlbum {
 
 		$sql = "SELECT photos.* FROM " .TABLE_PREFIX."pa_photos photos LEFT JOIN ".TABLE_PREFIX."pa_albums albums ON albums.id=photos.album_id WHERE albums.id=$id ORDER BY ordering";
 		if ($offset >= 0){
-			$sql .= " LIMIT $offset ,".AT_PA_PHOTO_PERS_PAGE;
+			$sql .= " LIMIT $offset ,".AT_PA_PHOTOS_PER_PAGE;
 		}
 
 		$result = mysql_query($sql, $db);
@@ -283,11 +285,12 @@ class PhotoAlbum {
 	 * Get a list of album by the given type (profile/my albums/class albums)
 	 * Default to be all.
 	 */
-	function getAlbums($member_id, $type_id=-1){
+	function getAlbums($member_id, $type_id=-1, $offset=-1){
 		//TODO add paginator to this.
 		global $db;
 		$type_id = intval($type_id);
 		$member_id = intval($member_id);
+		$offset = intval($offset);
 
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pa_albums WHERE member_id=$member_id";
 		if($type_id==AT_PA_TYPE_COURSE_ALBUM){
@@ -301,6 +304,9 @@ class PhotoAlbum {
 		}
 		elseif($type_id > 0){
 			$sql .= " AND type_id=$type_id";
+		}
+		if ($offset > -1){
+			$sql .= " LIMIT $offset ," . AT_PA_ALBUMS_PER_PAGE;
 		}
 		$result = mysql_query($sql, $db);
 		if($result){

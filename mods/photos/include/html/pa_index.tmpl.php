@@ -7,13 +7,11 @@
 				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM;?>"><?php echo _AT('course_albums'); ?></a> |
 				<a href="<?php echo AT_PA_BASENAME; ?>create_album.php"><?php echo _AT('create_album');?></a>
 		</div>
+		<!-- page numbers -->
 		<div class="paginator">
-			<ul>
-				<li><a>1</a></li>
-				<li><a>2</a></li>
-				<li><a>3</a></li>
-			</ul>
+			<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 		</div>
+
 	</div>
 
 	<div class="album_panel">
@@ -43,18 +41,19 @@
 				<p><a href="<?php echo AT_PA_BASENAME;?>edit_album.php?id=<?php echo $row['id'];?>">Edit</a> | <a href="<?php echo AT_PA_BASENAME;?>delete_album.php?id=<?php echo $row['id'];?>"><?php echo _AT('delete');?></a></p>
 			</div>
 		</div>
-		<?php endforeach; endif; ?>
+		<?php endforeach; ?>
+		<?php else: ?>
+		<div class="album">
+			<p><?php echo _AT("no_albums"); ?></p>
+		</div>
+		<?php endif; ?>
 		<!-- end loop -->
 	</div>
 
 	<!-- page numbers -->
 	<div class="topbar">
 		<div class="paginator">
-			<ul>
-				<li><a>1</a></li>
-				<li><a>2</a></li>
-				<li><a>3</a></li>
-			</ul>
+			<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 		</div>
 	</div>
 </div>

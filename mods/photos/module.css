@@ -46,7 +46,7 @@ div.album_panel .photo_frame img{
 	padding: 0.2em;
 }
 div.album_panel .album_description{
-	width: 60%;
+	width: 100%;
 	float: left;
 }
 
@@ -80,8 +80,12 @@ div.add_photo{
 	border: 1px solid #D2D2D2;	
 	width: 95%;
 }
-div.add_photo ol.files img {
+div.add_photo ul.files img {
 	width: 50px;
+}
+div.add_photo ul li{
+	float: left;
+	display: inline;
 }
 
 div.photo_panel{

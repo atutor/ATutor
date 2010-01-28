@@ -2,12 +2,14 @@
 	<!-- Photo album options and page numbers -->
 	<div class="topbar">
 		<div class="summary">
+				<?php if (!empty($this->photos)): ?>
 				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>"><?php echo _AT('edit_photos');?></a> | 
 				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('organize_photos');?></a> |
-				<a>Add More Photos</a> |
+				<?php endif; ?>
+				<a href="<?php echo $_SERVER["REQUEST_URI"]; ?>#" onclick="jQuery('#ajax_uploader').toggle();"><?php echo _AT("add_more_photos"); ?></a> |
 		</div>
 		<div class="paginator">
-			<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTO_PERS_PAGE, AT_PA_PAGE_WINDOW);  ?>
+			<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 		</div>
 	</div>
 
@@ -27,17 +29,20 @@
 			</form>
 		</div>
 		-->
-		<div class="input-form" id="ajax_uploader">
-			<div class="row">
+		<div class="input-form" id="ajax_uploader" style="display:none;">
+			<div class="row" id="upload_button_div">
 				<p><?php echo _AT('upload_blub');?></p>
-				<input id="upload_button" type="button" class="button"/>
+				<input id="upload_button" type="button" value="<?php echo _AT("add_more_photos"); ?>" class="button"/>				
+			</div>
+			<div class="row" id="files_done" style="display:none;">
+				<input type="button" value="<?php echo _AT("upload"); ?>" class="button" onClick="window.location.reload();" />
 			</div>
 			<div class="row" id="files_pending" style="display:none;">
 				<img src="<?php echo AT_PA_BASENAME; ?>images/loading.gif" alt="loading" title="loading"/>
 				<span></span>
 			</div>
 			<div class="row">
-				<ol class="files"></ol>
+				<ul class="files"></ul>
 			</div>
 		</div>
 	</div>
@@ -59,7 +64,7 @@
 	<!-- page numbers -->
 	<div class="topbar">
 		<div class="paginator">
-			<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTO_PERS_PAGE, AT_PA_PAGE_WINDOW);  ?>
+			<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 		</div>
 	</div>
 
@@ -131,13 +136,15 @@ jQuery(document).ready(function () {
 
 
 /* Ajax Uploader */
-var upload_pending  = 0; //counter
+var upload_pending  = 0; //counter for pending files
 var ajax_upload = new AjaxUpload('upload_button', {
   // Location of the server-side upload script
   // NOTE: You are not allowed to upload files to another domain
   action: '<?php echo $_base_path. AT_PA_BASENAME; ?>albums.php',
   // File upload name
   name: 'photo',
+  // Title 
+  title: '<?php echo _AT("add_more_photos"); ?>',
   // Additional data to send
   data: {
     upload : 'ajax',
@@ -164,6 +171,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	  upload_pending++;
 	  if (upload_pending > 0){
 		jQuery('#files_pending').show();
+		jQuery('#files_done').hide();
 	  }
 	  jQuery('#files_pending').children('span').text('Loading... '+ (upload_pending)+' Remaining')
   },
@@ -178,7 +186,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	 img = jQuery('<img>').attr('src', '<?php echo $_base_href . AT_PA_BASENAME; ?>get_photo.php?aid='+response_array.aid+'&pid='+response_array.pid+'&ph='+response_array.ph);	 
 	 img.attr('alt', response_array.alt);
 	 li = jQuery('<li></li>');
-	 li.appendTo('#ajax_uploader .files');
+	 li.prependTo('#ajax_uploader .files');
 	 img.appendTo(li);
 	 jQuery('<span></span>').appendTo(li).text(file);
 	 a_delete = jQuery('<a>'); //deletion link
@@ -189,7 +197,8 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	 a_delete.appendTo(li);
 	 jQuery('#files_pending').children('span').text('Loading... '+ (--upload_pending)+' Remaining')
 	 if (upload_pending == 0){
-		jQuery('#files_pending').hide("slow");
+		jQuery('#files_pending').hide();
+		jQuery('#files_done').show();
 	  }
   }
 });

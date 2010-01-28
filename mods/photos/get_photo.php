@@ -50,6 +50,9 @@ $file = AT_PA_CONTENT_DIR . $album_file_path . $photo_file_path;
 
 //if file does not exist, quit.
 if (!file_exists($file)){
+	//TODO: Clean files silently, cleaned but garbaged link remains on page. 
+	//Remove node from the DOM tree?
+	$pa->deletePhoto($pid);
 	header('HTTP/1.1 404 Not Found', TRUE);
 	exit;
 } 

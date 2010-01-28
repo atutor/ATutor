@@ -25,6 +25,8 @@ $id = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
 
+$_pages[AT_PA_BASENAME.'albums.php']['title']    = _AT('albums') .' - '.$info['name'];
+
 /*
 //TODO: Validate users, course and my albums.
 $visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
@@ -112,7 +114,7 @@ if(isset($_POST['upload'])){
 //paginator settings
 $page = intval($_GET['p']);
 $photos_count = sizeof($pa->getAlbumPhotos());
-$last_page = ceil($photos_count/AT_PA_PHOTO_PERS_PAGE);
+$last_page = ceil($photos_count/AT_PA_PHOTOS_PER_PAGE);
 
 if (!$page || $page < 0) {
 	$page = 1;
@@ -120,8 +122,8 @@ if (!$page || $page < 0) {
 	$page = $last_page;
 }
 
-$count  = (($page-1) * AT_PA_PHOTO_PERS_PAGE) + 1;
-$offset = ($page-1) * AT_PA_PHOTO_PERS_PAGE;
+$count  = (($page-1) * AT_PA_PHOTOS_PER_PAGE) + 1;
+$offset = ($page-1) * AT_PA_PHOTOS_PER_PAGE;
 
 //get details
 $photos = $pa->getAlbumPhotos($offset);
