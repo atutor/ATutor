@@ -58,3 +58,27 @@ CREATE TABLE `pa_photo_comments` (
   PRIMARY KEY (`id`)
 )
 ENGINE = MyISAM;
+
+
+# Languages Varaibles
+INSERT INTO `language_text` VALUES ('en', '_module','albums','Albums',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','photo','Photo',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','profile_gallery','Profile Gallery',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','edit_photos','Edit Photos',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','organize_photos','Organize Photos',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','add_more_photos','Add More Photos',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','upload_blurb','Click "Add More Photo" and browse for the picture that you wished to upload.  These photos will be processed and displayed below.  You also have the option to remove the pending photos anytime.  When you are done, click "Upload".',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','album_name','Album Name',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','album_type','Album Type',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','album_location','Album Location',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','album_description','Album Description',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','album_photos','Album Photos',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','album_cover','Album Cover',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','my_albums','My Albums',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','course_albums','Course Albums',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','create_album','Create Album',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','alt_text','Alternative Text',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','no_album','No Album Available',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','edit_photo','Edit Photo',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','delete_this_photo','Delete This Photo',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','organize_photo_blurb','Note: Drag photos using a mouse, or [CTRL]+[Left/Right/Up/Down Arrow] keys to rearrange them.',NOW(),'');

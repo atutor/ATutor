@@ -27,16 +27,19 @@ $info = $pa->getAlbumInfo();
 
 $_pages[AT_PA_BASENAME.'albums.php']['title']    = _AT('albums') .' - '.$info['name'];
 
-/*
+
 //TODO: Validate users, course and my albums.
-$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
-if(!isset($visible_albums[$id])){
-	//TODO msg;
-	$msg->addError("You can't see this album");
-	header('location: index.php');
-	exit;
+// Validate only user and course albums for now. My albums are public.
+if ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM || $info['type_id']==AT_PA_TYPE_PERSONAL){
+	$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
+	if(!isset($visible_albums[$id])){
+		//TODO msg;
+		$msg->addError("ACCESS_DENIED");
+		header('location: index.php');
+		exit;
+	}
 }
-*/
+
 
 //TODO: handle add_photo
 if(isset($_POST['upload'])){

@@ -9,8 +9,8 @@
 	if ($course_album_privilege || true): ?>
 	<div class="row">
 		<div class="left_row"<label for="album_type"><?php echo _AT('album_type'); ?></label></div>
-		<label for="my_album"><?php echo _AT('my_album'); ?><label><input type="radio" name="album_type" id="my_album" value="1" />
-		<label for="course_album"><?php echo _AT('course_album'); ?></label><input type="radio" name="album_type" id="course_album" value="2" />
+		<label for="my_album"><?php echo _AT('my_albums'); ?><label><input type="radio" name="album_type" id="my_album" value="1" />
+		<label for="course_album"><?php echo _AT('course_albums'); ?></label><input type="radio" name="album_type" id="course_album" value="2" />
 
 	</div>
 	<?php endif; ?>

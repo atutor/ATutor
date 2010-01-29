@@ -26,6 +26,14 @@ div.album_panel{
 	border: 1px solid #D2D2D2;	
 	width: 95%;
 }
+div.album_panel div.photo_wrapper {
+	/* This class is to fix the problem where the images shift
+	 * to the right when there is a border upon selection 
+	 */
+	height: 150px;
+	width: 150px;
+	float: left;
+}
 div.album_panel .photo_frame{
 	float: left;
 	margin: 0.2em;
@@ -179,11 +187,14 @@ div.edit_photo_box .action{
 }
 
 
-.fl-reorderer-movable-default{
+/* FLUID Image Reorderer */
+.fl-imageReorderer-item {
+}
+.fl-reorderer-movable-hover{
+	cursor: pointer;
 }
 .fl-reorderer-movable-selected{
-	border-left: 2px solid red;
-	border-right: 2px solid red;
+	border: 2px solid red;
 }
 .fl-reorderer-dropMarker {
 	border: 2px solid red;
@@ -195,6 +206,8 @@ div.edit_photo_box .action{
 	filter:alpha(opacity=60);
 }
 
+
+/* FLUID Simple Inline Editor */
 .fl-inlineEdit-invitation {
    background-color: #FFECB3 !important;
    border: 1px solid #CCC !important;

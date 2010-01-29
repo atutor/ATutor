@@ -31,7 +31,7 @@
 		-->
 		<div class="input-form" id="ajax_uploader" style="display:none;">
 			<div class="row" id="upload_button_div">
-				<p><?php echo _AT('upload_blub');?></p>
+				<p><?php echo _AT('upload_blurb');?></p>
 				<input id="upload_button" type="button" value="<?php echo _AT("add_more_photos"); ?>" class="button"/>				
 			</div>
 			<div class="row" id="files_done" style="display:none;">
@@ -201,13 +201,9 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	 a_delete.attr('title', file);
 	 a_delete.attr('onClick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this)');
 
-	 //div wrapper
-//	 div = jQuery('<div>').attr('class', 'pending_wrapper');
-	 
 	 //formation
 	 li = jQuery('<li></li>');
 	 li.prependTo('#ajax_uploader .files');
-//	 div.appendTo(li);
 	 img.appendTo(li);
 	 a_delete.appendTo(li);
  	 imgx.appendTo(a_delete);
