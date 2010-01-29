@@ -183,18 +183,35 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	 console.debug(response);
 	 // add file to the list
 	 response_array = JSON.parse(response);
+	 
+	 //thumbnail
 	 img = jQuery('<img>').attr('src', '<?php echo $_base_href . AT_PA_BASENAME; ?>get_photo.php?aid='+response_array.aid+'&pid='+response_array.pid+'&ph='+response_array.ph);	 
 	 img.attr('alt', response_array.alt);
-	 li = jQuery('<li></li>');
-	 li.prependTo('#ajax_uploader .files');
-	 img.appendTo(li);
-	 jQuery('<span></span>').appendTo(li).text(file);
-	 a_delete = jQuery('<a>'); //deletion link
-	 a_delete.text('<?php echo _AT("remove");?>');
+	 img.attr('title', file);
+	 img.attr('class', 'tn');
+	 
+	 //image for the x
+	 imgx = jQuery('<img>').attr('src', '<?php echo $_base_href . "images/x.gif" ?>');
+	 imgx.attr('title', '<?php echo _AT("remove");?>');
+	 imgx.attr('alt', '<?php echo _AT("remove");?>');
+
+	 //deletion link
+	 a_delete = jQuery('<a>'); 
 	 a_delete.attr('href', '<?php echo $_SERVER["REQUEST_URI"]; ?>#');
 	 a_delete.attr('title', file);
 	 a_delete.attr('onClick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this)');
+
+	 //div wrapper
+//	 div = jQuery('<div>').attr('class', 'pending_wrapper');
+	 
+	 //formation
+	 li = jQuery('<li></li>');
+	 li.prependTo('#ajax_uploader .files');
+//	 div.appendTo(li);
+	 img.appendTo(li);
 	 a_delete.appendTo(li);
+ 	 imgx.appendTo(a_delete);
+
 	 jQuery('#files_pending').children('span').text('Loading... '+ (--upload_pending)+' Remaining')
 	 if (upload_pending == 0){
 		jQuery('#files_pending').hide();

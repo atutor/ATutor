@@ -80,11 +80,18 @@ div.add_photo{
 	border: 1px solid #D2D2D2;	
 	width: 95%;
 }
-div.add_photo ul.files img {
+div.add_photo ul{
+	margin: 0px;
+	padding: 0px;
+}
+div.add_photo ul.files .tn {
 	width: 50px;
 }
+div.add_photo img{
+	border: 0;
+}
 div.add_photo ul li{
-	float: left;
+	padding: 1em;
 	display: inline;
 }
 
