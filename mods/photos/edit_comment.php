@@ -38,7 +38,6 @@ if ($result){
 	//TODO: AJAX
 	header('HTTP/1.0 200 OK');
 } else {
-	$msg->addError(); //sql or permission
 	header('HTTP/1.0 404 Not Found');
 }
 exit;

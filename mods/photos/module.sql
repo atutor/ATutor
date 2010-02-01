@@ -82,3 +82,14 @@ INSERT INTO `language_text` VALUES ('en', '_module','no_album','No Album Availab
 INSERT INTO `language_text` VALUES ('en', '_module','edit_photo','Edit Photo',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','delete_this_photo','Delete This Photo',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','organize_photo_blurb','Note: Drag photos using a mouse, or [CTRL]+[Left/Right/Up/Down Arrow] keys to rearrange them.',NOW(),'');
+
+# Error messages
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ADD_COMMENT_FAILED','Comment could not be added due to an internal error.  Please try again.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_ADD_PHOTO_FAILED','Photo could not be added due to an internal error.  Please try again.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CREATE_ALBUM_FAILED','Album could not be created due to an internal error.  Please try again.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EDIT_ALBUM_FAILED','Album could not be edited due to an internal error.  Please try again.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EDIT_PHOTO_FAILED','Photo could not be edited due to an internal error.  Please try again.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EMTPY_ALBUM_NAME','Album name can not be empty.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PHOTO_NOT_FOUND','Photo can not be found.',NOW(),'');
+
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_REORGANIZED','Photos are reorganized successfully.',NOW(),'');

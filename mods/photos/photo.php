@@ -39,8 +39,7 @@ $comments = $pa->getComments($pid, true);
 //TODO: Validate users, course and my albums.
 $visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
 if(!isset($visible_albums[$aid]) || $photo_info['album_id']!=$aid){
-	//TODO msg;
-	$msg->addError("You can't see this photo");
+	$msg->addError('ACCESS_DENIED');
 	header('location: index.php');
 	exit;
 }

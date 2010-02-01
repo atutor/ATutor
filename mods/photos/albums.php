@@ -63,53 +63,54 @@ if(isset($_POST['upload'])){
 	//add the photo
 	$result = $pa->addPhoto($_FILES['photo']['name'], $_POST['photo_comment'], $_SESSION['member_id']);
 	if ($result===FALSE){
-		//TODO: sql error
-		$msg->addError();
+		$msg->addError('ADD_PHOTO_FAILED');
 	}
-	//get photo filepath
-	$added_photo_id = mysql_insert_id();
-	$photo_info = $pa->getPhotoInfo($added_photo_id);
-	$photo_file_path = getPhotoFilePath($added_photo_id, $_FILES['photo']['name'], $photo_info['created_date']);
 
-	//resize images to a specific size, and its thumbnail
-	$si = new SimpleImage();
-	$si->load($_FILES['photo']['tmp_name']);
-	$image_w = $si->getWidth();
-	$image_h = $si->getHeight();
+	if (!$msg->containsError()){
+		//get photo filepath
+		$added_photo_id = mysql_insert_id();
+		$photo_info = $pa->getPhotoInfo($added_photo_id);
+		$photo_file_path = getPhotoFilePath($added_photo_id, $_FILES['photo']['name'], $photo_info['created_date']);
 
-	//picture is horizontal	
-	if($image_w > $image_h){
-		//don't stretch images
-		if ($image_w > AT_PA_IMAGE){
-			$si->resizeToWidth(AT_PA_IMAGE);
-			$si->save(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+		//resize images to a specific size, and its thumbnail
+		$si = new SimpleImage();
+		$si->load($_FILES['photo']['tmp_name']);
+		$image_w = $si->getWidth();
+		$image_h = $si->getHeight();
+
+		//picture is horizontal	
+		if($image_w > $image_h){
+			//don't stretch images
+			if ($image_w > AT_PA_IMAGE){
+				$si->resizeToWidth(AT_PA_IMAGE);
+				$si->save(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+			} else {
+				move_uploaded_file($_FILES['photo']['tmp_name'], AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+			}
+			$si->resizeToWidth(AT_PA_IMAGE_THUMB);
+			$si->save(AT_PA_CONTENT_DIR.$album_file_path_tn.$photo_file_path);
 		} else {
-			move_uploaded_file($_FILES['photo']['tmp_name'], AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+			if ($image_h > AT_PA_IMAGE){
+				$si->resizeToHeight(AT_PA_IMAGE);
+				$si->save(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+			} else {
+				move_uploaded_file($_FILES['photo']['tmp_name'], AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+			}
+			$si->resizeToHeight(AT_PA_IMAGE_THUMB);
+			$si->save(AT_PA_CONTENT_DIR.$album_file_path_tn.$photo_file_path);
 		}
-		$si->resizeToWidth(AT_PA_IMAGE_THUMB);
-		$si->save(AT_PA_CONTENT_DIR.$album_file_path_tn.$photo_file_path);
-	} else {
-		if ($image_h > AT_PA_IMAGE){
-			$si->resizeToHeight(AT_PA_IMAGE);
-			$si->save(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
-		} else {
-			move_uploaded_file($_FILES['photo']['tmp_name'], AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path);
+		if ($_POST['upload'] == 'ajax'){
+			$photo_file_hash = getPhotoFilePath($added_photo_id, '', $photo_info['created_date']);
+			//return JSON, relying on jQuery to convert entries to html entities.
+			echo json_encode(array(
+						'aid'=>$id,
+						'pid'=>$added_photo_id,
+						'ph'=>$photo_file_hash,
+						'title'=>$photo_info['title'],
+						'alt'=>$photo_info['alt']));
+			exit;
 		}
-		$si->resizeToHeight(AT_PA_IMAGE_THUMB);
-		$si->save(AT_PA_CONTENT_DIR.$album_file_path_tn.$photo_file_path);
-	}
-	if ($_POST['upload'] == 'ajax'){
-		$photo_file_hash = getPhotoFilePath($added_photo_id, '', $photo_info['created_date']);
-		//return JSON, relying on jQuery to convert entries to html entities.
-		echo json_encode(array(
-					'aid'=>$id,
-					'pid'=>$added_photo_id,
-					'ph'=>$photo_file_hash,
-					'title'=>$photo_info['title'],
-					'alt'=>$photo_info['alt']));
-		exit;
-	}
-
+	} //if msg contain error
 	header('location: albums.php?id='.$id);
 	exit;
 }

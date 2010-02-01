@@ -55,12 +55,11 @@ if(isset($_GET['org'])){
 			if(isset($ordering)){
 				$result = $pa->editPhotoOrder($photo_array['id'], $ordering);
 				if (!$result){
-					//TODO: sql error
-					$msg->addError('sql');
+					$msg->addError('EDIT_PHOTO_FAILED');
 				}
 			}
 		}
-		$msg->addFeedback('REORGANIZED');
+		exit;
 	}
 	include (AT_INCLUDE_PATH.'header.inc.php');
 	$savant->assign('album_info', $album_info);
@@ -84,7 +83,7 @@ if (isset($_POST['submit'])){
 			$result = $pa->editPhoto($photo_array['id'], $description, $alt_text);
 			if (!$result){
 				//TODO: sql error
-				$msg->addError('sql');
+				$msg->addError('EDIT_PHOTO_FAILED');
 			}
 		}
 	}
@@ -93,8 +92,8 @@ if (isset($_POST['submit'])){
 	if (isset($_POST['album_cover'])){
 		$result = $pa->editAlbumCover($_POST['album_cover']);
 		if (!$result){
-			//TODO: albumcover error.
-			$msg->addError('album cover: sql');
+			//albumcover error.
+			$msg->addError('EDIT_PHOTO_FAILED');
 		}
 	}
 

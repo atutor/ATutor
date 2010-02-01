@@ -32,7 +32,7 @@ $result = $pa->addComment($id, $_POST['comment'], $_SESSION['member_id'], $isPho
 if ($result){
 	//TODO: AJAX
 } else {
-	$msg->addError(); //sql
+	$msg->addError('ADD_COMMENT_FAILED'); //sql
 }
 
 if ($isPhoto){

@@ -25,11 +25,11 @@ $aid = intval($_GET['aid']);
 $pa = new PhotoAlbum($aid);
 
 if ($pid<1 || $aid <1){
-	$msg->addError('');	//no such picture
+	$msg->addError('PHOTO_NOT_FOUND');	//no such picture
 	header('Location: index.php');
 	exit;
 } elseif (!$pa->checkPhotoPriv($pid, $_SESSION['member_id'])){
-	$msg->addError('');	//TODO: nice try
+	$msg->addError('ACCESS_DENIED');	
 	header('Location: albums.php?id='.$aid);
 	exit;
 } 
