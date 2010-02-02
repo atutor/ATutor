@@ -30,7 +30,7 @@ $this->_pages['mods/scorm_packages/index.php']['guide']     = 'instructor/?p=sco
 $this->_pages['mods/scorm_packages/packages/index.php']['title_var'] = 'packages';
 $this->_pages['mods/scorm_packages/packages/index.php']['img']       = 'images/content_pkg.gif';
 $this->_pages['mods/scorm_packages/packages/index.php']['children']  = array ('mods/scorm_packages/packages/preferences.php');
-$this->_pages['mods/scorm_packages/packages/index.php']['guide']     = 'general/?p=6.2.packages.php';
+$this->_pages['mods/scorm_packages/packages/index.php']['guide']     = 'general/?p=packages.php';
 
 	$this->_pages['mods/scorm_packages/packages/preferences.php']['title_var'] = 'preferences';
 	$this->_pages['mods/scorm_packages/packages/preferences.php']['parent']    = 'mods/scorm_packages/packages/index.php';
