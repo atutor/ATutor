@@ -11,7 +11,7 @@ $result = mysql_query($sql, $db);
 
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
-		$list[] = '<a href="'.url_rewrite('reading_list/display_resource.php?id=' . $row['resource_id'], AT_PRETTY_URL_IS_HEADER).'"'.
+		$list[] = '<a href="'.url_rewrite('mods/_standard/reading_list/display_resource.php?id=' . $row['resource_id'], AT_PRETTY_URL_IS_HEADER).'"'.
 		          (strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'. 
 		          validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 	}
