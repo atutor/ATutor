@@ -28,7 +28,7 @@ $page_return = $_GET['page_return'];
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 
-	header('Location: index_instructor.php');
+	header('Location: display_resources.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
