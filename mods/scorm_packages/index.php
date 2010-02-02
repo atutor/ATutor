@@ -36,11 +36,11 @@ if (authenticate(AT_PRIV_PACKAGES, AT_PRIV_RETURN)) {
 		array_push ($_pages['mods/scorm_packages/index.php']['children'], 
 	       		            'mods/scorm_packages/delete.php'
 		);
-		/*
+		
 		array_push ($_pages['mods/scorm_packages/index.php']['children'], 
 	       			    'mods/scorm_packages/settings.php'
 		);
-		*/
+		
 	}
 	
 }

@@ -26,7 +26,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $me = 'mods/scorm_packages/scorm-1.2/learner_view.php';
 $im = 'mods/scorm_packages/scorm-1.2/images/';
 
-$_pages[$me]['parent'] = 'packages/index.php';
+$_pages[$me]['parent'] = 'mods/scorm_packages/packages/index.php';
 $_pages[$me]['children'] = array();
 
 $sql = "SELECT	lvalue, rvalue
@@ -40,5 +40,6 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 
 require ('./view.inc.php');
+
 require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

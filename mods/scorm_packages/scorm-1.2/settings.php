@@ -71,7 +71,7 @@ if (mysql_num_rows($result) == 0) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<div class="input-form">
+<div class="input-form" style="padding:1em;">
 <form name="form1" method="post"
       action="mods/scorm_packages/scorm-1.2/settings.php"
       enctype="multipart/form-data">

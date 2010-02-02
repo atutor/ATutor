@@ -388,7 +388,7 @@ this.onunload=cleanup;
 </script>
 
 <?php
-	$p = "\n" . '<div id="scorm_1_2_toc" style="display:block">' . "\n";
+	$p = "\n" . '<div id="scorm_1_2_toc" style="display:block; border:thin solid #cccccc;width:95%;padding:1em;margin:auto;">' . "\n";
 	for ($i=$c-1; $i>=0; $i--) {
 		$p .= $tree[$i] . '<br />' . "\n";
 	}

@@ -1,6 +1,6 @@
 <?php
 /*
- * mods/scorm_packages/settings.php
+ * packages/index.php
  *
  * This file is part of ATutor, see http://www.atutor.ca
  * 
@@ -21,45 +21,25 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
-$ptypes = explode (',', AT_PACKAGE_TYPES);
-$plug = Array();
-foreach ($ptypes as $type) {
-	include ('./' . $type . '/lib.inc.php');
-}
+require(AT_INCLUDE_PATH.'../mods/scorm_packages/lib.inc.php');
+echo '<div style="display:block; border:thin solid #cccccc;width:95%;padding:1em;margin:auto;">';
+$pkgs = getPackagesLearnerLinkList();
 
-$sql = "SELECT	package_id,
-		ptype
-	FROM    ".TABLE_PREFIX."packages
-	WHERE   course_id = $_SESSION[course_id]
-	ORDER	BY package_id
-	";
-
-$result = mysql_query($sql, $db);
-$p = '<div style="display:block; border:thin solid #cccccc;width:95%;padding:1em;margin:auto;">';	
-$p  .= '<p><ol>';
-$num = 0;
-while ($row = mysql_fetch_assoc($result)) {
-	foreach ($plug[$row['ptype']]->getSettingsLinks($row['package_id']) as $l) {
-		$p .= '<li>' . $l . '</li>';
-		$num++;
-	}
-}
-if ($num == 0) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
+if (sizeOf ($pkgs) == 0) {
 	$msg->addInfo (NO_PACKAGES);
 	$msg->printAll();
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-} 
-
-$p .= '</ol>';
-$p .= '</p>';
-$p .= '</div>';
-
-require(AT_INCLUDE_PATH.'header.inc.php');
-echo $p;
+} else {
+	echo getScript();
+	echo '<ol>' . "\n";
+	foreach ($pkgs as $p) {
+		echo '<li>' . $p . '</li>' . "\n";
+	}
+	echo '</ol>' . "\n";
+}
+echo '</div>';
 require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>
