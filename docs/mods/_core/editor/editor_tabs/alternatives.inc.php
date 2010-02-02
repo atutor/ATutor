@@ -37,9 +37,9 @@ else{
 ?>
 
 <div class="row_alternatives" id="radio_alt">
-	<input type="hidden" name="alternatives" value="1" id="single_resources" onclick="openIt(1)" />
+	<input type="hidden" name="alternatives" value="1" id="single_resources" />
 
-
+<!-- The code below allows for 'whole page' alternatives - see note at top of file -->
 <!--	<input type="radio" name="alternatives" value="1" id="single_resources" onclick="openIt(1)" <?php if (($_POST['alternatives'] != 2) || ($_GET['alternatives'] != 2)) { echo 'checked="checked"';} ?> />
 	<label for="single_resources"><?php echo _AT('define_alternatives_to_single_resources');  ?></label>
 	<br/>
@@ -222,7 +222,10 @@ else{
 ?>
 	  </div>
 	</div>
-	
+
+<!-- Start of div which is never displayed - $_POST['alternatives'] is always 1
+     see commented out code near top of this file for further explanation 
+     End of div is marked below -->
 	<div class="row_alternatives" id="textual_div" style="display: <?php if (($_POST['alternatives'] == 2) || ($_GET['alternatives'] == 2)) echo 'block'; else echo 'none';?>;">
 		<div class="row">
 <?php
@@ -396,7 +399,8 @@ else
 		&middot;<?php echo _AT('edit_after_upload'); ?></small>
 	</div>
 	 
-</div>	
+</div>
+<!-- end of div which is never displayed -->
 
 <div style="clear:left"></div>
 </div>
@@ -419,41 +423,43 @@ function on_load()
 		document.form.setvisualbutton_alt.value = "<?php echo _AT('switch_visual'); ?>";
 	}
 }
-	
+
+//Never used - see comment at start of this file
 // switch between text, visual editor for "body text"
-function switch_body_editor()
-{
-	if (document.form.setvisualbutton_alt.value=="<?php echo _AT('switch_visual'); ?>")
-	{
-		tinyMCE.execCommand('mceAddControl', false, 'body_text_alt');
-		document.form.setvisual_alt.value=1;
-		document.form.settext_alt.value=0;
-		document.form.formatting_alt[0].disabled = "disabled";
-		document.form.setvisualbutton_alt.value = "<?php echo _AT('switch_text'); ?>";
-	}
-	else
-	{
-		tinyMCE.execCommand('mceRemoveControl', false, 'body_text_alt');
-		document.form.setvisual_alt.value=0;
-		document.form.settext_alt.value=1;
-		document.form.formatting_alt[0].disabled = "";
-		document.form.setvisualbutton_alt.value = "<?php echo _AT('switch_visual'); ?>";
-	}
-}
-	
-function openIt(x)
-{
-	if (x=='1')
-	{
-		document.getElementById('textual_div').style.display = "none";
-		document.getElementById('nontextual_div').style.display = "block";
-	}
-	else 
-	{
-		document.getElementById('nontextual_div').style.display = "none";
-  	document.getElementById('textual_div').style.display = "block";
- 	}
-}
+//function switch_body_editor()
+//{
+//	if (document.form.setvisualbutton_alt.value=="<?php echo _AT('switch_visual'); ?>")
+//	{
+//		tinyMCE.execCommand('mceAddControl', false, 'body_text_alt');
+//		document.form.setvisual_alt.value=1;
+//		document.form.settext_alt.value=0;
+//		document.form.formatting_alt[0].disabled = "disabled";
+//		document.form.setvisualbutton_alt.value = "<?php echo _AT('switch_text'); ?>";
+//	}
+//	else
+//	{
+//		tinyMCE.execCommand('mceRemoveControl', false, 'body_text_alt');
+//		document.form.setvisual_alt.value=0;
+//		document.form.settext_alt.value=1;
+//		document.form.formatting_alt[0].disabled = "";
+//		document.form.setvisualbutton_alt.value = "<?php echo _AT('switch_visual'); ?>";
+//	}
+//}
+
+//Never used - see comment at start of this file
+//function openIt(x)
+//{
+//	if (x=='1')
+//	{
+//		document.getElementById('textual_div').style.display = "none";
+//		document.getElementById('nontextual_div').style.display = "block";
+//	}
+//	else 
+//	{
+//		document.getElementById('nontextual_div').style.display = "none";
+//  	document.getElementById('textual_div').style.display = "block";
+// 	}
+//}
 //-->
 </script> 
 <?php
