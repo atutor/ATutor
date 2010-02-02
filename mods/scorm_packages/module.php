@@ -9,7 +9,7 @@ define('AT_PACKAGE_URL_BASE', AT_BASE_HREF . 'sco/');
 
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_student_tool = 'packages/index.php';
+$_student_tool = 'mods/scorm_packages/index.php';
 
 $this->_pages['mods/scorm_packages/index.php']['title_var'] = 'packages';
 $this->_pages['mods/scorm_packages/index.php']['parent']    = 'tools/index.php';
@@ -27,14 +27,14 @@ $this->_pages['mods/scorm_packages/index.php']['guide']     = 'instructor/?p=sco
 
 	$this->_pages['mods/scorm_packages/scorm-1.2/view.php']['parent']    = 'mods/scorm_packages/index.php';
 
-$this->_pages['packages/index.php']['title_var'] = 'packages';
-$this->_pages['packages/index.php']['img']       = 'images/content_pkg.gif';
-$this->_pages['packages/index.php']['children']  = array ('mods/scorm_packages/preferences.php');
-$this->_pages['packages/index.php']['guide']     = 'general/?p=6.2.packages.php';
+$this->_pages['mods/scorm_packages/index.php']['title_var'] = 'packages';
+$this->_pages['mods/scorm_packages/index.php']['img']       = 'images/content_pkg.gif';
+$this->_pages['mods/scorm_packages/index.php']['children']  = array ('mods/scorm_packages/preferences.php');
+$this->_pages['mods/scorm_packages/index.php']['guide']     = 'general/?p=6.2.packages.php';
 
-	$this->_pages['packages/preferences.php']['title_var'] = 'preferences';
-	$this->_pages['packages/preferences.php']['parent']    = 'mods/scorm_packages/index.php';
+	$this->_pages['mods/scorm_packages/preferences.php']['title_var'] = 'preferences';
+	$this->_pages['mods/scorm_packages/preferences.php']['parent']    = 'mods/scorm_packages/index.php';
 
-	$this->_pages['packages/cmidata.php']['title_var'] = 'cmi_data';
-	$this->_pages['packages/cmidata.php']['parent']    = 'mods/scorm_packages/index.php';
+	$this->_pages['mods/scorm_packages/cmidata.php']['title_var'] = 'cmi_data';
+	$this->_pages['mods/scorm_packages/cmidata.php']['parent']    = 'mods/scorm_packages/index.php';
 ?>
