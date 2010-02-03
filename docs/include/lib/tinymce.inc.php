@@ -59,7 +59,6 @@ tinyMCE.init({
 	relative_urls : true,
 	content_css :"'.$_base_path.'/include/lib/tinymce_styles.css",
 	convert_urls : true,
-	convert_fonts_to_spans : true,
 	accessibility_warnings : true,
 	entity_encoding : "raw",
 	accessibility_focus : true,
@@ -75,7 +74,6 @@ tinyMCE.init({
 	theme_advanced_path_location : "bottom",
 	theme_advanced_resizing : true,
 	remove_linebreaks: false,
-	apply_source_formatting: true,
 
 	plugin_insertdate_dateFormat : "%Y-%m-%d",
 	plugin_insertdate_timeFormat : "%H:%M:%S",
