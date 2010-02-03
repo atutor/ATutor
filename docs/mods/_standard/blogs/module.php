@@ -22,28 +22,28 @@ define('BLOGS_AUTH_WRITE', 2);
 define('BLOGS_AUTH_RW',    3); // to save time
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_group_tool = $_student_tool = 'blogs/index.php';
+$_group_tool = $_student_tool = 'mods/_standard/blogs/index.php';
 
-$_pages['blogs/index.php']['title_var'] = 'blogs';
-$_pages['blogs/index.php']['img']       = 'images/home-blogs.png';
-$_pages['blogs/index.php']['icon']      = 'images/home-blogs_sm.png';
+$_pages['mods/_standard/blogs/index.php']['title_var'] = 'blogs';
+$_pages['mods/_standard/blogs/index.php']['img']       = 'images/home-blogs.png';
+$_pages['mods/_standard/blogs/index.php']['icon']      = 'images/home-blogs_sm.png';
 
 // module sublinks
-$this->_list['blogs'] = array('title_var'=>'blogs','file'=>'mods/_standard/blogs/sublinks.php');
+$this->_list['blogs'] = array('title_var'=>'blogs','file'=>'mods/_standard/mods/_standard/blogs/sublinks.php');
 
 if (isset($_REQUEST['oid'])) {
-	$_pages['blogs/edit_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']]['title_var'] = 'edit';
-	$_pages['blogs/edit_post.php']['title_var']   = 'edit';
-	$_pages['blogs/edit_post.php']['parent']      = 'blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id'];
+	$_pages['mods/_standard/blogs/edit_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']]['title_var'] = 'edit';
+	$_pages['mods/_standard/blogs/edit_post.php']['title_var']   = 'edit';
+	$_pages['mods/_standard/blogs/edit_post.php']['parent']      = 'mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id'];
 
-	$_pages['blogs/delete_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']]['title_var'] = 'delete';
-	$_pages['blogs/delete_post.php']['title_var'] = 'delete';
+	$_pages['mods/_standard/blogs/delete_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']]['title_var'] = 'delete';
+	$_pages['mods/_standard/blogs/delete_post.php']['title_var'] = 'delete';
 }
-$_pages['blogs/delete_comment.php']['title_var'] = 'delete';
+$_pages['mods/_standard/blogs/delete_comment.php']['title_var'] = 'delete';
 
 
 function blogs_get_group_url($group_id) {
-	return 'blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$group_id;
+	return 'mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$group_id;
 }
 
 /**
