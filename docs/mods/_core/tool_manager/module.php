@@ -4,7 +4,7 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 
 //define('AT_PRIV_TOOLBAR', $this->getPrivilege());
 
-$this->_pages['tools/toolmanager/index.php']['title_var'] = 'tool_manager'; 
-$this->_pages['tools/toolmanager/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_core/tool_manager/index.php']['title_var'] = 'tool_manager'; 
+$this->_pages['mods/_core/tool_manager/index.php']['parent']    = 'tools/index.php';
 
 ?>
