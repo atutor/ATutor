@@ -4,7 +4,7 @@ ob_start();
 ?>
 
 <?php if ($_config['gsearch']): ?>
-	<form action="<?php echo $_base_path; ?>google_search/index.php" method="get" name="gsearchform">
+	<form action="<?php echo $_base_path; ?>mods/_standard/google_search/index.php" method="get" name="gsearchform">
 <?php else: ?>
 	<form action="http://www.google.com/search" method="get" target="_new">
 	<input type="hidden" name="l" value="<?php echo $_SESSION['lang']; ?>" />
