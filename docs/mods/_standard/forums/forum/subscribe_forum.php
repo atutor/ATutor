@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: index.php 2526 2004-11-25 18:54:16Z greg$
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
