@@ -92,15 +92,20 @@ div.add_photo ul{
 	margin: 0px;
 	padding: 0px;
 }
-div.add_photo ul.files .tn {
-	width: 50px;
+div.add_photo .files .tn {
+	max-height: 30px;
 }
 div.add_photo img{
 	border: 0;
 }
 div.add_photo ul li{
-	padding: 1em;
-	display: inline;
+	float: left;
+	padding: 0.2em;
+	list-style: none;
+	width: 100%;
+	height: 30px;	
+	border-bottom: 1px solid #ddd;
+/*	display: inline; */
 }
 
 div.photo_panel{

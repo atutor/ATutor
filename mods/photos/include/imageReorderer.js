@@ -47,7 +47,7 @@ var demo = demo || {};
     demo.formBasedImageReorderer = function () {
         var reorderer = fluid.reorderImages("#reorder-images-form", {
             selectors: {
-                movables: ".flc-imageReorderer-item"
+                movables: ".photo_wrapper"
             },
 			listeners: {
 			   afterMove: afterMoveListener

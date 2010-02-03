@@ -1,5 +1,5 @@
 <div class="input-form">
-<form action="<?php echo $_SERVER['PHP_SELF'];?>" name="create_album" method="post">
+<form action="" name="create_album" method="post">
 	<div class="row">
 		<div class="left_row"><label for="album_name"><?php echo _AT('album_name'); ?></label></div>
 		<input id="album_name" name="album_name" type="text" value="<?php echo htmlentities($this->album_info['name']);?>" />

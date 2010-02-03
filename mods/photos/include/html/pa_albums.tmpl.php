@@ -29,19 +29,19 @@
 			</form>
 		</div>
 		-->
-		<div class="input-form" id="ajax_uploader" style="display:none;">
+		<div class="input-form" id="ajax_uploader" style="float:left; display:none;">
 			<div class="row" id="upload_button_div">
 				<p name="top"><?php echo _AT('upload_blurb');?></p>
 				<input id="upload_button" type="button" value="<?php echo _AT("add_more_photos"); ?>" class="button"/>				
 			</div>
 			<div class="row" id="files_done" style="display:none;">
 				<input type="button" value="<?php echo _AT("upload"); ?>" class="button" onClick="window.location.reload();" />
-			</div>
+			</div>			
 			<div class="row" id="files_pending" style="display:none;">
 				<img src="<?php echo AT_PA_BASENAME; ?>images/loading.gif" alt="loading" title="loading"/>
 				<span></span>
 			</div>
-			<div class="row">
+			<div class="row" style="max-height: 210px; overflow-y: auto;">
 				<ul class="files"></ul>
 			</div>
 		</div>
@@ -55,8 +55,8 @@
 		</div>
 		<?php endforeach; ?>
 		<div class="album_description">
-			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.$this->album_info['location'] .'<br/>';?>
-			<?php echo $this->album_info['description'];?></p>
+			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.htmlentities_utf8($this->album_info['location']) .'<br/>';?>
+			<?php echo htmlentities_utf8($this->album_info['description']);?></p>
 		</div>
 		<!-- end loop -->
 	</div>
@@ -180,16 +180,32 @@ var ajax_upload = new AjaxUpload('upload_button', {
   // @param file basename of uploaded file
   // @param response server response
   onComplete: function(file, response) {
-	 console.debug(response);
+//	 console.debug(response);
 	 // add file to the list
 	 response_array = JSON.parse(response);
-	 
-	 //thumbnail
-	 img = jQuery('<img>').attr('src', '<?php echo $_base_href . AT_PA_BASENAME; ?>get_photo.php?aid='+response_array.aid+'&pid='+response_array.pid+'&ph='+response_array.ph);	 
-	 img.attr('alt', response_array.alt);
-	 img.attr('title', file);
-	 img.attr('class', 'tn');
-	 
+	 if (response_array.error==true){
+		 //error, then refresh URL
+//		 console.debug(response_array);
+		 //thumbnail
+		 img = jQuery('<img>').attr('src', '<?php echo $_base_href . "images/unsubscribe-envelope.png" ?>');	 
+		 img.attr('alt', 'error');
+		 img.attr('title', file);
+
+		 //update error log msg
+		 file_msg = jQuery('<div>').text(response_array.msg);
+		 file_msg.attr('style', 'float:left; width: 50%');
+	 } else {
+		 //thumbnail
+		 img = jQuery('<img>').attr('src', '<?php echo $_base_href . AT_PA_BASENAME; ?>get_photo.php?aid='+response_array.aid+'&pid='+response_array.pid+'&ph='+response_array.ph);	 
+		 img.attr('alt', response_array.alt);
+		 img.attr('title', file);
+		 img.attr('class', 'tn');
+
+		 //update error log msg
+		 file_msg = jQuery('<div>').text('<?php echo _AT("uploaded"); ?>: ' + file);
+		 file_msg.attr('style', 'float:left; width: 50%');
+	 }	 
+
 	 //image for the x
 	 imgx = jQuery('<img>').attr('src', '<?php echo $_base_href . "images/x.gif" ?>');
 	 imgx.attr('title', '<?php echo _AT("remove");?>');
@@ -199,14 +215,20 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	 a_delete = jQuery('<a>'); 
 	 a_delete.attr('href', '<?php echo $_SERVER["REQUEST_URI"]; ?>#top');
 	 a_delete.attr('title', file);
-	 a_delete.attr('onClick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this)');
+	 a_delete.attr('onClick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this)');	 
+	  
+	 //img wrapper
+	 img_wrapper = jQuery('<div>');
+	 img_wrapper.attr('style', 'float:left; width: 50%');
+	 img.appendTo(img_wrapper);
+	 a_delete.appendTo(img_wrapper);
+	 imgx.appendTo(a_delete);
 
 	 //formation
 	 li = jQuery('<li></li>');
 	 li.prependTo('#ajax_uploader .files');
-	 img.appendTo(li);
-	 a_delete.appendTo(li);
- 	 imgx.appendTo(a_delete);
+	 file_msg.appendTo(li);
+	 img_wrapper.appendTo(li);
 
 	 jQuery('#files_pending').children('span').text('Loading... '+ (--upload_pending)+' Remaining')
 	 if (upload_pending == 0){
@@ -219,20 +241,26 @@ var ajax_upload = new AjaxUpload('upload_button', {
 //Ajax delete
 function deletePhoto(aid, pid, thisobj) {
 	var thisobj = thisobj;
-	xmlhttp=GetXmlHttpObject();
-	if (xmlhttp==null) {
-	  alert ("Your browser does not support AJAX!");
-	  return;
-	}
-	var url='<?php echo $_base_href . AT_PA_BASENAME; ?>remove_uploaded_photo.php?aid='+aid+'&pid='+pid;
-	xmlhttp.onreadystatechange=function(){
-		console.debug(xmlhttp);
-		if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			jQuery(thisobj).parent().remove();	//delete from DOM tree.
+	//run iff it is a photo
+	if(aid > 0 && pid > 0){
+		xmlhttp=GetXmlHttpObject();
+		if (xmlhttp==null) {
+		  alert ("Your browser does not support AJAX!");
+		  return;
 		}
-	};
-	xmlhttp.open("GET",url,true);
-	xmlhttp.send(null);
+		var url='<?php echo $_base_href . AT_PA_BASENAME; ?>remove_uploaded_photo.php?aid='+aid+'&pid='+pid;
+		xmlhttp.onreadystatechange=function(){
+	//		console.debug(xmlhttp);
+			if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				jQuery(thisobj).parent().parent().remove();	//delete from DOM tree.
+			}
+		};
+		xmlhttp.open("GET",url,true);
+		xmlhttp.send(null);
+	} else {
+		//simply remove tihs node without running anything in the DB
+		jQuery(thisobj).parent().parent().remove();	//delete from DOM tree.
+	}
 }
 
 function GetXmlHttpObject() {

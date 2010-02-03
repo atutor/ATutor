@@ -11,7 +11,7 @@
 		<!-- loop through this -->
 		<?php foreach($this->photos as $key=>$photo):?>
 		<div class="photo_wrapper">
-			<a class="flc-imageReorderer-item fl-imageReorderer-item photo_frame">
+			<a class="photo_frame">
 				<img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf8($photo['description'], false); ?>" alt="<?php echo htmlentities_utf8($photo['alt_text'], false); ?>>" />
 				<input name="image_<?php echo $photo['id']; ?>" value="<?php echo $photo['ordering']; ?>" type="hidden" />
 			</a>

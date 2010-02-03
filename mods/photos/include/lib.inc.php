@@ -55,14 +55,21 @@ function getAlbumFilePath($id, $timestamp){
 	return ($id.'_'.substr($padding, -5));
 }
 
-/** */
+/** 
+ * Check if the photo is supported, including extension check, file size check
+ * and library support checks.
+ * @param	string	location of the file.
+ * @return	$_FILE[] on successful, null on failure.
+ */
 function checkPhoto($file){
-	global $msg, $stripslashes;
+	global $stripslashes;
+	global $msg;
+	$msg = new AjaxMessage();
 
 	// check if GD is installed
 	if (!extension_loaded('gd')) {
 		$msg->printInfos('FEATURE_NOT_AVAILABLE');
-		return;
+		return false;
 	}
 
 	// check if folder exists, if not, create it
@@ -84,7 +91,7 @@ function checkPhoto($file){
 	}
 	if (!$supported_images) {
 		$msg->printInfos('FEATURE_NOT_AVAILABLE');
-		return;
+		return false;
 	}
 
 	// check if this is a supported file type
@@ -99,10 +106,10 @@ function checkPhoto($file){
 	}
 	if (!in_array($extension, $supported_images)) {
 		$msg->addError(array('FILE_ILLEGAL', $extension));
-		return;
+		return false;
 	} else if ($image_attributes[2] > IMAGETYPE_PNG) {
 		$msg->addError(array('FILE_ILLEGAL', $extension));
-		return;
+		return false;
 	}
 
 	// make sure under max file size

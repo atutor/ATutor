@@ -17,6 +17,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 include (AT_PA_INCLUDE.'classes/SimpleImage.class.php');
 include (AT_PA_INCLUDE.'lib.inc.php');
+include (AT_PA_INCLUDE.'classes/AjaxMessage.class.php');
 $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 $_custom_head .= '<script src="'.$_base_path . AT_PA_BASENAME . 'include/ajaxupload.js" type="text/javascript"></script>';
 
@@ -40,11 +41,18 @@ if ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM || $info['type_id']==AT_PA_TYPE_PE
 	}
 }
 
-
 //TODO: handle add_photo
 if(isset($_POST['upload'])){
 	//check file size, filename, and extension
 	$_FILES['photo'] = checkPhoto($_FILES['photo']);
+	if ($_FILES['photo']===false){
+		echo json_encode(array(
+						'aid'=>$id,
+						'pid'=>-1,
+						'msg'=>htmlentities($msg->printErrors()),
+						'error'=>true));
+		exit;
+	}
 
 	//computer album folder name and photo filename, if exist, shift bits
 	//goal: generate a random yet computable file structure to disallow
@@ -66,7 +74,7 @@ if(isset($_POST['upload'])){
 		$msg->addError('ADD_PHOTO_FAILED');
 	}
 
-	if (!$msg->containsError()){
+	if (!$msg->containsErrors()){
 		//get photo filepath
 		$added_photo_id = mysql_insert_id();
 		$photo_info = $pa->getPhotoInfo($added_photo_id);

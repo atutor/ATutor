@@ -3,7 +3,9 @@
  * Copyright (c) Andris Valums
  * Licensed under the MIT license ( http://valums.com/mit-license/ )
  * Thanks to Gary Haran, David Mark, Corey Burns and others for contributions 
+ * @modified by Harris Wong (ATRC) for Accessibility Purposes.
  */
+
 (function () {
     /* global window */
     /* jslint browser: true, devel: true, undef: true, nomen: true, bitwise: true, regexp: true, newcap: true, immed: true */
@@ -383,8 +385,8 @@
                 //Max zIndex supported by Opera 9.0-9.2
                 'zIndex': 2147483583
             });*/
-console.debug(input);            
-            // Make sure that element opacity exists.
+
+			// Make sure that element opacity exists.
             // Otherwise use IE filter            
 /*            if ( div.style.opacity !== "0") {
                 if (typeof(div.filters) == 'undefined'){

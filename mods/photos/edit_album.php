@@ -29,7 +29,6 @@ $album_info = $pa->getAlbumInfo();
 //handle Edit album info.
 if(isset($_POST['submit'])){
 	$pa = new PhotoAlbum($_POST['aid']);	//new object
-
 	if (isset($_POST['album_type'])){
 		$album_type	= (intval($_POST['album_type'])==AT_PA_TYPE_MY_ALBUM)?AT_PA_TYPE_MY_ALBUM:AT_PA_TYPE_COURSE_ALBUM;
 	} else {
