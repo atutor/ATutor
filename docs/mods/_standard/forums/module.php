@@ -9,7 +9,7 @@ define('AT_ADMIN_PRIV_FORUMS', $this->getAdminPrivilege() );
 $_group_tool = $_student_tool = 'mods/_standard/forums/forum/list.php';
 
 //side dropdown
-$this->_stacks['posts'] = array('title_var'=>'posts','file'=>AT_INCLUDE_PATH.'html/dropdowns/posts.inc.php');
+$this->_stacks['posts'] = array('title_var'=>'posts','file'=>AT_INCLUDE_PATH.'../mods/_standard/forums/dropdown/posts.inc.php');
 
 //modules sub-content
 $this->_list['forums'] = array('title_var'=>'forums','file'=>'mods/_standard/forums/sublinks.php');
