@@ -99,9 +99,9 @@ if (count($tran_files) == 0) {
 	<thead>
 	<tr>
 		<th scope="col">&nbsp;</th>
-		<th scope="col"><a href="'mods/_standard/chat/index.php?<?php echo $orders[$order]; ?>=name"><?php echo _AT('chat_transcript');?></a></th>
+		<th scope="col"><a href="mods/_standard/chat/index.php?<?php echo $orders[$order]; ?>=name"><?php echo _AT('chat_transcript');?></a></th>
 		<th scope="col"><?php echo _AT('status'); ?></th>
-		<th scope="col"><a href="'mods/_standard/chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th> 
+		<th scope="col"><a href="mods/_standard/chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th> 
 		</th> 
 	</tr>
 	</thead>

@@ -209,7 +209,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	if ($admin['produceTran'] > 0) {
 		echo '<input type="hidden" name="function" value="stopTran" />';
 		echo '<div class="row">';
-			echo _AT('chat_current_tran').' <a href="'mods/_standard/chat/view_transcript.php?t='.str_replace('.html', '', $admin['tranFile']).'" >'.str_replace('.html', '', $admin['tranFile']).'</a>.</p>';
+			echo _AT('chat_current_tran').' <a href="mods/_standard/chat/view_transcript.php?t='.str_replace('.html', '', $admin['tranFile']).'" >'.str_replace('.html', '', $admin['tranFile']).'</a>.</p>';
 		echo '</div>';
 
 		echo '<div class="row buttons">';
