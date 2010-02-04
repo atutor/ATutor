@@ -56,9 +56,9 @@ if(mysql_num_rows($result) > 0){
 		<?php for ($i=1; $i<=$num_pages; $i++): ?>
 			<li>
 				<?php if ($i == $page) : ?>
-					<a class="current" href="<?php echo url_rewrite('glossary/index.php?p='.$i.'#list'); ?>"><em><?php echo $i; ?></em></a>
+					<a class="current" href="<?php echo url_rewrite('mods/_core/glossary/index.php?p='.$i.'#list'); ?>"><em><?php echo $i; ?></em></a>
 				<?php else: ?>
-					<a href="<?php echo url_rewrite('glossary/index.php?p='.$i.'#list'); ?>"><?php echo $i; ?></a>
+					<a href="<?php echo url_rewrite('mods/_core/glossary/index.php?p='.$i.'#list'); ?>"><?php echo $i; ?></a>
 				<?php endif; ?>
 			</li>
 		<?php endfor; ?>
@@ -130,7 +130,7 @@ if(mysql_num_rows($result) > 0){
 
 <?php
 	if ($_GET['w']) {
-		echo '<br /><br /><a href="glossary/index.php">'._AT('view_all').'</a>';
+		echo '<br /><br /><a href="mods/_core/glossary/index.php">'._AT('view_all').'</a>';
 
 		if ($_GET['g_cid']) {
 			$path	= $contentManager->getContentPath(intval($_GET['g_cid']));

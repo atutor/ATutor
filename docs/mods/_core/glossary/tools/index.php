@@ -16,7 +16,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_GLOSSARY);
 
-//require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (isset($_POST['edit'], $_POST['word_id'])) {
 	header('Location: edit.php?gid='.$_POST['word_id']);

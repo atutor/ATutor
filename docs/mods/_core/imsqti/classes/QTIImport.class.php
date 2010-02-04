@@ -13,7 +13,7 @@
 // $Id: QTIImport.class.php 8944 2009-11-18 18:06:15Z cindy $
 
 define('AT_INCLUDE_PATH', '../../');
-require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
 require(AT_INCLUDE_PATH.'../mods/_core/imsqti/classes/QTIParser.class.php');	
 
 /**
