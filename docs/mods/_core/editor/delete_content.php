@@ -25,11 +25,11 @@ if (isset($_POST['submit_yes'])) {
 	unset($_SESSION['from_cid']);
 		
 	$msg->addFeedback('CONTENT_DELETED');
-	header('Location: '.AT_BASE_HREF.'tools/content/index.php');
+	header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
 	exit;
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'tools/content/index.php');
+	header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
 	exit;
 }
 

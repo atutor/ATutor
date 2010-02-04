@@ -37,13 +37,13 @@ if ($_POST['close'] || $_GET['close']) {
 	} else {
 		$msg->addFeedback('CLOSED');
 		if ($cid == 0) {
-			header('Location: '.AT_BASE_HREF.'tools/content/index.php');
+			header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
 			exit;
 		}
 	}
 	
 	if ($_REQUEST['cid'] == 0) {
-		header('Location: '.AT_BASE_HREF.'tools/content/index.php');
+		header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
 		exit;
 	}
 	header('Location: '.$_base_path.url_rewrite('content.php?cid='.intval($_REQUEST['cid'])));
