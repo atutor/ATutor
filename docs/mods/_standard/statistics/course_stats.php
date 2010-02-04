@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: course_stats.php 7208 2008-01-09 16:07:24Z greg $
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN);
 

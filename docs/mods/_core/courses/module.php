@@ -36,6 +36,5 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
 		$_pages['admin/modules/default_side.php']['guide']     = 'admin/?p=default_side_menu.php';
 
 }
-//what about delete course (in properties) ?
 
 ?>

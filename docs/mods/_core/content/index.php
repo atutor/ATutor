@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id: index.php 9078 2010-01-13 19:57:50Z greg $
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
 
@@ -41,7 +41,7 @@ if (isset($_GET['edit'], $_GET['ctid'])) {
 		header('Location: '.AT_BASE_HREF.'mods/_core/editor/edit_content_folder.php?cid='.$cid);
 	exit;
 } else if (isset($_GET['usage'], $_GET['ctid'])) {
-	header('Location: '.AT_BASE_HREF.'tools/tracker/page_student_stats.php?content_id='.intval($_GET['ctid']));
+	header('Location: '.AT_BASE_HREF.'mods/_standard/tracker/page_student_stats.php?content_id='.intval($_GET['ctid']));
 	exit;
 } else if (!isset($_GET['ctid']) && !isset($_GET['sub_content']) && (isset($_GET['usage']) || isset($_GET['view']) || isset($_GET['delete']) || isset($_GET['edit']))) {
 	$msg->addError('NO_ITEM_SELECTED');
