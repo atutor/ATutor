@@ -24,7 +24,7 @@ if ($course == 0) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
+	header('Location: '.$_base_href.'tools/index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
@@ -151,14 +151,14 @@ if (isset($_POST['cancel'])) {
 			$mail->Body    = $body;
 			if(!$mail->Send()) {
 		   		$msg->addError('SENDING_ERROR');
-				header('Location: index.php');
+				header('Location: '.$_SERVER['PHP_SELF']);
 		  		exit;
 			}
 			unset($mail);
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: index.php');
+		header('Location: '.$_base_href.'tools/index.php');
 		exit;
 	}
 }
