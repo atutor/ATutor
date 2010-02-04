@@ -29,7 +29,7 @@ $_pages['mods/_standard/blogs/index.php']['img']       = 'images/home-blogs.png'
 $_pages['mods/_standard/blogs/index.php']['icon']      = 'images/home-blogs_sm.png';
 
 // module sublinks
-$this->_list['blogs'] = array('title_var'=>'blogs','file'=>'mods/_standard/mods/_standard/blogs/sublinks.php');
+$this->_list['blogs'] = array('title_var'=>'blogs','file'=>'mods/_standard/blogs/sublinks.php');
 
 if (isset($_REQUEST['oid'])) {
 	$_pages['mods/_standard/blogs/edit_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']]['title_var'] = 'edit';
