@@ -95,7 +95,7 @@ else
 		<tr>
 <?php 
 			if ( ($grade != '') && (($row['result_release']==AT_RELEASE_IMMEDIATE) || ($row['result_release']==AT_RELEASE_MARKED)) )
-				echo '			<td><a href="tools/view_results.php?tid='.$row['id'].'&amp;rid='.$row_tr['result_id'].'">'.$row["title"].'</a></td>'."\n\r";
+				echo '			<td><a href="mods/_standard/tests/view_results.php?tid='.$row['id'].'&amp;rid='.$row_tr['result_id'].'">'.$row["title"].'</a></td>'."\n\r";
 			else
 				echo '			<td>'.$row["title"].'</td>'."\n\r";
 ?>
