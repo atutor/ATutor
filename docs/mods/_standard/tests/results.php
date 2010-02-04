@@ -215,11 +215,11 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 <thead>
 <tr>
 	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('login_name'); ?></a></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=full_name"><?php echo _AT('full_name'); ?></a></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=time_spent"><?php echo _AT('time_spent'); ?></a></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
+	<th scope="col"><a href="mods/_standard/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('login_name'); ?></a></th>
+	<th scope="col"><a href="mods/_standard/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=full_name"><?php echo _AT('full_name'); ?></a></th>
+	<th scope="col"><a href="mods/_standard/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
+	<th scope="col"><a href="mods/_standard/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=time_spent"><?php echo _AT('time_spent'); ?></a></th>
+	<th scope="col"><a href="mods/_standard/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
 </tr>
 </thead>
 <tfoot>

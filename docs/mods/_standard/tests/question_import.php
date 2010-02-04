@@ -141,7 +141,7 @@ if (!$overwrite){
 
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tools/tile/index.php');
+		header('Location: '.$_base_path.'mods/_standard/tile/index.php');
 	} else {
 		header('Location: question_db.php');
 	}
@@ -204,7 +204,7 @@ if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 		clr_dir($import_path);
 
 		if (isset($_GET['tile'])) {
-			header('Location: '.$_base_path.'tools/tile/index.php');
+			header('Location: '.$_base_path.'mods/_standard/tile/index.php');
 		} else {
 			header('Location: question_db.php');
 		}
@@ -224,7 +224,7 @@ if ($ims_manifest_xml === false) {
 	clr_dir($import_path);
 
 	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tools/tile/index.php');
+		header('Location: '.$_base_path.'mods/_standard/tile/index.php');
 	} else {
 		header('Location: question_db.php');
 	}
