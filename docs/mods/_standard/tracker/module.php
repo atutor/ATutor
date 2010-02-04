@@ -12,10 +12,10 @@ $_pages['mods/_standard/tracker/my_stats.php']['title_var'] = 'my_tracker';
 $_pages['mods/_standard/tracker/my_stats.php']['img']       = 'images/home-tracker.png';
 $_pages['mods/_standard/tracker/my_stats.php']['icon']      = 'images/home-tracker_sm.png';
 
-$_pages['tools/content/index.php']['children'][]  = 'mods/_standard/tracker/tools/index.php';
+$_pages['mods/_core/content/index.php']['children'][]  = 'mods/_standard/tracker/tools/index.php';
 
 $_pages['mods/_standard/tracker/tools/index.php']['title_var'] = 'content_usage';
-$_pages['mods/_standard/tracker/tools/index.php']['parent']    = 'tools/content/index.php';
+$_pages['mods/_standard/tracker/tools/index.php']['parent']    = 'mods/_core/content/index.php';
 $_pages['mods/_standard/tracker/tools/index.php']['children']  = array('mods/_standard/tracker/tools/student_usage.php', 'mods/_standard/tracker/tools/reset.php');
 $_pages['mods/_standard/tracker/tools/index.php']['guide']     = 'instructor/?p=content_usage.php';		
 
