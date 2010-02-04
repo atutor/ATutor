@@ -221,6 +221,9 @@ $keys = array_keys($module_list);
 </tr>
 </tfoot>
 <tbody>
+
+
+
 <?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; $i++; $readme = get_readme(AT_INCLUDE_PATH.'../mods/'.$dir_name);?>
 
 	<tr onmousedown="document.form['t_<?php echo $i; ?>'].checked = true; rowselect(this);" id="r_<?php echo $i; ?>">
