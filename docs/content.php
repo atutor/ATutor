@@ -166,7 +166,7 @@ if ((	($content_row['r_date'] <= $content_row['n_date'])
 			|| ($_SESSION['packaging'] == 'all'))
 	) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 
-	$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'tools/ims/ims_export.php?cid='.$cid);
+	$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'mods/_core/imscp/ims_export.php?cid='.$cid);
 }
 
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
@@ -210,7 +210,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 				$msg->addInfo('PRETEST');
 			}
 			else {
-				header('Location: '.url_rewrite('tools/test_intro.php?tid='.$pre_test_id.SEP.'cid='.$cid, AT_PRETTY_URL_IS_HEADER));
+				header('Location: '.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$pre_test_id.SEP.'cid='.$cid, AT_PRETTY_URL_IS_HEADER));
 			}
 		}
 		
