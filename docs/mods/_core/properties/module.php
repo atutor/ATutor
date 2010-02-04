@@ -23,24 +23,24 @@ if (!defined('AT_PRIV_ADMIN')) {
 }
 
 //admin pages
-$this->_pages['admin/edit_course.php']['title_var'] = 'course_properties';
-$this->_pages['admin/edit_course.php']['parent']    = 'admin/courses.php';
+$this->_pages['mods/_core/properties/admin/edit_course.php']['title_var'] = 'course_properties';
+$this->_pages['mods/_core/properties/admin/edit_course.php']['parent']    = 'admin/courses.php';
 
-$this->_pages['admin/delete_course.php']['title_var'] = 'delete_course';
-$this->_pages['admin/delete_course.php']['parent']    = 'admin/courses.php';
+$this->_pages['mods/_core/properties/admin/delete_course.php']['title_var'] = 'delete_course';
+$this->_pages['mods/_core/properties/admin/delete_course.php']['parent']    = 'admin/courses.php';
 
 
 //instructor pages
-$this->_pages['tools/course_properties.php']['title_var'] = 'properties';
-$this->_pages['tools/course_properties.php']['parent']    = 'tools/index.php';
-$this->_pages['tools/course_properties.php']['children']  = array('tools/delete_course.php', 'tools/access.php');
-$this->_pages['tools/course_properties.php']['guide']     = 'instructor/?p=properties.php';
+$this->_pages['mods/_core/properties/course_properties.php']['title_var'] = 'properties';
+$this->_pages['mods/_core/properties/course_properties.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_core/properties/course_properties.php']['children']  = array('mods/_core/properties/delete_course.php', 'mods/_core/properties/access.php');
+$this->_pages['mods/_core/properties/course_properties.php']['guide']     = 'instructor/?p=properties.php';
 
-	$this->_pages['tools/delete_course.php']['title_var'] = 'delete_course';
-	$this->_pages['tools/delete_course.php']['parent']    = 'tools/course_properties.php';
+	$this->_pages['mods/_core/properties/delete_course.php']['title_var'] = 'delete_course';
+	$this->_pages['mods/_core/properties/delete_course.php']['parent']    = 'mods/_core/properties/course_properties.php';
 
-	$this->_pages['tools/access.php']['title_var'] = 'authenticated_access';
-	$this->_pages['tools/access.php']['parent']    = 'tools/course_properties.php';
-	$this->_pages['tools/access.php']['guide']     = 'instructor/?p=authenticated_access.php';
+	$this->_pages['mods/_core/properties/access.php']['title_var'] = 'authenticated_access';
+	$this->_pages['mods/_core/properties/access.php']['parent']    = 'mods/_core/properties/course_properties.php';
+	$this->_pages['mods/_core/properties/access.php']['guide']     = 'instructor/?p=authenticated_access.php';
 
 ?>
