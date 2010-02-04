@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id: directory.php 7972 2008-09-30 17:30:48Z cindy $
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 /* should only be in here if you are enrolled in the course!!!!!! */
