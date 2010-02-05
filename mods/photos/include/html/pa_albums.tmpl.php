@@ -6,7 +6,7 @@
 				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>"><?php echo _AT('edit_photos');?></a> | 
 				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('organize_photos');?></a> |
 				<?php endif; ?>
-				<a href="<?php echo $_SERVER["REQUEST_URI"]; ?>#" onclick="jQuery('#ajax_uploader').toggle();"><?php echo _AT("add_more_photos"); ?></a> |
+				<a href="<?php echo $_SERVER["REQUEST_URI"]; ?>#top" onclick="jQuery('#ajax_uploader').toggle();"><?php echo _AT("add_more_photos"); ?></a> |
 		</div>
 		<div class="paginator">
 			<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
@@ -187,8 +187,8 @@ var ajax_upload = new AjaxUpload('upload_button', {
 		 //error, then refresh URL
 //		 console.debug(response_array);
 		 //thumbnail
-		 img = jQuery('<img>').attr('src', '<?php echo $_base_href . "images/unsubscribe-envelope.png" ?>');	 
-		 img.attr('alt', 'error');
+		 img = jQuery('<img>').attr('src', '<?php echo $_base_href . AT_PA_BASENAME . "images/no.png" ?>');	 
+		 img.attr('alt', '<?php echo _AT("error"); ?>');
 		 img.attr('title', file);
 
 		 //update error log msg

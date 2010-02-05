@@ -31,7 +31,6 @@ div.album_panel div.photo_wrapper {
 	 * to the right when there is a border upon selection 
 	 */
 	height: 150px;
-	width: 150px;
 	float: left;
 }
 div.album_panel .photo_frame{
@@ -195,11 +194,15 @@ div.edit_photo_box .action{
 /* FLUID Image Reorderer */
 .fl-imageReorderer-item {
 }
-.fl-reorderer-movable-hover{
+.fl-reorderer-movable-hover a{
 	cursor: pointer;
+	background-color: #ECEECC;
 }
-.fl-reorderer-movable-selected{
+.fl-reorderer-movable-selected a{
 	border: 2px solid red;
+}
+.fl-reorderer-movable-dragging a{
+	background-color: #ECEECC;
 }
 .fl-reorderer-dropMarker {
 	border: 2px solid red;

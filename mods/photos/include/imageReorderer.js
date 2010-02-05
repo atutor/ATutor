@@ -20,7 +20,7 @@ var demo = demo || {};
 	var afterMoveListener = function (thePhotoThatMoved, position, allPhotos) {
 		// Loop through each item in the ordered list and update its hidden form field.
 		allPhotos.each(function (idx, photo) {
-			$(photo).children("input").val(idx+1);
+			$(photo).children("a").children("input").val(idx+1);
 		});
 
 		//POST it back to the server
