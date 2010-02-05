@@ -16,8 +16,8 @@
 define('AT_PA_BASENAME',	'mods/photos/');
 define('AT_PA_BASE',		AT_INCLUDE_PATH.'../mods/photos/');
 define('AT_PA_INCLUDE',		AT_PA_BASE.'include/');
-define('AT_PA_CONTENT_DIR',	AT_CONTENT_DIR.'photo_album/');
-define('AT_PA_PHOTOS_PER_PAGE',	24);	//max # of photos to display
+define('AT_PA_CONTENT_DIR',	AT_CONTENT_DIR.'photos/');
+define('AT_PA_PHOTOS_PER_PAGE',	28);	//max # of photos to display
 define('AT_PA_ALBUMS_PER_PAGE',	5);	//max # of albums to display on index.php
 define('AT_PA_PAGE_WINDOW',		2);	//max # of photos to display
 

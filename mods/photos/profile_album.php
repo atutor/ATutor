@@ -28,7 +28,7 @@ if ($result){
 	if ($rows==0){
 		//create one.
 		$pa = new PhotoAlbum();
-		$result = $pa->createAlbum(_AT('profile_gallery'), '', '', AT_PA_TYPE_PERSONAL, $_SESSION['member_id']);
+		$result = $pa->createAlbum(_AT('pa_profile_album'), '', '', AT_PA_TYPE_PERSONAL, $_SESSION['member_id']);
 		$id = mysql_insert_id();
 	} else {
 		$row = mysql_fetch_assoc($result);	//album info.

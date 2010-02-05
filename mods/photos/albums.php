@@ -26,7 +26,7 @@ $id = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
 
-$_pages[AT_PA_BASENAME.'albums.php']['title']    = _AT('albums') .' - '.$info['name'];
+$_pages[AT_PA_BASENAME.'albums.php']['title']    = _AT('pa_albums') .' - '.$info['name'];
 
 
 //TODO: Validate users, course and my albums.
@@ -71,7 +71,7 @@ if(isset($_POST['upload'])){
 	//add the photo
 	$result = $pa->addPhoto($_FILES['photo']['name'], $_POST['photo_comment'], $_SESSION['member_id']);
 	if ($result===FALSE){
-		$msg->addError('ADD_PHOTO_FAILED');
+		$msg->addError('PA_ADD_PHOTO_FAILED');
 	}
 
 	if (!$msg->containsErrors()){

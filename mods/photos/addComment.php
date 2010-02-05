@@ -26,13 +26,21 @@ if (isset($_POST['pid']) && $pid>0){
 	$isPhoto = false;
 	$id = $aid;
 }
-$pa = new PhotoAlbum();
-$result = $pa->addComment($id, $_POST['comment'], $_SESSION['member_id'], $isPhoto);
 
-if ($result){
-	//TODO: AJAX
+
+//Error checking
+if (trim($_POST['comment']) == ''){
+	//if comment is empty
+	$msg->addError('PA_EMPTY_COMMENT'); //sql
 } else {
-	$msg->addError('ADD_COMMENT_FAILED'); //sql
+	$pa = new PhotoAlbum();
+	$result = $pa->addComment($id, $_POST['comment'], $_SESSION['member_id'], $isPhoto);
+
+	if ($result){
+		//TODO: AJAX
+	} else {
+		$msg->addError('PA_ADD_COMMENT_FAILED'); //sql
+	}
 }
 
 if ($isPhoto){

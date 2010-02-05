@@ -20,6 +20,7 @@ include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 //validates if this is me/have the privilege to delete.
 $id = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($id);
+$info = $pa->getAlbumInfo();
 
 if (!$pa->checkAlbumPriv($_SESSION['member_id'])){
 	$msg->addError('ACCESS_DENIED');
@@ -45,8 +46,7 @@ if ($_POST['submit_yes']) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars['id'] = $id;
-
-$msg->addConfirm(array('DELETE_ALBUM', $id), $hidden_vars);
+$msg->addConfirm(array('PA_DELETE_ALBUM', htmlentities_utf8($info['name'])), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

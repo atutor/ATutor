@@ -1,12 +1,12 @@
 <div>
 	<!-- Photo album options and page numbers -->
 	<div class="topbar">
-		<div class="summary"><?php echo _AT('organize_photos'); ?><br/></div>
+		<div class="summary"><?php echo _AT('pa_organize_photos'); ?><br/></div>
 	</div>
 
 	<div class="album_panel">
 		<?php if(!empty($this->photos)): ?>
-		<p><?php echo _AT('organize_photo_blurb'); ?></p>
+		<p><?php echo _AT('pa_organize_photo_blurb'); ?></p>
 		<form action="<?php echo 'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>" id="reorder-images-form" class="flc-imageReorderer fl-imageReorderer fl-reorderer-horizontalLayout" style="float:left;">
 		<!-- loop through this -->
 		<?php foreach($this->photos as $key=>$photo):?>

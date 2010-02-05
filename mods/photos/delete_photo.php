@@ -22,10 +22,10 @@ $pid = intval($_REQUEST['pid']);
 $aid = intval($_REQUEST['aid']);
 
 //_pages
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('albums');
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums');
 $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
 //$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children'] = array(AT_PA_BASENAME.'photo.php');
-$_pages[AT_PA_BASENAME.'photo.php?pid='.$pid.SEP.'aid='.$aid]['title']    = _AT('photo');
+$_pages[AT_PA_BASENAME.'photo.php?pid='.$pid.SEP.'aid='.$aid]['title']    = _AT('pa_photo');
 $_pages[AT_PA_BASENAME.'photo.php?pid='.$pid.SEP.'aid='.$aid]['parent']    = AT_PA_BASENAME.'albums.php?id='.$aid;
 $_pages[AT_PA_BASENAME.'delete_photo.php']['parent']    = AT_PA_BASENAME.'photo.php?pid='.$pid.SEP.'aid='.$aid;
 
@@ -34,7 +34,7 @@ $_pages[AT_PA_BASENAME.'delete_photo.php']['parent']    = AT_PA_BASENAME.'photo.
 $pa = new PhotoAlbum($aid);
 
 if ($pid<1 || $aid <1){
-	$msg->addError('PHOTO_NOT_FOUND');	//no such picture
+	$msg->addError('PA_PHOTO_NOT_FOUND');	//no such picture
 	header('Location: index.php');
 	exit;
 } elseif (!$pa->checkPhotoPriv($pid, $_SESSION['member_id'])){
@@ -63,7 +63,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $hidden_vars['pid'] = $pid;
 $hidden_vars['aid'] = $aid;
 
-$msg->addConfirm(array('DELETE_PHOTO', $pid), $hidden_vars);
+$msg->addConfirm(array('PA_DELETE_PHOTO'), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

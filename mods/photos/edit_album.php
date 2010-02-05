@@ -40,7 +40,7 @@ if(isset($_POST['submit'])){
 		$result = $pa->editAlbum($_POST['album_name'], $_POST['album_location'], $_POST['album_description'], $album_type);
 
 		if (!$result){
-			$msg->addError('EDIT_ALBUM_FAILED');
+			$msg->addError('PA_EDIT_ALBUM_FAILED');
 		}
 	} else {
 		//album name can't be empty

@@ -3,10 +3,10 @@
 	<div class="topbar">
 		<div class="summary">
 				<?php if (!empty($this->photos)): ?>
-				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>"><?php echo _AT('edit_photos');?></a> | 
-				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('organize_photos');?></a> |
+				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>"><?php echo _AT('pa_edit_photos');?></a> | 
+				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('pa_organize_photos');?></a> |
 				<?php endif; ?>
-				<a href="<?php echo $_SERVER["REQUEST_URI"]; ?>#top" onclick="jQuery('#ajax_uploader').toggle();"><?php echo _AT("add_more_photos"); ?></a> |
+				<a href="<?php echo $_SERVER["REQUEST_URI"]; ?>#top" onclick="jQuery('#ajax_uploader').toggle();"><?php echo _AT('pa_add_more_photos'); ?></a> |
 		</div>
 		<div class="paginator">
 			<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
@@ -18,7 +18,7 @@
 		<div class="input-form">
 			<form action="<?php echo AT_PA_BASENAME;?>albums.php" enctype="multipart/form-data" name="add_photos" method="post">
 				<div class="row">
-					<p><?php echo _AT('add_more_photos');?></p>
+					<p><?php echo _AT('pa_add_more_photos');?></p>
 				</div>
 				<div class="row">
 					<input type="file" name="photo" />
@@ -31,8 +31,8 @@
 		-->
 		<div class="input-form" id="ajax_uploader" style="float:left; display:none;">
 			<div class="row" id="upload_button_div">
-				<p name="top"><?php echo _AT('upload_blurb');?></p>
-				<input id="upload_button" type="button" value="<?php echo _AT("add_more_photos"); ?>" class="button"/>				
+				<p name="top"><?php echo _AT('pa_upload_blurb');?></p>
+				<input id="upload_button" type="button" value="<?php echo _AT('pa_add_more_photos'); ?>" class="button"/>				
 			</div>
 			<div class="row" id="files_done" style="display:none;">
 				<input type="button" value="<?php echo _AT("upload"); ?>" class="button" onClick="window.location.reload();" />
@@ -97,7 +97,7 @@
 			<div>
 				<form action="<?php echo AT_PA_BASENAME;?>addComment.php" method="post" class="input-form">
 					<div class="row"><label for="comments"><?php echo _AT('comments');?></label></div>
-					<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();">Write a comment...</textarea></div>
+					<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
 					<div class="row"><textarea name="comment" id="comment" style="display:none;"></textarea></div>
 					<div class="row">
 						<input type="hidden" name="aid" value="<?php echo $this->album_info['id'];?>" />
@@ -113,11 +113,29 @@
 <script type="text/javascript">
 /* Fluid inline editor */
 jQuery(document).ready(function () {
+	//the ATutor undo function
+	var undo = function (that, targetContainer) {
+					var markup = "<span class='flc-undo' aria-live='polite' aria-relevant='all'>" +
+					  "<span class='flc-undo-undoContainer'>[<a href='#' class='flc-undo-undoControl'><?php echo _AT('pa_undo'); ?></a>]</span>" +
+					  "<span class='flc-undo-redoContainer'>[<a href='#' class='flc-undo-redoControl'><?php echo _AT('pa_redo'); ?></a>]</span>" +
+					"</span>";
+					var markupNode = jQuery(markup);
+					targetContainer.append(markupNode);
+					return markupNode;
+				};
+	var pa_click_here_to_edit = '<?php echo _AT("pa_click_here_to_edit"); ?>';
+	var pa_click_item_to_edit = '<?php echo _AT("pa_click_item_to_edit"); ?>';
+
 	fluid.inlineEdits(".comment_feeds", {
 		componentDecorators: {
-			type: "fluid.undoDecorator"
+			type: "fluid.undoDecorator",
+			options: {
+				renderer: undo
+			}
 		},
+		defaultViewText: pa_click_here_to_edit,
 		useTooltip: true,
+		tooltipText: pa_click_item_to_edit, 
 		listeners: {
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
 				if (newValue != oldValue){
@@ -144,7 +162,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
   // File upload name
   name: 'photo',
   // Title 
-  title: '<?php echo _AT("add_more_photos"); ?>',
+  title: '<?php echo _AT("pa_add_more_photos"); ?>',
   // Additional data to send
   data: {
     upload : 'ajax',
@@ -202,7 +220,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
 		 img.attr('class', 'tn');
 
 		 //update error log msg
-		 file_msg = jQuery('<div>').text('<?php echo _AT("uploaded"); ?>: ' + file);
+		 file_msg = jQuery('<div>').text('<?php echo _AT("pa_processed"); ?>: ' + file);
 		 file_msg.attr('style', 'float:left; width: 50%');
 	 }	 
 

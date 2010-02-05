@@ -2,7 +2,7 @@
 	<!-- Photo album options and page numbers -->
 	<div class="topbar">
 		<?php if($this->photo_info['ordering'] <= $this->total_photos): ?>
-		<div class="summary"><?php echo 'Photos '.$this->photo_info['ordering'].' out of '.$this->total_photos ; ?></div>
+		<div class="summary"><?php echo _AT('pa_photo').' '.$this->photo_info['ordering'].' '._AT('pa_of').' '.$this->total_photos ; ?></div>
 		<div class="paginator">
 			<ul>
 				<?php if (isset($this->prev)): ?>
@@ -56,7 +56,7 @@
 			<!-- TODO: Add script to check, comment cannot be empty. -->
 			<form action="<?php echo AT_PA_BASENAME;?>addComment.php" method="post" class="input-form">
 				<div class="row"><label for="comments"><?php echo _AT('comments');?></label></div>
-				<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();">Write a comment...</textarea></div>
+				<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
 				<div class="row"><textarea name="comment" id="comment" style="display:none;"></textarea></div>
 				<div class="row">
 					<input type="hidden" name="pid" value="<?php echo $this->photo_info['id'];?>" />
@@ -68,10 +68,10 @@
 		
 		<?php if($this->action_permission): ?>
 		<div class="photo_actions">
-			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id']; ?>"><?php echo _AT('edit_photo'); ?></a><br/>
-			<a href="<?php echo AT_PA_BASENAME.'delete_photo.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"><?php echo _AT('delete_this_photo'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id']; ?>"><?php echo _AT('pa_edit_photo'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'delete_photo.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"><?php echo _AT('pa_delete_this_photo'); ?></a><br/>
 			<!-- TODO: is this needed? -->
-			<a href=""><?php echo _AT('set_profile_pic'); ?></a>			
+			<!-- <a href=""><?php echo _AT('set_profile_pic'); ?></a> -->
 		</div>
 		<?php endif; ?>
 	</div>
@@ -79,11 +79,29 @@
 
 <script type="text/javascript">
 jQuery(document).ready(function () {
+	//the ATutor undo function
+	var undo = function (that, targetContainer) {
+					var markup = "<span class='flc-undo' aria-live='polite' aria-relevant='all'>" +
+					  "<span class='flc-undo-undoContainer'>[<a href='#' class='flc-undo-undoControl'><?php echo _AT('pa_undo'); ?></a>]</span>" +
+					  "<span class='flc-undo-redoContainer'>[<a href='#' class='flc-undo-redoControl'><?php echo _AT('pa_redo'); ?></a>]</span>" +
+					"</span>";
+					var markupNode = jQuery(markup);
+					targetContainer.append(markupNode);
+					return markupNode;
+				};
+	var pa_click_here_to_edit = '<?php echo _AT("pa_click_here_to_edit"); ?>';
+	var pa_click_item_to_edit = '<?php echo _AT("pa_click_item_to_edit"); ?>';
+
     fluid.inlineEdits("#photo_panel", {
 		componentDecorators: {
-			type: "fluid.undoDecorator"
-		},
+			type: "fluid.undoDecorator",
+			options: {
+				renderer: undo
+			}
+		},		
+		defaultViewText: pa_click_here_to_edit,
 		useTooltip: true,
+		tooltipText: pa_click_item_to_edit, 
 		listeners: {
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
 				if (newValue != oldValue){
@@ -102,9 +120,14 @@ jQuery(document).ready(function () {
 
 	fluid.inlineEdits(".comment_feeds", {
 		componentDecorators: {
-			type: "fluid.undoDecorator"
+			type: "fluid.undoDecorator",
+			options: {
+				renderer: undo
+			}
 		},
+		defaultViewText: pa_click_here_to_edit,
 		useTooltip: true,
+		tooltipText: pa_click_item_to_edit, 
 		listeners: {
 			modelChanged: function(model, oldModel, source){
 				if (model != oldModel && source != undefined){

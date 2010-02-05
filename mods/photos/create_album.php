@@ -36,12 +36,12 @@ if(isset($_POST['submit'])){
 
 		if (!$result){
 			//TODO: sql failure.
-			$msg->addError('CREATE_ALBUM_FAILED');
+			$msg->addError('PA_CREATE_ALBUM_FAILED');
 		}
 	} else {
 		//album name can't be empty
 		//TODO: user input failure
-		$msg->addError('EMTPY_ALBUM_NAME');
+		$msg->addError('PA_EMTPY_ALBUM_NAME');
 	}
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');

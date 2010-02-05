@@ -2,10 +2,10 @@
 	<!-- Photo album options and page numbers -->
 	<div class="topbar">
 		<div class="summary">
-				<a href="<?php echo AT_PA_BASENAME.'profile_gallery.php';?>"><?php echo _AT('profile_gallery'); ?></a> | 
-				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM;?>"><?php echo _AT('my_albums'); ?></a> | 
-				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM;?>"><?php echo _AT('course_albums'); ?></a> |
-				<a href="<?php echo AT_PA_BASENAME; ?>create_album.php"><?php echo _AT('create_album');?></a>
+				<a href="<?php echo AT_PA_BASENAME.'profile_album.php';?>"><?php echo _AT('pa_profile_album'); ?></a> | 
+				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM;?>"><?php echo _AT('pa_my_albums'); ?></a> | 
+				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM;?>"><?php echo _AT('pa_course_albums'); ?></a> |
+				<a href="<?php echo AT_PA_BASENAME; ?>create_album.php"><?php echo _AT('pa_create_album');?></a>
 		</div>
 		<!-- page numbers -->
 		<div class="paginator">
@@ -44,7 +44,7 @@
 		<?php endforeach; ?>
 		<?php else: ?>
 		<div class="album">
-			<p><?php echo _AT("no_albums"); ?></p>
+			<p><?php echo _AT('pa_no_album'); ?></p>
 		</div>
 		<?php endif; ?>
 		<!-- end loop -->

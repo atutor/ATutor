@@ -16,11 +16,11 @@ https://source.fluidproject.org/svn/LICENSE.txt
 /*global demo*/
 
 var demo = demo || {};
-(function ($, fluid) {
+(function (jQuery, fluid) {
 	var afterMoveListener = function (thePhotoThatMoved, position, allPhotos) {
 		// Loop through each item in the ordered list and update its hidden form field.
 		allPhotos.each(function (idx, photo) {
-			$(photo).children("a").children("input").val(idx+1);
+			jQuery(photo).children("a").children("input").val(idx+1);
 		});
 
 		//POST it back to the server
@@ -29,11 +29,11 @@ var demo = demo || {};
 
 	// Serialize the form and post it back to the server.
 	var postOrder = function () {
-		var form = $("#reorder-images-form"); // Get the form out of the DOM
-		var photoRequest = $(form).serialize(); // Use jQuery to serialize it into a standard form request.
+		var form = jQuery("#reorder-images-form"); // Get the form out of the DOM
+		var photoRequest = jQuery(form).serialize(); // Use jQuery to serialize it into a standard form request.
 
 		// Send it back to the server via an AJAX POST request.
-		$.ajax({
+		jQuery.ajax({
 			type: "post",
 			url: form.action, 
 			data: photoRequest, 

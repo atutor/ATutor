@@ -21,10 +21,10 @@ $aid = intval($_REQUEST['aid']);
 $comment_id = intval($_REQUEST['comment_id']);
 
 //_pages
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('albums');
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums');
 $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
 //$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children'] = array(AT_PA_BASENAME.'photo.php');
-$_pages[AT_PA_BASENAME.'photo.php?pid='.$pid.SEP.'aid='.$aid]['title']    = _AT('photo');
+$_pages[AT_PA_BASENAME.'photo.php?pid='.$pid.SEP.'aid='.$aid]['title']    = _AT('pa_photo');
 $_pages[AT_PA_BASENAME.'photo.php?pid='.$pid.SEP.'aid='.$aid]['parent']    = AT_PA_BASENAME.'albums.php?id='.$aid;
 $_pages[AT_PA_BASENAME.'delete_comment.php']['parent']    = AT_PA_BASENAME.'photo.php?pid='.$pid.SEP.'aid='.$aid;
 
@@ -80,7 +80,7 @@ $hidden_vars['aid'] = $aid;
 $hidden_vars['pid'] = $pid;
 
 
-$msg->addConfirm(array('DELETE_COMMENT', $comment_id), $hidden_vars);
+$msg->addConfirm(array('PA_DELETE_COMMENT'), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

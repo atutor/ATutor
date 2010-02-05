@@ -24,7 +24,7 @@ if(isset($_POST['aid'])){
 $pid = intval($_GET['pid']);
 
 //breadcrumbs
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('albums');
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums');
 $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
 //$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children'] = array(AT_PA_BASENAME.'edit_photos.php');
 $_pages[AT_PA_BASENAME.'edit_photos.php']['parent'] = AT_PA_BASENAME.'albums.php?id='.$aid;
@@ -55,7 +55,7 @@ if(isset($_GET['org'])){
 			if(isset($ordering)){
 				$result = $pa->editPhotoOrder($photo_array['id'], $ordering);
 				if (!$result){
-					$msg->addError('EDIT_PHOTO_FAILED');
+					$msg->addError('PA_EDIT_PHOTO_FAILED');
 				}
 			}
 		}
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])){
 			$result = $pa->editPhoto($photo_array['id'], $description, $alt_text);
 			if (!$result){
 				//TODO: sql error
-				$msg->addError('EDIT_PHOTO_FAILED');
+				$msg->addError('PA_EDIT_PHOTO_FAILED');
 			}
 		}
 	}
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])){
 		$result = $pa->editAlbumCover($_POST['album_cover']);
 		if (!$result){
 			//albumcover error.
-			$msg->addError('EDIT_PHOTO_FAILED');
+			$msg->addError('PA_EDIT_PHOTO_FAILED');
 		}
 	}
 

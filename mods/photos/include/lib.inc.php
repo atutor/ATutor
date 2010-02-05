@@ -73,8 +73,8 @@ function checkPhoto($file){
 	}
 
 	// check if folder exists, if not, create it
-	if (!is_dir(AT_CONTENT_DIR.'/photo_album')) {
-		mkdir(AT_CONTENT_DIR.'/photo_album');
+	if (!is_dir(AT_PA_CONTENT_DIR)) {
+		mkdir(AT_PA_CONTENT_DIR);
 	}
 
 	//check GD support 

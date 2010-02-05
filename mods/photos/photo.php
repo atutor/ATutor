@@ -22,7 +22,7 @@ $_custom_head .= '<script type="text/javascript" src="'.AT_PA_BASENAME.'include/
 $aid = intval($_GET['aid']);
 $pid = intval($_GET['pid']);
 
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('albums');
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums');
 $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
 //$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children'] = array(AT_PA_BASENAME.'photo.php');
 $_pages[AT_PA_BASENAME.'photo.php']['parent']    = AT_PA_BASENAME.'albums.php?id='.$aid;
