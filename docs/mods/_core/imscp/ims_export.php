@@ -81,7 +81,7 @@ require(AT_INCLUDE_PATH.'../mods/_core/imscp/include/ims_template.inc.php');				
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('EXPORT_CANCELLED');
-	header('Location: ../index.php');
+	header('Location: ../content/index.php');
 	exit;
 }
 

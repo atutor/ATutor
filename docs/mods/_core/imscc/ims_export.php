@@ -57,7 +57,7 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	$course_id = $_SESSION['course_id'];
 }
 //load the following after vitals is included
-require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
 require(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4aExport.class.php');
 require(AT_INCLUDE_PATH.'../mods/_core/imscc/classes/Weblinks.class.php');
 require(AT_INCLUDE_PATH.'../mods/_core/imscc/classes/WeblinksExport.class.php');

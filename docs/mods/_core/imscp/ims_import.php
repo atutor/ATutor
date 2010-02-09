@@ -655,7 +655,7 @@ if (!isset($_POST['submit']) && !isset($_POST['cancel'])) {
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('IMPORT_CANCELLED');
 
-	header('Location: ./index.php');
+	header('Location: ../content/index.php');
 	exit;
 }
 
