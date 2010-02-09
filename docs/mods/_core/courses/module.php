@@ -13,27 +13,27 @@ if (!defined('AT_ADMIN_PRIV_COURSES')) {
 // for admin
 if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 
-	$this->_pages[AT_NAV_ADMIN] = array('admin/courses.php');
+	$this->_pages[AT_NAV_ADMIN] = array('mods/_core/courses/admin/courses.php');
 
-	$this->_pages['admin/courses.php']['title_var'] = 'courses';
-	$this->_pages['admin/courses.php']['parent']    = AT_NAV_ADMIN;
-	$this->_pages['admin/courses.php']['guide']     = 'admin/?p=courses.php';
-	$this->_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'admin/modules/default_mods.php', 'admin/modules/default_side.php');
+	$this->_pages['mods/_core/courses/admin/courses.php']['title_var'] = 'courses';
+	$this->_pages['mods/_core/courses/admin/courses.php']['parent']    = AT_NAV_ADMIN;
+	$this->_pages['mods/_core/courses/admin/courses.php']['guide']     = 'mods/_core/courses/admin/?p=courses.php';
+	$this->_pages['mods/_core/courses/admin/courses.php']['children']  = array('mods/_core/courses/admin/create_course.php', 'mods/_core/courses/admin/default_mods.php', 'mods/_core/courses/admin/default_side.php');
 
-		$this->_pages['admin/instructor_login.php']['title_var'] = 'view';
-		$this->_pages['admin/instructor_login.php']['parent']    = 'admin/courses.php';
+		$this->_pages['mods/_core/courses/admin/instructor_login.php']['title_var'] = 'view';
+		$this->_pages['mods/_core/courses/admin/instructor_login.php']['parent']    = 'mods/_core/courses/admin/courses.php';
 
-		$this->_pages['admin/create_course.php']['title_var'] = 'create_course';
-		$this->_pages['admin/create_course.php']['parent']    = 'admin/courses.php';
-		$this->_pages['admin/create_course.php']['guide']     = 'admin/?p=creating_courses.php';
+		$this->_pages['mods/_core/courses/admin/create_course.php']['title_var'] = 'create_course';
+		$this->_pages['mods/_core/courses/admin/create_course.php']['parent']    = 'mods/_core/courses/admin/courses.php';
+		$this->_pages['mods/_core/courses/admin/create_course.php']['guide']     = 'mods/_core/courses/admin/?p=creating_courses.php';
 
-		$_pages['admin/modules/default_mods.php']['title_var'] = 'default_modules';
-		$_pages['admin/modules/default_mods.php']['parent']    = 'admin/courses.php';
-		$_pages['admin/modules/default_mods.php']['guide']     = 'admin/?p=default_student_tools.php';
+		$_pages['mods/_core/courses/admin/default_mods.php']['title_var'] = 'default_modules';
+		$_pages['mods/_core/courses/admin/default_mods.php']['parent']    = 'mods/_core/courses/admin/courses.php';
+		$_pages['mods/_core/courses/admin/default_mods.php']['guide']     = 'mods/_core/courses/admin/?p=default_student_tools.php';
 
-		$_pages['admin/modules/default_side.php']['title_var'] = 'default_side_menu';
-		$_pages['admin/modules/default_side.php']['parent']    = 'admin/courses.php';
-		$_pages['admin/modules/default_side.php']['guide']     = 'admin/?p=default_side_menu.php';
+		$_pages['mods/_core/courses/admin/default_side.php']['title_var'] = 'default_side_menu';
+		$_pages['mods/_core/courses/admin/default_side.php']['parent']    = 'mods/_core/courses/admin/courses.php';
+		$_pages['mods/_core/courses/admin/default_side.php']['guide']     = 'mods/_core/courses/admin/?p=default_side_menu.php';
 
 }
 
