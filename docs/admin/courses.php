@@ -17,16 +17,16 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_COURSES);
 
 if (isset($_GET['view'], $_GET['id'])) {
-	header('Location: instructor_login.php?course='.$_GET['id']);
+	header('Location:instructor_login.php?course='.$_GET['id']);
 	exit;
 } else if (isset($_GET['edit'], $_GET['id'])) {
-	header('Location: edit_course.php?course='.$_GET['id']);
+	header('Location:  ../mods/_core/properties/admin/edit_course.php?course='.$_GET['id']);
 	exit;
 } else if (isset($_GET['backups'], $_GET['id'])) {
 	header('Location: ../mods/_core/backups/admin/index.php?course='.$_GET['id']);
 	exit;
 } else if (isset($_GET['delete'], $_GET['id'])) {
-	header('Location: delete_course.php?course='.$_GET['id']);
+	header('Location: ../mods/_core/properties/admin/delete_course.php?course='.$_GET['id']);
 	exit;
 }  else if (isset($_GET['delete']) || isset($_GET['backups']) || isset($_GET['edit']) || isset($_GET['view'])) {
 	$msg->addError('NO_ITEM_SELECTED');
