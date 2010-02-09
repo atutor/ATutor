@@ -23,9 +23,9 @@ $this->_stacks['support_tools'] = array('title_var'=>'support_tools','file'=>AT_
 
 if (admin_authenticate(AT_ADMIN_PRIV_SUPPORT_TOOLS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-		$this->_pages['mods/_standard/support_tools/scaffolds.php']['parent']    = 'admin/courses.php';
+		$this->_pages['mods/_standard/support_tools/scaffolds.php']['parent']    = 'mods/_core/courses/admin/courses.php';
 		$this->_pages['mods/_standard/support_tools/scaffolds.php']['title_var'] = 'support_tools';
-		$this->_pages['admin/courses.php']['children'] = array('mods/_standard/support_tools/scaffolds.php');
+		$this->_pages['mods/_core/courses/admin/courses.php']['children'] = array('mods/_standard/support_tools/scaffolds.php');
 	} 
 }
 ?>

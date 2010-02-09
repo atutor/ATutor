@@ -20,7 +20,7 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/courses.php');
+	header('Location: '.$_base_href.'mods/_core/courses/admin/courses.php');
 	exit;
 }
 
