@@ -261,7 +261,7 @@ if (isset($_SESSION['member_id']) && get_instructor_status() === TRUE)
 }
 else if (isset($_SESSION['member_id']) && defined('ALLOW_INSTRUCTOR_REQUESTS') || ALLOW_INSTRUCTOR_REQUESTS)
 {
-	$_pages['users/create_course.php']['title_var'] = 'request_instructor_priv';
+	$_pages['mods/_core/courses/users/create_course.php']['title_var'] = 'request_instructor_priv';
 }
 
 $_pages['users/private_enroll.php']['title_var'] = 'enroll';

@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/cats_categories/lib/admin_categories.inc.php');
 
 $cats	= array();
 $cats[0] = _AT('cats_uncategorized');
