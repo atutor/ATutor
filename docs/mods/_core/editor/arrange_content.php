@@ -22,7 +22,7 @@ if (isset($_POST['move']) && isset($_POST['moved_cid'])) {
 	$new_ordering = $arr[1];
 	
 	$contentManager->moveContent($_POST['moved_cid'], $new_pid, $new_ordering);
-	header('Location: '.AT_BASE_HREF.'editor/arrange_content.php');
+	header('Location: '.AT_BASE_HREF.'mods/_core/editor/arrange_content.php');
 	exit;
 }
 	
