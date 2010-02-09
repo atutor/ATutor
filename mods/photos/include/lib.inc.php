@@ -63,7 +63,7 @@ function getAlbumFilePath($id, $timestamp){
  */
 function checkPhoto($file){
 	global $stripslashes;
-	global $msg;
+	global $msg, $_config;
 	$msg = new AjaxMessage();
 
 	// check if GD is installed
@@ -113,8 +113,12 @@ function checkPhoto($file){
 	}
 
 	// make sure under max file size
-	// TODO
-
+	$allowed_usage = $_config['pa_max_memory_per_member'] * 1024 *1024;	//mb
+	if (memoryUsage($_SESSION['member_id']) > $allowed_usage){
+		$msg->addError('PA_EXCEEDED_MAX_USAGE');
+		return false;
+	}
+	
 	//check filename
 	$file['name'] = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $file['name'] );
 	$file['name'] = preg_replace("/[^A-Za-z0-9._\-]/", '', $file['name'] );
@@ -122,4 +126,33 @@ function checkPhoto($file){
 	return $file;
 }
  
+
+/**
+ * Return the total personal data usage
+ */
+function memoryUsage($member_id){	
+	global $db; 
+	$member_id = intval($member_id);
+	if ($member_id < 1){
+		return false;
+	}
+
+	$memory_usage = 0;
+	$sql = 'SELECT p.* FROM '.TABLE_PREFIX.'pa_photos p LEFT JOIN '.TABLE_PREFIX."pa_course_album ca ON p.album_id=ca.album_id WHERE member_id=$member_id AND ca.course_id IS NULL";
+	$result = mysql_query($sql, $db);
+	if ($result){
+		while ($row=mysql_fetch_assoc($result)){
+			$pa = new PhotoAlbum($row['album_id']);
+			$album_info = $pa->getAlbumInfo();
+			$photo_info = $pa->getPhotoInfo($row['id']);
+			$album_file_path = getAlbumFilePath($album_info['id'], $album_info['created_date']);
+			$photo_file_path = getPhotoFilePath($photo_info['id'], $photo_info['name'], $photo_info['created_date']);
+			$file = AT_PA_CONTENT_DIR . $album_file_path . DIRECTORY_SEPARATOR . $photo_file_path;
+			if (file_exists($file)){
+				$memory_usage += filesize($file);
+			}
+		}
+	}
+	return $memory_usage;
+}
 ?>

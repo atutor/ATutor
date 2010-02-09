@@ -53,17 +53,15 @@ $this->_pages[AT_PA_BASENAME.'index.php']['icon']      = 'images/home-directory_
 /*******
  * add the admin pages when needed.
  */
-/*
-if (admin_authenticate(AT_ADMIN_PRIV_SOCIAL, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-	$this->_pages[AT_NAV_ADMIN] = array('mods/_standard/social/index_admin.php');
-	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['title_var'] = 'social';
-	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['parent']    = AT_NAV_ADMIN;
-	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['children']    = array(AT_SOCIAL_BASENAME.'admin/delete_applications.php');
+if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+	$this->_pages[AT_NAV_ADMIN] = array('mods/photos/index_admin.php');
+	$this->_pages[AT_PA_BASENAME.'index_admin.php']['title_var'] = 'pa_photo_gallery';
+	$this->_pages[AT_PA_BASENAME.'index_admin.php']['parent']    = AT_NAV_ADMIN;
+	$this->_pages[AT_PA_BASENAME.'index_admin.php']['children']    = array(AT_PA_BASENAME.'admin/preferences.php');
+		$this->_pages[AT_PA_BASENAME.'admin/preferences.php']['title_var'] = 'pa_preferences';
+		$this->_pages[AT_PA_BASENAME.'admin/preferences.php']['parent'] = AT_PA_BASENAME.'index_admin.php';
 
-		$this->_pages[AT_SOCIAL_BASENAME.'admin/delete_applications.php']['title_var'] = 'delete_applications';
-		$this->_pages[AT_SOCIAL_BASENAME.'admin/delete_applications.php']['parent'] = AT_SOCIAL_BASENAME.'index_admin.php';
 }
-*/
 
 /*******
  * instructor Manage section:

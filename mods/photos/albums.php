@@ -22,7 +22,6 @@ $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom styl
 $_custom_head .= '<script src="'.$_base_path . AT_PA_BASENAME . 'include/ajaxupload.js" type="text/javascript"></script>';
 
 $id = intval($_REQUEST['id']);
-
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
 
@@ -140,6 +139,8 @@ $offset = ($page-1) * AT_PA_PHOTOS_PER_PAGE;
 //get details
 $photos = $pa->getAlbumPhotos($offset);
 $comments = $pa->getComments($id, false);
+//TODO: Can improve performance by adding this to a session variable
+$memory_usage = memoryUsage($_SESSION['member_id']);	
 
 include (AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('album_info', $info);
@@ -147,6 +148,8 @@ $savant->assign('photos', $photos);
 $savant->assign('comments', $comments);
 $savant->assign('page', $page);
 $savant->assign('num_rows', $photos_count);
+$savant->assign('memory_usage', $memory_usage/(1024*1024));	//mb
+$savant->assign('allowable_memory_usage', $_config['pa_max_memory_per_member']);	//mb
 $savant->assign('action_permission', $pa->checkAlbumPriv($_SESSION['member_id']));
 $savant->display('pa_albums.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 

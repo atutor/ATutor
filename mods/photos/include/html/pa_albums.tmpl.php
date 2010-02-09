@@ -32,6 +32,7 @@
 		<div class="input-form" id="ajax_uploader" style="float:left; display:none;">
 			<div class="row" id="upload_button_div">
 				<p name="top"><?php echo _AT('pa_upload_blurb');?></p>
+				<p class="memory_usage"><?php echo _AT('pa_memory_usage').': '. number_format($this->memory_usage, 2) .'/ '. $this->allowable_memory_usage . ' ' . _AT('mb'); ?></p>
 				<input id="upload_button" type="button" value="<?php echo _AT('pa_add_more_photos'); ?>" class="button"/>				
 			</div>
 			<div class="row" id="files_done" style="display:none;">
@@ -221,7 +222,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
 
 		 //update error log msg
 		 file_msg = jQuery('<div>').text('<?php echo _AT("pa_processed"); ?>: ' + file);
-		 file_msg.attr('style', 'float:left; width: 50%');
+		 file_msg.attr('style', 'float:left; width: 50%;');
 	 }	 
 
 	 //image for the x

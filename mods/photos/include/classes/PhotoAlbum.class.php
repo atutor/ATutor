@@ -286,7 +286,6 @@ class PhotoAlbum {
 	 * Default to be all.
 	 */
 	function getAlbums($member_id, $type_id=-1, $offset=-1){
-		//TODO add paginator to this.
 		global $db;
 		$type_id = intval($type_id);
 		$member_id = intval($member_id);
@@ -318,6 +317,46 @@ class PhotoAlbum {
 	}
 
 	/**
+	 * Get all albums, used by Admin only.
+	 */
+	function getAllAlbums($offset=-1){
+		global $db;
+		$offset = intval($offset);
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_albums';
+		
+		if ($offset > -1){
+			 $sql .= " LIMIT $offset ," . AT_PA_ADMIN_ALBUMS_PER_PAGE;
+		}
+
+		$result = mysql_query($sql, $db);
+		if($result){
+			while($row = mysql_fetch_assoc($result)){
+				$rows[$row['id']] = $row;
+			}
+		}
+		return $rows;
+	}
+
+	/** 
+	 * Get album type names
+	 * @param	int		album types, check constants.inc.php
+	 * @return	the string representation of this album type
+	 */
+	function getAlbumTypeName($type){
+		switch ($type){
+			case AT_PA_TYPE_MY_ALBUM:
+				return _AT('pa_my_albums');
+			case AT_PA_TYPE_COURSE_ALBUM:
+				return _AT('pa_course_albums');
+			case AT_PA_TYPE_PERSONAL:
+				return _AT('pa_profile_album');
+			default:
+				return false;
+		}
+	}
+
+	/**
 	 * Get the owner of this album
 	 * @param	int		album_id
 	 * @param	int		member_id
@@ -327,6 +366,11 @@ class PhotoAlbum {
 		global $db;
 		$album_id = $this->id;
 		$member_id = intval($member_id);
+
+		//if admin
+		if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)){
+			return true;
+		}
 
 		$sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_albums WHERE id=$album_id";
 		$result = mysql_query($sql, $db);

@@ -99,6 +99,11 @@ if (isset($_POST['submit'])){
 
 	//if no errors
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)) {
+		//if admin
+		header('Location: index_admin.php');
+		exit;
+	} 
 	header('Location: albums.php?id='.$aid);
 	exit;
 }

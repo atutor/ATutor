@@ -59,6 +59,8 @@ CREATE TABLE `pa_photo_comments` (
 )
 ENGINE = MyISAM;
 
+# Initiali Config
+INSERT INTO `config` VALUES ('pa_max_memory_per_member', '20');
 
 # Languages Varaibles
 INSERT INTO `language_text` VALUES ('en', '_module','pa_photo_gallery','Photo Gallery',NOW(),'');
@@ -80,6 +82,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_album_type','Album Type'
 INSERT INTO `language_text` VALUES ('en', '_module','pa_album_location','Album Location',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_album_description','Album Description',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_album_cover','Album Cover',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_last_updated','Last Updated',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_my_albums','My Albums',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_course_albums','Course Albums',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_create_album','Create Album',NOW(),'');
@@ -93,7 +96,9 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_redo','Redo',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_click_here_to_edit','Click here to edit',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_click_item_to_edit','Click item to edit',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_write_a_comment','Write a comment...',NOW(),'');
-
+INSERT INTO `language_text` VALUES ('en', '_module','pa_preferences','Album Preferences',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_max_memory','Maximum Memory Size allowed per member',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_memory_usage','Memory Usage',NOW(),'');
 
 # Error messages
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_ADD_COMMENT_FAILED','Comment could not be added due to an internal error.  Please try again.',NOW(),'');
@@ -104,6 +109,9 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_EDIT_ALBUM_FAILED
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_EDIT_PHOTO_FAILED','Photo could not be edited due to an internal error.  Please try again.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_EMTPY_ALBUM_NAME','Album name can not be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_PHOTO_NOT_FOUND','Photo can not be found.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_MEMORY_INPUT_ERROR','Invalid input.  Please enter a valid Integer.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_MEMORY_SQL_ERROR','Preferences were not updated due to an internal error.  Please try again.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_EXCEEDED_MAX_USAGE','You have exceeded the maximum allowable memory usage for the photo album.',NOW(),'');
 
 # Confirm messages
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_PA_DELETE_ALBUM','Are you sure you want to delete the album <strong>%s</strong>? Once deleted, photos can not be recovered.',NOW(),'');

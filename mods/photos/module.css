@@ -71,6 +71,7 @@ div.album .image{
 }
 div.album .info{
 	float: left;
+	width: 70%;
 }
 div.album .info span{
 	float: left;
@@ -102,9 +103,14 @@ div.add_photo ul li{
 	padding: 0.2em;
 	list-style: none;
 	width: 100%;
-	height: 30px;	
+	height: 100%;
 	border-bottom: 1px solid #ddd;
 /*	display: inline; */
+}
+div.add_photo p.memory_usage {
+	float: right;
+	font-size: 0.9em;
+	color: #5B5B5B;
 }
 
 div.photo_panel{

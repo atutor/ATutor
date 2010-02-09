@@ -14,6 +14,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
+include (AT_PA_INCLUDE.'lib.inc.php');
 $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 
 $aid = intval($_REQUEST['id']);
@@ -48,10 +49,20 @@ if(isset($_POST['submit'])){
 
 	}
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)) {
+		//if admin
+		header('Location: index_admin.php');
+		exit;
+	} 
 	header('Location: albums.php?id='.intval($_POST['aid']));
 	exit;
 } elseif (isset($_POST['cancel'])){
 	$msg->addFeedback('CANCELLED');
+	if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)) {
+		//if admin
+		header('Location: index_admin.php');
+		exit;
+	}
 	header('Location: '.AT_PA_BASE);
 	exit;
 }
