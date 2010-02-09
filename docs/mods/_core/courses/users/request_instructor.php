@@ -72,7 +72,7 @@ if (isset($_POST['cancel'])) {
 		$msg->addFeedback('APPROVAL_PENDING');
 	}
 
-	header('Location: ./index.php');
+ 	header('Location: ../../../../users/index.php');
 	exit;
 } 
 
