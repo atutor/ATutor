@@ -25,7 +25,7 @@ $isadmin   = FALSE;
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
+	header('Location: ../../../tools/index.php');
 	exit;
 
 
