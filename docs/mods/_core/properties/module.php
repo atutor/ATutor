@@ -24,10 +24,10 @@ if (!defined('AT_PRIV_ADMIN')) {
 
 //admin pages
 $this->_pages['mods/_core/properties/admin/edit_course.php']['title_var'] = 'course_properties';
-$this->_pages['mods/_core/properties/admin/edit_course.php']['parent']    = 'admin/courses.php';
+$this->_pages['mods/_core/properties/admin/edit_course.php']['parent']    = 'mods/_core/courses/admin/courses.php';
 
 $this->_pages['mods/_core/properties/admin/delete_course.php']['title_var'] = 'delete_course';
-$this->_pages['mods/_core/properties/admin/delete_course.php']['parent']    = 'admin/courses.php';
+$this->_pages['mods/_core/properties/admin/delete_course.php']['parent']    = 'mods/_core/courses/admin/courses.php';
 
 
 //instructor pages

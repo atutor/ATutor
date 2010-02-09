@@ -20,7 +20,7 @@ $course = intval($_REQUEST['course']);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: ../../../../admin/courses.php');
+	header('Location: ../../courses/admin/courses.php');
 	exit;
 } else if (isset($_POST['step']) && ($_POST['step'] == 2) && isset($_POST['submit_yes'])) {
 	require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
@@ -30,7 +30,7 @@ if (isset($_POST['submit_no'])) {
 	cache_purge('system_courses','system_courses'); // purge the system_courses cache (if successful)
 	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: ../../../../admin/courses.php');
+	header('Location: ../../courses/admin/courses.php');
 	exit;
 }
 

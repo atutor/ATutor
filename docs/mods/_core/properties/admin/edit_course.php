@@ -20,15 +20,15 @@ require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: courses.php');
+	header('Location: ../../courses/admin/courses.php');
 	exit;
 } else if (isset($_POST['course']) && !isset($_POST['setvisual'])) {
-	require(AT_INCLUDE_PATH.'lib/course.inc.php');
+	require(AT_INCLUDE_PATH.'../mods/_core/courses/lib/course.inc.php');
 	$errors = add_update_course($_POST, TRUE);
 
 	if (is_numeric($errors)) {
 		$msg->addFeedback('COURSE_PROPERTIES');
-		header('Location: '.AT_BASE_HREF.'admin/courses.php');
+		header('Location: '.AT_BASE_HREF.'mods/_core/courses/admin/courses.php');
 		exit;
 	}
 

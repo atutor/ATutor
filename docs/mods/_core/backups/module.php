@@ -6,8 +6,8 @@ define('AT_ADMIN_PRIV_BACKUPS', $this->getAdminPrivilege());
 
 if (admin_authenticate(AT_ADMIN_PRIV_BACKUPS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-		$this->_pages['mods/_core/backups/admin/courses.php']['children'] = array('mods/_core/backups/admin/index.php');
-		$this->_pages['mods/_core/backups/admin/index.php']['parent']    = 'mods/_core/backups/admin/courses.php';
+		$this->_pages['mods/_core/courses/admin/courses.php']['children'] = array('mods/_core/backups/admin/index.php');
+		$this->_pages['mods/_core/backups/admin/index.php']['parent']    = 'mods/_core/coruses/admin/courses.php';
 	} else {
 		$this->_pages[AT_NAV_ADMIN] = array('mods/_core/backups/admin/index.php');
 		$this->_pages['mods/_core/backups/admin/index.php']['parent'] = AT_NAV_ADMIN;
@@ -16,7 +16,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_BACKUPS, TRUE) || admin_authenticate(AT_ADM
 	$this->_pages['mods/_core/backups/admin/index.php']['title_var'] = 'backups';
 	$this->_pages['mods/_core/backups/admin/index.php']['guide']     = 'mods/_core/backups/admin/?p=backups.php';
 	$this->_pages['mods/_core/backups/admin/index.php']['children']  = array('mods/_core/backups/admin/create.php');
-	$this->_pages['mods/_core/backups/admin/index.php']['parent']    = 'admin/courses.php';
+	$this->_pages['mods/_core/backups/admin/index.php']['parent']    = 'mods/_core/courses/admin/courses.php';
 
 	$this->_pages['mods/_core/backups/admin/create.php']['title_var'] = 'create_backup';
 	$this->_pages['mods/_core/backups/admin/create.php']['parent']    = 'mods/_core/backups/admin/index.php';
