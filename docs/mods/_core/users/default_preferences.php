@@ -14,8 +14,8 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/themes.inc.php'); //update when themes are moved to mod/
-require(AT_INCLUDE_PATH.'mods/_core/users/lib/pref_tab_functions.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/themes/lib/themes.inc.php'); //update when themes are moved to mod/
+require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (isset($_POST['cancel'])) {

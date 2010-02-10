@@ -81,8 +81,8 @@ if (($row = mysql_fetch_assoc($result))==0) {
 <?php if (mysql_num_rows($result) > 0) : ?>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<?php $offset++; ?>
-		<tr onmousedown="document.location='<?php echo AT_BASE_HREF; ?>admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>'" title="<?php echo _AT('view_details'); ?>">
-			<td><a href="<?php echo AT_BASE_HREF; ?>admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>"><?php echo $row['time']; ?></a></td>
+		<tr onmousedown="document.location='<?php echo AT_BASE_HREF; ?>mods/_core/users/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>'" title="<?php echo _AT('view_details'); ?>">
+			<td><a href="<?php echo AT_BASE_HREF; ?>mods/_core/users/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>"><?php echo $row['time']; ?></a></td>
 			<td><?php echo $row['login']; ?></td>
 			<td><?php echo $operations[$row['operation']]; ?></td>
 			<td><?php echo $row['table']; ?></td>
