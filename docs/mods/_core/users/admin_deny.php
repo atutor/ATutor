@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 	exit;
 } else if ($_POST['cancel']) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
+	header('Location: users.php');
 	exit;
 }
 

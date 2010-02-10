@@ -309,17 +309,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tr>
 	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
 
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('login_name');      ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('login_name');      ?></a></th>
 	<?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
-		<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=public_field<?php echo $page_string; ?>"><?php echo _AT('student_id'); ?></a></th>
+		<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=public_field<?php echo $page_string; ?>"><?php echo _AT('student_id'); ?></a></th>
 	<?php endif; ?>
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=first_name<?php echo $page_string; ?>"><?php echo _AT('first_name'); ?></a></th>
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=second_name<?php echo $page_string; ?>"><?php echo _AT('second_name'); ?></a></th>
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=last_name<?php echo $page_string; ?>"><?php echo _AT('last_name');   ?></a></th>
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=last_login<?php echo $page_string; ?>"><?php echo _AT('last_login'); ?></a></th>
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=creation_date<?php echo $page_string; ?>"><?php echo _AT('creation_date'); ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=first_name<?php echo $page_string; ?>"><?php echo _AT('first_name'); ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=second_name<?php echo $page_string; ?>"><?php echo _AT('second_name'); ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=last_name<?php echo $page_string; ?>"><?php echo _AT('last_name');   ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=last_login<?php echo $page_string; ?>"><?php echo _AT('last_login'); ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $orders[$order]; ?>=creation_date<?php echo $page_string; ?>"><?php echo _AT('creation_date'); ?></a></th>
 </tr>
 
 </thead>
