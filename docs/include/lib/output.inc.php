@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-require_once(AT_INCLUDE_PATH . 'classes/ContentOutputUtils.class.php');
+//require_once(AT_INCLUDE_PATH . 'classes/ContentOutputUtils.class.php');
 
 /**********************************************************************************/
 /* Output functions found in this file, in order:
