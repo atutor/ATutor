@@ -72,8 +72,7 @@ if (isset($_GET["theme"]))
 if (!$result) // error occurs
 {
 	clr_dir("../../themes/".$theme);
-	debug($_GET['permission_granted']);
-exit;
+
 	if ($_GET['permission_granted']==1)
 	{
 		header('Location: '.AT_BASE_HREF.'mods/_core/themes/theme_install_step_3.php?error=1');
