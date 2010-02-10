@@ -246,7 +246,7 @@ class LanguageEditor extends Language {
 		$terms = serialize($terms);
 		$terms = urlencode($terms);
 
-		echo '<div align="center"><iframe src="'.$_base_path.'admin/missing_language.php?terms='.$terms.SEP.'lang='.$_SESSION['lang'].'" width="99%" height="300"></div>';
+		echo '<div align="center"><iframe src="'.$_base_path.'mods/_core/languages/missing_language.php?terms='.$terms.SEP.'lang='.$_SESSION['lang'].'" width="99%" height="300"></div>';
 	}
 
 	// public
