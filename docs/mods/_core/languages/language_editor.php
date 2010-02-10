@@ -147,7 +147,7 @@ $num_results = mysql_num_rows($result);
 
 	<td valign="top">
 		<div class="row">
-			<iframe src="admin/language_term.php" frameborder="0" height="430" width="450" marginheight="0" marginwidth="0" name="tran" id="tran"></iframe>
+			<iframe src="mods/_core/languages/language_term.php" frameborder="0" height="430" width="450" marginheight="0" marginwidth="0" name="tran" id="tran"></iframe>
 		</div>
 	</td>
 	</tr>
@@ -158,7 +158,7 @@ $num_results = mysql_num_rows($result);
 <script language="javascript" type="text/javascript">
 //<!--
 function showtext(obj) {
-	frames['tran'].location.href = "<?php echo AT_BASE_HREF; ?>admin/language_term.php?type=<?php echo $_variables[$_GET['type']].SEP; ?>term=" + obj.value;
+	frames['tran'].location.href = "<?php echo AT_BASE_HREF; ?>mods/_core/languages/language_term.php?type=<?php echo $_variables[$_GET['type']].SEP; ?>term=" + obj.value;
 }
 //-->
 </script>

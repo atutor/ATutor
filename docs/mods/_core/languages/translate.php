@@ -28,7 +28,7 @@ function openWindow(page) {
 }
 </script>
 
-<br /><form name="form1" method="post" action="admin/import_lang.php" enctype="multipart/form-data" onsubmit="openWindow('tools/prog.php');">
+<br /><form name="form1" method="post" action="mods/_core/languages/import_lang.php" enctype="multipart/form-data" onsubmit="openWindow('tools/prog.php');">
 <input type="hidden" name="import" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
 <tr>
