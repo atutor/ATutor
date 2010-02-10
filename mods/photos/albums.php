@@ -113,8 +113,10 @@ if(isset($_POST['upload'])){
 						'aid'=>$id,
 						'pid'=>$added_photo_id,
 						'ph'=>$photo_file_hash,
+						'size'=>number_format(filesize(AT_PA_CONTENT_DIR.$album_file_path.$photo_file_path)/1024, 2),
 						'title'=>$photo_info['title'],
 						'alt'=>$photo_info['alt']));
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			exit;
 		}
 	} //if msg contain error

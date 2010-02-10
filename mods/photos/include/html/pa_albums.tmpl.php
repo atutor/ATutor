@@ -34,9 +34,6 @@
 				<p name="top"><?php echo _AT('pa_upload_blurb');?></p>
 				<p class="memory_usage"><?php echo _AT('pa_memory_usage').': '. number_format($this->memory_usage, 2) .'/ '. $this->allowable_memory_usage . ' ' . _AT('mb'); ?></p>
 				<input id="upload_button" type="button" value="<?php echo _AT('pa_add_more_photos'); ?>" class="button"/>				
-			</div>
-			<div class="row" id="files_done" style="display:none;">
-				<input type="button" value="<?php echo _AT("upload"); ?>" class="button" onClick="window.location.reload();" />
 			</div>			
 			<div class="row" id="files_pending" style="display:none;">
 				<img src="<?php echo AT_PA_BASENAME; ?>images/loading.gif" alt="loading" title="loading"/>
@@ -44,6 +41,9 @@
 			</div>
 			<div class="row" style="max-height: 210px; overflow-y: auto;">
 				<ul class="files"></ul>
+			</div>
+			<div class="row" id="files_done" style="display:none;">
+				<input type="button" value="<?php echo _AT("upload"); ?>" class="button" onClick="window.location.reload();" />
 			</div>
 		</div>
 	</div>
@@ -212,7 +212,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
 
 		 //update error log msg
 		 file_msg = jQuery('<div>').text(response_array.msg);
-		 file_msg.attr('style', 'float:left; width: 50%');
+		 file_msg.attr('style', 'float:left; width: 80%');
 	 } else {
 		 //thumbnail
 		 img = jQuery('<img>').attr('src', '<?php echo $_base_href . AT_PA_BASENAME; ?>get_photo.php?aid='+response_array.aid+'&pid='+response_array.pid+'&ph='+response_array.ph);	 
@@ -221,8 +221,10 @@ var ajax_upload = new AjaxUpload('upload_button', {
 		 img.attr('class', 'tn');
 
 		 //update error log msg
-		 file_msg = jQuery('<div>').text('<?php echo _AT("pa_processed"); ?>: ' + file);
-		 file_msg.attr('style', 'float:left; width: 50%;');
+		 file_msg = jQuery('<div>').text('<?php echo _AT("pa_processed"); ?>: ' + file + ' (' + response_array.size );
+		 file_kb = jQuery('<span>').html('<?php echo _AT("kb"); ?>)');
+		 file_kb.appendTo(file_msg);
+		 file_msg.attr('style', 'float:left; width: 80%;');
 	 }	 
 
 	 //image for the x
@@ -238,7 +240,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	  
 	 //img wrapper
 	 img_wrapper = jQuery('<div>');
-	 img_wrapper.attr('style', 'float:left; width: 50%');
+	 img_wrapper.attr('style', 'float:left; ');
 	 img.appendTo(img_wrapper);
 	 a_delete.appendTo(img_wrapper);
 	 imgx.appendTo(a_delete);
