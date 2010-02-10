@@ -12,6 +12,7 @@
 /****************************************************************/
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+require_once(AT_INCLUDE_PATH . 'classes/ContentOutputUtils.class.php');
 
 /**********************************************************************************/
 /* Output functions found in this file, in order:
@@ -509,7 +510,7 @@ function smile_javascript () {
 		$i++;
 	}
 }
-
+    
 function myCodes($text, $html = false) {
 	global $_base_path;
 	global $HTTP_USER_AGENT;
@@ -589,11 +590,16 @@ function myCodes($text, $html = false) {
 		$text = str_replace('[fid]', $sequence_links['first']['url'], $text);
 	}
 
+//LAW - replace </p><p> tags in [code] tags with <br />
+//http://www.atutor.ca/atutor/mantis/view.php?id=4134 - attempt to fix this bug - does not work as required
+//	$outputUtils = new ContentOutputUtils();
+//	$text = $outputUtils ->stripPtags($text);
+	
 	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
-	$html = !$html ? 0 : 1;
-
+    $html = !$html ? 0 : 1;
+    
 	// little hack added by greg to add syntax highlighting without using <?php \?\>
-
+	
 	$text = str_replace("[code]","[code]<?php",$text);
 	$text = str_replace("[/code]","?>[/code]",$text);
 
@@ -765,10 +771,10 @@ function format_final_output($text, $nl2br = true) {
 	global $_base_path;
 
 	$text = str_replace('CONTENT_DIR/', '', $text);
-
 	if ($nl2br) {
 		return nl2br(image_replace(make_clickable(myCodes(' '.$text, false))));
 	}
+
 	return image_replace(make_clickable(myCodes(' '.$text, true)));
 }
 
