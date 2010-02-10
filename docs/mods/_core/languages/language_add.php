@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id: language_add.php 7208 2008-01-09 16:07:24Z greg $
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_LANGUAGES);
 if (!AT_DEVEL_TRANSLATE) { exit; }
@@ -22,7 +22,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: language.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php'); 
+	require_once(AT_INCLUDE_PATH . '../mods/_core/languages/classes/Language/LanguageEditor.class.php'); 
 	
 	if ($languageManager->exists($_POST['code'], $_POST['locale'])) {
 		$msg->addError('LANG_EXISTS');
@@ -41,7 +41,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="import" value="1" />
-<div class="input-form" style="width:60%">
+<div class="input-form" style="width:95%">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="code"><?php echo _AT('lang_code'); ?></label><br />
 		<input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo $_POST['code']; ?>" />

@@ -26,8 +26,6 @@ require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/LanguagesParser.cl
 $_SESSION['done'] = 1;
 
 if (isset($_POST['submit_import'])){
-//require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/LanguagesParser.class.php');
-
 	require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/RemoteLanguageManager.class.php');
 	$remoteLanguageManager = new RemoteLanguageManager();
 	$remoteLanguageManager->import($_POST['language']);

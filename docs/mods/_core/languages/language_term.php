@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: language_term.php 6612 2006-09-25 17:54:03Z joel $
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_LANGUAGES);
 
