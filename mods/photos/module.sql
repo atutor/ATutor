@@ -63,6 +63,7 @@ ENGINE = MyISAM;
 INSERT INTO `config` VALUES ('pa_max_memory_per_member', '50');
 
 # Languages Varaibles
+INSERT INTO `language_text` VALUES ('en', '_module','photos','Photo Gallery',NOW(),''); #For admin
 INSERT INTO `language_text` VALUES ('en', '_module','pa_photo_gallery','Photo Gallery',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_albums','Albums',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_photo','Photo',NOW(),'');
