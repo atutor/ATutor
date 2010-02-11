@@ -44,11 +44,12 @@ function load_editor($name = FALSE, $mode="textareas") {
 //insert predefined template: template
 //insert page break: pagebreak
 
-	echo '
-<script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.'jscripts/tiny_mce/tiny_mce.js"></script>
-<script language="javascript" type="text/javascript">
-tinyMCE.init({ 
-';
+echo '<script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.'jscripts/tiny_mce/tiny_mce_src.js"></script>
+<script language="javascript" type="text/javascript">';
+
+echo 'tinymce.PluginManager.load("insert_tag", "'.AT_BASE_HREF.'jscripts/ATutor_tiny_mce_plugins/insert_tag/editor_plugin.js");';
+
+echo 'tinyMCE.init({';
 	if ($name) {
 		echo '  mode : "exact",';
 		echo '  elements : "'.$name.'",';
@@ -62,13 +63,13 @@ tinyMCE.init({
 	accessibility_warnings : true,
 	entity_encoding : "raw",
 	accessibility_focus : true,
-	plugins : "acheck, table,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+	plugins : "-insert_tag, acheck, table,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
 	// Theme options
 	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
 	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,forecolor,backcolor",
 	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,|,sub,sup,|,charmap,emotions,advhr,|,ltr,rtl,|,fullscreen",
-	theme_advanced_buttons4 : "styleprops,|,abbr,acronym,attribs,|,acheck",
+	theme_advanced_buttons4 : "styleprops,|,abbr,acronym,attribs,|,acheck, |, insert_term_tag",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_path_location : "bottom",
