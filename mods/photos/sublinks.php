@@ -14,6 +14,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 require(AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
+require(AT_PA_INCLUDE.'lib.inc.php');
 
 //Comparison Function, return reverse results 
 function cmp($a, $b){
