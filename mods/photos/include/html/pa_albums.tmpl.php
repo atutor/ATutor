@@ -20,7 +20,7 @@
 			<div class="row" id="upload_button_div">
 				<p name="top"><?php echo _AT('pa_upload_blurb');?></p>
 				<p class="memory_usage"><?php echo _AT('pa_memory_usage').': '. number_format($this->memory_usage, 2) .'/ '. $this->allowable_memory_usage . ' ' . _AT('mb'); ?></p>
-				<input id="upload_button" type="button" value="<?php echo _AT('pa_add_more_photos'); ?>" class="button"/>				
+				<input id="upload_button" type="button" value="<?php echo _AT('pa_add_more_photos'); ?>" class="button"/>
 			</div>			
 			<div class="row" id="files_pending" style="display:none;">
 				<img src="<?php echo AT_PA_BASENAME; ?>images/loading.gif" alt="loading" title="loading"/>
@@ -75,7 +75,7 @@
 							if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']){
 								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf82($comment_array['comment']).'</span>'; 
 							} else {
-								echo htmlentities_utf82($comment_array['comment']); 
+								echo htmlentities_utf82($comment_array['comment'], true); 
 							}
 						?>
 					</div>

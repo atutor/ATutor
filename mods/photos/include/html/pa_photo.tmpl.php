@@ -19,9 +19,9 @@
 
 		<img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id'].SEP.'size=o'.SEP.'ph='.getPhotoFilePath($this->photo_info['id'], '', $this->photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($this->photo_info['description'], false); ?>" alt="<?php echo htmlentities_utf82($this->photo_info['alt_text']) ;?>" />
 		<?php if ($this->action_permission): ?>
-		<div class="flc-inlineEditable"><p class="flc-inlineEdit-text"><?php echo $this->photo_info['description'];?></p></div>
+		<div class="flc-inlineEditable"><p class="flc-inlineEdit-text"><?php echo htmlentities_utf82($this->photo_info['description']);?></p></div>
 		<?php else : ?>
-		<div><p><?php echo $this->photo_info['description'];?></p></div>
+		<div><p><?php echo htmlentities_utf82($this->photo_info['description'], true);?></p></div>
 		<?php endif; ?>
 	</div>
 
@@ -37,7 +37,7 @@
 							if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']){
 								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf82($comment_array['comment']).'</span>'; 
 							} else {
-								echo htmlentities_utf82($comment_array['comment']); 
+								echo htmlentities_utf82($comment_array['comment'], true); 
 							}
 						?>
 					</div>
