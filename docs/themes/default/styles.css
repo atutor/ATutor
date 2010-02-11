@@ -1388,7 +1388,7 @@ div#topnavlistcontainer {
 	background-position:  top right;
 	background-repeat: no-repeat;
 }
-font-weight: normal;
+
 
 ul#topnavlist {
 	padding-top: 5px;
@@ -1532,7 +1532,7 @@ fieldset.group_form{
 	margin:.5em;
 	border:thin #6D7B8D solid;
    	min-height: 170px;
-	padding:.em;
+	padding:.5em;
 }
 
 legend.group_form{
@@ -1827,7 +1827,7 @@ ul#subnavlist li a {
 
 div.menuedit{
 float:right;
-margin-top:-1.2em; 
-border:1px solid #cccccc;"
+margin-top:-1.2em;
+border:1px solid #cccccc;
 
 }
