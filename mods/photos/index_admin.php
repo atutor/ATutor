@@ -45,7 +45,7 @@ if (isset($_POST['edit'])){
 	//printing out the confirmation box
 	$hidden_vars['aid'] = $aid;
 	$hidden_vars['delete'] = 'delete';
-	$msg->addConfirm(array('PA_DELETE_ALBUM', htmlentities_utf8($info['name'])), $hidden_vars);	
+	$msg->addConfirm(array('PA_DELETE_ALBUM', htmlentities_utf82($info['name'])), $hidden_vars);	
 }
 
 //paginator settings

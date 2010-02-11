@@ -38,7 +38,7 @@ define('AT_ADMIN_PRIV_PHOTO_ALBUM', $this->getAdminPrivilege());
 /*******
  * create a side menu box/stack.
  */
-$this->_stacks['pa_photo_gallery'] = array('title_var'=>'photo_gallery', 'file'=>AT_INCLUDE_PATH.'../mods/photos/side_menu.inc.php');
+$this->_stacks['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery', 'file'=>AT_INCLUDE_PATH.'../mods/photos/side_menu.inc.php');
 // ** possible alternative: **
 // $this->addStack('social', array('title_var' => 'social', 'file' => './side_menu.inc.php');
 
@@ -47,7 +47,7 @@ $this->_stacks['pa_photo_gallery'] = array('title_var'=>'photo_gallery', 'file'=
  */
 $_group_tool = $_student_tool = AT_PA_BASENAME.'index.php';
 
-$this->_list['pa_photo_gallery'] = array('title_var'=>'photo_gallery','file'=>AT_PA_BASE.'sublinks.php');
+$this->_list['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery','file'=>AT_PA_BASE.'sublinks.php');
 $this->_pages[AT_PA_BASENAME.'index.php']['icon']      = 'images/home-directory_sm.png';
 
 /*******

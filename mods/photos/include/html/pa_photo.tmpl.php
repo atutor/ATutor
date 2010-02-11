@@ -17,7 +17,7 @@
 		<?php endif; ?>
 		<div style="clear:both"></div>
 
-		<img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id'].SEP.'size=o'.SEP.'ph='.getPhotoFilePath($this->photo_info['id'], '', $this->photo_info['created_date']);?>" title="<?php echo htmlentities_utf8($this->photo_info['description'], false); ?>" alt="<?php echo htmlentities_utf8($this->photo_info['alt_text']) ;?>" />
+		<img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id'].SEP.'size=o'.SEP.'ph='.getPhotoFilePath($this->photo_info['id'], '', $this->photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($this->photo_info['description'], false); ?>" alt="<?php echo htmlentities_utf82($this->photo_info['alt_text']) ;?>" />
 		<?php if ($this->action_permission): ?>
 		<div class="flc-inlineEditable"><p class="flc-inlineEdit-text"><?php echo $this->photo_info['description'];?></p></div>
 		<?php else : ?>
@@ -32,12 +32,12 @@
 			<?php foreach($this->comments as $k=>$comment_array): ?>
 				<div class="comment_box" id="comment_box">
 					<!-- TODO: Profile link and img -->
-					<div class="flc-inlineEditable"><a href=""><strong><?php echo htmlentities_utf8(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
+					<div class="flc-inlineEditable"><a href=""><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
 						<?php 
 							if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']){
-								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf8($comment_array['comment']).'</span>'; 
+								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf82($comment_array['comment']).'</span>'; 
 							} else {
-								echo htmlentities_utf8($comment_array['comment']); 
+								echo htmlentities_utf82($comment_array['comment']); 
 							}
 						?>
 					</div>

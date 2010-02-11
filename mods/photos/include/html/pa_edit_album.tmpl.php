@@ -15,11 +15,11 @@
 	<?php endif; ?>
 	<div class="row">
 		<div class="left_row"<label for="album_location"><?php echo _AT('pa_album_location'); ?></label></div>
-		<input id="album_location" name="album_location" type="text" value="<?php echo htmlentities_utf8($this->album_info['location']);?>"/>
+		<input id="album_location" name="album_location" type="text" value="<?php echo htmlentities_utf82($this->album_info['location']);?>"/>
 	</div>
 	<div class="row">
 		<div class="left_row"<label for="album_description"><?php echo _AT('pa_album_description'); ?></label></div>
-		<textarea id="album_description" name="album_description"><?php echo htmlentities_utf8($this->album_info['description'],false);?></textarea>
+		<textarea id="album_description" name="album_description"><?php echo htmlentities_utf82($this->album_info['description'],false);?></textarea>
 	</div>
 	<div class="row">
 		<input type="hidden" name="aid" value="<?php echo $this->album_info['id']; ?>" />

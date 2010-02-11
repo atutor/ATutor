@@ -19,13 +19,13 @@
 			$photo_info = $pa->getPhotoInfo($row['photo_id']); 
 			if (!empty($photo_info)):
 			?>
-			<a><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf8($photo_info['description']); ?>" alt="<?php echo htmlentities_utf8($photo_info['alt_text']); ?>" /></a>
+			<a><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" /></a>
 			<?php endif; //image ?>
 			</div>
 			<div class="info">
-				<h4><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><?php echo htmlentities_utf8($row['name']); ?></a></h4>
-				<p><?php echo htmlentities_utf8($row['description']); ?></p>
-				<p><?php echo _AT('location').': '.htmlentities_utf8($row['location']); ?></p>
+				<h4><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><?php echo htmlentities_utf82($row['name']); ?></a></h4>
+				<p><?php echo htmlentities_utf82($row['description']); ?></p>
+				<p><?php echo _AT('location').': '.htmlentities_utf82($row['location']); ?></p>
 				<span>
 				<p><?php echo _AT('last_updated', AT_date(_AT('forum_date_format'), $row['last_updated'], AT_DATE_MYSQL_DATETIME));?></p>
 				<p><?php echo _AT('created').': '.AT_date(_AT('forum_date_format'), $row['created_date'], AT_DATE_MYSQL_DATETIME); ?></p>

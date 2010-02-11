@@ -47,12 +47,12 @@
 		<!-- loop through this -->
 		<?php foreach($this->photos as $key=>$photo): ?>
 		<div class="photo_frame">
-			<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$this->album_info['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf8($photo['description'], false); ?>" alt="<?php echo htmlentities_utf8($photo['alt_text']);?>" /></a>
+			<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$this->album_info['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf82($photo['description'], false); ?>" alt="<?php echo htmlentities_utf82($photo['alt_text']);?>" /></a>
 		</div>
 		<?php endforeach; ?>
 		<div class="album_description">
-			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.htmlentities_utf8($this->album_info['location']) .'<br/>';?>
-			<?php echo htmlentities_utf8($this->album_info['description']);?></p>
+			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.htmlentities_utf82($this->album_info['location']) .'<br/>';?>
+			<?php echo htmlentities_utf82($this->album_info['description']);?></p>
 		</div>
 		<!-- end loop -->
 		<!-- page numbers -->
@@ -70,12 +70,12 @@
 			<?php foreach($this->comments as $k=>$comment_array): ?>
 				<div class="comment_box" id="comment_box">
 					<!-- TODO: Profile link and img -->
-					<div class="flc-inlineEditable"><a href=""><strong><?php echo htmlentities_utf8(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
+					<div class="flc-inlineEditable"><a href=""><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
 						<?php 
 							if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']){
-								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf8($comment_array['comment']).'</span>'; 
+								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf82($comment_array['comment']).'</span>'; 
 							} else {
-								echo htmlentities_utf8($comment_array['comment']); 
+								echo htmlentities_utf82($comment_array['comment']); 
 							}
 						?>
 					</div>
