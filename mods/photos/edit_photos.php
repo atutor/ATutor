@@ -23,15 +23,8 @@ if(isset($_POST['aid'])){
 }
 $pid = intval($_GET['pid']);
 
-//breadcrumbs
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums');
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
-//$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children'] = array(AT_PA_BASENAME.'edit_photos.php');
-$_pages[AT_PA_BASENAME.'edit_photos.php']['parent'] = AT_PA_BASENAME.'albums.php?id='.$aid;
-
 //initialization
 $pa = new PhotoAlbum($aid);
-
 if (!$pa->checkAlbumPriv($_SESSION['member_id'])){
 	header('location: albums.php?id='.$aid);
 	exit;
@@ -46,9 +39,22 @@ if ($pid > 0){
 }
 $album_info = $pa->getAlbumInfo();
 
+
+//Set pages/submenu
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums') .' - '.$album_info['name'];
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children']  = array(
+														AT_PA_BASENAME.'edit_photos.php',
+													);
+$_pages[AT_PA_BASENAME.'edit_photos.php']['parent'] = AT_PA_BASENAME.'albums.php?id='.$aid;
+
+
 //handle organize
 if(isset($_GET['org'])){
 	$_custom_head .= '<script type="text/javascript" src="'.AT_PA_BASENAME.'include/imageReorderer.js"></script>';
+	//reset pages/submenu
+	$_pages[AT_PA_BASENAME.'edit_photos.php']['title'] = _AT('pa_organize_photos');
+
 	if (isset($_POST['submit'])){
 		foreach($photos as $index=>$photo_array){
 			$ordering = $_POST['image_'.$photo_array['id']];
@@ -98,6 +104,11 @@ if (isset($_POST['submit'])){
 	}
 
 	//if no errors
+	if ($_POST['submit'] == 'ajax'){
+		//ajax, return 200 status
+		header('HTTP/1.1 200 OK');
+		exit;
+	}
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)) {
 		//if admin
@@ -106,7 +117,17 @@ if (isset($_POST['submit'])){
 	} 
 	header('Location: albums.php?id='.$aid);
 	exit;
+} elseif (isset($_POST['cancel'])){
+	$msg->addFeedback('CANCELLED');
+	if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)) {
+		//if admin
+		header('Location: index_admin.php');
+		exit;
+	}
+	header('Location: albums.php?id='.$aid);
+	exit;
 }
+
 
 include (AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('album_info', $album_info);

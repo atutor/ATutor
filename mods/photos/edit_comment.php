@@ -34,7 +34,7 @@ if ($pa->checkAlbumPriv($_SESSION['member_id']) || $pa->checkCommentPriv($cid, $
 	$result = $pa->editComment($cid, $comment, $isPhoto);
 }
 
-if ($result){
+if ($result===true){
 	//TODO: AJAX
 	header('HTTP/1.0 200 OK');
 } else {

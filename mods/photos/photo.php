@@ -22,11 +22,7 @@ $_custom_head .= '<script type="text/javascript" src="'.AT_PA_BASENAME.'include/
 $aid = intval($_GET['aid']);
 $pid = intval($_GET['pid']);
 
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums');
-$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
-//$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children'] = array(AT_PA_BASENAME.'photo.php');
-$_pages[AT_PA_BASENAME.'photo.php']['parent']    = AT_PA_BASENAME.'albums.php?id='.$aid;
-
+//init
 $pa = new PhotoAlbum($aid);
 
 //get details
@@ -35,6 +31,13 @@ $photos = $pa->getAlbumPhotos();
 $photo_info = $pa->getPhotoInfo($pid);
 $comments = $pa->getComments($pid, true);
 
+//Set pages/submenu
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums') .' - '.$info['name'];
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index.php';
+$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children']  = array(
+														AT_PA_BASENAME.'photo.php',
+													);
+$_pages[AT_PA_BASENAME.'photo.php']['parent'] = AT_PA_BASENAME.'albums.php?id='.$aid;
 
 //TODO: Validate users, course and my albums.
 $visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
@@ -43,7 +46,6 @@ if(!isset($visible_albums[$aid]) || $photo_info['album_id']!=$aid){
 	header('location: index.php');
 	exit;
 }
-
 
 if($pa->checkPhotoPriv($pid, $_SESSION['member_id']) || $pa->checkAlbumPriv($_SESSION['member_id'])){
 	$action_permission = true;

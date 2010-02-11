@@ -1,18 +1,5 @@
 <div id="uploader-contents">
 	<!-- Photo album options and page numbers -->
-	<div class="topbar">
-		<div class="summary">
-				<?php if (!empty($this->photos)): ?>
-				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>"><?php echo _AT('pa_edit_photos');?></a> | 
-				<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('pa_organize_photos');?></a> |
-				<?php endif; ?>
-				<a href="<?php echo $_SERVER["REQUEST_URI"]; ?>#top" onclick="jQuery('#ajax_uploader').toggle();"><?php echo _AT('pa_add_more_photos'); ?></a> |
-		</div>
-		<div class="paginator">
-			<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
-		</div>
-	</div>
-
 	<div class="add_photo">
 		<!--
 		<div class="input-form">
@@ -29,7 +16,7 @@
 			</form>
 		</div>
 		-->
-		<div class="input-form" id="ajax_uploader" style="float:left; display:none;">
+		<div class="input-form" id="ajax_uploader">
 			<div class="row" id="upload_button_div">
 				<p name="top"><?php echo _AT('pa_upload_blurb');?></p>
 				<p class="memory_usage"><?php echo _AT('pa_memory_usage').': '. number_format($this->memory_usage, 2) .'/ '. $this->allowable_memory_usage . ' ' . _AT('mb'); ?></p>
@@ -49,6 +36,14 @@
 	</div>
 
 	<div class="album_panel">
+		<div class="topbar">
+			<div class="summary">
+					<input type="button" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="jQuery('#ajax_uploader').toggle();" class="button" />
+			</div>
+			<div class="paginator">
+				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
+			</div>
+		</div>
 		<!-- loop through this -->
 		<?php foreach($this->photos as $key=>$photo): ?>
 		<div class="photo_frame">
@@ -60,14 +55,13 @@
 			<?php echo htmlentities_utf8($this->album_info['description']);?></p>
 		</div>
 		<!-- end loop -->
-	</div>
-
-	<!-- page numbers -->
-	<div class="topbar">
-		<div class="paginator">
-			<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
+		<!-- page numbers -->
+		<div class="topbar">
+			<div class="paginator">
+				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
+			</div>
 		</div>
-	</div>
+	</div>	
 
 	<!-- comments -->
 	<div class="comment_panel">
@@ -138,6 +132,19 @@ jQuery(document).ready(function () {
 		useTooltip: true,
 		tooltipText: pa_click_item_to_edit, 
 		listeners: {
+			modelChanged: function(model, oldModel, source){
+				/* for undo/redo model change */
+				if (model != oldModel && source != undefined){
+					viewNode = source.component.container.children('.flc-inlineEdit-text')[0];
+					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_comment.php';?>", 
+						{"submit":"submit",
+						 "aid":<?php echo $this->album_info['id'];?>, 
+						 "cid":viewNode.id, 
+						 "comment":model.value},
+						  function(data){}, 
+						  "json");
+				}
+			},
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
 				if (newValue != oldValue){
 					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_comment.php';?>", 

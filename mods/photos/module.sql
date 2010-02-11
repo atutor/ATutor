@@ -60,7 +60,7 @@ CREATE TABLE `pa_photo_comments` (
 ENGINE = MyISAM;
 
 # Initiali Config
-INSERT INTO `config` VALUES ('pa_max_memory_per_member', '20');
+INSERT INTO `config` VALUES ('pa_max_memory_per_member', '50');
 
 # Languages Varaibles
 INSERT INTO `language_text` VALUES ('en', '_module','pa_photo_gallery','Photo Gallery',NOW(),'');
@@ -99,6 +99,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_write_a_comment','Write 
 INSERT INTO `language_text` VALUES ('en', '_module','pa_preferences','Album Preferences',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_max_memory','Maximum Memory Size allowed per member',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_memory_usage','Memory Usage',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_open_upload_manager','Open Upload Manager',NOW(),'');
 
 # Error messages
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_ADD_COMMENT_FAILED','Comment could not be added due to an internal error.  Please try again.',NOW(),'');

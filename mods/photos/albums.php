@@ -25,9 +25,6 @@ $id = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
 
-$_pages[AT_PA_BASENAME.'albums.php']['title']    = _AT('pa_albums') .' - '.$info['name'];
-
-
 //TODO: Validate users, course and my albums.
 // Validate only user and course albums for now. My albums are public.
 if ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM || $info['type_id']==AT_PA_TYPE_PERSONAL){
@@ -39,6 +36,21 @@ if ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM || $info['type_id']==AT_PA_TYPE_PE
 		exit;
 	}
 }
+
+//Set pages/submenu
+$_pages[AT_PA_BASENAME.'index.php?type='.$info['type_id']]['children'] = array(AT_PA_BASENAME.'albums.php');
+
+$_pages[AT_PA_BASENAME.'albums.php']['title']    = _AT('pa_albums') .' - '.$info['name'];
+$_pages[AT_PA_BASENAME.'albums.php']['parent']	  = AT_PA_BASENAME.'index.php?type='.$info['type_id'];
+$_pages[AT_PA_BASENAME.'albums.php']['children']  = array(
+														AT_PA_BASENAME.'edit_photos.php?aid='.$id,
+														AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1',
+													);
+$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id]['title_var'] = 'pa_edit_photos';
+$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id]['parent'] = AT_PA_BASENAME.'albums.php';
+$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1']['title_var'] = 'pa_organize_photos';
+$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1']['parent'] = AT_PA_BASENAME.'albums.php';
+
 
 //TODO: handle add_photo
 if(isset($_POST['upload'])){

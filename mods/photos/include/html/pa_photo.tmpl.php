@@ -1,8 +1,9 @@
 <div>
-	<!-- Photo album options and page numbers -->
-	<div class="topbar">
+	<!-- frame that holds the 604px picture -->
+	<div class="photo_panel" id="photo_panel">
+		<!-- Photo ordering and prev/next -->
 		<?php if($this->photo_info['ordering'] <= $this->total_photos): ?>
-		<div class="summary"><?php echo _AT('pa_photo').' '.$this->photo_info['ordering'].' '._AT('pa_of').' '.$this->total_photos ; ?></div>
+		<div class="ordering"><?php echo _AT('pa_photo').' '.$this->photo_info['ordering'].' '._AT('pa_of').' '.$this->total_photos ; ?></div>
 		<div class="paginator">
 			<ul>
 				<?php if (isset($this->prev)): ?>
@@ -14,10 +15,8 @@
 			</ul>
 		</div>
 		<?php endif; ?>
-	</div>
+		<div style="clear:both"></div>
 
-	<!-- frame that holds the 604px picture -->
-	<div class="photo_panel" id="photo_panel">
 		<img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id'].SEP.'size=o'.SEP.'ph='.getPhotoFilePath($this->photo_info['id'], '', $this->photo_info['created_date']);?>" title="<?php echo htmlentities_utf8($this->photo_info['description'], false); ?>" alt="<?php echo htmlentities_utf8($this->photo_info['alt_text']) ;?>" />
 		<?php if ($this->action_permission): ?>
 		<div class="flc-inlineEditable"><p class="flc-inlineEdit-text"><?php echo $this->photo_info['description'];?></p></div>
@@ -92,6 +91,7 @@ jQuery(document).ready(function () {
 	var pa_click_here_to_edit = '<?php echo _AT("pa_click_here_to_edit"); ?>';
 	var pa_click_item_to_edit = '<?php echo _AT("pa_click_item_to_edit"); ?>';
 
+	/* inline edit for photo panel description */
     fluid.inlineEdits("#photo_panel", {
 		componentDecorators: {
 			type: "fluid.undoDecorator",
@@ -103,10 +103,24 @@ jQuery(document).ready(function () {
 		useTooltip: true,
 		tooltipText: pa_click_item_to_edit, 
 		listeners: {
+			modelChanged: function(model, oldModel, source){
+				/* for undo/redo model change */
+				if (model != oldModel && source != undefined){
+					viewNode = source.component.container.children('.flc-inlineEdit-text')[0];
+					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_photos.php';?>", 
+						{"submit":"ajax",
+						 "pid":<?php echo $this->photo_info['id'];?>, 
+						 "aid":<?php echo $this->aid;?>, 
+						 "description_<?php echo $this->photo_info['id'];?>":model.value,
+						 "alt_text_<?php echo $this->photo_info['id'];?>":"<?php echo $this->photo_info['alt_text'];?>"},
+						  function(data){}, 
+						  "json");
+				}
+			},
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
 				if (newValue != oldValue){
 					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_photos.php';?>", 
-							{"submit":"submit",
+							{"submit":"ajax",
 							 "pid":<?php echo $this->photo_info['id'];?>, 
 							 "aid":<?php echo $this->aid;?>, 
 							 "description_<?php echo $this->photo_info['id'];?>":newValue,
@@ -118,6 +132,7 @@ jQuery(document).ready(function () {
 		}
 	});
 
+	/* inline edit for photo album comments */
 	fluid.inlineEdits(".comment_feeds", {
 		componentDecorators: {
 			type: "fluid.undoDecorator",
@@ -130,6 +145,7 @@ jQuery(document).ready(function () {
 		tooltipText: pa_click_item_to_edit, 
 		listeners: {
 			modelChanged: function(model, oldModel, source){
+				/* for undo/redo model change */
 				if (model != oldModel && source != undefined){
 					viewNode = source.component.container.children('.flc-inlineEdit-text')[0];
 					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_comment.php';?>", 

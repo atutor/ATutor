@@ -23,6 +23,7 @@
 	<div class="row">
 		<input type="hidden" name="aid" value="<?php echo $this->album_info['id']; ?>" />
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" class="button" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" class="button"/>
 	</div>
 </form>
 <?php endif; ?>

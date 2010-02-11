@@ -1,9 +1,4 @@
 <div>
-	<!-- Photo album options and page numbers -->
-	<div class="topbar">
-		<div class="summary"><?php echo _AT('pa_organize_photos'); ?><br/></div>
-	</div>
-
 	<div class="album_panel">
 		<?php if(!empty($this->photos)): ?>
 		<p><?php echo _AT('pa_organize_photo_blurb'); ?></p>

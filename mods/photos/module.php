@@ -76,8 +76,26 @@ if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT
 /*******
  * student page.
  */
+//Temp _pages 
+$this->_pages[AT_SOCIAL_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'index.php');
+$this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+//end temp
+
 $this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = 'pa_photo_gallery';
 $this->_pages[AT_PA_BASENAME.'index.php']['img']       = AT_PA_BASENAME.'images/photo_album.gif';
+$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(
+															AT_PA_BASENAME.'profile_album.php',
+															AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM,
+															AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM,
+															AT_PA_BASENAME.'create_album.php'
+														);
+
+
+$this->_pages[AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM]['title_var'] = 'pa_my_albums';
+$this->_pages[AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM]['parent'] = AT_PA_BASENAME.'index.php';
+
+$this->_pages[AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM]['title_var'] = 'pa_course_albums';
+$this->_pages[AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM]['parent'] = AT_PA_BASENAME.'index.php';
 
 $this->_pages[AT_PA_BASENAME.'create_album.php']['title_var'] = 'pa_create_album';
 $this->_pages[AT_PA_BASENAME.'create_album.php']['parent'] = AT_PA_BASENAME.'index.php';

@@ -1,20 +1,12 @@
 <div>
 	<!-- Photo album options and page numbers -->
-	<div class="topbar">
-		<div class="summary">
-				<a href="<?php echo AT_PA_BASENAME.'profile_album.php';?>"><?php echo _AT('pa_profile_album'); ?></a> | 
-				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM;?>"><?php echo _AT('pa_my_albums'); ?></a> | 
-				<a href="<?php echo AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM;?>"><?php echo _AT('pa_course_albums'); ?></a> |
-				<a href="<?php echo AT_PA_BASENAME; ?>create_album.php"><?php echo _AT('pa_create_album');?></a>
-		</div>
-		<!-- page numbers -->
-		<div class="paginator">
-			<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
-		</div>
-
-	</div>
-
 	<div class="album_panel">
+		<div class="topbar">
+			<!-- page numbers -->
+			<div class="paginator">
+				<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
+			</div>
+		</div>
 		<!-- loop through this -->
 		<?php if(!empty($this->albums)): 
 			$pa = new PhotoAlbum();
@@ -48,12 +40,11 @@
 		</div>
 		<?php endif; ?>
 		<!-- end loop -->
-	</div>
-
-	<!-- page numbers -->
-	<div class="topbar">
-		<div class="paginator">
-			<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
+		<!-- page numbers -->
+		<div class="topbar">
+			<div class="paginator">
+				<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
+			</div>
 		</div>
-	</div>
+	</div>	
 </div>

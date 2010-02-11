@@ -458,6 +458,9 @@ class PhotoAlbum {
 
 		$id = intval($id);
 		$comment = $addslashes($comment);
+		if($id<1 || $comment==''){
+			return false;
+		}
 
 		if (!$isPhoto){
 			$sql = 'UPDATE '.TABLE_PREFIX."pa_album_comments SET comment='$comment' WHERE id=$id";
