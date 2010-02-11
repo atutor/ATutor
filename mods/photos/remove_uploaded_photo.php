@@ -13,7 +13,7 @@
 // $Id$
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-include (AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');	//clr_dir()
+include (AT_INCLUDE_PATH.'lib/filemanager.inc.php');	//clr_dir()
 include (AT_PA_INCLUDE.'lib.inc.php');	//album_filepath
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 
