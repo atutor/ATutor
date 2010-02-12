@@ -290,6 +290,7 @@ class PhotoAlbum {
 		$type_id = intval($type_id);
 		$member_id = intval($member_id);
 		$offset = intval($offset);
+		$rows = array();
 
 		$sql = "SELECT * FROM ".TABLE_PREFIX."pa_albums WHERE member_id=$member_id";
 		if($type_id==AT_PA_TYPE_COURSE_ALBUM){

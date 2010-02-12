@@ -35,6 +35,11 @@ $cnt = 0;               // count number of returned forums
 $pa = new PhotoAlbum();
 $visible_albums = array_merge($pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_COURSE_ALBUM),
 					$pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_MY_ALBUM));
+//check if there are any albums
+if (empty($visible_albums)){
+	return 0;
+}
+
 foreach($visible_albums as $album){
 	$album_ids .= $album['id'] . ', ';
 }

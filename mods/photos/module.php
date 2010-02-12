@@ -81,7 +81,7 @@ $this->_pages[AT_SOCIAL_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME
 //end temp
 
 $this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = 'pa_photo_gallery';
-$this->_pages[AT_PA_BASENAME.'index.php']['img']       = AT_PA_BASENAME.'images/photo_album.gif';
+$this->_pages[AT_PA_BASENAME.'index.php']['img']       = AT_PA_BASENAME.'images/photo_gallery.png';
 $this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(															
 															AT_PA_BASENAME.'profile_album.php',
 															AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM,
