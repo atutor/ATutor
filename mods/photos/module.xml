@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
-    <name lang="en">Photo Album</name> 
-    <description lang="en">Photo Album</description> 
+    <name lang="en">Photo Gallery</name> 
+    <description lang="en">Photo Gallery</description> 
     <maintainers>
         <maintainer> 
             <name>ATutor Team</name> 
@@ -13,7 +13,7 @@
 	<release> 
         <version>1.0 </version> 
         <date>2010-01-04</date> 
-	<state>Under Development</state> 
-	<notes></notes> 
+	<state>Beta</state> 
+	<notes>This is a Photo Gallery designed with accessibility in mind, works best with ATutor 1.6.4 and above.  Your server must have the GD Library version 2.0 or later to manipulate graphics files. This module will not install without it. More information at: http://www.boutell.com/gd/.  This Photo Gallery allows users to create different albums such as Profile Album, My Albums, and Course Albums.  Captions and alternative texts are easy to edit through the FLUID inline editor.</notes> 
     </release> 
 </module>

@@ -101,6 +101,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_preferences','Album Pref
 INSERT INTO `language_text` VALUES ('en', '_module','pa_max_memory','Maximum Memory Size allowed per member',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_memory_usage','Memory Usage',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_open_upload_manager','Open Upload Manager',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_close_upload_manager','Close Upload Manager',NOW(),'');
 
 # Error messages
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_ADD_COMMENT_FAILED','Comment could not be added due to an internal error.  Please try again.',NOW(),'');

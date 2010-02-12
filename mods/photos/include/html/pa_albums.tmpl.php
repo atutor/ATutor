@@ -38,7 +38,8 @@
 	<div class="album_panel">
 		<div class="topbar">
 			<div class="summary">
-					<input type="button" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="jQuery('#ajax_uploader').toggle();" class="button" />
+					<input type="button" id="upload_manager" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="toggleUploadManager()" class="button" />
+					<input type="hidden" id="upload_manager_toggle" value="1" />
 			</div>
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
@@ -303,4 +304,20 @@ function GetXmlHttpObject() {
 	return null;
 }
 
+
+/* 
+ * Toggle add more photo display, and the value of the button
+ */
+function toggleUploadManager(){
+		flag = jQuery('#upload_manager_toggle').val();
+		if (flag==1){
+			jQuery('#upload_manager').val('<?php echo _AT("pa_close_upload_manager"); ?>');
+			jQuery('#upload_manager_toggle').val(0);
+		} else {
+			jQuery('#upload_manager').val('<?php echo _AT("pa_open_upload_manager"); ?>');
+			jQuery('#upload_manager_toggle').val(1);
+		}
+		jQuery('#ajax_uploader').toggle();		
+}
+ 
 </script>

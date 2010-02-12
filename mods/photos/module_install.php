@@ -50,13 +50,53 @@ $_course_privilege = TRUE; // possible values: FALSE | AT_PRIV_ADMIN | TRUE
  */
 $directory = AT_PA_CONTENT_DIR;
 
+/**
+ * check if GD is installed and is version 2 or higher
+ */
+if (! extension_loaded('gd')) {
+	$msg->addError(array('MODULE_INSTALL', '<li>This module requires the GD Library. Please <a href="http://www.boutell.com/gd/" title="Link to GD web site">install it</a>.</li>'));
+} else {
+	if (function_exists('gd_info')) {
+		// use gd_info if possible...
+		$gd_info = gd_info();
+		preg_match('/\d/', $gd_info['GD Version'], $match);
+		if ($match[0] < 2) {
+			$msg->addError(array('MODULE_INSTALL', '<li>This module requires GD version 2 or higher. Please <a href="http://www.boutell.com/gd/" title="Link to GD web site">install it</a>.</li>'));
+		} 
+		//check GD support 
+		$supported_images = array();
+		if ($gd_info['GIF Create Support']) {
+			$supported_images[] = 'gif';
+		}
+		if ($gd_info['JPG Support']) {
+			$supported_images[] = 'jpg';
+		}
+		if ($gd_info['PNG Support']) {
+			$supported_images[] = 'png';
+		}
+		if (!$supported_images) {
+			$msg->addError(array('MODULE_INSTALL', '<li>This module must be able to support gif/jpg/png.  Please recompile your GD library with those types supported.</li>'));
+		}
+	} else {
+		// ...otherwise use phpinfo().
+		ob_start();
+		phpinfo(8);
+		$info = ob_get_contents();
+		ob_end_clean();
+		$info = stristr($info, 'gd version');
+		preg_match('/\d/', $info, $match);
+		if ($match[0] < 2) {
+			$msg->addError(array('MODULE_INSTALL', '<li>This module requires the GD Library version 2 or higher. Please <a href="http://www.boutell.com/gd/" title="Link to GD web site">install it</a>.</li>'));
+	   }
+	}
+}
+
 // check if the directory is writeable
 if (!is_dir($directory) && !@mkdir($directory)) {
 	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' does not exist. Please create it.</li>'));
 } else if (!is_writable($directory) && @chmod($directory, 0666)) {
 	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' is not writeable. On Unix issue the command <kbd>chmod a+rw</kbd>.</li>'));
 }
-
 
 /******
  * the following code checks if there are any errors (generated previously)
