@@ -89,6 +89,7 @@ $this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(
 															AT_PA_BASENAME.'create_album.php',
 															AT_SOCIAL_BASENAME.'index.php',
 														);
+$this->_pages[AT_PA_BASENAME.'index.php']['guide']     = 'general/?p=photo_album.php';
 
 
 $this->_pages[AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM]['title_var'] = 'pa_my_albums';
