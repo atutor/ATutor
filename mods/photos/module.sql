@@ -90,6 +90,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_create_album','Create Al
 INSERT INTO `language_text` VALUES ('en', '_module','pa_alt_text','Alternative Text',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_processed','Processed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_no_album','No Album Available',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_no_photos','No Photos Available',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_organize_photo_blurb','Note: Drag photos using a mouse, or [CTRL]+[Left/Right/Up/Down Arrow] keys to rearrange them.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_of','of',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_undo','Undo',NOW(),'');

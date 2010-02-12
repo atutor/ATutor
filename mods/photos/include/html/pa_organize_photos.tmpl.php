@@ -15,6 +15,10 @@
 		<!-- end loop -->
 		<input type="hidden" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button"/>
 		</form>
+		<?php else: ?>
+		<div class="edit_photo_box">
+			<p><?php echo _AT('pa_no_photos'); ?></p>
+		</div>
 		<?php endif; ?>
 	</div>
 </div>

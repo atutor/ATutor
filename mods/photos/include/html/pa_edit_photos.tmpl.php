@@ -26,5 +26,9 @@
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" class="button"/>
 	</div>
 </form>
+<?php else: ?>
+	<div class="edit_photo_box">
+		<p><?php echo _AT('pa_no_photos'); ?></p>
+	</div>
 <?php endif; ?>
 </div>

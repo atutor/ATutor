@@ -139,9 +139,12 @@ div.photo_panel div.ordering{
 div.photo_panel div.paginator{
 	float:right;
 }
-div.photo_panel div.flc-inlineEditable{
+div.photo_panel .flc-inlineEditable{
 	width: 604px;
 	margin: 0 auto;
+	text-align: left;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
 }
 div.comment_panel{
 	background: #FFFFFF;

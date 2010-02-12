@@ -45,6 +45,7 @@
 				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
 		</div>
+		<?php if(!empty($this->photos)): ?>
 		<!-- loop through this -->
 		<?php foreach($this->photos as $key=>$photo): ?>
 		<div class="photo_frame">
@@ -56,6 +57,11 @@
 			<?php echo htmlentities_utf82($this->album_info['description']);?></p>
 		</div>
 		<!-- end loop -->
+		<?php else: ?>
+		<div class="edit_photo_box">
+			<p><?php echo _AT('pa_no_photos'); ?></p>
+		</div>
+		<?php endif; ?>
 		<!-- page numbers -->
 		<div class="topbar">
 			<div class="paginator">
