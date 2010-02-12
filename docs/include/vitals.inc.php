@@ -1285,7 +1285,7 @@ function is_mobile_theme() {
 	return ($_SESSION['prefs']['PREF_THEME'] == 'mobile');
 }
 
-require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
+require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
 
 $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
 
