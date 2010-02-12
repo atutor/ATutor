@@ -69,7 +69,7 @@ echo 'tinyMCE.init({';
 	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
 	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,forecolor,backcolor",
 	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,|,sub,sup,|,charmap,emotions,advhr,|,ltr,rtl,|,fullscreen",
-	theme_advanced_buttons4 : "styleprops,|,abbr,acronym,attribs,|,acheck, |, insert_term_tag",
+	theme_advanced_buttons4 : "styleprops,|,abbr,acronym,attribs,|,acheck, |, insert_term_tag, insert_media_tag",
 	theme_advanced_toolbar_location : "top",
 	theme_advanced_toolbar_align : "left",
 	theme_advanced_path_location : "bottom",
