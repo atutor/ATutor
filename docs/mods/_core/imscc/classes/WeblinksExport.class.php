@@ -48,7 +48,7 @@ class WeblinksExport {
 		//$savant->assign('url_window_features', $url['window_features']);
 
 		//generates xml
-		$xml = $savant->fetch(AT_INCLUDE_PATH.'classes/Weblinks/Weblinks.tmpl.php');
+		$xml = $savant->fetch(AT_INCLUDE_PATH.'../mods/_core/imscc/classes/Weblinks.tmpl.php');
 
 		return $xml;
 	}
