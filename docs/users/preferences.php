@@ -16,7 +16,7 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
-require(AT_INCLUDE_PATH.'lib/pref_tab_functions.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
 /* whether or not, any settings are being changed when this page loads. */
 /* ie. is ANY action being performed right now?							*/
 
