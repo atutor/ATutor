@@ -39,7 +39,7 @@ global $_custom_head;
 global $substr, $strlen, $_course_id;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
-require(AT_INCLUDE_PATH . 'lib/pref_functions.inc.php');
+require(AT_INCLUDE_PATH . '../mods/_core/users/lib/pref_functions.inc.php');
 //require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
 
 $savant->assign('lang_code', $_SESSION['lang']);
