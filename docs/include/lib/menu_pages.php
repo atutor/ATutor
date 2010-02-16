@@ -20,7 +20,7 @@ global $system_courses;
 	5 sections: public, my_start_page, course, admin, home
 */
 if (isset($_pages[AT_NAV_ADMIN])) {
-    array_unshift($_pages[AT_NAV_ADMIN], 'admin/index.php', 'admin/modules/index.php');
+    array_unshift($_pages[AT_NAV_ADMIN], 'admin/index.php', 'mods/_core/modules/index.php');
 }
 
 if($_config['allow_browse'] && $_config['just_social'] != "1") {
@@ -92,7 +92,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
         }
 } else if (isset($_SESSION['course_id']) && $_SESSION['course_id'] == -1) {
 	/* admin pages */
-
+/*
         $_pages['admin/index.php']['title_var'] = 'home';
         $_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
         $_pages['admin/index.php']['guide']     = 'admin/?p=configuration.php';
@@ -104,7 +104,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 
         $_pages['admin/admins/my_password.php']['title_var'] = 'change_password';
         $_pages['admin/admins/my_password.php']['parent']    = 'admin/index.php';
-
+*/
         if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)) {
         //hide system preference from non-super admins
             $_pages[AT_NAV_ADMIN][] = 'admin/config_edit.php';
@@ -136,6 +136,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 
         if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
         // hide modules from non-super admins
+/*
             $_pages['admin/modules/index.php']['title_var'] = 'modules';
             $_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
             $_pages['admin/modules/index.php']['guide']     = 'admin/?p=modules.php';
@@ -171,21 +172,21 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 
             $_pages['admin/modules/confirm.php']['title_var'] = 'confirm';
             $_pages['admin/modules/confirm.php']['parent']    = 'admin/modules/add_new.php';
-
+*/
             $_pages['admin/cron_config.php']['title_var'] = 'cron_config';
             $_pages['admin/cron_config.php']['parent']    = 'admin/config_edit.php';
             $_pages['admin/cron_config.php']['guide']     = 'admin/?p=cron_setup.php';
             $_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/cron_config.php'));
-
+/*
             $_pages['admin/auto_enroll.php']['title_var'] = 'auto_enroll';
             $_pages['admin/auto_enroll.php']['parent']    = 'admin/config_edit.php';
             $_pages['admin/auto_enroll.php']['guide']     = 'admin/?p=auto_enroll.php';
             $_pages['admin/auto_enroll.php']['children']  = array_merge(array('admin/auto_enroll_edit.php'));
-            $_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/auto_enroll.php'));
+            $_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/auto_enroll.php'));*/
 
 
 
-
+/*
 
 
             $_pages['admin/auto_enroll_edit.php']['title_var'] = 'auto_enroll_edit';
@@ -194,7 +195,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 
             $_pages['admin/auto_enroll_delete.php']['title_var'] = 'auto_enroll_delete';
             $_pages['admin/auto_enroll_delete.php']['parent']    = 'admin/auto_enroll.php';
-
+*/
         }
     }
 
