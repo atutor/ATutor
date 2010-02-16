@@ -576,7 +576,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 <small><?php echo _AT('upload_icon_text'); ?></small>
             </div -->
 
-        <?php  require_once(AT_INCLUDE_PATH.'html/course_icon.inc.php'); ?>
+        <?php  require_once(AT_INCLUDE_PATH.'../mods/_core/courses/html/course_icon.inc.php'); ?>
 
         <br style="clear: left;" />
 
