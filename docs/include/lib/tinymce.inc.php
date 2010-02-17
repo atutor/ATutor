@@ -44,7 +44,7 @@ function load_editor($name = FALSE, $mode="textareas") {
 //insert predefined template: template
 //insert page break: pagebreak
 
-echo '<script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.'jscripts/tiny_mce/tiny_mce_src.js"></script>
+echo '<script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.'jscripts/tiny_mce/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript">';
 
 echo 'tinymce.PluginManager.load("insert_tag", "'.AT_BASE_HREF.'jscripts/ATutor_tiny_mce_plugins/insert_tag/editor_plugin.js");';
