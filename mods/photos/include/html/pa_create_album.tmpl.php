@@ -1,7 +1,7 @@
 <div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" name="create_album" method="post">
 	<div class="row">
-		<div class="left_row"><label for="album_name"><?php echo _AT('pa_album_name'); ?></label></div>
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><div class="left_row"><label for="album_name"><?php echo _AT('pa_album_name'); ?></label></div>
 		<input id="album_name" name="album_name" type="text" />
 	</div>
 	<?php

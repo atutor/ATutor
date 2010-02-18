@@ -89,7 +89,7 @@ $this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(
 															AT_PA_BASENAME.'create_album.php',
 															AT_SOCIAL_BASENAME.'index.php',
 														);
-$this->_pages[AT_PA_BASENAME.'index.php']['guide']     = 'general/?p=photo_album.php';
+$this->_pages[AT_PA_BASENAME.'index.php']['guide']     = 'general/?p=pa_index.php';
 
 
 $this->_pages[AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM]['title_var'] = 'pa_my_albums';
@@ -100,39 +100,35 @@ $this->_pages[AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_COURSE_ALBUM]['parent'
 
 $this->_pages[AT_PA_BASENAME.'create_album.php']['title_var'] = 'pa_create_album';
 $this->_pages[AT_PA_BASENAME.'create_album.php']['parent'] = AT_PA_BASENAME.'index.php';
-$this->_pages[AT_PA_BASENAME.'create_album.php']['guide']     = 'general/?p=photo_album.php';
+$this->_pages[AT_PA_BASENAME.'create_album.php']['guide']     = 'general/?p=pa_index.php';
 
 $this->_pages[AT_PA_BASENAME.'profile_album.php']['title_var'] = 'pa_profile_album';
 $this->_pages[AT_PA_BASENAME.'profile_album.php']['parent'] = AT_PA_BASENAME.'index.php';
-$this->_pages[AT_PA_BASENAME.'profile_album.php']['guide']     = 'general/?p=photo_album.php';
+$this->_pages[AT_PA_BASENAME.'profile_album.php']['guide']     = 'general/?p=pa_albums.php';
 
 $this->_pages[AT_PA_BASENAME.'edit_album.php']['title_var'] = 'pa_edit_album';
 $this->_pages[AT_PA_BASENAME.'edit_album.php']['parent'] = AT_PA_BASENAME.'index.php';
-$this->_pages[AT_PA_BASENAME.'edit_album.php']['guide']     = 'general/?p=photo_album.php';
+$this->_pages[AT_PA_BASENAME.'edit_album.php']['guide']     = 'general/?p=pa_albums.php';
 
 $this->_pages[AT_PA_BASENAME.'delete_album.php']['title_var'] = 'pa_delete_album';
 $this->_pages[AT_PA_BASENAME.'delete_album.php']['parent'] = AT_PA_BASENAME.'index.php';
-$this->_pages[AT_PA_BASENAME.'delete_album.php']['guide']     = 'general/?p=photo_album.php';
 
 $this->_pages[AT_PA_BASENAME.'albums.php']['title_var'] = 'pa_albums';
 $this->_pages[AT_PA_BASENAME.'albums.php']['parent'] = AT_PA_BASENAME.'index.php';
-$this->_pages[AT_PA_BASENAME.'albums.php']['guide']     = 'general/?p=photo_album.php';
+$this->_pages[AT_PA_BASENAME.'albums.php']['guide']     = 'general/?p=pa_albums.php';
 //$this->_pages[AT_PA_BASENAME.'albums.php']['children']  = array(AT_PA_BASENAME.'photo.php');
 
 $this->_pages[AT_PA_BASENAME.'photo.php']['title_var'] = 'pa_photo';
 $this->_pages[AT_PA_BASENAME.'photo.php']['parent'] = AT_PA_BASENAME.'albums.php';
-$this->_pages[AT_PA_BASENAME.'photo.php']['guide']     = 'general/?p=photo_album.php';
+$this->_pages[AT_PA_BASENAME.'photo.php']['guide']     = 'general/?p=pa_photo.php';
 	$this->_pages[AT_PA_BASENAME.'delete_photo.php']['title_var'] = 'pa_delete_photo';
 	$this->_pages[AT_PA_BASENAME.'delete_photo.php']['parent'] = AT_PA_BASENAME.'photo.php';
-	$this->_pages[AT_PA_BASENAME.'delete_photo.php']['guide']     = 'general/?p=photo_album.php';
-
 
 $this->_pages[AT_PA_BASENAME.'edit_photos.php']['title_var'] = 'pa_edit_photos';
 $this->_pages[AT_PA_BASENAME.'edit_photos.php']['parent'] = AT_PA_BASENAME.'albums.php';
-$this->_pages[AT_PA_BASENAME.'edit_photos.php']['guide']     = 'general/?p=edit_photos.php';
+$this->_pages[AT_PA_BASENAME.'edit_photos.php']['guide']     = 'general/?p=pa_albums.php';
 
 $this->_pages[AT_PA_BASENAME.'delete_comment.php']['title_var'] = 'pa_delete_comment';
 $this->_pages[AT_PA_BASENAME.'delete_comment.php']['parent'] = AT_PA_BASENAME.'photo.php';
-$this->_pages[AT_PA_BASENAME.'delete_comment.php']['guide']  = 'general/?p=photo_album.php';
 
 ?>
