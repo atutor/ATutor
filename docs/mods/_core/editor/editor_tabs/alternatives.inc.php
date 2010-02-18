@@ -391,8 +391,7 @@ else
 	<div class="row">
 		<strong><?php echo _AT('or'); ?></strong> <?php echo _AT('paste_file'); ?><br />
 		<input type="file" name="uploadedfile_paste" class="formfield" size="20" /> <input type="submit" name="submit_file_alt" value="<?php echo _AT('upload'); ?>" /><br />
-		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
-		&middot;<?php echo _AT('edit_after_upload'); ?></small>
+		<small class="spacer">&middot;<?php echo _AT('html_only'); ?></small>
 	</div>
 	 
 </div>
