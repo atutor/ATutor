@@ -26,12 +26,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		}
 	?>
 
-	<div class="row">
-		<label for="edithead"><?php echo _AT('customized_head');  ?></label>
-		<input type="button" name="edithead" id="edithead" value="<?php echo _AT('edit'); ?>" onclick="switch_head_editor()" class="button"/><br />
-		<small>&middot; <?php echo _AT('customized_head_note'); ?></small>
-	</div>
-
 <?php 
 if (trim($_POST['head']) == '<br />') {
 	$_POST['head'] = '';
@@ -42,11 +36,12 @@ if ($do_check) {
 ?>
 
 	<div class="row">
-		<div id="headDiv" style="display:none">
-			<input type="checkbox" name="use_customized_head" id="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
-			<label for="use_customized_head"><?php echo _AT('use_customized_head'); ?></label><br />
-			<label for="head"><?php echo _AT('customized_head'); ?></label><br /><textarea name="head" id="head" cols="" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
-		</div>
+        <input type="button" title="Edit custom head" name="edithead" id="edithead" value="+" onclick="switch_head_editor()" class="button"/>
+        <label for="head"><?php echo _AT('customized_head');  ?></label>
+        <small>(<?php echo _AT('customized_head_note'); ?>)</small>
+        <input type="checkbox" name="use_customized_head" id="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
+        <label for="use_customized_head"><?php echo _AT('use_customized_head'); ?></label>
+		<textarea name="head" id="head" cols="" rows="10" style="display:none"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
 	</div>
 
 	<div class="row">
@@ -150,8 +145,8 @@ if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
 			
 		if (document.form.displayhead.value==1)
 		{
-			document.getElementById("headDiv").style.display = '';
-			document.form.edithead.value = "<?php echo _AT('hide'); ?>"
+			document.getElementById("head").style.display = '';
+			document.form.edithead.value = "-"
 		}
 			
 		if (document.form.setvisual.value==1)
@@ -166,19 +161,19 @@ if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
 		}
 	}
 	
-	// show/hide "cusomized head" editor
+	// show/hide "customized head" textarea
 	function switch_head_editor()
 	{
-		if (document.form.edithead.value=="<?php echo _AT('edit'); ?>")
+		if (document.form.edithead.value=="+")
 		{
-			document.form.edithead.value = "<?php echo _AT('hide'); ?>"
-			document.getElementById("headDiv").style.display = "";
+			document.form.edithead.value = "-"
+			document.getElementById("head").style.display = "";
 			document.form.displayhead.value=1;
 		}
 		else
 		{
-			document.form.edithead.value = "<?php echo _AT('edit'); ?>"
-			document.getElementById("headDiv").style.display = "none";
+			document.form.edithead.value = "+"
+			document.getElementById("head").style.display = "none";
 			document.form.displayhead.value=0;
 		}
 	}
@@ -224,6 +219,5 @@ if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
 		document.form.formatting[0].disabled = "";
 		document.form.setvisualbutton.value = "<?php echo _AT('switch_visual'); ?>";
 	}
-
 	//-->
 	</script>
