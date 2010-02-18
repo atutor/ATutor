@@ -136,10 +136,6 @@ if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
 	</div>
 	
 	<div class="row">
-		<?php require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tabs/content_code_picker.inc.php'); ?>
-	</div>
-
-	<div class="row">
 		<strong><?php echo _AT('or'); ?></strong> <label for="uploadedfile"><?php echo _AT('paste_file'); ?></label><br />
 		<input type="file" name="uploadedfile_paste" id="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" /><br />
 		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />

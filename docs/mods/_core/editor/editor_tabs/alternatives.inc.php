@@ -389,10 +389,6 @@ else
 	</div>
 	
 	<div class="row">
-		<?php require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tabs/content_code_picker.inc.php'); ?>
-	</div>
-
-	<div class="row">
 		<strong><?php echo _AT('or'); ?></strong> <?php echo _AT('paste_file'); ?><br />
 		<input type="file" name="uploadedfile_paste" class="formfield" size="20" /> <input type="submit" name="submit_file_alt" value="<?php echo _AT('upload'); ?>" /><br />
 		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
