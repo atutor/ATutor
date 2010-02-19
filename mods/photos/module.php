@@ -80,6 +80,11 @@ if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'index.php');
 //end temp
 
+//$this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = _AT('test');
+//$this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index_mystart.php';
+//$this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] = array_push($this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'], AT_PA_BASENAME.'index.php');
+
+
 $this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = 'pa_photo_gallery';
 $this->_pages[AT_PA_BASENAME.'index.php']['img']       = AT_PA_BASENAME.'images/photo_gallery.png';
 $this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(															
@@ -90,6 +95,9 @@ $this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(
 															AT_SOCIAL_BASENAME.'index.php',
 														);
 $this->_pages[AT_PA_BASENAME.'index.php']['guide']     = 'general/?p=pa_index.php';
+
+$this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index_mystart.php';
+$this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] = array_merge(isset($this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children']) ? $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] : array(), array(AT_PA_BASENAME.'index.php'));
 
 
 $this->_pages[AT_PA_BASENAME.'index.php?type='.AT_PA_TYPE_MY_ALBUM]['title_var'] = 'pa_my_albums';
