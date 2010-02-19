@@ -16,11 +16,15 @@
 	$_pages['packages.php']					= 'Packages';
 	$_pages['tile.php']						= 'TILE Repository Search';
 	$_pages['file_storage.php']				= 'File Storage';
-    $_pages['my_network.php']					= 'My Networking';
-    $_pages['my_contacts.php']					= 'My Contacts';
-    $_pages['my_groups.php']					= 'Network Groups';
-    $_pages['my_profile.php']					= 'Network Profile';
+    $_pages['my_network.php']				= 'My Networking';
+    $_pages['my_contacts.php']				= 'My Contacts';
+    $_pages['my_groups.php']				= 'Network Groups';
+    $_pages['my_profile.php']				= 'Network Profile';
     $_pages['my_gadgets.php']				= 'Gadgets';
-    $_pages['my_settings.php']					= 'Social Settings';
+    $_pages['my_settings.php']				= 'Social Settings';
+	$_pages['pa_index.php']					= 'Photo Gallery';
+	$_pages['pa_albums.php']				= 'Albums';
+	$_pages['pa_photo.php']					= 'Photo';
+	$_pages['pa_comments.php']				= 'Comments';
 
 ?>

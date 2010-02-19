@@ -93,10 +93,10 @@ function hide() {
 
 <?php 
 if (isset($_GET['p'])) {
+	include('general/pages.inc.php');
 	$body = htmlentities($_GET['p']);
-	$accessible_pages = scandir('.');
-	
-	if (!in_array($body, $accessible_pages))
+	$accessible_pages = $_pages;
+	if (!isset($accessible_pages[$body]))
 	{
 ?>
 <div style="width: 50%;

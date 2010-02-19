@@ -213,7 +213,12 @@ if ($section == 'admin'){
 											'my_profile.php',			
 											'my_gadgets.php',			
 											'my_settings.php'	
-											)			
+											),
+				'pa_index.php' => array(
+											'pa_albums.php',
+											'pa_photo.php',
+											'pa_comments.php'
+											)
 			);
 	hb_print_toc($pages, 'general');
 } ?>
