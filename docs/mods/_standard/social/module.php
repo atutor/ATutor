@@ -140,13 +140,26 @@ $this->_pages[AT_NAV_PUBLIC] = array(AT_SOCIAL_BASENAME.'index_public.php');
 $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['title_var'] = 'social';
 $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['parent'] = AT_NAV_PUBLIC;
 
+
+
+
+
+
 /* my start page pages */
 if ($_SESSION['valid_user']==1){
-//$this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');
+$this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');
 $this->_pages[AT_NAV_START]  = array(AT_SOCIAL_BASENAME.'index_mystart.php');
 $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['title_var'] = 'social';
 $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['guide']     = 'general/?p=my_network.php';
 $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['parent'] = AT_NAV_START;
+
+$this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] = array_merge(
+array(AT_SOCIAL_BASENAME.'connections.php',
+AT_SOCIAL_BASENAME.'sprofile.php', 
+AT_SOCIAL_BASENAME.'applications.php', 
+AT_SOCIAL_BASENAME.'groups/index.php',
+AT_SOCIAL_BASENAME.'settings.php'),
+isset($_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children']) ? $_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] : array());
 
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['title_var'] = 'social';
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['guide']     = 'general/?p=my_network.php';

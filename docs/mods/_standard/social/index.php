@@ -81,7 +81,7 @@ if (isset($_GET['approval'])){
 }
 
 include (AT_INCLUDE_PATH.'header.inc.php'); 
-$savant->display('pubmenu.tmpl.php'); ?>
+?>
 	<div style="float:left; width:55%;">
 		<?php
 			//network updates
