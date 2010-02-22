@@ -30,7 +30,7 @@ if (isset($_POST['cancel'])) {
 
 
 }else if($_POST['submit']){
-	require(AT_INCLUDE_PATH.'mods/_core/properties/lib/course.inc.php');
+	require(AT_INCLUDE_PATH.'../mods/_core/properties/lib/course.inc.php');
 	$_POST['instructor'] = $_SESSION['member_id'];
 
 	$errors = add_update_course($_POST);
