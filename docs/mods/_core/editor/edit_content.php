@@ -850,7 +850,7 @@ $pid = intval($_REQUEST['pid']);
 	<?php endif; ?>
 	<?php 
 	//	if ($current_tab != 5){
-        	include('/editor_tabs/'.$tabs[$current_tab][1]);
+        	include('editor_tabs/'.$tabs[$current_tab][1]);
 			echo '</div></form>';
 	//	}
 	//	else 
