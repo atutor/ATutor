@@ -83,7 +83,7 @@ if ($do_check) {
             <label for="body_text"><?php echo _AT('body');  ?></label><br />
 		    <textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']);?></textarea>
 		</span>
-		<span id="weblinkSpan" />	
+		<span id="weblinkSpan" style="display:none" />	
 	        <label for="weblink_text"><?php echo _AT('weblink');  ?></label>
             <input name="weblink_text" id="weblink_text" value="<?php echo ($_POST['weblink_text']!=''?htmlspecialchars($_POST['weblink_text']):'http://'); ?>" style="width:60%;" />
 		</span>
@@ -161,7 +161,6 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 			editHead.val('-');
 		}
 
-		var stuff = isHTML.attr("checked");
         if (isWeblink.attr("checked")) {
             textArea.hide();
             webLink.show();
