@@ -95,7 +95,7 @@ function save_changes($redir, $current_tab) {
 	$_POST['test_message'] = trim($_POST['test_message']);
 	$_POST['allow_test_export'] = intval($_POST['allow_test_export']);
 
-	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
+//	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
 
 	//if weblink is selected, use it
 	if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
@@ -258,7 +258,7 @@ function save_changes($redir, $current_tab) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.basename($_SERVER['PHP_SELF']).'?cid='.$cid.SEP.'close='.$addslashes($_POST['save_n_close']).SEP.'tab='.$addslashes($_POST['current_tab']).SEP.'setvisual='.$addslashes($_POST['setvisual']).SEP.'displayhead='.$addslashes($_POST['displayhead']).SEP.'alternatives='.$addslashes($_POST['alternatives']));
+		header('Location: '.basename($_SERVER['PHP_SELF']).'?cid='.$cid.SEP.'close='.$addslashes($_POST['save_n_close']).SEP.'tab='.$addslashes($_POST['current_tab']).SEP.'displayhead='.$addslashes($_POST['displayhead']).SEP.'alternatives='.$addslashes($_POST['alternatives']));
 		exit;
 	} else {
 		return;

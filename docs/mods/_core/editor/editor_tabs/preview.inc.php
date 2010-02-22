@@ -21,6 +21,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		if ($_POST['body_text']) {
 			echo format_content($stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
+		} elseif ($_POST['weblink_text']) {
+            echo format_content($stripslashes($_POST['weblink_text']), $_POST['formatting']);
 		} else { 
 			global $msg;
 		

@@ -602,32 +602,20 @@ if ($current_tab == 5) {
 //}
 
 if (($current_tab == 0) || ($_current_tab == 5)) {
-	if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
-		if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) {
-			$_POST['formatting'] = 1;
-			$_REQUEST['settext'] = 0;
-			$_REQUEST['setvisual'] = 0;
-
-		} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) {
-			$_POST['formatting'] = 1;
-			$_POST['settext'] = 0;
-			$_POST['setvisual'] = 1;
-
-		} else { // else if == 0
+    if ($_POST['formatting'] == null){ 
+        // this is a fresh load from just logged in
+	    if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 0) {
 			$_POST['formatting'] = 0;
-			$_REQUEST['settext'] = 0;
-			$_REQUEST['setvisual'] = 0;
+		} else {
+			$_POST['formatting'] = 1;
 		}
-	}
-	if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
-		$onload = "document.form.ctitle.focus(); ";
-	}
+    }
 }
 
 // initialize buttons, texts, radio buttons for editor
 if ($current_tab == 0) 
 {
-	$onload.="on_load();";
+    $onload.="ATutor.mods.editor.on_load('". $_SESSION['prefs']['PREF_CONTENT_EDITOR']."');";
 }
 
 if ($current_tab == 5) 
@@ -696,6 +684,7 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['use_customized_head'] = $content_row['use_customized_head'];
 			$_POST['title']      = $content_row['title'];
 			$_POST['body_text']  = $content_row['text'];
+			$_POST['weblink_text'] = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
 			$_POST['test_message'] = $content_row['test_message'];
 			$_POST['allow_test_export'] = $content_row['allow_test_export'];
@@ -732,7 +721,7 @@ $pid = intval($_REQUEST['pid']);
 			}
 		}
 	}
-
+	
 	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
 	if ($_REQUEST['sub'] == 1)
@@ -742,12 +731,11 @@ $pid = intval($_REQUEST['pid']);
 	}
 	echo '<input type="submit" name="submit" style="display:none;"/>';
 	if (($current_tab != 0) && (($_current_tab != 5))) {
-		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
-		echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
+        echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
+        echo '<input type="hidden" name="weblink_text" value="'.htmlspecialchars($stripslashes($_POST['weblink_text'])).'" />';
+        echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
 		echo '<input type="hidden" name="use_customized_head" value="'.(($_POST['use_customized_head']=="") ? 0 : $_POST['use_customized_head']).'" />';
-		echo '<input type="hidden" name="displayhead" value="'.$_POST['displayhead'].'" />';
-		echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-		echo '<input type="hidden" name="settext" value="'.$_POST['settext'].'" />';		
+		echo '<input type="hidden" name="displayhead" id="displayhead" value="'.$_POST['displayhead'].'" />';
 		echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	}
 
@@ -806,7 +794,7 @@ $pid = intval($_REQUEST['pid']);
 			}
 		}
 	}
-
+	
 	//tests
 	if (is_array($_POST['tid']) && $current_tab != 6){
 		/* Test & Survey --> Other tabs triggers this condition */
@@ -841,7 +829,6 @@ $pid = intval($_REQUEST['pid']);
 	if ($do_check) {
 		$changes_made = check_for_changes($content_row);
 	}
-
 ?>
 <div align="center">
 	<?php output_tabs($current_tab, $changes_made); ?>
@@ -863,8 +850,8 @@ $pid = intval($_REQUEST['pid']);
 	<?php endif; ?>
 	<?php 
 	//	if ($current_tab != 5){
-				include(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tabs/'.$tabs[$current_tab][1]);
-				echo '</div></form>';
+        	include('/editor_tabs/'.$tabs[$current_tab][1]);
+			echo '</div></form>';
 	//	}
 	//	else 
 	//	{
