@@ -191,9 +191,13 @@ class UrlRewrite  {
 			$front = $url;
 			$end = '';
 		}
-
 		$front_array = explode('/', $front);
-
+		if ($front_array[1]=='_standard' || $front_array[1]=='_core' ){
+			//shift the first 2 elements.
+			array_shift($front_array);
+			array_shift($front_array);	
+			$front = implode('/', $front_array);
+		}
 		//find out what kind of link this is, pretty url? relative url? or PHP_SELF url?
 		$dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
 		$url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
@@ -306,7 +310,6 @@ class UrlRewrite  {
 				 $pretty_url .= $qs_sep.$obj->constructPrettyUrl($end);
 			}
 		}
-
 		//if mod_rewrite is switched on, defined in constants.inc.php
 		if ($_config['apache_mod_rewrite'] > 0){
 			return $pretty_url;
@@ -319,8 +322,36 @@ class UrlRewrite  {
 	 * Return the paths where this script is
 	 */
 	function getPath(){
+		//for 2.0, most of the paths are moved  into mods/_standard
+		//map the paths.
+		$hmap = array (
+					'/forums/forum'	=>	'mods/_standard', 
+					'/social'		=>	'mods/_standard',
+					'/imscp'		=>	'mods/_core',
+					'/glossary'		=>	'mods/_core',
+					'/tests'		=>	'mods/_standard',
+					'/chat'			=>	'mods/_standard',
+					'/links'		=>	'mods/_standard',
+					'/polls'		=>	'mods/_standard',
+					'/faq'			=>	'mods/_standard',
+					'/groups'		=>	'mods/_standard',
+					'/reading_list'	=>	'mods/_standard',
+					'/file_storage'	=>	'mods/_standard',
+					'/gradebook'	=>	'mods/_standard',
+					'/student_tools'=>	'mods/_standard',
+					'/directory'	=>	'mods/_standard',
+					'/sitemap'		=>	'mods/_standard',
+					'/tracker'		=>	'mods/_standard',
+					'/google_search'=>	'mods/_standard',
+					'/blogs'		=>	'mods/_standard'
+				);
+
 		if ($this->path != ''){
-			return substr($this->path, 1).'/';
+			$path = substr($this->path, 1).'/';
+			if (isset($hmap[$this->path])){
+				$path = $hmap[$this->path].'/'.$path;
+			}
+			return $path;
 		}
 		return '';
 	}
@@ -333,7 +364,7 @@ class UrlRewrite  {
 	}
 
 	/**
-	 * 
+	 * Return the link of the page.
 	 */
 	function getPage(){
 		return $this->getPath().$this->getFileName();
