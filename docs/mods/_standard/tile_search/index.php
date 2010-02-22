@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2006 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,156 +10,107 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 7482 2008-05-06 17:44:49Z greg $
+// $Id: index.php 6614 2006-09-27 19:32:29Z greg $
 
 define('AT_INCLUDE_PATH', '../../../include/');
-require (AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_CONTENT);
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once('classes/ResultParser.class.php');
 
-$path = array();
+//$default_results_per_page = 25;
+$default_results_per_page = 20;
 
-/* called at the start of en element */
-/* builds the $path array which is the path from the root to the current element */
-function startElement($parser, $name, $attrs) {
-	global $path;
-	array_push($path, $name);
-}
+$browse =  intval($browse);
 
-/* called when an element ends */
-/* removed the current element from the $path */
-function endElement($parser, $name) {
-	global $my_data, $path, $tile_title, $tile_description, $tile_identifier;
+if (!isset($_REQUEST["results_per_page"])) $_REQUEST["results_per_page"] = $default_results_per_page;
 
-	if ($path == array('lom', 'general', 'title', 'langstring')) {
-		$tile_title = $my_data;
-	} else if ($path == array('lom', 'general', 'description', 'langstring')) {
-		$tile_description = $my_data;
-	} else if ($path == array('lom', 'general', 'identifier')) {
-		$tile_identifier = $my_data;
+if ($_REQUEST['submit'] || isset($_REQUEST['p']))
+{
+	$keywords = trim($_REQUEST['keywords']);
+	//$title = trim($_REQUEST['title']);
+	//$description = trim($_REQUEST['description']);
+	//$author = trim($_REQUEST['author']);
+	$results_per_page = intval(trim($_REQUEST['results_per_page']));
+	
+	if($keywords <> "") 
+	// || $title <> "" || $description <> "" || $author <> "" || $_REQUEST["creativeCommons"] == "true"
+	{
+		$page = intval($_REQUEST['p']);
+		if (!$page) {
+			$page = 1;
+		}	
+	
+		if ($results_per_page > $default_results_per_page || $results_per_page == 0)
+			$results_per_page = $default_results_per_page;
+		
+		$startRecNumber = $results_per_page*($page - 1);
+		
+		$page_str = "results_per_page=".$results_per_page;
+		$url_search = "&maxResults=".$results_per_page."&start=".$results_per_page*($page - 1);
+	
+		if ($keywords <> "")
+		{
+			$page_str .= SEP."keywords=".urlencode($keywords);
+			$url_search .= "&keywords=".urlencode($keywords);
+		}
+	//	if ($title <> "") 
+	//	{
+	//		$page_str .= SEP."title=".urlencode($title);
+	//		$url_search .= "&title=".urlencode($title);
+	//	}
+	//	if ($description <> "") 
+	//	{
+	//		$page_str .= SEP. "description=".urlencode($description);
+	//		$url_search .= "&description=".urlencode($description);
+	//	}
+	//	if ($author <> "") 
+	//	{
+	//		$page_str .= SEP. "author=".urlencode($author);
+	//		$url_search .= "&author=".urlencode($author);
+	//	}
+	//	
+	//	if (isset($_REQUEST["search_type"])) 
+	//		$page_str .= SEP."search_type=".$_REQUEST["search_type"];
+	//	
+	//	if ($_REQUEST["search_type"] == 0) $url_search .= "&allKeyWords=true";
+	//	if ($_REQUEST["search_type"] == 1) $url_search .= "&anyKeyWords=true";
+	//	if ($_REQUEST["search_type"] == 2) $url_search .= "&exactPhraseKeyWords=true";
+	//	if ($_REQUEST["creativeCommons"] == "true") 
+	//	{
+	//		$page_str .= SEP. "creativeCommons=true";
+	//		$url_search .= "&creativeCommons=true";
+	//	}
+		
+		$url = AT_TILE_SEARCH_URL."?id=".AT_TILE_ID.$url_search;
+	
+		$xml_results = file_get_contents($url);
+		
+		if (!$xml_results)
+		{
+			$infos = array('CANNOT_CONNECT_SERVER', AT_TILE_SEARCH_URL);
+			$msg->addInfo($infos);
+		}
+		else
+		{
+			$resultParser = new ResultParser();
+			$resultParser->parse($xml_results);
+			$result_list = $resultParser->getParsedArray();
+			
+			$savant->assign('result_list', $result_list);
+			$savant->assign('startRecNumber', $startRecNumber+1);
+			$savant->assign('results_per_page', $results_per_page);
+			$savant->assign('page_str', $page_str);
+			$savant->assign('instructor_role', 1);
+		}
 	}
-
-	$my_data = '';
-	array_pop($path);
 }
 
-/* called when there is character data within elements */
-/* constructs the $items array using the last entry in $path as the parent element */
-function characterData($parser, $data){
-	global $my_data;
-	$my_data .= $data;
-}
+global $_custom_css, $onload;
+$_custom_css = $_base_path . 'mods/_standard/tile_search/module.css'; // use a custom stylesheet
+$onload = "document.form.keywords.focus();";
 
 require (AT_INCLUDE_PATH.'header.inc.php');
-	
 
-$msg->printAll();
+$savant->display('tile_search/index.tmpl.php');
 
-?>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" method="get" name="form">
-
-<div class="input-form" style="width: 60%">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
-	<div class="row">
-		<label for="words2"><?php echo _AT('search_words'); ?></label><br />
-		<input type="text" name="query" size="40" id="words2" value="<?php echo stripslashes(htmlspecialchars($_GET['query'])); ?>" />
-	</div>
-
-	<div class="row">
-		<?php echo _AT('search_in'); ?></label><br />
-
-		<input type="radio" name="field" value="anyField" id="taf" <?php if (!isset($_GET['field']) || ($_GET['field'] == 'anyField')) { echo 'checked="checked"'; } ?> /><label for="taf"><?php echo _AT('tile_any_field'); ?></label><br />
-		<input type="radio" name="field" value="title" id="tt" <?php if ($_GET['field'] == 'title') { echo 'checked="checked"'; } ?> /><label for="tt"><?php echo _AT('title'); ?></label><br />
-		<input type="radio" name="field" value="author" id="ta" <?php if ($_GET['field'] == 'author') { echo 'checked="checked"'; } ?> /><label for="ta"><?php echo _AT('tile_author'); ?></label><br />
-		<input type="radio" name="field" value="subject" id="tk" <?php if ($_GET['field'] == 'subject') { echo 'checked="checked"'; } ?> /><label for="tk"><?php echo _AT('tile_keyword'); ?></label><br />
-		<input type="radio" name="field" value="description" id="td" <?php if ($_GET['field'] == 'description') { echo 'checked="checked"'; } ?> /><label for="td"><?php echo _AT('description'); ?></label><br />
-		<input type="radio" name="field" value="technicalFormat" id="tf" <?php if ($_GET['field'] == 'technicalFormat') { echo 'checked="checked"'; } ?> /><label for="tf"><?php echo _AT('tile_technical_format'); ?></label>
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('search'); ?>" />
-	</div>
-</div>
-</form>
-<br />
-<?php
-
-if (isset($_GET['query'])) {
-	if (!extension_loaded('soap')) {
-		require(AT_INCLUDE_PATH . 'classes/nusoap.php');
-		// Create the client instance
-		$client = new nusoapclient(AT_TILE_WSDL, true);
-
-		// Check for an error
-		$error = $client->getError();
-		if ($error) {
-			// Display the error
-
-			$msg->addError('TILE_UNAVAILABLE');
-			$msg->printAll();
-
-			require(AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
-
-		// Create the proxy
-		$proxy = $client->getProxy();
-	} else {
-		// Create the client instance
-		$proxy = new soapclient(AT_TILE_WSDL);
-	}
-
-
-	$search_input = array('query' => $_GET['query'], 'field' => $_GET['field'], 'content' => 'contentPackage');
-
-	$results = $proxy->doSearch($search_input);
-
-	if ($results) {
-		$num_results = count($results);
-	} else {
-		$num_results = 0;
-	}
-	echo '<h3>'. _AT('results_found', $num_results).'</h3>';
-	echo '<ol>';
-	if ($num_results) {
-		foreach ($results as $result) {
-
-			$xml_parser = xml_parser_create();
-
-			xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
-			xml_set_element_handler($xml_parser, 'startElement', 'endElement');
-			xml_set_character_data_handler($xml_parser, 'characterData');
-
-			if (!xml_parse($xml_parser, $result, true)) {
-				die(sprintf("XML error: %s at line %d",
-							xml_error_string(xml_get_error_code($xml_parser)),
-							xml_get_current_line_number($xml_parser)));
-			}
-
-			xml_parser_free($xml_parser);
-
-			$tile_title = str_replace('<', '&lt;', $tile_title);
-
-			echo '<li><strong>' . $tile_title . '</strong> - ';
-			echo '<a href="'.AT_TILE_PREVIEW .'cp='.$tile_identifier.'&item='.$tile_identifier.'" target="_new">'._AT('preview').'</a>';
-			echo ' | <a href="'.AT_TILE_EXPORT.'?cp='.$tile_identifier.'">'._AT('download').'</a>';
-			if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-				echo ' | <a href="mods/_standard/tile/import.php?cp='.$tile_identifier.SEP.'title='.urlencode($tile_title).'">'._AT('import').'</a>';
-			}
-			echo '<br />';
-			if (strlen($tile_description) > 200) {
-				echo '<small>' . $tile_description  . '</small>';
-			} else {
-				echo $tile_description;
-			}
-
-			echo '<br /></li>';
-
-			unset($tile_title);
-			unset($tile_description);
-			unset($tile_identifier);
-		}
-	}
-	echo '</ol>';
-}
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

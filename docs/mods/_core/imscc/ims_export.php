@@ -18,20 +18,46 @@ $c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 
 if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	/* for TILE */
-
-	/* redirect to TILE import servlet */
-
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 	if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		/* user can't be authenticated */
 		header('HTTP/1.1 404 Not Found');
 		echo 'Document not found.';
 		exit;
 	}
+	
+	/* to avoid timing out on large files */
+	@set_time_limit(0);
+	
+	// oauth authentication. Get oauth access token: $access_token_key
+	$client_callback_url = AT_BASE_HREF.'mods/_core/imscc/ims_export.php?to_tile=1'.SEP.'cid='.$cid;
+	include_once('../imscp/oauth/oauth_authenticate.php');
 
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id'] . 'x' . date('Ymd'));
 
-	header('Location: '.AT_TILE_IMPORT. '?cp='.urlencode(AT_BASE_HREF. 'mods/_core/imscc/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m));
+	$tile_import_url = AT_TILE_IMPORT_URL. '?oauth_token='.$access_token_key.'&url='.urlencode(AT_BASE_HREF. 'mods/_core/imscc/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m);
+
+	$oauth_server_response = @file_get_contents($tile_import_url);
+	
+	// handle OAUTH import response
+	foreach (explode('&', $oauth_server_response) as $rtn)
+	{
+		$rtn_pair = explode('=', $rtn);
+		
+		if ($rtn_pair[0] == 'course_id') $tile_course_id = $rtn_pair[1];
+		if ($rtn_pair[0] == 'error') $error = $rtn_pair[1];
+	}
+	
+	if ($tile_course_id > 0)
+		$msg->addFeedback(array('TILE_IMPORT_SUCCESS', AT_TILE_VIEW_COURSE_URL.$tile_course_id));
+	else
+	{
+		// No response from transformable, the package file might be too big
+		if (trim($error) == '') $error = _AT('tile_no_response');
+		$msg->addError(array('TILE_IMPORT_FAIL', $error));
+	}
+	
+	header('Location: '.AT_BASE_HREF.'mods/_core/imscp/index.php');
 	exit;
 } else if (isset($_GET['m'])) {
 	/* for TILE */

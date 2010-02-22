@@ -94,8 +94,12 @@ class LanguageManager {
 	function getLanguage($code, $charset = '') {
 		if (!$charset) {
 			if (isset($this->availableLanguages[$code])) {
-				return current($this->availableLanguages[$code]);
+				if (is_array($this->availableLanguages[$code]))
+					foreach ($this->availableLanguages[$code] as $language)
+						return $language;
+//				return current($this->availableLanguages[$code]);
 			} else {
+				debug('return false');
 				return FALSE;
 			}
 		}

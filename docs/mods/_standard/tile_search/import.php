@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: import.php 7208 2008-01-09 16:07:24Z greg $
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
 
@@ -52,8 +52,8 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 
 ?>
 
-<form name="form1" method="post" action="tools/ims/ims_import.php?tile=1" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php?tile=1');">
-	<input type="hidden" name="url" value="<?php echo AT_TILE_EXPORT; ?>?cp=<?php echo $_GET['cp']; ?>" />
+<form name="form1" method="post" action="mods/_core/imscp/ims_import.php?tile=1" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php?tile=1');">
+	<input type="hidden" name="url" value="<?php echo AT_TILE_EXPORT_URL.$_GET['tile_course_id']; ?>" />
 <br />
 <div class="input-form">
 

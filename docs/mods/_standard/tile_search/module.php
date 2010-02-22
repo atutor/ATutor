@@ -1,34 +1,23 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-//if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
-
-/* the URL to the WSDL of the TILE repository of choice. */
-//define('AT_TILE_WSDL', 'http://tile.atutor.ca/tile/services/search?wsdl');
-
-/* the URL to the content package export servlet of the TILE repository of choice. */
-//define('AT_TILE_EXPORT', 'http://tile.atutor.ca/tile/servlet/export');
-
-/* the URL to the content importing servlet of the TILE repository. */
-//define('AT_TILE_IMPORT', 'http://tile.atutor.ca/tile/servlet/put');
-
-//define('AT_TILE_PREVIEW', 'http://tile.atutor.ca/tile/servlet/view?view=item&');
 
 // if this module is to be made available to students on the Home or Main Navigation
-//$_student_tool = 'tile.php';
+$_student_tool = 'mods/_standard/tile_search/tile.php';
 
-//$this->_pages['tools/content/index.php']['children'] = array('tools/tile/index.php');
+// Add menu item into "Manage" => "Content" 
+$this->_pages['mods/_core/content/index.php']['children'] = array('mods/_standard/tile_search/index.php');
 
-//instructor pages
-//$this->_pages['tools/tile/index.php']['title_var']  = 'tile_search';
-//$this->_pages['tools/tile/index.php']['parent'] = 'tools/content/index.php';
-//$this->_pages['tools/tile/index.php']['guide'] = 'instructor/?p=tile_repository.php';
+// instructor page
+$this->_pages['mods/_standard/tile_search/index.php']['title_var'] = 'tile_search';
+$this->_pages['mods/_standard/tile_search/index.php']['parent'] = 'mods/_core/content/index.php';
+$this->_pages['mods/_standard/tile_search/index.php']['children'] = array('mods/_standard/tile_search/import.php');
+$this->_pages['mods/_standard/tile_search/index.php']['guide'] = 'instructor/?p=tile_repository.php';
 
-//	$this->_pages['tools/tile/import.php']['title_var']    = 'import_content_package';
-//	$this->_pages['tools/tile/import.php']['parent']   = 'tools/tile/index.php';
+$this->_pages['mods/_standard/tile_search/import.php']['title_var'] = 'import';
+$this->_pages['mods/_standard/tile_search/import.php']['parent'] = 'mods/_standard/tile_search/index.php';
 
-//student pages
-//$this->_pages['tile.php']['title_var'] = 'tile_search';
-//$this->_pages['tile.php']['img']       = 'images/home-tile_search.png';
-//$this->_pages['tile.php']['text']      = _AT('tile_search_text');
-
+// student page
+$this->_pages['mods/_standard/tile_search/tile.php']['title_var'] = 'tile_search';
+$this->_pages['mods/_standard/tile_search/tile.php']['img'] = 'images/home-tile_search.png';
+$this->_pages['mods/_standard/tile_search/tile.php']['text'] = _AT('tile_search_text');
 ?>

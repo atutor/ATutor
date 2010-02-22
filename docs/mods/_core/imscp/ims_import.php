@@ -702,7 +702,7 @@ if ($ext != 'zip') {
 
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tools/tile/index.php');
+		header('Location: '.$_base_path.'mods/_standard/tile_search/index.php');
 	} else {
 		header('Location: index.php');
 	}
@@ -730,7 +730,7 @@ if (!@mkdir($import_path, 0700)) {
 
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tools/tile/index.php');
+		header('Location: '.$_base_path.'mods/_standard/tile_search/index.php');
 	} else {
 		header('Location: index.php');
 	}
@@ -772,7 +772,7 @@ if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 		clr_dir($import_path);
 
 		if (isset($_GET['tile'])) {
-			header('Location: '.$_base_path.'tools/tile/index.php');
+			header('Location: '.$_base_path.'mods/_standard/tile_search/index.php');
 		} else {
 			header('Location: index.php');
 		}
@@ -828,7 +828,7 @@ if ($ims_manifest_xml === false) {
 	clr_dir($import_path);
 
 	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tools/tile/index.php');
+		header('Location: '.$_base_path.'mods/_standard/tile_search/index.php');
 	} else {
 		header('Location: index.php');
 	}
@@ -887,7 +887,7 @@ if ($content_type == 'IMS Common Cartridge') {
 // Check if there are any errors during parsing.
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tools/tile/index.php');
+		header('Location: '.$_base_path.'mods/_standard/tile_search/index.php');
 	} else {
 		header('Location: index.php');
 	}
@@ -1375,7 +1375,7 @@ if ($_POST['s_cid']){
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 	if ($_GET['tile']) {
-		header('Location: '.AT_BASE_HREF.'tools/tile/index.php');
+		header('Location: '.AT_BASE_HREF.'mods/_standard/tile_search/index.php');
 	} else {
 		header('Location: ./index.php?cid='.intval($_POST['cid']));
 	}

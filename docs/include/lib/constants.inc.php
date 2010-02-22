@@ -369,4 +369,34 @@ define('SUBLINK_TEXT_LEN', 38);
 
 /* The lock out time for max login attempts */
 define('LOGIN_ATTEMPT_LOCKED_TIME', 60);	//in minutes, default an hour, 60 minutes
+
+/* Constants for Transformable web service - @author Cindy */
+// Transformable assigned web service id to access transformable search service
+define('AT_TILE_ID', '90c3cd6f656739969847f3a99ac0f3c7');
+
+// The expire threshold of oauth access token, in second
+define('AT_TILE_OAUTH_TOKEN_EXPIRE_THRESHOLD', 93600); // in second, 24 hours
+
+// Transformable base URL
+define('AT_TILE_BASE_URL', 'http://localhost/transformable/');
+
+// The URL to the transformable web service search entry
+define('AT_TILE_SEARCH_URL', AT_TILE_BASE_URL.'search.php');
+
+// The URL to view the transformable course
+define('AT_TILE_VIEW_COURSE_URL', AT_TILE_BASE_URL.'home/course/index.php?_course_id=');
+
+// The URL to export common cartridge from transformable
+define('AT_TILE_EXPORT_URL', AT_TILE_BASE_URL.'home/imscc/ims_export.php?course_id=');
+
+// The URL to import common cartridge into transformable
+define('AT_TILE_IMPORT_URL', AT_TILE_BASE_URL.'home/ims/ims_import.php');
+
+// The URLs to perform oauth authentication
+define('AT_TILE_OAUTH_REGISTER_CONSUMER_URL', AT_TILE_BASE_URL.'oauth/register_consumer.php');
+define('AT_TILE_OAUTH_REQUEST_TOKEN_URL', AT_TILE_BASE_URL.'oauth/request_token.php');
+define('AT_TILE_OAUTH_AUTHORIZATION_URL', AT_TILE_BASE_URL.'oauth/authorization.php');
+define('AT_TILE_OAUTH_ACCESS_TOKEN_URL', AT_TILE_BASE_URL.'oauth/access_token.php');
+
+/* END - Constants for Transformable web service */
 ?>
