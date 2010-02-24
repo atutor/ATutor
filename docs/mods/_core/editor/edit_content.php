@@ -100,6 +100,11 @@ if ($cid) {
 	$_section[0][0] = _AT('add_content');
 }
 
+    $_custom_head = '
+<link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
+<link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
+    ';
+
 if ($cid) {
 	$result = $contentManager->getContentPage($cid);
 
@@ -735,8 +740,9 @@ $pid = intval($_REQUEST['pid']);
         echo '<input type="hidden" name="weblink_text" value="'.htmlspecialchars($stripslashes($_POST['weblink_text'])).'" />';
         echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
 		echo '<input type="hidden" name="use_customized_head" value="'.(($_POST['use_customized_head']=="") ? 0 : $_POST['use_customized_head']).'" />';
-		echo '<input type="hidden" name="displayhead" id="displayhead" value="'.$_POST['displayhead'].'" />';
-		echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
+        echo '<input type="hidden" name="displayhead" id="displayhead" value="'.$_POST['displayhead'].'" />';
+        echo '<input type="hidden" name="displaytools" id="displaytools" value="'.$_POST['displaytools'].'" />';
+        echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	}
 
 	echo '<input type="hidden" name="ordering" value="'.$_POST['ordering'].'" />';
