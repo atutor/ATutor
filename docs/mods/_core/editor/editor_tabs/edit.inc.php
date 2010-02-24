@@ -25,7 +25,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value);" />
             <label for="text"><?php echo _AT('plain_text'); ?></label>
 
-            <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value, <?php echo $_SESSION['prefs']['PREF_CONTENT_EDITOR']?>);" />
+            <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value, '<?php echo $_SESSION['prefs']['PREF_CONTENT_EDITOR']?>');" />
             <label for="html"><?php echo _AT('html'); ?></label>
        
             <input type="radio" name="formatting" value="2" id="weblink" <?php if ($_POST['formatting'] == 2) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value);" />
@@ -61,7 +61,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<textarea name="head" id="head" cols="" rows="10" style="display:none"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
 	</div>
 	
-	<div id="toolsrow" class="row">
+	<div id="toolsrow" class="row" style="margin-bottom: 5px;">
 	    <div class="fl-force-left">
 	        <input type="button" title="Click to show tool bar" name="showtools" id="showtools" value="+" onclick="ATutor.mods.editor.showtools()" class="button"/>
             <label for="toolbar"><?php echo _AT('tools');  ?></label>
