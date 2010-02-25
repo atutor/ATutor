@@ -892,11 +892,6 @@
 
 			if (c = cm.get('anchor')) {
 				c.setActive(!!p && p.name);
-
-				if (tinymce.isWebKit) {
-					p = getParent('IMG');
-					c.setActive(!!p && DOM.getAttrib(p, 'mce_name') == 'a');
-				}
 			}
 
 			p = getParent('IMG');
@@ -1009,9 +1004,6 @@
 							break;
 
 						case 'font':
-							if (s.convert_fonts_to_spans)
-								na = 'span';
-
 							if (v = DOM.getAttrib(n, 'face'))
 								ti += 'font: ' + v + ' ';
 

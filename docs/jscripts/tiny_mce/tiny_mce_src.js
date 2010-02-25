@@ -5,9 +5,9 @@
 	win.tinymce = win.tinyMCE = {
 		majorVersion : '3',
 
-		minorVersion : '3b1',
+		minorVersion : '3rc1',
 
-		releaseDate : '2010-01-25',
+		releaseDate : '2010-02-23',
 
 		_init : function() {
 			var t = this, d = document, na = navigator, ua = na.userAgent, i, nl, n, base, p, v;
@@ -2439,8 +2439,8 @@ tinymce.create('static tinymce.util.XHR', {
 		split : function(pe, e, re) {
 			var t = this, r = t.createRng(), bef, aft, pa;
 
-			// W3C valid browsers tend to leave empty nodes to the left/right side of the contents, this makes sence
-			// but we don't want that in our code since it serves no purpose
+			// W3C valid browsers tend to leave empty nodes to the left/right side of the contents, this makes sense
+			// but we don't want that in our code since it serves no purpose for the end user
 			// For example if this is chopped:
 			//   <p>text 1<span><b>CHOP</b></span>text 2</p>
 			// would produce:
@@ -2462,15 +2462,13 @@ tinymce.create('static tinymce.util.XHR', {
 						return;
 
 					if (node.nodeType == 1) {
-						//console.log(node, node.ownerDocument.documentElement.querySelectorAll('body')[0].innerHTML);
-
 						// If the only child is a bookmark then move it up
 						children = node.childNodes;
 						if (children.length == 1 && children[0] && children[0].nodeType == 1 && children[0].getAttribute('_mce_type') == 'bookmark')
 							node.parentNode.insertBefore(children[0], node);
 
 						// Keep non empty elements or img, hr etc
-						if (children.length || /^(br|hr|input|img)$/.test(node.nodeName))
+						if (children.length || /^(br|hr|input|img)$/i.test(node.nodeName))
 							return;
 					}
 
@@ -3266,7 +3264,7 @@ tinymce.create('static tinymce.util.XHR', {
 })(tinymce.dom);
 (function() {
 	function Selection(selection) {
-		var t = this, invisibleChar = '\uFEFF', range, lastIERng, dom = selection.dom;
+		var t = this, invisibleChar = '\uFEFF', range, lastIERng, dom = selection.dom, TRUE = true, FALSE = false;
 
 		// Compares two IE specific ranges to see if they are different
 		// this method is useful when invalidating the cached selection range
@@ -3274,14 +3272,24 @@ tinymce.create('static tinymce.util.XHR', {
 			if (rng1 && rng2) {
 				// Both are control ranges and the selected element matches
 				if (rng1.item && rng2.item && rng1.item(0) === rng2.item(0))
-					return 1;
+					return TRUE;
 
 				// Both are text ranges and the range matches
-				if (rng1.isEqual && rng2.isEqual && rng2.isEqual(rng1))
-					return 1;
+				if (rng1.isEqual && rng2.isEqual && rng2.isEqual(rng1)) {
+					// IE will say that the range is equal then produce an invalid argument exception
+					// if you perform specific operations in a keyup event. For example Ctrl+Del.
+					// This hack will invalidate the range cache if the exception occurs
+					try {
+						// Try accessing nextSibling will producer an invalid argument some times
+						range.startContainer.nextSibling;
+						return TRUE;
+					} catch (ex) {
+						// Ignore
+					}
+				}
 			}
 
-			return 0;
+			return FALSE;
 		};
 
 		// Returns a W3C DOM compatible range object by using the IE Range API
@@ -3307,12 +3315,12 @@ tinymce.create('static tinymce.util.XHR', {
 
 			// Insert invisible start marker
 			ieRange.collapse();
-			ieRange.pasteHTML('<span id="_mce_start" style="display:none;line-height:0">\uFEFF</span>');
+			ieRange.pasteHTML('<span id="_mce_start" style="display:none;line-height:0">' + invisibleChar + '</span>');
 
 			// Insert invisible end marker
 			if (!collapsed) {
-				ieRange2.collapse(false);
-				ieRange2.pasteHTML('<span id="_mce_end" style="display:none;line-height:0">\uFEFF</span>');
+				ieRange2.collapse(FALSE);
+				ieRange2.pasteHTML('<span id="_mce_end" style="display:none;line-height:0">' + invisibleChar + '</span>');
 			}
 
 			// Sets the end point of the range by looking for the marker
@@ -3335,7 +3343,7 @@ tinymce.create('static tinymce.util.XHR', {
 					// Merge text nodes to reduce DOM fragmentation
 					sibling = container.nextSibling;
 					if (sibling && sibling.nodeType == 3) {
-						isMerged = true;
+						isMerged = TRUE;
 						container.appendData(sibling.nodeValue);
 						dom.remove(sibling);
 					}
@@ -3369,11 +3377,11 @@ tinymce.create('static tinymce.util.XHR', {
 			};
 
 			// Set start of range
-			setEndPoint(true);
+			setEndPoint(TRUE);
 
 			// Set end of range if needed
 			if (!collapsed)
-				setEndPoint(false);
+				setEndPoint(FALSE);
 
 			// Restore selection if the range contents was merged
 			// since the selection was then moved since the text nodes got changed
@@ -3394,6 +3402,14 @@ tinymce.create('static tinymce.util.XHR', {
 			ec = rng.endContainer;
 			eo = rng.endOffset;
 			ieRng = body.createTextRange();
+
+			// If document selection move caret to first node in document
+			if (sc == doc || ec == doc) {
+				ieRng = body.createTextRange();
+				ieRng.collapse();
+				ieRng.select();
+				return;
+			}
 
 			// If child index resolve it
 			if (sc.nodeType == 1 && sc.hasChildNodes()) {
@@ -3445,7 +3461,7 @@ tinymce.create('static tinymce.util.XHR', {
 
 					// If it's only containing a padding remove it so the caret remains
 					if (sc.innerHTML == invisibleChar) {
-						ieRng.collapse(true);
+						ieRng.collapse(TRUE);
 						sc.removeChild(sc.firstChild);
 					}
 				}
@@ -3479,7 +3495,7 @@ tinymce.create('static tinymce.util.XHR', {
 				ieRng.moveToElementText(sc);
 
 				if (skipStart)
-					ieRng.collapse(false);
+					ieRng.collapse(FALSE);
 			}
 
 			// If same text container then we can do a more simple move
@@ -3535,7 +3551,7 @@ tinymce.create('static tinymce.util.XHR', {
 				var doc = dom.doc, body = doc.body, started, startRng;
 
 				// Make HTML element unselectable since we are going to handle selection by hand
-				doc.documentElement.unselectable = true;
+				doc.documentElement.unselectable = TRUE;
 
 				// Return range from point or null if it failed
 				function rngFromPoint(x, y) {
@@ -5102,7 +5118,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 				e = r.parentElement();
 
 				if (e && e.nodeName == 'BODY')
-					return e.firstChild;
+					return e.firstChild || e;
 
 				return e;
 			} else {
@@ -5130,7 +5146,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 				e = r.parentElement();
 
 				if (e && e.nodeName == 'BODY')
-					return e.lastChild;
+					return e.lastChild || e;
 
 				return e;
 			} else {
@@ -5284,7 +5300,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 
 						if (point) {
 							for (node = root, i = point.indexes.length - 1; i >= 0; i--)
-								node = node.childNodes[point.indexes[i]];
+								node = node.childNodes[point.indexes[i]] || node;
 
 							if (start) {
 								if (node.nodeType == 3 && point.offset)
@@ -6794,6 +6810,8 @@ window.tinymce.dom.Sizzle = Sizzle;
 		};
 
 		this.loadScripts = function(scripts, callback, scope) {
+			var loadScripts;
+
 			function execScriptLoadedCallbacks(url) {
 				// Execute URL callback functions
 				tinymce.each(scriptLoadedCallbacks[url], function(callback) {
@@ -6808,7 +6826,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 				scope : scope || this
 			});
 
-			(function loadScripts() {
+			loadScripts = function() {
 				var loadingScripts = tinymce.grep(scripts);
 
 				// Current scripts has been handled
@@ -6847,7 +6865,9 @@ window.tinymce.dom.Sizzle = Sizzle;
 
 					queueLoadedCallbacks.length = 0;
 				}
-			})();
+			};
+
+			loadScripts();
 		};
 	};
 
@@ -8658,7 +8678,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		DOM = tinymce.DOM, Event = tinymce.dom.Event,
 		ThemeManager = tinymce.ThemeManager, PluginManager = tinymce.PluginManager,
 		explode = tinymce.explode,
-		Dispatcher = tinymce.util.Dispatcher, undefined;
+		Dispatcher = tinymce.util.Dispatcher, undefined, instanceCounter = 0;
 
 	// Setup some URLs where the editor API is located and where the document is
 	tinymce.documentBaseURL = window.location.href.replace(/[\?#].*$/, '').replace(/[\/\\][^\/]+$/, '');
@@ -8691,7 +8711,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		activeEditor : null,
 
 		init : function(s) {
-			var t = this, pl, sl = tinymce.ScriptLoader, c, e, el = [], ed;
+			var t = this, pl, sl = tinymce.ScriptLoader, e, el = [], ed;
 
 			function execCallback(se, n, s) {
 				var f = se[n];
@@ -8732,12 +8752,10 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 									el.push(ed);
 									ed.render(1);
 								} else {
-									c = 0;
-
 									each(document.forms, function(f) {
 										each(f.elements, function(e) {
 											if (e.name === v) {
-												v = 'mce_editor_' + c;
+												v = 'mce_editor_' + instanceCounter++;
 												DOM.setAttrib(e, 'id', v);
 
 												ed = new tinymce.Editor(v, s);
@@ -8783,7 +8801,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				if (s.oninit) {
 					l = co = 0;
 
-					each (el, function(ed) {
+					each(el, function(ed) {
 						co++;
 
 						if (!ed.initialized) {
@@ -9095,7 +9113,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				custom_undo_redo_keyboard_shortcuts : 1,
 				custom_undo_redo_restore_selection : 1,
 				custom_undo_redo : 1,
-				doctype : '<!DOCTYPE>',
+				doctype : tinymce.isIE6 ? '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' : '<!DOCTYPE>', // Use old doctype on IE 6 to avoid horizontal scroll
 				visual_table_class : 'mceItemTable',
 				visual : 1,
 				font_size_style_values : 'xx-small,x-small,small,medium,large,x-large,xx-large',
@@ -9510,9 +9528,9 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				blockquote : {block : 'blockquote', wrapper : 1},
 
 				removeformat : [
-					{selector : 'b,strong,em,i,font,u,strike', remove : 'all', split : true, expand : false},
-					{selector : 'span', attributes : ['style', 'class'], remove : 'empty', split : true, expand : false},
-					{selector : '*', attributes : ['style', 'class'], expand : false}
+					{selector : 'b,strong,em,i,font,u,strike', remove : 'all', split : true, expand : false, block_expand : true, deep : true},
+					{selector : 'span', attributes : ['style', 'class'], remove : 'empty', split : true, expand : false, deep : true},
+					{selector : '*', attributes : ['style', 'class'], expand : false, deep : true}
 				]
 			});
 
@@ -10546,12 +10564,13 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 			// Workaround for bug, http://bugs.webkit.org/show_bug.cgi?id=12250
 			// WebKit can't even do simple things like selecting an image
+			// This also fixes so it's possible to select mceItemAnchors
 			if (tinymce.isWebKit) {
 				t.onClick.add(function(ed, e) {
 					e = e.target;
 
 					// Needs tobe the setBaseAndExtend or it will fail to select floated images
-					if (e.nodeName == 'IMG')
+					if (e.nodeName == 'IMG' || (e.nodeName == 'A' && t.dom.hasClass(e, 'mceItemAnchor')))
 						t.selection.getSel().setBaseAndExtent(e, 0, e, 1);
 				});
 			}
@@ -10912,6 +10931,34 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			// Ignore these, added for compatibility
 			'mceResetDesignMode,mceBeginUndoLevel' : function() {},
 
+			// Add undo manager logic
+			'mceEndUndoLevel,mceAddUndoLevel' : function() {
+				editor.undoManager.add();
+			},
+
+			'Cut,Copy,Paste' : function(command) {
+				var doc = editor.getDoc(), failed;
+
+				// Try executing the native command
+				try {
+					execNativeCommand(command);
+				} catch (ex) {
+					// Command failed
+					failed = TRUE;
+				}
+
+				// Present alert message about clipboard access not being available
+				if (failed || !doc.queryCommandEnabled(command)) {
+					if (tinymce.isGecko) {
+						editor.windowManager.confirm(editor.getLang('clipboard_msg'), function(state) {
+							if (state)
+								open('http://www.mozilla.org/editor/midasdemo/securityprefs.html', '_blank');
+						});
+					} else
+						editor.windowManager.alert(editor.getLang('clipboard_no_support'));
+				}
+			},
+
 			// Override unlink command
 			unlink : function(command) {
 				if (selection.isCollapsed())
@@ -10997,7 +11044,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 			mceCleanup : function() {
 				storeSelection();
-				editor.setContent(editor.getContent({cleanup : TRUE}));
+				editor.setContent(editor.getContent({cleanup : TRUE}), {cleanup : TRUE});
 				restoreSelection();
 			},
 
@@ -11160,6 +11207,19 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				return value;
 			}
 		}, 'value');
+
+		// Add undo manager logic
+		if (settings.custom_undo_redo) {
+			addCommands({
+				Undo : function() {
+					editor.undoManager.undo();
+				},
+
+				Redo : function() {
+					editor.undoManager.redo();
+				}
+			});
+		}
 	};
 })(tinymce);(function(tinymce) {
 	tinymce.create('tinymce.UndoManager', {
@@ -11279,14 +11339,14 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 })(tinymce);
 (function(tinymce) {
 	// Shorten names
-	var Event, isIE, isGecko, isOpera, each, extend;
-
-	Event = tinymce.dom.Event;
-	isIE = tinymce.isIE;
-	isGecko = tinymce.isGecko;
-	isOpera = tinymce.isOpera;
-	each = tinymce.each;
-	extend = tinymce.extend;
+	var Event = tinymce.dom.Event,
+		isIE = tinymce.isIE,
+		isGecko = tinymce.isGecko,
+		isOpera = tinymce.isOpera,
+		each = tinymce.each,
+		extend = tinymce.extend,
+		TRUE = true,
+		FALSE = false;
 
 	// Checks if the selection/caret is at the end of the specified block element
 	function isAtEnd(rng, par) {
@@ -11305,7 +11365,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		n = n.replace(/<(img|hr|table|input|select|textarea)[ \>]/gi, '-'); // Keep these convert them to - chars
 		n = n.replace(/<[^>]+>/g, ''); // Remove all tags
 
-		return n.replace(/[ \t\r\n]+/g, '') == '';
+		return n.replace(/[ \u00a0\t\r\n]+/g, '') == '';
 	};
 
 	function splitList(selection, dom, li) {
@@ -11321,10 +11381,10 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				selection.select(block, 1);
 			}
 
-			return false;
+			return FALSE;
 		}
 
-		return true;
+		return TRUE;
 	};
 
 	tinymce.create('tinymce.ForceBlocks', {
@@ -11369,7 +11429,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		},
 
 		setup : function() {
-			var t = this, ed = t.editor, s = ed.settings;
+			var t = this, ed = t.editor, s = ed.settings, dom = ed.dom, selection = ed.selection;
 
 			// Force root blocks when typing and when getting output
 			if (s.forced_root_block) {
@@ -11382,39 +11442,24 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				// Force IE to produce BRs on enter
 				if (isIE) {
 					ed.onKeyPress.add(function(ed, e) {
-						var n, s = ed.selection;
+						var n;
 
-						if (e.keyCode == 13 && s.getNode().nodeName != 'LI') {
-							s.setContent('<br id="__" /> ', {format : 'raw'});
-							n = ed.dom.get('__');
+						if (e.keyCode == 13 && selection.getNode().nodeName != 'LI') {
+							selection.setContent('<br id="__" /> ', {format : 'raw'});
+							n = dom.get('__');
 							n.removeAttribute('id');
-							s.select(n);
-							s.collapse();
+							selection.select(n);
+							selection.collapse();
 							return Event.cancel(e);
 						}
 					});
 				}
-
-				return;
 			}
 
 			if (!isIE && s.force_p_newlines) {
-/*				ed.onPreProcess.add(function(ed, o) {
-					each(ed.dom.select('br', o.node), function(n) {
-						var p = n.parentNode;
-
-						// Replace <p><br /></p> with <p>&nbsp;</p>
-						if (p && p.nodeName == 'p' && (p.childNodes.length == 1 || p.lastChild == n)) {
-							p.replaceChild(ed.getDoc().createTextNode('\u00a0'), n);
-						}
-					});
-				});*/
-
 				ed.onKeyPress.add(function(ed, e) {
-					if (e.keyCode == 13 && !e.shiftKey) {
-						if (!t.insertPara(e))
-							Event.cancel(e);
-					}
+					if (e.keyCode == 13 && !e.shiftKey && !t.insertPara(e))
+						Event.cancel(e);
 				});
 
 				if (isGecko) {
@@ -11425,32 +11470,46 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				}
 			}
 
-			function ren(rn, na) {
-				var ne = ed.dom.create(na);
+			// Workaround for missing shift+enter support, http://bugs.webkit.org/show_bug.cgi?id=16973
+			if (tinymce.isWebKit) {
+				function insertBr(ed) {
+					var rng = selection.getRng(), br;
 
-				each(rn.attributes, function(a) {
-					if (a.specified && a.nodeValue)
-						ne.setAttribute(a.nodeName.toLowerCase(), a.nodeValue);
+					// Insert BR element
+					rng.insertNode(br = dom.create('br'));
+
+					// Place caret after BR
+					rng.setStartAfter(br);
+					rng.setEndAfter(br);
+					selection.setRng(rng);
+
+					// Could not place caret after BR then insert an nbsp entity and move the caret
+					if (selection.getSel().focusNode == br.previousSibling) {
+						selection.select(dom.insertAfter(dom.doc.createTextNode('\u00a0'), br));
+						selection.collapse(TRUE);
+					}
+
+					// Scroll to new position, scrollIntoView can't be used due to bug: http://bugs.webkit.org/show_bug.cgi?id=16117
+					ed.getWin().scrollTo(0, dom.getPos(selection.getRng().startContainer).y);
+				};
+
+				ed.onKeyPress.add(function(ed, e) {
+					if (e.keyCode == 13 && (e.shiftKey || s.force_br_newlines)) {
+						insertBr(ed);
+						Event.cancel(e);
+					}
 				});
-
-				each(rn.childNodes, function(n) {
-					ne.appendChild(n.cloneNode(true));
-				});
-
-				rn.parentNode.replaceChild(ne, rn);
-
-				return ne;
-			};
+			}
 
 			// Padd empty inline elements within block elements
 			// For example: <p><strong><em></em></strong></p> becomes <p><strong><em>&nbsp;</em></strong></p>
 			ed.onPreProcess.add(function(ed, o) {
-				each(ed.dom.select('p,h1,h2,h3,h4,h5,h6,div', o.node), function(p) {
+				each(dom.select('p,h1,h2,h3,h4,h5,h6,div', o.node), function(p) {
 					if (isEmpty(p)) {
-						each(ed.dom.select('span,em,strong,b,i', o.node), function(n) {
+						each(dom.select('span,em,strong,b,i', o.node), function(n) {
 							if (!n.hasChildNodes()) {
 								n.appendChild(ed.getDoc().createTextNode('\u00a0'));
-								return false; // Break the loop one padding is enough
+								return FALSE; // Break the loop one padding is enough
 							}
 						});
 					}
@@ -11462,22 +11521,22 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				// Replaces IE:s auto generated paragraphs with the specified element name
 				if (s.element != 'P') {
 					ed.onKeyPress.add(function(ed, e) {
-						t.lastElm = ed.selection.getNode().nodeName;
+						t.lastElm = selection.getNode().nodeName;
 					});
 
 					ed.onKeyUp.add(function(ed, e) {
-						var bl, sel = ed.selection, n = sel.getNode(), b = ed.getBody();
+						var bl, n = selection.getNode(), b = ed.getBody();
 
 						if (b.childNodes.length === 1 && n.nodeName == 'P') {
-							n = ren(n, s.element);
-							sel.select(n);
-							sel.collapse();
+							n = dom.rename(n, s.element);
+							selection.select(n);
+							selection.collapse();
 							ed.nodeChanged();
 						} else if (e.keyCode == 13 && !e.shiftKey && t.lastElm != 'P') {
-							bl = ed.dom.getParent(n, 'p');
+							bl = dom.getParent(n, 'p');
 
 							if (bl) {
-								ren(bl, s.element);
+								dom.rename(bl, s.element);
 								ed.nodeChanged();
 							}
 						}
@@ -11487,7 +11546,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		},
 
 		find : function(n, t, s) {
-			var ed = this.editor, w = ed.getDoc().createTreeWalker(n, 4, null, false), c = -1;
+			var ed = this.editor, w = ed.getDoc().createTreeWalker(n, 4, null, FALSE), c = -1;
 
 			while (n = w.nextNode()) {
 				c++;
@@ -11510,7 +11569,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 			// Fix for bug #1863847
 			//if (e && e.keyCode == 13)
-			//	return true;
+			//	return TRUE;
 
 			// Wrap non blocks into blocks
 			for (i = nl.length - 1; i >= 0; i--) {
@@ -11641,21 +11700,21 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			// If root blocks are forced then use Operas default behavior since it's really good
 // Removed due to bug: #1853816
 //			if (se.forced_root_block && isOpera)
-//				return true;
+//				return TRUE;
 
 			// Setup before range
 			rb = d.createRange();
 
 			// If is before the first block element and in body, then move it into first block element
 			rb.setStart(s.anchorNode, s.anchorOffset);
-			rb.collapse(true);
+			rb.collapse(TRUE);
 
 			// Setup after range
 			ra = d.createRange();
 
 			// If is before the first block element and in body, then move it into first block element
 			ra.setStart(s.focusNode, s.focusOffset);
-			ra.collapse(true);
+			ra.collapse(TRUE);
 
 			// Setup start/end points
 			dir = rb.compareBoundaryPoints(rb.START_TO_END, ra) < 0;
@@ -11686,7 +11745,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				r.collapse(1);
 				ed.selection.setRng(r);
 
-				return false;
+				return FALSE;
 			}
 
 			// If the caret is in an invalid location in FF we need to move it into the first block
@@ -11711,11 +11770,11 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			bn = sb ? sb.nodeName : se.element; // Get block name to create
 
 			// Return inside list use default browser behavior
-			if (sb = t.dom.getParent(sb, 'li,pre')) {
-				if (sb.nodeName == 'LI')
-					return splitList(ed.selection, t.dom, sb);
+			if (n = t.dom.getParent(sb, 'li,pre')) {
+				if (n.nodeName == 'LI')
+					return splitList(ed.selection, t.dom, n);
 
-				return true;
+				return TRUE;
 			}
 
 			// If caption or absolute layers then always generate new blocks within
@@ -11828,7 +11887,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					do {
 						// We only want style specific elements
 						if (/^(SPAN|STRONG|B|EM|I|FONT|STRIKE|U)$/.test(n.nodeName)) {
-							nn = n.cloneNode(false);
+							nn = n.cloneNode(FALSE);
 							dom.setAttrib(nn, 'id', ''); // Remove ID since it needs to be unique
 							nl.push(nn);
 						}
@@ -11865,7 +11924,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			bef.normalize();
 
 			function first(n) {
-				return d.createTreeWalker(n, NodeFilter.SHOW_TEXT, null, false).nextNode() || n;
+				return d.createTreeWalker(n, NodeFilter.SHOW_TEXT, null, FALSE).nextNode() || n;
 			};
 
 			// Move cursor and scroll into view
@@ -11885,50 +11944,11 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				//console.debug('SCROLL!', 'vp.y: ' + vp.y, 'y' + y, 'vp.h' + vp.h, 'clientHeight' + aft.clientHeight, 'yyy: ' + (y < vp.y ? y : y - vp.h + aft.clientHeight));
 			}
 
-			return false;
+			return FALSE;
 		},
 
 		backspaceDelete : function(e, bs) {
 			var t = this, ed = t.editor, b = ed.getBody(), dom = ed.dom, n, se = ed.selection, r = se.getRng(), sc = r.startContainer, n, w, tn;
-
-			/*
-			var par, rng, nextBlock;
-
-			// Delete key will not merge paragraphs on Gecko so we need to do this manually
-			// Hitting the delete key at the following caret position doesn't merge the elements <p>A|</p><p>B</p>
-			// This logic will merge them into this: <p>A|B</p>
-			if (e.keyCode == 46) {
-				if (r.collapsed) {
-					par = dom.getParent(sc, 'p,h1,h2,h3,h4,h5,h6,div');
-
-					if (par) {
-						rng = dom.createRng();
-
-						rng.setStart(sc, r.startOffset);
-						rng.setEndAfter(par);
-
-						// Get number of characters to the right of the cursor if it's zero then we are at the end and need to merge the next block element
-						if (dom.getOuterHTML(rng.cloneContents()).replace(/<[^>]+>/g, '').length == 0) {
-							nextBlock = dom.getNext(par, 'p,h1,h2,h3,h4,h5,h6,div');
-
-							// Copy all children from next sibling block and remove it
-							if (nextBlock) {
-								each(nextBlock.childNodes, function(node) {
-									par.appendChild(node.cloneNode(true));
-								});
-
-								dom.remove(nextBlock);
-							}
-
-							// Block the default even since the Gecko team might eventually fix this
-							// We will remove this logic once they do we can't feature detect this one
-							e.preventDefault();
-							return;
-						}
-					}
-				}
-			}
-			*/
 
 			// The caret sometimes gets stuck in Gecko if you delete empty paragraphs
 			// This workaround removes the element by hand and moves the caret to the previous element
@@ -11941,7 +11961,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					if (n) {
 						if (sc != b.firstChild) {
 							// Find last text node
-							w = ed.dom.doc.createTreeWalker(n, NodeFilter.SHOW_TEXT, null, false);
+							w = ed.dom.doc.createTreeWalker(n, NodeFilter.SHOW_TEXT, null, FALSE);
 							while (tn = w.nextNode())
 								n = tn;
 
@@ -12095,7 +12115,8 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 				if (!s.onclick) {
 					s.onclick = function(v) {
-						ed.execCommand(s.cmd, s.ui || false, s.value);
+						if (s.cmd)
+							ed.execCommand(s.cmd, s.ui || false, s.value);
 					};
 				}
 			});
@@ -12457,6 +12478,10 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				cb.call(s || t);
 		},
 
+		resizeBy : function(dw, dh, win) {
+			win.resizeBy(dw, dh);
+		},
+
 		// Internal functions
 
 		_decode : function(s) {
@@ -12522,6 +12547,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			forcedRootBlock = ed.settings.forced_root_block,
 			nodeIndex = dom.nodeIndex,
 			INVISIBLE_CHAR = '\uFEFF',
+			MCE_ATTR_RE = /^(src|href|style)$/,
 			FALSE = false,
 			TRUE = true,
 			undefined,
@@ -12558,6 +12584,11 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					format = format.length ? format : [format];
 
 					each(format, function(format) {
+						// Set deep to false by default on selector formats this to avoid removing
+						// alignment on images inside paragraphs when alignment is changed on paragraphs
+						if (format.deep === undefined)
+							format.deep = !format.selector;
+
 						// Default to true
 						if (format.split === undefined)
 							format.split = !format.selector;
@@ -12675,7 +12706,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 							// Start wrapping
 							if (!currentWrapElm) {
 								// Wrap the node
-								currentWrapElm = wrapElm.cloneNode(false);
+								currentWrapElm = wrapElm.cloneNode(FALSE);
 								node.parentNode.insertBefore(currentWrapElm, node);
 								newWrappers.push(currentWrapElm);
 							}
@@ -12715,7 +12746,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 						var child, clone;
 
 						each(node.childNodes, function(node) {
-							if (node.nodeType == 1) {
+							if (node.nodeType == 1 && !isBookmarkNode(node)) {
 								child = node;
 								return FALSE; // break loop
 							}
@@ -12804,20 +12835,22 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 			// Merges the styles for each node
 			function process(node) {
-				var children;
+				var children, i, l;
 
-				// Process children first
+				// Grab the children first since the nodelist might be changed
 				children = tinymce.grep(node.childNodes);
 
 				// Process current node
-				each(formatList, function(format) {
-					if (removeFormat(format, vars, node, node))
-						return FALSE; // Break loop
-				});
+				for (i = 0, l = formatList.length; i < l; i++) {
+					if (removeFormat(formatList[i], vars, node, node))
+						break;
+				}
 
-				each(children, function(node) {
-					process(node);
-				});
+				// Process the children
+				if (format.deep) {
+					for (i = 0, l = children.length; i < l; i++)
+						process(children[i]);
+				}
 			};
 
 			function findFormatRoot(container) {
@@ -12828,7 +12861,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					// Find format root element
 					if (!formatRoot && parent.id != '_start' && parent.id != '_end') {
 						// If the matched format has a remove none flag we shouldn't split it
-						if (matchNode(parent, name, vars))
+						if (!isBlock(parent) && matchNode(parent, name, vars))
 							formatRoot = parent;
 					}
 				});
@@ -12959,19 +12992,28 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			var formatList = get(name), format, i, classes;
 
 			function matchItems(node, format, item_name) {
-				var key, value, items = format[item_name];
+				var key, value, items = format[item_name], i;
 
-					// Check all items
+				// Check all items
 				if (items) {
-					for (key in items) {
-						if (items.hasOwnProperty(key)) {
-							if (item_name === 'attributes')
-								value = dom.getAttrib(node, key);
-							else
-								value = getStyle(node, key);
+					// Non indexed object
+					if (items.length === undefined) {
+						for (key in items) {
+							if (items.hasOwnProperty(key)) {
+								if (item_name === 'attributes')
+									value = dom.getAttrib(node, key);
+								else
+									value = getStyle(node, key);
 
-							if (!isEq(value, replaceVars(items[key], vars)))
-								return;
+								if (!isEq(value, replaceVars(items[key], vars)))
+									return;
+							}
+						}
+					} else {
+						// Only one match needed for indexed arrays
+						for (i = 0; i < items.length; i++) {
+							if (item_name === 'attributes' ? dom.getAttrib(node, items[i]) : getStyle(node, items[i]))
+								return TRUE;
 						}
 					}
 				}
@@ -13154,6 +13196,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				endContainer = rng.endContainer,
 				endOffset = rng.endOffset, sibling, lastIdx;
 
+			// This function walks up the tree if there is no siblings before/after the node
 			function findParentContainer(container, child_name, sibling_name, root) {
 				var parent, child;
 
@@ -13162,8 +13205,9 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				for (;;) {
 					// Check if we can move up are we at root level or body level
 					parent = container.parentNode;
-					
-					if (parent == root || isBlock(parent))
+
+					// Stop expanding on block elements or root depending on format
+					if (parent == root || (!format[0].block_expand && isBlock(parent)))
 						return container;
 
 					for (sibling = parent[child_name]; sibling && sibling != container; sibling = sibling[sibling_name]) {
@@ -13215,7 +13259,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			// Example * becomes !: !<p><b><i>*text</i><i>text*</i></b></p>!
 			// This will reduce the number of wrapper elements that needs to be created
 			// Move start point up the tree
-			if (format[0].inline) {
+			if (format[0].inline || format[0].block_expand) {
 				startContainer = findParentContainer(startContainer, 'firstChild', 'nextSibling');
 				endContainer = findParentContainer(endContainer, 'lastChild', 'previousSibling');
 			}
@@ -13283,11 +13327,13 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 				endContainer = findBlockEndPoint(endContainer, 'nextSibling');
 
 				// Non block element then try to expand up the leaf
-				if (!isBlock(startContainer))
-					startContainer = findParentContainer(startContainer, 'firstChild', 'nextSibling');
+				if (format[0].block) {
+					if (!isBlock(startContainer))
+						startContainer = findParentContainer(startContainer, 'firstChild', 'nextSibling');
 
-				if (!isBlock(endContainer))
-					endContainer = findParentContainer(endContainer, 'lastChild', 'previousSibling');
+					if (!isBlock(endContainer))
+						endContainer = findParentContainer(endContainer, 'lastChild', 'previousSibling');
+				}
 			}
 
 			// Setup index for startContainer
@@ -13373,6 +13419,14 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 								}
 							}
 						}
+
+						// IE6 has a bug where the attribute doesn't get removed correctly
+						if (name == "class")
+							node.removeAttribute('className');
+
+						// Remove mce prefixed attributes
+						if (MCE_ATTR_RE.test(name))
+							node.removeAttribute('_mce_' + name);
 
 						node.removeAttribute(name);
 					}
@@ -13686,64 +13740,10 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		}
 	};
 })(tinymce);
-(function(tinymce) {
-	tinymce.each(['Cut', 'Copy', 'Paste'], function(cmd) {
-		tinymce.GlobalCommands.add(cmd, function() {
-			var ed = this, doc = ed.getDoc();
+tinymce.onAddEditor.add(function(tinymce, ed) {
+	var filters, fontSizes, dom, settings = ed.settings;
 
-			try {
-				doc.execCommand(cmd, false, null);
-
-				// On WebKit the command will just be ignored if it's not enabled
-				if (!doc.queryCommandEnabled(cmd))
-					throw 'Error';
-			} catch (ex) {
-				if (tinymce.isGecko) {
-					ed.windowManager.confirm(ed.getLang('clipboard_msg'), function(s) {
-						if (s)
-							open('http://www.mozilla.org/editor/midasdemo/securityprefs.html', '_blank');
-					});
-				} else
-					ed.windowManager.alert(ed.getLang('clipboard_no_support'));
-			}
-		});
-	});
-})(tinymce);
-(function() {
-	var cmds = tinymce.GlobalCommands;
-
-	cmds.add(['mceEndUndoLevel', 'mceAddUndoLevel'], function() {
-		this.undoManager.add();
-	});
-
-	cmds.add('Undo', function() {
-		var ed = this;
-
-		if (ed.settings.custom_undo_redo) {
-			ed.undoManager.undo();
-			ed.nodeChanged();
-			return true;
-		}
-
-		return false; // Run browser command
-	});
-
-	cmds.add('Redo', function() {
-		var ed = this;
-
-		if (ed.settings.custom_undo_redo) {
-			ed.undoManager.redo();
-			ed.nodeChanged();
-			return true;
-		}
-
-		return false; // Run browser command
-	});
-})();
-(function() {
-	tinymce.onAddEditor.add(function(tinymce, ed) {
-		var filters, fontSizes, dom, settings = ed.settings;
-
+	if (settings.inline_styles) {
 		fontSizes = tinymce.explode(settings.font_size_style_values);
 
 		function replaceWithSpan(node, styles) {
@@ -13775,20 +13775,20 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			}
 		};
 
-		function convert() {
-			dom = ed.dom;
+		function convert(editor, params) {
+			dom = editor.dom;
 
 			if (settings.convert_fonts_to_spans) {
-				tinymce.each(dom.select('font,u,strike'), function(node) {
+				tinymce.each(dom.select('font,u,strike', params.node), function(node) {
 					filters[node.nodeName.toLowerCase()](ed.dom, node);
 				});
 			}
 		};
 
-		ed.onSetContent.add(convert);
+		ed.onPreProcess.add(convert);
 
 		ed.onInit.add(function() {
 			ed.selection.onSetContent.add(convert);
 		});
-	});
-})(tinymce);
+	}
+});
