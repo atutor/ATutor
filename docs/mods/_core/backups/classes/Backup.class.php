@@ -393,7 +393,7 @@ class Backup {
 
 		// 5. if override is set then delete the content
 		if ($action == 'overwrite') {
-			require_once(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
+			require_once(AT_INCLUDE_PATH.'../mods/_core/properties/lib/delete_course.inc.php');
 			delete_course($this->course_id, $material);
 			$_SESSION['s_cid'] = 0;
 		} // else: appending content
