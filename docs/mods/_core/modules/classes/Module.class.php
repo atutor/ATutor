@@ -660,6 +660,26 @@ class Module {
 		mysql_query($sql, $db);
 
 	}
+
+
+	/**
+	 * Get the latest news from the Module. 
+	 * @access	public
+	 * @author	Harris Wong 
+	 * @date	Feb 25, 2010
+	 */
+	function getNews(){
+		global $msg;
+
+		if (file_exists(AT_MODULE_PATH . $this->_directoryName . '/module_news.php')) {
+			require(AT_MODULE_PATH . $this->_directoryName . '/module_news.php');
+			if (function_exists(basename($this->_directoryName).'_news')) {
+				$fnctn = basename($this->_directoryName).'_news';
+				return $fnctn($course_id);
+			}
+		}
+
+	}
 	
 	private function convertContent164($course_id) {
 		global $db;
