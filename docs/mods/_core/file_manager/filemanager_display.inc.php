@@ -421,7 +421,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<td  align="right" style="white-space:nowrap">';
 
 		if ($popup == TRUE) {
-			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\', \'' . $tab . '\');" />&nbsp;';
+			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\', \'' . $tab . '\', \'' .$_SESSION['prefs']['PREF_CONTENT_EDITOR']. '\');" />&nbsp;';
 		}
 
 		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
@@ -457,7 +457,7 @@ echo '</table></form>';
 
 <script type="text/javascript">
 //<!--
-function insertFile(fileName, pathTo, ext, tab) { 
+function insertFile(fileName, pathTo, ext, tab, ed_pref) { 
 
 	// pathTo + fileName should be relative to current path (specified by the Content Package Path)
 
@@ -465,22 +465,26 @@ function insertFile(fileName, pathTo, ext, tab) {
 		var info = "<?php echo _AT('alternate_text'); ?>";
 		var html = '<img src="' + pathTo+fileName + '" border="0" alt="' + info + '" />';
 
-		insertLink(html, tab);
+		insertLink(html, tab, ed_pref);
 	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid") {
 		var html = '[media]'+ pathTo + fileName + '[/media]';
 
-		insertLink(html, tab);
+		insertLink(html, tab, ed_pref);
 	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
 		var html = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 		
-		insertLink(html, tab);
+		insertLink(html, tab, ed_pref);
 	}
 }
 
-function insertLink(html, tab)
+function insertLink(html, tab, ed_pref)
 {
-	if (!window.opener || window.opener.document.form.setvisual.value == 1) {
+    if (window.opener) {
+        var isNotVisual = window.opener.document.form.html.checked && (ed_pref === '1');
+    }
+
+	if (!window.opener || !isNotVisual) {
 		if (!window.opener && window.parent.tinyMCE)
 			window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 		else
