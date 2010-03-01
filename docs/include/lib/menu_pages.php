@@ -136,43 +136,43 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 
         if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
         // hide modules from non-super admins
-/*
-            $_pages['admin/modules/index.php']['title_var'] = 'modules';
-            $_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
-            $_pages['admin/modules/index.php']['guide']     = 'admin/?p=modules.php';
-            $_pages['admin/modules/index.php']['children']  = array('admin/modules/install_modules.php');
 
-            $_pages['admin/modules/details.php']['title_var'] = 'details';
-            $_pages['admin/modules/details.php']['parent']    = 'admin/modules/index.php';
+            $_pages['mods/_core/modules/index.php']['title_var'] = 'modules';
+            $_pages['mods/_core/modules/index.php']['parent']    = AT_NAV_ADMIN;
+            $_pages['mods/_core/modules/index.php']['guide']     = 'admin/?p=modules.php';
+            $_pages['mods/_core/modules/index.php']['children']  = array('mods/_core/modules/install_modules.php');
 
-            $_pages['admin/modules/module_uninstall_step_1.php']['title_var'] = 'module_uninstall';
-            $_pages['admin/modules/module_uninstall_step_1.php']['parent']    = 'admin/modules/index.php';
+            $_pages['mods/_core/modules/details.php']['title_var'] = 'details';
+            $_pages['mods/_core/modules/details.php']['parent']    = 'mods/_core/modules/index.php';
 
-            $_pages['admin/modules/module_uninstall_step_2.php']['title_var'] = 'module_uninstall';
-            $_pages['admin/modules/module_uninstall_step_2.php']['parent']    = 'admin/modules/index.php';
+            $_pages['mods/_core/modules/module_uninstall_step_1.php']['title_var'] = 'module_uninstall';
+            $_pages['mods/_core/modules/module_uninstall_step_1.php']['parent']    = 'mods/_core/modules/index.php';
 
-            $_pages['admin/modules/module_uninstall_step_3.php']['title_var'] = 'module_uninstall';
-            $_pages['admin/modules/module_uninstall_step_3.php']['parent']    = 'admin/modules/index.php';
+            $_pages['mods/_core/modules/module_uninstall_step_2.php']['title_var'] = 'module_uninstall';
+            $_pages['mods/_core/modules/module_uninstall_step_2.php']['parent']    = 'mods/_core/modules/index.php';
 
-            $_pages['admin/modules/install_modules.php']['title_var'] = 'install_modules';
-            $_pages['admin/modules/install_modules.php']['parent']    = 'admin/modules/index.php';
-            $_pages['admin/modules/install_modules.php']['guide']     = 'admin/?p=modules.php';
+            $_pages['mods/_core/modules/module_uninstall_step_3.php']['title_var'] = 'module_uninstall';
+            $_pages['mods/_core/modules/module_uninstall_step_3.php']['parent']    = 'mods/_core/modules/index.php';
 
-            $_pages['admin/modules/version_history.php']['title_var'] = 'version_history';
-            $_pages['admin/modules/version_history.php']['parent']    = 'admin/modules/install_modules.php';
+            $_pages['mods/_core/modules/install_modules.php']['title_var'] = 'install_modules';
+            $_pages['mods/_core/modules/install_modules.php']['parent']    = 'mods/_core/modules/index.php';
+            $_pages['mods/_core/modules/install_modules.php']['guide']     = 'admin/?p=modules.php';
 
-            $_pages['admin/modules/module_install_step_1.php']['title_var'] = 'details';
-            $_pages['admin/modules/module_install_step_1.php']['parent']    = 'admin/modules/install_modules.php';
+            $_pages['mods/_core/modules/version_history.php']['title_var'] = 'version_history';
+            $_pages['mods/_core/modules/version_history.php']['parent']    = 'mods/_core/modules/install_modules.php';
 
-            $_pages['admin/modules/module_install_step_2.php']['title_var'] = 'details';
-            $_pages['admin/modules/module_install_step_2.php']['parent']    = 'admin/modules/install_modules.php';
+            $_pages['mods/_core/modules/module_install_step_1.php']['title_var'] = 'details';
+            $_pages['mods/_core/modules/module_install_step_1.php']['parent']    = 'mods/_core/modules/install_modules.php';
 
-            $_pages['admin/modules/module_install_step_3.php']['title_var'] = 'details';
-            $_pages['admin/modules/module_install_step_3.php']['parent']    = 'admin/modules/install_modules.php';
+            $_pages['mods/_core/modules/module_install_step_2.php']['title_var'] = 'details';
+            $_pages['mods/_core/modules/module_install_step_2.php']['parent']    = 'mods/_core/modules/install_modules.php';
 
-            $_pages['admin/modules/confirm.php']['title_var'] = 'confirm';
-            $_pages['admin/modules/confirm.php']['parent']    = 'admin/modules/add_new.php';
-*/
+            $_pages['mods/_core/modules/module_install_step_3.php']['title_var'] = 'details';
+            $_pages['mods/_core/modules/module_install_step_3.php']['parent']    = 'mods/_core/modules/install_modules.php';
+
+            $_pages['mods/_core/modules/confirm.php']['title_var'] = 'confirm';
+            $_pages['mods/_core/modules/confirm.php']['parent']    = 'mods/_core/modules/add_new.php';
+
             $_pages['admin/cron_config.php']['title_var'] = 'cron_config';
             $_pages['admin/cron_config.php']['parent']    = 'admin/config_edit.php';
             $_pages['admin/cron_config.php']['guide']     = 'admin/?p=cron_setup.php';
@@ -182,12 +182,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
             $_pages['admin/auto_enroll.php']['parent']    = 'admin/config_edit.php';
             $_pages['admin/auto_enroll.php']['guide']     = 'admin/?p=auto_enroll.php';
             $_pages['admin/auto_enroll.php']['children']  = array_merge(array('admin/auto_enroll_edit.php'));
-            $_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/auto_enroll.php'));*/
-
-
-
-/*
-
+            $_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/auto_enroll.php'));
 
             $_pages['admin/auto_enroll_edit.php']['title_var'] = 'auto_enroll_edit';
             $_pages['admin/auto_enroll_edit.php']['parent']    = 'admin/auto_enroll.php';
