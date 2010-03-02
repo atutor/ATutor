@@ -27,6 +27,7 @@ define('AT_PA_IMAGE',		604);		//default maximum width/height for images
 define('AT_PA_IMAGE_THUMB',	130);		//default maximum width/height for thumbnails
 
 //Album types
+define('AT_PA_TYPE_ALL_ALBUM',			-1);//all albums
 define('AT_PA_TYPE_MY_ALBUM',			1);	//my album
 define('AT_PA_TYPE_COURSE_ALBUM',		2);	//course album
 define('AT_PA_TYPE_PERSONAL',			3); //personal album

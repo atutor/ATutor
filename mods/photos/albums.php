@@ -38,10 +38,14 @@ if ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM || $info['type_id']==AT_PA_TYPE_PE
 }
 
 //Set pages/submenu
-$_pages[AT_PA_BASENAME.'index.php?type='.$info['type_id']]['children'] = array(AT_PA_BASENAME.'albums.php');
+$_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'albums.php');
 
 $_pages[AT_PA_BASENAME.'albums.php']['title']    = _AT('pa_albums') .' - '.$info['name'];
-$_pages[AT_PA_BASENAME.'albums.php']['parent']	  = AT_PA_BASENAME.'index.php?type='.$info['type_id'];
+if ($info['type_id']==AT_PA_TYPE_MY_ALBUM){
+	$_pages[AT_PA_BASENAME.'albums.php']['parent']	  = AT_PA_BASENAME.'index.php';
+} elseif ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM){
+	$_pages[AT_PA_BASENAME.'albums.php']['parent']	  = AT_PA_BASENAME.'course_albums.php';
+} 
 $_pages[AT_PA_BASENAME.'albums.php']['children']  = array(
 														AT_PA_BASENAME.'edit_photos.php?aid='.$id,
 														AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1',

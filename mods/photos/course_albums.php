@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id$
+// $Id: index.php 9412 2010-03-02 17:14:43Z greg $
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'lib.inc.php');
@@ -19,7 +19,7 @@ $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom styl
 
 //instantiate obj
 $pa = new PhotoAlbum();
-$type = AT_PA_TYPE_MY_ALBUM;
+$type = AT_PA_TYPE_COURSE_ALBUM;
 $album_count = sizeof($pa->getAlbums($_SESSION['member_id'], $type));
 
 //paginator settings
