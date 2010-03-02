@@ -14,6 +14,11 @@
 	</div>
 	<?php endif; ?>
 	<div class="row">
+		<div class="left_row"<label for="album_permission"><?php echo _AT('pa_album_permission'); ?></label></div>
+		<label for="album_permission_private"><?php echo _AT('pa_private'); ?><label><input type="radio" name="album_permission" id="album_permission_private" value="0" <?php echo ($this->album_info['permission']==AT_PA_PRIVATE_ALBUM)?' checked="checked"':'';?>/>
+		<label for="album_permission_shared"><?php echo _AT('pa_shared'); ?></label><input type="radio" name="album_permission" id="album_permission_shared" value="1" <?php echo ($this->album_info['permission']==AT_PA_SHARED_ALBUM)?' checked="checked"':'';?>/>
+	</div>
+	<div class="row">
 		<div class="left_row"<label for="album_location"><?php echo _AT('pa_album_location'); ?></label></div>
 		<input id="album_location" name="album_location" type="text" value="<?php echo htmlentities_utf82($this->album_info['location']);?>"/>
 	</div>

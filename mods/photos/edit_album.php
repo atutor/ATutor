@@ -37,9 +37,17 @@ if(isset($_POST['submit'])){
 		//default is "my album" 'cause normally user can't create course album.
 		$album_type	= AT_PA_TYPE_MY_ALBUM;
 	}
+
+	//private or shared album?
+	if (isset($_POST['album_permission'])){
+		$album_permission = ($_POST['album_permission']==AT_PA_SHARED_ALBUM)?AT_PA_SHARED_ALBUM:AT_PA_PRIVATE_ALBUM;
+	} else {
+		$album_permission = AT_PA_PRIVATE_ALBUM;
+	}
+
 	if (isset($_POST['album_name']) && $_POST['album_name']!=''){
 		//TODO: photo_id = 0, should default to use the first one after multi-file uploader works
-		$result = $pa->editAlbum($_POST['album_name'], $_POST['album_location'], $_POST['album_description'], $album_type);
+		$result = $pa->editAlbum($_POST['album_name'], $_POST['album_location'], $_POST['album_description'], $album_type, $album_permission);
 
 		if (!$result){
 			$msg->addError('PA_EDIT_ALBUM_FAILED');

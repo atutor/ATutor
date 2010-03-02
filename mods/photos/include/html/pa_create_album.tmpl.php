@@ -11,9 +11,13 @@
 		<div class="left_row"<label for="album_type"><?php echo _AT('pa_album_type'); ?></label></div>
 		<label for="my_album"><?php echo _AT('pa_my_albums'); ?><label><input type="radio" name="album_type" id="my_album" value="1" />
 		<label for="course_album"><?php echo _AT('pa_course_albums'); ?></label><input type="radio" name="album_type" id="course_album" value="2" />
-
 	</div>
 	<?php endif; ?>
+	<div class="row">
+		<div class="left_row"<label for="album_permission"><?php echo _AT('pa_album_permission'); ?></label></div>
+		<label for="album_permission_private"><?php echo _AT('pa_private'); ?><label><input type="radio" name="album_permission" id="album_permission_private" value="0" />
+		<label for="album_permission_shared"><?php echo _AT('pa_shared'); ?></label><input type="radio" name="album_permission" id="album_permission_shared" value="1" />
+	</div>
 	<div class="row">
 		<div class="left_row"<label for="album_location"><?php echo _AT('pa_album_location'); ?></label></div>
 		<input id="album_location" name="album_location" type="text" />

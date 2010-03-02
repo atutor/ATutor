@@ -135,8 +135,17 @@ class PhotoAlbum {
 		return true;
 	}
 
-	/** */
-	function createAlbum($name, $location, $description, $type, $member_id, $photo_id=0){
+	/** 
+	 * Create an album
+	 * @param	string		name of the album
+	 * @param	string		location of where this album took place
+	 * @param	string		descriptive text of this album
+	 * @param	int			check include/constants.inc.php
+	 * @param	int			permission, 0 for private, 1 for shared
+	 * @param	int			album author
+	 * @param	int			OPTIONAL, Photo cover for this album
+	 */
+	function createAlbum($name, $location, $description, $type, $permission, $member_id, $photo_id=0){
 		global $addslashes, $db;
 
 		//handle input
@@ -184,18 +193,20 @@ class PhotoAlbum {
 	
 	/** 
 	 * Update album
-	 * @param	string	album name
-	 * @param	string	location of which the album is taken from
-	 * @param	string	description of the album
-	 * @param	int		album type
+	 * @param	string		name of the album
+	 * @param	string		location of where this album took place
+	 * @param	string		descriptive text of this album
+	 * @param	int			check include/constants.inc.php
+	 * @param	int			permission, 0 for private, 1 for shared
 	 */
-	function editAlbum($name, $location, $description, $type){
+	function editAlbum($name, $location, $description, $type, $permission){
 		global $db, $addslashes;
 		$id			 = $this->id;
 		$name		 = $addslashes($name);
 		$location	 = $addslashes($location);
 		$description = $addslashes($description);
 		$type		 = ($type==AT_PA_TYPE_COURSE_ALBUM)?AT_PA_TYPE_COURSE_ALBUM:AT_PA_TYPE_MY_ALBUM;
+		$permission	 = ($permission==AT_PA_SHARED_ALBUM)?AT_PA_SHARED_ALBUM:AT_PA_PRIVATE_ALBUM;
 		$info		 = $this->getAlbuminfo();
 
 		//if type has been changed, run the query to update the course_album table
@@ -210,7 +221,7 @@ class PhotoAlbum {
 			}
 		}
 
-		$sql = 'UPDATE '.TABLE_PREFIX."pa_albums SET name='$name', location='$location', description='$description', type_id=$type WHERE id=$id";
+		$sql = 'UPDATE '.TABLE_PREFIX."pa_albums SET name='$name', location='$location', description='$description', type_id=$type, permission=$permission WHERE id=$id";
 		$result = mysql_query($sql, $db);
 		return $result;
 	}

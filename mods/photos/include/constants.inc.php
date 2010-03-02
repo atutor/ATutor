@@ -33,4 +33,8 @@ define('AT_PA_TYPE_COURSE_ALBUM',		2);	//course album
 define('AT_PA_TYPE_PERSONAL',			3); //personal album
 define('AT_PA_TYPE_GROUP_ALBUM',		4);	//group album
 define('AT_PA_TYPE_SOCIAL_GROUP_ALBUM',	5);	//social group album
+
+//Album permissions
+define('AT_PA_PRIVATE_ALBUM',			0);	//private album, default
+define('AT_PA_SHARED_ALBUM',			1);	//shared album
 ?>

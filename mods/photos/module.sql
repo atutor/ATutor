@@ -4,7 +4,7 @@ CREATE TABLE `pa_albums` (
   `name` VARCHAR(255) NOT NULL,
   `location` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
-  `permission` VARCHAR(45) NOT NULL,
+  `permission` TINYINT(1) UNSIGNED NOT NULL,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `photo_id` INTEGER UNSIGNED NOT NULL,
   `type_id` TINYINT(1) UNSIGNED NOT NULL,
