@@ -41,9 +41,11 @@
 					<input type="button" id="upload_manager" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="toggleUploadManager()" class="button" />
 					<input type="hidden" id="upload_manager_toggle" value="1" />
 			</div>
+			<?php if($this->num_rows > AT_PA_PHOTOS_PER_PAGE){  ?>
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
+			<?php } ?>
 		</div>
 		<?php if(!empty($this->photos)): ?>
 		<!-- loop through this -->
@@ -64,9 +66,11 @@
 		<?php endif; ?>
 		<!-- page numbers -->
 		<div class="topbar">
+			<?php if($this->num_rows > AT_PA_PHOTOS_PER_PAGE){  ?>
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
+			<?php } ?>
 		</div>
 	</div>	
 

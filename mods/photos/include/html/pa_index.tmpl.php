@@ -1,12 +1,16 @@
 <div>
 	<!-- Photo album options and page numbers -->
 	<div class="album_panel">
+	<?php if($this->num_rows > AT_PA_ALBUMS_PER_PAGE){?>
+
 		<div class="topbar">
 			<!-- page numbers -->
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
 		</div>
+
+	<?php  } ?>
 		<!-- loop through this -->
 		<?php if(!empty($this->albums)): 
 			$pa = new PhotoAlbum();
@@ -19,7 +23,7 @@
 			$photo_info = $pa->getPhotoInfo($row['photo_id']); 
 			if (!empty($photo_info)):
 			?>
-			<a><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" /></a>
+			<a><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" /></a>
 			<?php endif; //image ?>
 			</div>
 			<div class="info">
@@ -41,10 +45,12 @@
 		<?php endif; ?>
 		<!-- end loop -->
 		<!-- page numbers -->
+		<?php if($this->num_rows > AT_PA_ALBUMS_PER_PAGE){?>
 		<div class="topbar">
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
 		</div>
+		<?php  } ?>
 	</div>	
 </div>
