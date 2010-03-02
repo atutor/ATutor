@@ -196,7 +196,20 @@ class PhotoAlbum {
 		$location	 = $addslashes($location);
 		$description = $addslashes($description);
 		$type		 = ($type==AT_PA_TYPE_COURSE_ALBUM)?AT_PA_TYPE_COURSE_ALBUM:AT_PA_TYPE_MY_ALBUM;
-		
+		$info		 = $this->getAlbuminfo();
+
+		//if type has been changed, run the query to update the course_album table
+		if ($info['type_id'] != $type){
+			//if course album, add a record.		
+			if ($type==AT_PA_TYPE_COURSE_ALBUM){
+				$sql = "INSERT INTO ".TABLE_PREFIX."pa_course_album (course_id, album_id) VALUES ($_SESSION[course_id], $id)";
+				$result = mysql_query($sql, $db);
+			} else {
+				$sql = 'DELETE FROM '.TABLE_PREFIX."pa_course_album WHERE course_id=$_SESSION[course_id] AND album_id=$id";
+				$result = mysql_query($sql, $db);
+			}
+		}
+
 		$sql = 'UPDATE '.TABLE_PREFIX."pa_albums SET name='$name', location='$location', description='$description', type_id=$type WHERE id=$id";
 		$result = mysql_query($sql, $db);
 		return $result;
