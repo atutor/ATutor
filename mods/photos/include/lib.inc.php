@@ -79,6 +79,7 @@ function checkPhoto($file){
 
 	//check GD support 
 	$gd_info = gd_info();
+
 	$supported_images = array();
 	if ($gd_info['GIF Create Support']) {
 		$supported_images[] = 'gif';
@@ -122,7 +123,6 @@ function checkPhoto($file){
 	//check filename
 	$file['name'] = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $file['name'] );
 	$file['name'] = preg_replace("/[^A-Za-z0-9._\-]/", '', $file['name'] );
-	
 	return $file;
 }
  

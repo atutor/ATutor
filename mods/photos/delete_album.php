@@ -11,9 +11,11 @@
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
 // $Id$
+$_user_location = 'public';
+
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-include (AT_INCLUDE_PATH.'lib/filemanager.inc.php');	//clr_dir()
+include (AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');	//clr_dir()
 include (AT_PA_INCLUDE.'lib.inc.php');	//album_filepath
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 
@@ -39,8 +41,15 @@ if ($_POST['submit_yes']) {
 	$pa->deleteAlbum();
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	Header('Location: index.php');
-	exit;
+
+	if($info['type_id']== AT_PA_TYPE_COURSE_ALBUM){
+		Header('Location: course_albums.php');
+		exit;
+	}else{
+		Header('Location: index.php');
+		exit;
+	}
+
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

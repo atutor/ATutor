@@ -5,8 +5,8 @@
 		<input id="album_name" name="album_name" type="text" />
 	</div>
 	<?php
-	//if the user has the privilege to create course albums, then allow them to choose
-	if ($course_album_privilege || true): ?>
+	//if the user has the privilege to create course albums, and she's in a course, then allow them to choose
+	if ($_SESSION['course_id'] && ($course_album_privilege || true)): ?>
 	<div class="row">
 		<div class="left_row"<label for="album_type"><?php echo _AT('pa_album_type'); ?></label></div>
 		<label for="my_album"><?php echo _AT('pa_my_albums'); ?><label><input type="radio" name="album_type" id="my_album" value="1" />

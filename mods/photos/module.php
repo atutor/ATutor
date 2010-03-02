@@ -81,30 +81,29 @@ $this->_pages[AT_SOCIAL_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME
 //end temp
 
 //$this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = _AT('test');
-//$this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index_mystart.php';
+//$this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
 //$this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] = array_push($this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'], AT_PA_BASENAME.'index.php');
 
 
 $this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = 'pa_photo_gallery';
 $this->_pages[AT_PA_BASENAME.'index.php']['img']       = AT_PA_BASENAME.'images/photo_gallery.png';
-$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(															
-															AT_PA_BASENAME.'profile_album.php',
-/*															AT_PA_BASENAME.'my_albums.php',
-*/															AT_PA_BASENAME.'course_albums.php',
-															AT_PA_BASENAME.'create_album.php',
-/*															AT_SOCIAL_BASENAME.'index.php',
-*/);
+
+if($_SESSION['course_id'] < 1){
+$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'profile_album.php', AT_PA_BASENAME.'create_album.php');
+}else{
+$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'profile_album.php', AT_PA_BASENAME.'course_albums.php', AT_PA_BASENAME.'create_album.php');
+$this->_pages[AT_PA_BASENAME.'course_albums.php']['title_var'] = 'pa_course_albums';
+$this->_pages[AT_PA_BASENAME.'course_albums.php']['parent'] = AT_PA_BASENAME.'index.php';
+$this->_pages[AT_PA_BASENAME.'course_albums.php']['guide']     = 'general/?p=pa_index.php';
+}
+
 $this->_pages[AT_PA_BASENAME.'index.php']['guide']     = 'general/?p=pa_index.php';
 
 $this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index_mystart.php';
 $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] = array_merge(isset($this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children']) ? $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] : array(), array(AT_PA_BASENAME.'index.php'));
 
-
 //$this->_pages[AT_PA_BASENAME.'my_albums.php']['title_var'] = 'pa_my_albums';
 //$this->_pages[AT_PA_BASENAME.'my_albums.php']['parent'] = AT_PA_BASENAME.'index.php';
-
-$this->_pages[AT_PA_BASENAME.'course_albums.php']['title_var'] = 'pa_course_albums';
-$this->_pages[AT_PA_BASENAME.'course_albums.php']['parent'] = AT_PA_BASENAME.'index.php';
 
 $this->_pages[AT_PA_BASENAME.'create_album.php']['title_var'] = 'pa_create_album';
 $this->_pages[AT_PA_BASENAME.'create_album.php']['parent'] = AT_PA_BASENAME.'index.php';

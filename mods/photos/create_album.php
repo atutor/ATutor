@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
 // $Id$
+$_user_location = 'public';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
@@ -44,8 +45,16 @@ if(isset($_POST['submit'])){
 		$msg->addError('PA_EMTPY_ALBUM_NAME');
 	}
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: index.php');
-	exit;
+
+	if($_POST['album_type'] == AT_PA_TYPE_COURSE_ALBUM){
+		header('Location: course_albums.php');
+		exit;
+	}else{
+		header('Location: index.php');
+		exit;
+	
+	}
+
 } elseif (isset($_POST['cancel'])){
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.AT_PA_BASE);

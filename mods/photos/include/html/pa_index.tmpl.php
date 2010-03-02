@@ -23,7 +23,7 @@
 			$photo_info = $pa->getPhotoInfo($row['photo_id']); 
 			if (!empty($photo_info)):
 			?>
-			<a><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" /></a>
+			<a><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" border="0"/></a>
 			<?php endif; //image ?>
 			</div>
 			<div class="info">
