@@ -1,6 +1,7 @@
-tinyMCE.addI18n('en.insert_tag',{
-	termdesc : 'Insert term tag',
-	codedesc : 'Insert code tag',
-	mediadesc : 'Insert media tag',
-	texdesc : 'Insert tex tag'
+tinyMCE.addI18n('en.swap_toolbar_simple',{
+	desc : 'Hide toolbars'
+});
+
+tinyMCE.addI18n('en.swap_toolbar_complex',{
+	desc : 'More toolbars'
 });
