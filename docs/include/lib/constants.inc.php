@@ -399,4 +399,50 @@ define('AT_TILE_OAUTH_AUTHORIZATION_URL', AT_TILE_BASE_URL.'oauth/authorization.
 define('AT_TILE_OAUTH_ACCESS_TOKEN_URL', AT_TILE_BASE_URL.'oauth/access_token.php');
 
 /* END - Constants for Transformable web service */
+
+/* UTC Timezones array */
+/* When the PHP requirement is 5.3, replace this with PHP timezone functions */
+
+$utc_timezones = array(
+array("UTC-12, Y","-12"),
+array("UTC-11, X","-11"),
+array("UTC-10, W","-10"),
+array("UTC-9:30, V","-9.5"),
+array("UTC-9, V","-9"),
+array("UTC-8, U","-8"),
+array("UTC-7, T","-7"),
+array("UTC-6, S","-6"),
+array("UTC-5, R","-5"),
+array("UTC-4:30, Q","-4.5"),
+array("UTC-4, Q","-4"),
+array("UTC-3:30, P","-3.5"),
+array("UTC-3, P","-3"),
+array("UTC-2, O","-2"),
+array("UTC-1, N","-1"),
+array("UTC+0, Z","0"),
+array("UTC+1, A","1"),
+array("UTC+2, B","2"),
+array("UTC+3, C","3"),
+array("UTC+3:30, C","3.5"),
+array("UTC+4, D","4"),
+array("UTC+4:30, D","4.5"),
+array("UTC+5, E","5"),
+array("UTC+5:30, E","5.5"),
+array("UTC+5:45, E","5.75"),
+array("UTC+6, F","6"),
+array("UTC+6:30, F","6.5"),
+array("UTC+7, G","7"),
+array("UTC+8, H","8"),
+array("UTC+8:45, H","8.75"),
+array("UTC+9, I","9"),
+array("UTC+9:30, I","9.5"),
+array("UTC+10, K","10"),
+array("UTC+10:30, K","10.5"),
+array("UTC+11, L","11"),
+array("UTC+11:30, L","11.5"),
+array("UTC+12, M","12"),
+array("UTC+12:45, M","12.75"),
+array("UTC+13, M","13"),
+array("UTC+14, M","14"));
+/* End of Timezones array */
 ?>

@@ -212,6 +212,7 @@ $_pages['help/contact_support.php']['parent'] = 'help/index.php';
 $_pages['contact_instructor.php']['title_var']  = 'contact_instructor';
 
 /* public pages */
+
 $_pages['registration.php']['title_var'] = 'register';
 $_pages['registration.php']['parent']    = AT_NAV_PUBLIC;
 $_pages['registration.php']['children']  = isset($_pages['browse.php']['children']) ? $_pages['browse.php']['children'] : array();
@@ -244,10 +245,9 @@ $_pages['users/index.php']['guide']     = 'general/?p=my_courses.php';
 if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION['course_id']) || !$_SESSION['course_id'])) {
 	$_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
 }
-
-$_pages['users/browse.php']['title_var'] = 'browse_courses';
-$_pages['users/browse.php']['parent']    = 'users/index.php';
-$_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
+	$_pages['users/browse.php']['title_var'] = 'browse_courses';
+	$_pages['users/browse.php']['parent']    = 'users/index.php';
+	$_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
 
 $_pages['mods/_core/courses/users/create_course.php']['parent']    = 'users/index.php';
 $_pages['mods/_core/courses/users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
@@ -411,7 +411,6 @@ function get_sub_navigation($current_page) {
 
 function get_current_sub_navigation_page($current_page) {
     global $_pages, $_base_path;
-
     $parent_page = $_pages[$current_page]['parent'];
 
     if (isset($parent_page) && defined($parent_page)) {
