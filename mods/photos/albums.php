@@ -25,11 +25,10 @@ $id = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
 
-//TODO: Validate users, course and my albums.
-// Validate only user and course albums for now. My albums are public.
-if ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM || $info['type_id']==AT_PA_TYPE_PERSONAL){
+//TODO: Validate users, using permission and course album control.
+if ($info['member_id'] != $_SESSION['member_id']){
 	$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
-	if(!isset($visible_albums[$id])){
+	if(!isset($visible_albums[$id]) && $info['permission']==AT_PA_PRIVATE_ALBUM){
 		//TODO msg;
 		$msg->addError("ACCESS_DENIED");
 		header('location: index.php');

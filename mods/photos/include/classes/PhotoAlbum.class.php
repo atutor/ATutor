@@ -154,10 +154,11 @@ class PhotoAlbum {
 		$description = $addslashes($description);
 		$type		= intval($type);
 		$type		= ($type<=0)?AT_PA_TYPE_MY_ALBUM:$type;
+		$permission	= intval($permission);
 		$member_id  = intval($member_id);
 		$photo_id	= intval($photo_id);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."pa_albums (name, location, description, type_id, member_id, photo_id, created_date, last_updated) VALUES ('$name', '$location', '$description', $type, $member_id, $photo_id, NOW(), NOW())";
+		$sql = "INSERT INTO ".TABLE_PREFIX."pa_albums (name, location, description, type_id, member_id, permission, photo_id, created_date, last_updated) VALUES ('$name', '$location', '$description', $type, $member_id, $permission, $photo_id, NOW(), NOW())";
 		$result = mysql_query($sql, $db);
 
 		//if course album, add a record.
@@ -357,6 +358,30 @@ class PhotoAlbum {
 		$result = mysql_query($sql, $db);
 		if($result){
 			while($row = mysql_fetch_assoc($result)){
+				$rows[$row['id']] = $row;
+			}
+		}
+		return $rows;
+	}
+
+
+	/**
+	 * Get all private/shared albums (ignore album type)
+	 * @param	boolean		True to get all shared album; false to get all private album, default: true
+	 * @param	int			Resultset's limit
+	 */
+	function getSharedAlbums($isShared=true, $offset=-1){
+		global $db;
+		$offset = intval($offset);
+		$permission = ($isShared)? 1 : 0;
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."pa_albums WHERE permission=$permission";
+		if ($offset > -1){
+			 $sql .= " LIMIT $offset ," . AT_PA_ALBUMS_PER_PAGE;
+		}
+		$result = mysql_query($sql, $db);
+		if ($result){
+			while ($row = mysql_fetch_assoc($result)){
 				$rows[$row['id']] = $row;
 			}
 		}

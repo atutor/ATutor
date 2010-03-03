@@ -63,7 +63,8 @@ if(isset($_POST['submit'])){
 		header('Location: index_admin.php');
 		exit;
 	} 
-	header('Location: albums.php?id='.intval($_POST['aid']));
+	//header('Location: albums.php?id='.intval($_POST['aid']));
+	header('Location: index.php');
 	exit;
 } elseif (isset($_POST['cancel'])){
 	$msg->addFeedback('CANCELLED');

@@ -31,6 +31,10 @@
 				<p><?php echo htmlentities_utf82($row['description']); ?></p>
 				<p><?php echo _AT('location').': '.htmlentities_utf82($row['location']); ?></p>
 				<span>
+				<!-- If this is shared album, display the author -->
+				<?php if (isset($this->isSharedAlbum)): ?>
+				<p><?php echo _AT('created_by').': '.AT_print(get_display_name($row['member_id']), 'members.full_name'); ?></p>
+				<?php endif; ?>
 				<p><?php echo _AT('last_updated', AT_date(_AT('forum_date_format'), $row['last_updated'], AT_DATE_MYSQL_DATETIME));?></p>
 				<p><?php echo _AT('created').': '.AT_date(_AT('forum_date_format'), $row['created_date'], AT_DATE_MYSQL_DATETIME); ?></p>
 				</span><br/>
