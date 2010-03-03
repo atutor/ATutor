@@ -82,6 +82,7 @@ if (isset($_GET['approval'])){
 
 include (AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
+<div  class="social-wrapper">
 	<div style="float:left; width:55%;">
 		<?php
 			//network updates
@@ -160,6 +161,7 @@ include (AT_INCLUDE_PATH.'header.inc.php');
 		$savant->display('tiny_sgroups.tmpl.php');
 	?>
 	</div>
-
+<div style="clear:both;"></div>
+</div>
 
 <?php include (AT_INCLUDE_PATH.'footer.inc.php'); ?>

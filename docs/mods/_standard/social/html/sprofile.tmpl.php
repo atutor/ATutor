@@ -2,7 +2,8 @@
 //Profile template for social
 ?>
 
-<div>
+
+<div  class="social-wrapper">
 	<div><h3><?php echo printSocialName($this->profile['member_id'], false); ?></h3></div>
 	<div class="social-left">		
 		<div class="headingbox" style="margin-right:1em;">
@@ -293,5 +294,6 @@
 
 			
 	</div>
+<div style="clear:both;"></div>
 </div>
 

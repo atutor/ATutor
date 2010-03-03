@@ -1,4 +1,6 @@
 <script src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/livesearch.js" type="text/javascript"></script>
+
+<div class="social-wrapper">
 <div class="input-form" style="width:40%;padding:1em;min-height:4.5em;">
 	<h3><?php echo _AT('search_for_groups'); ?></h3>
 	<form action="<?php echo AT_SOCIAL_BASENAME.'groups/search.php'; ?>" method="POST" id="search_group_form">
@@ -34,4 +36,7 @@
 	else: 
 		echo _AT('none_found');
 	endif;?>
+</div>
+
+<div style="clear:both;"></div>
 </div>

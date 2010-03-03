@@ -1,3 +1,8 @@
+<div class="social-wrapper">
+<?php
+include('lib/profile_menu.inc.php');
+?>
+<br />
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php global $languageManager, $_config; ?>
 <div class="input-form">
@@ -126,3 +131,5 @@
 	</div>
 </div>
 </form>
+<div style="clear:both;"></div>
+</div>

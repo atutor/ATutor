@@ -13,6 +13,7 @@
 	//take out double quotes until there is a way to escape XSS from the ajax script.
 	$last_search = preg_replace('/\"/', '', $last_search);
 ?>
+<div class="social-wrapper">
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>
 <div class="input-form" style="float:right; width:34%;padding:1em;min-height:4.5em;">
 	<div class="contentrow">
@@ -104,4 +105,6 @@
 	-->
 </div>
 <div style="clear:both;"></div>
+
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>
+</div>

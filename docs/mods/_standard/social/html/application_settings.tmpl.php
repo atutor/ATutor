@@ -1,3 +1,4 @@
+<div class="social-wrapper">
 <form method="post" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'applications.php');?>">
 <?php 
   $html = '<div>';
@@ -61,3 +62,5 @@
   <?php echo _AT('no_settings'); ?>
   <?php endif; ?>
 </form>
+<div style="clear:both;"></div>
+</div>

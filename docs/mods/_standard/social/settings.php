@@ -34,6 +34,11 @@ $private_obj = $controller->getPrivacyObject($_SESSION['member_id']);
 
 //headers start here
 include(AT_INCLUDE_PATH.'header.inc.php'); 
+?>
+<div class="social-wrapper">
+
+<?php
+
 $savant->display('pubmenu.tmpl.php');
 $savant->display('settings/settings_menu.tmpl.php');
 if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
@@ -79,5 +84,9 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 	$savant->assign('application_prefs', $private_obj->getActivity());
 	$savant->display('settings/privacy_settings.tmpl.php');
 }
+?>
+<div style="clear:both;"></div>
+</div>
+<?php
 include(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

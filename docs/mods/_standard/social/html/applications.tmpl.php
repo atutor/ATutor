@@ -7,7 +7,7 @@
 <script type="text/javascript"
 	src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/prototype.js"></script>
 <script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/container.js"></script>
-
+<div class="social-wrapper">
 <div class="search_form">	
 		<div class="headingbox"><h3><?php echo _AT('add_application'); ?></h3></div>
 		<div class="contentbox">
@@ -67,8 +67,7 @@
 <?php endforeach; ?>
 </div>
 <?php else: ?>
-
-<div class="gadget_wrapper">ssss
+<div class="gadget_wrapper">
 <div class="headingbox"><h3><?php echo _AT('your_applications'); ?></h3></div>
 <?php	
 	foreach ($this->list_of_my_apps as $id=>$app_obj): 
@@ -105,3 +104,5 @@ echo '</div>';
 }
 ?>
 <?php endif; ?>
+<div style="clear:both;"></div>
+</div>

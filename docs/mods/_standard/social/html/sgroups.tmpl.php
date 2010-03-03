@@ -8,6 +8,7 @@
 		$last_search = $_POST['search_groups_'.$rand];	
 	}
 ?>
+<div class="social-wrapper">
 <div style="width:59%;float:left">
 <?php include('tiny_sgroups.tmpl.php'); ?>
 </div>
@@ -35,4 +36,5 @@
 		<span><a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/create.php"><?php echo _AT('create_group'); ?></a></span><br />
 	</div>
 </div>
-
+<div style="clear:both;"></div>
+</div>

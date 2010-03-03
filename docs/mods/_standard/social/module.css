@@ -89,8 +89,15 @@ li.inlinelist{
 	padding-right: 1em;
 }
 ul.social_inline_menu{
-background-color: #eeeeee;
-border:thin #cccccc solid;
-padding:.5em;
-
+	background-color: #eeeeee;
+	border:thin #cccccc solid;
+	padding:.5em;
+	width:90%;
+	margin:auto;
+}
+div.social-wrapper{
+	border:thin solid #cccccc; 
+	width:90%;
+	padding:.5em;
+	margin:auto;
 }

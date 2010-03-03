@@ -189,7 +189,9 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
+<div class="social-wrapper">
 <?php include("lib/profile_menu.inc.php")  ?>
+<br />
 <form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>?member_id=<?php echo $member_id; ?>" name="form">
 <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $_config['prof_pic_max_file_size']; ?>" />
 <div class="input-form">
@@ -209,5 +211,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 </div>
 </form>
-
+<div style="clear:both;"></div>
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

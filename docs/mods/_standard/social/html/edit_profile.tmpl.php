@@ -1,8 +1,7 @@
-<h2><?php echo $this->profile['first_name'].' '.$this->profile['last_name']; ?></h2>
-
+<div class="social-wrapper">
 
 <?php include(AT_SOCIAL_INCLUDE."profile_menu.inc.php")  ?>
-
+<h2><?php echo $this->profile['first_name'].' '.$this->profile['last_name']; ?></h2>
 <ul>
 	<li>
 		<div>
@@ -163,3 +162,5 @@
 
 
 </ul>
+<div style="clear:both;"></div>
+</div>
