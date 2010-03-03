@@ -850,7 +850,7 @@ $pid = intval($_REQUEST['pid']);
 
 	<?php else: ?>
 		<div class="saved">
-			<?php //if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" /> <input type="submit" name="close" value="<?php echo _AT('close'); ?>" /> <input type="checkbox" style="border:0px;" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"><?php echo _AT('close_after_saving'); ?></label>
+			<?php //if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" class="button"/> <input type="submit" name="close" value="<?php echo _AT('close'); ?>"  class="button"/> <input type="checkbox" style="border:0px;" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?>/><label for="close"><?php echo _AT('close_after_saving'); ?></label>
 		</div>
 	<?php endif; ?>
 	<?php 
