@@ -630,16 +630,14 @@ if ($current_tab == 5)
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ///breaks here
-if ($current_tab == 0) 
+if ($current_tab == 0 || $current_tab == 5) 
 {
-	load_editor(false, "none");
+    $simple = true;
+    if ($_POST['complexeditor'] == '1') {
+        $simple = false;
+    }
+    load_editor($simple, false, "none");    
 }
-
-if ($current_tab == 5) 
-{
-	load_editor(false, "none");
-}
-
 
 //TODO*************BOLOGNA****************REMOVE ME**************/
 //loading toolbar for insert discussion topic or web link into the content
@@ -742,6 +740,7 @@ $pid = intval($_REQUEST['pid']);
 		echo '<input type="hidden" name="use_customized_head" value="'.(($_POST['use_customized_head']=="") ? 0 : $_POST['use_customized_head']).'" />';
         echo '<input type="hidden" name="displayhead" id="displayhead" value="'.$_POST['displayhead'].'" />';
         echo '<input type="hidden" name="displaytools" id="displaytools" value="'.$_POST['displaytools'].'" />';
+        echo '<input type="hidden" name="complexeditor" id="complexeditor" value="'.$_POST['complexeditor'].'" />';
         echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	}
 

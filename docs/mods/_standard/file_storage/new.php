@@ -106,7 +106,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 	require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 
-	load_editor('body');
+	load_editor(false, 'body');
 }
 if (isset($_POST['description'])) {
 	$_POST['description'] = $stripslashes($_POST['description']);

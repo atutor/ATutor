@@ -40,7 +40,7 @@ if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
 }
 
 if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
-	load_editor('banner');
+	load_editor(false, 'banner');
 }
 
 if (!isset($isadmin, $course, $db)) {

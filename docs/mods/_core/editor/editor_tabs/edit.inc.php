@@ -17,11 +17,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
     <input type="hidden" name="displayhead" id="displayhead" value="<?php if ($_POST['displayhead']==1 || $_REQUEST['displayhead']==1 || $_GET['displayhead']==1) echo '1'; else echo '0'; ?>" />
     <input type="hidden" name="displaytools" id="displaytools" value="<?php if ($_POST['displaytools']==1 || $_REQUEST['displaytools']==1 || $_GET['displaytools']==1) echo '1'; else echo '0'; ?>" />
+    <input type="hidden" name="complexeditor" id="complexeditor" value="<?php if ($_POST['complexeditor']==1 || $_REQUEST['complexeditor']==1 || $_GET['complexeditor']==1) echo '1'; else echo '0'; ?>" />
 
-    <div class="row">
-        <div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
-        <fieldset class="fl-container-flex30">
-            <legend><?php echo "Content type" ?></legend>
+	<div class="row">
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('title');  ?></label>
+		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
+   
+        <label for="formatting"><span style="padding-left: 1em; color: red;font-size: large; font-weight: bold;">*</span><?php echo "Content type" ?></label>
+        <span style="border:solid 1px black; padding: 0.25em;">
             <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value);" />
             <label for="text"><?php echo _AT('plain_text'); ?></label>
 
@@ -30,16 +33,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
        
             <input type="radio" name="formatting" value="2" id="weblink" <?php if ($_POST['formatting'] == 2) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value);" />
             <label for="weblink"><?php echo _AT('weblink'); ?></label>
-        </fieldset>
+       </span>
     </div>
 
-
-
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('title');  ?></label>
-		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
-	</div>
-	
 	<?php
 		if ($content_row['content_path']) {
 			echo '	<div class="row">'._AT('packaged_in').'<br />'.$content_row['content_path'].'</div>';
@@ -103,10 +99,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             
                 <script type="text/javascript" language="javascript">
                 //<!--
-                    //document.write(" <a style='text-decoration: none' href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' border='0' style='margin-bottom: 4px;'/></a>");
+                    document.write(" <a style='text-decoration: none' href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><!--img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' border='0' style='margin-bottom: 4px;'/--></a>");
                 //-->
                 </script>
-                <!-- a><img class='fl-centered' src="<?php echo $_base_path; ?>images/paste_plain.png" alt="Paste from file" height='16' width='16' border='0'/></a-->
             <input type="file" name="uploadedfile_paste" id="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" />
         </div> <!--  end col -->
         
@@ -194,6 +189,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             if (ed_pref !== '1') {
                 tinyMCE.execCommand('mceAddControl', false, 'body_text');
             }
+            webLink.hide();
 	    } else {
 		    webLink.hide();
 		    headRow.hide();

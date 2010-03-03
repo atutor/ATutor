@@ -153,7 +153,7 @@ if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
 }
 
 // load tinymce library
-load_editor(false, "none");
+load_editor(false, false, "none");
 
 $pathext = $_GET['pathext']; 
 $popup   = $_GET['popup'];

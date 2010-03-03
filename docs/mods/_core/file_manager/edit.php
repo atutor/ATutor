@@ -105,7 +105,7 @@ if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
 	}
 }
 if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
-	load_editor('body_text');
+	load_editor(false, 'body_text');
 }
 
 

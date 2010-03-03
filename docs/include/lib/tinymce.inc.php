@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-function load_editor($name = FALSE, $mode="textareas") {
+function load_editor($simple = TRUE, $name = FALSE, $mode="textareas") {
 	global $_base_path, $content_base_href;
 
 	 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) { 
@@ -47,41 +47,78 @@ function load_editor($name = FALSE, $mode="textareas") {
 echo '<script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.'jscripts/tiny_mce/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript">';
 
-echo 'tinymce.PluginManager.load("insert_tag", "'.AT_BASE_HREF.'jscripts/ATutor_tiny_mce_plugins/insert_tag/editor_plugin.js");';
+echo 'var ATutor = ATutor || {};
+      ATutor.tinymce = ATutor.tinymce || {};
 
-echo 'tinyMCE.init({';
-	if ($name) {
-		echo '  mode : "exact",';
-		echo '  elements : "'.$name.'",';
-	} else {
-		echo '	mode : "'.$mode.'",';
-	}	
-	echo 'theme : "advanced",
-	relative_urls : true,
-	content_css :"'.$_base_path.'/include/lib/tinymce_styles.css",
-	convert_urls : true,
-	accessibility_warnings : true,
-	entity_encoding : "raw",
-	accessibility_focus : true,
-	plugins : "-insert_tag, acheck, table,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+      (function () {
+';
 
-	// Theme options
-	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
-	theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,forecolor,backcolor",
-	theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,|,sub,sup,|,charmap,emotions,advhr,|,ltr,rtl,|,fullscreen",
-	theme_advanced_buttons4 : "styleprops,|,abbr,acronym,attribs,|,acheck, |, insert_term_tag, insert_media_tag, insert_tex_tag",
-	theme_advanced_toolbar_location : "top",
-	theme_advanced_toolbar_align : "left",
-	theme_advanced_path_location : "bottom",
-	theme_advanced_resizing : true,
-	remove_linebreaks: false,
+echo 'tinymce.PluginManager.load("insert_tag", "'.AT_BASE_HREF.'jscripts/ATutor_tiny_mce_plugins/insert_tag/editor_plugin.js");
+';
+echo 'tinymce.PluginManager.load("swap_toolbar", "'.AT_BASE_HREF.'jscripts/ATutor_tiny_mce_plugins/swap_toolbar/editor_plugin.js");
+';
 
-	plugin_insertdate_dateFormat : "%Y-%m-%d",
-	plugin_insertdate_timeFormat : "%H:%M:%S",
-	extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
-	document_base_url: "'.AT_BASE_HREF.$course_base_href.$content_base_href.'"
-	});';
-	echo '</script>';
+echo 'var initSettings = {';
+    if ($name) {
+        echo '  mode : "exact",';
+        echo '  elements : "'.$name.'",';
+    } else {
+        echo '  mode : "'.$mode.'",';
+    }   
+echo 'theme: "advanced",
+      relative_urls : true,
+      content_css :"'.$_base_path.'/include/lib/tinymce_styles.css",
+      convert_urls : true,
+      accessibility_warnings : true,
+      entity_encoding : "raw",
+      accessibility_focus : true,
+      plugins : "-insert_tag, -swap_toolbar, acheck, table,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+      theme_advanced_toolbar_location : "top",
+      theme_advanced_toolbar_align : "left",
+      theme_advanced_path_location : "bottom",
+      theme_advanced_resizing : true,
+      remove_linebreaks: false,
+      plugin_insertdate_dateFormat : "%Y-%m-%d",
+      plugin_insertdate_timeFormat : "%H:%M:%S",
+      extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+      document_base_url: "'.AT_BASE_HREF.$course_base_href.$content_base_href.'"
+    };
+
+    //these are the simple tools used on the content editor page
+    var simpleToolBars = {
+        theme_advanced_buttons1 : "swap_toolbar_complex,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,pasteword,link,unlink,|,acheck",
+        theme_advanced_buttons2 : "",
+        theme_advanced_buttons3 : "",
+        theme_advanced_buttons4 : ""
+    };
+    
+    //these are the more complex tools used on the content editor page
+    var complexToolBars = {
+        theme_advanced_buttons1 : "swap_toolbar_simple,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+        theme_advanced_buttons2 : "bullist,numlist,|,outdent,indent,ltr,rtl,blockquote,|,forecolor,backcolor,|,sub,sup,|,tablecontrols",
+        theme_advanced_buttons3 : "cut,copy,paste,pastetext,pasteword,|,link,unlink,anchor,image,|,abbr,acronym,|,charmap,emotions,advhr,|,insert_term_tag, insert_media_tag, insert_tex_tag",
+        theme_advanced_buttons4 : "search,replace,|,removeformat,undo,redo,|,styleprops,attribs,|,acheck,|,cleanup,code,|,fullscreen ",
+    };
+
+    ATutor.tinymce.initSimple = function() {
+        tinyMCE.init(jQuery.extend({}, initSettings, simpleToolBars));
+    };
+      
+    ATutor.tinymce.initComplex = function() {
+        tinyMCE.init(jQuery.extend({}, initSettings, complexToolBars));
+    };
+';
+    
+    if ($simple) {
+      echo 'ATutor.tinymce.initSimple();
+      ';
+    } else {
+      echo 'ATutor.tinymce.initComplex();
+      ';
+    }
+echo '})();
+';
+echo '</script>';
 }
 
 ?>
