@@ -33,14 +33,25 @@
 	
 	<div class="row">
 		<?php echo _AT('time_zone');  ?><br />
+		
+		
 		<?php
-		if (isset($_POST['time_zone']))
-			$selected_time_zone = $_POST['time_zone'];
-		else
-			$selected_time_zone = $_SESSION['prefs']['PREF_TIMEZONE'];
+		// Replace this hack to use the PHP timezone functions when the PHP requirement is raised to 5.2
+		global $utc_timezones; // set in include/lib/constants.inc.php
+		$local_offset = ((date(Z)/3600));
+		echo '<select name="time_zone">';	
+			echo '<option value="0">'._AT('none').'</option>';
+		foreach ($utc_timezones as $zone => $offset){
+			if(($offset[1]-$local_offset) == $_SESSION['prefs']['PREF_TIMEZONE']){
+			echo '<option value="'.($offset[1]-$local_offset).'" selected="selected">'.$offset[0].'</option>';
+			}else{
+			echo '<option value="'.($offset[1]-$local_offset).'">'.$offset[0].'</option>';
 
-		echo '<input type="text" name="time_zone" value="'.$selected_time_zone.'" size="4"/>&nbsp;&nbsp;';
-		echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
+			}
+		}
+		echo "</select>";
+		// end of hack
+		echo "&nbsp;".AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 		?>
 	</div>
 	
