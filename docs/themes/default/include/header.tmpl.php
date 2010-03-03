@@ -493,7 +493,9 @@ function printSubmenuHeader(title)
 			</div>
 
 			<ul id="subnavlist">
-			<?php $num_pages = count($this->sub_level_pages); ?>
+			<?php $num_pages = count($this->sub_level_pages); 
+
+?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 				
 				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
