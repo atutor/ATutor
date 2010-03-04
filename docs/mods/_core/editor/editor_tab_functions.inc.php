@@ -76,14 +76,15 @@ function output_tabs($current_tab, $changes) {
 	</table>
 <?php }
 /**
+ * Strips all tags and encodes special characters in the URL
  * Returns false if the URL is invalid
  * 
  * @param string $url
- * @return mixed - false if URL is invalid
+ * @return mixed - returns a stripped and encoded URL or false if URL is invalid
  */
 function isValidURL($url) {
     if (substr($url,0,4) === 'http') {
-        return filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
+        return filter_var(filter_var($url, FILTER_SANITIZE_STRING), FILTER_VALIDATE_URL);
     }
     return false;
 }
@@ -109,10 +110,12 @@ function save_changes($redir, $current_tab) {
 
 	//if weblink is selected, use it
 	if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
-	    if (isValidURL($_POST['weblink_text']) === false) {
+	    $url = $_POST['weblink_text'];
+	    $validated_url = isValidURL($url);
+        if (!validated_url || $validated_url !== $url) {
 	       $msg->addError(array('INVALID_INPUT', _AT('weblink')));
 	    } else {
-		    $_POST['body_text'] = $_POST['weblink_text'];
+		    $_POST['body_text'] = $url;
 		    $content_type_pref = CONTENT_TYPE_WEBLINK;
 	    }
 	} else {
