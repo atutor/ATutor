@@ -15,18 +15,20 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
-	<div class="row"><?php 
+	<div class="row">
+	<?php 
 	
 		echo '<h2>'.AT_print($stripslashes($_POST['title']), 'content.title').'</h2>';
 
-		if ($_POST['body_text']) {
-			echo format_content($stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
-		} elseif ($_POST['weblink_text']) {
-            echo format_content($stripslashes($_POST['weblink_text']), $_POST['formatting']);
-		} else { 
-			global $msg;
-		
-			$msg->printInfos('NO_PAGE_CONTENT');
-	
-		} ?>		
+		if ($_POST['formatting'] === '2') {
+            if (isValidURL($_POST['weblink_text']) === false) {
+                $msg->addError(array('INVALID_INPUT', _AT('weblink')));
+                $msg->printErrors();
+            } else {
+                  echo format_content($stripslashes($_POST['weblink_text']), $_POST['formatting']);
+            }
+        } else {
+            echo format_content($stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
+        }
+    ?>		
 	</div>

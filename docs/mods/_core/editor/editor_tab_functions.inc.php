@@ -48,7 +48,7 @@ function output_tabs($current_tab, $changes) {
 	$tabs = get_tabs();
 	$num_tabs = count($tabs);
 ?>
-	<table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="90%">
+	<table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
 	<tr>		
 		<?php 
 		for ($i=0; $i < $num_tabs; $i++): 
@@ -75,6 +75,18 @@ function output_tabs($current_tab, $changes) {
 	</tr>
 	</table>
 <?php }
+/**
+ * Returns false if the URL is invalid
+ * 
+ * @param string $url
+ * @return mixed - false if URL is invalid
+ */
+function isValidURL($url) {
+    if (substr($url,0,4) === 'http') {
+        return filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED);
+    }
+    return false;
+}
 
 // save all changes to the DB
 function save_changes($redir, $current_tab) {
@@ -95,12 +107,14 @@ function save_changes($redir, $current_tab) {
 	$_POST['test_message'] = trim($_POST['test_message']);
 	$_POST['allow_test_export'] = intval($_POST['allow_test_export']);
 
-//	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
-
 	//if weblink is selected, use it
 	if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
-		$_POST['body_text'] = $_POST['weblink_text'];
-		$content_type_pref = CONTENT_TYPE_WEBLINK;
+	    if (isValidURL($_POST['weblink_text']) === false) {
+	       $msg->addError(array('INVALID_INPUT', _AT('weblink')));
+	    } else {
+		    $_POST['body_text'] = $_POST['weblink_text'];
+		    $content_type_pref = CONTENT_TYPE_WEBLINK;
+	    }
 	} else {
 		$content_type_pref = CONTENT_TYPE_CONTENT;
 	}
@@ -323,6 +337,12 @@ function check_for_changes($row) {
 	} else if (!$row && $_POST['body_text']) {
 		$changes[0] = true;
 	}
+	
+    if ($row && strcmp($addslashes(trim($_POST['weblink_text'])), trim(addslashes($row['text'])))) {
+        $changes[0] = true;
+    } else if (!$row && $_POST['weblink_text']) {
+        $changes[0] = true;
+    }
 
 	/* use customized head: */
 	if ($row && isset($_POST['use_customized_head']) && ($_POST['use_customized_head'] != $row['use_customized_head'])) {
