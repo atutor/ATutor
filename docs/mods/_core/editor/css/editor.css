@@ -16,3 +16,7 @@
 .bottom-margin {
     margin-bottom: 1em;
 }
+
+.nowrap {
+    white-space: nowrap;
+}

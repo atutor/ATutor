@@ -24,7 +24,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('title');  ?></label>
 		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
         </span>
-        <span>
+        <span class="nowrap">
         <label for="formatting"><span class="required">*</span><?php echo _AT('formatting'); ?></label>
         <span class="bordered">
             <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value);" />
