@@ -1,0 +1,18 @@
+.required {
+    color: red;
+    font-size: large;
+    font-weight: bold;
+}
+
+.bordered {
+    border:solid 1px black;
+    padding: 0.3em;
+}
+
+.hidden {
+    display: none;
+}
+
+.bottom-margin {
+    margin-bottom: 1em;
+}
