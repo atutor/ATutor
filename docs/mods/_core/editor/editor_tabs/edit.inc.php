@@ -20,11 +20,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     <input type="hidden" name="complexeditor" id="complexeditor" value="<?php if ($_POST['complexeditor']==1 || $_REQUEST['complexeditor']==1 || $_GET['complexeditor']==1) echo '1'; else echo '0'; ?>" />
 
 	<div class="row">
+	    <span class="fl-force-left">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('title');  ?></label>
 		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
-   
-        <label for="formatting"><span style="padding-left: 1em; color: red;font-size: large; font-weight: bold;">*</span><?php echo "Content type" ?></label>
-        <span style="border:solid 1px black; padding: 0.25em;">
+        </span>
+        <span>
+        <label for="formatting"><span class="required">*</span><?php echo _AT('formatting'); ?></label>
+        <span class="bordered">
             <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value);" />
             <label for="text"><?php echo _AT('plain_text'); ?></label>
 
@@ -33,6 +35,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
        
             <input type="radio" name="formatting" value="2" id="weblink" <?php if ($_POST['formatting'] == 2) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value);" />
             <label for="weblink"><?php echo _AT('weblink'); ?></label>
+       </span>
        </span>
     </div>
 
@@ -54,15 +57,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         <small>(<?php echo _AT('customized_head_note'); ?>)</small>
         <input type="checkbox" name="use_customized_head" id="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
         <label for="use_customized_head"><?php echo _AT('use_customized_head'); ?></label>
-		<textarea name="head" id="head" cols="" rows="10" style="display:none"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
+		<textarea name="head" id="head" cols="" rows="10" class="hidden"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
 	</div>
 	
-	<div id="toolsrow" class="row" style="margin-bottom: 5px;">
+	<div id="toolsrow" class="row bottom-margin">
 	    <div class="fl-force-left">
 	        <input type="button" title="Click to show tool bar" name="showtools" id="showtools" value="+" onclick="ATutor.mods.editor.showtools()" class="button"/>
             <label for="toolbar"><?php echo _AT('tools');  ?></label>
         </div>
-        <div class="fl-container-flex66 fl-col-flex3" id="toolbar" style="display:none;">
+        <div class="fl-container-flex66 fl-col-flex3 hidden" id="toolbar">
             <div class='fl-col'>
         <!-- ******** Tool Manager ******* -->
 <?php //TODO***************BOLOGNA******************REMOVE ME***********/

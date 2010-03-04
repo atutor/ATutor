@@ -103,6 +103,7 @@ if ($cid) {
     $_custom_head = '
 <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
 <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
+<link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'mods/_core/editor/css/editor.css" />
     ';
 
 if ($cid) {
