@@ -122,6 +122,8 @@ while ($row = mysql_fetch_assoc($result))
 
 // Creates arrays for filtered test/student
 $selected_tests = array();
+//$csv_content .= $selected_students[$i]["first_name"]." " . $selected_students[$i]["last_name"];
+
 $selected_students = array();
 $grades = array();
 

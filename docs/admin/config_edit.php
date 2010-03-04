@@ -179,7 +179,7 @@ if (!isset($_POST['submit'])) {
 		<label for="time_zone"><?php echo _AT('time_zone'); ?></label><br />
 
 		<?php
-		// If PHP 5+ generate a list of timezones
+
 
 		// Replace this hack to use the PHP timezone functions when the PHP requirement is raised to 5.3
 		global $utc_timezones; // set in include/lib/constants.inc.php
@@ -199,7 +199,7 @@ if (!isset($_POST['submit'])) {
 
 		//echo '<input type="text" name="time_zone" value="'.$_config['time_zone'].'" size="5" maxlength="5"/> ';
 
-
+		// If PHP 5+ generate a list of timezones
 /*
 		if(phpversion() >= 5){
 			$timezone_names = timezone_identifiers_list();
