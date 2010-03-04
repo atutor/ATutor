@@ -181,10 +181,23 @@ if (!isset($_POST['submit'])) {
 		<?php
 		// If PHP 5+ generate a list of timezones
 
+		// Replace this hack to use the PHP timezone functions when the PHP requirement is raised to 5.3
+		global $utc_timezones; // set in include/lib/constants.inc.php
+		$local_offset = ((date(Z)/3600));
+		echo '<select name="time_zone">';	
+			echo '<option value="0">'._AT('none').'</option>';
+		foreach ($utc_timezones as $zone => $offset){
+			if(($offset[1]-$local_offset) == $_config['time_zone']){
+			echo '<option value="'.($offset[1]-$local_offset).'" selected="selected">'.$offset[0].'</option>';
+			}else{
+			echo '<option value="'.($offset[1]-$local_offset).'">'.$offset[0].'</option>';
+
+			}
+		}
+		echo "</select>";
 
 
-
-		echo '<input type="text" name="time_zone" value="'.$_config['time_zone'].'" size="5" maxlength="5"/> ';
+		//echo '<input type="text" name="time_zone" value="'.$_config['time_zone'].'" size="5" maxlength="5"/> ';
 
 
 /*
