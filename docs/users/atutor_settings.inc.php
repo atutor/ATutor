@@ -38,7 +38,7 @@
 		<?php
 		// Replace this hack to use the PHP timezone functions when the PHP requirement is raised to 5.2
 		global $utc_timezones; // set in include/lib/constants.inc.php
-		$local_offset = ((date(Z)/3600));
+		$local_offset = (((date(Z)/3600)+$_config['time_zone']));
 		echo '<select name="time_zone">';	
 			echo '<option value="0">'._AT('none').'</option>';
 		foreach ($utc_timezones as $zone => $offset){
