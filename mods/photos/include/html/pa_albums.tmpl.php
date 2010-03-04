@@ -41,11 +41,11 @@
 					<input type="button" id="upload_manager" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="toggleUploadManager()" class="button" />
 					<input type="hidden" id="upload_manager_toggle" value="1" />
 			</div>
-			<?php if($this->num_rows > AT_PA_PHOTOS_PER_PAGE){  ?>
+			<?php if($this->num_rows > AT_PA_PHOTOS_PER_PAGE):  ?>
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
-			<?php } ?>
+			<?php endif; ?>
 		</div>
 		<?php if(!empty($this->photos)): ?>
 		<!-- loop through this -->
@@ -54,11 +54,11 @@
 			<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$this->album_info['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf82($photo['description'], false); ?>" alt="<?php echo htmlentities_utf82($photo['alt_text']);?>" /></a>
 		</div>
 		<?php endforeach; ?>
+		<!-- end loop -->
 		<div class="album_description">
 			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.htmlentities_utf82($this->album_info['location']) .'<br/>';?>
 			<?php echo htmlentities_utf82($this->album_info['description']);?></p>
-		</div>
-		<!-- end loop -->
+		</div>		
 		<?php else: ?>
 		<div class="edit_photo_box">
 			<p><?php echo _AT('pa_no_photos'); ?></p>
@@ -66,11 +66,11 @@
 		<?php endif; ?>
 		<!-- page numbers -->
 		<div class="topbar">
-			<?php if($this->num_rows > AT_PA_PHOTOS_PER_PAGE){  ?>
+			<?php if($this->num_rows > AT_PA_PHOTOS_PER_PAGE):  ?>
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
-			<?php } ?>
+			<?php endif; ?>
 		</div>
 	</div>	
 

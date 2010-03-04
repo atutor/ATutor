@@ -58,6 +58,11 @@ div.album_panel .album_description{
 	float: left;
 }
 
+div.search_bar {
+	float: left;
+
+}
+
 div.album {
 	background: #FFFFFF;
 	border: 1px solid #D2D2D2;	
@@ -70,6 +75,15 @@ div.album .image{
 	margin: 0.5em;
 	min-width: 140px;
 }
+div.album img{
+	border-width: 0px;
+}
+div.album .image img.no-image {
+	float: left;
+	width: 130px;
+	height: 97px;
+	background-color: #EFEFEF;
+}
 div.album .info{
 	float: left;
 	width: 70%;
@@ -81,6 +95,16 @@ div.album .info span{
 div.album .info p{
 	font-size: 0.85em;
 	margin: 0;
+}
+div.album .search_photo_frame{
+	float: left;
+	margin: 0.2em;
+	min-height: 160px;
+	max-height: 160px;
+	max-width: 140px;
+	text-align: center;
+	border: 1px solid #d3d3d3;
+	overflow: hidden;
 }
 
 div.add_photo{

@@ -1,16 +1,16 @@
 <?php
 /***********************************************************************/
-/* ATutor								*/
+/* ATutor															   */
 /***********************************************************************/
 /* Copyright (c) 2002-2010											   */
-/* Adaptive Technology Resource Centre / Inclusive Design Institute  */
+/* Adaptive Technology Resource Centre / Inclusive Design Institute    */
 /* http://atutor.ca													   */
 /*																	   */
 /* This program is free software. You can redistribute it and/or	   */
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id: index.php 9412 2010-03-02 17:14:43Z greg $
+// $Id$
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'lib.inc.php');

@@ -67,6 +67,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','photos','Photo Gallery',NOW
 INSERT INTO `language_text` VALUES ('en', '_module','pa_photo_gallery','Photo Gallery',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_albums','Albums',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_photo','Photo',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_photos','Photos',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_profile_album','Profile Album',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_edit_photos','Edit Photos',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_edit_photo','Edit Photo',NOW(),'');
@@ -103,6 +104,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_max_memory','Maximum Mem
 INSERT INTO `language_text` VALUES ('en', '_module','pa_memory_usage','Memory Usage',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_open_upload_manager','Open Upload Manager',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_close_upload_manager','Close Upload Manager',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_no_image','No image',NOW(),'');
 
 # Error messages
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_ADD_COMMENT_FAILED','Comment could not be added due to an internal error.  Please try again.',NOW(),'');

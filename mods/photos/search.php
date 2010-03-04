@@ -1,9 +1,9 @@
 <?php
 /***********************************************************************/
-/* ATutor								*/
+/* ATutor															   */
 /***********************************************************************/
 /* Copyright (c) 2002-2010											   */
-/* Adaptive Technology Resource Centre / Inclusive Design Institute  */
+/* Adaptive Technology Resource Centre / Inclusive Design Institute    */
 /* http://atutor.ca													   */
 /*																	   */
 /* This program is free software. You can redistribute it and/or	   */
@@ -19,8 +19,9 @@ $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom styl
 
 //instantiate obj
 $pa = new PhotoAlbum();
-$type = AT_PA_TYPE_COURSE_ALBUM;
-$album_count = sizeof($pa->getAlbums($_SESSION['member_id'], $type));
+$keywords = explode(' ', trim($_POST['pa_search']));
+$search_results = $pa->search($keywords);
+$album_count = sizeof($pa->getSharedAlbums(true));
 
 //paginator settings
 $page = intval($_GET['p']);
@@ -35,13 +36,13 @@ if (!$page || $page < 0) {
 $count  = (($page-1) * AT_PA_ALBUMS_PER_PAGE) + 1;
 $offset = ($page-1) * AT_PA_ALBUMS_PER_PAGE;
 
-$albums = $pa->getAlbums($_SESSION['member_id'], $type, $offset);
+$albums = $pa->getSharedAlbums(true, $offset);
 
 include (AT_INCLUDE_PATH.'header.inc.php'); 
-$savant->assign('albums', $albums);
-$savant->assign('page', $page);
-$savant->assign('type', $type);
-$savant->assign('num_rows', $album_count);
-$savant->display('pa_index.tmpl.php');
+$savant->assign('albums', $search_results[0]);
+$savant->assign('photos', $search_results[1]);
+//$savant->assign('page', $page);
+//$savant->assign('num_rows', $album_count);
+$savant->display('pa_search.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

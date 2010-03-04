@@ -128,7 +128,7 @@ function checkPhoto($file){
  
 
 /**
- * Return the total personal data usage
+ * Return the total personal data usage (in bytes)
  */
 function memoryUsage($member_id){	
 	global $db; 

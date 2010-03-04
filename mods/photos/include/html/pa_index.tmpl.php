@@ -1,16 +1,21 @@
 <div>
 	<!-- Photo album options and page numbers -->
-	<div class="album_panel">
-	<?php if($this->num_rows > AT_PA_ALBUMS_PER_PAGE){?>
-
+	<div class="album_panel">	
 		<div class="topbar">
+			<div class="search_bar">
+				<form action="<?php echo AT_PA_BASENAME.'search.php'; ?>" id="pa_search_form" name="pa_search_form" method="post">
+					<input type="text" name="pa_search" />
+					<input type="image" alt="<?php echo _AT('search');?>" />
+				</form>
+			</div>
+			<?php if($this->num_rows > AT_PA_ALBUMS_PER_PAGE): ?>
 			<!-- page numbers -->
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
+			<?php endif; ?>
 		</div>
-
-	<?php  } ?>
+	
 		<!-- loop through this -->
 		<?php if(!empty($this->albums)): 
 			$pa = new PhotoAlbum();
@@ -23,7 +28,9 @@
 			$photo_info = $pa->getPhotoInfo($row['photo_id']); 
 			if (!empty($photo_info)):
 			?>
-			<a><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" border="0"/></a>
+			<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" /></a>
+			<?php else: ?>
+			<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img class="no-image" title="<?php echo _AT('pa_no_image'); ?>" alt="<?php echo _AT('pa_no_image'); ?>" /></a>
 			<?php endif; //image ?>
 			</div>
 			<div class="info">
