@@ -20,6 +20,7 @@
 		</tr>		
 		</thead>
 		<tbody>
+		<?php if(!empty($this->albums)): ?>
 		<?php foreach ($this->albums as $aid=>$row): ?>
 		<tr id="r_<?php echo $aid; ?>" onmousedown="jQuery('#album_<?php echo $aid; ?>').attr('checked', true); rowselect(this);">
 			<td><input type="radio" id="album_<?php echo $aid; ?>" name="aid" value="<?php echo $aid; ?>" /></td>
@@ -30,6 +31,7 @@
 			<td><?php echo AT_date(_AT('forum_date_format'), $row['last_updated'], AT_DATE_MYSQL_DATETIME) ?></td>
 		</tr>
 		<?php endforeach; ?>
+		<?php endif; ?>
 		</tbody>
 		<tfoot>
 		<tr>
