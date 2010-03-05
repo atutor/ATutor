@@ -112,11 +112,18 @@
 				</form>
 			</div>
 		</div>		
+
+		<?php if($this->action_permission): ?>
+		<div class="photo_actions">
+			<a href="<?php echo AT_PA_BASENAME.'edit_album.php?id='.$this->album_info['id']; ?>"><?php echo _AT('pa_edit_album'); ?></a><br/>
+		</div>
+		<?php endif; ?>
 	</div>
 </div>
 
 
 <script type="text/javascript">
+//<![CDATA[
 /* Fluid inline editor */
 jQuery(document).ready(function () {
 	//the ATutor undo function
@@ -329,5 +336,5 @@ function toggleUploadManager(){
 		}
 		jQuery('#ajax_uploader').toggle();		
 }
- 
+//]]>
 </script>

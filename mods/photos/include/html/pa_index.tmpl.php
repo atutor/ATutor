@@ -4,8 +4,8 @@
 		<div class="topbar">
 			<div class="search_bar">
 				<form action="<?php echo AT_PA_BASENAME.'search.php'; ?>" id="pa_search_form" name="pa_search_form" method="post">
-					<input type="text" name="pa_search" />
-					<input type="image" alt="<?php echo _AT('search');?>" />
+					<input type="text" class="s" name="pa_search" />
+					<input type="image" class="s_img" src="<?php echo AT_PA_BASENAME; ?>images/search_icon.png" alt="<?php echo _AT('search');?>" />
 				</form>
 			</div>
 			<?php if($this->num_rows > AT_PA_ALBUMS_PER_PAGE): ?>

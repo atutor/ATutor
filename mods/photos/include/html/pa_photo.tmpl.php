@@ -43,7 +43,6 @@
 					</div>
 					<div>
 						<div class="comment_actions">
-							<!-- TODO: if author, add in-line "edit" -->
 							<?php echo AT_date(_AT('forum_date_format'), $comment_array['created_date'], AT_DATE_MYSQL_DATETIME);?>
 							<?php if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']): ?>
 							<a href="<?php echo AT_PA_BASENAME.'delete_comment.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id'].SEP.'comment_id='.$comment_array['id']?>"><?php echo _AT('delete');?></a>

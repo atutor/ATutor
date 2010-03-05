@@ -616,7 +616,7 @@ class PhotoAlbum {
 		/** Get all photos from these albums */
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."pa_photos WHERE album_id IN ($visible_albums_ids)";		
 		$query = ' AND ' . substr($query, 0, -3);
-		$sql = $sql . $query . ' LIMIT 50'; 
+		$sql = $sql . $query . ' LIMIT 1'; 
 		$result = mysql_query($sql, $db);
 		if (!$result){
 			return null;
@@ -631,7 +631,6 @@ class PhotoAlbum {
 			$album_photos = array();	//keep track of the # of photos inside an album, should match a 'count(*) group by'
 			foreach($visible_photos as $photo_id=>$photo){
 				$match_flag = false;
-				$album_photos[$photo['album_id']]['total']++;	
 
 				if (preg_match("/$pattern/i", $photo['name'])){
 					$visible_photos[$photo_id]['point'] += 1;
@@ -647,7 +646,7 @@ class PhotoAlbum {
 				}
 				//total photo points within an album
 				if ($match_flag){
-					$album_photos[$photo['album_id']]['points'] += $visible_photos[$photo_id]['point'];
+					$album_photos[$photo['album_id']] += 1;
 				}
 			}
 		}
@@ -664,9 +663,10 @@ class PhotoAlbum {
 				$visible_albums[$album_id]['point'] += 1;
 			}
 			//every photo has a certain value to the album, and is calculated as follow 
-			//[sum of photo points in an album] / [total number of photos]
+			//[# of matched photo in an album] / [total number of matched photos] *4
+			//4 is the total matched photo score (ie. all album's photo score should add up to 4)
 			if (isset($album_photos[$album_id])){
-				$visible_albums[$album_id]['point'] += $album_photos[$album_id]['points']/$album_photos[$album_id]['total'];
+				$visible_albums[$album_id]['point'] += $album_photos[$album_id]/sizeof($visible_photos) * 4;
 			}
 			//If no point in the album, most likely it's irrelevant and not of interest, take it out
 			if (!isset($visible_albums[$album_id]['point'])){

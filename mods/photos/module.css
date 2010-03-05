@@ -59,8 +59,26 @@ div.album_panel .album_description{
 }
 
 div.search_bar {
+	background-image: url('images/search_bg.png');
+	background-repeat: no-repeat;
+	margin-left: 0.5em;
+	margin-top: 0.5em;
+	height: 31px;
+	width: 180px;
 	float: left;
-
+}
+div.search_bar .s{
+	float: left;
+	border: 0px;
+	margin-top: 0.3em;
+	margin-left: 0.5em;
+	width: 148px;
+}
+div.search_bar .s_img{
+	float: right;
+	border: 0px;
+	margin-top: 0.375em;	
+	margin-right: 0.4em;
 }
 
 div.album {
@@ -106,6 +124,31 @@ div.album .search_photo_frame{
 	border: 1px solid #d3d3d3;
 	overflow: hidden;
 }
+div.album .search_slider{
+	float: left;
+	width: 80%;
+	overflow: hidden;
+}
+div.album .search_slider_left{
+	float: left;
+	width: 10%;
+}
+div.album .search_slider_right{
+	float: right;
+	text-align: right;
+	width: 10%;
+}
+div.album .search_slider ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 99999px;
+	position: relative;
+}
+div.album .search_slider ul li{
+	float: left;
+}
+
 
 div.add_photo{
 	float: left;
