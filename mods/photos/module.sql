@@ -87,6 +87,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_album_cover','Album Cove
 INSERT INTO `language_text` VALUES ('en', '_module','pa_last_updated','Last Updated',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_my_albums','My Albums',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_course_albums','Course Albums',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_shared_albums','Shared Albums',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_create_album','Create Album',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_alt_text','Alternative Text',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_processed','Processed',NOW(),'');
@@ -105,6 +106,9 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_memory_usage','Memory Us
 INSERT INTO `language_text` VALUES ('en', '_module','pa_open_upload_manager','Open Upload Manager',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_close_upload_manager','Close Upload Manager',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_no_image','No image',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_album_permission','Album Permission',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_private','Private',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_shared','Shared',NOW(),'');
 
 # Error messages
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_ADD_COMMENT_FAILED','Comment could not be added due to an internal error.  Please try again.',NOW(),'');
