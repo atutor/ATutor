@@ -25,7 +25,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
                 $msg->addError(array('INVALID_INPUT', _AT('weblink')));
                 $msg->printErrors();
             } else {
-                  echo format_content($url, $_POST['formatting']);
+                  echo format_content($url, $_POST['formatting'], array());
             }
         } else {
             echo format_content($stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
