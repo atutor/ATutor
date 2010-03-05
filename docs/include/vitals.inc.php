@@ -173,12 +173,18 @@ if ($_config['time_zone']) {
 	//mysql_query($sql, $db);
 
 	if (function_exists('date_default_timezone_set')) {
-		date_default_timezone_set($_config['time_zone']);
+	foreach($utc_timezones as $zone){
+
+		if($zone[1] ==  $_config['time_zone']){
+		$zone_name = $zone[2];
+		break;
+		}
+	}
+		date_default_timezone_set($zone_name);
 	} else {
 		@putenv("TZ={$_config['time_zone']}");
 	}
 }
-
 /***** 7. start language block *****/
 	// set current language
 	require(AT_INCLUDE_PATH . '../mods/_core/languages/classes/LanguageManager.class.php');
