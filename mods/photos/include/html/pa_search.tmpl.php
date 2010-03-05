@@ -89,7 +89,7 @@ function slide(direction){
 	var album_offset = -1 * PIC_WIDTH * album_cnt;
 
 	//action
-	if (album_size * PIC_WIDTH + album_offset > 0){
+	if (album_size * PIC_WIDTH + album_offset > 0 && album_cnt >= 0){
 		album_ul.animate({left: album_offset});
 	} else {
 		//undo counts
