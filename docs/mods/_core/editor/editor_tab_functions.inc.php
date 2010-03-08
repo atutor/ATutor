@@ -467,6 +467,8 @@ function check_for_changes($row, $row_alternatives) {
 }
 
 function paste_from_file() {
+    //LAW
+//    debug($_FILES);
 	global $msg;
 	if ($_FILES['uploadedfile_paste']['name'] == '')	{
 		$msg->addError('FILE_NOT_SELECTED');
@@ -506,6 +508,8 @@ function paste_from_file() {
 			$msg->addFeedback('FILE_PASTED');
 		} else if ($ext == 'txt') {
 			$_POST['body_text'] = file_get_contents($_FILES['uploadedfile_paste']['tmp_name']);
+			//LAW
+//			debug($_POST);
 			$msg->addFeedback('FILE_PASTED');
 
 		}
