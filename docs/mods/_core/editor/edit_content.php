@@ -202,7 +202,6 @@ if ($current_tab == 0){
 
 $cid = intval($_REQUEST['cid']);
 $pid = intval($_REQUEST['pid']);
-
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
@@ -391,6 +390,8 @@ $pid = intval($_REQUEST['pid']);
 	if ($do_check) {
 		$changes_made = check_for_changes($content_row, $row_alternatives);
 	}
+	//LAW
+//	debug($_POST);
 ?>
 <div align="center">
 	<?php output_tabs($current_tab, $changes_made); ?>
