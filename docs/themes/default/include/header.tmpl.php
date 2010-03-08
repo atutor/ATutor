@@ -348,7 +348,7 @@ function printSubmenuHeader(title)
 	<!-- the sub navigation -->
 	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>					
-			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+			<a href="<?php echo $this->base_path; ?>mods/_core/users/pref_wizard/index.php"><img border="0" alt="edit preferences" src="<?php echo $this->base_href; ?>images/wand.png"/></a> | <strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
 			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
 		<?php endif; ?>
