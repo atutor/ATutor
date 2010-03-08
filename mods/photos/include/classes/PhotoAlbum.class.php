@@ -568,7 +568,7 @@ class PhotoAlbum {
 	}
 
 	/**
-	 * Search and return relevants photos from all visible albums
+	 * Search and return list of albums, and list of photos 
 	 * Note: Speed and ranks are of priority here.
 	 * @param	Array			The unescaped array of search phrases.
 	 * @return	[Array, Array]	First array is albums, second array are matched photos

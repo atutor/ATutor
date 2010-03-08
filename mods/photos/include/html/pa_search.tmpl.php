@@ -10,7 +10,7 @@
 		<div class="topbar">
 			<div class="search_bar">
 				<form action="<?php echo AT_PA_BASENAME.'search.php'; ?>" id="pa_search_form" name="pa_search_form" method="post">
-					<input type="text" class="s" name="pa_search" value="<?php echo $this->search_input; ?>" />
+					<input type="text" class="s" name="pa_search" value="<?php echo $this->search_input; ?>" title="<?php echo _AT('search');?>" />
 					<input type="image" class="s_img" src="<?php echo AT_PA_BASENAME; ?>images/search_icon.png" alt="<?php echo _AT('search');?>" />
 				</form>
 			</div>
@@ -25,7 +25,7 @@
 		<!-- album panel -->
 		<?php if(!empty($this->albums)): ?>
 		<div class="album">
-			<h4><?php echo _AT('pa_albums') . ' (' . $album_size. ')'; ?></h4>
+			<h4><?php echo _AT('pa_albums') . ' ' .  _AT('results'). ': ' . $album_size. ' ' .  _AT('results'); ?></h4>
 			<?php if($album_size > AT_PA_SEARCH_MIN_ALBUM): ?>
 			<div class="search_slider_left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>#n" onclick="slide('right');"><img src="<?php echo AT_PA_BASENAME; ?>images/prev.png" alt="<?php echo _AT('previous'); ?>" /></a></div>
 			<?php endif; ?>
@@ -38,7 +38,7 @@
 				<li>
 				<div class="search_photo_frame">
 					<?php if (!empty($photo_info)): ?>
-					<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$album['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$album['id'].SEP.'pid='.$album['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" /></a>
+					<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$album['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$album['id'].SEP.'pid='.$album['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($album['name']); ?>" /></a>
 					<?php else: ?>
 					<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$album['id'];?>"><img class="no-image" title="<?php echo _AT('pa_no_image'); ?>" alt="<?php echo _AT('pa_no_image'); ?>" /></a>
 					<?php endif; //album ?>
@@ -56,7 +56,7 @@
 		
 		<!-- photo panel -->
 		<div class="album">
-			<h4><?php echo _AT('pa_photos') . ' (' . $photo_size. ')'; ?></h4>
+			<h4><?php echo _AT('pa_photos') . ' ' .  _AT('results'). ': ' . $photo_size. ' ' .  _AT('results'); ?></h4>
 			<?php if(!empty($this->photos)): ?>
 			<!-- dynamic paginator -->
 			<?php if($photo_size > AT_PA_PHOTO_SEARCH_PER_PAGE): ?>

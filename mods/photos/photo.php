@@ -39,12 +39,15 @@ $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children']  = array(
 													);
 $_pages[AT_PA_BASENAME.'photo.php']['parent'] = AT_PA_BASENAME.'albums.php?id='.$aid;
 
-//TODO: Validate users, course and my albums.
-$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
-if(!isset($visible_albums[$aid]) || $photo_info['album_id']!=$aid){
-	$msg->addError('ACCESS_DENIED');
-	header('location: index.php');
-	exit;
+//TODO: Validate users, using permission and course album control.
+if ($info['member_id'] != $_SESSION['member_id']){
+	$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
+	if(!isset($visible_albums[$id]) && $info['permission']==AT_PA_PRIVATE_ALBUM){
+		//TODO msg;
+		$msg->addError("ACCESS_DENIED");
+		header('location: index.php');
+		exit;
+	}
 }
 
 if($pa->checkPhotoPriv($pid, $_SESSION['member_id']) || $pa->checkAlbumPriv($_SESSION['member_id'])){

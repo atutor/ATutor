@@ -1,21 +1,11 @@
 <div id="uploader-contents">
 	<!-- Photo album options and page numbers -->
 	<div class="add_photo">
-		<!--
-		<div class="input-form">
-			<form action="<?php echo AT_PA_BASENAME;?>albums.php" enctype="multipart/form-data" name="add_photos" method="post">
-				<div class="row">
-					<p><?php echo _AT('pa_add_more_photos');?></p>
-				</div>
-				<div class="row">
-					<input type="file" name="photo" />
-					
-					<input type="hidden" name="id" value="<?php echo $this->album_info['id'];?>" />
-					<input type="submit" name="upload" value="<?php echo _AT("upload");?>"class="button"/> 
-				</div>
-			</form>
+		<div class="toggle_uploader">
+			<input type="button" id="upload_manager" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="toggleUploadManager()" class="button" />
+			<input type="hidden" id="upload_manager_toggle" value="1" />
 		</div>
-		-->
+
 		<div class="input-form" id="ajax_uploader">
 			<div class="row" id="upload_button_div">
 				<p name="top"><?php echo _AT('pa_upload_blurb');?></p>
@@ -36,11 +26,7 @@
 	</div>
 
 	<div class="album_panel">
-		<div class="topbar">
-			<div class="summary">
-					<input type="button" id="upload_manager" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="toggleUploadManager()" class="button" />
-					<input type="hidden" id="upload_manager_toggle" value="1" />
-			</div>
+		<div class="topbar">			
 			<?php if($this->num_rows > AT_PA_PHOTOS_PER_PAGE):  ?>
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'id='.$this->album_info['id'], AT_PA_PHOTOS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>

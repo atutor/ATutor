@@ -4,7 +4,7 @@
 		<div class="topbar">
 			<div class="search_bar">
 				<form action="<?php echo AT_PA_BASENAME.'search.php'; ?>" id="pa_search_form" name="pa_search_form" method="post">
-					<input type="text" class="s" name="pa_search" />
+					<input type="text" class="s" name="pa_search" id="pa_search" title="<?php echo _AT('search');?>" />
 					<input type="image" class="s_img" src="<?php echo AT_PA_BASENAME; ?>images/search_icon.png" alt="<?php echo _AT('search');?>" />
 				</form>
 			</div>
@@ -28,7 +28,7 @@
 			$photo_info = $pa->getPhotoInfo($row['photo_id']); 
 			if (!empty($photo_info)):
 			?>
-			<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($photo_info['alt_text']); ?>" /></a>
+			<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($row['name']); ?>" /></a>
 			<?php else: ?>
 			<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img class="no-image" title="<?php echo _AT('pa_no_image'); ?>" alt="<?php echo _AT('pa_no_image'); ?>" /></a>
 			<?php endif; //image ?>

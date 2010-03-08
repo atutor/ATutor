@@ -171,6 +171,10 @@ div.add_photo ul{
 	margin: 0px;
 	padding: 0px;
 }
+div.add_photo .toggle_uploader{
+	width: 95%;
+	margin: 0.5em;
+}
 div.add_photo div#ajax_uploader{
 	display: none;
 	margin-top: 0.5em;
