@@ -140,6 +140,11 @@ if (isset($this_login, $this_password)) {
 			setcookie('ATLogin', $this_login, $cookie_expire, $parts['path']);
 			setcookie('ATPass',  $row['pass'],  $cookie_expire, $parts['path']);
 		}
+		
+		$_SESSION['first_login'] = false;
+		if ($row['last_login'] == null || $row['last_login'] == '' || $row['last_login'] == '0000-00-00 00:00:00') {
+		    $_SESSION['first_login'] = true;
+		}
 
 		$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
 		mysql_query($sql, $db);
