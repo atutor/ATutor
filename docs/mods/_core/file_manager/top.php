@@ -36,7 +36,7 @@ if (isset($_POST['rename'])) {
 		// error: you must select ONLY one file/dir to rename
 		$msg->addError('SELECT_ONE_ITEM');
 	} else {
-		header('Location: rename.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'oldname='.urlencode($_POST['check'][0]));
+		header('Location: rename.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'oldname='.urlencode($_POST['check'][0]).SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 		exit;
 	}
 } else if (isset($_POST['delete'])) {
@@ -46,7 +46,7 @@ if (isset($_POST['rename'])) {
 	} else {
 
 		$list = implode(',', $_POST['check']);
-		header('Location: delete.php?pathext=' . urlencode($_POST['pathext']) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . SEP . 'list=' . urlencode($list));
+		header('Location: delete.php?pathext=' . urlencode($_POST['pathext']) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . SEP . 'list=' . urlencode($list).SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 		exit;
 	}
 } else if (isset($_POST['move'])) {
@@ -56,7 +56,7 @@ if (isset($_POST['rename'])) {
 	} else {
 
 		$list = implode(',', $_POST['check']);		
-		header('Location: move.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'list='.urlencode($list));
+		header('Location: move.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'list='.urlencode($list).SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 		exit;
 	}
 }

@@ -51,19 +51,23 @@ $course_total = dirsize($current_path);
 
 $framed = intval($_GET['framed']);
 $popup = intval($_GET['popup']);
-$tab = intval($_GET['tab']);
+$cp = $_GET['cp'];
+$cid = intval($_GET['cid']);        // content id, used at "adapted content" page, => add/edit alternatives
+$pid = intval($_GET['pid']);        // primary resource id, used at "adapted content" page, => add/edit alternatives
+$a_type = intval($_GET['a_type']);  // alternative_type, used at "adapted content" page, => add/edit alternatives
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$get_file = 'get.php/';
 } else {
 	$get_file = 'content/' . $_SESSION['course_id'] . '/';
 }
+
 function fm_path(){
-	global $pathext;
+	global $pathext, $framed, $popup, $cp, $cid, $pid, $a_type;
 echo '<p>'._AT('current_path').' ';
 
 if (isset($pathext) && $pathext != '') {
-	echo '<a href="'.$_SERVER['PHP_SELF'].'?popup=' . $popup . SEP . 'framed=' . $framed.'">'._AT('home').'</a> ';
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?popup=' . $popup . SEP . 'framed=' . $framed.SEP . 'cp=' . $cp.SEP . 'cid=' . $cid.SEP . 'pid=' . $pid.SEP . 'a_type=' . $a_type.'">'._AT('home').'</a> ';
 }
 else {
 	$pathext = '';
@@ -87,7 +91,7 @@ if ($pathext != '') {
 			if ($bit_path == $pathext) {
 				echo $bit;
 			} else {
-				echo '<a href="'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . '">' . $bit . '</a>';
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'">' . $bit . '</a>';
 			}
 		}
 	}
@@ -131,7 +135,7 @@ if (TRUE || $framed != TRUE) {
 	// make new directory 
 	echo '<div class="input-form"><fieldset class="group_form"><legend class="group_form">'._AT('add_file_folder').'</legend>'."\n";
 	echo '	<div class="row">'."\n";
-	echo '		<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext != '') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup='.$popup.'">'."\n";
+	echo '		<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext != '') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup='.$popup.SEP.'cp='.SEP.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'">'."\n";
 	if( $MakeDirOn ) {
 		if ($depth < $MaxDirDepth) {
 			echo '		<label for="dirname">'._AT('create_folder_here').'</label><br />'."\n";
@@ -250,7 +254,7 @@ if (TRUE || $framed != TRUE) {
 		}
 
 		// Simple single file uploader
-		echo '<form onsubmit="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');" class="fl-ProgEnhance-basic" name="form1" method="post" action="mods/_core/file_manager/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
+		echo '<form onsubmit="openWindow(\''.AT_BASE_HREF.'tools/prog.php\');" class="fl-ProgEnhance-basic" name="form1" method="post" action="mods/_core/file_manager/upload.php?popup='.$popup.SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 		echo '<label for="uploadedfile">'._AT('upload_files').'</label><br />'."\n";
 		echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> ';
@@ -277,7 +281,7 @@ if (TRUE || $framed != TRUE) {
 // Directory and File listing 
 
 
-echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
+echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'" method="post">';
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 ?>
 <table class="data static" summary="" border="0" rules="groups" style="width: 90%">
@@ -328,7 +332,7 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 
 if($pathext) : ?>
 	<tr>
-		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'cp='.$_GET['cp']; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
+		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
 	</tr>
 <?php endif; ?>
 <?php
@@ -336,7 +340,7 @@ $totalBytes = 0;
 
 if ($dir == '')
 	$dir=opendir($current_path);
-
+	
 // loop through folder to get files and directory listing
 while (false !== ($file = readdir($dir)) ) {
 
@@ -356,7 +360,7 @@ while (false !== ($file = readdir($dir)) ) {
 	if(is_dir($current_path.$pathext.$file)) {
 		$size = dirsize($current_path.$pathext.$file.'/');
 		$totalBytes += $size;
-		$filename = '<a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/'). SEP . 'popup=' . $popup . SEP . 'framed='. $framed . SEP.'cp='.$_GET['cp'].'">'.$file.'</a>';
+		$filename = '<a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/'). SEP . 'popup=' . $popup . SEP . 'framed='. $framed . SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'">'.$file.'</a>';
 		$fileicon = '&nbsp;';
 		$fileicon .= '<img src="images/folder.gif" alt="'._AT('folder').':'.$file.'" height="18" width="20" class="img-size-fm1" />';
 		$fileicon .= '&nbsp;';
@@ -421,7 +425,12 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<td  align="right" style="white-space:nowrap">';
 
 		if ($popup == TRUE) {
-			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\', \'' . $tab . '\', \'' .$_SESSION['prefs']['PREF_CONTENT_EDITOR']. '\');" />&nbsp;';
+			if ($a_type > 0)  // define content alternative
+			{
+				$files[$file1] .= '<input class="button" type="button" name="alternative" value="' ._AT('use_as_alternative') . '" onclick="javascript: setAlternative(\''.get_relative_path($_GET['cp'], $pathext).$file.'\', \''.AT_BASE_HREF.$get_file.$pathext.urlencode($file).'\', \''.$cid.'\', \''.$pid.'\', \''.$a_type.'\');" />&nbsp;';
+			}
+			else
+				$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . get_relative_path($_GET['cp'], $pathext) . '\', \'' . $ext . '\', \'' .$_SESSION['prefs']['PREF_CONTENT_EDITOR']. '\');" />&nbsp;';
 		}
 
 		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
@@ -457,7 +466,7 @@ echo '</table></form>';
 
 <script type="text/javascript">
 //<!--
-function insertFile(fileName, pathTo, ext, tab, ed_pref) { 
+function insertFile(fileName, pathTo, ext, ed_pref) { 
 
 	// pathTo + fileName should be relative to current path (specified by the Content Package Path)
 
@@ -465,20 +474,20 @@ function insertFile(fileName, pathTo, ext, tab, ed_pref) {
 		var info = "<?php echo _AT('alternate_text'); ?>";
 		var html = '<img src="' + pathTo+fileName + '" border="0" alt="' + info + '" />';
 
-		insertLink(html, tab, ed_pref);
+		insertLink(html, ed_pref);
 	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid") {
 		var html = '[media]'+ pathTo + fileName + '[/media]';
 
-		insertLink(html, tab, ed_pref);
+		insertLink(html, ed_pref);
 	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
 		var html = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 		
-		insertLink(html, tab, ed_pref);
+		insertLink(html, ed_pref);
 	}
 }
 
-function insertLink(html, tab, ed_pref)
+function insertLink(html, ed_pref)
 {
     if (window.opener) {
         var isNotVisual = window.opener.document.form.html.checked && (ed_pref === '1');
@@ -491,9 +500,6 @@ function insertLink(html, tab, ed_pref)
 			if (window.opener && window.opener.tinyMCE)
 				window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 	} else {
-		if (tab==5)
-			insertAtCursor(window.opener.document.form.body_text_alt, html);
-		else
 			insertAtCursor(window.opener.document.form.body_text, html);
 	}
 }
@@ -519,6 +525,30 @@ function insertAtCursor(myField, myValue) {
 	}
 }
 
+// This function does:
+// 1. save into db via ajax
+// 2. set the according field in opener window to the selected file
+// 3. close file manager itself
+function setAlternative(file, file_preview_link, cid, pid, a_type) {
+	jQuery.post("<?php echo AT_BASE_HREF; ?>mods/_core/editor/save_alternative.php", 
+			{"pid":pid, "a_type":a_type, "alternative":file}, 
+			function(data) {});
+
+	link_html = '\
+      <a href="'+file_preview_link+'" title="<?php echo _AT('new_window'); ?>" target="_new">'+file+'</a><br /> \
+      <a href="#" onclick="poptastic(\\\'<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $cp.SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" title="<?php echo _AT('new_window'); ?>"> \
+        <img src="<?php echo AT_BASE_HREF; ?>images/home-tests_sm.png" border="0" title="<?php echo _AT('alter'); ?>" alt="<?php echo _AT('alter'); ?>" /> \
+      </a> \
+      <a href="#" onclick="removeAlternative(\\\'<?php echo $cp; ?>\\\', '+cid+','+pid+','+a_type+');return false;"> \
+        <img src="<?php echo AT_BASE_HREF; ?>images/icon_delete.gif" border="0" title="<?php echo _AT('remove'); ?>" alt="<?php echo _AT('remove'); ?>" /> \
+      </a> \
+    </div> \
+';
+	eval("window.opener.document.getElementById(\""+pid+"_"+a_type+"\").innerHTML = '"+link_html+"'");
+	
+	window.close();
+}
+
 <?php  if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") { ?>
 // toggle the view between div object and button
 function toggleform(id, link) {
@@ -527,7 +557,7 @@ function toggleform(id, link) {
 
 	if (obj.style.display == "none") {
 		//show
-		obj.style.display='';	
+		obj.style.display='';
 		obj.focus();
 
 		btn.style.display = 'none';
@@ -552,6 +582,18 @@ function setCheckboxCookie(obj, value1, value2, date)
 		var the_cookie = value2 + ";expires=" + the_cookie_date;
 	document.cookie = the_cookie;
 }
+<?php } ?>
+
+<?php 
+// When uploading a file as an alternative content, set the alternative field in the opener window 
+// and close "file manager" once the upload is successful
+if ($a_type > 0 && isset($_GET['uploadfile']) && $_GET['uploadfile'] <> '') { ?>
+function setAlternativeAndClose() {
+	setAlternative('<?php echo get_relative_path($_GET['cp'], $pathext).$_GET['uploadfile']; ?>', '<?php echo AT_BASE_HREF.$get_file.$pathext.urlencode($_GET['uploadfile']); ?>', '<?php echo $cid; ?>', '<?php echo $pid; ?>', '<?php echo $a_type; ?>');
+	window.close();
+}
+
+window.onload=setAlternativeAndClose;
 <?php } ?>
 
 //-->

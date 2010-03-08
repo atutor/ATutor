@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 		if (in_array($ext, $IllegalExtentions)) {
 			$errors = array('FILE_ILLEGAL', $ext);
 			$msg->addError($errors);
-			header('Location: index.php?pathext='.$_POST['pathext']);
+			header('Location: index.php?pathext='.$_POST['pathext'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 			exit;
 		}
 
@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 				if (!$result) {
 					require(AT_INCLUDE_PATH.'header.inc.php');
 					$msg->printErrors('FILE_NOT_SAVED');
-					echo '<a href="../mods/_core/file_manager/index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'] . '">' . _AT('back') . '</a>';
+					echo '<a href="../mods/_core/file_manager/index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'] . SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type'].'">' . _AT('back') . '</a>';
 					require(AT_INCLUDE_PATH.'footer.inc.php');
 					exit;
 				} else {
@@ -124,16 +124,22 @@ if (isset($_POST['submit'])) {
 						if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
-							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 						exit;
 					} /* else */
 
-					$msg->addFeedback('FILE_UPLOADED');
+					// uploading an alternative content object
+					if ($_GET['a_type'] > 0) {
+						header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type'].SEP.'uploadfile='.urlencode($_FILES['uploadedfile']['name']));
+					}
+					else {
+						$msg->addFeedback('FILE_UPLOADED');
 
-					if ($alter)
+						if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
-							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
+					}
 					exit;
 				}
 			} else {
@@ -141,7 +147,7 @@ if (isset($_POST['submit'])) {
 				if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
-							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 						
 				exit;
 			}
@@ -150,7 +156,7 @@ if (isset($_POST['submit'])) {
 			if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
-							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 						
 			exit;
 		}
@@ -159,7 +165,7 @@ if (isset($_POST['submit'])) {
 		if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
-							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup']);
+							header('Location: index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 		exit;
 	}
 }

@@ -28,13 +28,13 @@ $framed = $_REQUEST['framed'];
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 	exit;
 }
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_REQUEST['framed'].SEP.'popup='.$_REQUEST['popup']);
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_REQUEST['framed'].SEP.'popup='.$_REQUEST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 	exit;
 }
 
@@ -53,18 +53,18 @@ if (isset($_POST['submit_yes'])) {
 			if (course_realpath($current_path . $pathext . $source) == FALSE) {
 				// error: File does not exist
 				$msg->addError('DIR_NOT_EXIST');
-				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			}
 			else if (course_realpath($current_path . $dest) == FALSE) {
 				// error: File does not exist
 				$msg->addError('UNKNOWN');
-				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			}
 			else if (strpos($source, '..') !== false) {
 				$msg->addError('UNKNOWN');
-				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			}	
 			else {
@@ -84,18 +84,18 @@ if (isset($_POST['submit_yes'])) {
 			if (course_realpath($current_path . $pathext . $source) == FALSE) {
 				// error: File does not exist
 				$msg->addError('FILE_NOT_EXIST');
-				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			}
 			else if (course_realpath($current_path . $dest) == FALSE) {
 				// error: File does not exist
 				$msg->addError('UNKNOWN');
-				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			}
 			else if (strpos($source, '..') !== false) {
 				$msg->addError('UNKNOWN');
-				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			}	
 			else {
@@ -104,16 +104,20 @@ if (isset($_POST['submit_yes'])) {
 		}
 		$msg->addFeedback('MOVED_FILES');
 	}
-	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 	exit;
 }
 
 if (isset($_POST['dir_chosen'])) {
-	$hidden_vars['framed']  = $_POST['framed'];
-	$hidden_vars['popup']   = $_POST['popup'];
-	$hidden_vars['pathext'] = $_POST['pathext'];
-	$hidden_vars['dest']    = $_POST['dir_name'];
-
+	$hidden_vars['framed']  = $_REQUEST['framed'];
+	$hidden_vars['popup']   = $_REQUEST['popup'];
+	$hidden_vars['pathext'] = $_REQUEST['pathext'];
+	$hidden_vars['dest']    = $_REQUEST['dir_name'];
+	$hidden_vars['cp']  = $_REQUEST['cp'];
+	$hidden_vars['cid']   = $_REQUEST['cid'];
+	$hidden_vars['pid'] = $_REQUEST['pid'];
+	$hidden_vars['a_type']    = $_REQUEST['a_type'];
+	
 	if (isset($_POST['files'])) {
 		$list_of_files = implode(',', $_POST['files']);
 		$hidden_vars['listoffiles'] = $list_of_files;
@@ -136,7 +140,11 @@ else {
 	$pathext = $_GET['pathext']; 
 	$popup   = $_GET['popup'];
 	$framed  = $_GET['framed'];
-
+	$cp  = $_GET['cp'];
+	$cid  = $_GET['cid'];
+	$pid  = $_GET['pid'];
+	$a_type  = $_GET['a_type'];
+	
 	/* find the files and directories to be copied */
 	$total_list = explode(',', $_GET['list']);
 
@@ -185,7 +193,11 @@ else {
 <input type="hidden" name="pathext" value="<?php echo $pathext; ?>" />
 <input type="hidden" name="framed" value="<?php echo $framed; ?>" />
 <input type="hidden" name="popup" value="<?php echo $popup; ?>" />
-<?php
+<input type="hidden" name="cp" value="<?php echo $cp; ?>" />
+<input type="hidden" name="cid" value="<?php echo $cid; ?>" />
+<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
+<input type="hidden" name="a_type" value="<?php echo $a_type; ?>" />
+			<?php
 	echo $hidden_dirs;
 	echo $hidden_files;
 ?>

@@ -143,470 +143,6 @@ if ($current_tab == 4) {
 	$content_base_href = '';
 }
 
-//Added by Silvia
-
-// tools/filemanager/top.php
-
-if (!$_GET['f']) {
-	$_SESSION['done'] = 0;
-}
-if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
-	authenticate(AT_PRIV_CONTENT);
-}
-
-$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
-
-$MakeDirOn = true;
-
-/* get this courses MaxQuota and MaxFileSize: */
-$sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$my_MaxCourseSize	= $row['max_quota'];
-$my_MaxFileSize		= $row['max_file_size'];
-
-if ($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) {
-	$my_MaxCourseSize = $MaxCourseSize;
-}
-if ($my_MaxFileSize == AT_FILESIZE_DEFAULT) {
-	$my_MaxFileSize = $MaxFileSize;
-} else if ($my_MaxFileSize == AT_FILESIZE_SYSTEM_MAX) {
-	$my_MaxFileSize = megabytes_to_bytes(substr(ini_get('upload_max_filesize'), 0, -1));
-}
-
-$MaxSubDirs  = 5;
-$MaxDirDepth = 10;
-
-if ($_GET['pathext'] != '') {
-	$pathext = urldecode($_GET['pathext']);
-} else if ($_POST['pathext'] != '') {
-	$pathext = $_POST['pathext'];
-}
-
-if (strpos($pathext, '..') !== false) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('UNKNOWN');	
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-if($_GET['back'] == 1) {
-	$pathext  = substr($pathext, 0, -1);
-	$slashpos = strrpos($pathext, '/');
-	if($slashpos == 0) {
-		$pathext = '';
-	} else {
-		$pathext = substr($pathext, 0, ($slashpos+1));
-	}
-
-}
-
-$start_at = 2;
-/* remove the forward or backwards slash from the path */
-$newpath = $current_path;
-$depth = substr_count($pathext, '/');
-
-if ($pathext != '') {
-	$bits = explode('/', $pathext);
-	foreach ($bits as $bit) {
-		if ($bit != '') {
-			$bit_path .= $bit;
-
-			$_section[$start_at][0] = $bit;
-			$_section[$start_at][1] = 'mods/_core/file_manager/filemanager/index.php?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed;
-
-			$start_at++;
-		}
-	}
-	$bit_path = "";
-	$bit = "";
-}
-
-/* if upload successful, close the window */
-if ($f) {
-	$onload = 'closeWindow(\'progWin\');';
-}
-
-/* make new directory */
-if (isset($_POST['mkdir'])) {
-if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
-	$_POST['dirname'] = trim($_POST['dirname']);
-
-	/* anything else should be okay, since we're on *nix..hopefully */
-	$_POST['dirname'] = preg_replace('/[^a-zA-Z0-9._]/', '', $_POST['dirname']);
-
-	if ($_POST['dirname'] == '') {
-		$msg->addError(array('FOLDER_NOT_CREATED', $_POST['dirname'] ));
-	} 
-	else if (strpos($_POST['dirname'], '..') !== false) {
-		$msg->addError('BAD_FOLDER_NAME');
-	}	
-	else {
-		$result = @mkdir($current_path.$pathext.$_POST['dirname'], 0700);
-		if($result == 0) {
-			$msg->addError(array('FOLDER_NOT_CREATED', $_POST['dirname'] ));
-		}
-		else {
-			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		}
-	}
-}
-}
-$newpath = substr($current_path.$pathext, 0, -1);
-
-
-/* open the directory */
-if (!($dir = @opendir($newpath))) {
-	if (isset($_GET['create']) && ($newpath.'/' == $current_path)) {
-		@mkdir($newpath);
-		if (!($dir = @opendir($newpath))) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
-			$msg->printErrors('CANNOT_CREATE_DIR');			
-			require(AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		} else {
-			$msg->addFeedback('CONTENT_DIR_CREATED');
-		}
-	} else {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-
-		$msg->printErrors('CANNOT_OPEN_DIR');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-}
-
-/*
-if (isset($_POST['cancel'])) {
-	$msg->addFeedback('CANCELLED');
-}*/
-//end top.inc.php
-
-// upload.php
-$_SESSION['done'] = 1;
-$popup = $_REQUEST['popup'];
-$framed = $_REQUEST['framed'];
-
-/* get this courses MaxQuota and MaxFileSize: */
-$sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$my_MaxCourseSize	= $row['max_quota'];
-$my_MaxFileSize	= $row['max_file_size'];
-
-	if ($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) {
-		$my_MaxCourseSize = $MaxCourseSize;
-	}
-	if ($my_MaxFileSize == AT_FILESIZE_DEFAULT) {
-		$my_MaxFileSize = $MaxFileSize;
-	} else if ($my_MaxFileSize == AT_FILESIZE_SYSTEM_MAX) {
-		$my_MaxFileSize = megabytes_to_bytes(substr(ini_get('upload_max_filesize'), 0, -1));
-	}
-
-$path = AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$_POST['pathext'];
-
-if (isset($_POST['upload'])) {
-
-	if($_FILES['uploadedfile']['name'])	{
-//		echo 'il file esiste';
-		$_FILES['uploadedfile']['name'] = trim($_FILES['uploadedfile']['name']);
-		$_FILES['uploadedfile']['name'] = str_replace(' ', '_', $_FILES['uploadedfile']['name']);
-
-		$path_parts = pathinfo($_FILES['uploadedfile']['name']);
-		$ext = $path_parts['extension'];
-
-		/* check if this file extension is allowed: */
-		/* $IllegalExtentions is defined in ./include/config.inc.php */
-		if (in_array($ext, $IllegalExtentions)) {
-			$errors = array('FILE_ILLEGAL', $ext);
-			$msg->addError($errors);
-			header('Location: index.php?pathext='.$_POST['pathext']);
-			exit;
-		}
-
-		/* also have to handle the 'application/x-zip-compressed'  case	*/
-		if (   ($_FILES['uploadedfile']['type'] == 'application/x-zip-compressed')
-			|| ($_FILES['uploadedfile']['type'] == 'application/zip')
-			|| ($_FILES['uploadedfile']['type'] == 'application/x-zip')){
-			$is_zip = true;						
-		}
-
-	
-		/* anything else should be okay, since we're on *nix.. hopefully */
-		$_FILES['uploadedfile']['name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_FILES['uploadedfile']['name']);
-
-
-		/* if the file size is within allowed limits */
-		if( ($_FILES['uploadedfile']['size'] > 0) && ($_FILES['uploadedfile']['size'] <= $my_MaxFileSize) ) {
-
-			/* if adding the file will not exceed the maximum allowed total */
-			$course_total = dirsize($path);
-
-			if ((($course_total + $_FILES['uploadedfile']['size']) <= ($my_MaxCourseSize + $MaxCourseFloat)) || ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED)) {
-
-				/* check if this file exists first */
-				if (file_exists($path.$_FILES['uploadedfile']['name'])) {
-					/* this file already exists, so we want to prompt for override */
-
-					/* save it somewhere else, temporarily first			*/
-					/* file_name.time ? */
-					$_FILES['uploadedfile']['name'] = substr(time(), -4).'.'.$_FILES['uploadedfile']['name'];
-
-					$f = array('FILE_EXISTS',
-									substr($_FILES['uploadedfile']['name'], 5), 
-									$_FILES['uploadedfile']['name'],
-									$_POST['pathext'],
-									$_GET['popup'],
-									SEP);
-					$msg->addFeedback($f);
-				}
-
-				/* copy the file in the directory */
-				$result = move_uploaded_file( $_FILES['uploadedfile']['tmp_name'], $path.$_FILES['uploadedfile']['name'] );
-
-				if (!$result) {
-					require(AT_INCLUDE_PATH.'header.inc.php');
-					$msg->printErrors('FILE_NOT_SAVED');
-					echo '<a href="mods/_core/file_manager/index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'] . '">' . _AT('back') . '</a>';
-					require(AT_INCLUDE_PATH.'footer.inc.php');
-					exit;
-				} else {
-					if ($is_zip) {
-						$f = array('FILE_UPLOADED_ZIP',
-										urlencode($_POST['pathext']), 
-										urlencode($_FILES['uploadedfile']['name']), 
-										$_GET['popup'],
-										SEP);
-						//$msg->addFeedback($f);
-		
-					} /* else */
-
-					$msg->addFeedback('FILE_UPLOADED');
-				}
-			} else {
-				$msg->addError(array('MAX_STORAGE_EXCEEDED', get_human_size($my_MaxCourseSize)));
-			}
-		} else {
-			$msg->addError(array('FILE_TOO_BIG', get_human_size($my_MaxFileSize)));
-		}
-	} else {
-		$msg->addError('FILE_NOT_SELECTED');
-	}
-}
-
-// end upload.php	
-
-
-if ($current_tab == 5){
-	if ($_POST['alternatives']==1){
-		if (isset($_POST['add'])){
-			if (isset($_POST['resources'])){
-				if (isset($_POST['radio_alt'])){
-				
-					$sql	= "SELECT * FROM ".TABLE_PREFIX."primary_resources WHERE content_id='$cid' and primary_resource_id='$_POST[resources]'";
-		    		$result = mysql_query($sql, $db);
-	    		
-		    		if (mysql_num_rows($result) > 0) {
-	    	 	 		while ($row = mysql_fetch_assoc($result)) {
-	     		 			$sql_contr 	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id='$row[primary_resource_id]' and secondary_resource='$_POST[radio_alt]'";
-	     	 				$contr 	 	= mysql_query($sql_contr, $db);
-	     	 				if (mysql_num_rows($contr) > 0) {
-	     	 					$msg->addError('ALTERNATIVE_ALREADY_DECLARED');
-		     	 			}
-		     	 			else {
-	    	 	 				$sql_ins = "INSERT INTO ".TABLE_PREFIX."secondary_resources VALUES (NULL, '$row[primary_resource_id]', '$_POST[radio_alt]', 'en')";
-								$ins     = mysql_query($sql_ins, $db);
-								$msg->addFeedback('ALTERNATIVE_ADDED');
-							}
-						}
-					}
-	    		}
-				else 
-					$msg->addError('ALTERNATIVE_NOT_DEFINED');
-			}
-			else 
-				$msg->addError('RESOURCE_NOT_DEFINED');
-			}
-		}
-
-		
-	if ($_REQUEST[act]=='delete')	{
-		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources WHERE secondary_resource_id='$_REQUEST[id_alt]'";
-		$result = mysql_query($sql,$db);
-		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$_REQUEST[id_alt]'";
-		$result = mysql_query($sql,$db);
-		
-		$msg->addFeedback('ALTERNATIVE_DELETED');
-	}
-
-}
-
-
-if ($current_tab == 5) {
-	if (isset($_POST['save_types_and_language'])){
-		if(($_POST['alternatives']==1) || ($_GET['alternatives']==1)){
-			$sql	= "SELECT primary_resource_id FROM ".TABLE_PREFIX."primary_resources WHERE content_id='$cid'";
-	    	$result = mysql_query($sql, $db);
-
-	    	if (mysql_num_rows($result) > 0) {
-	   	 		while ($row = mysql_fetch_assoc($result)) {
-	   	 			$sql_type	 = "SELECT * FROM ".TABLE_PREFIX."resource_types";
-	    			$result_type = mysql_query($sql_type, $db);
-	    			
-     	 			if (mysql_num_rows($result_type) > 0) {
-	   	 				while ($type = mysql_fetch_assoc($result_type)) {
-	   	 					$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$row[primary_resource_id]' and type_id='$type[type_id]'";
-	   	 					$contr		= mysql_query($sql_contr, $db);	   
-	   	 					if (mysql_num_rows($contr) > 0) {
-	   	 						while ($control = mysql_fetch_assoc($contr)) {
-	   	 							if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary']))
-	   	 								continue;
-	   	 							else {
-	   	 								$sql_del = "DELETE FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$control[primary_resource_id]' and type_id='$control[type_id]'";
-										$result_del = mysql_query($sql_del, $db);
-		 							}
-	   	 						}	
-	   	 					}
-	   	 					else {
-	   	 						if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary'])){
-									$sql_ins	= "INSERT INTO ".TABLE_PREFIX."primary_resources_types VALUES ($row[primary_resource_id], $type[type_id])";
-									$ins 		= mysql_query($sql_ins, $db);
-									}	
-	   	 						
-	   	 						$sql_alt	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id='$row[primary_resource_id]'";
-		    					$result_alt = mysql_query($sql_alt, $db);
-	    					
-								if (mysql_num_rows($result_alt) > 0) {
-     		 						while ($alt = mysql_fetch_assoc($result_alt)) {
-										$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$alt[secondary_resource_id]' and type_id='$type[type_id]'";
-	   	 								$contr	= mysql_query($sql_contr, $db);	   
-	   	 								if (mysql_num_rows($contr) > 0) {
-	   	 									while ($control = mysql_fetch_assoc($contr)) {
-	   	 										if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary']))
-	   	 											continue;
-	   	 										else {
-	   	 											$sql_del = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$control[secondary_resource_id]' and type_id='$control[type_id]'";
-													$result_del = mysql_query($sql_del, $db);
-			 										}
-		   	 									}		
-	   		 								}
-	   	 								else {
-											if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary'])){
-												$sql_ins	= "INSERT INTO ".TABLE_PREFIX."secondary_resources_types VALUES ($alt[secondary_resource_id], $type[type_id])";
-												$ins 		= mysql_query($sql_ins, $db);
-	   	 										}
-	   	 									$lang=$_POST['lang_'.$alt[secondary_resource_id].'_secondary'];
-											$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET language_code='$lang' WHERE secondary_resource_id=$alt[secondary_resource_id]";
-											$up 	= mysql_query($sql_up, $db);
-
-      
-		   	 							}	
-									}			
-								}
-						
-								$lang=$_POST['lang_'.$row[primary_resource_id].'_primary'];
-								$sql_up	= "UPDATE ".TABLE_PREFIX."primary_resources SET language_code='$lang' WHERE primary_resource_id=$row[primary_resource_id]";
-								$up 	= mysql_query($sql_up, $db);
-								/* Added feedback message after types and language are updated Greg Oct 19/08  
-
-								  */
-								 $msg->addFeedback('RESOURCE_PROPERTIES_UPDATED');
-	   	 					}
-	   	 				}
-					}
-				}
-	    	}
-		}
-		else {
-			if (isset($_POST['body_text_alt'])){
-				$cid_wholepage = $cid.'_wholepage';
-				$sql	= "SELECT * FROM ".TABLE_PREFIX."primary_resources WHERE content_id='$cid' and resource='$cid_wholepage'";
-	    		$result = mysql_query($sql, $db);
-				if (mysql_num_rows($result) > 0){
-	    	 		while ($row = mysql_fetch_assoc($result)) {
-		    	 		$sql_type	 = "SELECT * FROM ".TABLE_PREFIX."resource_types";
-						$result_type = mysql_query($sql_type, $db);
-	    				
-		     	 		if (mysql_num_rows($result_type) > 0) {
-	   			 			while ($type = mysql_fetch_assoc($result_type)) {
-	   	 						$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$row[primary_resource_id]' and type_id='$type[type_id]'";
-			   	 				$contr		= mysql_query($sql_contr, $db);	   
-			   					if (mysql_num_rows($contr) > 0) {
-	   			 					while ($control = mysql_fetch_assoc($contr)) {
-	   	 								if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary']))
-	   	 									continue;
-			   	 						else {
-	   			 							$sql_del = "DELETE FROM ".TABLE_PREFIX."primary_resources_types WHERE primary_resource_id='$control[primary_resource_id]' and type_id='$control[type_id]'";
-											$result_del = mysql_query($sql_del, $db);
-			 							}
-	   	 							}	
-	   	 						} else {
-	   	 							if (isset($_POST['checkbox_'.$type[type].'_'.$row[primary_resource_id].'_primary'])){
-										$sql_ins	= "INSERT INTO ".TABLE_PREFIX."primary_resources_types VALUES ($row[primary_resource_id], $type[type_id])";
-										$ins 		= mysql_query($sql_ins, $db);
-									}
-	   	 						}	
-	   	 						if ($_POST['body_text_alt'] != $_POST['body_text']){
-	    							$sql_check_secondary 	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id='$row[primary_resource_id]'";
-	     				 			$check_secondary 	 	= mysql_query($sql_check_secondary, $db);
-	     	 						if (mysql_num_rows($check_secondary) > 0) {
-	     	 							while ($secondary = mysql_fetch_assoc($check_secondary)) {
-			     	 						$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET secondary_resource='$_POST[body_text_alt]' WHERE secondary_resource_id=$secondary[secondary_resource_id]";
-											$up 	= mysql_query($sql_up, $db);
-											$msg->addFeedback('ALTERNATIVE_UPDATED');
-	     	 							}	
-				     				}else {
-	    			 					$sql_ins = "INSERT INTO ".TABLE_PREFIX."secondary_resources VALUES (NULL, '$row[primary_resource_id]', '$_POST[body_text_alt]', 'en')";
-										$ins     = mysql_query($sql_ins, $db);
-										$msg->addFeedback('ALTERNATIVE_ADDED');
-									}
-									$sql_alt	= "SELECT * FROM ".TABLE_PREFIX."secondary_resources WHERE primary_resource_id='$row[primary_resource_id]'";
-	    							$result_alt = mysql_query($sql_alt, $db);
-	    					
-									if (mysql_num_rows($result_alt) > 0) {
-     			 						while ($alt = mysql_fetch_assoc($result_alt)) {
-											$sql_contr  = "SELECT * FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$alt[secondary_resource_id]' and type_id='$type[type_id]'";
-	   	 									$contr	= mysql_query($sql_contr, $db);	   
-				   	 						if (mysql_num_rows($contr) > 0) {
-	   	 										while ($control = mysql_fetch_assoc($contr)) {
-	   	 											if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary']))
-	   	 												continue;
-				   	 								else {
-	   	 												$sql_del = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types WHERE secondary_resource_id='$control[secondary_resource_id]' and type_id='$control[type_id]'";
-														$result_del = mysql_query($sql_del, $db);
-		 											}
-				   	 							}		
-	   	 									} else {
-												if (isset($_POST['checkbox_'.$type[type].'_'.$alt[secondary_resource_id].'_secondary'])){
-													$sql_ins	= "INSERT INTO ".TABLE_PREFIX."secondary_resources_types VALUES ($alt[secondary_resource_id], $type[type_id])";
-													$ins 		= mysql_query($sql_ins, $db);
-		   	 									}
-							   	 				$lang   = $_POST['lang_'.$alt[secondary_resource_id].'_secondary'];
-												$sql_up	= "UPDATE ".TABLE_PREFIX."secondary_resources SET language_code='$lang' WHERE secondary_resource_id='$alt[secondary_resource_id]'";
-												$up 	= mysql_query($sql_up, $db);
-
-	   	 									}
-     	 									$lang=$_POST['lang_'.$row[primary_resource_id].'_primary'];
-											$sql_up	= "UPDATE ".TABLE_PREFIX."primary_resources SET language_code='$lang' WHERE primary_resource_id='$row[primary_resource_id]'";
-											$up 	= mysql_query($sql_up, $db);
-
-	   	 								}
-									}
-								}
-	   	 					}
-						}
-	   				}
-				}
-			}
-	    }
-	}
-}		
-
-//End Added by Silvia 
-
-//Extended Test within content functionality - Harris @Sep 9, 2008
-//if ($current_tab == 6){
-//}
-
 if (($current_tab == 0) || ($_current_tab == 5)) {
     if ($_POST['formatting'] == null){ 
         // this is a fresh load from just logged in
@@ -622,11 +158,6 @@ if (($current_tab == 0) || ($_current_tab == 5)) {
 if ($current_tab == 0) 
 {
     $onload.="ATutor.mods.editor.on_load('". $_SESSION['prefs']['PREF_CONTENT_EDITOR']."');";
-}
-
-if ($current_tab == 5) 
-{
-	$onload.="on_load();";
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -800,22 +331,47 @@ $pid = intval($_REQUEST['pid']);
 			}
 		}
 	}
+
+	// adapted content
+	$sql = "SELECT pr.primary_resource_id, prt.type_id
+	          FROM ".TABLE_PREFIX."primary_resources pr, ".
+	                 TABLE_PREFIX."primary_resources_types prt
+	         WHERE pr.content_id = ".$cid."
+	           AND pr.language_code = '".$_SESSION['lang']."'
+	           AND pr.primary_resource_id = prt.primary_resource_id";
+	$all_types_result = mysql_query($sql, $db);
 	
-	//tests
-	if (is_array($_POST['tid']) && $current_tab != 6){
-		/* Test & Survey --> Other tabs triggers this condition */
-		foreach ($_POST['tid'] as $i=>$tid){
-			echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
-		}
-	} elseif ($current_tab != 6){
-		/* Edit Content (On Edit content tab), without clicking Test & Survey */
-		$i = 0;
-		if ($content_test){
-			while ($content_test_row = mysql_fetch_assoc($content_test)){
-				echo '<input type="hidden" name="tid['.$i++.']" value="'.$content_test_row['test_id'].'" />';
+	$i = 0;
+	while ($type = mysql_fetch_assoc($all_types_result)) {
+		$row_alternatives['alt_'.$type['primary_resource_id'].'_'.$type['type_id']] = 1;
+	}
+	
+	if (isset($_POST['use_post_for_alt']) && $current_tab != 5)
+	{
+		echo '<input type="hidden" name="use_post_for_alt" value="1" />';
+		if (is_array($_POST)) {
+			foreach ($_POST as $alt_id => $alt_value) {
+				if (substr($alt_id, 0 ,4) == 'alt_'){
+					echo '<input type="hidden" name="'.$alt_id.'" value="'.$alt_value.'" />';
+				}
 			}
 		}
 	}
+	
+	//tests
+	if ((is_array($_POST['tid']) || is_array($_POST['pre_tid'])) && $current_tab != 6){
+		/* Test & Survey --> Other tabs triggers this condition */
+		if (is_array($_POST['tid'])) {
+			foreach ($_POST['tid'] as $i=>$tid){
+				echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
+			}
+		}
+		if (is_array($_POST['pre_tid'])) {
+			foreach ($_POST['pre_tid'] as $i=>$pre_tid){
+				echo '<input type="hidden" name="pre_tid['.$i.']" value="'.$pre_tid.'" />';
+			}
+		}
+	} 
 	if (!isset($_POST['allow_test_export']) && $current_tab != 6) {
 		//export flag handling.
 		$sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
@@ -833,7 +389,7 @@ $pid = intval($_REQUEST['pid']);
 	}
 
 	if ($do_check) {
-		$changes_made = check_for_changes($content_row);
+		$changes_made = check_for_changes($content_row, $row_alternatives);
 	}
 ?>
 <div align="center">

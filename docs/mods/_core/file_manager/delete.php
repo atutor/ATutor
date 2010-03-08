@@ -28,7 +28,7 @@ $framed = $_REQUEST['framed'];
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 	exit;
 }
 
@@ -103,17 +103,17 @@ if (isset($_POST['submit_yes'])) {
 			if (strpos($filename, '..') !== false) {
 				$msg->addError('UNKNOWN');
 				$result=false;
-				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			} else if (!is_dir($current_path.$pathext.$filename)) {
 				$msg->addError(array('DIR_NOT_DELETED',$filename));
 				$result=false;
-				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			} else if (!($result = clr_dir($current_path.$pathext.$filename))) { 
 				$msg->addError('DIR_NO_PERMISSION');
 				$result=false;
-				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 				exit;
 			} 
 		}
@@ -121,7 +121,7 @@ if (isset($_POST['submit_yes'])) {
 			$msg->addFeedback('DIR_DELETED');
 	}
 	
-	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type']);
 	exit;
 }
 
@@ -131,7 +131,11 @@ if (isset($_POST['submit_yes'])) {
 	$pathext = $_GET['pathext']; 
 	$popup   = $_GET['popup'];
 	$framed  = $_GET['framed'];
-
+	$cp = $_GET['cp'];
+	$cid = $_GET['cid'];
+	$pid = $_GET['pid'];
+	$a_type = $_GET['a_type'];
+	
 	$count = count($total_list);
 	$countd = 0;
 	$countf = 0;
@@ -149,7 +153,11 @@ if (isset($_POST['submit_yes'])) {
 	$hidden_vars['pathext'] = $pathext;
 	$hidden_vars['popup']   = $popup;
 	$hidden_vars['framed']  = $framed;
-
+	$hidden_vars['cp']  = $cp;
+	$hidden_vars['cid']  = $cid;
+	$hidden_vars['pid']  = $pid;
+	$hidden_vars['a_type']  = $a_type;
+	
 	if (isset($_files)) {
 		$list_of_files = implode(',', $_files);
 		$hidden_vars['listoffiles'] = $list_of_files;
