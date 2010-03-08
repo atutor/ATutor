@@ -1,6 +1,8 @@
 <?php
 	//init
 	$pa = new PhotoAlbum();
+	$album_size = sizeof($this->albums);
+	$photo_size = sizeof($this->photos);
 ?>
 
 <div id="uploader-contents">
@@ -23,13 +25,16 @@
 		<!-- album panel -->
 		<?php if(!empty($this->albums)): ?>
 		<div class="album">
-			<h4><?php echo _AT('pa_albums'); ?></h4>
-			<div class="search_slider_left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>#n" onclick="slide('right');"><?php echo _AT('previous'); ?></a></div>
-			<div class="search_slider" id="search_slider_a">			
+			<h4><?php echo _AT('pa_albums') . ' (' . $album_size. ')'; ?></h4>
+			<?php if($album_size > AT_PA_SEARCH_MIN_ALBUM): ?>
+			<div class="search_slider_left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>#n" onclick="slide('right');"><img src="<?php echo AT_PA_BASENAME; ?>images/prev.png" alt="<?php echo _AT('previous'); ?>" /></a></div>
+			<?php endif; ?>
+			<div class="search_slider search_slider_a" id="search_slider_a">
 			<ul>
-				<?php foreach($this->albums as $index=>$album): 
-				$photo_info = $pa->getPhotoInfo($album['photo_id']); 
-				?>		
+				<?php 				
+				foreach($this->albums as $index=>$album): 
+				$photo_info = $pa->getPhotoInfo($album['photo_id']); 				
+				?>
 				<li>
 				<div class="search_photo_frame">
 					<?php if (!empty($photo_info)): ?>
@@ -43,21 +48,58 @@
 				<?php endforeach; ?>
 			</ul>			
 			</div>
-			<div class="search_slider_right""><a href="<?php echo $_SERVER['PHP_SELF']; ?>#n" onclick="slide('left');"><?php echo _AT('next'); ?></a></div>
+			<?php if($album_size > AT_PA_SEARCH_MIN_ALBUM): ?>
+			<div class="search_slider_right""><a href="<?php echo $_SERVER['PHP_SELF']; ?>#n" onclick="slide('left');"><img src="<?php echo AT_PA_BASENAME; ?>images/next.png" alt="<?php echo _AT('next'); ?>" /></a></div>
+			<?php endif; ?>
 		</div>
 		<?php endif; ?>
 		
 		<!-- photo panel -->
 		<div class="album">
-			<h4><?php echo _AT('pa_photos'); ?></h4>
-			<?php if(!empty($this->photos)): ?>		
+			<h4><?php echo _AT('pa_photos') . ' (' . $photo_size. ')'; ?></h4>
+			<?php if(!empty($this->photos)): ?>
+			<!-- dynamic paginator -->
+			<?php if($photo_size > AT_PA_PHOTO_SEARCH_PER_PAGE): ?>
+			<div class="paginator"><div class="paging">
+				<ul>
+				<?php
+					$pages = ceil($photo_size/AT_PA_PHOTO_SEARCH_PER_PAGE);
+					for($i=1; $i <=$pages; $i++){
+						echo '<li>';
+						echo '<a href="'. $_SERVER['PHP_SELF'] . '#n" ' . "onclick='go_to_page($i, $pages)'>$i</li>";
+						echo '</li>';
+					}
+				?>
+				</ul>
+			</div></div>
+			<?php endif; ?>
+			<!-- end dynamic paginator -->
+
+			<div class="search_slider search_slider_p" id="search_slider_p">
+			<ul>
 			<!-- loop through this -->
-			<?php foreach($this->photos as $key=>$photo): ?>
+			<?php 
+			$loop_counter = 0;	//counts the loop
+			foreach($this->photos as $key=>$photo): 
+			?>
+			<?php 
+				if ($loop_counter==0){
+					echo '<li>';
+				}
+				$loop_counter++;				
+			?>
 			<div class="photo_frame">
 				<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$photo['album_id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$photo['album_id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf82($photo['description'], false); ?>" alt="<?php echo htmlentities_utf82($photo['alt_text']);?>" /></a>
 			</div>
+			<?php 
+				if ($loop_counter>=AT_PA_PHOTO_SEARCH_PER_PAGE) {
+					echo '</li>';
+					$loop_counter = 0;
+				}	
+			?>
 			<?php endforeach; ?>
 			<!-- end loop -->
+			</ul></div>
 			<?php else: ?>
 			<div class="edit_photo_box">
 				<p><?php echo _AT('pa_no_photos'); ?></p>
@@ -71,25 +113,27 @@
 <script type="text/javascript">
 //<![CDATA[
 var album_cnt = 0;	//number of times, global
-var album_size = <?php echo sizeof($this->albums); ?>; //size of albums
+var album_size = <?php echo $album_size; ?>; //size of albums
+var photo_size = <?php echo $photo_size; ?>; //size of photos
+var ALBUM_PIC_WIDTH = <?php echo AT_PA_ALBUM_PIC_WIDTH; ?>;	//check the CSS and constants.inc.php
+var PHOTO_PIC_WIDTH = <?php echo AT_PA_PHOTO_PIC_WIDTH; ?>;	
 
 /* 
  * Slide the album list 
  * @param	string		left/right
  */
 function slide(direction){
-	//variables
-	var PIC_WIDTH = 147;	//check the CSS
+	//variables	
 	album_ul = jQuery('#search_slider_a').find('ul');	
 	if (direction=='left'){
 		album_cnt++;
 	} else {
 		album_cnt--;
 	}
-	var album_offset = -1 * PIC_WIDTH * album_cnt;
+	var album_offset = -1 * ALBUM_PIC_WIDTH * album_cnt;
 
 	//action
-	if (album_size * PIC_WIDTH + album_offset > 0 && album_cnt >= 0){
+	if (album_size * ALBUM_PIC_WIDTH + album_offset > 0 && album_cnt >= 0){
 		album_ul.animate({left: album_offset});
 	} else {
 		//undo counts
@@ -100,5 +144,22 @@ function slide(direction){
 		}
 	}
 }
+
+/*
+ * click on the page and will slide accordingly 
+ * @param	int	 page number
+ */
+function go_to_page(page, max_page){
+	//variables	
+	photo_ul = jQuery('#search_slider_p').find('ul');
+	photo_offset = -1 * PHOTO_PIC_WIDTH * (page - 1) * 5;
+	
+	//action
+	if (page >= 1 && page <= max_page){
+		photo_ul.animate({left: photo_offset});
+	}
+}
+
+
 //]]>
 </script>

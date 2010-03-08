@@ -616,7 +616,7 @@ class PhotoAlbum {
 		/** Get all photos from these albums */
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."pa_photos WHERE album_id IN ($visible_albums_ids)";		
 		$query = ' AND ' . substr($query, 0, -3);
-		$sql = $sql . $query . ' LIMIT 1'; 
+		$sql = $sql . $query . ' LIMIT ' . AT_PA_PHOTO_SEARCH_LIMIT; 
 		$result = mysql_query($sql, $db);
 		if (!$result){
 			return null;

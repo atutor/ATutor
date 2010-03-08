@@ -126,7 +126,6 @@ div.album .search_photo_frame{
 }
 div.album .search_slider{
 	float: left;
-	width: 80%;
 	overflow: hidden;
 }
 div.album .search_slider_left{
@@ -148,7 +147,19 @@ div.album .search_slider ul {
 div.album .search_slider ul li{
 	float: left;
 }
-
+div.album .search_slider_a{
+	width: 80%;
+}
+div.album .search_slider_p{
+	width: 730px;	/* 146 per frame, 5 frame per row */
+}
+div.album .search_slider_p ul li{
+	height: 576px;	/* 144 per frame, 4 row */
+	width: 730px;	/* 146 per frame, 5 frame per row */
+}
+div.album .search_paginator {
+	width: 100%;
+}
 
 div.add_photo{
 	float: left;

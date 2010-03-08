@@ -37,4 +37,12 @@ define('AT_PA_TYPE_SOCIAL_GROUP_ALBUM',	5);	//social group album
 //Album permissions
 define('AT_PA_PRIVATE_ALBUM',			0);	//private album, default
 define('AT_PA_SHARED_ALBUM',			1);	//shared album
+
+//Search 
+define('AT_PA_PHOTO_SEARCH_PER_PAGE',	20); //display this many photos on search result
+define('AT_PA_PHOTO_SEARCH_LIMIT',		250); //search results are limited to this number
+define('AT_PA_ALBUM_PIC_WIDTH',			147); //album pic width
+define('AT_PA_PHOTO_PIC_WIDTH',			146); //photo pic width
+define('AT_PA_SEARCH_MIN_ALBUM',		4); //numbers of album to show without having to show the next/prev keys
+
 ?>
