@@ -97,11 +97,17 @@ function get_category_name($cat_id) {
 	return $row['cat_name'];
 }
 
+//LAW
+//$_SESSION['first_login'] = true; //for testing
+if ($_SESSION['first_login']) {
+    $msg->addInfo(array('FIRST_PREFS', 'mods/_core/users/pref_wizard/index.php'));
+}
+
 if (!$courses && get_instructor_status())
 	$msg->addInfo('NO_COURSES_INST');
 elseif (!$courses)
 	$msg->addInfo('NO_COURSES');
-
+	
 $savant->assign('courses', $courses);
 
 $savant->display('users/index.tmpl.php');
