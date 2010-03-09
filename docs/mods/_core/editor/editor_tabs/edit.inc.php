@@ -13,8 +13,6 @@
 // $Id: edit.inc.php 8901 2009-11-11 19:10:19Z cindy $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-//LAW
-//debug($_POST);
 ?>
 
     <input type="hidden" name="displayhead" id="displayhead" value="<?php if ($_POST['displayhead']==1 || $_REQUEST['displayhead']==1 || $_GET['displayhead']==1) echo '1'; else echo '0'; ?>" />
@@ -104,7 +102,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             
                 <script type="text/javascript" language="javascript">
                 //<!--
-//                    document.write(" <a style='text-decoration: none' href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php?cid=<?php echo $cid; ?>','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' border='0' style='margin-bottom: 4px;'/></a>");
+//                    document.write(" <a style='text-decoration: none' href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' border='0' style='margin-bottom: 4px;'/></a>");
                 //-->
                 </script>
             <input type="file" name="uploadedfile_paste" id="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" />
