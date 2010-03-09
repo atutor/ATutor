@@ -1,5 +1,6 @@
-<div id="uploader-contents">
+<div id="uploader-contents">	
 	<!-- Photo album options and page numbers -->
+	<?php if ($this->action_permission || $this->album_info['type_id']==AT_PA_TYPE_COURSE_ALBUM): ?>
 	<div class="add_photo">
 		<div class="toggle_uploader">
 			<input type="button" id="upload_manager" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="toggleUploadManager()" class="button" />
@@ -24,6 +25,7 @@
 			</div>
 		</div>
 	</div>
+	<?php endif; //action permission?>
 
 	<div class="album_panel">
 		<div class="topbar">			
@@ -89,7 +91,7 @@
 			<div>
 				<form action="<?php echo AT_PA_BASENAME;?>addComment.php" method="post" class="input-form">
 					<div class="row"><label for="comments"><?php echo _AT('comments');?></label></div>
-					<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
+					<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();" onkeypress="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
 					<div class="row"><textarea name="comment" id="comment" style="display:none;"></textarea></div>
 					<div class="row">
 						<input type="hidden" name="aid" value="<?php echo $this->album_info['id'];?>" />
@@ -164,8 +166,8 @@ jQuery(document).ready(function () {
 	});
 });
 
-
 /* Ajax Uploader */
+<?php if ($this->action_permission || $this->album_info['type_id']==AT_PA_TYPE_COURSE_ALBUM): ?>
 var upload_pending  = 0; //counter for pending files
 var ajax_upload = new AjaxUpload('upload_button', {
   // Location of the server-side upload script
@@ -293,6 +295,7 @@ function deletePhoto(aid, pid, thisobj) {
 		//simply remove tihs node without running anything in the DB
 		jQuery(thisobj).parent().parent().remove();	//delete from DOM tree.
 	}
+	jQuery('#upload_button').focus(); 
 }
 
 function GetXmlHttpObject() {
@@ -322,5 +325,6 @@ function toggleUploadManager(){
 		}
 		jQuery('#ajax_uploader').toggle();		
 }
+<?php endif; ?>
 //]]>
 </script>

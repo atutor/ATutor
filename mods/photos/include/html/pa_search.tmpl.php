@@ -42,7 +42,7 @@
 					<?php else: ?>
 					<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$album['id'];?>"><img class="no-image" title="<?php echo _AT('pa_no_image'); ?>" alt="<?php echo _AT('pa_no_image'); ?>" /></a>
 					<?php endif; //album ?>
-					<span><?php echo 'Pt: ' .$album['point']. '<br/>' . $album['name']; ?></span>
+					<span><?php echo $album['name']; ?></span>
 				</div>
 				</li>
 				<?php endforeach; ?>
@@ -55,7 +55,7 @@
 		<?php endif; ?>
 		
 		<!-- photo panel -->
-		<div class="album">
+		<div class="album" style="min-width: 720px;">
 			<h4><?php echo _AT('pa_photos') . ' ' .  _AT('results'). ': ' . $photo_size. ' ' .  _AT('results'); ?></h4>
 			<?php if(!empty($this->photos)): ?>
 			<!-- dynamic paginator -->
@@ -66,7 +66,7 @@
 					$pages = ceil($photo_size/AT_PA_PHOTO_SEARCH_PER_PAGE);
 					for($i=1; $i <=$pages; $i++){
 						echo '<li>';
-						echo '<a href="'. $_SERVER['PHP_SELF'] . '#n" ' . "onclick='go_to_page($i, $pages)'>$i</li>";
+						echo '<a id="p_'.$i.'" href="'. $_SERVER['PHP_SELF'] . '#n" ' . "onclick='go_to_page($i, $pages)' title='"._AT('page') . ' ' ."$i'>$i</li>";
 						echo '</li>';
 					}
 				?>
@@ -156,6 +156,8 @@ function go_to_page(page, max_page){
 	
 	//action
 	if (page >= 1 && page <= max_page){
+		jQuery("a[id^='p_']").removeClass('current');	//remove all selector prefixed with "p_"
+		jQuery('#p_'+page).addClass('current');	//set current 
 		photo_ul.animate({left: photo_offset});
 	}
 }

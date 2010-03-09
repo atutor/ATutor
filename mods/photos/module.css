@@ -154,7 +154,7 @@ div.album .search_slider_p{
 	width: 730px;	/* 146 per frame, 5 frame per row */
 }
 div.album .search_slider_p ul li{
-	height: 576px;	/* 144 per frame, 4 row */
+/*	height: 576px;	/* 144 per frame, 4 row */
 	width: 730px;	/* 146 per frame, 5 frame per row */
 }
 div.album .search_paginator {

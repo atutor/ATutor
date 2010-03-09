@@ -93,6 +93,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_alt_text','Alternative T
 INSERT INTO `language_text` VALUES ('en', '_module','pa_processed','Processed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_no_album','No Album Available',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_no_photos','No Photos Available',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_no_image','No image',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_organize_photo_blurb','Note: Drag photos using a mouse, or [CTRL]+[Left/Right/Up/Down Arrow] keys to rearrange them.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_of','of',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_undo','Undo',NOW(),'');
@@ -105,10 +106,11 @@ INSERT INTO `language_text` VALUES ('en', '_module','pa_max_memory','Maximum Mem
 INSERT INTO `language_text` VALUES ('en', '_module','pa_memory_usage','Memory Usage',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_open_upload_manager','Open Upload Manager',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_close_upload_manager','Close Upload Manager',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','pa_no_image','No image',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_album_permission','Album Permission',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_private','Private',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','pa_shared','Shared',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','pa_uploaded_by','Uploaded by',NOW(),'');
+
 
 # Error messages
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_PA_ADD_COMMENT_FAILED','Comment could not be added due to an internal error.  Please try again.',NOW(),'');

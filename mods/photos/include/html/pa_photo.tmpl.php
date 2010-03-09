@@ -71,6 +71,10 @@
 			<!-- TODO: is this needed? -->
 			<!-- <a href=""><?php echo _AT('set_profile_pic'); ?></a> -->
 		</div>
+		<?php else: ?>
+		<div class="photo_actions">
+			<p><?php echo _AT('uploaded_by').': '.AT_print(get_display_name($row['member_id']), 'members.full_name'); ?></p>
+		</div>
 		<?php endif; ?>
 	</div>
 </div>
@@ -111,7 +115,7 @@ jQuery(document).ready(function () {
 						 "pid":<?php echo $this->photo_info['id'];?>, 
 						 "aid":<?php echo $this->aid;?>, 
 						 "description_<?php echo $this->photo_info['id'];?>":model.value,
-						 "alt_text_<?php echo $this->photo_info['id'];?>":"<?php echo $this->photo_info['alt_text'];?>"},
+						 "alt_text_<?php echo $this->photo_info['id'];?>":"<?php echo trim($this->photo_info['alt_text']);?>"},
 						  function(data){}, 
 						  "json");
 				}
@@ -123,7 +127,7 @@ jQuery(document).ready(function () {
 							 "pid":<?php echo $this->photo_info['id'];?>, 
 							 "aid":<?php echo $this->aid;?>, 
 							 "description_<?php echo $this->photo_info['id'];?>":newValue,
-							 "alt_text_<?php echo $this->photo_info['id'];?>":"<?php echo $this->photo_info['alt_text'];?>"},
+							 "alt_text_<?php echo $this->photo_info['id'];?>":"<?php echo trim($this->photo_info['alt_text']);?>"},
 							  function(data){}, 
 							  "json");
 				}

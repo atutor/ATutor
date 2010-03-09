@@ -24,6 +24,7 @@ $_custom_head .= '<script src="'.$_base_path . AT_PA_BASENAME . 'include/ajaxupl
 $id = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
+$action_permission = $pa->checkAlbumPriv($_SESSION['member_id']);
 
 //TODO: Validate users, using permission and course album control.
 if ($info['member_id'] != $_SESSION['member_id']){
@@ -45,21 +46,24 @@ if ($info['type_id']==AT_PA_TYPE_MY_ALBUM){
 } elseif ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM){
 	$_pages[AT_PA_BASENAME.'albums.php']['parent']	  = AT_PA_BASENAME.'course_albums.php';
 } 
-$_pages[AT_PA_BASENAME.'albums.php']['children']  = array(
-														AT_PA_BASENAME.'edit_photos.php?aid='.$id,
-														AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1',
-													);
-$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id]['title_var'] = 'pa_edit_photos';
-$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id]['parent'] = AT_PA_BASENAME.'albums.php';
-$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1']['title_var'] = 'pa_organize_photos';
-$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1']['parent'] = AT_PA_BASENAME.'albums.php';
-
+//if this member has the permission to edit the album, show the edit/organize menu
+if ($action_permission){
+	$_pages[AT_PA_BASENAME.'albums.php']['children']  = array(
+															AT_PA_BASENAME.'edit_photos.php?aid='.$id,
+															AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1',
+														);
+	$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id]['title_var'] = 'pa_edit_photos';
+	$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id]['parent'] = AT_PA_BASENAME.'albums.php';
+	$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1']['title_var'] = 'pa_organize_photos';
+	$_pages[AT_PA_BASENAME.'edit_photos.php?aid='.$id.SEP.'org=1']['parent'] = AT_PA_BASENAME.'albums.php';
+}
 
 //TODO: handle add_photo
 if(isset($_POST['upload'])){
 	//check file size, filename, and extension
 	$_FILES['photo'] = checkPhoto($_FILES['photo']);
-	if ($_FILES['photo']===false){
+	if ($_FILES['photo']===false || (!$action_permission && $info['type_id']!=AT_PA_TYPE_COURSE_ALBUM)){
+		//owner and course members can upload pictures.  Not edit though. 
 		echo json_encode(array(
 						'aid'=>$id,
 						'pid'=>-1,
@@ -167,7 +171,7 @@ $savant->assign('page', $page);
 $savant->assign('num_rows', $photos_count);
 $savant->assign('memory_usage', $memory_usage/(1024*1024));	//mb
 $savant->assign('allowable_memory_usage', $_config['pa_max_memory_per_member']);	//mb
-$savant->assign('action_permission', $pa->checkAlbumPriv($_SESSION['member_id']));
+$savant->assign('action_permission', $action_permission);
 $savant->display('pa_albums.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

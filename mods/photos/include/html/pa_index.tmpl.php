@@ -11,16 +11,16 @@
 			<?php if($this->num_rows > AT_PA_ALBUMS_PER_PAGE): ?>
 			<!-- page numbers -->
 			<div class="paginator">
-				<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
+				<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW); ?>
 			</div>
 			<?php endif; ?>
 		</div>
 	
 		<!-- loop through this -->
-		<?php if(!empty($this->albums)): 
-			$pa = new PhotoAlbum();
+		<?php if(!empty($this->albums)): ?>
+		<?php foreach($this->albums as $index=>$row): 
+			$pa = new PhotoAlbum($index);
 		?>
-		<?php foreach($this->albums as $index=>$row): ?>
 		<div class="album">
 			<!-- TODO: If photo is not presense, print another image? -->
 			<div class="image">
@@ -45,7 +45,9 @@
 				<p><?php echo _AT('last_updated', AT_date(_AT('forum_date_format'), $row['last_updated'], AT_DATE_MYSQL_DATETIME));?></p>
 				<p><?php echo _AT('created').': '.AT_date(_AT('forum_date_format'), $row['created_date'], AT_DATE_MYSQL_DATETIME); ?></p>
 				</span><br/>
-				<p><a href="<?php echo AT_PA_BASENAME;?>edit_album.php?id=<?php echo $row['id'];?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo AT_PA_BASENAME;?>delete_album.php?id=<?php echo $row['id'];?>"><?php echo _AT('delete');?></a></p>
+				<?php if($pa->checkAlbumPriv($_SESSION['member_id'])): ?>
+				<span><p><a href="<?php echo AT_PA_BASENAME;?>edit_album.php?id=<?php echo $row['id'];?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo AT_PA_BASENAME;?>delete_album.php?id=<?php echo $row['id'];?>"><?php echo _AT('delete');?></a></p></span>
+				<?php endif; ?>
 			</div>
 		</div>
 		<?php endforeach; ?>
@@ -56,12 +58,12 @@
 		<?php endif; ?>
 		<!-- end loop -->
 		<!-- page numbers -->
-		<?php if($this->num_rows > AT_PA_ALBUMS_PER_PAGE){?>
+		<?php if($this->num_rows > AT_PA_ALBUMS_PER_PAGE): ?>
 		<div class="topbar">
 			<div class="paginator">
 				<?php print_paginator($this->page, $this->num_rows, 'type='.$this->type, AT_PA_ALBUMS_PER_PAGE, AT_PA_PAGE_WINDOW);  ?>
 			</div>
 		</div>
-		<?php  } ?>
+		<?php endif; ?>
 	</div>	
 </div>

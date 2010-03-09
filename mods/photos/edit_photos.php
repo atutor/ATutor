@@ -19,17 +19,23 @@ include (AT_PA_INCLUDE.'lib.inc.php');
 $_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 
 $aid = intval($_GET['aid']);
+$pid = intval($_GET['pid']);
 if(isset($_POST['aid'])){
 	$aid = intval($_POST['aid']);
 }
-$pid = intval($_GET['pid']);
+if(isset($_POST['pid'])){
+	$pid = intval($_POST['pid']);
+}
 
 //initialization
 $pa = new PhotoAlbum($aid);
-if (!$pa->checkAlbumPriv($_SESSION['member_id'])){
-	header('location: albums.php?id='.$aid);
-	exit;
-}
+
+//validation
+if(!($pa->checkPhotoPriv($pid, $_SESSION['member_id']) || $pa->checkAlbumPriv($_SESSION['member_id']))){
+	$msg->addError("ACCESS_DENIED");
+		header('location: index.php');
+		exit;
+} 
 
 //get details
 if ($pid > 0){
@@ -39,7 +45,6 @@ if ($pid > 0){
 	$photos = $pa->getAlbumPhotos();
 }
 $album_info = $pa->getAlbumInfo();
-
 
 //Set pages/submenu
 $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['title']    = _AT('pa_albums') .' - '.$album_info['name'];

@@ -665,15 +665,17 @@
             if ( ! this._input || this._input.value === ''){                
                 return;                
             }
-                                    
-            var file = fileFromPath(this._input.value);
+			
+			var file = fileFromPath(this._input.value);
             
             // user returned false to cancel upload
             if (false === settings.onSubmit.call(this, file, getExt(file))){
                 this._clearInput();                
                 return;
             }
-            
+			
+			jQuery('#upload_button').focus();  //IE8 won't refocus after the createForm
+
             // sending request    
             var iframe = this._createIframe();
             var form = this._createForm(iframe);
@@ -696,7 +698,6 @@
 
             // get ready for next request            
             this._createInput();
-			jQuery('#upload_button').focus();
         }
     };
 })(); 

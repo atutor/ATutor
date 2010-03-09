@@ -22,6 +22,7 @@ $aid = intval($_REQUEST['id']);
 $pa = new PhotoAlbum($aid);
 
 if (!$pa->checkAlbumPriv($_SESSION['member_id'])){
+	$msg->addError('ACCESS_DENIED');
 	header('location: index.php');
 	exit;
 }

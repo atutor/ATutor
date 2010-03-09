@@ -43,7 +43,7 @@ if ($pid==0){
 //owner of comments and album owner can delete comments.
 if (!$pa->checkCommentPriv($comment_id, $_SESSION['member_id'], $isPhoto) || 
 	!$pa->checkAlbumPriv($_SESSION['member_id'])){
-	$msg->addError('');	//TODO: nice try
+	$msg->addError('ACCESS_DENIED');
 	header('Location: index.php');
 	exit;
 }
