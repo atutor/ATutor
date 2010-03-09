@@ -84,7 +84,7 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 		if (!$xml_results)
 		{
 			$infos = array('CANNOT_CONNECT_SERVER', AT_TILE_SEARCH_URL);
-			$msg->addInfo($infos);
+			$msg->addError($infos);
 		}
 		else
 		{
