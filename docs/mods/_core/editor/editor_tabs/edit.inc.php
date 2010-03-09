@@ -21,12 +21,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	<div class="row">
 	    <span>
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('title');  ?></label>
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ctitle"><?php echo _AT('title');  ?></label>
 		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
         </span>
         <span class="nowrap">
-        <label for="formatting"><span class="required">*</span><?php echo _AT('formatting'); ?></label>
-        <span class="bordered">
+        <label for="formatting_radios"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('formatting'); ?></label>
+        <span class="bordered" id="formatting_radios">
             <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="ATutor.mods.editor.switch_content_type(this.value);" />
             <label for="text"><?php echo _AT('plain_text'); ?></label>
 
@@ -136,11 +136,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     ?>
 
     <div class="row">
-        <span id="textSpan" />
+        <span id="textSpan">
             <label for="body_text"><?php echo _AT('body');  ?></label>
 		    <textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']);?></textarea>
 		</span>
-		<span id="weblinkSpan" />	
+		<span id="weblinkSpan">	
 	        <label for="weblink_text"><?php echo _AT('weblink');  ?></label>
             <input name="weblink_text" id="weblink_text" value="<?php echo ($_POST['weblink_text']!=''?htmlspecialchars($_POST['weblink_text']):'http://'); ?>" style="width:60%;" />
 		</span>
