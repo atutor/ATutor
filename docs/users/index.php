@@ -100,7 +100,7 @@ function get_category_name($cat_id) {
 //LAW
 //$_SESSION['first_login'] = true; //for testing
 if ($_SESSION['first_login']) {
-    $msg->addInfo(array('FIRST_PREFS', 'mods/_core/users/pref_wizard/index.php'));
+    $msg->addInfo(array('FIRST_PREFS', 'users/pref_wizard/index.php'));
 }
 
 if (!$courses && get_instructor_status())
