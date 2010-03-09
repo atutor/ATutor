@@ -44,4 +44,21 @@ if (!is_dir($directory) && !@mkdir($directory)) {
 	$msg->addError(array('MODULE_INSTALL', '<li>'.$directory.' is not writeable. On Unix issue the command <kbd>chmod a+rw</kbd>.</li>'));
 }
 
+/******
+ * the following code checks if there are any errors (generated previously)
+ * then uses the SqlUtility to run any database queries it needs, ie. to create
+ * its own tables.
+ */
+if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
+	// deal with the SQL file:
+	require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
+	$sqlUtility =& new SqlUtility();
+
+	/*
+	 * the SQL file could be stored anywhere, and named anything, "module.sql" is simply
+	 * a convention we're using.
+	 */
+	$sqlUtility->queryFromFile(dirname(__FILE__) . '/module.sql', TABLE_PREFIX);
+}
+
 ?>
