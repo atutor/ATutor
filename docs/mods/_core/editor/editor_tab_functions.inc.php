@@ -201,29 +201,32 @@ function save_changes($redir, $current_tab) {
 	}
 
 	// adapted content: save primary content type
-	// 1. delete old primary content type
-	$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
-	         WHERE primary_resource_id in 
-	               (SELECT DISTINCT primary_resource_id 
-	                  FROM ".TABLE_PREFIX."primary_resources
-	                 WHERE content_id=".$cid."
-	                   AND language_code='".$_SESSION['lang']."')";
-	$result = mysql_query($sql, $db);
-	
-	// 2. insert the new primary content type
-	$sql = "SELECT pr.primary_resource_id, rt.type_id
-	          FROM ".TABLE_PREFIX."primary_resources pr, ".
-	                 TABLE_PREFIX."resource_types rt
-	         WHERE pr.content_id = ".$cid."
-	           AND pr.language_code = '".$_SESSION['lang']."'";
-	$all_types_result = mysql_query($sql, $db);
-	
-	while ($type = mysql_fetch_assoc($all_types_result)) {
-		if (isset($_POST['alt_'.$type['primary_resource_id'].'_'.$type['type_id']]))
-		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources_types (primary_resource_id, type_id)
-			        VALUES (".$type['primary_resource_id'].", ".$type['type_id'].")";
-			$result = mysql_query($sql, $db);
+	if (isset($_POST['use_post_for_alt']))
+	{
+		// 1. delete old primary content type
+		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
+		         WHERE primary_resource_id in 
+		               (SELECT DISTINCT primary_resource_id 
+		                  FROM ".TABLE_PREFIX."primary_resources
+		                 WHERE content_id=".$cid."
+		                   AND language_code='".$_SESSION['lang']."')";
+		$result = mysql_query($sql, $db);
+		
+		// 2. insert the new primary content type
+		$sql = "SELECT pr.primary_resource_id, rt.type_id
+		          FROM ".TABLE_PREFIX."primary_resources pr, ".
+		                 TABLE_PREFIX."resource_types rt
+		         WHERE pr.content_id = ".$cid."
+		           AND pr.language_code = '".$_SESSION['lang']."'";
+		$all_types_result = mysql_query($sql, $db);
+		
+		while ($type = mysql_fetch_assoc($all_types_result)) {
+			if (isset($_POST['alt_'.$type['primary_resource_id'].'_'.$type['type_id']]))
+			{
+				$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources_types (primary_resource_id, type_id)
+				        VALUES (".$type['primary_resource_id'].", ".$type['type_id'].")";
+				$result = mysql_query($sql, $db);
+			}
 		}
 	}
 	

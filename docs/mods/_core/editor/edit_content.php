@@ -345,7 +345,7 @@ $pid = intval($_REQUEST['pid']);
 		$row_alternatives['alt_'.$type['primary_resource_id'].'_'.$type['type_id']] = 1;
 	}
 	
-	if (isset($_POST['use_post_for_alt']) && $current_tab != 5)
+	if ($current_tab != 5 && isset($_POST['use_post_for_alt']))
 	{
 		echo '<input type="hidden" name="use_post_for_alt" value="1" />';
 		if (is_array($_POST)) {
@@ -358,16 +358,36 @@ $pid = intval($_REQUEST['pid']);
 	}
 	
 	//tests
-	if ((is_array($_POST['tid']) || is_array($_POST['pre_tid'])) && $current_tab != 6){
-		/* Test & Survey --> Other tabs triggers this condition */
+	if ($current_tab != 6){
+		// set content associated tests
 		if (is_array($_POST['tid'])) {
 			foreach ($_POST['tid'] as $i=>$tid){
 				echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
 			}
 		}
+		else
+		{
+			$i = 0;
+			if ($content_test){
+				while ($content_test_row = mysql_fetch_assoc($content_test)){
+					echo '<input type="hidden" name="tid['.$i++.']" value="'.$content_test_row['test_id'].'" />';
+				}
+			}
+		}
+		
+		// set pre-tests
 		if (is_array($_POST['pre_tid'])) {
 			foreach ($_POST['pre_tid'] as $i=>$pre_tid){
 				echo '<input type="hidden" name="pre_tid['.$i.']" value="'.$pre_tid.'" />';
+			}
+		}
+		else
+		{
+			$i = 0;
+			$sql = 'SELECT * FROM '.TABLE_PREFIX."content_prerequisites WHERE content_id=$cid AND type='".CONTENT_PRE_TEST."'";
+			$pretests_result = mysql_query($sql, $db);
+			while ($pretest_row = mysql_fetch_assoc($pretests_result)) {
+					echo '<input type="hidden" name="pre_tid['.$i++.']" value="'.$pretest_row['item_id'].'" />';
 			}
 		}
 	} 

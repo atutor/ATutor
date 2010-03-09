@@ -1514,8 +1514,9 @@ function provide_alternatives1($cid, $content_page){
 function provide_alternatives($cid, $content){
 	global $db;
 	
-	$vidoe_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid");
+	$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid");
 	$txt_exts = array("txt", "html", "htm");
+	$image_exts = array("gif", "bmp", "png", "jpg", "jpeg");
 	
 	if (($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) && ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) && ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0)) 
 	{
@@ -1538,7 +1539,7 @@ function provide_alternatives($cid, $content){
 	           AND pr.content_id = c.content_id
 		     ORDER BY pr.primary_resource_id, prt.type_id";
 	$result = mysql_query($sql, $db);
-
+//debug($sql);
 	if (mysql_num_rows($result) == 0) return $content;
 	
 	while ($row = mysql_fetch_assoc($result)) 
@@ -1562,23 +1563,17 @@ function provide_alternatives($cid, $content){
 			$ext = substr($row['secondary_resource'], strrpos($row['secondary_resource'], '.')+1);
 			
 			// alternative is video
-			if (in_array($ext, $vidoe_exts))
+			if (in_array($ext, $video_exts))
 				$target = '[media]'.$row['secondary_resource'].'[/media]';
 			// a text primary to be replaced by a visual alternative 
 			else if (in_array($ext, $txt_exts))
 			{
-				if (substr($row['secondary_resource'], 0, 2) == '..') 
-					$file_location = substr($row['secondary_resource'], 3);
+				if ($row['content_path'] <> '') 
+					$file_location = $row['content_path'].'/'.$row['secondary_resource'];
 				else 
 					$file_location = $row['secondary_resource'];
-				$file .= $file_location;
 				
-				if ($row['content_path'] <> '') {
-					$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$row['content_path'].'/'.$file_location;
-				}
-				else {
-					$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
-				}
+				$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
 				$target = file_get_contents($file);
 				
 				// check whether html file
@@ -1600,13 +1595,12 @@ function provide_alternatives($cid, $content){
 					$target = nl2br($target);
 				}
 			} 
-			else if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==1 
-			         && $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="visual")
+			else if (in_array($ext, $image_exts))
 				$target = '<img border="0" alt="Alternate Text" src="'.$row['secondary_resource'].'"/>';
 			// otherwise
 			else
 				$target = '<p><a href="'.$row['secondary_resource'].'">'.$row['secondary_resource'].'</a></p>';
-			
+
 			// replace or append the target alternative to the source
 			if (($row['primary_type']==3 && $_SESSION['prefs']['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE'] == 'replace') ||
 				($row['primary_type']==1 && $_SESSION['prefs']['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE']=='replace') ||
@@ -1616,34 +1610,34 @@ function provide_alternatives($cid, $content){
 				$pattern_replace_to = '${1}${2}'.$target.'${3}';
 				
 			// append/replace target alternative to [media]source[/media]
-			$content = preg_replace("/(.*)(".preg_quote("[media]".$row['resource']."[/media]", "/").")(.*)/s", 
+			$content = preg_replace("/(.*)(".preg_quote("[media]".$row['resource']."[/media]", "/").")(.*)/sU", 
 			             $pattern_replace_to, $content);
 			
 			// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
-			if (preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/s", $content))
+			if (preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
 			{
-				$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/s", 
+				$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU", 
 		                                $pattern_replace_to, $content);
 			}
 
 			// append/replace target alternative to <img ... src="source" ...></a>
-			if (preg_match("/\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>/s", $content))
+			if (preg_match("/\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>/sU", $content))
 			{
-				$content = preg_replace("/(.*)(\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>)(.*)/s", 
+				$content = preg_replace("/(.*)(\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>)(.*)/sU", 
 		                                $pattern_replace_to, $content);
 			}
 			
 			// append/replace target alternative to <object ... source ...></object>
-			if (preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/s", $content))
+			if (preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/sU", $content))
 			{
-				$content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/s", 
+				$content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/sU", 
 		                                $pattern_replace_to, $content);
 			}
 
 			// append/replace target alternative to <embed ... source ...>
-			if (preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/s", $content))
+			if (preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/sU", $content))
 			{
-				$content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/s", 
+				$content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/sU", 
 		                                $pattern_replace_to, $content);
 			}
 		}
