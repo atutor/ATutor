@@ -147,7 +147,7 @@ else
 		           AND prt.type_id = rt.type_id";
 		$primary_type_result = mysql_query($sql, $db);
 		
-		if (mysql_num_rows($primary_type_result) > 0 && !$is_post_indicator_set)
+		if (!$is_post_indicator_set)
 		{
 			echo '  <input type="hidden" name="use_post_for_alt" value="1" />'."\n";
 			$is_post_indicator_set = true;
