@@ -7,6 +7,7 @@ include_once('module.inc.php');
 ob_start(); ?>
 
 <script type="text/javascript">
+//<!--
 var ATutor = ATutor || {};
 ATutor.cpref_switch = ATutor.cpref_switch || {};
 
@@ -38,6 +39,7 @@ ATutor.cpref_switch = ATutor.cpref_switch || {};
         );        
     };   
 })(ATutor);
+//-->
 </script>
 
 <?php
@@ -65,7 +67,7 @@ if ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL'] == 1) {
 
 ?>
 
-<form class="cpref_switch" method="post" name="cpref_switch_form">
+<form class="cpref_switch" method="post" name="cpref_switch_form" action="">
 <fieldset style="position: relative;padding: 1em;height: 15.5em; margin:0.5em">
 <legend style="display:none"><?php echo _AT('content_settings') ?></legend>
 
