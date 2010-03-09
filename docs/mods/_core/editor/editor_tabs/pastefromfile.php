@@ -1,7 +1,19 @@
 <?php
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-debug($FILES);
+?>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>Untitled Document</title>
+        <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function pasteFromFile(title) {
+            	eval("window.opener.document.getElementById(\"ctitle\").value = '"+title+"'");
+            }
+        </script>
+    </head>
+<?php
 
 class FileData
 {
@@ -82,31 +94,14 @@ function paste_from_file() {
     return $fileData;
 }
 
-?>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-        <title>Untitled Document</title>
-        <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            function pasteFromFile() {
-                <?php $fileData = paste_from_file(); ?>
-                jQuery("#ctitle", window.opener).html("<?php echo $fileData->getTitle(); ?>");
-                jQuery("#head", window.opener).html("<?php echo $fileData->getHead(); ?>");
-                jQuery("#use_customized_head", window.opener).attr("checked", <?php if ($fileData->getUseHead() === 1) echo "true"; else echo "false"?>);
-                jQuery("#body_text", window.opener).html("<?php echo $fileData->getBody(); ?>");
-            }
-        </script>
-    </head>
-<?php
-debug($_POST);
-if (isset($_POST['submit_file'])) {
-    //    get file and parse and put in variables.
-
-    echo '<script type="text/javascript">
-             pasteFromFile();
-          </script>';
+if (isset($_POST['submit_file']))
+{
+	$fileData = paste_from_file();
+	echo '<script type="text/javascript">';
+	echo 'pasteFromFile("'.$fileData->getTitle().'")';
+	echo '</script>';
 }
+
 ?>
     <body>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
