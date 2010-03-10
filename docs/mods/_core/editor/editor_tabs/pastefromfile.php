@@ -9,7 +9,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
         <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
         <script type="text/javascript">
             function pasteFromFile(title) {
-            	eval("window.opener.document.getElementById(\"ctitle\").value = '"+title+"'");
+                jQuery("#ctitle",window.opener.document).val(title);
             }
         </script>
     </head>
