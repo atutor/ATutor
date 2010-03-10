@@ -112,11 +112,11 @@ $this->_pages[AT_PA_BASENAME.'profile_album.php']['title_var'] = 'pa_profile_alb
 $this->_pages[AT_PA_BASENAME.'profile_album.php']['parent'] = AT_PA_BASENAME.'index.php';
 $this->_pages[AT_PA_BASENAME.'profile_album.php']['guide']     = 'general/?p=pa_albums.php';
 
-$this->_pages[AT_PA_BASENAME.'shared_albums.php']['title_var'] = 'pa_shared_album';
+$this->_pages[AT_PA_BASENAME.'shared_albums.php']['title_var'] = 'pa_shared_albums';
 $this->_pages[AT_PA_BASENAME.'shared_albums.php']['parent'] = AT_PA_BASENAME.'index.php';
 $this->_pages[AT_PA_BASENAME.'shared_albums.php']['guide']     = 'general/?p=pa_albums.php';
 
-$this->_pages[AT_PA_BASENAME.'search.php']['title_var'] = 'pa_search';
+$this->_pages[AT_PA_BASENAME.'search.php']['title_var'] = 'search';
 $this->_pages[AT_PA_BASENAME.'search.php']['parent'] = AT_PA_BASENAME.'index.php';
 $this->_pages[AT_PA_BASENAME.'search.php']['guide']     = 'general/?p=pa_albums.php';
 
