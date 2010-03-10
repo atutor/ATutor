@@ -12,7 +12,14 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
         ATutor.mods = ATutor.mods || {};
         ATutor.mods.editor = ATutor.mods.editor || {};
 
+        var errorStringPrefix = "<div id=error><h4><?php echo _AT('the_follow_errors_occurred'); ?></h4><ul><li>";      
+        var errorStringSuffix = "</li></ul></div>";      
+
         (function () {
+            ATutor.mods.editor.insertErrorMsg = function (errorString) {
+                jQuery("#subnavlistcontainer", window.opener.document).before(errorStringPrefix + errorString + errorStringSuffix);    
+            };
+            
             ATutor.mods.editor.pasteFromFile = function (body, title, head) {                
                 if (jQuery("#html", window.opener.document).attr("checked") && 
                    (<?php echo $_SESSION['prefs']['PREF_CONTENT_EDITOR']; ?> !== 1)) {
@@ -20,6 +27,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
                 } else {  
                     jQuery("#body_text", window.opener.document).val(body);
                 }
+                
                 if (title != "") {
                     jQuery("#ctitle",window.opener.document).val(title);
                 }
@@ -27,7 +35,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
                     jQuery("#head", window.opener.document).html(head);
                     jQuery("#use_customized_head", window.opener.document).attr("checked", true);
                 }
-                window.close();
             };
         })();
         </script>
@@ -40,6 +47,7 @@ class FileData
     private $title = "";
     private $head = "";
     private $body = "";
+    private $errorMsg = "";
     
     public function getTitle() {
         return $this->title;
@@ -64,6 +72,14 @@ class FileData
     public function setBody($value) {
         $this->body = $value;
     }
+
+    public function getErrorMsg() {
+        return $this->errorMsg;
+    }
+    
+    public function setErrorMsg($value) {
+        $this->errorMsg = $value;
+    }
     
 }
 
@@ -77,10 +93,12 @@ class FileData
  */
 function paste_from_file() {
     $fileData = new FileData();
-    
-    if ($_FILES['uploadedfile_paste']['name']
-        && (($_FILES['uploadedfile_paste']['type'] == 'text/plain')
-            || ($_FILES['uploadedfile_paste']['type'] == 'text/html')) ) {
+    if ($_FILES['uploadedfile_paste']['name'] == '') {
+        $fileData->setErrorMsg(_AT('AT_ERROR_FILE_NOT_SELECTED'));
+        return;
+    }
+    if (($_FILES['uploadedfile_paste']['type'] == 'text/plain')
+            || ($_FILES['uploadedfile_paste']['type'] == 'text/html') ) {
 
         $path_parts = pathinfo($_FILES['uploadedfile_paste']['name']);
         $ext = strtolower($path_parts['extension']);
@@ -104,16 +122,24 @@ function paste_from_file() {
             $fileData->setBody(get_html_body($contents)); 
         } else if ($ext == 'txt') {
             $fileData->setBody(file_get_contents($_FILES['uploadedfile_paste']['tmp_name']));
-        }
-    }
-    return $fileData;
+        } 
+     } else {
+        $fileData->setErrorMsg(_AT('AT_ERROR_BAD_FILE_TYPE'));
+     }
+     return $fileData;
 }
 
 if (isset($_POST['submit_file']))
 {
-	$fileData = paste_from_file();
 	echo '<script type="text/javascript">';
-	   echo 'ATutor.mods.editor.pasteFromFile("'.htmlentities($fileData->getBody()).'","'.htmlentities($fileData->getTitle()).'","'.htmlentities($fileData->getHead()).'");';
+	$fileData = paste_from_file();
+	$errorMessage = $fileData->getErrorMsg();
+	if ($errorMessage == "") {
+       echo 'ATutor.mods.editor.pasteFromFile("'.htmlentities($fileData->getBody()).'","'.htmlentities($fileData->getTitle()).'","'.htmlentities($fileData->getHead()).'");';
+    } else {
+       echo 'ATutor.mods.editor.insertErrorMsg("'.$errorMessage.'");';
+    }
+    echo "window.close();";
 	echo '</script>';
 }
 
