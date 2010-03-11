@@ -69,7 +69,7 @@
 			<?php foreach($this->comments as $k=>$comment_array): ?>
 				<div class="comment_box" id="comment_box">
 					<!-- TODO: Profile link and img -->
-					<div class="flc-inlineEditable"><strong><?php echo $comment_array['author']==''?_AT('unknown'):htmlentities_utf82($comment_array['author']); ?>:</strong>
+					<div class="flc-inlineEditable"><a href=""><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
 						<?php 
 							if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']){
 								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf82($comment_array['comment']).'</span>'; 
@@ -82,8 +82,7 @@
 						<!-- TODO: if author, add in-line "edit" -->
 						<?php echo AT_date(_AT('forum_date_format'), $comment_array['created_date'], AT_DATE_MYSQL_DATETIME);?>
 						<?php if ($this->action_permission): ?>
-<!--						<a href="<?php echo AT_PA_BASENAME.'delete_comment.php?aid='.$this->album_info['id'].SEP.'comment_id='.$comment_array['id']?>"><?php echo _AT('delete');?></a>
--->
+						<a href="<?php echo AT_PA_BASENAME.'delete_comment.php?aid='.$this->album_info['id'].SEP.'comment_id='.$comment_array['id']?>"><?php echo _AT('delete');?></a>
 						<?php endif; ?>
 					</div>
 				</div>
@@ -91,10 +90,8 @@
 			<!-- TODO: Add script to check, comment cannot be empty. -->
 			<div>
 				<form action="<?php echo AT_PA_BASENAME;?>addComment.php" method="post" class="input-form">
-				    <div class="row"><label for="author"><?php echo _AT('author');?></label></div>
-				    <div class="row"><input type="text" id="author" name="author" /></div>
 					<div class="row"><label for="comments"><?php echo _AT('comments');?></label></div>
-					<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();" onkeyup="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
+					<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();" onkeypress="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
 					<div class="row"><textarea name="comment" id="comment" style="display:none;"></textarea></div>
 					<div class="row">
 						<input type="hidden" name="aid" value="<?php echo $this->album_info['id'];?>" />

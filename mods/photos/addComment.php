@@ -35,11 +35,10 @@ if (trim($_POST['comment']) == ''){
 	$msg->addError('PA_EMPTY_COMMENT'); //sql
 } else {
 	$pa = new PhotoAlbum();
-	$result = $pa->addComment($id, $_POST['comment'], $_SESSION['member_id'], $_POST['author'], $isPhoto);
+	$result = $pa->addComment($id, $_POST['comment'], $_SESSION['member_id'], $isPhoto);
 
 	if ($result){
 		//TODO: AJAX
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 		$msg->addError('PA_ADD_COMMENT_FAILED'); //sql
 	}

@@ -91,8 +91,7 @@ $this->_pages[AT_PA_BASENAME.'index.php']['img']       = AT_PA_BASENAME.'images/
 if($_SESSION['course_id'] < 1){
 	$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'profile_album.php', AT_PA_BASENAME.'create_album.php');
 }else{
-//	$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'profile_album.php', AT_PA_BASENAME.'course_albums.php', AT_PA_BASENAME.'shared_albums.php', AT_PA_BASENAME.'create_album.php');
-	$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'create_album.php');
+	$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'profile_album.php', AT_PA_BASENAME.'course_albums.php', AT_PA_BASENAME.'shared_albums.php', AT_PA_BASENAME.'create_album.php');
 	$this->_pages[AT_PA_BASENAME.'course_albums.php']['title_var'] = 'pa_course_albums';
 	$this->_pages[AT_PA_BASENAME.'course_albums.php']['parent'] = AT_PA_BASENAME.'index.php';
 	$this->_pages[AT_PA_BASENAME.'course_albums.php']['guide']     = 'general/?p=pa_index.php';

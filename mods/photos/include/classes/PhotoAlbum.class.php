@@ -482,22 +482,20 @@ class PhotoAlbum {
 	 * @param	int		id (can be photo_id, or album_id)
 	 * @param	string	comment	
 	 * @param	int		user id
-	 * @param   string  author
 	 * @param	boolean	true if it is photo_id, false otherwise
 	 */
-	function addComment($id, $comment, $member_id, $author, $isPhoto){
+	function addComment($id, $comment, $member_id, $isPhoto){
 		global $addslashes, $db;
 
 		$id = intval($id);
 		$member_id = intval($member_id);
 		$comment = $addslashes($comment);
-		$author = $addslashes($author);
 
 		if(!$isPhoto){
-			$sql =	'INSERT INTO '.TABLE_PREFIX."pa_album_comments (album_id, comment, member_id, author, created_date) VALUES ($id, '$comment', $member_id, '$author', NOW())";
+			$sql =	'INSERT INTO '.TABLE_PREFIX."pa_album_comments (album_id, comment, member_id, created_date) VALUES ($id, '$comment', $member_id, NOW())";
 		} else {
-			$sql =	'INSERT INTO '.TABLE_PREFIX."pa_photo_comments (photo_id, comment, member_id, author, created_date) VALUES ($id, '$comment', $member_id, '$author', NOW())";
-		} 
+			$sql =	'INSERT INTO '.TABLE_PREFIX."pa_photo_comments (photo_id, comment, member_id, created_date) VALUES ($id, '$comment', $member_id, NOW())";
+		}
 		$result = mysql_query($sql, $db);
 		return $result;
 	}
