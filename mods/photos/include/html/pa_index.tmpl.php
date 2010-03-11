@@ -45,6 +45,14 @@
 				<p><?php echo _AT('last_updated', AT_date(_AT('forum_date_format'), $row['last_updated'], AT_DATE_MYSQL_DATETIME));?></p>
 				<p><?php echo _AT('created').': '.AT_date(_AT('forum_date_format'), $row['created_date'], AT_DATE_MYSQL_DATETIME); ?></p>
 				</span><br/>
+				<?php 
+					/* If the span has 3 rows, we need 2 <br> for the next span to sink to the bottom.  
+					 * So if we have an extra "created_by" row, we need an extra <br> tag
+					 */
+					if (isset($this->isSharedAlbum)){
+						echo '<br/>';
+					}
+				?>
 				<?php if($pa->checkAlbumPriv($_SESSION['member_id'])): ?>
 				<span><p><a href="<?php echo AT_PA_BASENAME;?>edit_album.php?id=<?php echo $row['id'];?>"><?php echo _AT('edit'); ?></a> | <a href="<?php echo AT_PA_BASENAME;?>delete_album.php?id=<?php echo $row['id'];?>"><?php echo _AT('delete');?></a></p></span>
 				<?php endif; ?>

@@ -54,7 +54,7 @@
 			<!-- TODO: Add script to check, comment cannot be empty. -->
 			<form action="<?php echo AT_PA_BASENAME;?>addComment.php" method="post" class="input-form">
 				<div class="row"><label for="comments"><?php echo _AT('comments');?></label></div>
-				<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus(); onkeyup="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
+				<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();" onkeyup="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
 				<div class="row"><textarea name="comment" id="comment" style="display:none;"></textarea></div>
 				<div class="row">
 					<input type="hidden" name="pid" value="<?php echo $this->photo_info['id'];?>" />

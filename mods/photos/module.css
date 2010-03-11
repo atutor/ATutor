@@ -40,11 +40,11 @@ div.album_panel .photo_frame{
 	min-width: 140px;
 	text-align: center;
 }
-div.album_panel .photo_frame a:focus{
+div.album_panel .photo_frame a:focus, div.album_panel .photo_frame a:hover{
 	cursor: pointer;
 	float:left;
 	min-width: 140px;
-	text-align: center;
+	min-height: 140px;
 	background: #FCE6C9;
 }
 div.album_panel .photo_frame img{

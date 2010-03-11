@@ -11,7 +11,7 @@
 			<div class="row" id="upload_button_div">
 				<p name="top"><?php echo _AT('pa_upload_blurb');?></p>
 				<p class="memory_usage"><?php echo _AT('pa_memory_usage').': '. number_format($this->memory_usage, 2) .'/ '. $this->allowable_memory_usage . ' ' . _AT('mb'); ?></p>
-				<input id="upload_button" type="button" value="<?php echo _AT('pa_add_more_photos'); ?>" class="button"/>
+				<label for="add_more_photos" id="upload_button"><?php echo _AT('pa_add_more_photos'); ?></label>
 			</div>			
 			<div class="row" id="files_pending" style="display:none;">
 				<img src="<?php echo AT_PA_BASENAME; ?>images/loading.gif" alt="loading" title="loading"/>
@@ -248,7 +248,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	 //deletion link
 	 a_delete = jQuery('<a>'); 
 	 a_delete.attr('href', '<?php echo $_SERVER["REQUEST_URI"]; ?>#top');
-	 a_delete.attr('title', file);
+	 a_delete.attr('title', '<?php _AT("delete"); ?> ' + file);
 	 a_delete.attr('onClick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this)');	 
 	  
 	 //img wrapper
@@ -295,7 +295,7 @@ function deletePhoto(aid, pid, thisobj) {
 		//simply remove tihs node without running anything in the DB
 		jQuery(thisobj).parent().parent().remove();	//delete from DOM tree.
 	}
-	jQuery('#upload_button').focus(); 
+	jQuery('#add_more_photos').focus(); 
 }
 
 function GetXmlHttpObject() {

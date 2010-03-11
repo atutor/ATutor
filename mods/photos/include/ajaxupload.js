@@ -313,6 +313,9 @@
         // disabled in FireFox, let's fix it
         this.enable();        
         
+		// create the first input button on the fly
+		this._createInput();
+
         this._rerouteClicks();
     };
     
@@ -357,6 +360,7 @@
 			var div = document.getElementById("upload_button_div");
             input.setAttribute('type', 'file');
             input.setAttribute('name', this._settings.name);
+			input.setAttribute('id', 'add_more_photos');
 			input.setAttribute('title', this._settings.title);
             
             addStyles(input, {
@@ -364,9 +368,9 @@
                 // in Opera only 'browse' button
                 // is clickable and it is located at
                 // the right side of the input
-//                'right' : 0,
-  //              'margin' : 0,
-    //            'padding' : 0,
+                'right' : 0,
+                'margin' : 0,
+                'padding' : 0,
 //                'fontSize' : '480px',                			     
                 'cursor' : 'pointer'
             });            
@@ -673,10 +677,9 @@
                 this._clearInput();                
                 return;
             }
-			
-			jQuery('#upload_button').focus();  //IE8 won't refocus after the createForm
 
             // sending request    
+			jQuery('#upload_manager').focus();
             var iframe = this._createIframe();
             var form = this._createForm(iframe);
             
@@ -698,6 +701,11 @@
 
             // get ready for next request            
             this._createInput();
+
+			//IE won't refocus after the createForm
+			if(jQuery('#add_more_photos').length){
+				jQuery('#add_more_photos').focus();
+			} 
         }
     };
 })(); 
