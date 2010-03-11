@@ -1039,7 +1039,7 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 		$i=max($current_page-$window - max($window-$num_pages+$current_page,0), 1);
 
 		if ($i > 1) {
-			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p=1">1</a></li>';
+			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p=1" title="'._AT('page').' 1">1</a></li>';
 			if ($i > 2) {
 		        echo '<li>&hellip;</li>';
 			}
@@ -1047,16 +1047,16 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 
 		for ($i; $i<= min($current_page+$window -min($current_page-$window,0),$num_pages); $i++) {
 			if ($current_page == $i) {
-				echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.$i.'" class="current"><em>'.$current_page.'</em></a></li>';
+				echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.$i.'" class="current" title="'._AT('page').' '. $current_page.'"><em>'.$current_page.'</em></a></li>';
 			} else {
-				echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.$i.'">'.$i.'</a></li>';
+				echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.$i.'" title="'._AT('page').' '. $i.'">'.$i.'</a></li>';
 			}
 		}
         if ($i <= $num_pages) {
 			if ($i < $num_pages) {
 		        echo '<li>&hellip;</li>';
 	        }
-			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.$num_pages.'">'.$num_pages.'</a></li>';
+			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.$num_pages.'" title="'._AT('page').' '. $num_pages.'">'.$num_pages.'</a></li>';
 		}
 		echo '</ul>';
 		echo '</div>';
