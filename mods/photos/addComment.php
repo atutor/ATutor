@@ -39,6 +39,7 @@ if (trim($_POST['comment']) == ''){
 
 	if ($result){
 		//TODO: AJAX
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 		$msg->addError('PA_ADD_COMMENT_FAILED'); //sql
 	}
