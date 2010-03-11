@@ -17,7 +17,7 @@
 				<img src="<?php echo AT_PA_BASENAME; ?>images/loading.gif" alt="loading" title="loading"/>
 				<span></span>
 			</div>
-			<div class="row" style="max-height: 210px; overflow-y: auto;">
+			<div class="row">
 				<ul class="files"></ul>
 			</div>
 			<div class="row" id="files_done" style="display:none;">
@@ -91,7 +91,7 @@
 			<div>
 				<form action="<?php echo AT_PA_BASENAME;?>addComment.php" method="post" class="input-form">
 					<div class="row"><label for="comments"><?php echo _AT('comments');?></label></div>
-					<div class="row"><textarea name="comment" id="comment_template" onclick="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();" onkeyup="this.style.display='none';c=document.getElementById('comment');c.style.display='block';c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
+					<div class="row"><textarea name="comment" id="comment_template" onclick="jQuery(this).hide();c=jQuery('#comment');c.show();c.focus();" onkeyup="jQuery(this).hide();c=jQuery('#comment');c.show();c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
 					<div class="row"><textarea name="comment" id="comment" style="display:none;"></textarea></div>
 					<div class="row">
 						<input type="hidden" name="aid" value="<?php echo $this->album_info['id'];?>" />
@@ -242,14 +242,14 @@ var ajax_upload = new AjaxUpload('upload_button', {
 
 	 //image for the x
 	 imgx = jQuery('<img>').attr('src', '<?php echo $_base_href . "images/x.gif" ?>');
-	 imgx.attr('title', '<?php echo _AT("remove");?>');
-	 imgx.attr('alt', '<?php echo _AT("remove");?>');
+	 imgx.attr('title', '<?php echo _AT("remove");?> ' + file);
+	 imgx.attr('alt', '<?php echo _AT("remove");?> ' + file);
 
 	 //deletion link
 	 a_delete = jQuery('<a>'); 
 	 a_delete.attr('href', '<?php echo $_SERVER["REQUEST_URI"]; ?>#top');
-	 a_delete.attr('title', '<?php _AT("delete"); ?> ' + file);
-	 a_delete.attr('onClick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this)');	 
+	 //a_delete.attr('onclick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this);');
+	 a_delete.click(function(){deletePhoto(response_array.aid, response_array.pid, this)});
 	  
 	 //img wrapper
 	 img_wrapper = jQuery('<div>');
@@ -295,7 +295,9 @@ function deletePhoto(aid, pid, thisobj) {
 		//simply remove tihs node without running anything in the DB
 		jQuery(thisobj).parent().parent().remove();	//delete from DOM tree.
 	}
-	jQuery('#add_more_photos').focus(); 
+	if(jQuery('#add_more_photos').length){
+		jQuery('#add_more_photos').focus();
+	} 
 }
 
 function GetXmlHttpObject() {
