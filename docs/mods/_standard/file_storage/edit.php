@@ -192,7 +192,7 @@ $file_path = fs_get_file_path($id);
 			<?php echo _AT('contents'); ?><br />
 			<?php echo _AT('not_editable'); ?>
 			<br />
-			<?php if (in_array($ext, array('gif', 'jpg','jpeg'))): ?>
+			<?php if (in_array($ext, array('gif', 'jpg','jpeg', 'png', 'bmp'))): ?>
 				<img src="mods/_standard/file_storage/index.php<?php echo $owner_arg_prefix; ?>download=1<?php echo SEP; ?>files<?php echo urlencode('[]').'='.$id; ?>" alt="" title="" />
 
 			<?php elseif ($ext == 'swf'): ?>
