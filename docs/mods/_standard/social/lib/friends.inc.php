@@ -635,20 +635,6 @@ function getProfileLink($id, $str){
 	return $link;
 }
 
-
-/**
- * Convert all input to htmlentities output, in UTF-8.
- * @param	string	input to be convert
- * @param	boolean	true if we wish to change all carrier returns to a <br/> tag, false otherwise.
- */
-function htmlentities_utf8($str, $use_nl2br=true){
-	$return = htmlentities($str, ENT_QUOTES, 'UTF-8');
-	if ($use_nl2br){
-		return nl2br($return);
-	} 
-	return $return;
-}
-
 /**
  * This function will return a list of the member's activities 
  * @param	member_id	The id of the member we wish to get the activities from.

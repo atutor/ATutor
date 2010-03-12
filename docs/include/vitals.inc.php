@@ -1291,6 +1291,21 @@ function is_mobile_theme() {
 	return ($_SESSION['prefs']['PREF_THEME'] == 'mobile');
 }
 
+/**
+ * Convert all input to htmlentities output, in UTF-8.
+ * @param	string	input to be convert
+ * @param	boolean	true if we wish to change all carrier returns to a <br/> tag, false otherwise.
+ * @author	Harris Wong
+ * @date	March 12, 2010
+ */
+function htmlentities_utf8($str, $use_nl2br=true){
+	$return = htmlentities($str, ENT_QUOTES, 'UTF-8');
+	if ($use_nl2br){
+		return nl2br($return);
+	} 
+	return $return;
+}
+
 require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
 
 $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
