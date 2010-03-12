@@ -669,7 +669,22 @@ class Module {
 	 * @date	Feb 25, 2010
 	 */
 	function getNews(){
-		global $msg;
+		global $msg, $enrolled_courses, $db;
+
+		if (!isset($enrolled_courses)){
+			$sql = 'SELECT E.approved, E.last_cid, C.* FROM AT_course_enrollment E, AT_courses C WHERE E.member_id=1 AND E.course_id=C.course_id ORDER BY C.title';
+			$result = mysql_query($sql, $db);
+			if ($result) {
+				while($row = mysql_fetch_assoc($result)){
+					$enrolled_courses = $enrolled_courses . $row['course_id'] . ', ';
+				}
+				$enrolled_courses = substr($enrolled_courses, 0, -2); 
+
+				if ($enrolled_courses != ''){
+					$enrolled_courses = '(' . $enrolled_courses . ')';
+				} 
+			}
+		}
 
 		if (file_exists(AT_MODULE_PATH . $this->_directoryName . '/module_news.php')) {
 			require(AT_MODULE_PATH . $this->_directoryName . '/module_news.php');
@@ -678,7 +693,6 @@ class Module {
 				return $fnctn($course_id);
 			}
 		}
-
 	}
 	
 	private function convertContent164($course_id) {

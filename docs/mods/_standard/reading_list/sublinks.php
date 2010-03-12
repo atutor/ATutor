@@ -15,7 +15,7 @@ if (mysql_num_rows($result) > 0) {
 		          (strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'. 
 		          validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 	}
-	return $list;	
+	return $list;
 } else {
 	return 0;			//si ritorna 0 nel caso in cui il modulo corrente non possieda dei sottocontenuti
 }

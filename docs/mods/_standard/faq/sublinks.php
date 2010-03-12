@@ -15,8 +15,7 @@ if (mysql_num_rows($result) > 0) {
 		          (strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 
 		          validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 	}
-	return $list;
-	
+	return $list;	
 } else {
 	return 0;
 }

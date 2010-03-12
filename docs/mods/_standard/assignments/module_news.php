@@ -16,14 +16,21 @@
  * @return list of news, [timestamp]=>
  */
 function assignments_news() {
-	global $db;
+	global $db, $enrolled_courses;
 	$news = array();
 
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'assignments WHERE course_id='.$_SESSION['course_id'].' ORDER BY date_due DESC';
+	if ($enrolled_courses == ''){
+		return $news;
+	} 
+
+	$sql = 'SELECT * FROM '.TABLE_PREFIX.'assignments WHERE course_id IN '.$enrolled_courses.' ORDER BY date_due DESC';
 	$result = mysql_query($sql, $db);
 	if($result){
 		while($row = mysql_fetch_assoc($result)){
-			$news[] = array('time'=>$row['date_due'], 'object'=>$row);
+			$news[] = array('time'=>$row['date_due'], 
+							'object'=>$row, 
+							'thumb'=>'',
+							'link'=>_AT('ASSIGNMENT_HAS_BEEN_POSTED', $row['title']));
 		}
 	}
 	return $news;

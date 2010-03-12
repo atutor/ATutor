@@ -37,7 +37,7 @@ if (query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 $_pages['mods/_standard/blogs/add_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['title_var'] = 'add';
 
 $_pages['mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['title'] = blogs_get_blog_name(BLOGS_GROUP, $_REQUEST['oid']);
-$_pages['mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['parent']    = 'mods/_standard/blogs/index.php';
+$_pages['mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['parent'] = 'mods/_standard/blogs/index.php';
 if (query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 	$_pages['mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid']]['children'] = array('mods/_standard/blogs/add_post.php');
 } else {

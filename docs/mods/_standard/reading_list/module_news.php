@@ -24,7 +24,12 @@ function reading_list_news() {
 
 	if (mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
-			$news[] = array('time'=>$row['date_end'], 'object'=>$row);
+			$news[] = array('time'=>$row['date_end'], 
+							'object'=>$row,
+							'thumb'=>'images/home-reading_list_sm.png',
+							'link'=>'<a href="'.url_rewrite('mods/_standard/reading_list/display_resource.php?id=' . $row['resource_id'],
+									AT_PRETTY_URL_IS_HEADER).'"'.(strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'. 
+									validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
 		}	
 	}
 	return $news;

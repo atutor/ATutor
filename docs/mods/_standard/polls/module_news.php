@@ -16,14 +16,23 @@
  * @return list of news, [timestamp]=>
  */
 function polls_news() {
-	global $db;
+	global $db, $enrolled_courses;
 	$news = array();
 
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$_SESSION['course_id'].' ORDER BY created_date DESC';
+	if ($enrolled_courses == ''){
+		return $news;
+	} 
+
+	$sql = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id IN'.$enrolled_courses.' ORDER BY created_date DESC';
 	$result = mysql_query($sql, $db);
 	if($result){
 		while($row = mysql_fetch_assoc($result)){
-			$news[] = array('time'=>$row['created_date'], 'object'=>$row);
+			$news[] = array('time'=>$row['created_date'], 
+							'object'=>$row,
+							'thumb'=>'images/home-polls_sm.png',
+							'link'=>'<a href="'.url_rewrite('mods/_standard/polls/index.php#'.$row['poll_id'], AT_PRETTY_URL_IS_HEADER).'"'.
+									(strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 
+									validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
 		}
 	}
 	return $news;

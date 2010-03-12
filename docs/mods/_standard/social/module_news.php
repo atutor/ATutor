@@ -25,7 +25,11 @@ function social_news() {
 	$actvity_obj = new Activity();
 	$activities = $actvity_obj->getFriendsActivities($_SESSION['member_id']);
 	foreach($activities as $row){
-		$news[] = array('time'=>$row['created_date'], 'object'=>$row);
+		$link_title = printSocialName($row['member_id']).' '. $row['title'];
+		$news[] = array('time'=>$row['created_date'], 
+						'object'=>$row, 
+						'thumb'=>'images/home-directory_sm.png',
+						'link'=>'<span title="'.strip_tags($link_title).'">'.$link_title."</span>");
 	}
 	return $news;
 }
