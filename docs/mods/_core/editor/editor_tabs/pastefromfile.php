@@ -12,12 +12,16 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
         ATutor.mods = ATutor.mods || {};
         ATutor.mods.editor = ATutor.mods.editor || {};
 
-        var errorStringPrefix = "<div id=error><h4><?php echo _AT('the_follow_errors_occurred'); ?></h4><ul><li>";      
-        var errorStringSuffix = "</li></ul></div>";      
+        var errorStringPrefix = '<div id="error"><h4><?php echo _AT('the_follow_errors_occurred'); ?></h4><ul><li>';      
+        var errorStringSuffix = '</li></ul></div>';      
 
         (function () {
             ATutor.mods.editor.insertErrorMsg = function (errorString) {
                 jQuery("#subnavlistcontainer", window.opener.document).before(errorStringPrefix + errorString + errorStringSuffix);    
+            };
+
+            ATutor.mods.editor.removeErrorMsg = function () {
+                jQuery("#error", window.opener.document).remove();
             };
             
             ATutor.mods.editor.pasteFromFile = function (body, title, head) {                
@@ -95,9 +99,7 @@ function paste_from_file() {
     $fileData = new FileData();
     if ($_FILES['uploadedfile_paste']['name'] == '') {
         $fileData->setErrorMsg(_AT('AT_ERROR_FILE_NOT_SELECTED'));
-        return;
-    }
-    if (($_FILES['uploadedfile_paste']['type'] == 'text/plain')
+    } elseif (($_FILES['uploadedfile_paste']['type'] == 'text/plain')
             || ($_FILES['uploadedfile_paste']['type'] == 'text/html') ) {
 
         $path_parts = pathinfo($_FILES['uploadedfile_paste']['name']);
@@ -112,14 +114,14 @@ function paste_from_file() {
 
             if (($start_pos !== false) && ($end_pos !== false)) {
                 $start_pos += strlen('<title>');
-                $fileData->setTitle(trim(substr($contents, $start_pos, $end_pos-$start_pos)));
+                $fileData->setTitle(htmlentities_utf8(trim(substr($contents, $start_pos, $end_pos-$start_pos))), true);
             }
             unset($start_pos);
             unset($end_pos);
 
-            $fileData->setHead(trim(get_html_head_by_tag($contents, array("link", "style", "script"))));
+            $fileData->setHead(htmlentities_utf8(trim(get_html_head_by_tag($contents, array("link", "style", "script")))), true);
             
-            $fileData->setBody(get_html_body($contents)); 
+            $fileData->setBody(htmlentities_utf8(get_html_body($contents)), true); 
         } else if ($ext == 'txt') {
             $fileData->setBody(file_get_contents($_FILES['uploadedfile_paste']['tmp_name']));
         } 
@@ -132,10 +134,11 @@ function paste_from_file() {
 if (isset($_POST['submit_file']))
 {
 	echo '<script type="text/javascript">';
+    echo 'ATutor.mods.editor.removeErrorMsg();';
 	$fileData = paste_from_file();
 	$errorMessage = $fileData->getErrorMsg();
 	if ($errorMessage == "") {
-       echo 'ATutor.mods.editor.pasteFromFile("'.htmlentities($fileData->getBody()).'","'.htmlentities($fileData->getTitle()).'","'.htmlentities($fileData->getHead()).'");';
+       echo 'ATutor.mods.editor.pasteFromFile("'.$fileData->getBody().'","'.$fileData->getTitle().'","'.$fileData->getHead().'");';
     } else {
        echo 'ATutor.mods.editor.insertErrorMsg("'.$errorMessage.'");';
     }
