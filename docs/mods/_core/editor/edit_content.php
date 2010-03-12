@@ -410,8 +410,6 @@ $pid = intval($_REQUEST['pid']);
 	if ($do_check) {
 		$changes_made = check_for_changes($content_row, $row_alternatives);
 	}
-	//LAW
-//	debug($_POST);
 ?>
 <div align="center">
 	<?php output_tabs($current_tab, $changes_made); ?>
