@@ -1,7 +1,20 @@
 <?php
-echo "Here I am?";
+define('AT_INCLUDE_PATH', '../../include/');
 
+$_user_location = 'users';
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+
+if (isset($_POST['next'])) {
+    include_once('../display_settings.inc.php');
+}
 ?>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
+<label for="display">I would like to make the text on the screen easier to see.</label>
+<input type="checkbox" name="display" id="display" />
+<input type="submit" value="Next »" name="next" id="next" />
+</form>
+
 <!-- 
 <label for="clang">Preferred Language:</label>
 <select name="clang" id="clang">
