@@ -1294,7 +1294,8 @@ function is_mobile_theme() {
 /**
  * Convert all input to htmlentities output, in UTF-8.
  * @param	string	input to be convert
- * @param	boolean	true if we wish to change all carrier returns to a <br/> tag, false otherwise.
+ * @param	boolean	true if we wish to change all newlines(\r\n) to a <br/> tag, false otherwise.  
+ *			ref: http://php.net/manual/en/function.nl2br.php
  * @author	Harris Wong
  * @date	March 12, 2010
  */
