@@ -4,29 +4,39 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_user_location = 'users';
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+define('DISPLAY', 0);
+define('STRUCTURE', 1);
+define('NAVIGATION', 2);
+
 //debug($_POST);
 
 if (isset($_POST['next'])) {
-	if (is_array($_POST['pref_wiz'])) {
-		foreach ($_POST['pref_wiz'] as $pref) {
-			switch ($pref) {
-    			case 0:
+	if (is_array($_POST['pref_wiz'])) {   
+		foreach ($_POST['pref_wiz'] as $pref => $val) {
+		    switch ($val) {
+    			case DISPLAY:
         			include_once('../display_settings.inc.php');
         			break;
-    			case 1:
-        			echo $pref;
+    			case STRUCTURE:
+        			echo "structural stuff";
         			break;
+    			case NAVIGATION:
+                    include_once('../control_settings.inc.php');
+    			    break;
 			}
 		}
 	}
 } else {
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
-<input type="checkbox" name="pref_wiz[]" id="display" />
+<input type="checkbox" name="pref_wiz[]" value="0" id="display" />
 <label for="display">I would like to make the text on the screen easier to see.</label>
 
-<input type="checkbox" name="pref_wiz[]" id="structure" />
+<input type="checkbox" name="pref_wiz[]" value="1" id="structure" />
 <label for="structure">I would like to enhance the structure of the content.</label>
+
+<input type="checkbox" name="pref_wiz[]" value="2" id="navigation" />
+<label for="navigation">I would like to enhance the navigation of the content.</label>
 
 <input type="submit" value="Next" name="next" id="next" />
 </form>
