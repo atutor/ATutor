@@ -282,6 +282,10 @@ $_pages['users/preferences.php']['title_var']  = 'preferences';
 $_pages['users/preferences.php']['parent'] = AT_NAV_START;
 $_pages['users/preferences.php']['guide']  = 'general/?p=preferences.php';
 
+$_pages['users/pref_wizard/index.php']['title_var']  = 'preferences';
+$_pages['users/pref_wizard/index.php']['parent'] = AT_NAV_START;
+
+
 
 /* course pages */
 $_pages['index.php']['title_var']  = 'home';
