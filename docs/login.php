@@ -109,9 +109,9 @@ if (isset($this_login, $this_password)) {
 	} 
 	
 	if ($used_cookie) {
-		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences,password AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND password='$this_password'";
+		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences,password AS pass, language, status, last_login FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND password='$this_password'";
 	} else {
-		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
+		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass, last_login FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
 	}
 	$result = mysql_query($sql, $db);
 
@@ -154,7 +154,7 @@ if (isset($this_login, $this_password)) {
 		mysql_query($sql, $db);
 
 		$msg->addFeedback('LOGIN_SUCCESS');
-		header('Location: bounce.php?course='.$_POST['form_course_id']);
+    	header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;
 	} else {
 		// check if it's an admin login.
