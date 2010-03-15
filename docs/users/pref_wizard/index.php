@@ -1,32 +1,20 @@
 <?php
 define('AT_INCLUDE_PATH', '../../include/');
-
 $_user_location = 'users';
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-define('DISPLAY', 0);
-define('STRUCTURE', 1);
-define('NAVIGATION', 2);
 
 //debug($_POST);
 
 if (isset($_POST['next']) && (is_array($_POST['pref_wiz']))) {   
-	foreach ($_POST['pref_wiz'] as $pref => $val) {
-	    switch ($val) {
-   			case DISPLAY:
-       			include_once('../display_settings.inc.php');
-       			break;
-   			case STRUCTURE:
-       			echo "structural stuff";
-       			break;
-   			case NAVIGATION:
-                include_once('../control_settings.inc.php');
-   			    break;
-		}
+	foreach ($_POST['pref_wiz'] as $pref => $template) {
+	    $savant->assign('pref_template', $template);
+        $savant->display('users/pref_wizard/index.tmpl.php');    
 	}
+} else {
+    $savant->display('users/pref_wizard/index.tmpl.php');     
 }
 
-$savant->display('users/pref_wizard/index.tmpl.php');    
+
 ?>
 
 <!-- 
