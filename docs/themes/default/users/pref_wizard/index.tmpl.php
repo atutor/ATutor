@@ -2,6 +2,7 @@
 define('DISPLAY', 0);
 define('STRUCTURE', 1);
 define('NAVIGATION', 2);
+define('ALT_TO_TEXT', 3);
 
 global $_custom_head, $onload;
     
@@ -13,8 +14,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
-    if (isset($this->pref_template)) {
-        switch ($this->pref_template) {
+    $pref_next = $this->pref_next;
+    $pref = $this->pref_wiz[$pref_next];
+    if ($pref != null) {
+        switch ($pref) {
             case DISPLAY:
                 include_once('../display_settings.inc.php');
                 break;
@@ -24,7 +27,15 @@ require(AT_INCLUDE_PATH.'header.inc.php');
             case NAVIGATION:
                 include_once('../control_settings.inc.php');
                 break;
+            case ALT_TO_TEXT:
+                include_once('../alt_to_text.inc.php');
+                break;
         }
+        foreach ($this->pref_wiz as $pref => $template) { 
+            echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
+        }
+        $pref_next++;
+        echo '<input type="hidden" value="'.$pref_next.'" name="pref_next" id="pref_next" />';
     } else {
         $savant->display('users/pref_wizard/initialize.tmpl.php');
     }
