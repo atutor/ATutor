@@ -32,7 +32,7 @@
 			<?php foreach($this->comments as $k=>$comment_array): ?>
 				<div class="comment_box" id="comment_box">
 					<!-- TODO: Profile link and img -->
-					<div class="flc-inlineEditable"><a href=""><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
+					<div class="flc-inlineEditable"><a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
 						<?php 
 							if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']){
 								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf82($comment_array['comment']).'</span>'; 

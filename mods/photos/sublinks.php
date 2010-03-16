@@ -60,7 +60,9 @@ while($row = mysql_fetch_assoc($result)){
 }
 
 //sort the comments by date in decrement order
-uasort($all_comments, 'cmp');
+if (!empty($all_comments)){
+	uasort($all_comments, 'cmp');
+}
 
 //assign proper link to the comment list.
 foreach($all_comments as $comment){
