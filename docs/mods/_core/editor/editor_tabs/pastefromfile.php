@@ -16,6 +16,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
         var errorStringSuffix = '</li></ul></div>';      
 
         (function () {
+            
             ATutor.mods.editor.insertErrorMsg = function (errorString) {
                 jQuery("#subnavlistcontainer", window.opener.document).before(errorStringPrefix + errorString + errorStringSuffix);    
             };
@@ -23,8 +24,17 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
             ATutor.mods.editor.removeErrorMsg = function () {
                 jQuery("#error", window.opener.document).remove();
             };
+
+            ATutor.mods.editor.testStuff = function () {
+                var body = ATutor.mods.editor.stuff;
+                body = body.replace(/\\/g,"");
+                alert(body);
+                jQuery("#body_text", window.opener.document).val(body);
+                                
+            };
             
-            ATutor.mods.editor.pasteFromFile = function (body, title, head) {                
+            ATutor.mods.editor.pasteFromFile = function (body, title, head) {
+                body = body.replace(/\\/g,"");
                 if (jQuery("#html", window.opener.document).attr("checked") && 
                    (<?php echo $_SESSION['prefs']['PREF_CONTENT_EDITOR']; ?> !== 1)) {
                 	window.opener.tinyMCE.activeEditor.setContent(body);
@@ -114,16 +124,15 @@ function paste_from_file() {
 
             if (($start_pos !== false) && ($end_pos !== false)) {
                 $start_pos += strlen('<title>');
-                $fileData->setTitle(htmlentities_utf8(trim(substr($contents, $start_pos, $end_pos-$start_pos))), true);
+                $fileData->setTitle(trim(substr($contents, $start_pos, $end_pos-$start_pos)));
             }
             unset($start_pos);
             unset($end_pos);
 
-            $fileData->setHead(htmlentities_utf8(trim(get_html_head_by_tag($contents, array("link", "style", "script")))), true);
-            
-            $fileData->setBody(htmlentities_utf8(get_html_body($contents)), true); 
+            $fileData->setHead(trim(get_html_head_by_tag($contents, array("link", "style", "script"))));
+            $fileData->setBody(trim(get_html_body($contents))); 
         } else if ($ext == 'txt') {
-            $fileData->setBody(file_get_contents($_FILES['uploadedfile_paste']['tmp_name']));
+            $fileData->setBody(trim(file_get_contents($_FILES['uploadedfile_paste']['tmp_name'])));
         } 
      } else {
         $fileData->setErrorMsg(_AT('AT_ERROR_BAD_FILE_TYPE'));
@@ -138,8 +147,7 @@ if (isset($_POST['submit_file']))
 	$fileData = paste_from_file();
 	$errorMessage = $fileData->getErrorMsg();
 	if ($errorMessage == "") {
-//       echo 'ATutor.mods.editor.pasteFromFile("'.$fileData->getBody().'","'.$fileData->getTitle().'","'.$fileData->getHead().'");';
-		echo 'jQuery("#body_text", window.opener.document).val('.json_encode($fileData->getBody()).');';
+        echo 'ATutor.mods.editor.pasteFromFile('.json_encode($fileData->getBody()).','.json_encode($fileData->getTitle()).','.json_encode($fileData->getHead()).');';
     } else {
        echo 'ATutor.mods.editor.insertErrorMsg("'.$errorMessage.'");';
     }
