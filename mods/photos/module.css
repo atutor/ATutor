@@ -127,6 +127,7 @@ div.album .search_photo_frame{
 div.album .search_slider{
 	float: left;
 	overflow: hidden;
+	position: relative;	/* ie7 */
 }
 div.album .search_slider_left{
 	float: left;
