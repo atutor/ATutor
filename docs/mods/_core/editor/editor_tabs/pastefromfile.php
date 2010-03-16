@@ -138,7 +138,8 @@ if (isset($_POST['submit_file']))
 	$fileData = paste_from_file();
 	$errorMessage = $fileData->getErrorMsg();
 	if ($errorMessage == "") {
-       echo 'ATutor.mods.editor.pasteFromFile("'.$fileData->getBody().'","'.$fileData->getTitle().'","'.$fileData->getHead().'");';
+//       echo 'ATutor.mods.editor.pasteFromFile("'.$fileData->getBody().'","'.$fileData->getTitle().'","'.$fileData->getHead().'");';
+       echo 'jQuery("#bodyVal").val('.json_encode($fileData->getBody()).');';
     } else {
        echo 'ATutor.mods.editor.insertErrorMsg("'.$errorMessage.'");';
     }
