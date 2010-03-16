@@ -16,7 +16,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <?php
     $pref_next = $this->pref_next;
     $pref = $this->pref_wiz[$pref_next];
-    if ($pref != null) {
+    $submitVal = "Next";
+    if ($pref == null) {
+        $savant->display('users/pref_wizard/initialize.tmpl.php');
+    } else {
         switch ($pref) {
             case DISPLAY:
                 include_once('../display_settings.inc.php');
@@ -31,16 +34,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
                 include_once('../alt_to_text.inc.php');
                 break;
         }
-        foreach ($this->pref_wiz as $pref => $template) { 
-            echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
-        }
+
         $pref_next++;
-        echo '<input type="hidden" value="'.$pref_next.'" name="pref_next" id="pref_next" />';
-    } else {
-        $savant->display('users/pref_wizard/initialize.tmpl.php');
+        if($pref_next <= $count($this->pref_wiz) - 1) {
+            foreach ($this->pref_wiz as $pref => $template) { 
+                echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
+            }
+            echo '<input type="hidden" value="'.$pref_next.'" name="pref_next" id="pref_next" />';
+        } else {
+            $submitVal = "Done";
+        }
     }
+    echo '<input type="submit" value="'.$submitVal.'" name="submit" id="submit" />'
 ?>
-    <input type="submit" value="Next" name="next" id="next" />
 </form>
 
 <?php 

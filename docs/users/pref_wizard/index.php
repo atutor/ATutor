@@ -2,19 +2,16 @@
 define('AT_INCLUDE_PATH', '../../include/');
 $_user_location = 'users';
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
 
-//debug($_POST);
 
-if (isset($_POST['next']) && (is_array($_POST['pref_wiz']))) {   
-	foreach ($_POST['pref_wiz'] as $pref => $template) {
-	    $savant->assign('pref_template', $template);
-        $savant->display('users/pref_wizard/index.tmpl.php');    
-	}
-} else {
-    $savant->display('users/pref_wizard/index.tmpl.php');     
+debug($_POST);
+
+if (isset($_POST['submit'])) {
+    $savant->assign('pref_wiz', $_POST['pref_wiz']);
+    $savant->assign('pref_next', intVal($_POST['pref_next']));
 }
-
-
+$savant->display('users/pref_wizard/index.tmpl.php');     
 ?>
 
 <!-- 
