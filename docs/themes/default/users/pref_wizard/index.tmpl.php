@@ -1,16 +1,23 @@
 <?php 
 define('DISPLAY', 0);
-define('STRUCTURE', 1);
-define('NAVIGATION', 2);
-define('ALT_TO_TEXT', 3);
+define('NAVIGATION', 1);
+define('ALT_TO_TEXT', 2);
+define('ALT_TO_AUDIO', 3);
+define('ALT_TO_VISUAL', 4);
+define('SUPPORT', 5);
+define('ATUTOR', 6);
 
-global $_custom_head, $onload;
-    
-$_custom_head = "<script language=\"JavaScript\" src=\"jscripts/TILE.js\" type=\"text/javascript\"></script>";
-$onload = "setPreviewFace(); setPreviewSize(); setPreviewColours();";
-
-require(AT_INCLUDE_PATH.'header.inc.php'); 
+global $savant;
+global $_base_path;
 ?>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <title>Preferences wizard</title>
+        <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+		<script src="<?php echo $_base_path; ?>jscripts/TILE.js" type="text/javascript"></script>
+    </head>
+    <body>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
@@ -24,14 +31,23 @@ require(AT_INCLUDE_PATH.'header.inc.php');
             case DISPLAY:
                 include_once('../display_settings.inc.php');
                 break;
-            case STRUCTURE:
-                echo "structural stuff";
-                break;
             case NAVIGATION:
                 include_once('../control_settings.inc.php');
                 break;
             case ALT_TO_TEXT:
                 include_once('../alt_to_text.inc.php');
+                break;
+            case ALT_TO_AUDIO:
+                include_once('../alt_to_audio.inc.php');
+                break;
+            case ALT_TO_VISUAL:
+                include_once('../alt_to_visual.inc.php');
+                break;
+            case SUPPORT:
+                include_once('../tool_settings.inc.php');
+                break;
+            case ATUTOR:
+                include_once('../atutor_settings.inc.php');
                 break;
         }
 
@@ -49,7 +65,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
     echo '<input type="submit" value="'.$submitVal.'" name="submit" id="submit" />';
 ?>
 </form>
-
-<?php 
-    require(AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+</body>
+<div id="footer">
+    <?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
+    <?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
+</div>
+</body>
+</html>

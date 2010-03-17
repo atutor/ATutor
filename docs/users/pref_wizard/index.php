@@ -2,10 +2,8 @@
 define('AT_INCLUDE_PATH', '../../include/');
 $_user_location = 'users';
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
-
-
-debug($_POST);
 
 if (isset($_POST['submit'])) {
     $savant->assign('pref_wiz', $_POST['pref_wiz']);
@@ -25,44 +23,7 @@ $savant->display('users/pref_wizard/index.tmpl.php');
 	<option value="ta">Tamil</option>
 	<option value="ur">Urdu</option>
 </select>
-<input
-	type="checkbox" onkeypress="checkNext()" onclick="checkNext()"
-	name="screenEnhance" id="screenEnhance">
-<label for="screenEnhance">I would like to make the text on the screen
-easier to see.</label>
-<input
-	type="checkbox" onkeypress="checkNext()" onclick="checkNext()"
-	name="structPres" id="structPres">
-<label for="structPres">I would like to enhance the structure of the
-content.</label>
-<input
-	type="checkbox" onkeypress="checkNext()" onclick="checkNext()"
-	name="structNav" id="structNav">
-<label for="structNav">I would like to enhance the navigation of the
-content.</label>
-<input
-	type="checkbox" onkeypress="checkNext()" onclick="checkNext()"
-	name="altToVisual" id="altToVisual">
-<label for="altToVisual">I would like alternatives to visual content.</label>
-<input
-	type="checkbox" onkeypress="checkNext()" onclick="checkNext()"
-	name="altToText" id="altToText">
-<label for="altToText">I would like alternatives to textual content.</label>
-<input
-	type="checkbox" onkeypress="checkNext()" onclick="checkNext()"
-	name="altToAudio" id="altToAudio">
-<label for="altToAudio">I would like alternatives to auditory content.</label>
-<input
-	type="checkbox" onkeypress="checkNext()" onclick="checkNext()"
-	name="stylesheet" id="stylesheet">
-<label for="stylesheet">I would like to specify the URL of my personal
-stylesheet.</label>
-<input
-	type="checkbox" onkeypress="checkNext()" onclick="checkNext()"
-	name="learnerScaffold" id="learnerScaffold">
-<label for="learnerScaffold">I would like access to learner support
-tools.</label>
--->
+
 <!-- 
 
 
