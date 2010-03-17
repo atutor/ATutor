@@ -36,7 +36,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
         }
 
         $pref_next++;
-        if($pref_next <= $count($this->pref_wiz) - 1) {
+        $max_array_key = count($this->pref_wiz) - 1;       
+        if ($pref_next <= $max_array_key) {
             foreach ($this->pref_wiz as $pref => $template) { 
                 echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
             }
@@ -45,7 +46,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
             $submitVal = "Done";
         }
     }
-    echo '<input type="submit" value="'.$submitVal.'" name="submit" id="submit" />'
+    echo '<input type="submit" value="'.$submitVal.'" name="submit" id="submit" />';
 ?>
 </form>
 
