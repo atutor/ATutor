@@ -347,8 +347,10 @@ function printSubmenuHeader(title)
 <div style="background-color:#E6E6E6; font-size:0.85em; padding-top: 5px; border-bottom:1px solid black; height:2em;">
 	<!-- the sub navigation -->
 	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
-		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>					
-			<a href="<?php echo $this->base_path; ?>users/pref_wizard/index.php"><img border="0" alt="edit preferences" src="<?php echo $this->base_href; ?>images/wand.png"/></a> | <strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
+		    <a><img border="0" alt="edit preferences" src="<?php echo $this->base_href; ?>images/wand.png" onclick="window.open('<?php echo $this->base_path; ?>users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;"/></a> | 
+			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | 
+			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
 			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
 		<?php endif; ?>
