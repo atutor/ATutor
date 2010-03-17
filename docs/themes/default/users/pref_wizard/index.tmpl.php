@@ -1,12 +1,4 @@
 <?php 
-define('DISPLAY', 0);
-define('NAVIGATION', 1);
-define('ALT_TO_TEXT', 2);
-define('ALT_TO_AUDIO', 3);
-define('ALT_TO_VISUAL', 4);
-define('SUPPORT', 5);
-define('ATUTOR', 6);
-
 global $savant;
 global $_base_path;
 ?>
@@ -24,36 +16,15 @@ global $_base_path;
     $pref_next = $this->pref_next;
     $pref = $this->pref_wiz[$pref_next];
     $submitVal = "Next";
-    if ($pref == null) {
-        $savant->display('users/pref_wizard/initialize.tmpl.php');
-    } else {
-        switch ($pref) {
-            case DISPLAY:
-                include_once('../display_settings.inc.php');
-                break;
-            case NAVIGATION:
-                include_once('../control_settings.inc.php');
-                break;
-            case ALT_TO_TEXT:
-                include_once('../alt_to_text.inc.php');
-                break;
-            case ALT_TO_AUDIO:
-                include_once('../alt_to_audio.inc.php');
-                break;
-            case ALT_TO_VISUAL:
-                include_once('../alt_to_visual.inc.php');
-                break;
-            case SUPPORT:
-                include_once('../tool_settings.inc.php');
-                break;
-            case ATUTOR:
-                include_once('../atutor_settings.inc.php');
-                break;
-        }
+    if ($this->start_template != null) {
+        $savant->display($this->start_template);
+    }
+    else if ($this->pref_template != null) {
+        include_once($this->pref_template);
 
         $pref_next++;
-        $max_array_key = count($this->pref_wiz) - 1;       
-        if ($pref_next <= $max_array_key) {
+        $max_pref_key = count($this->pref_wiz) - 1;       
+        if ($pref_next <= $max_pref_key) {
             foreach ($this->pref_wiz as $pref => $template) { 
                 echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
             }
