@@ -81,7 +81,7 @@ $list = $Backup->getAvailableList();
 			echo $row['file_name'].'</label></td>';
 			echo '<td>'.AT_date(_AT('filemanager_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME).'</td>';
 			echo '<td align="right">'.get_human_size($row['file_size']).'</td>';
-			echo '<td>'.AT_Print($row['description'], 'backups.description').'</td>';
+			echo '<td>'.AT_Print(htmlentities_utf8($row['description']), 'backups.description').'</td>';
 			echo '</tr>';
 		}
 ?>

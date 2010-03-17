@@ -56,7 +56,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$hidden_vars['delete_news']  = TRUE;
 		$hidden_vars['form_news_id'] = $row['news_id'];
 		
-		$confirm = array('DELETE_NEWS', AT_print($row['title'], 'news.title'));
+		$confirm = array('DELETE_NEWS', AT_print(htmlentities_utf8($row['title']), 'news.title'));
 		$msg->addConfirm($confirm, $hidden_vars);
 		
 		$msg->printConfirm();

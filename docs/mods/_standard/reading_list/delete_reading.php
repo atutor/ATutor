@@ -49,7 +49,7 @@ if ($row = mysql_fetch_assoc($result)){
 	$resource_result = mysql_query($sql, $db);
 	if ($resource_row = mysql_fetch_assoc($resource_result)){
 		$hidden_vars['id'] = $reading_id;
-		$confirm = array('RL_DELETE_READING', $resource_row['title']);
+		$confirm = array('RL_DELETE_READING', htmlentities_utf8($resource_row['title']));
 		$msg->addConfirm($confirm, $hidden_vars);
 		$msg->printConfirm();
 	}

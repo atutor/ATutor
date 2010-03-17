@@ -46,9 +46,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<form method="post" action="'.htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES).'">';
 		echo '<table width="70%" border="0" cellspacing="0" cellpadding="0" summary="" class="dropdown" align="center">';
 		echo '<tr>';
-		echo '<td valign="top" class="dropdown-heading" nowrap="nowrap" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
+		echo '<td valign="top" class="dropdown-heading" nowrap="nowrap" align="left"><strong>' . AT_print(htmlentities_utf8($row['question']), 'polls.question') . '</strong>';
 		echo '<input type="hidden" name="poll_id" value="'.$row['poll_id'].'" /></td></tr>';
-
 
 		if (!authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
 			$sql = "SELECT * FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id] AND member_id=$_SESSION[member_id]";
@@ -66,7 +65,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 					echo '<tr>';
 					echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">';
-					echo '<small>' . AT_print($row['choice' . $i], 'polls.choice') . '</small><br />';
+					echo '<small>' . AT_print(htmlentities_utf8($row['choice' . $i]), 'polls.choice') . '</small><br />';
 					echo '<img src="'.$_base_path . 'images/blue.gif" height="5" width="'.$width.'" alt="" /> '.$row['count' . $i];
 					echo '</td></tr>';
 				}
@@ -76,7 +75,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				if ($row['choice' . $i]) {
 					echo '<tr>';
 					echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">';
-					echo '<small><input type="radio" name="choice" value="'.$i.'" id="xc'.$i.$row['poll_id'].'" /><label for="xc'.$i.$row['poll_id'].'">' . AT_print($row['choice' . $i], 'polls.choice') . '</label></small></td></tr>';
+					echo '<small><input type="radio" name="choice" value="'.$i.'" id="xc'.$i.$row['poll_id'].'" /><label for="xc'.$i.$row['poll_id'].'">' . AT_print(htmlentities_utf8($row['choice' . $i]), 'polls.choice') . '</label></small></td></tr>';
 				}
 			}
 

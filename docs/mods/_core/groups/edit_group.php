@@ -100,7 +100,7 @@ $row['modules'] = explode('|', $row['modules']);
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit'); ?></legend>
 	<div class="row">
-		<h3><?php echo $type_row['title']; ?></h3>
+		<h3><?php echo htmlentities_utf8($type_row['title']); ?></h3>
 	</div>
 
 	<div class="row">

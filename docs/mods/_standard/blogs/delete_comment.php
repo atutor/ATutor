@@ -61,7 +61,7 @@ $sql = 'SELECT comment FROM '.TABLE_PREFIX.'blog_posts_comments WHERE comment_id
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
-$msg->addConfirm(array('DELETE', $row['comment']), $hidden_vars);
+$msg->addConfirm(array('DELETE', htmlentities_utf8($row['comment'])), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

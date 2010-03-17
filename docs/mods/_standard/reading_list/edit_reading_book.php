@@ -90,7 +90,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<select name="existingbook" id="booktitle">
 
 			<?php while ($rowbook = mysql_fetch_assoc($book_result)): ?>
-				<option value="<?php echo $rowbook['resource_id']; ?>"<?php if ($rowbook['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($rowbook['title']); ?></option>
+				<option value="<?php echo $rowbook['resource_id']; ?>"<?php if ($rowbook['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo htmlentities_utf8($rowbook['title']); ?></option>
 			<?php endwhile; ?>
 		
 		</select>
@@ -110,7 +110,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>	
 	
 	<div class="row">
-	<label for="comment"><?php  echo _AT('comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo htmlspecialchars($rowreading['comment']);  ?>" />
+	<label for="comment"><?php  echo _AT('comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo htmlentities_utf8($rowreading['comment']);  ?>" />
 	</div>
 
 <h3><?php echo _AT('rl_read_by_date'); ?></h3>
@@ -135,19 +135,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<select name="startday" id="startdate">
 		<?php for ($i = 1; $i <= 31; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_start[2]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
+			<option value="<?php echo intval($i); ?>" <?php if ($i == $array_date_start[2]) { echo ' selected="selected"'; } ?>><?php echo intval($i); ?></option>
 		<?php } ?>
 		</select>
 		
 		<select name="startmonth">
 		<?php for ($i = 1; $i <= 12; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_start[1]) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', $i, AT_DATE_INDEX_VALUE) ?></option>
+			<option value="<?php echo intval($i); ?>" <?php if ($i == $array_date_start[1]) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', intval($i), AT_DATE_INDEX_VALUE) ?></option>
 		<?php } ?>
 		</select>
 
 		<select name="startyear">
 		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_start[0]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
+			<option value="<?php echo intval($i); ?>" <?php if ($i == $array_date_start[0]) { echo ' selected="selected"'; } ?>><?php echo intval($i); ?></option>
 		<?php } ?>
 		</select>
 	
@@ -156,19 +156,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 		<select name="endday" id="enddate">
 		<?php for ($i = 1; $i <= 31; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_end[2]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
+			<option value="<?php echo intval($i); ?>" <?php if ($i == $array_date_end[2]) { echo ' selected="selected"'; } ?>><?php echo intval($i); ?></option>
 		<?php } ?>
 		</select>
 	
 		<select name="endmonth">
 		<?php for ($i = 1; $i <= 12; $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_end[1]) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', $i, AT_DATE_INDEX_VALUE) ?></option>
+			<option value="<?php echo intval($i); ?>" <?php if ($i == $array_date_end[1]) { echo ' selected="selected"'; } ?>><?php echo AT_Date('%M', intval($i), AT_DATE_INDEX_VALUE) ?></option>
 		<?php } ?>
 		</select>
 	
 		<select name="endyear">
 		<?php for ($i = ($today['year'] - '1'); $i <= ($today['year'] + '4'); $i++){ ?>
-			<option value="<?php echo $i ?>" <?php if ($i == $array_date_end[0]) { echo ' selected="selected"'; } ?>><?php echo $i ?></option>
+			<option value="<?php echo intval($i); ?>" <?php if ($i == $array_date_end[0]) { echo ' selected="selected"'; } ?>><?php echo intval($i); ?></option>
 		<?php } ?>
 		</select>
 	

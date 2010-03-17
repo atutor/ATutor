@@ -106,7 +106,7 @@ $result = mysql_query($sql, $db);
 		}
 		?>/></td>
 
-		<td><label for="a<?php echo $row['assignment_id']; ?>"><?php echo $row['title']; ?></label></td>
+		<td><label for="a<?php echo $row['assignment_id']; ?>"><?php echo htmlentities_utf8($row['title']); ?></label></td>
 
 		<td><?php if($row['assign_to'] == '0'){echo _AT('all_students'); } else {
 					$sql = "SELECT title FROM ".TABLE_PREFIX."groups_types WHERE type_id=$row[assign_to] AND course_id=$_SESSION[course_id]";

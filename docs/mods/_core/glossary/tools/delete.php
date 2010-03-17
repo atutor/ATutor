@@ -61,7 +61,7 @@ while ($row = mysql_fetch_assoc($result)){
 	$title = $row['word'];
 }
 		
-$msg->addConfirm(array('DELETE', $title),  $hidden_vars);
+$msg->addConfirm(array('DELETE', htmlentities_utf8($title)),  $hidden_vars);
 $msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 	
 $msg->printConfirm();

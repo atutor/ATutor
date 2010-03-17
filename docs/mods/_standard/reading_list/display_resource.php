@@ -32,6 +32,15 @@ if (!$row = mysql_fetch_assoc($result)) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
+
+$row['type']		= intval($row['type']);
+$row['title']		= htmlentities_utf8($row['title']);
+$row['author']		= htmlentities_utf8($row['author']);
+$row['publisher']	= htmlentities_utf8($row['publisher']);
+$row['date']		= htmlentities_utf8($row['date']);
+$row['id']			= htmlentities_utf8($row['id']);
+$row['comments']	= htmlentities_utf8($row['comments']);
+
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="get" name="form">
 <div class="input-form">

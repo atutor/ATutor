@@ -61,8 +61,8 @@ if ($_POST['cancel']) {
 if ($_POST['edit_post']) {
 	$missing_fields = array();
 
-	$_POST['subject']	= str_replace('<', '&lt;', trim($_POST['subject']));
-	$_POST['body']		= str_replace('<', '&lt;', trim($_POST['body']));
+//	$_POST['subject']	= str_replace('<', '&lt;', trim($_POST['subject']));
+//	$_POST['body']		= str_replace('<', '&lt;', trim($_POST['body']));
 	$_POST['pid']		= intval($_POST['pid']);
 
 	$_POST['subject']  = $addslashes($_POST['subject']);
@@ -130,7 +130,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label>
-		<textarea cols="65" name="body" rows="10" id="body"><?php echo $post_row['body']; ?></textarea>
+		<textarea cols="65" name="body" rows="10" id="body"><?php echo htmlentities_utf8($post_row['body']); ?></textarea>
 	</div>
 	
 	<div class="row">

@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: groups.php 7586 2008-05-30 16:46:17Z hwong $
 
-define('AT_INCLUDE_PATH', 'include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -29,7 +29,7 @@ $result = mysql_query($sql, $db);
 echo '<ol id="tools">';
 
 while ($row = mysql_fetch_assoc($result)) {
-	echo '<li class="top-tool">'.$row['title'] . ' ';
+	echo '<li class="top-tool">'.htmlentities_utf8($row['title']) . ' ';
 
 	$modules = explode('|', $row['modules']);
 	asort($modules);

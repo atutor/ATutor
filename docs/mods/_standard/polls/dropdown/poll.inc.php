@@ -52,7 +52,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 	if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN) || ($my_row = mysql_fetch_assoc($result))) {
 		echo '<tr>';
-		echo '<td valign="top" class="dropdown-heading" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
+		echo '<td valign="top" class="dropdown-heading" align="left"><strong>' . AT_print(htmlentities_utf8($row['question']), 'polls.question') . '</strong>';
 		echo '</td></tr>';
 
 		// we already voted
@@ -66,7 +66,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 				echo '<tr>';
 				echo '<td valign="top" class="dropdown"  align="left">';
-				echo '<small>' . AT_print($row['choice' . $i], 'polls.choice') . '</small><br />';
+				echo '<small>' . AT_print(htmlentities_utf8($row['choice' . $i]), 'polls.choice') . '</small><br />';
 				echo '<img src="'.$_base_path . 'images/blue.gif" height="5" width="'.$width.'" alt="" /> '.$row['count' . $i];
 				echo '</td></tr>';
 			}
@@ -74,14 +74,14 @@ if ($row = mysql_fetch_assoc($result)) {
 	} else {
 		// show the form to vote
 		echo '<tr>';
-		echo '<td valign="top" class="dropdown" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
+		echo '<td valign="top" class="dropdown" align="left"><strong>' . AT_print(htmlentities_utf8($row['question']), 'polls.question') . '</strong>';
 		echo '<form method="post" action="'.htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES).'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" />';
 		echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">';
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 			if ($row['choice' . $i]) {
 				echo '<tr>';
 				echo '<td valign="top" align="left">';
-				echo '<small><input type="radio" name="choice" value="'.$i.'" id="c'.$i.'" /><label for="c'.$i.'">' . AT_print($row['choice' . $i], 'polls.choice') . '</label></small></td></tr>';
+				echo '<small><input type="radio" name="choice" value="'.$i.'" id="c'.$i.'" /><label for="c'.$i.'">' . AT_print(htmlentities_utf8($row['choice' . $i]), 'polls.choice') . '</label></small></td></tr>';
 			}
 		}
 

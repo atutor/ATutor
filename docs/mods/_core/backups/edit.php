@@ -46,7 +46,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit'); ?></legend>
 	<div class="row">
 		<label for="description"><?php echo _AT('optional_description'); ?></label>
-		<textarea cols="30" rows="2" id="description" name="new_description"><?php echo $row['description']; ?></textarea>
+		<textarea cols="30" rows="2" id="description" name="new_description"><?php echo htmlentities_utf8($row['description']); ?></textarea>
 	</div>
 
 	<div class="row buttons">

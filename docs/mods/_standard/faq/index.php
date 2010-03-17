@@ -33,8 +33,8 @@ $result  = mysql_query($sql, $db);
 
 					<?php do { ?>
 						<li style="font-weight: normal">
-							<h3><?php echo $entry_row['question']; ?></h3>
-							<p><?php echo $entry_row['answer'];?></p>
+							<h3><?php echo htmlentities_utf8($entry_row['question']); ?></h3>
+							<p><?php echo htmlentities_utf8($entry_row['answer']);?></p>
 						</li>
 						<?php $counter++; ?>
 					<?php } while ($entry_row = mysql_fetch_assoc($entry_result)) ?>

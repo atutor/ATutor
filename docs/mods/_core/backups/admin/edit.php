@@ -57,7 +57,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<label for="desc"><?php echo _AT('description'); ?></label><br />
-		<textarea cols="30" rows="2" name="new_description" id="desc"><?php echo $backup_row['description']; ?></textarea>
+		<textarea cols="30" rows="2" name="new_description" id="desc"><?php echo htmlentities_utf8($backup_row['description']); ?></textarea>
 	</div>
 
 	<div class="row buttons">

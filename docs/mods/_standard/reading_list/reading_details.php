@@ -30,6 +30,13 @@ $resultReadings = mysql_query($sql, $db);
 $sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)){ 
+	$row['type']		= intval($row['type']);
+	$row['title']		= htmlentities_utf8($row['title']);
+	$row['author']		= htmlentities_utf8($row['author']);
+	$row['publisher']	= htmlentities_utf8($row['publisher']);
+	$row['date']		= htmlentities_utf8($row['date']);
+	$row['comments']	= htmlentities_utf8($row['comments']);
+
 	if ($row['type'] == RL_TYPE_BOOK): ?>
 	<div class="input-form">
 		<p><?php  echo _AT('title'). ": <strong>". $row['title']. "</strong>"; ?><br/>

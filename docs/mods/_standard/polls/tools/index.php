@@ -86,7 +86,7 @@ $result = mysql_query($sql, $db);
 	<?php do { ?>
 		<tr onmousedown="document.form['p_<?php echo $row['poll_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['poll_id']; ?>">
 			<td><input type="radio" id="p_<?php echo $row['poll_id']; ?>" name="poll" value="<?php echo $row['poll_id']; ?>" /></td>
-			<td><label for="p_<?php echo $row['poll_id']; ?>"><?php echo AT_print($row['question'], 'polls.question'); ?></label></td>
+			<td><label for="p_<?php echo $row['poll_id']; ?>"><?php echo AT_print(htmlentities_utf8($row['question']), 'polls.question'); ?></label></td>
 			<td><?php echo AT_DATE(_AT("server_date_format"), $row['created_date']); ?></td>
 			<td><?php echo $row['total']; ?></td>
 		</tr>

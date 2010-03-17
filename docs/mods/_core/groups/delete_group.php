@@ -83,7 +83,7 @@ unset($hidden_vars);
 $hidden_vars['id'] = $_GET['id'];
 $hidden_vars['type_id'] = $row['type_id'];
 
-$msg->addConfirm(array('DELETE_GROUP',$row['title']), $hidden_vars);
+$msg->addConfirm(array('DELETE_GROUP',htmlentities_utf8($row['title'])), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

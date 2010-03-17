@@ -79,7 +79,7 @@ $result = mysql_query($sql, $db);
 			
 				<td><input type="radio" name="aid" value="<?php echo $row['news_id']; ?>" id="n<?php echo $row['news_id']; ?>" /></td>
 				
-				<td><label for="n<?php echo $row['news_id']; ?>"><?php echo AT_print($row['title'], 'news.title'); ?></label></td>
+				<td><label for="n<?php echo $row['news_id']; ?>"><?php echo AT_print(htmlentities_utf8($row['title']), 'news.title'); ?></label></td>
 				<td><?php echo AT_date(_AT('announcement_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></td>
 			</tr>
 		<?php } while ($row = mysql_fetch_assoc($result)); ?>

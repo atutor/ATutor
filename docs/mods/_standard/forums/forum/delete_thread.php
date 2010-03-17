@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
@@ -99,19 +99,19 @@ if (isset($_POST['submit_no'])) {
 	}
 }
 
-$_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
-$_pages['forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
-$_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php?fid='.$fid);
+$_pages['mods/_standard/forums/forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
+$_pages['mods/_standard/forums/forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
+$_pages['mods/_standard/forums/forum/index.php?fid='.$fid]['children'] = array('mods/_standard/forums/forum/new_thread.php?fid='.$fid);
 
-$_pages['forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
-$_pages['forum/new_thread.php?fid='.$fid]['parent']    = 'forum/index.php?fid='.$fid;
+$_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
+$_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
 
-$_pages['forum/view.php']['title']  = $post_row['subject'];
-$_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
+$_pages['mods/_standard/forums/forum/view.php']['title']  = $post_row['subject'];
+$_pages['mods/_standard/forums/forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
 
-$_pages['forum/delete_thread.php']['title_var'] = 'delete_post';
-$_pages['forum/delete_thread.php']['parent']    = 'forum/index.php?fid='.$fid;
-$_pages['forum/delete_thread.php']['children']  = array();
+$_pages['mods/_standard/forums/forum/delete_thread.php']['title_var'] = 'delete_post';
+$_pages['mods/_standard/forums/forum/delete_thread.php']['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
+$_pages['mods/_standard/forums/forum/delete_thread.php']['children']  = array();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -119,7 +119,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $sql = "SELECT * from ".TABLE_PREFIX."forums_threads WHERE post_id = '$pid'";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)){
-	$title = htmlspecialchars($row['subject'], ENT_COMPAT, "UTF-8");
+	$title = htmlentities_utf8($row['subject']);
 }
 
 $hidden_vars['fid']  = $_GET['fid'];

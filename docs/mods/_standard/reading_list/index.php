@@ -37,6 +37,10 @@ $result = mysql_query($sql, $db);
 	<?php do { ?>
 			<?php // get the external resource using the resource ID from the reading
 			$id = $row['resource_id'];
+			$row['date_start'] = htmlentities_utf8($row['date_start']);
+			$row['date_end'] = htmlentities_utf8($row['date_end']);
+			$row['comment'] = htmlentities_utf8($row['comment']);
+
 			$sql = "SELECT title, type, url FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 			$resource_result = mysql_query($sql, $db);
 			if ($resource_row = mysql_fetch_assoc($resource_result)){ 
@@ -58,7 +62,7 @@ $result = mysql_query($sql, $db);
 				}?>
 				</td>
 
-				<td><a href="<?php echo url_rewrite('mods/_standard/reading_list/display_resource.php?id='.$id); ?>" title="<?php echo _AT('rl_view_resource_details')?>" ><?php echo $resource_row['title']; ?></a>		
+				<td><a href="<?php echo url_rewrite('mods/_standard/reading_list/display_resource.php?id='.$id); ?>" title="<?php echo _AT('rl_view_resource_details')?>" ><?php echo htmlentities_utf8($resource_row['title']); ?></a>		
 				</td>
 				<td><?php echo _AT ($row['required']); ?></td>
 				<td><?php echo $row['comment']; ?></td>

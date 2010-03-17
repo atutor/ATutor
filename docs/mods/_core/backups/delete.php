@@ -43,7 +43,7 @@ while ($row = mysql_fetch_assoc($result)){
 	$title = $row['file_name'];
 }
 	$index['backup_id'] = $_GET['backup_id'];
-	$msg->addConfirm(array('DELETE', $title ), $index);
+	$msg->addConfirm(array('DELETE', htmlentities_utf8($title)), $index);
 	$msg->printConfirm();
 
 require (AT_INCLUDE_PATH.'footer.inc.php');

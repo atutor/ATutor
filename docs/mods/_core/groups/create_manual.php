@@ -94,7 +94,7 @@ $types = array();
 $sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
-	$types[$row['type_id']] = $row['title'];
+	$types[$row['type_id']] = htmlentities_utf8($row['title']);
 }
 
 ?>
@@ -113,17 +113,17 @@ while ($row = mysql_fetch_assoc($result)) {
 				</select>
 				<em><?php echo _AT('or'); ?></em>
 			<?php endif; ?>
-			<label for="new"><?php echo _AT('new_type'); ?></label> <input type="text" name="new_type" value="<?php echo htmlspecialchars($_POST['new_type']); ?>" id="new" size="30" maxlength="40" />
+			<label for="new"><?php echo _AT('new_type'); ?></label> <input type="text" name="new_type" value="<?php echo htmlentities_utf8($_POST['new_type']); ?>" id="new" size="30" maxlength="40" />
 		</div>
 
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="prefix"><?php echo _AT('title'); ?></label><br />
-			<input type="text" name="prefix" id="prefix" value="<?php echo htmlspecialchars($_POST['prefix']); ?>" size="20" maxlength="40" />
+			<input type="text" name="prefix" id="prefix" value="<?php echo htmlentities_utf8($_POST['prefix']); ?>" size="20" maxlength="40" />
 		</div>
 
 		<div class="row">
 			<label for="description"><?php echo _AT('description'); ?></label><br />
-			<textarea name="description" id="description" cols="10" rows="2"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
+			<textarea name="description" id="description" cols="10" rows="2"><?php echo htmlentities_utf8($_POST['description']); ?></textarea>
 		</div>
 
 		<div class="row">

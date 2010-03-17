@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: delete.php 7208 2008-01-09 16:07:24Z greg $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -63,7 +63,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$hidden_vars['link_id'] = $link_id;
 		$hidden_vars['cat_id'] = $row['cat_id'];
 		
-		$confirm = array('DELETE_LINK', AT_print($row['LinkName'], 'resource_links.LinkName'));
+		$confirm = array('DELETE_LINK', AT_print(htmlentities_utf8($row['LinkName']), 'resource_links.LinkName'));
 		$msg->addConfirm($confirm, $hidden_vars);
 		
 		$msg->printConfirm();

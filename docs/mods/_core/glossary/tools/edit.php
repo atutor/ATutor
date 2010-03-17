@@ -101,12 +101,12 @@ if ($_POST['submit']) {
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit_glossary'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('glossary_term');  ?></label><br/ >
-		<input type="text" name="word" size="40" id="title" value="<?php echo htmlspecialchars($stripslashes($row['word'])); ?>" />
+		<input type="text" name="word" size="40" id="title" value="<?php echo htmlentities_utf8($stripslashes($row['word'])); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('glossary_definition'); ?></label><br />
-		<textarea name="definition" cols="55" rows="7" id="body"><?php echo $row['definition']; ?></textarea>
+		<textarea name="definition" cols="55" rows="7" id="body"><?php echo htmlentities_utf8($row['definition']); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -129,7 +129,7 @@ if ($_POST['submit']) {
 					echo ' selected="selected" ';
 				}
 			
-				echo '>'.$row_g['word'].'</option>';
+				echo '>'.htmlentities_utf8($row_g['word']).'</option>';
 			} while ($row_g = mysql_fetch_array($result));
 			
 			echo '</select>';

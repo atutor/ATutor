@@ -501,9 +501,9 @@ function printSubmenuHeader(title)
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 				
 				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-				<li><?php echo $this->sub_level_pages[$i]['title']; ?></li>
+				<li><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></li>
 				<?php else: ?>
-					<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+					<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></a></li>
 				<?php endif; ?>
 				<?php if ($i < $num_pages-1): 
 					echo " ";?>

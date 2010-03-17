@@ -49,7 +49,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	$hidden_vars['topic_id'] = $row['topic_id'];
 	$hidden_vars['id'] = $_GET['id'];
 
-	$confirm = array('DELETE_FAQ_QUESTION', $row['question']);
+	$confirm = array('DELETE_FAQ_QUESTION', htmlentities_utf8($row['question']));
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 } else {

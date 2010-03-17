@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
@@ -69,13 +69,13 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-$_pages['forum/index.php?fid='.$_REQUEST['fid']]['title']    = get_forum_name($_REQUEST['fid']);
-$_pages['forum/index.php?fid='.$_REQUEST['fid']]['parent']   = 'forum/list.php';
-$_pages['forum/index.php?fid='.$_REQUEST['fid']]['children'] = array('forum/move_thread.php');
+$_pages['mods/_standard/forums/forum/index.php?fid='.$_REQUEST['fid']]['title']    = get_forum_name($_REQUEST['fid']);
+$_pages['mods/_standard/forums/forum/index.php?fid='.$_REQUEST['fid']]['parent']   = 'mods/_standard/forums/forum/list.php';
+$_pages['mods/_standard/forums/forum/index.php?fid='.$_REQUEST['fid']]['children'] = array('mods/_standard/forums/forum/move_thread.php');
 
-$_pages['forum/move_thread.php']['title_var'] = 'move_thread';
-$_pages['forum/move_thread.php']['parent']    = 'forum/index.php?fid='.$_REQUEST['fid'];
-$_pages['forum/move_thread.php']['children']  = array();
+$_pages['mods/_standard/forums/forum/move_thread.php']['title_var'] = 'move_thread';
+$_pages['mods/_standard/forums/forum/move_thread.php']['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$_REQUEST['fid'];
+$_pages['mods/_standard/forums/forum/move_thread.php']['children']  = array();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
@@ -92,7 +92,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<ul style="list-style: none">
 		<?php foreach($all_forums['nonshared'] as $row): ?>
 			<li>
-				<input type="radio" name="new_fid" value="<?php echo $row['forum_id']; ?>" id="f<?php echo $row['forum_id']; ?>" <?php if ($row['forum_id'] == $_REQUEST['fid']) { echo 'checked="checked"'; } ?> /><label for="f<?php echo $row['forum_id']; ?>"><?php echo $row['title']; ?></label>
+				<input type="radio" name="new_fid" value="<?php echo $row['forum_id']; ?>" id="f<?php echo $row['forum_id']; ?>" <?php if ($row['forum_id'] == $_REQUEST['fid']) { echo 'checked="checked"'; } ?> /><label for="f<?php echo $row['forum_id']; ?>"><?php echo htmlentities_utf8($row['title']); ?></label>
 			</li>
 		<?php endforeach; ?>
 		</ul>

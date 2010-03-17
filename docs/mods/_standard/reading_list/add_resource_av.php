@@ -106,11 +106,11 @@ if ($id && !isset($_POST['submit'])){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)){
-		$title     = $row['title'];
-		$author    = $row['author'];
-		$publisher = $row['publisher']; 
-		$date      = $row['date']; 
-		$comments  = $row['comments'];
+		$title     = htmlentities_utf8($row['title']);
+		$author    = htmlentities_utf8($row['author']);
+		$publisher = htmlentities_utf8($row['publisher'];) 
+		$date      = htmlentities_utf8($row['date']); 
+		$comments  = htmlentities_utf8($row['comments']);
 	}
 	// change title of page to 'edit AV resource' (default is 'add AV resource')
 	$_pages['mods/_standard/reading_list/add_resource_av.php'][title_var] = 'rl_edit_resource_av';
@@ -131,27 +131,27 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('rl_add_resource_av'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php  echo _AT('title'); ?></label><br />
-		<input type="text" name="title" size="35" id="title" value="<?php echo htmlspecialchars($title); ?>" />
+		<input type="text" name="title" size="35" id="title" value="<?php echo $title; ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="author"><?php  echo _AT('author'); ?></label><br />
-		<input type="text" name="author" size="25" id="author" value="<?php echo htmlspecialchars($author); ?>" />
+		<input type="text" name="author" size="25" id="author" value="<?php echo $author; ?>" />
 	</div>
 
 	<div class="row">
 		<label for="date"><?php  echo _AT('rl_year_written'); ?></label><br />
-		<input type="text" name="date" size="6" id="date" value="<?php echo htmlspecialchars($date); ?>" />
+		<input type="text" name="date" size="6" id="date" value="<?php echo $date; ?>" />
 	</div>
 
 	<div class="row">
 		<label for="publisher"><?php  echo _AT('rl_publisher'); ?></label><br />
-		<input type="text" name="publisher" size="20" id="publisher" value="<?php echo htmlspecialchars($publisher); ?>" />
+		<input type="text" name="publisher" size="20" id="publisher" value="<?php echo $publisher; ?>" />
 	</div>
 
 	<div class="row">
 		<label for="comments"><?php  echo _AT('comment'); ?></label><br />
-		<textarea name="comments" cols="30" rows="2" id="comments"><?php echo htmlspecialchars($comments); ?></textarea>
+		<textarea name="comments" cols="30" rows="2" id="comments"><?php echo $comments; ?></textarea>
 	</div>
 
 	<div class="row buttons">

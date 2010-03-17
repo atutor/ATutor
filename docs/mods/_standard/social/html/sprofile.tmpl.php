@@ -27,16 +27,16 @@
 
 		<?php         if($this->profile['occupation']){ ?>
 			<dt><?php echo _AT('occupation'); ?></dt><br />
-			<dd><?php echo $this->profile['occupation']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->profile['occupation']); ?></dd>
 			<?php }?>
 			<?php if($this->profile['expertise']){ ?>
 			<dt><?php echo _AT('expertise'); ?></dt><br />
-			<dd><?php echo $this->profile['expertise']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->profile['expertise']); ?></dd>
 			<?php }?>
 			<?php if ($this->relationship==AT_SOCIAL_FRIENDS_VISIBILITY || $this->relationship==AT_SOCIAL_OWNER_VISIBILITY): ?>
 			<?php if($this->profile['email']): ?>
 			<dt><?php echo _AT('email'); ?></dt><br />
-			<dd><?php echo $this->profile['email']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->profile['email']); ?></dd>
 			<?php endif; ?>
 			<?php endif; ?>
 			<?php if($this->profile['gender']!='n'){ ?>
@@ -49,15 +49,15 @@
 			<?php }?>
 			<?php if($this->profile['phone']){ ?>
 			<dt><?php echo _AT('phone'); ?></dt><br />
-			<dd><?php echo $this->profile['phone']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->profile['phone']); ?></dd>
 			<?php }?>
 			<?php if($this->profile['country']){ ?>
 			<dt><?php echo _AT('country'); ?></dt><br />
-			<dd><?php echo $this->profile['country']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->profile['country']); ?></dd>
 			<?php }?>
 			<?php if($this->profile['postal']){ ?>
 			<dt><?php echo _AT('street_address'); ?></dt><br />
-			<dd><?php echo $this->profile['postal']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->profile['postal']); ?></dd>
 			<?php }?>
 			<?php if($this->profile['interests']){ ?>
 			<dt><?php echo _AT('interests'); ?></dt><br />
@@ -73,27 +73,27 @@
 			<?php }?>
 			<?php if($this->profile['others']){ ?>
 			<dt><?php echo _AT('others'); ?></dt><br />
-			<dd><?php echo $this->profile['others']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->profile['others']); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_weight']){ ?>
 			<dt><?php echo _AT('per_weight'); ?></dt><br />
-			<dd><?php echo $this->personal['per_weight']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->personal['per_weight']); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_height']){ ?>
 			<dt><?php echo _AT('per_height'); ?></dt><br />
-			<dd><?php echo $this->personal['per_height']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->personal['per_height']); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_hair']){ ?>
 			<dt><?php echo _AT('per_hair'); ?></dt><br />
-			<dd><?php echo $this->personal['per_hair']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->personal['per_hair']); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_eyes']){ ?>
 			<dt><?php echo _AT('per_eyes'); ?></dt><br />
-			<dd><?php echo $this->personal['per_eyes']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->personal['per_eyes']); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_ethnicity']){ ?>
 			<dt><?php echo _AT('per_ethnicity'); ?></dt><br />
-			<dd><?php echo $this->personal['per_ethnicity']; ?></dd>
+			<dd><?php echo htmlentities_utf8($this->personal['per_ethnicity']); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_languages']){ ?>
 			<dt><?php echo _AT('per_languages'); ?></dt><br />

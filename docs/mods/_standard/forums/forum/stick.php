@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
@@ -24,7 +24,7 @@ $result = mysql_query($sql, $db);
 
 $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
-header('Location: '.AT_BASE_HREF.'forum/index.php?fid='.intval($_GET['fid']));
+header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/index.php?fid='.intval($_GET['fid']));
 exit;
 
 ?>

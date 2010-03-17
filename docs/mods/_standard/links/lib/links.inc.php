@@ -157,6 +157,7 @@ function select_link_categories($categories, $cat_id, $current_cat_id, $exclude,
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 
+
 		if ($exclude && ($cat_id == $current_cat_id)) {
 			return;
 		}

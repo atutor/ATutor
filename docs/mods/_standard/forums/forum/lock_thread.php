@@ -17,27 +17,27 @@ $fid  = intval($_REQUEST['fid']);
 if ($fid == 0) {
 	$fid  = intval($_GET['fid']);
 }
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
 
-$_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
-$_pages['forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
-$_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php?fid='.$fid);
+$_pages['mods/_standard/forums/forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
+$_pages['mods/_standard/forums/forum/index.php?fid='.$fid]['parent']   = 'mods/_standard/forums/forum/list.php';
+$_pages['mods/_standard/forums/forum/index.php?fid='.$fid]['children'] = array('mods/_standard/forums/forum/new_thread.php?fid='.$fid);
 
-$_pages['forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
-$_pages['forum/new_thread.php?fid='.$fid]['parent']    = 'forum/index.php?fid='.$fid;
+$_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
+$_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
 
-$_pages['forum/view.php']['title']  = $post_row['subject'];
-$_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
+$_pages['mods/_standard/forums/forum/view.php']['title']  = $post_row['subject'];
+$_pages['mods/_standard/forums/forum/view.php']['parent'] = 'mods/_standard/forums/forum/index.php?fid='.$fid;
 
-$_pages['forum/lock_thread.php']['title_var'] = 'lock_thread';
-$_pages['forum/lock_thread.php']['parent']    = 'forum/index.php?fid='.$fid;
+$_pages['mods/_standard/forums/forum/lock_thread.php']['title_var'] = 'lock_thread';
+$_pages['mods/_standard/forums/forum/lock_thread.php']['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'forum/index.php?fid='.$fid);
+	header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/index.php?fid='.$fid);
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['lock'] = intval($_POST['lock']);
@@ -49,11 +49,11 @@ if (isset($_POST['cancel'])) {
 
 	if($_POST['lock'] == '1' || $_POST['lock'] == '2'){
 		$msg->addFeedback('THREAD_LOCKED');
-		header('Location: '.AT_BASE_HREF.'forum/index.php?fid='.$fid);
+		header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/index.php?fid='.$fid);
 		exit;
 	} else {
 		$msg->addFeedback('THREAD_UNLOCKED');
-		header('Location: '.AT_BASE_HREF.'forum/index.php?fid='.$fid);
+		header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/index.php?fid='.$fid);
 		exit;
 	}
 }

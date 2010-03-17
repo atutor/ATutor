@@ -22,8 +22,8 @@ if (!$_SESSION['valid_user']) {
 $msg->printErrors();
 
 if (isset($_POST['submit'])) {
-	$subject	= $_POST['subject'];
-	$body		= $_POST['body'];
+	$subject	= htmlentities_utf8($_POST['subject']);
+	$body		= htmlentities_utf8($_POST['body']);
 	$parent_id	= $_POST['parent_id'];
 	$parent_name	= $_POST['parent_name'];
 	//post reply is set when there is an error occuring.
@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 	<?php if (isset($_REQUEST['reply'])): ?>
 		<div class="row">
 			<label for="body"><?php echo _AT('forum_reply_to'); ?></label><br />
-			<textarea cols="45" name="replytext" rows="5"><?php echo $saved_post['body']; ?></textarea>
+			<textarea cols="45" name="replytext" rows="5"><?php echo htmlentities_utf8($saved_post['body']); ?></textarea>
 		</div>
 
 	<?php endif; ?>

@@ -63,7 +63,7 @@ $result  = mysql_query($sql, $db);
 		<?php do { ?>
 			<tr onmousedown="document.form['t<?php echo $row['topic_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['topic_id']; ?>_0">
 				<th style="border-top:1pt solid #e0e0e0;"><input type="radio" name="item" id="t<?php echo $row['topic_id']; ?>" value="<?php echo $row['topic_id']; ?>" /></th>
-				<th style="border-top:1pt solid #e0e0e0;"><?php echo $row['name']; ?></th>
+				<th style="border-top:1pt solid #e0e0e0;"><?php echo htmlentities_utf8($row['name']); ?></th>
 			</tr>
 			<?php 
 				$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
@@ -73,7 +73,7 @@ $result  = mysql_query($sql, $db);
 			<?php if ($entry_row = mysql_fetch_assoc($entry_result)) : do { ?>
 				<tr onmousedown="document.form['q<?php echo $entry_row['entry_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['topic_id']; ?>_<?php echo $entry_row['entry_id']; ?>">
 					<td><input type="radio" name="item" id="q<?php echo $entry_row['entry_id']; ?>" value="<?php echo $entry_row['entry_id']; ?>q" /></td>
-					<td><?php echo $entry_row['question']; ?></td>
+					<td><?php echo htmlentities_utf8($entry_row['question']); ?></td>
 				</tr>
 			<?php } while ($entry_row = mysql_fetch_assoc($entry_result)); else: ?>
 				<tr>

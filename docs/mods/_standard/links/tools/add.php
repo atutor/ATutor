@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: add.php 7208 2008-01-09 16:07:24Z greg $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -138,12 +138,12 @@ $msg->printErrors();
 	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="url"><?php echo _AT('url'); ?></label><br />
-		<input type="text" name="url" size="40" id="url" value="<?php echo $_POST['url']; ?>" />
+		<input type="text" name="url" size="40" id="url" value="<?php echo htmlentities_utf8($_POST['url']); ?>" />
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="description"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="55" rows="5" id="description" style="width:90%;"><?php echo $_POST['description']; ?></textarea>
+		<textarea name="description" cols="55" rows="5" id="description" style="width:90%;"><?php echo htmlentities_utf8($_POST['description']); ?></textarea>
 	</div>
 
 	<div class="row">

@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$main_links = '';
 	}
-
+	$main_links = $addslashes($main_links);
 	$sql    = "REPLACE INTO ".TABLE_PREFIX."fha_student_tools VALUES ($_SESSION[course_id], '$main_links', 1)";
 	$result = mysql_query($sql, $db);
 

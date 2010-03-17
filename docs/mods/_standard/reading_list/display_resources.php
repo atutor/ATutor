@@ -94,8 +94,8 @@ $result = mysql_query($sql, $db);
 			<td><input type="radio" id="t<?php echo $row['resource_id'];?>" name="resource_id" value="<?php echo $row['resource_id']; ?>"
 			<?php if ($first == true){ echo 'checked="checked"'; $first=false;} ?>/></td>
 			<td><?php echo _AT($_rl_types[$row['type']]); ?></td>
-			<td><label for="t<?php echo $row['resource_id'];?>"><strong><?php echo $row['title']; ?></strong></label></td>
-			<td><?php echo $row['author']; ?></td>
+			<td><label for="t<?php echo $row['resource_id'];?>"><strong><?php echo htmlentities_utf8($row['title']); ?></strong></label></td>
+			<td><?php echo htmlentities_utf8($row['author']); ?></td>
 			</tr>
 		<?php } while($row = mysql_fetch_assoc($result)); ?>
 </tbody>

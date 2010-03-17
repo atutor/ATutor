@@ -32,7 +32,7 @@ $tmp_groups = array();
 $sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$id ORDER BY title";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
-	$tmp_groups[$row['group_id']] = $row['title'];
+	$tmp_groups[$row['group_id']] = htmlentities_utf8($row['title']);
 }
 $groups_keys = array_keys($tmp_groups);
 $groups_keys = implode($groups_keys, ',');
@@ -138,7 +138,7 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
-echo '<h2>'.$type_row['title'].'</h2>';
+echo '<h2>'.htmlentities_utf8($type_row['title']).'</h2>';
 
 
 if (isset($_GET['gid'])) {
