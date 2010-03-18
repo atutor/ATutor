@@ -1,15 +1,26 @@
 <?php 
 global $savant;
 global $_base_path;
+global $msg;
 ?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="<?php echo $this->lang_code; ?>">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-        <title>Preferences wizard</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
+        <title><?php echo SITE_NAME; ?> : Preferences wizard</title>
         <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 		<script src="<?php echo $_base_path; ?>jscripts/TILE.js" type="text/javascript"></script>
+        <link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
+        <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/print.css" type="text/css" media="print" />
+        <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/styles.css" type="text/css" />
+        <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/forms.css" type="text/css" />
+        <?php echo get_user_style(); ?>
     </head>
-    <body>
+    <body onload="<?php echo $this->onload; ?>">
+        <div align="right"><a href="javascript:window.close()">Close</a></div>
+        <a name="content"></a>
+
+<?php $msg->printAll(); ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
