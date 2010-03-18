@@ -64,6 +64,8 @@ if($_config['allow_registration'] ==1){
 		</form>
 
 	</div>
-	<br style="clear:both;"/></div>
+
 <?php } ?>
+<br style="clear:both;" />
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
