@@ -107,3 +107,7 @@ ENGINE = MyISAM;
 INSERT INTO `config` VALUES ('pa_max_memory_per_member', '50');
 
 # -------------- Photo Album Module Ends -----------------
+
+#----------------Flowplayer Module ------------------------
+INSERT INTO `modules` VALUES ('_standard/flowplayer',	 2, 33554432, 0, 0, 0);
+
