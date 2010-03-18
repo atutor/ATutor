@@ -59,7 +59,9 @@ while($row = mysql_fetch_assoc($result)){
 	$all_comments[] = $row;
 }
 
-
+if (empty($all_comments)){
+	return 0;
+}
 
 //sort the comments by date in decrement order
 uasort($all_comments, 'cmp');
