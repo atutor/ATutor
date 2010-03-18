@@ -39,7 +39,7 @@ if ($pid<1 || $aid <1){
 	$msg->addError('PA_PHOTO_NOT_FOUND');	//no such picture
 	header('Location: index.php');
 	exit;
-} elseif (!$pa->checkPhotoPriv($pid, $_SESSION['member_id'])){
+} elseif (!$pa->checkPhotoPriv($pid, $_SESSION['member_id']) && !$pa->checkAlbumPriv($_SESSION['member_id'])){
 	$msg->addError('ACCESS_DENIED');
 	header('Location: albums.php?id='.$aid);
 	exit;

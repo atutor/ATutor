@@ -69,19 +69,21 @@
 			<?php foreach($this->comments as $k=>$comment_array): ?>
 				<div class="comment_box" id="comment_box">
 					<!-- TODO: Profile link and img -->
-					<div class="flc-inlineEditable"><a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
-						<?php 
-							if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']){
-								echo '<span class="flc-inlineEdit-text" id="cid_'.$comment_array['id'].'">'.htmlentities_utf82($comment_array['comment']).'</span>'; 
-							} else {
-								echo htmlentities_utf82($comment_array['comment'], true); 
-							}
-						?>
+					<?php if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']): ?>
+					<div class="flc-inlineEditable">
+						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
+						<span class="flc-inlineEdit-text" id="<?php echo $comment_array['id'];?>" ><?php echo htmlentities_utf82($comment_array['comment']);?></span>
 					</div>
+					<?php else: ?>
+					<div>
+						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
+						<?php echo htmlentities_utf82($comment_array['comment'], true);?>
+					</div>
+					<?php endif; ?>
 					<div class="comment_actions">
 						<!-- TODO: if author, add in-line "edit" -->
 						<?php echo AT_date(_AT('forum_date_format'), $comment_array['created_date'], AT_DATE_MYSQL_DATETIME);?>
-						<?php if ($this->action_permission): ?>
+						<?php if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']): ?>
 						<a href="<?php echo AT_PA_BASENAME.'delete_comment.php?aid='.$this->album_info['id'].SEP.'comment_id='.$comment_array['id']?>"><?php echo _AT('delete');?></a>
 						<?php endif; ?>
 					</div>
