@@ -2,12 +2,12 @@
 	var whiteSpaceRe = /^\s*|\s*$/g,
 		undefined;
 
-	win.tinymce = win.tinyMCE = {
+	var tinymce = {
 		majorVersion : '3',
 
-		minorVersion : '3rc1',
+		minorVersion : '3',
 
-		releaseDate : '2010-02-23',
+		releaseDate : '2010-03-10',
 
 		_init : function() {
 			var t = this, d = document, na = navigator, ua = na.userAgent, i, nl, n, base, p, v;
@@ -286,7 +286,7 @@
 		createNS : function(n, o) {
 			var i, v;
 
-			o = o || window;
+			o = o || win;
 
 			n = n.split('.');
 			for (i=0; i<n.length; i++) {
@@ -432,7 +432,12 @@
 
 	// Initialize the API
 	tinymce._init();
+
+	// Expose tinymce namespace to the global namespace (window)
+	win.tinymce = win.tinyMCE = tinymce;
 })(window);
+
+
 tinymce.create('tinymce.util.Dispatcher', {
 	scope : null,
 	listeners : null,
@@ -485,6 +490,7 @@ tinymce.create('tinymce.util.Dispatcher', {
 	}
 
 	});
+
 (function() {
 	var each = tinymce.each;
 
@@ -725,6 +731,7 @@ tinymce.create('tinymce.util.Dispatcher', {
 		}
 	});
 })();
+
 (function() {
 	var each = tinymce.each;
 
@@ -795,6 +802,7 @@ tinymce.create('tinymce.util.Dispatcher', {
 		}
 	});
 })();
+
 tinymce.create('static tinymce.util.JSON', {
 	serialize : function(o) {
 		var i, v, s = tinymce.util.JSON.serialize, t;
@@ -847,6 +855,7 @@ tinymce.create('static tinymce.util.JSON', {
 	}
 
 	});
+
 tinymce.create('static tinymce.util.XHR', {
 	send : function(o) {
 		var x, t, w = window, c = 0;
@@ -905,6 +914,7 @@ tinymce.create('static tinymce.util.XHR', {
 		}
 	}
 });
+
 (function() {
 	var extend = tinymce.extend, JSON = tinymce.util.JSON, XHR = tinymce.util.XHR;
 
@@ -957,7 +967,8 @@ tinymce.create('static tinymce.util.XHR', {
 			}
 		}
 	});
-}());(function(tinymce) {
+}());
+(function(tinymce) {
 	// Shorten names
 	var each = tinymce.each,
 		is = tinymce.is,
@@ -1239,38 +1250,26 @@ tinymce.create('static tinymce.util.XHR', {
 			return o + ' />';
 		},
 
-		remove : function(n, k) {
-			var t = this;
+		remove : function(node, keep_children) {
+			return this.run(node, function(node) {
+				var parent, child;
 
-			return this.run(n, function(n) {
-				var p, g, i;
+				parent = node.parentNode;
 
-				p = n.parentNode;
-
-				if (!p)
+				if (!parent)
 					return null;
 
-				if (k) {
-					for (i = n.childNodes.length - 1; i >= 0; i--)
-						t.insertAfter(n.childNodes[i], n);
-
-					//each(n.childNodes, function(c) {
-					//	p.insertBefore(c.cloneNode(true), n);
-					//});
+				if (keep_children) {
+					while (child = node.firstChild) {
+						// IE 8 will crash if you don't remove completely empty text nodes
+						if (child.nodeType !== 3 || child.nodeValue)
+							parent.insertBefore(child, node);
+						else
+							node.removeChild(child);
+					}
 				}
 
-				// Fix IE psuedo leak
-				if (t.fixPsuedoLeaks) {
-					p = n.cloneNode(true);
-					k = 'IELeakGarbageBin';
-					g = t.get(k) || t.add(t.doc.body, 'div', {id : k, style : 'display:none'});
-					g.appendChild(n);
-					g.innerHTML = '';
-
-					return p;
-				}
-
-				return p.removeChild(n);
+				return parent.removeChild(node);
 			});
 		},
 
@@ -2164,23 +2163,21 @@ tinymce.create('static tinymce.util.XHR', {
 			});
 		},
 
-		insertAfter : function(n, r) {
-			var t = this;
+		insertAfter : function(node, reference_node) {
+			reference_node = this.get(reference_node);
 
-			r = t.get(r);
+			return this.run(node, function(node) {
+				var parent, nextSibling;
 
-			return this.run(n, function(n) {
-				var p, ns;
+				parent = reference_node.parentNode;
+				nextSibling = reference_node.nextSibling;
 
-				p = r.parentNode;
-				ns = r.nextSibling;
-
-				if (ns)
-					p.insertBefore(n, ns);
+				if (nextSibling)
+					parent.insertBefore(node, nextSibling);
 				else
-					p.appendChild(n);
+					parent.appendChild(node);
 
-				return n;
+				return node;
 			});
 		},
 
@@ -2204,14 +2201,6 @@ tinymce.create('static tinymce.util.XHR', {
 					each(tinymce.grep(o.childNodes), function(c) {
 						n.appendChild(c);
 					});
-				}
-
-				// Fix IE psuedo leak for elements since replacing elements if fairly common
-				// Will break parentNode for some unknown reason
-				if (t.fixPsuedoLeaks && o.nodeType === 1) {
-					o.parentNode.insertBefore(n, o);
-					t.remove(o);
-					return n;
 				}
 
 				return o.parentNode.replaceChild(n, o);
@@ -2586,6 +2575,7 @@ tinymce.create('static tinymce.util.XHR', {
 
 	tinymce.DOM = new tinymce.dom.DOMUtils(document, {process_html : 0});
 })(tinymce);
+
 (function(ns) {
 	// Range constructor
 	function Range(dom) {
@@ -3262,6 +3252,7 @@ tinymce.create('static tinymce.util.XHR', {
 
 	ns.Range = Range;
 })(tinymce.dom);
+
 (function() {
 	function Selection(selection) {
 		var t = this, invisibleChar = '\uFEFF', range, lastIERng, dom = selection.dom, TRUE = true, FALSE = false;
@@ -3622,6 +3613,7 @@ tinymce.create('static tinymce.util.XHR', {
 	// Expose the selection object
 	tinymce.dom.TridentSelection = Selection;
 })();
+
 
 /*
  * Sizzle CSS Selector Engine - v1.0
@@ -4595,6 +4587,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 
 })();
 
+
 (function(tinymce) {
 	// Shorten names
 	var each = tinymce.each, DOM = tinymce.DOM, isIE = tinymce.isIE, isWebKit = tinymce.isWebKit, Event;
@@ -4878,6 +4871,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 		Event.destroy();
 	});
 })(tinymce);
+
 (function(tinymce) {
 	tinymce.dom.Element = function(id, settings) {
 		var t = this, dom, el;
@@ -4986,6 +4980,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 		});
 	};
 })(tinymce);
+
 (function(tinymce) {
 	function trimNl(s) {
 		return s.replace(/[\n\r]+/g, '');
@@ -5340,9 +5335,6 @@ window.tinymce.dom.Sizzle = Sizzle;
 							if (suffix == 'start') {
 								if (!keep) {
 									idx = dom.nodeIndex(marker);
-
-									if (idx > 0)
-										idx++;
 								} else {
 									node = marker;
 									idx = 1;
@@ -5608,6 +5600,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	tinymce.create('tinymce.dom.XMLWriter', {
 		node : null,
@@ -5699,6 +5692,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	tinymce.create('tinymce.dom.StringWriter', {
 		str : null,
@@ -5825,6 +5819,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	// Shorten names
 	var extend = tinymce.extend, each = tinymce.each, Dispatcher = tinymce.util.Dispatcher, isIE = tinymce.isIE, isGecko = tinymce.isGecko;
@@ -6691,6 +6686,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	tinymce.dom.ScriptLoader = function(settings) {
 		var QUEUED = 0,
@@ -6874,6 +6870,7 @@ window.tinymce.dom.Sizzle = Sizzle;
 	// Global script loader
 	tinymce.ScriptLoader = new tinymce.dom.ScriptLoader();
 })(tinymce);
+
 tinymce.dom.TreeWalker = function(start_node, root_node) {
 	var node = start_node;
 
@@ -6913,6 +6910,7 @@ tinymce.dom.TreeWalker = function(start_node, root_node) {
 		return (node = findSibling(node, 'lastChild', 'lastSibling', shallow));
 	};
 };
+
 (function() {
 	var transitional = {};
 
@@ -7066,7 +7064,8 @@ tinymce.dom.TreeWalker = function(start_node, root_node) {
 			return !!(element && (!child_name || element[child_name]));
 		};
 	};
-})();(function(tinymce) {
+})();
+(function(tinymce) {
 	tinymce.dom.RangeUtils = function(dom) {
 		var INVISIBLE_CHAR = '\uFEFF';
 
@@ -7228,6 +7227,7 @@ tinymce.dom.TreeWalker = function(start_node, root_node) {
 */
 	};
 })(tinymce);
+
 (function(tinymce) {
 	// Shorten class names
 	var DOM = tinymce.DOM, is = tinymce.is;
@@ -7328,7 +7328,8 @@ tinymce.dom.TreeWalker = function(start_node, root_node) {
 			tinymce.dom.Event.clear(this.id);
 		}
 	});
-})(tinymce);tinymce.create('tinymce.ui.Container:tinymce.ui.Control', {
+})(tinymce);
+tinymce.create('tinymce.ui.Container:tinymce.ui.Control', {
 	Container : function(id, s) {
 		this.parent(id, s);
 
@@ -7349,6 +7350,7 @@ tinymce.dom.TreeWalker = function(start_node, root_node) {
 	}
 });
 
+
 tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 	Separator : function(id, s) {
 		this.parent(id, s);
@@ -7359,6 +7361,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 		return tinymce.DOM.createHTML('span', {'class' : this.classPrefix});
 	}
 });
+
 (function(tinymce) {
 	var is = tinymce.is, DOM = tinymce.DOM, each = tinymce.each, walk = tinymce.walk;
 
@@ -7388,6 +7391,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	var is = tinymce.is, DOM = tinymce.DOM, each = tinymce.each, walk = tinymce.walk;
 
@@ -7485,7 +7489,8 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 			return m;
 		}
 	});
-})(tinymce);(function(tinymce) {
+})(tinymce);
+(function(tinymce) {
 	var is = tinymce.is, DOM = tinymce.DOM, each = tinymce.each, Event = tinymce.dom.Event, Element = tinymce.dom.Element;
 
 	tinymce.create('tinymce.ui.DropMenu:tinymce.ui.Menu', {
@@ -7812,7 +7817,8 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 			DOM.addClass(ro, 'mceLast');
 		}
 	});
-})(tinymce);(function(tinymce) {
+})(tinymce);
+(function(tinymce) {
 	var DOM = tinymce.DOM;
 
 	tinymce.create('tinymce.ui.Button:tinymce.ui.Control', {
@@ -7845,6 +7851,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each, Dispatcher = tinymce.util.Dispatcher;
 
@@ -8114,7 +8121,8 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 			Event.clear(this.id + '_open');
 		}
 	});
-})(tinymce);(function(tinymce) {
+})(tinymce);
+(function(tinymce) {
 	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each, Dispatcher = tinymce.util.Dispatcher;
 
 	tinymce.create('tinymce.ui.NativeListBox:tinymce.ui.ListBox', {
@@ -8242,7 +8250,8 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 			t.onPostRender.dispatch(t, DOM.get(t.id));
 		}
 	});
-})(tinymce);(function(tinymce) {
+})(tinymce);
+(function(tinymce) {
 	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each;
 
 	tinymce.create('tinymce.ui.MenuButton:tinymce.ui.Button', {
@@ -8331,6 +8340,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each;
 
@@ -8396,6 +8406,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	var DOM = tinymce.DOM, Event = tinymce.dom.Event, is = tinymce.is, each = tinymce.each;
 
@@ -8562,6 +8573,7 @@ tinymce.create('tinymce.ui.Separator:tinymce.ui.Control', {
 		}
 	});
 })(tinymce);
+
 tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 	renderHTML : function() {
 		var t = this, h = '', c, co, dom = tinymce.DOM, s = t.settings, i, pr, nx, cl;
@@ -8624,6 +8636,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		return dom.createHTML('table', {id : t.id, 'class' : 'mceToolbar' + (s['class'] ? ' ' + s['class'] : ''), cellpadding : '0', cellspacing : '0', align : t.settings.align || ''}, '<tbody><tr>' + h + '</tr></tbody>');
 	}
 });
+
 (function(tinymce) {
 	var Dispatcher = tinymce.util.Dispatcher, each = tinymce.each;
 
@@ -10712,7 +10725,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 						case 8:
 							// Fix IE control + backspace browser bug
 							if (t.selection.getRng().item) {
-								t.selection.getRng().item(0).removeNode();
+								ed.dom.remove(t.selection.getRng().item(0));
 								return Event.cancel(e);
 							}
 					}
@@ -10837,6 +10850,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	// Added for compression purposes
 	var each = tinymce.each, undefined, TRUE = true, FALSE = false;
@@ -11221,7 +11235,8 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			});
 		}
 	};
-})(tinymce);(function(tinymce) {
+})(tinymce);
+(function(tinymce) {
 	tinymce.create('tinymce.UndoManager', {
 		index : 0,
 		data : null,
@@ -11337,6 +11352,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	// Shorten names
 	var Event = tinymce.dom.Event,
@@ -11473,7 +11489,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			// Workaround for missing shift+enter support, http://bugs.webkit.org/show_bug.cgi?id=16973
 			if (tinymce.isWebKit) {
 				function insertBr(ed) {
-					var rng = selection.getRng(), br;
+					var rng = selection.getRng(), br, div = dom.create('div', null, ' '), divYPos, vpHeight = dom.getViewPort(ed.getWin()).h;
 
 					// Insert BR element
 					rng.insertNode(br = dom.create('br'));
@@ -11489,8 +11505,15 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 						selection.collapse(TRUE);
 					}
 
+					// Create a temporary DIV after the BR and get the position as it
+					// seems like getPos() returns 0 for text nodes and BR elements.
+					dom.insertAfter(div, br);
+					divYPos = dom.getPos(div).y;
+					dom.remove(div);
+
 					// Scroll to new position, scrollIntoView can't be used due to bug: http://bugs.webkit.org/show_bug.cgi?id=16117
-					ed.getWin().scrollTo(0, dom.getPos(selection.getRng().startContainer).y);
+					if (divYPos > vpHeight) // It is not necessary to scroll if the DIV is inside the view port.
+						ed.getWin().scrollTo(0, divYPos);
 				};
 
 				ed.onKeyPress.add(function(ed, e) {
@@ -12013,6 +12036,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	// Shorten names
 	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each, extend = tinymce.extend;
@@ -12374,6 +12398,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		}
 	});
 })(tinymce);
+
 (function(tinymce) {
 	var Dispatcher = tinymce.util.Dispatcher, each = tinymce.each, isIE = tinymce.isIE, isOpera = tinymce.isOpera;
 
@@ -12488,7 +12513,8 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			return tinymce.DOM.decode(s).replace(/\\n/g, '\n');
 		}
 	});
-}(tinymce));(function(tinymce) {
+}(tinymce));
+(function(tinymce) {
 	function CommandManager() {
 		var execCommands = {}, queryStateCommands = {}, queryValueCommands = {};
 
@@ -12534,7 +12560,8 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 	};
 
 	tinymce.GlobalCommands = new CommandManager();
-})(tinymce);(function(tinymce) {
+})(tinymce);
+(function(tinymce) {
 	tinymce.Formatter = function(ed) {
 		var formats = {},
 			each = tinymce.each,
@@ -12759,9 +12786,9 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 							dom.replace(clone, node, TRUE);
 							dom.remove(child, 1);
-
-							return TRUE;
 						}
+
+						return clone || node;
 					};
 
 					childCount = getChildCount(node);
@@ -12774,10 +12801,8 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 
 					if (format.inline || format.wrapper) {
 						// Merges the current node with it's children of similar type to reduce the number of elements
-						if (!format.exact && childCount === 1) {
-							if (mergeStyles(node))
-								return;
-						}
+						if (!format.exact && childCount === 1)
+							node = mergeStyles(node);
 
 						// Remove/merge children
 						each(formatList, function(format) {
@@ -13524,8 +13549,8 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					each(dom.getAttribs(node), function(attr) {
 						var name = attr.nodeName.toLowerCase();
 
-						// Don't compare internal attributes or style/class
-						if (name.indexOf('_') !== 0 && name !== 'class' && name !== 'style')
+						// Don't compare internal attributes or style
+						if (name.indexOf('_') !== 0 && name !== 'style')
 							attribs[name] = dom.getAttrib(node, name);
 					});
 
@@ -13740,6 +13765,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 		}
 	};
 })(tinymce);
+
 tinymce.onAddEditor.add(function(tinymce, ed) {
 	var filters, fontSizes, dom, settings = ed.settings;
 
@@ -13792,3 +13818,4 @@ tinymce.onAddEditor.add(function(tinymce, ed) {
 		});
 	}
 });
+
