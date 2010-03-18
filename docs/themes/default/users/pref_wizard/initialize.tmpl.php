@@ -33,3 +33,6 @@
         <label for="atutor_pref">I would like to change or review my ATutor preferences.</label>
     </div>
     
+    <input type="submit" value="Next" name="submit" id="submit" />
+    
+    

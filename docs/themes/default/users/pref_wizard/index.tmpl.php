@@ -13,27 +13,23 @@ global $_base_path;
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
-    $pref_next = $this->pref_next;
-    $pref = $this->pref_wiz[$pref_next];
-    $submitVal = "Next";
     if ($this->start_template != null) {
         $savant->display($this->start_template);
     }
     else if ($this->pref_template != null) {
         include_once($this->pref_template);
-
-        $pref_next++;
-        $max_pref_key = count($this->pref_wiz) - 1;       
-        if ($pref_next <= $max_pref_key) {
+        
+        $pref_next = $this->pref_next + 1;
+        if ($pref_next < count($this->pref_wiz)) {
             foreach ($this->pref_wiz as $pref => $template) { 
                 echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
             }
             echo '<input type="hidden" value="'.$pref_next.'" name="pref_next" id="pref_next" />';
+            echo '<input type="submit" value="Next" name="submit" id="submit" />';
         } else {
-            $submitVal = "Done";
+            echo '<input type="submit" value="Done" name="submit" id="submit" />';
         }
     }
-    echo '<input type="submit" value="'.$submitVal.'" name="submit" id="submit" />';
 ?>
 </form>
 </body>

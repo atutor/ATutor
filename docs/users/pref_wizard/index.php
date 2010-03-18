@@ -13,7 +13,19 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
 
-if (isset($_POST['submit'])) {
+//first time loading - show pref checkboxes
+if (!isset($_POST['submit'])) {
+    $savant->assign('start_template', "users/pref_wizard/initialize.tmpl.php");
+    $savant->display('users/pref_wizard/index.tmpl.php');
+} 
+// last preference page reached - close the wizard
+else if ($_POST['submit'] == 'Done') {
+    echo '<script type="text/javascript">';
+    echo "window.close();";
+    echo '</script>';
+} 
+// show appropriate preference page
+else if ($_POST['submit'] == 'Next') {
     $pref_next = intVal($_POST['pref_next']);
     switch ($_POST['pref_wiz'][$pref_next]) {
         case DISPLAY:
@@ -40,11 +52,8 @@ if (isset($_POST['submit'])) {
         }
     $savant->assign('pref_wiz', $_POST['pref_wiz']);
     $savant->assign('pref_next', $pref_next);
-}
-else {
-    $savant->assign('start_template', "users/pref_wizard/initialize.tmpl.php");
-}
-$savant->display('users/pref_wizard/index.tmpl.php');     
+    $savant->display('users/pref_wizard/index.tmpl.php');     
+} 
 ?>
 
 <!-- 
