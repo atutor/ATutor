@@ -348,7 +348,9 @@ function printSubmenuHeader(title)
 	<!-- the sub navigation -->
 	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
-		    <a><img border="0" alt="edit preferences" src="<?php echo $this->base_href; ?>images/wand.png" onclick="window.open('<?php echo $this->base_path; ?>users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;"/></a> | 
+		  <?php if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {?>
+		    <a><img border="0" alt="edit preferences" src="<?php echo $this->base_href; ?>images/wand.png" onclick="window.open('<?php echo $this->base_path; ?>users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;"/></a> |
+		    <?php } ?> 
 			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | 
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
