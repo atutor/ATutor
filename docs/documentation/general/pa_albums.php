@@ -6,7 +6,8 @@
 
 
 <h3>Uploading a photo</h3>
-<p>To upload a photo, click on the "Open Upload Manager".  A new section will appear and now you can click "Add More Photos", then "Browse", to upload any photos in the format of gif/jpg/png.  After selecting a photo from the File Upload, ATutor will automatically resize the image and append its details at the top of the pending list.  Details include file name, file size, a thumbnail of the image, and a delete button.  The delete button allows the user to remove the pending photos anytime during the upload process.  At the right bottom of this section, you will see a "Memory Usage: x.xx/ 8 MB" message, which tells you how much memory you have used.  Once the memory limit is reached, an error message will display in the pending list.  Finally, click "Upload" to finish the upload process.  The photos should now be listed in the album.</p>
+<p>To upload a photo, click on the "Open Upload Manager".  A new section will appear and now click "Browse" to upload any photos in the format of gif/jpg/png.  After selecting a photo from the File Upload, ATutor will automatically resize the image and append its details at the top of the pending list.  Details include file name, file size, a thumbnail of the image, and a delete button.  The delete button allows the user to remove the pending photos anytime during the upload process.  At the right bottom of this section, you will see a "Memory Usage: x.xx/ 8 MB" message, which tells you how much memory you have used.  Once the memory limit is reached, an error message will display in the pending list.  Finally, click "Upload" to finish the upload process.  The photos should now be listed in the album.</p>
+
 
 
 <h3>Edit Photos</h3>

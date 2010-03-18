@@ -92,6 +92,13 @@ if (isset($_POST['submit'])) {
 		} else if (!is_writable($_POST['content_dir'].'/social')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/social</strong> directory is not writable.';
 		}
+		if (!is_dir($_POST['content_dir'].'/photos')) {
+			if (!@mkdir($_POST['content_dir'].'/photos')) {
+				$errors[] = '<strong>'.$_POST['content_dir'].'/photos</strong> directory does not exist and cannot be created.';  
+			}
+		} else if (!is_writable($_POST['content_dir'].'/photos')){
+			$errors[] = '<strong>'.$_POST['content_dir'].'/photos</strong> directory is not writable.';
+		}
 		if (!is_dir($_POST['content_dir'].'/module')) {
 			if (!@mkdir($_POST['content_dir'].'/module')) {
 				$errors[] = '<strong>'.$_POST['content_dir'].'/module</strong> directory does not exist and cannot be created.';  
