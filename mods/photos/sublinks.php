@@ -46,7 +46,7 @@ foreach($visible_albums as $album){
 $album_ids = substr($album_ids, 0, strlen($albums_ids) - 2);
 
 //album comments
-$sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_album_comments WHERE id IN ('.$album_ids.') ORDER BY created_date DESC';
+$sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_album_comments WHERE album_id IN ('.$album_ids.') ORDER BY created_date DESC';
 $result = mysql_query($sql, $db);
 while($row = mysql_fetch_assoc($result)){
 	$all_comments[] = $row;
@@ -59,10 +59,12 @@ while($row = mysql_fetch_assoc($result)){
 	$all_comments[] = $row;
 }
 
-//sort the comments by date in decrement order
-if (!empty($all_comments)){
-	uasort($all_comments, 'cmp');
+if (empty($all_comments)){
+	return 0;
 }
+
+//sort the comments by date in decrement order
+uasort($all_comments, 'cmp');
 
 //assign proper link to the comment list.
 foreach($all_comments as $comment){
