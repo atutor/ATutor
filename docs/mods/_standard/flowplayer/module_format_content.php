@@ -51,7 +51,7 @@ if ($has_flv)
 {
 	$_input .= '
 	<script language="JavaScript">
-		$f("a.flowplayerholder", "'.AT_BASE_HREF.'/mods/flowplayer/flowplayer-3.1.2.swf", { 
+		$f("a.flowplayerholder", "'.AT_BASE_HREF.'/mods/_standard/flowplayer/flowplayer-3.1.2.swf", { 
 		 	clip: { autoPlay: false },  		
 	        plugins:  { 
 		        controls: { 
