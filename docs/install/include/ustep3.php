@@ -218,7 +218,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	/* or delete it from the modules table. or maybe disable it instead? */
 	if (version_compare($_POST['step1']['old_version'], '1.5.1', '>')) {
 		define('TABLE_PREFIX', $_POST['step1']['tb_prefix']);
-		require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
+		require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
 		$moduleFactory = new ModuleFactory(FALSE);
 		$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED);
 		$keys = array_keys($module_list);
