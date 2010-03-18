@@ -17,4 +17,4 @@ $_user_location	= 'users';
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $member_id = $_SESSION['member_id'];
 
-require(AT_INCLUDE_PATH.'../mods/_standard/profile_picture/html/profile_picture.inc.php'); ?>
+require(AT_INCLUDE_PATH.'../mods/_standard/profile_pictures/html/profile_picture.inc.php'); ?>
