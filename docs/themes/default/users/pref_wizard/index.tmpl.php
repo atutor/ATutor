@@ -14,6 +14,8 @@ global $msg;
         <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/print.css" type="text/css" media="print" />
         <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/styles.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/forms.css" type="text/css" />
+        <link rel="stylesheet" href="<?php echo $_base_path ?>jscripts/infusion/framework/fss/css/fss-layout.css" type="text/css" />
+        
         <?php echo get_user_style(); ?>
     </head>
     <body onload="<?php echo $this->onload; ?>">
@@ -33,14 +35,14 @@ global $msg;
         
         foreach ($this->pref_wiz as $pref => $template) { 
             echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
-        }      
-        echo '<input type="checkbox" name="save" id="save" />';
-        echo '<label for="save">Save when I click next.</label>';
-        echo '<input type="submit" name="set_default" value="'._AT("factory_default").'" accesskey="d" />';
-        echo '<input type="submit" value="Previous" name="previous" id="previous" />';
+        }
         echo '<input type="hidden" value="'.$this->pref_index.'" name="pref_index" id="pref_index" />';    
+        
+        echo '<div class="fl-container-flex"><input class="fl-force-left" type="submit" name="set_default" value="'._AT("factory_default").'" accesskey="d" />';
+        echo '<span class="fl-force-right"><input type="submit" value="Previous" name="previous" id="previous" />';
         if ($this->pref_index < count($this->pref_wiz) - 1) echo '<input type="submit" value="Next" name="next" id="next" />';
         else echo '<input type="submit" value="Done" name="done" id="done" />';
+        echo '</span></div>';
     }
 ?>
 </form>
