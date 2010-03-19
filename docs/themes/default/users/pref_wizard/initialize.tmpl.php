@@ -1,39 +1,40 @@
     <div>
-        <input type="checkbox" name="pref_wiz[]" value="<?php echo DISPLAY ?>" id="display" />
+        <input type="checkbox" name="pref_wiz[]" value="<?php echo DISPLAY ?>" id="display" <?php if (in_array(DISPLAY, $_POST['pref_wiz'])) echo checked ?> />
         <label for="display">I would like to make the text on the screen easier to see.</label>
     </div>
 
     <div>
-        <input type="checkbox" name="pref_wiz[]" value="<?php echo NAVIGATION ?>" id="navigation" />
+        <input type="checkbox" name="pref_wiz[]" value="<?php echo NAVIGATION ?>" id="navigation" <?php if (in_array(NAVIGATION, $_POST['pref_wiz'])) echo checked ?> />
         <label for="navigation">I would like to enhance the navigation of the content.</label>
     </div>
 
     <div>
-        <input type="checkbox" name="pref_wiz[]" value="<?php echo ALT_TO_TEXT ?>" id="altToText" />
+        <input type="checkbox" name="pref_wiz[]" value="<?php echo ALT_TO_TEXT ?>" id="altToText" <?php if (in_array(ALT_TO_TEXT, $_POST['pref_wiz'])) echo checked ?> />
         <label for="altToText">I would like alternatives to textual content.</label>
     </div>
 
     <div>
-        <input type="checkbox" name="pref_wiz[]" value="<?php echo ALT_TO_AUDIO ?>" id="altToAudio" />
+        <input type="checkbox" name="pref_wiz[]" value="<?php echo ALT_TO_AUDIO ?>" id="altToAudio" <?php if (in_array(ALT_TO_AUDIO, $_POST['pref_wiz'])) echo checked ?> />
         <label for="altToAudio">I would like alternatives to audio content.</label>
     </div>
     
     <div>
-        <input type="checkbox" name="pref_wiz[]" value="<?php echo ALT_TO_VISUAL ?>" id="altToVisual" />
+        <input type="checkbox" name="pref_wiz[]" value="<?php echo ALT_TO_VISUAL ?>" id="altToVisual" <?php if (in_array(ALT_TO_VISUAL, $_POST['pref_wiz'])) echo checked ?> />
         <label for="altToVisual">I would like alternatives to visual content.</label>
     </div>
     
     <div>
-        <input type="checkbox" name="pref_wiz[]" value="<?php echo SUPPORT ?>" id="support" />
+        <input type="checkbox" name="pref_wiz[]" value="<?php echo SUPPORT ?>" id="support" <?php if (in_array(SUPPORT, $_POST['pref_wiz'])) echo checked ?> />
         <label for="support">I would like access to learner support tools.</label>
     </div>
     
     <div>
-        <input type="checkbox" name="pref_wiz[]" value="<?php echo ATUTOR ?>" id="atutor_pref" />
+        <input type="checkbox" name="pref_wiz[]" value="<?php echo ATUTOR ?>" id="atutor_pref" <?php if (in_array(ATUTOR, $_POST['pref_wiz'])) echo checked ?> />
         <label for="atutor_pref">I would like to change or review my ATutor preferences.</label>
     </div>
     
-    <input type="submit" value="Next" name="submit" id="submit" />
+    <input type="hidden" value="-1" name="pref_index" id="pref_index" />
+    <input type="submit" value="Next" name="next" id="next" />
     
     <!-- 
 I want to make the text on the screen easier to see (leads to…screen enhancement options)

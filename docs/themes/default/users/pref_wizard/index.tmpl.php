@@ -20,7 +20,8 @@ global $msg;
         <div align="right"><a href="javascript:window.close()">Close</a></div>
         <a name="content"></a>
 
-<?php $msg->printAll(); ?>
+        <h1><?php echo _AT('preferences') ?></h1>
+        <?php $msg->printAll(); ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
@@ -30,16 +31,16 @@ global $msg;
     else if ($this->pref_template != null) {
         include_once($this->pref_template);
         
-        $pref_next = $this->pref_next + 1;
-        if ($pref_next < count($this->pref_wiz)) {
-            foreach ($this->pref_wiz as $pref => $template) { 
-                echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
-            }
-            echo '<input type="hidden" value="'.$pref_next.'" name="pref_next" id="pref_next" />';
-            echo '<input type="submit" value="Next" name="submit" id="submit" />';
-        } else {
-            echo '<input type="submit" value="Done" name="submit" id="submit" />';
-        }
+        foreach ($this->pref_wiz as $pref => $template) { 
+            echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
+        }      
+        echo '<input type="checkbox" name="save" id="save" />';
+        echo '<label for="save">Save when I click next.</label>';
+        echo '<input type="submit" name="set_default" value="'._AT("factory_default").'" accesskey="d" />';
+        echo '<input type="submit" value="Previous" name="previous" id="previous" />';
+        echo '<input type="hidden" value="'.$this->pref_index.'" name="pref_index" id="pref_index" />';    
+        if ($this->pref_index < count($this->pref_wiz) - 1) echo '<input type="submit" value="Next" name="next" id="next" />';
+        else echo '<input type="submit" value="Done" name="done" id="done" />';
     }
 ?>
 </form>
