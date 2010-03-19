@@ -20,8 +20,8 @@
 			<div class="row">
 				<ul class="files"></ul>
 			</div>
-			<div class="row" id="files_done" style="display:none;">
-				<input type="button" value="<?php echo _AT("upload"); ?>" class="button" onClick="window.location.reload();" />
+			<div class="row">
+				<input id="files_done" disabled="disabled" type="button" value="<?php echo _AT("upload"); ?>" class="button" onClick="window.location.reload();" />
 			</div>
 		</div>
 	</div>
@@ -205,7 +205,7 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	  upload_pending++;
 	  if (upload_pending > 0){
 		jQuery('#files_pending').show();
-		jQuery('#files_done').hide();
+		jQuery('#files_done').attr('disabled', 'disabled');
 	  }
 	  jQuery('#files_pending').children('span').text('Loading... '+ (upload_pending)+' Remaining')
   },
@@ -250,8 +250,8 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	 //deletion link
 	 a_delete = jQuery('<a>'); 
 	 a_delete.attr('href', '<?php echo $_SERVER["REQUEST_URI"]; ?>#top');
-	 //a_delete.attr('onclick', 'deletePhoto('+response_array.aid+', '+response_array.pid+', this);');
-	 a_delete.click(function(){deletePhoto(response_array.aid, response_array.pid, this)});
+	 a_delete.attr('id', response_array.pid);
+	 a_delete.click(function(){deletePhoto(response_array.aid, this)});
 	  
 	 //img wrapper
 	 img_wrapper = jQuery('<div>');
@@ -269,14 +269,16 @@ var ajax_upload = new AjaxUpload('upload_button', {
 	 jQuery('#files_pending').children('span').text('Loading... '+ (--upload_pending)+' Remaining')
 	 if (upload_pending == 0){
 		jQuery('#files_pending').hide();
-		jQuery('#files_done').show();
+		jQuery('#files_done').removeAttr('disabled');
 	  }
   }
 });
 
 //Ajax delete
-function deletePhoto(aid, pid, thisobj) {
+function deletePhoto(aid, thisobj) {
 	var thisobj = thisobj;
+	pid = thisobj.id;
+
 	//run iff it is a photo
 	if(aid > 0 && pid > 0){
 		xmlhttp=GetXmlHttpObject();
