@@ -1,4 +1,3 @@
-<fieldset style="width:30%;">
 <legend><strong><?php echo _AT("alt_to_visual"); ?></strong> </legend>  
 
     <div class="row">
@@ -69,5 +68,3 @@
 ?>
             </select>
     </div>
-
-</fieldset>

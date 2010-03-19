@@ -1,4 +1,3 @@
-<fieldset style="width:30%; float:left;">
 <legend><strong><?php echo _AT("alt_to_text"); ?></strong> </legend>  
 
     <div class="row">
@@ -67,4 +66,3 @@
 ?>
             </select>
     </div>
-</fieldset>
