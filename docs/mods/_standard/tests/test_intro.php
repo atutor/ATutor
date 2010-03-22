@@ -148,42 +148,42 @@ if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) 
 		<tr>
 			<td><?php echo _AT('questions'); ?></td>
 			<td><?php echo $test_row['num_questions']; ?></td>
-		<tr>
+		</tr>
 
 		<tr>
 			<td><?php echo _AT('out_of'); ?></td>
 			<td><?php echo $test_row['out_of']; ?></td>
-		<tr>
+		</tr>
 	
 		<tr>
 			<td><?php echo _AT('attempts'); ?></td>
 			<td><?php echo $num_takes; ?> / <?php echo ($test_row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) ? _AT('unlimited') : $test_row['num_takes']; ?></td>
-		<tr>
+		</tr>
 			
 		<tr>
 			<td><?php echo _AT('start_date'); ?></td>
 			<td><?php echo AT_date(	_AT('startend_date_long_format'), $test_row['start_date'], AT_DATE_MYSQL_DATETIME); ?></td>
-		<tr>
+		</tr>
 
 		<tr>
 			<td><?php echo _AT('end_date'); ?></td>
 			<td><?php echo AT_date(	_AT('startend_date_long_format'), $test_row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
-		<tr>
+		</tr>
 
 		<tr>
 			<td><?php echo _AT('anonymous'); ?></td>
 			<td><?php echo $test_row['anonymous'] ? _AT('yes') : _AT('no'); ?></td>
-		<tr>
+		</tr>
 
 		<tr>
 			<td><?php echo _AT('display'); ?></td>
 			<td><?php echo $test_row['display'] ? _AT('one_question_per_page') : _AT('all_questions_on_page'); ?></td>
-		<tr>
+		</tr>
 
 		<tr>
 			<td><?php echo _AT('instructions'); ?></td>
 			<td><?php echo nl2br($test_row['instructions']); ?></td>
-		<tr>
+		</tr>
 		</table>
 <?php if ($test_row['guests'] && !$_SESSION['member_id']): ?>
 	</fieldset>
@@ -225,7 +225,7 @@ if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) 
 
 
 <?php endif; ?>
-
+</div>
 	
 	<div class="row buttons">
 		<input type="submit" name="submit" value=" <?php echo _AT('start_test'); ?> " accesskey="s" class="button"/>
