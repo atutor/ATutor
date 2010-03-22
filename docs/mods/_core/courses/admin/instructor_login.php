@@ -28,6 +28,7 @@ if (isset($_POST['submit_yes'])) {
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
+		unset($_SESSION['prefs']);
 		if ($row['preferences'] == "")
 			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])));
 		else
