@@ -18,18 +18,18 @@ debug($_POST);
 
 /**
  * Tests if this is the first loading the pref wizard index page
- * 
+ *
  * @return boolean true if it is the first time, false otherwise
  */
 function isFirstLoad() {
-    if (isset($_POST['next']) || isset($_POST['previous']) || 
-        isset($_POST['done'])) return false;
+    if (isset($_POST['next']) || isset($_POST['previous']) ||
+    isset($_POST['done'])) return false;
     return true;
 }
 
 /**
  * Tests if this is a return to the initialization page of the pref wizard
- * 
+ *
  * @return boolean true if it is a return to init page, false otherwise
  */
 function isReturnToInit() {
@@ -39,7 +39,7 @@ function isReturnToInit() {
 
 /**
  * Tests if checkboxes were checked on submission of the initial pref wizard page
- * 
+ *
  * @return boolean true if no checkboxes were checked, false otherwise
  */
 function initNoChecks() {
@@ -49,19 +49,28 @@ function initNoChecks() {
 
 //START OF PROCESSING
 
+if (isset($_POST['pref_index'])) {
+    $last_pref_index = intVal($_POST['pref_index']);
+    if ($last_pref_index >= 0) {
+        $temp_prefs = assignPostVars();
+        assign_session_prefs($temp_prefs);
+        save_prefs();
+    }
+}
+
 //close popup if done.
 if (isset($_POST['done'])) {
     echo '<script type="text/javascript">';
     echo "window.close();";
     echo '</script>';
-} 
+}
 
-// display initialization page IF 
-// first time loading pref wiz OR going from first pref page 
+// display initialization page IF
+// first time loading pref wiz OR going from first pref page
 // to initialize page via previous button OR submit checkboxes with none checked
 else if (isFirstLoad() || isReturnToInit() || initNoChecks()) {
     if (initNoChecks()) {
-        $msg->addError("checkboxes must be checked"); 
+        $msg->addError("checkboxes must be checked");
     }
     $savant->assign('start_template', "users/pref_wizard/initialize.tmpl.php");
     $savant->display('users/pref_wizard/index.tmpl.php');
@@ -69,8 +78,8 @@ else if (isFirstLoad() || isReturnToInit() || initNoChecks()) {
 
 // show appropriate preference page (next or previous)
 else {
-    if (isset($_POST['next'])) $pref_index = intVal($_POST['pref_index'] + 1);
-    if (isset($_POST['previous'])) $pref_index = intVal($_POST['pref_index'] - 1);
+    if (isset($_POST['next'])) $pref_index = $last_pref_index + 1;
+    if (isset($_POST['previous'])) $pref_index = $last_pref_index - 1;
     $savant->assign('pref_wiz', $_POST['pref_wiz']);
     $savant->assign('pref_index', $pref_index);
     switch ($_POST['pref_wiz'][$pref_index]) {
