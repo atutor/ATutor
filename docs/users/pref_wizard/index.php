@@ -14,7 +14,7 @@ require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_functions.inc.php');
 
-debug($_POST);
+//debug($_POST);
 
 /**
  * Tests if this is the first loading the pref wizard index page
@@ -59,16 +59,18 @@ if (isset($_POST['pref_index'])) {
 }
 
 //close popup if done.
-if (isset($_POST['done'])) {
-    echo '<script type="text/javascript">';
-    echo "window.close();";
-    echo '</script>';
-}
+//if (isset($_POST['done'])) {
+//    echo '<script type="text/javascript">';
+//    echo 'var ATutor = ATutor || {};';
+//    echo 'ATutor.setStyles("'.$_SESSION["prefs"]["PREF_FONT_FACE"].'");';
+//    echo "window.close();";
+//    echo '</script>';
+//}
 
 // display initialization page IF
 // first time loading pref wiz OR going from first pref page
 // to initialize page via previous button OR submit checkboxes with none checked
-else if (isFirstLoad() || isReturnToInit() || initNoChecks()) {
+if (isFirstLoad() || isReturnToInit() || initNoChecks()) {
     if (initNoChecks()) {
         $msg->addError("checkboxes must be checked");
     }
@@ -109,3 +111,4 @@ else {
     $savant->display('users/pref_wizard/index.tmpl.php');
 }
 ?>
+
