@@ -22,7 +22,6 @@ function tests_news() {
 	if ($enrolled_courses == ''){
 		return $news;
 	} 
-
 	$sql = "SELECT T.test_id, T.course_id, T.title, T.start_date as start_date, UNIX_TIMESTAMP(T.start_date) AS sd, UNIX_TIMESTAMP(T.end_date) AS ed 
           FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_questions_assoc Q 
          WHERE Q.test_id=T.test_id 
