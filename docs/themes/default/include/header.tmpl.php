@@ -74,12 +74,14 @@ global $system_courses, $_custom_css, $db;
 <?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
+    <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
 	<script language="javascript" type="text/javascript">
 	//<!--
 	jQuery.noConflict();
 	//-->
 	</script>
 <?php echo $this->custom_css; ?>
+    <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
@@ -249,6 +251,29 @@ function printSubmenuHeader(title)
 	'	       style="float:right" type="image" /> '+ title +
 	'</h4>');
 }
+
+ATutor = ATutor || {};
+
+(function () {
+
+    jQuery(document).ready( function () {
+    
+<?php 
+        //if user has set any display preferences set styles block
+        if (($_SESSION["prefs"]["PREF_FONT_FACE"] != "")
+            || ($_SESSION["prefs"]["PREF_FONT_TIMES"] != 0 && $_SESSION["prefs"]["PREF_FONT_TIMES"] != 1)
+            || ($_SESSION["prefs"]["PREF_FG_COLOUR"] != "")
+            || ($_SESSION["prefs"]["PREF_BG_COLOUR"] != "")
+            || ($_SESSION["prefs"]["PREF_HL_COLOUR"] != ""))
+        {
+?>            
+             ATutor.users.preferences.setStyles('<?php echo $_SESSION["prefs"]["PREF_FONT_FACE"] ?>');
+<?php   }?>        
+     });
+    
+})();
+
+
 //-->
 </script>
 <div class="page_wrapper">
