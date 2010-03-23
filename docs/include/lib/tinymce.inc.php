@@ -47,7 +47,7 @@ function load_editor($simple = TRUE, $name = FALSE, $mode="textareas") {
 echo '<script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.'jscripts/tiny_mce/tiny_mce.js"></script>
 <script language="javascript" type="text/javascript">';
 
-echo 'var ATutor = ATutor || {};
+echo 'ATutor = ATutor || {};
       ATutor.tinymce = ATutor.tinymce || {};
 
       (function () {

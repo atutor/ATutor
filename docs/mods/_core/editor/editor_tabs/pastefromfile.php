@@ -7,8 +7,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
         <title>Paste from file tool</title>
         <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+        <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>
         <script type="text/javascript">
-        var ATutor = ATutor || {};
+        ATutor = ATutor || {};
         ATutor.mods = ATutor.mods || {};
         ATutor.mods.editor = ATutor.mods.editor || {};
 
