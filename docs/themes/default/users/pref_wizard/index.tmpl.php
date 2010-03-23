@@ -11,36 +11,14 @@ global $msg;
         <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 		<script src="<?php echo $_base_path; ?>jscripts/TILE.js" type="text/javascript"></script>
         <link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/print.css" type="text/css" media="print" />
-        <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/styles.css" type="text/css" />
-        <link rel="stylesheet" href="<?php echo $_base_path.'themes'.$this->theme; ?>/forms.css" type="text/css" />
         <link rel="stylesheet" href="<?php echo $_base_path ?>jscripts/infusion/framework/fss/css/fss-layout.css" type="text/css" />       
-        <?php echo get_user_style(); ?>
+        <style id="pref_style" type="text/css"></style>
         
-        <script type="text/javascript">
-var ATutor = ATutor || {};
-
-ATutor.user_styles = '<!-- ' + 
-'   body { ' +
-'     {FG_COLOR} {BG_COLOR} {FONT_SIZE} {FONT} } ' +
-'   h1, h2, h3, h4, h5, h6 { ' +
-'     {FG_COLOR} {BG_COLOR} ' +
-'   } ' +
-'    --> ';
-
-ATutor.setParentStyles = function (font) {
-	ATutor.user_styles.replace('{FONT}', 'font-family:' + font + ';');
-    console.log(ATutor.user_styles);
-    jQuery('#pref_style', window.opener).html(ATutor.user_styles);
-};
-
-</script>
-
 <?php 
 //close popup if done.
 if (isset($_POST['done'])) {
     echo '<script type="text/javascript">';
-    echo 'ATutor.setParentStyles("'.$_SESSION["prefs"]["PREF_FONT_FACE"].'");';
+//    echo 'ATutor.setParentStyles("'.$_SESSION["prefs"]["PREF_FONT_FACE"].'");';
     echo "window.close();";
     echo '</script>';
 }
