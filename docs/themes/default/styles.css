@@ -1843,3 +1843,13 @@ margin-top:-1.2em;
 border:1px solid #cccccc;
 
 }
+
+/* alternate colours in the My Course list */
+tr.even {
+    background-color: #F7F3ED;
+}
+
+tr.odd {
+    background-color: transparent;
+}
+
