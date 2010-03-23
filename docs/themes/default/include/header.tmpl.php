@@ -267,7 +267,7 @@ ATutor = ATutor || {};
             || ($_SESSION["prefs"]["PREF_HL_COLOUR"] != ""))
         {
 ?>            
-             ATutor.users.preferences.setStyles('<?php echo $_SESSION["prefs"]["PREF_FONT_FACE"] ?>');
+//             ATutor.users.preferences.setStyles('<?php echo $_SESSION["prefs"]["PREF_FONT_FACE"] ?>');
 <?php   }?>        
      });
     
