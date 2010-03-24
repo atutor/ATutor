@@ -16,7 +16,7 @@
  * @return list of news, [timestamp]=>
  */
 function announcements_news() {
-	global $db, $enrolled_courses;
+	global $db, $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == ''){
@@ -29,7 +29,9 @@ function announcements_news() {
 		while($row = mysql_fetch_assoc($result)){
 			$news[] = array('time'=>$row['date'], 
 							'object'=>$row, 
-							'thumb'=>'',
+							'alt'=>_AT('announcements'),
+							'course'=>$system_courses[$row['course_id']]['title'],
+							'thumb'=>'images/flag_blue.png',
 							'link'=>$row['body']);
 		}
 	}

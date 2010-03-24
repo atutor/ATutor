@@ -16,7 +16,7 @@
  * @return list of news, [timestamp]=>
  */
 function polls_news() {
-	global $db, $enrolled_courses;
+	global $db, $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == ''){
@@ -29,6 +29,8 @@ function polls_news() {
 		while($row = mysql_fetch_assoc($result)){
 			$news[] = array('time'=>$row['created_date'], 
 							'object'=>$row,
+							'alt'=>_AT('polls'),
+							'course'=>$system_courses[$row['course_id']]['title'],
 							'thumb'=>'images/home-polls_sm.png',
 							'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/polls/index.php#'.$row['poll_id']).'"'.
 									(strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 

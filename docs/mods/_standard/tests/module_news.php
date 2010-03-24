@@ -16,7 +16,7 @@
  * @return list of news, [timestamp]=>
  */
 function tests_news() {
-	global $db, $enrolled_courses;
+	global $db, $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == ''){
@@ -35,12 +35,9 @@ function tests_news() {
 			if ( ($row['sd'] <= time()) && ($row['ed'] >= time())){
 				$news[] = array('time'=>$row['start_date'], 
 								'object'=>$row,
+								'alt'=>_AT('tests'),
+								'course'=>$system_courses[$row['course_id']]['title'],
 								'thumb'=>'images/home-tests_sm.png',
-							/*	'link'=>'<a href="'.url_rewrite('mods/_standard/tests/test_intro.php?course_id=2&tid=' 
-										. $row['test_id'], AT_PRETTY_URL_IS_HEADER).'"'
-										.(strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'
-										.validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
-		*/
 								'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/tests/test_intro.php?tid='.$row['test_id']).'" '
 										.(strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'
 										.validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');

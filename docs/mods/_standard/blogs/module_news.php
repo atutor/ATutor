@@ -16,14 +16,16 @@
  * @return list of news, [timestamp]=>
  */
 function blogs_news() {
-	global $db, $enrolled_courses;
+	global $db, $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == ''){
 		return $news;
 	} 
 
-	$sql = "SELECT G.group_id, G.title, G.modules FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id IN $enrolled_courses ORDER BY G.title";
+	$sql = "SELECT G.group_id, G.title, G.modules, T.course_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types  T USING (type_id) WHERE T.course_id IN $enrolled_courses ORDER BY G.title";
+
+
 	$result = mysql_query($sql, $db);
 	if ($result){
 		if (mysql_num_rows($result) > 0) {
@@ -35,8 +37,13 @@ function blogs_news() {
 					$row2 = mysql_fetch_assoc($date_result);					
 					$last_updated = ' - ' . _AT('last_updated', AT_date(_AT('forum_date_format'), $row2['date'], AT_DATE_MYSQL_DATETIME));
 				
-					$link_title = $row['title'].$last_updated;
-					$news[] = array('time'=>$row2['date'], 'object'=>$row, 'thumb'=>'images/home-blogs_sm.png', 'link'=>'<a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.htmlentities(SEP).'oid='.$row['group_id'], AT_PRETTY_URL_IS_HEADER).'"'.
+					$link_title = $row['title'];
+					$news[] = array('time'=>$row2['date'], 
+					'object'=>$row, 
+					'alt'=>_AT('blogs'),
+					'course'=>$system_courses[$row['course_id']]['title'],
+					'thumb'=>'images/home-blogs_sm.png', 
+					'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.htmlentities(SEP).'oid='.$row['group_id']).'"'.
 			          (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.$link_title.'"' : '') .'>'. 
 			          validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
 				}

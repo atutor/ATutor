@@ -16,7 +16,7 @@
  * @return list of news, [timestamp]=>
  */
 function links_news() {
-	global $db, $enrolled_courses;
+	global $db, $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == ''){
@@ -31,6 +31,7 @@ function links_news() {
 							'time'=>$row['SubmitDate'], 
 							'object'=>$row, 
 							'alt'=>_AT('links'),
+							'course'=>$system_courses[$row['owner_id']]['title'],
 							'thumb'=>'images/home-links_sm.png', 
 							'link'=>'<a href="bounce.php?course='.$row['owner_id'].'&p='.urlencode('mods/_standard/links/index.php?view='.$row['link_id']).'"'.
 									(strlen($row['LinkName']) > SUBLINK_TEXT_LEN ? ' title="'.$row['LinkName'].'"' : '') .'>'. 

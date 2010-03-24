@@ -16,7 +16,7 @@
  * @return list of news, [timestamp]=>
  */
 function faq_news() {
-	global $db, $enrolled_courses;
+	global $db, $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == ''){
@@ -27,9 +27,13 @@ function faq_news() {
 	$result = mysql_query($sql, $db);
 	if($result){
 		while($row = mysql_fetch_assoc($result)){
-			$news[] = array('time'=>$row['revised_date'], 'object'=>$row, 'thumb'=>'images/home-faq_sm.png', 'link'=>'<a href="'.url_rewrite('faq/index.php#'.$row['entry_id'], AT_PRETTY_URL_IS_HEADER).'"'.
-		          (strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 
-		          validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
+			$news[] = array('time'=>$row['revised_date'], 
+			'alt'=>_AT('faq'),'object'=>$row,
+			'course'=>$system_courses[$row['course_id']]['title'], 
+			'thumb'=>'images/home-faq_sm.png', 
+			'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/faq/index.php#'.$row['entry_id']).'"'.
+			(strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 
+			validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
 		}
 	}
 	return $news;
