@@ -12,6 +12,8 @@
 /************************************************************************/
 // $Id: pref_functions.inc.php 8013 2008-10-02 19:51:24Z hwong $
 
+//Note that this file is no longer needed. Remove when we are sure we no longer need to refer back to it.
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $user_style_template;
