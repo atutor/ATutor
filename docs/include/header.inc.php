@@ -85,9 +85,6 @@ if (isset($_custom_head)) {
 ' . $_custom_head;
 }
 
-$custom_head .= '
-' . get_user_style();
-
 $savant->assign('custom_css', $custom_head);
 
 if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || ($substr($onload, -8) != 'focus();'))) {
