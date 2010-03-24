@@ -31,7 +31,7 @@ function links_news() {
 							'time'=>$row['SubmitDate'], 
 							'object'=>$row, 
 							'thumb'=>'images/home-links_sm.png', 
-							'link'=>'<a href="'.url_rewrite('mods/_standard/links/index.php?view='.$row['link_id'], AT_PRETTY_URL_IS_HEADER).'"'.
+							'link'=>'<a href="bounce.php?course='.$row['owner_id'].'&p='.urlencode('mods/_standard/links/index.php?view='.$row['link_id']).'"'.
 									(strlen($row['LinkName']) > SUBLINK_TEXT_LEN ? ' title="'.$row['LinkName'].'"' : '') .'>'. 
 									validate_length($row['LinkName'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
 		}
