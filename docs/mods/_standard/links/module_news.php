@@ -30,6 +30,7 @@ function links_news() {
 			$news[] = array(
 							'time'=>$row['SubmitDate'], 
 							'object'=>$row, 
+							'alt'=>_AT('links'),
 							'thumb'=>'images/home-links_sm.png', 
 							'link'=>'<a href="bounce.php?course='.$row['owner_id'].'&p='.urlencode('mods/_standard/links/index.php?view='.$row['link_id']).'"'.
 									(strlen($row['LinkName']) > SUBLINK_TEXT_LEN ? ' title="'.$row['LinkName'].'"' : '') .'>'. 
