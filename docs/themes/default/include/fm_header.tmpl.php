@@ -25,6 +25,13 @@ global $system_courses;
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
+    <script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>    
+    <script language="javascript" type="text/javascript">
+    //<!--
+    jQuery.noConflict();
+    //-->
+    </script>
+    <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
@@ -35,6 +42,7 @@ global $system_courses;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 	<?php echo $this->custom_css; ?>
+	<style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>"><div class="input-form"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('close_file_manager'); ?></a></div>

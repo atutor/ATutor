@@ -18,6 +18,11 @@
 	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
 </div>
-</div> <!-- end page wrapper -->
+</div> <!-- end page wrapper --> 
+<script type="text/javascript">
+//<!--
+    <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
+//-->
+</script>
 </body>
 </html>
