@@ -148,6 +148,12 @@ if(isset($_POST['upload'])){
 	exit;
 }
 
+//If this is a profile album, 403 it to the profile album page
+if ($info['type_id'] == AT_PA_TYPE_PERSONAL){
+	header('Location: profile_album.php');
+	exit;
+}
+
 //paginator settings
 $page = intval($_GET['p']);
 $photos_count = sizeof($pa->getAlbumPhotos());

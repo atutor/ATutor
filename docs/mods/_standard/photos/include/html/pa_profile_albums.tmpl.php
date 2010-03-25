@@ -3,9 +3,9 @@
 	<?php if ($this->action_permission || $this->album_info['type_id']==AT_PA_TYPE_COURSE_ALBUM): ?>
 	<div class="add_profile_photo">
 	    <div class="profile_photo">
-		    <img src="<?php echo 'get_profile_img.php?id='.$_SESSION['member_id'].SEP.'size=p';?>" title="<?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?>" alt="<?php _AT('profile_picture');?>" />
+		    <img src="<?php echo 'get_profile_img.php?id='.$_SESSION['member_id'].SEP.'size=p';?>" title="<?php echo htmlentities_utf82(AT_print(get_display_name($_SESSION['member_id']), 'members.full_name')); ?>" alt="<?php _AT('profile_picture');?>" />
 		</div>
-		<div class="uploader input-form">
+		<div class="uploader">
 		    <form enctype="multipart/form-data" method="post" action="<?php echo AT_PA_BASENAME. 'albums.php'; ?>" class="">
 		        <div class="row">
 		            <label for="single_uploader">Upload Picture</label>
@@ -13,7 +13,7 @@
 		        </div>
 		        <div class="row">
 		            <input type="hidden" name="id" value="<?php echo $this->album_info['id']; ?>"/>
-		            <input type="submit" name="upload" value="<?php echo _AT('upload');?>" />
+		            <input type="submit" class="button" name="upload" value="<?php echo _AT('upload');?>" />
                 </div>
 		    </form>
 		</div>
@@ -98,7 +98,8 @@
 
 		<?php if($this->action_permission): ?>
 		<div class="photo_actions">
-			<a href="<?php echo AT_PA_BASENAME.'edit_album.php?id='.$this->album_info['id']; ?>"><?php echo _AT('pa_edit_album'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>"><?php echo _AT('pa_edit_photos'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('pa_organize_photos'); ?></a><br/>
 		</div>
 		<?php endif; ?>
 	</div>

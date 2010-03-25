@@ -201,21 +201,32 @@ div.add_photo p.memory_usage {
 	color: #5B5B5B;
 }
 
+
+
 div.add_profile_photo{
 	float: left;
 	background: #F7F7F7;
 	border: 1px solid #D2D2D2;	
 	width: 95%;
 }
+
 div.add_profile_photo .profile_photo{
-    float: left;
-    padding: 0.5em;
-    padding-right: 1em;
+    
+	float: left;
+    
+	padding: 0.5em;
+
 }
+
 div.add_profile_photo .uploader{
-    float: left;
-    width: 50%;
+    
+	float: left;
+    
+	width: 50%;
+
+	padding: 0.5em;
 }
+	
 
 div.photo_panel{
 	background: #F7F7F7;
