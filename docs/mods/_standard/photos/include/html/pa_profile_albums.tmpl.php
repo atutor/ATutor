@@ -5,10 +5,11 @@
 	    <div class="profile_photo">
 		    <img src="<?php echo 'get_profile_img.php?id='.$_SESSION['member_id'].SEP.'size=p';?>" title="<?php echo htmlentities_utf82(AT_print(get_display_name($_SESSION['member_id']), 'members.full_name')); ?>" alt="<?php _AT('profile_picture');?>" />
 		</div>
+
 		<div class="uploader">
 		    <form enctype="multipart/form-data" method="post" action="<?php echo AT_PA_BASENAME. 'albums.php'; ?>" class="">
 		        <div class="row">
-		            <label for="single_uploader">Upload Picture</label>
+		            <label for="single_uploader"><?php echo _AT('pa_choose_profile_picture');?></label>
 		            <input type="file" id="single_uploader" name="photo">
 		        </div>
 		        <div class="row">
@@ -17,6 +18,19 @@
                 </div>
 		    </form>
 		</div>
+	
+		<div class="uploader">
+		    <form method="post" action="<?php echo 'mods/_standard/profile_pictures/profile_picture.php'; ?>" class="">
+		        <div class="row">
+		            <label><?php echo _AT('pa_delete_profile_pic_blub'); ?></label>		            
+		        </div>
+		        <div class="row">
+					<input type="hidden" name="delete" value="1" />	
+		            <input type="submit" class="button" name="submit" value="<?php echo _AT('delete');?>" />
+                </div>
+		    </form>
+		</div>
+				
 	</div>
 	<?php endif; //action permission?>
 

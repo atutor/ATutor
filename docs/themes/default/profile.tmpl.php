@@ -13,7 +13,7 @@
 // $Id: edit.php 3111 2005-01-18 19:32:00Z joel $
 
 
-global $display_name_formats, $moduleFactory;
+global $display_name_formats, $moduleFactory, $db, $_modules;
 
 ?>
 <div class="input-form">
@@ -24,7 +24,21 @@ global $display_name_formats, $moduleFactory;
 			if ($mod->isEnabled() === TRUE): ?>
 				<dt><?php echo _AT('picture'); ?></dt>
 				<dd><?php if (profile_image_exists($this->row['member_id'])): ?>
-					<a href="get_profile_img.php?id=<?php echo $this->row['member_id'].SEP.'size=o'; ?>"><?php print_profile_img($this->row['member_id'], 2); ?></a>
+				<?php
+					//run a check to see if any personal album exists, if not, create one.
+					$sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_albums WHERE member_id='.$this->row['member_id'].' AND type_id='.AT_PA_TYPE_PERSONAL;
+					$result = mysql_query($sql, $db);
+					if ($result){
+						$row = mysql_fetch_assoc($result);	//album info.
+						$aid = $row['id'];
+					}
+					if (in_array('mods/_standard/photos/index.php', $_modules)){
+						$img_link = AT_PA_BASENAME.'albums.php?id='.$aid;
+					} else {
+						$img_link = 'get_profile_img.php?id='.$this->row['member_id'].SEP.'size=o';
+					}
+				?>
+					<a href="<?php echo $img_link ?>"><?php print_profile_img($this->row['member_id'], 2); ?></a>
 					<?php else: ?>
 						<?php echo _AT('none'); ?>
 					<?php endif; ?>

@@ -27,7 +27,7 @@ $info = $pa->getAlbumInfo();
 $action_permission = $pa->checkAlbumPriv($_SESSION['member_id']);
 
 //TODO: Validate users, using permission and course album control.
-if ($info['member_id'] != $_SESSION['member_id']){
+if ($info['member_id'] != $_SESSION['member_id'] && $info['type_id']!=AT_PA_TYPE_PERSONAL){
 	$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
 	if(!isset($visible_albums[$id]) && $info['permission']==AT_PA_PRIVATE_ALBUM){
 		//TODO msg;
@@ -148,8 +148,8 @@ if(isset($_POST['upload'])){
 	exit;
 }
 
-//If this is a profile album, 403 it to the profile album page
-if ($info['type_id'] == AT_PA_TYPE_PERSONAL){
+//If this is a profile album, redirect it to the profile album page
+if ($info['type_id'] == AT_PA_TYPE_PERSONAL && $info['member_id']==$_SESSION['member_id']){
 	header('Location: profile_album.php');
 	exit;
 }

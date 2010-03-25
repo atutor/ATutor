@@ -40,7 +40,7 @@ $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children']  = array(
 $_pages[AT_PA_BASENAME.'photo.php']['parent'] = AT_PA_BASENAME.'albums.php?id='.$aid;
 
 //TODO: Validate users, using permission and course album control.
-if ($info['member_id'] != $_SESSION['member_id']){
+if ($info['member_id'] != $_SESSION['member_id'] && $info['type_id']!=AT_PA_TYPE_PERSONAL){
 	$visible_albums = $pa->getAlbums($_SESSION['member_id'], $info['type_id']);
 	if(!isset($visible_albums[$aid]) && $info['permission']==AT_PA_PRIVATE_ALBUM){
 		//TODO msg;
