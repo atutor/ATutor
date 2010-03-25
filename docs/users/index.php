@@ -108,6 +108,35 @@ if (!$courses && get_instructor_status())
 elseif (!$courses)
 	$msg->addInfo('NO_COURSES');
 	
+
+//sort function for all_news
+function all_news_cmp($a, $b){
+	if ($b['time'] < $a['time']){
+		return -1;
+	} elseif ($b['time'] > $a['time']){
+		return 1;
+	} else {
+		return 0;
+	}
+}
+$all_news = array();	//all news 
+
+$module_status_bits = AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_MISSING | AT_MODULE_STATUS_PARTIALLY_UNINSTALLED;
+$module_type_bits = AT_MODULE_TYPE_STANDARD + AT_MODULE_TYPE_EXTRA;
+
+$module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits, $sort = TRUE);
+
+foreach($module_list as $key=>$obj) {
+	$news = $obj->getNews();
+	while(!empty($news)){
+		$current_item = array_pop($news);
+		array_push($all_news, $current_item);
+	}
+}
+
+usort($all_news, 'all_news_cmp');
+
+$savant->assign('all_news', $all_news);
 $savant->assign('courses', $courses);
 
 $savant->display('users/index.tmpl.php');
