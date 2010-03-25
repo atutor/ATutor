@@ -35,7 +35,7 @@ $this->_pages['mods/_standard/forums/index.php']['children']  = array('mods/_sta
 //student pages
 $this->_pages['mods/_standard/forums/forum/list.php']['title_var']  = 'forums';
 $this->_pages['mods/_standard/forums/forum/list.php']['img']        = 'images/home-forums.png';
-$this->_pages['mods/_standard/forums/forum/list.php']['icon']		  = 'images/home-forums_sm.png';		//added favicon
+$this->_pages['mods/_standard/forums/forum/list.php']['icon']		  = 'images/pin.png';		//added favicon
 //$this->_pages['forum/list.php']['text']		  = 'Sezione Forum';				//added text
 $this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums');
 	//list.php's children

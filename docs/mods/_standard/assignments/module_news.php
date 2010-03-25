@@ -16,7 +16,7 @@
  * @return list of news, [timestamp]=>
  */
 function assignments_news() {
-	global $db, $enrolled_courses;
+	global $db, $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == ''){
@@ -29,8 +29,10 @@ function assignments_news() {
 		while($row = mysql_fetch_assoc($result)){
 			$news[] = array('time'=>$row['date_due'], 
 							'object'=>$row, 
-							'thumb'=>'',
-							'link'=>_AT('ASSIGNMENT_HAS_BEEN_POSTED', $row['title']));
+							'course'=>$system_courses[$row['course_id']]['title'],
+							'alt'=>_AT('assignment'),
+							'thumb'=>'images/home-forums_sm.png',
+							'link'=>_AT('assignment_due', $row['title'], '<small>'.AT_DATE('%F %j, %g:%i',$row['date_due']).'</small>'));
 		}
 	}
 	return $news;
