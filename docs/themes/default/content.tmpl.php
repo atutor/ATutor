@@ -49,7 +49,7 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "")
 <?php endif; ?>
 
 <?php
-/*TODO***************BOLOGNA***************REMOVE ME**********/
+
 if (!empty($this->forum_ids)): ?>
 <div id="content-test" class="input-form">
     <ol>
