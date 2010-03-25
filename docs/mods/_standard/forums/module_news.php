@@ -39,7 +39,7 @@ function forums_news() {
 							 $news[] = array('time'=>$forum_obj['last_post'], 
 							  'object'=>$forum_obj, 
 							  'alt'=>_AT('forum'),
-							  'thumb'=>'images/home-forums_sm.png',
+							  'thumb'=>'images/pin.png',
 							  'course'=>$system_courses[$row['course_id']]['title'],
 							  'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/forums/forum/index.php?fid='.$forum_obj['forum_id']).'"'.
 							  (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.$link_title.'"' : '') .'>'. 
