@@ -40,7 +40,7 @@ function tests_news() {
 								'thumb'=>'images/home-tests_sm.png',
 								'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/tests/test_intro.php?tid='.$row['test_id']).'" '
 										.(strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'
-										.validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
+										.validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a> <small>('._AT('start_date').':'.AT_DATE('%F %j, %g:%i',$row['start_date']).')</small>');
 			}
 		}
 	}
