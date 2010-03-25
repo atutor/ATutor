@@ -1690,7 +1690,7 @@ fieldset#toc {
 }
 
 #side-menu{
-	overflow:hidden;
+	/* overflow:hidden; */
 }
 
 /* cleans up glossary question mark line spacing*/
