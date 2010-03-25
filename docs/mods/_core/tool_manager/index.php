@@ -22,6 +22,7 @@ $cid = intval($_REQUEST['cid']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+
 $tool_file= AT_INCLUDE_PATH.'../'.$_REQUEST['tool_file'];	// viene prelevato il path del file necessario per prelevare le informazioni relative ai sottocontenuti
 $tool_list = require($tool_file);                            //si richiede la lista ei contenuti per lo strumento. i contenuti trovati potranno essere inseriti all'interno del materiale didattico come collegamento.
 ?>
@@ -44,7 +45,7 @@ if(isset($tool_list)) {?>
         </thead>
         <tbody>
             <?php foreach($tool_list as $tool) {
-		    $i = $i+1;
+		            $i = $i+1;
                     $result = mysql_query($sql, $db);
                     while($row = mysql_fetch_assoc($result)){
                         if($tool['id'] == $row['forum_id']){
@@ -57,8 +58,7 @@ if(isset($tool_list)) {?>
                 ?>
             <tr>
                 <td valign="top">
-                    <!--<input name='checkAll' type='checkbox' onClick="checkAll();" />-->
-                    <input name="check[]" value="<?php echo $tool['id'];?>" id="<?php echo $i; ?>" type="checkbox" <?php echo $checked;?> onClick="chkBoxes();" />
+                    <input name="check[]" value="<?php echo $tool['id'];?>" id="<?php echo $i; ?>" type="checkbox" <?php echo $checked;?> />
                     &nbsp;<?php echo $files;?>
                 </td>
                 <td valign="top"><label for="<?php echo $i; ?>"><?php echo $tool['title']; ?></label></td>
@@ -73,36 +73,7 @@ if(isset($tool_list)) {?>
     
 </form>
 
-<?php }
-
-
-/*###############################*/
-/* added*/
-/*##############################*/?>
+<?php } ?>
 </fieldset>
 </div>
-<script language="javascript" type="text/javascript">
-    function checkAll() {
-        for (var i = 0; i < document.datagrid.check.length; i++) {
-            if (document.datagrid.checkall.checked === true) {
-                document.datagrid.check[i].checked = true;
-            } else {
-                document.datagrid.check[i].checked = false;
-            }
-        }
-    }
-    
-    function chkBoxes() {
-        document.datagrid.del_selected.disabled = false;
-        var myCheckBoxes = document.datagrid.elements['check[]']; //array di checkboxes
-        for (var i = 0; i < myCheckBoxes.length; i++) {
-            if (myCheckBoxes[i].checked === true) {
-                break;
-            }
-        }
-        if (i === myCheckBoxes.length) {
-            document.datagrid.del_selected.disabled = true;
-        }
-    }
-</script>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
