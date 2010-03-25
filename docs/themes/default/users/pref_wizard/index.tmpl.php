@@ -12,17 +12,8 @@ global $msg;
 		<script src="<?php echo $_base_path; ?>jscripts/TILE.js" type="text/javascript"></script>
         <link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo $_base_path ?>jscripts/infusion/framework/fss/css/fss-layout.css" type="text/css" />       
-        <style id="pref_style" type="text/css"></style>
-        
-<?php 
-//close popup if done.
-if (isset($_POST['done'])) {
-    echo '<script type="text/javascript">';
-//    echo 'ATutor.setParentStyles("'.$_SESSION["prefs"]["PREF_FONT_FACE"].'");';
-    echo "window.close();";
-    echo '</script>';
-}
-?>
+        <script src="<?php echo $_base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+        <style id="pref_style" type="text/css"></style>       
     </head>
     <body onload="<?php echo $this->onload; ?>">
         <div align="right"><a href="javascript:window.close()">Close</a></div>
@@ -52,5 +43,21 @@ if (isset($_POST['done'])) {
     }
 ?>
 </form>
+<script type="text/javascript">
+//<!--
+    <?php 
+    if (isset($_POST['done'])) {
+        echo 'ATutor.users.preferences.setStyles("'.$_SESSION["prefs"]["PREF_BG_COLOUR"].
+            '","'.$_SESSION["prefs"]["PREF_FG_COLOUR"].
+            '","'.$_SESSION["prefs"]["PREF_HL_COLOUR"].
+            '","'.$_SESSION["prefs"]["PREF_FONT_FACE"].
+            '","'.$_SESSION["prefs"]["PREF_FONT_TIMES"].'");';
+        
+        echo "window.close();";
+    }    
+    require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); 
+    ?>
+//-->
+</script>
 </body>
 </html>

@@ -1,9 +1,15 @@
-/**
- * $Id: $
- * 
- * @author Laurel A. Williams
- * @copyright Copyright © 2010, ATutor, All rights reserved.
- */
+/************************************************************************/
+/* ATutor                                                               */
+/************************************************************************/
+/* Copyright (c) 2010 by Laurel Williams                           */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/* http://atutor.ca                                                     */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+// $Id: $
 
 var ATutor = ATutor || {};
 ATutor.users = ATutor.users || {};
@@ -11,6 +17,8 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 
 (function() {
 	
+	//styles block for user preferences
+	//used by ATutor.users.preferences.setStyles
     ATutor.users.preferences.user_styles = 
     	'<style id="pref_style" type="text/css">' + 
     	'<!--' + 
@@ -347,6 +355,9 @@ ATutor.users.preferences = ATutor.users.preferences || {};
     	'-->' +
     	'</style>';
 
+    /**
+     * Substitutes styles into styles block above and then places those styles on the page
+     */
     ATutor.users.preferences.setStyles = function (bg_color, fg_color, hl_color, font, font_size) {
 		var font_style = font ? 'font-family:' + font + ' !important;\n' : '';
 		var font_size_style = font_size ? 'font-size:' + font_size + 'em !important;\n' : '';
@@ -356,6 +367,18 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 				
 		var pref_style = ATutor.users.preferences.user_styles.replace(/FONT_FAMILY/g, font_style).replace(/FONT_SIZE/g, font_size_style).replace(/BG_COLOR/g, bg_color_style).replace(/FG_COLOR/g, fg_color_style).replace(/HL_COLOR/g, hl_color_style);
 	    jQuery('#pref_style').replaceWith(pref_style);
-	};	
+	    if (window.opener) jQuery('#pref_style', window.opener.document).replaceWith(pref_style);
+	};
+	
+	/**
+	 * Adds click hander to links with id pref_wiz_launcher
+	 */
+	ATutor.users.preferences.addPrefWizClickHandler = function (base_path) {
+    	var launcherArray = jQuery(".pref_wiz_launcher");   	
+    	launcherArray.click(function() {
+    		window.open(base_path + 'users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490');
+    		return false;
+    	});
+    };
 	
 })();

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor                                                               */
 /************************************************************************/
-/* Copyright (c) 2002-2010 by Laurel Williams                           */
+/* Copyright (c) 2010 by Laurel Williams                           */
 /* Adaptive Technology Resource Centre / University of Toronto          */
 /* http://atutor.ca                                                     */
 /*                                                                      */
@@ -13,12 +13,14 @@
 // $Id: $
 //
 // This file is essentially a javascript file, but needs to be terminated with
-// a .php extension so that php calls can be used within it.
+// a .php extension so that php calls can be used within it. Please put pure javascript
+// in ATutor.js
 ?>
 ATutor = ATutor || {};
 
 (function () {
 
+    //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
 <?php 
         //if user has set any display preferences set styles block
@@ -35,7 +37,10 @@ ATutor = ATutor || {};
                      '<?php echo $_SESSION["prefs"]["PREF_HL_COLOUR"]; ?>',
                      '<?php echo $_SESSION["prefs"]["PREF_FONT_FACE"]; ?>',
                      '<?php echo $_SESSION["prefs"]["PREF_FONT_TIMES"]; ?>');
-<?php   }?>        
+<?php   }?>
+
+        ATutor.users.preferences.addPrefWizClickHandler('<?php echo $_base_path ?>');
+                
      });
 })();
 
