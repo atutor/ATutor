@@ -87,7 +87,47 @@ if ($this->announcements): ?>
 function print_sublinks($link){
 	global $_base_path;
 ?>
+<div class="details_ol">
+	<div class="details_or">
+		<div class="outside_box">
+<?php if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)) {?>
+			<div class="buttonbox">
+			<a href="#" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>'); return false;"><img src="<?php echo AT_BASE_HREF; ?>images/x.gif" border="0" alt="<?php echo _AT('close'); ?>"/></a>
+			</div>
+<?php }?>
+			<img src="<?php echo $link['img']; ?>" alt="" border="0" style="vertical-align:middle;" height="45" width="45"/>
+			<span class="home-title"><a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a></span>
+			<div class="inside_box">
 
+<?php
+	// if $link['sub_file'] is defined, print the text array returned from sub_file, otherwise, print the text defined in $link['text']
+	if($link['sub_file']!=""){
+		$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);
+		if(!is_array($array)){ 
+?>
+				<div class="details-text">
+				<i><?php echo _AT('none_found'); ?></i>
+				</div>
+<?php } else { ?>
+				<div class="details-text">
+<?php 	foreach($array as $sublink){ ?>
+					<img src="<?php echo $link['icon']; ?>" border="0" alt="" style="vertical-align:middle;"/> 
+<?php		if ($sublink <> '') echo $sublink."<br />"; } ?>
+				</div> 
+<?php 
+		} // end of else						
+	} else { ?>
+				<div class="details_text"><?php echo $link['text']; ?></div>
+<?php } ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!--
 <div class="details_ol">
 	<div class="details_or">
 		<div class="outside_box">
@@ -104,7 +144,7 @@ function print_sublinks($link){
 <?php
 	// if $link['sub_file'] is defined, print the text array returned from sub_file, otherwise, print the text defined in $link['text']
 	if($link['sub_file']!=""){
-		$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);
+		//$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);
 		if(!is_array($array)){ 
 ?>
 				<div class="details-text">
@@ -125,6 +165,6 @@ function print_sublinks($link){
 		</div>
 	</div>
 </div>
-
+-->
 <?php } ?>
 

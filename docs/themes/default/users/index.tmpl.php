@@ -189,7 +189,6 @@
 //display current news
 echo '<ul style="line-height:2em; list-style-type:none; margin-left:-2em;margin-right:1em;">';
 
-
 foreach($this->all_news as $news){
       $count++;
       if($count < 100){
