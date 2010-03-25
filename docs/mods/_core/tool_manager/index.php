@@ -57,7 +57,7 @@ if(isset($tool_list)) {?>
                 ?>
             <tr>
                 <td valign="top">
-                    <!--<input name='checkAll' type='checkbox' onClick="checkAll();">-->
+                    <!--<input name='checkAll' type='checkbox' onClick="checkAll();" />-->
                     <input name="check[]" value="<?php echo $tool['id'];?>" id="<?php echo $i; ?>" type="checkbox" <?php echo $checked;?> onClick="chkBoxes();" />
                     &nbsp;<?php echo $files;?>
                 </td>
@@ -67,38 +67,42 @@ if(isset($tool_list)) {?>
 		$i=0;?>
         </tbody>
     </table>
-    <br><br><br>
-    <input type="hidden" name="cid" value="<?php echo $cid;?>">
-    <input type="submit" name="save" value="<?php echo _AT('save');?>" class="button">
+    <br /><br /><br />
+    <input type="hidden" name="cid" value="<?php echo $cid;?>" />
+    <input type="submit" name="save" value="<?php echo _AT('save');?>" class="button" />
     
 </form>
-</fieldset>
-</div>
+
 <?php }
 
 
 /*###############################*/
 /* added*/
 /*##############################*/?>
-
-
-<script language=javascript>
+</fieldset>
+</div>
+<script language="javascript" type="text/javascript">
     function checkAll() {
-        check=true;
-        for (i=0;i<document.datagrid.check.length;i++) {
-            if (document.datagrid.checkall.checked==true)
-                document.datagrid.check[i].checked=true;
-            else
-                document.datagrid.check[i].checked=false;
+        for (var i = 0; i < document.datagrid.check.length; i++) {
+            if (document.datagrid.checkall.checked === true) {
+                document.datagrid.check[i].checked = true;
+            } else {
+                document.datagrid.check[i].checked = false;
+            }
         }
     }
+    
     function chkBoxes() {
-        document.datagrid.del_selected.disabled=false;
+        document.datagrid.del_selected.disabled = false;
         var myCheckBoxes = document.datagrid.elements['check[]']; //array di checkboxes
-        for (i=0;i<myCheckBoxes.length;i++)
-            if (myCheckBoxes[i].checked==true)
+        for (var i = 0; i < myCheckBoxes.length; i++) {
+            if (myCheckBoxes[i].checked === true) {
                 break;
-        if (i == myCheckBoxes.length)
-            document.datagrid.del_selected.disabled=true;
+            }
+        }
+        if (i === myCheckBoxes.length) {
+            document.datagrid.del_selected.disabled = true;
+        }
     }
 </script>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
