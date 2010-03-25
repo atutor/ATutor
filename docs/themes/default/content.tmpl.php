@@ -58,7 +58,7 @@ if (!empty($this->forum_ids)): ?>
             <ul class="tools">
                 <?php
                 foreach ($this->forum_ids as $id => $forum_obj) {
-                    echo '<li><a href="'.url_rewrite('forum/index.php?fid='.$forum_obj['forum_id'], AT_PRETTY_URL_IS_HEADER).'">'.
+                    echo '<li><a href="'.url_rewrite('mods/_standard/forums/forum/index.php?fid='.$forum_obj['forum_id'], AT_PRETTY_URL_IS_HEADER).'">'.
                         AT_print($forum_obj['title'], 'forums.title').'</a><br /></li>';
                 }
                 ?>
