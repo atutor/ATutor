@@ -39,7 +39,7 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "")
 		<ul class="tools">
 		<?php 
 			foreach ($this->test_ids as $id => $test_obj){
-				echo '<li><a href="'.url_rewrite('tools/test_intro.php?tid='.$test_obj['test_id'], AT_PRETTY_URL_IS_HEADER).'">'.
+				echo '<li><a href="'.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$test_obj['test_id'], AT_PRETTY_URL_IS_HEADER).'">'.
 					AT_print($test_obj['title'], 'tests.title').'</a><br /></li>';
 			}
 		?>
