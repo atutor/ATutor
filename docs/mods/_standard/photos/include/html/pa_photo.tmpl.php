@@ -71,8 +71,7 @@
 		<div class="photo_actions">
 			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id']; ?>"><?php echo _AT('pa_edit_photo'); ?></a><br/>
 			<a href="<?php echo AT_PA_BASENAME.'delete_photo.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"><?php echo _AT('pa_delete_this_photo'); ?></a><br/>
-			<!-- TODO: is this needed? -->
-			<!-- <a href=""><?php echo _AT('set_profile_pic'); ?></a> -->
+			<a href="<?php echo 'mods/_standard/profile_pictures/profile_picture.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"><?php echo _AT('pa_set_profile_pic'); ?></a>
 		</div>
 		<?php else: ?>
 		<div class="photo_actions">

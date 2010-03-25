@@ -1,10 +1,10 @@
-<div id="uploader-contents">	
+<div id="uploader-contents">
 	<!-- Photo album options and page numbers -->
 	<?php if ($this->action_permission || $this->album_info['type_id']==AT_PA_TYPE_COURSE_ALBUM): ?>
-	<div class="add_photo">
+	<div class="add_photo">		
 		<div class="toggle_uploader">
 			<input type="button" id="upload_manager" name="upload_manager" value="<?php echo _AT('pa_open_upload_manager'); ?>" onclick="toggleUploadManager()" class="button" />
-			<input type="hidden" id="upload_manager_toggle" value="1" />
+			<input type="hidden" id="upload_manager_toggle" value="1" />			
 		</div>
 
 		<div class="input-form" id="ajax_uploader">
