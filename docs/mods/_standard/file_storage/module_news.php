@@ -27,6 +27,7 @@ function file_storage_news() {
 	$result = mysql_query($sql, $db);
 	if($result){
 		while($row = mysql_fetch_assoc($result)){
+			$row['course_id'] = $row['owner_id'];
 			if($row['description'] !=""){
 				$filetext = $row['description'];
 			} else {
