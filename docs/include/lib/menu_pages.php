@@ -24,7 +24,11 @@ if (isset($_pages[AT_NAV_ADMIN])) {
 }
 
 if($_config['allow_browse'] && $_config['just_social'] != "1") {
+if($_SESSION['valid_user']){
+    $browse_tab = "users/browse.php";
+}else{
     $browse_tab = "browse.php";
+}
 }
 if($_config['allow_registration']) {
     $reg_tab = "registration.php";
