@@ -28,10 +28,18 @@ if ($_GET['tile']) {
 <head>
 	<title><?php echo _AT($lang_variable); ?></title>
 	<?php if ($_GET['frame']) { ?>
-		<META HTTP-EQUIV="refresh" content="3;URL=prog.php?frame=1"> 
+		<meta http-equiv="refresh" content="3;URL=prog.php?frame=1" /> 
 	<?php } ?>
-	<link rel="stylesheet" href="<?php echo $_base_path; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; <?php echo $myLang->getCharacterSet(); ?>" />
+    <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+    <script language="javascript" type="text/javascript">
+    //<!--
+    jQuery.noConflict();
+    //-->
+    </script>
+    <script src="<?php echo $_base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+    <link rel="stylesheet" href="<?php echo $_base_path; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
+    <style id="pref_style" type="text/css"></style> 
 </head>
 <body <?php
 	if ($_SESSION['done']) {
@@ -84,5 +92,10 @@ if (!$_GET['frame']) {  ?>
 } ?></td>
 </tr>
 </table>
+<script type="text/javascript">
+//<!--
+    <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
+//-->
+</script>
 </body>
 </html>
