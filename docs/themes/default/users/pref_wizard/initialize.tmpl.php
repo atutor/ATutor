@@ -36,7 +36,7 @@
     </div>
     
     <input type="hidden" value="-1" name="pref_index" id="pref_index" />
-    <input type="submit" value="Next" name="next" id="next" />
+    <input class="fl-force-right" type="submit" value="Next" name="next" id="next" />
     
     <!-- 
 I want to make the text on the screen easier to see (leads to…screen enhancement options)
