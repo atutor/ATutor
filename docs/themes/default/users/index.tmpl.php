@@ -187,16 +187,16 @@
 <?php
 	    
 //display current news
-echo '<ul style="line-height:2em; list-style-type:none; margin-left:-2em;margin-right:1em;">';
-
-foreach($this->all_news as $news){
-      $count++;
-      if($count < 100){
-
-	echo '<li><img src="'.$news['thumb'].'" style="vertical-align:middle;" alt="'.$news['alt'].'" title="'.$news['alt'].'"/> ' . $news['link'] .' <br /><small>(<a href="bounce.php?course='.$news['object']['course_id'].'">'.$news['course'].'</a>)| ('.AT_DATE('%F %j, %g:%i',$news['time']).')</small><hr style=""/></li>';
-      }
+if (isset($this->all_news)) {
+    echo '<ul style="line-height:2em; list-style-type:none;">';
+    foreach($this->all_news as $news){
+        $count++;
+        if($count < 100){
+            echo '<li><img src="'.$news['thumb'].'" style="vertical-align:middle;" alt="'.$news['alt'].'" title="'.$news['alt'].'"/> ' . $news['link'] .' <br /><small>(<a href="bounce.php?course='.$news['object']['course_id'].'">'.$news['course'].'</a>)| ('.AT_DATE('%F %j, %g:%i',$news['time']).')</small><hr style=""/></li>';
+        }
+    }
+    echo '</ul>';
 }
-echo '</ul>';
 ?>
 </div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
