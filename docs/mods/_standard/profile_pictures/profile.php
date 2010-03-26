@@ -1,15 +1,16 @@
 <?php
-/************************************************************************/
-/* ATutor																*/
-/************************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
-/************************************************************************/
+/***********************************************************************/
+/* ATutor															   */
+/***********************************************************************/
+/* Copyright (c) 2002-2009											   */
+/* Adaptive Technology Resource Centre / Inclusive Design Institute	   */
+/* http://atutor.ca													   */
+/*																	   */
+/* This program is free software. You can redistribute it and/or	   */
+/* modify it under the terms of the GNU General Public License		   */
+/* as published by the Free Software Foundation.					   */
+/***********************************************************************/
+// $Id: remove_uploaded_photo.php 9519 2010-03-18 15:38:11Z hwong $
 // $Id: profile.php 8901 2009-11-11 19:10:19Z cindy $
 
 $_user_location	= 'users';

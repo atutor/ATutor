@@ -11,36 +11,17 @@
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
 // $Id$
-$_user_location = 'public';
 
 define('AT_INCLUDE_PATH', '../../../include/');
+$_user_location	= 'public';
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
+require ('../profile_pictures/save_profile_picture.php');	//handle POST request
 
-//check what comment this is for. Album or Photo.
-$pid = intval($_POST['pid']);
-$aid = intval($_POST['aid']);
-$cid = $_POST['cid'];
-$comment = $_POST['comment'];
-
-if (isset($_POST['pid']) && $pid>0){
-	$isPhoto = true;
+//tweak.  disallow redirect to profile album, if the refererer is from profile picture.php
+if (isset($_SESSION['course_id']) && $_SESSION['course_id']>0){
+	header('Location: profile_album.php');
 } else {
-	$isPhoto = false;
-}
-$cid = intval(str_replace('cid_', '', $cid));
-
-$pa = new PhotoAlbum($aid);
-//validates
-if ($pa->checkAlbumPriv($_SESSION['member_id']) || $pa->checkCommentPriv($cid, $_SESSION['member_id'], $isPhoto)){
-	$result = $pa->editComment($cid, $comment, $isPhoto);
-}
-
-if ($result===true){
-	//TODO: AJAX
-	header('HTTP/1.0 200 OK');
-} else {
-	header('HTTP/1.0 404 Not Found');
+	header('Location: ../profile_pictures/profile_picture.php');
 }
 exit;
 ?>
