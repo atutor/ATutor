@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2010 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -351,7 +351,7 @@ function printSubmenuHeader(title)
 	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
           <?php if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)) {?>
-		    <a><img border="0" alt="edit preferences" src="<?php echo $this->base_href; ?>images/wand.png" onclick="window.open('<?php echo $this->base_path; ?>users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;"/></a> |
+		    <a class="pref_wiz_launcher"><img border="0" alt="edit preferences" src="<?php echo $this->base_href; ?>images/wand.png" /></a> |
 		    <?php } ?> 
 			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | 
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
