@@ -6,7 +6,9 @@ div.input-form {
 	margin-bottom: 20px;
 	line-height:150%;
 	background-color: #F8F8F8;
-
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	padding:.2em;
 }
 
 div.input-form div.row h3 {

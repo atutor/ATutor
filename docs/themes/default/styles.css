@@ -2,8 +2,12 @@ html,body{
 	height:100%;
 
 }
-
-
+.site-name{
+font-size:small;
+font-weight:bold;
+padding-left:1em;
+color:grey;
+}
 /* main body attributes */
 body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
@@ -13,10 +17,14 @@ body {
 	background-color: #cccccc;
 }
 .page_wrapper{
-	border:thin solid black;
+	border:thin solid #ffffff;
 	width:97%;
 	margin:auto;
+margin-top:1em;
 	background-color: #ffffff;
+	border-radius:.5em;
+	-moz-border-radius: 1em 1em .5em .5em;
+	border:thin solid black;
 }
 p {
     margin: 0.5em 0em 1em 0em;
@@ -51,7 +59,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 160%;
-	color: #FFF;
+
 }
 
 h2 {
@@ -538,6 +546,7 @@ h1#section-title {
 	white-space:nowrap;
 	margin-left:1em;
 	margin-bottom: -0.5em;
+	
 }
 
 div#top-links {
@@ -914,8 +923,8 @@ div.paging li a:hover, div.paging li a.current {
 }
 
 #header{
-	background-color: #1D2326;
-	background-image: url(images/pencil_top.gif);
+	/* background-color: #1D2326; */
+	/* background-image: url(images/pencil_top.gif); */
 	background-position: right bottom;
 	background-repeat: no-repeat;
 	height : 6.85em;
@@ -923,7 +932,6 @@ div.paging li a:hover, div.paging li a.current {
 
 #header a{
 	font-weight:600;
-	color: white;
 }
 
 
@@ -991,17 +999,27 @@ text-decoration:underline;
 h4.box {
 	font-size:0.85em;
 	padding: 2px;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em 0em 0em;
+	padding:.2em;
+border:thin solid #ccc;
+
 }
 
 div.box {
 	padding: 5px;
 	background-color: #F5F5F5;
 	color: black;
-	border: 1px solid #B8AE9C;
-
 	font-size:0.85em;
 	font-weight: normal;
 	padding:2px;
+
+	border-radius:.5em;
+	-moz-border-radius: .0em .0em .5em .5em;
+	padding:.2em;
+border-left:thin solid #ccc;
+border-right:thin solid #ccc;
+border-bottom:thin solid #ccc;
 }
 
 h5.box { 
@@ -1141,15 +1159,20 @@ fieldset {
 }
 
 a#guide {
-	background-image: url('../default/images/guide.gif'); background-repeat: no-repeat; background-position: 7px 4px;
-	background-color: #eee;
-	padding: 2px 10px 2px 27px;
-	border: 1px solid #ccc;
-	float:right;
+	background-image: url('../default/images/help.png'); background-repeat: no-repeat; background-position: 2px 2px;
+	padding: 3px 10px 5px 30px;
 	text-decoration:none;
 	font-size:0.85em;
 }
-
+#guidediv{
+	padding: 2px 10px 2px 27px;
+	border: 1px solid #ccc;
+	float:right;
+	background-color: #eee;
+	border-radius:.5em;
+	-moz-border-radius:.5em;
+	padding:.2em;
+}
 div#content-text {
 	padding-right: 5pt;
 	line-height:150%;
@@ -1394,15 +1417,16 @@ div.toolcontainer{
 */
 	
 div#topnavlistcontainer {
-	background-color: #1D2326;
-	background-image: url(images/pencil_bottom.gif);
+	/*  background-color: #1D2326;  */
+	/* background-image: url(images/pencil_bottom.gif); */
 	background-position:  top right;
 	background-repeat: no-repeat;
+height:1.7em;
 }
 
 
 ul#topnavlist {
-	padding-top: 5px;
+	padding-top: 2px;
 	margin-top: 0px;
 	margin-left:5px;
 }
@@ -1411,13 +1435,20 @@ ul#topnavlist li {
 	white-space: nowrap;
 	list-style: none;
 	display: inline;
-	margin: 0px;
+	margin: 2px;
+
+
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
-    background-color: #E6E6E6;
+   background-color: #E6E6E6;
     color: black;
 	text-decoration:none;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em 0em 0em;
+	padding: .2em 2em .2em;
+border-bottom:0;
+
 }
 
 ul#topnavlist li a {
@@ -1425,15 +1456,21 @@ ul#topnavlist li a {
     color: #555;
 	font-weight:bold;
     height: 1.5em;
-    padding: 0em 2em 0em;
+border:thin solid #ccc;
    	text-decoration:underline;
 	background-color:white;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em 0em 0em;
+	padding: .2em 2em .2em;
 }
 
 ul#topnavlist li a.selected {
     /* The selected tab. There's only one of these */
     color: #555;
     font-weight: normal;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em 0em 0em;
+	padding: .2em 2em .2em
 }
 
 ol#tools>li:hover {
@@ -1728,6 +1765,9 @@ padding:.2em;
 	margin-left:.4em;
 	width:28em;
 	height:9.8em;
+	border-radius:.5em;
+	-moz-border-radius:.5em;
+	padding:.2em;
 }
 
 .inside_box{
@@ -1739,7 +1779,9 @@ padding:.3em;
 	height:52%;
 	margin-bottom:.2em;
 font-size:10pt;
-
+	border-radius:.5em;
+	-moz-border-radius:.5em;
+	padding:.2em;
 
 }
 .details_or{
@@ -1923,4 +1965,3 @@ tr.even {
 tr.odd {
     background-color: transparent;
 }
-

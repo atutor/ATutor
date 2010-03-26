@@ -315,7 +315,7 @@ function printSubmenuHeader(title)
 	?>
 	<!-- section title -->
 	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
-		echo '<div style="font-size:small;font-weight:bold;padding-left:1em;color:white;">'.stripslashes(SITE_NAME).'</div>'; 
+		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
 	else:
 		echo '<br />';	
 	endif; ?>
