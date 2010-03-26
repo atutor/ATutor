@@ -8,7 +8,7 @@ ob_start(); ?>
 
 <script type="text/javascript">
 //<!--
-var ATutor = ATutor || {};
+ATutor = ATutor || {};
 ATutor.cpref_switch = ATutor.cpref_switch || {};
 
 (function (ATutor) {
