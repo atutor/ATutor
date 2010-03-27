@@ -16,7 +16,7 @@ global $msg;
         <style id="pref_style" type="text/css"></style>       
     </head>
     <body onload="<?php echo $this->onload; ?>">
-        <div align="right"><a href="javascript:window.close()">Close</a></div>
+        <div class="fl-force-right"><a href="javascript:window.close()">Close</a></div>
         <a name="content"></a>
 
         <h1><?php echo _AT('preferences') ?></h1>
@@ -28,7 +28,9 @@ global $msg;
         $savant->display($this->start_template);
     }
     else if ($this->pref_template != null) {
+    	echo '<fieldset>';
         include_once($this->pref_template);
+        echo '</fieldset>';
         
         foreach ($this->pref_wiz as $pref => $template) { 
             echo '<input type="hidden" name="pref_wiz[]" value="'.$template.'" />';
