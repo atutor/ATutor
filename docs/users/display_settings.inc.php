@@ -1,4 +1,3 @@
-<fieldset> 
 <legend><strong><?php echo _AT("text"); ?></strong> </legend>   
 
 	<div class="row">
@@ -131,4 +130,3 @@
 			<span id="highlightedPreview" style="background-color: rgb(0, 255, 0); font-family: monospace;">Highlighted</span> Text  
 		</div> 
 	</div>
-</fieldset>

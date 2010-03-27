@@ -1,4 +1,3 @@
-<fieldset>
 <legend><strong><?php echo _AT("navigation"); ?></strong> </legend>  
 
 	<div class="row">
@@ -60,5 +59,3 @@
 		<input type="radio" name="show_bread_crumbs" id="sbc_yes" value="1" <?php echo $yes; ?> /><label for="sbc_yes"><?php echo _AT('yes'); ?></label>
 		<input type="radio" name="show_bread_crumbs" id="sbc_no" value="0" <?php echo $no; ?> /><label for="sbc_no"><?php echo _AT('no'); ?></label>
 	</div>
-</fieldset>
-

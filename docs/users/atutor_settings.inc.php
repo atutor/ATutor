@@ -1,4 +1,3 @@
-<fieldset>
 <legend><strong><?php echo _AT("atutor_settings"); ?></strong> </legend>  
 	<div class="row">
 		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
@@ -185,5 +184,3 @@
 		<input type="radio" name="content_editor" id="ce_1" value="1" <?php echo $num1; ?>/><label for="ce_1"><?php echo _AT('html'); ?></label>
 		<input type="radio" name="content_editor" id="ce_2" value="2" <?php echo $num2; ?>/><label for="ce_2"><?php echo _AT('html') . ' - '. _AT('visual_editor'); ?></label>
 	</div>
-</fieldset>
-

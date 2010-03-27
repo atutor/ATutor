@@ -1,6 +1,5 @@
- <fieldset> <legend><strong><?php echo _AT("support_tools"); ?></strong>  </legend>  
+<legend><strong><?php echo _AT("support_tools"); ?></strong>  </legend>  
 	<div class="row">
-		<?php echo _AT('support_tools'); ?><br />
 <?php
 			if (isset($_POST["dictionary_val"]))
 				$dict_val = $_POST["dictionary_val"];
@@ -92,5 +91,3 @@ function changeVal(val_name)
 }
 //-->
 </script>
-
-</fieldset>
