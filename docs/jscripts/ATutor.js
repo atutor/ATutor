@@ -376,7 +376,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 	ATutor.users.preferences.addPrefWizClickHandler = function (base_path) {
     	var launcherArray = jQuery(".pref_wiz_launcher");   	
     	launcherArray.click(function() {
-    		window.open(base_path + 'users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490');
+    		window.open(base_path + 'users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=520');
     		return false;
     	});
     };
