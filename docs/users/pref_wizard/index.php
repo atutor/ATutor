@@ -47,7 +47,6 @@ function initNoChecks() {
 }
 
 //START OF PROCESSING
-
 if (isset($_POST['pref_index'])) {
     $last_pref_index = intVal($_POST['pref_index']);
     if ($last_pref_index >= 0) {
@@ -56,15 +55,6 @@ if (isset($_POST['pref_index'])) {
         save_prefs();
     }
 }
-
-//close popup if done.
-//if (isset($_POST['done'])) {
-//    echo '<script type="text/javascript">';
-//    echo 'var ATutor = ATutor || {};';
-//    echo 'ATutor.setStyles("'.$_SESSION["prefs"]["PREF_FONT_FACE"].'");';
-//    echo "window.close();";
-//    echo '</script>';
-//}
 
 // display initialization page IF
 // first time loading pref wiz OR going from first pref page
@@ -83,6 +73,8 @@ else {
     if (isset($_POST['previous'])) $pref_index = $last_pref_index - 1;
     $savant->assign('pref_wiz', $_POST['pref_wiz']);
     $savant->assign('pref_index', $pref_index);
+    $languages = $languageManager->getAvailableLanguages();
+	$savant->assign('languages', $languages);
     switch ($_POST['pref_wiz'][$pref_index]) {
         case DISPLAY:
             $savant->assign('pref_template', '../display_settings.inc.php');
