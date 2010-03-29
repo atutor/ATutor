@@ -1457,7 +1457,7 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding: .2em 2em .2em;
-border-bottom:0;
+	border-bottom: thin solid #E6E6E6;
 
 }
 
@@ -1953,7 +1953,7 @@ ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active{
   	color: black;
 	text-decoration:none;
 	background-color: #E6E6E6;
-	border-bottom:thin solid white;
+
 }
 
 ul#subnavlist li a {
