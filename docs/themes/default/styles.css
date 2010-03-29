@@ -600,10 +600,13 @@ a#editor-link.on {
 /* for data tables */
 table.data {
 	clear:right;
-	border: 1px solid #B8AE9C;
+	border: 1px solid #cccccc;
 	width: 90%; 
 	margin-left: auto; 
 	margin-right: auto;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	padding:.2em
 } 
 
 table.data th {
@@ -1146,8 +1149,15 @@ fieldset#shortcuts {
 
 fieldset {
 	margin-bottom: 10pt;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	padding:.2em
 }
 #shortcuts legend {
+
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	padding:.2em
 }
 #shortcuts ul {
 	position: relative;
@@ -1163,16 +1173,13 @@ a#guide {
 	padding: 3px 10px 5px 30px;
 	text-decoration:none;
 	font-size:0.85em;
-}
-#guidediv{
-	padding: 2px 10px 2px 27px;
-	border: 1px solid #ccc;
 	float:right;
-	background-color: #eee;
+	border:thin solid #cccccc;
 	border-radius:.5em;
-	-moz-border-radius:.5em;
-	padding:.2em;
+	-moz-border-radius: .5em .5em .5em .5em;
+
 }
+
 div#content-text {
 	padding-right: 5pt;
 	line-height:150%;
@@ -1216,6 +1223,9 @@ div#container {
 	padding: 0px;
 	border:0;
 	width: 95%;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	padding:.2em
 }
 
 div#menutoggle{
@@ -1421,7 +1431,7 @@ div#topnavlistcontainer {
 	/* background-image: url(images/pencil_bottom.gif); */
 	background-position:  top right;
 	background-repeat: no-repeat;
-height:1.7em;
+	height:1.7em;
 }
 
 
@@ -1921,6 +1931,7 @@ ul#subnavlist {
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
 	white-space:nowrap;
+margin-bottom:.1em;
 }
 
 ul#subnavlist li {
@@ -1928,16 +1939,21 @@ ul#subnavlist li {
   	background-color: #FFFFFF;
 	list-style: none;
 	display: inline;
-	margin: 0px;
 	font-weight:700;
 	text-align:center;
 	border:thin solid #cccccc;
-	padding:0em 1em 0em;
+	border-radius:.5em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: .1em .5em .1em .5em ;
+
+
 }
 
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active{
   	color: black;
 	text-decoration:none;
+	background-color: #E6E6E6;
+	border-bottom:thin solid white;
 }
 
 ul#subnavlist li a {
@@ -1947,6 +1963,7 @@ ul#subnavlist li a {
    	text-decoration:underline;
 	background-color:white;
 	font-weight:500;
+
 
 }
 
