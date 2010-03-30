@@ -411,6 +411,9 @@ $pid = intval($_REQUEST['pid']);
 		$changes_made = check_for_changes($content_row, $row_alternatives);
 	}
 ?>
+
+<div class="editor_wrapper">
+
 <div align="center">
 	<?php output_tabs($current_tab, $changes_made); ?>
 </div>
@@ -442,5 +445,5 @@ $pid = intval($_REQUEST['pid']);
 	//	}
 			
 ?>
-
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
