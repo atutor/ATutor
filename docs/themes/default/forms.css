@@ -51,8 +51,8 @@ div.input-form input[type=text], div.input-form input[type=password] {
 }
 
 div.input-form textarea:focus, div.input-form  input[type=password]:focus, div.input-form  input[type=text]:focus{
-	border:1px solid #A50707;
-	background-color: #FFDAB9;
+	border:1px solid #545454;
+	background-color: #eeeeee;
 	padding: 2px;
 }
 
