@@ -45,7 +45,7 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 		$rtn_pair = explode('=', $rtn);
 		
 		if ($rtn_pair[0] == 'course_id') $tile_course_id = $rtn_pair[1];
-		if ($rtn_pair[0] == 'error') $error = $rtn_pair[1];
+		if ($rtn_pair[0] == 'error') $error = urldecode($rtn_pair[1]);
 	}
 	
 	if ($tile_course_id > 0)
