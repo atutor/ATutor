@@ -54,6 +54,13 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	{
 		// No response from transformable, the package file might be too big
 		if (trim($error) == '') $error = _AT('tile_no_response');
+		else {
+			// delete this access token since it cannot import into Transformable
+			$sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens
+			         WHERE token = '".$access_token_key."'
+			           AND token_type='access'";
+			$result = mysql_query($sql, $db);
+		}
 		$msg->addError(array('TILE_IMPORT_FAIL', $error));
 	}
 	

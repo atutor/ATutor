@@ -37,13 +37,14 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	$tile_import_url = AT_TILE_IMPORT_URL. '?oauth_token='.$access_token_key.'&url='.urlencode(AT_BASE_HREF. 'mods/_core/imscp/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m);
 
 	$oauth_server_response = @file_get_contents($tile_import_url);
+	
 	// handle OAUTH import response
 	foreach (explode('&', $oauth_server_response) as $rtn)
 	{
 		$rtn_pair = explode('=', $rtn);
 		
 		if ($rtn_pair[0] == 'course_id') $tile_course_id = $rtn_pair[1];
-		if ($rtn_pair[0] == 'error') $error = $rtn_pair[1];
+		if ($rtn_pair[0] == 'error') $error = urldecode($rtn_pair[1]);
 	}
 	
 	if ($tile_course_id > 0)
@@ -52,6 +53,13 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	{
 		// No response from transformable, the package file might be too big
 		if (trim($error) == '') $error = _AT('tile_no_response');
+		else {
+			// delete this access token since it cannot import into Transformable
+			$sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens
+			         WHERE token = '".$access_token_key."'
+			           AND token_type='access'";
+			$result = mysql_query($sql, $db);
+		}
 		$msg->addError(array('TILE_IMPORT_FAIL', $error));
 	}
 

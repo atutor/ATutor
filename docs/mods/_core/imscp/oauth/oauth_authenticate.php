@@ -76,7 +76,7 @@ if ($access_token_key == '')
 				if ($rtn_pair[0] == 'consumer_key') $consumer_key = $rtn_pair[1];
 				if ($rtn_pair[0] == 'consumer_secret') $consumer_secret = $rtn_pair[1];
 				if ($rtn_pair[0] == 'expire') $expire_threshold = $rtn_pair[1];
-				if ($rtn_pair[0] == 'error') $error = $rtn_pair[1];
+				if ($rtn_pair[0] == 'error') $error = urldecode($rtn_pair[1]);
 			}
 			
 			if ($error <> '')
@@ -111,7 +111,7 @@ if ($access_token_key == '')
 		// 2. get request token
 		$req_req = OAuthRequest::from_consumer_and_token($consumer, NULL, "GET", AT_TILE_OAUTH_REQUEST_TOKEN_URL);
 		$req_req->sign_request($sig_method, $consumer, NULL);
-		
+
 		$oauth_server_response = file_get_contents($req_req);
 		
 	//	debug('request token - request: '."\n".$req_req);
@@ -124,7 +124,7 @@ if ($access_token_key == '')
 			
 			if ($rtn_pair[0] == 'oauth_token') $request_token_key = $rtn_pair[1];
 			if ($rtn_pair[0] == 'oauth_token_secret') $request_token_secret = $rtn_pair[1];
-			if ($rtn_pair[0] == 'error') $error = $rtn_pair[1];
+			if ($rtn_pair[0] == 'error') $error = urldecode($rtn_pair[1]);
 		}
 		
 		if ($error == '' && strlen($request_token_key) > 0 && strlen($request_token_secret) > 0)
@@ -148,6 +148,7 @@ if ($access_token_key == '')
 		
 		// 3. authorization
 		$auth_req = AT_TILE_OAUTH_AUTHORIZATION_URL.'?oauth_token='.$request_token_key.'&oauth_callback='.urlencode($client_callback_url);
+		
 		header('Location: '.$auth_req);
 		exit;
 	}
@@ -190,7 +191,7 @@ if ($access_token_key == '')
 			
 			if ($rtn_pair[0] == 'oauth_token') $access_token_key = $rtn_pair[1];
 			if ($rtn_pair[0] == 'oauth_token_secret') $access_token_secret = $rtn_pair[1];
-			if ($rtn_pair[0] == 'error') $error = $rtn_pair[1];
+			if ($rtn_pair[0] == 'error') $error = urldecode($rtn_pair[1]);
 		}
 		
 		if ($error == '' && strlen($access_token_key) > 0 && strlen($access_token_secret) > 0)
