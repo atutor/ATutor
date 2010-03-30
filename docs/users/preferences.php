@@ -108,8 +108,7 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	}
 
 	/* also update message notification pref */
-	$sql = "UPDATE ".TABLE_PREFIX."members SET inbox_notify =". $mnot .", creation_date=creation_date, last_login=last_login WHERE member_id = $_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
+	save_email_notification($mnot);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 }
