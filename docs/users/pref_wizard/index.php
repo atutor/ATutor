@@ -51,8 +51,11 @@ if (isset($_POST['pref_index'])) {
     $last_pref_index = intVal($_POST['pref_index']);
     if ($last_pref_index >= 0) {
         $temp_prefs = assignPostVars();
+        $mnot = intval($_POST['mnot']);
         assign_session_prefs($temp_prefs);
         save_prefs();
+        save_email_notification($mnot);
+        
     }
 }
 
@@ -69,12 +72,19 @@ if (isFirstLoad() || isReturnToInit() || initNoChecks()) {
 
 // show appropriate preference page (next or previous)
 else {
+    
+    $languages = $languageManager->getAvailableLanguages();
+    $savant->assign('languages', $languages);
+    
+    $sql   = "SELECT inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+    $result = mysql_query($sql, $db);
+    $row_notify = mysql_fetch_assoc($result);
+    $savant->assign('notify', $row_notify['inbox_notify']);
+    
     if (isset($_POST['next'])) $pref_index = $last_pref_index + 1;
     if (isset($_POST['previous'])) $pref_index = $last_pref_index - 1;
     $savant->assign('pref_wiz', $_POST['pref_wiz']);
-    $savant->assign('pref_index', $pref_index);
-    $languages = $languageManager->getAvailableLanguages();
-	$savant->assign('languages', $languages);
+    $savant->assign('pref_index', $pref_index);    
     switch ($_POST['pref_wiz'][$pref_index]) {
         case DISPLAY:
             $savant->assign('pref_template', '../display_settings.inc.php');
