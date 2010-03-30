@@ -14,7 +14,7 @@ body {
 	margin:0px;
 	margin-top: -10px;
 	font-size: small;
-	background-color: #cccccc;
+	background-color: #eeeeee;
 }
 .page_wrapper{
 	border:thin solid #ffffff;
@@ -24,7 +24,7 @@ margin-top:1em;
 	background-color: #ffffff;
 	border-radius:.5em;
 	-moz-border-radius: 1em 1em .5em .5em;
-	border:thin solid black;
+
 }
 p {
     margin: 0.5em 0em 1em 0em;
@@ -48,7 +48,7 @@ p a:active {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #A50707;
+    color: #A8A8A8;
     clear: right;
     font: 100% Verdana, Helvetica, Arial, sans-serif;
 	font-weight: bold;
@@ -473,7 +473,10 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 table.etabbed-table a	{
 	text-decoration:underline;
 	font-size:10pt;
+border:thin solid black;
 }
+
+
 
 a#my-start-page {
 	padding: 2px;
@@ -610,7 +613,7 @@ table.data {
 } 
 
 table.data th {
-	background-color: #F6EAD6;
+	background-color: #eeeeee;
 	padding: 3px;
 	white-space: nowrap;
 }
@@ -1169,7 +1172,7 @@ fieldset {
 }
 
 a#guide {
-	background-image: url('../default/images/help.png'); background-repeat: no-repeat; background-position: 2px 2px;
+	background-image: url('images/help.png'); background-repeat: no-repeat; background-position: 2px 2px;
 	padding: 3px 10px 5px 30px;
 	text-decoration:none;
 	font-size:0.85em;
@@ -1463,10 +1466,10 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
 
 ul#topnavlist li a {
     /* The normal, unselected tabs. They are all links */
-    color: #555;
+	color: #555;
 	font-weight:bold;
-    height: 1.5em;
-border:thin solid #ccc;
+	height: 1.5em;
+	border:thin solid #ccc;
    	text-decoration:underline;
 	background-color:white;
 	border-radius:.5em;
@@ -1981,4 +1984,60 @@ tr.even {
 
 tr.odd {
     background-color: transparent;
+}
+
+/* Content editor wrapper div */
+.editor_wrapper{
+	border:thin solid #cccccc;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	padding: .1em .5em .1em .5em ;
+}
+/* Content editor tabs */
+.editor_buttontab {
+	color:#555;
+	font-size:10pt;
+	white-space: nowrap;
+	background-color: #FFFDE0;
+	margin: 0px;
+	border:0;
+	font-weight:500;
+	text-align:center;
+	padding:0em 0em 0em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+
+}
+.editor_tab{
+	border-top: thin solid #cccccc;
+	border-left: thin solid #cccccc;
+	border-right: thin solid #cccccc;
+	border-bottom:0;
+	text-align: center;
+	white-space: nowrap;
+	width:13%;
+	padding:0;
+	background-color: #FFFDE0;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: 0em .2em 0em .2em ;
+}
+.editor_tab_selected{
+	border-top: thin solid #cccccc;
+	border-left: thin solid #cccccc;
+	border-right: thin solid #cccccc;
+	border-bottom:0;
+	padding-left: 3px;
+	padding-right: 3px;
+  	background-color: #eeeeee;
+	margin: 0px;
+	font-weight:bold;
+	text-align:center;
+	padding:1em 1em 1em;
+	white-space: nowrap;
+	text-decoration:none;
+	width:15%;
+	padding:0em 0em 0em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em 0em 0em;
 }
