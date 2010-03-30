@@ -475,7 +475,7 @@ function insertFile(fileName, pathTo, ext, ed_pref) {
 		var html = '<img src="' + pathTo+fileName + '" border="0" alt="' + info + '" />';
 
 		insertLink(html, ed_pref);
-	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid") {
+	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid" ||ext == "flv"|| ext == "mp4") {
 		var html = '[media]'+ pathTo + fileName + '[/media]';
 
 		insertLink(html, ed_pref);
