@@ -1514,9 +1514,9 @@ function provide_alternatives1($cid, $content_page){
 function provide_alternatives($cid, $content){
 	global $db;
 	
-	$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid");
+	$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid", "mp4", "flv");
 	$txt_exts = array("txt", "html", "htm");
-	$image_exts = array("gif", "bmp", "png", "jpg", "jpeg");
+	$image_exts = array("gif", "bmp", "png", "jpg", "jpeg", "png", "tif");
 	
 	if (($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) && ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) && ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0)) 
 	{
