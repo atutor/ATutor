@@ -444,7 +444,7 @@ while ($row = mysql_fetch_assoc($result)) {
 						<input type="text" id="fname" name="new_folder_name" size="20" />
 					</div>
 					<div class="row buttons">
-						<input type="submit" name="create_folder" value="<?php echo _AT('create'); ?>" />
+						<input type="submit" name="create_folder" value="<?php echo _AT('create'); ?>" class="button" />
 					</div>
 				</div>
 			</div>
@@ -465,7 +465,7 @@ while ($row = mysql_fetch_assoc($result)) {
 						<textarea name="description" id="description" rows="1" cols="20"></textarea>
 					</div>
 					<div class="row buttons">
-						<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" />
+						<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>"  class="button"/>
 					</div>
 				</div>
 			</div>
@@ -599,14 +599,14 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 <tfoot>
 <tr>
 	<td colspan="7">
-		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
+		<input type="submit" name="download" value="<?php echo _AT('download'); ?>"  class="button"/>
 		<?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
 			<?php if (($owner_type != WORKSPACE_COURSE) && !(($owner_type == WORKSPACE_PERSONAL) && ($_SESSION['is_admin'] || authenticate(AT_PRIV_GROUPS,true))) ): ?>
-				<input type="submit" name="assignment" value="<?php echo _AT('hand_in'); ?>" />
+				<input type="submit" name="assignment" value="<?php echo _AT('hand_in'); ?>"  class="button"/>
 			<?php endif; ?>
-			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
-			<input type="submit" name="move" value="<?php echo _AT('move'); ?>" />
-			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>"  class="button"/>
+			<input type="submit" name="move" value="<?php echo _AT('move'); ?>"  class="button"/>
+			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>"  class="button"/>
 		<?php endif; ?>
 	</td>
 </tr>
