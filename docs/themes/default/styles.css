@@ -670,7 +670,6 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 	padding: 5px;
 	background-image: none;
 	padding-left: 0px;
-
 }
 
 /*buttons*/
@@ -1435,8 +1434,8 @@ ul#topnavlist {
 ul#topnavlist li {
 	white-space: nowrap;
 	list-style: none;
-	display: inline;
-	margin: 2px;
+	display: inline-block;
+	height:2em;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -1461,6 +1460,7 @@ ul#topnavlist li a {
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding: .2em 2em .2em;
+
 }
 
 ul#topnavlist li a.selected {
@@ -1869,7 +1869,7 @@ div.menuedit{
 	margin-top:-1.2em;
 	border:1px solid #cccccc;
 }
-
+/* NEW IN ATUTOR 2.0 */
 /* alternate colours in the My Course list */
 tr.even {
     background-color: #F7F3ED;
@@ -1943,4 +1943,12 @@ tr.odd {
 	border: thin solid #cccccc;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
+}
+.logoutbar{
+      background-color:#E6E6E6; 
+      font-size:0.85em; 
+      padding-top: 5px; 
+      border-bottom:1px solid #cccccc; 
+      height:2em;
+      text-align:right;
 }
