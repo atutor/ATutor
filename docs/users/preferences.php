@@ -86,27 +86,10 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	save_prefs();
 
 	//update auto-login settings
-	if (isset($auto_login) && ($auto_login == 'disable')) {
-		$parts = parse_url(AT_BASE_HREF);
-		$is_cookie_login_set = setcookie('ATLogin', '', time()-172800, $parts['path']);
-		$is_cookie_pass_set = setcookie('ATPass',  '', time()-172800, $parts['path']);
-
-		// The usage of flag $is_auto_login is because the set cookies are only accessible at the next page reload
-		if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = 'enable';
-		else $is_auto_login = 'disable';
-	} else if (isset($auto_login) && ($auto_login == 'enable')) {
-		$parts = parse_url(AT_BASE_HREF);
-		$sql	= "SELECT password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
-		$row	= mysql_fetch_assoc($result);
-		$password = $row["password"];
-		$is_cookie_login_set = setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path']);
-		$is_cookie_pass_set = setcookie('ATPass',  $password, time()+172800, $parts['path']);
-		
-		if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = 'enable';
-		else $is_auto_login = 'disable';
-	}
-
+    if (isset($auto_login)) {
+        $is_auto_login = setAutoLoginCookie($auto_login);
+    }
+    
 	/* also update message notification pref */
 	save_email_notification($mnot);
 
