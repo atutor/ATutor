@@ -47,15 +47,18 @@ function initNoChecks() {
 }
 
 //START OF PROCESSING
+$is_auto_login = checkAutoLoginCookie();
+
 if (isset($_POST['pref_index'])) {
     $last_pref_index = intVal($_POST['pref_index']);
     if ($last_pref_index >= 0) {
         $temp_prefs = assignPostVars();
-        $mnot = intval($_POST['mnot']);
         assign_session_prefs($temp_prefs);
         save_prefs();
-        save_email_notification($mnot);
         
+        if (isset($_POST['mnot'])) save_email_notification(intval($_POST['mnot']));
+
+        if (isset($_POST['auto'])) $is_auto_login = setAutoLoginCookie($_POST['auto']);        
     }
 }
 
@@ -80,6 +83,8 @@ else {
     $result = mysql_query($sql, $db);
     $row_notify = mysql_fetch_assoc($result);
     $savant->assign('notify', $row_notify['inbox_notify']);
+    
+    $savant->assign('is_auto_login', $is_auto_login);
     
     if (isset($_POST['next'])) $pref_index = $last_pref_index + 1;
     if (isset($_POST['previous'])) $pref_index = $last_pref_index - 1;

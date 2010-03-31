@@ -27,10 +27,7 @@ if (!$_SESSION['valid_user']) {
 	$msg->addFeedback('PREFS_LOGIN');
 }
 
-$is_auto_login = 'disable';
-if (isset($_COOKIE['ATLogin']) && isset($_COOKIE['ATPass'])) {
-    $is_auto_login = 'enable';
-}
+$is_auto_login = checkAutoLoginCookie();
 
 if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	if (isset($_POST['submit']))

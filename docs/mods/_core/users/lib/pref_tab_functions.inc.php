@@ -170,4 +170,18 @@ global $db;
 	return $is_auto_login;
 }
 
+/**
+ * Sets $is_auto_login to 'enable' if both auto login cookies are set, otherwise
+ * returns 'disable'
+ * 
+ * @return string
+ */
+function checkAutoLoginCookie() {
+    $is_auto_login = 'disable';
+    if (isset($_COOKIE['ATLogin']) && isset($_COOKIE['ATPass'])) {
+        $is_auto_login = 'enable';
+    }
+    return $is_auto_login;
+}
+
 ?>
