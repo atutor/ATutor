@@ -89,7 +89,7 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	if (isset($auto_login) && ($auto_login == 'disable')) {
 		$parts = parse_url(AT_BASE_HREF);
 		$is_cookie_login_set = setcookie('ATLogin', '', time()-172800, $parts['path']);
-		$is_cookie_paa_set = setcookie('ATPass',  '', time()-172800, $parts['path']);
+		$is_cookie_pass_set = setcookie('ATPass',  '', time()-172800, $parts['path']);
 
 		// The usage of flag $is_auto_login is because the set cookies are only accessible at the next page reload
 		if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = 'enable';
