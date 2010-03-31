@@ -27,10 +27,19 @@ if (!$_SESSION['valid_user']) {
 	$msg->addFeedback('PREFS_LOGIN');
 }
 
+$is_auto_login = 'disable';
+if (isset($_COOKIE['ATLogin']) && isset($_COOKIE['ATPass'])) {
+    $is_auto_login = 'enable';
+}
+
 if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	if (isset($_POST['submit']))
 	{
+	    //copy posted variables to a temporary array
 		$temp_prefs = assignPostVars();
+    
+		//email notification and auto-login settings are handled
+		//separately from other preferences
 		$mnot = intval($_POST['mnot']);
 		if (isset($_POST['auto'])) $auto_login = $_POST['auto'];
 	}
@@ -78,20 +87,15 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 		unset($_POST);
 	}
 
-	/* we do this instead of assigning to the $_SESSION directly, b/c	*/
-	/* assign_session_prefs functionality might change slightly.		*/
+	//save most preferences to session and db
 	assign_session_prefs($temp_prefs);
-
-	/* save as pref for ALL courses */
 	save_prefs();
 
-	//update auto-login settings
-    if (isset($auto_login)) {
+	//update email notification and auto-login settings separately
+    save_email_notification($mnot);
+	if (isset($auto_login)) {
         $is_auto_login = setAutoLoginCookie($auto_login);
     }
-    
-	/* also update message notification pref */
-	save_email_notification($mnot);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 }
@@ -105,6 +109,9 @@ $languages = $languageManager->getAvailableLanguages();
 /* page contents starts here */
 $savant->assign('notify', $row_notify['inbox_notify']);
 $savant->assign('languages', $languages);
+
+//problem here - if auto login is enabled, but we don't check that there is a cookie, how do we know if it is enabled?
+
 $savant->assign('is_auto_login', $is_auto_login);
 
 $savant->display('users/preferences.tmpl.php');
