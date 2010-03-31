@@ -69,7 +69,7 @@ $result = mysql_query($sql, $db);
 </thead>
 <tfoot>
 <tr>
-	<td colspan="3"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="3"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button"/> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>"  class="button"/></td>
 </tr>
 </tfoot>
 <tbody>

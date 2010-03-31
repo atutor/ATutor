@@ -138,8 +138,8 @@ $msg->printErrors();
 		</div>
 		
 		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
-			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?> " />
+			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s"  class="button"/>
+			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?> "  class="button"/>
 		</div>
 	</fieldset>
 	</div>
