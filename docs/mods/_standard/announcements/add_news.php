@@ -123,11 +123,11 @@ $msg->printErrors();
 			<?php   //Button for enabling/disabling visual editor
 				if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 					echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-					echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
+					echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button"/>';
 				} else {
 					echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'"  ';
 					if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
-					echo '/>';
+					echo ' class="button" />';
 				}
 			?>
 		</div>
