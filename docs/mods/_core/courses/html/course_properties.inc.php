@@ -364,9 +364,9 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 		<?php
 			if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 				echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-				echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
+				echo '<input type="submit" name="settext" value="'._AT('switch_text').'"  class="button"/>';
 			} else {
-				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" />';
+				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" class="button"/>';
 			}
 		?>
 	</div>
