@@ -134,4 +134,26 @@ global $addslashes;
 	return $temp_prefs;
 }
 
+	function setAutoLoginCookie($toDo) {
+		$parts = parse_url(AT_BASE_HREF);
+		$time = time() + 172800;
+		$password = ""; 
+		$login = "";
+		if ($toDo == 'enable') {
+			$time = time() - 172800;
+			$sql	= "SELECT password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+			$result = mysql_query($sql, $db);
+			$row	= mysql_fetch_assoc($result);
+			$password = $row["password"];
+			$login = $_SESSION['login'];
+			
+		}
+		$is_cookie_login_set = setcookie('ATLogin', '', $time, $parts['path']);
+		$is_cookie_pass_set = setcookie('ATPass',  '', $time, $parts['path']);
+		if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = 'enable';
+		else $is_auto_login = 'disable';
+		return $is_auto_login;
+	}
+
+
 ?>
