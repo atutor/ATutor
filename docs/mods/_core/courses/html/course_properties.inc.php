@@ -544,7 +544,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 			<?php // ------------- other icons
 
 				$course_imgs = array();
-				if ($dir = opendir('../images/courses/')) {
+				if ($dir = opendir('../../../../images/courses/')) {
 					while (false !== ($file = readdir($dir)) ) {
 						if( ($file == '.') || ($file == '..')) { 
 							continue;
