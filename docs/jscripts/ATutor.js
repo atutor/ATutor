@@ -376,11 +376,13 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 	ATutor.users.preferences.addPrefWizClickHandler = function (base_path) {
     	var launcherArray = jQuery(".pref_wiz_launcher");   	
     	launcherArray.click(function() {
-//    		jQuery("#footer").before('<div id="pref_wiz_div" class="fl-theme-slate"></div>');
+//    		jQuery("#footer").before('<div id="pref_wiz_div"></div>');   		
 //    		jQuery("#pref_wiz_div").load(base_path + 'users/pref_wizard/index.php', function() {
-//    			jQuery(this).dialog({
-//    			    modal:true
-//    			  }); 
+//   			jQuery("#pref_wiz_div").dialog({
+//   				height: 520,
+//   				width: 640,
+//   			    modal:true
+//   			}); 
 //    		});
     		window.open(base_path + 'users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=520');
     		return false;
