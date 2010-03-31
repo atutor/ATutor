@@ -88,5 +88,8 @@ div.input-form div.row_alternatives {
 input[type=text]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-
+}
+input[type=password]{
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
 }

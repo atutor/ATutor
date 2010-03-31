@@ -16,7 +16,7 @@ function encrypt_password() {
 }
 
 </script>
-<div class="container"  style="width:90%;margin:auto;border:thin solid #cccccc;	background-color: #F8F8F8;padding:1em;">
+<div class="input-form">
 	<div class="column" style="margin-top:0;">
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="form_login_action" value="true" />
@@ -66,6 +66,7 @@ if($_config['allow_registration'] ==1){
 	</div>
 
 <?php } ?>
+
 <br style="clear:both;" />
 </div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
