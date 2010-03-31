@@ -81,9 +81,9 @@ $result = mysql_query($sql, $db);
 <tfoot>
 <tr>
 	<td colspan="4">
-		<input type="submit" name="submissions" value="<?php echo _AT('submissions'); ?>" /> 
-		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
-		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+		<input type="submit" name="submissions" value="<?php echo _AT('submissions'); ?>" class="button"/> 
+		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>"  class="button"/> 
+		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" />
 					
 	</td>
 </tr>
