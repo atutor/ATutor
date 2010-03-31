@@ -46,11 +46,27 @@ div#top-links a:active{
 .outside_box{
 	height:9.6em;
 }
+/*
 ul#subnavlist li a {
 	margin-right:1em;
 	font-size:8pt;
 	border-left:none;
 	border-right:none;
+}*/
+ul#topnavlist {
+	padding-top: 2px;
+	margin-top: 0px;
+	margin-left:5px;
+height:4em;
+}
+
+
+ul#topnavlist li {
+	white-space: nowrap;
+	list-style: none;
+	display: inline;
+	height:2em;
+clear:both;
 }
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active, ul#subnavlist strong {
 	margin-right:.5em;
