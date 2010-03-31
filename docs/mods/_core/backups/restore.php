@@ -51,6 +51,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 <input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
 
 <div class="input-form">
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('restore'); ?></legend>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('material'); ?><br />
 
@@ -78,9 +79,10 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('restore'); ?>" /> 
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('restore'); ?>"  class="button"/> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  class="button"/>
 	</div>
+</fieldset>
 </div>
 </form>
 <?php $i=0; ?>

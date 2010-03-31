@@ -58,10 +58,10 @@ $list = $Backup->getAvailableList();
 </thead>
 <tfoot>
 <tr>
-	<td colspan="6"><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" /> 
-				  <input type="submit" name="download" value="<?php echo _AT('download'); ?>" /> 
-				  <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
-				  <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /></td>
+	<td colspan="6"><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>"  class="button"/> 
+				  <input type="submit" name="download" value="<?php echo _AT('download'); ?>"  class="button"/> 
+				  <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>"  class="button"/> 
+				  <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>"  class="button"/></td>
 </tr>
 </tfoot>
 <tbody>

@@ -67,8 +67,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 
 		<div class="row buttons">
-		<input type="submit" name="upload" value="<?php echo _AT('upload_backup'); ?>" onclick="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php');" /> 
-			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		<input type="submit" name="upload" value="<?php echo _AT('upload_backup'); ?>" onclick="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php');"  class="button"/> 
+			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  class="button"/>
 		</div>
 	<?php endif; ?>
 	</fieldset>
