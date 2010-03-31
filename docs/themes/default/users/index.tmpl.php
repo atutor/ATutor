@@ -84,7 +84,7 @@
 <?php endif; ?>
 <?php if ($row['last_cid']): ?>
       <div class="shortcuts" style="float:right;">
-	      <small><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="<?php echo $_base_href;  ?>themes/default/images/resume.gif" border="" alt="<?php echo _AT('resume'); ?>" title="<?php echo _AT('resume'); ?>" /></a></small>
+	      <small><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="<?php echo $_base_href;  ?>themes/default/images/resume.png" border="" alt="<?php echo _AT('resume'); ?>" title="<?php echo _AT('resume'); ?>" /></a></small>
       </div>
 <?php endif; ?>
 </ul>
@@ -182,8 +182,8 @@
 
 </div>
 
-<div class="container" style="width:38%; margin:auto;border:thin solid #e8e8e8; float:right;">
-<div style="width:100%; background-color:#eeeeee; border-bottom: thin solid #cccccc;"> Things Current</div><br />
+<div class="current_box">
+<div class="current_head"> <h3>Things Current</h3></div><br />
 <?php
 	    
 //display current news

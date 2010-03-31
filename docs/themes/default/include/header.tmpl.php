@@ -346,9 +346,9 @@ function printSubmenuHeader(title)
 	</ul>
 </div>
 
-<div style="background-color:#E6E6E6; font-size:0.85em; padding-top: 5px; border-bottom:1px solid black; height:2em;">
-	<!-- the sub navigation -->
-	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
+<div class="logoutbar">
+
+	<div>
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
           <?php if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN)) {?>
 		    <a class="pref_wiz_launcher"><img border="0" alt="edit preferences" src="<?php echo $this->base_href; ?>images/wand.png" /></a> |
@@ -360,29 +360,6 @@ function printSubmenuHeader(title)
 		<?php endif; ?>
 	</div>
 
-	<?php if ($this->sub_level_pages): ?>
-	<!--	<div id="sub-navigation">
-			<?php if (isset($this->back_to_page)): ?>
-				<a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo _AT('back_to').' '.$this->back_to_page['title']; ?></a> | 
-			<?php endif; ?>
-
-			<?php $num_pages = count($this->sub_level_pages); ?>
-			<?php for ($i=0; $i<$num_pages; $i++): ?>
-				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-					<strong><?php echo $this->sub_level_pages[$i]['title']; ?></strong>
-				<?php else: ?>
-					<a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a>
-				<?php endif; ?>
-				<?php if ($i < $num_pages-1): ?>
-					|
-				<?php endif; ?>
-			<?php endfor; ?>
-		</div> -->
-	<?php else: ?>
-		<!-- <div id="sub-navigation">
-			&nbsp;
-		</div> -->
-	<?php endif; ?>
 </div>
 
 <div style="padding:3px;">
@@ -399,7 +376,6 @@ function printSubmenuHeader(title)
 		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	<?php endif; ?>
 </div>
-
 
 <div id="contentwrapper">
 	<?php if ((isset($this->course_id) && $this->course_id > 0) && $system_courses[$this->course_id]['side_menu']): ?>
@@ -452,13 +428,13 @@ function printSubmenuHeader(title)
 		<div id="sequence-links">
 		<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 			<?php if ($this->sequence_links['resume']): ?>
-					<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+					<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.png" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
 			<?php else:
 				if ($this->sequence_links['previous']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->img; ?>previous.gif" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->img; ?>previous.png" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
 				<?php endif;
 				if ($this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->img; ?>next.gif" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->img; ?>next.png" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
 				<?php endif; ?>
 			<?php endif; ?>
 		<?php } ?>
