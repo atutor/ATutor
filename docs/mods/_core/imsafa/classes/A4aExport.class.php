@@ -40,6 +40,7 @@ class A4aExport extends A4a {
 			$secondary_array = array();
 			foreach($resources_types as $rtid){
 				$sec_resources['secondary_resources'] = parent::getSecondaryResources($rid);
+
 				//determine secondary resource type
 				foreach ($sec_resources['secondary_resources'] as $sec_id => $sec_resource){
 					$current_sec_file = $sec_resource['resource'];
@@ -49,14 +50,13 @@ class A4aExport extends A4a {
 					if (!isset($this->original_files[$current_sec_file]) || empty($this->original_files[$current_sec_file]) ){
 						//TODO merge these values i think
 						$this->original_files[$current_sec_file ] = $sec_resource;
-						$this->original_files[$current_sec_file ]['resource_type'][$prop['resource']] = parent::getSecondaryResourcesTypes($sec_id);
+						$this->original_files[$current_sec_file ]['resource_type'][$prop['resource']][] = parent::getSecondaryResourcesTypes($sec_id);
 					} else {
-						$this->original_files[$current_sec_file ]['resource_type'][$prop['resource']] = parent::getSecondaryResourcesTypes($sec_id);
+						$this->original_files[$current_sec_file ]['resource_type'][$prop['resource']][] = parent::getSecondaryResourcesTypes($sec_id);
 					}
 					//add this primary file ref, and the resources type to the secondary file
 					$this->original_files[$current_sec_file]['primary_resources'][$prop['resource']] = $rtid;
 //					$this->original_files[$current_sec_file]['primary_resources'][$prop['resource']]['language_code'] = $sec_resource['language_code'];
-
 				}
 				$res_type['resource_type'] = $rtid;	//could be 1+
 				$temp = array_merge($prop, $res_type, $secondary_array);
@@ -102,11 +102,14 @@ class A4aExport extends A4a {
 		// Get original files' xml 
 		foreach($this->original_files as $id=>$resource){
 			$orig_access_mode = array();
-
 			foreach($resource['resource_type'] as $type_id){
 				if (!is_array($type_id)){
 					//primary resource will always have just on type
 					$orig_access_mode[] = $this->getResourceNameById($type_id);
+				} else {
+					foreach($type_id as $k=>$type_id2){
+						$orig_access_mode[] = $this->getResourceNameById($type_id2[0]);
+					}
 				}
 			}
 			$savant->assign('relative_path', $this->relative_path);	//the template will need the relative path
@@ -128,9 +131,10 @@ class A4aExport extends A4a {
 					$orig_access_mode = array(); //reinitialize
 					foreach($resource['resource_type'][$uri] as $type_id){
 						$orig_access_mode[] = $this->getResourceNameById($type_id);
+						$savant->assign('orig_access_mode', $orig_access_mode);
+						$xml_array[$id.' to '.$uri][] = $savant->fetch(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.tmpl.php');
 					}
-					$savant->assign('orig_access_mode', $orig_access_mode);
-					$xml_array[$id.' to '.$uri] = $savant->fetch(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.tmpl.php');
+					
 				}
 			} else {
 				$savant->assign('primary_resource_uri', '');
@@ -147,7 +151,9 @@ class A4aExport extends A4a {
 	 */
 	function getResourceNameById($type_id){
 		$orig_access_mode = '';
-
+		if (is_array($type_id)) {
+			$type_id = $type_id[0];
+		}
 		switch($type_id){
 			case 1:
 				$orig_access_mode = 'auditory';
@@ -156,6 +162,8 @@ class A4aExport extends A4a {
 				$orig_access_mode = 'textual';
 				break;
 			case 2:
+				$orig_access_mode = 'sign_language';
+				break;
 			case 4:
 				$orig_access_mode = 'visual';
 				break;

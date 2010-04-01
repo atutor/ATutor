@@ -31,10 +31,13 @@
 				case 1:
 					$orig_access_mode = 'auditory';
 					break;
+				case 2:
+					$orig_access_mode = 'visual';
+					$representation_form = 'sign_language';
+					break;
 				case 3:
 					$orig_access_mode = 'textual';
-					break;
-				case 2:
+					break;				
 				case 4:
 					//sign language, and visual
 					$orig_access_mode = 'visual';
@@ -44,6 +47,9 @@
 			}
 		?>
 		<originalAccessMode><?php echo $orig_access_mode; ?></originalAccessMode>
+		<?php if (isset($representation_form) && $representation_form!=''): ?>
+		<representationForm><?php echo $representation_form; ?></representationForm>
+		<?php endif; ?>
 	</adaptationStatement>
 	<?php endforeach; ?>
 	<?php endif; ?>

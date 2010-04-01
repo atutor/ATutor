@@ -530,10 +530,10 @@ function rehash($items){
 
 			if ($name=='originalAccessMode'){				
 				if (in_array('accessModeStatement', $element_path)){
-					$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['access_stmt_originalAccessMode'][] = $my_data;
+					$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['access_stmt_originalAccessMode'] = $my_data;
 				} elseif (in_array('adaptationStatement', $element_path)){
-					$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['adapt_stmt_originalAccessMode'][] = $my_data;
-				}			
+					$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['adapt_stmt_originalAccessMode'] = $my_data;
+				}
 			} elseif (($name=='language') && in_array('accessModeStatement', $element_path)){
 				$items[$current_identifier]['a4a'][$last_file_name][$resource_num]['language'][] = $my_data;
 			} elseif ($name=='hasAdaptation') {

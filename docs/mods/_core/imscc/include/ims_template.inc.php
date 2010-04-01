@@ -39,8 +39,7 @@ function get_import_files($text)
 			array_push($files, $file);
 		}
 	
-	}
-	
+	}	
 	return $files;
 }
 	
@@ -325,7 +324,9 @@ function print_organizations($parent_id,
 						if (is_array($a4a_secondary_files[$file])){
 							$all_secondary_files_md = '';	//reinitialize string to null
 							foreach ($a4a_secondary_files[$file] as $v){
-								$all_secondary_files_md .= $a4a_xml_array[$v];	//all the meta data								
+								foreach($a4a_xml_array[$v] as $v2){
+									$all_secondary_files_md .= $v2;	//all the meta data		
+								}								
 							}
 							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
 							array('resources/'.$content['content_path'] . $file, $all_secondary_files_md), 
@@ -344,7 +345,6 @@ function print_organizations($parent_id,
 						}
 					}
 				}
-
 				/* check if this file is one of the test xml file, if so, we need to add the dependency
 				 * Note:  The file has already been added to the archieve before this is called.
 				 */
