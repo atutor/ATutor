@@ -37,7 +37,7 @@ global $msg;
         }
         echo '<input type="hidden" value="'.$this->pref_index.'" name="pref_index" id="pref_index" />';    
         
-        echo '<div class="fl-container-flex"><input class="fl-force-left" type="submit" name="set_default" value="'._AT("factory_default").'" accesskey="d" />';
+//        echo '<div class="fl-container-flex"><input class="fl-force-left" type="submit" name="set_default" value="'._AT("factory_default").'" accesskey="d" />';
         echo '<span class="fl-force-right"><input type="submit" value="Previous" name="previous" id="previous" />';
         if ($this->pref_index < count($this->pref_wiz) - 1) echo '<input type="submit" value="Next" name="next" id="next" />';
         else echo '<input type="submit" value="Done" name="done" id="done" />';
