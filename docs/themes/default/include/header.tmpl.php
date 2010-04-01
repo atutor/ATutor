@@ -66,14 +66,16 @@ global $system_courses, $_custom_css, $db;
 	<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+    <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+    <link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/jquery-ui-1.7.2/css/smoothness/jquery-ui-1.7.2.custom.css" type="text/css" />
 <?php echo $this->rtl_css; ?>
 <?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 <?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
+    <script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
+    <script src="<?php echo $this->base_path; ?>jscripts/jquery-ui-1.7.2/development-bundle/ui/ui.resizable.js" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
 	//<!--
 	jQuery.noConflict();
