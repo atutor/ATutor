@@ -415,6 +415,7 @@ p.search-description {
 /***************************************************************/
 
 table.tabbed-table {
+
 	width: 100%;
 	border:thin black solid;
 }
@@ -470,13 +471,6 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 	color: black;
 	text-decoration: none;
 }
-/* Preferences tabs */
-table.etabbed-table a	{
-	text-decoration:underline;
-	font-size:10pt;
-border:thin solid black;
-}
-
 
 
 a#my-start-page {
@@ -1960,4 +1954,63 @@ select {
 border: thin solid #cccccc;
 
       padding-right:.1em;
+}
+
+/* Preference Editor tabs */
+/* Preferences tabs */
+table.etabbed-table	{
+	float:left;
+	padding-left:5em;
+	font-size:10pt;
+
+}
+prefs-tab-spacer {
+	background-color: transparent;
+	width: 5px;
+	border-bottom: 1px solid #B8AE9C;
+}
+.prefs_buttontab {
+	color:#555;
+	font-size:10pt;
+	white-space: nowrap;
+	background-color: #ffffff;
+	margin: 0px;
+	border:0;
+	font-weight:500;
+	padding:0em 0em 0em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+
+}
+.prefs_tab{
+	border-top: thin solid #cccccc;
+	border-left: thin solid #cccccc;
+	border-right: thin solid #cccccc;
+	border-bottom:0;
+	text-align: center;
+	white-space: nowrap;
+	margin-left:2em;
+	background-color: #FFFFFF;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: 0em .2em 0em .2em ;
+	}
+	
+.prefs_buttontab:hover, .prefs_tab:hover {
+  	background-color: #eeeeee;
+}
+.prefs_tab_selected{
+	border-top: thin solid #cccccc;
+	border-left: thin solid #cccccc;
+	border-right: thin solid #cccccc;
+	border-bottom:0;
+  	background-color: #eeeeee;
+	margin: 0px;
+	font-weight:bold;
+	text-align:center;
+	padding: 0em .2em 0em .2em ;
+	white-space: nowrap;
+	text-decoration:none;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em 0em 0em;
 }
