@@ -1423,6 +1423,7 @@ ul#topnavlist li a {
 	border-top:thin solid #ccc;
 	border-left:thin solid #ccc;
 	border-right:thin solid #ccc;
+	border-bottom:thin solid #ccc;
    	text-decoration:underline;
 	background-color:white;
 	border-radius:.5em;
