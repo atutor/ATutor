@@ -310,8 +310,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 <input type="hidden" name="tab" value="<?php echo $current_tab; ?>" />
 <input type="hidden" name="course_id" value="<?php echo $course_id; ?>"/>
-<div style="width: 95%; margin-right: auto; margin-left: auto;">
-<ul id="navlist">
+
+<ul id="subnavlist">
 	<?php for ($i = 0; $i< $num_tabs; $i++): ?>
 		<?php if ($current_tab == $i): ?>
 			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></strong></a></li>
@@ -320,7 +320,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php endif; ?>
 	<?php endfor; ?>
 </ul>
-</div>
+
 
 <table class="data" style="width:95%;" summary="" rules="cols" >
 <colgroup>
