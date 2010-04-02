@@ -13,7 +13,7 @@
 // $Id: sitemap.php 9081 2010-01-13 20:26:03Z cindy $
 
 $page = 'sitemap';
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
