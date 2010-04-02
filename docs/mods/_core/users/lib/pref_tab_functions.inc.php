@@ -41,28 +41,29 @@ function output_tabs($current_tab, $changes) {
 		<?php 
 		for ($i=0; $i < $num_tabs; $i++): 
 			if ($current_tab == $i):?>
-				<td class="selected" style="white-space: nowrap">
+				<td class="prefs_tab_selected">
 					<?php if ($changes[$i]): ?>
 						<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
-					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'pointer\';" '.$clickEvent.' />'; ?>
+					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="prefs_buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'pointer\';" '.$clickEvent.' />'; ?>
 					<?php endif; ?>
 					<?php echo _AT($tabs[$i][0]); ?>
 				</td>
-				<td class="tab-spacer">&nbsp;</td>
+				<td class="prefs-tab-spacer">&nbsp;</td>
 			<?php else: ?>
-				<td class="tab" style="white-space: nowrap">
+				<td class="prefs_tab">
 					<?php if ($changes[$i]): ?>
 						<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
 					<?php endif; ?>
 
-					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'pointer\';" '.$clickEvent.' />'; ?>
+					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="prefs_buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'pointer\';" '.$clickEvent.' />'; ?>
 				</td>
-				<td class="tab-spacer">&nbsp;</td>
+				<td class="prefs-tab-spacer">&nbsp;</td>
 			<?php endif; ?>
 		<?php endfor; ?>
 		<td >&nbsp;</td>
 	</tr>
 	</table>
+	<br style="clear:both" />
 <?php }
 
 // returns given $languges in html <option> tag
