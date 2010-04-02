@@ -1411,7 +1411,8 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 /** inbox stuff - reuses some of the forum layout **/
 #inbox-msg li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; width: 95%; list-style: none; min-height: 11em;}
 
-	
+
+/* Top navigation tabs / list */
 div#topnavlistcontainer {
 	background-position:  top right;
 	background-repeat: no-repeat;
@@ -1423,6 +1424,7 @@ ul#topnavlist {
 	padding-top: 2px;
 	margin-top: 0px;
 	margin-left:5px;
+
 }
 
 ul#topnavlist li {
@@ -1430,6 +1432,7 @@ ul#topnavlist li {
 	list-style: none;
 	display: inline-block;
 	height:2em;
+	margin-top:.1em;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -1448,7 +1451,9 @@ ul#topnavlist li a {
 	color: #555;
 	font-weight:bold;
 	height: 1.5em;
-	border:thin solid #ccc;
+	border-top:thin solid #ccc;
+	border-left:thin solid #ccc;
+	border-right:thin solid #ccc;
    	text-decoration:underline;
 	background-color:white;
 	border-radius:.5em;
@@ -1986,7 +1991,6 @@ prefs-tab-spacer {
 	border-top: thin solid #cccccc;
 	border-left: thin solid #cccccc;
 	border-right: thin solid #cccccc;
-	border-bottom:0;
 	text-align: center;
 	white-space: nowrap;
 	margin-left:2em;

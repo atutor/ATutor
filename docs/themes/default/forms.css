@@ -93,3 +93,13 @@ input[type=password]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
 }
+
+input[type=submit]{
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
+
+input[type=reset]{
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
