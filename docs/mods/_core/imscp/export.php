@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: export.php 7208 2008-01-09 16:07:24Z greg $
 
-define('AT_INCLUDE_PATH', './include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['cancel'])) {
@@ -20,7 +20,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	header('Location: '.$_base_href.'tools/ims/ims_export.php?cid=' . intval($_POST['cid']));
+	header('Location: '.$_base_href.'mods/_core/imscp/ims_export.php?cid=' . intval($_POST['cid']));
 	exit;
 }
 
