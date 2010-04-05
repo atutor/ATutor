@@ -33,19 +33,16 @@ class A4aExport extends A4a {
 	 */	
 	function getAlternative(){
 		$resources = parent::getPrimaryResources();
-
 		foreach($resources as $rid => $prop){
 			$resources_types = parent::getPrimaryResourcesTypes($rid);
 			$temp = array();
 			$secondary_array = array();
 			foreach($resources_types as $rtid){
 				$sec_resources['secondary_resources'] = parent::getSecondaryResources($rid);
-
 				//determine secondary resource type
 				foreach ($sec_resources['secondary_resources'] as $sec_id => $sec_resource){
 					$current_sec_file = $sec_resource['resource'];
 					$secondary_array['secondary_resources'][] = $current_sec_file ;
-
 					//add to secondary file array if it's not there
 					if (!isset($this->original_files[$current_sec_file]) || empty($this->original_files[$current_sec_file]) ){
 						//TODO merge these values i think
@@ -58,11 +55,17 @@ class A4aExport extends A4a {
 					$this->original_files[$current_sec_file]['primary_resources'][$prop['resource']] = $rtid;
 //					$this->original_files[$current_sec_file]['primary_resources'][$prop['resource']]['language_code'] = $sec_resource['language_code'];
 				}
-				$res_type['resource_type'] = $rtid;	//could be 1+
-				$temp = array_merge($prop, $res_type, $secondary_array);
 			}
-			if (!empty($temp)){
+			$res_type['resource_type'] = $rtid;	//could be 1+
+			$temp = array_merge($prop, $res_type, $secondary_array);
+
+			if (isset($this->original_files[$temp['resource']])){
+				//use the existing temp array values, but merge in the secondary_array
+				$temp = array_merge($this->original_files[$temp['resource']], $secondary_array);
+			} 
+			if(!empty($temp)){
 				$this->original_files[$temp['resource']] = $temp;
+	//			debug($this->original_files['7dolomiti_1a_como1e_como_road1b.jpg'], $rid);
 			}
 		}
 		return $this->original_files;
@@ -116,7 +119,7 @@ class A4aExport extends A4a {
 			$savant->assign('orig_access_mode', $orig_access_mode);
 			$savant->assign('language_code', $resource['language_code']);
 			$savant->assign('secondary_resources', $resource['secondary_resources']);
-			
+
 			// If this is an alternative, and it is mapping to 
 			// 1+ original files.  Each of these mapping requires
 			// its own xml
