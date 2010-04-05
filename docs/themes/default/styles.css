@@ -1779,6 +1779,8 @@ div.home_box {
 div#subnavlistcontainer {
 	width:95%;
 	margin:auto;
+	height:auto;
+
 }
 div#subnavbacktopage {
 	padding-top:5px;
@@ -1798,15 +1800,14 @@ ul#subnavlist {
 	padding-top: 5px;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
-	white-space:nowrap;
-	margin-bottom:.1em;
+	margin-bottom:-.1em;
+
 }
 
 ul#subnavlist li {
-	white-space: nowrap;
   	background-color: #FFFFFF;
 	list-style: none;
-	display: inline;
+	display: inline-block;
 	font-weight:700;
 	text-align:center;
 	border:thin solid #cccccc;
@@ -1989,3 +1990,9 @@ prefs-tab-spacer {
 	-moz-border-radius: .3em .3em 0em 0em;
 }
 
+.admin_container{
+border:thin solid #cccccc;
+border-radius:.5em;
+-moz-border-radius:.5em;
+
+}
