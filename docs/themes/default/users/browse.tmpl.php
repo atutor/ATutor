@@ -109,7 +109,7 @@
 		<td>
 		 <?php
 		    // insert enrolment link if allowed
-		    if (!in_array($row['course_id'], array_keys($this->nav_courses))) : ?> 
+		    if (!in_array($row['course_id'], array_keys(array($this->nav_courses)))) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
 
