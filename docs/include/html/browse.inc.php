@@ -97,7 +97,7 @@ $has_categories = false;
 if ($categories_select != '<option value="0"></option>') {
 	$has_categories = true;
 }
-
+$savant->assign('cats', $cats);
 $savant->assign('num_results', $num_results);
 $savant->assign('has_categories', $has_categories);
 $savant->assign('categories_select', $categories_select);
