@@ -46,34 +46,45 @@
 	</form>
 </fieldset>
 </div>
-<div style="width:90%;margin:auto;">
+<div class="container" style="width:95%; margin:auto;">
+<table class="data">
+<tr>
+<th>&nbsp;</th>
+<th><?php echo _AT('title'); ?></th>
+<th><?php echo _AT('description'); ?></th>
+<th><?php echo _AT('category'); ?></th>
+<th><?php echo _AT('instructor'); ?></th>
+<th><?php echo _AT('access'); ?></th>
+<th><?php echo _AT('shortcuts'); ?></th>
+</tr>
 	<?php while ($row = mysql_fetch_assoc($this->courses_result)): ?>
-		<div style="float:left;" class="browse-course">
+	    <?php  $counter++; ?>
+		 <tr class="<?php if ($counter %2) { echo 'odd'; } else { echo 'even'; } ?>">
+		 <td>
+		
+		      <?php if ($row['icon']) { // if a course icon is available, display it here.  
+			      $style_for_title = 'style="height: 1.5em;"'; 
 
-			<dl class="browse-course">
-
-				
-					<?php if ($row['icon']) { // if a course icon is available, display it here.  
-						$style_for_title = 'style="height: 1.5em;"'; 
-
-						//Check if this is a custom icon, if so, use get_course_icon.php to get it
-						//Otherwise, simply link it from the images/
-						$path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
-		                if (file_exists($path.$row['icon'])) {
-							if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-								$course_icon = 'get_course_icon.php/?id='.$row['course_id'];
-							} else {
-								$course_icon = 'content/' . $row['course_id'] . '/';
-							}
-						} else {
-							$course_icon = 'images/courses/'.$row['icon'];
-						}
-					?>
-						<a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" style="float:left;margin-right:.5em;"/></a>
-					<?php } ?>
-				
+			      //Check if this is a custom icon, if so, use get_course_icon.php to get it
+			      //Otherwise, simply link it from the images/
+			      $path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
+			    if (file_exists($path.$row['icon'])) {
+				      if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+					      $course_icon = 'get_course_icon.php/?id='.$row['course_id'];
+				      } else {
+					      $course_icon = 'content/' . $row['course_id'] . '/';
+				      }
+			      } else {
+				      $course_icon = 'images/courses/'.$row['icon'];
+			      }
+		      ?>
+			      <a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" style="float:left;margin-right:.5em;"/></a>
+		      <?php } ?>
+		</td>
+		<td>
 				<h3><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?></a></h3>
-
+		</td>
+		<td>
 			<?php if ($row['description']): ?>
 				<div style="height:6.4em;" title="<?php echo htmlentities($row['description']);?>"><?php echo substr(nl2br(htmlentities($row['description'], ENT_QUOTES, 'UTF-8')),0,150); 
 				if(strlen($row['description']) > 150){
@@ -83,18 +94,39 @@
 			<?php else: ?>
 				<div style="height:6.4em;clear:right;" title="<?php echo htmlentities($row['description']);?>">&nbsp;</div>
 			<?php endif; ?>
-			<dl class="browse-course">
-			<?php if ($has_categories): ?>
-				<dt><?php echo _AT('category'); ?></dt>
-				<dd><a href="<?php echo $_SERVER['PHP_SELF'].'?'.$page_string.SEP; ?>category=<?php echo $row['cat_id']; ?>"><?php echo $cats[$row['cat_id']]; ?></a>&nbsp;</dd>
+		</td>
+		<td>
+			<?php if (is_array($this->cats) && $row['cat_id'] != 0): ?>
+				<a href="<?php echo $_SERVER['PHP_SELF'].'?'.$page_string.SEP; ?>category=<?php echo $row['cat_id']; ?>"><?php echo $this->cats[$row['cat_id']]; ?></a>
 			<?php endif; ?>
-				<dt><?php echo _AT('instructor'); ?></dt>
-				<dd><a href="<?php echo AT_BASE_HREF; ?>contact_instructor.php?id=<?php echo $row['course_id']; ?>"><?php echo get_display_name($row['member_id']); ?></a></dd>
-				<dt><?php echo _AT('access'); ?></dt>
-				<dd><?php echo _AT($row['access']); ?></dd>
-			</dl>
-		</div>
-	<?php endwhile; ?>
+		</td>
+		<td>
+				<a href="<?php echo AT_BASE_HREF; ?>contact_instructor.php?id=<?php echo $row['course_id']; ?>"><?php echo get_display_name($row['member_id']); ?></a>
+		</td>
+		<td>
+			<?php echo _AT($row['access']); ?>
+		</td>
+		<td>
+		 <?php
+		    // insert enrolment link if allowed
+		    if (!in_array($row['course_id'], array_keys($this->nav_courses))) : ?> 
+			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+		<?php endif; ?>
+
+		  <?php 
+		    //insert preview/guest access if authenticated access is set
+		    if (!in_array($row['course_id'], array_keys($this->nav_courses))) : 
+		    // hack something here to add guest access
+			  ?> 
+
+		  <?php endif; ?>
+
+		</td>
+		</tr>
+	      
+	<?php
+	    endwhile; ?>
+</table>
 </div>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
