@@ -115,7 +115,7 @@
 
 		  <?php 
 		    //insert preview/guest access if authenticated access is set
-		    if (!in_array($row['course_id'], array_keys($this->nav_courses))) : 
+		    if (!in_array($row['course_id'], array_keys(array($this->nav_courses)))) : 
 		    // hack something here to add guest access
 			  ?> 
 
