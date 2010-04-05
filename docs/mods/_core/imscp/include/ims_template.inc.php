@@ -261,7 +261,9 @@ function print_organizations($parent_id,
 						if (is_array($a4a_secondary_files[$file])){
 							$all_secondary_files_md = '';	//reinitialize string to null
 							foreach ($a4a_secondary_files[$file] as $v){
-								$all_secondary_files_md .= $a4a_xml_array[$v];	//all the meta data								
+								foreach($a4a_xml_array[$v] as $v2){
+									$all_secondary_files_md .= $v2;	//all the meta data		
+								}						
 							}
 							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
 							array('resources/'.$file_save_path, $all_secondary_files_md), 
