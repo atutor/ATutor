@@ -1610,7 +1610,7 @@ function provide_alternatives($cid, $content){
 				$pattern_replace_to = '${1}${2}'.$target.'${3}';
 				
 			// append/replace target alternative to [media]source[/media]
-			$content = preg_replace("/(.*)(".preg_quote("[media]".$row['resource']."[/media]", "/").")(.*)/sU", 
+			$content = preg_replace("/(.*)(".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/").")(.*)/sU", 
 			             $pattern_replace_to, $content);
 			
 			// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
