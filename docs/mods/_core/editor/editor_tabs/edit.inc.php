@@ -51,9 +51,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         }
     ?>
     
+    <!-- TODO LAW text to add here for title text on both links -->
+    <!-- TODO LAW add click handlers to edit.js -->
     <div class="row fl-col-fixed">
-       <a id="headtool" class="fl-force-left fl-col-flex" title="Click to edit/hide custom head" onclick="ATutor.mods.editor.toggleHead(); return false;"><img src="<?php echo $_base_path; ?>images/custom_head.jpg" alt="Customized head" height="30" width="30" border="0" /></a>
-       <a class="fl-col-flex" title="Click to show/hide tools" onclick="ATutor.mods.editor.toggleTools(); return false;"><img src="<?php echo $_base_path; ?>images/tool_go.jpg" alt="Tools" height="30" width="30" border="0" /></a>
+       <a id="headtool" class="fl-force-left fl-col-flex" title="Click to show/hide customized head" onclick="ATutor.mods.editor.toggleHead(); return false;"><img src="<?php echo $_base_path; ?>images/custom_head.jpg" alt="<?php echo _AT('customized_head');  ?>" height="30" width="30" /></a>
+       <a class="fl-col-flex" title="Click to show/hide tools" onclick="ATutor.mods.editor.toggleTools(); return false;"><img src="<?php echo $_base_path; ?>images/tool_go.jpg" alt="<?php echo _AT('tools');  ?>" height="30" width="30" /></a>
     </div>   
 
 	<div id="head" class="row">
@@ -69,24 +71,25 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         <div class="fl-container-flex66 fl-col-flex3" id="">
             <div class='fl-col'>
         <!-- ******** Tool Manager ******* -->
-<?php //TODO***************BOLOGNA******************REMOVE ME***********/
+<?php
     echo "<div class='fl-text-align-center'>"._AT('tools_manager')."</div>";
     $count = 0;
     foreach($all_tools as $tool) {
         if($tool['tool_file'] != '' && $tool['table'] != '') {
             $sql_assoc = "SELECT * FROM ".TABLE_PREFIX.$tool['table']." WHERE content_id='$cid'";
             $result_assoc = mysql_query($sql_assoc,$db);
+
+            //TODO LAW note that the text 'added' and 'none' below need to be moved to language files
             if($num_row = mysql_num_rows($result_assoc)){
-                $tool['style']='border:solid; border-color:#43addb';
                 $tool['alt'] = $tool['title'].' added';
             } else {
-                $tool['style']='margin-bottom: 4px;';
-                $tool['alt'] = $tool['title'].' noen';
+                $tool['alt'] = $tool['title'].' none';
             }
 
             $count++; ?>
+            <!-- TODO LAW can this click handler be moved to edit.js -->
             <script type="text/javascript" language="javascript">
-                document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/tool_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>tool_file=<?php echo $tool['tool_file'].SEP;?>cid=<?php echo $cid;?>','newWin2','menubar=0,scrollbars=1,resizable=1,width=600,height=400'); return false;\"><img class='fl-centered fl-fix' id=\"<?php echo $tool['title'];?>\" style=\"<?php echo $tool['style'];?>\" src='<?php echo $tool['img']; ?>' alt='<?php echo $tool['alt'];?>' title='<?php echo $tool['title'];?>' height='30' border='0'/></a>");
+                document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/tool_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>tool_file=<?php echo $tool['tool_file'].SEP;?>cid=<?php echo $cid;?>','newWin2','menubar=0,scrollbars=1,resizable=1,width=600,height=400'); return false;\"><img class='fl-centered fl-fix' id=\"<?php echo $tool['title'];?>\" src='<?php echo $tool['img']; ?>' alt='<?php echo $tool['alt'];?>' title='<?php echo $tool['title'];?>' height='30' border='0'/></a>");
             </script>
         <?php }
     }
@@ -100,24 +103,31 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         <div class='fl-col' id="pastetool">
             <div class='fl-text-align-center'><?php echo _AT('paste_file')?></div>
             <div class='fl-text-align-center'><small><?php echo _AT('html_only'); ?></small></div>
+
+            <!-- TODO LAW can this click handler be moved to edit.js -->
+            <!-- TODO LAW still trying to change the paste tool to use an icon and a dialog -->
                 <script type="text/javascript" language="javascript">
                 //<!--
-//                    document.write(" <a style='text-decoration: none' href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' border='0' style='margin-bottom: 4px;'/></a>");
+//                    document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' /></a>");
                 //-->
                 </script>
+            <!-- TODO LAW language to be moved to language files -->
             <input title="Browse for file to upload" type="file" name="uploadedfile_paste" id="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" />
         </div> <!--  end col -->
         
         <!-- File manager tool -->
         <div class='fl-col' id="filemantool">
             <div class='fl-text-align-center'><?php echo _AT('file_manager'); ?></div>
+
+            <!-- TODO LAW can this click handler be moved to edit.js -->
+            <!-- TODO LAW alt text for language files -->
                 <script type="text/javascript" language="javascript">
                 //<!--
-                    document.write(" <a style='text-decoration: none' href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $content_row['content_path']; ?>','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/file-manager.png\" alt=\"Open file manager\" height='30' width='30' border='0' style='margin-bottom: 4px;'/></a>");
+                    document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $content_row['content_path']; ?>','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/file-manager.png\" alt=\"Open file manager\" height='30' width='30' /></a>");
                 //-->
                 </script>
                 <noscript>
-                    <a style='text-decoration: none' href="<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1"><img class='fl-centered' src="<?php echo $_base_path; ?>images/file-manager.png" alt="Open file manager" height='30' width='30' border='0'/></a>
+                    <a href="<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1"><img class='fl-centered' src="<?php echo $_base_path; ?>images/file-manager.png" alt="Open file manager" height='30' width='30' /></a>
                 </noscript>    
         </div> <!-- end col -->    
         </div>
@@ -142,7 +152,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</span>
 		<span id="weblinkSpan">	
 	        <label for="weblink_text"><?php echo _AT('weblink');  ?></label>
-            <input name="weblink_text" id="weblink_text" value="<?php echo ($_POST['weblink_text']!=''?htmlspecialchars($_POST['weblink_text']):'http://'); ?>" style="width:60%;" />
+            <input name="weblink_text" id="weblink_text" value="<?php echo ($_POST['weblink_text']!=''?htmlspecialchars($_POST['weblink_text']):'http://'); ?>" />
 		</span>
 	</div>
 
