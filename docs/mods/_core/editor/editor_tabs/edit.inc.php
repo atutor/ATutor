@@ -50,22 +50,23 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	       $_POST['head'] = $stripslashes($_POST['head']);
         }
     ?>
+    
+    <div class="row fl-col-fixed">
+       <a id="headtool" class="fl-force-left fl-col-flex" title="Click to edit/hide custom head" onclick="ATutor.mods.editor.toggleHead(); return false;"><img src="<?php echo $_base_path; ?>images/custom_head.jpg" alt="Customized head" height="30" width="30" border="0" /></a>
+       <a class="fl-col-flex" title="Click to show/hide tools" onclick="ATutor.mods.editor.toggleTools(); return false;"><img src="<?php echo $_base_path; ?>images/tool_go.jpg" alt="Tools" height="30" width="30" border="0" /></a>
+    </div>   
 
-	<div id="headrow" class="row">
-        <input type="button" title="Click to edit custom head" name="edithead" id="edithead" value="+" onclick="ATutor.mods.editor.switch_head_editor()" class="button"/>
+	<div id="head" class="row">
         <label for="head"><?php echo _AT('customized_head');  ?></label>
         <small>(<?php echo _AT('customized_head_note'); ?>)</small>
         <input type="checkbox" name="use_customized_head" id="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
         <label for="use_customized_head"><?php echo _AT('use_customized_head'); ?></label>
-		<textarea name="head" id="head" cols="" rows="10" class="hidden"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
+		<textarea cols="" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
 	</div>
-	
-	<div id="toolsrow" class="row bottom-margin">
-	    <div class="fl-force-left">
-	        <input type="button" title="Click to show tool bar" name="showtools" id="showtools" value="+" onclick="ATutor.mods.editor.showtools()" class="button"/>
-            <label for="toolbar"><?php echo _AT('tools');  ?></label>
-        </div>
-        <div class="fl-container-flex66 fl-col-flex3 hidden" id="toolbar">
+		
+	<div id="tools" class="row bottom-margin">
+        <label class="fl-force-left" for="toolbar"><?php echo _AT('tools');  ?></label>
+        <div class="fl-container-flex66 fl-col-flex3" id="">
             <div class='fl-col'>
         <!-- ******** Tool Manager ******* -->
 <?php //TODO***************BOLOGNA******************REMOVE ME***********/
@@ -99,7 +100,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         <div class='fl-col' id="pastetool">
             <div class='fl-text-align-center'><?php echo _AT('paste_file')?></div>
             <div class='fl-text-align-center'><small><?php echo _AT('html_only'); ?></small></div>
-            
                 <script type="text/javascript" language="javascript">
                 //<!--
 //                    document.write(" <a style='text-decoration: none' href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' border='0' style='margin-bottom: 4px;'/></a>");
@@ -149,44 +149,65 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <script type="text/javascript" language="javascript">
 //<!--
 
-var ATutor = ATutor || {};
+ATutor = ATutor || {};
 ATutor.mods = ATutor.mods || {};
 ATutor.mods.editor = ATutor.mods.editor || {};
 
 (function () {
 
+	//content areas
     var textArea = jQuery("#textSpan");
     var webLink = jQuery("#weblinkSpan");
+
+    //content types
     var isHTML = jQuery("#html");
     var isWeblink = jQuery("#weblink");
-    var headRow = jQuery("#headrow");
+
+    //tool bar
+    var displayTools = jQuery("#displaytools");
+    var tools = jQuery("#tools");   
     var fileManTool = jQuery("#filemantool");
     var pasteTool = jQuery("#pastetool");
-    var showTools = jQuery("#showtools");
-    var toolbar = jQuery("#toolbar");   
+
+    //custom head
+    var headtool = jQuery("#headtool");
     var displayHead = jQuery("#displayhead");
     var head = jQuery("#head");
-    var editHead = jQuery("#edithead");
-    var displayTools = jQuery("#displaytools");
 
+    //hides the custom head button and custom head tools
+    var hideHead = function () {
+        headtool.hide();
+        if (!head.hasClass("hidden")) {
+            doToggleTools(head, displayHead);
+        }
+    };
+
+    //hides or shows tool (toggle) and sets hidden input value appropriately.
+    var doToggleTools = function (theElement, hiddenElement) {
+        if (theElement.hasClass("hidden")) {
+            theElement.removeClass("hidden");
+            hiddenElement.val("1");
+        } else {
+            theElement.addClass("hidden");
+            hiddenElement.val("0");
+        }       
+    };
+
+    //initializes values to show or hide them on page load
 	ATutor.mods.editor.on_load = function (ed_pref) {	
-		if (displayHead.val() === '1') {
-			head.show();
-			editHead.val('-');
-			editHead.attr('title', "Click to hide custom head");
+		if (displayHead.val() === '0') {
+			head.addClass("hidden");
 		}
 
-		if (displayTools.val() === '1') {
-			toolbar.show();
-			showTools.val('-');
-			showTools.attr('title', "Click to hide tool bar");
+		if (displayTools.val() === '0') {
+			tools.addClass("hidden");
 		}
 
         if (isWeblink.attr("checked")) {
+            hideHead();
+			pasteTool.hide();
+			fileManTool.hide();
             textArea.hide();
-            headRow.hide();
-            pasteTool.hide();
-            fileManTool.hide();
             
         } else if (isHTML.attr("checked")) {
             if (ed_pref !== '1') {
@@ -194,48 +215,32 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             }
             webLink.hide();
 	    } else {
-		    webLink.hide();
-		    headRow.hide();
+	        hideHead();
+	    	webLink.hide();
 		    fileManTool.hide();
-	    }
-	    	
-	};
-		
-	// show/hide "customized head" textarea
-	ATutor.mods.editor.switch_head_editor = function () {
-		if (editHead.val() === "+") {
-			editHead.val("-");
-	        editHead.attr('title', "Click to hide custom head");	
-			head.show();
-			displayHead.val("1");
-		} else {
-            editHead.val("+");
-            editHead.attr('title', "Click to edit custom head");
-            head.hide();
-            displayHead.val("0");
-		}
+	    }	
 	};
 
-	// show/hide "tools"
-    ATutor.mods.editor.showtools = function () {
-        var stuff = displayTools.val();
-        if (showTools.val() === "+") {
-            showTools.val("-");
-            showTools.attr('title', "Click to hide tool bar");
-            toolbar.show();
-            displayTools.val("1");
-        } else {
-            showTools.val("+");
-            showTools.attr('title', "Click to show tool bar");
-            toolbar.hide();
-            displayTools.val("0");
+	//toggles head visible and hides tools if they are not already hidden
+    ATutor.mods.editor.toggleHead = function () {
+        doToggleTools(head, displayHead);
+        if (!tools.hasClass("hidden")) {
+            doToggleTools(tools, displayTools);
         }
     };
+
+	//toggles tools visible and hides head if it is not already hidden
+	ATutor.mods.editor.toggleTools = function () {
+		doToggleTools(tools, displayTools);
+		if (!head.hasClass("hidden")) {
+		    doToggleTools(head, displayHead);
+		}
+	};
 	
 	//switch between content types.
 	ATutor.mods.editor.switch_content_type = function (formatting, ed_pref) {
 		if (formatting === '0') { //text type
-			headRow.hide();
+			hideHead();
 			fileManTool.hide();
             webLink.hide();
             tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
@@ -243,7 +248,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             pasteTool.show();
 		}
 		else if (formatting === '2') { //weblink type
-			headRow.hide();
+			hideHead();
 			pasteTool.hide();
 			fileManTool.hide();
             textArea.hide();
@@ -251,7 +256,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 	        webLink.show();
 		}
 		else { //html type
-			headRow.show();
+			headtool.show();
 			pasteTool.show();
 			fileManTool.show();
             textArea.show();
