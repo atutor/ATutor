@@ -23,6 +23,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 	var displayheadId = "#displayhead";
 	
 	var displaytoolsId = "#displaytools";
+	var tooltoolId = "#tooltool";
 	var toolsId = "#tools";
 	
 	var isWeblinkId = "#weblink";
@@ -54,6 +55,24 @@ ATutor.mods.editor = ATutor.mods.editor || {};
         }       
     };
 
+	//toggles head visible and hides tools if they are not already hidden
+    var toggleHead = function () {
+        doToggleTools(jQuery(headId), jQuery(displayheadId));
+        var tools = jQuery(toolsId);
+        if (!tools.hasClass(hiddenClass)) {
+            doToggleTools(tools, jQuery(displaytoolsId));
+        }
+    };
+
+	//toggles tools visible and hides head if it is not already hidden
+	var toggleTools = function () {
+		doToggleTools(jQuery(toolsId), jQuery(displaytoolsId));
+		var head = jQuery(headId);
+		if (!head.hasClass(hiddenClass)) {
+		    doToggleTools(head, jQuery(displayheadId));
+		}
+	};
+ 
     //initializes values to show or hide them on page load
 	ATutor.mods.editor.on_load = function (ed_pref) {	
 		if (jQuery(displayheadId).val() === '0') {
@@ -79,24 +98,6 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 	        jQuery(weblinkId).hide();
 	        jQuery(filemanToolId).hide();
 	    }	
-	};
-
-	//toggles head visible and hides tools if they are not already hidden
-    var toggleHead = function () {
-        doToggleTools(jQuery(headId), jQuery(displayheadId));
-        var tools = jQuery(toolsId);
-        if (!tools.hasClass(hiddenClass)) {
-            doToggleTools(tools, jQuery(displaytoolsId));
-        }
-    };
-
-	//toggles tools visible and hides head if it is not already hidden
-	ATutor.mods.editor.toggleTools = function () {
-		doToggleTools(jQuery(toolsId), jQuery(displaytoolsId));
-		var head = jQuery(headId);
-		if (!head.hasClass(hiddenClass)) {
-		    doToggleTools(head, jQuery(displayheadId));
-		}
 	};
 	
 	//switch between content types.
@@ -129,11 +130,10 @@ ATutor.mods.editor = ATutor.mods.editor || {};
  		}
 	};
 	
-	
+	//set up click handlers
 	var initialize = function () {
-		jQuery("#headtool").click(function () {
-			toggleHead();
-		});
+		jQuery(headtoolId).click(toggleHead);
+		jQuery(tooltoolId).click(toggleTools);
 	};
 	
 	jQuery(document).ready(initialize);

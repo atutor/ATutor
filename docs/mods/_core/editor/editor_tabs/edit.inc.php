@@ -52,10 +52,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     ?>
     
     <!-- TODO LAW text to add here for title text on both links -->
-    <!-- TODO LAW add click handlers to edit.js -->
     <div class="row fl-col-fixed">
        <a id="headtool" class="fl-force-left fl-col-flex" title="Click to show/hide customized head" ><img src="<?php echo $_base_path; ?>images/custom_head.jpg" alt="<?php echo _AT('customized_head');  ?>" height="30" width="30" /></a>
-       <a class="fl-col-flex" title="Click to show/hide tools" onclick="ATutor.mods.editor.toggleTools(); return false;"><img src="<?php echo $_base_path; ?>images/tool_go.jpg" alt="<?php echo _AT('tools');  ?>" height="30" width="30" /></a>
+       <a id="tooltool" class="fl-col-flex" title="Click to show/hide tools" ><img src="<?php echo $_base_path; ?>images/tool_go.jpg" alt="<?php echo _AT('tools');  ?>" height="30" width="30" /></a>
     </div>   
 
 	<div id="head" class="row">
