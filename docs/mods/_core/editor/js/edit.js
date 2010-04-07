@@ -82,7 +82,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 	};
 
 	//toggles head visible and hides tools if they are not already hidden
-    ATutor.mods.editor.toggleHead = function () {
+    var toggleHead = function () {
         doToggleTools(jQuery(headId), jQuery(displayheadId));
         var tools = jQuery(toolsId);
         if (!tools.hasClass(hiddenClass)) {
@@ -128,4 +128,13 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             jQuery(weblinkId).hide();
  		}
 	};
+	
+	
+	var initialize = function () {
+		jQuery("#headtool").click(function () {
+			toggleHead();
+		});
+	};
+	
+	jQuery(document).ready(initialize);
 })();
