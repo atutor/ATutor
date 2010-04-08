@@ -132,7 +132,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
  		}
 	};
 	
-	launchFileManager = function () {
+	var launchFileManager = function () {
         window.open(window.location.protocol + "//" + window.location.host +"/"+ window.location.pathname.split("/")[1] + '/mods/_core/file_manager/index.php?framed=1;popup=1;cp=' + ATutor.content_path,'newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490');
    		return false;
     };
