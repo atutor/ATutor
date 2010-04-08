@@ -105,7 +105,7 @@ if ($cid) {
 <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
 <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'mods/_core/editor/css/editor.css" />
 <script type="text/javascript" src="'.$_base_path.'mods/_core/editor/js/edit.js"></script>
-    ';
+';
 
 if ($cid) {
 	$result = $contentManager->getContentPage($cid);

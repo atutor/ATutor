@@ -118,11 +118,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         <div class='fl-col' id="filemantool">
             <div class='fl-text-align-center'><?php echo _AT('file_manager'); ?></div>
 
-            <!-- TODO LAW can this click handler be moved to edit.js -->
             <!-- TODO LAW alt text for language files -->
                 <script type="text/javascript" language="javascript">
                 //<!--
-                    document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $content_row['content_path']; ?>','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/file-manager.png\" alt=\"Open file manager\" height='30' width='30' /></a>");
+                     ATutor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
+                     document.write(' <a id="file_manager_launcher" href="#"><img class="fl-centered" src="<?php echo $_base_path; ?>images/file-manager.png" alt="Open file manager" height="30" width="30" /></a>');
                 //-->
                 </script>
                 <noscript>
@@ -132,7 +132,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         </div>
 	
 	</div>
-	
 	
     <?php 
         // kludge #1548
