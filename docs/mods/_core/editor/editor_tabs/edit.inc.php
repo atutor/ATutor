@@ -51,7 +51,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         }
     ?>
     
-    <!-- TODO LAW text to add here for title text on both links -->
+    <!-- TODO LAW language titles on both links -->
     <div class="row fl-col-fixed">
        <a id="headtool" class="fl-force-left fl-col-flex" title="Click to show/hide customized head" ><img src="<?php echo $_base_path; ?>images/custom_head.jpg" alt="<?php echo _AT('customized_head');  ?>" height="30" width="30" /></a>
        <a id="tooltool" class="fl-col-flex" title="Click to show/hide tools" ><img src="<?php echo $_base_path; ?>images/tool_go.jpg" alt="<?php echo _AT('tools');  ?>" height="30" width="30" /></a>
@@ -78,7 +78,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             $sql_assoc = "SELECT * FROM ".TABLE_PREFIX.$tool['table']." WHERE content_id='$cid'";
             $result_assoc = mysql_query($sql_assoc,$db);
 
-            //TODO LAW note that the text 'added' and 'none' below need to be moved to language files
+            //TODO LAW language 'added' and 'none' below
             if($num_row = mysql_num_rows($result_assoc)){
                 $tool['alt'] = $tool['title'].' added';
             } else {
@@ -108,14 +108,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             <div class='fl-text-align-center'><?php echo _AT('paste_file')?></div>
             <div class='fl-text-align-center'><small><?php echo _AT('html_only'); ?></small></div>
 
-            <!-- TODO LAW can this click handler be moved to edit.js -->
             <!-- TODO LAW still trying to change the paste tool to use an icon and a dialog -->
+            <!-- TODO LAW once this is figured out, move this click handler to edit.js -->
                 <script type="text/javascript" language="javascript">
                 //<!--
 //                    document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' /></a>");
                 //-->
                 </script>
-            <!-- TODO LAW language to be moved to language files -->
+                
+            <!-- TODO LAW language title -->
             <input title="Browse for file to upload" type="file" name="uploadedfile_paste" id="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" />
         </div> <!--  end col -->
         
@@ -123,7 +124,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         <div class='fl-col' id="filemantool">
             <div class='fl-text-align-center'><?php echo _AT('file_manager'); ?></div>
 
-            <!-- TODO LAW alt text for language files -->
+            <!-- TODO LAW language alt text -->
                 <script type="text/javascript" language="javascript">
                 //<!--
                      ATutor.mods.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
