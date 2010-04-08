@@ -21,7 +21,7 @@ if (!isset($_main_menu)) {
 	$_main_menu = $contentManager->getContent();
 }
 
-function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $ordering = '') {
+function print_menu_sections(&$menu, $only_print_content_folder = false, $parent_content_id = 0, $depth = 0, $ordering = '') {
 	$my_children = $menu[$parent_content_id];
 	$cid = $_GET['cid'];
 
@@ -33,6 +33,9 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 		 * as part of the menu section.  If test, skip it.
 		 */
 		if (isset($children['test_id'])){
+			continue;
+		}
+		if ($only_print_content_folder && $children['content_type'] != CONTENT_TYPE_FOLDER) {
 			continue;
 		}
 
@@ -51,7 +54,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 		}
 		echo ' '.$children['title'].'</option>';
 
-		print_menu_sections($menu, $children['content_id'], $depth+1, $new_ordering);
+		print_menu_sections($menu, $only_print_content_folder, $children['content_id'], $depth+1, $new_ordering);
 	}
 }
 
@@ -133,7 +136,7 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 			<option value="0"><?php echo _AT('import_content_package_bottom_subcontent'); ?></option>
 			<option value="0"></option>
 			<?php
-				print_menu_sections($_main_menu);
+				print_menu_sections($_main_menu, true);
 			?>
 		</select>
 	</div>
