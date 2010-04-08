@@ -131,18 +131,25 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             jQuery(weblinkId).hide();
  		}
 	};
-	
+
+	var base_path = window.location.protocol + "//" + window.location.host +"/"+ window.location.pathname.split("/")[1];
+
 	var launchFileManager = function () {
-        window.open(window.location.protocol + "//" + window.location.host +"/"+ window.location.pathname.split("/")[1] + '/mods/_core/file_manager/index.php?framed=1;popup=1;cp=' + ATutor.content_path,'newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490');
+        window.open(base_path + '/mods/_core/file_manager/index.php?framed=1&popup=1&cp=' + ATutor.mods.editor.content_path,'newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490');
    		return false;
     };
 
-	
+    var launchTool = function () {
+    	window.open(base_path + '/mods/_core/tool_manager/index.php?framed=1&popup=1&tool_file=' + ATutor.mods.editor.tool_file + '&cid=' + ATutor.mods.editor.content_id,'newWin2','menubar=0,scrollbars=1,resizable=1,width=600,height=400');
+    	return false;
+    };
+    
 	//set up click handlers
 	var initialize = function () {
 		jQuery(headtoolId).click(toggleHead);
 		jQuery(tooltoolId).click(toggleTools);
 		jQuery(fileManagerLauncherId).click(launchFileManager);
+		jQuery(".tool").click(launchTool);
 	};
 	
 	jQuery(document).ready(initialize);

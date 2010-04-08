@@ -86,9 +86,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             }
 
             $count++; ?>
-            <!-- TODO LAW can this click handler be moved to edit.js -->
             <script type="text/javascript" language="javascript">
-                document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/tool_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>tool_file=<?php echo $tool['tool_file'].SEP;?>cid=<?php echo $cid;?>','newWin2','menubar=0,scrollbars=1,resizable=1,width=600,height=400'); return false;\"><img class='fl-centered fl-fix' id=\"<?php echo $tool['title'];?>\" src='<?php echo $tool['img']; ?>' alt='<?php echo $tool['alt'];?>' title='<?php echo $tool['title'];?>' height='30' border='0'/></a>");
+            //<!--
+                ATutor.mods.editor.tool_file = "<?php if(isset($tool['tool_file'])) echo $tool['tool_file'] ?>";
+                ATutor.mods.editor.content_id = "<?php if(isset($cid)) echo $cid ?>";
+                document.write(' <a class="tool" href="#" > ');
+                document.write('<img class="fl-centered fl-fix" id="<?php echo $tool['title']; ?>" src="<?php echo $tool['img']; ?>" alt="<?php echo $tool['alt']; ?>" title="<?php echo $tool['title']; ?>" height="30" />');
+                document.write('</a> ');
+             //-->
             </script>
         <?php }
     }
@@ -121,7 +126,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             <!-- TODO LAW alt text for language files -->
                 <script type="text/javascript" language="javascript">
                 //<!--
-                     ATutor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
+                     ATutor.mods.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
                      document.write(' <a id="file_manager_launcher" href="#"><img class="fl-centered" src="<?php echo $_base_path; ?>images/file-manager.png" alt="Open file manager" height="30" width="30" /></a>');
                 //-->
                 </script>

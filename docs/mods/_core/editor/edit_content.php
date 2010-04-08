@@ -162,7 +162,7 @@ if ($current_tab == 0)
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-///breaks here
+
 if ($current_tab == 0 || $current_tab == 5) 
 {
     $simple = true;
