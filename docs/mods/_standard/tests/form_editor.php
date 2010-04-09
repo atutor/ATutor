@@ -63,6 +63,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<base href="<?php echo AT_BASE_HREF; ?>" />
 	<script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+	<script src="<?php echo $_base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>
 
 </head>
 
