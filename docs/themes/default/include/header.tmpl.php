@@ -22,6 +22,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * $this->rtl_css			if set, the path to the RTL style sheet
  * $this->icon			the path to a course icon
  * $this->banner_style		-deprecated-
+ * $this->cats		 array or course categories
  * $this->theme				the directory name of the current theme
  * $this->base_href			the full url to this atutor installation
  * $this->onload			javascript onload() calls
