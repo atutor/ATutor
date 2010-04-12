@@ -17,139 +17,157 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 
 (function () {
 	var hiddenClass = "hidden";
-	
+	var enabledClass = "clickable";
+    
+    var hideIt = function (theElement, hiddenElement) {
+    	theElement.addClass(hiddenClass);
+    	hiddenElement.val("0");
+    };
+
+    var showIt = function (theElement, hiddenElement) {
+    	theElement.removeClass(hiddenClass);
+    	hiddenElement.val("1");
+    };
+
+	//hides or shows tool (toggle) and sets hidden input value appropriately.
+    var doToggle = function (theElement, hiddenElement) {
+    	if (theElement.hasClass(hiddenClass)) {
+    		showIt(theElement, hiddenElement);
+    	} else {
+    		hideIt(theElement, hiddenElement);
+    	}
+    };
+
+    //customized head variables
 	var headId = "#head";
-	var headtoolId = "#headtool";
 	var displayheadId = "#displayhead";
-	
-	var displaytoolsId = "#displaytools";
-	var tooltoolId = "#tooltool";
-	var toolsId = "#tools";
-	
-	var isWeblinkId = "#weblink";
-	var isHTMLId = "#html";
-	
-	var pasteToolId = "#pastetool";
-	var filemanToolId = "#filemantool";
-	
-	var textAreaId = "#textSpan";
-	var weblinkId = "#weblinkSpan";
-	
-	var fileManagerLauncherId = "#file_manager_launcher"
-
-    //hides the custom head button and custom head tools
-    var hideHead = function () {    	
-        jQuery(headtoolId).hide();
-    	var head = jQuery(headId);
-        if (!head.hasClass(hiddenClass)) {
-            doToggleTools(head, jQuery(displayheadId));
-        }
-    };
-
-    //hides or shows tool (toggle) and sets hidden input value appropriately.
-    var doToggleTools = function (theElement, hiddenElement) {
-        if (theElement.hasClass(hiddenClass)) {
-            theElement.removeClass(hiddenClass);
-            hiddenElement.val("1");
-        } else {
-            theElement.addClass(hiddenClass);
-            hiddenElement.val("0");
-        }       
-    };
-
-	//toggles head visible and hides tools if they are not already hidden
-    var toggleHead = function () {
-        doToggleTools(jQuery(headId), jQuery(displayheadId));
-        var tools = jQuery(toolsId);
-        if (!tools.hasClass(hiddenClass)) {
-            doToggleTools(tools, jQuery(displaytoolsId));
-        }
-    };
-
-	//toggles tools visible and hides head if it is not already hidden
-	var toggleTools = function () {
-		doToggleTools(jQuery(toolsId), jQuery(displaytoolsId));
-		var head = jQuery(headId);
-		if (!head.hasClass(hiddenClass)) {
-		    doToggleTools(head, jQuery(displayheadId));
-		}
+	var headTool = {
+			toolId: "#headtool",
+			enabledClass: enabledClass,
+			enabledImage: "/images/custom_head.png",
+			enabledTitle: "Click to show/hide customized head",
+			clickFunction: function () {
+				doToggle(jQuery(headId), jQuery(displayheadId));
+			},
+			disabledImage: "/images/custom_head_disabled.png",
+			disabledTitle: "tool disabled"
 	};
- 
-    //initializes values to show or hide them on page load
-	ATutor.mods.editor.on_load = function (ed_pref) {	
-		if (jQuery(displayheadId).val() === '0') {
-			jQuery(headId).addClass(hiddenClass);
-		}
 
-		if (jQuery(displaytoolsId).val() === '0') {
-			jQuery(toolsId).addClass(hiddenClass);
-		}
-
-        if (jQuery(isWeblinkId).attr("checked")) {
-            hideHead();
-			jQuery(pasteToolId).hide();
-			jQuery(filemanToolId).hide();
-            jQuery(textAreaId).hide();
-        } else if (jQuery(isHTMLId).attr("checked")) {
-            if (ed_pref !== '1') {
-                tinyMCE.execCommand('mceAddControl', false, 'body_text');
-            }
-            jQuery(weblinkId).hide();
-	    } else {
-	        hideHead();
-	        jQuery(weblinkId).hide();
-	        jQuery(filemanToolId).hide();
-	    }	
-	};
-	
-	//switch between content types.
-	ATutor.mods.editor.switch_content_type = function (formatting, ed_pref) {
-		if (formatting === '0') { //text type
-			hideHead();
-			jQuery(filemanToolId).hide();
-            jQuery(weblinkId).hide();
-            tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
-			jQuery(textAreaId).show();
-            jQuery(pasteToolId).show();
-		}
-		else if (formatting === '2') { //weblink type
-			hideHead();
-			jQuery(pasteToolId).hide();
-			jQuery(filemanToolId).hide();
-			jQuery(textAreaId).hide();
-            tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
-            jQuery(weblinkId).show();
-		}
-		else { //html type
-			jQuery(headtoolId).show();
-			jQuery(pasteToolId).show();
-			jQuery(filemanToolId).show();
-			jQuery(textAreaId).show();
-            if (ed_pref !== '1') {
-                tinyMCE.execCommand('mceAddControl', false, 'body_text');
-            }
-            jQuery(weblinkId).hide();
- 		}
+	//paste from file variables
+	var pasteId = "#paste";
+	var displaypasteId = "#displaypaste";
+	var pasteTool = {
+			toolId: "#pastetool",
+			enabledClass: enabledClass,
+			enabledImage: "/images/paste_plain.png",
+			enabledTitle: "Click to show/hide paste from file tool",
+			clickFunction: function () {
+				doToggle(jQuery(pasteId), jQuery(displaypasteId));
+			},
+			disabledImage: "/images/paste_plain_disabled.png",
+			disabledTitle: "tool disabled"
 	};
 
 	var base_path = window.location.protocol + "//" + window.location.host +"/"+ window.location.pathname.split("/")[1];
 
+	//click function to launch file manager window
 	var launchFileManager = function () {
         window.open(base_path + '/mods/_core/file_manager/index.php?framed=1&popup=1&cp=' + ATutor.mods.editor.content_path,'newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490');
    		return false;
     };
 
+	//file manager variables
+	var filemanTool = {
+			toolId: "#filemantool",
+			enabledClass: enabledClass,
+			enabledImage: "/images/file-manager.png",
+			enabledTitle: "Click to open file manager",
+			clickFunction: function () {
+				launchFileManager();
+			},
+			disabledImage: "/images/file-manager_disabled.png",
+			disabledTitle: "tool disabled"
+	};
+    
+	//checks hidden variable and shows/hides element accordingly
+    var setDisplay = function (theElement, hiddenElement) {
+    	if (hiddenElement.val() === '0') {
+    		theElement.addClass(hiddenClass);
+    	} else {
+    		theElement.removeClass(hiddenClass);
+    	}
+    };
+
+    var disableTool = function (theTool) {
+    	var theToolElement = jQuery(theTool.toolId);
+    	theToolElement.removeClass(theTool.enabledClass);
+    	theToolElement.attr("src", base_path + theTool.disabledImage);
+    	theToolElement.attr("title", theTool.disabledTitle);
+    	theToolElement.unbind("click");
+    };
+    
+    var enableTool = function (theTool) {
+    	var theToolElement = jQuery(theTool.toolId);
+    	theToolElement.addClass(theTool.enabledClass);
+    	theToolElement.attr("src", base_path + theTool.enabledImage);
+    	theToolElement.attr("title", theTool.enabledTitle);
+    	theToolElement.click(theTool.clickFunction);
+    };	
+
+    //initializes values to show or hide them
+	var setupPage = function () {
+		var head = jQuery(headId);
+		var displayhead = jQuery(displayheadId);
+		var paste = jQuery(pasteId);
+		var displaypaste = jQuery(displaypasteId);
+		var textArea = jQuery("#textSpan");
+		var weblink = jQuery("#weblinkSpan");
+        if (jQuery("#weblink").attr("checked")) {
+        	disableTool(headTool);
+        	disableTool(pasteTool);
+        	disableTool(filemanTool);
+        	
+        	hideIt(head, displayhead);
+        	hideIt(paste, displaypaste);
+        	tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
+        	textArea.hide();
+        	weblink.show();
+        } else if (jQuery("#html").attr("checked")) {
+        	enableTool(headTool);
+        	enableTool(pasteTool);
+        	enableTool(filemanTool);
+        	
+        	setDisplay(head, displayhead);
+        	setDisplay(paste, displaypaste);
+            if (ATutor.mods.editor.editor_pref !== '1') {
+                tinyMCE.execCommand('mceAddControl', false, 'body_text');
+            }
+            weblink.hide();
+            textArea.show();
+	    } else {
+	    	disableTool(headTool);
+	    	enableTool(pasteTool);
+	    	disableTool(filemanTool);
+	    	
+	    	hideIt(head, displayhead);
+	    	setDisplay(paste, displaypaste);       	
+	    	weblink.hide();
+        	tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
+        	textArea.show();
+	    }	
+	};
+
+    //click function to launch tool window
     var launchTool = function () {
     	window.open(base_path + '/mods/_core/tool_manager/index.php?framed=1&popup=1&tool_file=' + ATutor.mods.editor.tool_file + '&cid=' + ATutor.mods.editor.content_id,'newWin2','menubar=0,scrollbars=1,resizable=1,width=600,height=400');
     	return false;
     };
-    
-	//set up click handlers
+
+	//set up click handlers and show/hide apppropriate tools via setupPage
 	var initialize = function () {
-		jQuery(headtoolId).click(toggleHead);
-		jQuery(tooltoolId).click(toggleTools);
-		jQuery(fileManagerLauncherId).click(launchFileManager);
 		jQuery(".tool").click(launchTool);
+		jQuery("#formatting_radios > input").click(setupPage);
+		setupPage();
 	};
 	
 	jQuery(document).ready(initialize);

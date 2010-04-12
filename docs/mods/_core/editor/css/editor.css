@@ -24,3 +24,7 @@
 img {
     border: none;
 }
+
+.clickable {
+    cursor: pointer;    
+}

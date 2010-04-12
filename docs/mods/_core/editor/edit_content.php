@@ -156,10 +156,10 @@ if (($current_tab == 0) || ($_current_tab == 5)) {
 }
 
 // initialize buttons, texts, radio buttons for editor
-if ($current_tab == 0) 
-{
-    $onload.="ATutor.mods.editor.on_load('". $_SESSION['prefs']['PREF_CONTENT_EDITOR']."');";
-}
+//if ($current_tab == 0) 
+//{
+//    $onload.="ATutor.mods.editor.on_load('". $_SESSION['prefs']['PREF_CONTENT_EDITOR']."');";
+//}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -271,7 +271,6 @@ $pid = intval($_REQUEST['pid']);
         echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
 		echo '<input type="hidden" name="use_customized_head" value="'.(($_POST['use_customized_head']=="") ? 0 : $_POST['use_customized_head']).'" />';
         echo '<input type="hidden" name="displayhead" id="displayhead" value="'.$_POST['displayhead'].'" />';
-        echo '<input type="hidden" name="displaytools" id="displaytools" value="'.$_POST['displaytools'].'" />';
         echo '<input type="hidden" name="complexeditor" id="complexeditor" value="'.$_POST['complexeditor'].'" />';
         echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	}
