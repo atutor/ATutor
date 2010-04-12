@@ -1,4 +1,7 @@
 <legend><strong><?php echo _AT("atutor_settings"); ?></strong> </legend>  
+<div id="feedback" style="width:90%;">
+<?php echo _AT('prefs_set_atutor'); ?> 
+</div>
 	<div class="row">
 		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
 			<?php echo _AT('themes_disabled'); ?>

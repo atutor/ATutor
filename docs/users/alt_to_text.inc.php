@@ -1,5 +1,6 @@
 <legend><strong><?php echo _AT("alt_to_text"); ?></strong> </legend>  
-
+<div id="feedback" style="width:90%;">
+<?php echo _AT('prefs_set_text'); ?></div>
     <div class="row">
         <?php echo _AT('use_alt_to_text'); ?><br />
         <?php

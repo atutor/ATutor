@@ -1,5 +1,7 @@
 <legend><strong><?php echo _AT("navigation"); ?></strong> </legend>  
-
+<div id="feedback" style="width:90%;">
+<?php echo _AT('prefs_set_nav'); ?>
+</div>
 	<div class="row">
 		<?php echo _AT('show_contents'); ?><br />
 		<?php
