@@ -1876,6 +1876,7 @@ tr.odd {
 	border-left: thin solid #cccccc;
 	border-right: thin solid #cccccc;
 	border-bottom:0;
+margin-bottom:.5em;
 	text-align: center;
 	white-space: nowrap;
 	width:13%;
@@ -1938,9 +1939,9 @@ table.etabbed-table	{
 	float:left;
 	padding-left:5em;
 	font-size:10pt;
-
+	margin-top:-.3em;
 }
-prefs-tab-spacer {
+.prefs-tab-spacer {
 	background-color: transparent;
 	width: 5px;
 	border-bottom: 1px solid #B8AE9C;
