@@ -1996,3 +1996,18 @@ border-radius:.5em;
 -moz-border-radius:.5em;
 
 }
+
+.wizscreen{
+background-color:#ffffff;
+padding:2em;
+line-height:2em;
+}
+
+.wizscreen > legend{
+padding-left:2em;
+padding-right:2em;
+border:thin solid black;
+background-color:#ffffff;
+color:#0000FF;
+font-weight:bold;
+}
