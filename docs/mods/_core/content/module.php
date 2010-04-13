@@ -23,7 +23,7 @@ $this->_pages['mods/_core/content/index.php']['guide']     = 'instructor/?p=cont
 $this->_pages['mods/_core/content/index.php']['children']  = array('mods/_core/editor/add_content.php', 'mods/_core/editor/arrange_content.php', 'mods/_core/imscp/index.php');
 
 $this->_pages['mods/_core/editor/add_content.php']['title_var']    = 'add_content';
-$this->_pages['mods/_core/editor/add_content.php']['parent']   = 'mods/_core/content/index.php';
+$this->_pages['mods/_core/editor/add_content.php']['parent']   = 'mods/_core/content/index.php'; 
 $this->_pages['mods/_core/editor/add_content.php']['guide']     = 'instructor/?p=creating_editing_content.php';
 
 $this->_pages['mods/_core/editor/arrange_content.php']['title_var']    = 'arrange_content';
