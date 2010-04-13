@@ -43,7 +43,7 @@ if (isset($_GET['edit'], $_GET['ctid'])) {
     }
 	exit;
 } else if (isset($_GET['usage'], $_GET['ctid'])) {
-	header('Location: '.AT_BASE_HREF.'mods/_standard/tracker/page_student_stats.php?content_id='.intval($_GET['ctid']));
+	header('Location: '.AT_BASE_HREF.'mods/_standard/tracker/tools/page_student_stats.php?content_id='.intval($_GET['ctid']));
 	exit;
 } else if (!isset($_GET['ctid']) && !isset($_GET['sub_content']) && (isset($_GET['usage']) || isset($_GET['view']) || isset($_GET['delete']) || isset($_GET['edit']))) {
 	$msg->addError('NO_ITEM_SELECTED');
@@ -120,7 +120,7 @@ function print_select($pid, $depth) {
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table class="data" summary="" rules="cols" style="width: 90%;">
+<table class="data" summary="" rules="cols" style="width: 95%;">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
