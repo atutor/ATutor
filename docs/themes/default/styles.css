@@ -1227,6 +1227,7 @@ div#container {
 	padding: 0px;
 	border:0;
 	width: 95%;
+	border:thin solid #cccccc;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 	padding:.2em
@@ -1949,12 +1950,12 @@ table.etabbed-table	{
 	float:left;
 	padding-left:5em;
 	font-size:10pt;
-	margin-top:-.3em;
+
+
 }
 .prefs-tab-spacer {
 	background-color: transparent;
 	width: 5px;
-	border-bottom: 1px solid #B8AE9C;
 }
 .prefs_buttontab {
 	color:#555;
