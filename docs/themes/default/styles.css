@@ -337,11 +337,9 @@ td.selected{
 /* the side menu */
 /* the side menu heading */
 td.dropdown-heading {
-	background-color: #DBFDD4;
+	background-color: #eeeeee;
 	color: #595241;
-	border-left: 1px solid #ECFEEA;
-	border-right: 1px solid #ECFEEA;
-	border-top: 1px solid #ECFEEA;
+	border: 1px solid #cccccc;
 	font-weight: bold;
 	padding: 2px;
 }
@@ -359,9 +357,9 @@ td.dropdown {
 	padding: 2px;
 	background-color: white;
 	color: black;
-	border-left: 1px solid #ECFEEA;
-	border-right: 1px solid #ECFEEA;
-	border-bottom: 1px solid #ECFEEA;
+	border-left: 1px solid #eeeeee;
+	border-right: 1px solid #eeeeee;
+	border-bottom: 1px solid #eeeeee;
 	font-weight: normal;
 }
 td.dropdown a, td.dropdown a:visited  {
@@ -995,11 +993,18 @@ div.tabs a:hover, div.tabs a.active {
 	border-bottom: 1px solid #B8AE9C;
 	color: white;
 }
+.contentbox{
+	border-radius:.5em;
+	-moz-border-radius: 0em 0em .5em .5em;
+}
 
+.headingbox{
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em 0em 0em;
+}
 .headingbox a{
 	color: #A50707;
 	text-decoration:underline;
-
 }
 
 h4.box {
@@ -1330,6 +1335,11 @@ div.social-left{
 	margin-left:.5em;
 	float:left;
 }
+div.social-wrapper{
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em 0em 0em;
+}
+
 
 /* floating layout */
 #contentwrapper{
