@@ -66,9 +66,9 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 		$this->_pages['mods/_core/users/create_user.php']['parent']    = 'mods/_core/users/users.php';
 
 		$this->_pages['mods/_core/users/default_preferences.php']['title_var'] = 'default_preferences';
-		$this->_pages['mods/_core/users/default_preferences.php']['parent']    = 'mods/_core/users/config_edit.php';
+		$this->_pages['mods/_core/users/default_preferences.php']['parent']    = 'admin/config_edit.php';
 		$this->_pages['mods/_core/users/default_preferences.php']['guide']     = 'admin/?p=default_preferences.php';
-		$this->_pages['mods/_core/users/config_edit.php']['children'] = array('mods/_core/users/default_preferences.php');
+		$this->_pages['admin/config_edit.php']['children'] = array('mods/_core/users/default_preferences.php');
 
 		$this->_pages['mods/_core/users/password_user.php']['title_var'] = 'password';
 		$this->_pages['mods/_core/users/password_user.php']['parent']    = 'mods/_core/users/users.php';
