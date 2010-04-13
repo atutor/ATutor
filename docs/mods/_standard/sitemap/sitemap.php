@@ -18,7 +18,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
+?>
+<div id="container" style="padding:2em;">
+<?
 echo '<p><a href="index.php">'._AT('home').'</a>';
 
 $_current_modules = array_slice($_pages[AT_NAV_COURSE], 1);
@@ -64,6 +66,9 @@ echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" /
 $contentManager->printSiteMapMenu();
 
 echo '</p>';
+?>
+</div>
 
+<?
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
