@@ -23,9 +23,7 @@ if (!isset($_GET['category_id'])) {
 }
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 ?>
-
-	<div class="input-form" style="width:90%;">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('category'); ?></legend>
+<fieldset class="group_form" style="width:93%"><legend class="group_form"><?php echo _AT('category'); ?></legend>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 		<div class="row">
@@ -40,9 +38,8 @@ require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.p
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 		</div>
 		</form>
+</fieldset>
 
-		</fieldset>
-	</div>
 
 <?php
 

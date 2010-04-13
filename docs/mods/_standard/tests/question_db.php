@@ -89,8 +89,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
-<div class="input-form" width="95%">
-	<fieldset class="group_form" style="width:43%;float:left;height:18em;min-width:15em;"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
+<div class="input-form">
+	<fieldset class="group_form" style="width:45%;float:left;height:18em;min-width:15em;"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
 		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 			<label for="question"><?php echo _AT('create_new_question'); ?></label><br />
@@ -106,7 +106,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</form>
 	</fieldset>
 
-	<fieldset class="group_form" style="width:43%;float:left;clear:right;height:18em;min-width:18em;"><legend class="group_form"><?php echo _AT('import_question'); ?></legend>
+	<fieldset class="group_form" style="width:45%;float:left;clear:right;height:18em;min-width:18em;"><legend class="group_form"><?php echo _AT('import_question'); ?></legend>
 		<form method="post" action="<?php echo 'mods/_standard/tests/question_import.php'; ?>" enctype="multipart/form-data" >	<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
 			<input type="file" name="file" id="to_file" />
 			<div class="row buttons">
@@ -115,10 +115,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</form>
 	</fieldset>
 
-</div>
 
 <?php $tid = 0; ?>
 
 <?php require(AT_INCLUDE_PATH.'../mods/_standard/tests/html/tests_questions.inc.php'); ?>
-
+<br style="clear:both;" />
+</div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

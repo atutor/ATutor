@@ -153,6 +153,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 
 ?>
 <!--h3><?php //echo AT_print($row['title'], 'tests.title'); ?></h3><br / -->
+<div id="container">
 <h3><?php echo AT_print($title, 'tests.title'); ?></h3><br />
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
@@ -269,6 +270,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 </tbody>
 </table>
 </form>
+</div>
 <script language="JavaScript" type="text/javascript">
 //<!--
 function CheckAll() {

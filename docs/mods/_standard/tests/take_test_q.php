@@ -247,7 +247,7 @@ if (!$result || !$question_row) {
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <?php if (isset($_REQUEST['cid'])) {?> <input type="hidden" name="cid" value="<?php echo $cid; ?>" /> <?php }?>
 
-<div class="input-form" style="width:80%">
+<div class="input-form" style="width:95%">
 
 	<fieldset class="group_form"><legend class="group_form"><?php echo $title ?> (<?php echo _AT('question').' '. ($pos+1).'/'.$test_row['num_questions']; ?>)</legend>
 	<?php if ($_REQUEST['efs']){?>
