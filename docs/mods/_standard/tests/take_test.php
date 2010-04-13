@@ -208,7 +208,7 @@ if (!isset($_REQUEST['gid']) && !$in_progress) {
 <?php if (isset($_REQUEST['gid'])): ?> <input type="hidden" name="gid" value="<?php echo $gid; ?>" /> <?php endif; ?>
 <?php if (isset($_REQUEST['cid'])): ?> <input type="hidden" name="cid" value="<?php echo $cid; ?>" /> <?php endif; ?>
 
-<div class="input-form" style="width:80%">
+<div class="input-form" style="width:95%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo $title ?></legend>
 
 
