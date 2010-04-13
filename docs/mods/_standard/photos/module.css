@@ -24,7 +24,9 @@ div.album_panel{
 	float: left;
 	background: #F7F7F7;
 	border: 1px solid #D2D2D2;	
-	width: 95%;
+	width: 96%;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
 }
 div.album_panel div.photo_wrapper {
 	/* This class is to fix the problem where the images shift
@@ -59,13 +61,17 @@ div.album_panel .album_description{
 }
 
 div.search_bar {
-	background-image: url('images/search_bg.png');
-	background-repeat: no-repeat;
+	/* background-image: url('images/search_bg.png');
+	background-repeat: no-repeat; */
+	background-color:#ffffff;
+	border:thin solid #cccccc;
 	margin-left: 0.5em;
 	margin-top: 0.5em;
-	height: 31px;
+	height: 27px;
 	width: 180px;
 	float: left;
+	border-radius:.5em;
+	-moz-border-radius:.8em .8em .8em .8em;
 }
 div.search_bar .s{
 	float: left;
@@ -83,10 +89,13 @@ div.search_bar .s_img{
 
 div.album {
 	background: #FFFFFF;
+	padding:1em;
 	border: 1px solid #D2D2D2;	
 	width: 95%;
 	margin: 0.5em;
 	float: left;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em 0em 0em;
 }
 div.album .image{
 	float: left;
@@ -166,7 +175,10 @@ div.add_photo{
 	float: left;
 	background: #F7F7F7;
 	border: 1px solid #D2D2D2;	
-	width: 95%;
+	width: 96%;
+	border-radius:.5em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	margin-bottom:.2em;
 }
 div.add_photo ul{
 	margin: 0px;
@@ -205,11 +217,16 @@ div.add_profile_photo{
 	float: left;
 	background: #F7F7F7;
 	border: 1px solid #D2D2D2;	
-	width: 95%;
+	width: 96%;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	margin-bottom:.2em;
+
 }
 div.add_profile_photo .profile_photo{    
 	float: left;    
 	padding: 0.5em;
+
 }
 div.add_profile_photo .uploader{    
 	float: left;    
@@ -224,7 +241,9 @@ div.photo_panel{
 	border: 1px solid #D2D2D2;
 	text-align: center;
 	width: 95%;
-	padding-top: 0.5em;
+	padding: 0.5em;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
 }
 div.photo_panel img{
 	background: #FFFFFF;
@@ -248,6 +267,10 @@ div.comment_panel{
 	float: left;
 	border: 1px solid #D2D2D2;
 	width: 95%;
+	padding:.5em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	margin-top:.2em;
 }
 div.comment_panel .comment_feeds{
 	float: left;
@@ -258,8 +281,27 @@ div.comment_panel .photo_actions{
 	max-width: 49%;
 	background: #F7F7F7;
 	float:right;
+	padding:1em;
+	border:thin solid #cccccc;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
 }
-
+.row textarea#comment_template, textarea#comment_template active{
+	background-color:#eeeeee;
+	border:thin solid #eeeeee;
+	border:thin solid #cccccc;
+	padding:.2em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
+.row textarea#comment{
+	background-color:#ffffff;
+	border:thin solid #eeeeee;
+	border:thin solid #cccccc;
+	padding:.2em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
 div.comment_panel textarea{
 	width:100%;
 }
@@ -284,6 +326,9 @@ div.edit_photo_frame{
 	float: left;
 	padding: 0.2em;
 	background: #F7F7F7;
+	border:thin solid #cccccc;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
 }
 div.edit_photo_box{	
 	float: left;
@@ -293,10 +338,20 @@ div.edit_photo_box{
 	margin-bottom: 0.8em;
 	padding: 0.8em;
 	width: 94%;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
 }
 div.edit_photo_box .info{
 	float: left;
 	width: 60%;
+}
+
+.info textarea{
+	background-color: #eeeeee;
+	border:thin solid #cccccc;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	margin-top:.2em;
 }
 div.edit_photo_box .info textarea.alt_text{
 	height: 2.5em;
@@ -308,6 +363,10 @@ div.edit_photo_box .action{
 	float: right;
 	background: #F7F7F7;
 	min-width: 140px;
+	padding:.2em;
+	border:thin solid #cccccc;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
 }
 
 
@@ -342,4 +401,15 @@ div.edit_photo_box .action{
 }
 .fl-inlineEdit-focus {
     border: 2px solid #777777;
+}
+
+
+.pa_tool_link{
+
+text-decoration:none;
+}
+
+.pa_tool_image{
+vertical-align:middle;
+margin-right:.5em;
 }

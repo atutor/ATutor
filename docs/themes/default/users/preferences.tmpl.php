@@ -29,6 +29,11 @@ if ($current_tab == 1)
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
+
+if($_SESSION['course_id'] == "-1"){
+echo '<div id="container"><br />';
+}
+
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>"  method="post" name="form" enctype="multipart/form-data">
@@ -265,7 +270,10 @@ else  // user login
 		<input type="reset" name="reset" value="<?php echo _AT('reset'); ?>" />
 	</div>
 </div>
-
 </form>	
+<?php
+if($_SESSION['course_id'] == "-1"){
+echo '</div>';
+}
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

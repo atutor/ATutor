@@ -105,7 +105,7 @@
 
 		<?php if($this->action_permission): ?>
 		<div class="photo_actions">
-			<a href="<?php echo AT_PA_BASENAME.'edit_album.php?id='.$this->album_info['id']; ?>"><?php echo _AT('pa_edit_album'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'edit_album.php?id='.$this->album_info['id']; ?>" class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/edit.gif" alt="" border="0"  class="pa_tool_image"/><?php echo _AT('pa_edit_album'); ?></a><br/>
 		</div>
 		<?php endif; ?>
 	</div>

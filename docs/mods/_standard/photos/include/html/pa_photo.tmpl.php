@@ -7,10 +7,10 @@
 		<div class="paginator">
 			<ul>
 				<?php if (isset($this->prev)): ?>
-				<li><a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$this->prev['id'].SEP.'aid='.$this->aid;?>"><?php echo _AT('previous'); ?></a></li>
+				<li><a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$this->prev['id'].SEP.'aid='.$this->aid;?>"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']?>/images/previous.png" alt="<?php echo _AT('previous'); ?>" title="<?php echo _AT('previous'); ?>"/></a></li>
 				<?php endif; ?>
 				<?php if (isset($this->next)): ?>
-				<li><a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$this->next['id'].SEP.'aid='.$this->aid;?>"><?php echo _AT('next'); ?></a></li>
+				<li><a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$this->next['id'].SEP.'aid='.$this->aid;?>"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']?>/images/next.png" alt="<?php echo _AT('next'); ?>" title="<?php echo _AT('next'); ?>"/></a></li>
 				<?php endif; ?>				
 			</ul>
 		</div>
@@ -69,9 +69,9 @@
 		
 		<?php if($this->action_permission): ?>
 		<div class="photo_actions">
-			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id']; ?>"><?php echo _AT('pa_edit_photo'); ?></a><br/>
-			<a href="<?php echo AT_PA_BASENAME.'delete_photo.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"><?php echo _AT('pa_delete_this_photo'); ?></a><br/>
-			<a href="<?php echo AT_PA_BASENAME.'set_profile_picture.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"><?php echo _AT('pa_set_profile_pic'); ?></a>
+			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id']; ?>" class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/edit.gif" alt="" border="0"  class="pa_tool_image"/><?php echo _AT('pa_edit_photo'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'delete_photo.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"  class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/x.gif" alt="" border="0" class="pa_tool_image"/><?php echo _AT('pa_delete_this_photo'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'set_profile_picture.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"  class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/profile.gif" alt="" border="0" class="pa_tool_image"/><?php echo _AT('pa_set_profile_pic'); ?></a>
 		</div>
 		<?php else: ?>
 		<div class="photo_actions">

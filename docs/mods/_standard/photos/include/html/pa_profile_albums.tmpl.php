@@ -1,4 +1,4 @@
-<div id="uploader-contents">
+<div id="uploader-contents"">
 	<!-- Photo album options and page numbers -->
 	<?php if ($this->action_permission || $this->album_info['type_id']==AT_PA_TYPE_COURSE_ALBUM): ?>
 	<div class="add_profile_photo">
@@ -112,8 +112,8 @@
 
 		<?php if($this->action_permission): ?>
 		<div class="photo_actions">
-			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>"><?php echo _AT('pa_edit_photos'); ?></a><br/>
-			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>"><?php echo _AT('pa_organize_photos'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id']; ?>" class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/edit.gif" alt="" border="0"  class="pa_tool_image"/><?php echo _AT('pa_edit_photos'); ?></a><br/>
+			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>" class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/photos_arrange.png" alt="" border="0"  class="pa_tool_image"/><?php echo _AT('pa_organize_photos'); ?></a><br/>
 		</div>
 		<?php endif; ?>
 	</div>
