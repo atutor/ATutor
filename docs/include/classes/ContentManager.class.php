@@ -929,9 +929,6 @@ initContentMenu();
 			$counter = 1;
 			$num_items = count($top_level);
 			
-//			if ($parent_id <> 0) echo '<li>';
-			
-//			echo '<ul id="folder'.$parent_id.$from.'">'."\n";
 			echo '<div id="folder'.$parent_id.$from.'">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
@@ -967,7 +964,6 @@ initContentMenu();
 					$link .= $img_link . ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
 					$base_title_length = 29;
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
-//						$link .= $path.$counter.' ';
 						$base_title_length = 24;
 					}
 
@@ -976,12 +972,15 @@ initContentMenu();
 					if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 					}
-//					$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
 					
 					if (isset($content['test_id']))
 						$link .= $content['title'];
 					else
-						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span>';
+						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">';
+						if($_SESSION['prefs']['PREF_NUMBERING']){
+						  $link .= $path.$counter;
+						}
+						$link .= '&nbsp;'.$content['title'].'</span>';
 					
 					$link .= '</a>';
 					if ($on) {
@@ -1008,12 +1007,19 @@ initContentMenu();
 					if ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)
 					{ // current content page
 						$full_title = $content['title'];
-						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$path.$counter.$content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
+						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': ';
+						if($_SESSION['prefs']['PREF_NUMBERING']){
+						  $link .= $path.$counter;
+						}
+						  $link .= $content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
-//						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
-						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span></strong>';
+						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">';
+						if($_SESSION['prefs']['PREF_NUMBERING']){
+						  $link .= $path.$counter;
+						}
+						$link .='&nbsp;'.$content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
@@ -1022,7 +1028,6 @@ initContentMenu();
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
-//						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
 						
 						$full_title = $content['title'];
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
@@ -1035,11 +1040,14 @@ initContentMenu();
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
-//						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
 						if (isset($content['test_id']))
 							$link .= $content['title'];
 						else
-							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.$path.$counter.'&nbsp;'.$content['title'].'</span>';
+							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">';
+						if($_SESSION['prefs']['PREF_NUMBERING']){
+						  $link .= $path.$counter;
+						}
+						  $link .= '&nbsp;'.$content['title'].'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
 							$link .= '</a>'."\n";
@@ -1052,7 +1060,7 @@ initContentMenu();
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
 							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
-//						echo '<div id="folder_content_'.$content['content_id'].'">';
+
 					}
 					
 					if ($on) {
@@ -1064,7 +1072,6 @@ initContentMenu();
 					$on = true;
 				}
 
-//				echo '<li>'."\n";
 				echo '<span>'."\n";
 				
 				if ( isset($this->_menu[$content['content_id']]) && is_array($this->_menu[$content['content_id']]) ) {
@@ -1096,7 +1103,6 @@ initContentMenu();
 
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-//							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
 							echo '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
@@ -1106,7 +1112,6 @@ initContentMenu();
 						}
 					} else {
 						if ($on) {
-//							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" />'."\n";
 							echo '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
@@ -1140,9 +1145,6 @@ initContentMenu();
 					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 				}
 
-//				if ($_SESSION['prefs']['PREF_NUMBERING']) {
-//					echo $path.$counter;
-//				}
 				
 				echo $link;
 				
@@ -1166,8 +1168,7 @@ initContentMenu();
 				}
 				$counter++;
 			} // end of foreach
-//			echo "</ul>";
-//			if ($parent_id <> 0) print "</li>\n\n";
+
 			print "</div>\n\n";
 		}
 	}
@@ -1335,7 +1336,10 @@ initContentMenu();
 					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" />';
 				}
 
-				echo '<small> '.$path.$counter;
+				echo '<small>';
+				  if($_SESSION['prefs']['PREF_NUMBERING']){
+					echo $path.$counter;
+				    }
 				
 				echo $link;
 				
