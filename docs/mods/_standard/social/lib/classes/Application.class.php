@@ -337,25 +337,32 @@ class Application extends Applications{
 		//   it only parses "&".  Once shindig fixed this, we gotta change it back to SEP
 		//@harris July 23, 2009
 		$url = AT_SHINDIG_URL.'/gadgets/ifr?' 
-			. "synd=default" 
-			. "&container=default" 
-			. "&viewer=". $_SESSION['member_id']
-			. "&owner=" . $oid
+			. "bpc=1&synd=ATutor"				//container name
+			. "&container=default"		//container name
+			. "&viewer=". $_SESSION['member_id']	//viewer ID
+			. "&owner=" . $oid			//owner ID
 			. "&aid=" . $this->getId()			//application id
-			. "&mid=" . $this->getModuleId()	//not sure what mod_id is
-			. "&country=US" 
-			. "&lang=en" 
+			. "&mid=" . $this->getModuleId()	//module ID
+			. "&country=US"			//country code
+			. "&lang=en"		//language code
 			. "&view=" . $view	//canvas for this big thing, should be a variable
-			. "&parent=" . urlencode("http://" . $_SERVER['HTTP_HOST']) . $prefs . (isset($appParams) ? '&view-params=' . urlencode($appParams) : '') 
-			. "&st=" . urlencode(base64_encode($securityToken->toSerialForm())) 
-			. "&v=" . $this->getVersion()
-			. "&url=" . urlencode($this->getUrl()) . "#rpctoken=" . rand(0, getrandmax());
+			. "&parent=" . urlencode("http://" . $_SERVER['HTTP_HOST']) . $prefs . (isset($appParams) ? '&view-params=' . urlencode($appParams) : '') //container URL
+			. "&st=" . urlencode(base64_encode($securityToken->toSerialForm())) //encrypted token
+			. "&v=" . $this->getVersion()	//cache busting md5 of the gadget xml
+			. "&url=" . urlencode($this->getUrl()) //url of gadgets xml
+			. "#rpctoken=" . rand(0, getrandmax());  //random unique number
 		return $url;
 	}
 
-	//TO BE IMPLEMENTED
+	/**
+	 * Returns the cache busting md5 of the gadget XML 
+	 * @return	md5 of the xml content.
+	 */
 	function getVersion(){
-		return '0.1';
+		//use the skeleton of the XML as version
+		//if it changed, then version is changed.
+		$xml = file_get_contents(($this->getUrl()));
+		return md5($xml);
 	}
 
 

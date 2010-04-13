@@ -22,6 +22,7 @@ function encrypt_password() {
 		<input type="hidden" name="form_login_action" value="true" />
 		<input type="hidden" name="form_course_id" value="<?php echo $this->form_course_id; ?>" />
 		<input type="hidden" name="form_password_hidden" value="" />
+		<input type="hidden" name="p" value="<?php echo urlencode($_GET['p']);?>" />
 		<div class="input-form" style="background-color:white;">
 			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
 			<p><?php echo _AT('login_text') ;?></p>

@@ -53,9 +53,9 @@ class ATutorDbFetcher {
     $extension_class_paths = Config::get('extension_class_paths');
     foreach (explode(',', $extension_class_paths) as $path) {
       if (file_exists($path . "/ATutorDbFetcher.php")) {
-        $configFile = $path . '/../../../../include/lib/mysql_connect.inc.php';
+        $configFile = $path . '/../../../../../include/lib/mysql_connect.inc.php';
         if (file_exists($configFile)) {
-		  define('AT_INCLUDE_PATH', $path . '/../../../../include/');
+		  define('AT_INCLUDE_PATH', $path . '/../../../../../include/');
 		  include(AT_INCLUDE_PATH.'config.inc.php');
 		  include(AT_INCLUDE_PATH . 'lib/constants.inc.php');
 		  include(AT_INCLUDE_PATH . 'lib/mysql_connect.inc.php');
@@ -137,8 +137,8 @@ class ATutorDbFetcher {
     return true;
   }
 
-//  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds) {
-  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields) {
+  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds) {
+//  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields) {
 	global $db;
     //TODO add support for filterBy, filterOp and filterValue
     $this->checkDb();
@@ -293,6 +293,11 @@ class ATutorDbFetcher {
   public function getAppData($ids, $keys, $app_id) {
     $this->checkDb();
     $data = array();
+	
+	if (empty($ids)){
+		return $data;
+	}
+
     foreach ($ids as $key => $val) {
       if (! empty($val)) {
         $ids[$key] = intval($val);

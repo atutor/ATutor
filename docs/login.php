@@ -153,6 +153,12 @@ if (isset($this_login, $this_password)) {
 		$sql = 'DELETE FROM '.TABLE_PREFIX."member_login_attempt WHERE login='$this_login'";
 		mysql_query($sql, $db);
 
+		//if page variable is set, bring them there.
+		if (isset($_POST['p'])){
+			header ('Location: '.urldecode($_POST['p']));
+			exit;
+		}		
+		
 		$msg->addFeedback('LOGIN_SUCCESS');
     	header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;
