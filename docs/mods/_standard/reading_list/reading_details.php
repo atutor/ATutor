@@ -91,7 +91,9 @@ if ($row = mysql_fetch_assoc($result)){
 ?>
 	<?php } while($rowReadings = mysql_fetch_assoc($resultReadings)); ?>
 <?php else: ?>
-		<em><?php echo _AT('none_found'); ?></em>
+	<table  class="data" style="width: 95%;"><tr>
+		<td colspan="3"><em><?php echo _AT('none_found'); ?></em></td>
+	</tr></table>
 <?php endif; ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

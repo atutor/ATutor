@@ -21,7 +21,7 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[cou
 $result = mysql_query($sql, $db);
 ?>
 
-<table class="data" style="width: 90%;">
+<table class="data" style="width: 95%;">
 <thead>
 <tr>
 	<th><?php echo _AT('rl_start');    ?></th>
