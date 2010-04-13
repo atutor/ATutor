@@ -57,25 +57,21 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     <script type="text/javascript" language="javascript">
     //<!--
         ATutor.mods.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
+        ATutor.mods.editor.content_id = "<?php if(isset($cid)) echo $cid ?>";
+        //TODO LAW language titles
+        ATutor.mods.editor.head_enabled_title = "<?php echo _AT('customized_head_enabled_title'); ?>";
+        ATutor.mods.editor.head_disabled_title = "<?php echo _AT('customized_head_disabled_title'); ?>";
+        ATutor.mods.editor.paste_enabled_title = "<?php echo _AT('paste_enabled_title'); ?>";
+        ATutor.mods.editor.paste_disabled_title = "<?php echo _AT('paste_disabled_title'); ?>";
+        ATutor.mods.editor.fileman_enabled_title = "<?php echo _AT('fileman_enabled_title'); ?>";
+        ATutor.mods.editor.fileman_disabled_title = "<?php echo _AT('fileman_disabled_title'); ?>";
     //-->
     </script>
     
     <div class="fl-container fl-fix">
-      	<!-- Custom head tool -->
-    	<!-- TODO LAW language title for both tools below -->
         <img id="headtool" class="fl-col" src="" title="" alt="<?php echo _AT('customized_head');  ?>" height="30" width="30" />
-
-        <img id="pastetool" class="fl-col" title="" src="" alt="Paste from file" height="30" width="30"/>
-
-        <script type="text/javascript" language="javascript">
-        //<!--
-            ATutor.mods.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
-            ATutor.mods.editor.content_id = "<?php if(isset($cid)) echo $cid ?>";
-        //-->
-        </script>
-        
-        <!-- TODO LAW language title -->
-        <img id="filemantool" class="fl-col" src="<?php echo $_base_path; ?>images/file-manager.png" alt="<?php echo _AT('close_file_manager'); ?>" title="" height="30" width="30" />
+        <img id="pastetool" class="fl-col" title="" src="" alt="<?php echo _AT('paste_file')?>" height="30" width="30"/>      
+        <img id="filemantool" class="fl-col" title="" src="" alt="<?php echo _AT('file_manager'); ?>" height="30" width="30" />
            
 <!-- ******** Tool Manager ******* -->
 <?php
@@ -100,7 +96,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
                	ATutor.mods.editor.tool_file = "<?php if(isset($tool['tool_file'])) echo $tool['tool_file'] ?>";
            	//-->
            	</script>
-           	<img class="fl-col clickable tool" id="<?php echo $tool['title']; ?>" src="<?php echo $tool['img']; ?>" alt="<?php echo $tool['alt']; ?>" title="<?php echo $tool['title']; ?>" height="30" width="30" />
+           	<img class="fl-col clickable tool" src="<?php echo $tool['img']; ?>" alt="<?php echo $tool['alt']; ?>" title="<?php echo $tool['title']; ?>" height="30" width="30" />
 <?php 
         }
     }
