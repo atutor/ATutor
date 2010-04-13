@@ -1800,11 +1800,13 @@ div#subnavbacktopage {
 }
 
 div.toolcontainer{
-	width:90%;
+	width:95%;
 	margin:auto;
 	border:thin solid #e8e8e8;
 	padding-top:1em;
 	padding-bottom:1em;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
 }
 
 ul#subnavlist {
