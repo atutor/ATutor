@@ -72,8 +72,9 @@ if (isset($_POST['addmore'])) {
 				}
 			}
 		}
+
 	}
-}
+} 
 /*************  INFO GATHERED  **************/
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -100,16 +101,20 @@ if ($_POST['verify']) {
 
 		add_users($students, $enroll, $_SESSION['course_id']);
 
-		$msg->printFeedbacks(); ?>
 
+		  ?>
+		 <div id="container">
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="finalform" />
 		<div class="input-form">
+		<?php
+		$msg->printFeedbacks();
+		?>
 			<div class="row buttons">
 				<input type="submit" name="addmore" value="<?php echo _AT('add_more'); ?>" />
 				<input type="submit" name="return"  value="<?php echo _AT('done'); ?>" />
 			</div>
 		</div>
-		</form><?php				
+		</form></div><?php				
 	}
 
 }
