@@ -30,7 +30,7 @@ if (isset($_REQUEST['goto_content']))
 }
 if (isset($_REQUEST['back']))
 {
-	header('Location: '.url_rewrite('../mods/_standard/tests/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+	header('Location: '.url_rewrite('mods/_standard/tests/my_tests.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
