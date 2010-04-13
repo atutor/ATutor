@@ -54,7 +54,7 @@ if ($_config['check_version']) {
 
 ?>
 
-<div style="width: 40%; float: right; padding-top: 4px; padding-left: 10px;">
+<div class="container" style="width: 40%; float: right; padding-top: 4px; padding-left: 10px;">
 	<div class="input-form" style="width: 98%;">
 			<div class="row">
 				<h3><?php echo _AT('social_switch'); ?></h3>
@@ -243,7 +243,7 @@ if ($_config['check_version']) {
 
 </div>
 
-<div style="width: 55%;">
+<div class="admin_container" style="width: 55%;">
 	<?php
 	$path_length = strlen($_base_path);
 
