@@ -102,7 +102,7 @@ if (!$files) {
 	//@harris echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
 	<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
-	<div class="input-form" style="width: 50%">
+	<div class="input-form" style="width: 95%">
 		<div class="row">
 			<select name="id" size="<?php echo min(count($files), 5);?>">
 				<?php foreach ($files as $file): ?>
