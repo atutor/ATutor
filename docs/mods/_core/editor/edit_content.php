@@ -434,7 +434,7 @@ $pid = intval($_REQUEST['pid']);
 		</div>
 	<?php endif; ?>
 	<?php include('editor_tabs/'.$tabs[$current_tab][1]); ?>
-</div>
+</div></div>
 </form>
-</div>
+
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
