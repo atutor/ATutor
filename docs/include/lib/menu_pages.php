@@ -250,7 +250,8 @@ if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION
 	$_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
 }
 	$_pages['users/browse.php']['title_var'] = 'browse_courses';
-	$_pages['users/browse.php']['parent']    = 'users/index.php';
+	//$_pages['users/browse.php']['parent']    = 'users/index.php';
+	$_pages['users/browse.php']['parent']    = AT_NAV_START;
 	$_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
 
 $_pages['mods/_core/courses/users/create_course.php']['parent']    = 'users/index.php';
@@ -373,7 +374,6 @@ function get_main_navigation($current_page) {
 
 function get_current_main_page($current_page) {
     global $_pages, $_base_path;
-
     $parent_page = $_pages[$current_page]['parent'];
 
     if (isset($parent_page) && defined($parent_page)) {
