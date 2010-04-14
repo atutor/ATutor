@@ -26,7 +26,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<div class="row">
 	    <span>
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ctitle"><?php echo _AT('title');  ?></label>
-		<input type="text" name="title" id="ctitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
+		<input type="text" name="title" id="ctitle" size="60" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
         </span>
         <span class="nowrap">
         <label for="formatting_radios"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('formatting'); ?></label>
@@ -138,7 +138,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         }
     ?>
 
-    <div class="row fl-fix">
+    <div class="row">
         <span id="textSpan">
             <label for="body_text"><?php echo _AT('body');  ?></label>
 		    <textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']);?></textarea>

@@ -433,18 +433,8 @@ $pid = intval($_REQUEST['pid']);
 			<?php //if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" class="button"/> <input type="submit" name="close" value="<?php echo _AT('close'); ?>"  class="button"/> <input type="checkbox" style="border:0px;" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?>/><label for="close"><?php echo _AT('close_after_saving'); ?></label>
 		</div>
 	<?php endif; ?>
-	<?php 
-	//	if ($current_tab != 5){
-        	include('editor_tabs/'.$tabs[$current_tab][1]);
-			echo '</div></form>';
-	//	}
-	//	else 
-	//	{
-	//		echo '</div></form>';
-	//		include(AT_INCLUDE_PATH.'html/editor_tabs/'.$tabs[$current_tab][1]);
-			
-	//	}
-			
-?>
+	<?php include('editor_tabs/'.$tabs[$current_tab][1]); ?>
+</div>
+</form>
 </div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
