@@ -65,12 +65,12 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     var pasteTool = {
             toolId: "#pastetool",
             enabledClass: enabledClass,
-            enabledImage: "/images/paste_plain.png",
+            enabledImage: "/images/paste.png",
             enabledTitle: ATutor.mods.editor.paste_enabled_title,
             clickFunction: function () {
                 doToggle(jQuery(pasteId), jQuery(displaypasteId));
             },
-            disabledImage: "/images/paste_plain_disabled.png",
+            disabledImage: "/images/paste_disabled.png",
             disabledTitle: ATutor.mods.editor.paste_disabled_title
         };
 
