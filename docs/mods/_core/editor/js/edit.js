@@ -51,12 +51,10 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             toolId: "#headtool",
             enabledClass: enabledClass,
             enabledImage: "/images/custom_head.png",
-            enabledTitle: ATutor.mods.editor.head_enabled_title,
             clickFunction: function () {
                 doToggle(jQuery(headId), jQuery(displayheadId));
             },
             disabledImage: "/images/custom_head_disabled.png",
-            disabledTitle: ATutor.mods.editor.head_disabled_title
         };
 
     //paste from file variables
@@ -66,12 +64,10 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             toolId: "#pastetool",
             enabledClass: enabledClass,
             enabledImage: "/images/paste.png",
-            enabledTitle: ATutor.mods.editor.paste_enabled_title,
             clickFunction: function () {
                 doToggle(jQuery(pasteId), jQuery(displaypasteId));
             },
             disabledImage: "/images/paste_disabled.png",
-            disabledTitle: ATutor.mods.editor.paste_disabled_title
         };
 
     var base_path = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split("/")[1];
@@ -87,12 +83,10 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             toolId: "#filemantool",
             enabledClass: enabledClass,
             enabledImage: "/images/file-manager.png",
-            enabledTitle: ATutor.mods.editor.fileman_enabled_title,
             clickFunction: function () {
                 launchFileManager();
             },
             disabledImage: "/images/file-manager_disabled.png",
-            disabledTitle: ATutor.mods.editor.fileman_disabled_title
         };
     
     //checks hidden variable and shows/hides element accordingly
@@ -173,6 +167,12 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     var initialize = function () {
         jQuery(".tool").click(launchTool);
         jQuery("#formatting_radios > input").click(setupPage);
+        headTool.enabledTitle = ATutor.mods.editor.head_enabled_title;
+        headTool.disabledTitle = ATutor.mods.editor.head_disabled_title;
+        pasteTool.enabledTitle = ATutor.mods.editor.paste_enabled_title;
+        pasteTool.disabledTitle = ATutor.mods.editor.paste_disabled_title;
+        filemanTool.enabledTitle = ATutor.mods.editor.fileman_enabled_title;
+        filemanTool.disabledTitle = ATutor.mods.editor.fileman_disabled_title;
         setupPage();
     };
     

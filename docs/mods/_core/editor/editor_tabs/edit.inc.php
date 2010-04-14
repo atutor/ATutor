@@ -58,7 +58,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     //<!--
         ATutor.mods.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
         ATutor.mods.editor.content_id = "<?php if(isset($cid)) echo $cid ?>";
-        //TODO LAW language titles
         ATutor.mods.editor.head_enabled_title = "<?php echo _AT('customized_head_enabled_title'); ?>";
         ATutor.mods.editor.head_disabled_title = "<?php echo _AT('customized_head_disabled_title'); ?>";
         ATutor.mods.editor.paste_enabled_title = "<?php echo _AT('paste_enabled_title'); ?>";
