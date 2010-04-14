@@ -2,7 +2,7 @@ div.input-form {
 	width: 95%; 
 	margin-left:auto; 
 	margin-right:auto;
-	border: thin #CCCCCC solid;
+	border: 1px #CCCCCC solid;
 	margin-bottom: 20px;
 	line-height:150%;
 	background-color: #F8F8F8;

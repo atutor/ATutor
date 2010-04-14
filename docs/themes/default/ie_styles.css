@@ -11,6 +11,7 @@ ul#topnavlist li {
 	padding-bottom:0.3em;
 	margin:0px;
 	margin-bottom:-3px;
+	border-bottom:0;
 }
 
 label {
@@ -23,11 +24,9 @@ table.data tfoot input {
 
 }
 table.data {
-float:left;
-clear:right;
-margin-left:2em;
-
-}
+	float:left;
+	clear:right;
+	margin-left:2em;
 
 }
 #topnavlistcontainer {
@@ -46,38 +45,30 @@ div#top-links a:active{
 .outside_box{
 	height:9.6em;
 }
-/*
-ul#subnavlist li a {
-	margin-right:1em;
-	font-size:8pt;
-	border-left:none;
-	border-right:none;
-}*/
+
 ul#topnavlist {
-	padding-top: 2px;
-	margin-top: 0px;
+	padding-top: 4px;
 	margin-left:5px;
-height:4em;
+	height:4em;
 }
-
-
 ul#topnavlist li {
 	white-space: nowrap;
 	list-style: none;
+	margin-top:-5px;
 	display: inline;
 	height:2em;
-clear:both;
+	clear:both;
 }
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active, ul#subnavlist strong {
-	margin-right:.5em;
-	font-size:8pt;
-	border-left:none;
-	border-right:none;
-
+	margin-top:-5px;
+	margin-right:1em;
 }
 ul#subnavlist li {
 	zoom:100%;
-border-bottom:none;
+	margin-top:5px;
+	max-width:12em;
+	margin-right:2em;
+	display: inline;
 }
 fieldset.group_form{
 	padding:.5em;
@@ -98,3 +89,17 @@ float:left;
 clear:right;
 margin-left:1.5em;
 }
+
+.current_box{
+	width:30%; 
+float:left;
+margin-left:3em;
+
+}
+
+ul.current_list{
+      line-height:2em; 
+      list-style-type:none;
+      margin-left:0;
+}
+

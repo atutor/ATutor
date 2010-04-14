@@ -17,7 +17,7 @@ body {
     background-color: #eeeeee;
 }
 .page_wrapper{
-    border:thin solid #ffffff;
+    border:1px solid #ffffff;
     width:97%;
     margin:auto;
     margin-top:1em;
@@ -259,9 +259,9 @@ a .highlight{
 }
 
 .tab {
-	border-top: thin solid #cccccc;
-	border-left: thin solid #cccccc;
-	border-right: thin solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
 	border-bottom:0;
 	text-align: center;
 	white-space: nowrap;
@@ -415,7 +415,7 @@ p.search-description {
 table.tabbed-table {
 
 	width: 100%;
-	border:thin black solid;
+	border:1px black solid;
 }
 table.tabbed-table th#left-empty-tab {
 	background-color: transparent;
@@ -1013,7 +1013,7 @@ h4.box {
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding:.2em;
-	border:thin solid #ccc;
+	border:1px solid #ccc;
 
 }
 
@@ -1028,9 +1028,9 @@ div.box {
 	border-radius:.5em;
 	-moz-border-radius: .0em .0em .5em .5em;
 	padding:.2em;
-	border-left:thin solid #ccc;
-	border-right:thin solid #ccc;
-	border-bottom:thin solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc;
+	border-bottom:1px solid #ccc;
 }
 
 h5.box { 
@@ -1180,7 +1180,7 @@ a#guide {
 	text-decoration:none;
 	font-size:0.85em;
 	float:right;
-	border:thin solid #cccccc;
+	border:1px solid #cccccc;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 }
@@ -1227,7 +1227,7 @@ div#container {
 	padding: 0px;
 	border:0;
 	width: 95%;
-	border:thin solid #cccccc;
+	border:1px solid #cccccc;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 	padding:.2em
@@ -1383,7 +1383,7 @@ div.forum-post-ctrl a { text-decoration: none; }
 div.forum-post-ctrl span { color: black; background-color: #fefdc2; padding: 3px; }
 div.forum-post-content p.date { color: #a1a1a1; border-bottom: 1px solid #F7F3ED; }
 div.forum-post-content div.body p { margin-bottom:1em; }
-div.forum-paginator{border:thin #cccccc solid; padding:.3em; width:95%;margin:auto;background-color:#F7F3ED;}
+div.forum-paginator{border:1px #cccccc solid; padding:.3em; width:95%;margin:auto;background-color:#F7F3ED;}
 span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2em;}
 
 
@@ -1419,10 +1419,10 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
 	background-color: #E6E6E6;
 	color: black;
 	text-decoration:none;
-	border-radius:.5em;
+	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding: .2em 2em .2em;
-	border-bottom: thin solid #E6E6E6;
+	border-bottom: 1px solid #E6E6E6;
 
 }
 
@@ -1431,13 +1431,12 @@ ul#topnavlist li a {
 	color: #555;
 	font-weight:bold;
 	height: 1.5em;
-	border-top:thin solid #ccc;
-	border-left:thin solid #ccc;
-	border-right:thin solid #ccc;
-	border-bottom:thin solid #ccc;
+	border-top:1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #ccc;
    	text-decoration:underline;
 	background-color:white;
-	border-radius:.5em;
+	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding: .2em 2em .2em;
 
@@ -1549,13 +1548,13 @@ dl.browse-course dd {
 fieldset.group_form{
 	width:90%;
 	margin:.5em;
-	border:thin #6D7B8D solid;
+	border:1px #6D7B8D solid;
    	min-height: 170px;
 	padding:.5em;
 }
 
 legend.group_form{
-	border:thin #6D7B8D solid;
+	border:1px #6D7B8D solid;
 	background-color: #EEEEEE;
 	font-weight: 600;
 	color: black;
@@ -1726,7 +1725,7 @@ div.home_box {
 }
 
 .outside_box{
-	border:thin solid #cccccc;
+	border:1px solid #cccccc;
 	background: #eeeeee;
 	padding:.2em;
 	margin-left:.4em;
@@ -1738,7 +1737,7 @@ div.home_box {
 }
 
 .inside_box{
-	border:thin solid #cccccc;
+	border:1px solid #cccccc;
 	background: #ffffff;
 	padding:.3em;
 	width:95%;
@@ -1802,7 +1801,7 @@ div#subnavbacktopage {
 div.toolcontainer{
 	width:95%;
 	margin:auto;
-	border:thin solid #e8e8e8;
+	border:1px solid #e8e8e8;
 	padding-top:1em;
 	padding-bottom:1em;
 	border-radius:.5em;
@@ -1823,8 +1822,9 @@ ul#subnavlist li {
 	display: inline-block;
 	font-weight:700;
 	text-align:center;
-	border:thin solid #cccccc;
-	border-radius:.5em;
+	border:1px solid #cccccc;
+
+	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: .1em .5em .1em .5em ;
 }
@@ -1833,7 +1833,6 @@ ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#
   	color: black;
 	text-decoration:none;
 	background-color: #E6E6E6;
-
 }
 
 ul#subnavlist li a {
@@ -1843,8 +1842,6 @@ ul#subnavlist li a {
    	text-decoration:underline;
 	background-color:white;
 	font-weight:500;
-
-
 }
 
 div.menuedit{
@@ -1864,7 +1861,7 @@ tr.odd {
 
 /* Content editor wrapper div */
 .editor_wrapper{
-	border:thin solid #cccccc;
+	border:1px solid #cccccc;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 	padding: .1em .5em .1em .5em ;
@@ -1885,9 +1882,9 @@ tr.odd {
 
 }
 .editor_tab{
-	border-top: thin solid #cccccc;
-	border-left: thin solid #cccccc;
-	border-right: thin solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
 	border-bottom:0;
 margin-bottom:.5em;
 	text-align: center;
@@ -1900,9 +1897,9 @@ margin-bottom:.5em;
 	padding: 0em .2em 0em .2em ;
 }
 .editor_tab_selected{
-	border-top: thin solid #cccccc;
-	border-left: thin solid #cccccc;
-	border-right: thin solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
 	border-bottom:0;
 	padding-left: 3px;
 	padding-right: 3px;
@@ -1919,14 +1916,25 @@ margin-bottom:.5em;
 	-moz-border-radius: .3em .3em 0em 0em;
 }
 
-/* things current box on My Start */
+/* 1pxgs current box on My Start */
 .current_box{
-	float:right;
-	width:38%; 
-	padding:1em;
-	border: thin solid #cccccc;
+float:left;
+margin-left:1em;
+	width:30%; 
+	padding:.5em;
+	border: 1px solid #cccccc;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
+}
+
+ul.current_list{
+      line-height:2em; 
+      list-style-type:none;
+      margin-left:-3em;
+}
+.current_list img{
+      vertical-align:middle;
+
 }
 .logoutbar{
       background-color:#E6E6E6; 
@@ -1941,7 +1949,7 @@ margin-bottom:.5em;
 select {
       margin-left: .2em;
       background-color:#eeeeee; 	
-border: thin solid #cccccc;
+border: 1px solid #cccccc;
 
       padding-right:.1em;
 }
@@ -1973,9 +1981,9 @@ table.etabbed-table	{
 
 }
 .prefs_tab{
-	border-top: thin solid #cccccc;
-	border-left: thin solid #cccccc;
-	border-right: thin solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
 	text-align: center;
 	white-space: nowrap;
 	margin-left:2em;
@@ -1989,9 +1997,9 @@ table.etabbed-table	{
   	background-color: #eeeeee;
 }
 .prefs_tab_selected{
-	border-top: thin solid #cccccc;
-	border-left: thin solid #cccccc;
-	border-right: thin solid #cccccc;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
 	border-bottom:0;
   	background-color: #eeeeee;
 	margin: 0px;
@@ -2005,7 +2013,7 @@ table.etabbed-table	{
 }
 
 .admin_container{
-border:thin solid #cccccc;
+border:1px solid #cccccc;
 border-radius:.5em;
 -moz-border-radius:.5em;
 
@@ -2020,7 +2028,7 @@ line-height:2em;
 .wizscreen > legend{
 padding-left:2em;
 padding-right:2em;
-border:thin solid black;
+border:1px solid black;
 background-color:#ffffff;
 color:#0000FF;
 font-weight:bold;
