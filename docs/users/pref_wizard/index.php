@@ -67,6 +67,7 @@ if (isset($_POST['pref_index'])) {
 // to initialize page via previous button OR submit checkboxes with none checked
 if (isFirstLoad() || isReturnToInit() || initNoChecks()) {
     if (initNoChecks()) {
+    	//TODO LAW add language
         $msg->addError("NO_BOXES_CHECKED");
     }
     $savant->assign('start_template', "users/pref_wizard/initialize.tmpl.php");
