@@ -41,7 +41,7 @@ class ContentManager
 	/* constructor	*/
 	function ContentManager(&$db, $course_id) {
 		$this->db = $db;
-		$this->course_id = $course_id;
+		$this->course_id = intval($course_id);
 	}
 
 	function initContent( ) {
