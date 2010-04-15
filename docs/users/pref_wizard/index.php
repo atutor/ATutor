@@ -8,12 +8,9 @@ define('SUPPORT', 5);
 define('ATUTOR', 6);
 
 define('AT_INCLUDE_PATH', '../../include/');
-$_user_location = 'users';
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
-
-//debug($_POST);
 
 /**
  * Tests if this is the first loading the pref wizard index page
