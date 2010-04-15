@@ -40,7 +40,7 @@ ATutor = ATutor || {};
 <?php   }?>
 
         ATutor.users.preferences.addPrefWizClickHandler('<?php echo $_base_path ?>');
-                
+        ATutor.users.preferences.course_id = <?php echo $_SESSION['course_id']; ?>                
      });
 })();
 

@@ -8,6 +8,13 @@ define('SUPPORT', 5);
 define('ATUTOR', 6);
 
 define('AT_INCLUDE_PATH', '../../include/');
+
+//$_user_location is set to prevent a redirect at line 281 of vitals.inc.php
+//however if user is in a course then $_user_location is not set and
+// the course_id is passed through the pref_wizard to allow return to the course when done.
+if (!isset($_REQUEST['course_id']) || ($_REQUEST['course_id'] == 0)) {
+    $_user_location = 'users';
+}
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');

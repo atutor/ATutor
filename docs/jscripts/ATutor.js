@@ -397,7 +397,14 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 //    				}
 //    			}); 
 //    		});
-    		window.open(base_path + 'users/pref_wizard/index.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=520');
+    		var query_string = "";
+    		if (ATutor.users.preferences.course_id !== "") {
+    			query_string = 'course_id=' + ATutor.users.preferences.course_id;
+    		}
+    		if (query_string !== "") {
+    			query_string = "?" + query_string;
+    		}
+    		window.open(base_path + 'users/pref_wizard/index.php' + query_string,'newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=520');
     		return false;
     	});
     };
