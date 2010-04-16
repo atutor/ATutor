@@ -86,51 +86,54 @@ function assignPostVars() {
 global $addslashes;
 	
 	$temp_prefs = array();
-	
+    foreach($_SESSION['prefs'] as $pref_name => $value) {
+        $temp_prefs[$pref_name] = $value;
+    }
+		
 	/* custom prefs */
 	// atutor settings (tab 0)
-	$temp_prefs['PREF_NUMBERING']      = intval($_POST['numbering']);	
-	$temp_prefs['PREF_THEME']          = $addslashes($_POST['theme']);
-	$temp_prefs['PREF_TIMEZONE']	   = $addslashes($_POST['time_zone']);
-	$temp_prefs['PREF_JUMP_REDIRECT']  = intval($_POST['use_jump_redirect']);
-	$temp_prefs['PREF_FORM_FOCUS']     = intval($_POST['form_focus']);
-	$temp_prefs['PREF_CONTENT_EDITOR'] = intval($_POST['content_editor']);
-	$temp_prefs['PREF_SHOW_GUIDE']     = intval($_POST['show_guide']);
+	if (isset($_POST['numbering'])) $temp_prefs['PREF_NUMBERING'] = intval($_POST['numbering']);	
+	if (isset($_POST['theme'])) $temp_prefs['PREF_THEME'] = $addslashes($_POST['theme']);
+	if (isset($_POST['time_zone'])) $temp_prefs['PREF_TIMEZONE'] = $addslashes($_POST['time_zone']);
+	if (isset($_POST['use_jump_direct'])) $temp_prefs['PREF_JUMP_REDIRECT'] = intval($_POST['use_jump_redirect']);
+	if (isset($_POST['form_focus'])) $temp_prefs['PREF_FORM_FOCUS'] = intval($_POST['form_focus']);
+	if (isset($_POST['content_editor'])) $temp_prefs['PREF_CONTENT_EDITOR'] = intval($_POST['content_editor']);
+	if (isset($_POST['show_guide']))$temp_prefs['PREF_SHOW_GUIDE'] = intval($_POST['show_guide']);
 
 	// display settings (tab 1)
-	$temp_prefs['PREF_FONT_FACE']	   = $addslashes($_POST['fontface']);
-	$temp_prefs['PREF_FONT_TIMES']	   = $addslashes($_POST['font_times']);
-	$temp_prefs['PREF_FG_COLOUR']	   = $addslashes($_POST['fg']);
-	$temp_prefs['PREF_BG_COLOUR']	   = $addslashes($_POST['bg']);
-	$temp_prefs['PREF_HL_COLOUR']	   = $addslashes($_POST['hl']);
+	if (isset($_POST['fontface'])) $temp_prefs['PREF_FONT_FACE'] = $addslashes($_POST['fontface']);
+	if (isset($_POST['font_times'])) $temp_prefs['PREF_FONT_TIMES'] = $addslashes($_POST['font_times']);
+	if (isset($_POST['fg'])) $temp_prefs['PREF_FG_COLOUR'] = $addslashes($_POST['fg']);
+	if (isset($_POST['bg'])) $temp_prefs['PREF_BG_COLOUR'] = $addslashes($_POST['bg']);
+	if (isset($_POST['hl'])) $temp_prefs['PREF_HL_COLOUR'] = $addslashes($_POST['hl']);
 	
 	// content settings (tab 2)
-	$temp_prefs['PREF_USE_ALTERNATIVE_TO_TEXT'] = intval($_POST['use_alternative_to_text']);
-	$temp_prefs['PREF_ALT_TO_TEXT'] = $addslashes($_POST['preferred_alt_to_text']);
-	$temp_prefs['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_text_append_or_replace']);
-	$temp_prefs['PREF_ALT_TEXT_PREFER_LANG'] = $addslashes($_POST['alt_text_prefer_lang']);
-	$temp_prefs['PREF_USE_ALTERNATIVE_TO_AUDIO'] = intval($_POST['use_alternative_to_audio']);
-	$temp_prefs['PREF_ALT_TO_AUDIO'] = $addslashes($_POST['preferred_alt_to_audio']);
-	$temp_prefs['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_audio_append_or_replace']);
-	$temp_prefs['PREF_ALT_AUDIO_PREFER_LANG'] = $addslashes($_POST['alt_audio_prefer_lang']);
-	$temp_prefs['PREF_USE_ALTERNATIVE_TO_VISUAL'] = intval($_POST['use_alternative_to_visual']);
-	$temp_prefs['PREF_ALT_TO_VISUAL'] = $addslashes($_POST['preferred_alt_to_visual']);
-	$temp_prefs['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_visual_append_or_replace']);
-	$temp_prefs['PREF_ALT_VISUAL_PREFER_LANG'] = $addslashes($_POST['alt_visual_prefer_lang']);
+	if (isset($_POST['use_alternative_to_text'])) $temp_prefs['PREF_USE_ALTERNATIVE_TO_TEXT'] = intval($_POST['use_alternative_to_text']);
+	if (isset($_POST['preferred_alt_to_text'])) $temp_prefs['PREF_ALT_TO_TEXT'] = $addslashes($_POST['preferred_alt_to_text']);
+	if (isset($_POST['alt_to_text_append_or_replace'])) $temp_prefs['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_text_append_or_replace']);
+	if (isset($_POST['alt_text_prefer_lang'])) $temp_prefs['PREF_ALT_TEXT_PREFER_LANG'] = $addslashes($_POST['alt_text_prefer_lang']);
+	if (isset($_POST['use_alternative_to_audio'])) $temp_prefs['PREF_USE_ALTERNATIVE_TO_AUDIO'] = intval($_POST['use_alternative_to_audio']);
+	if (isset($_POST['preferred_alt_to_audio'])) $temp_prefs['PREF_ALT_TO_AUDIO'] = $addslashes($_POST['preferred_alt_to_audio']);
+	if (isset($_POST['alt_to_audio_append_or_replace'])) $temp_prefs['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_audio_append_or_replace']);
+	if (isset($_POST['alt_audio_prefer_lang'])) $temp_prefs['PREF_ALT_AUDIO_PREFER_LANG'] = $addslashes($_POST['alt_audio_prefer_lang']);
+	if (isset($_POST['use_alternative_to_visual'])) $temp_prefs['PREF_USE_ALTERNATIVE_TO_VISUAL'] = intval($_POST['use_alternative_to_visual']);
+	if (isset($_POST['preferred_alt_to_visual'])) $temp_prefs['PREF_ALT_TO_VISUAL'] = $addslashes($_POST['preferred_alt_to_visual']);
+	if (isset($_POST['alt_to_visual_append_or_replace'])) $temp_prefs['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE'] = $addslashes($_POST['alt_to_visual_append_or_replace']);
+	if (isset($_POST['alt_visual_prefer_lang'])) $temp_prefs['PREF_ALT_VISUAL_PREFER_LANG'] = $addslashes($_POST['alt_visual_prefer_lang']);
 
 	// tool settings (tab 3)
-	$temp_prefs['PREF_DICTIONARY'] = intval($_POST['dictionary_val']);
-	$temp_prefs['PREF_THESAURUS'] = intval($_POST['thesaurus_val']);
-	$temp_prefs['PREF_NOTE_TAKING'] = intval($_POST['note_taking_val']);
-	$temp_prefs['PREF_CALCULATOR'] = intval($_POST['calculator_val']);
-	$temp_prefs['PREF_ABACUS'] = intval($_POST['abacus_val']);
-	$temp_prefs['PREF_ATLAS'] = intval($_POST['atlas_val']);
-	$temp_prefs['PREF_ENCYCLOPEDIA'] = intval($_POST['encyclopedia_val']);	
+	if (isset($_POST['dictionary_val'])) $temp_prefs['PREF_DICTIONARY'] = intval($_POST['dictionary_val']);
+	if (isset($_POST['thesaurus_val'])) $temp_prefs['PREF_THESAURUS'] = intval($_POST['thesaurus_val']);
+	if (isset($_POST['note_taking_val'])) $temp_prefs['PREF_NOTE_TAKING'] = intval($_POST['note_taking_val']);
+	if (isset($_POST['calculator_val'])) $temp_prefs['PREF_CALCULATOR'] = intval($_POST['calculator_val']);
+	if (isset($_POST['abacus_val'])) $temp_prefs['PREF_ABACUS'] = intval($_POST['abacus_val']);
+	if (isset($_POST['atlas_val'])) $temp_prefs['PREF_ATLAS'] = intval($_POST['atlas_val']);
+	if (isset($_POST['encyclopedia_val'])) $temp_prefs['PREF_ENCYCLOPEDIA'] = intval($_POST['encyclopedia_val']);	
 
 	// control settings (tab 4)
-	$temp_prefs['PREF_SHOW_CONTENTS'] = intval($_POST['show_contents']);
-	$temp_prefs['PREF_SHOW_NEXT_PREVIOUS_BUTTONS'] = intval($_POST['show_next_previous_buttons']);
-	$temp_prefs['PREF_SHOW_BREAD_CRUMBS'] = intval($_POST['show_bread_crumbs']);
+	if (isset($_POST['show_contents'])) $temp_prefs['PREF_SHOW_CONTENTS'] = intval($_POST['show_contents']);
+	if (isset($_POST['show_next_previous_buttons'])) $temp_prefs['PREF_SHOW_NEXT_PREVIOUS_BUTTONS'] = intval($_POST['show_next_previous_buttons']);
+	if (isset($_POST['show_bread_crumbs'])) $temp_prefs['PREF_SHOW_BREAD_CRUMBS'] = intval($_POST['show_bread_crumbs']);
 		
 	return $temp_prefs;
 }
