@@ -97,6 +97,7 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 }
 
+unset($_SESSION['first_login']);
 $sql	= "SELECT inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 $result = mysql_query($sql, $db);
 $row_notify = mysql_fetch_assoc($result);

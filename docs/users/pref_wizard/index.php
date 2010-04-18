@@ -51,6 +51,7 @@ function initNoChecks() {
 }
 
 //START OF PROCESSING
+unset($_SESSION['first_login']);
 $is_auto_login = checkAutoLoginCookie();
 
 if (isset($_POST['pref_index'])) {
