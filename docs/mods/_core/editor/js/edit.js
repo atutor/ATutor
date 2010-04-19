@@ -16,7 +16,6 @@
 /*global tinyMCE */
 /*global window */
 
-
 ATutor = ATutor || {};
 ATutor.mods = ATutor.mods || {};
 ATutor.mods.editor = ATutor.mods.editor || {};
@@ -103,6 +102,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
         theToolElement.removeClass(theTool.enabledClass);
         theToolElement.attr("src", base_path + theTool.disabledImage);
         theToolElement.attr("title", theTool.disabledTitle);
+        theToolElement.attr("alt", theTool.disabledTitle);
         theToolElement.unbind("click");
     };
     
@@ -111,6 +111,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
         theToolElement.addClass(theTool.enabledClass);
         theToolElement.attr("src", base_path + theTool.enabledImage);
         theToolElement.attr("title", theTool.enabledTitle);
+        theToolElement.attr("alt", theTool.enabledTitle);
         theToolElement.click(theTool.clickFunction);
     };	
 
