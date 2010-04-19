@@ -148,7 +148,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
         } else {
             disableTool(headTool);
             enableTool(pasteTool);
-            disableTool(filemanTool);
+            enableTool(filemanTool);
             
             hideIt(head, displayhead);
             setDisplay(paste, displaypaste);
