@@ -365,19 +365,19 @@ function printSubmenuHeader(title)
 
 </div>
 
-<div style="padding:0;width:100%">
-<?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
-	<!-- the bread crumbs -->
-	<div id="breadcrumbs">
-		<?php foreach ($this->path as $page): ?>
-			<a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
-		<?php endforeach; ?> <?php echo $this->page_title; ?>
-	</div>
-<?php } ?>
+<div class="crumbcontainer">
+	  <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
+		  <!-- the bread crumbs -->
+		  <div id="breadcrumbs">
+			  <?php foreach ($this->path as $page): ?>
+				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
+			  <?php endforeach; ?> <?php echo $this->page_title; ?>
+		  </div>
+	  <?php } ?>
 
-	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
-	<?php endif; ?>
+		  <?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+		  <?php endif; ?>
 </div>
 
 <div id="contentwrapper">
