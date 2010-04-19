@@ -440,10 +440,11 @@ class ATutorDbFetcher {
           $person->setAddresses($addresses);
         }
 		//TODO: Not in ATutor yet, skeleton field
+		/*
         if (isset($fields['bodyType']) || isset($fields['@all'])) {
-          $res2 = mysqli_query($db, "select * from ".TABLE_PREFIX."person_body_type where person_id = " . $person_id);
-          if (@mysqli_num_rows($res2)) {
-            $row = @mysql_fetch_array($res2, MYSQLI_ASSOC);
+          $res2 = mysql_query($db, "select * from ".TABLE_PREFIX."person_body_type where person_id = " . $person_id);
+          if (@mysql_num_rows($res2)) {
+            $row = @mysql_fetch_assic($res2);
             $bodyType = new BodyType();
             $bodyType->setBuild($row['build']);
             $bodyType->setEyeColor($row['eye_color']);
@@ -453,7 +454,10 @@ class ATutorDbFetcher {
             $person->setBodyType($bodyType);
           }
         }
+		*/
+
 		//TODO: Not in ATutor yet, skeleton field
+		/*
         if (isset($fields['books']) || isset($fields['@all'])) {
           $books = array();
           $res2 = mysqli_query($db, "select book from ".TABLE_PREFIX."person_books where person_id = " . $person_id);
@@ -462,7 +466,10 @@ class ATutorDbFetcher {
           }
           $person->setBooks($books);
         }
+		*/
+
 		//TODO: Not in ATutor yet, skeleton field
+		/*
         if (isset($fields['cars']) || isset($fields['@all'])) {
           $cars = array();
           $res2 = mysqli_query($db, "select car from ".TABLE_PREFIX."person_cars where person_id = " . $person_id);
@@ -471,7 +478,10 @@ class ATutorDbFetcher {
           }
           $person->setCars($cars);
         }
+		*/
+
 		//TODO: Not in ATutor yet, skeleton field
+		/*
         if (isset($fields['currentLocation']) || isset($fields['@all'])) {
           $addresses = array();
           $res2 = mysqli_query($db, "select a.* from ".TABLE_PREFIX."person_current_location pcl, ".TABLE_PREFIX."person_addresses pa, ".TABLE_PREFIX."addresses a where a.id = pcl.address_id and pa.person_id = " . $person_id);
@@ -492,6 +502,8 @@ class ATutorDbFetcher {
             $person->setCurrentLocation($addres);
           }
         }
+		*/
+
 		//TODO: Email is a singleton in ATutor, expand it.  A person may have 1+ emails nowadays.
 		//added to the above with all the other member's properties
 /*
@@ -506,6 +518,7 @@ class ATutorDbFetcher {
         }
 */
 		//TODO: Not in ATutor yet, skeleton field
+		/*
         if (isset($fields['food']) || isset($fields['@all'])) {
           $foods = array();
           $res2 = mysqli_query($db, "select food from ".TABLE_PREFIX."person_foods where person_id = " . $person_id);
@@ -514,7 +527,10 @@ class ATutorDbFetcher {
           }
           $person->setFood($foods);
         }
+		*/
+
 		//TODO: Not in ATutor yet, skeleton field
+		/*
         if (isset($fields['heroes']) || isset($fields['@all'])) {
           $strings = array();
           $res2 = mysqli_query($db, "select hero from ".TABLE_PREFIX."person_heroes where person_id = " . $person_id);
@@ -523,6 +539,7 @@ class ATutorDbFetcher {
           }
           $person->setHeroes($strings);
         }
+		*/
 		//Added with the above profile, interests is in CSV
 /*
         if (isset($fields['interests']) || isset($fields['@all'])) {
@@ -540,14 +557,14 @@ class ATutorDbFetcher {
 		  $sql = "SELECT * FROM ". TABLE_PREFIX . "social_member_position WHERE member_id = ".$member_id;
           $res2 = mysql_query($sql, $this->db);
           while ($row = mysql_fetch_assoc($res2)) {
-            $organization = new Organization();
+            $organization = new Organization($row['company']);
             $organization->setDescription($row['description']);
             $organization->setEndDate($row['to']);
             $organization->setField($row['field']);
             $organization->setName($row['company']);
             $organization->setSalary($row['salary']);
             $organization->setStartDate($row['from']);
-            $organization->setSubField($row['sub_field']); 
+            $organization->setSubField($row['']); 
             $organization->setTitle($row['title']);
             $organization->setWebpage($row['webpage']);
             $organization->setType('job');
@@ -579,19 +596,19 @@ class ATutorDbFetcher {
           $fetchedOrg = true;
         }
         if (isset($fields['schools']) || isset($fields['@all'])) {
-          $res2 = mysqli_query($db, "select o.* from ".TABLE_PREFIX."person_schools ps, ".TABLE_PREFIX."organizations o where o.id = ps.organization_id and ps.person_id = " . $person_id);
-          while ($row = mysqli_fetch_array($res2, MYSQLI_ASSOC)) {
-            $organization = new Organization();
+          $res2 = mysql_query("SELECT * FROM ".TABLE_PREFIX."social_member_education WHERE member_id = " . $member_id, $this->db);
+          while ($row = mysql_fetch_assoc($res2)) {
+            $organization = new Organization($row['university']);
             $organization->setDescription($row['description']);
             $organization->setEndDate($row['to']);
             $organization->setField($row['field']);
             $organization->setName($row['university']);
-            $organization->setSalary($row['salary']);
+            $organization->setSalary('');
             $organization->setStartDate($row['from']);
-            $organization->setSubField($row['sub_field']);
+            $organization->setSubField('');
             $organization->setTitle($row['degree']);
-            $organization->setWebpage($row['webpage']);
-            $organization->setType($row['school']);
+            $organization->setWebpage('');
+            $organization->setType('school');
 			//TODO: Address: To be implemented
 			/*
             if ($row['address_id']) {
@@ -623,6 +640,7 @@ class ATutorDbFetcher {
         }
         //TODO languagesSpoken, currently missing the languages / countries tables so can't do this yet
 		//TODO: Not in ATutor yet, skeleton field
+/*
         if (isset($fields['movies']) || isset($fields['@all'])) {
           $strings = array();
           $res2 = mysqli_query($db, "select movie from ".TABLE_PREFIX."person_movies where person_id = " . $person_id);
@@ -639,14 +657,18 @@ class ATutorDbFetcher {
           }
           $person->setMusic($strings);
         }
+*/
         if (isset($fields['phoneNumbers']) || isset($fields['@all'])) {
           $numbers = array();
-          $res2 = mysqli_query($db, "select number, number_type from ".TABLE_PREFIX."person_phone_numbers where person_id = " . $person_id);
-          while (list($number, $type) = @mysqli_fetch_row($res2)) {
-            $numbers[] = new Phone($number, $type);
-          }
+          $res2 = mysql_query("SELECT phone FROM ".TABLE_PREFIX."members where member_id = " . $member_id, $this->db);
+		  if ($res2){
+			  while ($number = mysql_fetch_assoc($res2)) {
+				$numbers[] = new Phone($number, 'Home');	//default to 'Home' until ATutor supports Mobile, etc.
+			  }
+		  }
           $person->setPhoneNumbers($numbers);
         }
+/*
         if (isset($fields['ims']) || isset($fields['@all'])) {
           $ims = array();
           $res2 = mysqli_query($db, "select value, value_type from ".TABLE_PREFIX."person_ims where person_id = " . $person_id);
@@ -704,12 +726,19 @@ class ATutorDbFetcher {
           }
           $person->setTurnOffs($strings);
         }
+*/
         if (isset($fields['urls']) || isset($fields['@all'])) {
           $strings = array();
-          $res2 = mysqli_query($db, "select url from ".TABLE_PREFIX."person_urls where person_id = " . $person_id);
-          while (list($data) = @mysqli_fetch_row($res2)) {
-            $strings[] = new Url($data, null, null);
-          }
+          $res2 = mysql_query("SELECT url, site_name FROM ".TABLE_PREFIX."social_member_websites WHERE member_id = " . $member_id, $this->db);
+		  if ($res2){
+			  while ($data = mysql_fetch_assoc($res2)) {
+				/**
+				 * see
+				 * http://www.opensocial.org/Technical-Resources/opensocial-spec-v081/opensocial-reference#opensocial.Url
+				 */
+				$strings[] = new Url($data['url'], null, $data['site_name']);
+			  }
+		  }
           $strings[] = new Url($this->url_prefix . '/profile/' . $member_id, null, 'profile'); // always include profile URL
           $person->setUrls($strings);
         }
