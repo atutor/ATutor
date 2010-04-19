@@ -2013,28 +2013,33 @@ table.etabbed-table	{
 }
 
 .admin_container{
-border:1px solid #cccccc;
-border-radius:.5em;
--moz-border-radius:.5em;
+	border:1px solid #cccccc;
+	border-radius:.5em;
+	-moz-border-radius:.5em;
 
 }
 
 .wizscreen{
-background-color:#ffffff;
-padding:2em;
-line-height:2em;
+	background-color:#ffffff;
+	padding:2em;
+	line-height:2em;
 }
 
 .wizscreen > legend{
-padding-left:2em;
-padding-right:2em;
-border:1px solid black;
-background-color:#ffffff;
-color:#0000FF;
-font-weight:bold;
+	padding-left:2em;
+	padding-right:2em;
+	border:1px solid black;
+	background-color:#ffffff;
+	color:#0000FF;
+	font-weight:bold;
 }
 
 .navlist{
 	list-style: none;
 	display: inline;
+}
+.crumbcontainer{
+	padding:0;
+	width:100%;
+	height:2.5em;
 }
