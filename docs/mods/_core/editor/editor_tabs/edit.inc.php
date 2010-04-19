@@ -68,9 +68,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     </script>
     
     <div class="fl-container fl-fix">
-        <img id="headtool" class="fl-col" src="" title="" alt="<?php echo _AT('customized_head');  ?>" height="30" width="30" />
-        <img id="pastetool" class="fl-col" title="" src="" alt="<?php echo _AT('paste_file')?>" height="30" width="30"/>      
-        <img id="filemantool" class="fl-col" title="" src="" alt="<?php echo _AT('file_manager'); ?>" height="30" width="30" />
+        <img id="headtool" class="fl-col" src="" title="" height="30" width="30" />
+        <img id="pastetool" class="fl-col" title="" src="" height="30" width="30"/>      
+        <img id="filemantool" class="fl-col" title="" src="" height="30" width="30" />
            
 <!-- ******** Tool Manager ******* -->
 <?php
