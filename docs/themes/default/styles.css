@@ -13,11 +13,11 @@ body {
     font-family: Verdana, Helevetica, Arial, sans-serif;
     margin:0px;
     margin-top: -10px;
-    font-size: small;
+    font-size: .8em;
     background-color: #eeeeee;
 }
 .page_wrapper{
-    border:1px solid #ffffff;
+    border:1px solid #cccccc;
     width:97%;
     margin:auto;
     margin-top:1em;
@@ -1345,7 +1345,7 @@ div.social-wrapper{
 /* floating layout */
 #contentwrapper{
 	float: left;
-	width: 99%;
+	width: 100%;
 }
 #contentcolumn {
 	margin-left: 0.5em;
@@ -1397,6 +1397,7 @@ div#topnavlistcontainer {
 	background-position:  top right;
 	background-repeat: no-repeat;
 	height:1.7em;
+	border-bottom:1px solid #cccccc;
 }
 
 
@@ -1885,7 +1886,7 @@ tr.odd {
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
 	border-bottom:0;
-margin-bottom:.5em;
+	margin-bottom:.5em;
 	text-align: center;
 	white-space: nowrap;
 	width:13%;
@@ -2031,4 +2032,9 @@ border:1px solid black;
 background-color:#ffffff;
 color:#0000FF;
 font-weight:bold;
+}
+
+.navlist{
+	list-style: none;
+	display: inline;
 }

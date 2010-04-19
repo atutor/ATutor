@@ -365,7 +365,7 @@ function printSubmenuHeader(title)
 
 </div>
 
-<div style="padding:3px;">
+<div style="padding:0;width:100%">
 <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 	<!-- the bread crumbs -->
 	<div id="breadcrumbs">

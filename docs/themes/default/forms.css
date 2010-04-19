@@ -103,3 +103,15 @@ input[type=reset]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
 }
+.test_instruction{
+	background-color: #f3f3f3; 
+	padding: 5px 10px; 
+	margin: 0px; 
+	border-top: 1px solid;
+}
+.test_points{
+	float: right; 
+	width: 50%; 
+	text-align: right; 
+	font-weight: bold;
+}
