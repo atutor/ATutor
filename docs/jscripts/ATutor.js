@@ -28,6 +28,30 @@ ATutor.users.preferences = ATutor.users.preferences || {};
   	  	'h1, h2, h3, h4, h5, h6 {' +
   	  	'FG_COLOR BG_COLOR' +
   		'}' +
+  		'.tab {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.editor_tab {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.editor_buttontab {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.editor_tab_selected {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'#contentwrapper {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.test_instruction {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.contentbox {' +
+  	  	'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY'+
+  		'}' +
+  		'#footer {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
   		'p.toc {' +
   		'FG_COLOR BG_COLOR' +
   		'}' +
@@ -46,7 +70,25 @@ ATutor.users.preferences = ATutor.users.preferences || {};
   		'.buttontab {' +
   		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
   		'}' +
+  		'.prefs_buttontab {' +
+  		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
+  		'}' +
+  		'.prefs_tab {' +
+  		'FG_COLOR BG_COLOR FONT_FAMILY' +
+  		'}' +
+  		'.prefs_tab_selected {' +
+  		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
+  		'}' +
+  		'.even {' +
+  		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
+  		'}' +
+  		'.odd {' +
+  		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
+  		'}' +
   		'.tab {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.active {' +
   		'FG_COLOR BG_COLOR' +
   		'}' +
   		'.econtainer {' +
@@ -95,6 +137,12 @@ ATutor.users.preferences = ATutor.users.preferences || {};
   		'FG_COLOR BG_COLOR' +
   		'}' +
   		'div#sub-navigation strong {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'#subnavlist li{' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.logoutbar{' +
   		'FG_COLOR BG_COLOR' +
   		'}' +
   		'div#help {' +
@@ -232,6 +280,15 @@ ATutor.users.preferences = ATutor.users.preferences || {};
   		'ul#topnavlist li a {' +
   		'FG_COLOR BG_COLOR' +
   		'}' +
+  		'#breadcrumbs {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.crumbcontainer {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
+  		'.wizscreen {' +
+  		'FG_COLOR BG_COLOR' +
+  		'}' +
   		'ul#topnavlist li a.selected {' +
   		'FG_COLOR BG_COLOR' +
   		'}' +
@@ -274,9 +331,6 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 	  	'div.input-form div.row {' +
 	  	'FG_COLOR BG_COLOR' +
 	  	'}' +
-	  	'div.input-form input[type=text], div.input-form input[type=password] {' +
-	  	'FG_COLOR BG_COLOR' +
-	  	'}' +
 	  	'input[type=checkbox]{' +
 	  	'FG_COLOR BG_COLOR' +
 	  	'}' +
@@ -286,7 +340,6 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 	  	'div.input-form div.row_alternatives {' +
 	  	'FG_COLOR BG_COLOR' +
 	  	'}' +
-	
 	  	'a:active, a:hover, a:focus, .highlight, a.highlight {' +
 	  	'HL_COLOR FG_COLOR }' +
 	  	'ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {' +
@@ -298,13 +351,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
   		'.button:focus, .button2:focus {' +
   		'background-color:  #FF0000;	; FG_COLOR' +
   		'}' +
-  		'div.input-form textarea:focus, div.input-form  input[type=password]:focus, div.input-form  input[type=text]:focus{' +
-  		'HL_COLOR FG_COLOR' +
-  		'}' +
-  		'.formfield:focus{' +
-  		'HL_COLOR FG_COLOR' +
-  		'}' +
-  		'table.data tfoot input:focus {' +
+  		'table.data tfoot {' +
   		'HL_COLOR FG_COLOR' +
   		'}' +
   		'td.selected{' +
