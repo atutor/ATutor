@@ -53,7 +53,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             clickFunction: function () {
                 doToggle(jQuery(headId), jQuery(displayheadId));
             },
-            disabledImage: "/images/custom_head_disabled.png",
+            disabledImage: "/images/custom_head_disabled.png"
         };
 
     //paste from file variables
@@ -66,7 +66,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             clickFunction: function () {
                 doToggle(jQuery(pasteId), jQuery(displaypasteId));
             },
-            disabledImage: "/images/paste_disabled.png",
+            disabledImage: "/images/paste_disabled.png"
         };
 
     //click function to launch file manager window
@@ -83,7 +83,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             clickFunction: function () {
                 launchFileManager();
             },
-            disabledImage: "/images/file-manager_disabled.png",
+            disabledImage: "/images/file-manager_disabled.png"
         };
     
     //checks hidden variable and shows/hides element accordingly
