@@ -81,7 +81,11 @@ function output_language_options($languages, $selected_lang)
 <?php
 	}
 }
-
+/**
+ * Assigns posted preferences to a $temp_prefs array
+ * 
+ * @return array of preferences
+ */
 function assignPostVars() {
 global $addslashes;
 	
@@ -136,6 +140,74 @@ global $addslashes;
 	if (isset($_POST['show_bread_crumbs'])) $temp_prefs['PREF_SHOW_BREAD_CRUMBS'] = intval($_POST['show_bread_crumbs']);
 		
 	return $temp_prefs;
+}
+
+/**
+ * Assigns default preferences to a preferences array
+ *  
+ * @return an array of preferences
+ */
+function assignDefaultPrefs() {
+global $db, $_config_defaults;      
+        $sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
+        $result = mysql_query($sql, $db);
+        
+        if (mysql_num_rows($result) > 0)
+        {
+            $row_defaults = mysql_fetch_assoc($result);
+            $default = $row_defaults["value"];
+            
+            $temp_prefs = unserialize($default);
+            
+            // Many new preferences are introduced in 1.6.2 that are missing in old admin 
+            // default preference string. Solve this case by completing settings on new
+            // preferences with $_config_defaults
+            foreach (unserialize($_config_defaults['pref_defaults']) as $name => $value)
+                if (!isset($temp_prefs[$name])) $temp_prefs[$name] = $value;
+        }
+        else
+            $temp_prefs = unserialize($_config_defaults['pref_defaults']);
+
+        return $temp_prefs;
+}
+
+/**
+ * gets the default preference for inbox notification (disabled usually)
+ * 
+ * @return the value of the inbox notification preference
+ */
+function assignDefaultMnot() {
+global $db, $_config_defaults;
+        $sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
+        $result = mysql_query($sql, $db);
+        if (mysql_num_rows($result) > 0)
+        {
+            $row_notify = mysql_fetch_assoc($result);
+            $mnot = $row_notify["value"];
+        }
+        else
+            $mnot = $_config_defaults['pref_inbox_notify'];
+        return $mnot;
+}
+
+/**
+ * gets the default preference for auto login preference (disabled usually)
+ * 
+ * @return the value of the auto login preference
+ */
+function assignDefaultAutologin() {
+global $db, $_config_defaults;;
+        $sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_is_auto_login'";
+        $result = mysql_query($sql, $db);
+        if (mysql_num_rows($result) > 0)
+        {
+            $row_is_auto_login = mysql_fetch_assoc($result);
+            $auto_login = $row_is_auto_login["value"];
+        }
+        else
+            $auto_login = $_config_defaults['pref_is_auto_login'];
+        return $auto_login;
+
 }
 
 /**
