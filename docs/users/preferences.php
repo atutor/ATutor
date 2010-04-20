@@ -42,45 +42,9 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	}
 	else if (isset($_POST['set_default']))
 	{
-		$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
-		$result = mysql_query($sql, $db);
-		
-		if (mysql_num_rows($result) > 0)
-		{
-			$row_defaults = mysql_fetch_assoc($result);
-			$default = $row_defaults["value"];
-			
-			$temp_prefs = unserialize($default);
-			
-			// Many new preferences are introduced in 1.6.2 that are missing in old admin 
-			// default preference string. Solve this case by completing settings on new
-			// preferences with $_config_defaults
-			foreach (unserialize($_config_defaults['pref_defaults']) as $name => $value)
-				if (!isset($temp_prefs[$name])) $temp_prefs[$name] = $value;
-		}
-		else
-			$temp_prefs = unserialize($_config_defaults['pref_defaults']);
-
-		$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
-		$result = mysql_query($sql, $db);
-		if (mysql_num_rows($result) > 0)
-		{
-			$row_notify = mysql_fetch_assoc($result);
-			$mnot = $row_notify["value"];
-		}
-		else
-			$mnot = $_config_defaults['pref_inbox_notify'];
-		
-		$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_is_auto_login'";
-		$result = mysql_query($sql, $db);
-		if (mysql_num_rows($result) > 0)
-		{
-			$row_is_auto_login = mysql_fetch_assoc($result);
-			$auto_login = $row_is_auto_login["value"];
-		}
-		else
-			$auto_login = $_config_defaults['pref_is_auto_login'];
-		
+	    $temp_prefs = assignDefaultPrefs();
+        $mnot = assignDefaultMnot();
+        $auto_login = assignDefaultAutologin();
 		unset($_POST);
 	}
 

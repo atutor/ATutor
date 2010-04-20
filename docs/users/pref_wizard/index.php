@@ -51,6 +51,18 @@ function initNoChecks() {
 }
 
 //START OF PROCESSING
+if ($_POST['set_default']) {
+     $temp_prefs = assignDefaultPrefs();
+     assign_session_prefs($temp_prefs);
+     save_prefs();       
+     save_email_notification(assignDefaultMnot());
+     setAutoLoginCookie(assignDefaultAutologin());
+     unset($_POST);
+     $_POST['set_default'] = 1;
+     
+     $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+}
+
 unset($_SESSION['first_login']);
 $is_auto_login = checkAutoLoginCookie();
 
@@ -63,7 +75,7 @@ if (isset($_POST['pref_index'])) {
         
         if (isset($_POST['mnot'])) save_email_notification(intval($_POST['mnot']));
 
-        if (isset($_POST['auto'])) $is_auto_login = setAutoLoginCookie($_POST['auto']);        
+        if (isset($_POST['auto'])) setAutoLoginCookie($_POST['auto']);        
     }
 }
 
