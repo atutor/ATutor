@@ -423,27 +423,6 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 	ATutor.users.preferences.addPrefWizClickHandler = function (base_path) {
     	var launcherArray = jQuery(".pref_wiz_launcher");   	
     	launcherArray.click(function() {
-//LAW - working on moving to a jQuery modal dialog.
-//    		jQuery("#footer").before('<div id="pref_wiz_div"></div>');   		
-//    		jQuery("#pref_wiz_div").load(base_path + 'users/pref_wizard/index.php', function() {
-//    			jQuery("#pref_wiz_div").dialog({
-//    				height: 520,
-//    				width: 640,
-//    				modal: true,
-//    				buttons: {
-//    					Next: function() {
-//    							jQuery.ajax({
-//    										type: 'POST',
-//    										url: base_path + 'users/pref_wizard/index.php',
-//    										data: jQuery("#pref_wiz_div > form").serialize(),
-//    										success: function(data, textStatus, XMLHttpRequest) {
-//    											jQuery("#pref_wiz_div").html(data);
-//    										}
-//    							});
-//    					}
-//    				}
-//    			}); 
-//    		});
     		var query_string = "";
     		if (ATutor.users.preferences.course_id !== "") {
     			query_string = 'course_id=' + ATutor.users.preferences.course_id;
