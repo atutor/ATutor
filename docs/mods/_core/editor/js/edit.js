@@ -123,6 +123,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
         var displaypaste = jQuery(displaypasteId);
         var textArea = jQuery("#textSpan");
         var weblink = jQuery("#weblinkSpan");
+        var textAreaId = "body_text";
         if (jQuery("#weblink").attr("checked")) {
             disableTool(headTool);
             disableTool(pasteTool);
@@ -130,7 +131,9 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             
             hideIt(head, displayhead);
             hideIt(paste, displaypaste);
-            tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
+            if (tinyMCE.get(textAreaId)) {
+            	tinyMCE.execCommand('mceRemoveControl', false, textAreaId);
+            }
             textArea.hide();
             weblink.show();
         } else if (jQuery("#html").attr("checked")) {
@@ -140,8 +143,8 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             
             setDisplay(head, displayhead);
             setDisplay(paste, displaypaste);
-            if (ATutor.mods.editor.editor_pref !== '1') {
-                tinyMCE.execCommand('mceAddControl', false, 'body_text');
+            if (ATutor.mods.editor.editor_pref !== '1' && !tinyMCE.get(textAreaId)) {
+           		tinyMCE.execCommand('mceAddControl', false, textAreaId);
             }
             weblink.hide();
             textArea.show();
@@ -153,7 +156,9 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             hideIt(head, displayhead);
             setDisplay(paste, displaypaste);
             weblink.hide();
-            tinyMCE.execCommand('mceRemoveControl', false, 'body_text');
+            if (tinyMCE.get(textAreaId)) {
+            	tinyMCE.execCommand('mceRemoveControl', false, textAreaId);
+            }
             textArea.show();
         }	
     };
