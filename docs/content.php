@@ -217,16 +217,29 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 		// if one of the prerequisite test(s) has expired, student cannot view the content 
 		if (intval($pre_test_id) != -1 || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN))
 		{
-			//Silvia: to provide appropriated content on the basis of users' preferences
-			$content = provide_alternatives($cid, $content_row['text']);
-	                
+			// find whether the body has alternatives defined
+			list($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative)
+			= provide_alternatives($cid, $content_row['text'], true);
+			
+			// apply alternatives
+			if (intval($_GET['alternative']) > 0) {
+				$content = provide_alternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
+			} else {
+				$content = provide_alternatives($cid, $content_row['text']);
+			}
+	        
 			$content = format_content($content, $content_row['formatting'], $glossary);
 	
 			$content_array = get_content_table($content);
 			
 			$savant->assign('content_table', $content_array[0]);
 			$savant->assign('body', $content_array[1]);
-	
+			$savant->assign('cid', $cid);
+			$savant->assign('has_text_alternative', $has_text_alternative);
+			$savant->assign('has_audio_alternative', $has_audio_alternative);
+			$savant->assign('has_visual_alternative', $has_visual_alternative);
+			$savant->assign('has_sign_lang_alternative', $has_sign_lang_alternative);
+						
 			//assign test pages if there are tests associated with this content page
 			if (!empty($content_test_ids)){
 				$savant->assign('test_message', $content_row['test_message']);

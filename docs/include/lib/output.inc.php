@@ -1507,21 +1507,40 @@ function provide_alternatives1($cid, $content_page){
 * @access	public
 * @param	$cid: 				content id.
 * @param	$content:	 		the original content page ($content_row['text'], from content.php).
+* @param    $info_only:         boolean. Default value is "false". When it's "true", returns an array of 4 values:
+*                               $has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative
+* @param    $only_on_secondary_type: Default value is "". Accept one of the values: 1(auditory), 2(sign_language), 3(text), 4(visual)
+*                               When the value is given, ignore the alternative preference settings and only replace/append 
+*                               (replace or append is still from session preference) the objects with the alternatives with
+*                               the given alternative types.
 * @return	string				$content: the content page with the appropriated resources.
 * @see		$db			        from include/vitals.inc.php
 * @author	Cindy Qi Li
 */
-function provide_alternatives($cid, $content){
+function provide_alternatives($cid, $content, $info_only = false, $only_on_secondary_type = 0){
 	global $db;
 	
 	$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid", "mp4", "flv");
 	$txt_exts = array("txt", "html", "htm");
 	$image_exts = array("gif", "bmp", "png", "jpg", "jpeg", "png", "tif");
+	$only_on_secondary_type = intval($only_on_secondary_type);
 	
-	if (($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) && ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) && ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0)) 
+	if (!$info_only && !$only_on_secondary_type && 
+	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) && 
+	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) && 
+	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0)) 
 	{
 		//No user's preferences related to content format are declared
 		return $content;
+	}
+	
+	// intialize the 4 returned values when $info_only is on
+	if ($info_only)
+	{
+		$has_text_alternative = false;
+		$has_audio_alternative = false;
+		$has_visual_alternative = false;
+		$has_sign_lang_alternative = false;
 	}
 
 	// get all relations between primary resources and their alternatives
@@ -1536,15 +1555,20 @@ function provide_alternatives($cid, $content){
 		       AND pr.primary_resource_id = sr.primary_resource_id
 		       AND sr.language_code='".$_SESSION['prefs']['PREF_ALT_AUDIO_PREFER_LANG']."'
 		       AND sr.secondary_resource_id = srt.secondary_resource_id
-	           AND pr.content_id = c.content_id
-		     ORDER BY pr.primary_resource_id, prt.type_id";
+	           AND pr.content_id = c.content_id";
+	if ($only_on_secondary_type > 0) {
+		$sql .= " AND srt.type_id=".$only_on_secondary_type;
+	}
+	$sql .= " ORDER BY pr.primary_resource_id, prt.type_id";
+	
 	$result = mysql_query($sql, $db);
 //debug($sql);
 	if (mysql_num_rows($result) == 0) return $content;
 	
 	while ($row = mysql_fetch_assoc($result)) 
 	{
-		if (($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==1 && $row['primary_type']==3 &&
+		if ($info_only || $only_on_secondary_type ||
+		    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==1 && $row['primary_type']==3 &&
 		    ($_SESSION['prefs']['PREF_ALT_TO_TEXT']=="audio" && $row['secondary_type']==1 || 
 		     $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="visual" && $row['secondary_type']==4 || 
 		     $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="sign_lang" && $row['secondary_type']==2)) ||
@@ -1574,7 +1598,7 @@ function provide_alternatives($cid, $content){
 					$file_location = $row['secondary_resource'];
 				
 				$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
-				$target = file_get_contents($file);
+				$target = '<br />'.file_get_contents($file);
 				
 				// check whether html file
 				if (preg_match('/.*\<html.*\<\/html\>.*/s', $target))
@@ -1608,41 +1632,92 @@ function provide_alternatives($cid, $content){
 				$pattern_replace_to = '${1}'.$target.'${3}';
 			else
 				$pattern_replace_to = '${1}${2}'.$target.'${3}';
-				
-			// append/replace target alternative to [media]source[/media]
-			$content = preg_replace("/(.*)(".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/").")(.*)/sU", 
-			             $pattern_replace_to, $content);
-			
-			// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
-			if (preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
-			{
-				$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU", 
-		                                $pattern_replace_to, $content);
-			}
 
+			// *** Alternative replace/append starts from here ***
+			$img_processed = false;    // The indicator to tell the source image is found (or not) 
+			                           // and processed (or not) in an <img> tag. If found and processed, 
+			                           // SKIP the found/process for <a> tag because the source is a image
+			                           // and <a> is very likely the tag wrapping around <img>
+			                            
+			// append/replace target alternative to [media]source[/media]
+			if (preg_match("/".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/")."/sU", $content))
+			{
+				if (!$info_only) {
+					$content = preg_replace("/(.*)(".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/").")(.*)/sU", 
+			             $pattern_replace_to, $content);
+				} else {
+					if ($row['secondary_type'] == 1) $has_audio_alternative = true;
+					if ($row['secondary_type'] == 2) $has_sign_lang_alternative = true;
+					if ($row['secondary_type'] == 3) $has_text_alternative = true;
+					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
+				}
+			}
+			
 			// append/replace target alternative to <img ... src="source" ...></a>
 			if (preg_match("/\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>/sU", $content))
 			{
-				$content = preg_replace("/(.*)(\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>)(.*)/sU", 
+				$img_processed = true;
+				if (!$info_only) {
+					$content = preg_replace("/(.*)(\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>)(.*)/sU", 
 		                                $pattern_replace_to, $content);
+				} else {
+					if ($row['secondary_type'] == 1) $has_audio_alternative = true;
+					if ($row['secondary_type'] == 2) $has_sign_lang_alternative = true;
+					if ($row['secondary_type'] == 3) $has_text_alternative = true;
+					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
+				}
 			}
 			
+			// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
+			// skip this "if" when the source object has been processed in aboved <img> tag
+			if (!$img_processed && preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
+			{
+				if (!$info_only) {
+					$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU", 
+		                                $pattern_replace_to, $content);
+				} else {
+					if ($row['secondary_type'] == 1) $has_audio_alternative = true;
+					if ($row['secondary_type'] == 2) $has_sign_lang_alternative = true;
+					if ($row['secondary_type'] == 3) $has_text_alternative = true;
+					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
+				}
+			}
+
 			// append/replace target alternative to <object ... source ...></object>
 			if (preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/sU", $content))
 			{
-				$content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/sU", 
+				if (!$info_only) {
+					$content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/sU", 
 		                                $pattern_replace_to, $content);
+				} else {
+					if ($row['secondary_type'] == 1) $has_audio_alternative = true;
+					if ($row['secondary_type'] == 2) $has_sign_lang_alternative = true;
+					if ($row['secondary_type'] == 3) $has_text_alternative = true;
+					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
+				}
 			}
 
 			// append/replace target alternative to <embed ... source ...>
 			if (preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/sU", $content))
 			{
-				$content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/sU", 
+				if (!$info_only) {
+					$content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/sU", 
 		                                $pattern_replace_to, $content);
+				} else {
+					if ($row['secondary_type'] == 1) $has_audio_alternative = true;
+					if ($row['secondary_type'] == 2) $has_sign_lang_alternative = true;
+					if ($row['secondary_type'] == 3) $has_text_alternative = true;
+					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
+				}
 			}
 		}
 	}
-	return $content;
+	
+	if (!$info_only) {
+		return $content;
+	} else {
+		return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
+	}
 }	
 		
 /**

@@ -1142,6 +1142,11 @@ div.course div.shortcuts {
 	vertical-align: middle;
 }
 
+div#alternatives_shortcuts {
+	float: right;
+	margin: -2em 5pt;
+}
+
 fieldset#shortcuts {
 	float: right;
 	background-color: #FEFDEF;
@@ -1151,8 +1156,6 @@ fieldset#shortcuts {
 	padding-bottom: 5pt;
 	padding-left: 10pt;
 }
-
-
 
 fieldset {
 	margin-bottom: 10pt;
