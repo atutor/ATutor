@@ -39,30 +39,30 @@ global $msg;
         echo '<input type="hidden" value="'.$this->pref_index.'" name="pref_index" id="pref_index" />';    
         echo '<input type="hidden" value="'.$_SESSION['course_id'].'" name="course_id" id="course_id" />';
         
-//        echo '<div class="fl-container-flex"><input class="fl-force-left" type="submit" name="set_default" value="'._AT("factory_default").'" accesskey="d" />';
         echo '<span class="fl-force-right"><input type="submit" value="'._AT('previous').'" name="previous" id="previous" class="button"/>';
         if ($this->pref_index < count($this->pref_wiz) - 1) echo '<input type="submit" value="'._AT('next').'" name="next" id="next" class="button"/>';
         else echo '<input type="submit" value="'._AT('done').'" name="done" id="done" class="button"/>';
-        echo '</span></div>';
+        echo '</span>';
         echo '</fieldset>';
     }
 ?>
+
+    <input class="fl-centered" type="submit" name="set_default" value="<?php echo _AT("factory_default") ?>" accesskey="d" />
+
 </form>
 <script type="text/javascript">
 //<!--
     <?php 
-    if (isset($_POST['done'])) {
+    if (isset($_POST['done']) || isset($_POST['set_default'])) {
         echo 'ATutor.users.preferences.setStyles("'.$_SESSION["prefs"]["PREF_BG_COLOUR"].
             '","'.$_SESSION["prefs"]["PREF_FG_COLOUR"].
             '","'.$_SESSION["prefs"]["PREF_HL_COLOUR"].
             '","'.$_SESSION["prefs"]["PREF_FONT_FACE"].
             '","'.$_SESSION["prefs"]["PREF_FONT_TIMES"].'");';
         
-        echo "window.close();";
-    }    
+//        echo "window.close();";
+    }   
     require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); 
-
-
 
     ?>
 //-->

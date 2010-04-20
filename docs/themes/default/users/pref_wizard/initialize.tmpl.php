@@ -1,7 +1,5 @@
 <?php $prefs_set = isset($this->pref_wiz);?>
 
-
-
 <fieldset class="wizscreen"><legend><?php echo _AT('prefs_set_init_legend'); ?></legend>
 <div id="feedback" style="width:90%;">
 <?php echo _AT('prefs_set_init'); ?>
