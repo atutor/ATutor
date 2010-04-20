@@ -18,6 +18,8 @@
 ?>
 ATutor = ATutor || {};
 
+ATutor.base_href = "<?php echo AT_BASE_HREF; ?>";
+
 (function () {
 
     //everything in the document.ready block executes after the page is fully loaded

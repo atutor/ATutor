@@ -69,11 +69,9 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             disabledImage: "/images/paste_disabled.png",
         };
 
-    var base_path = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split("/")[1];
-
     //click function to launch file manager window
     var launchFileManager = function () {
-        window.open(base_path + '/mods/_core/file_manager/index.php?framed=1&popup=1&cp=' + ATutor.mods.editor.content_path, 'newWin1', 'menubar=0,scrollbars=1,resizable=1,width=640,height=490');
+        window.open(ATutor.base_href + '/mods/_core/file_manager/index.php?framed=1&popup=1&cp=' + ATutor.mods.editor.content_path, 'newWin1', 'menubar=0,scrollbars=1,resizable=1,width=640,height=490');
         return false;
     };
 
@@ -100,7 +98,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     var disableTool = function (theTool) {
         var theToolElement = jQuery(theTool.toolId);
         theToolElement.removeClass(theTool.enabledClass);
-        theToolElement.attr("src", base_path + theTool.disabledImage);
+        theToolElement.attr("src", ATutor.base_href + theTool.disabledImage);
         theToolElement.attr("title", theTool.disabledTitle);
         theToolElement.attr("alt", theTool.disabledTitle);
         theToolElement.unbind("click");
@@ -109,7 +107,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     var enableTool = function (theTool) {
         var theToolElement = jQuery(theTool.toolId);
         theToolElement.addClass(theTool.enabledClass);
-        theToolElement.attr("src", base_path + theTool.enabledImage);
+        theToolElement.attr("src", ATutor.base_href + theTool.enabledImage);
         theToolElement.attr("title", theTool.enabledTitle);
         theToolElement.attr("alt", theTool.enabledTitle);
         theToolElement.click(theTool.clickFunction);
@@ -165,7 +163,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 
     //click function to launch tool window
     var launchTool = function () {
-        window.open(base_path + '/mods/_core/tool_manager/index.php?framed=1&popup=1&tool_file=' + ATutor.mods.editor.tool_file + '&cid=' + ATutor.mods.editor.content_id, 'newWin2', 'menubar=0,scrollbars=1,resizable=1,width=600,height=400');
+        window.open(ATutor.base_href + '/mods/_core/tool_manager/index.php?framed=1&popup=1&tool_file=' + ATutor.mods.editor.tool_file + '&cid=' + ATutor.mods.editor.content_id, 'newWin2', 'menubar=0,scrollbars=1,resizable=1,width=600,height=400');
         return false;
     };
 
