@@ -47,7 +47,7 @@ global $msg;
     }
 ?>
 
-    <input class="fl-centered" type="submit" name="set_default" value="<?php echo _AT("factory_default") ?>" accesskey="d" />
+    <input class="fl-centered button" type="submit" name="set_default" value="<?php echo _AT("reapply_default") ?>" accesskey="d" />
 
 </form>
 <script type="text/javascript">
@@ -60,7 +60,7 @@ global $msg;
             '","'.$_SESSION["prefs"]["PREF_FONT_FACE"].
             '","'.$_SESSION["prefs"]["PREF_FONT_TIMES"].'");';
         
-//        echo "window.close();";
+        echo "window.close();";
     }   
     require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); 
 
