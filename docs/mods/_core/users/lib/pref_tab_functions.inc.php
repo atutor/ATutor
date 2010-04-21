@@ -168,9 +168,6 @@ global $db, $_config_defaults;
         }
         else {
             $temp_prefs = unserialize($_config_defaults['pref_defaults']);
-            if (!$temp_prefs) echo "false";
-            //debug($_config_defaults);
-            print_r($temp_prefs);
         }
 
         return $temp_prefs;
