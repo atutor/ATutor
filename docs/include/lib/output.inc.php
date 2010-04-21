@@ -1525,15 +1525,6 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	$image_exts = array("gif", "bmp", "png", "jpg", "jpeg", "png", "tif");
 	$only_on_secondary_type = intval($only_on_secondary_type);
 	
-	if (!$info_only && !$only_on_secondary_type && 
-	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) && 
-	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) && 
-	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0)) 
-	{
-		//No user's preferences related to content format are declared
-		return $content;
-	}
-	
 	// intialize the 4 returned values when $info_only is on
 	if ($info_only)
 	{
@@ -1543,6 +1534,19 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 		$has_sign_lang_alternative = false;
 	}
 
+	if (!$info_only && !$only_on_secondary_type && 
+	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) && 
+	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) && 
+	    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0)) 
+	{
+		//No user's preferences related to content format are declared
+		if (!$info_only) {
+			return $content;
+		} else {
+			return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
+		}
+	}
+	
 	// get all relations between primary resources and their alternatives
 	$sql = "SELECT c.content_path, pr.resource, prt.type_id primary_type, sr.secondary_resource, srt.type_id secondary_type
 	          FROM ".TABLE_PREFIX."primary_resources pr, ".
@@ -1563,7 +1567,13 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	
 	$result = mysql_query($sql, $db);
 //debug($sql);
-	if (mysql_num_rows($result) == 0) return $content;
+	if (mysql_num_rows($result) == 0) {
+		if (!$info_only) {
+			return $content;
+		} else {
+			return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
+		}
+	}
 	
 	while ($row = mysql_fetch_assoc($result)) 
 	{
