@@ -162,11 +162,16 @@ global $db, $_config_defaults;
             // Many new preferences are introduced in 1.6.2 that are missing in old admin 
             // default preference string. Solve this case by completing settings on new
             // preferences with $_config_defaults
-            foreach (unserialize($_config_defaults['pref_defaults']) as $name => $value)
+            foreach (unserialize($_config_defaults['pref_defaults']) as $name => $value) {
                 if (!isset($temp_prefs[$name])) $temp_prefs[$name] = $value;
+            }
         }
-        else
+        else {
             $temp_prefs = unserialize($_config_defaults['pref_defaults']);
+            if (!$temp_prefs) echo "false";
+            //debug($_config_defaults);
+            print_r($temp_prefs);
+        }
 
         return $temp_prefs;
 }
