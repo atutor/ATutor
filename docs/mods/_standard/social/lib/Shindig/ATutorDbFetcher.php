@@ -257,12 +257,12 @@ class ATutorDbFetcher {
     $app_id = intval($app_id);
     if (empty($value)) {
       // empty key kind of became to mean "delete data" (was an old orkut hack that became part of the spec spec)
-	  $sql = "delete from ".TABLE_PREFIX."social_application_settings where application_id = $app_id and member_id = $member_id and name = '$key'";
+	  $sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id AND member_id = $member_id AND name = '$key'";
       if (! @mysql_query($sql, $this->db)) {
         return false;
       }
     } else {
-		$sql ="insert into ".TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) values ($app_id, $member_id, '$key', '$value') on duplicate key update value = '$value'";
+		$sql ="INSERT INTO ".TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES ($app_id, $member_id, '$key', '$value') ON DUPLICATE KEY UPDATE VALUE = '$value'";
       if (! @mysql_query($sql, $this->db)) {
         return false;
       }
@@ -276,13 +276,13 @@ class ATutorDbFetcher {
     $person_id = intval($member_id);
     $app_id = intval($app_id);
     if ($key == '*') {
-		$sql = "delete from ".TABLE_PREFIX."social_application_settings where application_id = $app_id and member_id = $member_id";
+		$sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id = $member_id";
       if (! @mysql_query($sql, $this->db)) {
         return false;
       }
     } else {
-      $key = mysql_real_escape_string($this->db, $key);
-	  $sql = "delete from ".TABLE_PREFIX."social_application_settings where application_id = $app_id and member_id = $member_id and name = '$key'";
+      $key = mysql_real_escape_string($key);
+	  $sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id = $member_id and name = '$key'";
       if (! @mysql_query($sql, $this->db)) {
         return false;
       }
@@ -297,7 +297,6 @@ class ATutorDbFetcher {
 	if (empty($ids)){
 		return $data;
 	}
-
     foreach ($ids as $key => $val) {
       if (! empty($val)) {
         $ids[$key] = intval($val);
@@ -316,7 +315,7 @@ class ATutorDbFetcher {
     } else {
       $keys = '';
     }
-	$sql = "select member_id, name, value from ".TABLE_PREFIX."social_application_settings where application_id = $app_id and member_id in (" . implode(',', $ids) . ") $keys";
+	$sql = "SELECT member_id, name, value FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id in (" . implode(',', $ids) . ") $keys";
     $res = mysql_query($sql, $this->db);
     while (list($member_id, $key, $value) = mysql_fetch_row($res)) {
       if (! isset($data[$member_id])) {

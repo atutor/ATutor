@@ -41,7 +41,6 @@ class Application extends Applications{
 	 */
 	function addApplication($gadget_obj){ 
 		global $db, $addslashes;
-
 		//TODO: Many more fields to add
 //		$id						= $gadget_obj['moduleId'];   //after i change the URL to the key.
 		$author					= $addslashes($gadget_obj->author);
@@ -145,7 +144,7 @@ class Application extends Applications{
 		$request = json_encode(array(
 			'context' => array('country' => 'US', 'language' => 'en', 'view' => 'default', 
 				'container' => 'atutor'), 
-			'gadgets' => array(array('url' => $app_url, 'moduleId' => '1'))));
+			'gadgets' => array(array('url' => $app_url, 'moduleId' => $this->getModuleId()))));
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, AT_SHINDIG_URL.'/gadgets/metadata');
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
