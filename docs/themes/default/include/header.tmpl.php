@@ -59,7 +59,7 @@ global $system_courses, $_custom_css, $db;
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
-	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
+	<meta name="Generator" content="ATutor - Copyright 2010 by http://atutor.ca" />
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
@@ -157,12 +157,12 @@ function showTocToggle(objId, show, hide, key, selected) {
 
 		if (selected == 'hide') {
 			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
+			'<span id="' + objId + 'showlink" style="display:none;"><img src="<?php echo $this->base_href; ?>images/showmenu.gif" title="' + show + '" alt="' + show + '" border="0" /></span>' +
+			'<span id="' + objId + 'hidelink"><img src="<?php echo $this->base_href; ?>images/hidemenu.gif" title="' + hide + '" alt="' + hide + '" border="0" /></span>'	+ '</a>');
 		} else {
 			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
+			'<span id="' + objId + 'showlink"><img src="<?php echo $this->base_href; ?>images/showmenu.gif" title="' + show + '" alt="' + show + '" border="0" /></span>' +
+			'<span id="' + objId + 'hidelink" style="display:none;"><img src="<?php echo $this->base_href; ?>images/hidemenu.gif" title="' + hide + '" alt="' + hide + '" border="0" /></span>'	+ '</a>');
 		}
 	}
 }
@@ -306,7 +306,7 @@ function printSubmenuHeader(title)
 
 	<?php
 	// If there is a custom course banner in the file manager called banner.html, display it here
-	@readfile(AT_CONTENT_DIR . $this->course_id.'/banner.txt'); 
+	@readfile(AT_CONTENT_DIR . $this->course_id.'/banner.html'); 
 
 	/*
 	and example banner.html file might look like:
@@ -320,11 +320,14 @@ function printSubmenuHeader(title)
 	else:
 		echo '<br />';	
 	endif; ?>
+	<div id="course_title_container" <?php if(empty($this->icon)){echo ' style="left:1em;"';}   ?>>
 	<h1 id="section-title"><?php echo $this->section_title; ?>
 		<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
 	</h1>
+	<br style="clear:both;" />
+	</div>
 
 
 </div>
@@ -382,7 +385,7 @@ function printSubmenuHeader(title)
 
 <div id="contentwrapper">
 	<?php if ((isset($this->course_id) && $this->course_id > 0) && $system_courses[$this->course_id]['side_menu']): ?>
-		<div id="leftcolumn">
+		<div id="leftcolumn" <?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] == 0) { echo 'style="margin-top:-3.5em;"';} ?>>
 			<script type="text/javascript">
 			//<![CDATA[
 			var state = getcookie("side-menu");
