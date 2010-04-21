@@ -96,20 +96,46 @@
 </div>
 
 <div class="current_box">
-<div class="current_head"> <h3><?php echo _AT('things_current'); ?></h3></div><br />
-<?php
-	    
-//display current news
-if (isset($this->all_news)) {
-    echo '<ul class="current_list">';
-    foreach($this->all_news as $news){
-        $count++;
-        if($count < 100){
-            echo '<li"><img src="'.$news['thumb'].'" alt="'.$news['alt'].'" title="'.$news['alt'].'"/> ' . $news['link'] .' <br /><small>(<a href="bounce.php?course='.$news['object']['course_id'].'">'.$news['course'].'</a>)| ('.AT_DATE('%F %j, %g:%i',$news['time']).')</small><hr style=""/></li>';
-        }
+<div class="current_head"> <h3><?php echo _AT('things_current'); ?></h3></div>
+    <?php
+		
+    //display current news
+
+    if($_GET['p'] == 0){
+      $p = 1;
+    }else{
+      $p = intval($_GET['p']);
     }
-    echo '</ul>';
-}
-?>
+    if($_GET['p'] == "all"){
+      $perpage = count($this->all_news);
+    }else{
+      $perpage = 10;
+    }
+
+    $newscount = count($this->all_news);
+    $num_pages = (ceil($newscount/$perpage));;
+    $start = ($p-1)*$perpage;
+    $end = ($p*$perpage);
+
+    print_paginator($page, $num_pages, '', 1); 
+    for($i=$start;$i<=$end; $i++){
+	$count = $i;
+	if (isset($this->all_news)) {
+	    echo '<ul class="current_list">';
+	      if(isset($this->all_news[$i]['thumb'])){
+		    echo '<li"><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'"/> ' . $this->all_news[$i]['link'] .' <br />';
+		    if($this->all_news[$i]['object']['course_id']){
+		    echo '<small>(<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)|';
+		    }
+		    echo '('.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).')</small><hr style=""/></li>';
+		}
+	    echo '</ul>';
+	}
+    }
+    if($perpage == count($this->all_news)){ ?>
+	<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=1"><?php echo _AT('show_pages'); ?></a>
+    <?php }else{ ?>
+	<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=all"><?php echo _AT('show_all'); ?></a>
+    <?php } ?>
 </div>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
