@@ -18,9 +18,9 @@
 ?>
 ATutor = ATutor || {};
 
-ATutor.base_href = "<?php echo AT_BASE_HREF; ?>";
-
 (function () {
+
+    ATutor.base_href = "<?php echo AT_BASE_HREF; ?>";
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
@@ -41,7 +41,7 @@ ATutor.base_href = "<?php echo AT_BASE_HREF; ?>";
                      '<?php echo $_SESSION["prefs"]["PREF_FONT_TIMES"]; ?>');
 <?php   }?>
 
-        ATutor.users.preferences.addPrefWizClickHandler('<?php echo $_base_path ?>');
+        ATutor.users.preferences.addPrefWizClickHandler();
         ATutor.users.preferences.course_id = "<?php echo $_SESSION['course_id']; ?>";                
      });
 })();
