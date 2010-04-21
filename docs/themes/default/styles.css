@@ -7,6 +7,8 @@ html,body{
     font-weight:bold;
     padding-left:1em;
     color:grey;
+    white-space:nowrap;
+    margin-left:5.5em;
 }
 /* main body attributes */
 body {
@@ -539,7 +541,6 @@ div#toctoggle {
 
 h1#section-title {
 	float: left;
-	white-space:nowrap;
 	margin-left:1em;
 	margin-bottom: -0.5em;
 	
@@ -547,10 +548,10 @@ h1#section-title {
 
 div#top-links {
 	float:right;
-	padding-right: 5px;
-	margin-right:205px;
-	margin-top:1em;
 	white-space:nowrap;
+	padding-right: 5px;
+	margin-right:20px;
+	margin-top:1em;
 }
 
 div#top-links a:link, div#top-links a:visited {
@@ -562,8 +563,11 @@ div#top-links a:focus{
 	background-color:#F6EAD6;
 }
 
-#jumpmenu:focus{
+#jumpmenu{
 	background-color:#EEEEEE;
+	border:thin solid #cccccc;
+	border-radius:.3em .3em .3em .3em;
+	-moz-border-radius:.3em .3em .3em .3em;	
 }
 a#editor-link {
 	background-color: #F7F3ED;
@@ -1397,18 +1401,16 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 /* Top navigation tabs / list */
 div#topnavlistcontainer {
-	background-position:  top right;
-	background-repeat: no-repeat;
 	height:1.7em;
 	border-bottom:1px solid #cccccc;
+	clear:left;
+
 }
 
 
 ul#topnavlist {
 	padding-top: 2px;
-	margin-top: 0px;
-	margin-left:5px;
-
+	margin-top: 5px;
 }
 
 ul#topnavlist li {
@@ -1417,6 +1419,7 @@ ul#topnavlist li {
 	display: inline-block;
 	height:2em;
 	margin-top:.1em;
+	clear:both;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -1733,7 +1736,7 @@ div.home_box {
 	background: #eeeeee;
 	padding:.2em;
 	margin-left:.4em;
-	width:28em;
+	width:26em;
 	height:9.8em;
 	border-radius:.5em;
 	-moz-border-radius:.5em;
@@ -1921,8 +1924,8 @@ tr.odd {
 
 /* 1pxgs current box on My Start */
 .current_box{
-float:left;
-margin-left:1em;
+	float:left;
+	margin-left:1em;
 	width:30%; 
 	padding:.5em;
 	border: 1px solid #cccccc;
@@ -1949,11 +1952,10 @@ ul.current_list{
       padding-right:1em;
 }
 
-select {
+.select {
       margin-left: .2em;
       background-color:#eeeeee; 	
-border: 1px solid #cccccc;
-
+      border: 1px solid #cccccc;
       padding-right:.1em;
 }
 
@@ -2045,4 +2047,11 @@ table.etabbed-table	{
 	padding:0;
 	width:100%;
 	height:2.5em;
+}
+#course_title_container{
+	float:left;
+	clear:both;
+	white-space:pre-line;
+	position: absolute; 
+	left:6em;
 }
