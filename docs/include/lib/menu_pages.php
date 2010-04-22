@@ -116,7 +116,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
             $_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
             $_pages['admin/config_edit.php']['parent']    = AT_NAV_ADMIN;
             $_pages['admin/config_edit.php']['guide']     = 'admin/?p=system_preferences.php';
-            $_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/error_logging.php'));
+            $_pages['admin/config_edit.php']['children']  = array_merge((array) $_pages['admin/config_edit.php']['children'], array('admin/error_logging.php','mods/_standard/social/index_admin.php'));
         }
         $_pages['admin/fix_content.php']['title_var'] = 'fix_content_ordering';
         $_pages['admin/fix_content.php']['parent']    = 'admin/index.php';
