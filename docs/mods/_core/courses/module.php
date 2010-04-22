@@ -18,7 +18,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
 	$this->_pages['mods/_core/courses/admin/courses.php']['title_var'] = 'courses';
 	$this->_pages['mods/_core/courses/admin/courses.php']['parent']    = AT_NAV_ADMIN;
 	$this->_pages['mods/_core/courses/admin/courses.php']['guide']     = 'mods/_core/courses/admin/?p=courses.php';
-	$this->_pages['mods/_core/courses/admin/courses.php']['children']  = array('mods/_core/courses/admin/create_course.php', 'mods/_core/courses/admin/default_mods.php', 'mods/_core/courses/admin/default_side.php','mods/_core/courses/admin/auto_enroll.php');
+	$this->_pages['mods/_core/courses/admin/courses.php']['children']  = array('mods/_core/courses/admin/create_course.php','mods/_core/enrolment/admin/index.php', 'mods/_core/courses/admin/default_mods.php', 'mods/_core/courses/admin/default_side.php','mods/_core/courses/admin/auto_enroll.php');
 
 		$this->_pages['mods/_core/courses/admin/instructor_login.php']['title_var'] = 'view';
 		$this->_pages['mods/_core/courses/admin/instructor_login.php']['parent']    = 'mods/_core/courses/admin/courses.php';
