@@ -62,7 +62,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         ATutor.mods.editor.head_disabled_title = "<?php echo _AT('customized_head_disabled_title'); ?>";
         ATutor.mods.editor.paste_enabled_title = "<?php echo _AT('paste_enabled_title'); ?>";
         ATutor.mods.editor.paste_disabled_title = "<?php echo _AT('paste_disabled_title'); ?>";
-        ATutor.mods.editor.fileman_enabled_title = "<?php echo _AT('fileman_enabled_title'); ?>";
+        ATutor.mods.editor.fileman_enabled_title = "<?php echo _AT('fileman_enabled_title').' - '._AT('new_window'); ?>";
         ATutor.mods.editor.fileman_disabled_title = "<?php echo _AT('fileman_disabled_title'); ?>";
     //-->
     </script>
