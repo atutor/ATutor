@@ -4,7 +4,7 @@ global $_base_path;
 global $msg;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $this->lang_code; ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
         <title><?php echo SITE_NAME; ?> : <?php echo _AT('prefs_wizard'); ?>Preferences wizard</title>
@@ -13,7 +13,7 @@ global $msg;
         <link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo $_base_path ?>jscripts/infusion/framework/fss/css/fss-layout.css" type="text/css" />       
         <link rel="stylesheet" href="<?php echo $_base_path; ?>themes/default/styles.css" type="text/css" />
-   <script src="<?php echo $_base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+        <script src="<?php echo $_base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
         <style id="pref_style" type="text/css"></style>    
     </head>
     <body onload="<?php echo $this->onload; ?>">

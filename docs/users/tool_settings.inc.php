@@ -58,29 +58,29 @@
 			if ($abac_val == 1) $abac = ' checked ';
 
 ?>
-		<input id="dict_val" name="dictionary_val" type="hidden" value="<?php echo $dict_val; ?>" >
-		<input id="dict" name="dictionary" type="checkbox" <?php echo $dict; ?> onchange="changeVal('dict')"><label for="dict"><?php echo _AT("dictionary"); ?></label><br />
+		<input id="dict_val" name="dictionary_val" type="hidden" value="<?php echo $dict_val; ?>"  />
+		<input id="dict" name="dictionary" type="checkbox" checked="<?php echo $dict; ?>" onchange="changeVal('dict')" /><label for="dict"><?php echo _AT("dictionary"); ?></label><br />
 		
-		<input id="thes_val" name="thesaurus_val" type="hidden" value="<?php echo $thes_val; ?>" >
-		<input id="thes" name="thesaurus" type="checkbox" <?php echo $thes; ?> onchange="changeVal('thes')"><label for="thes"><?php echo _AT("thesaurus"); ?></label><br />
+		<input id="thes_val" name="thesaurus_val" type="hidden" value="<?php echo $thes_val; ?>" />
+		<input id="thes" name="thesaurus" type="checkbox" checked="<?php echo $thes; ?>" onchange="changeVal('thes')" /><label for="thes"><?php echo _AT("thesaurus"); ?></label><br />
 
-		<input id="enc_val" name="encyclopedia_val" type="hidden" value="<?php echo $enc_val; ?>" >
-		<input id="enc" name="encyclopedia" type="checkbox" <?php echo $enc; ?> onchange="changeVal('enc')"><label for="enc"><?php echo _AT("encyclopedia"); ?></label><br />
+		<input id="enc_val" name="encyclopedia_val" type="hidden" value="<?php echo $enc_val; ?>" />
+		<input id="enc" name="encyclopedia" type="checkbox" checked="<?php echo $enc; ?>" onchange="changeVal('enc')" /><label for="enc"><?php echo _AT("encyclopedia"); ?></label><br />
 
-		<input id="atla_val" name="atlas_val" type="hidden" value="<?php echo $atla_val; ?>" >
-		<input id="atla" name="atlas" type="checkbox" <?php echo $atla; ?> onchange="changeVal('atla')"><label for="atla"><?php echo _AT("atlas"); ?></label><br />
+		<input id="atla_val" name="atlas_val" type="hidden" value="<?php echo $atla_val; ?>" />
+		<input id="atla" name="atlas" type="checkbox" checked="<?php echo $atla; ?>" onchange="changeVal('atla')" /><label for="atla"><?php echo _AT("atlas"); ?></label><br />
 
-		<input id="notes_val" name="note_taking_val" type="hidden" value="<?php echo $notes_val; ?>" >
-		<input id="notes" name="note_taking" type="checkbox" <?php echo $notes; ?> onchange="changeVal('notes')"><label for="notes"><?php echo _AT("note_taking"); ?></label><br />
+		<input id="notes_val" name="note_taking_val" type="hidden" value="<?php echo $notes_val; ?>" />
+		<input id="notes" name="note_taking" type="checkbox" checked="<?php echo $notes; ?>" onchange="changeVal('notes')" /><label for="notes"><?php echo _AT("note_taking"); ?></label><br />
 
-		<input id="calc_val" name="calculator_val" type="hidden" value="<?php echo $calc_val; ?>" >
-		<input id="calc" name="calculator" type="checkbox" <?php echo $calc; ?> onchange="changeVal('calc')"><label for="calc"><?php echo _AT("calculator"); ?></label><br />
+		<input id="calc_val" name="calculator_val" type="hidden" value="<?php echo $calc_val; ?>" />
+		<input id="calc" name="calculator" type="checkbox" checked="<?php echo $calc; ?>" onchange="changeVal('calc')" /><label for="calc"><?php echo _AT("calculator"); ?></label><br />
 <!--
-		<input id="peer_val" name="peer_interaction_val" type="hidden" value="<?php echo $peer_val; ?>" >
-		<input id="peer" name="peer_interaction" type="checkbox" <?php echo $peer; ?> onchange="changeVal('peer')"><label for="peer"><?php echo _AT("peer_interaction"); ?></label><br />-->
+		<input id="peer_val" name="peer_interaction_val" type="hidden" value="<?php echo $peer_val; ?>" />
+		<input id="peer" name="peer_interaction" type="checkbox" checked="<?php echo $peer; ?>" onchange="changeVal('peer')" /><label for="peer"><?php echo _AT("peer_interaction"); ?></label><br />-->
 
-		<input id="abac_val" name="abacus_val" type="hidden" value="<?php echo $abac_val; ?>" >
-		<input id="abac" name="abacus" type="checkbox" <?php echo $abac; ?> onchange="changeVal('abac')"><label for="abac"><?php echo _AT("abacus"); ?></label><br />
+		<input id="abac_val" name="abacus_val" type="hidden" value="<?php echo $abac_val; ?>" />
+		<input id="abac" name="abacus" type="checkbox" checked="<?php echo $abac; ?>" onchange="changeVal('abac')" /><label for="abac"><?php echo _AT("abacus"); ?></label><br />
 	</div>
 
 <script language="javascript" type="text/javascript">

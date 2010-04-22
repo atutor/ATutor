@@ -4,7 +4,7 @@
 </div>
 <div style="width:25%; float:left;">
 	<div class="row">
-		<input type="hidden" id="defaultfontface" value="Verdana">
+		<input type="hidden" id="defaultfontface" value="Verdana" />
 		<label for="fontface"><?php echo _AT('font_face'); ?></label><br />
 			<select name="fontface" id="fontface" onchange="setPreviewFace()"><?php
 				if (isset($_POST['fontface']))
@@ -24,7 +24,7 @@
 	</div>
 
 	<div class="row">
-		<input type="hidden" id="defaultfontsize" value="12">
+		<input type="hidden" id="defaultfontsize" value="12" />
 		<label for="font_times"><?php echo _AT('font_size'); ?></label><br />
 			<select name="font_times" id="font_times" onchange="setPreviewSize()">
 <?php
@@ -45,7 +45,7 @@
 	</div>
 
 	<div class="row">
-		<input type="hidden" id="defaultfg" value="000000">
+		<input type="hidden" id="defaultfg" value="000000" />
 		<label for="fg"><?php echo _AT('fg_colour'); ?></label><br />
 			<select name="fg" id="fg" onchange="setPreviewColours()">
 <?php
@@ -73,7 +73,7 @@
 	</div>
 
 	<div class="row">
-		<input type="hidden" id="defaultbg" value="FFFFFF">
+		<input type="hidden" id="defaultbg" value="FFFFFF" />
 		<label for="bg"><?php echo _AT('bg_colour'); ?></label><br />
 			<select name="bg" id="bg" onchange="setPreviewColours()">
 <?php
@@ -101,7 +101,7 @@
 	</div>
 
 	<div class="row">
-		<input type="hidden" id="defaulthl" value="E6E6E6">
+		<input type="hidden" id="defaulthl" value="E6E6E6" />
 		<label for="hl"><?php echo _AT('hl_colour'); ?></label><br />
 			<select name="hl" id="hl" onchange="setPreviewColours()">
 <?php
