@@ -8,11 +8,11 @@ define('AT_ADMIN_PRIV_ENROLLMENT', $this->getAdminPrivilege());
 $this->_stacks['users_online'] = array('title_var'=>'users_online', 'file'=>AT_INCLUDE_PATH.'html/dropdowns/users_online.inc.php');
 
 if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-	$this->_pages[AT_NAV_ADMIN] = array('mods/_core/enrolment/admin/index.php');
-	$this->_pages['mods/_core/enrolment/admin/index.php']['parent'] = AT_NAV_ADMIN;
+	//$this->_pages[AT_NAV_ADMIN] = array('mods/_core/enrolment/admin/index.php');
+	$this->_pages['mods/_core/enrolment/admin/index.php']['parent'] =  'mods/_core/courses/admin/courses.php';
 
 	$this->_pages['mods/_core/enrolment/admin/index.php']['title_var'] = 'enrollment';
-	$this->_pages['mods/_core/enrolment/admin/index.php']['parent']    = AT_NAV_ADMIN;
+	$this->_pages['mods/_core/enrolment/admin/index.php']['parent']    = 'mods/_core/courses/admin/courses.php';
 	$this->_pages['mods/_core/enrolment/admin/index.php']['guide']     = 'admin/?p=enrollment.php';
 
 	$this->_pages['mods/_core/enrolment/admin/enroll_edit.php']['title_var']    = 'enrollment';
