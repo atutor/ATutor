@@ -2039,6 +2039,14 @@ table.etabbed-table	{
 	font-weight:bold;
 }
 
+.wizscreen .buttons {
+    padding-top: 2em;
+}
+
+.wizscreen .button {
+    margin: 0em 0.25em;
+}
+
 .navlist{
 	list-style: none;
 	display: inline;
