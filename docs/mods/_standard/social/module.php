@@ -55,9 +55,9 @@ $this->_pages[AT_SOCIAL_BASENAME.'index.php']['icon']      = 'images/home-direct
  */
 
 if (admin_authenticate(AT_ADMIN_PRIV_SOCIAL, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-	$this->_pages[AT_NAV_ADMIN] = array('mods/_standard/social/index_admin.php');
+	//$this->_pages[AT_NAV_ADMIN] = array('mods/_standard/social/index_admin.php');
 	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['title_var'] = 'social';
-	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['parent']    = AT_NAV_ADMIN;
+	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['parent']    = 'admin/config_edit.php';
 	$this->_pages[AT_SOCIAL_BASENAME.'index_admin.php']['children']    = array(AT_SOCIAL_BASENAME.'admin/delete_applications.php');
 
 		$this->_pages[AT_SOCIAL_BASENAME.'admin/delete_applications.php']['title_var'] = 'delete_applications';
