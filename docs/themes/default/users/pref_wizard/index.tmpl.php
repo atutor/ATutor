@@ -7,7 +7,7 @@ global $msg;
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
-        <title><?php echo SITE_NAME; ?> : <?php echo _AT('prefs_wizard'); ?>Preferences wizard</title>
+        <title><?php echo SITE_NAME; ?> : <?php echo _AT('preferences'); ?></title>
         <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 		<script src="<?php echo $_base_path; ?>jscripts/TILE.js" type="text/javascript"></script>
         <link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
