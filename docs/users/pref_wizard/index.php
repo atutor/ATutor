@@ -18,7 +18,6 @@ if (!isset($_REQUEST['course_id']) || ($_REQUEST['course_id'] == 0)) {
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
-
 /**
  * Tests if this is the first loading the pref wizard index page
  *
@@ -78,6 +77,9 @@ if (isset($_POST['pref_index'])) {
         if (isset($_POST['auto'])) setAutoLoginCookie($_POST['auto']);        
     }
 }
+
+$savant->assign('lang_charset', $myLang->getCharacterSet());
+$savant->assign('lang_code', $_SESSION['lang']);
 
 // display initialization page IF
 // first time loading pref wiz OR going from first pref page
