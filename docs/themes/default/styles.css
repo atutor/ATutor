@@ -1929,8 +1929,6 @@ tr.odd {
 	width:30%; 
 	padding:.5em;
 	border: 1px solid #cccccc;
-	border-radius:.5em;
-	-moz-border-radius: .5em .5em .5em .5em;
 }
 
 ul.current_list{
@@ -1940,8 +1938,8 @@ ul.current_list{
 }
 .current_list img{
       vertical-align:middle;
-
 }
+
 .logoutbar{
       background-color:#E6E6E6; 
       font-size:0.85em; 

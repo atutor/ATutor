@@ -1482,3 +1482,21 @@ div.home_box {
 .details_text{
 	margin-left:1em;
 }
+
+/* 1pxgs current box on My Start */
+.current_box{
+    float:left;
+    margin-left:1em;
+    width:30%; 
+    padding:.5em;
+    border: 1px solid #cccccc;
+}
+
+ul.current_list{
+      line-height:2em; 
+      list-style-type:none;
+      margin-left:-3em;
+}
+.current_list img{
+      vertical-align:middle;
+}
