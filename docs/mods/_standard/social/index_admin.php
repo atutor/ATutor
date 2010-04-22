@@ -32,7 +32,7 @@ if($_POST['save']){
 require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
-
+<div style="width:95%;margin:auto;">
 <div class="headingbox"><h3><?php echo _AT('admin_social'); ?></h3></a></div>
 <div class="contentbox">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -43,6 +43,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		</dl>
 	<input type="submit" name="save" value="<?php echo _AT('save'); ?>">
 </form>
+</div>
 </div>
 <?php 
 
