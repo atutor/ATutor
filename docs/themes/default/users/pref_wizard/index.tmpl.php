@@ -39,7 +39,6 @@ global $msg;
         echo '<input type="hidden" value="'.$this->pref_index.'" name="pref_index" id="pref_index" />';    
         echo '<input type="hidden" value="'.$_SESSION['course_id'].'" name="course_id" id="course_id" />';
         
-        echo '<p>here</p>';
         echo '<input type="submit" name="set_default" value="'._AT("reapply_default").'" accesskey="d" />';
         echo '<span class="fl-force-right"><input type="submit" value="'._AT('previous').'" name="previous" id="previous" class="button"/>';
         if ($this->pref_index < count($this->pref_wiz) - 1) echo '<input type="submit" value="'._AT('next').'" name="next" id="next" class="button"/>';
