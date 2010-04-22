@@ -41,6 +41,7 @@
     
     <input type="hidden" value="-1" name="pref_index" id="pref_index" /><br />
     <input type="hidden" value="<?php echo $_SESSION['course_id']; ?>" name="course_id" id="course_id" /><br />
+    <input class="button" type="submit" name="set_default" value="<?php echo _AT("reapply_default"); ?>" accesskey="d" />
     <input class="button" type="submit" value="<?php echo _AT('next'); ?>" name="next" id="next" style="float:right;"/>
 
 </fieldset>
