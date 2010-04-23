@@ -105,7 +105,7 @@ class ATutorOAuthLookupService extends OAuthLookupService {
       return null; // xoauth_requestor_id was provided, but does not match oauth token -> fail
     } else {
       $userId = $oauthUserId; // use userId from oauth token
-      return new OAuthSecurityToken($userId, $appUrl, $dataStore->get_app_id($consumerToken), "atutor");
+      return new OAuthSecurityToken($userId, $appUrl, $dataStore->get_app_id($consumer), "atutor");
     }
   }
 }
