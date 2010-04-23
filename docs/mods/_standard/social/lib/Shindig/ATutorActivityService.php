@@ -80,5 +80,23 @@ class ATutorActivityService extends ATutorService implements ActivityService {
       throw new SocialSpiException("Invalid activity id(s)", ResponseError::$NOT_FOUND);
     }
   }
+
+  /** 
+   * Update Activities, based on Opensocial v8.1
+   * http://www.opensocial.org/Technical-Resources/opensocial-spec-v081/rpc-protocol.html
+   * @param		String userId = "@me"
+   * @param		String groupId = "@self"
+   * @param		String appId = auth.AppId
+   * @param		Object Activity activity 	
+   * @param		AuthToken auth = HttpRequest.Authorization
+   * @return	opensocial.Activity
+   * @date		Apr 23, 2010
+   * @author	Harris Wong
+   *
+   * Note: Shindig 1.0 shindig/php/src/social/spi/ActivityService.php does not support this.
+   */
+  public function updateActivity($userId, $groupId, $appId, $activity, SecurityToken $token) {
+    throw new SocialSpiException("Not implemented", ResponseError::$NOT_IMPLEMENTED);
+  }
 }
 ?>
