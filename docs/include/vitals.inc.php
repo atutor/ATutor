@@ -33,6 +33,22 @@ function unregister_GLOBALS() {
    }
 }
 
+//functions for properly escaping input strings
+function my_add_null_slashes( $string ) {
+    return mysql_real_escape_string(stripslashes($string));
+}
+function my_null_slashes($string) {
+    return $string;
+}
+
+if ( get_magic_quotes_gpc() == 1 ) {
+    $addslashes   = 'my_add_null_slashes';
+    $stripslashes = 'stripslashes';
+} else {
+    $addslashes   = 'mysql_real_escape_string';
+    $stripslashes = 'my_null_slashes';
+}
+
 /*
  * structure of this document (in order):
  *
@@ -518,10 +534,10 @@ function add_user_online() {
 	if (!isset($_SESSION['member_id']) || !($_SESSION['member_id'] > 0)) {
 		return;
 	}
-	global $db;
+	global $db, $addslashes;
 
     $expiry = time() + 900; // 15min
-    $sql    = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.addslashes(get_display_name($_SESSION['member_id'])).'", '.$expiry.')';
+    $sql    = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.$addslashes(get_display_name($_SESSION['member_id'])).'", '.$expiry.')';
     $result = mysql_query($sql, $db);
 
 	/* garbage collect and optimize the table every so often */
@@ -623,10 +639,10 @@ function assign_session_prefs($prefs) {
 }
 
 function save_prefs( ) {
-	global $db;
+	global $db, $addslashes;
 
 	if ($_SESSION['valid_user']) {
-		$data	= addslashes(serialize($_SESSION['prefs']));
+		$data	= $addslashes(serialize($_SESSION['prefs']));
 		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'", creation_date=creation_date, last_login=last_login WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql, $db); 
 	}
@@ -777,22 +793,6 @@ if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 		$_my_uri .= htmlentities(SEP);
 	}
 	$_my_uri = $_SERVER['PHP_SELF'].$_my_uri;
-
-function my_add_null_slashes( $string ) {
-    return mysql_real_escape_string(stripslashes($string));
-}
-function my_null_slashes($string) {
-	return $string;
-}
-
-if ( get_magic_quotes_gpc() == 1 ) {
-	$addslashes   = 'my_add_null_slashes';
-	$stripslashes = 'stripslashes';
-} else {
-	$addslashes   = 'mysql_real_escape_string';
-	$stripslashes = 'my_null_slashes';
-}
-
 
 /**
  * If MBString extension is loaded, 4.3.0+, then use it.
@@ -1143,10 +1143,10 @@ if (isset($_GET['expand'])) {
 * @author  Shozub Qureshi
 */
 function write_to_log($operation_type, $table_name, $num_affected, $details) {
-	global $db;
+	global $db, $addslashes;
 
 	if ($num_affected > 0) {
-		$details = addslashes(stripslashes($details));
+		$details = $addslashes(stripslashes($details));
 		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', NULL, $operation_type, '$table_name', $num_affected, '$details')";
 		$result = mysql_query($sql, $db);
 	}
