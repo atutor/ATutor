@@ -59,7 +59,14 @@ global $system_courses;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_path; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<?php echo $this->custom_css; ?>
+    <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+    <script language="javascript" type="text/javascript">
+    //<!--
+    jQuery.noConflict();
+    //-->
+    </script>
+    <?php echo $this->custom_css; ?>
+    <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="setstates(); <?php echo $this->onload; ?>"><script language="javascript" type="text/javascript">
 //<!--

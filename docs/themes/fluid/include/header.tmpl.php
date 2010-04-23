@@ -76,7 +76,14 @@ global $system_courses, $_custom_css, $db, $_base_path;
 	<?php endif; ?>
 	<script type="text/javascript" src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
-	<?php echo $this->custom_css; ?>
+    <script language="javascript" type="text/javascript">
+    //<!--
+    jQuery.noConflict();
+    //-->
+    </script>
+    <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+    <?php echo $this->custom_css; ?>
+    <style id="pref_style" type="text/css"></style> 
 </head>
 
 <body onload="<?php echo $this->onload; ?>">
