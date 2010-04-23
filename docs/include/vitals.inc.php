@@ -241,6 +241,13 @@ if ($_config['time_zone']) {
 	$savant = new Savant2();
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
+	//if user has requested theme change, make the change here
+	if ($_POST['theme'] && $_POST['submit']) {
+	    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
+	} else if ($_POST['set_default'] && $_SESSION['prefs']['PREF_THEME'] != 'default') {
+	    $_SESSION['prefs']['PREF_THEME'] = 'default';
+	}
+	
 	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
 	// When more mobile themes come in, this should be changed.
 	if (stripos($_SERVER['HTTP_USER_AGENT'], 'mobile')) {
