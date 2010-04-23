@@ -48,9 +48,6 @@ class ATutorActivityService extends ATutorService implements ActivityService {
 
   public function createActivity($userId, $groupId, $appId, $fields, $activity, SecurityToken $token) {
     try {
-		print_r($token);
-		print_r($token->getOwnerId());
-		print_r($token->getViewerId());
       if ($token->getOwnerId() != $token->getViewerId()) {
         throw new SocialSpiException("unauthorized: Create activity permission denied.", ResponseError::$UNAUTHORIZED);
       }
@@ -62,6 +59,18 @@ class ATutorActivityService extends ATutorService implements ActivityService {
     }
   }
 
+
+  /**
+   * Delete activity
+   * @param		String userId = "@me"
+   * @param		String groupId = "@self"
+   * @param		String appId = auth.AppId
+   * @param		String activityId 	
+   * @param		AuthToken auth = HttpRequest.Authorization
+   * @return	Void
+   *
+   * Check http://www.atutor.ca/atutor/mantis/view.php?id=4230 for details regarding to $activityId
+   */
   public function deleteActivities($userId, $groupId, $appId, $activityIds, SecurityToken $token) {
     $ids = $this->getIdSet($userId, $groupId, $token);
     if (count($ids) < 1 || count($ids) > 1) {

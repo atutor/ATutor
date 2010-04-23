@@ -1,24 +1,22 @@
 <?php
+/***********************************************************************/
+/* ATutor															   */
+/***********************************************************************/
+/* Copyright (c) 2002-2009											   */
+/* Adaptive Technology Resource Centre / Inclusive Design Institute	   */
+/* http://atutor.ca													   */
+/*																	   */
+/* This program is free software. You can redistribute it and/or	   */
+/* modify it under the terms of the GNU General Public License		   */
+/* as published by the Free Software Foundation.					   */
+/***********************************************************************/
 // $Id$
-/**
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 
+
+/**
+ * This is developed based on the v8.1 Opensocial specification
+ * http://www.opensocial.org/Technical-Resources/opensocial-spec-v081/rpc-protocol
+ */
 class ATutorDbFetcher {
   private $url_prefix;
   private $cache;
@@ -105,7 +103,7 @@ class ATutorDbFetcher {
 //    $body = isset($activity['body']) ? $activity['body'] : '';
     $title = mysql_real_escape_string($title);
 //    $body = mysql_real_escape_string($body);
-	$sql = "insert into ".TABLE_PREFIX."social_activities (id, member_id, application_id, title, created_date) values (0, $member_id, $app_id, '$title', NOW())";
+	$sql = "INSERT INTO ".TABLE_PREFIX."social_activities (member_id, application_id, title, created_date) values ($member_id, $app_id, '$title', NOW())";
     mysql_query($sql, $this->db);
     if (! ($activityId = mysql_insert_id($this->db))) {
       return false;
@@ -151,14 +149,13 @@ class ATutorDbFetcher {
       foreach ($activityIds as $key => $val) {
         $activityIds[$key] = mysql_real_escape_string($val);
       }
-      $activityIdQuery = " and activities.id in (".implode(',', $activityIds);
+      $activityIdQuery = " AND id IN (".implode(',', $activityIds);
     } else {
       $activityIdQuery = '';
     }
     // return a proper totalResults count
-	$sql = "select count(id) from ".TABLE_PREFIX."social_activities where ".TABLE_PREFIX."activities.person_id in ($ids) $activityIdQuery";
+	$sql = "SELECT count(id) FROM ".TABLE_PREFIX."social_activities WHERE member_id in ($ids) $activityIdQuery";
     $res = mysql_query($sql, $this->db);
-
     if ($res !== false) {
       list($totalResults) = mysql_fetch_row($res);
     } else {
@@ -169,32 +166,17 @@ class ATutorDbFetcher {
     $activities['totalResults'] = $totalResults;
     $activities['startIndex'] = $startIndex;
     $activities['count'] = $count;
-    $query = "
-			select 
-				".TABLE_PREFIX."social_activities.member_id as member_id,
-				".TABLE_PREFIX."social_activities.id as activity_id,
-				".TABLE_PREFIX."social_activities.title as title,
-				".TABLE_PREFIX."social_activities.created as created
-			from 
-				".TABLE_PREFIX."social_activities
-			where
-				".TABLE_PREFIX."social_activities.member_id in ($ids)
-				$activityIdQuery
-			order by 
-				created desc
-			limit 
-				$startIndex, $count
-			";
+    $query = "SELECT member_id, id, title, created_date FROM ".TABLE_PREFIX."social_activities WHERE member_id in ($ids) $activityIdQuery order by created_date desc limit $startIndex, $count";
     $res = mysql_query($query, $this->db);
     if ($res) {
-      if (@mysql_num_rows($res)) {
-        while ($row = @mysql_fetch_assoc($res)) {
-          $activity = new Activity($row['activity_id'], $row['member_id']);
+      if (mysql_num_rows($res)) {
+        while ($row = mysql_fetch_assoc($res)) {
+          $activity = new Activity($row['id'], $row['member_id']);
           $activity->setStreamTitle('activities');
-          $activity->setTitle($row['activity_title']);
+          $activity->setTitle($row['title']);
 //          $activity->setBody($row['activity_body']);
-          $activity->setPostedTime($row['created']);
-          $activity->setMediaItems($this->getMediaItems($row['activity_id']));
+          $activity->setPostedTime($row['created_date']);
+          $activity->setMediaItems($this->getMediaItems($row['id']));
           $activities[] = $activity;
         }
       } elseif (isset($activityIds) && is_array($activityIds)) {
@@ -207,17 +189,21 @@ class ATutorDbFetcher {
     }
   }
 
+  /**
+   * Delete activity
+   *
+   * Check http://www.atutor.ca/atutor/mantis/view.php?id=4230 for details regarding to $activityId
+   */
   public function deleteActivities($userId, $appId, $activityIds) {
     $this->checkDb();
     foreach ($activityIds as $key => $val) {
-      $activityIds[$key] = mysql_real_escape_string($val);
+      $activityIds[$key] = intval($val);
     }
     $activityIds = implode(',', $activityIds);
     $userId = intval($userId);
     $appId = intval($appId);
 	//can use this instead: 	$sql = "delete from ".TABLE_PREFIX."social_activities where id in ($activityIds)";
-	$sql = "delete from ".TABLE_PREFIX."social_activities where member_id = $userId and application_id = $appId and id in ($activityIds)";
-	
+	$sql = "DELETE FROM ".TABLE_PREFIX."social_activities WHERE member_id = $userId and application_id = $appId AND id IN ($activityIds)";
     mysql_query($sql, $this->db);
     return (mysql_affected_rows($this->db) != 0);
   }

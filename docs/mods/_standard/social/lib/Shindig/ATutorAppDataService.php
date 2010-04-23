@@ -61,8 +61,6 @@ class ATutorAppDataService extends ATutorService implements AppDataService {
         foreach ($fields as $key) {
           $value = isset($values[$key]) ? $values[$key] : null;
           if (! ATutorDbFetcher::get()->setAppData($userId->getUserId($token), $key, $value, $token->getAppId())) {
-// use the following for opensocial-client testing.  
-//          if (! ATutorDbFetcher::get()->setAppData($userId->getUserId($token), $key, $value, $appId)) {
             throw new SocialSpiException("Internal server error", ResponseError::$INTERNAL_ERROR);
           }
         }
