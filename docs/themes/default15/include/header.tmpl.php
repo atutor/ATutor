@@ -70,13 +70,6 @@ global $system_courses;
 </head>
 <body onload="setstates(); <?php echo $this->onload; ?>"><script language="javascript" type="text/javascript">
 //<!--
-
-var newwindow;
-function poptastic(url) {
-	newwindow=window.open(url,'popup','height=700,width=700,scrollbars=yes,resizable=yes');
-	if (window.focus) {newwindow.focus()}
-}
-
 function getexpirydate(nodays){
 	var UTCstring;
 	Today = new Date();

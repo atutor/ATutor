@@ -26,7 +26,7 @@
 			<input type="submit" value="<?php echo _AT('show_your_applications'); ?>" class="button" />	
 			<?php endif; ?>
 			</form>
-			<button type="button"  onclick="poptastic('http://atutor.ca/get_gadgets.php')" class="button" /><?php echo _AT('find_gadgets'); ?></button>
+			<button type="button"  onclick="ATutor.poptastic('http://atutor.ca/get_gadgets.php')" class="button" /><?php echo _AT('find_gadgets'); ?></button>
 		</div>
 </div>
 

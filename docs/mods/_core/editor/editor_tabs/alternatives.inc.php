@@ -61,7 +61,7 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 			{
 				echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
 				echo '      <a href="'.get_preview_link($secondary_resource['secondary_resource']).'" title="'._AT('new_window').'" target="_new">'.$secondary_resource['secondary_resource'].'</a><br />'."\n";
-				echo '      <a href="#" onclick="poptastic(\''.AT_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
+				echo '      <a href="#" onclick="ATutor.poptastic(\''.AT_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
 				echo '        <img src="'.AT_BASE_HREF.'images/home-tests_sm.png" border="0" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
 				echo '      </a>'."\n";
 				echo '      <a href="#" onclick="removeAlternative(\''.$content_row['content_path'].'\', '.$content_id.','.$pid.','.$alternative_type.');return false;">'."\n";
@@ -76,7 +76,7 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 	if (!$found_alternative)
 	{
 		echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
-		echo '      <input type="button" value="'._AT('add').'" title="'._AT('new_window').'" onclick="poptastic(\''.AT_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" />'."\n";
+		echo '      <input type="button" value="'._AT('add').'" title="'._AT('new_window').'" onclick="ATutor.poptastic(\''.AT_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" />'."\n";
 		echo '    </div>'."\n";
 	}
 	echo '    </td>'."\n";
@@ -234,7 +234,7 @@ function removeAlternative(contentPath, cid, pid, a_type)
 			{"pid":pid, "a_type":a_type}, 
 			function(data) {});
 
-	var button_html = '      <input type="button" value="<?php echo _AT('add'); ?>" title="<?php echo _AT('new_window'); ?>" onclick="poptastic(\\\'<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp='+contentPath+'<?php echo SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" />';
+	var button_html = '      <input type="button" value="<?php echo _AT('add'); ?>" title="<?php echo _AT('new_window'); ?>" onclick="ATutor.poptastic(\\\'<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp='+contentPath+'<?php echo SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" />';
 	eval("document.getElementById(\""+pid+"_"+a_type+"\").innerHTML = '"+button_html+"'");
 }
 //-->

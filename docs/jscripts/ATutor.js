@@ -17,6 +17,14 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 
 (function() {
 	
+	ATutor.poptastic = function (url) {
+		var newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
+		if (window.focus) {
+			newwindow.focus();
+		}
+	};
+
+	
 	//styles block for user preferences
 	//used by ATutor.users.preferences.setStyles
     ATutor.users.preferences.user_styles = 

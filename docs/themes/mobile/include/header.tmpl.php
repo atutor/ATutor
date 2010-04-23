@@ -90,17 +90,13 @@ jQuery('#content_link').click(function(e) {
 	jQuery.noConflict();
 	//-->
 	</script>
-<?php echo $this->custom_css; ?>
+    <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+    <?php echo $this->custom_css; ?>
+    <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
 //<!--
-var newwindow;
-function poptastic(url) {
-	newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
-	if (window.focus) {newwindow.focus()}
-}
-
 function getexpirydate(nodays){
 	var UTCstring;
 	Today = new Date();
