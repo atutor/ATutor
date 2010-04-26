@@ -14,7 +14,7 @@
 		<td valign="top" style="width: 25%">
 		<script type="text/javascript">
 		//<![CDATA[
-		var state = getcookie("side-menu");
+		var state = ATutor.getcookie("side-menu");
 		if (state && (state == 'none')) {
 			document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu">');
 		} else {

@@ -9,7 +9,7 @@
 		<td valign="top">
 		<script type="text/javascript">
 		//<![CDATA[
-		var state = getcookie("side-menu");
+		var state = ATutor.getcookie("side-menu");
 		if (state && (state == 'none')) {
 			document.writeln('<div style="display:none;" id="side-menu">');
 		} else {

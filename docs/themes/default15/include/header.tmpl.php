@@ -68,62 +68,8 @@ global $system_courses;
     <?php echo $this->custom_css; ?>
     <style id="pref_style" type="text/css"></style> 
 </head>
-<body onload="setstates(); <?php echo $this->onload; ?>"><script language="javascript" type="text/javascript">
+<body onload="<?php echo $this->onload; ?>"><script language="javascript" type="text/javascript">
 //<!--
-function getexpirydate(nodays){
-	var UTCstring;
-	Today = new Date();
-	nomilli=Date.parse(Today);
-	Today.setTime(nomilli+nodays*24*60*60*1000);
-	UTCstring = Today.toUTCString();
-	return UTCstring;
-}
-
-function setcookie(name,value,duration){
-	cookiestring=name+"="+escape(value)+";path=/;expires="+getexpirydate(duration);
-	document.cookie=cookiestring;
-	if(!getcookie(name)){
-		return false;
-	} else {
-		return true;
-	}
-}
-
-function getcookie(cookiename) {
-	var cookiestring=""+document.cookie;
-	var index1=cookiestring.indexOf(cookiename);
-	if (index1==-1 || cookiename=="") return ""; 
-	var index2=cookiestring.indexOf(';',index1);
-	if (index2==-1) index2=cookiestring.length; 
-	return unescape(cookiestring.substring(index1+cookiename.length+1,index2));
-}
-
-function setDisplay(objId) {
-	var toc = document.getElementById(objId);
-
-	var state = getcookie(objId);
-	if (document.getElementById(objId) && state && (state == 'none')) {
-		toggleToc(objId);
-	}
-}
-
-
-function setstates() {
-	return;
-	var objId = "side-menu";
-	var state = getcookie(objId);
-	if (document.getElementById(objId) && state && (state == 'none')) {
-		toggleToc(objId);
-	}
-
-	var objId = "toccontent";
-	var state = getcookie(objId);
-	if (document.getElementById(objId) && state && (state == 'none')) {
-		toggleToc(objId);
-	}
-	return true;
-}
-
 function showTocToggle(objId, show, hide, key, selected) {
 	if(document.getElementById) {
 		if (key) {
@@ -160,7 +106,7 @@ function toggleToc(objId) {
 		hidelink.style.display='none';
 		showlink.style.display='';
 	}
-	setcookie(objId, toc.style.display, 1);
+	ATutor.setcookie(objId, toc.style.display, 1);
 }
 //-->
 </script>
@@ -301,7 +247,7 @@ function toggleToc(objId) {
 		<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
-			var state = getcookie("side-menu");
+			var state = ATutor.getcookie("side-menu");
 			if (state && (state == 'none')) {
 				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
 			} else {

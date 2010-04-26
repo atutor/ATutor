@@ -15,7 +15,7 @@ $compact_title = str_replace(' ', '', $this->title);
 </div>
 
 <script language="javascript" type="text/javascript">
-if (getcookie("m_<?php echo $this->title; ?>") == "0")
+if (ATutor.getcookie("m_<?php echo $this->title; ?>") == "0")
 {
 	jQuery("#menu_<?php echo $compact_title; ?>").hide();
 }

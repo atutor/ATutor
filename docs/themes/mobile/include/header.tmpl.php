@@ -97,44 +97,6 @@ jQuery('#content_link').click(function(e) {
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
 //<!--
-function getexpirydate(nodays){
-	var UTCstring;
-	Today = new Date();
-	nomilli=Date.parse(Today);
-	Today.setTime(nomilli+nodays*24*60*60*1000);
-	UTCstring = Today.toUTCString();
-	return UTCstring;
-}
-
-function setcookie(name,value,duration){
-	cookiestring=name+"="+escape(value)+";path=/;expires="+getexpirydate(duration);
-	document.cookie=cookiestring;
-	if(!getcookie(name)){
-		return false;
-	} else {
-		return true;
-	}
-}
-
-function getcookie(cookiename) {
-	var cookiestring=""+document.cookie;
-	var index1=cookiestring.indexOf(cookiename);
-	if (index1==-1 || cookiename=="") return ""; 
-	var index2=cookiestring.indexOf(';',index1);
-	if (index2==-1) index2=cookiestring.length; 
-	return unescape(cookiestring.substring(index1+cookiename.length+1,index2));
-}
-
-function setDisplay(objId) {
-	var toc = document.getElementById(objId);
-
-	var state = getcookie(objId);
-	if (document.getElementById(objId) && state && (state == 'none')) {
-		toggleToc(objId);
-	}
-}
-
-
 function showTocToggle(objId, show, hide, key, selected) {
 	if(document.getElementById) {
 		if (key) {
@@ -174,7 +136,7 @@ function toggleToc(objId) {
 		hidelink.style.display='none';
 		showlink.style.display='';
 	}
-	setcookie(objId, hidelink.style.display, 1);
+	ATutor.setcookie(objId, hidelink.style.display, 1);
 }
 
 // toggle content folder in side menu "content navigation"
@@ -183,12 +145,12 @@ function toggleFolder(cid)
 	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
 		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
-		setcookie("c<?php echo $this->course_id;?>_"+cid, null, 1);
+		ATutor.setcookie("c<?php echo $this->course_id;?>_"+cid, null, 1);
 	}
 	else {
 		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
 		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
-		setcookie("c<?php echo $this->course_id;?>_"+cid, "1", 1);
+		ATutor.setcookie("c<?php echo $this->course_id;?>_"+cid, "1", 1);
 	}
 	
 	jQuery("#folder"+cid).slideToggle();
@@ -204,14 +166,14 @@ function elementToggle(elem, title)
 		jQuery(elem).attr("src", element_expand_icon);
 		jQuery(elem).attr("alt", "<?php echo _AT('show'). ' '; ?>"+ title);
 		jQuery(elem).attr("title", "<?php echo _AT('show'). ' '; ?>"+ title);
-		setcookie("m_"+title, 0, 1);
+		ATutor.setcookie("m_"+title, 0, 1);
 	}
 	else {
 		jQuery(elem).attr("src", element_collapse_icon);
 		jQuery(elem).attr("alt", "<?php echo _AT('collapse'); ?>");
 		jQuery(elem).attr("alt", "<?php echo _AT('hide'). ' '; ?>"+ title);
 		jQuery(elem).attr("title", "<?php echo _AT('hide'). ' '; ?>"+ title);
-		setcookie("m_"+title, null, 1);;
+		ATutor.setcookie("m_"+title, null, 1);;
 	}
 	
 	jQuery(elem).parent().next().slideToggle();
