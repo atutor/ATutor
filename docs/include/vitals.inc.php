@@ -830,7 +830,7 @@ if(isset($_COOKIE["flash"])){
     $_SESSION['flash'] = $_COOKIE["flash"];
 
     //delete the cookie
-    setcookie("flash",'',time()-3600);
+    ATutor.setcookie("flash",'',time()-3600);
 }
 
 if (!isset($_SESSION["flash"])) {
