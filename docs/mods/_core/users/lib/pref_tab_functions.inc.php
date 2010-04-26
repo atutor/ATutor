@@ -242,8 +242,8 @@ global $db;
 	}
 	
 	//set cookies and boolean value indicating cookies have been set.ies
-	$is_cookie_login_set = setcookie('ATLogin', $login, $time, $path);
-	$is_cookie_pass_set = setcookie('ATPass',  $password, $time, $path);
+	$is_cookie_login_set = ATutor.setcookie('ATLogin', $login, $time, $path);
+	$is_cookie_pass_set = ATutor.setcookie('ATPass',  $password, $time, $path);
 	if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = $toDo;
 	return $is_auto_login;
 }
