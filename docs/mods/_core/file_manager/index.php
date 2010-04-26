@@ -33,7 +33,7 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
     /* Provide the option of switching between Fluid Uploader and simple single file uploader
        and save the user preference as a cookie */
     if (!isset($_COOKIE["fluid_on"]))
-        setcookie("fluid_on", "yes", time()+1200); 
+        ATutor.setcookie("fluid_on", "yes", time()+1200); 
 
     $fluid_dir = 'jscripts/infusion/';
     $framed = intval($_GET['framed']);
