@@ -45,7 +45,7 @@ global $system_courses;
 	<style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>"><div class="input-form"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('close_file_manager'); ?></a></div>
+<br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('close_window'); ?></a></div>
 <a name="content"></a>
 
 <?php global $msg; $msg->printAll(); ?>

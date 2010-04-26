@@ -25,11 +25,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	<div class="row">
 	    <span>
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ctitle"><?php echo _AT('title');  ?></label>
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ctitle"><strong><?php echo _AT('title');  ?></strong></label>
 		<input type="text" name="title" id="ctitle" size="60" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
         </span>
         <span class="nowrap">
-        <label for="formatting_radios"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('formatting'); ?></label>
+        <label for="formatting_radios"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><strong><?php echo _AT('formatting'); ?></strong></label>
         <span class="bordered" id="formatting_radios">
             <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> />
             <label for="text"><?php echo _AT('plain_text'); ?></label>
@@ -45,7 +45,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 <?php
 		if ($content_row['content_path']) {
-			echo '	<div class="row">'._AT('packaged_in').'<br />'.$content_row['content_path'].'</div>';
+			echo '	<div class="row"><strong>'._AT('packaged_in').':</strong>&nbsp;&nbsp;'.$content_row['content_path'].'</div>';
 		}
         if (trim($_POST['head']) == '<br />') {
 	      $_POST['head'] = '';
@@ -64,10 +64,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         ATutor.mods.editor.paste_disabled_title = "<?php echo _AT('paste_disabled_title'); ?>";
         ATutor.mods.editor.fileman_enabled_title = "<?php echo _AT('fileman_enabled_title').' - '._AT('new_window'); ?>";
         ATutor.mods.editor.fileman_disabled_title = "<?php echo _AT('fileman_disabled_title'); ?>";
+        ATutor.mods.editor.accessibility_enabled_title = "<?php echo _AT('accessibility_enabled').' - '._AT('new_window'); ?>";
+        ATutor.mods.editor.accessibility_disabled_title = "<?php echo _AT('accessibility_disabled'); ?>";
+        ATutor.mods.editor.processing_text = "<?php echo _AT('processing'); ?>";
     //-->
     </script>
     
-    <div class="fl-container fl-fix">
+    <div class="row fl-container fl-fix">
+        <img id="previewtool" class="fl-col clickable" src="<?php echo AT_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" />
+        <img id="accessibilitytool" class="fl-col" src="" title="" height="30" width="30" />
         <img id="headtool" class="fl-col" src="" title="" height="30" width="30" />
         <img id="pastetool" class="fl-col" title="" src="" height="30" width="30"/>      
         <img id="filemantool" class="fl-col" title="" src="" height="30" width="30" />
@@ -80,11 +85,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             $sql_assoc = "SELECT * FROM ".TABLE_PREFIX.$tool['table']." WHERE content_id='$cid'";
             $result_assoc = mysql_query($sql_assoc,$db);
 
-            //TODO LAW language 'added' and 'none' below
             if($num_row = mysql_num_rows($result_assoc)){
-                $tool['alt'] = $tool['title'].' added';
+                $tool['alt'] = $tool['title'].' '._AT('added');
             } else {
-                $tool['alt'] = $tool['title'].' none';
+                $tool['alt'] = $tool['title'].' '._AT('none');
             }
 
             $count++; 
@@ -114,18 +118,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		
     <!-- Paste from file -->
    	<div id="paste" class="row">
-       	<div><?php echo _AT('paste_file')?><small><?php echo _AT('html_only'); ?></small></div>
-   		<!-- TODO LAW language title -->
-       	<input title="Browse for file to upload" type="file" name="uploadedfile_paste" id="uploadedfile" class="formfield" size="20" /> 
+       	<div><?php echo _AT('paste_file')?><small>(<?php echo _AT('html_only'); ?>)</small></div>
+       	<input title="<?php echo _AT('browse_for_upload'); ?>" type="file" name="uploadedfile_paste" id="uploadedfile" class="formfield" size="20" /> 
        	<input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>"  class="button" />
-    
-       	<!-- TODO LAW still trying to change the paste tool to use an icon and a dialog -->
-       	<!-- TODO LAW once this is figured out, move this click handler to edit.js -->
-        <script type="text/javascript" language="javascript">
-        //<!--
-//                document.write(" <a href=\"#\" onclick=\"window.open('<?php echo AT_BASE_HREF; ?>mods/_core/editor/editor_tabs/pastefromfile.php','newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=490'); return false;\"><img class='fl-centered' src=\"<?php echo $_base_path; ?>images/paste_plain.png\" alt=\"Paste from file\" height='16' width='16' /></a>");
-        //-->
-        </script>       
     </div>
    
     <?php 
@@ -140,7 +135,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
     <div class="row">
         <span id="textSpan">
-            <label for="body_text"><?php echo _AT('body');  ?></label>
+            <label for="body_text"><strong><?php echo _AT('body');  ?></strong></label>
 		    <textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']);?></textarea>
 		</span>
 		<span id="weblinkSpan">	

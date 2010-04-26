@@ -34,6 +34,11 @@ $this->_pages['mods/_core/editor/edit_content.php']['title_var'] = 'edit_content
 $this->_pages['mods/_core/editor/edit_content.php']['parent']    = 'mods/_core/content/index.php';
 $this->_pages['mods/_core/editor/edit_content.php']['guide']     = 'instructor/?p=creating_editing_content.php';
 
+$this->_pages['mods/_core/editor/preview.php']['title_var'] = 'preview';
+$this->_pages['mods/_core/editor/preview.php']['parent']    = 'mods/_core/content/edit_content.php';
+
+$this->_pages['mods/_core/editor/accessibility.php']['title_var'] = 'accessibility';
+$this->_pages['mods/_core/editor/accessibility.php']['parent']    = 'mods/_core/content/edit_content.php';
 
 //instructors
 $this->_pages['mods/_core/imscp/index.php']['title_var'] = 'content_packaging';

@@ -88,8 +88,6 @@ if (isset($_POST['submit'])) {
 
 if (!isset($current_tab) && isset($_POST['button_1']) && ($_POST['button_1'] == -1) && !isset($_POST['submit'])) {
 	$current_tab = 1;
-} else if (!isset($current_tab) && (($_POST['desc_submit'] != '') || ($_POST['reverse'] != ''))) {
-	$current_tab = 4;  /* after clicking 'make decisions' on accessibility tab */
 } else if (!isset($current_tab)) {
 	$current_tab = 0;
 }
@@ -139,14 +137,7 @@ if ($cid) {
 	}
 }
 
-if ($current_tab == 4) {
-	/* kludge for issue #1626: */
-	/* fixes the base href for the AChecker tab. */
-	$course_base_href = '';
-	$content_base_href = '';
-}
-
-if (($current_tab == 0) || ($_current_tab == 5)) {
+if (($current_tab == 0) || ($_current_tab == 3)) {
     if ($_POST['formatting'] == null){ 
         // this is a fresh load from just logged in
 	    if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 0) {
@@ -157,15 +148,9 @@ if (($current_tab == 0) || ($_current_tab == 5)) {
     }
 }
 
-// initialize buttons, texts, radio buttons for editor
-//if ($current_tab == 0) 
-//{
-//    $onload.="ATutor.mods.editor.on_load('". $_SESSION['prefs']['PREF_CONTENT_EDITOR']."');";
-//}
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if ($current_tab == 0 || $current_tab == 5) 
+if ($current_tab == 0 || $current_tab == 3) 
 {
     $simple = true;
     if ($_POST['complexeditor'] == '1') {
@@ -267,7 +252,7 @@ $pid = intval($_REQUEST['pid']);
 		echo '<input type="hidden" name="folder_title" value="'.htmlspecialchars($stripslashes($_POST['folder_title'])).'" />';
 	}
 	echo '<input type="submit" name="submit" style="display:none;"/>';
-	if (($current_tab != 0) && (($_current_tab != 5))) {
+	if (($current_tab != 0) && (($_current_tab != 3))) {
         echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
         echo '<input type="hidden" name="weblink_text" value="'.htmlspecialchars($stripslashes($_POST['weblink_text'])).'" />';
         echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
@@ -310,7 +295,7 @@ $pid = intval($_REQUEST['pid']);
 	if (is_array($word)) {
 		/* update $_POST['glossary_defs'] with any new/changed terms */
 		for($i=0; $i<$num_terms; $i++) {
-			$word[$i] = urlencode($word[$i]);
+			$word[$i] = $word[$i];
 			if (!isset($_POST['glossary_defs'][$word[$i]])) {
 				$_POST['glossary_defs'][$word[$i]] = $glossary[$word[$i]];
 			}
@@ -347,7 +332,7 @@ $pid = intval($_REQUEST['pid']);
 		$row_alternatives['alt_'.$type['primary_resource_id'].'_'.$type['type_id']] = 1;
 	}
 	
-	if ($current_tab != 5 && isset($_POST['use_post_for_alt']))
+	if ($current_tab != 3 && isset($_POST['use_post_for_alt']))
 	{
 		echo '<input type="hidden" name="use_post_for_alt" value="1" />';
 		if (is_array($_POST)) {
@@ -360,7 +345,7 @@ $pid = intval($_REQUEST['pid']);
 	}
 	
 	//tests
-	if ($current_tab != 6){
+	if ($current_tab != 4){
 		// set content associated tests
 		if (is_array($_POST['tid'])) {
 			foreach ($_POST['tid'] as $i=>$tid){
@@ -393,7 +378,7 @@ $pid = intval($_REQUEST['pid']);
 			}
 		}
 	} 
-	if (!isset($_POST['allow_test_export']) && $current_tab != 6) {
+	if (!isset($_POST['allow_test_export']) && $current_tab != 4) {
 		//export flag handling.
 		$sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
 		$result2 = mysql_query($sql, $db);

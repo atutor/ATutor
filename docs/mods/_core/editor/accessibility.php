@@ -12,7 +12,32 @@
 /************************************************************************/
 // $Id: accessibility.inc.php 8901 2009-11-11 19:10:19Z cindy $
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+define('AT_INCLUDE_PATH', '../../../include/');
+
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tab_functions.inc.php');
+
+$cid = intval($_POST['cid']);
+
+if ($cid == 0) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$missing_fields[] = _AT('content_id');
+	$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+$result = $contentManager->getContentPage($cid);
+
+if (!($content_row = @mysql_fetch_assoc($result))) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printErrors('PAGE_NOT_FOUND');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+$course_base_href = '';
+$content_base_href = '';
 
 //make decisions
 if ($_POST['make_decision']) 
@@ -46,6 +71,7 @@ else if (isset($_POST['reverse']))
 	}
 }
 
+require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 	<div class="row">
 		<?php 					
@@ -66,7 +92,6 @@ else if (isset($_POST['reverse']))
 			write_temp_file();
 
 			$pg_url = AT_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
-
 			$checker_url = AT_ACHECKER_URL.'checkacc.php?uri='.urlencode($pg_url).'&id='.AT_ACHECKER_WEB_SERVICE_ID
 							. '&guide=WCAG2-L2&output=html';
 
@@ -91,3 +116,6 @@ else if (isset($_POST['reverse']))
 
 	?>
 	</div>
+<?php 
+require(AT_INCLUDE_PATH.'footer.inc.php');
+?>
