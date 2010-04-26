@@ -137,8 +137,8 @@ if (isset($this_login, $this_password)) {
 			$parts = parse_url($_base_href);
 			// update the cookie.. increment to another 2 days
 			$cookie_expire = time()+172800;
-			setcookie('ATLogin', $this_login, $cookie_expire, $parts['path']);
-			setcookie('ATPass',  $row['pass'],  $cookie_expire, $parts['path']);
+			ATutor.setcookie('ATLogin', $this_login, $cookie_expire, $parts['path']);
+			ATutor.setcookie('ATPass',  $row['pass'],  $cookie_expire, $parts['path']);
 		}
 		
 		$_SESSION['first_login'] = false;
