@@ -73,49 +73,51 @@ else if (isset($_POST['reverse']))
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
-	<div class="row">
-		<?php 					
-			echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?popup=1" method="post" name="form">
+  <div class="row">
+<?php 					
+	echo '    <input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
+	echo '    <input type="hidden" name="cid" value="'.$_POST['cid'].'" />';
+	
+	if (!$cid) {
+		$msg->printInfos('SAVE_CONTENT');
 
-			if (!$cid) {
-				$msg->printInfos('SAVE_CONTENT');
+		echo '  </div>';
 
-				echo '</div>';
+		return;
+	}
 
-				return;
-			}
+$msg->printInfos();
+if ($_POST['body_text'] != '') {
+	//save temp file
+	$_POST['content_path'] = $content_row['content_path'];
+	write_temp_file();
 
-		$msg->printInfos();
-		if ($_POST['body_text'] != '') {
-			//save temp file
-			$_POST['content_path'] = $content_row['content_path'];
-			write_temp_file();
+	$pg_url = AT_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
+	$checker_url = AT_ACHECKER_URL.'checkacc.php?uri='.urlencode($pg_url).'&id='.AT_ACHECKER_WEB_SERVICE_ID
+					. '&guide=WCAG2-L2&output=html';
 
-			$pg_url = AT_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
-			$checker_url = AT_ACHECKER_URL.'checkacc.php?uri='.urlencode($pg_url).'&id='.AT_ACHECKER_WEB_SERVICE_ID
-							. '&guide=WCAG2-L2&output=html';
+	$report = @file_get_contents($checker_url);
 
-			$report = @file_get_contents($checker_url);
+	if (stristr($report, '<div id="error">')) {
+		$msg->printErrors('INVALID_URL');
+	} else if ($report === false) {
+		$msg->printInfos('SERVICE_UNAVAILABLE');
+	} else {
+		echo '    <input type="hidden" name="pg_url" value="'.$pg_url.'" />';
+		echo $report;	
 
-			if (stristr($report, '<div id="error">')) {
-				$msg->printErrors('INVALID_URL');
-			} else if ($report === false) {
-				$msg->printInfos('SERVICE_UNAVAILABLE');
-			} else {
-				echo '<input type="hidden" name="pg_url" value="'.$pg_url.'" />';
-				echo $report;	
+		echo '    <p>'._AT('access_credit').'</p>';
+	}
+	//delete file
+	@unlink(AT_CONTENT_DIR . $_POST['cid'] . '.html');
 
-				echo '<p>'._AT('access_credit').'</p>';
-			}
-			//delete file
-			@unlink(AT_CONTENT_DIR . $_POST['cid'] . '.html');
-		
-		} else {
-			$msg->printInfos('NO_PAGE_CONTENT');
-		} 
-
-	?>
-	</div>
+} else {
+	$msg->printInfos('NO_PAGE_CONTENT');
+} 
+?>
+  </div>
+</form>
 <?php 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
