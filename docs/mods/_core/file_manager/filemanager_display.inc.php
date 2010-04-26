@@ -536,7 +536,7 @@ function setAlternative(file, file_preview_link, cid, pid, a_type) {
 
 	link_html = '\
       <a href="'+file_preview_link+'" title="<?php echo _AT('new_window'); ?>" target="_new">'+file+'</a><br /> \
-      <a href="#" onclick="poptastic(\\\'<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $cp.SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" title="<?php echo _AT('new_window'); ?>"> \
+      <a href="#" onclick="ATutor.poptastic(\\\'<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $cp.SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" title="<?php echo _AT('new_window'); ?>"> \
         <img src="<?php echo AT_BASE_HREF; ?>images/home-tests_sm.png" border="0" title="<?php echo _AT('alter'); ?>" alt="<?php echo _AT('alter'); ?>" /> \
       </a> \
       <a href="#" onclick="removeAlternative(\\\'<?php echo $cp; ?>\\\', '+cid+','+pid+','+a_type+');return false;"> \
