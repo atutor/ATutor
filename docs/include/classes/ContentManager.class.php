@@ -726,7 +726,7 @@ function initContentMenu() {
 		// collapse all root content folders
 		while ($row = mysql_fetch_assoc($result)) {
 			echo '
-	if (getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
+	if (ATutor.getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
 	{
 		jQuery("#folder"+'.$row['content_id'].').show();
 		jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
@@ -752,7 +752,7 @@ function initContentMenu() {
 	jQuery("#folder"+'.$current_content_path[$i]['content_id'].').show();
 	jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("src", tree_collapse_icon);
 	jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("alt", "'._AT("collapse").'");
-	setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
+	ATutor.setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
 ';
 		}
 		echo '}'; // end of javascript function initContentMenu()
