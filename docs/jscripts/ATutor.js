@@ -16,14 +16,47 @@ ATutor.users = ATutor.users || {};
 ATutor.users.preferences = ATutor.users.preferences || {};
 
 (function() {
-	
+	/**
+	 * A function to open a popup window
+	 */
 	ATutor.poptastic = function (url) {
 		var newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
 		if (window.focus) {
 			newwindow.focus();
 		}
 	};
+	
+	/**
+	 * Cookie handling
+	 */
+	var getexpirydate = function (nodays) {
+		var Today = new Date();
+		var nomilli = Date.parse(Today);
+		Today.setTime(nomilli + nodays * 24 * 60 * 60 * 1000);
+		return Today.toUTCString();
+	};
 
+	ATutor.setcookie = function (name, value, duration) {
+		document.cookie = name + "=" + escape(value) + ";path=/;expires=" + getexpirydate(duration);;
+		if( !ATutor.getcookie(name) ){
+			return false;
+		} else {
+			return true;
+		}
+	};
+
+	ATutor.getcookie = function (cookiename) {
+		var cookiestring = "" + document.cookie;
+		var index1 = cookiestring.indexOf(cookiename);
+		if (index1 == -1 || cookiename == "") {
+			return "";
+		}
+		var index2 = cookiestring.indexOf( ';', index1);
+		if (index2 == -1) {
+			index2 = cookiestring.length;
+		}
+		return unescape(cookiestring.substring(index1 + cookiename.length + 1, index2));
+	};
 	
 	//styles block for user preferences
 	//used by ATutor.users.preferences.setStyles
