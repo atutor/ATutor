@@ -95,7 +95,7 @@ class ATutorDbFetcher {
   public function createActivity($member_id, $activity, $app_id = '0') {
     $this->checkDb();
     $app_id = intval($app_id);
-    $person_id = intval($member_id);
+    $member_id = intval($member_id);
     $title = trim(isset($activity['title']) ? $activity['title'] : '');
     if (empty($title)) {
       throw new Exception("Invalid activity: empty title");
@@ -220,6 +220,46 @@ class ATutorDbFetcher {
 //    }
     return $media;
   }  
+
+  /**
+   * @param		Int						Sender's member id
+   * @param		appId					application id
+   * @param		Opensocial.Message		Message Object, check http://wiki.opensocial.org/index.php?title=Opensocial.Message_%28v0.8%29
+   * @return	null
+   */
+  public function createMessage($member_id, $appId, $message){
+	global $db;
+	$this->checkDb();
+	$app_id = intval($app_id);
+	$member_id = intval($member_id);
+	$recipients = $message['recipients'];
+	if (empty($message)) {
+	  throw new Exception("Invalid message: empty message");
+	}
+	if (empty($recipients)) {
+	  throw new Exception("Invalid message: No recipients");
+	}
+
+	//safe guard 
+	$body = mysql_real_escape_string($message['body']);
+	$subject = mysql_real_escape_string($message['title']);
+	foreach ($recipients as $key => $val) {
+      $recipients[$key] = intval($val);
+    }
+
+	//add message to every recipient's inbox.
+	foreach($recipients as $id){
+		if ($id==0){
+			continue;
+		}
+		$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (NULL, 0, $member_id, $id, NOW(), 1, 0, '$subject', '$body')";
+		$result = mysql_query($sql,$this->db);
+
+		// sent message box:
+		$sql = "INSERT INTO ".TABLE_PREFIX."messages_sent VALUES (NULL, 0, $member_id, $id, NOW(), '$subject', '$body')";
+		$result = mysql_query($sql,$this->db);
+	}
+  }
 
   public function getFriendIds($member_id) {
 	global $db;

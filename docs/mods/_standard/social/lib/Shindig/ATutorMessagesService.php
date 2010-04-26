@@ -14,7 +14,13 @@
 
 class ATutorMessagesService extends ATutorService implements MessagesService {
   public function createMessage($userId, $appId, $message, $optionalMessageId, SecurityToken $token) {
-    throw new SocialSpiException("Not implemented", ResponseError::$NOT_IMPLEMENTED);
+	try {
+		$messages = ATutorDbFetcher::get()->createMessage($userId, $token->getAppId(), $message);
+	} catch (SocialSpiException $e) {
+		throw $e;
+    } catch (Exception $e) {
+		throw new SocialSpiException("Invalid create message request: " . $e->getMessage(), ResponseError::$INTERNAL_ERROR);
+    }
   }
 }
 ?>
