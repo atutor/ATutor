@@ -21,9 +21,9 @@ $sql    = "SELECT username, SHA1(password) FROM ".TABLE_PREFIX."mahara WHERE at_
 $result = mysql_query($sql, $db);
 
 if ($row = @mysql_fetch_array($result)) {
-    setcookie("ATutor_Mahara[at_login]", $_SESSION['login'], time()+1200); 
-    setcookie("ATutor_Mahara[username]", $row[0], time()+1200); 
-    setcookie("ATutor_Mahara[password]", $row[1], time()+1200); 
+    ATutor.setcookie("ATutor_Mahara[at_login]", $_SESSION['login'], time()+1200); 
+    ATutor.setcookie("ATutor_Mahara[username]", $row[0], time()+1200); 
+    ATutor.setcookie("ATutor_Mahara[password]", $row[1], time()+1200); 
 
     if (function_exists('url_rewrite')) {   // if "pretty url" feature supported (from ATutor 1.6.1)
         $url = url_rewrite('mods/mahara/mahara_login.php', AT_PRETTY_URL_IS_HEADER);

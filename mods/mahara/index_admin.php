@@ -118,9 +118,9 @@ if (isset($_config['mahara'])) {
             ?>
 
             <?php
-            setcookie("ATutor_Mahara[at_login]", $_SESSION['login'], time()+1200); 
-            setcookie("ATutor_Mahara[username]", $username, time()+1200); 
-            setcookie("ATutor_Mahara[password]", $password, time()+1200); 
+            ATutor.setcookie("ATutor_Mahara[at_login]", $_SESSION['login'], time()+1200); 
+            ATutor.setcookie("ATutor_Mahara[username]", $username, time()+1200); 
+            ATutor.setcookie("ATutor_Mahara[password]", $password, time()+1200); 
 
 
             if (function_exists('url_rewrite')) {   // if "pretty url" feature supported (from ATutor 1.6.1)

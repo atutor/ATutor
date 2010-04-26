@@ -104,10 +104,10 @@ if (isset($_COOKIE['ATutor_Mahara'])) {
         $usr[$name] = $value;
 
         // expire the cookie
-        setcookie ("ATutor_Mahara[".$name."]", "", time() - 3600);
+        ATutor.setcookie ("ATutor_Mahara[".$name."]", "", time() - 3600);
     }
     //expire the cookie array
-    setcookie ("ATutor_Mahara", "", time() - 3600);
+    ATutor.setcookie ("ATutor_Mahara", "", time() - 3600);
 } else {
     echo 'Unable to detect cookies or the session has timed out.  Please check that cookies are enabled on your browser and try again.';
     exit;
