@@ -814,13 +814,13 @@ div.home-link img {
 }
 
 /* sequence links */
-div#sequence-links {
+div.sequence-links {
 	float: right;
 	margin-top: 10px;
 	padding-right: 5px;
 	font-size: smaller;
 }
-div#sequence-links a {
+div.sequence-links a {
 	text-decoration: none;
 }
 

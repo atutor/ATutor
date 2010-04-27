@@ -973,14 +973,15 @@ initContentMenu();
 						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 					}
 					
-					if (isset($content['test_id']))
+					if (isset($content['test_id'])) {
 						$link .= $content['title'];
-					else
+					} else {
 						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">';
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
 						$link .= '&nbsp;'.$content['title'].'</span>';
+					}
 					
 					$link .= '</a>';
 					if ($on) {

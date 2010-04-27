@@ -72,10 +72,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     
     <div class="row fl-container fl-fix">
         <img id="previewtool" class="fl-col clickable" src="<?php echo AT_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" />
-        <img id="accessibilitytool" class="fl-col" src="" title="" height="30" width="30" />
-        <img id="headtool" class="fl-col" src="" title="" height="30" width="30" />
-        <img id="pastetool" class="fl-col" title="" src="" height="30" width="30"/>      
-        <img id="filemantool" class="fl-col" title="" src="" height="30" width="30" />
+        <img id="accessibilitytool" class="fl-col" src="" title="" alt="" height="30" width="30" />
+        <img id="headtool" class="fl-col" src="" title="" alt="" height="30" width="30" />
+        <img id="pastetool" class="fl-col" title="" src="" alt="" height="30" width="30"/>      
+        <img id="filemantool" class="fl-col" title="" src="" alt="" height="30" width="30" />
            
 <!-- ******** Tool Manager ******* -->
 <?php
