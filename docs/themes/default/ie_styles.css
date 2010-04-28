@@ -1,4 +1,13 @@
-/* IE specific styles */
+/* IE specific styles *
+.page_wrapper{
+
+    /* For IE 8 */    
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999')";
+     /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999');
+
+}
+
 
 ul#topnavlist {
 	zoom:100%;
@@ -103,3 +112,10 @@ ul.current_list{
       margin-left:0;
 }
 
+.outside_box{
+    /* For IE 8 */    
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999')";
+     /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999');
+
+}

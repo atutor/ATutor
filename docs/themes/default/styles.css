@@ -28,6 +28,8 @@ body {
     background-color: #ffffff;
     border-radius:.5em;
     -moz-border-radius: 1em 1em .5em .5em;
+    -moz-box-shadow:.2em .2em  #999999;
+    box-shadow: .2em .2em  #999999;
 
 }
 p {
@@ -170,11 +172,17 @@ a.dropdown-title {
     border:  #AAA  solid 1px;
     border-radius:.3em;
     -moz-border-radius: .3em .3em .3em .3em;
+    	-moz-box-shadow:.2em .2em .3em #999999;
+    box-shadow: .2em .2em .3em #999999;
 
 }
 .button:focus {
+
     border:1px solid #A50707;
-    background-color:  #FFDAB9;	
+
+}
+.button:active {
+        background-color: #000000;
 }
 /* small submit button at top */
 .button2 {
@@ -600,6 +608,7 @@ a#editor-link.on {
 
 
 /* for data tables */
+
 table.data {
 	clear:right;
 	border: 1px solid #cccccc;
@@ -668,6 +677,7 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 	padding: 5px;
 	background-image: none;
 	padding-left: 0px;
+
 }
 
 /*buttons*/
@@ -679,6 +689,7 @@ table.data tfoot input {
 table.data tfoot input:focus {
 	background-color: #FFDAB9;
 	border:  #AAA  solid 1px;
+
 }
 
 
@@ -1020,23 +1031,25 @@ h4.box {
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding:.2em;
 	border:1px solid #ccc;
+	-moz-box-shadow:.2em .2em .2em #999999;
+    box-shadow: .2em .2em  .2em #999999;
 
 }
 
 div.box {
-	padding: 5px;
+	padding: .5em;
 	background-color: #F5F5F5;
 	color: black;
 	font-size:0.85em;
 	font-weight: normal;
-	padding:2px;
-
-	border-radius:.5em;
-	-moz-border-radius: .0em .0em .5em .5em;
+	border-radius:.5em .5em;
+	-moz-border-radius: .3em .3em .3em .3em;
 	padding:.2em;
 	border-left:1px solid #ccc;
 	border-right:1px solid #ccc;
 	border-bottom:1px solid #ccc;
+	-moz-box-shadow:.2em .2em .2em #999999;
+    box-shadow: .2em .2em  .2em #999999;
 }
 
 h5.box { 
@@ -1419,9 +1432,11 @@ ul#topnavlist li {
 	white-space: nowrap;
 	list-style: none;
 	display: inline-block;
-	height:2em;
+	height:1.3em;
 	margin-top:.1em;
 	clear:both;
+	 -moz-box-shadow:.2em .0em .4em #999999;
+    box-shadow: .2em .2em .2em #999999;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -1447,7 +1462,12 @@ ul#topnavlist li a {
 	background-color:white;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
+
 	padding: .2em 2em .2em;
+
+}
+
+ul#topnavlist li{
 
 }
 
@@ -1703,6 +1723,9 @@ fieldset#toc {
 #side-menu{
 	 overflow:hidden; 
 	 width:18em;
+	 padding-right:.3em;
+	 padding-bottom:.3em;
+	 
 }
 
 /* cleans up glossary question mark line spacing*/
@@ -1742,6 +1765,9 @@ div.home_box {
 	height:9.8em;
 	border-radius:.5em;
 	-moz-border-radius:.5em;
+	-moz-border-radius: 1em 1em .5em .5em;
+    -moz-box-shadow:.2em .2em .2em #999999;
+    box-shadow: .2em .2em .2em #999999;
 	padding:.2em;
 }
 
@@ -1835,10 +1861,13 @@ ul#subnavlist li {
 
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
+height:1.1em;	
+	-moz-box-shadow:.1em .0em .1em #999999;
+    box-shadow: .2em .0em .2em #999999;
 	padding: .1em .5em .1em .5em ;
 }
 
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, 		ul#subnavlist li:hover{
   	color: black;
 	text-decoration:none;
 	background-color: #E6E6E6;
@@ -2061,5 +2090,5 @@ table.etabbed-table	{
 	clear:both;
 	white-space:pre-line;
 	position: absolute; 
-	left:6em;
+	left:7em;
 }

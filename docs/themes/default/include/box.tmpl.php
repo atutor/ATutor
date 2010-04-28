@@ -9,7 +9,6 @@ $compact_title = str_replace(' ', '', $this->title);
 <script language="javascript" type="text/javascript">
 	printSubmenuHeader("<?php echo $this->title; ?>");
 </script>
-
 <div class="box" id="menu_<?php echo $compact_title ?>">
 	<?php echo $this->dropdown_contents; ?>
 </div>
