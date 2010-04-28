@@ -23,7 +23,8 @@ body {
 .page_wrapper{
     border:1px solid #cccccc;
     width:97%;
-    margin:auto;
+    margin-left:auto;
+        margin-right:auto;
     margin-top:1em;
     background-color: #ffffff;
     border-radius:.5em;
@@ -1147,8 +1148,9 @@ div.course img.icon	{
 }
 img.headicon	{
 	float:  left;
-	margin-top:1.2em;
-
+	margin-top:.5em;
+	margin-left:.5em;
+	margin-right:.5em;
 	height:6.45em;
 	width:6.45em;
 	vertical-align:top;
@@ -1418,14 +1420,13 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 div#topnavlistcontainer {
 	height:1.7em;
 	border-bottom:1px solid #cccccc;
-	clear:left;
-
+	margin-top:-1.5em;
 }
-
 
 ul#topnavlist {
 	padding-top: 2px;
-	margin-top: 5px;
+	margin-top: 2px;
+
 }
 
 ul#topnavlist li {
@@ -1467,9 +1468,6 @@ ul#topnavlist li a {
 
 }
 
-ul#topnavlist li{
-
-}
 
 ul#topnavlist li a.selected {
     /* The selected tab. There's only one of these */
