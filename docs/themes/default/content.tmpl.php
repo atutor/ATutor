@@ -49,16 +49,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 </div>
 <?php endif; // END OF displaying alternative shortcut icons?>
 
-<?php if ($this->shortcuts): ?>
-<fieldset id="shortcuts"><legend><?php echo _AT('shortcuts'); ?></legend>
-	<ul>
-		<?php foreach ($this->shortcuts as $link): ?>
-			<li><a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a></li>
-		<?php endforeach; ?>
-	</ul>
-</fieldset>
-<?php endif; ?>
-
 <?php 
 if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") 
 	echo $this->content_table;

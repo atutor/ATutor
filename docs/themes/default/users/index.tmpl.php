@@ -1,6 +1,6 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<div class="container" style="width:58%; margin:auto;border:none;float:left;">
+<div id="my_courses_container">
 <table class="data" style="width:100%;">
 <tr><th></th>
 <th><?php echo _AT('course'); ?></th>

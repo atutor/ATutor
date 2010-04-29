@@ -8,6 +8,8 @@ div.input-form {
 	background-color: #F8F8F8;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
+        -moz-box-shadow:.2em .2em .3em #999999;
+        box-shadow: .2em .2em .3em #999999;
 	padding:.2em;
 }
 
@@ -97,11 +99,23 @@ input[type=password]{
 input[type=submit]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.2em .2em .3em #999999;
+	 box-shadow: .2em .2em .3em #999999;
+
 }
 
 input[type=reset]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.2em .2em .3em #999999;
+	box-shadow: .2em .2em .3em #999999;
+}
+select{
+	background-color:#eeeeee;
+	border-radius: .2em .2em .2em .2em;
+	-moz-border-radius: .2em .2em .2em .2em;
+	-moz-box-shadow:.2em .2em .3em #999999;
+	box-shadow: .2em .2em .3em #999999;
 }
 .test_instruction{
 	background-color: #f3f3f3; 

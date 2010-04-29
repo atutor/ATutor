@@ -195,11 +195,14 @@ function printSubmenuHeader(title)
 </script>
 <div class="page_wrapper">
 <div id="header">
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
-	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
-
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+	
+	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
+		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
+	else:
+		echo '<br />';	
+	endif; ?>
 	<div id="top-links"> <!-- top help/search/login links -->
+			  <div id="top-links-jump">
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<?php if(!$this->just_social): ?>
 			<!-- start the jump menu -->
@@ -219,7 +222,8 @@ function printSubmenuHeader(title)
 				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" class="button" /> </form>
 			<!-- /end the jump menu -->
 			<?php endif; ?>
-
+			</div>
+			<div id="top-links-text">
 			<?php if ($_SESSION['is_super_admin']): ?>
 				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
 			<?php endif; ?>
@@ -236,10 +240,11 @@ function printSubmenuHeader(title)
 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> 
 		<?php endif; ?>
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+		</div>
 	</div>
-	<?php if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
-		<a href="<?php echo $this->base_path.url_rewrite('index.php'); ?>"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	
-	<?php } ?>
+	<?php// if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
+		<!--<a href="<?php echo $this->base_path.url_rewrite('index.php'); ?>"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	 -->
+	<?php// } ?>
 
 
 
@@ -254,18 +259,14 @@ function printSubmenuHeader(title)
 
 	?>
 	<!-- section title -->
-	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
-		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
-	else:
-		echo '<br />';	
-	endif; ?>
+
+	<!-- Course Title -->
 	<div id="course_title_container" <?php if(empty($this->icon)){echo ' style="left:1em;"';}   ?>>
 	<h1 id="section-title"><?php echo $this->section_title; ?>
 		<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
 	</h1>
-	<br style="clear:both;" />
 	</div>
 
 
@@ -318,9 +319,20 @@ function printSubmenuHeader(title)
 	  <?php } ?>
 
 		  <?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+      <div id="guide_box">
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+      </div>
 		  <?php endif; ?>
-</div>
+      <?php if ($this->shortcuts): ?>
+      <div id="shortcuts">
+	      <ul>
+		      <?php foreach ($this->shortcuts as $link): ?>
+			      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+		      <?php endforeach; ?>
+	      </ul>
+      </div>
+      <?php endif; ?>
+      </div>
 
 <div id="contentwrapper">
 	<?php if ((isset($this->course_id) && $this->course_id > 0) && $system_courses[$this->course_id]['side_menu']): ?>
