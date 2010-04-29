@@ -40,7 +40,10 @@ function get_relative_path($src, $dest) {
 	} else if (substr($dest, 0, strlen($src)) == $src) {
 		$path = substr($dest, strlen($src) + 1);
 	} else {
-		$path = '../' . $dest;
+		$depth = substr_count($src, '/');
+		for ($i = 0; $i < $depth + 1; $i++)
+			$path .= '../';
+		$path .= $dest;
 	}
 
 	return $path;
@@ -467,7 +470,6 @@ echo '</table></form>';
 <script type="text/javascript">
 //<!--
 function insertFile(fileName, pathTo, ext, ed_pref) { 
-
 	// pathTo + fileName should be relative to current path (specified by the Content Package Path)
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {

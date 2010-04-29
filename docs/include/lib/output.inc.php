@@ -780,9 +780,11 @@ function format_final_output($text, $nl2br = true) {
 
 // 
 function apply_customized_format($input) {
-	global $_input, $moduleFactory;
+	global $_input, $moduleFactory, $content_base_href, $_content_base_href;
 	
 	$_input = $input;
+	$_content_base_href = $content_base_href;
+	
 	$enabled_modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
 
 	if (is_array($enabled_modules))
