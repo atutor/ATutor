@@ -41,7 +41,7 @@ function get_relative_path($src, $dest) {
 		$path = substr($dest, strlen($src) + 1);
 	} else {
 		$depth = substr_count($src, '/');
-		for ($i = 0; $i < $depth + 1; $i++)
+		for ($i = 0; $i < $depth + 1; $i++)  // $depth+1 because the last '/' is not recorded in content.content_path
 			$path .= '../';
 		$path .= $dest;
 	}
