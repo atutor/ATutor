@@ -1,7 +1,5 @@
 html,body{
     height:100%;
-
-
 }
 .site-name{
     font-size:small;
@@ -9,7 +7,10 @@ html,body{
     padding-left:1em;
     color:grey;
     white-space:nowrap;
-    margin-left:5.5em;
+    margin-left:auto;
+    float:left;
+
+
 }
 /* main body attributes */
 body {
@@ -27,8 +28,8 @@ body {
         margin-right:auto;
     margin-top:1em;
     background-color: #ffffff;
-    border-radius:.5em;
-    -moz-border-radius: 1em 1em .5em .5em;
+    border-radius: 1em 1em 1em 1em;
+    -moz-border-radius: 1em 1em 1em 1em;
     -moz-box-shadow:.2em .2em  #999999;
     box-shadow: .2em .2em  #999999;
 
@@ -173,7 +174,7 @@ a.dropdown-title {
     border:  #AAA  solid 1px;
     border-radius:.3em;
     -moz-border-radius: .3em .3em .3em .3em;
-    	-moz-box-shadow:.2em .2em .3em #999999;
+    -moz-box-shadow:.2em .2em .3em #999999;
     box-shadow: .2em .2em .3em #999999;
 
 }
@@ -553,18 +554,22 @@ div#toctoggle {
 h1#section-title {
 	float: left;
 	margin-left:1em;
-	margin-bottom: -0.5em;
+margin-top:-.8em;
 	
+}
+
+div#bypass-links{
+	width:3px;
 }
 
 div#top-links {
 	float:right;
-	white-space:nowrap;
+	clear:right;
+	height:1.7em;
 	padding-right: 5px;
 	margin-right:20px;
-	margin-top:1em;
+	margin-top:0em;
 }
-
 div#top-links a:link, div#top-links a:visited {
 	text-decoration:none;
 	margin-left:10px;
@@ -573,9 +578,29 @@ div#top-links a:focus{
 	color:black;
 	background-color:#F6EAD6;
 }
+#top-links-text{
+	float:right;
+	clear:right;
+	margin-left: .5em;
+	margin-top:.2em;
+	white-space:nowrap;
+	background-color:#eeeeee;
+	border:thin solid #cccccc;
+	border-radius: .3em .3em .3em .3em;
+	-mox-border-radius: ..3em .3em .3em .3em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
+}
+#top-links-jump{
+	float:left;
+	white-space:nowrap;
+	margin-top:.2em;
+	background-color:#eeeeee;
+	padding-right:.5em;
+}
 
 #jumpmenu{
-	background-color:#EEEEEE;
+	background-color:#eeeeee;
 	border:thin solid #cccccc;
 	border-radius:.3em .3em .3em .3em;
 	-moz-border-radius:.3em .3em .3em .3em;	
@@ -945,11 +970,11 @@ div.paging li a:hover, div.paging li a.current {
 }
 
 #header{
-	/* background-color: #1D2326; */
-	/* background-image: url(images/pencil_top.gif); */
-	background-position: right bottom;
+	background-image: url('images/pencils_up_top.jpg');
+	background-position: 99% 98%;
 	background-repeat: no-repeat;
-	height : 6.85em;
+	height : 5em;
+	margin-bottom:-.2em;
 }
 
 #header a{
@@ -1050,7 +1075,7 @@ div.box {
 	border-right:1px solid #ccc;
 	border-bottom:1px solid #ccc;
 	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .2em  .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 }
 
 h5.box { 
@@ -1157,8 +1182,9 @@ img.headicon	{
 	text-align: right;
 	border:1px solid white;
 }
-div.course div.shortcuts {
+div.course div.shortcuts , a {
 	text-align: right;
+	text-decoration:none;
 	clear: left;
 	vertical-align: middle;
 }
@@ -1180,9 +1206,20 @@ fieldset#shortcuts {
 
 fieldset {
 	margin-bottom: 10pt;
-	border-radius:.5em;
+	border-radius: .5em .5em .5em .5em;;
 	-moz-border-radius: .5em .5em .5em .5em;
 	padding:.2em
+}
+div#shortcuts{
+	border-left:thin solid #cccccc;
+	border-right:thin solid #cccccc;
+	border-bottom:thin solid #cccccc;
+	border-radius: 0em 0em .5em .5em;;
+	-moz-border-radius: 0em 0em .5em .5em;
+	float:right;
+	width:12em;
+	margin-right:2em;
+	padding:.1em;
 }
 #shortcuts legend {
 	border-radius:.5em;
@@ -1197,16 +1234,26 @@ fieldset {
 	list-style-type:  none;
 	padding-left: 0pt; 
 }
-
+#shortcuts li{
+	display: inline;
+}
 a#guide {
 	background-image: url('images/help.png'); background-repeat: no-repeat; background-position: 2px 2px;
 	padding: 3px 10px 5px 30px;
 	text-decoration:none;
 	font-size:0.85em;
 	float:right;
-	border:1px solid #cccccc;
-	border-radius:.5em;
-	-moz-border-radius: .5em .5em .5em .5em;
+
+}
+div#guide_box{
+	border-left:thin solid #cccccc;
+	border-right:thin solid #cccccc;
+	border-bottom:thin solid #cccccc;
+	border-radius: 0em 0em .5em .5em;;
+	-moz-border-radius: 0em 0em .5em .5em;
+	float:right;
+	margin-right:2em;
+	padding-left:.1em;
 }
 
 div#content-text {
@@ -1252,8 +1299,10 @@ div#container {
 	border:0;
 	width: 95%;
 	border:1px solid #cccccc;
-	border-radius:.5em;
+	border-radius: .5em .5em .5em .5em;
 	-moz-border-radius: .5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 	padding:.2em
 }
 
@@ -1418,15 +1467,17 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 /* Top navigation tabs / list */
 div#topnavlistcontainer {
-	height:1.7em;
+	background-image: url('images/pencils_up_bottom.jpg');
+	background-position: 99% 0%;
+	background-repeat: no-repeat;
+	height:1.9em;
+	margin-top: .1em;
 	border-bottom:1px solid #cccccc;
-	margin-top:-1.5em;
 }
 
 ul#topnavlist {
 	padding-top: 2px;
 	margin-top: 2px;
-
 }
 
 ul#topnavlist li {
@@ -1436,8 +1487,8 @@ ul#topnavlist li {
 	height:1.3em;
 	margin-top:.1em;
 	clear:both;
-	 -moz-box-shadow:.2em .0em .4em #999999;
-    box-shadow: .2em .2em .2em #999999;
+	-moz-box-shadow:.2em .0em .4em #999999;
+	box-shadow: .2em .2em .2em #999999;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -1845,7 +1896,7 @@ ul#subnavlist {
 	padding-top: 5px;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
-	margin-bottom:-.1em;
+	margin-bottom:0em;
 
 }
 
@@ -1958,6 +2009,10 @@ tr.odd {
 	width:30%; 
 	padding:.5em;
 	border: 1px solid #cccccc;
+	border-radius: .5em .5em .5em .5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 }
 
 ul.current_list{
@@ -1972,7 +2027,7 @@ ul.current_list{
 .logoutbar{
       background-color:#E6E6E6; 
       font-size:0.85em; 
-      padding-top: 5px; 
+      padding-top: 2px; 
       border-bottom:1px solid #cccccc; 
       height:2em;
       text-align:right;
@@ -2084,9 +2139,26 @@ table.etabbed-table	{
 	height:2.5em;
 }
 #course_title_container{
+	background-color:#ffffff;
 	float:left;
 	clear:both;
 	white-space:pre-line;
-	position: absolute; 
-	left:7em;
+	position:relative; 
+	left:1em;
+	margin-top:.5em;
+}
+#my_courses_container{
+	  width:58%; 
+	  margin:auto;
+	  border:none;
+	  float:left;
+	  border-radius: .5em .5em .5em .5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
+}
+.shortcut_icon{
+border:0;
+vertical-align:middle;
+
 }
