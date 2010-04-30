@@ -403,7 +403,6 @@ $pid = intval($_REQUEST['pid']);
 <div align="center">
 	<?php output_tabs($current_tab, $changes_made); ?>
 </div>
-<br/>
 <div class="input-form" style="width: 95%;">
 
 	<?php if ($changes_made): ?>
