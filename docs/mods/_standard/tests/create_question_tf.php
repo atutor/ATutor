@@ -66,7 +66,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_tf'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cats"><?php echo _AT('category'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
@@ -81,7 +81,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 	
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('statement'); ?></label>
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('statement'); ?></label>
 		<?php print_VE('question'); ?>
 		<br />
 

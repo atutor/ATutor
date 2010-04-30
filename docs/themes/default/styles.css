@@ -910,14 +910,9 @@ div.dropdown-heading {
 	padding: 2px;
 }
 
-div.required {
+.required {
 	font-weight: bold;
 	color: red;
-	font-size: large;
-	float: left;
-	position: relative;
-	margin-top: -5px;
-	height: 15px;
 	padding-right: 2px;
 }
 
@@ -2160,5 +2155,32 @@ table.etabbed-table	{
 .shortcut_icon{
 border:0;
 vertical-align:middle;
-
+}
+ul#content-tool-links {
+	list-style: none outside none;
+}
+ul#content-tool-links li{
+	display: inline;
+	float: left;
+	width: 5em;
+	padding: 0 3em 0 0;
+	text-align: center;
+	font-size: 0.7em;
+	font-weight:bold;
+	color: #1A4A72;
+	line-height:120%;
+}
+ul#content-tool-links img{
+	border: 0 none;
+	display: block;
+	padding-left: 10px;
+}
+.hidden {
+    display: none;
+}
+.clickable {
+    cursor: pointer;    
+}
+.nowrap {
+    white-space: nowrap;
 }

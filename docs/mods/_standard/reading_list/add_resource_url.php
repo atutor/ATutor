@@ -127,12 +127,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('rl_add_resource_url'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php  echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php  echo _AT('title'); ?></label><br />
 		<input type="text" name="title" size="35" id="title" value="<?php echo $title; ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="url"><?php  echo _AT('url'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="url"><?php  echo _AT('url'); ?></label><br />
 		<input type="text" name="url" size="50" id="url" value="<?php echo $url; ?>" />
 	</div>
 

@@ -53,7 +53,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('restore'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('material'); ?><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('material'); ?><br />
 
 		<input type="checkbox" value="1" name="all" id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 

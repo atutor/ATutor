@@ -440,7 +440,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				</div>
 				<div  id="c_folder">
 					<div class="row">
-						<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="fname"><?php echo _AT('name'); ?></label><br />
+						<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="fname"><?php echo _AT('name'); ?></label><br />
 						<input type="text" id="fname" name="new_folder_name" size="20" />
 					</div>
 					<div class="row buttons">
@@ -456,7 +456,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				</div>
 				<div id="upload">
 					<div class="row">
-						<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="file"><?php echo _AT('upload_file'); ?></label><br />
+						<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="file"><?php echo _AT('upload_file'); ?></label><br />
 						<input type="file" name="file" id="file" />
 						<br /><?php echo _AT('or'); ?> <a href="mods/_standard/file_storage/new.php<?php echo $owner_arg_prefix; ?>folder=<?php echo $folder_id; ?>"><?php echo _AT('file_manager_new'); ?></a>
 					</div>

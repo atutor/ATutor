@@ -192,16 +192,16 @@ function encrypt_password()
 			<td colspan="2" class="row1">The Super Administrator account is used for managing ATutor. The Super Administrator can also create additional Administrators each with their own privileges and roles. Administrator accounts cannot enroll in courses.</td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="username">Administrator Username:</label></b><br />
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="username">Administrator Username:</label></b><br />
 			May contain only letters, numbers, or underscores.</td>
 			<td class="row1"><input type="text" name="admin_username" id="username" maxlength="20" size="20" value="<?php if (!empty($_POST['admin_username'])) { echo stripslashes(htmlspecialchars($_POST['admin_username'])); } else { echo $defaults['admin_username']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="password">Administrator Password:</label></b></td>
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="password">Administrator Password:</label></b></td>
 			<td class="row1"><input type="text" name="admin_password" id="password" maxlength="15" size="15" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="email">Administrator Email:</label></b></td>
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="email">Administrator Email:</label></b></td>
 			<td class="row1"><input type="text" name="admin_email" id="email" size="40" value="<?php if (!empty($_POST['admin_email'])) { echo stripslashes(htmlspecialchars($_POST['admin_email'])); } else { echo $defaults['admin_email']; } ?>" class="formfield" /></td>
 		</tr>
 		</table>
@@ -213,17 +213,17 @@ function encrypt_password()
 			<th colspan="2">System Preferences</th>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="sitename">Site Name:</label></b><br />
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="sitename">Site Name:</label></b><br />
 			The name of your course server website.<br />Default: <kbd><?php echo $defaults['site_name']; ?></kbd></td>
 			<td class="row1"><input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="cemail">Contact Email:</label></b><br />
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="cemail">Contact Email:</label></b><br />
 			The email that will be used as the return email when needed.</td>
 			<td class="row1"><input type="text" name="email" id="cemail" size="40" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>			
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="just_social">Just Social:</label></b><br />
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="just_social">Just Social:</label></b><br />
 			Deploy ATutor as just a Social Networking platform? (without LMS)</td>
 			<td class="row1">
 				<label for="social_y">Just Social</label><input type="radio" name="just_social" id="social_y" value="1" class="formfield" <?php echo ($_POST['just_social']==1)?' checked="checked"':''; ?>/>
@@ -247,24 +247,24 @@ function encrypt_password()
 			<td colspan="2" class="row1">You will need a personal account to view and create courses.</td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_username">Username:</label></b><br />
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="account_username">Username:</label></b><br />
 			May contain only letters, numbers, and underscores.</td>
 			<td class="row1"><input type="text" name="account_username" id="account_username" maxlength="20" size="20" value="<?php if (!empty($_POST['account_username'])) { echo stripslashes(htmlspecialchars($_POST['account_username'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_password">Password:</label></b></td>
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="account_password">Password:</label></b></td>
 			<td class="row1"><input type="text" name="account_password" id="account_password" maxlength="15" size="15" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_email">Email:</label></b></td>
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="account_email">Email:</label></b></td>
 			<td class="row1"><input type="text" name="account_email" id="account_email" size="40" maxlength="60" value="<?php if (!empty($_POST['account_email'])) { echo stripslashes(htmlspecialchars($_POST['account_email'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_fname">First Name:</label></b></td>
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="account_fname">First Name:</label></b></td>
 			<td class="row1"><input type="text" name="account_fname" id="account_fname" size="40" maxlength="60" value="<?php if (!empty($_POST['account_fname'])) { echo stripslashes(htmlspecialchars($_POST['account_fname'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_lname">Last Name:</label></b></td>
+			<td class="row1"><span class="required" title="Required Field">*</span><b><label for="account_lname">Last Name:</label></b></td>
 			<td class="row1"><input type="text" name="account_lname" id="account_lname" size="40" maxlength="60" value="<?php if (!empty($_POST['account_lname'])) { echo stripslashes(htmlspecialchars($_POST['account_lname'])); } ?>" class="formfield" /></td>
 		</tr>
 		</table>

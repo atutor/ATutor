@@ -183,7 +183,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 <input type="hidden" name="folder" value="<?php echo $current_file['folder_id']; ?>" />
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="comment"><?php echo _AT('comment'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="comment"><?php echo _AT('comment'); ?></label><br />
 		<textarea cols="40" rows="4" id="comment" name="comment"></textarea>
 	</div>
 

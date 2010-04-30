@@ -113,24 +113,24 @@ $msg->printErrors();
 
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>"/>
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cat"><?php echo _AT('category'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="cat"><?php echo _AT('category'); ?></label><br />
 		<select name="cat" id="cat">
 			<?php select_link_categories($categories, 0, $_POST['cat'], FALSE);	?>
 		</select>
 	</div>
 	
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="url"><?php echo _AT('url'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="url"><?php echo _AT('url'); ?></label><br />
 		<input type="text" name="url" size="40" id="url" value="<?php echo $_POST['url']; ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="description"><?php echo _AT('description'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="description"><?php echo _AT('description'); ?></label><br />
 		<textarea name="description" cols="55" rows="5" id="description" ><?php echo $_POST['description']; ?></textarea>
 	</div>
 

@@ -145,7 +145,7 @@ if (!isset($_POST['submit'])) {
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="sitename"><?php echo _AT('site_name'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="sitename"><?php echo _AT('site_name'); ?></label><br />
 		<input type="text" name="site_name" size="40" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo $stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $_config['site_name']; } ?>" />
 	</div>
 
@@ -171,7 +171,7 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cemail"><?php echo _AT('contact_email'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="cemail"><?php echo _AT('contact_email'); ?></label><br />
 		<input type="text" name="contact_email" id="cemail" size="40" value="<?php if (!empty($_POST['email'])) { echo $stripslashes(htmlspecialchars($_POST['email'])); } else { echo $_config['contact_email']; } ?>"  />
 	</div>
 

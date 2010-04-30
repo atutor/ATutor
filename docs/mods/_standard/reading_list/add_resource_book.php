@@ -134,12 +134,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('rl_add_resource_book'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php  echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php  echo _AT('title'); ?></label><br />
 		<input type="text" name="title" size="35" id="title" value="<?php echo $title; ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="author"><?php  echo _AT('author'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="author"><?php  echo _AT('author'); ?></label><br />
 		<input type="text" name="author" size="25" id="author" value="<?php echo $author; ?>" />
 	</div>
 

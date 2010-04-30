@@ -82,7 +82,7 @@ if (!$_config['gsearch'] || $_config['gtype']==GOOGLE_TYPE_SOAP){ ?>
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="keywords"><?php echo _AT('search_words'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="keywords"><?php echo _AT('search_words'); ?></label><br />
 			<input type="text" name="q" size="30" id="keywords" value="<?php echo htmlspecialchars($stripslashes($_GET['q'])); ?>" />
 		</div>
 

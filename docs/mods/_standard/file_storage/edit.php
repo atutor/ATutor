@@ -146,7 +146,7 @@ $file_path = fs_get_file_path($id);
 <input type="submit" name="submit" style="display:none;"/>
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('file_name'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="name"><?php echo _AT('file_name'); ?></label><br />
 		<input type="text" name="name" id="name" value="<?php echo htmlspecialchars($row['file_name']); ?>" size="40" maxlength="70" />
 	</div>
 

@@ -66,7 +66,7 @@ if (!isset($_POST['properties'])) {
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_open'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cats"><?php echo _AT('category'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
@@ -81,7 +81,7 @@ if (!isset($_POST['properties'])) {
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?></label> 
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
 		<?php print_VE('question'); ?>
 		<textarea id="question" cols="50" rows="6" name="question" style="width:90%;"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>

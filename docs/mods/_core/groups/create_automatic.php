@@ -159,12 +159,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('groups_create_automatic'); ?></legend>
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="type"><?php echo _AT('groups_type'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="type"><?php echo _AT('groups_type'); ?></label><br />
 			<input type="text" name="type_title" id="type" value="<?php echo htmlentities_utf8($_POST['type_title']); ?>" size="30" maxlength="60" />
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="prefix"><?php echo _AT('group_prefix'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="prefix"><?php echo _AT('group_prefix'); ?></label><br />
 			<input type="text" name="prefix" id="prefix" value="<?php echo htmlentities_utf8($_POST['prefix']); ?>" size="20" maxlength="40" />
 		</div>
 
@@ -174,7 +174,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('number_of_groups'); ?><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('number_of_groups'); ?><br />
 			<?php
 				$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`&".AT_PRIV_GROUPS."=0";
 				$result = mysql_query($sql, $db);

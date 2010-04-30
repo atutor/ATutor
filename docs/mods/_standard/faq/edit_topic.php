@@ -75,7 +75,7 @@ if (!$row = mysql_fetch_assoc($result)) {
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php  echo _AT('name'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="name"><?php  echo _AT('name'); ?></label><br />
 		<input type="text" name="name" size="50" id="name" value="<?php if (isset($_POST['name'])) echo htmlentities_utf8($stripslashes($_POST['name']));  ?>" />
 	</div>
 

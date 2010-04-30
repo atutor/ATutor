@@ -29,7 +29,7 @@ if ($this->shortcuts):
 </fieldset>
 <?php endif; ?>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><div style="font-weight:bold;"><label for="ftitle"><?php echo _AT('content_folder_title');  ?></label></div>
+		<div style="font-weight:bold;"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ftitle"><?php echo _AT('content_folder_title');  ?></label></div>
 		<input type="text" name="title" id="ftitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($this->ftitle); ?>" />
 	</div>
 	

@@ -68,7 +68,7 @@ if (isset($module_xml)) :  ?>
 	<h3><?php echo _AT('module_details'); ?></h3>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('module_name'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="name"><?php echo _AT('module_name'); ?></label><br />
 		<input type="text" name="name" id="name" size="40" value="" />
 	</div>
 

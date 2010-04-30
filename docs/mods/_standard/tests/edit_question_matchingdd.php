@@ -139,7 +139,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_matchingdd'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cats"><?php echo _AT('category'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
@@ -166,7 +166,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <?php for ($i=0; $i<10; $i++): ?>
 	<div class="row">
 		<?php if ($i < 2) :?>
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 		<?php endif; ?>
 		<?php echo _AT('question'); ?> <?php echo ($i+1); ?>
 		
@@ -192,7 +192,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<?php for ($i=0; $i<10; $i++): ?>
 		<div class="row">
 			<?php if ($i < 2) :?>
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<?php endif; ?>
 			<?php echo _AT('answer'); ?> <?php echo $_letters[$i]; ?>
 			<?php print_VE('answer_' . $i); ?>

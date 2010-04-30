@@ -43,7 +43,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <input type="hidden" name="import" value="1" />
 <div class="input-form" style="width:95%">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="code"><?php echo _AT('lang_code'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="code"><?php echo _AT('lang_code'); ?></label><br />
 		<input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo $_POST['code']; ?>" />
 	</div>
 
@@ -53,7 +53,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="charset"><?php echo _AT('charset'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="charset"><?php echo _AT('charset'); ?></label><br />
 		<input id="charset" name="charset" type="text" size="31" maxlength="20" class="formfield" value="<?php echo $_POST['charset']; ?>" />
 	</div>
 
@@ -72,17 +72,17 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="reg_exp"><?php echo _AT('reg_exp'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="reg_exp"><?php echo _AT('reg_exp'); ?></label><br />
 		<input id="reg_exp" name="reg_exp" type="text" size="31" class="formfield" value="<?php echo $_POST['reg_exp']; ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="nname"><?php echo _AT('name_in_language'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="nname"><?php echo _AT('name_in_language'); ?></label><br />
 		<input id="nname" name="native_name" type="text" size="31" maxlength="20" class="formfield" value="<?php echo $_POST['native_name']; ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ename"><?php echo _AT('name_in_english'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ename"><?php echo _AT('name_in_english'); ?></label><br />
 		<input id="ename" name="english_name" type="text" size="31" maxlength="20" class="formfield" value="<?php echo $_POST['english_name'];?>" />
 	</div>
 

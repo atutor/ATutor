@@ -71,7 +71,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>" />
 	</div>
 
@@ -86,7 +86,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="courses"><?php echo _AT('courses'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="courses"><?php echo _AT('courses'); ?></label><br />
 		<?php if ($system_courses): ?>
 			<select name="courses[]" id="courses" multiple="multiple" size="5"><?php
 		

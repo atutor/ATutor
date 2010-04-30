@@ -103,7 +103,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('groups_create_manual'); ?></legend>
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="type"><?php echo _AT('groups_type'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="type"><?php echo _AT('groups_type'); ?></label><br />
 			<?php if ($types): ?>
 				<?php echo _AT('existing_type'); ?>
 				<select name="type" id="type">
@@ -117,7 +117,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="prefix"><?php echo _AT('title'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="prefix"><?php echo _AT('title'); ?></label><br />
 			<input type="text" name="prefix" id="prefix" value="<?php echo htmlentities_utf8($_POST['prefix']); ?>" size="20" maxlength="40" />
 		</div>
 

@@ -133,7 +133,7 @@ $msg->printErrors();
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body_text"><?php echo _AT('body'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body_text"><?php echo _AT('body'); ?></label><br />
 			<textarea name="body_text" cols="55" rows="15" id="body_text"><?php echo $_POST['body_text']; ?></textarea>
 		</div>
 		

@@ -465,14 +465,9 @@ table.data td {
 	padding: 3px;
 }
 
-div.required {
+.required {
 	font-weight: bold;
 	color: red;
-	font-size: x-large;
-	float: left;
-	position: relative;
-	margin-top: -3px;
-	height: 15px;
 	padding-right: 0px;
 }
 div.optional {

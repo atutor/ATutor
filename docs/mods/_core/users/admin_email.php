@@ -106,19 +106,19 @@ if ($row['cnt'] == 0) {
 
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo  _AT('to'); ?><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo  _AT('to'); ?><br />
 		<input type="radio" name="to" value="3" checked="checked" id="all" /><label for="all"><?php echo _AT('all_users'); ?></label>  
 	  <input type="radio" name="to" value="1" id="inst" <?php if ($_POST['to'] == AT_STATUS_INSTRUCTOR) { echo 'checked="checked"'; } ?> /><label for="inst"><?php echo  _AT('instructors'); ?></label>
 	  <input type="radio" name="to" value="2" id="stud" <?php if ($_POST['to'] == AT_STATUS_STUDENT) { echo 'checked="checked"'; } ?> /><label for="stud"><?php echo  _AT('students'); ?></label>
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
 		<textarea cols="55" rows="18" name="body" id="body"><?php echo $_POST['body']; ?></textarea>
 	</div>
 

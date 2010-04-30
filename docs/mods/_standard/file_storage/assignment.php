@@ -115,7 +115,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('assignment'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="name"><?php echo _AT('assignment'); ?></label><br />
 		<select name="assignment" size="<?php echo min(5, count($assignments)); ?>">
 			<?php foreach ($assignments as $assignment): ?>
 				<?php if ($assignment['date_due'] != '0000-00-00 00:00:00'): ?>

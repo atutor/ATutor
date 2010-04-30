@@ -62,7 +62,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 		
 		<div class="row">
-			<label for="file"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('file'); ?></label><br />
+			<label for="file"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('file'); ?></label><br />
 			<input type="file" name="file" id="file" />
 		</div>
 

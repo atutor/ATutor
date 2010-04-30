@@ -165,7 +165,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('properties'); ?></legend>
 <?php if ($isadmin): ?>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="inst"><?php echo  _AT('instructor'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="inst"><?php echo  _AT('instructor'); ?></label><br />
 			<?php 
 			$sql = "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE status=".AT_STATUS_INSTRUCTOR;
 			$result = mysql_query($sql, $db);
@@ -188,7 +188,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 <?php endif; ?>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" id="title" name="title" size="40" value="<?php echo htmlspecialchars($row['title']); ?>" />
 	</div>
 

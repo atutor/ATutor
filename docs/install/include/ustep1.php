@@ -245,7 +245,7 @@ if (isset($errors)) {
 
 <table width="70%" class="tableborder" cellspacing="0" cellpadding="1" border="0" align="center">
 <tr>
-	<td class="row1"><div class="required" title="Required Field">*</div><b><label for="dir">Old Directory Name:</label></b><br />
+	<td class="row1"><span class="required" title="Required Field">*</span><b><label for="dir">Old Directory Name:</label></b><br />
 		The old directory must be at the same level as the current directory.</td>
 		<td class="row1" valign="middle">
 		<?php if ($dirs): ?>

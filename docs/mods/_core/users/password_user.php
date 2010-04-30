@@ -126,12 +126,12 @@ function encrypt_password()
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="password"><?php echo _AT('password'); ?></label><br />
 			<input type="password" name="password" id="password" value="" size="30" />
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('confirm_password'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="password2"><?php echo _AT('confirm_password'); ?></label><br />
 			<input type="password" name="password2" id="password2" value="" size="30" />
 		</div>
 

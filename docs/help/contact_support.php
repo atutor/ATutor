@@ -101,22 +101,22 @@ $msg->printErrors();
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="from"><?php echo _AT('from_name'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="from"><?php echo _AT('from_name'); ?></label><br />
 		<input type="text" name="from" id="from" size="40" value="<?php echo htmlspecialchars($stripslashes($_POST['from'])); ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="from_email"><?php echo _AT('from_email'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="from_email"><?php echo _AT('from_email'); ?></label><br />
 		<input type="text" name="from_email" id="from_email" size="40" value="<?php echo htmlspecialchars($stripslashes($_POST['from_email'])); ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" id="subject" size="40" value="<?php echo htmlspecialchars($stripslashes($_POST['subject'])); ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body_text"><?php echo _AT('body'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body_text"><?php echo _AT('body'); ?></label><br />
 		<textarea cols="55" rows="15" id="body_text" name="body"><?php echo htmlspecialchars($stripslashes($_POST['body'])); ?></textarea>
 	</div>
 

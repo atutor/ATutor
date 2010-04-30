@@ -250,7 +250,7 @@ else
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_external_test'); ?></legend>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" size="30" value="<?php echo $_POST['title']; ?>" />
 	</div>
 

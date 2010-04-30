@@ -82,7 +82,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_question'); ?></legend>
 	<div class="row">
 
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="topic"><?php  echo _AT('topic'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="topic"><?php  echo _AT('topic'); ?></label><br />
 		<select name="topic_id" id="topic">
 			<?php while ($row = mysql_fetch_assoc($result)): ?>
 				<option value="<?php echo $row['topic_id']; ?>"<?php if (isset($_POST['topic_id']) && ($row['topic_id'] == $_POST['topic_id'])) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['name']); ?></option>
@@ -90,12 +90,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</select>
 	</div>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php  echo _AT('question'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php  echo _AT('question'); ?></label><br />
 		<input type="text" name="question" size="50" id="question" value="<?php if (isset($_POST['question'])) echo htmlentities_utf8($stripslashes($_POST['question']));  ?>" />
 
 	</div>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="answer"><?php  echo _AT('answer'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="answer"><?php  echo _AT('answer'); ?></label><br />
 		<textarea name="answer" cols="45" rows="3" id="answer" style="width:90%;"><?php if (isset ($_POST['answer'])) echo htmlentities_utf8($stripslashes($_POST['answer']));  ?></textarea>
 	</div>
 

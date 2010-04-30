@@ -120,7 +120,7 @@ if (!($forum = @get_forum($_GET['forum']))) {
 
 <div class="input-form">
 	<div class="row">
-		<label for="title"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php  echo _AT('title'); ?></label><br />
+		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php  echo _AT('title'); ?></label><br />
 		<input type="text" name="title" size="40" id="title" value="<?php echo htmlentities_utf8($forum['title']); ?>" />
 	</div>
 
@@ -135,7 +135,7 @@ if (!($forum = @get_forum($_GET['forum']))) {
 	</div>
 
 	<div class="row">
-		<label for="courses"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('courses'); ?></label><br />
+		<label for="courses"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('courses'); ?></label><br />
 		<select name="courses[]" id="courses" multiple="multiple" size="5"><?php
 			/*
 			echo '<option value="0"';

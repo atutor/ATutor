@@ -24,13 +24,13 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <div id="messageDIV"></div>
 	
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="atutor_patch_id"><?php echo _AT('atutor_patch_id'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="atutor_patch_id"><?php echo _AT('atutor_patch_id'); ?></label><br />
 		<small>&middot; <?php echo _AT('contain_only'); ?></small><br />
 		<input id="atutor_patch_id" name="atutor_patch_id" type="text" maxlength="100" size="30" value="<?php echo $row_patches['atutor_patch_id']; ?>" /><br />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="atutor_version_to_apply"><?php echo _AT('atutor_version_to_apply'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="atutor_version_to_apply"><?php echo _AT('atutor_version_to_apply'); ?></label><br />
 		<input id="atutor_version_to_apply" name="atutor_version_to_apply" type="text" maxlength="100" size="30" value="<?php echo $row_patches['applied_version']; ?>" /><br />
 	</div>
 

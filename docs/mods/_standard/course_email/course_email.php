@@ -181,7 +181,7 @@ if ($row['cnt'] == 0) {
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('course_email'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 		<?php echo  _AT('to'); ?><br />
 		<input type="checkbox" name="to_assistants" value="1" id="assistants" <?php if ($_POST['to_assistants']=='1') { echo 'checked="checked"'; } ?> /><label for="assistants"><?php echo  _AT('assistants'); ?></label>
 		<input type="checkbox" name="to_enrolled" value="1" id="enrolled" <?php if ($_POST['to_enrolled']=='1') { echo 'checked="checked"'; } else { echo 'checked="checked"'; } ?> /><label for="enrolled"><?php echo  _AT('enrolled'); ?></label>
@@ -212,12 +212,12 @@ if ($row['cnt'] == 0) {
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" size="60" id="subject" value="<?php echo $_POST['subject']; ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
 		<textarea cols="55" rows="18" name="body" id="body"><?php echo $_POST['body']; ?></textarea>
 	</div>
 

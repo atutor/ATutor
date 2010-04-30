@@ -39,12 +39,12 @@ function encrypt_password()
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="student_id"><?php echo _AT('student_id'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="student_id"><?php echo _AT('student_id'); ?></label><br />
 			<input id="student_id" name="student_id" type="text" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['student_id'])); ?>" /><br />
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="student_pin"><?php echo _AT('student_pin'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="student_pin"><?php echo _AT('student_pin'); ?></label><br />
 			<input id="student_pin" name="student_pin" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['student_pin'])); ?>" /><br />
 		</div>
 	<?php endif; ?>
@@ -61,7 +61,7 @@ function encrypt_password()
 	
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="login"><?php echo _AT('login_name'); ?></label><br />
 		<?php if ($_POST['member_id']) : ?>
 				<span id="login"><?php echo stripslashes(htmlspecialchars($_POST['login'])); ?></span>
 				<input name="member_id" type="hidden" value="<?php echo intval($_POST['member_id']); ?>" />
@@ -75,21 +75,21 @@ function encrypt_password()
 
 	<?php if (!admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || !$_POST['member_id']): ?>
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password1"><?php echo _AT('password'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="form_password1"><?php echo _AT('password'); ?></label><br />
 			<input id="form_password1" name="form_password1" type="password" size="15" maxlength="15" /><br />
 			<small>&middot; <?php echo _AT('combination'); ?><br />
 				   &middot; <?php echo _AT('15_max_chars'); ?></small>
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password2"><?php echo _AT('password_again'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="form_password2"><?php echo _AT('password_again'); ?></label><br />
 			<input id="form_password2" name="form_password2" type="password" size="15" maxlength="15" />
 		</div>
 	<?php endif; ?>
 
 	<?php if (isset($_config['use_captcha']) && $_config['use_captcha']==1): ?>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 		<label for="secret"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=<?php echo md5(uniqid(time())); ?>" id="simage" align="left" /></label>
 		<a href="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_play.php" title="<?php echo _AT('audible_captcha'); ?>"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/audio_icon.gif" alt="<?php echo _AT('audible_captcha'); ?>" onclick="this.blur()" align="top" border="0"></a><br>
 		<a href="#" title="<?php echo _AT('refresh_image'); ?>" onclick="document.getElementById('simage').src = '<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/refresh.gif" alt="<?php echo _AT('refresh_image'); ?>" onclick="this.blur()" align="bottom" border="0"></a>
@@ -103,18 +103,18 @@ function encrypt_password()
 	<?php endif; ?>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email"><?php echo _AT('email_address'); ?></label><br />
 		<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
 		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email'] || !isset($_POST['submit'])) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email2"><?php echo _AT('email_again'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email2"><?php echo _AT('email_again'); ?></label><br />
 		<input id="email2" name="email2" type="text" size="50" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email2'])); ?>" />
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="first_name"><?php echo _AT('first_name'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="first_name"><?php echo _AT('first_name'); ?></label><br />
 		<input id="first_name" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['first_name'])); ?>" />
 	</div>
 
@@ -124,7 +124,7 @@ function encrypt_password()
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="last_name"><?php echo _AT('last_name'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="last_name"><?php echo _AT('last_name'); ?></label><br />
 		<input id="last_name" name="last_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['last_name'])); ?>" />
 	</div>
 	
@@ -140,7 +140,7 @@ function encrypt_password()
 			}?>
 			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
 			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('account_status'); ?><br />
+				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('account_status'); ?><br />
 
 				<input type="radio" name="status" value="0" id="disa" <?php echo $disa; ?> /><label for="disa"><?php echo _AT('disabled'); ?></label>
 				<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>

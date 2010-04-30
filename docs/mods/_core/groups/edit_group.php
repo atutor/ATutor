@@ -104,7 +104,7 @@ $row['modules'] = explode('|', $row['modules']);
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" value="<?php echo htmlspecialchars($row['title']); ?>" size="20" maxlength="40" />
 	</div>
 

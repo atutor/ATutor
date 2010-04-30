@@ -113,7 +113,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="required" value="1" />
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cats"><?php echo _AT('category'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
@@ -127,7 +127,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?></label> 
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
 		<?php print_VE('question'); ?>
 		<textarea id="question" cols="50" rows="6" name="question" style="width:90%;"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
@@ -136,7 +136,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<?php for ($i=0; $i<10; $i++): ?>
 		<div class="row">
 			<?php if ($i < 2): ?>
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<?php endif; ?> <?php echo _AT('item'); ?> <?php echo ($i+1); ?>
 			
 			<?php print_VE('choice_' . $i); ?>

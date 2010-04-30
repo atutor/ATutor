@@ -249,7 +249,7 @@ if (isset($_POST['step1']['old_version'])) {
 
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1"><div class="required" title="Required Field">*</div><strong><label for="contentdir">Content Directory</label></strong>
+		<td class="row1"><span class="required" title="Required Field">*</span><strong><label for="contentdir">Content Directory</label></strong>
 		<p>It has been detected that your webserver does not support the protected content directory feature. The content directory stores all of the courses' files.</p>
 		<p>Due to that restriction your content directory must exist within your ATutor installation directory and cannot be moved. Its path is specified below. Please create it if it does not already exist.</p>
 		<br /><br />
@@ -259,7 +259,7 @@ if (isset($_POST['step1']['old_version'])) {
 <?php else: ?>
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1"><div class="required" title="Required Field">*</div><strong><label for="contentdir">Content Directory</label></strong>
+		<td class="row1"><span class="required" title="Required Field">*</span><strong><label for="contentdir">Content Directory</label></strong>
 		<p>Please specify where the content directory should be. The content directory stores all of the courses' files. As a security measure, the content directory should be placed <em>outside</em> of your ATutor installation (for example, to a non-web-accessible location that is not publically available).</p>
 		
 		<p>On a Windows machine, the path should look like <kbd>C:\content</kbd>, while on Unix it should look like <kbd>/var/content</kbd>.</p>

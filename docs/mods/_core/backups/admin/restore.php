@@ -63,7 +63,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 		<p><?php echo _AT('restore_backup_about'); ?></p>
 	</div>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('material'); ?><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('material'); ?><br />
 	
 		<input type="checkbox" value="1" name="all" id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 
@@ -82,7 +82,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="course"><?php echo _AT('course'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="course"><?php echo _AT('course'); ?></label><br />
 		
 			<select name="in_course" id="course"><?php
 					foreach ($system_courses as $id => $course) {

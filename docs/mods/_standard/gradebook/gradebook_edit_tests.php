@@ -123,7 +123,7 @@ if ($row_this["type"] == "External")
 {
 ?>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" id="title" size="40" name="title" value="<?php echo $row_this["title"]; ?>" />
 	</div>
 

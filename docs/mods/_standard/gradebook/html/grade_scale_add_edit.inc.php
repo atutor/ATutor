@@ -181,21 +181,21 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			</td>
 			<td>
 			<?php if ($i==0) { ?>
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<?php } ?>
 			<?php echo _AT('scale_value'); ?>
 			</td>
 
 			<td>
 			<?php if ($i==0) { ?>
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<?php } ?>
 			<?php echo _AT('percentage_from'); ?>
 			</td>
 
 			<td>
 			<?php if ($i==0) { ?>
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<?php } ?>
 			<?php echo _AT('percentage_to'); ?>
 			</td>

@@ -30,7 +30,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         </span>
         <span class="nowrap">
         <label for="formatting_radios"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><strong><?php echo _AT('formatting'); ?></strong></label>
-        <span class="bordered" id="formatting_radios">
+        <span id="formatting_radios">
             <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> />
             <label for="text"><?php echo _AT('plain_text'); ?></label>
 
@@ -70,12 +70,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     //-->
     </script>
     
-    <div class="row fl-container fl-fix">
-        <img id="previewtool" class="fl-col clickable" src="<?php echo AT_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" />
-        <img id="accessibilitytool" class="fl-col" src="" title="" alt="" height="30" width="30" />
-        <img id="headtool" class="fl-col" src="" title="" alt="" height="30" width="30" />
-        <img id="pastetool" class="fl-col" title="" src="" alt="" height="30" width="30"/>      
-        <img id="filemantool" class="fl-col" title="" src="" alt="" height="30" width="30" />
+    <div class="fl-container fl-fix">
+      <ul id="content-tool-links">
+        <li><img id="previewtool" class="fl-col clickable" src="<?php echo AT_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" /><?php echo _AT('preview'); ?></li>
+        <li><img id="accessibilitytool" class="fl-col" src="" title="" alt="" height="30" width="30" /><?php echo _AT('accessibility'); ?></li>
+        <li><img id="headtool" class="fl-col" src="" title="" alt="" height="30" width="30" /><?php echo _AT('customized_head'); ?></li>
+        <li><img id="pastetool" class="fl-col" title="" src="" alt="" height="30" width="30"/><?php echo _AT('paste'); ?></li> 
+        <li><img id="filemantool" class="fl-col" title="" src="" alt="" height="30" width="30" /><?php echo _AT('files'); ?></li>
            
 <!-- ******** Tool Manager ******* -->
 <?php
@@ -99,11 +100,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
                	ATutor.mods.editor.tool_file = "<?php if(isset($tool['tool_file'])) echo $tool['tool_file'] ?>";
            	//-->
            	</script>
-           	<img class="fl-col clickable tool" src="<?php echo $tool['img']; ?>" alt="<?php echo $tool['alt']; ?>" title="<?php echo $tool['title']; ?>" height="30" width="30" />
+           	<li><img class="fl-col clickable tool" src="<?php echo $tool['img']; ?>" alt="<?php echo $tool['alt']; ?>" title="<?php echo $tool['title']; ?>" height="30" width="30" /><?php echo $tool['title']?></li>
 <?php 
         }
     }
 ?>
+      </ul>
+
 <!-- ****** end Tool Manager ***** -->
    	</div> <!-- end toolbar -->
 

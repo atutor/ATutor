@@ -85,7 +85,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 		<label for="new"><?php echo _AT('new_name'); ?></label><br />
 		<?php echo $_GET['pathext']; ?><input type="text" name="new_name" id="new" value="<?php echo $_REQUEST['oldname']; ?>" size="30" />
 	</div>

@@ -20,12 +20,12 @@ function encrypt_password()
 	<div class="input-form" style="width:90%;">
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="form_password"><?php echo _AT('password'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="form_password"><?php echo _AT('password'); ?></label><br />
 			<input id="form_password" name="form_password" type="password" size="15" maxlength="15" value="" /><br />
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email"><?php echo _AT('email_address'); ?></label><br />
 			<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
 		</div>
 

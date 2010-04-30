@@ -178,7 +178,7 @@ if ($reply_to) {
 
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="to"><?php echo _AT('to'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="to"><?php echo _AT('to'); ?></label><br />
 		<?php
 			if (!$reply_to) {
 				$sql	= "SELECT DISTINCT M.first_name, M.second_name, M.last_name, M.login, M.member_id FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a') ORDER BY M.first_name, M.second_name, M.last_name, M.login";
@@ -205,7 +205,7 @@ if ($reply_to) {
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" id="subject" value="<?php
 			if (($subject != '') && ($_POST['subject'] == '')) {
 				if ($_GET['reply'] && !($substr($subject, 0, 2) == _AT('re'))) {
@@ -221,7 +221,7 @@ if ($reply_to) {
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('message'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('message'); ?></label><br />
 		<textarea name="message" id="body" rows="15" cols="55"><?php
 			if ($body != '') {
 				if ($strlen($body) > 400){

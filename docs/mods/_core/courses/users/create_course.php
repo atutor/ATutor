@@ -34,7 +34,7 @@ if (get_instructor_status() === FALSE) {
 				</div>
 
 				<div class="row">
-					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="desc"><?php echo _AT('give_description'); ?></label><br />
+					<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="desc"><?php echo _AT('give_description'); ?></label><br />
 					<textarea cols="40" rows="2" id="desc" name="description"></textarea>
 				</div>
 
