@@ -34,7 +34,7 @@
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
 </div>
 </div> <!-- end page wrapper --> 
-<script type="text/javascript">
+<script language="javascript" type="text/javascript">
 //<!--
     <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
 //-->
