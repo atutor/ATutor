@@ -6,21 +6,7 @@ $compact_title = str_replace(' ', '', $this->title);
 ?>
 
 <br />
-<script language="javascript" type="text/javascript">
-	printSubmenuHeader("<?php echo $this->title; ?>");
-</script>
-
+<h4 class="box"><span><?php echo $this->title ?></span><input class="fl-force-right" src="" alt="" title="" type="image" /></h4>
 <div class="box" id="menu_<?php echo $compact_title ?>">
 	<?php echo $this->dropdown_contents; ?>
 </div>
-
-<script language="javascript" type="text/javascript">
-if (ATutor.getcookie("m_<?php echo $this->title; ?>") == "0")
-{
-	jQuery("#menu_<?php echo $compact_title; ?>").hide();
-}
-else
-{
-	jQuery("#menu_<?php echo $compact_title; ?>").show();
-}
-</script>

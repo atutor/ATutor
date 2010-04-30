@@ -925,15 +925,24 @@ div.tabs a:hover, div.tabs a:active {
 h4.box {
 	font-size:0.85em;
 	padding: 2px;
+    border-radius:.5em;
+    -moz-border-radius: .5em .5em 0em 0em;
+    padding:.2em;
+    border:1px solid #ccc;
+
 }
 
 div.box {
 	color: black;
-
 	font-size:0.85em;
 	font-weight: normal;
 	padding:5px;
-	margin-bottom:5px;
+	margin-bottom:5px;  
+    border-radius:.5em;
+    -moz-border-radius: .0em .0em .5em .5em;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    border-bottom:1px solid #ccc;
 }
 
 h5.box { 

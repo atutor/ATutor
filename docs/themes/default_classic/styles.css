@@ -977,16 +977,19 @@ fieldset {
 /* side-menu */
 h4.box {
 	margin-top: 10px;
-	font-family: Helevetica, Arial, sans-serif;
     background: #788CB3;
     border: 1px solid #788CB3;
-    color: white;
     padding: 0em 1em 0em 1em;
     display: inline;
-	font-weight:normal;
 	margin-left: 0px;
 	margin-top: 1000px;
-	white-space:nowrap;
+}
+
+h4.box span {
+    font-family: Helevetica, Arial, sans-serif;
+    font-weight: normal;
+    color: white;
+    white-space: nowrap;
 }
 
 div.box {

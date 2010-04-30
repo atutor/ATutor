@@ -102,7 +102,7 @@ function showTocToggle(objId, show, hide, key, selected) {
 			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
 		}
 	}
-}
+};
 
 function toggleToc(objId) {
 	var toc = document.getElementById(objId);
@@ -123,7 +123,7 @@ function toggleToc(objId) {
 		showlink.style.display='';
 	}
 	ATutor.setcookie(objId, toc.style.display, 1);
-}
+};
 
 //toggle content folder in side menu "content navigation"
 function toggleFolder(cid)
@@ -140,52 +140,7 @@ function toggleFolder(cid)
 	}
 	
 	jQuery("#folder"+cid).slideToggle();
-}
-
-// toggle elements in side menu
-function elementToggle(elem, title)
-{
-	element_collapse_icon = "<?php echo $_base_path; ?>images/mswitch_minus.gif";
-	element_expand_icon = "<?php echo $_base_path; ?>images/mswitch_plus.gif";
-	
-	if (jQuery(elem).attr("src") == element_collapse_icon) {
-		jQuery(elem).attr("src", element_expand_icon);
-		jQuery(elem).attr("alt", "<?php echo _AT('show'). ' '; ?>"+ title);
-		jQuery(elem).attr("title", "<?php echo _AT('show'). ' '; ?>"+ title);
-		ATutor.setcookie("m_"+title, 0, 1);
-	}
-	else {
-		jQuery(elem).attr("src", element_collapse_icon);
-		jQuery(elem).attr("alt", "<?php echo _AT('collapse'); ?>");
-		jQuery(elem).attr("alt", "<?php echo _AT('hide'). ' '; ?>"+ title);
-		jQuery(elem).attr("title", "<?php echo _AT('hide'). ' '; ?>"+ title);
-		ATutor.setcookie("m_"+title, null, 1);;
-	}
-	
-	jQuery(elem).parent().next().slideToggle();
-}
-
-function printSubmenuHeader(title)
-{
-	if (ATutor.getcookie("m_"+title) == "0")
-	{
-		image = "<?php echo $_base_path?>images/mswitch_plus.gif";
-		alt_text = "<?php echo _AT('show'); ?>" + title;
-	}
-	else
-	{
-		image = "<?php echo $_base_path?>images/mswitch_minus.gif";
-		alt_text = "<?php echo _AT('hide'); ?>" + title;
-	}
-	
-	document.writeln('<h4 class="box">'+
-	'	<input src="'+image+'"' + 
-	'	       onclick="elementToggle(this, \''+title+'\'); return false;"' +
-	'	       alt="'+ alt_text + '" ' +
-	'	       title="'+ alt_text + '"' +
-	'	       style="float:right" type="image" />'+ title +
-	'</h4>');
-}
+};
 //-->
 </script>
 <!-- section title -->

@@ -85,7 +85,10 @@ global $system_courses, $_custom_css, $db;
 </head>
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
-//<!--
+/**
+ * This function adds the show/hide functionality to the entire side menu via a show/hide button
+ * Only necessary in the content area of the site.
+ */
 function showTocToggle(objId, show, hide, key, selected) {
 	if(document.getElementById) {
 		if (key) {
@@ -106,6 +109,9 @@ function showTocToggle(objId, show, hide, key, selected) {
 	}
 }
 
+/**
+ * This function actually performs the toggle functionality for the side menu
+ */
 function toggleToc(objId) {
 	var toc = document.getElementById(objId);
 	if (toc == null) {
@@ -128,7 +134,7 @@ function toggleToc(objId) {
 	ATutor.setcookie(objId, hidelink.style.display, 1);
 }
 
-// toggle content folder in side menu "content navigation"
+// toggle open/close content folder in side menu "content navigation"
 function toggleFolder(cid)
 {
 	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
@@ -147,51 +153,6 @@ function toggleFolder(cid)
 	jQuery("#folder"+cid).slideToggle();
 }
 
-// toggle elements in side menu
-function elementToggle(elem, title)
-{
-	element_collapse_icon = "<?php echo $this->base_path; ?>images/mswitch_minus.gif";
-	element_expand_icon = "<?php echo $this->base_path; ?>images/mswitch_plus.gif";
-	
-	if (jQuery(elem).attr("src") == element_collapse_icon) {
-		jQuery(elem).attr("src", element_expand_icon);
-		jQuery(elem).attr("alt", "<?php echo _AT('show'). ' '; ?>"+ title);
-		jQuery(elem).attr("title", "<?php echo _AT('show'). ' '; ?>"+ title);
-		ATutor.setcookie("m_"+title, 0, 1);
-	}
-	else {
-		jQuery(elem).attr("src", element_collapse_icon);
-		jQuery(elem).attr("alt", "<?php echo _AT('collapse'); ?>");
-		jQuery(elem).attr("alt", "<?php echo _AT('hide'). ' '; ?>"+ title);
-		jQuery(elem).attr("title", "<?php echo _AT('hide'). ' '; ?>"+ title);
-		ATutor.setcookie("m_"+title, null, 1);;
-	}
-	
-	jQuery(elem).parent().next().slideToggle();
-}
-
-function printSubmenuHeader(title)
-{
-	if (ATutor.getcookie("m_"+title) == "0")
-	{
-		image = "<?php echo $this->base_path?>images/mswitch_plus.gif";
-		alt_text = "<?php echo _AT('show'); ?> " + title;
-	}
-	else
-	{
-		image = "<?php echo $this->base_path?>images/mswitch_minus.gif";
-		alt_text = "<?php echo _AT('hide'); ?> " + title;
-	}
-	
-	document.writeln('<h4 class="box">'+
-	'	<input src="'+image+'"' + 
-	'	       onclick="elementToggle(this, \''+title+'\'); return false;"' +
-	'	       alt="'+ alt_text + '" ' +
-	'	       title="'+ alt_text + '"' +
-	'	       style="float:right" type="image" /> '+ title +
-	'</h4>');
-}
-//-->
 </script>
 <div class="page_wrapper">
 <div id="header">
