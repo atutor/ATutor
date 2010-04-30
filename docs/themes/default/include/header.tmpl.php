@@ -85,6 +85,7 @@ global $system_courses, $_custom_css, $db;
 </head>
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
+//<!--
 /**
  * This function adds the show/hide functionality to the entire side menu via a show/hide button
  * Only necessary in the content area of the site.
@@ -152,7 +153,7 @@ function toggleFolder(cid)
 	
 	jQuery("#folder"+cid).slideToggle();
 }
-
+//-->
 </script>
 <div class="page_wrapper">
 <div id="header">
@@ -203,11 +204,9 @@ function toggleFolder(cid)
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 		</div>
 	</div>
-	<?php// if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
+	<?php // if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
 		<!--<a href="<?php echo $this->base_path.url_rewrite('index.php'); ?>"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	 -->
-	<?php// } ?>
-
-
+	<?php // } ?>
 
 	<?php
 	// If there is a custom course banner in the file manager called banner.html, display it here
