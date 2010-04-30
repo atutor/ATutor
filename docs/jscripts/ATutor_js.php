@@ -17,10 +17,14 @@
 // in ATutor.js
 ?>
 ATutor = ATutor || {};
+ATutor.course = ATutor.course || {};
 
 (function () {
 
     ATutor.base_href = "<?php echo AT_BASE_HREF; ?>";
+    ATutor.course.show = "<?php echo _AT('show'); ?>";
+    ATutor.course.hide = "<?php echo _AT('hide'); ?>";
+    
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
@@ -43,6 +47,12 @@ ATutor = ATutor || {};
 
         ATutor.users.preferences.addPrefWizClickHandler();
         ATutor.users.preferences.course_id = "<?php echo $_SESSION['course_id']; ?>";                
+<?php 
+        if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
+?>
+            ATutor.course.doSideMenus();
+<?php   }
+?>        
      });
 })();
 

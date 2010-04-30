@@ -1334,4 +1334,8 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 	}
 }
 
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
+    $_custom_head .= '<script type="text/javascript" src="'.$_base_path.'jscripts/ATutorCourse.js"></script>';
+}
+
 ?>
