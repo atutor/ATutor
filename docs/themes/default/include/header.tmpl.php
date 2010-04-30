@@ -295,9 +295,15 @@ function toggleFolder(cid)
       <?php endif; ?>
       </div>
 
-<div id="contentwrapper">
+<div id="contentwrapper" 
+		<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] == 0):
+			$style.='margin-top:-2em;';
+		endif; ?>
+		<?php
+		 echo 'style="'.$style.'"';
+		?>>
 	<?php if ((isset($this->course_id) && $this->course_id > 0) && $system_courses[$this->course_id]['side_menu']): ?>
-		<div id="leftcolumn" <?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] == 0) { echo 'style="margin-top:-3.5em;"';} ?>>
+		<div id="leftcolumn">
 			<script type="text/javascript">
 			//<![CDATA[
 			var state = ATutor.getcookie("side-menu");
@@ -319,11 +325,7 @@ function toggleFolder(cid)
 		</div>
 	<?php endif; ?>
 
-	<div id="contentcolumn"
-		<?php if ((isset($this->course_id) && $this->course_id <= 0) && isset($this->side_menu) && !$this->side_menu): ?>
-			style="margin-left:0.5em;width:99%;"
-		<?php endif; ?>
-		>
+	<div id="contentcolumn">
 
 		<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 		<div id="menutoggle">
