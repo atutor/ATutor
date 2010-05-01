@@ -96,7 +96,7 @@ input[type=password]{
 	-moz-border-radius: .3em .3em .3em .3em;
 }
 
-input[type=submit]{
+div.input-form input[type=submit]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
 	-moz-box-shadow:.2em .2em .3em #999999;
