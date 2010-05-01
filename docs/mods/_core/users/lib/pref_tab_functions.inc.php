@@ -63,7 +63,6 @@ function output_tabs($current_tab, $changes) {
 		<td >&nbsp;</td>
 	</tr>
 	</table>
-	<br style="clear:both" />
 <?php }
 
 // returns given $languges in html <option> tag
