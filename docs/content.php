@@ -159,7 +159,7 @@ save_last_cid($cid);
 if (isset($top_num) && $top_num != (int) $top_num) {
 	$top_num = substr($top_num, 0, strpos($top_num, '.'));
 }
-
+/*
 $shortcuts = array();
 if ((	($content_row['r_date'] <= $content_row['n_date'])
 		&& ((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
@@ -185,7 +185,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'mods/_core/editor/delete_content.php?cid='.$cid, 'icon' => $_base_href . 'images/page_delete.gif');
 }
 $savant->assign('shortcuts', $shortcuts);
-
+*/
 /* if i'm an admin then let me see content, otherwise only if released */
 $released_status = $contentManager->isReleased($cid);
 
