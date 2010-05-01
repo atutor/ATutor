@@ -347,3 +347,7 @@ span.formfield {
   width: 55%;
   text-align: left;
 }
+
+.browse-result{
+border:thin solid #cccccc;
+}
