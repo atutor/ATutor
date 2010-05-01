@@ -79,34 +79,33 @@ if (isset($this->result_list))
 	
 	<dl class="browse-result">
 	
-		<dt>
+		<dt class="tr_results_tools">
 <?php if (isset($this->instructor_role)) { ?>
           <a href="<?php echo AT_TILE_EXPORT_URL.$result['courseID']; ?>">
-            <img src="<?php echo AT_BASE_HREF. 'images/up.png'?>" alt="<?php echo _AT('download_common_cartridge'); ?>" title="<?php echo _AT("download_common_cartridge"); ?>" border="0">
+            <img src="<?php echo AT_BASE_HREF. 'images/download.png'?>" alt="<?php echo _AT('download_common_cartridge'); ?>" title="<?php echo _AT("download_common_cartridge").' '.$result['title']; ?>; ?>" border="0">
           </a>&nbsp;
           <a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>">
-            <img src="<?php echo AT_BASE_HREF. 'images/archive.gif'?>" alt="<?php echo _AT('import'); ?>" title="<?php echo _AT("import"); ?>" border="0">
+            <img src="<?php echo AT_BASE_HREF. 'images/archive.gif'?>" alt="<?php echo _AT('import'); ?>" title="<?php echo _AT("import").' '.$result['title']; ?>" border="0">
           </a>
 <?php }?>
         </dt>
 		<dd>
-		  <h3>
+		  <h3 style="margin-left:-2.5em;">
 		    <a href="<?php echo AT_TILE_VIEW_COURSE_URL.$result['courseID']; ?>" target="_new" ><?php echo htmlspecialchars($result['title']); ?></a>
 		  </h3>
-		</dd>
-<!-- 
+		</dd> 
 		<dt><?php echo _AT("author"); ?></dt>
 		<dd><?php if ($result['authorName']=='') echo _AT('unknown'); else echo htmlspecialchars($result['authorName']); ?></dd>
- -->
-		<dt><?php echo _AT("merlot_creation_date"); ?></dt>
+
+		<dt><?php echo _AT("creation_date"); ?></dt>
 		<dd><?php echo $result['creationDate']; ?></dd>
 	
 		<dt><?php echo _AT("description"); ?></dt>
 		<dd><?php if ($result['description']=='') echo _AT('na'); else if (strlen($result['description']) > 120) echo substr(htmlspecialchars($result['description']), 0, 120). "..."; else echo htmlspecialchars($result['description']); ?></dd>
-<!-- 
-		<dt><?php echo _AT("merlot_creative_commons"); ?></dt>
+
+		<dt><?php echo _AT("creative_commons"); ?></dt>
 		<dd><?php if ($result['creativeCommons'] == "true") echo _AT('yes'); else echo _AT('no'); ?></dd>
- -->
+
 	</dl>
 	<br />
 	<?php
