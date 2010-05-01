@@ -19,13 +19,13 @@ body {
     margin-top: -10px;
     font-size: .8em;
     background-color: #eeeeee;
-        background-image:url('images/texture_bg.png');
+    background-image:url('images/texture_bg.png');
 }
 .page_wrapper{
     border:1px solid #cccccc;
     width:97%;
     margin-left:auto;
-        margin-right:auto;
+    margin-right:auto;
     margin-top:1em;
     background-color: #ffffff;
     border-radius: 1em 1em 1em 1em;
@@ -57,7 +57,6 @@ p a:active {
 
 h1, h2, h3, h4, h5, h6 {
     color: #545454;
-    clear: right;
     font: 100% Verdana, Helvetica, Arial, sans-serif;
     font-weight: bold;
     margin: 0;
@@ -554,7 +553,7 @@ div#toctoggle {
 h1#section-title {
 	float: left;
 	margin-left:1em;
-margin-top:-.8em;
+margin-top:-1.2em;
 	
 }
 
@@ -572,7 +571,9 @@ div#top-links {
 }
 div#top-links a:link, div#top-links a:visited {
 	text-decoration:none;
-	margin-left:10px;
+	margin-left:.5em;
+	margin-right:.5em;
+	
 }
 div#top-links a:focus{
 	color:black;
@@ -1034,11 +1035,15 @@ div.tabs a:hover, div.tabs a.active {
 .contentbox{
 	border-radius:.5em;
 	-moz-border-radius: 0em 0em .5em .5em;
+	-moz-box-shadow:.1em .1em .2em #999999;
+    box-shadow: .1em .1em .2em #999999;
 }
 
 .headingbox{
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em 0em 0em;
+		-moz-box-shadow:.1em .1em .2em #999999;
+    box-shadow: .1em .1em .2em #999999;
 }
 .headingbox a{
 	color: #A50707;
@@ -1380,9 +1385,11 @@ ul#home-links li a img {
 .img-size-tree {
 	vertical-align: middle;
 	margin-top: 0px;
-        padding:0;
-	height:1.45em;
-	width:1.5em;
+	margin-left:-.5em;
+	margin-bottom:-.2em;
+    padding:0;
+	height:1.3em;
+	width:1.4em;
 }
 /* profile page */
 
@@ -1637,8 +1644,9 @@ fieldset.group_form{
 	border:1px #6D7B8D solid;
    	min-height: 170px;
 	padding:.5em;
-}
-
+	-moz-box-shadow:.1em .2em .3em #999999;
+    box-shadow: .3em .1em .2em #999999;
+} 
 legend.group_form{
 	border:1px #6D7B8D solid;
 	background-color: #EEEEEE;
@@ -1648,6 +1656,8 @@ legend.group_form{
 	padding-right: 1em;
 	border-radius:.2em;
 	-moz-border-radius: .2em .2em .2em .2em;
+		-moz-box-shadow:.1em .1em .1em #999999;
+    box-shadow: .1em .1em .1em #999999;
 }
 /* file storage */
 
@@ -1705,6 +1715,7 @@ div#menutoggle{
 
 
 /*Added by Silvia */
+/* remove when confirmed content alternatives funtions correctly without these styles 
 div.column_primary {
 	float: left;
 	width: 42%;
@@ -1762,9 +1773,9 @@ label.primary a{
 	font-weight: bolder;
 	background-color: white;
 }
-
+*/
 /* format of "table of contents" on content page */
-#toc a 		{ display:block; margin:3px; }
+#toc a 		{ display:block; margin:3px; float:left;}
 #toc .h2		{ padding:0 0 0 10px;}
 #toc .h3		{ padding:0 0 0 30px;}
 #toc .h4		{ padding:0 0 0 40px; }
@@ -1901,10 +1912,10 @@ div.toolcontainer{
 }
 
 ul#subnavlist {
-	padding-top: 5px;
+	padding-top: 3px;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
-	margin-bottom:0em;
+
 
 }
 
@@ -1918,10 +1929,10 @@ ul#subnavlist li {
 
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-height:1.1em;	
+	height:1.1em;	
 	-moz-box-shadow:.1em .0em .1em #999999;
     box-shadow: .2em .0em .2em #999999;
-	padding: .1em .5em .1em .5em ;
+	padding: .1em .5em .4em .5em ;
 }
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, 		ul#subnavlist li:hover{
@@ -2204,4 +2215,31 @@ ul#content-tool-links img{
 }
 .flowplayerholder{
 clear:right;
+}
+
+
+/* Transformable repository search */
+
+.browse-result{
+	border:thin solid #cccccc;
+	padding:.5em;
+	width:95%;
+	margin-left:auto;
+	margin-right:auto;
+		border-radius: .3em .3em .3em .3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+    box-shadow: .2em .1em .2em #999999;
+}
+
+.tr_results_tools{
+float:right;
+padding-left:.2em;
+padding-right:.2em;
+padding-top:.2em;
+border:thin solid #cccccc;
+		border-radius: .3em .3em .3em .3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+    box-shadow: .2em .1em .2em #999999;
 }
