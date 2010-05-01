@@ -254,7 +254,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 }
 
 
-// strstr for content is a hack util there's a better way to ensure the content shortcut tools are available on all content related pages.
+// strstr matching for "content" is a hack until there's a better way to ensure // the content shortcut tools are available on all content related pages.
 if($_SESSION['cid'] > 0 || $_REQUEST['cid'] > 0 || strstr($_SERVER['PHP_SELF'], 'content')){
 
 // Setup array of content tools for shortcuts tool bar.
