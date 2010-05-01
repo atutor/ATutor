@@ -27,6 +27,8 @@ div.album_panel{
 	width: 96%;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
 }
 div.album_panel div.photo_wrapper {
 	/* This class is to fix the problem where the images shift
@@ -72,6 +74,8 @@ div.search_bar {
 	float: left;
 	border-radius:.5em;
 	-moz-border-radius:.8em .8em .8em .8em;
+		-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
 }
 div.search_bar .s{
 	float: left;
@@ -94,8 +98,10 @@ div.album {
 	width: 95%;
 	margin: 0.5em;
 	float: left;
-	border-radius:.5em;
-	-moz-border-radius: .5em .5em 0em 0em;
+	border-radius:.5em .5em .5em .5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+		-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
 }
 div.album .image{
 	float: left;
@@ -220,6 +226,8 @@ div.add_profile_photo{
 	width: 96%;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
+		-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
 	margin-bottom:.2em;
 
 }
@@ -268,8 +276,10 @@ div.comment_panel{
 	border: 1px solid #D2D2D2;
 	width: 95%;
 	padding:.5em;
-	border-radius:.3em;
+	border-radius: .3em .3em .3em .3em;
 	-moz-border-radius: .3em .3em .3em .3em;
+		-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
 	margin-top:.2em;
 }
 div.comment_panel .comment_feeds{
