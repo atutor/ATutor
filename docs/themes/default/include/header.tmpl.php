@@ -157,7 +157,7 @@ function toggleFolder(cid)
 //-->
 </script>
 <div class="page_wrapper">
-<div id="header">
+<div id="header" >
 	
 	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
