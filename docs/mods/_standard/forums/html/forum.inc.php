@@ -46,7 +46,9 @@ $sql	= "SELECT *, last_comment + 0 AS stamp, DATE_FORMAT(last_comment, '%Y-%m-%d
 $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_assoc($result))) {
+	echo '<div class="input-form">';
 	$msg->printInfos('NO_POSTS_FOUND');
+	echo '</div>';
 	return;
 }
 ?>
