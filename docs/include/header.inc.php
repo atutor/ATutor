@@ -163,7 +163,7 @@ if (isset($_pages[$current_page]['title'])) {
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	//Truncate course title if it's > 45.
 	$session_course_title = htmlentities($_SESSION['course_title'], ENT_QUOTES, 'UTF-8');
-	$section_title = validate_length($session_course_title, 45, VALIDATE_LENGTH_FOR_DISPLAY);
+	$section_title = validate_length($session_course_title, 100, VALIDATE_LENGTH_FOR_DISPLAY);
 	// If there is an icon, display it on the header
 	$sql = 'SELECT icon FROM '.TABLE_PREFIX.'courses WHERE course_id='.$_SESSION['course_id'];
 	$result =  mysql_query($sql, $db);
@@ -284,7 +284,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	$shortcuts[] = array(
 		'title' => _AT('add_sub_folder'),   
 		'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php?pid='.$cid, 
-		'icon' => $_base_href . 'images/folder_new_sibling.gif');
+		'icon' => $_base_href . 'images/folder_new_sub.gif');
 	
 	$shortcuts[] = array(
 		'title' => _AT('add_sibling_page'), 
@@ -294,7 +294,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	$shortcuts[] = array(
 		'title' => _AT('add_sub_page'),     
 		'url' => $_base_href . 'mods/_core/editor/edit_content.php?pid='.$cid, 
-		'icon' => $_base_href . 'images/page_add_sibling.gif');
+		'icon' => $_base_href . 'images/page_add_sub.gif');
 	
 	if($_SESSION['cid'] > 0 || $_REQUEST['cid'] > 0 ){
 	$shortcuts[] = array(
