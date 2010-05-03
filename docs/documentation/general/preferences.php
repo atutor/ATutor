@@ -1,5 +1,8 @@
 <?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
+<h2>Preferences Wizard</h2>
+<p>At any time (except while viewing the Preferences screen) the Preferences Wizard can be opened by clicking the wand icon next to your login name to the upper right (location may vary across themes). Any of the settings you can set through the Preferences panels described below, can also be set using the wizard.</p>
+
 <h2>Preferences</h2>
 <p>The following preferences allow a user to control how some features function, and how information is displayed.</p>
 <h3>ATutor Settings</h3>
@@ -31,7 +34,7 @@
 	<dt>Content Editor</dt>
 	<dd>This preference controls how content is entered. Choose between <em>Plain Text</em> for entering content text that will escape any HTML markup and will be formatted as entered; <em>HTML</em> for entering HTML content manually; and <em>HTML - Visual Editor</em> for entering HTML content using the visual (also known as a <acronym title="What You See Is What You Get">WYSIWYG</acronym>) editor which represents the content as it will be displayed. It is also possible to change the editor manually for each item.</dd>
 </dl>
-<h3>Display Settings</h3>
+<h3>Text Settings</h3>
 <p>These settings are used to control the overall colours and fonts displayed.</p>
 
 <dl>
@@ -50,14 +53,14 @@
     <dt>Alternatives to Visual</dt>
     <dd>If you are a person with a visual disability, of you prefer content without the usually larger, slow to load, visual information in content, select from these options to have alternatives to visual information either replace, or append to, visual information in the primary version of the content.</dd>
 </dl>
-<h3>Tool Settings</h3>
+<h3>Learner Supports</h3>
 <p>These settings are used to control which  learning tools are available to you in a side menu block.</p>
 
 <dl>
-    <dt>Learner Support Tools</dt>
+    <dt>Learner Supports</dt>
     <dd>Select from the various tools, the ones you would like available to you when in your ATutor courses.</dd>
 </dl>
-<h3>Control Settings</h3>
+<h3>Navigations</h3>
 <p>These settings are used to enable or disabled various ATutor navigation tools.</p>
 
 <dl>

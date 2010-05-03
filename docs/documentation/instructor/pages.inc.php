@@ -25,7 +25,7 @@
     $_pages['content_tests.php']		 = 'Associating Tests';
     $_pages['content_packages.php']              = 'Import/Export Content';
     $_pages['content_usage.php']                 = 'Content Usage';
-    $_pages['tile_repository.php']               = 'TILE Repository';
+    $_pages['tile_repository.php']               = 'Content Search';
     $_pages['scorm_packages.php']                = 'SCORM Packages';
     $_pages['course_email.php']                  = 'Course Email';
     $_pages['enrollment.php']                    = 'Enrollment';
