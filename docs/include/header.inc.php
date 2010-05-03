@@ -270,16 +270,15 @@ if ((	($content_row['r_date'] <= $content_row['n_date'])
 
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	if($_SESSION['cid'] > 0 || $_REQUEST['cid'] > 0 ){
-		$shortcuts[] = array('
-		title' => _AT('edit_this_page'),   
-		'url' => $_base_href . 'mods/_core/editor/edit_content.php?cid='.$cid, 'icon' => $_base_href . 'images/medit.gif');
-	}
-	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 		$shortcuts[] = array(
-			'title' => _AT('add_sibling_folder'), 
-			'url' => $_base_href.'mods/_core/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 
-			'icon' => $_base_href . 'images/folder_new_sibling.gif');
+		'title' => _AT('edit_this_page'),   
+		'url' => $_base_href . 'mods/_core/editor/edit_content.php?cid='.$cid,
+		'icon' => $_base_href . 'images/medit.gif');
 	}
+	$shortcuts[] = array(
+		'title' => _AT('add_sibling_folder'), 
+		'url' => $_base_href.'mods/_core/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 
+		'icon' => $_base_href . 'images/folder_new_sibling.gif');
 			
 			
 	$shortcuts[] = array(
@@ -287,12 +286,11 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php?pid='.$cid, 
 		'icon' => $_base_href . 'images/folder_new_sibling.gif');
 	
-	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-		$shortcuts[] = array(
-			'title' => _AT('add_sibling_page'), 
-			'url' => $_base_href.'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 
-			'icon' => $_base_href . 'images/page_add_sibling.gif');
-	}
+	$shortcuts[] = array(
+		'title' => _AT('add_sibling_page'), 
+		'url' => $_base_href.'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 
+		'icon' => $_base_href . 'images/page_add_sibling.gif');
+
 	$shortcuts[] = array(
 		'title' => _AT('add_sub_page'),     
 		'url' => $_base_href . 'mods/_core/editor/edit_content.php?pid='.$cid, 
