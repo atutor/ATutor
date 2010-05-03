@@ -64,6 +64,7 @@ global $system_courses, $_custom_css, $_base_path;
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-layout.css" />
 	<?php echo $this->rtl_css; ?>
 	<?php if ($system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
@@ -84,47 +85,6 @@ global $system_courses, $_custom_css, $_base_path;
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
 //<!--
-function showTocToggle(objId, show, hide, key, selected) {
-	if(document.getElementById) {
-		if (key) {
-			var accesskey = " accesskey='" + key + "' title='"+ show + "/" + hide + " Alt - "+ key +"'";
-		} else {
-			var accesskey = "";
-		}
-
-		if (selected == 'hide') {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
-		} else {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
-		}
-	}
-};
-
-function toggleToc(objId) {
-	var toc = document.getElementById(objId);
-	if (toc == null) {
-		return;
-	}
-	var showlink=document.getElementById(objId + 'showlink');
-	var hidelink=document.getElementById(objId + 'hidelink');
-	if (hidelink.style.display == 'none') {
-		document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-		toc.style.display = '';
-		hidelink.style.display='';
-		showlink.style.display='none';
-	} else {
-		document.getElementById('contentcolumn_shiftright').id="contentcolumn";
-		toc.style.display = 'none';
-		hidelink.style.display='none';
-		showlink.style.display='';
-	}
-	ATutor.setcookie(objId, toc.style.display, 1);
-};
-
 //toggle content folder in side menu "content navigation"
 function toggleFolder(cid)
 {
@@ -245,28 +205,25 @@ function toggleFolder(cid)
 <?php } ?>
 
 <div id="contentwrapper">
-<div id="contentcolumn"
-	<?php if (($this->course_id <= 0) && !$this->side_menu): ?>
-		style="margin-right:0px;width:99%;"
-	<?php endif; ?>
-	>
+    <?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
+        <div id="rightcolumn">
+            <a name="menu"></a>
+            <div id="side-menu">
+                <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
+            </div>
+        </div>
+    <?php endif; ?>
 
+<div id="contentcolumn">
 <!-- the page title -->
 	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: right; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
 		<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
 			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 		<?php if ($this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
-			<script type="text/javascript" language="javascript">
-			//<![CDATA[
-			var state = ATutor.getcookie("side-menu");
-			if (state && (state == 'none')) {
-				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
-			} else {
-				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
-			}
-			//]]>
-			</script>
+        <div id="menutoggle">
+            <a accesskey=""><img src="" title="" alt="" /></a>
+        </div>
 		<?php endif; ?>
 	</div>
 

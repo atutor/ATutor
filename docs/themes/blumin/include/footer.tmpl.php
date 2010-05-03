@@ -11,11 +11,6 @@
 
 </div>
 </div>
-	<?php if (($_SESSION['course_id'] > 0) && $this->side_menu): ?>
-		<div id="rightcolumn">
-			<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
-		</div>
-	<?php endif; ?>
 <div id="footer">
 	<br /><br />
 	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
