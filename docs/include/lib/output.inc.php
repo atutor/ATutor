@@ -387,7 +387,7 @@ function _AT() {
 		}
 
 		if (isset($_config['latex_server']) && $_config['latex_server']) {
-			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
+			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\" alt=\"'.'$1'.'\" title=\"'.'$1'.'\">'", $input);
 		}
 
 		/* this has to be here, only because AT_FORMAT_HTML is the only check that has an else-block */
@@ -892,8 +892,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 	$input = str_replace('CONTENT_DIR', '', $input);
 
 	if (isset($_config['latex_server']) && $_config['latex_server']) {
-		// see: http://www.forkosh.com/mimetex.html
-		$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
+		$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\" alt=\"'.'$1'.'\" title=\"'.'$1'.'\">'", $input);
 	}
 
 	if ($html) {
