@@ -257,7 +257,7 @@ function toggleFolder(cid)
 		<?php
 		 echo 'style="'.$style.'"';
 		?>>
-	<?php if ((isset($this->course_id) && $this->course_id > 0) && $system_courses[$this->course_id]['side_menu']): ?>
+	<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="leftcolumn">
             <a name="menu"></a>
             <div id="side-menu">
@@ -266,12 +266,7 @@ function toggleFolder(cid)
 		</div>
 	<?php endif; ?>
 
-	<div id="contentcolumn"
-		<?php if ((isset($this->course_id) && $this->course_id <= 0) && isset($this->side_menu) && !$this->side_menu): ?>
-			style="margin-left:0.5em;width:99%;"
-		<?php endif; ?>
-		>
-
+	<div id="contentcolumn">
 		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="menutoggle">
 		    <a accesskey=""><img src="" title="" alt="" /></a>

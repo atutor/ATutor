@@ -1437,18 +1437,14 @@ div.social-wrapper{
 	width: 100%;
 }
 #contentcolumn {
-	margin-left: 0.5em;
 	padding-right: 5px;
-}
-#contentcolumn_shiftright {
-	margin-left: 19em;
+    overflow: auto;
 }
 
 #leftcolumn{
 	float: left;
-	width: 19em;
-	margin-left: 5px;
-	margin-top:-10px;
+    overflow: hidden;
+    margin: -10px 5px 0;
 }
 
 #footer{
@@ -1799,8 +1795,7 @@ fieldset#toc {
 	 overflow:hidden; 
 	 width:18em;
 	 padding-right:.3em;
-	 padding-bottom:.3em;
-	 
+	 padding-bottom:.3em; 
 }
 
 /* cleans up glossary question mark line spacing*/
