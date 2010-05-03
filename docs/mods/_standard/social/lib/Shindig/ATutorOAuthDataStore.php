@@ -60,6 +60,16 @@ class ATutorOAuthDataStore extends OAuthDataStore {
     return null;
   }
 
+  public function lookup_consumer_name($consumer_key){
+	$consumer_key = mysql_real_escape_string(trim($consumer_key));
+	$sql = "SELECT user_id, app_id, FROM ".TABLE_PREFIX."oauth_consumer WHERE consumer_key = '$consumer_key'";
+	$res = mysql_query($sql, $this->db);
+	if (mysql_num_rows($res)) {
+      $ret = mysql_fetch_assoc($res);
+      return $ret;
+    }
+  }
+
   public function lookup_token($consumer, $token_type, $token) {	
     $token_type		= mysql_real_escape_string($token_type);
     $consumer_key	= mysql_real_escape_string($consumer->key);
@@ -92,6 +102,7 @@ class ATutorOAuthDataStore extends OAuthDataStore {
     $consumer_key		= mysql_real_escape_string($consumer->key);
     $consumer_secret	= mysql_real_escape_string($consumer->secret);
 	$sql = "SELECT user_id FROM ".TABLE_PREFIX."oauth_consumer WHERE consumer_key = '$consumer_key' AND consumer_secret = '$consumer_secret'";
+//echo $sql;exit;
     $res = mysql_query($sql, $this->db);
     if (mysql_num_rows($res)) {
       $ret = mysql_fetch_assoc($res);

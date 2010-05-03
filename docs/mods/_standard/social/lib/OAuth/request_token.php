@@ -14,9 +14,7 @@
 
 require_once('OAuth.php');
 require_once('../Shindig/ATutorOAuthDataStore.php');
-
 $oauthDataStore = new ATutorOAuthDataStore();
-
 try {
   $server = new OAuthServer($oauthDataStore);
   $server->add_signature_method(new OAuthSignatureMethod_HMAC_SHA1());

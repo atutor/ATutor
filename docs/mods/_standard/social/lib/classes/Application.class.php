@@ -134,19 +134,20 @@ class Application extends Applications{
 	function parseModulePrefs($app_url){
 		//parse all the attributes of the <ModulePrefs> tag
 		//and save everything in the object.
-		 $gadget = $this->fetch_gadget_metadata($app_url);
+		$securityToken = BasicSecurityToken::createFromValues(1, 1, 0, AT_BASE_HREF, urlencode($app_url), 0);
+		$gadget = $this->fetch_gadget_metadata($app_url, $securityToken);
 		 return $gadget->gadgets;
 	}
 
 
 	// Restful - JSON CURL data transfer
-	private function fetch_gadget_metadata($app_url) {
+	private function fetch_gadget_metadata($app_url, $securityToken) {
 		$request = json_encode(array(
 			'context' => array('country' => 'US', 'language' => 'en', 'view' => 'default', 
 				'container' => 'atutor'), 
 			'gadgets' => array(array('url' => $app_url, 'moduleId' => $this->getModuleId()))));
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, AT_SHINDIG_URL.'/gadgets/metadata');
+		curl_setopt($ch, CURLOPT_URL, AT_SHINDIG_URL.'/gadgets/metadata?st=' . urlencode(base64_encode($securityToken->toSerialForm())));;
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_AUTOREFERER, 1);

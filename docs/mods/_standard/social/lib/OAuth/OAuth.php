@@ -89,7 +89,6 @@ class OAuthSignatureMethod_HMAC_SHA1 extends OAuthSignatureMethod {
 
     $key_parts = array_map(array('OAuthUtil', 'urlencodeRFC3986'), $key_parts);
     $key = implode('&', $key_parts);
-
     return base64_encode(hash_hmac('sha1', $base_string, $key, true));
   }
 }
@@ -203,32 +202,29 @@ class OAuthRequest {
     $scheme = (! isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on") ? 'http' : 'https';
     @$http_url or $http_url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     @$http_method or $http_method = $_SERVER['REQUEST_METHOD'];
-
     $request_headers = OAuthRequest::get_headers();
-
     // let the library user override things however they'd like, if they know
     // which parameters to use then go for it, for example XMLRPC might want to
     // do this
     if ($parameters) {
       $req = new OAuthRequest($http_method, $http_url, $parameters);
-    } else {
-      // collect request parameters from query string (GET) and post-data (POST) if appropriate (note: POST vars have priority)
-      $req_parameters = $_GET;
-      if ($http_method == "POST" && @$request_headers["Content-Type"] == "application/x-www-form-urlencoded") {
-        $req_parameters = array_merge($req_parameters, $_POST);
-      }
-
+    } elseif (isset($request_headers['Authorization']) && substr($request_headers['Authorization'], 0, 5) == "OAuth") {
       // next check for the auth header, we need to do some extra stuff
       // if that is the case, namely suck in the parameters from GET or POST
       // so that we can include them in the signature
-      if (@substr($request_headers['Authorization'], 0, 5) == "OAuth") {
-        $header_parameters = OAuthRequest::split_header($request_headers['Authorization']);
-        $parameters = array_merge($req_parameters, $header_parameters);
-        $req = new OAuthRequest($http_method, $http_url, $parameters);
-      } else
-        $req = new OAuthRequest($http_method, $http_url, $req_parameters);
+      $header_parameters = OAuthRequest::split_header($request_headers['Authorization']);
+      if ($http_method == "GET") {
+        $req_parameters = $_GET;
+      } else if ($http_method = "POST") {
+        $req_parameters = $_POST;
+      }
+      $parameters = array_merge($header_parameters, $req_parameters);
+      $req = new OAuthRequest($http_method, $http_url, $parameters);
+    } elseif ($http_method == "GET") {
+      $req = new OAuthRequest($http_method, $http_url, $_GET);
+    } elseif ($http_method == "POST") {
+      $req = new OAuthRequest($http_method, $http_url, $_POST);
     }
-
     return $req;
   }
 
@@ -492,10 +488,14 @@ class OAuthServer {
    */
   public function fetch_request_token(&$request) {
     $this->get_version($request);
-
+//@harris
+//open up firebug, check RemoteContentRequest Object
+//the parameter has only oauth_signature but nothing else.all the keys are missing.
+//failing the get_consumer request.
+//print_r($request);exit;
     $consumer = $this->get_consumer($request);
 
-    // no token required for the initial token request
+	// no token required for the initial token request
     $token = NULL;
 
     $this->check_signature($request, $consumer, $token);
@@ -663,6 +663,7 @@ class OAuthDataStore {
 
 /*  A very naive dbm-based oauth storage
  */
+/* @harris, not needed, use AT_
 class SimpleOAuthDataStore extends OAuthDataStore {
   private $dbh;
 
@@ -727,6 +728,7 @@ class SimpleOAuthDataStore extends OAuthDataStore {
     return $token;
   }
 }
+*/
 
 class OAuthUtil {
 
@@ -743,23 +745,3 @@ class OAuthUtil {
   }
 }
 
-function debug($var, $title='') {
-	echo '<pre style="border: 1px black solid; padding: 0px; margin: 10px;" title="debugging box">';
-	if ($title) {
-		echo '<h4>'.$title.'</h4>';
-	}
-	
-	ob_start();
-	print_r($var);
-	$str = ob_get_contents();
-	ob_end_clean();
-
-	$str = str_replace('<', '&lt;', $str);
-
-	$str = str_replace('[', '<span style="color: red; font-weight: bold;">[', $str);
-	$str = str_replace(']', ']</span>', $str);
-	$str = str_replace('=>', '<span style="color: blue; font-weight: bold;">=></span>', $str);
-	$str = str_replace('Array', '<span style="color: purple; font-weight: bold;">Array</span>', $str);
-	echo $str;
-	echo '</pre>';
-}
