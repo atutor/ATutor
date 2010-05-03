@@ -32,7 +32,7 @@ $this->_pages['mods/_core/editor/arrange_content.php']['guide']     = 'instructo
 
 $this->_pages['mods/_core/editor/edit_content.php']['title_var'] = 'edit_content';
 $this->_pages['mods/_core/editor/edit_content.php']['parent']    = 'mods/_core/content/index.php';
-$this->_pages['mods/_core/editor/edit_content.php']['guide']     = 'instructor/?p=creating_editing_content.php';
+$this->_pages['mods/_core/editor/edit_content.php']['guide']     = 'instructor/?p=content_edit.php';
 
 $this->_pages['mods/_core/editor/preview.php']['title_var'] = 'preview';
 $this->_pages['mods/_core/editor/preview.php']['parent']    = 'mods/_core/content/edit_content.php';
