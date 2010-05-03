@@ -274,11 +274,6 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		title' => _AT('edit_this_page'),   
 		'url' => $_base_href . 'mods/_core/editor/edit_content.php?cid='.$cid, 'icon' => $_base_href . 'images/medit.gif');
 	}
-	$shortcuts[] = array(
-		'title' => _AT('add_top_folder'),   
-		'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php', 
-		'icon' => $_base_href . 'images/folder_new.gif');
-
 	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 		$shortcuts[] = array(
 			'title' => _AT('add_sibling_folder'), 
@@ -291,11 +286,6 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		'title' => _AT('add_sub_folder'),   
 		'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php?pid='.$cid, 
 		'icon' => $_base_href . 'images/folder_new_sibling.gif');
-	
-	$shortcuts[] = array(
-		'title' => _AT('add_top_page'),     
-		'url' => $_base_href . 'mods/_core/editor/edit_content.php', 
-		'icon' => $_base_href . 'images/page_add.gif');
 	
 	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 		$shortcuts[] = array(
