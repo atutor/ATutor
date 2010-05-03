@@ -18,9 +18,9 @@ if ($this->banner): ?><?php echo $this->banner; ?><br /><?php endif;
 // positioning switch of home ONLY FOR INSTRUCTORS. two icons will be used for identification to distinguish the two different views of the home.
 if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && count($this->home_links) > 0){
 	if($this->view_mode==0)
-		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/detail_view.png"  alt ="'._AT('detail_view').'" border="0"/></a>';
+		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/detail_view.png" title ="'._AT('detail_view').'"  alt ="'._AT('detail_view').'" border="0"/></a><br />';
 	else
-		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/icon_view.png"  alt ="'._AT('icon_view').'" border="0"/></a>';
+		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/icon_view.png"  title ="'._AT('icon_view').'" alt ="'._AT('icon_view').'" border="0"/></a><br />';
 }	
 
 // Icon View, $this->view_mode = 0. course will be made changes to the icons to restore the classic icons.
