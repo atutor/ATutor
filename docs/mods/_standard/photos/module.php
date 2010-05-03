@@ -47,7 +47,7 @@ $this->_stacks['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery', 'fil
  */
 $_group_tool = $_student_tool = AT_PA_BASENAME.'index.php';
 
-$this->_list['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery','file'=>AT_PA_BASE.'sublinks.php');
+$this->_list['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery','file'=>AT_PA_BASENAME.'sublinks.php');
 $this->_pages[AT_PA_BASENAME.'index.php']['icon']      = 'images/home-directory_sm.png';
 
 /*******
