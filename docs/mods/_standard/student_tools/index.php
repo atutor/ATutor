@@ -34,7 +34,7 @@ $home_view = $row['home_view'];
 // set to "detail view" and user role is instructor
 if ($home_view == 1 && authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
 {
-	$_custom_head = '
+	$_custom_head .= '
 <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
 <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
 <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-theme-mist.css" />
