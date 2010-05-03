@@ -1489,7 +1489,7 @@ div#topnavlistcontainer {
 	background-image: url('images/pencils_up_bottom.jpg');
 	background-position: 99% 0%;
 	background-repeat: no-repeat;
-	height:1.8em;
+	height:1.7em;
 	margin-top: .1em;
 	border-bottom:1px solid #cccccc;
 }
@@ -1570,6 +1570,7 @@ li.top-tool a {  font-weight: bold; }
 li.child-tool a { 
 	font-size: x-small;
 	font-weight: normal; 
+	text-decoration:underline;
 }
  
 ul.child-top-tool {
