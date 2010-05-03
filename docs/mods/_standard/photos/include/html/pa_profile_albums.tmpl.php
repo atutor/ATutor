@@ -1,4 +1,4 @@
-<div id="uploader-contents"">
+<div id="uploader-contents">
 	<!-- Photo album options and page numbers -->
 	<?php if ($this->action_permission || $this->album_info['type_id']==AT_PA_TYPE_COURSE_ALBUM): ?>
 	<div class="add_profile_photo">

@@ -49,7 +49,7 @@
 			</ul>			
 			</div>
 			<?php if($album_size > AT_PA_SEARCH_MIN_ALBUM): ?>
-			<div class="search_slider_right""><a href="<?php echo $_SERVER['PHP_SELF']; ?>#n" onclick="slide('left');"><img src="<?php echo AT_PA_BASENAME; ?>images/next.png" alt="<?php echo _AT('next'); ?>" /></a></div>
+			<div class="search_slider_right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>#n" onclick="slide('left');"><img src="<?php echo AT_PA_BASENAME; ?>images/next.png" alt="<?php echo _AT('next'); ?>" /></a></div>
 			<?php endif; ?>
 		</div>
 		<?php endif; ?>
