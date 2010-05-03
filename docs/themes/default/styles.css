@@ -1932,13 +1932,14 @@ ul#subnavlist li {
 	display: inline-block;
 	font-weight:700;
 	text-align:center;
-	border:1px solid #cccccc;
-
+	border-top:1px solid #cccccc;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.1em;	
 	-moz-box-shadow:.1em .0em .1em #999999;
-    box-shadow: .2em .0em .2em #999999;
+	box-shadow: .2em .0em .2em #999999;
 	padding: .1em .5em .4em .5em ;
 }
 
@@ -1992,43 +1993,45 @@ tr.odd {
 
 }
 .editor_tab{
-float:left;
+	float:left;
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
 	border-bottom:0;
 	margin-bottom:-.5em;
 	text-align: center;
-	width:15%
 	white-space: nowrap;
 	background-color: #ffffff;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	-moz-box-shadow:.1em .0em .1em #999999;
-    box-shadow: .2em .0em .2em #999999;
+	box-shadow: .2em .0em .2em #999999;
 	padding: 0em .2em 0em .2em ;
 	height:1.4em;
 }
+.editor_tab:hover, .editor_tab input[type=submit]:hover{
+	background-color:#eeeeee;
+}
+
 .editor_tab_selected{
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
 	border-bottom:0;
-	padding-left: 3px;
-	padding-right: 3px;
+	padding: 0em .2em 0em .2em ;
   	background-color: #eeeeee;
 	font-weight:bold;
 	text-align:center;
-	padding:1em 1em 1em;
 	white-space: nowrap;
 	text-decoration:none;
-	padding:0em 0em 0em;
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.4em;
-		width:15%
-}
 
+}
+.editor_tab input[type=submit]{
+	height:1.2em;
+}
 /* 1pxgs current box on My Start */
 .current_box{
 	float:left;
