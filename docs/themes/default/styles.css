@@ -1439,6 +1439,7 @@ div.social-wrapper{
 #contentcolumn {
 	margin-left: 0.5em;
 	padding-right: 5px;
+border:thin solid black;
 }
 #contentcolumn_shiftright {
 	margin-left: 19em;
@@ -1446,7 +1447,7 @@ div.social-wrapper{
 
 #leftcolumn{
 	float: left;
-	width: 17em;
+	width: 19em;
 	margin-left: 5px;
 	margin-top:-10px;
 }
