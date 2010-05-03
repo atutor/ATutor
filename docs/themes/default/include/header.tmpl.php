@@ -272,11 +272,9 @@ function toggleFolder(cid)
 		<?php endif; ?>
 		>
 
-		<?php if (isset($this->course_id) && $this->course_id > 0): ?>
+		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="menutoggle">
-			<?php if ($system_courses[$this->course_id]['side_menu']): ?>
-			    <a accesskey=""><img src="" title="" alt="" /></a>
-			<?php endif; ?>
+		    <a accesskey=""><img src="" title="" alt="" /></a>
 		</div>
 
 		<div class="sequence-links">
