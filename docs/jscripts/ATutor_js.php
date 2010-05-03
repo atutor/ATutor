@@ -51,6 +51,7 @@ ATutor.course = ATutor.course || {};
         if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 ?>
             ATutor.course.doSideMenus();
+            ATutor.course.doMenuToggle();
 <?php   }
 ?>        
      });

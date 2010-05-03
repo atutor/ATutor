@@ -87,55 +87,6 @@ global $system_courses, $_custom_css, $db;
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
 //<!--
-/**
- * This function adds the show/hide functionality to the entire side menu via a show/hide button
- * Only necessary in the content area of the site.
- */
-function showTocToggle(objId, show, hide, key, selected) {
-	if(document.getElementById) {
-		if (key) {
-			var accesskey = " accesskey='" + key + "' title='"+ show + "/" + hide + " Alt - "+ key +"'";
-		} else {
-			var accesskey = "";
-		}
-
-		if (selected == 'hide') {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink" style="display:none;"><img src="<?php echo $this->base_href; ?>images/showmenu.gif" title="' + show + '" alt="' + show + '" border="0" /></span>' +
-			'<span id="' + objId + 'hidelink"><img src="<?php echo $this->base_href; ?>images/hidemenu.gif" title="' + hide + '" alt="' + hide + '" border="0" /></span>'	+ '</a>');
-		} else {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink"><img src="<?php echo $this->base_href; ?>images/showmenu.gif" title="' + show + '" alt="' + show + '" border="0" /></span>' +
-			'<span id="' + objId + 'hidelink" style="display:none;"><img src="<?php echo $this->base_href; ?>images/hidemenu.gif" title="' + hide + '" alt="' + hide + '" border="0" /></span>'	+ '</a>');
-		}
-	}
-}
-
-/**
- * This function actually performs the toggle functionality for the side menu
- */
-function toggleToc(objId) {
-	var toc = document.getElementById(objId);
-	if (toc == null) {
-		return;
-	}
-	var showlink=document.getElementById(objId + 'showlink');
-	var hidelink=document.getElementById(objId + 'hidelink');
-
-	if (hidelink.style.display == 'none') {
-		document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-		jQuery("[id="+objId+"]").slideDown("slow");
-		hidelink.style.display='';
-		showlink.style.display='none';
-	} else {
-		document.getElementById('contentcolumn_shiftright').id="contentcolumn";
-		jQuery("[id="+objId+"]").slideUp("slow");
-		hidelink.style.display='none';
-		showlink.style.display='';
-	}
-	ATutor.setcookie(objId, hidelink.style.display, 1);
-}
-
 // toggle open/close content folder in side menu "content navigation"
 function toggleFolder(cid)
 {
@@ -157,7 +108,7 @@ function toggleFolder(cid)
 //-->
 </script>
 <div class="page_wrapper">
-<div id="header" >
+<div id="header">
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
@@ -308,44 +259,23 @@ function toggleFolder(cid)
 		?>>
 	<?php if ((isset($this->course_id) && $this->course_id > 0) && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="leftcolumn">
-			<script type="text/javascript">
-			//<![CDATA[
-			var state = ATutor.getcookie("side-menu");
-			if (state && (state == 'none')) {
-				document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu">');
-			} else {
-				document.writeln('<a name="menu"></a><div id="side-menu">');
-			}
-			//]]>
-			</script>
-
-			<?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
-
-			<script type="text/javascript">
-			//<![CDATA[
-				document.writeln('</div>');
-			//]]>
-			</script>
+            <a name="menu"></a>
+            <div id="side-menu">
+		        <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
+		    </div>
 		</div>
 	<?php endif; ?>
 
-	<div id="contentcolumn">
+	<div id="contentcolumn"
+		<?php if ((isset($this->course_id) && $this->course_id <= 0) && isset($this->side_menu) && !$this->side_menu): ?>
+			style="margin-left:0.5em;width:99%;"
+		<?php endif; ?>
+		>
 
 		<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 		<div id="menutoggle">
-
-			<?php if ($this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
-				<script type="text/javascript" language="javascript">
-				//<![CDATA[
-				var state = ATutor.getcookie("side-menu");
-				if (state && (state == 'none')) {
-					showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
-				} else {
-					document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-					showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
-				}
-				//]]>
-				</script>
+			<?php if ($system_courses[$this->course_id]['side_menu']): ?>
+			    <a accesskey=""><img src="" title="" alt="" /></a>
 			<?php endif; ?>
 		</div>
 

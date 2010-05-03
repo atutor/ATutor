@@ -67,11 +67,68 @@ ATutor.course = ATutor.course || {};
 		}
 	};
 	
+	var menu_show_icon;
+	var menu_hide_icon;
+	
 	//Initialize the submenus
 	ATutor.course.doSideMenus = function () {
 		element_collapse_icon = ATutor.base_href + "images/mswitch_minus.gif";
 		element_expand_icon = ATutor.base_href + "images/mswitch_plus.gif";
-		printSubmenus();
+		printSubmenus();		
+	};
+	
+	var hideMenu = function () {
+		var menuLink = jQuery("#menutoggle > a");
+		menuLink.attr("accesskey", "");
+		
+		var menuImage = jQuery("img", menuLink);
+		menuImage.attr("src", menu_show_icon);
+		menuImage.attr("alt", ATutor.course.show);
+		menuImage.attr("title", ATutor.course.show);
+		
+		jQuery("#side-menu").hide();
+		ATutor.setcookie("side-menu", "none", 1);
+	};
+
+	var showMenu = function () {
+		var menuLink = jQuery("#menutoggle > a");
+		menuLink.attr("accesskey", "");
+		
+		var menuImage = jQuery("img", menuLink);
+		menuImage.attr("src", menu_hide_icon);
+		menuImage.attr("alt", ATutor.course.hide);
+		menuImage.attr("title", ATutor.course.hide);
+		
+		jQuery("#side-menu").show();
+		ATutor.setcookie("side-menu", "", 1);
+	};
+	
+	var showHideMenu = function () {
+		var clickedElement = jQuery("img", this);
+		if (clickedElement.attr("src") == menu_hide_icon) {
+			hideMenu();
+		}
+		else {
+			showMenu();
+		}
+	};
+
+	var printMenuToggle = function () {
+		var state = ATutor.getcookie("side-menu");
+		if (state && state=="none") { 
+			hideMenu();
+		} else {
+			showMenu(); 
+		}
+		var menuLink = jQuery("#menutoggle > a");
+		menuLink.click(showHideMenu);
+		
+	};
+	
+	ATutor.course.doMenuToggle = function () {
+		menu_show_icon = ATutor.base_href + "images/showmenu.gif";
+		menu_hide_icon = ATutor.base_href + "images/hidemenu.gif";
+		printMenuToggle();
 	};
 
 })();
