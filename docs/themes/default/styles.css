@@ -1435,16 +1435,18 @@ div.social-wrapper{
 #contentwrapper{
 	float: left;
 	width: 100%;
+
 }
 #contentcolumn {
 	padding-right: 5px;
-    overflow: auto;
+	overflow: auto;
 }
 
 #leftcolumn{
 	float: left;
-    overflow: hidden;
-    margin: -10px 5px 0;
+	width:21em;
+	overflow: hidden;
+	margin: -10px 5px 0;
 }
 
 #footer{
@@ -1453,7 +1455,7 @@ div.social-wrapper{
 	text-align: center;
 	padding: 4px 0px;
 	background-image: url('images/atutor_logo.png');
-    background-position: 1% 98%;
+	background-position: 1% 98%;
 	background-repeat: no-repeat;
 }
 
@@ -1793,7 +1795,7 @@ fieldset#toc {
 
 #side-menu{
 	 overflow:hidden; 
-	 width:18em;
+	 width:20em;
 	 padding-right:.3em;
 	 padding-bottom:.3em; 
 }
