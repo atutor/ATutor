@@ -40,7 +40,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
             $this->_pages['mods/_core/courses/admin/auto_enroll.php']['parent']    = 'mods/_core/courses/admin/courses.php';
             $this->_pages['mods/_core/courses/admin/auto_enroll.php']['guide']     = 'admin/?p=auto_enroll.php';
             $this->_pages['mods/_core/courses/admin/auto_enroll.php']['children']  = array_merge(array('mods/_core/courses/admin/auto_enroll_edit.php'));
-            $this->_pages['admin/config_edit.php']['children']  = array_merge((array) $this->_pages['admin/config_edit.php']['children'], array('mods/_core/courses/admin/auto_enroll.php'));
+            $this->_pages['admin/config_edit.php']['children']  = array_merge((array) $this->_pages['admin/config_edit.php']['children']);
 
 
 
