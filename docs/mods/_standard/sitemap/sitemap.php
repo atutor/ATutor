@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
-<div id="container" style="padding:2em;">
+<div id="container" style="padding:2em; width:90%;">
 <?
 echo '<p><a href="index.php">'._AT('home').'</a>';
 
