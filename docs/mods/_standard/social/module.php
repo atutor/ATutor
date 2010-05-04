@@ -78,8 +78,15 @@ if (admin_authenticate(AT_ADMIN_PRIV_SOCIAL, TRUE) || admin_authenticate(AT_ADMI
 /*******
  * student page.
  */
-$this->_pages[AT_SOCIAL_BASENAME.'index.php']['title_var'] = 'social';
-$this->_pages[AT_SOCIAL_BASENAME.'index.php']['img']       = AT_SOCIAL_BASENAME.'images/social.gif';
+$this->_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['title_var'] = 'social';
+$this->_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['img']       = AT_SOCIAL_BASENAME.'images/social.gif';
+$this->_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['children'] = array_merge(
+array(AT_SOCIAL_BASENAME.'connections.php',
+AT_SOCIAL_BASENAME.'sprofile.php', 
+AT_SOCIAL_BASENAME.'applications.php', 
+AT_SOCIAL_BASENAME.'groups/index.php',
+AT_SOCIAL_BASENAME.'settings.php'),
+isset($_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['children']) ? $_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['children'] : array());
 
 $this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['title_var'] = 'social_profile';
 $this->_pages[AT_SOCIAL_BASENAME.'sprofile.php']['parent'] = AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX;
@@ -139,11 +146,6 @@ $this->_pages[AT_SOCIAL_BASENAME.'groups/list.php']['parent'] = AT_SOCIAL_BASENA
 $this->_pages[AT_NAV_PUBLIC] = array(AT_SOCIAL_BASENAME.'index_public.php');
 $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['title_var'] = 'social';
 $this->_pages[AT_SOCIAL_BASENAME.'index_public.php']['parent'] = AT_NAV_PUBLIC;
-
-
-
-
-
 
 /* my start page pages */
 if ($_SESSION['valid_user']==1){
