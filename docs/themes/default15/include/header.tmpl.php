@@ -68,49 +68,7 @@ global $system_courses;
     <?php echo $this->custom_css; ?>
     <style id="pref_style" type="text/css"></style> 
 </head>
-<body onload="<?php echo $this->onload; ?>"><script language="javascript" type="text/javascript">
-//<!--
-function showTocToggle(objId, show, hide, key, selected) {
-	if(document.getElementById) {
-		if (key) {
-			var accesskey = " accesskey='" + key + "' title='"+ show + "/" + hide + " Alt+"+ key +"'";
-		} else {
-			var accesskey = "";
-		}
-
-		if (selected == 'hide') {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
-		} else {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
-		}
-	}
-}
-
-function toggleToc(objId) {
-	var toc = document.getElementById(objId);
-	if (toc == null) {
-		return;
-	}
-	var showlink=document.getElementById(objId + 'showlink');
-	var hidelink=document.getElementById(objId + 'hidelink');
-	if (hidelink.style.display == 'none') {
-		toc.style.display = '';
-		hidelink.style.display='';
-		showlink.style.display='none';
-	} else {
-		toc.style.display = 'none';
-		hidelink.style.display='none';
-		showlink.style.display='';
-	}
-	ATutor.setcookie(objId, toc.style.display, 1);
-}
-//-->
-</script>
-
+<body onload="<?php echo $this->onload; ?>">
 <div id="member-links" style="float: right;">
 	<!-- hidden direct link to content -->
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" style="border: 0px;" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
@@ -245,16 +203,9 @@ function toggleToc(objId) {
 			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 		<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
-			<script type="text/javascript" language="javascript">
-			//<![CDATA[
-			var state = ATutor.getcookie("side-menu");
-			if (state && (state == 'none')) {
-				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
-			} else {
-				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
-			}
-			//]]>
-			</script>
+        <div id="menutoggle">
+            <a accesskey=""><img src="" title="" alt="" /></a>
+        </div>
 		<?php endif; ?>
 	</div>
 
