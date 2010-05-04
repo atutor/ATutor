@@ -110,47 +110,6 @@ jQuery(document).ready(function () {
 	});
 });
 
-function showTocToggle(objId, show, hide, key, selected) {
-	if(document.getElementById) {
-		if (key) {
-			var accesskey = " accesskey='" + key + "' title='"+ show + "/" + hide + " Alt - "+ key +"'";
-		} else {
-			var accesskey = "";
-		}
-
-		if (selected == 'hide') {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
-		} else {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
-		}
-	}
-}
-
-function toggleToc(objId) {
-	var toc = document.getElementById(objId);
-	if (toc == null) {
-		return;
-	}
-	var showlink=document.getElementById(objId + 'showlink');
-	var hidelink=document.getElementById(objId + 'hidelink');
-	if (hidelink.style.display == 'none') {
-		document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-		toc.style.display = '';
-		hidelink.style.display='';
-		showlink.style.display='none';
-	} else {
-		document.getElementById('contentcolumn_shiftright').id="contentcolumn";
-		toc.style.display = 'none';
-		hidelink.style.display='none';
-		showlink.style.display='';
-	}
-	ATutor.setcookie(objId, toc.style.display, 1);
-}
-
 //toggle content folder in side menu "content navigation"
 function toggleFolder(cid)
 {
@@ -167,7 +126,7 @@ function toggleFolder(cid)
 	
 	jQuery("#folder"+cid).slideToggle();
 }
-
+//-->
 </script>
 
 <div id="top-links"> <!-- top help/search/login links -->
@@ -311,8 +270,14 @@ function toggleFolder(cid)
 		</div>
 		
 		<?php if ($this->course_id > 0): ?>
+		<div id="menutoggle">
+            <a accesskey=""><img src="" title="" alt="" /></a>
+        </div>
+		
 		<a href=""></a>
 		<div class="sequence-links">
+		
+		
 		<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 			<?php if ($this->sequence_links['resume']): ?>
 					<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>

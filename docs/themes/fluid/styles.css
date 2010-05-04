@@ -1634,3 +1634,13 @@ ul.current_list{
 .current_list img{
       vertical-align:middle;
 }
+
+div#menutoggle{
+    text-align: right; 
+    padding-bottom: 10px; 
+    padding-right: 10px; 
+    float: left; 
+    margin-top: 10px; 
+    padding-right: 5px; 
+    font-size:0.95em;
+}
