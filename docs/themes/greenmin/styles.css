@@ -1287,26 +1287,17 @@ dl#public-profile dd {
 	width: 99%;
 }
 #contentcolumn {
-	margin-left: 5px;
-	padding-right: 5px;
+    padding-left: 5px;
+    overflow: auto;
 }
 #contentcolumn_shiftright {
 	margin-left: 210px;
 	padding-right: 5px;
 }
 #rightcolumn{
-	float: left;
-	width: 17em;
-	margin-left: -200px;
-	overflow: hidden;
-}
-#leftcolumn{
-	position: absolute;
-	left: 0;
-	float: left;
-	width: 200px;
-	margin-left: 5px;
-	overflow: hidden;
+    float: right;
+    overflow: hidden;
+    margin: -5px 0 0;
 }
 #footer{
 	clear: left;
@@ -1498,4 +1489,21 @@ ul.current_list{
 }
 .current_list img{
       vertical-align:middle;
+}
+
+#side-menu{
+     overflow:hidden; 
+     width:18em;
+     padding-right:.3em;
+     padding-bottom:.3em; 
+}
+
+div#menutoggle{
+    text-align: right; 
+    padding-bottom: 10px; 
+    padding-right: 10px; 
+    float: right; 
+    margin-top: 10px; 
+    padding-right: 5px; 
+    font-size:0.95em;
 }

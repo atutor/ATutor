@@ -85,47 +85,6 @@ global $system_courses, $_custom_css, $_base_path;
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
 //<!--
-function showTocToggle(objId, show, hide, key, selected) {
-	if(document.getElementById) {
-		if (key) {
-			var accesskey = " accesskey='" + key + "' title='"+ show + "/" + hide + " Alt - "+ key +"'";
-		} else {
-			var accesskey = "";
-		}
-
-		if (selected == 'hide') {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
-		} else {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
-		}
-	}
-}
-
-function toggleToc(objId) {
-	var toc = document.getElementById(objId);
-	if (toc == null) {
-		return;
-	}
-	var showlink=document.getElementById(objId + 'showlink');
-	var hidelink=document.getElementById(objId + 'hidelink');
-	if (hidelink.style.display == 'none') {
-		document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-		toc.style.display = '';
-		hidelink.style.display='';
-		showlink.style.display='none';
-	} else {
-		document.getElementById('contentcolumn_shiftright').id="contentcolumn";
-		toc.style.display = 'none';
-		hidelink.style.display='none';
-		showlink.style.display='';
-	}
-	ATutor.setcookie(objId, toc.style.display, 1);
-}
-
 //toggle content folder in side menu "content navigation"
 function toggleFolder(cid)
 {
@@ -142,7 +101,7 @@ function toggleFolder(cid)
 	
 	jQuery("#folder"+cid).slideToggle();
 }
-
+//-->
 </script>
 <!-- section title -->
 <div><a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a><h1 id="section-title"><?php echo $this->section_title; ?><?php if (($this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
@@ -248,11 +207,16 @@ function toggleFolder(cid)
 <div>
 
 <div id="contentwrapper">
-<div id="contentcolumn"
-	<?php if (($this->course_id <= 0) && !$this->side_menu): ?>
-		style="margin-right:0px;width:99%;"
-	<?php endif; ?>
-	>
+    <?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
+        <div id="rightcolumn">
+            <a name="menu"></a>
+            <div id="side-menu">
+                <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+<div id="contentcolumn">
 
 <!-- the page title -->
 
@@ -261,22 +225,12 @@ function toggleFolder(cid)
 			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	</div>
 		<?php endif; ?>
-	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float:left ; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
 
 		<?php if ($this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
-			<script type="text/javascript" language="javascript">
-			//<![CDATA[
-			var state = getcookie("side-menu");
-			if (state && (state == 'none')) {
-				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
-			} else {
-				document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
-			}
-			//]]>
-			</script>
+        <div id="menutoggle">
+            <a accesskey=""><img src="" title="" alt="" /></a>
+        </div>
 		<?php endif; ?>
-	</div>
 
 	<div class="sequence-links">
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
