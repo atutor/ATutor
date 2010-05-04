@@ -34,10 +34,10 @@ if (isset($_POST['cancel'])) {
 		$_POST['answer'][$i]          = $addslashes(trim($_POST['answer'][$i]));
 	}
 
-	if (!$_POST['question'][0] 
-		|| !$_POST['question'][1] 
-		|| !$_POST['answer'][0] 
-		|| !$_POST['answer'][1]) {
+	if ($_POST['question'][0] == ''
+		|| $_POST['question'][1] == ''
+		|| $_POST['answer'][0] == ''
+		|| $_POST['answer'][1] == '') {
 
 		$msg->addError('QUESTION_EMPTY');
 	}
