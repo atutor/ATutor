@@ -97,48 +97,6 @@ jQuery('#content_link').click(function(e) {
 <body onload="<?php echo $this->onload; ?>">
 <script language="javascript" type="text/javascript">
 //<!--
-function showTocToggle(objId, show, hide, key, selected) {
-	if(document.getElementById) {
-		if (key) {
-			var accesskey = " accesskey='" + key + "' title='"+ show + "/" + hide + " Alt - "+ key +"'";
-		} else {
-			var accesskey = "";
-		}
-
-		if (selected == 'hide') {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
-		} else {
-			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-			'<span id="' + objId + 'showlink">' + show + '</span>' +
-			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
-		}
-	}
-}
-
-function toggleToc(objId) {
-	var toc = document.getElementById(objId);
-	if (toc == null) {
-		return;
-	}
-	var showlink=document.getElementById(objId + 'showlink');
-	var hidelink=document.getElementById(objId + 'hidelink');
-
-	if (hidelink.style.display == 'none') {
-		document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-		jQuery("[id="+objId+"]").slideDown("slow");
-		hidelink.style.display='';
-		showlink.style.display='none';
-	} else {
-		document.getElementById('contentcolumn_shiftright').id="contentcolumn";
-		jQuery("[id="+objId+"]").slideUp("slow");
-		hidelink.style.display='none';
-		showlink.style.display='';
-	}
-	ATutor.setcookie(objId, hidelink.style.display, 1);
-}
-
 // toggle content folder in side menu "content navigation"
 function toggleFolder(cid)
 {
@@ -155,7 +113,7 @@ function toggleFolder(cid)
 	
 	jQuery("#folder"+cid).slideToggle();
 }
-
+//-->
 </script>
 <div class="page_wrapper">
 <div id="header">
