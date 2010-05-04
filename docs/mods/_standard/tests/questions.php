@@ -140,7 +140,33 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_q
 $result	= mysql_query($sql, $db);
 
 ?>
+<script type="text/javascript">
+//<!--
+function setAllWeights() {
+    for (var i=0; i<document.form.elements.length;i++) {
+        var e = document.form.elements[i];
+        if ((e.type == 'text') && (e.name.substring(0, 7) == 'weight[')) {
+            e.value = document.form.all_weights.value;
+        }
+    }
+}
+//-->
+</script>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?tid=<?php echo $tid; ?>" method="post" name="form">
+<div class="input-form">
+	<div class="row">
+		<?php echo _AT('set_all_weights'); ?>
+	</div>
+	<div class="row">
+		<label for="all_weights"><?php echo _AT('points') . ':'; ?></label>
+		<input type="text" id="all_weights" name="all_weights" size="2">
+	</div>
+	<div class="row">
+		<input type="button" class="button" name="set_all_weights" value="<?php echo _AT('set'); ?>" onclick="setAllWeights()">
+	</div>
+</div>
+
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <table class="data static" summary="" rules="rows">
 <thead>
@@ -236,7 +262,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 
 	echo '" align="left" nowrap="nowrap">';
-	echo '<input type="submit" value="'._AT('update').'" name="submit" /> </td>';
+	echo '<input type="submit" value="'._AT('save').'" name="submit" /> </td>';
 	echo '</tr>';
 	echo '</tfoot>';
 } else {
