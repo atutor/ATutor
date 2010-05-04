@@ -37,27 +37,6 @@ global $system_courses, $_custom_css, $_base_path;
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>">
-<script language="javascript" type="text/javascript">
-//<!--
-//toggle content folder in side menu "content navigation"
-function toggleFolder(cid)
-{
-	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
-		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
-		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
-		ATutor.setcookie("c<?php echo $this->course_id;?>_"+cid, null, 1);
-	}
-	else {
-		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
-		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
-		ATutor.setcookie("c<?php echo $this->course_id;?>_"+cid, "1", 1);
-	}
-	
-	jQuery("#folder"+cid).slideToggle();
-}
-
-</script>
-
 <div id="member-links" style="float: right;">
 	<!-- hidden direct link to content -->
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" style="border: 0px;" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>

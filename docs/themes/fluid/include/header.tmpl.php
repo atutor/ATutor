@@ -110,22 +110,6 @@ jQuery(document).ready(function () {
 	});
 });
 
-//toggle content folder in side menu "content navigation"
-function toggleFolder(cid)
-{
-	if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
-		jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
-		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('expand'); ?>");
-		ATutor.setcookie("c<?php echo $this->course_id;?>_"+cid, null, 1);
-	}
-	else {
-		jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
-		jQuery("#tree_icon"+cid).attr("alt", "<?php echo _AT('collapse'); ?>");
-		ATutor.setcookie("c<?php echo $this->course_id;?>_"+cid, "1", 1);
-	}
-	
-	jQuery("#folder"+cid).slideToggle();
-}
 //-->
 </script>
 
