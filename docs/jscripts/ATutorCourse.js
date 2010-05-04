@@ -86,7 +86,7 @@ ATutor.course = ATutor.course || {};
 		menuImage.attr("alt", ATutor.course.show);
 		menuImage.attr("title", ATutor.course.show);
 		
-		jQuery("#side-menu").hide();
+		jQuery("#side-menu").slideUp("slow");
 		ATutor.setcookie("side-menu", "none", 1);
 	};
 
@@ -99,7 +99,7 @@ ATutor.course = ATutor.course || {};
 		menuImage.attr("alt", ATutor.course.hide);
 		menuImage.attr("title", ATutor.course.hide);
 		
-		jQuery("#side-menu").show();
+		jQuery("#side-menu").slideDown("slow");
 		ATutor.setcookie("side-menu", "", 1);
 	};
 	
