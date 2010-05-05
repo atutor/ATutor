@@ -78,10 +78,7 @@ ATutor.course = ATutor.course || {};
 	};
 	
 	var hideMenu = function () {
-		var menuLink = jQuery("#menutoggle > a");
-		menuLink.attr("accesskey", "");
-		
-		var menuImage = jQuery("img", menuLink);
+		var menuImage = jQuery("#menutoggle > a > img");
 		menuImage.attr("src", menu_show_icon);
 		menuImage.attr("alt", ATutor.course.show);
 		menuImage.attr("title", ATutor.course.show);
@@ -90,11 +87,8 @@ ATutor.course = ATutor.course || {};
 		ATutor.setcookie("side-menu", "none", 1);
 	};
 
-	var showMenu = function () {
-		var menuLink = jQuery("#menutoggle > a");
-		menuLink.attr("accesskey", "");
-		
-		var menuImage = jQuery("img", menuLink);
+	var showMenu = function () {		
+		var menuImage = jQuery("#menutoggle > a > img");
 		menuImage.attr("src", menu_hide_icon);
 		menuImage.attr("alt", ATutor.course.hide);
 		menuImage.attr("title", ATutor.course.hide);
@@ -121,8 +115,7 @@ ATutor.course = ATutor.course || {};
 			showMenu(); 
 		}
 		var menuLink = jQuery("#menutoggle > a");
-		menuLink.click(showHideMenu);
-		
+		menuLink.click(showHideMenu);	
 	};
 	
 	ATutor.course.doMenuToggle = function () {
