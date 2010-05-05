@@ -31,7 +31,7 @@ ATutor.course = ATutor.course || {};
 <?php 
         //if user has set any display preferences set styles block
         if (($_SESSION["prefs"]["PREF_FONT_FACE"] != "")
-            || ($_SESSION["prefs"]["PREF_FONT_TIMES"] != 0 && $_SESSION["prefs"]["PREF_FONT_TIMES"] != 1)
+            || ($_SESSION["prefs"]["PREF_FONT_TIMES"] != 0 && $_SESSION["prefs"]["PREF_FONT_TIMES"] != .8)
             || ($_SESSION["prefs"]["PREF_FG_COLOUR"] != "")
             || ($_SESSION["prefs"]["PREF_BG_COLOUR"] != "")
             || ($_SESSION["prefs"]["PREF_HL_COLOUR"] != ""))
