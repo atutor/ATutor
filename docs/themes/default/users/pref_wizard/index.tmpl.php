@@ -58,10 +58,11 @@ global $msg;
             '","'.$_SESSION["prefs"]["PREF_FONT_FACE"].
             '","'.$_SESSION["prefs"]["PREF_FONT_TIMES"].'");';
         
+    } 
+    if (isset($_POST['done'])) {
         echo "window.close();";
-    }   
+    }
     require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); 
-
     ?>
 //-->
 
