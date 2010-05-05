@@ -1439,7 +1439,7 @@ div.social-wrapper{
 }
 #contentcolumn {
 	padding-right: 5px;
-	overflow: auto;
+	overflow:hidden;
 }
 
 #leftcolumn{
@@ -2179,7 +2179,7 @@ table.etabbed-table	{
 }
 #my_courses_container{
 	  width:58%; 
-	  margin:auto;
+	  margin-left:1em;
 	  border:none;
 	  float:left;
 	  border-radius: .5em .5em .5em .5em;
@@ -2188,8 +2188,8 @@ table.etabbed-table	{
 	 box-shadow: .2em .2em  .2em #999999;
 }
 .shortcut_icon{
-border:0;
-vertical-align:middle;
+	border:0;
+	vertical-align:middle;
 }
 ul#content-tool-links {
 	list-style: none outside none;

@@ -231,14 +231,12 @@ global $system_courses, $_custom_css, $db;
 <div id="contentwrapper" 
 		<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] == 0):
 			$style.='margin-top:-2em;';
-		endif; ?>
-		<?php
-		 echo 'style="'.$style.'"';
-		?>>
+			echo 'style="'.$style.'"';
+		endif; ?>>
 	<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="leftcolumn">
-            <a name="menu"></a>
-            <div id="side-menu">
+		  <a name="menu"></a>
+		     <div id="side-menu">
 		        <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 		    </div>
 		</div>

@@ -137,5 +137,7 @@
     <?php }else{ ?>
 	<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=all"><?php echo _AT('show_all'); ?></a>
     <?php } ?>
-</div>
+<br /><br />
+</div>  
+
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
