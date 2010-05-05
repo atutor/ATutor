@@ -79,16 +79,16 @@ if (isset($this->result_list))
 	
 	<dl class="browse-result">
 	
-		<dt class="tr_results_tools">
 <?php if (isset($this->instructor_role)) { ?>
+		<dt class="tr_results_tools">
           <a href="<?php echo AT_TILE_EXPORT_URL.$result['courseID']; ?>">
             <img src="<?php echo AT_BASE_HREF. 'images/download.png'?>" alt="<?php echo _AT('download_common_cartridge'); ?>" title="<?php echo _AT("download_common_cartridge").' '.$result['title']; ?>; ?>" border="0">
           </a>&nbsp;
           <a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>">
             <img src="<?php echo AT_BASE_HREF. 'images/archive.gif'?>" alt="<?php echo _AT('import'); ?>" title="<?php echo _AT("import").' '.$result['title']; ?>" border="0">
           </a>
-<?php }?>
         </dt>
+<?php }?>
 		<dd>
 		  <h3 style="margin-left:-2.5em;">
 		    <a href="<?php echo AT_TILE_VIEW_COURSE_URL.$result['courseID']; ?>" target="_new" ><?php echo htmlspecialchars($result['title']); ?></a>

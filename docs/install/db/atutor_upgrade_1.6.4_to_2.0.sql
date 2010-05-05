@@ -108,6 +108,13 @@ INSERT INTO `config` VALUES ('pa_max_memory_per_member', '50');
 
 # -------------- Photo Album Module Ends -----------------
 
-#----------------Flowplayer Module ------------------------
+# ----------------Flowplayer Module ------------------------
 INSERT INTO `modules` VALUES ('_standard/flowplayer',	 2, 33554432, 0, 0, 0);
 
+# Add Transformable configuration
+
+INSERT INTO `config` (`name`, `value`) VALUES('transformable_uri', 'http://localhost/transformable/');
+INSERT INTO `config` (`name`, `value`) VALUES('transformable_web_service_id', '90c3cd6f656739969847f3a99ac0f3c7');
+INSERT INTO `config` (`name`, `value`) VALUES('transformable_oauth_expire', '93600');
+
+# End of adding Transformable configuration

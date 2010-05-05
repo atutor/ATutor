@@ -80,7 +80,7 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 	//		$url_search .= "&creativeCommons=true";
 	//	}
 		
-		$url = AT_TILE_SEARCH_URL."?id=".AT_TILE_ID.$url_search;
+		$url = AT_TILE_SEARCH_URL."?id=".$_config['transformable_web_service_id'].$url_search;
 	
 		$xml_results = file_get_contents($url);
 		

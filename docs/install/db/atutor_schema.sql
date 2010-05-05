@@ -1135,6 +1135,9 @@ INSERT INTO `config` (`name`, `value`) VALUES('atlas', 'http://maps.google.ca/')
 INSERT INTO `config` (`name`, `value`) VALUES('calculator', 'http://www.calculateforfree.com/');
 INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.org/webnote/');
 INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
+INSERT INTO `config` (`name`, `value`) VALUES('transformable_uri', 'http://localhost/transformable/');
+INSERT INTO `config` (`name`, `value`) VALUES('transformable_web_service_id', '90c3cd6f656739969847f3a99ac0f3c7');
+INSERT INTO `config` (`name`, `value`) VALUES('transformable_oauth_expire', '93600');
 
 #End Access4All setup 
 

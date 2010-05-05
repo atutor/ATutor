@@ -33,7 +33,7 @@ if (!defined('AT_INCLUDE_PATH'))
 
 require_once('OAuthUtility.class.php');
 require_once("OAuth.php");
-global $msg;
+global $msg, $_config;
 
 // check whether the transformable url is accessible
 if (!OAuthUtility::isAccessible(AT_TILE_OAUTH_REGISTER_CONSUMER_URL))
@@ -57,12 +57,12 @@ if ($access_token_key == '')
 	{
 		// 1. register consumer
 		$sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers 
-		         WHERE oauth_server='".mysql_real_escape_string(AT_TILE_BASE_URL)."'";
+		         WHERE oauth_server='".mysql_real_escape_string($_config['transformable_uri'])."'";
 		$result = mysql_query($sql, $db);
 	
 		if (mysql_num_rows($result) == 0)
 		{
-			$register_consumer_url = AT_TILE_OAUTH_REGISTER_CONSUMER_URL.'?consumer='.urlencode(AT_BASE_HREF).'&expire='.AT_TILE_OAUTH_TOKEN_EXPIRE_THRESHOLD;
+			$register_consumer_url = AT_TILE_OAUTH_REGISTER_CONSUMER_URL.'?consumer='.urlencode(AT_BASE_HREF).'&expire='.$_config['transformable_oauth_expire'];
 			$oauth_server_response = file_get_contents($register_consumer_url);
 		
 //			debug('register consumer - request: '.$register_consumer_url);
@@ -89,7 +89,7 @@ if ($access_token_key == '')
 			{
 				$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_servers
 					    (oauth_server, consumer_key, consumer_secret, expire_threshold, create_date)
-					    VALUES ('".mysql_real_escape_string(AT_TILE_BASE_URL)."', '".$consumer_key."',
+					    VALUES ('".mysql_real_escape_string($_config['transformable_uri'])."', '".$consumer_key."',
 					    '".$consumer_secret."', ".$expire_threshold.", now())";
 				$result = mysql_query($sql, $db);
 				$oauth_server_id = mysql_insert_id();
