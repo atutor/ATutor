@@ -204,7 +204,7 @@ global $system_courses;
 		<?php endif; ?>
 		<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
         <div id="menutoggle">
-            <a accesskey=""><img src="" title="" alt="" /></a>
+            <a accesskey="n"><img src="" title="" alt="" /></a>
         </div>
 		<?php endif; ?>
 	</div>

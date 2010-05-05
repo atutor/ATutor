@@ -202,7 +202,7 @@ global $system_courses, $_custom_css, $_base_path;
 		<?php endif; ?>
 		<?php if ($this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
         <div id="menutoggle">
-            <a accesskey=""><img src="" title="" alt="" /></a>
+            <a accesskey="n"><img src="" title="" alt="" /></a>
         </div>
 		<?php endif; ?>
 	</div>

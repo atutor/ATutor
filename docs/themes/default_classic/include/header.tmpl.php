@@ -179,7 +179,7 @@ global $system_courses, $_custom_css, $_base_path;
 
 		<?php if ($this->course_id > 0): ?>
 		    <div id="menutoggle">
-                <a accesskey=""><img src="" title="" alt="" /></a>
+                <a accesskey="n"><img src="" title="" alt="" /></a>
             </div>
 		<?php endif; ?>
 	</div>

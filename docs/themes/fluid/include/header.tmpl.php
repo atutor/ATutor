@@ -255,7 +255,7 @@ jQuery(document).ready(function () {
 		
 		<?php if ($this->course_id > 0): ?>
 		<div id="menutoggle">
-            <a accesskey=""><img src="" title="" alt="" /></a>
+            <a accesskey="n"><img src="" title="" alt="" /></a>
         </div>
 		
 		<a href=""></a>
