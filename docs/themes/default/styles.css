@@ -1073,7 +1073,6 @@ div.box {
 	font-weight: normal;
 	border-radius:.0em .0em .5em .5em;
 	-moz-border-radius: .0em .0em .5em .5em;
-	padding:.2em;
 	border-left:1px solid #ccc;
 	border-right:1px solid #ccc;
 	border-bottom:1px solid #ccc;
@@ -1429,8 +1428,6 @@ div.social-wrapper{
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em 0em 0em;
 }
-
-
 /* floating layout */
 #contentwrapper{
 	float: left;
@@ -1438,7 +1435,8 @@ div.social-wrapper{
 
 }
 #contentcolumn {
-	padding-right: 5px;
+	padding-right: 1em;
+	padding-left: 1em;
 	overflow:hidden;
 }
 
@@ -1556,12 +1554,14 @@ ol#tools>li:hover {
 /*  tool list on admin home and manage screens  */
  li.top-tool { 
 	list-style: none;
-	padding: 2px 2px 2px 15px;
+	padding: 2px 2px 2px 5px;
 	margin-bottom: 5px; 
+	margin-left:-3em;
 	line-height: 200%; 
 	background-color: #fdfdfd; 
 	border-bottom: 1px solid #efefef; 
-	border: 1px solid #eeeeff;}
+	border: 1px solid #eeeeff;
+}
 
 li.top-tool a {  font-weight: bold; } 
 
@@ -1795,9 +1795,9 @@ fieldset#toc {
 
 #side-menu{
 	 overflow:hidden; 
-	 width:20em;
-	 padding-right:.3em;
+	 width:20.5em;
 	 padding-bottom:.3em; 
+	  padding-right:.5em;
 }
 
 /* cleans up glossary question mark line spacing*/
