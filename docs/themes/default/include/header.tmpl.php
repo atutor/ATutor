@@ -137,6 +137,7 @@ global $system_courses, $_custom_css, $db;
 		<?php endif; ?>
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 		</div>
+
 	</div>
 	<?php // if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
 		<!--<a href="<?php echo $this->base_path.url_rewrite('index.php'); ?>"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	 -->
