@@ -78,7 +78,6 @@ if (isset($this->result_list))
 	?>
 	
 	<dl class="browse-result">
-	
 <?php if (isset($this->instructor_role)) { ?>
 		<dt class="tr_results_tools">
           <a href="<?php echo AT_TILE_EXPORT_URL.$result['courseID']; ?>">

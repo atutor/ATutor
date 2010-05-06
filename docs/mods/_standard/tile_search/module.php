@@ -13,7 +13,7 @@ $this->_pages['mods/_core/content/index.php']['children'] = array('mods/_standar
 if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages['admin/config_edit.php']['children'] = array('mods/_standard/tile_search/admin/module_setup.php');
 
-	$this->_pages['mods/_standard/tile_search/admin/module_setup.php']['title_var'] = 'transformable_setup';
+	$this->_pages['mods/_standard/tile_search/admin/module_setup.php']['title_var'] = 'tile_setup';
 	$this->_pages['mods/_standard/tile_search/admin/module_setup.php']['parent']    = 'admin/config_edit.php';
 //	$this->_pages['mods/_standard/tile_search/admin/module_setup.php']['guide']     = 'admin/?p=tranformable_key.php';
 }
