@@ -22,7 +22,7 @@ body {
     background-image:url('images/texture_bg.png');
 }
 .page_wrapper{
-    border:1px solid #cccccc;
+    border:1px solid #aaaaaa;
     width:97%;
     margin-left:auto;
     margin-right:auto;
@@ -32,9 +32,9 @@ body {
     -moz-border-radius: 1em 1em 1em 1em;
     -moz-box-shadow:.2em .2em  #999999;
     box-shadow: .2em .2em  #999999;
-    background-image: url('images/atutor_head.png');
+    background-image: url('images/atutor_head.jpg');
     background-position: 0% 0%;
-	background-repeat: no-repeat;
+	background-repeat: repeat-x;
 
 }
 p {
@@ -969,11 +969,11 @@ div.paging li a:hover, div.paging li a.current {
 }
 
 #header{
-	background-image: url('images/pencils_up_top.jpg');
-	background-position: 99% 98%;
+	background-image: url('images/pencil_top_ds.png');
+	background-position: 99% 99%;
 	background-repeat: no-repeat;
 	height : 5em;
-	margin-bottom:-.2em;
+	margin-bottom:-.15em;
 }
 
 #header a{
@@ -1452,9 +1452,6 @@ div.social-wrapper{
 	width: 100%;
 	text-align: center;
 	padding: 4px 0px;
-	background-image: url('images/atutor_logo.png');
-	background-position: 1% 98%;
-	background-repeat: no-repeat;
 }
 
 /** forum stuff **/
@@ -1482,11 +1479,11 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 /* Top navigation tabs / list */
 div#topnavlistcontainer {
-	background-image: url('images/pencils_up_bottom.jpg');
-	background-position: 99% 0%;
+	background-image: url('images/pencil_bottom_ds.png');
+	background-position: 99% 1%;
 	background-repeat: no-repeat;
 	height:1.7em;
-	margin-top: .1em;
+	margin-top: -.1em;
 	border-bottom:1px solid #cccccc;
 }
 
