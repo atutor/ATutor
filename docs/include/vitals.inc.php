@@ -1320,6 +1320,32 @@ function htmlentities_utf8($str, $use_nl2br=true){
 	return $return;
 }
 
+/**
+ * Check if json_encode/json_decode exists, if not, use the json service library.
+ * NOTE:  json_encode(), json_decode() are NOT available piror to php 5.2
+ * @author	Harris Wong
+ * @date	April 21, 2010
+ */
+ if ( !function_exists('json_encode') ){
+    function json_encode($content){
+		require_once (AT_INCLUDE_PATH.'lib/json.inc.php');
+		$json = new Services_JSON;               
+        return $json->encode($content);
+    }
+}
+if ( !function_exists('json_decode') ){
+    function json_decode($content, $assoc=false){
+		require_once (AT_INCLUDE_PATH.'lib/json.inc.php');
+		if ( $assoc ){
+			$json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+        } else {
+			$json = new Services_JSON;
+		}
+        return $json->decode($content);
+    }
+}
+
+
 require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
 
 $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
