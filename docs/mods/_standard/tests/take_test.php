@@ -238,15 +238,9 @@ if (!isset($_REQUEST['gid']) && !$in_progress) {
 		<strong><?php echo _AT('done'); ?>!</strong>
 	</div>
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" accesskey="s" />
+		<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" accesskey="s" onclick="confirmSubmit(this, '<?php echo $addslashes(_AT("test_confirm_submit")); ?>'); return false;"/>
 	</div>
 </div>
 </form>
-<script type="text/javascript">
-//<!--
-function iframeSetHeight(id, height) {
-	document.getElementById("qframe" + id).style.height = (height + 20) + "px";
-}
-//-->
-</script>
+<script type="text/javascript" src="<?php echo $_base_href;?>/mods/_standard/tests/lib/take_test.js">
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

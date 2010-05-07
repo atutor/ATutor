@@ -269,15 +269,13 @@ if (!$result || !$question_row) {
 		<?php if ($pos > 0): ?>
 			<input type="submit" name="previous" value="<?php echo _AT('previous'); ?>" />
 		<?php endif; ?>
-		<input type="submit" name="next" value="<?php echo _AT('next'); ?>" accesskey="s" />
+		<?php if (($pos+1) == $test_row['num_questions']): ?>
+			<input type="submit" name="next" value="<?php echo _AT('submit'); ?>" accesskey="s" onclick="confirmSubmit(this, '<?php echo $addslashes(_AT("test_confirm_submit")); ?>'); return false;"/>
+		<?php else: ?>
+			<input type="submit" name="next" value="<?php echo _AT('next'); ?>" accesskey="s" />
+		<?php endif; ?>
 	</div>
 </div>
 </form>
-<script type="text/javascript">
-//<!--
-function iframeSetHeight(id, height) {
-	document.getElementById("qframe" + id).style.height = (height + 20) + "px";
-}
-//-->
-</script>
+<script type="text/javascript" src="<?php echo $_base_href;?>/mods/_standard/tests/lib/take_test.js">
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
