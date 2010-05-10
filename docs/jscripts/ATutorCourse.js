@@ -77,48 +77,57 @@ ATutor.course = ATutor.course || {};
 		printSubmenus();		
 	};
 	
-	var hideMenu = function () {
+	var hideMenu = function (effect) {
 		var menuImage = jQuery("#menutoggle > a > img");
 		menuImage.attr("src", menu_show_icon);
 		menuImage.attr("alt", ATutor.course.show);
 		menuImage.attr("title", ATutor.course.show);
 		
-		jQuery("#side-menu").slideUp("slow");
+		if (effect) {
+			jQuery("#side-menu").slideUp("slow");
+		} else {
+			jQuery("#side-menu").hide();
+		}
+			
 		ATutor.setcookie("side-menu", "none", 1);
 	};
 
-	var showMenu = function () {		
+	var showMenu = function (effect) {		
 		var menuImage = jQuery("#menutoggle > a > img");
 		menuImage.attr("src", menu_hide_icon);
 		menuImage.attr("alt", ATutor.course.hide);
 		menuImage.attr("title", ATutor.course.hide);
 		
-		jQuery("#side-menu").slideDown("slow");
+		if (effect) {
+			jQuery("#side-menu").slideDown("slow");
+		} else {
+			jQuery("#side-menu").show();
+		}
 		ATutor.setcookie("side-menu", "", 1);
 	};
 	
 	var showHideMenu = function () {
 		var clickedElement = jQuery("img", this);
 		if (clickedElement.attr("src") == menu_hide_icon) {
-			hideMenu();
+			hideMenu(true);
 		}
 		else {
-			showMenu();
+			showMenu(true);
 		}
 	};
 
-	var printMenuToggle = function () {
+	var printMenuToggle = function (effect) {
 		var state = ATutor.getcookie("side-menu");
 		if (state && state=="none") { 
-			hideMenu();
+			hideMenu(effect);
 		} else {
-			showMenu(); 
+			showMenu(effect); 
 		}
 		var menuLink = jQuery("#menutoggle > a");
 		menuLink.click(showHideMenu);	
 	};
 	
-	ATutor.course.doMenuToggle = function () {
+	ATutor.course.doMenuToggle = function (effect) {
 		menu_show_icon = ATutor.base_href + "images/showmenu.gif";
 		menu_hide_icon = ATutor.base_href + "images/hidemenu.gif";
 		printMenuToggle();

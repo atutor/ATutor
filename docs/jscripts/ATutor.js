@@ -471,7 +471,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
     		if (query_string !== "") {
     			query_string = "?" + query_string;
     		}
-    		window.open(ATutor.base_href + 'users/pref_wizard/index.php' + query_string,'newWin1','menubar=0,scrollbars=1,resizable=1,width=640,height=580');
+    		window.open(ATutor.base_href + 'users/pref_wizard/index.php' + query_string,'prefWizWindow','menubar=0,scrollbars=1,resizable=1,width=640,height=580');
     		return false;
     	});
     };
