@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id: preferences.php 9606 2010-03-26 14:36:54Z hwong $
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
