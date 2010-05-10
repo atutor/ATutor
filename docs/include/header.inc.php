@@ -279,22 +279,22 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		'title' => _AT('add_sibling_folder'), 
 		'url' => $_base_href.'mods/_core/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 
 		'icon' => $_base_href . 'images/folder_new_sibling.gif');
-
+/*
 	$shortcuts[] = array(
 		'title' => _AT('add_sub_folder'),   
 		'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php?pid='.$cid, 
 		'icon' => $_base_href . 'images/folder_new_sub.gif');
-	
+*/
 	$shortcuts[] = array(
 		'title' => _AT('add_sibling_page'), 
 		'url' => $_base_href.'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 
 		'icon' => $_base_href . 'images/page_add_sibling.gif');
-
+/*
 	$shortcuts[] = array(
 		'title' => _AT('add_sub_page'),     
 		'url' => $_base_href . 'mods/_core/editor/edit_content.php?pid='.$cid, 
 		'icon' => $_base_href . 'images/page_add_sub.gif');
-	
+*/
 	if($_SESSION['cid'] > 0 || $_REQUEST['cid'] > 0 ){
 	$shortcuts[] = array(
 		'title' => _AT('delete_this_page'), 
