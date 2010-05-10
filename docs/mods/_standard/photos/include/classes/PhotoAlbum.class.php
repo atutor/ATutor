@@ -24,7 +24,13 @@ class PhotoAlbum {
 		$this->id = intval($id);
 	}
 
-	/** */
+	/** 
+	  * Add a photo.  
+	  * @param	string	filename
+	  * @param	string	description of the photo
+	  * @param	int		author of this photo
+	  * @return	the photo id that's in the database.
+	  */
 	function addPhoto($name, $comment, $member_id){
 		global $db, $addslashes;
 		$name		= $addslashes($name);
@@ -47,10 +53,11 @@ class PhotoAlbum {
 
 		//update album last_updated
 		if ($result){
+			$photo_id = mysql_insert_id();
 			$this->updateAlbumTimestamp();
 		}
 
-		return $result;
+		return $photo_id;
 	}
 
 	/** */

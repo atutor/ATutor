@@ -93,14 +93,13 @@ if(isset($_POST['upload'])){
 	}
 
 	//add the photo
-	$result = $pa->addPhoto($_FILES['photo']['name'], $_POST['photo_comment'], $_SESSION['member_id']);
-	if ($result===FALSE){
+	$added_photo_id = $pa->addPhoto($_FILES['photo']['name'], $_POST['photo_comment'], $_SESSION['member_id']);
+	if ($added_photo_id <= 0){
 		$msg->addError('PA_ADD_PHOTO_FAILED');
 	}
 
 	if (!$msg->containsErrors()){
 		//get photo filepath
-		$added_photo_id = mysql_insert_id();
 		$photo_info = $pa->getPhotoInfo($added_photo_id);
 		$photo_file_path = getPhotoFilePath($added_photo_id, $_FILES['photo']['name'], $photo_info['created_date']);
 
