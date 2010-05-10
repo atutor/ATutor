@@ -62,7 +62,7 @@ $onload = 'document.course_form.title.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-require(AT_INCLUDE_PATH.'../mods/_core/properties/html/course_properties.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/courses/html/course_properties.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 

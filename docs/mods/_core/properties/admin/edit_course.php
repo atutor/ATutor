@@ -22,7 +22,7 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: ../../courses/admin/courses.php');
 	exit;
-} else if (isset($_POST['course']) && !isset($_POST['setvisual'])) {
+} else if (isset($_POST['course']) || isset($_POST['course'])) {
 	require(AT_INCLUDE_PATH.'../mods/_core/courses/lib/course.inc.php');
 	$errors = add_update_course($_POST, TRUE);
 
@@ -31,7 +31,6 @@ if (isset($_POST['cancel'])) {
 		header('Location: '.AT_BASE_HREF.'mods/_core/courses/admin/courses.php');
 		exit;
 	}
-
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -42,7 +41,7 @@ $course = intval($_REQUEST['course']);
 $isadmin   = TRUE;
 
 
-require(AT_INCLUDE_PATH.'../mods/_core/properties/html/course_properties.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/courses/html/course_properties.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

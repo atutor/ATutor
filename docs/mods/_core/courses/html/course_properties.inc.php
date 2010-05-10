@@ -482,23 +482,20 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
                 $path = AT_CONTENT_DIR.$row['course_id']."/custom_icons/";
                 if (file_exists($path.$row['icon'])) {
                     if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-                        $_base_href = 'get_course_icon.php/?id='.$row['course_id'];
+                        $custom_icon_path = 'get_course_icon.php/?id='.$row['course_id'];
                     } else {
                         $_base_href = 'content/' . $row['course_id'] . '/';
                     }
                 } else {
-                    $_base_href = "images/courses/";
-                                            //$_base_href = 'get_course_icon.php/?id='.$row['course_id'];
+                    $_base_href = "images/courses/";	//$_base_href = 'get_course_icon.php/?id='.$row['course_id'];
                 }
 
             $force_get = (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) ? true : false;
             echo "<input type='hidden' name='boolForce' id='boolForce' value='$force_get' />";
         
-       //include(AT_INCLUDE_PATH.'html/course_icon.inc.php');
-        
-        
+       //include(AT_INCLUDE_PATH.'html/course_icon.inc.php');        
         ?>
-		<img id="i0" src="<?php echo $_base_href.$row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
+		<img id="i0" src="<?php echo ($custom_icon_path=='')?$_base_href.$row['icon']:$custom_icon_path; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
 
 		<?php else: ?>
 			<img id="i0" src="images/clr.gif" alt="" style="float: left; margin: 2px;" border="1" height="79" width="79"  />
@@ -544,7 +541,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 			<?php // ------------- other icons
 
 				$course_imgs = array();
-				if ($dir = opendir('../../../../images/courses/')) {
+				if ($dir = opendir(AT_INCLUDE_PATH.'../images/courses/')) {
 					while (false !== ($file = readdir($dir)) ) {
 						if( ($file == '.') || ($file == '..')) { 
 							continue;
