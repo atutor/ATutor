@@ -28,7 +28,7 @@ $pa = new PhotoAlbum($aid);
 //handle edit/delete
 if (isset($_POST['edit'])){
 	//open up the edit page
-	header('Location: edit_album.php?id='.$aid);
+	header('Location: admin/edit_album.php?id='.$aid);
 } elseif (isset($_POST['delete'])){
 	//handle confirmation 
 	if ($_POST['submit_no']) {

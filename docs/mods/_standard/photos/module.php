@@ -61,6 +61,11 @@ if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT
 		$this->_pages[AT_PA_BASENAME.'admin/preferences.php']['title_var'] = 'pa_preferences';
 		$this->_pages[AT_PA_BASENAME.'admin/preferences.php']['parent'] = AT_PA_BASENAME.'index_admin.php';
 
+		$this->_pages[AT_PA_BASENAME.'admin/edit_album.php']['title_var'] = 'pa_edit_album';
+		$this->_pages[AT_PA_BASENAME.'admin/edit_album.php']['parent'] = AT_PA_BASENAME.'index_admin.php';
+
+		$this->_pages[AT_PA_BASENAME.'admin/edit_photos.php']['title_var'] = 'pa_edit_photos';
+		$this->_pages[AT_PA_BASENAME.'admin/edit_photos.php']['parent'] = AT_PA_BASENAME.'index_admin.php';
 }
 
 /*******

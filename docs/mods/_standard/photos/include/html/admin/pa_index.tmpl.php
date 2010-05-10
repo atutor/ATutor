@@ -24,7 +24,7 @@
 		<?php foreach ($this->albums as $aid=>$row): ?>
 		<tr id="r_<?php echo $aid; ?>" onmousedown="jQuery('#album_<?php echo $aid; ?>').attr('checked', true); rowselect(this);">
 			<td><input type="radio" id="album_<?php echo $aid; ?>" name="aid" value="<?php echo $aid; ?>" /></td>
-			<td><a href="<?php echo AT_PA_BASENAME."edit_photos.php?aid=$aid"; ?>"><?php echo htmlentities_utf82($row['name']); ?></a></td>
+			<td><a href="<?php echo AT_PA_BASENAME."admin/edit_photos.php?aid=$aid"; ?>"><?php echo htmlentities_utf82($row['name']); ?></a></td>
 			<td><?php echo $pa->getAlbumTypeName($row['type_id']); ?></td>
 			<td><?php echo htmlentities_utf82($row['description']); ?></td>
 			<td><?php echo htmlentities_utf82(AT_print(get_display_name($row['member_id']), 'members.full_name')) ?></td>
