@@ -27,6 +27,13 @@ if (!$pa->checkAlbumPriv($_SESSION['member_id'])){
 	exit;
 }
 
+//Set pages/submenu
+if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)) {
+	//this is admin
+	$_pages[AT_PA_BASENAME.'edit_album.php']['parent']   = AT_PA_BASENAME.'index_admin.php';
+
+}
+
 $album_info = $pa->getAlbumInfo();
 
 //handle Edit album info.

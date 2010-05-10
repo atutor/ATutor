@@ -44,6 +44,12 @@ class PhotoAlbum {
 		
 		$sql = "INSERT INTO ".TABLE_PREFIX."pa_photos (name, description, member_id, album_id, ordering, created_date, last_updated) VALUES ('$name', '$comment', $member_id, $album_id, $ordering, NOW(), NOW())";
 		$result = mysql_query($sql, $db);
+
+		//update album last_updated
+		if ($result){
+			$this->updateAlbumTimestamp();
+		}
+
 		return $result;
 	}
 
@@ -64,7 +70,7 @@ class PhotoAlbum {
 	}
 
 	/** 
-	 * Edit the info of the photo.  (just description for now)
+	 * Edit the info of the photo.  
 	 * @param	int		photo id
 	 * @param	string	the caption of the photo
 	 * @param	string	alternative text of the image.
@@ -77,6 +83,12 @@ class PhotoAlbum {
 
 		$sql = "UPDATE ".TABLE_PREFIX."pa_photos SET description='$description', alt_text='$alt_text', last_updated=NOW() WHERE id=$id";
 		$result = mysql_query($sql);
+
+		//update album last_updated
+		if ($result){
+			$this->updateAlbumTimestamp();
+		}
+
 		return $result;
 	}
 
@@ -92,6 +104,12 @@ class PhotoAlbum {
 
 		$sql = "UPDATE ".TABLE_PREFIX."pa_photos SET ordering=$ordering, last_updated=NOW() WHERE id=$id";
 		$result = mysql_query($sql);
+
+		//update album last_updated
+		if ($result){
+			$this->updateAlbumTimestamp();
+		}
+
 		return $result;
 	}
 
@@ -131,6 +149,11 @@ class PhotoAlbum {
 		//delete the photo from db
 		$sql = "DELETE FROM ".TABLE_PREFIX."pa_photos WHERE id=$id";
 		mysql_query($sql, $db);
+
+		//update album last_updated
+		if ($result){
+			$this->updateAlbumTimestamp();
+		}
 		
 		return true;
 	}
@@ -187,7 +210,7 @@ class PhotoAlbum {
 			return false;
 		}
 		
-		$sql = "UPDATE ".TABLE_PREFIX."pa_albums SET photo_id=$pid WHERE id=$aid";
+		$sql = "UPDATE ".TABLE_PREFIX."pa_albums SET photo_id=$pid, last_updated=NOW() WHERE id=$aid";
 		$result = mysql_query($sql, $db);
 		return $result;
 	}
@@ -222,7 +245,7 @@ class PhotoAlbum {
 			}
 		}
 
-		$sql = 'UPDATE '.TABLE_PREFIX."pa_albums SET name='$name', location='$location', description='$description', type_id=$type, permission=$permission WHERE id=$id";
+		$sql = 'UPDATE '.TABLE_PREFIX."pa_albums SET name='$name', location='$location', description='$description', type_id=$type, permission=$permission, last_updated=NOW() WHERE id=$id";
 		$result = mysql_query($sql, $db);
 		return $result;
 	}
@@ -263,6 +286,21 @@ class PhotoAlbum {
 
 		//delete album
 		$sql = "DELETE FROM ".TABLE_PREFIX."pa_albums WHERE id=$id";
+		mysql_query($sql, $db);
+	}
+
+	/**
+	 * Update album last_updated column to the current timestamp.
+	 * @return	null
+	 * @access	private
+	 */
+	private function updateAlbumTimestamp(){
+		global $db;
+		if($this->id <= 0){
+			//quit if album id is not set.
+			return;
+		}
+		$sql = 'UPDATE '.TABLE_PREFIX.'pa_albums SET last_updated=NOW() WHERE id='.$this->id;
 		mysql_query($sql, $db);
 	}
 

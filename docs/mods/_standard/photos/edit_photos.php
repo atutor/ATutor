@@ -53,7 +53,10 @@ $_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['children']  = array(
 														AT_PA_BASENAME.'edit_photos.php',
 													);
 $_pages[AT_PA_BASENAME.'edit_photos.php']['parent'] = AT_PA_BASENAME.'albums.php?id='.$aid;
+if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)) {
+	$_pages[AT_PA_BASENAME.'albums.php?id='.$aid]['parent']   = AT_PA_BASENAME.'index_admin.php';
 
+}
 
 //handle organize
 if(isset($_GET['org'])){

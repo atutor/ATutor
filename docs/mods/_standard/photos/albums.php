@@ -46,6 +46,12 @@ if ($info['type_id']==AT_PA_TYPE_MY_ALBUM){
 } elseif ($info['type_id']==AT_PA_TYPE_COURSE_ALBUM){
 	$_pages[AT_PA_BASENAME.'albums.php']['parent']	  = AT_PA_BASENAME.'course_albums.php';
 } 
+if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)) {
+	//this is admin
+	$_pages[AT_PA_BASENAME.'albums.php']['parent']   = AT_PA_BASENAME.'index_admin.php';
+
+}
+
 //if this member has the permission to edit the album, show the edit/organize menu
 if ($action_permission){
 	$_pages[AT_PA_BASENAME.'albums.php']['children']  = array(
