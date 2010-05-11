@@ -34,7 +34,11 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id'] . 'x' . date('Ymd'));
 
-	$tile_import_url = AT_TILE_IMPORT_URL. '?oauth_token='.$access_token_key.'&url='.urlencode(AT_BASE_HREF. 'mods/_core/imscp/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m);
+	$export_url = AT_BASE_HREF. 'mods/_core/imscp/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m;
+	if (isset($_REQUEST['to_a4a'])){
+		$export_url .= '&a4a=1';
+	}
+	$tile_import_url = AT_TILE_IMPORT_URL. '?oauth_token='.$access_token_key.'&url='.urlencode($export_url);
 
 	$oauth_server_response = @file_get_contents($tile_import_url);
 	
@@ -80,7 +84,9 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	}
 	
 	$course_id = $c;
-
+	if (isset($_GET['a4a'])){
+		$use_a4a = true;
+	}
 } else {
 	$use_a4a = false;
 	if (isset($_REQUEST['to_a4a'])){
