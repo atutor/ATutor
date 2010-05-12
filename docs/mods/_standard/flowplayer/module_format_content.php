@@ -1,6 +1,6 @@
 <?php
 // input string. DO NOT CHANGE.
-global $_input;
+global $_input, $_content_base_href;
 
 //Output for flowplayer module.
 
@@ -15,7 +15,7 @@ href=\"http://##MEDIA1##.flv\">
 preg_match_all("#\[media[0-9a-z\|]*\]([\w\./-]+)\.flv\[/media\]#i",$_input,$media_matches[1],PREG_SET_ORDER);
 $media_replace[1] ="<a class=\"flowplayerholder\"
 style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\"
-href=\"".AT_BASE_HREF."get.php/##MEDIA1##.flv\">
+href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.flv\">
 </a>";
 
 $has_flv = false;
