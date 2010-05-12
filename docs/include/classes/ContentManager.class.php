@@ -1029,10 +1029,9 @@ initContentMenu();
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
-						
 						$full_title = $content['title'];
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
-							$link .= '<a href="'.$_base_path.url_rewrite("mods/_core/editor/edit_content_folder.php?cid=".$content['content_id']).'" title="'.$full_title. _AT('click_edit').'">'."\n";
+							$link .= '<a href="'.$_base_path."mods/_core/editor/edit_content_folder.php?cid=".$content['content_id'].'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
 						else {
 							$link .= '<span style="cursor:pointer" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\'); ">'."\n";
