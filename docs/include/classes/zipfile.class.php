@@ -246,7 +246,7 @@ debug($dir, 'add dir');
 	 * Destructor - removes temporary folder and its content.
 	 */
 	function __destruct(){
-//		clr_dir($this->zipfile_dir);
+		clr_dir($this->zipfile_dir);
 	}
 }
 
