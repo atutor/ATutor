@@ -47,7 +47,7 @@ function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
 }
 
 function add_update_course($_POST, $isadmin = FALSE) {
-	require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+	require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 	global $addslashes;
 	global $db;
