@@ -13,7 +13,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'../mods/_core/imsqti/lib/qti.inc.php'); 
 require(AT_INCLUDE_PATH.'../mods/_core/imsqti/classes/QTIImport.class.php');

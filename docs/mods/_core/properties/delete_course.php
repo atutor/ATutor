@@ -23,7 +23,7 @@ if (isset($_POST['submit_no'])) {
 	header('Location: '.AT_BASE_HREF.'mods/_core/properties/course_properties.php');
 	exit;
 } else if (isset($_POST['step']) && ($_POST['step'] == 2) && isset($_POST['submit_yes'])) {
-	require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+	require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 	require(AT_INCLUDE_PATH.'../mods/_core/properties/lib/delete_course.inc.php');
 
 	delete_course($_SESSION['course_id'], $entire_course = true); // delete the course

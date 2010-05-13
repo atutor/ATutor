@@ -92,7 +92,7 @@ function updatePatchesRecord($patch_id, $updateInfo)
 * @author  Cindy Qi Li
 */
 function clear_dir($dir) {
-	require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+	require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 		
 	if(!$opendir = @opendir($dir)) {
 		return false;

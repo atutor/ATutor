@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_BACKUPS);
 
 require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
-require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 if (isset($_POST['backup_id'])) {
 	$ids = explode('_', $_POST['backup_id']);

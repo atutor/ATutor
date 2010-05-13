@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); // for get_human_size()
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); // for get_human_size()
 require(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php');
 
 $owner_type = abs($_REQUEST['ot']);

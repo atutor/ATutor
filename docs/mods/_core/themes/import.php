@@ -16,7 +16,7 @@ $_user_location = 'admin';
 // 1. define relative path to `include` directory:
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH . 'vitals.inc.php');
-require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
 require (AT_INCLUDE_PATH . '../mods/_core/themes/classes/ThemeParser.class.php');
 admin_authenticate(AT_ADMIN_PRIV_THEMES);

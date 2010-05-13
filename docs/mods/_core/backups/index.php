@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
-require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 if (isset($_POST['restore'], $_POST['backup_id'])) {
 	header('Location: restore.php?backup_id=' . $_POST['backup_id']);

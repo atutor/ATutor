@@ -19,7 +19,7 @@ global $db, $associated_forum;
 $get_related_glossary = true;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
-require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 $cid = intval($_REQUEST['cid']);
 
@@ -294,7 +294,7 @@ $pid = intval($_REQUEST['pid']);
 	if (is_array($word)) {
 		/* update $_POST['glossary_defs'] with any new/changed terms */
 		for($i=0; $i<$num_terms; $i++) {
-			$word[$i] = $word[$i];
+			$word[$i] = htmlentities_utf8($word[$i]);
 			if (!isset($_POST['glossary_defs'][$word[$i]])) {
 				$_POST['glossary_defs'][$word[$i]] = $glossary[$word[$i]];
 			}
@@ -303,6 +303,7 @@ $pid = intval($_REQUEST['pid']);
 
 	if (is_array($_POST['glossary_defs']) && ($current_tab != 2)) {
 		foreach($_POST['glossary_defs'] as $w => $d) {
+
 			/* this term still exists in the content */
 			if (!in_array($w, $word)) {
 				unset($_POST['glossary_defs'][$w]);

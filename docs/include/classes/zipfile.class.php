@@ -1,33 +1,37 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/***********************************************************************/
+/* ATutor															   */
+/***********************************************************************/
+/* Copyright (c) 2002-2009											   */
+/* Adaptive Technology Resource Centre / Inclusive Design Institute	   */
+/* http://atutor.ca													   */
+/*																	   */
+/* This program is free software. You can redistribute it and/or	   */
+/* modify it under the terms of the GNU General Public License		   */
+/* as published by the Free Software Foundation.					   */
+/***********************************************************************/
 // $Id$
 
-//loads the pclzip library.
-define('PCLZIP_TEMPORARY_DIR', AT_CONTENT_DIR.'export'.DIRECTORY_SEPARATOR);
-include(AT_INCLUDE_PATH.'/classes/pclzip.lib.php');
-include(AT_INCLUDE_PATH.'..//mods/_core/file_manager/filemanager.inc.php');	//copy/delete folder
+define('PCLZIP_TEMPORARY_DIR', AT_CONTENT_DIR.'export'.DIRECTORY_SEPARATOR);  //constant for the temp folder.
+include(AT_INCLUDE_PATH.'/classes/pclzip.lib.php');	 //loads the pclzip library.
+include_once(AT_INCLUDE_PATH.'..//mods/_core/file_manager/filemanager.inc.php');	//copy/delete folder
 
 /**
-* Class for creating and accessing an archive zip file
+* Class for creating and accessing an archive zip file.  Originally written by Joel Kronenberg,
+* edited by Harris Wong to use the PCLZIP library (http://www.phpconcept.net)
+*
+* As of ATutor 2.0, this file will extend the pclzip library functions instead of using Joel's.  
+* The function preconditions and postconditions will remain the same however. 
+*
 * @access	public
-* @link		http://www.pkware.com/products/enterprise/white_papers/appnote.html	for the specs
+* @link		http://www.pkware.com/documents/casestudies/APPNOTE.TXT	for the specs
 * @author	Joel Kronenberg
 */
 class zipfile {
 
-
 	/**
-	 *
+	 * string $zipfile_dir - the actual system directory that stores the temporary files for archiving.
+	 * @access	private
 	 */
 	var $zipfile_dir;
 
@@ -37,7 +41,10 @@ class zipfile {
 	*/
 	var $is_closed; 
 
-	/** File name */
+	/** 
+	 * string $filename -	randomized filename of this zip instance.  It also shares the same name
+	 *						as the folder under the export/ folder.  
+	 */
 	var $filename; 
 
 
@@ -47,7 +54,7 @@ class zipfile {
 	* @author	Joel Kronenberg
 	*/
 	function zipfile() {
-		//create the 
+		//create the temp folder for export if it hasn't been created.
 		if (!is_dir(PCLZIP_TEMPORARY_DIR)){
 			mkdir(PCLZIP_TEMPORARY_DIR);
 			copy(PCLZIP_TEMPORARY_DIR.'../index.html', PCLZIP_TEMPORARY_DIR.'index.html');
@@ -56,6 +63,7 @@ class zipfile {
 		//generate a random hash 
 		$this->filename = substr(md5(rand()), 0, 5);
 
+		//create a temporary folder for this zip instance
 		$this->zipfile_dir = PCLZIP_TEMPORARY_DIR.$this->filename.DIRECTORY_SEPARATOR;
 		mkdir($this->zipfile_dir);
 		$this->is_closed = false;
@@ -78,8 +86,7 @@ class zipfile {
 			echo 'cant open dir: '.$dir.$pre_pend_dir;
 			exit;		
 		}
-debug($dir, 'add dir');
-		//copy folder recursively
+		//copy folder recursively into the temp folder.
 		copys($dir, $this->zipfile_dir.DIRECTORY_SEPARATOR.$zip_prefix_dir);
 	}
 
@@ -91,7 +98,7 @@ debug($dir, 'add dir');
 	* @author  Joel Kronenberg
 	*/
     function priv_add_dir($name, $timestamp = '') {   
-		//deprecated.
+		//deprecated as of ATutor 2.0
     } 
 	
 	/**
@@ -105,7 +112,7 @@ debug($dir, 'add dir');
 	*/
 	function create_dir($name, $timestamp='') {
 		$name = trim($name);
-		//don't create folder if it is itself
+		//don't create a folder if it is itself
 		if ($name=='' || $name=='.'){
 			return;
 		}
@@ -120,9 +127,9 @@ debug($dir, 'add dir');
 			$this->create_dir(dirname($name));
 		}
 
-		//returned stack. continue from where it left off.  
-		//Now, the parent folder is created, so it should be able to create its folder.
+		//returned stack. continue from where it left off.  		
 		if (!is_dir($this->zipfile_dir.$name)){
+			//the parent folder should be created at this point, create itself
 			mkdir($this->zipfile_dir.$name);
 		}
 	}
@@ -146,6 +153,7 @@ debug($dir, 'add dir');
 			$this->create_dir(dirname($name));
 		}
 
+		//write to file
 		$fp = fopen($this->zipfile_dir.$name, 'w');
 		fwrite($fp, $file_data);
 		fclose($fp);		
@@ -158,8 +166,7 @@ debug($dir, 'add dir');
 	* @author  Joel Kronenberg
 	*/
 	function close() {
-		//save file 
-
+		//use pclzip to compress the file, and save it in the temp folder.
 		$archive = new PclZip($this->zipfile_dir.$this->filename.'.zip');
 		$v_list = $archive->create($this->zipfile_dir, 
 							PCLZIP_OPT_REMOVE_PATH, $this->zipfile_dir);
@@ -168,8 +175,7 @@ debug($dir, 'add dir');
 		if ($v_list == 0) {
 		die ("Error: " . $archive->errorInfo(true));
 		}
-
-//		debug($v_list);		
+		
 		$this->is_closed = true;
 	}
 
@@ -244,6 +250,10 @@ debug($dir, 'add dir');
 
 	/**
 	 * Destructor - removes temporary folder and its content.
+	 * Should self-destruct automatically for PHP 5.0+; otherwise developers should call this function
+	 * to clean up.
+	 * @access	public
+	 * @author	Harris Wong
 	 */
 	function __destruct(){
 		clr_dir($this->zipfile_dir);

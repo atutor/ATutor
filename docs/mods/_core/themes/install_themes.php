@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'../mods/_core/themes/classes/ThemeListParser.class.php');
-require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 // delete all folders and files in $dir
 function clear_dir($dir)

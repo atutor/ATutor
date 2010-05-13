@@ -230,7 +230,7 @@ function delete_theme ($theme_dir) {
 
 	} else {	//disable, clear directory and delete theme from db
 
-		require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); /* for clr_dir() */
+		require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); /* for clr_dir() */
 		if ($status != 0) {
 			disable_theme($theme_dir);
 			$msg->deleteFeedback('THEME_DISABLED');

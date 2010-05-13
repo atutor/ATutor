@@ -24,7 +24,7 @@ if (isset($_POST['submit_no'])) {
 } else if (isset($_POST['submit_yes'])) {
 	
 	//clean up the db
-	require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+	require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 	
 	if (($result = clr_dir(AT_CONTENT_DIR . 'logs/'))) {
 		$msg->addFeedback('ERROR_LOG_RESET');
