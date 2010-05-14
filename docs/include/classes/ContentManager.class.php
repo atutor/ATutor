@@ -1481,10 +1481,10 @@ initContentMenu();
 	/** 
 	 * Return true if this content page allows export, else false.
 	 * @param	int	content id
-	 * @return	true if 'allow_test_export'==1 || is instructor
+	 * @return	true if 'allow_test_export'==1 || is instructor || oauth export into Transformable
 	 */
 	function allowTestExport($content_id){
-		if (isset($_SESSION['is_admin'])){	
+		if (isset($_SESSION['is_admin']) || (isset($_REQUEST['m']) && isset($_REQUEST['c']))) {
 			return true;
 		}
 		$sql = "SELECT allow_test_export FROM ".TABLE_PREFIX."content WHERE content_id=$content_id";

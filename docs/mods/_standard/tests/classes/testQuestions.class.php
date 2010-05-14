@@ -266,7 +266,21 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	global $savant, $db, $system_courses, $languageManager, $test_zipped_files, $test_files, $use_cc;
 	global $course_id;
 
+	$course_id = $_SESSION['course_id'];
+	$course_title = $_SESSION['course_title'];
 	$course_language = $system_courses[$_SESSION['course_id']]['primary_language'];
+	
+	if ($course_language == '') {  // when oauth export into Transformable
+		$sql = "SELECT course_id, title, primary_language FROM ".TABLE_PREFIX."courses
+		         WHERE course_id = (SELECT course_id FROM ".TABLE_PREFIX."tests
+		                             WHERE test_id=".$tid.")";
+		$result	= mysql_query($sql, $db);
+		$course_row = mysql_fetch_assoc($result);
+		
+		$course_language = $course_row['primary_language'];
+		$course_id = $course_row['course_id'];
+		$course_title = $course_row['title'];
+	}
 	$courseLanguage =& $languageManager->getLanguage($course_language);
 	$course_language_charset = $courseLanguage->getCharacterSet();
 	$imported_files;
@@ -292,7 +306,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 
 	//TODO: Merge the following 2 sqls together.
 	//Randomized or not, export all the questions that are associated with it.
-	$sql	= "SELECT TQ.question_id, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
+	$sql	= "SELECT TQ.question_id, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$course_id AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 	$result	= mysql_query($sql, $db);
 	$question_ids = array();
 
@@ -373,7 +387,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 
 		$zipfile->close();
 
-		$filename = str_replace(array(' ', ':'), '_', $_SESSION['course_title'].'-'.$test_title.'-'.date('Ymd'));
+		$filename = str_replace(array(' ', ':'), '_', $course_title.'-'.$test_title.'-'.date('Ymd'));
 		$zipfile->send_file($filename);
 		exit;
 	}

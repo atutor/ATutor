@@ -31,13 +31,17 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	
 	// oauth authentication. Get oauth access token: $access_token_key
 	$client_callback_url = AT_BASE_HREF.'mods/_core/imscc/ims_export.php?to_tile=1'.SEP.'cid='.$cid;
+	if (isset($_REQUEST['to_a4a'])){
+		$client_callback_url .= SEP.'to_a4a=1';
+	}
 	include_once('../imscp/oauth/oauth_authenticate.php');
 
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id'] . 'x' . date('Ymd'));
-	$export_url = AT_BASE_HREF. 'mods/_core/imscc/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m;
+	$export_url = AT_BASE_HREF. 'mods/_core/imscc/ims_export.php?cid='.$cid.SEP.'c='.$_SESSION['course_id'].SEP.'m='.$m;
 	if (isset($_REQUEST['to_a4a'])){
-		$export_url .= '&a4a=1';
+		$export_url .= SEP.'a4a=1';
 	}
+	
 	$tile_import_url = AT_TILE_IMPORT_URL. '?oauth_token='.$access_token_key.'&url='.urlencode($export_url);
 
 	$oauth_server_response = @file_get_contents($tile_import_url);
@@ -250,7 +254,7 @@ $test_ids = array();	//global array to store all the test ids
 
 //TODO**************BOLOGNA***************REMOVE ME***************************/
 //Exoprt Forum:
-global $forum_list;
+global $forum_list, $test_xml_items;;
 $forum_list = array();
 
 /* generate the resources and save the HTML files */
@@ -290,6 +294,7 @@ if ($glossary_xml){
 } else {
 	$glossary_manifest_xml = '';
 }
+
 /* append the Organizations and Resources to the imsmanifest */
 $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}', '{GLOSSARY}',	'{RESOURCES}', '{TEST_ITEMS}', '{COURSE_TITLE}'),
 									array($organizations_str, $glossary_manifest_xml,	$resources, $test_xml_items, $ims_course_title),
