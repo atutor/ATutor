@@ -38,7 +38,7 @@ define('AT_ADMIN_PRIV_PHOTO_ALBUM', $this->getAdminPrivilege());
 /*******
  * create a side menu box/stack.
  */
-$this->_stacks['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery', 'file'=>AT_PA_BASE.'side_menu.inc.php');
+//$this->_stacks['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery', 'file'=>AT_PA_BASE.'side_menu.inc.php');
 // ** possible alternative: **
 // $this->addStack('social', array('title_var' => 'social', 'file' => './side_menu.inc.php');
 
