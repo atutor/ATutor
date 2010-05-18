@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/***********************************************************************/
+/* ATutor															   */
+/***********************************************************************/
+/* Copyright (c) 2002-2009											   */
+/* Adaptive Technology Resource Centre / Inclusive Design Institute	   */
+/* http://atutor.ca													   */
+/*																	   */
+/* This program is free software. You can redistribute it and/or	   */
+/* modify it under the terms of the GNU General Public License		   */
+/* as published by the Free Software Foundation.					   */
+/***********************************************************************/
 // $Id$
 
 $_user_location	= 'public';
@@ -154,10 +154,10 @@ if (isset($this_login, $this_password)) {
 		mysql_query($sql, $db);
 
 		//if page variable is set, bring them there.
-	//	if (isset($_POST['p'])){
-	//		header ('Location: '.urldecode($_POST['p']));
-	//		exit;
-	//	}		
+		if (isset($_POST['p']) && $_POST['p']!=''){
+			header ('Location: '.urldecode($_POST['p']));
+			exit;
+		}
 		
 		$msg->addFeedback('LOGIN_SUCCESS');
     	header('Location: bounce.php?course='.$_POST['form_course_id']);
