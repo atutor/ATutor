@@ -30,7 +30,9 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 		/* custom prefs */
 		// atutor settings (tab 0)
 		$pref_defaults['PREF_NUMBERING']      = intval($_POST['numbering']);
-		$pref_defaults['PREF_THEME']          = $addslashes($_POST['theme']);
+		if (isset($_POST['theme']) && $_POST['theme'] != '') {
+			$pref_defaults['PREF_THEME']          = $addslashes($_POST['theme']);
+		}
 		$pref_defaults['PREF_TIMEZONE']	     = $addslashes($_POST['time_zone']);
 		$pref_defaults['PREF_JUMP_REDIRECT']  = intval($_POST['use_jump_redirect']);
 		$pref_defaults['PREF_FORM_FOCUS']     = intval($_POST['form_focus']);
@@ -108,7 +110,7 @@ $pref_defaults = unserialize($_config_defaults['pref_defaults']);
 if (is_array(unserialize($_config['pref_defaults'])))
 	foreach (unserialize($_config['pref_defaults']) as $name => $value)
 		$pref_defaults[$name] = $value;
-
+		
 assign_session_prefs($pref_defaults);
 
 $sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";

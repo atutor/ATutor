@@ -257,7 +257,7 @@ if ($_config['time_zone']) {
 	else if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 
 		if ($_SESSION['course_id'] == -1) {
-			if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
+			if ($_SESSION['prefs']['PREF_THEME'] == '' || !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
 				$_SESSION['prefs']['PREF_THEME'] = 'default';
 			}
 			$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
