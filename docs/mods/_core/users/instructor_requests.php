@@ -64,8 +64,7 @@ if (isset($_GET['deny']) && isset($_GET['id'])) {
 
 			if(!$mail->Send()) {
 			   //echo 'There was an error sending the message';
-			   $msg->printErrors('SENDING_ERROR');
-			   exit;
+			   $msg->addError('SENDING_ERROR');
 			}
 
 			unset($mail);
