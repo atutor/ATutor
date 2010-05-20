@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Job Board</name> 
+    <description lang="en"></description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL/ATutor</license> 
+	<release> 
+        <version>1.0</version> 
+        <date>2010-05-18</date> 
+	<state>Beta</state> 
+	<notes></notes> 
+    </release> 
+</module>
