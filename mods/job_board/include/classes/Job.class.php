@@ -88,7 +88,7 @@ class Job{
 	 * @return	null
 	 */
 	function addToJobCart($member_id, $job_id){
-		global $db, $msg
+		global $db, $msg;
 
 		$member_id = intval($member_id);
 		$job_id = intval($job_id);
