@@ -21,18 +21,24 @@ $job = new Job();
 $all_job_posts = $job->getAllJobs();
 
 include(AT_INCLUDE_PATH.'header.inc.php');?>
-<div class="jb_head">
-	<div class="jb_add_posting">
-		<a href="add_new_post.php"><?php echo _AT('jb_add_new_post');?></a>
+<form action="" method="get">
+	<div class="jb_head">
+		<div class="jb_search">					
+				<label for="jb_search"><?php echo _AT('jb_search'); ?></label>
+				<input type="text" id="jb_search" name="jb_search" value="" />
+				<input type="submit" name="jb_submit" value="<?php echo _AT('search'); ?>" />
+			<a onclick="toggleAdvanceSearch()"><?php echo _AT('jb_advanced_search'); ?></a>
+			<div class="jb_advance_search" style="display: none;">
+			advance search table goes here.
+			<?php $savant->display('jb_advance_search_table.tmpl.php');?>
+			</div>
+		</div>
+		<div class="jb_add_posting">
+			<a href="add_new_post.php"><?php echo _AT('jb_login');?></a>
+			<a href="add_new_post.php"><?php echo _AT('jb_not_a_member');?></a>
+		</div>		
 	</div>
-	<div class="jb_search">
-		<form action="" method="get">
-			<label for="jb_search"><?php echo _AT('jb_search'); ?></label>
-			<input type="text" id="jb_search" name="jb_search" value="" />
-			<input type="submit" name="jb_submit" value="<?php echo _AT('search'); ?>" />
-		</form>
-	</div>
-</div>
+</form>
 <div style="clear:both;"></div>
 <div>
 <?php
@@ -40,5 +46,16 @@ $savant->assign('all_job_posts', $all_job_posts);
 $savant->display('jb_posting_table.tmpl.php');
 ?>
 </div>
+
+<script type="text/javascript" >
+	function toggleAdvanceSearch(){
+		var box_state = jQuery('.jb_advance_search').css('display');
+		if (box_state == 'none'){
+			jQuery('.jb_advance_search').css('display', 'block');
+		} else {
+			jQuery('.jb_advance_search').css('display', 'none');
+		}
+	}
+</script>
 
 <?php include(AT_INCLUDE_PATH.'footer.inc.php'); ?>

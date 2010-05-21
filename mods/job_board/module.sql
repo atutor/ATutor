@@ -1,12 +1,12 @@
 CREATE TABLE `jb_postings` (
-  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  `descriptions` TEXT,
+  `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,  
   `employer_id` INTEGER UNSIGNED NOT NULL,
   `categories` INTEGER UNSIGNED NOT NULL,
+  `description` TEXT,
   `is_public` TINYINT(1) UNSIGNED NOT NULL,
   `closing_date` TIMESTAMP NOT NULL,
   `created_date` TIMESTAMP NOT NULL,
-  `revised_date` TIMESTAMP NOT NULL,
+  `revised_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 )
 ENGINE = MyISAM;

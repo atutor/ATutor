@@ -122,8 +122,8 @@ class Job{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings";
 		$rs = mysql_query($sql, $db);
 		
-		while($row = mysql_query($result)){
-			$result[] = $row;
+		while($row = mysql_fetch_assoc($rs)){
+			$result[$row['id']] = $row;
 		}
 
 		return $result;

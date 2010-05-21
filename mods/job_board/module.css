@@ -1,8 +1,14 @@
 div.jb_head{
+	float: left;
+	width: 99%;
 }
 div.jb_add_posting{
-	float: left;
+	float: right;
 }
 div.jb_search{
-	float:right;
+	width: 70%;
+	float: left;
+}
+
+div.jb_advance_search{
 }
