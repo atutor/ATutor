@@ -1,6 +1,7 @@
 CREATE TABLE `jb_postings` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,  
   `employer_id` INTEGER UNSIGNED NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
   `categories` INTEGER UNSIGNED NOT NULL,
   `description` TEXT,
   `is_public` TINYINT(1) UNSIGNED NOT NULL,
@@ -21,6 +22,7 @@ ENGINE = MyISAM;
 CREATE TABLE `jb_employers` (                                                                                                                                                                                                                                           
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(40) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `company` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,

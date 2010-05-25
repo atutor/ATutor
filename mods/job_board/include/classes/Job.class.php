@@ -17,18 +17,24 @@ class Job{
 
 	/**
 	 * Add a job posting to the database.
+	 * @param	string	job title
 	 * @param	string	description
 	 * @param	Array	categories
 	 */
-	function addJob($description, $categories, $is_public, $closing_date){
+	function addJob($title, $description, $categories, $is_public, $closing_date){
 		global $addslashes, $db, $msg;
 
+		$title = $addslashes($title);
 		$description = $addslashes($description);
-		//TODO - category
+		if (!empty($categories)){
+			foreach($categories as $id => $category){
+				$categories[$id] = intval($category);
+			}
+		}
 		$is_public = (intval($is_public)==0)?0:1;
 		$closing_date = $addslashes($closing_date);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings SET (employer_id, descriptions, categories, is_public, closing_date, create_date, revised_date) VALUES ($employer_id, '$descriptions', '$categories', $is_public, '$closing_date', NOW(), NOW())";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings SET (employer_id, titlie, descriptions, categories, is_public, closing_date, create_date, revised_date) VALUES ($employer_id, '$title', '$descriptions', '$categories', $is_public, '$closing_date', NOW(), NOW())";
 		$result = mysql_query($sql, $db);
 
 		if (!$result){
@@ -126,6 +132,18 @@ class Job{
 			$result[$row['id']] = $row;
 		}
 
+		return $result;
+	}
+
+	function getCategories(){
+		global $addslashes, $db, $msg;
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_categories';
+		$rs = mysql_query($sql, $db);
+
+		while($row = mysql_fetch_assoc($rs)){
+			$result[$row['id']] = $row;
+		}
 		return $result;
 	}
 

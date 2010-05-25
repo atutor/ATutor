@@ -10,5 +10,11 @@ div.jb_search{
 	float: left;
 }
 
-div.jb_advance_search{
+div.jb_login{
+	width: 60%;
+	margin: 0 auto;
+}
+textarea#jb_description{
+	width: 99%;
+	height: 600px;
 }

@@ -47,7 +47,7 @@ define('AT_ADMIN_PRIV_JOB_BOARD', $this->getAdminPrivilege());
  */
 $_group_tool = $_student_tool = AT_JB_BASENAME.'index.php';
 
-$this->_list['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery','file'=>AT_JB_BASENAME.'sublinks.php');
+$this->_list['jb_job_board'] = array('title_var'=>'jb_job_board','file'=>AT_JB_BASENAME.'sublinks.php');
 $this->_pages[AT_JB_BASENAME.'index.php']['icon']      = 'images/home-directory_sm.png';
 
 /*******
@@ -84,15 +84,21 @@ if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT
  * student page.
  */
 $this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = 'job_board';
-//$this->_pages[AT_JB_BASENAME.'index.php']['children'] = array(AT_JB_BASENAME.'index.php');
+//$this->_pages[AT_JB_BASENAME.'index.php']['children'] = array();
+$this->_pages[AT_JB_BASENAME.'employer_login.php']['title_var'] = 'jb_employer_login';
+$this->_pages[AT_JB_BASENAME.'employer_login.php']['parent'] = AT_JB_BASENAME.'index.php';
+$this->_pages[AT_JB_BASENAME.'employer_registration.php']['title_var'] = 'jb_employer_registration';
+$this->_pages[AT_JB_BASENAME.'employer_registration.php']['parent'] = AT_JB_BASENAME.'index.php';
 
+$this->_pages[AT_JB_BASENAME.'employer_home.php']['title_var'] = 'jb_employer_home';
+$this->_pages[AT_JB_BASENAME.'employer_home.php']['parent'] = AT_JB_BASENAME.'index.php';
+$this->_pages[AT_JB_BASENAME.'employer_home.php']['children'] = array(AT_JB_BASENAME.'add_new_post.php');
+$this->_pages[AT_JB_BASENAME.'add_new_post.php']['title_var'] = 'jb_add_new_post';
+$this->_pages[AT_JB_BASENAME.'add_new_post.php']['parent'] = AT_JB_BASENAME.'employer_home.php';
 
 //$this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = _AT('test');
 //$this->_pages[AT_JB_BASENAME.'index.php']['parent'] = AT_JB_BASENAME.'index.php';
 //$this->_pages[AT_JB_BASENAME.'index_mystart.php']['children'] = array_push($this->_pages[AT_JB_BASENAME.'index_mystart.php']['children'], AT_JB_BASENAME.'index.php');
-
-
-
 
 /* public pages */
 $this->_pages[AT_NAV_PUBLIC] = array(AT_JB_BASENAME.'index_public.php');
