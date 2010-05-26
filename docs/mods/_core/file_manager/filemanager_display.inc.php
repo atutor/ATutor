@@ -492,7 +492,7 @@ function insertFile(fileName, pathTo, ext, ed_pref) {
 function insertLink(html, ed_pref)
 {
     if (window.opener) {
-        var isNotVisual = window.opener.document.form.html.checked && (ed_pref === '1');
+        var isNotVisual = (jQuery('#html:checked').val() !== null) && (ed_pref === '1');
     }
 
 	if (!window.opener || !isNotVisual) {
