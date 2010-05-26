@@ -24,7 +24,7 @@ $all_job_posts = $job->getAllJobs();
 if (isset($_POST['submit']) && $_POST['submit']!=''){
 	$this_password	= $addslashes($_POST['form_password_hidden']);
 	$this_login		= $addslashes($_POST['form_login']);
-
+    $_SESSION['jb_employer_id'] = 1;
 	//if succeeded
 	header('Location: employer_home.php');
 	exit;

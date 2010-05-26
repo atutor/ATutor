@@ -19,11 +19,18 @@ class Job{
 	 * Add a job posting to the database.
 	 * @param	string	job title
 	 * @param	string	description
-	 * @param	Array	categories
+	 * @param	Array	categories (must be converted to JSON before storing into database)
+	 * @param   int     1 if public; 0 otherwise.
+	 * @param   string  Closing date for this job post, mysql TIMESTAMP format
 	 */
 	function addJob($title, $description, $categories, $is_public, $closing_date){
 		global $addslashes, $db, $msg;
-
+		
+		if($_SESSION['jb_employer_id']<1){
+		    $msg->addError();   //authentication error
+		    exit;
+        }
+        
 		$title = $addslashes($title);
 		$description = $addslashes($description);
 		if (!empty($categories)){
@@ -31,12 +38,12 @@ class Job{
 				$categories[$id] = intval($category);
 			}
 		}
+		$categories = json_encode($categories);
 		$is_public = (intval($is_public)==0)?0:1;
 		$closing_date = $addslashes($closing_date);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings SET (employer_id, titlie, descriptions, categories, is_public, closing_date, create_date, revised_date) VALUES ($employer_id, '$title', '$descriptions', '$categories', $is_public, '$closing_date', NOW(), NOW())";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, categories, is_public, closing_date, created_date, revised_date) VALUES ($_SESSION[jb_employer_id], '$title', '$description', '$categories', $is_public, '$closing_date', NOW(), NOW())";
 		$result = mysql_query($sql, $db);
-
 		if (!$result){
 			//TODO: db error message
 			$msg->addError();
