@@ -141,6 +141,19 @@ class Job{
 
 		return $result;
 	}
+	
+	function getMyJobs(){
+	    global $addslashes, $db, $msg;
+	    
+	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id'];
+	    $rs = mysql_query($sql, $db);
+	    
+	    while($row = mysql_fetch_assoc($rs)){
+	        $result[$row['id']] = $row;
+        }
+        
+        return $result;
+    }
 
 	function getCategories(){
 		global $addslashes, $db, $msg;

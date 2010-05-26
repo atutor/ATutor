@@ -20,9 +20,10 @@ $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom styl
 //TODO: If not authenticated with user login, quit.
 
 $job = new Job();
-$all_job_posts = $job->getAllJobs();
+$all_job_posts = $job->getMyJobs();
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->assign('all_job_posts', $all_job_posts);
 $savant->display('jb_employer_home.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
