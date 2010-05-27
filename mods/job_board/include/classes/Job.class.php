@@ -13,7 +13,11 @@
 // $Id$
 
 class Job{
-	function Job(){}
+	var $categories; //list of available categories
+
+	function Job(){
+		$this->categories = $this->getCategories();
+	}
 
 	/**
 	 * Add a job posting to the database.
@@ -127,21 +131,48 @@ class Job{
 
 	function removeFromJobCart($member_id, $job_id){}
 
-	function getJob($job_id){}
+
+	/** 
+	 * Return all the values of a single job
+	 * @param	int		The id of the job
+	 * @return	Array	row value of the job entry.
+	 */
+	function getJob($job_id){
+		global $addslashes, $db, $msg;
+		$job_id = intval($job_id);
+		
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings WHERE id=$job_id";
+		$rs = mysql_query($sql, $db);
+		if ($rs){
+			$row = mysql_fetch_assoc($rs);
+			$row['categories'] = $this->convertJsonCategoriesToArray($row['categories']);
+		}
+		return $row;
+	}
 	
+
+	/**
+	 * Return all jobs
+	 * @return	Array	array of rows
+	 */
 	function getAllJobs(){
 		global $addslashes, $db, $msg;
 
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings";
 		$rs = mysql_query($sql, $db);
-		
-		while($row = mysql_fetch_assoc($rs)){
-			$result[$row['id']] = $row;
+		if ($rs){
+			while($row = mysql_fetch_assoc($rs)){
+				$row['categories'] = $this->convertJsonCategoriesToArray($row['categories']);
+				$result[$row['id']] = $row;
+			}
 		}
 
 		return $result;
 	}
 	
+	/**
+	 * Returns a list of jobs that's created by the currented logged in employer
+	 */
 	function getMyJobs(){
 	    global $addslashes, $db, $msg;
 	    
@@ -149,6 +180,7 @@ class Job{
 	    $rs = mysql_query($sql, $db);
 	    
 	    while($row = mysql_fetch_assoc($rs)){
+			$row['categories'] = $this->convertJsonCategoriesToArray($row['categories']);
 	        $result[$row['id']] = $row;
         }
         
@@ -157,6 +189,11 @@ class Job{
 
 	function getCategories(){
 		global $addslashes, $db, $msg;
+
+		//If this instance already have the categories, don't run the query.
+		if(!empty($this->categories)){
+			return $this->categories;
+		}
 
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_categories';
 		$rs = mysql_query($sql, $db);
@@ -167,6 +204,15 @@ class Job{
 		return $result;
 	}
 
+	/**
+	 * Match the category id to its name
+	 * @param	int		Category ID
+	 * @return	string	the name of the category.
+	 */
+	function getCategoryNameById($id){
+		return $this->categories[intval($id)]['name'];
+	}
+
 	function search($queries){}
 
 	function approveEmployer($member_id){}
@@ -174,5 +220,18 @@ class Job{
 	function disapproveEmployer($member_id){}
 
 
+	/**
+	 * Convert the json formated categories string into an array
+	 * @param	string		json format categories
+	 * @return	Array		Array of categories integers.  Null if input is an empty string.
+	 * @private
+	 */
+	private function convertJsonCategoriesToArray($categories){
+		if ($categories!=''){
+			$categories_entry = json_decode($categories);
+			return $categories_entry;
+		}
+		return null;
+	}
 }
 ?>

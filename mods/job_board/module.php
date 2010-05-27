@@ -85,16 +85,19 @@ if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT
  */
 $this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = 'job_board';
 //$this->_pages[AT_JB_BASENAME.'index.php']['children'] = array();
-$this->_pages[AT_JB_BASENAME.'employer_login.php']['title_var'] = 'jb_employer_login';
-$this->_pages[AT_JB_BASENAME.'employer_login.php']['parent'] = AT_JB_BASENAME.'index.php';
+$this->_pages[AT_JB_BASENAME.'employer/login.php']['title_var'] = 'jb_employer_login';
+$this->_pages[AT_JB_BASENAME.'employer/login.php']['parent'] = AT_JB_BASENAME.'index.php';
 $this->_pages[AT_JB_BASENAME.'employer_registration.php']['title_var'] = 'jb_employer_registration';
 $this->_pages[AT_JB_BASENAME.'employer_registration.php']['parent'] = AT_JB_BASENAME.'index.php';
 
-$this->_pages[AT_JB_BASENAME.'employer_home.php']['title_var'] = 'jb_employer_home';
-$this->_pages[AT_JB_BASENAME.'employer_home.php']['parent'] = AT_JB_BASENAME.'index.php';
-$this->_pages[AT_JB_BASENAME.'employer_home.php']['children'] = array(AT_JB_BASENAME.'add_new_post.php');
-$this->_pages[AT_JB_BASENAME.'add_new_post.php']['title_var'] = 'jb_add_new_post';
-$this->_pages[AT_JB_BASENAME.'add_new_post.php']['parent'] = AT_JB_BASENAME.'employer_home.php';
+$this->_pages[AT_JB_BASENAME.'employer/home.php']['title_var'] = 'jb_employer_home';
+$this->_pages[AT_JB_BASENAME.'employer/home.php']['parent'] = AT_JB_BASENAME.'index.php';
+$this->_pages[AT_JB_BASENAME.'employer/home.php']['children'] = array(AT_JB_BASENAME.'employer/add_new_post.php');
+$this->_pages[AT_JB_BASENAME.'employer/add_new_post.php']['title_var'] = 'jb_add_new_post';
+$this->_pages[AT_JB_BASENAME.'employer/add_new_post.php']['parent'] = AT_JB_BASENAME.'employer/home.php';
+
+$this->_pages[AT_JB_BASENAME.'view_post.php']['title_var'] = 'jb_view_post';
+$this->_pages[AT_JB_BASENAME.'view_post.php']['parent'] = AT_JB_BASENAME.'index.php';
 
 //$this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = _AT('test');
 //$this->_pages[AT_JB_BASENAME.'index.php']['parent'] = AT_JB_BASENAME.'index.php';

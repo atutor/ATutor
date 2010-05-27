@@ -34,8 +34,8 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 			</div>
 		</div>
 		<div class="jb_add_posting">
-			<a href="<?php echo AT_JB_BASENAME;?>employer_login.php"><?php echo _AT('jb_login');?></a>
-			<a href="<?php echo AT_JB_BASENAME;?>employer_registration.php"><?php echo _AT('jb_not_a_member');?></a>
+			<a href="<?php echo AT_JB_BASENAME;?>employer/login.php"><?php echo _AT('jb_login');?></a>
+			<a href="<?php echo AT_JB_BASENAME;?>employer/registration.php"><?php echo _AT('jb_not_a_member');?></a>
 		</div>		
 	</div>
 </form>

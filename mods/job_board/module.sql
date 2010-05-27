@@ -2,7 +2,7 @@ CREATE TABLE `jb_postings` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,  
   `employer_id` INTEGER UNSIGNED NOT NULL,
   `title` VARCHAR(255) NOT NULL,
-  `categories` INTEGER UNSIGNED NOT NULL,
+  `categories` VARCHAR(255) NOT NULL,
   `description` TEXT,
   `is_public` TINYINT(1) UNSIGNED NOT NULL,
   `closing_date` TIMESTAMP NOT NULL,
