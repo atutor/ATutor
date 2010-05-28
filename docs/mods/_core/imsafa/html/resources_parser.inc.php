@@ -131,7 +131,7 @@ $i=0;
 foreach ($my_files as $file) {
 	/* filter out full urls */
 	$url_parts = @parse_url($file);
-	if (isset($url_parts['scheme'])) {
+	if (isset($url_parts['scheme']) && substr($file, 0, strlen(AT_BASE_HREF)) != AT_BASE_HREF) {
 		continue;
 	}
 
