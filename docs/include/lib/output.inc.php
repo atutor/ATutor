@@ -1558,7 +1558,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	         WHERE pr.content_id=".$cid."
 		       AND pr.primary_resource_id = prt.primary_resource_id
 		       AND pr.primary_resource_id = sr.primary_resource_id
-		       AND sr.language_code='".$_SESSION['prefs']['PREF_ALT_AUDIO_PREFER_LANG']."'
+		       AND sr.language_code='".$_SESSION['lang']."'
 		       AND sr.secondary_resource_id = srt.secondary_resource_id
 	           AND pr.content_id = c.content_id";
 	if ($only_on_secondary_type > 0) {
@@ -1631,7 +1631,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 				}
 			} 
 			else if (in_array($ext, $image_exts))
-				$target = '<img border="0" alt="Alternate Text" src="'.$row['secondary_resource'].'"/>';
+				$target = '<img border="0" alt="'._AT('alternate_text').'" src="'.$row['secondary_resource'].'"/>';
 			// otherwise
 			else
 				$target = '<p><a href="'.$row['secondary_resource'].'">'.$row['secondary_resource'].'</a></p>';
