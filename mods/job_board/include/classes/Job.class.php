@@ -34,16 +34,16 @@ class Job{
 		    $msg->addError();   //authentication error
 		    exit;
         }
-        
+
 		$title = $addslashes($title);
 		$description = $addslashes($description);
 		if (!empty($categories)){
 			foreach($categories as $id => $category){
 				$categories[$id] = intval($category);
 			}
-		}
+		}	
 		$categories = json_encode($categories);
-		$is_public = (intval($is_public)==0)?0:1;
+		$is_public = (isset($is_public))?1:0;
 		$closing_date = $addslashes($closing_date);
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, categories, is_public, closing_date, created_date, revised_date) VALUES ($_SESSION[jb_employer_id], '$title', '$description', '$categories', $is_public, '$closing_date', NOW(), NOW())";

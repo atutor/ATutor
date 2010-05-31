@@ -93,8 +93,11 @@ $this->_pages[AT_JB_BASENAME.'employer_registration.php']['parent'] = AT_JB_BASE
 $this->_pages[AT_JB_BASENAME.'employer/home.php']['title_var'] = 'jb_employer_home';
 $this->_pages[AT_JB_BASENAME.'employer/home.php']['parent'] = AT_JB_BASENAME.'index.php';
 $this->_pages[AT_JB_BASENAME.'employer/home.php']['children'] = array(AT_JB_BASENAME.'employer/add_new_post.php');
+$this->_pages[AT_JB_BASENAME.'employer/edit_post.php']['title_var'] = 'jb_edit_post';
+$this->_pages[AT_JB_BASENAME.'employer/edit_post.php']['parent'] = AT_JB_BASENAME.'employer/home.php';
 $this->_pages[AT_JB_BASENAME.'employer/add_new_post.php']['title_var'] = 'jb_add_new_post';
 $this->_pages[AT_JB_BASENAME.'employer/add_new_post.php']['parent'] = AT_JB_BASENAME.'employer/home.php';
+
 
 $this->_pages[AT_JB_BASENAME.'view_post.php']['title_var'] = 'jb_view_post';
 $this->_pages[AT_JB_BASENAME.'view_post.php']['parent'] = AT_JB_BASENAME.'index.php';
