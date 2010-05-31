@@ -43,6 +43,7 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 <div>
 <?php
 $savant->assign('all_job_posts', $all_job_posts);
+$savant->assign('job_obj', $job);
 $savant->display('jb_posting_table.tmpl.php');
 ?>
 </div>

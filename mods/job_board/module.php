@@ -87,8 +87,8 @@ $this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = 'job_board';
 //$this->_pages[AT_JB_BASENAME.'index.php']['children'] = array();
 $this->_pages[AT_JB_BASENAME.'employer/login.php']['title_var'] = 'jb_employer_login';
 $this->_pages[AT_JB_BASENAME.'employer/login.php']['parent'] = AT_JB_BASENAME.'index.php';
-$this->_pages[AT_JB_BASENAME.'employer_registration.php']['title_var'] = 'jb_employer_registration';
-$this->_pages[AT_JB_BASENAME.'employer_registration.php']['parent'] = AT_JB_BASENAME.'index.php';
+$this->_pages[AT_JB_BASENAME.'employer/registration.php']['title_var'] = 'jb_employer_registration';
+$this->_pages[AT_JB_BASENAME.'employer/registration.php']['parent'] = AT_JB_BASENAME.'index.php';
 
 $this->_pages[AT_JB_BASENAME.'employer/home.php']['title_var'] = 'jb_employer_home';
 $this->_pages[AT_JB_BASENAME.'employer/home.php']['parent'] = AT_JB_BASENAME.'index.php';

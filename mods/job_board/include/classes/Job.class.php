@@ -63,7 +63,7 @@ class Job{
 
 		$name = $addslashes($name);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_categories SET (name) VALUES ('$name')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_categories (name) VALUES ('$name')";
 		$result = mysql_query($sql, $db);
 
 		if (!$result){
@@ -76,21 +76,24 @@ class Job{
 	 * Add an employer from the registration page.
 	 * @param	string	employer name
 	 * @param	string	email of the employer
+	 * @param	string	password for the login
 	 * @param	string	the company that this employer represents
 	 * @param	string	a brief description of the company, useful for admin approval.
+	 * @param	string	company main website.
 	 * @return	null
 	 */
-	function addEmployerRequest ($name, $email, $company, $description){
+	function addEmployerRequest ($name, $email, $password, $company, $description, $website=""){
 		global $addslashes, $db, $msg;
 		
 		$name = $addslashes($name);
 		$email = $addslashes($email);
+		$password = $addslashes($password);
 		$company = $addslashes($company);
 		$description = $addslashes($description);
+		$website = $addslashes($website);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_employers SET (name, email, company, description, approval_state) VALUES ('$name', '$email', '$company', '$description', 0)";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_employers (name, email, password, company, description, website, approval_state) VALUES ('$name', '$email', '$password', '$company', '$description', '$website', 0)";
 		$result = mysql_query($sql, $db);
-
 		if (!$result){
 			//TODO: db error message
 			$msg->addError();
@@ -110,7 +113,7 @@ class Job{
 		$member_id = intval($member_id);
 		$job_id = intval($job_id);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_jobcart SET (member_id, job_id, created_date) VALUES ($member_id, $job_id, '$created_date')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_jobcart (member_id, job_id, created_date) VALUES ($member_id, $job_id, '$created_date')";
 		$result = mysql_sql($sql, $db);
 
 		if (!$result){

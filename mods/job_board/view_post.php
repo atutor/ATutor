@@ -17,12 +17,29 @@ include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_JB_INCLUDE.'classes/Job.class.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
 
-$jid = intval($_GET['jid']);
+$jid = intval($_REQUEST['jid']);
 $job = new Job();
 $job_post = $job->getJob($jid);
 
+if($_GET['action']=='delete'){
+	$hidden_vars['jid'] = $jid;
+	$job_post = $job->getJob($jid);
+	$msg->addConfirm(array('DELETE', $job_post['title']), $hidden_vars);
+}
+//handle delete 
+if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: employer/home.php');
+	exit;
+} else if (isset($_POST['submit_yes'])) {
+	$job->removeJob($jid);
+	$msg->addFeedback('JB_POST_DELETED');
+	header('Location: employer/home.php');
+	exit;
+}
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+$msg->printConfirm();
 $savant->assign('job_obj', $job);
 $savant->assign('job_post', $job_post);
 $savant->display('jb_view_post.tmpl.php');
