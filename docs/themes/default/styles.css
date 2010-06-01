@@ -585,7 +585,7 @@ div#top-links a:focus{
 #top-links-text{
 	float:right;
 	clear:right;
-	margin-left: .5em;
+	margin-left: 2em;
 	margin-top:.2em;
 	white-space:nowrap;
 	background-color:#eeeeee;
@@ -2245,4 +2245,16 @@ border:thin solid #cccccc;
 	-moz-border-radius: .3em .3em .3em .3em;
 	-moz-box-shadow:.2em .2em .2em #999999;
     box-shadow: .2em .1em .2em #999999;
+}
+
+div.pageinator_box{
+width:95%;
+margin-left:auto;
+margin-right:auto;
+margin-bottom: -.5em;
+border-top:thin solid #cccccc;
+border-left:thin solid #cccccc;
+border-right:thin solid #cccccc;
+border-radius: .3em .3em 0em 0em;
+-moz-border-radius: .3em .3em 0em 0em;
 }
