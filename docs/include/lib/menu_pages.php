@@ -271,10 +271,13 @@ $_pages['users/private_enroll.php']['parent']    = 'users/index.php';
 $_pages['users/remove_course.php']['title_var'] = 'unenroll';
 $_pages['users/remove_course.php']['parent']    = 'users/index.php';
 
+$_pages['mods/_standard/profile_pictures/profile_picture.php']['title_var']    = 'picture';
+
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
 $_pages['users/profile.php']['guide']     = 'general/?p=profile.php';
-$_pages['users/profile.php']['children']  = array_merge(array('users/password_change.php', 'users/email_change.php'), (array) $_pages['users/profile.php']['children']);
+//$_pages['users/profile.php']['children']  = array_merge(array('users/password_change.php', 'users/email_change.php','mods/_standard/profile_pictures/profile_picture.php'), (array) $_pages['users/profile.php']['children']);
+$_pages['users/profile.php']['children']  = array_merge(array('users/password_change.php', 'users/email_change.php','mods/_standard/profile_pictures/profile_picture.php'), (array) $_pages['users/profile.php']['children']);
 
 $_pages['users/password_change.php']['title_var'] = 'change_password';
 $_pages['users/password_change.php']['parent']    = 'users/profile.php';
