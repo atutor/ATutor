@@ -11,8 +11,8 @@
 	</thead>
 	<tbody>
 		<?php 
-			if (!empty($this->all_job_posts)):
-				foreach ($this->all_job_posts as $id=>$row): 
+			if (!empty($this->job_posts)):
+				foreach ($this->job_posts as $id=>$row): 
 		?>
 		<tr>
 			<td><a href="<?php echo AT_JB_BASENAME.'view_post.php?jid='.$row['id'];?>" title="<?php echo _AT('jb_view_job_post'); ?>"><?php echo $row['id']; ?></a></td>

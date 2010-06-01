@@ -37,17 +37,22 @@ class Job{
 
 		$title = $addslashes($title);
 		$description = $addslashes($description);
-		if (!empty($categories)){
-			foreach($categories as $id => $category){
-				$categories[$id] = intval($category);
-			}
-		}	
-		$categories = json_encode($categories);
 		$is_public = (isset($is_public))?1:0;
 		$closing_date = $addslashes($closing_date);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, categories, is_public, closing_date, created_date, revised_date) VALUES ($_SESSION[jb_employer_id], '$title', '$description', '$categories', $is_public, '$closing_date', NOW(), NOW())";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, is_public, closing_date, created_date, revised_date) VALUES ($_SESSION[jb_employer_id], '$title', '$description', $is_public, '$closing_date', NOW(), NOW())";
 		$result = mysql_query($sql, $db);
+		$posting_id = mysql_insert_id();
+
+		//add to posting category table
+		if (!empty($categories)){
+			foreach($categories as $id => $category){
+				$category = intval($category);
+				$sql = 'INSERT INTO '.TABLE_PREFIX."jb_posting_categories (posting_id, category_id) VALUES ($posting_id, $category)";
+				mysql_query($sql, $db);
+			}
+		}
+
 		if (!$result){
 			//TODO: db error message
 			$msg->addError();
@@ -148,7 +153,7 @@ class Job{
 		$rs = mysql_query($sql, $db);
 		if ($rs){
 			$row = mysql_fetch_assoc($rs);
-			$row['categories'] = $this->convertJsonCategoriesToArray($row['categories']);
+			$row['categories'] = $this->getPostingCategories($row['id']);
 		}
 		return $row;
 	}
@@ -156,16 +161,25 @@ class Job{
 
 	/**
 	 * Return all jobs
-	 * @return	Array	array of rows
+	 * @param	int		current page number.  The page that the user is viewing
+	 * @return	Array	job posts that will be shown on the given page. 
 	 */
-	function getAllJobs(){
+	function getAllJobs($page=0){
 		global $addslashes, $db, $msg;
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings";
+		//handle pages offset
+		$page = intval($page);
+		if ($page > 0){
+			$offset = ($page - 1) * AT_JB_ROWS_PER_PAGE;
+			$extra = " LIMIT $offset, ".AT_JB_ROWS_PER_PAGE;
+		} else {
+			$extra = '';
+		}
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings $extra";
 		$rs = mysql_query($sql, $db);
 		if ($rs){
 			while($row = mysql_fetch_assoc($rs)){
-				$row['categories'] = $this->convertJsonCategoriesToArray($row['categories']);
+				$row['categories'] = $this->getPostingCategories($row['id']);
 				$result[$row['id']] = $row;
 			}
 		}
@@ -175,15 +189,25 @@ class Job{
 	
 	/**
 	 * Returns a list of jobs that's created by the currented logged in employer
+ 	 * @param	int		current page number.  The page that the user is viewing
 	 */
-	function getMyJobs(){
+	function getMyJobs($page=0){
 	    global $addslashes, $db, $msg;
 	    
-	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id'];
+		//handle pages offset
+		$page = intval($page);
+		if ($page > 0){
+			$offset = ($page - 1) * AT_JB_ROWS_PER_PAGE;
+			$extra = " LIMIT $offset, ".AT_JB_ROWS_PER_PAGE;
+		} else {
+			$extra = '';
+		}
+
+	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id']." $extra";
 	    $rs = mysql_query($sql, $db);
 	    
 	    while($row = mysql_fetch_assoc($rs)){
-			$row['categories'] = $this->convertJsonCategoriesToArray($row['categories']);
+			$row['categories'] = $this->getPostingCategories($row['id']);
 	        $result[$row['id']] = $row;
         }
         
@@ -216,25 +240,47 @@ class Job{
 		return $this->categories[intval($id)]['name'];
 	}
 
-	function search($queries){}
+	/**
+	 * Get the categories by the given posting id
+	 * @param	int		posting id
+	 * @return	Array	Array of categories integers.  Null if input is an empty string.
+	 * @private
+	 */
+	function getPostingCategories($pid){
+		global $addslashes, $db;
+		$pid = intval($pid);
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_posting_categories WHERE posting_id=$pid";
+		$rs = mysql_query($sql, $db);
+
+		while($row = mysql_fetch_assoc($rs)){
+			$result[] = $row['category_id'];
+		}
+		return $result;
+	}
+
+	/**
+	 * Perform a search with the given filters.
+	 * @param	Array	[field]=>[input]
+	 * @return	Array	matched entries
+	 */
+	function search($input){
+		global $addslashes, $db; 
+
+		//If input is not an array, quit right away.  
+		if (!is_array($input)){
+			return;
+		}
+
+		//get the search fields
+		$title = $addslashes($input['title']);
+	}
 
 	function approveEmployer($member_id){}
 
 	function disapproveEmployer($member_id){}
 
 
-	/**
-	 * Convert the json formated categories string into an array
-	 * @param	string		json format categories
-	 * @return	Array		Array of categories integers.  Null if input is an empty string.
-	 * @private
-	 */
-	private function convertJsonCategoriesToArray($categories){
-		if ($categories!=''){
-			$categories_entry = json_decode($categories);
-			return $categories_entry;
-		}
-		return null;
-	}
+
 }
 ?>

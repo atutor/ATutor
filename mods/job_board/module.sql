@@ -19,6 +19,13 @@ CREATE TABLE `jb_categories` (
 )
 ENGINE = MyISAM;
 
+CREATE TABLE `jb_posting_categories` (
+  `posting_id` INTEGER UNSIGNED NOT NULL,
+  `category_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`posting_id`, `category_id`)
+)
+ENGINE = MyISAM;
+
 CREATE TABLE `jb_employers` (                                                                                                                                                                                                                                           
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
