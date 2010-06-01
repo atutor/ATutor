@@ -122,6 +122,6 @@ $savant->assign('num_pages', $num_pages);
 $savant->assign('search_field', $search_field);
 $savant->assign('friends', $friends);
 $savant->assign('rand_key', $rand_key);
-$savant->display('index_public.tmpl.php');
+$savant->display('social/index_public.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
