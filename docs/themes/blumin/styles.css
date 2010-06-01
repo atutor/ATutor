@@ -1563,3 +1563,13 @@ div#menutoggle{
     padding-right: 5px; 
     font-size:0.95em;
 }
+#my_courses_container{
+	  width:58%; 
+	  margin-left:1em;
+	  border:none;
+	  float:left;
+	  border-radius: .5em .5em .5em .5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
+}
