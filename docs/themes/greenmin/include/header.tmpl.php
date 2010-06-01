@@ -90,7 +90,8 @@ global $system_courses, $_custom_css, $_base_path;
 </div>
 
 <!-- top help/search/login links -->
-<div style="float:right;" id="top-links">
+<div id="top-links">
+<div id="top-links-jump">
 <!-- back to start page -->
 	<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 		<!-- start the jump menu -->
@@ -123,6 +124,7 @@ global $system_courses, $_custom_css, $_base_path;
 	<?php endif; ?>
 
 	<img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> <img src="<?php echo $this->img; ?>linkTransparent.gif" alt="" /> <a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+</div>
 </div>
 <br />
 <div id="topnavlistcontainer">
