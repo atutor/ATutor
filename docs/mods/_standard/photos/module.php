@@ -22,7 +22,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  */
 global $savant;
 require(AT_INCLUDE_PATH.'../mods/_standard/photos/include/constants.inc.php');	//load constant file right away.
-$savant->addPath('template', AT_PA_INCLUDE.'html/');
+//$savant->addPath('template', AT_PA_INCLUDE.'html/');
 
 /******
  * this file must only be included within a Module obj
@@ -85,8 +85,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT
 $this->_pages[AT_SOCIAL_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'index.php');
 //end temp
 
-//$this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = _AT('test');
-//$this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
+$this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = _AT('test');
+$this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index.php';
 //$this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] = array_push($this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'], AT_PA_BASENAME.'index.php');
 
 

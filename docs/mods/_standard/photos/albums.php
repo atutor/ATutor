@@ -188,6 +188,6 @@ $savant->assign('num_rows', $photos_count);
 $savant->assign('memory_usage', $memory_usage/(1024*1024));	//mb
 $savant->assign('allowable_memory_usage', $_config['pa_max_memory_per_member']);	//mb
 $savant->assign('action_permission', $action_permission);
-$savant->display('pa_albums.tmpl.php');
+$savant->display('photos/pa_albums.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

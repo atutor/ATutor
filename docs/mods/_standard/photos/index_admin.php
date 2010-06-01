@@ -70,6 +70,6 @@ $msg->printConfirm();
 $savant->assign('albums', $albums);
 $savant->assign('page', $page);
 $savant->assign('num_rows', $photos_count);
-$savant->display('admin/pa_index.tmpl.php');
+$savant->display('photos/admin/pa_index.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

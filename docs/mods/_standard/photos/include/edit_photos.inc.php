@@ -114,5 +114,5 @@ if (isset($_POST['submit'])){
 //template goes here
 $savant->assign('album_info', $album_info);
 $savant->assign('photos', $photos);
-$savant->display('pa_edit_photos.tmpl.php');
+$savant->display('photos/pa_edit_photos.tmpl.php');
 ?>

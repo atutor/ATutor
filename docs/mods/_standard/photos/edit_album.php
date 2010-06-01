@@ -88,6 +88,6 @@ if(isset($_POST['submit'])){
 
 include (AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('album_info', $album_info);
-$savant->display('pa_edit_album.tmpl.php');
+$savant->display('photos/pa_edit_album.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

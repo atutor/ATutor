@@ -80,7 +80,7 @@ if(isset($_GET['org'])){
 	include (AT_INCLUDE_PATH.'header.inc.php');
 	$savant->assign('album_info', $album_info);
 	$savant->assign('photos', $photos);
-	$savant->display('pa_organize_photos.tmpl.php');
+	$savant->display('photos/pa_organize_photos.tmpl.php');
 	include (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }

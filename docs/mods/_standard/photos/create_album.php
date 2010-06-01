@@ -69,6 +69,6 @@ if(isset($_POST['submit'])){
 }
 
 include (AT_INCLUDE_PATH.'header.inc.php'); 
-$savant->display('pa_create_album.tmpl.php');
+$savant->display('photos/pa_create_album.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

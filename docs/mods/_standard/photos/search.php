@@ -46,6 +46,6 @@ $savant->assign('albums', $search_results[0]);
 $savant->assign('photos', $search_results[1]);
 //$savant->assign('page', $page);
 //$savant->assign('num_rows', $album_count);
-$savant->display('pa_search.tmpl.php');
+$savant->display('photos/pa_search.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

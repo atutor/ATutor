@@ -84,6 +84,6 @@ $savant->assign('aid', $aid);
 $savant->assign('photo_info', $photo_info);
 $savant->assign('comments', $comments);
 $savant->assign('action_permission', $action_permission);
-$savant->display('pa_photo.tmpl.php');
+$savant->display('photos/pa_photo.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

@@ -34,6 +34,6 @@ if(isset($_POST['submit'])){
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('max_memory', $_config['pa_max_memory_per_member']);
-$savant->display('admin/pa_preferences.tmpl.php');
+$savant->display('photos/admin/pa_preferences.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

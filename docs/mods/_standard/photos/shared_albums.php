@@ -41,6 +41,6 @@ $savant->assign('albums', $albums);
 $savant->assign('isSharedAlbum', true);
 $savant->assign('page', $page);
 $savant->assign('num_rows', $album_count);
-$savant->display('pa_index.tmpl.php');
+$savant->display('photos/pa_index.tmpl.php');
 include (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
