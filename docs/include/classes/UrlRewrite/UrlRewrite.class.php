@@ -324,26 +324,28 @@ class UrlRewrite  {
 	function getPath(){
 		//for 2.0, most of the paths are moved  into mods/_standard
 		//map the paths.
-		$hmap = array (
-					'/forums/forum'	=>	'mods/_standard', 
-					'/social'		=>	'mods/_standard',
-					'/imscp'		=>	'mods/_core',
+		$hmap = array (					 										
 					'/glossary'		=>	'mods/_core',
-					'/tests'		=>	'mods/_standard',
+					'/groups'		=>	'mods/_core',
+					'/imscp'		=>	'mods/_core',
+					'/blogs'		=>	'mods/_standard',
 					'/chat'			=>	'mods/_standard',
-					'/links'		=>	'mods/_standard',
-					'/polls'		=>	'mods/_standard',
-					'/faq'			=>	'mods/_standard',
-					'/groups'		=>	'mods/_standard',
-					'/reading_list'	=>	'mods/_standard',
-					'/file_storage'	=>	'mods/_standard',
-					'/gradebook'	=>	'mods/_standard',
-					'/student_tools'=>	'mods/_standard',
 					'/directory'	=>	'mods/_standard',
-					'/sitemap'		=>	'mods/_standard',
-					'/tracker'		=>	'mods/_standard',
+					'/faq'			=>	'mods/_standard',					
+					'/file_storage'	=>	'mods/_standard',
+					'/forums/forum'	=>	'mods/_standard',
 					'/google_search'=>	'mods/_standard',
-					'/blogs'		=>	'mods/_standard'
+					'/gradebook'	=>	'mods/_standard',
+					'/links'		=>	'mods/_standard',
+					'/photos'		=>	'mods/_standard',
+					'/polls'		=>	'mods/_standard',
+					'/sitemap'		=>	'mods/_standard',
+					'/social'		=>	'mods/_standard',
+					'/student_tools'=>	'mods/_standard',
+					'/tile_search'  =>	'mods/_standard',
+					'/tests'		=>	'mods/_standard',
+					'/tracker'		=>	'mods/_standard',
+					'/reading_list'	=>	'mods/_standard'					
 				);
 
 		if ($this->path != ''){
