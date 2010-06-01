@@ -68,9 +68,9 @@ if($_GET['delete'] == "confirm"){
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
 $savant->assign('group_invitations',getGroupInvitations());
 $savant->assign('group_obj', $group_obj);
-$savant->display('sgroup_view.tmpl.php');
+$savant->display('social/sgroup_view.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

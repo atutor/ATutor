@@ -161,12 +161,12 @@ if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET[
 //mark those that are already added
 $friends = markFriends($_SESSION['member_id'], $friends);
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
 $savant->assign('page', $page);
 $savant->assign('num_pages', $num_pages);
 $savant->assign('search_field', htmlentities_utf8($search_field));
 $savant->assign('friends', $friends);
 $savant->assign('rand_key', $rand_key);
-$savant->display('connections.tmpl.php');
+$savant->display('social/connections.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -39,13 +39,13 @@ include(AT_INCLUDE_PATH.'header.inc.php');
 
 <?php
 
-$savant->display('pubmenu.tmpl.php');
-$savant->display('settings/settings_menu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
+$savant->display('social/settings/settings_menu.tmpl.php');
 if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 	//TODO
 	//Default to account settings
 	//Page prints from here
-	$savant->display('settings/account_settings.tmpl.php');
+	$savant->display('social/settings/account_settings.tmpl.php');
 } elseif (isset($_REQUEST['n']) && $_REQUEST['n']=='application_settings'){
 	$app = new Application();
 	//handle application setting updates
@@ -60,7 +60,7 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 	//initialization
 	$savant->assign('home_display', $app->getHomeDisplaySettings());
 	$savant->assign('my_apps', $list_of_my_apps = $app->listMyApplications());
-	$savant->display('settings/application_settings.tmpl.php');
+	$savant->display('social/settings/application_settings.tmpl.php');
 } else {
 	//handle privacy setting updates
 	if (isset($_POST['submit'])){
@@ -82,7 +82,7 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 	$savant->assign('profile_prefs', $private_obj->getProfile());
 	$savant->assign('search_prefs', $private_obj->getSearch());
 	$savant->assign('application_prefs', $private_obj->getActivity());
-	$savant->display('settings/privacy_settings.tmpl.php');
+	$savant->display('social/settings/privacy_settings.tmpl.php');
 }
 ?>
 <div style="clear:both;"></div>

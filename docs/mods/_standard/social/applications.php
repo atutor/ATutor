@@ -97,7 +97,7 @@ if (isset($_REQUEST['app_id'])){
 		$savant->assign('settings', $app->getSettings());	//userPrefs
 		$savant->assign('user_settings', $app->getApplicationSettings($_SESSION['member_id']));
 		$savant->assign('app_id', $app->getId());	//id
-		$savant->display('application_settings.tmpl.php');
+		$savant->display('social/application_settings.tmpl.php');
 		include(AT_INCLUDE_PATH.'footer.inc.php');		
 		exit;
 	}
@@ -124,7 +124,7 @@ if (isset($_REQUEST['app_id'])){
 	include(AT_INCLUDE_PATH.'header.inc.php');
 	$savant->assign('iframe_url', $iframe_url);
 	$savant->assign('app', $app);
-	$savant->display('individual_application.tmpl.php');
+	$savant->display('social/individual_application.tmpl.php');
 	include(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -133,9 +133,9 @@ if (isset($_REQUEST['app_id'])){
 $list_of_my_apps = $app->listMyApplications();
 
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
 $savant->assign('list_of_my_apps', $list_of_my_apps);
 $savant->assign('list_of_all_apps', $list_of_all_apps);
-$savant->display('applications.tmpl.php');
+$savant->display('social/applications.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

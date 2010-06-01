@@ -88,12 +88,12 @@ include (AT_INCLUDE_PATH.'header.inc.php');
 			//network updates
 			$actvity_obj = new Activity();
 			$savant->assign('activities', $actvity_obj->getFriendsActivities($_SESSION['member_id']));
-			$savant->display('activities.tmpl.php');
+			$savant->display('social/activities.tmpl.php');
 
 			//applications/gagdets
 			$applications_obj = new Applications();
 			$savant->assign('list_of_my_apps', $applications_obj->listMyApplications(true));
-			$savant->display('tiny_applications.tmpl.php');
+			$savant->display('social/tiny_applications.tmpl.php');
 //			echo '<div class="gadget_wrapper">';
 //			echo '<div class="gadget_title_bar">Applications</div>';
 //			echo '<div class="gadget_container">TODO: GADGETS/Applications</div>';
@@ -112,7 +112,7 @@ include (AT_INCLUDE_PATH.'header.inc.php');
 			$savant->assign('group_invitations', getGroupInvitations());
 			$savant->assign('group_requests', getGroupRequests());
 			$savant->assign('pending_requests', getPendingRequests());
-			$savant->display('friend_list.tmpl.php'); 
+			$savant->display('social/friend_list.tmpl.php'); 
 		?>		
 	</div>
 		
@@ -158,7 +158,7 @@ include (AT_INCLUDE_PATH.'header.inc.php');
 		//assign
 		$savant->assign('my_groups', $random_groups);
 		$savant->assign('randomize_groups', true);
-		$savant->display('tiny_sgroups.tmpl.php');
+		$savant->display('social/tiny_sgroups.tmpl.php');
 	?>
 	</div>
 <div style="clear:both;"></div>

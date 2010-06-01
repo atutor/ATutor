@@ -61,8 +61,8 @@ if (isset($_POST['inviteMember']) && isset($_POST['new_members'])){
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
 $savant->assign('group_obj', $group_obj);
-$savant->display('sgroup_invite.tmpl.php');
+$savant->display('social/sgroup_invite.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

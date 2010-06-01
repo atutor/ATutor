@@ -91,11 +91,17 @@ $last_search = preg_replace('/\"/', '', $last_search);
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
+?>
+<div class="pageinator_box">
+<?php
 print_paginator($page, $num_pages, 'search_groups_'.$rand_key.'='.$query.SEP.'rand_key='.$rand_key, 1); 
+?>
+</div>
+<?php
 $savant->assign('rand_key', $rand);
 $savant->assign('last_search', $last_search);
-$savant->assign('search_result', $search_result);
-$savant->display('sgroup_search.tmpl.php');
+$savant->assign('social/search_result', $search_result);
+$savant->display('social/sgroup_search.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -16,4 +16,5 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $member_id = $_SESSION['member_id'];
 $_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
-require('html/profile_picture.html.php'); ?>
+$savant->display('social/profile_picture.html.php');
+//require('profile_picture.html.php'); ?>

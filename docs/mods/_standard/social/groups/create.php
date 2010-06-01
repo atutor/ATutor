@@ -170,8 +170,8 @@ if (isset($_POST['create'])){
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
 $savant->assign('group_types', $social_groups->getAllGroupType());
-$savant->display('sgroup_edit.tmpl.php');
+$savant->display('social/sgroup_edit.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

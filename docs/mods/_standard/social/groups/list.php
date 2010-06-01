@@ -82,10 +82,10 @@ if (isset($_GET['remove']) && isset($_GET['member_id'])){
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
 $savant->assign('grp_obj', $grp_obj);
 $savant->assign('grp_members', $grp_members);
 $savant->assign('rand_key', $rand_key);
-$savant->display('sgroup_list.tmpl.php');
+$savant->display('social/sgroup_list.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

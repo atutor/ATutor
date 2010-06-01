@@ -49,9 +49,15 @@ $my_groups = $social_group->getMemberGroups($_SESSION['member_id'], $offset);
 
 //Display
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+$savant->display('social/pubmenu.tmpl.php');
+?>
+<div class="pageinator_box">
+<?php
 print_paginator($page, $num_pages, '', 1); 
+?>
+</div>
+<?php
 $savant->assign('my_groups', $my_groups);
-$savant->display('sgroups.tmpl.php');
+$savant->display('social/sgroups.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
