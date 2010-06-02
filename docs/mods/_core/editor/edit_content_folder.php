@@ -24,6 +24,12 @@ if ($cid > 0)
 	$content_row = mysql_fetch_assoc($result);
 }
 
+if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
+	$course_base_href = 'get.php/';
+} else {
+	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 // save changes
 if ($_POST['submit'])
 {
