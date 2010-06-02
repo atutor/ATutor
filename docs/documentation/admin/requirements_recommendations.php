@@ -16,14 +16,20 @@
 		<p>ATutor is written in the <acronym title="Recursive acronym for PHP: Hypertext Preprocessor">PHP</acronym> language. The PHP configuration file contains many configuration settings that can be changed. The following are the minimum requirements needed to install and use ATutor.</p>
 
 		<dl>
-			<dt>PHP 4.3.0+</dt>
-			<dd>PHP 4.3.0 or higher is required. Version 5.2.0 or higher is recommended.</dd>
+			<dt>PHP 5.0.2+</dt>
+			<dd>Version 5.2.0 or higher is recommended.</dd>
 
 			<dt><kbd>zlib</kbd></dt>
 			<dd>Zlib support must be enabled in PHP; It is used for compressing and uncompressing ZIP files.</dd>
 
 			<dt><kbd>mysql</kbd></dt>
-			<dd>MySQL support must be enabled in PHP.</dd>
+			<dd>MySQL support must be enabled in PHP. </dd>
+
+			<dt><kbd>mbstring</kbd></dt>
+			<dd>MBstring support must be compiled into PHP to support UTF-8 lamguage characters.</dd>
+
+			<dt><kbd>curl</kbd> (optional)</dt>
+			<dd>Curl support must be compiled into PHP for ATutor Social (Networking) .</dd>
 
 			<dt><kbd>safe_mode = Off</kbd></dt>
 			<dd><kbd>safe_mode</kbd> must be disabled in PHP. ATutor cannot function with the restrictions enforced when <kbd>safe_mode</kbd> is enabled.</dd>
@@ -65,7 +71,7 @@ session.use_trans_sid   = 0
 </pre>
 
 	<h3>MySQL</h3>
-		<p>Currently ATutor only supports the MySQL database. MySQL 4.0.2 or higher, or 4.1.10 or higher is required. MySQL 4.0.20 and higher or 4.1.10 and higher is recommended, especially if you are using languages that would benefit from being represented in the <acronym title="UCS Transformation Format, a multibyte character encoding format.">UTF-8</acronym> character set. As ATutor moves towards utilizing UTF-8 throughout, support for older version of MySQL will be removed.</p>
+		<p>Currently ATutor only supports the MySQL database. MySQL 4.1.10 or higher is required.</p>
 
 		<p>A database user account with database creation privileges is required if your database does not already exist. That same user will then need table creation privileges for the chosen database. See the MySQL chapter <a href="http://dev.mysql.com/doc/mysql/en/privileges.html" target="_new">How the Privilege System Works</a> for additional information.</p>
 
