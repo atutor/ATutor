@@ -16,7 +16,7 @@
 	$_pages['managing_existing_themes.php']		 = 'Managing Existing Themes';
 	$_pages['creating_themes.php']               = 'Creating Themes';
 	$_pages['error_logging.php']                 = 'Error Logging';
-	$_pages['feeds.php']						 = 'Syndicated Feeds';
+	$_pages['feeds.php']						 = 'News Feeds';
 	$_pages['google_key.php']					 = 'Google Key';
 	$_pages['cron_setup.php']					 = 'Cron Set-up';
 	$_pages['enrollment.php']                    = 'Enrollment';
@@ -32,7 +32,7 @@
 	$_pages['default_side_menu.php']	     = 'Default Side Menu';
 	$_pages['backups.php']                       = 'Backups';
 	$_pages['forums.php']                        = 'Forums';
-	$_pages['auto_enroll.php']                        = 'Auto-Enroll at Registration';
+	$_pages['auto_enroll.php']                        = 'Auto-Enrolment';
 	$_pages['categories.php']                    = 'Course Categories';
 	$_pages['modules.php']                       = 'Modules';
 	$_pages['patcher.php']                       = 'Patcher';
