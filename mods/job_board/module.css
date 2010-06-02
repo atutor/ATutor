@@ -21,3 +21,7 @@ textarea#jb_description{
 div.jb_view_container label{
 	font-weight: bold;
 }
+div.jb_advance_search{
+	margin-left: 5em;
+	background: #eeeeee;
+}

@@ -21,7 +21,6 @@ $job = new Job();
 $all_categories = $job->getCategories();
 
 //on submit
-debug($_POST);
 if(isset($_POST['submit'])){
 	$job->addJob($_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $_POST['jb_closing_date']);
 	$msg->addFeedback('JOB_POST_ADDED_SUCCESSFULLY');

@@ -274,6 +274,48 @@ class Job{
 
 		//get the search fields
 		$title = $addslashes($input['title']);
+		$email = $addslashes($input['email']);
+		$description = $addslashes($input['description']);
+
+		//create sub sql for the search fields.
+		if ($title!=''){
+			$title_bits = explode(' ', $input['title']);
+			$title_sql = '';
+			//concat all the title search fields together.
+			foreach($title_bits as $v){
+				$title_sql .= "`title` LIKE '%$v%' OR ";
+			}
+//			$title_sql = substr($title_sql, 0, -3);
+		}
+		if ($email!=''){
+			$email_bits = explode(' ', $input['email']);
+			$email_sql = '';
+			//concat all the email search fields together.
+			foreach($email_bits as $v){
+				$email_sql .= "`email` LIKE '%$v%' OR ";
+			}
+//			$email_sql = substr($email_sql, 0, -3);
+		}
+		if ($description!=''){
+			$description_bits = explode(' ', $input['description']);
+			$description_sql = '';
+			//concat all the description search fields together.
+			foreach($description_bits as $v){
+				$description_sql .= "`description` LIKE '%$v%' OR ";
+			}
+			$description_sql = substr($description_sql, 0, -3);
+		}
+		$sql_wc =	$title_sql . $email_sql . $description_sql; //where clause
+		if ($sql_wc!=''){
+			$sql_wc = ' WHERE '.$sql_wc;
+		}
+		//compose the search query
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings $sql_wc";
+		$rs = mysql_query($sql, $db);
+		while ($row = mysql_fetch_assoc($rs)){
+			$result[] = $row;
+		}
+		debug($result);
 	}
 
 	function approveEmployer($member_id){}

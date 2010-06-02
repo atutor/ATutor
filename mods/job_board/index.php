@@ -24,7 +24,9 @@ $all_job_posts = $job->getAllJobs();
 $current_job_posts = $job->getAllJobs($page);  //job post for this page
 
 //handle search
-
+if (isset($_GET['jb_submit'])){
+	debug($_GET);
+}
 
 include(AT_INCLUDE_PATH.'header.inc.php');?>
 <form action="" method="get">
@@ -33,10 +35,12 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 				<label for="jb_search"><?php echo _AT('jb_search'); ?></label>
 				<input type="text" id="jb_search" name="jb_search" value="" />
 				<input type="submit" name="jb_submit" value="<?php echo _AT('search'); ?>" />
-			<a onclick="toggleAdvanceSearch()"><?php echo _AT('jb_advanced_search'); ?></a>
+			<a onclick="toggleAdvanceSearch()"><?php echo _AT('jb_search_filter'); ?></a>
 			<div class="jb_advance_search" style="display: none;">
-			advance search table goes here.
-			<?php $savant->display('jb_advance_search_table.tmpl.php');?>
+			<?php 
+				$savant->assign('job_obj', $job);
+				$savant->display('jb_advance_search_table.tmpl.php');
+			?>
 			</div>
 		</div>
 		<div class="jb_add_posting">
