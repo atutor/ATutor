@@ -1497,6 +1497,69 @@ initContentMenu();
 		}
 		return false;
 	}
+
+	/**
+	 * This function returns an array of content tools' shortcuts
+	 * @access: public
+	 * @param: $content_row: an array of the current content information
+	 * @return: an array of all the tool shortcuts that apply to the current content or content folder
+	 */
+	public static function getToolShortcuts($content_row)
+	{
+		global $_base_href, $contentManager;
+		
+		$shortcuts = array();
+		if ((	($content_row['r_date'] <= $content_row['n_date'])
+				&& ((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
+					|| ($_SESSION['packaging'] == 'all'))
+			) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+			$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'mods/_core/imscp/ims_export.php?cid='.$content_row['content_id'], 'icon' => $_base_href . 'images/download.png');
+		}
+		
+		if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT) {
+				$shortcuts[] = array(
+				'title' => _AT('edit_this_page'),   
+				'url' => $_base_href . 'mods/_core/editor/edit_content.php?cid='.$content_row['content_id'],
+				'icon' => $_base_href . 'images/medit.gif');
+			}
+			$shortcuts[] = array(
+				'title' => _AT('add_sibling_folder'), 
+				'url' => $_base_href.'mods/_core/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'], 
+				'icon' => $_base_href . 'images/folder_new_sibling.gif');
+		
+			if ($content_row['content_type'] == CONTENT_TYPE_FOLDER) {
+				$shortcuts[] = array(
+					'title' => _AT('add_sub_folder'),   
+					'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php?pid='.$content_row['content_id'], 
+					'icon' => $_base_href . 'images/folder_new_sub.gif');
+			}
+			
+			$shortcuts[] = array(
+				'title' => _AT('add_sibling_page'), 
+				'url' => $_base_href.'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'], 
+				'icon' => $_base_href . 'images/page_add_sibling.gif');
+
+			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT) {
+				$shortcuts[] = array(
+					'title' => _AT('delete_this_page'), 
+					'url' => $_base_href . 'mods/_core/editor/delete_content.php?cid='.$content_row['content_id'], 
+					'icon' => $_base_href . 'images/page_delete.gif');
+			}
+			else if ($content_row['content_type'] == CONTENT_TYPE_FOLDER) {
+				$shortcuts[] = array(
+					'title' => _AT('add_sub_page'),     
+					'url' => $_base_href . 'mods/_core/editor/edit_content.php?pid='.$content_row['content_id'], 
+					'icon' => $_base_href . 'images/page_add_sub.gif');
+				$shortcuts[] = array(
+					'title' => _AT('delete_this_folder'), 
+					'url' => $_base_href . 'mods/_core/editor/delete_content.php?cid='.$content_row['content_id'], 
+					'icon' => $_base_href . 'images/page_delete.gif');
+			}
+		}
+		
+		return $shortcuts;
+	}
 }
 
 ?>

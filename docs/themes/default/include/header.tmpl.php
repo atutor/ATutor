@@ -38,6 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * $this->back_to_page				if set, the path and file name to the part of this page (if parent is not a top level nav)
  * $this->current_sub_level_page	the full path to the current sub level page with file name
  * $this->guide				the full path and file name to the guide page
+ * $this->shortcuts         the array of tools' shortcuts to display at top right corner. Used by content.php and edit_content_folder.php
  * ======================================
  * top_level_pages           array(array('url', 'title'))     the top level pages. ATutor default creates tabs.
  * section_title             string                           the name of the current section. either name of the course, administration, my start page, etc.

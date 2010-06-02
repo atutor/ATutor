@@ -185,34 +185,9 @@ if ($cid > 0)
 	if (isset($top_num) && $top_num != (int) $top_num) {
 		$top_num = substr($top_num, 0, strpos($top_num, '.'));
 	}
-	/* MOVE SHORTCUTS INTO HEADER.INC
 	
-	$shortcuts = array();
-	if (((!$content_row['content_parent_id'] && $_SESSION['packaging'] == 'top') || $_SESSION['packaging'] == 'all') 
-	    || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'mods/_core/imscp/ims_export.php?cid='.$cid, 'icon' => $_base_href . 'images/download.png');
-	}
-	
-	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php', 'icon' => $_base_href . 'images/folder_new.gif');
-	
-		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-			$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
-				'mods/_core/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 'icon' => $_base_href . 'images/folder_new_sibling.gif');
-		}
-		
-		$shortcuts[] = array('title' => _AT('add_sub_folder'),   'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php?pid='.$cid);
-		
-		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'mods/_core/editor/edit_content.php', 'icon' => $_base_href . 'images/page_add.gif');
-		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-			$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
-				'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 'icon' => $_base_href . 'images/page_add_sibling.gif');
-		}
-	
-		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'mods/_core/editor/edit_content.php?pid='.$cid);
-		$shortcuts[] = array('title' => _AT('delete_this_folder'), 'url' => $_base_href . 'mods/_core/editor/delete_content.php?cid='.$cid, 'icon' => $_base_href . 'images/page_delete.gif');
-	}
-	*/
+	// used by header.inc.php
+	$_tool_shortcuts = $contentManager->getToolShortcuts($content_row);
 	$release_date = $content_row['release_date'];
 
 	// display pre-tests
