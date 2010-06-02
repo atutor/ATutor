@@ -57,7 +57,8 @@
 <th><?php echo _AT('access'); ?></th>
 <th><?php echo _AT('shortcuts'); ?></th>
 </tr>
-	<?php while ($row = mysql_fetch_assoc($this->courses_result)): ?>
+<?php if (is_array($this->courses_rows)){ ?>
+	<?php foreach ($this->courses_rows as $row){ ?>
 	    <?php  $counter++; ?>
 		 <tr class="<?php if ($counter %2) { echo 'odd'; } else { echo 'even'; } ?>">
 		 <td>
@@ -109,23 +110,14 @@
 		<td>
 		 <?php
 		    // insert enrolment link if allowed
-		    if (!in_array($row['course_id'], array_keys(array($this->nav_courses)))) : ?> 
-			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+		    if (isset($row['enroll_link'])) : ?> 
+			- <small><?php echo $row['enroll_link']; ?></small>
 		<?php endif; ?>
-
-		  <?php 
-		    //insert preview/guest access if authenticated access is set
-		    if (!in_array($row['course_id'], array_keys(array($this->nav_courses)))) : 
-		    // hack something here to add guest access
-			  ?> 
-
-		  <?php endif; ?>
-
 		</td>
 		</tr>
 	      
-	<?php
-	    endwhile; ?>
+	<?php } // end foreach ?>
+<?php } // end if ?>
 </table>
 </div>
 
