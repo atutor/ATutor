@@ -995,9 +995,9 @@ initContentMenu();
 				} 
 				else 
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
-					$base_title_length = 26;
+					$base_title_length = 33;
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
-						$base_title_length = 21;
+						$base_title_length = 26;
 					}
 					
 					if (isset($highlighted[$content['content_id']])) {
