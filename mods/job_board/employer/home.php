@@ -36,7 +36,9 @@ if ($page > 0){
 } else {
 	$offset = 0;
 }
-$current_job_posts = array_slice($all_job_posts, $offset, AT_JB_ROWS_PER_PAGE);
+if (sizeof($all_job_posts) > 0){
+	$current_job_posts = array_slice($all_job_posts, $offset, AT_JB_ROWS_PER_PAGE);
+}
 
 include(AT_INCLUDE_PATH.'header.inc.php');
 print_paginator($page, sizeof($all_job_posts), '', AT_JB_ROWS_PER_PAGE);

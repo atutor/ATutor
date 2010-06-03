@@ -29,7 +29,7 @@ if (isset($_POST['submit']) && $_POST['submit']!=''){
 	$row = mysql_fetch_assoc($result);
 	//if enc(a x s) = enc(b x s), then valid
 	if (sha1($addslashes($row['password']).$_SESSION['token']) == $_POST['form_password_hidden']){
-		$_SESSION['jb_employer_id'] = 1;
+		$_SESSION['jb_employer_id'] = $row['id'];
 		//if succeeded
 		$msg->addFeedback('LOGIN_SUCCESS');
 		header('Location: home.php');
