@@ -12,11 +12,12 @@
 /***********************************************************************/
 // $Id$
 
-//Job Board base variables
-define('AT_JB_BASENAME',	'mods/job_board/');
-define('AT_JB_BASE',		AT_INCLUDE_PATH.'../mods/job_board/');
-define('AT_JB_INCLUDE',		AT_JB_BASE.'include/');
+define(AT_INCLUDE_PATH, '../../../include/');
+include(AT_INCLUDE_PATH.'vitals.inc.php');
 
-define('AT_JB_ROWS_PER_PAGE',		5);	//row per page constant, default is 50 (same as output.inc.php)
+unset($_SESSION['jb_employer_id']);
+$msg->addFeedback('LOGOUT');
 
+header('Location: ../index.php');
+exit;
 ?>

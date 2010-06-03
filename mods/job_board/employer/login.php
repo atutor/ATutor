@@ -22,12 +22,21 @@ $all_job_posts = $job->getAllJobs();
 
 //Check the form username and pwd
 if (isset($_POST['submit']) && $_POST['submit']!=''){
-	$this_password	= $addslashes($_POST['form_password_hidden']);
-	$this_login		= $addslashes($_POST['form_login']);
-    $_SESSION['jb_employer_id'] = 1;
-	//if succeeded
-	header('Location: home.php');
-	exit;
+	$job_login		= $addslashes($_POST['form_login']);
+
+	$sql = 'SELECT id, password FROM '.TABLE_PREFIX."jb_employers WHERE username='$job_login'";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	//if enc(a x s) = enc(b x s), then valid
+	if (sha1($addslashes($row['password']).$_SESSION['token']) == $_POST['form_password_hidden']){
+		$_SESSION['jb_employer_id'] = 1;
+		//if succeeded
+		$msg->addFeedback('LOGIN_SUCCESS');
+		header('Location: home.php');
+		exit;
+	} else {
+		$msg->addError('INVALID_LOGIN');
+	}    
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');

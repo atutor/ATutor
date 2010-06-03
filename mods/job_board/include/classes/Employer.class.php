@@ -12,11 +12,19 @@
 /***********************************************************************/
 // $Id$
 
-//Job Board base variables
-define('AT_JB_BASENAME',	'mods/job_board/');
-define('AT_JB_BASE',		AT_INCLUDE_PATH.'../mods/job_board/');
-define('AT_JB_INCLUDE',		AT_JB_BASE.'include/');
+class Employer{
+	function Employer(){}
 
-define('AT_JB_ROWS_PER_PAGE',		5);	//row per page constant, default is 50 (same as output.inc.php)
-
+	/**
+	 * Simple authentication.  
+	 * @return	Boolean		True if is an employer with the valid id.  False otherwise.
+ 	 * @precondition		User has been authenticated via the login page.
+	 */
+	function authenticate(){
+		if(isset($_SESSION['jb_employer_id']) && $_SESSION['jb_employer_id'] > 0){
+			return true;
+		}
+		return false;
+	}
+}
 ?>

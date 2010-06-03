@@ -23,11 +23,13 @@ $job = new Job();
 //todo: handle spam.
 if(isset($_POST['submit'])){
 	$email = $_POST['jb_registration_email'];
-	$name = $_POST['jb_registration_name'];
+	$username = $_POST['jb_registration_username'];
 	$company = $_POST['jb_registration_company'];
+	$employer_name = $_POST['jb_registration_employer_name'];
 	$website = $_POST['jb_registration_website'];
 	$description = $_POST['jb_registration_description'];
 	$password = $_POST['jb_registration_password_hidden'];
+	$noerror = true;
 
 	if ($_POST['jb_registration_password_error'] != ''){
 		$errors = explode(',', $_POST['jb_registration_password_error']);
@@ -40,17 +42,27 @@ if(isset($_POST['submit'])){
 	}
 	
 	// these fields cannot be empty
-	if($email=='' || $name=='' || $company==''){
+	if($email=='' || $username=='' || $company=='' || $employer_name==''){
 		$msg->addError('JB_MISSING_FIELDS');
 		$noerror = false;
 	} 
 
-	// email taken
-
+	// email, username taken	
+	$sql = 'SELECT COUNT(*) FROM '.TABLE_PREFIX."jb_employers WHERE username='$username' OR email='$email'";
+	$result = mysql_query($sql, $db);	
+	if ($result){
+		$row = mysql_fetch_row($result);
+		if ($row[0] > 0){
+			$msg->addError('JB_EXISTING_INFO');
+			$noerror = false;
+		}
+	}
 		
 	if ($noerror){
 		//no error
-		$job->addEmployerRequest($name, $email, $password, $company, $description, $website);
+		$job->addEmployerRequest($username, $password, $employer_name, $email, $company, $description, $website);
+		header('Location: index.php');
+		exit;
 	}
 
 

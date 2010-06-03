@@ -22,14 +22,8 @@ function encrypt_password()
 	<form method="post" action="" name="jb_registration_form">
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
-			<label for="jb_registration_email"><?php echo _AT('jb_email'); ?></label>
-			<input type="text" id="jb_registration_email" name="jb_registration_email" />
-		</div>
-
-		<div class="row">
-			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
-			<label for="jb_registration_name"><?php echo _AT('jb_name'); ?></label>
-			<input type="text" id="jb_registration_name" name="jb_registration_name" />
+			<label for="jb_registration_username"><?php echo _AT('jb_registration_username'); ?></label>
+			<input type="text" id="jb_registration_username" name="jb_registration_username" value="<?php echo htmlentities_utf8($_POST['jb_registration_username']); ?>"/>
 		</div>
 
 		<div class="row">
@@ -46,18 +40,30 @@ function encrypt_password()
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
+			<label for="jb_registration_employer_name"><?php echo _AT('jb_registration_employer_name'); ?></label>
+			<input type="text" id="jb_registration_employer_name" name="jb_registration_employer_name" value="<?php echo htmlentities_utf8($_POST['jb_registration_employer_name']); ?>"/>
+		</div>
+
+		<div class="row">
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
+			<label for="jb_registration_email"><?php echo _AT('jb_email'); ?></label>
+			<input type="text" id="jb_registration_email" name="jb_registration_email" value="<?php echo htmlentities_utf8($_POST['jb_registration_email']); ?>"/>
+		</div>
+		
+		<div class="row">
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<label for="jb_registration_company"><?php echo _AT('company'); ?></label>
-			<input type="text" id="jb_registration_company" name="jb_registration_company" />
+			<input type="text" id="jb_registration_company" name="jb_registration_company" value="<?php echo htmlentities_utf8($_POST['jb_registration_company']); ?>"/>
 		</div>
 
 		<div class="row">
 			<label for="jb_registration_website"><?php echo _AT('website'); ?></label>
-			<input type="text" id="jb_registration_website" name="jb_registration_website" />
+			<input type="text" id="jb_registration_website" name="jb_registration_website" value="<?php echo htmlentities_utf8($_POST['jb_registration_website']); ?>"/>
 		</div>
 		
 		<div class="row">
 			<label for="jb_registration_description"><?php echo _AT('description'); ?></label>
-			<textarea id="jb_registration_description" name="jb_registration_description" ></textarea>
+			<textarea id="jb_registration_description" name="jb_registration_description" ><?php echo htmlentities_utf8($_POST['jb_registration_description']); ?></textarea>
 		</div>
 
 		<div class="row">

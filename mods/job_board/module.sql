@@ -28,7 +28,8 @@ ENGINE = MyISAM;
 
 CREATE TABLE `jb_employers` (                                                                                                                                                                                                                                           
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
+  `employer_name` VARCHAR(255) NOT NULL,
   `password` VARCHAR(40) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `company` VARCHAR(255) NOT NULL,

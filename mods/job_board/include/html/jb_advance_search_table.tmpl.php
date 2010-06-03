@@ -19,10 +19,12 @@
 			</div>
 		</td>
 	</tr>
+	<!--
 	<tr>
 		<td><label for="jb_search_email"><?php echo _AT('jb_email'); ?></td>
 		<td><input type="text" name="jb_search_email" id="jb_search_email" /></td>
 	</tr>
+	-->
 	<tr>
 		<td><label for="jb_search_description"><?php echo _AT('jb_description'); ?></td>
 		<td><input type="text" name="jb_search_description" id="jb_search_description" /></td>

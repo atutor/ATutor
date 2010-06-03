@@ -78,26 +78,29 @@ class Job{
 	}
 
 	/** 
-	 * Add an employer from the registration page.
-	 * @param	string	employer name
-	 * @param	string	email of the employer
+	 * Add an employer from the registration page.	 
+	 * @param	string	username 
 	 * @param	string	password for the login
+	 * @param	string	employer name
+	 * @param	string  employer's email
 	 * @param	string	the company that this employer represents
 	 * @param	string	a brief description of the company, useful for admin approval.
 	 * @param	string	company main website.
 	 * @return	null
 	 */
-	function addEmployerRequest ($name, $email, $password, $company, $description, $website=""){
+	function addEmployerRequest ($username, $password, $employer_name, $email, $company, $description, $website=""){
 		global $addslashes, $db, $msg;
 		
-		$name = $addslashes($name);
-		$email = $addslashes($email);
+		$username = $addslashes($username);
 		$password = $addslashes($password);
+		$employer_name = $addslashes($employer_name);
+		$email = $addslashes($email);
 		$company = $addslashes($company);
 		$description = $addslashes($description);
 		$website = $addslashes($website);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_employers (name, email, password, company, description, website, approval_state) VALUES ('$name', '$email', '$password', '$company', '$description', '$website', 0)";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_employers (username, password, employer_name, email, company, description, website, approval_state) VALUES ('$username', '$password', '$employer_name', '$email', '$company', '$description', '$website', 0)";
+debug($sql);
 		$result = mysql_query($sql, $db);
 		if (!$result){
 			//TODO: db error message
@@ -118,11 +121,11 @@ class Job{
 		$member_id = intval($member_id);
 		$job_id = intval($job_id);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_jobcart (member_id, job_id, created_date) VALUES ($member_id, $job_id, '$created_date')";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_jobcart (member_id, job_id, created_date) VALUES ($member_id, $job_id, NOW())";
 		$result = mysql_sql($sql, $db);
 
 		if (!$result){
-			//TODO: db error message
+			//TODO: db error message 
 			$msg->addError();
 		}
 	}
@@ -131,7 +134,17 @@ class Job{
 
 	function updateEmploer($job_id, $company, $note){}
 
-	function removeJob($job_id){}
+	/**
+	 * Remove this job posting entry from the database
+	 * @param	int		job posting id
+	 */
+	function removeJob($job_id){
+		//Delete all associated posting_categories
+
+		//Delete job cart posting entries
+
+		//Delete job post
+	}
 
 	function removeCategory($cat_id){}
 
@@ -161,21 +174,12 @@ class Job{
 
 	/**
 	 * Return all jobs
-	 * @param	int		current page number.  The page that the user is viewing
 	 * @return	Array	job posts that will be shown on the given page. 
 	 */
-	function getAllJobs($page=0){
+	function getAllJobs(){
 		global $addslashes, $db, $msg;
 
-		//handle pages offset
-		$page = intval($page);
-		if ($page > 0){
-			$offset = ($page - 1) * AT_JB_ROWS_PER_PAGE;
-			$extra = " LIMIT $offset, ".AT_JB_ROWS_PER_PAGE;
-		} else {
-			$extra = '';
-		}
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings $extra";
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings ORDER BY revised_date DESC";
 		$rs = mysql_query($sql, $db);
 		if ($rs){
 			while($row = mysql_fetch_assoc($rs)){
@@ -189,21 +193,12 @@ class Job{
 	
 	/**
 	 * Returns a list of jobs that's created by the currented logged in employer
- 	 * @param	int		current page number.  The page that the user is viewing
+	 * @return	Array	job posts that will be shown on the given page. 
 	 */
-	function getMyJobs($page=0){
+	function getMyJobs(){
 	    global $addslashes, $db, $msg;
 	    
-		//handle pages offset
-		$page = intval($page);
-		if ($page > 0){
-			$offset = ($page - 1) * AT_JB_ROWS_PER_PAGE;
-			$extra = " LIMIT $offset, ".AT_JB_ROWS_PER_PAGE;
-		} else {
-			$extra = '';
-		}
-
-	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id']." $extra";
+	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id']." ORDER BY revised_date DESC";
 	    $rs = mysql_query($sql, $db);
 	    
 	    while($row = mysql_fetch_assoc($rs)){
@@ -214,6 +209,7 @@ class Job{
         return $result;
     }
 
+	//returns the list of categories.
 	function getCategories(){
 		global $addslashes, $db, $msg;
 
@@ -261,7 +257,11 @@ class Job{
 
 	/**
 	 * Perform a search with the given filters.
-	 * @param	Array	[field]=>[input]
+	 * @param	Array	[field]=>[input].  Format must be the following:
+	 *						[title]		 =>[string]
+	 *						[categories] =>Array(integer)
+	 *						[email]		 =>[string] (taken out)
+	 *						[description]=>[string]
 	 * @return	Array	matched entries
 	 */
 	function search($input){
@@ -273,9 +273,16 @@ class Job{
 		}
 
 		//get the search fields
+		$general = $addslashes($input['general']);
 		$title = $addslashes($input['title']);
 		$email = $addslashes($input['email']);
 		$description = $addslashes($input['description']);
+		$categories = $input['categories'];
+
+		//create sub sql for general search
+		if ($general!=''){
+			$general_sql = "`title` LIKE '%$general%' OR `description` LIKE '%$general%' OR ";
+		}
 
 		//create sub sql for the search fields.
 		if ($title!=''){
@@ -285,8 +292,9 @@ class Job{
 			foreach($title_bits as $v){
 				$title_sql .= "`title` LIKE '%$v%' OR ";
 			}
-//			$title_sql = substr($title_sql, 0, -3);
 		}
+/*
+ * Not sure if this is actually useful.
 		if ($email!=''){
 			$email_bits = explode(' ', $input['email']);
 			$email_sql = '';
@@ -294,28 +302,44 @@ class Job{
 			foreach($email_bits as $v){
 				$email_sql .= "`email` LIKE '%$v%' OR ";
 			}
-//			$email_sql = substr($email_sql, 0, -3);
 		}
+*/
 		if ($description!=''){
 			$description_bits = explode(' ', $input['description']);
 			$description_sql = '';
 			//concat all the description search fields together.
 			foreach($description_bits as $v){
 				$description_sql .= "`description` LIKE '%$v%' OR ";
-			}
-			$description_sql = substr($description_sql, 0, -3);
+			}			
 		}
-		$sql_wc =	$title_sql . $email_sql . $description_sql; //where clause
+		if (is_array($categories) && !empty($categories)){
+			foreach($categories as $k=>$category_id){
+				//if 'any' is selected, use all category
+				if ($category_id==0){
+					$categories = $this->getCategories();
+					foreach ($categories as $k2=>$v2){
+						$categories[$k2] = intval($v2['id']);
+					}
+					break;
+				}
+				$categories[$k] = intval($category_id);				
+			}
+			$categories = '('. implode(',', $categories) . ')';
+			$categories_sql = 'RIGHT JOIN (SELECT DISTINCT posting_id FROM '.TABLE_PREFIX."jb_posting_categories WHERE category_id IN $categories) AS pc ON p.id=pc.posting_id ";
+		}
+		$sql_wc = $general_sql . $title_sql . $email_sql . $description_sql; //where clause
 		if ($sql_wc!=''){
+			$sql_wc = substr($sql_wc, 0, -3);
 			$sql_wc = ' WHERE '.$sql_wc;
 		}
 		//compose the search query
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings $sql_wc";
+		$sql = 'SELECT p.* FROM '.TABLE_PREFIX."jb_postings AS p $categories_sql $sql_wc ORDER BY revised_date DESC";
 		$rs = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($rs)){
+			$row['categories'] = $this->getPostingCategories($row['id']);
 			$result[] = $row;
 		}
-		debug($result);
+		return $result;
 	}
 
 	function approveEmployer($member_id){}
