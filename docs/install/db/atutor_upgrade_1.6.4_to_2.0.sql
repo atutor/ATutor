@@ -118,3 +118,8 @@ INSERT INTO `config` (`name`, `value`) VALUES('transformable_web_service_id', '9
 INSERT INTO `config` (`name`, `value`) VALUES('transformable_oauth_expire', '93600');
 
 # End of adding Transformable configuration
+
+
+# Add the 1.6 series default theme as a secondary theme for ATutor 2.0
+INSERT INTO `themes` VALUES ('ATutor 1.6', '2.0', 'default16', NOW(), 'This is the 1.6 series default theme.', 1);
+
