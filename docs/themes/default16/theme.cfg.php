@@ -22,7 +22,7 @@
 	$_theme['version'] = '2.0';
 
 /* Which version of ATutor is this theme intended for. */
-	$_theme['atutor-version'] = '2.0'
+	$_theme['atutor-version'] = '2.0';
 
 /* author information */
 	$_theme['author_name']  = 'ATutor';
