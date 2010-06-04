@@ -72,8 +72,8 @@ ATutor.course = ATutor.course || {};
 	
 	//Initialize the submenus
 	ATutor.course.doSideMenus = function () {
-		element_collapse_icon = ATutor.base_href + "images/mswitch_minus.gif";
-		element_expand_icon = ATutor.base_href + "images/mswitch_plus.gif";
+		element_collapse_icon = ATutor.base_href + "themes/" + ATutor.course.theme + "/images/mswitch_minus.gif";
+		element_expand_icon = ATutor.base_href + "themes/" + ATutor.course.theme + "/images/mswitch_plus.gif";
 		printSubmenus();		
 	};
 	
@@ -128,8 +128,8 @@ ATutor.course = ATutor.course || {};
 	};
 	
 	ATutor.course.doMenuToggle = function (effect) {
-		menu_show_icon = ATutor.base_href + "images/showmenu.gif";
-		menu_hide_icon = ATutor.base_href + "images/hidemenu.gif";
+		menu_show_icon = ATutor.base_href + "themes/" + ATutor.course.theme + "/images/showmenu.gif";
+		menu_hide_icon = ATutor.base_href +  "themes/" + ATutor.course.theme + "/images/hidemenu.gif"; 
 		printMenuToggle();
 	};
 	

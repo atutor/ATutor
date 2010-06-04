@@ -24,7 +24,7 @@ ATutor.course = ATutor.course || {};
     ATutor.base_href = "<?php echo AT_BASE_HREF; ?>";
     ATutor.course.show = "<?php echo _AT('show'); ?>";
     ATutor.course.hide = "<?php echo _AT('hide'); ?>";
-    
+    ATutor.course.theme = "<?php echo $_SESSION['prefs']['PREF_THEME']; ?>";
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
