@@ -8,8 +8,6 @@
 		</div>  
 
 	<?php endif; ?> 
-
-</div>
 </div>
 <div id="footer">
 	<br /><br />

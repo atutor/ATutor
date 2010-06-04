@@ -31,8 +31,6 @@ p a:active {
 
 h1, h2, h3, h4, h5, h6 {
     color: Black;
-    clear: left;
-clear: right;
     font: 100% Verdana, Helvetica, Arial, sans-serif;
     margin: 0;
     padding-top: 0.5em;
@@ -117,7 +115,10 @@ a:visited {
 	color: #384F89;
 	text-decoration: none;
 }
-a:hover {/* style for home page sublinks view */
+a:hover {
+
+}
+/* style for home page sublinks view */
 div.home_box {
 	width: 410px;
 	height: 150px;	
@@ -613,9 +614,8 @@ a#editor-link.on {
 
 /* for data tables */
 table.data {
-	clear:right;
 	border: 1px solid #f0f0f0;
-	width: 80%; 
+	width: 78%; 
 	margin-left: auto; 
 	margin-right: auto;
 	border-spacing: 0px;
@@ -628,7 +628,7 @@ table.data th {
 	white-space: nowrap;
 }
 
-table.data th a {
+table.data th a {	text-align: right;
 	color: black;
 	padding-right: 15px;
 	margin-right: 15px;
@@ -678,6 +678,7 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 	padding: 5px;
 	background-image: none;
 	padding-left: 0px;
+
 }
 
 table.data tfoot input {
@@ -740,7 +741,6 @@ dl.browse-course dt {
 	float: left;
 	font-weight: bold;
 	width: 25%;
-	text-align: right;
 	padding: 5px 10px 5px 0px;
 	vertical-align: middle;
 }
@@ -933,7 +933,7 @@ form {
 	background: White url('images/linkTransparent.gif') 3px 2px no-repeat;
 	border: 1px solid #8CACBB;
 	cursor: pointer;
-    text-transform: lowercase;
+	text-transform: lowercase;
 	font-size:0.85em;
 }
 #jumpmenu {
@@ -1171,7 +1171,6 @@ div.course div.shortcuts {
 }
 
 fieldset#shortcuts {
-	float: right;
 	background-color: #FAFAFA;
 	border: 1pt solid #AAAAAA;
 	margin: -5pt 5pt 5pt 5pt;
@@ -1183,6 +1182,10 @@ fieldset#shortcuts {
 legend {
 	padding-right: 10pt;
 	padding-left: 10pt;
+	  border-radius: .3em .3em .3em .3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	 box-shadow: .1em .1em  .1em #999999;
 }
 
 fieldset {
@@ -1202,7 +1205,9 @@ fieldset {
 }
 
 a#guide {
-	background-image: url('../default/images/guide.gif'); background-repeat: no-repeat; background-position: 7pt 2pt;
+	background-image: url('../default/images/help.png'); 
+	background-repeat: no-repeat; 
+	background-position: 2px 2px;
 	background-color: #eee;
 	padding: 1pt 10pt 1pt 23pt;
 	border: 1pt solid #ccc;
@@ -1212,6 +1217,7 @@ a#guide {
 div#content-text {
 	padding-right: 5pt;
 	line-height:150%;
+
 }
 
 div#content-text li {
@@ -1349,7 +1355,7 @@ dl#public-profile dd {
 /* floating layout */
 #contentwrapper{
 	float: left;
-	width: 99%;
+	width: 100%;
 }
 
 #contentcolumn {
@@ -1409,9 +1415,13 @@ ul#topnavlist {
 }
 
 ul#topnavlist li {
+	white-space: nowrap;
 	list-style: none;
-	display: inline;
-	margin: 0px;
+	display: inline-block;
+	height:1.3em;
+	margin-top:.1em;
+	clear:both;
+
 }
 
 ul#topnavlist li:first-child a {
@@ -1455,7 +1465,7 @@ ul#topnavlist li a.selected {
 
 #side-menu{
      overflow:hidden; 
-     width:18em;
+     width:20em;
      padding-right:.3em;
      padding-bottom:.3em; 
 }
@@ -1558,7 +1568,7 @@ div#menutoggle{
     text-align: right; 
     padding-bottom: 10px; 
     padding-right: 10px; 
-    float: left; 
+    float: right; 
     margin-top: 10px; 
     padding-right: 5px; 
     font-size:0.95em;
@@ -1573,7 +1583,7 @@ div#menutoggle{
 	-moz-box-shadow:.2em .2em .2em #999999;
 	 box-shadow: .2em .2em  .2em #999999;
 }
-/* Preference Editor tabs */
+/* berence Editor tabs */
 /* Preferences tabs */
 table.etabbed-table	{
 	padding-left:5em;
@@ -1610,8 +1620,8 @@ table.etabbed-table	{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: 0em .2em 0em .2em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .0em .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+    box-shadow: .1em .1em .1em #999999;
 	}
 	
 .prefs_buttontab:hover, .prefs_tab:hover {
@@ -1648,4 +1658,92 @@ table.etabbed-table	{
 	border:thin solid #cccccc;
 	border-radius:.3em .3em .3em .3em;
 	-moz-border-radius:.3em .3em .3em .3em;	
+}
+
+}
+ul#content-tool-links {
+	list-style: none outside none;
+}
+ul#content-tool-links li{
+	display: inline;
+	float: left;
+	width: 5em;
+	padding: 0 3em 0 0;
+	text-align: center;
+	font-size: 0.7em;
+	font-weight:bold;
+	color: #1A4A72;
+	line-height:120%;
+}
+ul#content-tool-links img{
+	border: 0 none;
+	display: block;
+	padding-left: 10px;
+}
+
+.hidden {
+    display: none;
+}
+.clickable {
+    cursor: pointer;    
+}
+.nowrap {
+    white-space: nowrap;
+}
+.flowplayerholder{
+clear:right;
+}
+
+/* Content editor tabs */
+.editor_buttontab {
+	color:#000000;
+	font-size:10pt;
+	border:0;
+	white-space: nowrap;
+	background-color: #ffffff;
+	margin: 0px;
+	font-weight:500;
+	text-align:center;
+	padding:0em 0em 0em;
+
+}
+.editor_tab{
+	float:left;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom:0;
+	margin-bottom:-.5em;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #ffffff;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	-moz-box-shadow:.1em .0em .1em #999999;
+	box-shadow: .2em .0em .2em #999999;
+	padding: 0em .2em 0em .2em ;
+	height:1.4em;
+}
+.editor_tab:hover, .editor_tab input[type=submit]:hover{
+	background-color:#eeeeee;
+}
+
+.editor_tab_selected{
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom:0;
+	padding: 0em .2em 0em .2em ;
+  	background-color: #eeeeee;
+	font-weight:bold;
+	text-align:center;
+	white-space: nowrap;
+	text-decoration:none;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	height:1.4em;
+
+}
+.editor_tab input[type=submit]{
+	height:1.2em;
 }

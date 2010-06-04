@@ -213,7 +213,7 @@ global $system_courses, $_custom_css,$db;
 		<?php endforeach; ?> <?php echo $this->page_title; ?>
 	</div>
 	<?php if ($this->guide): ?>
-		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+		<a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	<?php endif; ?>
 </div>
 

@@ -981,7 +981,9 @@ div.box {
 	font-weight: normal;
 	font-size: 0.85em;
 }
-
+.fl-force-right{
+	float:right;
+}
 h5.box { 
     background: #DEECE2;
     border: 1px solid #57945A;
@@ -1514,8 +1516,8 @@ div#menutoggle{
 	  float:left;
 	  border-radius: .5em .5em .5em .5em;
 	-moz-border-radius: .5em .5em .5em .5em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;
 }
 /* Preference Editor tabs */
 /* Preferences tabs */
@@ -1554,8 +1556,7 @@ table.etabbed-table	{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: 0em .2em 0em .2em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .0em .2em #999999;
+
 	}
 	
 .prefs_buttontab:hover, .prefs_tab:hover {
