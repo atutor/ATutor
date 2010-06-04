@@ -247,7 +247,7 @@ global $system_courses, $_custom_css, $db;
 	<div id="contentcolumn">
 		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="menutoggle">
-		    <a accesskey="n"><img src="" title="" alt="" /></a>
+		   <a href="javascript:void(0)" accesskey="n"><img src="" title="" alt="" border="0"/></a>
 		</div>
 
 		<div class="sequence-links">

@@ -30,8 +30,8 @@ body {
     background-color: #ffffff;
     border-radius: 1em 1em 1em 1em;
     -moz-border-radius: 1em 1em 1em 1em;
-    -moz-box-shadow:.2em .2em  #999999;
-    box-shadow: .2em .2em  #999999;
+    -moz-box-shadow:.1em .1em  #999999;
+    box-shadow: .1em .1em  #999999;
     background-image: url('images/atutor_head.jpg');
     background-position: 0% 0%;
 	background-repeat: repeat-x;
@@ -176,8 +176,8 @@ a.dropdown-title {
     border:  #AAA  solid 1px;
     border-radius:.3em;
     -moz-border-radius: .3em .3em .3em .3em;
-    -moz-box-shadow:.2em .2em .3em #999999;
-    box-shadow: .2em .2em .3em #999999;
+    -moz-box-shadow:.1em .1em .2em #999999;
+    box-shadow: .1em .1em .2em #999999;
 
 }
 .button:focus {
@@ -973,7 +973,7 @@ div.paging li a:hover, div.paging li a.current {
 	background-position: 99% 99%;
 	background-repeat: no-repeat;
 	height : 5em;
-	margin-bottom:-.15em;
+	margin-bottom:-.1em;
 }
 
 #header a{
@@ -1038,8 +1038,8 @@ div.tabs a:hover, div.tabs a.active {
 .contentbox{
 	border-radius:.5em;
 	-moz-border-radius: 0em 0em .5em .5em;
-	-moz-box-shadow:.1em .1em .2em #999999;
-    box-shadow: .1em .1em .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+    box-shadow: .1em .1em .1em #999999;
 }
 
 .headingbox{
@@ -1060,8 +1060,8 @@ h4.box {
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding:.2em;
 	border:1px solid #ccc;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .2em .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+    box-shadow: .1em .1em .1em #999999;
 
 }
 
@@ -1076,8 +1076,8 @@ div.box {
 	border-left:1px solid #ccc;
 	border-right:1px solid #ccc;
 	border-bottom:1px solid #ccc;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	 box-shadow: .1em .1em  .1em #999999;
 }
 
 h5.box { 
@@ -1425,8 +1425,11 @@ div.social-left{
 	float:left;
 }
 div.social-wrapper{
-	border-radius:.5em;
-	-moz-border-radius: .5em .5em 0em 0em;
+	padding:5em;
+	border-radius:.5em .5em .5em .5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em .2em #999999;
 }
 /* floating layout */
 #contentwrapper{
@@ -1482,14 +1485,19 @@ div#topnavlistcontainer {
 	background-image: url('images/pencil_bottom_ds.png');
 	background-position: 99% 1%;
 	background-repeat: no-repeat;
-	height:1.7em;
-	margin-top: -.1em;
+	height:1.75em;
+	margin-top: .1em;
 	border-bottom:1px solid #cccccc;
 }
 
 ul#topnavlist {
-	padding-top: 2px;
-	margin-top: 2px;
+	padding: 0;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 3px;
+	white-space: nowrap;
+	margin-top: 0px;
+	margin-bottom:0px;
 }
 
 ul#topnavlist li {
@@ -1501,8 +1509,8 @@ ul#topnavlist li {
 	clear:both;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-	-moz-box-shadow:.2em .0em .4em #999999;
-	box-shadow: .2em .2em .2em #999999;
+	-moz-box-shadow:.1em .0em .1em #999999;
+	box-shadow: .1em .1em .1em #999999;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -1538,8 +1546,8 @@ ul#topnavlist li a.selected {
     /* The selected tab. There's only one of these */
 	color: #555;
 	font-weight: normal;
-	border-radius:.5em;
-	-moz-border-radius: .5em .5em 0em 0em;
+	border-radius:.3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em em 0em;
 	padding: .2em 2em .2em
 }
 
@@ -1646,8 +1654,7 @@ fieldset.group_form{
 	border:1px #6D7B8D solid;
    	min-height: 170px;
 	padding:.5em;
-	-moz-box-shadow:.1em .2em .3em #999999;
-    box-shadow: .3em .1em .2em #999999;
+
 } 
 legend.group_form{
 	border:1px #6D7B8D solid;
@@ -1913,9 +1920,10 @@ div.toolcontainer{
 }
 
 ul#subnavlist {
-	padding-top: 3px;
+	padding-top: 4px;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
+	font-size:.8em;
 
 
 }
@@ -1931,10 +1939,10 @@ ul#subnavlist li {
 	border-right:1px solid #cccccc;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	height:1.1em;	
+	height:1.0em;	
 	-moz-box-shadow:.1em .0em .1em #999999;
 	box-shadow: .2em .0em .2em #999999;
-	padding: .1em .5em .4em .5em ;
+	padding: 0em .5em .6em .5em ;
 }
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, 		ul#subnavlist li:hover{
@@ -2035,8 +2043,8 @@ tr.odd {
 	border: 1px solid #cccccc;
 	border-radius: .5em .5em .5em .5em;
 	-moz-border-radius: .5em .5em .5em .5em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	 box-shadow: .1em .1em  .2em #999999;
 }
 
 ul.current_list{
@@ -2181,8 +2189,8 @@ table.etabbed-table	{
 	  float:left;
 	  border-radius: .5em .5em .5em .5em;
 	-moz-border-radius: .5em .5em .5em .5em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	 box-shadow: .1em .1em  .1em #999999;
 }
 .shortcut_icon{
 	border:0;
@@ -2258,3 +2266,4 @@ border-right:thin solid #cccccc;
 border-radius: .3em .3em 0em 0em;
 -moz-border-radius: .3em .3em 0em 0em;
 }
+
