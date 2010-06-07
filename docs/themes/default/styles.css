@@ -969,7 +969,8 @@ div.paging li a:hover, div.paging li a.current {
 }
 
 #header{
-	background-image: url('images/pencil_top_ds.png');
+	/* background-image: url('images/pencil_top_ds.png'); */
+
 	background-position: 99% 99%;
 	background-repeat: no-repeat;
 	height : 5em;
@@ -1482,7 +1483,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 /* Top navigation tabs / list */
 div#topnavlistcontainer {
-	background-image: url('images/pencil_bottom_ds.png');
+	/*background-image: url('images/pencil_bottom_ds.png'); */
 	background-position: 99% 1%;
 	background-repeat: no-repeat;
 	height:1.75em;
