@@ -18,8 +18,8 @@ body {
     margin:0px;
     margin-top: -10px;
     font-size: .8em;
-    background-color: #eeeeee;
-    background-image:url('images/texture_bg.png');
+    background-color: #EDE7C2;
+   /* background-image:url('images/texture_bg.png'); */
 }
 .page_wrapper{
     border:1px solid #aaaaaa;
@@ -592,8 +592,8 @@ div#top-links a:focus{
 	border:thin solid #cccccc;
 	border-radius: .3em .3em .3em .3em;
 	-mox-border-radius: ..3em .3em .3em .3em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;
 }
 #top-links-jump{
 	float:left;
@@ -1197,8 +1197,8 @@ div#alternatives_shortcuts {
 	margin: -2em 5pt;
 	border-radius: .5em .5em .5em .5em;;
 	-moz-border-radius: .5em .5em .5em .5em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;
 	 border:1px solid #cccccc;
 	 padding-top: .2em;
 	 padding-left: .2em;
@@ -1228,8 +1228,8 @@ div#shortcuts{
 	border-radius: 0em 0em .5em .5em;;
 	-moz-border-radius: 0em 0em .5em .5em;
 	float:right;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;
 	margin-right:2em;
 	padding:.1em;
 }
@@ -1263,8 +1263,8 @@ div#guide_box{
 	border-bottom:thin solid #cccccc;
 	border-radius: 0em 0em .5em .5em;;
 	-moz-border-radius: 0em 0em .5em .5em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .0em .2em #999999;
+	-moz-box-shadow:.1em .1em .2em #999999;
+    box-shadow: .1em .1em .2em #999999;
 	float:right;
 	margin-right:2em;
 	padding-left:.1em;
@@ -1315,8 +1315,8 @@ div#container {
 	border:1px solid #cccccc;
 	border-radius: .5em .5em .5em .5em;
 	-moz-border-radius: .5em .5em .5em .5em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;
 	padding:.2em
 }
 
@@ -1496,7 +1496,6 @@ ul#topnavlist {
 	margin-right: auto;
 	margin-left: auto;
 	margin-bottom: 3px;
-	white-space: nowrap;
 	margin-top: 0px;
 	margin-bottom:0px;
 }
@@ -1511,7 +1510,7 @@ ul#topnavlist li {
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	-moz-box-shadow:.1em .0em .1em #999999;
-	box-shadow: .1em .1em .1em #999999;
+	box-shadow: .1em .0em .1em #999999;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -1843,8 +1842,8 @@ div.home_box {
 	border-radius:.5em;
 	-moz-border-radius:.3em .3em .3em .3em;
 	border-radius: 3em 3em .3em .3em;
-    -moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .2em .2em #999999;
+    -moz-box-shadow:.1em .1em .2em #999999;
+    box-shadow: .1em .1em .2em #999999;
 	padding:.2em;
 }
 
@@ -1942,7 +1941,7 @@ ul#subnavlist li {
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.0em;	
 	-moz-box-shadow:.1em .0em .1em #999999;
-	box-shadow: .2em .0em .2em #999999;
+	box-shadow: .1em .0em .1em #999999;
 	padding: 0em .5em .6em .5em ;
 }
 
@@ -2008,7 +2007,7 @@ tr.odd {
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	-moz-box-shadow:.1em .0em .1em #999999;
-	box-shadow: .2em .0em .2em #999999;
+	box-shadow: .1em .0em .1em #999999;
 	padding: 0em .2em 0em .2em ;
 	height:1.4em;
 }
@@ -2111,8 +2110,8 @@ table.etabbed-table	{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: 0em .2em 0em .2em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .0em .2em #999999;
+	-moz-box-shadow:.1em .1em .2em #999999;
+    box-shadow: .1em .1em .2em #999999;
 	}
 	
 .prefs_buttontab:hover, .prefs_tab:hover {
@@ -2132,8 +2131,8 @@ table.etabbed-table	{
 	text-decoration:none;
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .0em .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+    box-shadow: .1em .1em .1em #999999;
 }
 
 .admin_container{
@@ -2238,33 +2237,33 @@ clear:right;
 	width:95%;
 	margin-left:auto;
 	margin-right:auto;
-		border-radius: .3em .3em .3em .3em;
+	border-radius: .3em .3em .3em .3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .1em .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	box-shadow: .1em .1em .1em #999999;
 }
 
 .tr_results_tools{
-float:right;
-padding-left:.2em;
-padding-right:.2em;
-padding-top:.2em;
-border:thin solid #cccccc;
-		border-radius: .3em .3em .3em .3em;
+	float:right;
+	padding-left:.2em;
+	padding-right:.2em;
+	padding-top:.2em;
+	border:thin solid #cccccc;
+	border-radius: .3em .3em .3em .3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .1em .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	box-shadow: .1em .1em .1em #999999;
 }
 
 div.pageinator_box{
-width:95%;
-margin-left:auto;
-margin-right:auto;
-margin-bottom: -.5em;
-border-top:thin solid #cccccc;
-border-left:thin solid #cccccc;
-border-right:thin solid #cccccc;
-border-radius: .3em .3em 0em 0em;
--moz-border-radius: .3em .3em 0em 0em;
+	width:95%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: -.5em;
+	border-top:thin solid #cccccc;
+	border-left:thin solid #cccccc;
+	border-right:thin solid #cccccc;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
 }
 
