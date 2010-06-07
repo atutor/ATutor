@@ -15,6 +15,7 @@
 define(AT_INCLUDE_PATH, '../../include/');
 include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_JB_INCLUDE.'classes/Job.class.php');
+include(AT_JB_INCLUDE.'classes/Employer.class.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
 
 $job = new Job();

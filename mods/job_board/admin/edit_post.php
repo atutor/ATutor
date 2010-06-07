@@ -12,43 +12,36 @@
 /***********************************************************************/
 // $Id$
 
-define(AT_INCLUDE_PATH, '../../include/');
+define(AT_INCLUDE_PATH, '../../../include/');
 include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_JB_INCLUDE.'classes/Job.class.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
 
+admin_authenticate(AT_ADMIN_PRIV_JOB_BOARD);
+
 /* 
  * Add the submenu on this page so that user can go back to the listing.
  * Reason why this is not included in module.php is because we don't want the 
- * 'view_post' submenu to show on job_board/index.php
+ * 'edit_post' submenu to show on job_board/index.php
  */
-$_pages[AT_JB_BASENAME.'index.php']['children'] = array(AT_JB_BASENAME.'view_post.php');
+$_pages[AT_JB_BASENAME.'index_admin.php']['children'] = array(AT_JB_BASENAME.'admin/edit_post.php');
 
-$jid = intval($_REQUEST['jid']);
+$jid = intval($_GET['jid']);
 $job = new Job();
 $job_post = $job->getJob($jid);
 
-if($_GET['action']=='delete'){
-	$hidden_vars['jid'] = $jid;
-	$job_post = $job->getJob($jid);
-	$msg->addConfirm(array('DELETE', $job_post['title']), $hidden_vars);
-}
-//handle delete 
-if (isset($_POST['submit_no'])) {
-	$msg->addFeedback('CANCELLED');
-	header('Location: employer/home.php');
-	exit;
-} else if (isset($_POST['submit_yes'])) {
-	$job->removeJob($jid);
-	$msg->addFeedback('JB_POST_DELETED');
-	header('Location: employer/home.php');
+//handle edit
+if(isset($_POST['submit'])){
+	$job->updateJob($jid, $_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $_POST['jb_closing_date'], $_POST['jb_approval_state']);
+	$msg->addFeedback('UPDATED_SUCCESS');
+	header('Location: ../index_admin.php');
 	exit;
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');
-$msg->printConfirm();
-$savant->assign('job_obj', $job);
+$savant->assign('job', $job);
+$savant->assign('categories', $job->getCategories());
 $savant->assign('job_post', $job_post);
-$savant->display('jb_view_post.tmpl.php');
+$savant->display('admin/jb_edit_post.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

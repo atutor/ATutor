@@ -23,7 +23,7 @@ class Job{
 	 * Add a job posting to the database.
 	 * @param	string	job title
 	 * @param	string	description
-	 * @param	Array	categories (must be converted to JSON before storing into database)
+	 * @param	Array	categories id
 	 * @param   int     1 if public; 0 otherwise.
 	 * @param   string  Closing date for this job post, mysql TIMESTAMP format
 	 */
@@ -39,8 +39,9 @@ class Job{
 		$description = $addslashes($description);
 		$is_public = (isset($is_public))?1:0;
 		$closing_date = $addslashes($closing_date);
+		$approval_state = ($_config['jb_posting_approval']==1)?AT_JB_POSTING_STATUS_UNCONFIRMED:AT_JB_POSTING_STATUS_CONFIRMED;	
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, is_public, closing_date, created_date, revised_date) VALUES ($_SESSION[jb_employer_id], '$title', '$description', $is_public, '$closing_date', NOW(), NOW())";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, is_public, closing_date, created_date, revised_date, approval_state) VALUES ($_SESSION[jb_employer_id], '$title', '$description', $is_public, '$closing_date', NOW(), NOW(), $approval_state)";
 		$result = mysql_query($sql, $db);
 		$posting_id = mysql_insert_id();
 
@@ -85,10 +86,11 @@ class Job{
 	 * @param	string  employer's email
 	 * @param	string	the company that this employer represents
 	 * @param	string	a brief description of the company, useful for admin approval.
+	 * @param	string	Requested date in the format of mysql TIMESTAMP, (yyyy-mm-dd hh:mm:ss)
 	 * @param	string	company main website.
-	 * @return	null
+	 * @return	the ID of this employer.
 	 */
-	function addEmployerRequest ($username, $password, $employer_name, $email, $company, $description, $website=""){
+	function addEmployerRequest ($username, $password, $employer_name, $email, $company, $description, $requested_date, $website=""){
 		global $addslashes, $db, $msg;
 		
 		$username = $addslashes($username);
@@ -97,15 +99,17 @@ class Job{
 		$email = $addslashes($email);
 		$company = $addslashes($company);
 		$description = $addslashes($description);
+		$requested_date = $addslashes($requested_date);
 		$website = $addslashes($website);
+		$approval_status = AT_JB_STATUS_UNCONFIRMED;
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_employers (username, password, employer_name, email, company, description, website, approval_state) VALUES ('$username', '$password', '$employer_name', '$email', '$company', '$description', '$website', 0)";
-debug($sql);
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_employers (username, password, employer_name, email, company, description, website, requested_date, approval_state) VALUES ('$username', '$password', '$employer_name', '$email', '$company', '$description', '$website', '$requested_date', $approval_status)";
 		$result = mysql_query($sql, $db);
 		if (!$result){
 			//TODO: db error message
 			$msg->addError();
 		}
+		return mysql_insert_id();
 	}
 
 
@@ -130,9 +134,45 @@ debug($sql);
 		}
 	}
 
-	function updateJob($job_id, $description, $categories, $is_public){}
+	/**
+	 * Update the job posting 
+	 * @param	int		Job's id
+	 * @param	string	job title
+	 * @param	string	description
+	 * @param	Array	categories id
+	 * @param   int     1 if public; 0 otherwise.
+	 * @param   string  Closing date for this job post, mysql TIMESTAMP format
+	 * @param	int		Check job_board/include/constants.inc.php
+	 */
+	function updateJob($id, $title, $description, $categories, $is_public, $closing_date, $approval_state){
+		global $addslashes, $db, $msg;
+		
+		$id = intval($id);
+		$title = $addslashes($title);
+		$description = $addslashes($description);
+		$is_public = (isset($is_public))?1:0;
+		$closing_date = $addslashes($closing_date);
+		$approval_state = intval($approval_state);
 
-	function updateEmploer($job_id, $company, $note){}
+		$sql = 'UPDATE '.TABLE_PREFIX."jb_postings SET title='$title', description='$description', is_public=$is_public, closing_date='$closing_date', approval_state=$approval_state WHERE id=$id";
+		mysql_query($sql, $db);
+
+		//update to posting category table
+		if (!empty($categories)){
+			//remove all
+			$sql = 'DELETE FROM '.TABLE_PREFIX."jb_posting_categories WHERE posting_id=$id";
+			mysql_query($sql, $db);
+
+			foreach($categories as $category){
+				$category = intval($category);				
+				//add all the categories back.
+				$sql = 'INSERT INTO '.TABLE_PREFIX."jb_posting_categories (posting_id, category_id) VALUES ($id, $category)";
+				mysql_query($sql, $db);
+			}
+		}
+	}
+
+	function updateEmployer($employer_id, $company, $note){}
 
 	/**
 	 * Remove this job posting entry from the database
@@ -174,12 +214,21 @@ debug($sql);
 
 	/**
 	 * Return all jobs
-	 * @return	Array	job posts that will be shown on the given page. 
+	 * @param	boolean		true if this is an admin.  If set to true. will return all 
+	 *						entries even if it's not approved.  Default is false
+	 * @return	Array		job posts that will be shown on the given page. 
 	 */
-	function getAllJobs(){
+	function getAllJobs($is_admin=false){
 		global $addslashes, $db, $msg;
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings ORDER BY revised_date DESC";
+		//if not admin, filter only the ones that's approved.
+		if(!$is_admin){
+			$filter_sql = 'WHERE approval_state='.AT_JB_POSTING_STATUS_CONFIRMED;
+		} else {
+			$filter_sql = '';
+		}
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings $filter_sql ORDER BY revised_date DESC";
 		$rs = mysql_query($sql, $db);
 		if ($rs){
 			while($row = mysql_fetch_assoc($rs)){
@@ -187,7 +236,6 @@ debug($sql);
 				$result[$row['id']] = $row;
 			}
 		}
-
 		return $result;
 	}
 	
@@ -345,8 +393,5 @@ debug($sql);
 	function approveEmployer($member_id){}
 
 	function disapproveEmployer($member_id){}
-
-
-
 }
 ?>

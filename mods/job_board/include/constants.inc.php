@@ -19,4 +19,14 @@ define('AT_JB_INCLUDE',		AT_JB_BASE.'include/');
 
 define('AT_JB_ROWS_PER_PAGE',		5);	//row per page constant, default is 50 (same as output.inc.php)
 
+
+//Employer Statuses
+define('AT_JB_STATUS_UNCONFIRMED',	0);
+define('AT_JB_STATUS_CONFIRMED',	1);
+define('AT_JB_STATUS_SUSPENDED',	2);
+
+//Posting Statuses
+define('AT_JB_POSTING_STATUS_UNCONFIRMED',	0);
+define('AT_JB_POSTING_STATUS_CONFIRMED',	1);
+
 ?>

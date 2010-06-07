@@ -8,6 +8,7 @@ CREATE TABLE `jb_postings` (
   `closing_date` TIMESTAMP NOT NULL,
   `created_date` TIMESTAMP NOT NULL,
   `revised_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `approval_state` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 )
 ENGINE = MyISAM;
@@ -34,9 +35,10 @@ CREATE TABLE `jb_employers` (
   `email` VARCHAR(255) NOT NULL,
   `company` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
+  `website` VARCHAR(255) NOT NULL,
   `last_login` TIMESTAMP NOT NULL,
   `requested_date` TIMESTAMP NOT NULL,
-  `approval_state` TINYINT(1) UNSIGNED NOT NULL,
+  `approval_state` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 )
 ENGINE = MyISAM;

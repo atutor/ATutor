@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id: home.php 9947 2010-05-27 21:05:03Z hwong $
+// $Id$
 
 define(AT_INCLUDE_PATH, '../../../include/');
 include(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -60,7 +60,24 @@ if(isset($_POST['submit'])){
 		
 	if ($noerror){
 		//no error
-		$job->addEmployerRequest($username, $password, $employer_name, $email, $company, $description, $website);
+		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
+		$e_id = $job->addEmployerRequest($username, $password, $employer_name, $email, $company, $description, $now, $website);
+		
+		//sends out confirmation email.
+		$code = substr(md5($email . $now . $e_id), 0, 10);		
+		$confirmation_link = $_base_href . AT_JB_BASENAME . 'confirm.php?id='.$e_id.SEP.'m='.$code;
+
+		/* send the email confirmation message: */
+		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+		$mail = new ATutorMailer();
+
+		$mail->From     = $_config['contact_email'];
+		$mail->AddAddress($email);
+		$mail->Subject = SITE_NAME . ' - ' . _AT('jb_email_confirmation_subject');
+		$mail->Body    = _AT('jb_email_confirmation_message', SITE_NAME, $confirmation_link);
+echo $confirmation_link;
+		$mail->Send();
+
 		header('Location: index.php');
 		exit;
 	}

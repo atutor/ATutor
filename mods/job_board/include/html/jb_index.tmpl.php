@@ -18,7 +18,11 @@
 			<tr>
 				<td><a href="<?php echo AT_JB_BASENAME.'view_post.php?jid='.$row['id'];?>" title="<?php echo _AT('jb_view_job_post'); ?>"><?php echo $row['id']; ?></a></td>
 				<td><a href="<?php echo AT_JB_BASENAME.'view_post.php?jid='.$row['id'];?>" title="<?php echo $row['title']; ?>"><?php echo $row['title']; ?></a></td>
-				<td><?php echo $row['employer_id']; ?></td>
+				<td><?php 
+						$employer = new Employer($row['employer_id']);
+						echo $employer->getName(); 
+					?>
+				</td>
 				<td>
 				<?php if(is_array($row['categories'])):
 						foreach($row['categories'] as $category): 

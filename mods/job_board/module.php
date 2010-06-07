@@ -53,22 +53,26 @@ $this->_pages[AT_JB_BASENAME.'index.php']['icon']      = 'images/home-directory_
 /*******
  * add the admin pages when needed.
  */
- /*
-if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+ if (admin_authenticate(AT_ADMIN_PRIV_JOB_BOARD, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages[AT_NAV_ADMIN] = array(AT_JB_BASENAME.'index_admin.php');
-	$this->_pages[AT_JB_BASENAME.'index_admin.php']['title_var'] = 'pa_photo_gallery';
+	$this->_pages[AT_JB_BASENAME.'index_admin.php']['title_var'] = 'jb_job_board';
 	$this->_pages[AT_JB_BASENAME.'index_admin.php']['parent']    = AT_NAV_ADMIN;
-	$this->_pages[AT_JB_BASENAME.'index_admin.php']['children']    = array(AT_JB_BASENAME.'admin/preferences.php');
-		$this->_pages[AT_JB_BASENAME.'admin/preferences.php']['title_var'] = 'pa_preferences';
+	$this->_pages[AT_JB_BASENAME.'index_admin.php']['children']    = array(AT_JB_BASENAME.'admin/preferences.php', AT_JB_BASENAME.'admin/add_category.php', AT_JB_BASENAME.'admin/employers.php');
+		$this->_pages[AT_JB_BASENAME.'admin/preferences.php']['title_var'] = 'jb_preferences';
 		$this->_pages[AT_JB_BASENAME.'admin/preferences.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
 
-		$this->_pages[AT_JB_BASENAME.'admin/edit_album.php']['title_var'] = 'pa_edit_album';
-		$this->_pages[AT_JB_BASENAME.'admin/edit_album.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
+		$this->_pages[AT_JB_BASENAME.'admin/add_category.php']['title_var'] = 'jb_add_category';
+		$this->_pages[AT_JB_BASENAME.'admin/add_category.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
 
-		$this->_pages[AT_JB_BASENAME.'admin/edit_photos.php']['title_var'] = 'pa_edit_photos';
-		$this->_pages[AT_JB_BASENAME.'admin/edit_photos.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
+		$this->_pages[AT_JB_BASENAME.'admin/employers.php']['title_var'] = 'jb_employers';
+		$this->_pages[AT_JB_BASENAME.'admin/employers.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
+
+		$this->_pages[AT_JB_BASENAME.'admin/view_post.php']['title_var'] = 'jb_view_post';
+		$this->_pages[AT_JB_BASENAME.'admin/view_post.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
+
+		$this->_pages[AT_JB_BASENAME.'admin/edit_post.php']['title_var'] = 'jb_edit_post';
+		$this->_pages[AT_JB_BASENAME.'admin/edit_post.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
 }
-*/
 
 /*******
  * instructor Manage section:
@@ -84,7 +88,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, TRUE) || admin_authenticate(AT
  * student page.
  */
 $this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = 'job_board';
-//$this->_pages[AT_JB_BASENAME.'index.php']['children'] = array();
+//$this->_pages[AT_JB_BASENAME.'index.php']['children'] = array(AT_JB_BASENAME.'view_post.php');
 $this->_pages[AT_JB_BASENAME.'employer/login.php']['title_var'] = 'jb_employer_login';
 $this->_pages[AT_JB_BASENAME.'employer/login.php']['parent'] = AT_JB_BASENAME.'index.php';
 $this->_pages[AT_JB_BASENAME.'employer/registration.php']['title_var'] = 'jb_employer_registration';
@@ -97,7 +101,6 @@ $this->_pages[AT_JB_BASENAME.'employer/edit_post.php']['title_var'] = 'jb_edit_p
 $this->_pages[AT_JB_BASENAME.'employer/edit_post.php']['parent'] = AT_JB_BASENAME.'employer/home.php';
 $this->_pages[AT_JB_BASENAME.'employer/add_new_post.php']['title_var'] = 'jb_add_new_post';
 $this->_pages[AT_JB_BASENAME.'employer/add_new_post.php']['parent'] = AT_JB_BASENAME.'employer/home.php';
-
 
 $this->_pages[AT_JB_BASENAME.'view_post.php']['title_var'] = 'jb_view_post';
 $this->_pages[AT_JB_BASENAME.'view_post.php']['parent'] = AT_JB_BASENAME.'index.php';

@@ -18,9 +18,7 @@ include(AT_JB_INCLUDE.'classes/Job.class.php');
 include(AT_JB_INCLUDE.'classes/Employer.class.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
 
-//TODO: If not authenticated with user login, quit.
-$employer = new Employer();
-if (!$employer->authenticate()){
+if (!Employer::authenticate()){
 	$msg->addError('ACCESS_DENIED');
 	header('Location: ../index.php');
 	exit;
