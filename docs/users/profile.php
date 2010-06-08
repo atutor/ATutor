@@ -148,4 +148,5 @@ $onload = 'document.form.first_name.focus();';
 
 //$savant->display('registration.tmpl.php');
 $savant->display('users/profile.tmpl.php');
+//global $this->_pages;
 ?>
