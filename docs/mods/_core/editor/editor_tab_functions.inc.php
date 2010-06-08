@@ -450,7 +450,7 @@ function check_for_changes($row, $row_alternatives) {
 	{
 		foreach ($_POST as $alt_id => $alt_value) {
 			if (substr($alt_id, 0 ,4) == 'alt_' && $alt_value != $row_alternatives[$alt_id]){
-				$changes[5] = true;
+				$changes[3] = true;
 				break;
 			}
 		}
@@ -458,10 +458,10 @@ function check_for_changes($row, $row_alternatives) {
 	
 	/* test & survey */	
 	if ($row && isset($_POST['test_message']) && $_POST['test_message'] != $row['test_message']){
-		$changes[6] = true;
+		$changes[4] = true;
 	}
 	if ($row && isset($_POST['allow_test_export']) && $_POST['allow_test_export'] != $row['allow_test_export']){
-		$changes[6] = true;
+		$changes[4] = true;
 	}
 
 	return $changes;
