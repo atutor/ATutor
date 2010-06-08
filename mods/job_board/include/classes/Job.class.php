@@ -67,7 +67,13 @@ class Job{
 	function addCategory($name){
 		global $addslashes, $db, $msg;
 
-		$name = $addslashes($name);
+		$name = $addslashes(trim($name));
+
+		//don't update if it's empty.
+		if ($name==''){
+			$msg->addError('JB_CATEGORY_NAME_CANNOT_BE_EMPTY');
+			return;
+		}
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_categories (name) VALUES ('$name')";
 		$result = mysql_query($sql, $db);
@@ -76,6 +82,12 @@ class Job{
 			//TODO: db error message
 			$msg->addError();
 		}
+
+		//add this category to the category list.
+		$row['id'] = mysql_insert_id();;
+		$row['name'] = $name;
+		$this->categories[] = $row;
+		$msg->addFeedback('JB_CATEGORY_ADDED_SUCCESSFULLY');
 	}
 
 	/** 
@@ -172,6 +184,32 @@ class Job{
 		}
 	}
 
+	/**
+	 * Update category name, used by admin only.
+	 * @param	int		category id
+	 * @param	string	category name
+	 * @return	null
+	 */
+	function updateCategory($id, $name){
+		global $addslashes, $db, $msg;
+
+		$id = intval($id);
+		$name = $addslashes(trim($name));
+
+		//don't update if it's empty.
+		if ($name==''){
+			$msg->addError('JB_CATEGORY_NAME_CANNOT_BE_EMPTY');
+			return;
+		}
+
+		$sql = 'UPDATE '.TABLE_PREFIX."jb_categories SET name='$name' WHERE id=$id";
+		$result = mysql_query($sql, $db);
+
+		if (!$result){
+			$msg->addError();
+		}
+	}
+
 	function updateEmployer($employer_id, $company, $note){}
 
 	/**
@@ -186,7 +224,21 @@ class Job{
 		//Delete job post
 	}
 
-	function removeCategory($cat_id){}
+	/**
+	 * Remove the category 
+	 * @param	int		category id.
+	 */
+	function removeCategory($cat_id){
+		global $db;
+
+		$cat_id = intval($cat_id);
+		if($cat_id < 1){
+			return;
+		}
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_categories WHERE id=$cat_id";
+		mysql_query($sql, $db);
+	}
 
 	function removeEmployer($member_id){}
 
@@ -281,7 +333,11 @@ class Job{
 	 * @return	string	the name of the category.
 	 */
 	function getCategoryNameById($id){
-		return $this->categories[intval($id)]['name'];
+		foreach($this->categories as $category){
+			if ($category['id']==$id){
+				return $category['name'];
+			}			
+		}
 	}
 
 	/**

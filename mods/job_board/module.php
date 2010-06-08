@@ -57,12 +57,12 @@ $this->_pages[AT_JB_BASENAME.'index.php']['icon']      = 'images/home-directory_
 	$this->_pages[AT_NAV_ADMIN] = array(AT_JB_BASENAME.'index_admin.php');
 	$this->_pages[AT_JB_BASENAME.'index_admin.php']['title_var'] = 'jb_job_board';
 	$this->_pages[AT_JB_BASENAME.'index_admin.php']['parent']    = AT_NAV_ADMIN;
-	$this->_pages[AT_JB_BASENAME.'index_admin.php']['children']    = array(AT_JB_BASENAME.'admin/preferences.php', AT_JB_BASENAME.'admin/add_category.php', AT_JB_BASENAME.'admin/employers.php');
+	$this->_pages[AT_JB_BASENAME.'index_admin.php']['children']    = array(AT_JB_BASENAME.'admin/preferences.php', AT_JB_BASENAME.'admin/categories.php', AT_JB_BASENAME.'admin/employers.php');
 		$this->_pages[AT_JB_BASENAME.'admin/preferences.php']['title_var'] = 'jb_preferences';
 		$this->_pages[AT_JB_BASENAME.'admin/preferences.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
 
-		$this->_pages[AT_JB_BASENAME.'admin/add_category.php']['title_var'] = 'jb_add_category';
-		$this->_pages[AT_JB_BASENAME.'admin/add_category.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
+		$this->_pages[AT_JB_BASENAME.'admin/categories.php']['title_var'] = 'jb_categories';
+		$this->_pages[AT_JB_BASENAME.'admin/categories.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
 
 		$this->_pages[AT_JB_BASENAME.'admin/employers.php']['title_var'] = 'jb_employers';
 		$this->_pages[AT_JB_BASENAME.'admin/employers.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
@@ -96,11 +96,15 @@ $this->_pages[AT_JB_BASENAME.'employer/registration.php']['parent'] = AT_JB_BASE
 
 $this->_pages[AT_JB_BASENAME.'employer/home.php']['title_var'] = 'jb_employer_home';
 $this->_pages[AT_JB_BASENAME.'employer/home.php']['parent'] = AT_JB_BASENAME.'index.php';
-$this->_pages[AT_JB_BASENAME.'employer/home.php']['children'] = array(AT_JB_BASENAME.'employer/add_new_post.php');
+$this->_pages[AT_JB_BASENAME.'employer/home.php']['children'] = array(AT_JB_BASENAME.'employer/add_new_post.php', AT_JB_BASENAME.'employer/profile.php');
 $this->_pages[AT_JB_BASENAME.'employer/edit_post.php']['title_var'] = 'jb_edit_post';
 $this->_pages[AT_JB_BASENAME.'employer/edit_post.php']['parent'] = AT_JB_BASENAME.'employer/home.php';
 $this->_pages[AT_JB_BASENAME.'employer/add_new_post.php']['title_var'] = 'jb_add_new_post';
 $this->_pages[AT_JB_BASENAME.'employer/add_new_post.php']['parent'] = AT_JB_BASENAME.'employer/home.php';
+$this->_pages[AT_JB_BASENAME.'employer/profile.php']['title_var'] = 'jb_edit_profile';
+$this->_pages[AT_JB_BASENAME.'employer/profile.php']['parent'] = AT_JB_BASENAME.'employer/home.php';
+
+
 
 $this->_pages[AT_JB_BASENAME.'view_post.php']['title_var'] = 'jb_view_post';
 $this->_pages[AT_JB_BASENAME.'view_post.php']['parent'] = AT_JB_BASENAME.'index.php';

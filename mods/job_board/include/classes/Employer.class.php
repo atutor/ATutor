@@ -36,19 +36,6 @@ class Employer{
 		$this->website	= $row['website'];
 	}
 
-	/**
-	 * Simple authentication.  
-	 * @return	Boolean		True if is an employer with the valid id.  False otherwise.
- 	 * @precondition		User has been authenticated via the login page.
-	 * @access public
-	 */
-	function authenticate(){
-		if(isset($_SESSION['jb_employer_id']) && $_SESSION['jb_employer_id'] > 0){
-			return true;
-		}
-		return false;
-	}
-
 	function getName(){
 		return $this->name;
 	}
@@ -59,6 +46,45 @@ class Employer{
 
 	function getCompany(){
 		return $this->company;
+	}
+
+	function getWebsite(){
+		return $this->website;
+	}
+
+
+	/**
+	 * Update the employer profile.  
+	 *
+	 * @param	string		employer's name
+	 * @param	string		company's name
+	 * @param	string		employer's email
+	 * @param	string		employer's website.
+	 * @return	null
+	 */
+	 function updateProfile($name, $company, $email, $website){
+		global $addslashes, $db;
+		$name = $addslashes($name);
+		$company = $addslashes($company);
+		$email = $addslashes($email);
+		$website = $addslashes($website);
+		
+		$sql = 'UPDATE '.TABLE_PREFIX."jb_employers SET name='$name', company='$company', email='$email', '$website' WHERE id=".$this->id;
+		mysql_query($sql, $db);		
+	 }
+
+	/**
+	 * Simple authentication.  
+	 *
+	 * @return	Boolean		True if is an employer with the valid id.  False otherwise.
+ 	 * @precondition		User has been authenticated via the login page.
+	 * @access public
+	 */
+	function authenticate(){
+		if(isset($_SESSION['jb_employer_id']) && $_SESSION['jb_employer_id'] > 0){
+			return true;
+		}
+		return false;
 	}
 }
 ?>

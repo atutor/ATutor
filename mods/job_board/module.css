@@ -25,3 +25,21 @@ div.jb_advance_search{
 	margin-left: 5em;
 	background: #eeeeee;
 }
+
+/* admin styles */
+div.admin_categories_container{
+	width: 95%;
+	margin: auto;
+}
+div.admin_categories{
+	float: left;
+	width: 100%;
+}
+div.admin_categories div.left{
+	width: 40%;
+	float: left;
+}
+div.admin_categories div.right{
+	float: left;
+}
+
