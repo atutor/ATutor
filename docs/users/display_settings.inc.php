@@ -1,8 +1,8 @@
 <legend><strong><?php echo _AT("text"); ?></strong> </legend>   
-<div id="feedback" style="width:90%;">
+<div id="feedback">
 <?php echo _AT('prefs_set_display'); ?>
 </div>
-<div style="width:25%; float:left;">
+<div id="defaultfontsize-wrapper">
 	<div class="row">
 		<input type="hidden" id="defaultfontface" value="Verdana" />
 		<label for="fontface"><?php echo _AT('font_face'); ?></label><br />
@@ -128,9 +128,9 @@
 			</select>
 	</div>
 </div>
-<div style="width:70%;float:left;height:20em;">
-	<div id="previewArea" style="padding: 0em; border-bottom-width: 0px; margin-left: auto; margin-right: auto; font-weight: normal; width: 70%;float:left;clear:right;"> 
-		<div id="previewText" style="border: 2px solid rgb(0, 0, 0); padding: 2em; width: 80%; color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); font-family: monospace;">     Sample 
+<div id="display-settings-preview">
+	<div id="previewArea">
+		<div id="previewText">Sample 
 			<span id="highlightedPreview" style="background-color: rgb(0, 255, 0); font-family: monospace;">Highlighted</span> Text  
 		</div> 
 	</div>
