@@ -172,14 +172,19 @@ global $system_courses, $_custom_css,$db;
 
 <div style="background-color:#E6E6E6; font-size:0.85em; padding-top: 5px; border-bottom:1px solid black; height:2em;">
 	<!-- the sub navigation -->
-	<div style="float: right; padding-right: 5px; text-transform: lowercase;">
-		<?php if ($_SESSION['valid_user']): ?>					
-			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+<div class="logoutbar">
+		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
+		<?php $path_parts = explode("/", $this->current_top_level_page); 
+		      $last_path_part = $path_parts[sizeof($path_parts) - 1];
+               if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
+		    <a class="pref_wiz_launcher"><img border="0" alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" src="<?php echo $this->base_href; ?>images/wand.png" /></a> |
+		    <?php } ?> 
+			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | 
+			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
-			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
+			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
 		<?php endif; ?>
-	</div>
-
+</div>
 	<?php if ($this->sub_level_pages): ?>
 		<div id="sub-navigation">
 			<?php if (isset($this->back_to_page)): ?>

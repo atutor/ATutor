@@ -1776,3 +1776,145 @@ div.menuedit{
 	margin-top:-1.2em;
 	border:1px solid #cccccc;
 }
+
+
+/* Detailed view styles */
+div.home_box {
+	width: 29em;
+	height: 150px;	
+	padding-top: 15px;
+	float: left;
+}
+
+.outside_box{
+	border:1px solid #cccccc;
+	background: #eeeeee;
+	padding:.2em;
+	margin-left:.4em;
+	width:26em;
+	height:9.8em;
+	border-radius:.5em;
+	-moz-border-radius:.3em .3em .3em .3em;
+	border-radius: 3em 3em .3em .3em;
+    -moz-box-shadow:.2em .2em .2em #999999;
+    box-shadow: .2em .2em .2em #999999;
+	padding:.2em;
+}
+
+.inside_box{
+	border:1px solid #cccccc;
+	background: #ffffff;
+	padding:.3em;
+	width:95%;
+	margin:auto;
+	height:52%;
+	margin-bottom:.2em;
+	font-size:10pt;
+	border-radius:.5em;
+	-moz-border-radius:.5em;
+	padding:.2em;
+}
+.details_or{
+	width:28.8em;
+	height:9.8em;
+	margin:0;
+}
+.details_ol{
+
+	height:9.8em;
+	margin:0px;
+	width:.45em;
+	background-position: top left;
+	background-repeat:no-repeat;
+}
+.details_ir{
+	width:.5em;
+	height:100%;
+	float:right;
+}
+.details_il{
+	height:100%;
+	float:left;
+}
+.home-title{
+	font-size:10pt;
+	font-weight:bold;
+}
+.buttonbox{
+	float:right;
+}
+
+.details_text{
+	margin-left:1em;
+}
+.draggable_selected {
+	background-color: transparent;
+	cursor: move;
+}
+/* Transformable repository search */
+
+.browse-result{
+	border:thin solid #cccccc;
+	padding:.5em;
+	width:95%;
+	margin-left:auto;
+	margin-right:auto;
+	border-radius: .3em .3em .3em .3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	box-shadow: .1em .1em .1em #999999;
+}
+
+.tr_results_tools{
+	float:right;
+	padding-left:.2em;
+	padding-right:.2em;
+	padding-top:.2em;
+	border:thin solid #cccccc;
+	border-radius: .3em .3em .3em .3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	box-shadow: .1em .1em .1em #999999;
+}
+
+div.pageinator_box{
+	width:95%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: -.5em;
+	border-top:thin solid #cccccc;
+	border-left:thin solid #cccccc;
+	border-right:thin solid #cccccc;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+}
+#previewText{
+    font-family: monospace;
+    border: 2px solid rgb(0, 0, 0);
+    padding: 2em;
+    width: 80%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+}
+#previewArea{
+    padding: 0em;
+    border-bottom-width: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: normal;
+    width: 70%;
+    float:left;
+    clear:right;
+}
+#display-settings-preview{
+    width:70%;
+    float:left;
+    height:20em;   
+}
+#feedback{
+    width: 90%;
+}
+#defaultfontsize-wrapper{
+    width:25%;
+    float:left;
+}

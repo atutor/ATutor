@@ -2267,3 +2267,33 @@ div.pageinator_box{
 	-moz-border-radius: .3em .3em 0em 0em;
 }
 
+#previewText{
+    font-family: monospace;
+    border: 2px solid rgb(0, 0, 0);
+    padding: 2em;
+    width: 80%;
+    color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
+}
+#previewArea{
+    padding: 0em;
+    border-bottom-width: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: normal;
+    width: 70%;
+    float:left;
+    clear:right;
+}
+#display-settings-preview{
+    width:70%;
+    float:left;
+    height:20em;   
+}
+#feedback{
+    width: 90%;
+}
+#defaultfontsize-wrapper{
+    width:25%;
+    float:left;
+}
