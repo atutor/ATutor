@@ -88,6 +88,8 @@ global $system_courses, $_custom_css, $db;
 <body onload="<?php echo $this->onload; ?>">
 <div class="page_wrapper">
 <div id="header">
+	
+
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
@@ -98,6 +100,7 @@ global $system_courses, $_custom_css, $db;
 	else:
 		echo '<br />';	
 	endif; ?>
+
 	<div id="top-links"> <!-- top help/search/login links -->
 			  <div id="top-links-jump">
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
@@ -140,6 +143,7 @@ global $system_courses, $_custom_css, $db;
 		</div>
 
 	</div>
+
 	<?php // if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
 		<!--<a href="<?php echo $this->base_path.url_rewrite('index.php'); ?>"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	 -->
 	<?php // } ?>

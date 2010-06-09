@@ -39,6 +39,9 @@
     <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
 //-->
 </script>
-<a href="http://www.atutor.ca"><img src="<?php echo $this->base_path ?>images/atutor_logo2.png" alt="ATutor logo" style="float:right;margin-top:.5em;margin-right:2em;clear:right;" border="0" /></a>
+<div class="logo" style="float:left;clear:right;">
+      <a href="http://www.atutor.ca/"><img src="<?php echo $this->base_path; ?>images/AT_Logo_1_sm.png"  alt="ATutor Logo" style="border:none;" /></a>
+</div>
+
 </body>
 </html>
