@@ -269,9 +269,11 @@ class Job{
 	 * @param	boolean		true if this is an admin.  If set to true. will return all 
 	 *						entries even if it's not approved.  Default is false
 	 * @return	Array		job posts that will be shown on the given page. 
+	 *                      Return empty array if no entries.
 	 */
 	function getAllJobs($is_admin=false){
 		global $addslashes, $db, $msg;
+		$result = array();
 
 		//if not admin, filter only the ones that's approved.
 		if(!$is_admin){
@@ -297,6 +299,7 @@ class Job{
 	 */
 	function getMyJobs(){
 	    global $addslashes, $db, $msg;
+	    $result = array();
 	    
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id']." ORDER BY revised_date DESC";
 	    $rs = mysql_query($sql, $db);
@@ -353,8 +356,10 @@ class Job{
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_posting_categories WHERE posting_id=$pid";
 		$rs = mysql_query($sql, $db);
 
-		while($row = mysql_fetch_assoc($rs)){
-			$result[] = $row['category_id'];
+		if($rs){
+		    while($row = mysql_fetch_assoc($rs)){
+			    $result[] = $row['category_id'];
+		    }
 		}
 		return $result;
 	}
@@ -370,7 +375,7 @@ class Job{
 	 */
 	function search($input){
 		global $addslashes, $db; 
-
+        $result = array();
 		//If input is not an array, quit right away.  
 		if (!is_array($input)){
 			return;

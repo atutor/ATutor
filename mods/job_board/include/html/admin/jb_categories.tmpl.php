@@ -13,6 +13,7 @@
 
 	<div class="admin_categories_container" id="admin_categories_container">
 	<p><?php echo _AT('jb_admin_edit_categories_blub'); ?></p>
+	<?php if(!empty($this->categories)): ?>
 	<?php foreach($this->categories as $category): ?>
 		<div class="admin_categories">
 			<div class="left">
@@ -20,7 +21,7 @@
 			</div>
 			<div class="right"><a href="<?php echo AT_JB_BASENAME;?>admin/categories.php?submit=delete<?php echo SEP; ?>action=delete<?php echo SEP;?>cid=<?php echo $category['id']; ?>" ><?php echo _AT('delete'); ?></a></div>
 		</div>
-	<?php endforeach; ?>
+	<?php endforeach; endif; ?>
 	</div>
 </div>
 

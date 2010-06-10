@@ -60,16 +60,12 @@ $this->_pages[AT_JB_BASENAME.'index.php']['icon']      = 'images/home-directory_
 	$this->_pages[AT_JB_BASENAME.'index_admin.php']['children']    = array(AT_JB_BASENAME.'admin/preferences.php', AT_JB_BASENAME.'admin/categories.php', AT_JB_BASENAME.'admin/employers.php');
 		$this->_pages[AT_JB_BASENAME.'admin/preferences.php']['title_var'] = 'jb_preferences';
 		$this->_pages[AT_JB_BASENAME.'admin/preferences.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
-
 		$this->_pages[AT_JB_BASENAME.'admin/categories.php']['title_var'] = 'jb_categories';
 		$this->_pages[AT_JB_BASENAME.'admin/categories.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
-
 		$this->_pages[AT_JB_BASENAME.'admin/employers.php']['title_var'] = 'jb_employers';
 		$this->_pages[AT_JB_BASENAME.'admin/employers.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
-
 		$this->_pages[AT_JB_BASENAME.'admin/view_post.php']['title_var'] = 'jb_view_post';
 		$this->_pages[AT_JB_BASENAME.'admin/view_post.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
-
 		$this->_pages[AT_JB_BASENAME.'admin/edit_post.php']['title_var'] = 'jb_edit_post';
 		$this->_pages[AT_JB_BASENAME.'admin/edit_post.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
 }

@@ -1,5 +1,23 @@
+<script language="JavaScript" src="sha-1factory.js" type="text/javascript"></script>
+<script type="text/javascript">
+/* 
+ * Encrypt login password with sha1
+ */
+function encrypt_password() {
+	document.jb_profile_form.jb_employer_password_error.value = "";
+
+	err = verify_password(document.jb_profile_form.jb_employer_password.value, document.jb_profile_form.jb_employer_password2.value);
+	if (err.length > 0)	{
+		document.jb_profile_form.jb_employer_password_error.value = err;
+	} else {
+		document.jb_profile_form.jb_employer_password_hidden.value = hex_sha1(document.jb_profile_form.jb_employer_password.value);
+		document.jb_profile_form.jb_employer_password.value = "";
+		document.jb_profile_form.jb_employer_password2.value = "";
+	}
+}
+</script>
 <div class="input-form">
-	<form action="" method="post">
+	<form action="" method="post" name="jb_profile_form">
 		<div class="row">
 			<label for="jb_employer_name"><?php echo _AT('name'); ?></label>
 			<input type="text" name="jb_employer_name" id="jb_employer_name" value="<?php echo htmlentities_utf8($this->name); ?>"/>
@@ -7,12 +25,12 @@
 
 		<div class="row">
 			<label for="jb_employer_password"><?php echo _AT('password'); ?></label>
-			<input type="text" name="jb_employer_password" id="jb_employer_password"/>
+			<input type="password" name="jb_employer_password" id="jb_employer_password"/>
 		</div>
 
 		<div class="row">
 			<label for="jb_employer_password2"><?php echo _AT('password_again'); ?></label>
-			<input type="text" name="jb_employer_password2" id="jb_employer_password2"/>
+			<input type="password" name="jb_employer_password2" id="jb_employer_password2"/>
 		</div>
 
 		<div class="row">
@@ -36,7 +54,9 @@
 		</div>
 
 		<div class="row">
-			<input class="button" type="submit" name="submit" value="<?php echo _AT('submit'); ?>" />
+    		<input type="hidden" name="jb_employer_password_hidden" value="" />
+    		<input class="hidden" name="jb_employer_password_error" />
+			<input class="button" type="submit" name="submit" value="<?php echo _AT('submit'); ?>" onclick="return encrypt_password();"/>
 		</div>
 	</form>
 </div>

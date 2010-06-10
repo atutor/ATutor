@@ -30,8 +30,7 @@ $employer = new Employer($_SESSION['jb_employer_id']);
 //save profile changes
 if ($_POST['submit']){
 	$name = $_POST['jb_employer_name'];
-	$pass = $_POST['jb_employer_password'];
-	$pass2 = $_POST['jb_employer_password2'];
+	$pass = $_POST['jb_employer_password_hidden'];
 	$company = $_POST['jb_employer_company'];
 	$email = $_POST['jb_employer_email'];
 	$email2 = $_POST['jb_employer_email2'];
@@ -45,19 +44,25 @@ if ($_POST['submit']){
 			exit;
 		}
 	}
-
-	//check if password has been changed.
-	if ($pass!=''){
-		if ($pass!=$pass2){
-			$msg->addError('PASSWORD_MISMATCH');
-			header('Location: profile.php');
-			exit;
+	
+	//check js errors
+	if ($_POST['jb_employer_password_error'] != ''){
+		$errors = explode(',', $_POST['jb_employer_password_error']);
+		if(sizeof($errors) > 0){
+			foreach($errors as $err){
+				$msg->addError($err);
+			}
 		}
-	} else {
-		//todo: update password
+		header('Location: profile.php');
+		exit;
 	}
 
-	if ($job->updateProfile($name, $company, $email, $website)){
+	//update password
+	if ($pass!='' && strlen($pass)==40){
+	    $employer->updatePassword($pass);
+	} 
+
+	if ($employer->updateProfile($name, $company, $email, $website)){
 		$msg->addFeedback('PROFILE_UPDATED');
 	} else {
 		$msg->addFeedback('DB_NOT_UPDATED');

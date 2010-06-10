@@ -6,10 +6,11 @@
 		</div>		
 		<div class="row">
 			<label><?php echo _AT('jb_category'); ?></label><br/>
+			<?php if(!empty($this->categories)): ?>
 			<?php foreach($this->categories as $category): ?>
 			<label for="jb_category_<?php echo $category['id'];?>"><?php echo htmlentities_utf8($category['name']); ?></label>
 			<input type="checkbox" id="jb_category_<?php echo $category['id'];?>" name="jb_categories[]" value="<?php echo $category['id']; ?>" /> | 
-			<?php endforeach; ?>
+			<?php endforeach; endif; ?>
 		</div>
 		<div class="row">
 			<label for="jb_is_public"><?php echo _AT('jb_is_public'); ?></label>

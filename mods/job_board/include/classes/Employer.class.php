@@ -14,10 +14,14 @@
 
 class Employer{
 	var $id;			//employer id
+	var $username;      //employer's username
 	var $name;			//employer name
 	var $company;		//company name
+	var $description;   //description of this employer
 	var $email;			//employer's email
 	var $website;		//company's website
+	var $last_login;    //last login date
+	var $approval_state;//approval state
 
 	//constructor
 	function Employer($id){
@@ -26,15 +30,25 @@ class Employer{
 		$id = intval($id);
 		$this->id = $id;
 		
-		$sql = 'SELECT employer_name, email, company, website FROM '.TABLE_PREFIX."jb_employers WHERE id=$id";
+		$sql = 'SELECT username, employer_name, email, company, description, website, last_login, approval_state FROM '.TABLE_PREFIX."jb_employers WHERE id=$id";
 		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		
-		$this->name		= $row['employer_name'];
-		$this->company	= $row['company'];
-		$this->email	= $row['email'];
-		$this->website	= $row['website'];
+		if ($result){
+	        $row = mysql_fetch_assoc($result);
+
+	        $this->name		= $row['employer_name'];
+	        $this->username = $row['username'];
+	        $this->company	= $row['company'];
+	        $this->description	= $row['description'];
+	        $this->email	= $row['email'];
+	        $this->website	= $row['website'];
+	        $this->last_login = $row['last_login'];
+	        $this->approval_state = $row['approval_state'];
+		}
 	}
+	
+	function getUsername(){
+	    return $this->username;
+    }
 
 	function getName(){
 		return $this->name;
@@ -47,10 +61,22 @@ class Employer{
 	function getCompany(){
 		return $this->company;
 	}
+	
+	function getDescription(){
+	    return $this->description;
+    }
 
 	function getWebsite(){
 		return $this->website;
 	}
+	
+	function getLastLogin(){
+	    return $this->last_login;
+    }
+    
+    function getApprovalState(){
+        return $this->approval_state;
+    }
 
 
 	/**
@@ -69,8 +95,25 @@ class Employer{
 		$email = $addslashes($email);
 		$website = $addslashes($website);
 		
-		$sql = 'UPDATE '.TABLE_PREFIX."jb_employers SET name='$name', company='$company', email='$email', '$website' WHERE id=".$this->id;
+		$sql = 'UPDATE '.TABLE_PREFIX."jb_employers SET employer_name='$name', company='$company', email='$email', website='$website' WHERE id=".$this->id;
 		mysql_query($sql, $db);		
+	 }
+	 
+	 /**
+	  * Update password 
+	  * @pass   string      SHA1 encrpted password, length=40
+	  */
+	 function updatePassword($pass){
+	    global $addslashes, $db;
+	    $pass = $addslashes($pass);
+	  
+	    //if password is empty, or not encrypted, quit
+	    if ($pass=='' || strlen($pass)!=40){
+	        return;
+        }
+        
+	    $sql = 'UPDATE '.TABLE_PREFIX."jb_employers SET password='$pass' WHERE id=".$this->id;
+	    mysql_query($sql, $db);
 	 }
 
 	/**
