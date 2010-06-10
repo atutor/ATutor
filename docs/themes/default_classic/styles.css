@@ -1603,3 +1603,34 @@ div.social-wrapper{
 	padding:.5em;
 	margin:auto;
 }
+
+
+.network-activity{
+    float:left;
+    width:55%;
+}
+.my-contacts{
+    float:right;
+    width:38%;
+    min-width:38%;
+}
+.my-network-groups{
+    float:right;
+    clear:right;
+    width:38%;
+    max-width:38%;
+}
+.people-you-may-know{
+    padding-top:1em;
+    float:right;
+    clear:right;
+    width:38%;
+    min-width:38%;
+ }
+.contentbox-a{
+    width: 100%;
+}
+.contentbox-b{
+    padding-bottom:0.2em;
+}
+ 
