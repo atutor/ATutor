@@ -116,7 +116,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         <small>(<?php echo _AT('customized_head_note'); ?>)</small></label>
         <input type="checkbox" name="use_customized_head" id="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
         <label for="use_customized_head"><?php echo _AT('use_customized_head'); ?></label>
-		<textarea id="headtext" cols="" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
+		<textarea id="headtext" name="head" cols="" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
 	</div>
 		
     <!-- Paste from file -->
