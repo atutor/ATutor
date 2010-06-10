@@ -18,6 +18,12 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+if ($cid == 0) {
+	$msg->printErrors('SAVE_BEFORE_PROCEED');
+	require_once(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 /**
  * This function returns the preview link of the given file
  * @param  $file     the file location in "file manager"

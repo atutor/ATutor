@@ -47,7 +47,6 @@ $skip_ims_validation = false;
 $added_dt = array();	//the mapping of discussion tools that are added
 $avail_dt = array();	//list of discussion tools that have not been handled
 
-
 /*
  * return the error messages represented by the given array 
  * @author	Mike A.
@@ -663,7 +662,6 @@ $cid = intval($_POST['cid']);
 
 if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 	if ($content = @file_get_contents($_POST['url'])) {
-
 		// save file to /content/
 		$filename = substr(time(), -6). '.zip';
 		$full_filename = AT_CONTENT_DIR . $filename;
@@ -1359,7 +1357,7 @@ foreach($items as $idetails){
 }
 clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
-if (isset($_POST['url'])) {
+if (file_exists($full_filename)) {
 	@unlink($full_filename);
 }
 

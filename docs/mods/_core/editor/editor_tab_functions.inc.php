@@ -163,8 +163,9 @@ function save_changes($redir, $current_tab) {
 			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}
-	}
-
+	} 
+	else return;
+	
 	/* insert glossary terms */
 	if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
 		global $glossary, $glossary_ids, $msg;

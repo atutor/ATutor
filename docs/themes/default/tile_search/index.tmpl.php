@@ -80,8 +80,8 @@ if (isset($this->result_list))
 	<dl class="browse-result">
 <?php if (isset($this->instructor_role)) { ?>
 		<dt class="tr_results_tools">
-          <a href="<?php echo AT_TILE_EXPORT_URL.$result['courseID']; ?>">
-            <img src="<?php echo AT_BASE_HREF. 'images/download.png'?>" alt="<?php echo _AT('download_common_cartridge'); ?>" title="<?php echo _AT("download_common_cartridge").' '.$result['title']; ?>; ?>" border="0">
+          <a href="<?php echo AT_TILE_EXPORT_CP_URL.$result['courseID']; ?>">
+            <img src="<?php echo AT_BASE_HREF. 'images/download.png'?>" alt="<?php echo _AT('download_content_package'); ?>" title="<?php echo _AT("download_content_package").' '.$result['title']; ?>" border="0">
           </a>&nbsp;
           <a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>">
             <img src="<?php echo AT_BASE_HREF. 'images/archive.gif'?>" alt="<?php echo _AT('import'); ?>" title="<?php echo _AT("import").' '.$result['title']; ?>" border="0">

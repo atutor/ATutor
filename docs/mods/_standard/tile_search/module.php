@@ -48,8 +48,11 @@ define('AT_TILE_SEARCH_URL', $_config['transformable_uri'].'search.php');
 // The URL to view the transformable course
 define('AT_TILE_VIEW_COURSE_URL', $_config['transformable_uri'].'home/course/index.php?_course_id=');
 
+// The URL to export content package from transformable
+define('AT_TILE_EXPORT_CP_URL', $_config['transformable_uri'].'home/ims/ims_export.php?course_id=');
+
 // The URL to export common cartridge from transformable
-define('AT_TILE_EXPORT_URL', $_config['transformable_uri'].'home/imscc/ims_export.php?course_id=');
+define('AT_TILE_EXPORT_CC_URL', $_config['transformable_uri'].'home/imscc/ims_export.php?to_a4a=1&course_id=');
 
 // The URL to import common cartridge into transformable
 define('AT_TILE_IMPORT_URL', $_config['transformable_uri'].'home/ims/ims_import.php');
