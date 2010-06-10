@@ -21,6 +21,7 @@ require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroup.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
 $_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
+
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$info = array('INVALID_USER', $_SESSION['course_id']);
@@ -82,8 +83,8 @@ if (isset($_GET['approval'])){
 
 include (AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
-<div  class="social-wrapper">
-	<div style="float:left; width:55%;">
+<div class="social-wrapper">
+	<div class="network-activity"> 
 		<?php
 			//network updates
 			$actvity_obj = new Activity();
@@ -101,7 +102,7 @@ include (AT_INCLUDE_PATH.'header.inc.php');
 		?>
 	</div>
 
-	<div style="float:right;width:38%;min-width:38%;">
+	<div class="my-contacts">
 		<?php			
 			//if friends array is not empty.
 			if (!empty($friends)){
@@ -121,26 +122,26 @@ include (AT_INCLUDE_PATH.'header.inc.php');
 	if(!empty($people_you_may_know)):
 	?>
 	<!-- people you may know -->
-	<div style="padding-top:1em;float:right;clear:right;width:38%;min-width:38%;">
+	<div class="people-you-may-know">
 		
 		<div class="headingbox">
 			<h3><?php echo _AT('people_you_may_know'); ?></h3>
 		</div>
 		<div class="contentbox">
 		<?php foreach ($people_you_may_know as $index=>$id): ?>
-			<div style="width:100%;">
-				<div style="padding-bottom:0.2em;">
+			<div id="contentbox-a">
+				<div id="contentbox-b">
 					<?php echo printSocialProfileImg($id); ?>					
 					<?php echo printSocialName($id); ?>
-					<a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0" style=""/></a>
+					<a href="<?php echo AT_SOCIAL_BASENAME; ?>connections.php?id=<?php echo $id; ?>"><img src="<?php echo $_base_href.AT_SOCIAL_BASENAME; ?>images/plus_icon.gif" alt="<?php echo _AT('add_to_friends'); ?>" title="<?php echo _AT('add_to_friends'); ?>" border="0" /></a>
 				</div>
 			</div>
 		<?php endforeach; ?>
 		</div>
 	</div>
 	<?php endif; ?>
-	<!-- groups -->
-	<div style="float:right;clear:right;width:38%;max-width:38%;"><br />
+	<!-- groups --><br /><br /><br />
+	<div class="my-network-groups"><br />
 	<?php			
 		//if my groups array is not empty.
 		$social_group = new SocialGroups();
