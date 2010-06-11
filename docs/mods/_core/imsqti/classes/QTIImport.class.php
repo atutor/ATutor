@@ -141,12 +141,14 @@ class QTIImport {
 					if (is_array($xml->choices[$loopcounter])){		
 						foreach ($xml->choices[$loopcounter] as $choiceNum=>$choiceOpt){
 							if (sizeof($test_obj['groups'] )>0) {
-								foreach ($xml->answers[$loopcounter] as $ansNum=>$ansOpt){
-									if ($choiceNum == $ansOpt){
-										//Not exactly efficient, worst case N^2
-										$test_obj['answers'][$ansNum] = $i;
-									}			
-								}		
+								if (!empty($xml->answers[$loopcounter])){
+									foreach ($xml->answers[$loopcounter] as $ansNum=>$ansOpt){
+										if ($choiceNum == $ansOpt){
+											//Not exactly efficient, worst case N^2
+											$test_obj['answers'][$ansNum] = $i;
+										}			
+									}
+								}
 							} else {
 								//save answer(s)
 								if (is_array($xml->answers[$loopcounter]) && in_array($choiceNum, $xml->answers[$loopcounter])){

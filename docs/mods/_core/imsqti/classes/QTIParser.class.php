@@ -347,6 +347,9 @@ class QTIParser {
 			case 'FIB-string':
 				return 3;
 				break;
+			case 'Drag-and-drop':
+				return 5;
+				break;
 			case 'Multiple-response':
 				return 7;
 				break;

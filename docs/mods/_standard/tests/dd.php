@@ -115,7 +115,7 @@ li.answer {
 						<?php endfor; ?>
 					</select>
 				
-				<?php echo $row['choice_'.$i]; ?></li>
+				<?php echo AT_print($row['choice_'.$i], 'tests_questions.question'); ?></li>
 			<?php endif; ?>
 		<?php endfor; ?>
 	</ul>
@@ -123,7 +123,7 @@ li.answer {
 	<ol style="position: absolute; list-style-type: upper-alpha; top: 10px; left: 310px" id="a">
 		<?php for ($i=0; $i < 10; $i++): ?>
 			<?php if ($row['option_'. $i] != ''): ?>
-				<li class="answer" id="a<?php echo $i; ?>" value="<?php echo $i; ?>"><?php echo $_letters[$i]; ?>. <?php echo $row['option_'.$i]; ?></li>
+				<li class="answer" id="a<?php echo $i; ?>" value="<?php echo $i; ?>"><?php echo $_letters[$i]; ?>. <?php echo AT_print($row['option_'.$i], 'tests_questions.question'); ?></li>
 			<?php endif; ?>
 		<?php endfor; ?>
 	</ol>

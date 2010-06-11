@@ -485,7 +485,7 @@
 			<xs:element name="response_xy" type="response_xyType" minOccurs="0" maxOccurs="0" />
 			<xs:element name="response_str" type="response_strType" />
 			<xs:element name="response_num" type="response_numType" minOccurs="0" maxOccurs="0" />
-			<xs:element name="response_grp" type="response_grpType" minOccurs="0" maxOccurs="0" />
+			<xs:element name="response_grp" type="response_grpType" />
 			<xs:element ref="response_extension" minOccurs="0" maxOccurs="0" />
 		</xs:choice>
 		<xs:attribute name="class" type="xs:string" default="Block" />
