@@ -222,7 +222,7 @@ if ($reply_to) {
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('message'); ?></label><br />
-		<textarea name="message" id="body" rows="15" cols="55"><?php
+		<textarea name="message" id="body" rows="15" cols="45"><?php
 			if ($body != '') {
 				if ($strlen($body) > 400){
 					$body = $substr($body,0,400);
