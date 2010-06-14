@@ -879,6 +879,10 @@ if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 
 // Check if all the files exists in the manifest, iff it's a IMS CC package.
 if ($content_type == 'IMS Common Cartridge') {
+	//If user chooses to ignore validation.
+	if(isset($_POST['ignore_validation']) && $_POST['ignore_validation']==1) {
+		$skip_ims_validation = true;
+	}
 	checkResources($import_path);
 }
 
