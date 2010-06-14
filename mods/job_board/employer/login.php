@@ -24,19 +24,25 @@ $all_job_posts = $job->getAllJobs();
 if (isset($_POST['submit']) && $_POST['submit']!=''){
 	$job_login		= $addslashes($_POST['form_login']);
 
-	$sql = 'SELECT id, password FROM '.TABLE_PREFIX."jb_employers WHERE username='$job_login'";
+	$sql = 'SELECT id, password, approval_state FROM '.TABLE_PREFIX."jb_employers WHERE username='$job_login'";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
-	//if enc(a x s) = enc(b x s), then valid
-	if (sha1($addslashes($row['password']).$_SESSION['token']) == $_POST['form_password_hidden']){
-		$_SESSION['jb_employer_id'] = $row['id'];
-		//if succeeded
-		$msg->addFeedback('LOGIN_SUCCESS');
-		header('Location: home.php');
-		exit;
-	} else {
+	//check for approval state
+	if ($row['approval_state']!=AT_JB_STATUS_CONFIRMED){
 		$msg->addError('INVALID_LOGIN');
-	}    
+	} else {
+		//check login + password
+		//if enc(a x s) = enc(b x s), then valid
+		if (sha1($addslashes($row['password']).$_SESSION['token']) == $_POST['form_password_hidden']){
+			$_SESSION['jb_employer_id'] = $row['id'];
+			//if succeeded
+			$msg->addFeedback('LOGIN_SUCCESS');
+			header('Location: home.php');
+			exit;
+		} else {
+			$msg->addError('INVALID_LOGIN');
+		}
+	}
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');

@@ -78,6 +78,21 @@ class Employer{
         return $this->approval_state;
     }
 
+	/**
+	 * Set the approval state value
+	 * @param	int		Approval state, check constants.inc.php
+	 * @return	null
+	 */
+	function setApprovalState($state){
+		global $addslashes, $db;
+		
+		//change this if the approval_state has more than 3 values in the constant file
+		$state = (intval($state) > 2)?AT_JB_STATUS_UNCONFIRMED:intval($state);
+
+		$sql = 'UPDATE '.TABLE_PREFIX."jb_employers SET approval_state='$state' WHERE id=".$this->id;
+		mysql_query($sql, $db);
+	}
+
 
 	/**
 	 * Update the employer profile.  

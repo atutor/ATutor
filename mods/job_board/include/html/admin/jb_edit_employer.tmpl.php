@@ -38,6 +38,16 @@ function encrypt_password() {
 		</div>
 
 		<div class="row">
+			<label><?php echo _AT('jb_approval_state'); ?></label><br />
+			<label for="jb_employer_approval_state_unconfirmed"><?php echo _AT('jb_employer_approval_state_unconfirmed'); ?></label>
+			<input type="radio" name="jb_employer_approval_state" id="jb_employer_approval_state_unconfirmed" value="<?php echo AT_JB_STATUS_UNCONFIRMED;?>" <?php echo ($this->approval_state==AT_JB_STATUS_UNCONFIRMED)?'checked="checked"':''; ?> />
+			<label for="jb_employer_approval_state_confirmed"><?php echo _AT('jb_employer_approval_state_confirmed'); ?></label>
+			<input type="radio" name="jb_employer_approval_state" id="jb_employer_approval_state_confirmed" value="<?php echo AT_JB_STATUS_CONFIRMED;?>" <?php echo ($this->approval_state==AT_JB_STATUS_CONFIRMED)?'checked="checked"':''; ?> />
+			<label for="jb_employer_approval_state_suspended"><?php echo _AT('jb_employer_approval_state_suspended'); ?></label>
+			<input type="radio" name="jb_employer_approval_state" id="jb_employer_approval_state_suspended" value="<?php echo AT_JB_STATUS_SUSPENDED;?>" <?php echo ($this->approval_state==AT_JB_STATUS_SUSPENDED)?'checked="checked"':''; ?> />
+		</div>
+
+		<div class="row">
 			<label for="jb_employer_company"><?php echo _AT('company'); ?></label>
 			<input type="text" name="jb_employer_company" id="jb_employer_company" value="<?php echo htmlentities_utf8($this->company); ?>"/>
 		</div>

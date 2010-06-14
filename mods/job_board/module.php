@@ -68,6 +68,8 @@ $this->_pages[AT_JB_BASENAME.'index.php']['icon']      = 'images/home-directory_
 		$this->_pages[AT_JB_BASENAME.'admin/view_post.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
 		$this->_pages[AT_JB_BASENAME.'admin/edit_post.php']['title_var'] = 'jb_edit_post';
 		$this->_pages[AT_JB_BASENAME.'admin/edit_post.php']['parent'] = AT_JB_BASENAME.'index_admin.php';
+		$this->_pages[AT_JB_BASENAME.'admin/edit_employer.php']['title_var'] = 'jb_edit_employer';
+		$this->_pages[AT_JB_BASENAME.'admin/edit_employer.php']['parent'] = AT_JB_BASENAME.'admin/employers.php';
 }
 
 /*******

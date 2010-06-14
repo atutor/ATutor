@@ -21,10 +21,20 @@
         <td><?php echo $employer->getWebsite(); ?></td>
         <td><?php echo $employer->getLastLogin(); ?></td>
         <?php 
-            $approval_state = 
+			switch($employer->getApprovalState()){
+				case AT_JB_STATUS_UNCONFIRMED:
+					$approval_state = _AT('jb_employer_status_unconfirmed');
+					break;
+				case AT_JB_STATUS_CONFIRMED:
+					$approval_state = _AT('jb_employer_status_confirmed');
+					break;
+				case AT_JB_STATUS_SUSPENDED:
+					$approval_state = _AT('jb_employer_status_suspended');
+					break;
+			}
         ?>
-        <td><?php echo $employer->getApprovalState(); ?></td>
-        <td><a href="edit_employer.php"><?php echo _AT('edit'); ?></a></td>
+        <td><?php echo $approval_state; ?></td>
+        <td><a href="<?php echo AT_JB_BASENAME;?>admin/edit_employer.php"><?php echo _AT('edit'); ?></a></td>
     </tr>
     <?php endforeach; endif; ?>
 </table>
