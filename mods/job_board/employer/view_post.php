@@ -12,7 +12,7 @@
 /***********************************************************************/
 // $Id$
 
-define(AT_INCLUDE_PATH, '../../include/');
+define(AT_INCLUDE_PATH, '../../../include/');
 include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_JB_INCLUDE.'classes/Job.class.php');
 include(AT_JB_INCLUDE.'classes/Employer.class.php');
@@ -29,7 +29,7 @@ if (!Employer::authenticate()){
  * Reason why this is not included in module.php is because we don't want the 
  * 'view_post' submenu to show on job_board/index.php
  */
-$_pages[AT_JB_BASENAME.'index.php']['children'] = array(AT_JB_BASENAME.'view_post.php');
+$_pages[AT_JB_BASENAME.'employer/home.php']['children'] = array(AT_JB_BASENAME.'employer/view_post.php');
 
 $jid = intval($_REQUEST['jid']);
 $job = new Job();
@@ -43,12 +43,12 @@ if($_GET['action']=='delete'){
 //handle delete 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: employer/home.php');
+	header('Location: home.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$job->removeJob($jid);
 	$msg->addFeedback('JB_POST_DELETED');
-	header('Location: employer/home.php');
+	header('Location: home.php');
 	exit;
 }
 

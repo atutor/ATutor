@@ -26,6 +26,13 @@ div.jb_advance_search{
 	background: #eeeeee;
 }
 
+/* add to cart template style */
+div.add_to_cart{
+	padding: 1em;
+	background-color: #eeeeee;
+	float:right;
+}
+
 /* admin styles */
 div.admin_categories_container{
 	width: 95%;
@@ -42,4 +49,3 @@ div.admin_categories div.left{
 div.admin_categories div.right{
 	float: left;
 }
-

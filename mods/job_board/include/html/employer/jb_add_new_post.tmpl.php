@@ -17,9 +17,20 @@
 			<input type="checkbox" id="jb_is_public" name="jb_is_public" ></textarea>
 		</div>
 		<div class="row">
-			<!-- todo: use the date picker -->
 			<label for="jb_closing_date"><?php echo _AT('jb_closing_date'); ?></label>
-			<input type="text" id="jb_closing_date" name="jb_closing_date" ></textarea>
+			<?php
+			//load mysql timestamp template into the template.
+			$today_day   = date('d');
+			$today_mon   = date('m');
+			$today_year  = date('Y');
+
+			$today_hour  = date('H');
+			$today_min   = date('i');
+
+			//load the release_date template.
+			$name = '_jb_closing_date';
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+			?>
 		</div>
 		<div class="row">
 			<label for="jb_description"><?php echo _AT('jb_description'); ?></label>

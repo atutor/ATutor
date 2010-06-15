@@ -126,7 +126,7 @@ class Job{
 
 
 	/**
-	 * Map a ATutor member_id to a job post.  
+	 * Bookmark this job.
 	 * @param	int		ATutor's member_id
 	 * @param	int		Job id
 	 * @return	null
@@ -138,7 +138,7 @@ class Job{
 		$job_id = intval($job_id);
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_jobcart (member_id, job_id, created_date) VALUES ($member_id, $job_id, NOW())";
-		$result = mysql_sql($sql, $db);
+		$result = mysql_query($sql, $db);
 
 		if (!$result){
 			//TODO: db error message 
@@ -217,9 +217,15 @@ class Job{
 	 * @param	int		job posting id
 	 */
 	function removeJob($job_id){
+		global $db;
+		$job_id = intval($job_id);
+
 		//Delete all associated posting_categories
+//		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_posting_categories WHERE posting_id=$job_id";
+//		mysql_query($sql, $db);
 
 		//Delete job cart posting entries
+
 
 		//Delete job post
 	}
@@ -236,13 +242,30 @@ class Job{
 			return;
 		}
 
+		//Remove all categories entries with this category id
+		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_posting_categories WHERE category_id=$cat_id";
+		mysql_query($sql, $db);
+
 		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_categories WHERE id=$cat_id";
 		mysql_query($sql, $db);
 	}
 
 	function removeEmployer($member_id){}
 
-	function removeFromJobCart($member_id, $job_id){}
+	/**
+	 * Remove the job bookmark 
+	 * @param	int		member id
+	 * @param	int		job posting id
+	 * @return	null
+	 */
+	function removeFromJobCart($member_id, $job_id){
+		global $db;
+		$member_id = intval($member_id);
+		$job_id = intval($job_id);
+
+		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_jobcart WHERE member_id=$member_id AND job_id=$job_id";
+		mysql_query($sql, $db);
+	}
 
 
 	/** 
@@ -312,6 +335,25 @@ class Job{
         return $result;
     }
 
+	/**
+	 * Returns a list of jobs that are bookmarked.
+	 * @return	Array	job posts that are bookmarked by the ATutor user
+	 */
+	 function getBookmarkJobs(){
+		 global $db;
+		 $member_id = $_SESSION['member_id'];
+		 $result = array();
+
+		 $sql = 'SELECT * FROM '.TABLE_PREFIX."jb_jobcart WHERE member_id=$member_id";
+		 $rs = mysql_query($sql, $db);
+		 if($rs){
+			 while($row=mysql_fetch_assoc($rs)){
+				$result[] = $row['job_id'];
+			 }
+		 }
+		 return $result;
+	 }
+
 	//returns the list of categories.
 	function getCategories(){
 		global $addslashes, $db, $msg;
@@ -339,8 +381,10 @@ class Job{
 		foreach($this->categories as $category){
 			if ($category['id']==$id){
 				return $category['name'];
-			}			
+			}
 		}
+		//if it can't find any category, then return 'no category'
+		return _AT('no_category');
 	}
 
 	/**
@@ -371,6 +415,7 @@ class Job{
 	 *						[categories] =>Array(integer)
 	 *						[email]		 =>[string] (taken out)
 	 *						[description]=>[string]
+	 *						[bookmark]	 =>[string] (on/off)
 	 * @return	Array	matched entries
 	 */
 	function search($input){
@@ -387,6 +432,7 @@ class Job{
 		$email = $addslashes($input['email']);
 		$description = $addslashes($input['description']);
 		$categories = $input['categories'];
+		$bookmark = $input['bookmark'];
 
 		//create sub sql for general search
 		if ($general!=''){
@@ -436,7 +482,14 @@ class Job{
 			$categories = '('. implode(',', $categories) . ')';
 			$categories_sql = 'RIGHT JOIN (SELECT DISTINCT posting_id FROM '.TABLE_PREFIX."jb_posting_categories WHERE category_id IN $categories) AS pc ON p.id=pc.posting_id ";
 		}
-		$sql_wc = $general_sql . $title_sql . $email_sql . $description_sql; //where clause
+
+		if($bookmark!=''){
+			$bookmark_jobs = $this->getBookmarkJobs();
+			$bookmarks = '('. implode(',', $bookmark_jobs) . ')';
+			$bookmark_sql = "`id` IN $bookmarks OR ";
+		}
+
+		$sql_wc = $general_sql . $title_sql . $email_sql . $description_sql . $bookmark_sql; //where clause
 		if ($sql_wc!=''){
 			$sql_wc = substr($sql_wc, 0, -3);
 			$sql_wc = ' WHERE '.$sql_wc;

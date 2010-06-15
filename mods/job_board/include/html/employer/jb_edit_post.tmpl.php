@@ -18,9 +18,24 @@
 			<input type="checkbox" id="jb_is_public" name="jb_is_public" <?php echo ($this->job_post['is_public']==1)?'checked="checked"':''; ?>/>
 		</div>
 		<div class="row">
-			<!-- todo: use the date picker -->
 			<label for="jb_closing_date"><?php echo _AT('jb_closing_date'); ?></label>
-			<input type="text" id="jb_closing_date" name="jb_closing_date" value="<?php echo htmlentities_utf8($this->job_post['closing_date']); ?>" ></textarea>
+			<?php
+			//load mysql timestamp template into the template.
+			if (intval($this->job_post['closing_date'])) {
+				$today_day   = substr($this->job_post['closing_date'], 8, 2);
+				$today_mon   = substr($this->job_post['closing_date'], 5, 2);
+				$today_year  = substr($this->job_post['closing_date'], 0, 4);
+
+				$today_hour  = substr($this->job_post['closing_date'], 11, 2);
+				$today_min   = substr($this->job_post['closing_date'], 14, 2);
+			} else {
+				$today_year  = date('Y');
+			}
+
+			//load the release_date template.
+			$name = '_jb_closing_date';
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+			?>
 		</div>
 		<div class="row">
 			<label for="jb_description"><?php echo _AT('jb_description'); ?></label>

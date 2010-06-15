@@ -37,7 +37,22 @@ $job_post = $job->getJob($jid);
 
 //handle edit
 if(isset($_POST['submit'])){
-	$job->updateJob($jid, $_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $_POST['jb_closing_date'], $_POST['jb_approval_state']);
+	//concat the closing date values
+	$year = intval($_POST['year_jb_closing_date']);
+	$month = intval($_POST['month_jb_closing_date']);
+	$month = ($month < 10)?'0'.$month:$month;
+	$day = intval($_POST['day_jb_closing_date']);
+	$day = ($day < 10)?'0'.$day:$day;
+	$hour = intval($_POST['hour_jb_closing_date']);
+	$hour = ($hour < 10)?'0'.$hour:$hour;
+	$min = intval($_POST['min_jb_closing_date']);
+	$min = ($min < 10)?'0'.$min:$min;
+	$jb_closing_date = $year.'-'.$month.'-'.$day.' '.$hour.':'.$min.':00';
+
+	//approval state.
+	$approval_state = ($_config['jb_posting_approval']==1)?AT_JB_POSTING_STATUS_UNCONFIRMED:AT_JB_POSTING_STATUS_CONFIRMED;	
+
+	$job->updateJob($jid, $_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date, 0);
 	$msg->addFeedback('UPDATED_SUCCESS');
 	header('Location: home.php');
 	exit;

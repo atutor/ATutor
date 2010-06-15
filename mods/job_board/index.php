@@ -22,6 +22,7 @@ $job = new Job();
 $page = intval($_GET['p']);
 $page = ($page==0)?1:$page;
 $all_job_posts = $job->getAllJobs();
+$bookmark_posts = $job->getBookmarkJobs();
 
 //handle search
 if (isset($_GET['jb_submit'])){
@@ -30,6 +31,7 @@ if (isset($_GET['jb_submit'])){
 //	$search_input['email'] = $_GET['jb_search_email'];
 	$search_input['description'] = trim($_GET['jb_search_description']);
 	$search_input['categories'] = $_GET['jb_search_categories'];
+	$search_input['bookmark'] = $_GET['jb_search_bookmark'];
 	$all_job_posts = $job->search($search_input);
 }
 
@@ -46,7 +48,7 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 		<div class="jb_search">					
 				<label for="jb_search_general"><?php echo _AT('jb_search'); ?></label>
 				<input type="text" id="jb_search_general" name="jb_search_general" value="" />
-				<input type="submit" name="jb_submit" value="<?php echo _AT('search'); ?>" />
+				<input class="button" type="submit" name="jb_submit" value="<?php echo _AT('search'); ?>" />
 			<a onclick="toggleAdvanceSearch()"><?php echo _AT('jb_search_filter'); ?></a>
 			<div class="jb_advance_search" style="display: none;">
 			<?php 
@@ -63,7 +65,7 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 			<a href="<?php echo AT_JB_BASENAME;?>employer/login.php"><?php echo _AT('jb_login');?></a>
 			<a href="<?php echo AT_JB_BASENAME;?>employer/registration.php"><?php echo _AT('jb_not_a_member');?></a>
 			<?php endif; ?>
-		</div>		
+		</div>
 	</div>
 </form>
 <div style="clear:both;"></div>
@@ -71,6 +73,7 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 <?php
 print_paginator($page, sizeof($all_job_posts), $_SERVER['QUERY_STRING'], AT_JB_ROWS_PER_PAGE);
 $savant->assign('job_posts', $current_job_posts);
+$savant->assign('bookmark_posts', $bookmark_posts);
 $savant->assign('job_obj', $job);
 $savant->display('jb_index.tmpl.php');
 print_paginator($page, sizeof($all_job_posts), $_SERVER['QUERY_STRING'], AT_JB_ROWS_PER_PAGE);

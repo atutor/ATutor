@@ -1,6 +1,10 @@
 <div class="jb_view_container">
 	<h4><?php echo $this->job_post['title'];?></h4>
 	
+	<?php 
+		include(AT_JB_INCLUDE.'jb_add_to_cart.inc.php');
+	?>
+
 	<div>
 		<label><?php echo _AT('jb_categories'); ?></label>
 		<?php if(is_array($this->job_post['categories'])):

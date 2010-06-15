@@ -4,9 +4,9 @@
 		<th><?php echo _AT('title'); ?></th>
 		<th><?php echo _AT('jb_employer'); ?></th>
 		<th><?php echo _AT('jb_categories'); ?></th>
-		<th><?php echo _AT('description'); ?></th>
-		<th><?php echo _AT('jb_closing_date'); ?></th>
+		<th><?php echo _AT('description'); ?></th>		
 		<th><?php echo _AT('created_date'); ?></th>
+		<th><?php echo _AT('jb_closing_date'); ?></th>
 		<th><?php echo _AT('approval_state'); ?></th>
 		<th></th>
 	</thead>
@@ -33,8 +33,8 @@
 				<?php endif; ?>
 			</td>
 			<td><?php echo $row['description']; ?></td>
-			<td><?php echo $row['closing_date']; ?></td>
 			<td><?php echo $row['created_date']; ?></td>
+			<td><?php echo $row['closing_date']; ?></td>			
 			<td><?php echo ($row['approval_state']==AT_JB_POSTING_STATUS_CONFIRMED)?_AT('jb_confirmed'):_AT('jb_unconfirmed'); ?></td>
 			<td><a href="<?php echo AT_JB_BASENAME . 'admin/edit_post.php?jid='.$row['id']; ?>" title="<?php echo _AT('jb_click_to_edit'); ?>"><?php echo _AT('edit');?></a> | <a href="<?php echo AT_JB_BASENAME . 'admin/view_post.php?action=delete'.SEP.'jid='.$row['id']; ?>" title="<?php echo _AT('jb_click_to_delete'); ?>"><?php echo _AT('delete'); ?></a></td>
 		</tr>

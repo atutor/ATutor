@@ -28,6 +28,13 @@ $jid = intval($_REQUEST['jid']);
 $job = new Job();
 $job_post = $job->getJob($jid);
 
+//handle add to cart event
+if ($_GET['action']=='add_to_cart'){
+	$job->addToJobCart($_SESSION['member_id'], $jid);
+} elseif ($_GET['action']=='remove_from_cart'){
+	$job->removeFromJobCart($_SESSION['member_id'], $jid);
+}
+
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('job_obj', $job);
 $savant->assign('job_post', $job_post);
