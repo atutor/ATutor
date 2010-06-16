@@ -13,8 +13,8 @@
 // $Id$
 
 define('PCLZIP_TEMPORARY_DIR', AT_CONTENT_DIR.'export'.DIRECTORY_SEPARATOR);  //constant for the temp folder.
-include(AT_INCLUDE_PATH.'/classes/pclzip.lib.php');	 //loads the pclzip library.
-include_once(AT_INCLUDE_PATH.'..//mods/_core/file_manager/filemanager.inc.php');	//copy/delete folder
+include(AT_INCLUDE_PATH.'classes/pclzip.lib.php');	 //loads the pclzip library.
+include_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');	//copy/delete folder
 
 /**
 * Class for creating and accessing an archive zip file.  Originally written by Joel Kronenberg,
