@@ -25,11 +25,13 @@ if (!Employer::authenticate()){
 	exit;
 }
 
+//init
 $job = new Job();
 $page = intval($_GET['p']);
 $page = ($page==0)?1:$page;
-$all_job_posts = $job->getMyJobs();
+$all_job_posts = $job->getMyJobs($_GET['col'], $_GET['order']);
 
+//handle pages
 if ($page > 0){
 	$offset = ($page - 1) * AT_JB_ROWS_PER_PAGE;
 } else {
@@ -39,11 +41,20 @@ if (sizeof($all_job_posts) > 0){
 	$current_job_posts = array_slice($all_job_posts, $offset, AT_JB_ROWS_PER_PAGE);
 }
 
+//handle order
+if ($_GET['order']==''){
+	$order = 'DESC';
+} else {
+	//flip the ordre
+	$order = ($_GET['order']=='ASC')?'DESC':'ASC';
+	$page_string = 'col='.$_GET['col'].SEP.'order='.$_GET['order'];
+}
+
 include(AT_INCLUDE_PATH.'header.inc.php');
-print_paginator($page, sizeof($all_job_posts), '', AT_JB_ROWS_PER_PAGE);
+print_paginator($page, sizeof($all_job_posts), $page_string, AT_JB_ROWS_PER_PAGE);
 $savant->assign('job_obj', $job);
 $savant->assign('job_posts', $current_job_posts);
 $savant->display('employer/jb_home.tmpl.php');
-print_paginator($page, sizeof($all_job_posts), '', AT_JB_ROWS_PER_PAGE);
+print_paginator($page, sizeof($all_job_posts), $page_string, AT_JB_ROWS_PER_PAGE);
 include(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

@@ -18,11 +18,21 @@ include(AT_JB_INCLUDE.'classes/Job.class.php');
 include(AT_JB_INCLUDE.'classes/Employer.class.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
 
+//initialize
 $job = new Job();
 $page = intval($_GET['p']);
 $page = ($page==0)?1:$page;
-$all_job_posts = $job->getAllJobs();
+$all_job_posts = $job->getAllJobs($_GET['col'], $_GET['order']);
 $bookmark_posts = $job->getBookmarkJobs();
+
+//handle order
+if ($_GET['order']==''){
+	$order = 'DESC';
+} else {
+	//flip the ordre
+	$order = ($_GET['order']=='ASC')?'DESC':'ASC';
+	$page_string = 'col='.$_GET['col'].SEP.'order='.$_GET['order'];
+}
 
 //handle search
 if (isset($_GET['jb_submit'])){
@@ -32,9 +42,10 @@ if (isset($_GET['jb_submit'])){
 	$search_input['description'] = trim($_GET['jb_search_description']);
 	$search_input['categories'] = $_GET['jb_search_categories'];
 	$search_input['bookmark'] = $_GET['jb_search_bookmark'];
-	$all_job_posts = $job->search($search_input);
+	$all_job_posts = $job->search($search_input, $_GET['col'], $_GET['oder']);
 }
 
+//handle page
 if ($page > 0){
 	$offset = ($page - 1) * AT_JB_ROWS_PER_PAGE;
 } else {
@@ -71,12 +82,12 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 <div style="clear:both;"></div>
 <div>
 <?php
-print_paginator($page, sizeof($all_job_posts), $_SERVER['QUERY_STRING'], AT_JB_ROWS_PER_PAGE);
+print_paginator($page, sizeof($all_job_posts), $page_string, AT_JB_ROWS_PER_PAGE);
 $savant->assign('job_posts', $current_job_posts);
 $savant->assign('bookmark_posts', $bookmark_posts);
 $savant->assign('job_obj', $job);
 $savant->display('jb_index.tmpl.php');
-print_paginator($page, sizeof($all_job_posts), $_SERVER['QUERY_STRING'], AT_JB_ROWS_PER_PAGE);
+print_paginator($page, sizeof($all_job_posts), $page_string, AT_JB_ROWS_PER_PAGE);
 ?>
 </div>
 

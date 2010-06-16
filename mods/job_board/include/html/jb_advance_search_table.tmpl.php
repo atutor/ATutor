@@ -16,7 +16,9 @@
 					if(!empty($_GET['jb_search_categories'])){
 						if(in_array($category['id'], $_GET['jb_search_categories'])){
 							$jb_search_categories_checked =  'checked="checked"';
-						} 
+						} else {
+							$jb_search_categories_checked = '';
+						}
 					}
 				?>
 				<input type="checkbox" name="jb_search_categories[]" value="<?php echo $category['id']; ?>" id="<?php echo 'jb_search_category_'.$category['id']; ?>" <?php echo $jb_search_categories_checked; ?>/>

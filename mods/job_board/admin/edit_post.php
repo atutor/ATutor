@@ -15,6 +15,7 @@
 define(AT_INCLUDE_PATH, '../../../include/');
 include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_JB_INCLUDE.'classes/Job.class.php');
+require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
 
 admin_authenticate(AT_ADMIN_PRIV_JOB_BOARD);
@@ -30,12 +31,48 @@ $jid = intval($_GET['jid']);
 $job = new Job();
 $job_post = $job->getJob($jid);
 
+//visual editor
+if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
+	$onload = 'document.form.title.focus();';
+}
+
 //handle edit
 if(isset($_POST['submit'])){
-	$job->updateJob($jid, $_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $_POST['jb_closing_date'], $_POST['jb_approval_state']);
+	//concat the closing date values
+	$year = intval($_POST['year_jb_closing_date']);
+	$month = intval($_POST['month_jb_closing_date']);
+	$month = ($month < 10)?'0'.$month:$month;
+	$day = intval($_POST['day_jb_closing_date']);
+	$day = ($day < 10)?'0'.$day:$day;
+	$hour = intval($_POST['hour_jb_closing_date']);
+	$hour = ($hour < 10)?'0'.$hour:$hour;
+	$min = intval($_POST['min_jb_closing_date']);
+	$min = ($min < 10)?'0'.$min:$min;
+	$jb_closing_date = $year.'-'.$month.'-'.$day.' '.$hour.':'.$min.':00';
+
+	$job->updateJob($jid, $_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date, $_POST['jb_approval_state']);
 	$msg->addFeedback('UPDATED_SUCCESS');
 	header('Location: ../index_admin.php');
 	exit;
+}
+
+//load visual editor base on personal preferences
+if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
+	if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) {
+		$_POST['formatting'] = 1;
+		$_REQUEST['settext'] = 0;
+		$_REQUEST['setvisual'] = 0;
+
+	} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) {
+		$_POST['formatting'] = 1;
+		$_POST['settext'] = 0;
+		$_POST['setvisual'] = 1;
+
+	} else { // else if == 0
+		$_POST['formatting'] = 0;
+		$_REQUEST['settext'] = 0;
+		$_REQUEST['setvisual'] = 0;
+	}
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');

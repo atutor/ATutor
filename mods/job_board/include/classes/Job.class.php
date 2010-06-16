@@ -14,9 +14,15 @@
 
 class Job{
 	var $categories; //list of available categories
+	var $cols;		//sortable columns
 
 	function Job(){
 		$this->categories = $this->getCategories();
+
+		$cols['title'] = 'title';
+		$cols['created_date'] = 'created_date';
+		$cols['closing_date'] = 'closing_date';
+		$this->cols = $cols;
 	}
 
 	/**
@@ -289,12 +295,14 @@ class Job{
 
 	/**
 	 * Return all jobs
+	 * @param	string		sortable columns: title, created_date, closing_date
+	 * @param	string		asc for ascending, else descending
 	 * @param	boolean		true if this is an admin.  If set to true. will return all 
 	 *						entries even if it's not approved.  Default is false
 	 * @return	Array		job posts that will be shown on the given page. 
 	 *                      Return empty array if no entries.
 	 */
-	function getAllJobs($is_admin=false){
+	function getAllJobs($col, $order, $is_admin=false){
 		global $addslashes, $db, $msg;
 		$result = array();
 
@@ -305,7 +313,11 @@ class Job{
 			$filter_sql = '';
 		}
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings $filter_sql ORDER BY revised_date DESC";
+		//order
+		$col = isset($this->cols[$_GET['order']])?$this->cols[$_GET['order']]:$this->cols['created_date'];
+		$order = ($order=='ASC')?'ASC':'DESC';
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings $filter_sql ORDER BY $col $order";
 		$rs = mysql_query($sql, $db);
 		if ($rs){
 			while($row = mysql_fetch_assoc($rs)){
@@ -318,13 +330,19 @@ class Job{
 	
 	/**
 	 * Returns a list of jobs that's created by the currented logged in employer
+	 * @param	string		sortable columns: title, created_date, closing_date
+	 * @param	string		asc for ascending, else descending
 	 * @return	Array	job posts that will be shown on the given page. 
 	 */
-	function getMyJobs(){
+	function getMyJobs($col, $order){
 	    global $addslashes, $db, $msg;
 	    $result = array();
+
+		//order
+		$col = isset($this->cols[$_GET['order']])?$this->cols[$_GET['order']]:$this->cols['created_date'];
+		$order = ($order=='ASC')?'ASC':'DESC';
 	    
-	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id']." ORDER BY revised_date DESC";
+	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id']." ORDER BY $col $order";
 	    $rs = mysql_query($sql, $db);
 	    
 	    while($row = mysql_fetch_assoc($rs)){
@@ -416,9 +434,11 @@ class Job{
 	 *						[email]		 =>[string] (taken out)
 	 *						[description]=>[string]
 	 *						[bookmark]	 =>[string] (on/off)
+	 * @param	string		sortable columns: title, created_date, closing_date
+	 * @param	string		asc for ascending, else descending
 	 * @return	Array	matched entries
 	 */
-	function search($input){
+	function search($input, $col, $order){
 		global $addslashes, $db; 
         $result = array();
 		//If input is not an array, quit right away.  
@@ -494,8 +514,13 @@ class Job{
 			$sql_wc = substr($sql_wc, 0, -3);
 			$sql_wc = ' WHERE '.$sql_wc;
 		}
+		
+		//order
+		$col = isset($this->cols[$_GET['order']])?$this->cols[$_GET['order']]:$this->cols['created_date'];
+		$order = ($order=='ASC')?'ASC':'DESC';
+
 		//compose the search query
-		$sql = 'SELECT p.* FROM '.TABLE_PREFIX."jb_postings AS p $categories_sql $sql_wc ORDER BY revised_date DESC";
+		$sql = 'SELECT p.* FROM '.TABLE_PREFIX."jb_postings AS p $categories_sql $sql_wc ORDER BY $col $order";
 		$rs = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($rs)){
 			$row['categories'] = $this->getPostingCategories($row['id']);

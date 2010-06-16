@@ -1,13 +1,14 @@
+<?php global $order; ?>
 <div>
-	<table>
+	<table class="data static" summary="" rules="rows">
 		<thead>			
+
 			<th><?php echo _AT('id'); ?></th>
-			<th><?php echo _AT('jb_title'); ?></th>
+			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=title".SEP."order=$order"; ?>"><?php echo _AT('jb_title'); ?></a></th>
 			<th><?php echo _AT('jb_employer'); ?></th>
 			<th><?php echo _AT('jb_categories'); ?></th>
-			<th><?php echo _AT('description'); ?></th>
-			<th><?php echo _AT('created_date'); ?></th>
-			<th><?php echo _AT('jb_closing_date'); ?></th>			
+			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=created_date".SEP."order=$order"; ?>"><?php echo _AT('created_date'); ?></a></th>
+			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=closing_date".SEP."order=$order"; ?>"><?php echo _AT('jb_closing_date'); ?></a></th>
 		</thead>
 
 		<tbody>
@@ -37,9 +38,8 @@
 				<span><?php echo $this->job_obj->getCategoryNameById($row['categories']);?></span>
 				<?php endif; ?>
 				</td>
-				<td><?php echo $row['description']; ?></td>				
-				<td><?php echo $row['created_date']; ?></td>
-				<td><?php echo $row['closing_date']; ?></td>
+				<td><?php echo AT_DATE(_AT("announcement_date_format"), $row['created_date']); ?></td>
+				<td><?php echo AT_DATE(_AT("announcement_date_format"), $row['closing_date']); ?></td>
 			</tr>
 			<?php endforeach; endif; ?>
 		</tbody>

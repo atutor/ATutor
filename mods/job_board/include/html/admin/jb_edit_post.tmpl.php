@@ -1,6 +1,10 @@
-<?php debug($this->job_post);?>
+<?php 
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	load_editor();
+}
+?>
 <div class="input-form">
-	<form action="" method="post">
+	<form action="" method="post" name="form">
 		<div class="row">
 			<label for="jb_title"><?php echo _AT('jb_title'); ?></label>
 			<input type="text" id="jb_title" name="jb_title" value="<?php echo htmlentities_utf8($this->job_post['title']); ?>" />
@@ -25,13 +29,47 @@
 			<input type="radio" id="jb_approval_state_<?php echo AT_JB_POSTING_STATUS_CONFIRMED; ?>" name="jb_approval_state" value="<?php echo AT_JB_POSTING_STATUS_CONFIRMED; ?>" <?php echo ($this->job_post['approval_state']==AT_JB_POSTING_STATUS_CONFIRMED)?'checked="checked"':''; ?> />
 		</div>
 		<div class="row">
-			<!-- todo: use the date picker -->
 			<label for="jb_closing_date"><?php echo _AT('jb_closing_date'); ?></label>
-			<input type="text" id="jb_closing_date" name="jb_closing_date" value="<?php echo htmlentities_utf8($this->job_post['closing_date']); ?>" ></textarea>
+			<?php
+			//load mysql timestamp template into the template.
+			if (intval($this->job_post['closing_date'])) {
+				$today_day   = substr($this->job_post['closing_date'], 8, 2);
+				$today_mon   = substr($this->job_post['closing_date'], 5, 2);
+				$today_year  = substr($this->job_post['closing_date'], 0, 4);
+
+				$today_hour  = substr($this->job_post['closing_date'], 11, 2);
+				$today_min   = substr($this->job_post['closing_date'], 14, 2);
+			} else {
+				$today_year  = date('Y');
+			}
+
+			//load the release_date template.
+			$name = '_jb_closing_date';
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+			?>
 		</div>
 		<div class="row">
-			<label for="jb_description"><?php echo _AT('jb_description'); ?></label>
-			<textarea id="jb_description" name="jb_description" ><?php echo htmlentities_utf8($this->job_post['description'], false); ?></textarea>
+			<?php echo _AT('formatting'); ?><br />
+			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+
+			<label for="text"><?php echo _AT('plain_text'); ?></label>
+			<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+
+			<label for="html"><?php echo _AT('html'); ?></label>
+			<?php   //Button for enabling/disabling visual editor
+				if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+					echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+					echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button"/>';
+				} else {
+					echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'"  ';
+					if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
+					echo ' class="button" />';
+				}
+			?>
+		</div>
+		<div class="row">
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="jb_description"><?php echo _AT('jb_description'); ?></label><br />
+			<textarea name="jb_description" cols="55" rows="15" id="jb_description"><?php echo $_POST['jb_description']; ?><?php echo $this->job_post['description']; ?></textarea>
 		</div>
 		<div class="row">
 			<input class="button" type="submit" name="submit" value="<?php echo _AT('submit'); ?>"/>

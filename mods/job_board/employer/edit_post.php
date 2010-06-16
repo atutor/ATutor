@@ -16,6 +16,7 @@ define(AT_INCLUDE_PATH, '../../../include/');
 include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_JB_INCLUDE.'classes/Job.class.php');
 include(AT_JB_INCLUDE.'classes/Employer.class.php');
+require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
 
 if (!Employer::authenticate()){
@@ -34,6 +35,11 @@ $_pages[AT_JB_BASENAME.'index_admin.php']['children'] = array(AT_JB_BASENAME.'ad
 $jid = intval($_GET['jid']);
 $job = new Job();
 $job_post = $job->getJob($jid);
+
+//visual editor
+if ((!$_POST['setvisual'] && $_POST['settext']) || !$_GET['setvisual']){
+	$onload = 'document.form.title.focus();';
+}
 
 //handle edit
 if(isset($_POST['submit'])){
@@ -56,6 +62,25 @@ if(isset($_POST['submit'])){
 	$msg->addFeedback('UPDATED_SUCCESS');
 	header('Location: home.php');
 	exit;
+}
+
+//load visual editor base on personal preferences
+if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
+	if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) {
+		$_POST['formatting'] = 1;
+		$_REQUEST['settext'] = 0;
+		$_REQUEST['setvisual'] = 0;
+
+	} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) {
+		$_POST['formatting'] = 1;
+		$_POST['settext'] = 0;
+		$_POST['setvisual'] = 1;
+
+	} else { // else if == 0
+		$_POST['formatting'] = 0;
+		$_REQUEST['settext'] = 0;
+		$_REQUEST['setvisual'] = 0;
+	}
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');

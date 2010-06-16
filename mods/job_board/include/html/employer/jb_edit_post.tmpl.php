@@ -1,3 +1,9 @@
+<?php
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	load_editor();
+}
+?>
+
 <div class="input-form">
 	<form action="" method="post">
 		<div class="row">
@@ -37,10 +43,31 @@
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 			?>
 		</div>
+
 		<div class="row">
-			<label for="jb_description"><?php echo _AT('jb_description'); ?></label>
-			<textarea id="jb_description" name="jb_description" ><?php echo htmlentities_utf8($this->job_post['description'], false); ?></textarea>
+			<?php echo _AT('formatting'); ?><br />
+			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+
+			<label for="text"><?php echo _AT('plain_text'); ?></label>
+			<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+
+			<label for="html"><?php echo _AT('html'); ?></label>
+			<?php   //Button for enabling/disabling visual editor
+				if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+					echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+					echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button"/>';
+				} else {
+					echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'"  ';
+					if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
+					echo ' class="button" />';
+				}
+			?>
 		</div>
+		<div class="row">
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="jb_description"><?php echo _AT('jb_description'); ?></label><br />
+			<textarea name="jb_description" cols="55" rows="15" id="jb_description"><?php echo $_POST['jb_description']; ?><?php echo $this->job_post['description']; ?></textarea>
+		</div>
+
 		<div class="row">
 			<input class="button" type="submit" name="submit" value="<?php echo _AT('submit'); ?>"/>
 		</div>

@@ -17,9 +17,6 @@ include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_JB_INCLUDE.'classes/Job.class.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
 
-$job = new Job();
-$all_job_posts = $job->getAllJobs();
-
 //Check the form username and pwd
 if (isset($_POST['submit']) && $_POST['submit']!=''){
 	$job_login		= $addslashes($_POST['form_login']);
