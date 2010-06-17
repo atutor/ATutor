@@ -87,20 +87,22 @@ $courses_result = mysql_query($sql, $db);
 
 // add "enroll me" link if the user is not the course owner and is not enrolled
 while ($row = mysql_fetch_assoc($courses_result)) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=".$row['course_id'];
-	$result = mysql_query($sql, $db);
-	
-	if ($row['access'] == 'private') {
-		$enroll_link = '<a href="'.$_base_path.'users/private_enroll.php?course='.$row['course_id'].'">'. _AT('enroll_me').'</a>';
-	} else {
-		$enroll_link = '<a href="'.$_base_path.'enroll.php?course='.$row['course_id'].'">'. _AT('enroll_me').'</a>';
-	}
-	
-	if (mysql_num_rows($result) == 0 && $_SESSION['member_id'] <> $row['member_id']) {
-		$row['enroll_link'] = $enroll_link;
-	} else if ($row['access'] == 'private') {
-		$enrollment_row = mysql_fetch_assoc($courses_result);
-		if ($enrollment_row['approved'] == 'n') $row['enroll_link'] = $enroll_link;
+	if ($_SESSION['member_id'] > 0) {
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=".$row['course_id'];
+		$result = mysql_query($sql, $db);
+		
+		if ($row['access'] == 'private') {
+			$enroll_link = '<a href="'.$_base_path.'users/private_enroll.php?course='.$row['course_id'].'">'. _AT('enroll_me').'</a>';
+		} else {
+			$enroll_link = '<a href="'.$_base_path.'enroll.php?course='.$row['course_id'].'">'. _AT('enroll_me').'</a>';
+		}
+		
+		if (mysql_num_rows($result) == 0 && $_SESSION['member_id'] <> $row['member_id']) {
+			$row['enroll_link'] = $enroll_link;
+		} else if ($row['access'] == 'private') {
+			$enrollment_row = mysql_fetch_assoc($courses_result);
+			if ($enrollment_row['approved'] == 'n') $row['enroll_link'] = $enroll_link;
+		}
 	}
 	$courses_rows[] = $row;
 }
