@@ -1839,9 +1839,8 @@ div.home_box {
 	margin-left:.4em;
 	width:26em;
 	height:9.8em;
-	border-radius:.5em;
 	-moz-border-radius:.3em .3em .3em .3em;
-	border-radius: 3em 3em .3em .3em;
+	border-radius: .3em .3em .3em .3em;
     -moz-box-shadow:.1em .1em .2em #999999;
     box-shadow: .1em .1em .2em #999999;
 	padding:.2em;
@@ -2440,6 +2439,6 @@ div.social-wrapper{
 float:left;
 clear:right;
 margin-left:2em;
-
+}
 
 }
