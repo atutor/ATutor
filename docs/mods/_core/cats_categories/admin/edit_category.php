@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/themes.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/themes/lib/themes.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_CATEGORIES);
 
 require(AT_INCLUDE_PATH.'../mods/_core/cats_categories/lib/admin_categories.inc.php');

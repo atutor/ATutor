@@ -16,7 +16,7 @@ if (!isset($_REQUEST['course_id']) || ($_REQUEST['course_id'] == 0)) {
     $_user_location = 'users';
 }
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/themes.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_core/themes/lib/themes.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
 /**
  * Tests if this is the first loading the pref wizard index page
