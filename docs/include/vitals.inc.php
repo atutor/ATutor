@@ -1317,8 +1317,7 @@ function get_group_concat($table, $field, $where_clause = 1, $separator = ',') {
 		$list .= $row['id'] . ',';
 	}
 	if ($list) {
-		return substr($list, 0, -1);
-	}
+		return substr($list, 0, -1); }
 	return 0;
 }
 
@@ -1343,16 +1342,16 @@ function get_human_time($seconds) {
 
 function is_mobile_device() {
 	$http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-	return stripos($http_user_agent, 'mobile') > 0 ? true : false;
+	return (!stripos($http_user_agent, 'mobile') || !stripos($http_user_agent, BLACKBERRY_DEVICE)) ? true : false;
 }
 
 function get_mobile_device_type() {
 	$http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
-	if (stripos($http_user_agent, IPOD_DEVICE)) {
+	if (stripos($http_user_agent, IPOD_DEVICE) !== false && stripos($http_user_agent, IPOD_DEVICE) >= 0) {
 		return IPOD_DEVICE;
-	} else if (stripos($http_user_agent, BLACKBERRY_DEVICE)) {
+	} else if (stripos($http_user_agent, BLACKBERRY_DEVICE) !== false && stripos($http_user_agent, BLACKBERRY_DEVICE) >= 0) {
 		return BLACKBERRY_DEVICE;
-	} else if (stripos($http_user_agent, ANDROID_DEVICE)) {
+	} else if (stripos($http_user_agent, ANDROID_DEVICE) !== false && stripos($http_user_agent, ANDROID_DEVICE) >= 0) {
 		return ANDROID_DEVICE;
 	} else {
 		return UNKNOWN_DEVICE;
