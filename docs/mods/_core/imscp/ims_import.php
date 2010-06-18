@@ -317,7 +317,6 @@ function rehash($items){
 		}
 */
 
-
 		//validate namespaces
 		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
 			$schema_location = array();
@@ -350,7 +349,6 @@ function rehash($items){
 		} else {
 			//throw error		
 		}
-
 
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
 			$xml_base_path = $attrs['xml:base'];
@@ -417,7 +415,11 @@ function rehash($items){
 					array_pop($all_package_base_path);
 				}
 			}
-			$items[$current_identifier]['new_path'] = implode('/', $package_base_path);	
+			
+			if (count($package_base_path) > 0) {
+				$items[$current_identifier]['new_path'] = implode('/', $package_base_path);
+			}
+				
 /* 
  * @harris, reworked the package_base_path 
 				if ($package_base_path=="") {
@@ -456,9 +458,9 @@ function rehash($items){
 				$items[$attrs['identifier']]['href'] = $attrs['href'];
 
 				// href points to a remote url
-				if (preg_match('/^http.*:\/\//', trim($attrs['href'])))
+				if (preg_match('/^http.*:\/\//', trim($attrs['href']))) {
 					$items[$attrs['identifier']]['new_path'] = '';
-				else // href points to local file
+				} else // href points to local file
 				{
 					$temp_path = pathinfo($attrs['href']);
 					$temp_path = explode('/', $temp_path['dirname']);
@@ -487,10 +489,9 @@ function rehash($items){
 			if(!isset($items[$current_identifier]) && $attrs['href']!=''){
 				$items[$current_identifier]['href']	 = $attrs['href'];
 			}
-			if (file_exists($import_path.$attrs['href'])){
+			if (substr($attrs['href'], 0, 7) == 'http://' || substr($attrs['href'], 0, 8) == 'https://' || file_exists($import_path.$attrs['href'])){
 				$items[$current_identifier]['file'][] = $attrs['href'];
 			} else {
-				//$msg->addError('');
 				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT(array('ims_files_missing', $attrs['href']))));
 			}
 		}		

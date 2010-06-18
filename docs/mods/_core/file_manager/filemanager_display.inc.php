@@ -276,17 +276,25 @@ if (TRUE || $framed != TRUE) {
 		echo '	</fieldset></div>'."\n";
 		$msg->printInfos('OVER_QUOTA');
 	}
-	echo '<br />';
 }
 
-
-
 // Directory and File listing 
-
-
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'" method="post">';
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
+
+// display the section to use a remote URL as an alternative
+if ($a_type > 0) {
 ?>
+<div class="input-form" style="min-height:10px">
+<fieldset class="group_form" style="min-height: 0px;"><legend class="group_form"><?php echo _AT('use_url_as_alternative'); ?></legend>
+	<div class="row">
+	  <input name="remote_alternative" id="remote_alternative" value="http://" size="60" />
+	  <input class="button" type="button" name="alternative" value="<?php echo _AT('use_as_alternative'); ?>" onclick="javascript: setURLAlternative();" />
+	</div>
+</fieldset>
+</div>
+<?php }?>
+
 <table class="data static" summary="" border="0" rules="groups" style="width: 90%">
 <thead>
 <tr>
@@ -549,6 +557,16 @@ function setAlternative(file, file_preview_link, cid, pid, a_type) {
 	eval("window.opener.document.getElementById(\""+pid+"_"+a_type+"\").innerHTML = '"+link_html+"'");
 	
 	window.close();
+}
+
+// This function validates the url then call setAlternative()
+function setURLAlternative() {
+	remote_url = jQuery('#remote_alternative').val();
+	if (remote_url == '' || remote_url == 'http://') {
+		alert("<?php echo _AT('empty_url'); ?>");
+		return false;
+	}
+	setAlternative(remote_url, remote_url, '<?php echo $cid; ?>.', '<?php echo $pid; ?>', '<?php echo $a_type; ?>');
 }
 
 <?php  if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") { ?>

@@ -131,9 +131,9 @@ $i=0;
 foreach ($my_files as $file) {
 	/* filter out full urls */
 	$url_parts = @parse_url($file);
-	if (isset($url_parts['scheme']) && substr($file, 0, strlen(AT_BASE_HREF)) != AT_BASE_HREF) {
-		continue;
-	}
+//	if (isset($url_parts['scheme']) && substr($file, 0, strlen(AT_BASE_HREF)) != AT_BASE_HREF) {
+//		continue;
+//	}
 
 	/* file should be relative to content. let's double check */
 	if ((substr($file, 0, 1) == '/')) {

@@ -64,21 +64,34 @@ class A4aImport extends A4a {
 						//we will see ../, but since everything is under 'resources/', the relative_path
 						//we can safely take it out.
 						//@edited Dec 6th, imscc import uses relative paths, ims doesn't.
-						$secondary_files = $items[$this->relative_path.$secondary_resource];
-						if (in_array($this->relative_path.$secondary_resource, $imported_files)){
+						if (substr($secondary_resource, 0, 7) == 'http://' || substr($secondary_resource, 0, 8) == 'https://') {
+							$secondary_resource_with_relative_path = $secondary_resource;
+						} else {
+							$secondary_resource_with_relative_path = $this->relative_path.$secondary_resource;
+						}
+
+						$secondary_files = $items[$secondary_resource_with_relative_path];
+						if (in_array($secondary_resource_with_relative_path, $imported_files)){
 							continue;
 						}
-						$imported_files[] = $this->relative_path.$secondary_resource;
+						$imported_files[] = $secondary_resource_with_relative_path;
 						if (empty($secondary_files)){
 						    //tweak: if this is empty, then most likely it is an ims import.
 						    $secondary_resource = preg_replace('/^\.\.\//', '', $secondary_resource);
-						    $secondary_files = $items[$this->relative_path.$secondary_resource];
+						    $secondary_files = $items[$secondary_resource_with_relative_path];
 						}
 						//check if this secondary file is the adaptation of 
-						// this primary file 
+						// this primary file
 						foreach($secondary_files as $secondary_file){
 							//isAdaptation is 1-to-1 mapping, save to use [0]
-							if(($this->relative_path.$secondary_file['isAdaptationOf'][0]) == $file_path){
+							if (substr($secondary_file['isAdaptationOf'][0], 0, 7) == 'http://' 
+							   || substr($secondary_file['isAdaptationOf'][0], 0, 8) == 'https://') {
+								$adaption_with_relative_path = $secondary_file['isAdaptationOf'][0];
+							} else {
+								$adaption_with_relative_path = $this->relative_path.$secondary_file['isAdaptationOf'][0];
+							}
+							
+							if($adaption_with_relative_path == $file_path){
 								$secondary_lang = $secondary_file['language'][0];
 
 								//access_stmt_originalAccessMode cause we want the language for the secondary file.

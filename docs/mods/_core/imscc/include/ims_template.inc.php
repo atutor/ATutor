@@ -264,85 +264,98 @@ function print_organizations($parent_id,
 			foreach ($my_files as $file) {
 				/* filter out full urls */
 				$url_parts = @parse_url($file);
-				if (isset($url_parts['scheme'])) {
-					continue;
-				}
+//				if (isset($url_parts['scheme'])) {
+//					continue;
+//				}
 
 				/* file should be relative to content. let's double check */
 				if ((substr($file, 0, 1) == '/')) {
 					continue;
 				}
 
+				if (substr($file, 0, 7) != 'http://' && substr($file, 0, 8) != 'https://') {
+					$file_path = realpath(AT_CONTENT_DIR . $course_id . '/' . $content['content_path'] . $file);
+	
+					/* check if this file exists in the content dir, if not don't include it */
+					if (file_exists($file_path) && 	is_file($file_path) && !in_array($file_path, $zipped_files)) {
+						$zipped_files[] = $file_path;
+						$dir = substr(dirname($file_path), strlen(AT_CONTENT_DIR . $course_id));
+	
+						if (!in_array($dir, $paths) && $dir) {
+							$dir = str_replace('\\', '/', substr($dir, 1));
+							$zipfile->create_dir('resources/' . $dir, time());
+							
+							$paths[] = $dir;
+						}
+	
+						$file_info = stat( $file_path );
+	
+						//remove relative path in the content_path.	
+						$filepath_array = explode('/', 'resources/' . $content['content_path'] . $file);
+						$new_filepath_array = array();
+						if (in_array('..', $filepath_array)){
+							while (!empty($filepath_array)){
+								$temp = array_shift($filepath_array);
+								if ($temp == '..'){
+									array_pop($new_filepath_array);
+								} else {
+									array_push($new_filepath_array, $temp);
+								}
+							}
+							$zip_path = implode('/', $new_filepath_array);
+						} else {
+							$zip_path = 'resources/' . $content['content_path'] . $file;
+						}
+	
+						$zipfile->add_file(@file_get_contents($file_path), $zip_path, $file_info['mtime']);
+					}
+				}
+				//a4a secondary files have mapping, save the ones that we want in order to add the tag in
+				$a4a_secondary_files = array();
+				foreach ($a4a_xml_array as $a4a_filename=>$a4a_filearray){
+					if (preg_match('/(.*)\sto\s(.*)/', $a4a_filename, $matches)){
+						//save the actual file name
+						$a4a_secondary_files[$matches[1]][] = $a4a_filename;	//values are holders
+					}
+				}
 
-				$file_path = realpath(AT_CONTENT_DIR . $course_id . '/' . $content['content_path'] . $file);
-
-				/* check if this file exists in the content dir, if not don't include it */
-				if (file_exists($file_path) && 	is_file($file_path) && !in_array($file_path, $zipped_files)) {
-					$zipped_files[] = $file_path;
-					$dir = substr(dirname($file_path), strlen(AT_CONTENT_DIR . $course_id));
-
-					if (!in_array($dir, $paths) && $dir) {
-						$dir = str_replace('\\', '/', substr($dir, 1));
-						$zipfile->create_dir('resources/' . $dir, time());
+				// If this file has a4a alternatives, link it.
+				if (isset($a4a_xml_array[$file]) || isset($a4a_secondary_files[$file])){
+					//if this is an array, meaning that it has more than 1 alternatives, print all
+					if (substr($file, 0, 7) == 'http://' || substr($file, 0, 8) == 'https://') {
+						$name_in_file_meta = $file;
+					} else {
+						$name_in_file_meta = 'resources/'.$content['content_path'] . $file;
+					}
+					if (is_array($a4a_secondary_files[$file])){
+						$all_secondary_files_md = '';	//reinitialize string to null
+						foreach ($a4a_secondary_files[$file] as $v){
+							foreach($a4a_xml_array[$v] as $v2){
+								$all_secondary_files_md .= $v2;	//all the meta data		
+							}								
+						}
+						debug(str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
+						array($name_in_file_meta, $all_secondary_files_md), 
+						$ims_template_xml['file_meta']), 'if');
 						
-						$paths[] = $dir;
-					}
-
-					$file_info = stat( $file_path );
-
-					//remove relative path in the content_path.	
-					$filepath_array = explode('/', 'resources/' . $content['content_path'] . $file);
-					$new_filepath_array = array();
-					if (in_array('..', $filepath_array)){
-						while (!empty($filepath_array)){
-							$temp = array_shift($filepath_array);
-							if ($temp == '..'){
-								array_pop($new_filepath_array);
-							} else {
-								array_push($new_filepath_array, $temp);
-							}
-						}
-						$zip_path = implode('/', $new_filepath_array);
+						$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
+						array($name_in_file_meta, $all_secondary_files_md), 
+						$ims_template_xml['file_meta']);
 					} else {
-						$zip_path = 'resources/' . $content['content_path'] . $file;
+						debug(str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
+						array($name_in_file_meta, $all_secondary_files_md), 
+						$ims_template_xml['file_meta']), 'else');
+						
+						$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
+						array($name_in_file_meta, $a4a_xml_array[$file]), 
+						$ims_template_xml['file_meta']);
 					}
-
-					$zipfile->add_file(@file_get_contents($file_path), $zip_path, $file_info['mtime']);
-
-					//a4a secondary files have mapping, save the ones that we want in order to add the tag in
-					$a4a_secondary_files = array();
-					foreach ($a4a_xml_array as $a4a_filename=>$a4a_filearray){
-						if (preg_match('/(.*)\sto\s(.*)/', $a4a_filename, $matches)){
-							//save the actual file name
-							$a4a_secondary_files[$matches[1]][] = $a4a_filename;	//values are holders
-						}
-					}
-
-					// If this file has a4a alternatives, link it.
-					if (isset($a4a_xml_array[$file]) || isset($a4a_secondary_files[$file])){
-						//if this is an array, meaning that it has more than 1 alternatives, print all
-						if (is_array($a4a_secondary_files[$file])){
-							$all_secondary_files_md = '';	//reinitialize string to null
-							foreach ($a4a_secondary_files[$file] as $v){
-								foreach($a4a_xml_array[$v] as $v2){
-									$all_secondary_files_md .= $v2;	//all the meta data		
-								}								
-							}
-							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
-							array('resources/'.$content['content_path'] . $file, $all_secondary_files_md), 
-							$ims_template_xml['file_meta']);
-						} else {
-							$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
-							array('resources/'.$content['content_path'] . $file, $a4a_xml_array[$file]), 
-							$ims_template_xml['file_meta']);
-						}
+				} else {
+					//if this file is in the test array, add an extra link to the direct file, 
+					if (!empty($test_zipped_files) && in_array($file_path, $test_zipped_files)){
+						$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
 					} else {
-						//if this file is in the test array, add an extra link to the direct file, 
-						if (!empty($test_zipped_files) && in_array($file_path, $test_zipped_files)){
-							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
-						} else {
-							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
-						}
+						$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
 					}
 				}
 				/* check if this file is one of the test xml file, if so, we need to add the dependency
