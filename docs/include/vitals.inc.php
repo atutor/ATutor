@@ -242,23 +242,34 @@ if ($_config['time_zone']) {
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
 	//if user has requested theme change, make the change here
-	if ($_POST['theme'] && $_POST['submit']) {
+	if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
 	    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
-	} else if ($_POST['set_default'] && $_SESSION['prefs']['PREF_THEME'] != 'default') {
+	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
+	} else if ($_POST['set_default']) {
 	    $_SESSION['prefs']['PREF_THEME'] = 'default';
+	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
+	}
+	
+	// if the request is from a mobile device, same original session var PREF_THEME into session var PREF_THEME_ORIG
+	// and assign PREF_MOBILE_THEME TO PREF_THEME so that elsewhere PREF_THEME is used doesn't not need to be changed.
+	// At save_prefs(), switch back the theme session vars: PREF_THEME => PREF_MOBILE_THEME, PREF_THEME_ORIG => PREF_THEME
+	if (is_mobile_device()) {
+		if (!is_mobile_theme($_SESSION['prefs']['PREF_MOBILE_THEME'])) {
+			$_SESSION['prefs']['PREF_MOBILE_THEME'] = get_system_default_theme();
+		}
+		
+		if ($_SESSION['prefs']['PREF_THEME'] <> $_SESSION['prefs']['PREF_MOBILE_THEME']) {
+			$_SESSION['prefs']['PREF_THEME_ORIG'] = $_SESSION['prefs']['PREF_THEME'];
+			$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
+		}
 	}
 	
 	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
 	// When more mobile themes come in, this should be changed.
-	if (stripos($_SERVER['HTTP_USER_AGENT'], 'mobile')) {
-		$_SESSION['prefs']['PREF_THEME'] = 'mobile';
-		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
-	}
-	else if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
-
+	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 		if ($_SESSION['course_id'] == -1) {
 			if ($_SESSION['prefs']['PREF_THEME'] == '' || !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
-				$_SESSION['prefs']['PREF_THEME'] = 'default';
+				$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
 			}
 			$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 		} else {
@@ -272,7 +283,7 @@ if ($_config['time_zone']) {
 				// get default
 				$default_theme = get_default_theme();
 				if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
-					$default_theme = array('dir_name' => 'default');
+					$default_theme = array('dir_name' => get_system_default_theme());
 				}
 				$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
 				$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
@@ -283,7 +294,7 @@ if ($_config['time_zone']) {
 		$default_theme = get_default_theme();
 		
 		if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name']) || $default_theme == '') {
-			$default_theme = array('dir_name' => 'default');
+			$default_theme = array('dir_name' => get_system_default_theme());
 		}
 		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
 		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
@@ -649,6 +660,11 @@ function save_prefs( ) {
 	global $db, $addslashes;
 
 	if ($_SESSION['valid_user']) {
+		if (is_mobile_device()) {
+			$_SESSION['prefs']['PREF_MOBILE_THEME'] = $_SESSION['prefs']['PREF_THEME'];
+			$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_THEME_ORIG'];
+		}
+		unset($_SESSION['prefs']['PREF_THEME_ORIG']);
 		$data	= $addslashes(serialize($_SESSION['prefs']));
 		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'", creation_date=creation_date, last_login=last_login WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql, $db); 
@@ -1128,11 +1144,36 @@ function admin_authenticate($privilege = 0, $check = false) {
 function get_default_theme() {
 	global $db;
 
-	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=2";
+	if (is_mobile_device()) {
+		$default_status = 3;
+	} else {
+		$default_status = 2;
+	}
+	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=".$default_status;
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
 	return $row;
+}
+
+function get_system_default_theme() {
+	if (is_mobile_device()) {
+		return 'mobile';
+	} else {
+		return 'default';
+	}
+}
+
+function is_mobile_theme($theme) {
+	global $db;
+
+	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE type='".MOBILE_DEVICE."'";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		if ($row['dir_name'] == $theme && is_dir(AT_INCLUDE_PATH . '../themes/' . $theme)) return true;
+	}
+
+	return false;
 }
 
 if (isset($_GET['expand'])) {
@@ -1300,8 +1341,22 @@ function get_human_time($seconds) {
 	return $out;
 }
 
-function is_mobile_theme() {
-	return ($_SESSION['prefs']['PREF_THEME'] == 'mobile');
+function is_mobile_device() {
+	$http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	return stripos($http_user_agent, 'mobile') > 0 ? true : false;
+}
+
+function get_mobile_device_type() {
+	$http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	if (stripos($http_user_agent, IPOD_DEVICE)) {
+		return IPOD_DEVICE;
+	} else if (stripos($http_user_agent, BLACKBERRY_DEVICE)) {
+		return BLACKBERRY_DEVICE;
+	} else if (stripos($http_user_agent, ANDROID_DEVICE)) {
+		return ANDROID_DEVICE;
+	} else {
+		return UNKNOWN_DEVICE;
+	}
 }
 
 /**
@@ -1363,5 +1418,4 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
     $_custom_head .= '<script type="text/javascript" src="'.$_base_path.'jscripts/ATutorCourse.js"></script>';
 }
-
 ?>

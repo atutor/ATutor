@@ -275,6 +275,8 @@ else if (isset($_GET['p_course'])) // p_course is set when pretty url is turned 
 	$_course_id = $_GET['p_course'];
 
 $savant->assign('course_id', $_course_id);
+$savant->assign('is_mobile_device', is_mobile_device());
+$savant->assign('mobile_device_type', get_mobile_device_type());
 
 if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['popup']) && $_REQUEST['popup'])) {
     $savant->assign('framed', 1);

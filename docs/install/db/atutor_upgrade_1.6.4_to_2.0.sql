@@ -119,7 +119,8 @@ INSERT INTO `config` (`name`, `value`) VALUES('transformable_oauth_expire', '936
 
 # End of adding Transformable configuration
 
-
 # Add the 1.6 series default theme as a secondary theme for ATutor 2.0
 INSERT INTO `themes` VALUES ('ATutor 1.6', '2.0', 'default16', NOW(), 'This is the 1.6 series default theme.', 1);
 
+# Add new field themes.type to seperate "Desktop" and "Mobile" themes
+ALTER TABLE `themes` ADD `type` varchar(20) NOT NULL default 'Desktop' AFTER `dir_name`;

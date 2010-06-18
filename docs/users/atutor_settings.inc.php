@@ -1,37 +1,52 @@
+<?php 
+function print_theme_selectbox($theme_list, $selected_theme, $type) {
+	if (!is_array($theme_list) || count($theme_list) == 0) return ;
+?>
+	<div class="row">
+		<label for="<?php if ($type == DESKTOP_DEVICE) echo "theme"; else echo "mobile_theme"; ?>"><?php if ($type == DESKTOP_DEVICE) echo _AT('desktop_theme'); else echo _AT('mobile_theme'); ?></label><br />
+		<select name="<?php if ($type == DESKTOP_DEVICE) echo "theme"; else echo "mobile_theme"; ?>" id="<?php if ($type == DESKTOP_DEVICE) echo "theme"; else echo "mobile_theme"; ?>"><?php
+			foreach ($theme_list as $theme) {
+				if (!$theme) {
+					continue;
+				}
+
+				$theme_fldr = get_folder($theme);
+
+				if ($theme_fldr == $selected_theme) {
+					echo '<option value="'.$theme_fldr.'" selected="selected">'.$theme.'</option>';
+				} else {
+					echo '<option value="'.$theme_fldr.'">'.$theme.'</option>';
+				}
+			}
+		?>
+		</select>
+	</div>
+<?php }?>
+
 <legend><strong><?php echo _AT("atutor_settings"); ?></strong> </legend>  
 <div id="feedback" style="width:90%;">
 <?php echo _AT('prefs_set_atutor'); ?> 
 </div>
-	<div class="row">
-		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
-			<?php echo _AT('themes_disabled'); ?>
-		<?php else: ?>
-			<label for="theme"><?php echo _AT('theme'); ?></label><br />
-				<select name="theme" id="theme"><?php
-					if (isset($_POST['theme']))
-						$selected_theme = $_POST['theme'];
-					else
-						$selected_theme = $_SESSION['prefs']['PREF_THEME'];
-						
-					$_themes = get_enabled_themes();
-					
-					foreach ($_themes as $theme) {
-						if (!$theme) {
-							continue;
-						}
-
-						$theme_fldr = get_folder($theme);
-
-						if ($theme_fldr == $selected_theme) {
-							echo '<option value="'.$theme_fldr.'" selected="selected">'.$theme.'</option>';
-						} else {
-							echo '<option value="'.$theme_fldr.'">'.$theme.'</option>';
-						}
-					}
-				?>
-				</select>
-		<?php endif; ?>
-	</div>
+<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES){
+	echo _AT('themes_disabled'); 
+} else { 
+	if (isset($_POST['theme']))
+		$selected_theme = $_POST['theme'];
+	else
+		$selected_theme = $_SESSION['prefs']['PREF_THEME'];
+		
+	$_themes = get_enabled_themes(DESKTOP_DEVICE);
+	print_theme_selectbox($_themes, $selected_theme, DESKTOP_DEVICE);
+	
+	if (isset($_POST['mobile_theme']))
+		$selected_theme = $_POST['mobile_theme'];
+	else
+		$selected_theme = $_SESSION['prefs']['PREF_MOBILE_THEME'];
+		
+	$_themes = get_enabled_themes(MOBILE_DEVICE);
+	print_theme_selectbox($_themes, $selected_theme, MOBILE_DEVICE);
+}
+?>
 	
 	<div class="row">
 		<?php echo _AT('time_zone');  ?><br />

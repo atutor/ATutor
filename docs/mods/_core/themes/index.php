@@ -29,9 +29,13 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	header('Location: delete.php?theme_code='.urlencode($theme));
 	exit;
 } else if (isset($_GET['default'], $_GET['theme_dir'])) {
-	set_theme_as_default($theme);
+	set_theme_as_default($theme, $_GET['type']);
 	$_config['pref_defaults'] = unserialize($_config['pref_defaults']);
-	$_config['pref_defaults']['PREF_THEME'] = $theme;
+	if (is_mobile_device()) {
+		$_config['pref_defaults']['PREF_MOBILE_THEME'] = $theme;
+	} else {
+		$_config['pref_defaults']['PREF_THEME'] = $theme;
+	}
 	$_config['pref_defaults'] = serialize($_config['pref_defaults']);
 
 	$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_defaults','{$_config['pref_defaults']}')";
@@ -61,9 +65,6 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$sql    = "SELECT * FROM " . TABLE_PREFIX . "themes ORDER BY title ASC";
-$result = mysql_query($sql, $db);
 ?>
 
 <?php if (!is_writeable(realpath('./../../../themes'))): ?>
@@ -94,11 +95,24 @@ $result = mysql_query($sql, $db);
 		</div>
 	</div>
 	</form>
+	<br />
+<?php endif; 
 
-	<br /><br />
-<?php endif; ?>
+$sql    = "SELECT * FROM " . TABLE_PREFIX . "themes WHERE type='".DESKTOP_DEVICE."' ORDER BY title ASC";
+$result = mysql_query($sql, $db);
+print_data_table($result, DESKTOP_DEVICE);
+echo '<br /><br />';
+$sql    = "SELECT * FROM " . TABLE_PREFIX . "themes WHERE type='".MOBILE_DEVICE."' ORDER BY title ASC";
+$result = mysql_query($sql, $db);
+print_data_table($result, MOBILE_DEVICE);
+?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
+<?php function print_data_table($result, $type) {
+	if (mysql_num_rows($result) == 0) return;
+?>
+<h3><?php if ($type == DESKTOP_DEVICE) echo _AT('themes_for_desktop'); else echo _AT('themes_for_mobile');?></h3><br />
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form_<?php echo $type; ?>">
+<input type="hidden" name="type" value="<?php echo $type; ?>" />
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>
@@ -117,7 +131,7 @@ $result = mysql_query($sql, $db);
 		<input type="submit" name="preview"  value="<?php echo _AT('preview'); ?>" />
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
-		<input type="submit" name="default" value="<?php echo _AT('set_default'); ?>" />
+		<input type="submit" name="default" value="<?php echo _AT('set_default').'&nbsp;'; if ($type == DESKTOP_DEVICE) echo _AT('desktop_theme'); else echo _AT('mobile_theme'); ?>" />
 		<input type="submit" name="export"  value="<?php echo _AT('export'); ?>" />
 		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
 	</td>
@@ -136,7 +150,7 @@ $result = mysql_query($sql, $db);
 				echo _AT('disabled');
 			} else if ($row['status'] == 1) {
 				echo _AT('enabled');
-			} else if ($row['status'] == 2) {
+			} else if (($type == DESKTOP_DEVICE && $row['status'] == 2) || ($type == MOBILE_DEVICE && $row['status'] == 3)) {
 				echo '<strong>'._AT('default').'</strong>'; 
 			}
 			?>
@@ -157,4 +171,8 @@ $result = mysql_query($sql, $db);
 <?php endwhile; ?>
 </table>
 </form>
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php
+}
+ 
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
+?>

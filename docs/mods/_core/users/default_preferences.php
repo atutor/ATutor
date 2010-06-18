@@ -33,6 +33,9 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 		if (isset($_POST['theme']) && $_POST['theme'] != '') {
 			$pref_defaults['PREF_THEME']          = $addslashes($_POST['theme']);
 		}
+		if (isset($_POST['mobile_theme']) && $_POST['mobile_theme'] != '') {
+			$pref_defaults['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
+		}
 		$pref_defaults['PREF_TIMEZONE']	     = $addslashes($_POST['time_zone']);
 		$pref_defaults['PREF_JUMP_REDIRECT']  = intval($_POST['use_jump_redirect']);
 		$pref_defaults['PREF_FORM_FOCUS']     = intval($_POST['form_focus']);

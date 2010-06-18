@@ -50,8 +50,9 @@ if (isset($_GET["theme"]))
 		$xml_parser = new ThemeParser();
 		$xml_parser->parse($theme_xml);
 
-		$version      = $xml_parser->theme_rows['version'];
-		$extra_info   = $xml_parser->theme_rows['extra_info'];
+		$version = $xml_parser->theme_rows['version'];
+		$type = $xml_parser->theme_rows['type'];
+		$extra_info = $xml_parser->theme_rows['extra_info'];
 	}
 
 	if ($title == '') $title = str_replace('_', ' ', $theme);
@@ -62,8 +63,8 @@ if (isset($_GET["theme"]))
 	if ($version != VERSION) $status = '0';
 	
 	//save information in database
-	$sql = "INSERT INTO ".TABLE_PREFIX."themes (title, version, dir_name, last_updated, extra_info, status) ".
-				"VALUES ('$title', '$version', '$theme', '$last_updated', '$extra_info', '$status')";
+	$sql = "INSERT INTO ".TABLE_PREFIX."themes (title, version, dir_name, type, last_updated, extra_info, status) ".
+				"VALUES ('$title', '$version', '$theme', '$type', '$last_updated', '$extra_info', '$status')";
 	$result = mysql_query($sql, $db);
 	
 	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', mysql_affected_rows($db), $sql);

@@ -778,7 +778,7 @@ function initContentMenu() {
 		// if change the location of this line, change function switchEditMode(), else condition accordingly
 		echo '<div id="editable_table">';
 		
-		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && !is_mobile_theme())
+		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && !is_mobile_device())
 		{
 			echo "\n".'
 			<div class="menuedit">
@@ -989,7 +989,7 @@ initContentMenu();
 					}
 					
 					// instructors have privilege to delete content
-					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id']) && !is_mobile_theme()) {
+					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id']) && !is_mobile_device()) {
 						$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 					}
 				} 
@@ -1023,14 +1023,14 @@ initContentMenu();
 						$link .='&nbsp;'.$content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
 							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
 						$full_title = $content['title'];
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
 							$link .= '<a href="'.$_base_path."mods/_core/editor/edit_content_folder.php?cid=".$content['content_id'].'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
 						else {
@@ -1049,7 +1049,7 @@ initContentMenu();
 						}
 						  $link .= '&nbsp;'.$content['title'].'</span>';
 						
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
 							$link .= '</a>'."\n";
 						}
 						else {
@@ -1057,7 +1057,7 @@ initContentMenu();
 						}
 						
 						// instructors have privilege to delete content
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_theme()) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
 							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 

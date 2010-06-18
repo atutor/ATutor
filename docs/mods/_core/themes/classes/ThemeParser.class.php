@@ -62,6 +62,9 @@ class ThemeParser {
 		} else if ($this->element_path == array('theme', 'version')) {
 			$this->theme_rows['version'] = trim($this->character_data);
 
+		} else if ($this->element_path == array('theme', 'type')) {
+			$this->theme_rows['type'] = trim($this->character_data);
+
 		} else if ($this->element_path == array('theme', 'last_updated')) {
 			$this->theme_rows['last_updated'] = trim($this->character_data);
 

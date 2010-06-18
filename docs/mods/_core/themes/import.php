@@ -170,8 +170,9 @@ function import_theme() {
 		$xml_parser = new ThemeParser();
 		$xml_parser->parse($theme_xml);
 
-		$version      = $xml_parser->theme_rows['version'];
-		$extra_info   = $xml_parser->theme_rows['extra_info'];
+		$version = $xml_parser->theme_rows['version'];
+		$extra_info = $xml_parser->theme_rows['extra_info'];
+		$type = $xml_parser->theme_rows['type'];
 	}
 
 	$title        = str_replace('_', ' ', $fldrname);
@@ -184,7 +185,7 @@ function import_theme() {
 	}
 
 	//save information in database
-	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$fldrname', '$last_updated', '$extra_info', '$status')";
+	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$fldrname', '$type', '$last_updated', '$extra_info', '$status')";
 	$result = mysql_query($sql, $db);	
 	
 	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', mysql_affected_rows($db), $sql);

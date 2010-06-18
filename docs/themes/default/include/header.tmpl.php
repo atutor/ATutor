@@ -48,6 +48,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * current_top_level_page    string                           full url to the current top level page in "top_leve_pages"
  * current_sub_level_page    string                           full url to the current sub level page in the "sub_level_pages"
  * sub_level_pages           array(array('url', 'title'))     the sub level pages.
+ * is_mobile_device          true or false                    the request is from a mobile device or a desktop device
+ * mobile_device_type        One of the constants: IPOD_DEVICE, BLACKBERRY_DEVICE, ANDROID_DEVICE, UNKNOWN_DEVICE (@see include/lib/constants.inc.php)
  */
 
 // will have to be moved to the header.inc.php

@@ -74,10 +74,15 @@ function get_theme_name ($theme_dir) {
 * @return  array				the version of the theme
 * @author  Shozub Qureshi
 */
-function get_enabled_themes () {
+function get_enabled_themes ($type = "all") {
 	global $db;
-	//Go to db
-	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE status = '1' OR status = '2' ORDER BY title";
+	
+	if ($type == MOBILE_DEVICE) {
+		$where_clause = " AND type='".MOBILE_DEVICE."' ";
+	} else if ($type == DESKTOP_DEVICE) {
+		$where_clause = " AND type='".DESKTOP_DEVICE."' ";
+	}
+	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE (status = '1' OR status = '2' OR status = '3') ".$where_clause." ORDER BY title";
 	$result = mysql_query($sql, $db);
 	
 	//Get all theme names into array
@@ -193,17 +198,22 @@ function disable_theme ($theme_dir) {
 	}
 }
 
-function set_theme_as_default ($theme_dir) {
+function set_theme_as_default ($theme_dir, $type) {
 	global $msg, $db;
 	
 	//unset current default theme
-	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '1' WHERE status = '2'";
+	if ($type == MOBILE_DEVICE) {
+		$default_status = 3;
+	} else {
+		$default_status = 2;
+	}
+	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = 1 WHERE status = ".$default_status;
 	$result = mysql_query($sql, $db);
 	
 	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 
 	//set to default
-	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '2' WHERE dir_name = '$theme_dir'";
+	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = ".$default_status." WHERE dir_name = '$theme_dir'";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -265,14 +275,15 @@ function export_theme($theme_dir) {
 	$dir          = $row['dir_name'] . '/';
 	$title        = $row['title'];
 	$version      = $row['version'];
+	$type         = $row['type'];
 	$last_updated = $row['last_updated'];
 	$extra_info   = $row['extra_info'];
 
 
 
 	//generate 'theme_info.xml' file based on info	
-	$info_xml = str_replace(array('{TITLE}', '{VERSION}', '{LAST_UPDATED}', '{EXTRA_INFO}'), 
-							array($title, $version, $last_updated, $extra_info),
+	$info_xml = str_replace(array('{TITLE}', '{VERSION}', '{TYPE}', '{LAST_UPDATED}', '{EXTRA_INFO}'), 
+							array($title, $version, $type, $last_updated, $extra_info),
            				    $theme_template_xml);
 
 	//zip together all the contents of the folder along with the XML file
