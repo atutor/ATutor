@@ -27,7 +27,7 @@ admin_authenticate(AT_ADMIN_PRIV_JOB_BOARD);
 $_pages[AT_JB_BASENAME.'admin/employers.php']['children'] = array(AT_JB_BASENAME.'admin/edit_employer.php');
 
 //init
-$employer = new Employer($_SESSION['jb_employer_id']);
+$employer = new Employer($_GET['eid']);
 
 //save profile changes
 if ($_POST['submit']){

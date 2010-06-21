@@ -46,6 +46,10 @@ class Employer{
 		}
 	}
 	
+	function getId(){
+		return $this->id;
+	}
+
 	function getUsername(){
 	    return $this->username;
     }

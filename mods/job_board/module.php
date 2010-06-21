@@ -107,6 +107,9 @@ $this->_pages[AT_JB_BASENAME.'employer/profile.php']['parent'] = AT_JB_BASENAME.
 $this->_pages[AT_JB_BASENAME.'view_post.php']['title_var'] = 'jb_view_post';
 $this->_pages[AT_JB_BASENAME.'view_post.php']['parent'] = AT_JB_BASENAME.'index.php';
 
+$this->_pages[AT_JB_BASENAME.'subscribe.php']['title_var'] = 'jb_subscribe';
+$this->_pages[AT_JB_BASENAME.'subscribe.php']['parent'] = AT_JB_BASENAME.'index.php';
+
 //$this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = _AT('test');
 //$this->_pages[AT_JB_BASENAME.'index.php']['parent'] = AT_JB_BASENAME.'index.php';
 //$this->_pages[AT_JB_BASENAME.'index_mystart.php']['children'] = array_push($this->_pages[AT_JB_BASENAME.'index_mystart.php']['children'], AT_JB_BASENAME.'index.php');

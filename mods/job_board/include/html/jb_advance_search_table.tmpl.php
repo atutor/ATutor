@@ -42,4 +42,8 @@
 		<td><label for="jb_search_bookmark"><?php echo _AT('jb_bookmark'); ?></td>
 		<td><input type="checkbox" name="jb_search_bookmark" id="jb_search_bookmark" <?php if($_GET['jb_search_bookmark']!=''){echo 'checked="checked"';} ?> /></td>
 	</tr>
+	<tr>
+		<td><label for="jb_search_archive"><?php echo _AT('jb_archive'); ?></td>
+		<td><input type="checkbox" name="jb_search_archive" id="jb_search_archive" <?php if($_GET['jb_search_archive']!=''){echo 'checked="checked"';} ?> /></td>
+	</tr>
 </table>

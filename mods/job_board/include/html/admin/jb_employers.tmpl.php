@@ -34,7 +34,7 @@
 			}
         ?>
         <td><?php echo $approval_state; ?></td>
-        <td><a href="<?php echo AT_JB_BASENAME;?>admin/edit_employer.php"><?php echo _AT('edit'); ?></a></td>
+        <td><a href="<?php echo AT_JB_BASENAME.'admin/edit_employer.php?eid='.$employer->getId();?>"><?php echo _AT('edit'); ?></a></td>
     </tr>
     <?php endforeach; endif; ?>
 </table>

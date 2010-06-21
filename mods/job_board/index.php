@@ -42,7 +42,21 @@ if (isset($_GET['jb_submit'])){
 	$search_input['description'] = trim($_GET['jb_search_description']);
 	$search_input['categories'] = $_GET['jb_search_categories'];
 	$search_input['bookmark'] = $_GET['jb_search_bookmark'];
-	$all_job_posts = $job->search($search_input, $_GET['col'], $_GET['oder']);
+	$search_input['archive'] = $_GET['jb_search_archive'];
+	$all_job_posts = $job->search($search_input, $_GET['col'], $_GET['order']);
+
+	if(!empty($_GET['jb_search_categories'])){
+		foreach($_GET['jb_search_categories'] as $category_id){
+			$category_string .= 'jb_search_categories[]='.intval($category_id).SEP;
+		}
+	}
+	$search_string =	'jb_submit=search'.SEP.
+						'jb_search_general='.$_GET['jb_search_general'].SEP.
+						'jb_search_title='.$_GET['jb_search_title'].SEP.
+						'jb_search_description='.$_GET['jb_search_description'].SEP.
+						$category_string.
+						'jb_search_bookmark='.$_GET['jb_search_bookmark'].SEP.
+						'jb_search_archive='.$_GET['jb_search_archive'];
 }
 
 //handle page
@@ -82,12 +96,12 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 <div style="clear:both;"></div>
 <div>
 <?php
-print_paginator($page, sizeof($all_job_posts), $page_string, AT_JB_ROWS_PER_PAGE);
+print_paginator($page, sizeof($all_job_posts), $search_string.SEP.$page_string, AT_JB_ROWS_PER_PAGE);
 $savant->assign('job_posts', $current_job_posts);
 $savant->assign('bookmark_posts', $bookmark_posts);
 $savant->assign('job_obj', $job);
 $savant->display('jb_index.tmpl.php');
-print_paginator($page, sizeof($all_job_posts), $page_string, AT_JB_ROWS_PER_PAGE);
+print_paginator($page, sizeof($all_job_posts), $search_string.SEP.$page_string, AT_JB_ROWS_PER_PAGE);
 ?>
 </div>
 

@@ -1,14 +1,21 @@
-<?php global $order; ?>
+<?php global $order, $search_string; 
+if ($search_string!=''){
+	$search_string = SEP.$search_string;
+}
+?>
+<div>
+	<a href="<?php echo AT_JB_BASENAME.'subscribe.php'; ?>"><?php echo _AT('jb_subscribe'); ?></a>
+</div>
+
 <div>
 	<table class="data static" summary="" rules="rows">
-		<thead>			
-
+		<thead>
 			<th><?php echo _AT('id'); ?></th>
-			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=title".SEP."order=$order"; ?>"><?php echo _AT('jb_title'); ?></a></th>
+			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=title".SEP."order=$order".$search_string; ?>"><?php echo _AT('jb_title'); ?></a></th>
 			<th><?php echo _AT('jb_employer'); ?></th>
 			<th><?php echo _AT('jb_categories'); ?></th>
-			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=created_date".SEP."order=$order"; ?>"><?php echo _AT('created_date'); ?></a></th>
-			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=closing_date".SEP."order=$order"; ?>"><?php echo _AT('jb_closing_date'); ?></a></th>
+			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=created_date".SEP."order=$order".$search_string; ?>"><?php echo _AT('created_date'); ?></a></th>
+			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=closing_date".SEP.SEP."order=$order".$search_string; ?>"><?php echo _AT('jb_closing_date'); ?></a></th>
 		</thead>
 
 		<tbody>

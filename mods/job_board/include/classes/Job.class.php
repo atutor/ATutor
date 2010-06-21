@@ -308,13 +308,14 @@ class Job{
 
 		//if not admin, filter only the ones that's approved.
 		if(!$is_admin){
-			$filter_sql = 'WHERE approval_state='.AT_JB_POSTING_STATUS_CONFIRMED;
+			$now = date('Y-m-d H:i:s');
+			$filter_sql = "WHERE closing_date >= '$now' AND approval_state=".AT_JB_POSTING_STATUS_CONFIRMED;
 		} else {
 			$filter_sql = '';
 		}
 
 		//order
-		$col = isset($this->cols[$_GET['order']])?$this->cols[$_GET['order']]:$this->cols['created_date'];
+		$col = isset($this->cols[$col])?$this->cols[$col]:$this->cols['created_date'];
 		$order = ($order=='ASC')?'ASC':'DESC';
 
 		$sql = 'SELECT * FROM '.TABLE_PREFIX."jb_postings $filter_sql ORDER BY $col $order";
@@ -339,7 +340,7 @@ class Job{
 	    $result = array();
 
 		//order
-		$col = isset($this->cols[$_GET['order']])?$this->cols[$_GET['order']]:$this->cols['created_date'];
+		$col = isset($this->cols[$col])?$this->cols[$col]:$this->cols['created_date'];
 		$order = ($order=='ASC')?'ASC':'DESC';
 	    
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id']." ORDER BY $col $order";
@@ -431,9 +432,10 @@ class Job{
 	 * @param	Array	[field]=>[input].  Format must be the following:
 	 *						[title]		 =>[string]
 	 *						[categories] =>Array(integer)
-	 *						[email]		 =>[string] (taken out)
+	 *						[email]		 =>[string] *no longer in use
 	 *						[description]=>[string]
 	 *						[bookmark]	 =>[string] (on/off)
+	 *						[archive]	 =>[string] (on/off)
 	 * @param	string		sortable columns: title, created_date, closing_date
 	 * @param	string		asc for ascending, else descending
 	 * @return	Array	matched entries
@@ -453,6 +455,7 @@ class Job{
 		$description = $addslashes($input['description']);
 		$categories = $input['categories'];
 		$bookmark = $input['bookmark'];
+		$archive = $input['archive'];
 
 		//create sub sql for general search
 		if ($general!=''){
@@ -509,18 +512,28 @@ class Job{
 			$bookmark_sql = "`id` IN $bookmarks OR ";
 		}
 
+		//load entries with expired closing date
+		if ($archive==''){
+			$now = date('Y-m-d H:i:s');
+			$closing_sql = "closing_date >= '$now' AND ";
+		}
+
+		//only closed time and approved state
+		//this sql must go first
+		$approval_closing_sql = "($closing_sql approval_state=".AT_JB_POSTING_STATUS_CONFIRMED.')';
+		
 		$sql_wc = $general_sql . $title_sql . $email_sql . $description_sql . $bookmark_sql; //where clause
 		if ($sql_wc!=''){
 			$sql_wc = substr($sql_wc, 0, -3);
-			$sql_wc = ' WHERE '.$sql_wc;
+			$sql_wc = ' AND ('. $sql_wc . ')';
 		}
 		
 		//order
-		$col = isset($this->cols[$_GET['order']])?$this->cols[$_GET['order']]:$this->cols['created_date'];
+		$col = isset($this->cols[$col])?$this->cols[$col]:$this->cols['created_date'];
 		$order = ($order=='ASC')?'ASC':'DESC';
 
 		//compose the search query
-		$sql = 'SELECT p.* FROM '.TABLE_PREFIX."jb_postings AS p $categories_sql $sql_wc ORDER BY $col $order";
+		$sql = 'SELECT p.* FROM '.TABLE_PREFIX."jb_postings AS p $categories_sql WHERE $approval_closing_sql $sql_wc ORDER BY $col $order";
 		$rs = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($rs)){
 			$row['categories'] = $this->getPostingCategories($row['id']);
@@ -532,5 +545,30 @@ class Job{
 	function approveEmployer($member_id){}
 
 	function disapproveEmployer($member_id){}
+
+
+	/** 
+	 * Update subscription for the categories.  Remove existing entries first, then re-insert new ones.
+	 * @param	int		Member id
+	 * @param	Array	Categories IDs.  [index]=>[category_id]
+	 */
+	function subscribe_categories ($member_id, $categories){
+		global $db;
+
+		$member_id = intval($member_id);
+
+		if (!empty($categories)){
+			$categories = $addslashes(implode(',', $categories));
+		} else {
+			return;
+		}
+
+		//remove old subscriptions
+		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_category_subscribes WHERE member_id=$member_id";
+		mysql_query($sql, $db);
+
+		//add new subscription
+		//TODO
+	}
 }
 ?>
