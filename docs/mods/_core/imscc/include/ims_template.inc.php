@@ -334,18 +334,10 @@ function print_organizations($parent_id,
 								$all_secondary_files_md .= $v2;	//all the meta data		
 							}								
 						}
-						debug(str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
-						array($name_in_file_meta, $all_secondary_files_md), 
-						$ims_template_xml['file_meta']), 'if');
-						
 						$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
 						array($name_in_file_meta, $all_secondary_files_md), 
 						$ims_template_xml['file_meta']);
 					} else {
-						debug(str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
-						array($name_in_file_meta, $all_secondary_files_md), 
-						$ims_template_xml['file_meta']), 'else');
-						
 						$content_files .= str_replace(	array('{FILE}', '{FILE_META_DATA}'), 
 						array($name_in_file_meta, $a4a_xml_array[$file]), 
 						$ims_template_xml['file_meta']);
