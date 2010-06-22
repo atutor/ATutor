@@ -101,7 +101,7 @@ echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="preview">';
 
 if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 	?>
-	<div class="input-form" style="width:80%">
+	<div class="input-form" style="width:95%">
 	<div class="row"><h2><?php echo $test_row['title']; ?></h2></div>
 
 
