@@ -20,7 +20,7 @@ $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom styl
 //init
 $job = new Job();
 $categories = $job->getCategories();
-
+$subscribed = $job->getSubscribedCategories($_SESSION['member_id']);
 
 //handle save
 if (isset($_POST['submit'])){
@@ -31,14 +31,17 @@ if (isset($_POST['submit'])){
 		header('Location: index.php');
 		exit;
 	}
-
-	debug($_POST);exit;
+	$job->subscribeCategories($_SESSION['member_id'], $_POST['jb_subscribe_categories']);
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	header('Location: subscribe.php');
+	exit;
 }
 
 
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('categories', $categories);
 $savant->assign('job_obj', $job);
+$savant->assign('subscribed', $subscribed);
 $savant->display('jb_subscribe.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

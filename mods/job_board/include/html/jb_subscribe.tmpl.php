@@ -3,7 +3,7 @@
 	<div class="row"><?php echo _AT('jb_subscribe_blub');?></div>
 	<div class="row">
 	<?php foreach ($this->categories as $category): ?>
-	<input type="checkbox" name="jb_subscribe_categories[]" value="<?php echo $category['id']; ?>" id="<?php echo 'jb_subscribe_category_'.$category['id']; ?>" />
+	<input type="checkbox" name="jb_subscribe_categories[]" value="<?php echo $category['id']; ?>" id="<?php echo 'jb_subscribe_category_'.$category['id']; ?>" <?php echo (in_array($category['id'], $this->subscribed))?'checked="checked"':''; ?>/>
 	<label for="<?php echo 'jb_subscribe_category_'.$category['id']; ?>"><?php echo $this->job_obj->getCategoryNameById($category['id']); ?></label><br/>
 	<?php endforeach; ?>
 	</div>

@@ -32,8 +32,10 @@ class Job{
 	 * @param	Array	categories id
 	 * @param   int     1 if public; 0 otherwise.
 	 * @param   string  Closing date for this job post, mysql TIMESTAMP format
+	 * @precondition	ATutor Mailer class imported.
 	 */
 	function addJob($title, $description, $categories, $is_public, $closing_date){
+		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 		global $addslashes, $db, $msg;
 		
 		if($_SESSION['jb_employer_id']<1){
@@ -57,6 +59,33 @@ class Job{
 				$category = intval($category);
 				$sql = 'INSERT INTO '.TABLE_PREFIX."jb_posting_categories (posting_id, category_id) VALUES ($posting_id, $category)";
 				mysql_query($sql, $db);
+
+				//send out notification if the person is subscribed to the category.
+				$sql = 'SELECT m.member_id, m.email FROM '.TABLE_PREFIX.'jb_category_subscribes cs LEFT JOIN '.TABLE_PREFIX."members m ON cs.member_id=m.member_id WHERE category_id=$category";
+				$result = mysql_query($sql, $db);
+				if($result){
+					while($row = mysql_fetch_assoc($result)){
+						$mail = new ATutorMailer;
+						$mail->AddAddress($row['email'], get_display_name($row['member_id']));
+						$body = _AT('jb_subscription_msg');
+						$body .= "\n----------------------------------------------\n";
+						$body .= _AT('posted_by').": ".get_display_name($row['member_id'])."\n";
+						$body .= $_POST['body']."\n";
+						$mail->FromName = $_config['site_name'];
+						$mail->From     = $_config['contact_email'];
+						$mail->Subject = _AT('jb_subscription_mail_subject');
+						$mail->Body    = $body;
+/* 
+ * TODO: 
+ * Take out these comments, it's here cause my email isn't set up and it slows down my browser.
+						if(!$mail->Send()) {
+							$msg->addError('SENDING_ERROR');
+						}
+*/
+						unset($mail);
+					}
+				}
+				
 			}
 		}
 
@@ -428,6 +457,28 @@ class Job{
 	}
 
 	/**
+	 * Get the list of categories that this member is subscribed to.
+	 * @param	int		member id
+	 * @return	Array	list of categories
+	 */
+	function getSubscribedCategories($member_id){
+		global $db;
+
+		$member_id = intval($member_id);
+		$result = array();
+		
+		$sql = 'SELECT category_id FROM '.TABLE_PREFIX."jb_category_subscribes WHERE member_id=$member_id";
+		$rs = mysql_query($sql, $db);
+		
+		if ($rs){
+			while($row = mysql_fetch_array($rs)){
+				$result[] = $row[0];
+			}
+		}
+		return $result;
+	}
+
+	/**
 	 * Perform a search with the given filters.
 	 * @param	Array	[field]=>[input].  Format must be the following:
 	 *						[title]		 =>[string]
@@ -552,23 +603,27 @@ class Job{
 	 * @param	int		Member id
 	 * @param	Array	Categories IDs.  [index]=>[category_id]
 	 */
-	function subscribe_categories ($member_id, $categories){
+	function subscribeCategories ($member_id, $categories){
 		global $db;
 
 		$member_id = intval($member_id);
-
-		if (!empty($categories)){
-			$categories = $addslashes(implode(',', $categories));
-		} else {
-			return;
-		}
 
 		//remove old subscriptions
 		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_category_subscribes WHERE member_id=$member_id";
 		mysql_query($sql, $db);
 
-		//add new subscription
-		//TODO
+		if (!empty($categories)){
+			foreach($categories as $category){
+				$category = intval($category);
+				if($category < 1){
+					continue;
+				}
+
+				//add new subscription
+				$sql = 'INSERT INTO '.TABLE_PREFIX."jb_category_subscribes (member_id, category_id) VALUES ($member_id, $category)";
+				mysql_query($sql, $db);
+			}
+		}
 	}
 }
 ?>
