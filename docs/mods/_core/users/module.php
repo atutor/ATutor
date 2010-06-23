@@ -15,19 +15,6 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 	$this->_pages['mods/_core/users/users.php']['children']  = array('mods/_core/users/create_user.php', 'mods/_core/users/instructor_requests.php', 'mods/_core/users/master_list.php', 'mods/_core/users/admin_email.php');
 
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
-
-        $_pages['admin/index.php']['title_var'] = 'home';
-        $_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
-        $_pages['admin/index.php']['guide']     = 'admin/?p=configuration.php';
-        $_pages['admin/index.php']['children'] = array_merge(array('mods/_core/users/admins/my_edit.php', 'mods/_core/users/admins/my_password.php'), isset($_pages['mods/_core/users/index.php']['children']) ?  $_pages['admin/index.php']['children'] : array());
-
-        $_pages['mods/_core/users/admins/my_edit.php']['title_var'] = 'my_account';
-        $_pages['mods/_core/users/admins/my_edit.php']['parent']    = 'admin/index.php';
-        $_pages['mods/_core/users/admins/my_edit.php']['guide']     = 'admin/?p=my_account.php';
-
-        $_pages['mods/_core/users/admins/my_password.php']['title_var'] = 'change_password';
-        $_pages['mods/_core/users/admins/my_password.php']['parent']    = 'admin/index.php';
-
 		$this->_pages['mods/_core/users/users.php']['children'][]  = 'mods/_core/users/admins/index.php';
 
 		$this->_pages['mods/_core/users/admins/index.php']['title_var'] = 'administrators';
@@ -35,27 +22,27 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 		$this->_pages['mods/_core/users/admins/index.php']['guide']     = 'admin/?p=administrators.php';
 		$this->_pages['mods/_core/users/admins/index.php']['children']  = array('mods/_core/users/admins/create.php', 'mods/_core/users/admins/log.php');
 
-			$this->_pages['mods/_core/users/admins/log.php']['title_var'] = 'admin_log';
-			$this->_pages['mods/_core/users/admins/log.php']['parent']    = 'mods/_core/users/admins/index.php';
-			$this->_pages['mods/_core/users/admins/log.php']['children']  = array('mods/_core/users/admins/reset_log.php');
+		$this->_pages['mods/_core/users/admins/log.php']['title_var'] = 'admin_log';
+		$this->_pages['mods/_core/users/admins/log.php']['parent']    = 'mods/_core/users/admins/index.php';
+		$this->_pages['mods/_core/users/admins/log.php']['children']  = array('mods/_core/users/admins/reset_log.php');
 
-				$this->_pages['mods/_core/users/admins/reset_log.php']['title_var'] = 'reset_log';
-				$this->_pages['mods/_core/users/admins/reset_log.php']['parent']    = 'mods/_core/users/admins/log.php';
+		$this->_pages['mods/_core/users/admins/reset_log.php']['title_var'] = 'reset_log';
+		$this->_pages['mods/_core/users/admins/reset_log.php']['parent']    = 'mods/_core/users/admins/log.php';
 
-				$this->_pages['mods/_core/users/admins/detail_log.php']['title_var'] = 'details';
-				$this->_pages['mods/_core/users/admins/detail_log.php']['parent']    = 'mods/_core/users/admins/log.php';
+		$this->_pages['mods/_core/users/admins/detail_log.php']['title_var'] = 'details';
+		$this->_pages['mods/_core/users/admins/detail_log.php']['parent']    = 'mods/_core/users/admins/log.php';
 
-			$this->_pages['mods/_core/users/admins/create.php']['title_var'] = 'create_admin';
-			$this->_pages['mods/_core/users/admins/create.php']['parent']    = 'mods/_core/users/admins/index.php';
+		$this->_pages['mods/_core/users/admins/create.php']['title_var'] = 'create_admin';
+		$this->_pages['mods/_core/users/admins/create.php']['parent']    = 'mods/_core/users/admins/index.php';
 
-			$this->_pages['mods/_core/users/admins/edit.php']['title_var'] = 'edit_admin';
-			$this->_pages['mods/_core/users/admins/edit.php']['parent']    = 'mods/_core/users/admins/index.php';
+		$this->_pages['mods/_core/users/admins/edit.php']['title_var'] = 'edit_admin';
+		$this->_pages['mods/_core/users/admins/edit.php']['parent']    = 'mods/_core/users/admins/index.php';
 
-			$this->_pages['mods/_core/users/admins/password.php']['title_var'] = 'password';
-			$this->_pages['mods/_core/users/admins/password.php']['parent']    = 'mods/_core/users/admins/index.php';
+		$this->_pages['mods/_core/users/admins/password.php']['title_var'] = 'password';
+		$this->_pages['mods/_core/users/admins/password.php']['parent']    = 'mods/_core/users/admins/index.php';
 
-			$this->_pages['mods/_core/users/admins/delete.php']['title_var'] = 'delete_admin';
-			$this->_pages['mods/_core/users/admins/delete.php']['parent']    = 'mods/_core/users/admins/index.php';
+		$this->_pages['mods/_core/users/admins/delete.php']['title_var'] = 'delete_admin';
+		$this->_pages['mods/_core/users/admins/delete.php']['parent']    = 'mods/_core/users/admins/index.php';
 	}
 
 		$this->_pages['mods/_core/users/admin_email.php']['title_var'] = 'admin_email';
