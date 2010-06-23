@@ -22,7 +22,7 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: ../../courses/admin/courses.php');
 	exit;
-} else if (isset($_POST['course']) || isset($_POST['course'])) {
+} else if (isset($_POST['submit'])) {
 	require(AT_INCLUDE_PATH.'../mods/_core/courses/lib/course.inc.php');
 	$errors = add_update_course($_POST, TRUE);
 
