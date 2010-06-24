@@ -20,7 +20,7 @@ require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <div id="container" style="padding:2em; width:90%;">
-<?
+<?php
 echo '<p><a href="index.php">'._AT('home').'</a>';
 
 $_current_modules = array_slice($_pages[AT_NAV_COURSE], 1);
@@ -30,7 +30,7 @@ foreach ($_current_modules as $module) {
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" />  <a href="'.url_rewrite($module).'">' . _AT($_pages[$module]['title_var']) . '</a>';
 
-	if ($module == 'forum/list.php') {
+	if (substr($module, -14) == 'forum/list.php') {
 		$forums = get_forums($_SESSION['course_id']);
 		if (is_array($forums)) {
 			foreach ($forums as $state=>$rows) {
@@ -46,7 +46,7 @@ foreach ($_current_modules as $module) {
 						echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" />';
 					}
 					echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="img-size-tree" />';
-					echo ' <a href="'.url_rewrite('forum/index.php?fid='.$row['forum_id']).'">'.AT_print($row['title'], 'forums.title').'</a>';
+					echo ' <a href="'.url_rewrite('mods/_standard/forums/forum/index.php?fid='.$row['forum_id']).'">'.AT_print($row['title'], 'forums.title').'</a>';
 				}
 			} 
 		} else {
@@ -69,6 +69,6 @@ echo '</p>';
 ?>
 </div>
 
-<?
+<?php
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -124,3 +124,7 @@ INSERT INTO `themes` VALUES ('ATutor 1.6', '2.0', 'default16', NOW(), 'This is t
 
 # Add new field themes.type to seperate "Desktop" and "Mobile" themes
 ALTER TABLE `themes` ADD `type` varchar(20) NOT NULL default 'Desktop' AFTER `dir_name`;
+
+# point the index page of modules "glossary", "file_storage" to the new location
+UPDATE `courses` SET main_links=replace(main_links, '|glossary/index.php', '|mods/_core/glossary/index.php');
+UPDATE `courses` SET main_links=replace(main_links, '|file_storage/index.php', '|mods/_standard/file_storage/index.php');
