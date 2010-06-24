@@ -60,8 +60,8 @@ if ($_config['check_version']) {
 				<h3><?php echo _AT('social_switch'); ?></h3>
 				<p><?php echo _AT('social_switch_text'); ?></p>
 			</div>
-			<div class="row">
 			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<div class="row">
 			<?php echo _AT('social_switch'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['just_social'] ? _AT('just_social') : _AT('social_and_lms')); ?>)<br />
 			<input type="radio" name="just_social" value="1" id="social_y" <?php if($_config['just_social']) { echo 'checked="checked"'; }?>  /><label for="social_y"><?php echo _AT('just_social'); ?></label> <br /><input type="radio" name="just_social" value="0" id="social_n" <?php if(!$_config['just_social']) { echo 'checked="checked"'; }?>  /><label for="social_n"><?php echo _AT('social_and_lms'); ?></label>
 			</div>
