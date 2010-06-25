@@ -48,9 +48,9 @@
     $_pages['delete_course.php']                 = 'Delete Course';
     $_pages['reading_list.php']			 = 'Reading List';
     $_pages['statistics.php']                    = 'Statistics';
-    $_pages['tests_surveys.php']                 = 'Tests &amp; Surveys';
-    $_pages['creating_tests_surveys.php']        = 'Creating Tests &amp; Surveys';
-    $_pages['question_database.php']             = 'Question Database';
+    $_pages['tests_surveys.php']                 = 'Tests and Surveys';
+    $_pages['creating_tests_surveys.php']        = 'Creating Tests and Surveys';
+    $_pages['question_database.php']             = 'Question Bank';
     $_pages['creating_questions.php']		 = 'Creating Questions';
     $_pages['question_categories.php']           = 'Question Categories';
     $_pages['edit_delete_tests.php']		 = 'Editing &amp; Deleting Tests';

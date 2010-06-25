@@ -1,7 +1,7 @@
 <?php require('../common/body_header.inc.php'); $lm = '$LastChangedDate$'; ?>
 
 <h2>Creating Test Questions</h2>
-	<p>Test questions are created in the <a href="question_database.php">Question Database</a>. Options differ depending on the type of question being created. All questions are saved to the Question Database where they can then be added to Tests or Surveys. The following questions are supported:</p>
+	<p>Test questions are created in the <a href="question_database.php">Question Bank</a>. Options differ depending on the type of question being created. All questions are saved to the Question Database where they can then be added to Tests or Surveys. The following questions are supported:</p>
 	
 	<dl>
 		<dt>Likert</dt>
