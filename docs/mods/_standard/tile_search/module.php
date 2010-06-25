@@ -33,15 +33,6 @@ $this->_pages['mods/_standard/tile_search/tile.php']['img'] = 'images/home-tile_
 $this->_pages['mods/_standard/tile_search/tile.php']['text'] = _AT('tile_search_text');
 
 /* Constants for Transformable web service - @author Cindy */
-// Transformable assigned web service id to access transformable search service
-//define('AT_TILE_ID', '90c3cd6f656739969847f3a99ac0f3c7');
-
-// The expire threshold of oauth access token, in second
-//define('AT_TILE_OAUTH_TOKEN_EXPIRE_THRESHOLD', 93600); // in second, 24 hours
-
-// Transformable base URL
-//define('AT_TILE_BASE_URL', 'http://localhost/transformable/');
-
 // The URL to the transformable web service search entry
 define('AT_TILE_SEARCH_URL', $_config['transformable_uri'].'search.php');
 
