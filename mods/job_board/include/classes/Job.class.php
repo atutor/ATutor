@@ -432,7 +432,7 @@ class Job{
 			}
 		}
 		//if it can't find any category, then return 'no category'
-		return _AT('no_category');
+		return _AT('jb_no_category');
 	}
 
 	/**
@@ -481,10 +481,10 @@ class Job{
 	/**
 	 * Perform a search with the given filters.
 	 * @param	Array	[field]=>[input].  Format must be the following:
-	 *						[title]		 =>[string]
+	 *						[title]		 =>[string] *no longer in use
 	 *						[categories] =>Array(integer)
 	 *						[email]		 =>[string] *no longer in use
-	 *						[description]=>[string]
+	 *						[description]=>[string] *no longer in use
 	 *						[bookmark]	 =>[string] (on/off)
 	 *						[archive]	 =>[string] (on/off)
 	 * @param	string		sortable columns: title, created_date, closing_date
@@ -501,9 +501,9 @@ class Job{
 
 		//get the search fields
 		$general = $addslashes($input['general']);
-		$title = $addslashes($input['title']);
-		$email = $addslashes($input['email']);
-		$description = $addslashes($input['description']);
+//		$title = $addslashes($input['title']);
+//		$email = $addslashes($input['email']);
+//		$description = $addslashes($input['description']);
 		$categories = $input['categories'];
 		$bookmark = $input['bookmark'];
 		$archive = $input['archive'];
@@ -514,7 +514,8 @@ class Job{
 		}
 
 		//create sub sql for the search fields.
-		if ($title!=''){
+		//*merged with general search 
+/*		if ($title!=''){
 			$title_bits = explode(' ', $input['title']);
 			$title_sql = '';
 			//concat all the title search fields together.
@@ -522,6 +523,7 @@ class Job{
 				$title_sql .= "`title` LIKE '%$v%' OR ";
 			}
 		}
+*/		
 /*
  * Not sure if this is actually useful.
 		if ($email!=''){
@@ -533,6 +535,7 @@ class Job{
 			}
 		}
 */
+/*
 		if ($description!=''){
 			$description_bits = explode(' ', $input['description']);
 			$description_sql = '';
@@ -541,6 +544,7 @@ class Job{
 				$description_sql .= "`description` LIKE '%$v%' OR ";
 			}			
 		}
+*/		
 		if (is_array($categories) && !empty($categories)){
 			foreach($categories as $k=>$category_id){
 				//if 'any' is selected, use all category

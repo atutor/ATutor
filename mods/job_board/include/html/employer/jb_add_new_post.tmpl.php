@@ -6,11 +6,11 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 <div class="input-form">
 	<form action="" method="post">
 		<div class="row">
-			<label for="jb_title"><?php echo _AT('jb_title'); ?></label>
+			<label for="jb_title"><?php echo _AT('title'); ?></label>
 			<input type="text" id="jb_title" name="jb_title" />
 		</div>		
 		<div class="row">
-			<label><?php echo _AT('jb_category'); ?></label><br/>
+			<label><?php echo _AT('categories'); ?></label><br/>
 			<?php if(!empty($this->categories)): ?>
 			<?php foreach($this->categories as $category): ?>
 			<label for="jb_category_<?php echo $category['id'];?>"><?php echo htmlentities_utf8($category['name']); ?></label>
@@ -57,7 +57,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 			?>
 		</div>
 		<div class="row">
-			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="jb_description"><?php echo _AT('jb_description'); ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="jb_description"><?php echo _AT('description'); ?></label><br />
 			<textarea name="jb_description" cols="55" rows="15" id="jb_description"><?php echo $_POST['jb_description']; ?><?php echo $this->job_post['description']; ?></textarea>
 		</div>
 		<div class="row">

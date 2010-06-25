@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
 // $Id$
-
+$_user_location='public';
 define(AT_INCLUDE_PATH, '../../include/');
 include(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_JB_INCLUDE.'classes/Job.class.php');
@@ -37,9 +37,9 @@ if ($_GET['order']==''){
 //handle search
 if (isset($_GET['jb_submit'])){
 	$search_input['general'] = trim($_GET['jb_search_general']);
-	$search_input['title'] = trim($_GET['jb_search_title']);
+//	$search_input['title'] = trim($_GET['jb_search_title']);
 //	$search_input['email'] = $_GET['jb_search_email'];
-	$search_input['description'] = trim($_GET['jb_search_description']);
+//	$search_input['description'] = trim($_GET['jb_search_description']);
 	$search_input['categories'] = $_GET['jb_search_categories'];
 	$search_input['bookmark'] = $_GET['jb_search_bookmark'];
 	$search_input['archive'] = $_GET['jb_search_archive'];
@@ -84,11 +84,11 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 		</div>
 		<div class="jb_add_posting">
 			<?php if(isset($_SESSION['jb_employer_id']) && $_SESSION['jb_employer_id'] > 0): ?>
-			<a href="<?php echo AT_JB_BASENAME;?>employer/home.php"><?php echo _AT('jb_home');?></a>
+			<a href="<?php echo AT_JB_BASENAME;?>employer/home.php"><?php echo _AT('jb_employer_home');?></a> | 
 			<a href="<?php echo AT_JB_BASENAME;?>employer/logout.php"><?php echo _AT('jb_logout');?></a>
 			<?php else: ?>
-			<a href="<?php echo AT_JB_BASENAME;?>employer/login.php"><?php echo _AT('jb_login');?></a>
-			<a href="<?php echo AT_JB_BASENAME;?>employer/registration.php"><?php echo _AT('jb_not_a_member');?></a>
+			<a href="<?php echo AT_JB_BASENAME;?>employer/login.php"><?php echo _AT('jb_login');?></a> | 
+			<a href="<?php echo AT_JB_BASENAME;?>employer/registration.php"><?php echo _AT('jb_employer_registration');?></a>
 			<?php endif; ?>
 		</div>
 	</div>

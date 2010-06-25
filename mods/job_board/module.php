@@ -47,7 +47,7 @@ define('AT_ADMIN_PRIV_JOB_BOARD', $this->getAdminPrivilege());
  */
 $_group_tool = $_student_tool = AT_JB_BASENAME.'index.php';
 
-$this->_list['jb_job_board'] = array('title_var'=>'jb_job_board','file'=>AT_JB_BASENAME.'sublinks.php');
+$this->_list['job_board'] = array('title_var'=>'job_board','file'=>AT_JB_BASENAME.'sublinks.php');
 $this->_pages[AT_JB_BASENAME.'index.php']['icon']      = 'images/home-directory_sm.png';
 
 /*******
@@ -55,7 +55,7 @@ $this->_pages[AT_JB_BASENAME.'index.php']['icon']      = 'images/home-directory_
  */
  if (admin_authenticate(AT_ADMIN_PRIV_JOB_BOARD, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages[AT_NAV_ADMIN] = array(AT_JB_BASENAME.'index_admin.php');
-	$this->_pages[AT_JB_BASENAME.'index_admin.php']['title_var'] = 'jb_job_board';
+	$this->_pages[AT_JB_BASENAME.'index_admin.php']['title_var'] = 'job_board';
 	$this->_pages[AT_JB_BASENAME.'index_admin.php']['parent']    = AT_NAV_ADMIN;
 	$this->_pages[AT_JB_BASENAME.'index_admin.php']['children']    = array(AT_JB_BASENAME.'admin/preferences.php', AT_JB_BASENAME.'admin/categories.php', AT_JB_BASENAME.'admin/employers.php');
 		$this->_pages[AT_JB_BASENAME.'admin/preferences.php']['title_var'] = 'jb_preferences';
@@ -115,9 +115,9 @@ $this->_pages[AT_JB_BASENAME.'subscribe.php']['parent'] = AT_JB_BASENAME.'index.
 //$this->_pages[AT_JB_BASENAME.'index_mystart.php']['children'] = array_push($this->_pages[AT_JB_BASENAME.'index_mystart.php']['children'], AT_JB_BASENAME.'index.php');
 
 /* public pages */
-$this->_pages[AT_NAV_PUBLIC] = array(AT_JB_BASENAME.'index_public.php');
-$this->_pages[AT_JB_BASENAME.'index_public.php']['title_var'] = 'job_board';
-$this->_pages[AT_JB_BASENAME.'index_public.php']['parent'] = AT_NAV_PUBLIC;
+$this->_pages[AT_NAV_PUBLIC] = array(AT_JB_BASENAME.'index.php');
+$this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = 'job_board';
+$this->_pages[AT_JB_BASENAME.'index.php']['parent'] = AT_NAV_PUBLIC;
 
 /* my start page pages */
 $this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');

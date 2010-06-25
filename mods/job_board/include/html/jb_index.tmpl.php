@@ -3,17 +3,19 @@ if ($search_string!=''){
 	$search_string = SEP.$search_string;
 }
 ?>
+<?php if(isset($_SESSION['member_id']) && $_SESSION['member_id'] >0): ?>
 <div>
 	<a href="<?php echo AT_JB_BASENAME.'subscribe.php'; ?>"><?php echo _AT('jb_subscribe'); ?></a>
 </div>
+<?php endif; ?>
 
 <div>
 	<table class="data static" summary="" rules="rows">
 		<thead>
 			<th><?php echo _AT('id'); ?></th>
-			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=title".SEP."order=$order".$search_string; ?>"><?php echo _AT('jb_title'); ?></a></th>
-			<th><?php echo _AT('jb_employer'); ?></th>
-			<th><?php echo _AT('jb_categories'); ?></th>
+			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=title".SEP."order=$order".$search_string; ?>"><?php echo _AT('title'); ?></a></th>
+			<th><?php echo _AT('employer'); ?></th>
+			<th><?php echo _AT('categories'); ?></th>
 			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=created_date".SEP."order=$order".$search_string; ?>"><?php echo _AT('created_date'); ?></a></th>
 			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=closing_date".SEP.SEP."order=$order".$search_string; ?>"><?php echo _AT('jb_closing_date'); ?></a></th>
 		</thead>

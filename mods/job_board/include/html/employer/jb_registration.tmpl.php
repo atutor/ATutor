@@ -22,7 +22,7 @@ function encrypt_password()
 	<form method="post" action="" name="jb_registration_form">
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
-			<label for="jb_registration_username"><?php echo _AT('jb_registration_username'); ?></label>
+			<label for="jb_registration_username"><?php echo _AT('username'); ?></label>
 			<input type="text" id="jb_registration_username" name="jb_registration_username" value="<?php echo htmlentities_utf8($_POST['jb_registration_username']); ?>"/>
 		</div>
 
@@ -40,13 +40,13 @@ function encrypt_password()
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
-			<label for="jb_registration_employer_name"><?php echo _AT('jb_registration_employer_name'); ?></label>
+			<label for="jb_registration_employer_name"><?php echo _AT('name'); ?></label>
 			<input type="text" id="jb_registration_employer_name" name="jb_registration_employer_name" value="<?php echo htmlentities_utf8($_POST['jb_registration_employer_name']); ?>"/>
 		</div>
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
-			<label for="jb_registration_email"><?php echo _AT('jb_email'); ?></label>
+			<label for="jb_registration_email"><?php echo _AT('email'); ?></label>
 			<input type="text" id="jb_registration_email" name="jb_registration_email" value="<?php echo htmlentities_utf8($_POST['jb_registration_email']); ?>"/>
 		</div>
 		
@@ -57,7 +57,7 @@ function encrypt_password()
 		</div>
 
 		<div class="row">
-			<label for="jb_registration_website"><?php echo _AT('website'); ?></label>
+			<label for="jb_registration_website"><?php echo _AT('jb_website'); ?></label>
 			<input type="text" id="jb_registration_website" name="jb_registration_website" value="<?php echo htmlentities_utf8($_POST['jb_registration_website']); ?>"/>
 		</div>
 		

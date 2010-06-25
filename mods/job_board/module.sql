@@ -66,3 +66,55 @@ CREATE TABLE `jb_category_subscribes` (
 )
 ENGINE = MyISAM;
 
+
+# Module Language
+INSERT INTO `language_text` VALUES ('en', '_module','job_board','Job Board',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_search','Search',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_search_filter','Search Filters',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_search_filter_blub','Use the following filters to refine your search',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_subscribe','Subscribe',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_subscribe_blub','Check the categories below to get email notifications when there is a new job post.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_title','Title',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_employer','Employer',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_employers','Employers',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_categories','Categories',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_bookmark','Bookmark',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_archive','Archive',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_description','Description',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_closing_date','Closing Date',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_login','Post a Job',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_logout','Logout',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_registration','Employer Registration',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_any_categories','Any Categories',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_login','Employer Login',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_login_text','Login to manage or post new jobs.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_login_name','Employer Login Name',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_archive','Archive',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_home','Employer Home',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_add_new_post','Add new post',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_view_post','View Post',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_edit_profile','Edit Profile',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_is_public','Allow non-ATutor users to see this post',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_no_category','No category',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_add_to_cart','Bookmark this post',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_remove_to_cart','Remove this bookmark',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_website','Website',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_confirmed','Confirmed',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_unconfirmed','Unconfirmed',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state','Approval State',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state_confirmed','Confirmed',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state_unconfirmed','Unconfirmed',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_required_posting_approval','New posting requires approval',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_admin_add_category_blub','To add new categories for the job posting, type the category name in the text field and click "Save".',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_admin_edit_categories_blub','The list below are the current categories within the system.  You may delete them by clicking on "Delete".',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_status_unconfirmed','Unconfirmed',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_status_confirmed','Confirmed',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_status_suspended','Suspended',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_add_new_post','Add new post',NOW(),'');
+
+
+# Module Messages
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JOB_POST_ADDED_SUCCESSFULLY','Job Post added successfully.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_POST_DELETED','Job Post deleted successfully.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_UPDATED_SUCCESS','Job Post updated successfully.',NOW(),'');
+
