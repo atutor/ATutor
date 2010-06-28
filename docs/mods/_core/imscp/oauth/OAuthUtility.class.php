@@ -50,7 +50,8 @@ class OAuthUtility {
 		
 		$sql = "SELECT token, 
 		               unix_timestamp(now()) now_timestamp, 
-		               unix_timestamp(addtime(oct.assign_date, ocs.expire_threshold)) expire_timestamp
+		               ocs.expire_threshold,
+		               unix_timestamp(addtime(oct.assign_date, sec_to_time(ocs.expire_threshold))) expire_timestamp
 		          FROM ".TABLE_PREFIX."oauth_client_servers ocs, ".TABLE_PREFIX."oauth_client_tokens oct
 		         WHERE ocs.oauth_server_id=oct.oauth_server_id
 		           AND oct.member_id=".$_SESSION['member_id']."
@@ -59,15 +60,18 @@ class OAuthUtility {
 		
 		$result = mysql_query($sql, $db);
 		
-		if (mysql_num_rows($result) == 0) return '';
+		if (mysql_num_rows($result) == 0) {
+			return '';
+		}
 		else
 		{
 			$row = mysql_fetch_assoc($result);
 			
-			if ($row['now_timestamp'] < $row['expire_timestamp'])
+			if ($row['expire_threshold'] == 0 || $row['now_timestamp'] < $row['expire_timestamp']) {
 				return $row['token'];
-			else
+			} else {
 				return '';
+			}
 		}
 	}
 }
