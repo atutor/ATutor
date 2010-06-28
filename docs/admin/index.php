@@ -123,20 +123,22 @@ if ($_config['check_version']) {
 			$patchListParser->parse($patch_list_xml);
 			$patch_list_array = $patchListParser->getMyParsedArrayForVersion(VERSION);
 			
-			foreach ($patch_list_array as $row_num => $patch)
-				$patch_ids .= '\'' . $patch['atutor_patch_id'] . '\', ';
-				
-			$sql = "select count(distinct atutor_patch_id) cnt_installed_patches from ".TABLE_PREFIX."patches " .
-			       "where atutor_patch_id in (" . substr($patch_ids, 0, -2) .")".
-			       " and status like '%Installed'";
-		
-			$result = mysql_query($sql, $db) or die(mysql_error());
-			$row = mysql_fetch_assoc($result);
+			if (count($patch_list_array)) {
+				foreach ($patch_list_array as $row_num => $patch) {
+					$patch_ids .= '\'' . $patch['atutor_patch_id'] . '\', ';
+				}
+					
+				$sql = "select count(distinct atutor_patch_id) cnt_installed_patches from ".TABLE_PREFIX."patches " .
+				       "where atutor_patch_id in (" . substr($patch_ids, 0, -2) .")".
+				       " and status like '%Installed'";
 			
-			$cnt = count($patch_list_array) - $row['cnt_installed_patches'];
-
-			if ($cnt > 0)
-			{
+				$result = mysql_query($sql, $db) or die(mysql_error());
+				$row = mysql_fetch_assoc($result);
+				
+				$cnt = count($patch_list_array) - $row['cnt_installed_patches'];
+	
+				if ($cnt > 0)
+				{
 		?>
 	<div class="input-form" style="width: 98%;">
 		<form method="get" action="mods/_standard/patcher/index_admin.php">
@@ -151,6 +153,7 @@ if ($_config['check_version']) {
 		</form>
 	</div>
 	<?php 
+				}
 			}
 		}
 	} 
