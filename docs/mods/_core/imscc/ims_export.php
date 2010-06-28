@@ -192,7 +192,10 @@ class MyHandler {
 			}
 		} else if (isset($elements[$name]) && ($attrs[$elements[$name]] != '')) {
 			/* we know exactly which attribute contains the reference to the file. */
-			$my_files[] = $attrs[$elements[$name]];
+			//hack, if param[name]=autoplay or autostart, ignore
+			if (!($name=='param' && ($attrs['name']=='autoplay' || $attrs['name']=='autoStart'))){
+			    $my_files[] = $attrs[$elements[$name]];
+			}
 		}
     }
     function closeHandler(& $parser,$name) { }
