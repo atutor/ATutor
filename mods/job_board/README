@@ -1,0 +1,138 @@
+MODULE DETAILS:
+---------------
+Description:
+Allow users to add job postings to the board.  
+
+Version:
+1.0
+
+License:
+GPL/ATutor
+
+
+-------------------------------------------------------------------
+TABLE OF CONTENT
+-------------------------------------------------------------------
+1. Job board
+	1.1. Job Listing
+	1.2. Simple Search
+	1.3. Advanced Search
+	1.4. View Posting
+	1.5. Job Cart
+
+2. Employers
+	2.1. Registration
+	2.2. Adding a job posting
+	2.3. Update employer profile
+	2.4. Edit/Delete Postings
+3. Administrator
+	3.1. Edit/Delete Posting
+		3.1.1. Approving Postings
+	3.2. Preference Settings
+	3.3. Job Categories
+	3.4. Employers
+		3.4.1. Approving Employers
+
+
+-------------------------------------------------------------------
+1.1. Job Listing
+-------------------------------------------------------------------
+- Job listing can be sorted by clicking the column headers.  Not all columns can be sorted, only the ones with an up/down arrows can be sorted.  Namely, job title, created, closing date.
+- Clicking on the column header again will change the sorting from ascending order to descending order.  Vice versa.
+
+-------------------------------------------------------------------
+1.2. Simple Search
+-------------------------------------------------------------------
+- Search box allow users to search for any job post that matches your search query.  Specifically, it will genereate a list that matches its title, and description. 
+
+-------------------------------------------------------------------
+1.3. Advanced Search
+-------------------------------------------------------------------
+- Advanced search allow users to add specific parameters to refine their search.  
+- If bookmark is checked, it will filter out all entries that are bookmarked by the ATutor user.
+- If archive is checked, it will generate all postings even if its closing date is expired.
+
+-------------------------------------------------------------------
+1.4. View Posting
+-------------------------------------------------------------------
+- Click on any entries and you will be brought to another page that shows the content of the posting
+- Users have the option to bookmark this entry by clicking "Add to job cart" on the right floating box.
+
+-------------------------------------------------------------------
+1.5. Job Cart
+-------------------------------------------------------------------
+- "Job cart" is a bookmarking system.  It is made to allow users to track the posting they like.  
+- Bookmarked entries will have a '*' in the job listing.
+
+
+-------------------------------------------------------------------
+2.1. Registration
+-------------------------------------------------------------------
+- Only employers have the privilege to post jobs
+- To allow third party users to post jobs within ATutor.  ie. you do not have to be registered in ATutor to post a job.
+- Email need to be valid in order to activate your account. 
+- Registration is needed to filter out spammers.
+
+-------------------------------------------------------------------
+2.2. Adding a job posting
+-------------------------------------------------------------------
+1.  Register as an Employer by clicking on "Register as Employer"; or if you already have an Job board account, log in with your username.  Note: this username is different than the ATutor ID.
+2. Click on "Add a job posting" on the submenu on top.
+3. 
+- Title, is the title of your Job Post.  Should always include the position in the title.
+- Category, is used for ATutor users to get subscription and search for.  If there is no matching category, you may suggest it to the ATutor admin so they can add it in.
+- Closing date, is the deadline of the job post.  Once the post expired, it will no longer show up in the job board unless the user search for archives in the advanced search box.  
+- Description, should always include Job Title, Brief Description, Requirements, Contacts.
+4. Once ready, click submit and it will be posted.  (Might not show up if the post requires administrator approval)
+
+-------------------------------------------------------------------
+2.3. Update Employer profile
+-------------------------------------------------------------------
+1. Log in
+2. Click on "Update Profile" on the submenu.
+3. Make your changes and click save.
+
+-------------------------------------------------------------------
+2.4. Edit/Delete Posting
+-------------------------------------------------------------------
+1. On the listing page, click on edit/delete.  
+
+
+-------------------------------------------------------------------
+3.1. Edit/Delete Posting
+-------------------------------------------------------------------
+- Refer to 2.4.
+
+-------------------------------------------------------------------
+3.1.1. Approving Posting
+-------------------------------------------------------------------
+- From listing, click on Edit.
+- Within Admin mode, there is an option called "Approval State".  "Confirmed" will allow the posting to show up publicly.  "Unconfirmed" will hide it from the public listing.
+
+-------------------------------------------------------------------
+3.2. Preference Settings
+-------------------------------------------------------------------
+- if required posting approval is set to "Yes", all posting will needed to be approved.  
+- To know how to approve a posting, check 3.1.1.
+
+-------------------------------------------------------------------
+3.3. Job Categories
+-------------------------------------------------------------------
+- Admin has the ability to add more category by entering the new category name in the textbox.
+- To delete any categories, click "Delete" beside the desired category.
+- Note: Categories are always sorted alphanumerically.
+
+-------------------------------------------------------------------
+3.4. Employers
+-------------------------------------------------------------------
+- Admin has the ability to edit employers.  Click on 'Edit'.
+
+-------------------------------------------------------------------
+3.4.1. Approving Employer 
+-------------------------------------------------------------------
+- Employers can be disabled by clicking on 'Edit' as mentioned in 3.4.  
+- Under "Approval State"
+	"Unconfirmed" means the employer has not been confirmed and cannot post any job posting.
+	"Confirmed" means the employer is evaludated and has the right to post any job posting they want.
+	"Suspended" means the employer has violated the job board rules and can no longer post or login.  
+
