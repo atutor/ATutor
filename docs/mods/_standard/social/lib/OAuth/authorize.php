@@ -41,15 +41,15 @@ try {
 	$savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 	$savant->assign('current_date', AT_date(_AT('announcement_date_format')));
 	$savant->assign('just_social', $_config['just_social']);
-	$savant->display('oauth/header.tmpl.php');
+	$savant->display('social/oauth/header.tmpl.php');
 
 	//authorize template
 	$savant->assign('token', $token);
 	$savant->assign('callback', $callback);
-	$savant->display('oauth/authorize.tmpl.php');
+	$savant->display('social/oauth/authorize.tmpl.php');
 
 	//oauth customized footer template
-	$savant->display('oauth/footer.tmpl.php');
+	$savant->display('social/oauth/footer.tmpl.php');
 } catch (OAuthException $e) {
   echo $e->getMessage();
   exit;
