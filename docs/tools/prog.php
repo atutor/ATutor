@@ -38,6 +38,7 @@ if ($_GET['tile']) {
     //-->
     </script>
     <script src="<?php echo $_base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+    <script type="text/javascript" src="<?php echo $_base_path; ?>jscripts/ATutorCourse.js"></script>
     <link rel="stylesheet" href="<?php echo $_base_path; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
     <style id="pref_style" type="text/css"></style> 
 </head>
