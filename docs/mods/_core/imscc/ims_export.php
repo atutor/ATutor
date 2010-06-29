@@ -175,7 +175,6 @@ class MyHandler {
 		/* check if this attribute specifies the files in different ways: (ie. java) */
 		if (is_array($elements[$name])) {
 			$items = $elements[$name];
-
 			foreach ($items as $item) {
 				if ($attrs[$item] != '') {
 
@@ -194,7 +193,11 @@ class MyHandler {
 			/* we know exactly which attribute contains the reference to the file. */
 			//hack, if param[name]=autoplay or autostart, ignore
 			if (!($name=='param' && ($attrs['name']=='autoplay' || $attrs['name']=='autoStart'))){
-			    $my_files[] = $attrs[$elements[$name]];
+			    //skip glossary.html, tweak to accomodate atutor imscp; also skip repeated entries.
+			    if (strpos($attrs[$elements[$name]], 'glossary.html')===false 
+			            && !in_array($attrs[$elements[$name]], $my_files)){
+			        $my_files[] = $attrs[$elements[$name]];
+			    }
 			}
 		}
     }
