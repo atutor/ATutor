@@ -4,7 +4,7 @@
 /****************************************************************/
 /* Copyright (c) 2002-2008                                      */
 /* Written by Greg Gay & Joel Kronenberg & Chris Ridpath        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
+/* Inclusive Design Institute                                   */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/

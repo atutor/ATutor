@@ -3,7 +3,7 @@
 /* ATutor                                                               */
 /************************************************************************/
 /* Copyright (c) 2002 - 2009                                            */
-/* Adaptive Technology Resource Centre / University of Toronto          */
+/* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
 /* modify it under the terms of the GNU General Public License          */

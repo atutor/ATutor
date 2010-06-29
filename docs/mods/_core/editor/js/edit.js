@@ -2,7 +2,7 @@
 /* ATutor                                                               */
 /************************************************************************/
 /* Copyright (c) 2010 by Laurel Williams                                */
-/* Adaptive Technology Resource Centre / University of Toronto          */
+/* Inclusive Design Institute                                           */
 /* http://atutor.ca                                                     */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */

@@ -3,8 +3,8 @@ exit('no longer used');
 /************************************************************************/
 /* ATutor														        */
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
-/* Adaptive Technology Resource Centre / University of Toronto          */
+/* Copyright (c) 2002-2010                                              */
+/* Inclusive Design Institute                                           */
 /* http://atutor.ca												        */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
