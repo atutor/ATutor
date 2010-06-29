@@ -99,6 +99,7 @@ acronym {
 <li><a href="#config">Theme Configuration File</a></li>
 <li><a href="#create">Creating a Theme</a></li>
 <li><a href="#variables">Theme Variables</a></li>
+<li><a href="#testing">Testing a theme</a></li>
 <li><a href="#updating">Updating an old theme for a newer version of ATutor</a></li>
 </ul>
 
@@ -278,6 +279,7 @@ These files are generally all that are required to create a new theme:<br /><br 
 `title` (the name of the theme, any text string)
 `version` (the version of ATutor the theme is intended for)
 `dir_name` (the name of the directory the theme will be located in, alphabetic string, no spaces)
+`type` (the type of the theme, "Desktop" or "Mobile)
 `last_updated` (The last date the theme was modified, use "NOW()")
 `extra_info` (A description of the theme etc. )
 `status` (theme's enable status, 0:disabled, 1:enabled, 2:set as default theme)
@@ -286,12 +288,12 @@ These files are generally all that are required to create a new theme:<br /><br 
 
 <pre>
 INSERT INTO `AT_themes` 
-     (`title`, `version`, `dir_name`, `last_updated`, `extra_info`, `status`) 
+     (`title`, `version`, `dir_name`, `type`, `last_updated`, `extra_info`, `status`) 
 VALUES
-     ('Blueberry Cheesecake', '1.6.1', 'bb_cc', NOW(), 'This is a blue theme.', 1);
+     ('Blueberry Cheesecake', '1.6.1', 'bb_cc', `Desktop`, NOW(), 'This is a blue theme.', 1);
 </pre>
 
-
+<p>ATutor detects the type of the devices where the requests are from. If the request is from a desktop computer, the default desktop theme is automatically applied. Otherwise, if the request is from a mobile device, the default mobile is applied.</p>
 
 <a name="variables"></a>
 <h2>Theme Variables</h2>
@@ -331,7 +333,13 @@ VALUES
 * current_top_level_page    string                    full url to the current top level page in "top_leve_pages"
 * current_sub_level_page    string                    full url to the current sub level page in the "sub_level_pages"
 * sub_level_pages           array(array('url', 'title'))     the sub level pages.
+* is_mobile_device          true or false                    the request is from a mobile device or a desktop device
+* mobile_device_type        One of the values: ipod, blackberry, android, unknown
 </pre>
+<a name="testing"></a>
+<h2>Testing A Theme</h2>
+<p>To make ATutor use your theme, login as an ATutor user, go to "Preferences" page, "ATutor Settings" tab. Depending on the theme type, your theme will be displayed either in "Desktop Theme" or in "Mobile Theme". Find and select your theme name and save. ATutor will automatically switch to the saved theme. Note that if your theme is defined as a mobile theme, it will only be applied when you access ATutor via a mobile device. Vice versas for destop theme.</p>
+
 <a name="updating"></a>
 <h2>Updating an Old Theme</h2>
 
@@ -343,8 +351,6 @@ VALUES
 <p>Once you've perfected your theme, consider contributing it to the ATutor community so others can use it. Visit the Themes section of ATutor.ca to contribute a theme. Login with your atutor.ca user account, then submit your theme to receive credit for your work. Contributing a theme will automatically raise your ATutor contributor status to the Bronze level. Or, if you're not interested in being credited, just send the theme to the ATutor team (info//AT//atutor.ca), or post it to one of the forums, and the ATutor team will submit the theme for you.</p>
 
 <p><a href="http://www.atutor.ca/atutor/themes/submit_theme.php">Submit a Theme</a></p>
-
-
 
 </div>
 </body>
