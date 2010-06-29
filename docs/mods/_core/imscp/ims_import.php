@@ -154,8 +154,10 @@ function checkResources($import_path){
 	//other arrays. 
 	//Using sizeof make sure it's not a subset of array2.
 	//-1 on data because it always contain the imsmanifest.xml file
-	if (!empty($result) || sizeof($data)-1>sizeof($filearray)){
-		$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('ims_missing_references')));
+	if (!$skip_ims_validation){
+	    if (!empty($result) || sizeof($data)-1>sizeof($filearray)){
+		    $msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('ims_missing_references')));
+	    }
 	}
 	return true;
 }
@@ -296,7 +298,7 @@ function rehash($items){
 	/* builds the $path array which is the path from the root to the current element */
 	function startElement($parser, $name, $attrs) {
 		global $items, $path, $package_base_path, $all_package_base_path, $package_real_base_path;
-		global $element_path, $import_path;
+		global $element_path, $import_path, $skip_ims_validation;
 		global $xml_base_path, $test_message, $content_type;
 		global $current_identifier, $msg, $ns, $ns_cp;
 
@@ -318,7 +320,7 @@ function rehash($items){
 */
 
 		//validate namespaces
-		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
+		if(!$skip_ims_validation && isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
 			$schema_location = array();
 			$split_location = preg_split('/[\r\n\s]+/', trim($attrs['xsi:schemaLocation']));
 
@@ -354,7 +356,7 @@ function rehash($items){
 			$xml_base_path = $attrs['xml:base'];
 		} else if ($name == 'file') {
 			// check if it misses file references
-			if(!isset($attrs['href']) || $attrs['href']==''){
+			if(!$skip_ims_validation && (!isset($attrs['href']) || $attrs['href']=='')){
 				//$msg->addError('MANIFEST_NOT_WELLFORM');
 				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT('ims_missing_references')));
 			}
@@ -489,7 +491,7 @@ function rehash($items){
 			if(!isset($items[$current_identifier]) && $attrs['href']!=''){
 				$items[$current_identifier]['href']	 = $attrs['href'];
 			}
-			if (substr($attrs['href'], 0, 7) == 'http://' || substr($attrs['href'], 0, 8) == 'https://' || file_exists($import_path.$attrs['href'])){
+			if (substr($attrs['href'], 0, 7) == 'http://' || substr($attrs['href'], 0, 8) == 'https://' || file_exists($import_path.$attrs['href']) || $skip_ims_validation){
 				$items[$current_identifier]['file'][] = $attrs['href'];
 			} else {
 				$msg->addError(array('IMPORT_CARTRIDGE_FAILED', _AT(array('ims_files_missing', $attrs['href']))));
@@ -660,6 +662,11 @@ if (!isset($_POST['submit']) && !isset($_POST['cancel'])) {
 }
 
 $cid = intval($_POST['cid']);
+
+//If user chooses to ignore validation.
+if(isset($_POST['ignore_validation']) && $_POST['ignore_validation']==1) {
+	$skip_ims_validation = true;
+}
 
 if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 	if ($content = @file_get_contents($_POST['url'])) {
@@ -879,11 +886,7 @@ if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 }
 
 // Check if all the files exists in the manifest, iff it's a IMS CC package.
-if ($content_type == 'IMS Common Cartridge') {
-	//If user chooses to ignore validation.
-	if(isset($_POST['ignore_validation']) && $_POST['ignore_validation']==1) {
-		$skip_ims_validation = true;
-	}
+if ($content_type == 'IMS Common Cartridge') {	
 	checkResources($import_path);
 }
 
