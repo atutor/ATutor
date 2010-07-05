@@ -152,6 +152,30 @@ $not_as_good = FALSE;
 						} ?></td>
 		</tr>
 		<tr>
+			<td><kbd>GD</kbd></td>
+			<td><?php if (extension_loaded('gd')) {
+					echo 'On</td><td align="center">';
+					echo $good;
+				} else {
+					echo 'Disabled</td><td align="center">';
+					echo $bad;
+					$not_as_good = TRUE;
+				} ?></td>
+		</tr>
+		<?php if (extension_loaded('gd')): $gd_info = gd_info();?>
+		<tr>
+			<td><kbd>JPEG Support</kbd></td>
+			<td><?php if ($gd_info['JPG Support']) {
+					echo 'On</td><td align="center">';
+					echo $good;
+				} else {
+					echo 'Disabled</td><td align="center">';
+					echo $bad;
+					$not_as_good = TRUE;
+				} ?></td>
+		</tr>
+		<?php endif; ?>
+		<tr>
 			<td><kbd>upload_max_filesize</kbd> &gt;= 2 MB</td>
 			<td><?php echo $filesize = ini_get('upload_max_filesize'); ?></td>
 			<td align="center"><?php 
