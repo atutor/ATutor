@@ -155,6 +155,20 @@ if (isset($_POST['submit'])) {
 	}
 }
 
+//check chat directory
+if (!@opendir(AT_CONTENT_DIR . 'chat/')){
+	mkdir(AT_CONTENT_DIR . 'chat/', 0777);
+}
+
+if(!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings')){
+	@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'], 0777);
+	@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/', 0776);
+	@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/', 0776);
+	@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/', 0776);
+	@copy('admin.settings.default', AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings');
+	@chmod (AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings', 0777);
+
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
