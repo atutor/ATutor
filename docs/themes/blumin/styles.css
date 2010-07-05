@@ -1920,3 +1920,7 @@ div.social-wrapper{
 	padding:.5em;
 	margin:auto;
 }
+.content-settings{
+	width: 30%;
+	float: left;
+}

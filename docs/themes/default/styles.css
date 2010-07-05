@@ -2442,4 +2442,7 @@ clear:right;
 margin-left:2em;
 }
 
+.content-settings{
+	width: 30%;
+	float: left;
 }
