@@ -1,13 +1,13 @@
 
-<fieldset style="width:30%;float:left;">
+<fieldset class="content-settings">
 <?php include_once('alt_to_text.inc.php'); ?>
 </fieldset>
 
-<fieldset style="width:30%;float:left;">
+<fieldset class="content-settings">
 <?php include_once('alt_to_audio.inc.php'); ?>
 </fieldset>
 
-<fieldset style="width:30%;float:left;">
+<fieldset class="content-settings">
 <?php include_once('alt_to_visual.inc.php'); ?>
 </fieldset>
 
