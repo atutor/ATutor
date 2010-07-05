@@ -129,7 +129,10 @@ function checkResources($import_path){
 		if(isset($fileinfo['file']) && is_array($fileinfo['file']) && !empty($fileinfo['file'])){
 			foreach($fileinfo['file'] as $fn){
 				if (!in_array(realpath($import_path.$fn), $filearray)){
-					$filearray[] = realpath($import_path. $fn);
+					//if url, skip
+					if (preg_match('/^http[s]?\:/', $fn) == 0){
+						$filearray[] = realpath($import_path. $fn);
+					}					
 				}
 			}
 		}
