@@ -2,6 +2,6 @@
 
 <h2>Comments</h2>
 
-<p>Users can post any comments to the album and photo.  The author of the comment can edit their comment by clicking on the comment itself, the comment will turn into an editable field.  When the user is done editing, press Enter to save the changes.  Note: The owner of the album can edit/delete any comments within the album.  </p>
+<p>Users can post comments to an album or a photo.  The author of a comment can edit it by clicking on the comment itself, the comment will turn into an editable field.  When done editing, press Enter to save the changes.  Note: The owner of the album can edit and delete any comments within the album.  </p>
 
 <?php require('../common/body_footer.inc.php'); ?>
