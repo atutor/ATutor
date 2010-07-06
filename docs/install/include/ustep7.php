@@ -381,7 +381,7 @@ if (!$db) {
 			<input type="hidden" name="step" value="3" />';
 //			store_steps(1);
 
-			$html .= '<div><p>ATutor 1.6 upgrade requires you to convert ATutor content to UTF-8.  The courses are listed below with their associated primary language.  </p><p>Please choose one of the conversion options listed below, the recommanded option(in blue) is already selected for you.</p><p>For a more detailed description for each of these conversions, please visit our <a href="http://wiki.atutor.ca/display/atutorwiki/UTF-8+Conversion" target="blank">ATutor Wiki page</a></p></div>';
+			$html .= '<div><p>ATutor 2.0 upgrade requires you to convert ATutor content to UTF-8 if you are upgrading from a version ealier than ATutor 1.6.  The courses are listed below with their associated primary language.  </p><p>Please choose one of the conversion options listed below, the recommanded option(in blue) is already selected for you.</p><p>For a more detailed description for each of these conversions, please visit our <a href="http://wiki.atutor.ca/display/atutorwiki/UTF-8+Conversion" target="blank">ATutor Wiki page</a></p></div>';
 
 			//The html fragment that sets the suggested conversion type on bold 
 			$suggestion = array('class="suggested"', 'checked="checked"');	
