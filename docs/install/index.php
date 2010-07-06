@@ -158,8 +158,7 @@ $not_as_good = FALSE;
 					echo $good;
 				} else {
 					echo 'Disabled</td><td align="center">';
-					echo $bad;
-					$not_as_good = TRUE;
+					echo $warning;
 				} ?></td>
 		</tr>
 		<?php if (extension_loaded('gd')): $gd_info = gd_info();?>
@@ -170,8 +169,7 @@ $not_as_good = FALSE;
 					echo $good;
 				} else {
 					echo 'Disabled</td><td align="center">';
-					echo $bad;
-					$not_as_good = TRUE;
+					echo $warning;
 				} ?></td>
 		</tr>
 		<?php endif; ?>
