@@ -21,7 +21,7 @@
 				<ul class="files"></ul>
 			</div>
 			<div class="row" >
-				<input id="files_done" disabled="disabled" type="button" value="<?php echo _AT("upload"); ?>" class="button" onClick="window.location.reload();" />
+				<input id="files_done" disabled="disabled" type="button" value="<?php echo _AT("upload"); ?>" class="button" onclick="window.location.reload();" />
 			</div>
 		</div>
 	</div>
@@ -71,12 +71,12 @@
 					<!-- TODO: Profile link and img -->
 					<?php if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']): ?>
 					<div class="flc-inlineEditable">
-						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
+						<strong><a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
 						<span class="flc-inlineEdit-text" id="<?php echo $comment_array['id'];?>" ><?php echo htmlentities_utf82($comment_array['comment']);?></span>
 					</div>
 					<?php else: ?>
 					<div>
-						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
+						<strong><a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
 						<?php echo htmlentities_utf82($comment_array['comment'], true);?>
 					</div>
 					<?php endif; ?>

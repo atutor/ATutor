@@ -1,15 +1,20 @@
 <!-- matching question with partial marks -->
 		<item title="Mathcing question" ident="ITEM_<?php echo $this->row['question_id']; ?>">
 			<itemmetadata>
-				<qmd_itemtype>Matching</qmd_itemtype>
 				<qtimetadata>
 					<qtimetadatafield>
 						<fieldlabel>qmd_itemtype</fieldlabel>
 						<fieldentry>Logical Groups</fieldentry>
 					</qtimetadatafield>
 				</qtimetadata>
+				<qtimetadata>
+					<qtimetadatafield>
+						<fieldlabel>qmd_questiontype</fieldlabel>
+						<fieldentry>Drag-and-drop</fieldentry>
+					</qtimetadatafield>
+				</qtimetadata>
 			</itemmetadata>
-			<presentation>				
+			<presentation>
 				<flow>
 					<material>
 						<mattext texttype="text/html"><?php echo $this->row['question']; ?></mattext>
@@ -34,7 +39,6 @@
 					<?php endfor; ?>
 				</flow>
 			</presentation>
-
 
 			<resprocessing>
 				<outcomes>
