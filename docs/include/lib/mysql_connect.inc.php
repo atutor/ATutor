@@ -12,7 +12,8 @@
 // $Id$
 
 if (AT_INCLUDE_PATH !== 'NULL') {
-	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);	
+
 	if (!$db) {
 		/* AT_ERROR_NO_DB_CONNECT */
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
@@ -27,5 +28,15 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 						E_USER_ERROR);
 		exit;
 	}
+	
+	//get set_utf8 config
+	$sql = 'SELECT * FROM '.TABLE_PREFIX."config WHERE name='set_utf8'";
+	$result = mysql_query($sql, $db);
+	if ($result){
+		$row = mysql_fetch_assoc($result);
+	}
+	if ($row['value']==1){
+		mysql_query("SET NAMES 'utf8'", $db); 
+	}	
 }
 ?>

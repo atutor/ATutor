@@ -116,6 +116,10 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			$result = mysql_query($sql ,$db);
 		}
 
+		//if fresh install, use SET NAME to set the mysql connection to UTF8
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('set_utf8', '1')";
+		mysql_query($sql ,$db);
+
 		unset($_POST['admin_username']);
 		unset($_POST['form_admin_password_hidden']);
 		unset($_POST['admin_email']);
