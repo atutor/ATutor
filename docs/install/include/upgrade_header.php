@@ -49,7 +49,7 @@ $install_steps[9] = array('name' => 'Done!');
 <body>
 <div style="height: 70px; vertical-align: bottom; background: #354A81">
 	<h1 id="header">ATutor <?php echo $new_version; ?> Upgrade</h1>
-	<img src="../images/logo.gif" height="29" width="84" alt="ATutor Logo" id="logo" />
+	<img src="../images/AT_Logo_1_sm.png" height="35" width="97" alt="ATutor Logo" id="logo" />
 </div>
 <div style="clear: all"></div>
 <div class="content">
