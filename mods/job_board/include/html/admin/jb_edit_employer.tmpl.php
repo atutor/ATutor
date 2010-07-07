@@ -63,7 +63,7 @@ function encrypt_password() {
 		</div>
 
 		<div class="row">
-			<label for="jb_employer_website"><?php echo _AT('jb_company_url'); ?></label>
+			<label for="jb_employer_website"><?php echo _AT('jb_website'); ?></label>
 			<input type="text" name="jb_employer_website" id="jb_employer_website" value="<?php echo htmlentities_utf8($this->website); ?>"/>
 		</div>
 

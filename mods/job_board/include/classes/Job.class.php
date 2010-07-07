@@ -67,10 +67,9 @@ class Job{
 					while($row = mysql_fetch_assoc($result)){
 						$mail = new ATutorMailer;
 						$mail->AddAddress($row['email'], get_display_name($row['member_id']));
-						$body = _AT('jb_subscription_msg');
+						$body = _AT('jb_subscription_msg', $this->getCategoryNameById($category), $title);
 						$body .= "\n----------------------------------------------\n";
 						$body .= _AT('posted_by').": ".get_display_name($row['member_id'])."\n";
-						$body .= $_POST['body']."\n";
 						$mail->FromName = $_config['site_name'];
 						$mail->From     = $_config['contact_email'];
 						$mail->Subject = _AT('jb_subscription_mail_subject');

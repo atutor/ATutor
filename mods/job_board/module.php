@@ -110,19 +110,13 @@ $this->_pages[AT_JB_BASENAME.'view_post.php']['parent'] = AT_JB_BASENAME.'index.
 $this->_pages[AT_JB_BASENAME.'subscribe.php']['title_var'] = 'jb_subscribe';
 $this->_pages[AT_JB_BASENAME.'subscribe.php']['parent'] = AT_JB_BASENAME.'index.php';
 
-//$this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = _AT('test');
-//$this->_pages[AT_JB_BASENAME.'index.php']['parent'] = AT_JB_BASENAME.'index.php';
-//$this->_pages[AT_JB_BASENAME.'index_mystart.php']['children'] = array_push($this->_pages[AT_JB_BASENAME.'index_mystart.php']['children'], AT_JB_BASENAME.'index.php');
-
 /* public pages */
 $this->_pages[AT_NAV_PUBLIC] = array(AT_JB_BASENAME.'index.php');
-$this->_pages[AT_JB_BASENAME.'index.php']['title_var'] = 'job_board';
 $this->_pages[AT_JB_BASENAME.'index.php']['parent'] = AT_NAV_PUBLIC;
 
 /* my start page pages */
-$this->_pages[AT_NAV_START]  = array('mods/social/index_mystart.php');
-$this->_pages[AT_NAV_START]  = array(AT_JB_BASENAME.'index_mystart.php');
-$this->_pages[AT_JB_BASENAME.'index_mystart.php']['title_var'] = 'social';
-$this->_pages[AT_JB_BASENAME.'index_mystart.php']['guide']     = 'general/?p=my_network.php';
-$this->_pages[AT_JB_BASENAME.'index_mystart.php']['parent'] = AT_NAV_START;
+if(isset($_SESSION['member_id']) && $_SESSION['member_id']>0) {
+$this->_pages[AT_NAV_START]  = array(AT_JB_BASENAME.'index.php');
+$this->_pages[AT_JB_BASENAME.'index.php']['parent'] = AT_NAV_START;
+}
 ?>

@@ -26,7 +26,7 @@ if(isset($_POST['submit'])){
 	$sql = 'REPLACE INTO '.TABLE_PREFIX."config SET value='$posting_approval', name='jb_posting_approval'";
 	$result = mysql_query($sql, $db);
 	if ($reuslt===false){
-		$msg->addError('JB_SQL_ERROR');
+		$msg->addError('DB_NOT_UPDATED');
 	} else {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: preferences.php');

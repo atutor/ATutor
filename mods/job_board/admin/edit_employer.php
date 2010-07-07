@@ -71,7 +71,7 @@ if ($_POST['submit']){
 	if ($employer->updateProfile($name, $company, $email, $website)){
 		$msg->addFeedback('PROFILE_UPDATED');
 	} else {
-		$msg->addFeedback('DB_NOT_UPDATED');
+		$msg->addError('DB_NOT_UPDATED');
 	}
 	header('Location: employers.php');
 	exit;	

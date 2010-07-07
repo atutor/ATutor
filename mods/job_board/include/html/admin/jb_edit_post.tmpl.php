@@ -10,7 +10,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 			<input type="text" id="jb_title" name="jb_title" value="<?php echo htmlentities_utf8($this->job_post['title']); ?>" />
 		</div>		
 		<div class="row">
-			<label><?php echo _AT('jb_category'); ?></label><br/>
+			<label><?php echo _AT('jb_categories'); ?></label><br/>
 			<?php if(!empty($this->categories)): ?>
 			<?php foreach($this->categories as $category): ?>
 			<label for="jb_category_<?php echo $category['id'];?>"><?php echo htmlentities_utf8($category['name']); ?></label>

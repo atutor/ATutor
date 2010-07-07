@@ -7,7 +7,7 @@
 		<th><?php echo _AT('jb_categories'); ?></th>
 		<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=created_date".SEP."order=$order"; ?>"><?php echo _AT('created_date'); ?></a></th>
 		<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=closing_date".SEP."order=$order"; ?>"><?php echo _AT('jb_closing_date'); ?></a></th>
-		<th><?php echo _AT('approval_state'); ?></th>
+		<th><?php echo _AT('jb_approval_state'); ?></th>
 		<th></th>
 	</thead>
 	<tbody>
