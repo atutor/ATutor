@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Module Manager</name> 
+    <description lang="en">Setup and manage modules added to or enabled on this ATutor system.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2010-11-02</date> 
+        <state>stable</state> 
+        <notes></notes> 
+    </release> 
+</module>

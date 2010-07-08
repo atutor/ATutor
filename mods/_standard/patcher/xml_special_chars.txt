@@ -1,0 +1,5 @@
+&lt; 	< 	less than
+&gt; 	> 	greater than
+&amp; 	& 	ampersand 
+&apos; 	' 	apostrophe
+&quot; 	" 	quotation mark

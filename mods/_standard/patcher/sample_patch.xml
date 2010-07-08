@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<patch>
+	<atutor_patch_id>00001</atutor_patch_id>
+	<applied_version>1.6</applied_version>
+	<author>&lt;a href=&quot;http://atutor.ca&quot;&gt;ATutor&lt;/a&gt;</author>
+	<description>Sample patch XML</description>
+	<dependent_patches>
+		<dependent_patch>00002</dependent_patch>
+		<dependent_patch>00003</dependent_patch>
+	</dependent_patches>
+	
+	<sql>
+		ALTER TABLE `tests` ADD `description` TEXT NOT NULL AFTER `title`;
+	</sql>
+
+	<files>
+		<file>
+			<action>alter</action>
+			<name>create_test.php</name>
+			<location>tools/tests/</location>
+			<action_detail>
+				<type>delete</type>
+				<code_from></code_from>
+			</action_detail>
+				
+			<action_detail>
+				<type>replace</type>
+				<code_from></code_from>
+				<code_to></code_to>
+			</action_detail>
+		</file>
+	
+		<file>
+			<action>add</action>
+			<name>calendar.gif</name>
+			<location>docs/images/</location>
+		</file>
+
+		<file>
+			<action>delete</action>
+			<name>results_all_csv.php</name>
+			<location>tools/tests/</location>
+		</file>
+
+		<file>
+			<action>overwrite</action>
+			<name>results_all.php</name>
+			<location>tools/tests/</location>
+		</file>
+	</files>
+</patch> 

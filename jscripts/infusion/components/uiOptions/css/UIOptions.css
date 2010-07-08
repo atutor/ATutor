@@ -1,0 +1,36 @@
+.fl-uiOptions{background-color:#fff;}
+.fl-uiOptions .ui-accordion-content{border:1px solid;}
+.fl-uiOptions h2{cursor:pointer;margin:0;padding:5px 5px 5px 24px;background-color:#f5f5f5;}
+.fl-uiOptions h2:hover{background-color:#ccc;}
+.fl-uiOptions h2.ui-state-focus{background-color:#ccc;}
+.fl-uiOptions h2.ui-helper-reset{padding:5px 5px 5px 24px!important;}
+.fl-uiOptions fieldset{margin:0;padding:0;}
+.fl-uiOptions ol{margin:0;padding:15px 0 0 0;}
+.fl-uiOptions li{padding:6px 0;clear:both;list-style-type:none;line-height:1.6em;}
+.fl-uiOptions legend{text-indent:-500%;margin-bottom:-1.6em;visibility:hidden;}
+.fl-uiOptions .fl-uiOptions-buttons-refresher-5{width:5em;}
+.fl-uiOptions .fl-uiOptions-buttons-refresher-10{width:10em;}
+.fl-uiOptions .fl-accordion-content{zoom:1;}
+.fl-uiOptions .fl-accordion-content fieldset,.fl-uiOptions .fl-accordion-content span{display:inline;}
+.fl-uiOptions .fl-formLabels{text-align:right;padding-right:5px;}
+.fl-uiOptions .fl-uiOptions-min-text-size .fl-textfield,.fl-uiOptions .fl-uiOptions-line-spacing .fl-textfield{width:1.85em;height:1.2em;padding:.1em;}
+.fl-uiOptions .fl-slider{margin-bottom:0;margin-top:5px;}
+.fl-uiOptions .fl-subcomp-preview{padding:0;border:3px solid;}
+.fl-uiOptions .fl-subcomp-preview h2{font-weight:normal;margin:0;padding:5px;}
+.fl-uiOptions .fl-subcomp-preview iframe{width:100%;height:300px;}
+.fl-theme-mist .fl-uiOptions h2{background-color:#ebebeb;}
+.fl-theme-mist .fl-uiOptions .ui-accordion-content{border-color:#ebebeb;}
+.fl-theme-mist .fl-uiOptions .fl-subcomp-preview{border-color:#ebebeb;}
+.fl-theme-slate .fl-uiOptions h2{background-color:#666;}
+.fl-theme-slate .fl-uiOptions .ui-accordion-content{border-color:#666;}
+.fl-theme-slate .fl-uiOptions .fl-subcomp-preview{border-color:#666;}
+.fl-theme-coal .fl-uiOptions h2{background-color:#666;color:#fff;}
+.fl-theme-coal .fl-uiOptions .ui-accordion-content{border-color:#666;}
+.fl-theme-coal .fl-uiOptions .fl-subcomp-preview{border-color:#666;}
+.fl-theme-hc .fl-uiOptions h2{background-color:#666;color:#fff;}
+.fl-theme-hc .fl-uiOptions h2.ui-state-default{color:#fff!important;}
+.fl-theme-hc .fl-uiOptions h2.ui-state-hover{color:#000!important;}
+.fl-theme-hc .fl-uiOptions h2.ui-state-focus{color:#000!important;}
+.fl-theme-hci .fl-uiOptions h2.ui-state-default{color:#000!important;}
+.fl-theme-hci .fl-uiOptions h2.ui-state-hover{color:#fff!important;}
+.fl-theme-hci .fl-uiOptions h2.ui-state-focus{color:#fff!important;}

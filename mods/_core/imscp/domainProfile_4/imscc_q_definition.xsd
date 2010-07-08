@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv1p2" targetNamespace="http://www.imsglobal.org/xsd/ims_qtiasiv1p2">
+  <xsd:import namespace="ims_qtiasiv1p2_def_copy.xsd" schemaLocation="ims_qtiasiv1p2_def_copy.xsd" />
+  <!--****************************************************************************************-->
+  <!--** Definition document - this document holds AP defined simpleType elements that have **-->
+  <!--** been referenced through a type attribute in one of the modified, resultant schema. **-->
+  <!--****************************************************************************************-->
+  <xs:simpleType name="ExactOnlyType">
+    <xs:restriction>
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="Exact" />
+          <xs:enumeration value="Range" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:whiteSpace value="collapse" />
+      <xs:enumeration value="Exact" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EclipseOnlyType">
+    <xs:restriction>
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="Ellipse" />
+          <xs:enumeration value="Rectangle" />
+          <xs:enumeration value="Bounded" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:whiteSpace value="collapse" />
+      <xs:enumeration value="Ellipse" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string4">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4" />
+      <xs:whiteSpace value="preserve" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string32">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32" />
+      <xs:whiteSpace value="preserve" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string256">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="256" />
+      <xs:whiteSpace value="preserve" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string2">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2" />
+      <xs:whiteSpace value="preserve" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string16">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16" />
+      <xs:whiteSpace value="preserve" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="string1024">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1024" />
+      <xs:whiteSpace value="preserve" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SetAddSubtractOnly">
+    <xs:restriction>
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="Set" />
+          <xs:enumeration value="Add" />
+          <xs:enumeration value="Subtract" />
+          <xs:enumeration value="Multiply" />
+          <xs:enumeration value="Divide" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:whiteSpace value="collapse" />
+      <xs:enumeration value="Set" />
+      <xs:enumeration value="Add" />
+      <xs:enumeration value="Subtract" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ScoreOnlyType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="preserve" />
+      <xs:enumeration value="SCORE" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DummyType">
+    <xs:restriction base="xs:string">
+      <xs:whiteSpace value="preserve" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DecimalIntegerOnly">
+    <xs:restriction>
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="Integer" />
+          <xs:enumeration value="String" />
+          <xs:enumeration value="Decimal" />
+          <xs:enumeration value="Scientific" />
+          <xs:enumeration value="Boolean" />
+          <xs:enumeration value="Enumerated" />
+          <xs:enumeration value="Set" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:whiteSpace value="collapse" />
+      <xs:enumeration value="Integer" />
+      <xs:enumeration value="Decimal" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CompleteOnly">
+    <xs:restriction>
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="Complete" />
+          <xs:enumeration value="Incremental" />
+          <xs:enumeration value="Multilevel" />
+          <xs:enumeration value="Proprietary" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:whiteSpace value="collapse" />
+      <xs:enumeration value="Complete" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AllOnlyValue">
+    <xs:restriction>
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="All" />
+          <xs:enumeration value="Administrator" />
+          <xs:enumeration value="AdminAuthority" />
+          <xs:enumeration value="Assessor" />
+          <xs:enumeration value="Author" />
+          <xs:enumeration value="Candidate" />
+          <xs:enumeration value="InvigilatorProctor" />
+          <xs:enumeration value="Psychometrician" />
+          <xs:enumeration value="Scorer" />
+          <xs:enumeration value="Tutor" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:whiteSpace value="collapse" />
+      <xs:enumeration value="All" />
+    </xs:restriction>
+  </xs:simpleType>
+</xsd:schema>
+

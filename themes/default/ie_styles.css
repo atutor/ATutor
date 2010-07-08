@@ -1,0 +1,122 @@
+/* IE specific styles */
+.page_wrapper{
+
+    /* For IE 8 */    
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999')";
+     /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999');
+
+}
+
+
+ul#topnavlist {
+	zoom:100%;
+	margin:0px;
+}
+
+ul#topnavlist li {
+	zoom:100%;
+	padding:0.3em;
+	padding-bottom:0.3em;
+	margin:0px;
+	margin-bottom:-3px;
+	border-bottom:0;
+}
+
+label {
+	zoom:100%;
+	margin:0px;
+}
+
+table.data tfoot input {
+	min-width:0px;
+
+}
+table.data {
+	float:left;
+	clear:right;
+	margin-left:2em;
+
+}
+#topnavlistcontainer {
+	margin-bottom:-1px;
+}
+
+#header{
+	height: 5.0em;
+margin-bottom:.1em;
+}
+
+div#top-links a:active{
+	color:black;
+	background-color:#F6EAD6;
+}
+
+.outside_box{
+	height:9.6em;
+}
+
+ul#topnavlist {
+	padding-top: 4px;
+	margin-left:5px;
+	height:4em;
+}
+ul#topnavlist li {
+	white-space: nowrap;
+	list-style: none;
+	margin-top:-5px;
+	display: inline;
+	height:2em;
+	clear:both;
+}
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active, ul#subnavlist strong {
+	margin-top:-5px;
+	margin-right:1em;
+}
+ul#subnavlist li {
+	zoom:100%;
+	margin-top:5px;
+	max-width:12em;
+	margin-right:2em;
+	display: inline;
+}
+fieldset.group_form{
+	padding:.5em;
+}
+ul.folders {
+	list-style: disc url(../../images/folder.gif) outside;
+	font-family: Verdana, Helevetica, Arial, sans-serif;
+	margin-bottom: 5em;;
+	margin-top: 0px;
+	margin-right: 0px;
+}
+
+li.folders .disabled {
+	color: #B8AE9C;
+}
+table.etabbed-table{
+float:left;
+clear:right;
+margin-left:1.5em;
+}
+
+.current_box{
+	width:30%; 
+float:left;
+margin-left:3em;
+
+}
+
+ul.current_list{
+      line-height:2em; 
+      list-style-type:none;
+      margin-left:0;
+}
+
+.outside_box{
+    /* For IE 8 */    
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999')";
+     /* For IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999');
+
+}
