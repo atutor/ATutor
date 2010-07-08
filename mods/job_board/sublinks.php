@@ -30,7 +30,7 @@ if (is_array($result)) {
 		$cnt++;
 
 		$title = htmlentities_utf8($row['title']);
-		$list[] = '<span title="'.strip_tags($title).'">'.'<a href="'.$_base_href.'job_board/view_post.php?jid='.$row['id'].'">'.$title.'</a></span>';
+		$list[] = '<span title="'.strip_tags($title).'">'.'<a href="'.$_base_path.'mods/job_board/view_post.php?jid='.$row['id'].'">'.$title.'</a></span>';
 	}
 	return $list;
 } else {
