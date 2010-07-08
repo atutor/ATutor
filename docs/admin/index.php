@@ -88,7 +88,7 @@ if ($_config['check_version']) {
 			$row    = mysql_fetch_assoc($result);
 		?>
 	<div class="input-form" style="width: 98%;">
-		<form method="get" action="admin/instructor_requests.php">
+		<form method="get" action="mods/_core/users/instructor_requests.php">
 			<div class="row">
 				<h3><?php echo _AT('instructor_requests'); ?></h3>
 				<p><?php echo _AT('instructor_requests_text', $row['cnt']); ?></p>
