@@ -220,6 +220,7 @@ if (isset($_POST['submit'])) {
 $onload = 'document.form.login.focus();';
 
 $savant->assign('languageManager', $languageManager);
+$savant->assign('no_captcha', true);
 
 if (!isset($_POST['status'])) {
 	if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {

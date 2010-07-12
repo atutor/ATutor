@@ -87,7 +87,7 @@ function encrypt_password()
 		</div>
 	<?php endif; ?>
 
-	<?php if (isset($_config['use_captcha']) && $_config['use_captcha']==1): ?>
+	<?php if (isset($_config['use_captcha']) && $_config['use_captcha']==1 && !$this->no_captcha): ?>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 		<label for="secret"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=<?php echo md5(uniqid(time())); ?>" id="simage" align="left" /></label>
