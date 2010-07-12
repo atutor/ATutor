@@ -96,7 +96,7 @@ echo 'theme: "advanced",
         theme_advanced_buttons1 : "swap_toolbar_simple,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
         theme_advanced_buttons2 : "bullist,numlist,|,outdent,indent,ltr,rtl,blockquote,|,forecolor,backcolor,|,sub,sup,|,tablecontrols",
         theme_advanced_buttons3 : "cut,copy,paste,pastetext,pasteword,|,link,unlink,anchor,image,|,abbr,acronym,|,charmap,emotions,advhr,|,insert_term_tag, insert_media_tag, insert_tex_tag",
-        theme_advanced_buttons4 : "search,replace,|,removeformat,undo,redo,|,styleprops,attribs,|,acheck,|,cleanup,code,|,fullscreen ",
+        theme_advanced_buttons4 : "search,replace,|,removeformat,undo,redo,|,styleprops,attribs,|,acheck,|,cleanup,code,|,fullscreen "
     };
 
     ATutor.tinymce.initSimple = function() {
