@@ -113,7 +113,7 @@
     }
 
     $newscount = count($this->all_news);
-    $num_pages = (ceil($newscount/$perpage));;
+    $num_pages = ($perpage==0)?0:(ceil($newscount/$perpage));
     $start = ($p-1)*$perpage;
     $end = ($p*$perpage);
 
