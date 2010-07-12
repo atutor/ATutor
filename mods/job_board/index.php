@@ -74,7 +74,7 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 				<label for="jb_search_general"><?php echo _AT('jb_search'); ?></label>
 				<input type="text" id="jb_search_general" name="jb_search_general" value="" />
 				<input class="button" type="submit" name="jb_submit" value="<?php echo _AT('search'); ?>" />
-			<a onclick="toggleAdvanceSearch()"><?php echo _AT('jb_search_filter'); ?></a>
+			<a href="<?php echo AT_JB_BASENAME; ?>index.php#" onclick="toggleAdvanceSearch()"><?php echo _AT('jb_search_filter'); ?></a>
 			<div class="jb_advance_search" style="display: none;">
 			<?php 
 				$savant->assign('job_obj', $job);

@@ -48,7 +48,7 @@ define('AT_ADMIN_PRIV_JOB_BOARD', $this->getAdminPrivilege());
 $_group_tool = $_student_tool = AT_JB_BASENAME.'index.php';
 
 $this->_list['job_board'] = array('title_var'=>'job_board','file'=>AT_JB_BASENAME.'sublinks.php');
-$this->_pages[AT_JB_BASENAME.'index.php']['icon']      = AT_JB_BASENAME.'images/jb_icon_tiny.png';
+$this->_pages[AT_JB_BASENAME.'index.php']['icon']      = 'images/pin.png';
 
 /*******
  * add the admin pages when needed.
