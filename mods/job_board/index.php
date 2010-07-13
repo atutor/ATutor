@@ -68,13 +68,15 @@ if ($page > 0){
 $current_job_posts = array_slice($all_job_posts, $offset, AT_JB_ROWS_PER_PAGE);
 
 include(AT_INCLUDE_PATH.'header.inc.php');?>
+
 <form action="" method="get">
 	<div class="jb_head">
 		<div class="jb_search">					
 				<label for="jb_search_general"><?php echo _AT('jb_search'); ?></label>
 				<input type="text" id="jb_search_general" name="jb_search_general" value="" />
 				<input class="button" type="submit" name="jb_submit" value="<?php echo _AT('search'); ?>" />
-			<a href="<?php echo AT_JB_BASENAME; ?>index.php#" onclick="toggleAdvanceSearch()"><?php echo _AT('jb_search_filter'); ?></a>
+			<a href="<?php echo AT_JB_BASENAME; ?>index.php?<?php echo $_SERVER['QUERY_STRING'];?>#" onclick="toggleAdvanceSearch()"><?php echo _AT('jb_search_filter'); ?></a>
+			<a href="<?php echo AT_JB_BASENAME; ?>index.php?jb_search_general=&jb_submit=Search&jb_search_bookmark=on"><?php echo _AT('jb_bookmarks'); ?></a>
 			<div class="jb_advance_search" style="display: none;">
 			<?php 
 				$savant->assign('job_obj', $job);
