@@ -1,3 +1,4 @@
+<?php global $_config; ?>
 <div class="input-form">
 	<form action="" method="post">
 		<div class="row">

@@ -75,10 +75,9 @@ if(isset($_POST['submit'])){
 		$mail->AddAddress($email);
 		$mail->Subject = SITE_NAME . ' - ' . _AT('jb_email_confirmation_subject');
 		$mail->Body    = _AT('jb_email_confirmation_message', SITE_NAME, $confirmation_link);
-echo $confirmation_link;
 		$mail->Send();
 
-		header('Location: index.php');
+		header('Location: ../index.php');
 		exit;
 	}
 

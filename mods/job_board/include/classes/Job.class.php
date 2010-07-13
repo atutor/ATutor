@@ -36,7 +36,7 @@ class Job{
 	 */
 	function addJob($title, $description, $categories, $is_public, $closing_date){
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-		global $addslashes, $db, $msg;
+		global $addslashes, $db, $msg, $_config;
 		
 		if($_SESSION['jb_employer_id']<1){
 		    $msg->addError();   //authentication error
@@ -48,7 +48,6 @@ class Job{
 		$is_public = (isset($is_public))?1:0;
 		$closing_date = $addslashes($closing_date);
 		$approval_state = ($_config['jb_posting_approval']==1)?AT_JB_POSTING_STATUS_UNCONFIRMED:AT_JB_POSTING_STATUS_CONFIRMED;	
-
 		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, is_public, closing_date, created_date, revised_date, approval_state) VALUES ($_SESSION[jb_employer_id], '$title', '$description', $is_public, '$closing_date', NOW(), NOW(), $approval_state)";
 		$result = mysql_query($sql, $db);
 		$posting_id = mysql_insert_id();
@@ -74,13 +73,10 @@ class Job{
 						$mail->From     = $_config['contact_email'];
 						$mail->Subject = _AT('jb_subscription_mail_subject');
 						$mail->Body    = $body;
-/* 
- * TODO: 
- * Take out these comments, it's here cause my email isn't set up and it slows down my browser.
+
 						if(!$mail->Send()) {
 							$msg->addError('SENDING_ERROR');
 						}
-*/
 						unset($mail);
 					}
 				}
@@ -255,13 +251,16 @@ class Job{
 		$job_id = intval($job_id);
 
 		//Delete all associated posting_categories
-//		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_posting_categories WHERE posting_id=$job_id";
-//		mysql_query($sql, $db);
+		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_posting_categories WHERE posting_id=$job_id";
+		mysql_query($sql, $db);
 
 		//Delete job cart posting entries
-
+		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_jobcart WHERE job_id=$job_id";
+		mysql_query($sql, $db);
 
 		//Delete job post
+		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_postings WHERE id=$job_id";
+		mysql_query($sql, $db);
 	}
 
 	/**
@@ -279,7 +278,8 @@ class Job{
 		//Remove all categories entries with this category id
 		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_posting_categories WHERE category_id=$cat_id";
 		mysql_query($sql, $db);
-
+		
+		//Remove category
 		$sql = 'DELETE FROM '.TABLE_PREFIX."jb_categories WHERE id=$cat_id";
 		mysql_query($sql, $db);
 	}
@@ -372,12 +372,13 @@ class Job{
 		$order = ($order=='ASC')?'ASC':'DESC';
 	    
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_postings WHERE employer_id='.$_SESSION['jb_employer_id']." ORDER BY $col $order";
-	    $rs = mysql_query($sql, $db);
-	    
-	    while($row = mysql_fetch_assoc($rs)){
-			$row['categories'] = $this->getPostingCategories($row['id']);
-	        $result[$row['id']] = $row;
-        }
+	    $rs = mysql_query($sql, $db);	    
+		if ($rs){
+			while($row = mysql_fetch_assoc($rs)){
+				$row['categories'] = $this->getPostingCategories($row['id']);
+				$result[$row['id']] = $row;
+			}
+		}
         
         return $result;
     }
@@ -404,17 +405,19 @@ class Job{
 	//returns the list of categories.
 	function getCategories(){
 		global $addslashes, $db, $msg;
+		$result = array();
 
 		//If this instance already have the categories, don't run the query.
 		if(!empty($this->categories)){
 			return $this->categories;
 		}
-
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_categories';
 		$rs = mysql_query($sql, $db);
-
-		while($row = mysql_fetch_assoc($rs)){
-			$result[$row['id']] = $row;
+		
+		if ($rs){
+			while($row = mysql_fetch_assoc($rs)){
+				$result[$row['id']] = $row;
+			}
 		}
 		return $result;
 	}
@@ -589,9 +592,11 @@ class Job{
 		//compose the search query
 		$sql = 'SELECT p.* FROM '.TABLE_PREFIX."jb_postings AS p $categories_sql WHERE $approval_closing_sql $sql_wc ORDER BY $col $order";
 		$rs = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($rs)){
-			$row['categories'] = $this->getPostingCategories($row['id']);
-			$result[] = $row;
+		if ($rs){
+			while ($row = mysql_fetch_assoc($rs)){
+				$row['categories'] = $this->getPostingCategories($row['id']);
+				$result[] = $row;
+			}
 		}
 		return $result;
 	}

@@ -6,7 +6,7 @@ CREATE TABLE `jb_postings` (
   `is_public` TINYINT(1) UNSIGNED NOT NULL,
   `closing_date` TIMESTAMP NOT NULL,
   `created_date` TIMESTAMP NOT NULL,
-  `revised_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `revised_date` TIMESTAMP NOT NULL,
   `approval_state` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
 )
@@ -74,6 +74,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_search_filter_blub','Use
 INSERT INTO `language_text` VALUES ('en', '_module','jb_subscribe','Subscribe',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_subscribe_blub','Check the categories below to get email notifications when there is a new job post.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_title','Title',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_preferences','Preferences',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_employer','Employer',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_employers','Employers',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_categories','Categories',NOW(),'');
@@ -91,6 +92,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_login_name','Employer Lo
 INSERT INTO `language_text` VALUES ('en', '_module','jb_archive','Archive',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_home','Employer Home',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_add_new_post','Add new post',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_edit_post','Edit Post',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_view_post','View Post',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_edit_profile','Edit Profile',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_is_public','Allow non-ATutor users to see this post',NOW(),'');
@@ -134,3 +136,19 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_CATEGORY_DELET
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_JB_MISSING_FIELDS','Email, username, company name, employer name cannot be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_JB_EXISTING_INFO','Username or email has already been used.  Please choose another one. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_JB_CATEGORY_NAME_CANNOT_BE_EMPTY','Category name cannot be empty.',NOW(),'');
+
+# Initial categories
+INSERT INTO `jb_categories` (name) VALUES ('Auditing, Accounting');
+INSERT INTO `jb_categories` (name) VALUES ('General Business, Administrative');
+INSERT INTO `jb_categories` (name) VALUES ('HR, Business Service');
+INSERT INTO `jb_categories` (name) VALUES ('Management');
+INSERT INTO `jb_categories` (name) VALUES ('Engineering');
+INSERT INTO `jb_categories` (name) VALUES ('Computer Programming');
+INSERT INTO `jb_categories` (name) VALUES ('Visual Arts, Crafts and Design');
+INSERT INTO `jb_categories` (name) VALUES ('General Science');
+INSERT INTO `jb_categories` (name) VALUES ('General Health, Medical');
+INSERT INTO `jb_categories` (name) VALUES ('Pharmacy and Nutrition');
+INSERT INTO `jb_categories` (name) VALUES ('Teaching');
+INSERT INTO `jb_categories` (name) VALUES ('Performing Arts');
+INSERT INTO `jb_categories` (name) VALUES ('Psychology, Social Work, Counseling, Religion');
+INSERT INTO `jb_categories` (name) VALUES ('Others');

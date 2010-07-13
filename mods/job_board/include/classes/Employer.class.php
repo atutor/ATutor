@@ -115,7 +115,11 @@ class Employer{
 		$website = $addslashes($website);
 		
 		$sql = 'UPDATE '.TABLE_PREFIX."jb_employers SET employer_name='$name', company='$company', email='$email', website='$website' WHERE id=".$this->id;
-		mysql_query($sql, $db);		
+		$result = mysql_query($sql, $db);
+		if ($result){
+			return true;
+		} 
+		return false;
 	 }
 	 
 	 /**

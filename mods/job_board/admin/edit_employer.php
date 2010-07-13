@@ -43,7 +43,7 @@ if ($_POST['submit']){
 	if ($email!=$employer->getEmail()){
 		if ($email!=$email2){
 			$msg->addError('EMAIL_MISMATCH');
-			header('Location: profile.php');
+			header('Location: edit_employer.php');
 			exit;
 		}
 	}
@@ -56,7 +56,7 @@ if ($_POST['submit']){
 				$msg->addError($err);
 			}
 		}
-		header('Location: profile.php');
+		header('Location: edit_employer.php?eid='.intval($_GET['eid']));
 		exit;
 	}
 
