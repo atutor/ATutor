@@ -190,10 +190,9 @@ class MyHandler {
 				}
 			}
 		} else if (isset($elements[$name]) && ($attrs[$elements[$name]] != '')) {
-			/* we know exactly which attribute contains the reference to the file. */
-			//hack, if param[name]=autoplay or autostart, ignore
-			if (!($name=='param' && ($attrs['name']=='autoplay' || $attrs['name']=='autoStart'))){
-			    //skip glossary.html, tweak to accomodate atutor imscp; also skip repeated entries.
+			//hack, if param[name]=src or none <param> tag, extract. Skip all other <param> attributes.  
+			if ($name!='param' || $attrs['name']=='src'){
+				//skip glossary.html, tweak to accomodate atutor imscp; also skip repeated entries.
 			    if (strpos($attrs[$elements[$name]], 'glossary.html')===false 
 			            && !in_array($attrs[$elements[$name]], $my_files)){
 			        $my_files[] = $attrs[$elements[$name]];
@@ -273,6 +272,7 @@ print_resources_forum();
 
 $organizations_str = ob_get_contents();
 ob_end_clean();
+
 if (count($used_glossary_terms)) {
 	$used_glossary_terms = array_unique($used_glossary_terms);
 	sort($used_glossary_terms);
