@@ -28,8 +28,11 @@ $this->_stacks['hello_world'] = array('title_var'=>'hello_world', 'file'=>'mods/
  */
 //$this->_list['hello_world'] = array('title_var'=>'hello_world','file'=>'mods/hello_world/sublinks.php');
 
-// Uncomment for tiny list bullet icon for module sublinks "detail view" on course home page
+// Uncomment for tiny list bullet icon for module sublinks "icon view" on course home page
 //$this->_pages['mods/hello_world/index.php']['icon']      = 'mods/hello_world/hello_world_sm.jpg';
+
+// Uncomment for big icon for module sublinks "detail view" on course home page
+//$this->_pages['mods/hello_world/index.php']['img']      = 'mods/hello_world/hello_world.jpg';
 
 // ** possible alternative: **
 // the text to display on module "detail view" when sublinks are not available
