@@ -84,6 +84,7 @@ $file = AT_CONTENT_DIR . $_SESSION['course_id'] . $current_file;
 
 //send header mime type
 $pathinfo = pathinfo($file);
+
 $ext = $pathinfo['extension'];
 if ($ext == '') {
 	$ext = 'application/octet-stream';
@@ -95,7 +96,6 @@ if ($ext == '') {
 
 // NOTE!! for some reason realpath() is not returning FALSE when the file doesn't exist!
 $real = realpath($file);
-
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
 	if ($force_download) {
 		header('Content-Type: application/force-download');
@@ -120,6 +120,7 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 	header('x-Sendfile: ', TRUE); // if we get here then it didn't work
 
 	header('Content-Type: '.$ext);
+	header('Content-length: '.filesize($real));
 
 	@readfile($real);
 	exit;
