@@ -1,0 +1,18 @@
+Disclaimer ReadMe
+
+This module can be installed with ATutor to set up the legal disclaimer page as ATutor initial page. The users must agree with the legal disclaimer to use ATutor.
+
+* How to install Disclaimer
+1. Copy the downloaded file into the ATutor mods/ directory and unzip it there. 
+
+On Windows systems use and application like WinZip the extract the file into the mods/ directory
+
+On Unix/Linux systems use the command:
+
+tar xzvf disclaimer-0.1.tar.gz
+
+2. Login to ATutor as the administrator and run Install Module under the Modules tab, Select the Disclaimer module, which should be listed as available to be installed when the module has been unzipped into the modes directory
+
+3. Once the module has been installed, and enabled.
+
+4. go to admin home page, you will now have a link "Legal Disclaimer", click on it to go to the page where administrators can choose whether allow the "legal disclaimer" page as the system initial page, where to redirect if users do not agree to the legal disclaimer, and the legal disclaimer.
