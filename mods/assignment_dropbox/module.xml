@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Assignment Dropbox</name> 
+    <description lang="en">This module provides a easy way for students to submit assignments and instructors to manage assignment submissions.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2010-07-20</date> 
+        <state>stable</state> 
+        <notes></notes> 
+    </release> 
+</module>
