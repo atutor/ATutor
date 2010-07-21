@@ -18,12 +18,15 @@
 	.tac {
 		width: 60%;
 		margin: 0px auto;
-		border: 1px solid #C4C4C4;
+		/* border: 1px solid #C4C4C4; */
 		padding-bottom: 0.5em;
 	}
 	#tac_body{
-		width: 100%;
+		width: 98%;
 		padding:0.5em;
+		background-color:#FFFFFF;
+		border: 1px solid #C4C4C4; 
+		padding:1em;
 	}
 	#attention {
 		width:450px;
@@ -34,12 +37,13 @@
 	}
 	.mar20 {
 		margin-top:20px;
+		font-family: "arial";
 		border: 1px solid black; 
 		padding: 1em; 
 		overflow: scroll; 
 		width: 450px; 
 		height: 250px; 
-		font-size: 0.9em;
+		font-size: 1.2em;
 	}
 	-->
 	</style>
