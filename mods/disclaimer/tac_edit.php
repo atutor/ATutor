@@ -63,7 +63,12 @@ if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
 //template goes here
 include(AT_INCLUDE_PATH.'header.inc.php');
 if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	$_SESSION['prefs']['PREF_CONTENT_EDITOR'] = 2;
 	load_editor();
+} else if ($_POST['formatting']) {
+	$_SESSION['prefs']['PREF_CONTENT_EDITOR'] = 1;
+} else {
+	$_SESSION['prefs']['PREF_CONTENT_EDITOR'] = 0;
 }
 ?>
 <div class="input-form">
