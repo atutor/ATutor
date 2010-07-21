@@ -101,7 +101,7 @@ print_paginator($page, $num_pages, 'search_groups_'.$rand_key.'='.$query.SEP.'ra
 <?php
 $savant->assign('rand_key', $rand);
 $savant->assign('last_search', $last_search);
-$savant->assign('social/search_result', $search_result);
+$savant->assign('search_result', $search_result);
 $savant->display('social/sgroup_search.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
