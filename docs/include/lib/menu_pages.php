@@ -473,9 +473,10 @@ function get_home_navigation($home_array='') {
             }
             if(isset($_pages[$child]['icon'])) {                                //si controlla se è presente l'icona inserita nel modulo di rifrimento. si ricorda che l'icona � inserita solo per i moduli che prevedono possibili sottocontenuti.
                 $icon = $_base_path.$_pages[$child]['icon'];                    //in caso positivo viene prelevata e inserita in una variabile di appoggio che poi sar� a sua volta inserita all'interno dell'array finale home_links[]
-            } else if(isset($_pages[$child]['text'])) {                         //nel caso in cui non sia presente un' icona associata si controlla se � stato settata il testo (per moduli privi di sottocontenuti).
-                    $text = $_pages[$child]['text'];				//il testo viene inserito in una variabile d'appoggio e successivamente nell'array.
-                }
+            } 
+            if(isset($_pages[$child]['text'])) {                         //nel caso in cui non sia presente un' icona associata si controlla se � stato settata il testo (per moduli privi di sottocontenuti).
+                $text = $_pages[$child]['text'];				//il testo viene inserito in una variabile d'appoggio e successivamente nell'array.
+            }
 
             if (isset($_list[$_pages[$child]['title_var']]))                    //viene prelevato il path del file che dovr� poi essere richiamato nella visualizzazione dei sottocontenuti. solo i moduli che prevedono sottocontenuti avranno un file di riferimento.
                 $sub_file = $_list[$_pages[$child]['title_var']]['file'];
