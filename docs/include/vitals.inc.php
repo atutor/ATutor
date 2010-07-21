@@ -150,12 +150,6 @@ if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && (!isset
 		exit;
 	}
 
-	//hack for Terms and Conditions module.  Will need a better way to handle this module without adding this to the vitals. 
-	if($_config['enable_terms_and_conditions']==1){
-		header('Location: '.AT_BASE_HREF.'mods/terms_and_conditions/terms_and_conditions.php');
-		exit;
-	}
-
 	header('Location: '.AT_BASE_HREF.'login.php');
 	exit;
 }
