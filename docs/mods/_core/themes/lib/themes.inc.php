@@ -219,8 +219,11 @@ function set_theme_as_default ($theme_dir, $type) {
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	$feedback = array('THEME_DEFAULT', $theme_dir);
 	$msg->addFeedback($feedback);
-	$_SESSION['prefs']['PREF_THEME'] = $theme_dir;
 
+	//only over-ride the current theme iff it's not mobile themes.
+	if($type != MOBILE_DEVICE){
+		$_SESSION['prefs']['PREF_THEME'] = $theme_dir;
+	}
 	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 }
 
