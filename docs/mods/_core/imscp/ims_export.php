@@ -14,7 +14,6 @@ define('AT_INCLUDE_PATH', '../../../include/');
 
 /* content id of an optional chapter */
 $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : 0;
-$c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 
 if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	/* for TILE */
@@ -80,6 +79,7 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 
 	$_user_location = 'public';
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	$c = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $c . 'x' . date('Ymd'));
 	if (($m != $_GET['m']) || !$c) {
 		header('HTTP/1.1 404 Not Found');
