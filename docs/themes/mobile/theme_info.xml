@@ -5,7 +5,7 @@
 <theme>
 	<title>Mobile</title>
 	<version>0.1</version>
-	<type>Mobile</version>
+	<type>Mobile</type>
 	<last_updated>2009-12-10</last_updated>
 	<extra_info>This is the default theme for mobile devices.</extra_info>
 </theme>

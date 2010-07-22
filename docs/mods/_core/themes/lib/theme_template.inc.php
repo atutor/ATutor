@@ -1,6 +1,6 @@
 <?php
 
-$theme_template_xml = '<?xml version="1.0" encoding="EN"?>
+$theme_template_xml = '<?xml version="1.0" encoding="utf-8"?>
 <!--This is an ATutor Theme Generator document-->
 <!--Created from the ATutor Themes Export Generator-->
 

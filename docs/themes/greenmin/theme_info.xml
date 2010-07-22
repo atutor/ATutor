@@ -5,7 +5,7 @@
 <theme>
 	<title>Greenmin</title>
 	<version>1.6</version>
-	<type>Desktop</version>
+	<type>Desktop</type>
 	<last_updated>2007-08-31</last_updated>
 	<extra_info>plone-like.</extra_info>
 </theme>

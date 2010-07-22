@@ -5,7 +5,7 @@
 <theme>
 	<title>Default</title>
 	<version>1.0</version>
-	<type>Desktop</version>
+	<type>Desktop</type>
 	<last_updated>2008-02-12</last_updated>
 	<extra_info>plone-like.</extra_info>
 </theme>
