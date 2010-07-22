@@ -213,7 +213,8 @@ else {
   <div id="assignment_desc">
     <h4>
       <?php if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) { // instructor ?>
-      <a href="javascript:window.location='<?php echo AT_BASE_HREF; ?>mods/_standard/file_storage/index.php?ot=<?php echo $owner_type.SEP; ?>oid=<?php echo $assignment_row['assignment_id'].SEP;?>folder=0';" class="floatleft">
+      <a href="javascript:window.location='<?php echo AT_BASE_HREF. url_rewrite("mods/_standard/file_storage/index.php?ot=". $owner_type.SEP."oid=". $assignment_row['assignment_id'].SEP."folder=0"); ?>';" class="floatleft">
+      
       <?php } else { // students ?>
       <a href="javascript:ATutor.mods.assignment_dropbox.toggleDiv(<?php echo $assignment_row['assignment_id']; ?>)" class="floatleft">
       <?php } ?>
