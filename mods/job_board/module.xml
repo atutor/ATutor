@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
     <name lang="en">Job Board</name> 
-    <description lang="en"></description> 
+    <description lang="en">This module allows employers, who may or may not be a registered ATutor member, to post employment opportunities. An administrator can moderate job postings. Employers can edit and maintain a organization/company's job postings. Potential employees can subscribe the various job categories to receive notices when relevent jobs are posted, and can bookmark jobs to keep track of their job search.   </description> 
     <maintainers>
         <maintainer> 
             <name>ATutor Team</name> 
@@ -14,6 +14,6 @@
         <version>1.0</version> 
         <date>2010-05-18</date> 
 	<state>Stable</state> 
-	<notes></notes> 
+	<notes>See the module's README file for installation and usage instructions.</notes> 
     </release> 
 </module>
