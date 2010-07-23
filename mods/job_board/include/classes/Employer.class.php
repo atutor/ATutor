@@ -55,23 +55,23 @@ class Employer{
     }
 
 	function getName(){
-		return $this->name;
+		return htmlentities_utf8($this->name);
 	}
 	
 	function getEmail(){
-		return $this->email;
+		return htmlentities_utf8($this->email);
 	}
 
 	function getCompany(){
-		return $this->company;
+		return htmlentities_utf8($this->company);
 	}
 	
 	function getDescription(){
-	    return $this->description;
+	    return htmlentities_utf8($this->description);
     }
 
 	function getWebsite(){
-		return $this->website;
+		return htmlentities_utf8($this->website);
 	}
 	
 	function getLastLogin(){

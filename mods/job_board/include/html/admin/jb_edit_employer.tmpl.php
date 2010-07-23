@@ -23,17 +23,19 @@ function encrypt_password() {
 <div class="input-form">
 	<form action="" method="post" name="jb_profile_form">
 		<div class="row">
-			<label for="jb_employer_name"><?php echo _AT('name'); ?></label>
+			<label for="jb_employer_name"><?php echo _AT('jb_employer_name'); ?></label><br/>
 			<input type="text" name="jb_employer_name" id="jb_employer_name" value="<?php echo htmlentities_utf8($this->name); ?>"/>
 		</div>
 
 		<div class="row">
-			<label for="jb_employer_password"><?php echo _AT('password'); ?></label>
-			<input type="password" name="jb_employer_password" id="jb_employer_password"/>
+			<label for="jb_employer_password"><?php echo _AT('password'); ?></label><br/>
+			<input type="password" name="jb_employer_password" id="jb_employer_password"/><br/>
+			<small>&middot; <?php echo _AT('combination'); ?><br />
+				   &middot; <?php echo _AT('15_max_chars'); ?></small>
 		</div>
 
 		<div class="row">
-			<label for="jb_employer_password2"><?php echo _AT('password_again'); ?></label>
+			<label for="jb_employer_password2"><?php echo _AT('password_again'); ?></label><br/>
 			<input type="password" name="jb_employer_password2" id="jb_employer_password2"/>
 		</div>
 
@@ -48,22 +50,22 @@ function encrypt_password() {
 		</div>
 
 		<div class="row">
-			<label for="jb_employer_company"><?php echo _AT('company'); ?></label>
+			<label for="jb_employer_company"><?php echo _AT('company'); ?></label><br/>
 			<input type="text" name="jb_employer_company" id="jb_employer_company" value="<?php echo htmlentities_utf8($this->company); ?>"/>
 		</div>
 
 		<div class="row">
-			<label for="jb_employer_email"><?php echo _AT('email'); ?></label>
+			<label for="jb_employer_email"><?php echo _AT('email'); ?></label><br/>
 			<input type="text" name="jb_employer_email" id="jb_employer_email" value="<?php echo htmlentities_utf8($this->email); ?>"/>
 		</div>
 
 		<div class="row">
-			<label for="jb_employer_email2"><?php echo _AT('email_again'); ?></label>
+			<label for="jb_employer_email2"><?php echo _AT('email_again'); ?></label><br/>
 			<input type="text" name="jb_employer_email2" id="jb_employer_email2"/>
 		</div>
 
 		<div class="row">
-			<label for="jb_employer_website"><?php echo _AT('jb_website'); ?></label>
+			<label for="jb_employer_website"><?php echo _AT('jb_website'); ?></label><br/>
 			<input type="text" name="jb_employer_website" id="jb_employer_website" value="<?php echo htmlentities_utf8($this->website); ?>"/>
 		</div>
 

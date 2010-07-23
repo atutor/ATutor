@@ -13,8 +13,8 @@ if ($search_string!=''){
 	<table class="data static" summary="" rules="rows">
 		<thead>
 			<th><?php echo _AT('id'); ?></th>
-			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=title".SEP."order=$order".$search_string; ?>"><?php echo _AT('title'); ?></a></th>
-			<th><?php echo _AT('employer'); ?></th>
+			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=title".SEP."order=$order".$search_string; ?>"><?php echo _AT('jb_title'); ?></a></th>
+			<th><?php echo _AT('jb_employer'); ?></th>
 			<th><?php echo _AT('categories'); ?></th>
 			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=created_date".SEP."order=$order".$search_string; ?>"><?php echo _AT('created_date'); ?></a></th>
 			<th class="sort"><a href="<?php echo $_SERVER['PHP_SELF']."?col=closing_date".SEP.SEP."order=$order".$search_string; ?>"><?php echo _AT('jb_closing_date'); ?></a></th>
@@ -50,7 +50,10 @@ if ($search_string!=''){
 				<td><?php echo AT_DATE(_AT("announcement_date_format"), $row['created_date']); ?></td>
 				<td><?php echo AT_DATE(_AT("announcement_date_format"), $row['closing_date']); ?></td>
 			</tr>
-			<?php endforeach; endif; ?>
+			<?php endforeach; ?>
+			<?php else: ?>
+			<tr><td colspan="6"><?php echo _AT('none_found');?></td></tr>
+			<?php endif; ?>
 		</tbody>
 	</table>
 </div>

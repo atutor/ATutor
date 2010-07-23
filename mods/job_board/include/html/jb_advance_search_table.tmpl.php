@@ -25,7 +25,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><label for="jb_search_bookmark"><?php echo _AT('jb_bookmark'); ?></td>
+		<td><label for="jb_search_bookmark"><?php echo _AT('jb_bookmarks'); ?></td>
 		<td><input type="checkbox" name="jb_search_bookmark" id="jb_search_bookmark" <?php if($_GET['jb_search_bookmark']!=''){echo 'checked="checked"';} ?> /></td>
 	</tr>
 	<tr>

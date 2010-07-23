@@ -37,6 +37,9 @@
 			<td><?php echo ($row['approval_state']==AT_JB_POSTING_STATUS_CONFIRMED)?_AT('jb_confirmed'):_AT('jb_unconfirmed'); ?></td>
 			<td><a href="<?php echo AT_JB_BASENAME . 'admin/edit_post.php?jid='.$row['id']; ?>" title="<?php echo _AT('jb_click_to_edit'); ?>"><?php echo _AT('edit');?></a> | <a href="<?php echo AT_JB_BASENAME . 'admin/view_post.php?action=delete'.SEP.'jid='.$row['id']; ?>" title="<?php echo _AT('jb_click_to_delete'); ?>"><?php echo _AT('delete'); ?></a></td>
 		</tr>
-		<?php endforeach; endif; ?>
+		<?php endforeach; ?>
+		<?php else: ?>
+			<tr><td colspan="7"><?php echo _AT('none_found'); ?></td></tr>
+		<?php endif; ?>
 	</tbody>
 </table>

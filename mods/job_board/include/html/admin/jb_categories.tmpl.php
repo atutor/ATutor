@@ -21,7 +21,12 @@
 			</div>
 			<div class="right"><a href="<?php echo AT_JB_BASENAME;?>admin/categories.php?submit=delete<?php echo SEP; ?>action=delete<?php echo SEP;?>cid=<?php echo $category['id']; ?>" ><?php echo _AT('delete'); ?></a></div>
 		</div>
-	<?php endforeach; endif; ?>
+	<?php endforeach; ?>
+	<?php else: ?>
+	<div class="admin_categories">
+		<div class="left"><?php echo _AT('jb_no_category'); ?></div>
+	</div>
+	<?php endif; ?>
 	</div>
 </div>
 

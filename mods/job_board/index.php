@@ -81,7 +81,9 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 			}
 			?>	
 			<a href="<?php echo AT_JB_BASENAME; ?>index.php<?php echo $querystring;?>#" onclick="toggleAdvanceSearch()"><?php echo _AT('jb_search_filter'); ?></a>
-			<a href="<?php echo AT_JB_BASENAME; ?>index.php?jb_search_general=&jb_submit=Search&jb_search_bookmark=on"><?php echo _AT('jb_bookmark'); ?></a>
+			<?php if ($_SESSION['member_id'] >= 1): //display bookmark search if it member login.?>
+			| <a href="<?php echo AT_JB_BASENAME; ?>index.php?jb_search_general=&jb_submit=Search&jb_search_bookmark=on"><?php echo _AT('jb_bookmarks'); ?></a>
+			<?php endif; ?>
 			<div class="jb_advance_search" style="display: none;">
 			<?php 
 				$savant->assign('job_obj', $job);

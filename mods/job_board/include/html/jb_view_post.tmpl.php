@@ -26,7 +26,7 @@
 	</div>
 
 	<div>
-		<label><?php echo _AT('description'); ?></label>
+		<label><?php echo _AT('jb_post_description'); ?></label>
 		<p><?php echo $this->job_post['description']; ?></p>
 	</div>
 

@@ -1,10 +1,10 @@
 <table  class="data static" rules="rows">
     <tr>
         <th><?php echo _AT('username'); ?></th>
-        <th><?php echo _AT('name'); ?></th>
+        <th><?php echo _AT('jb_employer_name'); ?></th>
         <th><?php echo _AT('email'); ?></th>
         <th><?php echo _AT('company'); ?></th>
-        <th><?php echo _AT('description'); ?></th>
+        <th><?php echo _AT('jb_company_description'); ?></th>
         <th><?php echo _AT('jb_website'); ?></th>
         <th><?php echo _AT('last_login'); ?></th>
         <th><?php echo _AT('jb_approval_state'); ?></th>
@@ -36,5 +36,8 @@
         <td><?php echo $approval_state; ?></td>
         <td><a href="<?php echo AT_JB_BASENAME.'admin/edit_employer.php?eid='.$employer->getId();?>"><?php echo _AT('edit'); ?></a></td>
     </tr>
-    <?php endforeach; endif; ?>
+    <?php endforeach; ?>
+	<?php else: ?>
+		<tr><td colspan="8"><?php echo _AT('none_found');?> </td></tr>
+	<?php endif; ?>
 </table>

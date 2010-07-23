@@ -411,7 +411,7 @@ class Job{
 		if(!empty($this->categories)){
 			return $this->categories;
 		}
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_categories';
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'jb_categories order by name';
 		$rs = mysql_query($sql, $db);
 		
 		if ($rs){
