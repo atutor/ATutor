@@ -43,7 +43,9 @@ if ($_GET['order']==''){
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+echo '<div class="pageinator_box">';
 print_paginator($page, sizeof($all_job_posts), $page_string, AT_JB_ROWS_PER_PAGE);
+echo '</div>';
 $savant->assign('job_obj', $job);
 $savant->assign('job_posts', $current_job_posts);
 $savant->display('admin/jb_index.tmpl.php');

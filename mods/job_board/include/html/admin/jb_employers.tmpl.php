@@ -1,4 +1,4 @@
-<table>
+<table  class="data static" rules="rows">
     <tr>
         <th><?php echo _AT('username'); ?></th>
         <th><?php echo _AT('name'); ?></th>
