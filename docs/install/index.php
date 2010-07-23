@@ -164,7 +164,7 @@ $not_as_good = FALSE;
 		<?php if (extension_loaded('gd')): $gd_info = gd_info();?>
 		<tr>
 			<td><kbd>JPEG Support</kbd></td>
-			<td><?php if ($gd_info['JPG Support']) {
+			<td><?php if ($gd_info['JPG Support'] || $gd_info['JPEG Support']) {
 					echo 'On</td><td align="center">';
 					echo $good;
 				} else {

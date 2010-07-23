@@ -361,7 +361,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 			if ($gd_info['GIF Create Support']) {
 				$supported_images[] = 'gif';
 			}
-			if ($gd_info['JPG Support']) {
+			if ($gd_info['JPG Support'] || $gd_info['JPEG Support']) {
 				$supported_images[] = 'jpg';
 			}
 			if ($gd_info['PNG Support']) {

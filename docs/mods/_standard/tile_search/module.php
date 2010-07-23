@@ -21,7 +21,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 // instructor page
 $this->_pages['mods/_standard/tile_search/index.php']['title_var'] = 'tile_search';
 $this->_pages['mods/_standard/tile_search/index.php']['parent'] = 'mods/_core/content/index.php';
-$this->_pages['mods/_standard/tile_search/index.php']['children'] = array('mods/_standard/tile_search/import.php');
+//$this->_pages['mods/_standard/tile_search/index.php']['children'] = array('mods/_standard/tile_search/import.php');
 $this->_pages['mods/_standard/tile_search/index.php']['guide'] = 'instructor/?p=tile_repository.php';
 
 $this->_pages['mods/_standard/tile_search/import.php']['title_var'] = 'import';
