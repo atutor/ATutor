@@ -35,7 +35,7 @@ if (isset($_POST['cancel'])) {
 		$hash = sha1($row['id'] + $gen + $row['password']);
 		$hash_bit = substr($hash, 5, 15);
 		
-		$change_link = $_base_href.'password_reminder.php?id='.$row['id'].'&g='.$gen.'&h='.$hash_bit;
+		$change_link = $_base_href.AT_JB_BASENAME.'employer/password_reminder.php?id='.$row['id'].'&g='.$gen.'&h='.$hash_bit;
 		if($row['employer_name'] != ''){
 			$reply_name = $row['employer_name'];
 		}else{
@@ -133,7 +133,7 @@ if (isset($_POST['cancel'])) {
 			//send confirmation email
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
-			$tmp_message  = _AT(array('password_change_confirm', $_config['site_name'].': '._AT('job_board'), $_base_href))."\n\n";
+			$tmp_message  = _AT(array('password_change_confirm', $_config['site_name'].': '._AT('job_board'), $_base_href.AT_JB_BASENAME.'employer/login.php'))."\n\n";
 
 			$mail = new ATutorMailer;
 			$mail->From     = $_config['contact_email'];
@@ -149,7 +149,7 @@ if (isset($_POST['cancel'])) {
 			$msg->addFeedback('PASSWORD_CHANGED');
 			unset($mail);
 			
-			header('Location:index.php');
+			header('Location:login.php');
 
 		} else {
 			$savant->assign('id', $_REQUEST['id']);

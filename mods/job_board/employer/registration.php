@@ -77,6 +77,7 @@ if(isset($_POST['submit'])){
 		$mail->Body    = _AT('jb_email_confirmation_message', SITE_NAME, $confirmation_link);
 		$mail->Send();
 
+		$msg->addFeedback('REG_THANKS_CONFIRM');
 		header('Location: ../index.php');
 		exit;
 	}
