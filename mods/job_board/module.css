@@ -11,15 +11,62 @@ div.jb_search{
 }
 
 div.jb_login{
-	width: 60%;
-	margin: 0 auto;
+	width: 60%; 
+	margin-left:auto; 
+	margin-right:auto;
+	border: 1px #CCCCCC solid;
+	margin-bottom: 20px;
+	line-height:150%;
+	background-color: #F8F8F8;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+        -moz-box-shadow:.1em .1em .2em #999999;
+        box-shadow: .1em .1em .2em #999999;
+	padding:.2em;
 }
+
+fieldset.group_form{
+	width:90%;
+	margin:.5em;
+	border:1px #6D7B8D solid;
+   	min-height: 170px;
+	padding:.5em;
+
+} 
+legend.group_form{
+	border:1px #6D7B8D solid;
+	background-color: #EEEEEE;
+	font-weight: 600;
+	color: black;
+	padding-left: 1em;
+	padding-right: 1em;
+	border-radius:.2em;
+	-moz-border-radius: .2em .2em .2em .2em;
+		-moz-box-shadow:.1em .1em .1em #999999;
+    box-shadow: .1em .1em .1em #999999;
+}
+
+
 textarea#jb_description{
 	width: 99%;
 	height: 600px;
 }
+
+
+div.jb_view_container{
+border:1px solid #cccccc;
+background-color:#eeffff;
+padding:1em;
+line-height:1.5em;
+margin-bottom:1em;
+border-radius: .5em .5em .5em .5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+		-moz-box-shadow:.1em .1em .1em #999999;
+    box-shadow: .1em .1em .1em #999999;
+}
 div.jb_view_container label{
 	font-weight: bold;
+
 }
 div.jb_advance_search{
 	margin-left: 5em;
