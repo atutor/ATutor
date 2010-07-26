@@ -83,7 +83,7 @@ class UrlRewrite  {
 		//assumption: pathinfo ALWAYS in the format of key1/value1/key2/value2/key3/value3/etc...
 		foreach ($query_parts as $array_index=>$key_value){
 			if($array_index%2 == 0 && $query_parts[$array_index]!=''){
-				$result[$key_value] = $query_parts[$array_index+1];
+				if (isset($query_parts[$array_index+1])) $result[$key_value] = $query_parts[$array_index+1];
 			}
 		}
 		return $result;
