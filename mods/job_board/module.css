@@ -46,23 +46,21 @@ legend.group_form{
     box-shadow: .1em .1em .1em #999999;
 }
 
-
 textarea#jb_description{
 	width: 99%;
 	height: 600px;
 }
 
-
 div.jb_view_container{
-border:1px solid #cccccc;
-background-color:#eeffff;
-padding:1em;
-line-height:1.5em;
-margin-bottom:1em;
-border-radius: .5em .5em .5em .5em;
-	-moz-border-radius: .5em .5em .5em .5em;
-		-moz-box-shadow:.1em .1em .1em #999999;
-    box-shadow: .1em .1em .1em #999999;
+	border:1px solid #cccccc;
+	background-color:#eeffff;
+	padding:1em;
+	line-height:1.5em;
+	margin-bottom:1em;
+	border-radius: .5em .5em .5em .5em;
+		-moz-border-radius: .5em .5em .5em .5em;
+			-moz-box-shadow:.1em .1em .1em #999999;
+		box-shadow: .1em .1em .1em #999999;
 }
 div.jb_view_container label{
 	font-weight: bold;
@@ -71,6 +69,10 @@ div.jb_view_container label{
 div.jb_advance_search{
 	margin-left: 5em;
 	background: #eeeeee;
+}
+div.category_box{
+	width: 40%;
+	float: left;
 }
 
 /* add to cart template style */

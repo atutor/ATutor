@@ -47,7 +47,7 @@ if(isset($_POST['submit'])){
 	$min = ($min < 10)?'0'.$min:$min;
 	$jb_closing_date = $year.'-'.$month.'-'.$day.' '.$hour.':'.$min.':00';
 
-	$job->addJob($_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date);
+	$job->addJob($_POST['title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date);
 	$msg->addFeedback('JB_POST_ADDED_SUCCESSFULLY');
 	header('Location: home.php');
 	exit;

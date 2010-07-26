@@ -82,6 +82,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_bookmarks','Bookmarks',N
 INSERT INTO `language_text` VALUES ('en', '_module','jb_archive','Archive',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_company_description','Company Description',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_post_description','Description',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_post_description_note','Description should include Job Overview, Responsibilities, Qualifications, Contact Information',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_closing_date','Closing Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_login','Post a Job',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_logout','Logout',NOW(),'');

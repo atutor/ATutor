@@ -58,7 +58,7 @@ if(isset($_POST['submit'])){
 	//approval state.
 	$approval_state = ($_config['jb_posting_approval']==1)?AT_JB_POSTING_STATUS_UNCONFIRMED:AT_JB_POSTING_STATUS_CONFIRMED;	
 
-	$job->updateJob($jid, $_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date, $approval_state);
+	$job->updateJob($jid, $_POST['title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date, $approval_state);
 	$msg->addFeedback('JB_POST_UPDATED_SUCCESS');
 	header('Location: home.php');
 	exit;

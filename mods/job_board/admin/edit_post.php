@@ -50,7 +50,7 @@ if(isset($_POST['submit'])){
 	$min = ($min < 10)?'0'.$min:$min;
 	$jb_closing_date = $year.'-'.$month.'-'.$day.' '.$hour.':'.$min.':00';
 
-	$job->updateJob($jid, $_POST['jb_title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date, $_POST['jb_approval_state']);
+	$job->updateJob($jid, $_POST['title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date, $_POST['jb_approval_state']);
 	$msg->addFeedback('JB_POST_UPDATED_SUCCESS');
 	header('Location: ../index_admin.php');
 	exit;

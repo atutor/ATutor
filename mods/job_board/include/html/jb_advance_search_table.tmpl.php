@@ -3,11 +3,12 @@
 	<tr>
 		<td><?php echo _AT('jb_categories'); ?></td>
 		<td>
-			<div>
-			<input type="checkbox" name="jb_search_categories[]" value="0" id="jb_search_category_0" <?php if(!empty($_GET['jb_search_categories']) && in_array(0, $_GET['jb_search_categories'])){echo 'checked="checked"';} ?>/>
-			<label for="jb_search_category_0"><?php echo _AT('jb_any_categories');?></label>
+			<div class="category_box">
+				<input type="checkbox" name="jb_search_categories[]" value="0" id="jb_search_category_0" <?php if(!empty($_GET['jb_search_categories']) && in_array(0, $_GET['jb_search_categories'])){echo 'checked="checked"';} ?>/>
+				<label for="jb_search_category_0"><?php echo _AT('jb_any_categories');?></label>
+			</div>
 			<?php foreach($this->job_obj->getCategories() as $category): ?>
-			<div>
+			<div class="category_box">
 				<?php 					
 					if(!empty($_GET['jb_search_categories'])){
 						if(in_array($category['id'], $_GET['jb_search_categories'])){
@@ -21,7 +22,6 @@
 				<label for="<?php echo 'jb_search_category_'.$category['id']; ?>"><?php echo $this->job_obj->getCategoryNameById($category['id']); ?></label>
 			</div>
 			<?php endforeach; ?>
-			</div>
 		</td>
 	</tr>
 	<tr>

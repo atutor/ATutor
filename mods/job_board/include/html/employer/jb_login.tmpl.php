@@ -21,6 +21,8 @@ function encrypt_password() {
 			<input type="password" class="formfield" name="form_password" style="max-width: 80%; width: 80%;" id="pass" />
 			<br /><br />
 			<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" onclick="encrypt_password();" /> 
+			<a href="<?php echo AT_JB_BASENAME;?>employer/registration.php"><?php echo _AT('jb_employer_registration'); ?></a> | 
+			<a href="<?php echo AT_JB_BASENAME;?>employer/password_reminder.php"><?php echo _AT('password_reminder'); ?></a>
 		</fieldset>	
 	</form>
 </div>
