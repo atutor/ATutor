@@ -60,7 +60,13 @@
 		</div>
 		<div>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-			<input class="button" type="button" value="<?php echo _AT('i_do_not_agree');?>" onClick="parent.location='<?php echo $this->tac_link; ?>'" />
+<!-- 			<input class="button" type="button" value="<?php echo _AT('i_do_not_agree');?>" onClick="parent.location='<?php echo $this->tac_link; ?>'" /> -->
+			<?php if (isset($_GET['p']) && $_GET['p'] != '') {?>
+			<input type="hidden" name="p" value="<?php echo $_GET['p']; ?>" />
+			<?php } else if (isset($_GET['form_course_id'])) {?>
+			<input type="hidden" name="form_course_id" value="<?php echo $_GET['form_course_id']; ?>" />
+			<?php } ?>
+			<input class="button" type="submit" name="disagree" value="<?php echo _AT('i_do_not_agree');?>" />
 			<input class="button" type="submit" name="agree" value="<?php echo _AT('i_agree');?>" />
 		</form></div>
 	</div>

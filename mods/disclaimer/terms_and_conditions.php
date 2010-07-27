@@ -15,16 +15,41 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+global $_config;
+
 if (isset($_POST['agree'])) {
-	$_SESSION['agree_terms_and_conditions'] = 1;
-	header('Location: '.AT_BASE_HREF.'login.php');
+	if (!isset($_SESSION['login']) || $_SESSION['login'] == '') {
+		header ('Location: '.AT_BASE_HREF.'index.php');
+		exit;
+	}
+	
+	$sql = "INSERT INTO ".TABLE_PREFIX."DS_agreed_logins (login)
+	        VALUES ('".$_SESSION['login']."')";
+	$result = mysql_query($sql, $db);
+
+	if ($_SESSION['course_id'] == -1) { // admin login
+		header ('Location: '.AT_BASE_HREF.'admin/index.php');
+		exit;
+	} else { // regular user login
+		// if page variable is set, bring them there.
+		if (isset($_POST['p']) && $_POST['p']!=''){
+			header ('Location: '.urldecode($_POST['p']));
+			exit;
+		}
+		
+		$msg->addFeedback('LOGIN_SUCCESS');
+	    header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_POST['form_course_id']);
+		exit;
+	}
+} else if (isset($_POST['disagree'])) {
+	$_SESSION = array();   // destroy all session vars set in login.php
+	header('Location: '.$_config['tac_link']);
 	exit;
 }
 
 $savant->assign('site_name', $_config['site_name']);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 $savant->assign('base_href', $_base_href);
-$savant->assign('tac_link', $_config['tac_link']);
 $savant->assign('body_text', $_config['tac_body']);
 $savant->display('terms_and_conditions.tmpl.php');
 ?>

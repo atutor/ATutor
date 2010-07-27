@@ -1,3 +1,9 @@
+CREATE TABLE `DS_agreed_logins` (
+   `login` varchar(30) NOT NULL,
+   PRIMARY KEY ( `login` )
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 INSERT INTO `language_text` VALUES ('en', '_module','disclaimer','Legal Disclaimer',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','enable_terms_and_conditions','Enable Legal Disclaimer',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','tac_link','Where to redirect if users do not agree to the legal disclaimer',NOW(),'');

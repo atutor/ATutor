@@ -15,4 +15,6 @@ tar xzvf disclaimer-0.1.tar.gz
 
 3. Once the module has been installed, select it's associated radio button from the Module Manager screen, then click Enable.
 
-4.Then to configure the module go to admin home page, and follow the "Legal Disclaimer" link listed with System Preferences, to configuration screen. Enter the text of the disclaimer in the text area, then enter a redirect URL to some location outside ATutor, then enable the disclaimer module by selecting the "Enable" radio button, then Save.
+4. Go to "Patcher" tab, in section "Upload a zip file to install patch:", select the patch "disclaimer_supplement.zip" in the unzipped module folder "mods/disclaimer", then click "Install" button.
+
+4. Then to configure the module go to admin home page, and follow the "Legal Disclaimer" link listed with System Preferences, to configuration screen. Enter the text of the disclaimer in the text area, then enter a redirect URL to some location outside ATutor, then enable the disclaimer module by selecting the "Enable" radio button, then Save.

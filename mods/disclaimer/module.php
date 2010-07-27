@@ -25,13 +25,13 @@ if (admin_authenticate(AT_ADMIN_TERMS_AND_CONDITION, TRUE) || admin_authenticate
 }
 
 // The user cannot bypass the "terms and conditions" page 
-if($_config['enable_terms_and_conditions']==1 && !isset($_SESSION['agree_terms_and_conditions']) && !strstr($_SERVER['PHP_SELF'], 'terms_and_conditions.php')){
-	header('Location: '.AT_BASE_HREF.'mods/disclaimer/terms_and_conditions.php');
-	exit;
-}
-
-// destroy the session var at logout
-if (strstr($_SERVER['PHP_SELF'], 'logout.php')) {
-	unset($_SESSION['agree_terms_and_conditions']);
-}
+//if($_config['enable_terms_and_conditions']==1 && !isset($_SESSION['agree_terms_and_conditions']) && !strstr($_SERVER['PHP_SELF'], 'terms_and_conditions.php')){
+//	header('Location: '.AT_BASE_HREF.'mods/disclaimer/terms_and_conditions.php');
+//	exit;
+//}
+//
+//// destroy the session var at logout
+//if (strstr($_SERVER['PHP_SELF'], 'logout.php')) {
+//	unset($_SESSION['agree_terms_and_conditions']);
+//}
 ?>
