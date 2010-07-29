@@ -84,8 +84,8 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_company_description','Co
 INSERT INTO `language_text` VALUES ('en', '_module','jb_post_description','Description',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_post_description_note','Description should include Job Overview, Responsibilities, Qualifications, Contact Information',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_closing_date','Closing Date',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','jb_login','Post a Job',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','jb_logout','Logout',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_login','Employer sign-in',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_logout','Employer sign-out',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_registration','Employer Registration',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_any_categories','Any Categories',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_employer_login','Employer Login',NOW(),'');
@@ -106,8 +106,9 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_website','Website',NOW()
 INSERT INTO `language_text` VALUES ('en', '_module','jb_confirmed','Confirmed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_unconfirmed','Unconfirmed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state','Approval State',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state_confirmed','Confirmed',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state_unconfirmed','Unconfirmed',NOW(),'');
+
+INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state_confirmed','Approved',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state_unconfirmed','Disapproved',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_required_posting_approval','New posting requires approval',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_admin_add_category_blub','To add new categories for the job posting, type the category name in the text field and click "Save".',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_admin_edit_categories_blub','The list below are the current categories within the system.  You may edit the item by clicking on them, or delete them by clicking on "Delete".',NOW(),'');
@@ -130,11 +131,13 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_click_to_delete','Click 
 INSERT INTO `language_text` VALUES ('en', '_module','jb_required_posting_approval','Does job post need to be approved before listing?',NOW(),'');
 
 # Module Messages
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_POST_ADDED_SUCCESSFULLY','Job Post added successfully.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_POST_ADDED_SUCCESSFULLY','Job posted added successfully.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_POST_PENDING','The job posting will appear when it has been approved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_POST_DELETED','Job Post deleted successfully.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_POST_UPDATED_SUCCESS','Job Post updated successfully.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_CATEGORY_ADDED_SUCCESSFULLY','Category added successfully.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_CATEGORY_DELETED','Category deleted successfully.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_JB_PROFILE_UPDATED','Profile was successfully updated.',NOW(),'');
 
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_JB_MISSING_FIELDS','Email, username, company name, employer name cannot be empty.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_JB_EXISTING_INFO','Username or email has already been used.  Please choose another one. ',NOW(),'');

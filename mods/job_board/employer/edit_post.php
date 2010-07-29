@@ -84,6 +84,7 @@ if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->display('employer/jb_employer_header.tmpl.php');
 $savant->assign('job', $job);
 $savant->assign('categories', $job->getCategories());
 $savant->assign('job_post', $job_post);

@@ -25,11 +25,11 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 			<input type="checkbox" id="jb_is_public" name="jb_is_public" <?php echo ($this->job_post['is_public']==1)?'checked="checked"':''; ?>/>
 		</div>
 		<div class="row">
-			<label><?php echo _AT('jb_approval_state'); ?></label>			
-			<label for="jb_approval_state_<?php echo AT_JB_POSTING_STATUS_UNCONFIRMED; ?>"><?php echo _AT('jb_approval_state_confirmed'); ?></label>
-			<input type="radio" id="jb_approval_state_<?php echo AT_JB_POSTING_STATUS_UNCONFIRMED; ?>" name="jb_approval_state" value="<?php echo AT_JB_POSTING_STATUS_UNCONFIRMED; ?>" <?php echo ($this->job_post['approval_state']==AT_JB_POSTING_STATUS_UNCONFIRMED)?'checked="checked"':''; ?> />			
-			<label for="jb_approval_state_<?php echo AT_JB_POSTING_STATUS_CONFIRMED; ?>"><?php echo _AT('jb_approval_state_unconfirmed'); ?></label>
+			<label><?php echo _AT('jb_approval_state'); ?></label>						
+			<label for="jb_approval_state_<?php echo AT_JB_POSTING_STATUS_CONFIRMED; ?>"><?php echo _AT('jb_approval_state_confirmed'); ?></label>
 			<input type="radio" id="jb_approval_state_<?php echo AT_JB_POSTING_STATUS_CONFIRMED; ?>" name="jb_approval_state" value="<?php echo AT_JB_POSTING_STATUS_CONFIRMED; ?>" <?php echo ($this->job_post['approval_state']==AT_JB_POSTING_STATUS_CONFIRMED)?'checked="checked"':''; ?> />
+			<label for="jb_approval_state_<?php echo AT_JB_POSTING_STATUS_UNCONFIRMED; ?>"><?php echo _AT('jb_approval_state_unconfirmed'); ?></label>
+			<input type="radio" id="jb_approval_state_<?php echo AT_JB_POSTING_STATUS_UNCONFIRMED; ?>" name="jb_approval_state" value="<?php echo AT_JB_POSTING_STATUS_UNCONFIRMED; ?>" <?php echo ($this->job_post['approval_state']==AT_JB_POSTING_STATUS_UNCONFIRMED)?'checked="checked"':''; ?> />			
 		</div>
 		<div class="row">
 			<label for="jb_closing_date"><?php echo _AT('jb_closing_date'); ?></label>

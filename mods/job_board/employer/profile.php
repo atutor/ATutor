@@ -63,7 +63,7 @@ if ($_POST['submit']){
 	} 
 
 	if ($employer->updateProfile($name, $company, $email, $website)){
-		$msg->addFeedback('PROFILE_UPDATED');
+		$msg->addFeedback('JB_PROFILE_UPDATED');
 	} else {
 		$msg->addFeedback('DB_NOT_UPDATED');
 	}
@@ -73,6 +73,7 @@ if ($_POST['submit']){
 
 include(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printConfirm();
+$savant->display('employer/jb_employer_header.tmpl.php');
 $savant->assign('name', $employer->getName());
 $savant->assign('company', $employer->getCompany());
 $savant->assign('email', $employer->getEmail());

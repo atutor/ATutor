@@ -15,19 +15,23 @@
 				foreach ($this->job_posts as $id=>$row): 
 		?>
 		<tr>
-			<td><a href="<?php echo AT_JB_BASENAME.'view_post.php?jid='.$row['id'];?>" title="<?php echo _AT('jb_view_job_post'); ?>"><?php echo $row['id']; ?></a></td>
-			<td><a href="<?php echo AT_JB_BASENAME.'view_post.php?jid='.$row['id'];?>" title="<?php echo $row['title']; ?>"><?php echo $row['title']; ?></a></td>
+			<td><a href="<?php echo AT_JB_BASENAME.'employer/view_post.php?jid='.$row['id'];?>" title="<?php echo _AT('jb_view_job_post'); ?>"><?php echo $row['id']; ?></a></td>
+			<td><a href="<?php echo AT_JB_BASENAME.'employer/view_post.php?jid='.$row['id'];?>" title="<?php echo $row['title']; ?>"><?php echo $row['title']; ?></a></td>
 			<td><?php 
 						$employer = new Employer($row['employer_id']);
-						echo $employer->getName(); 
+						echo $employer->getCompany(); 
 					?>
 			</td>
 			<td>				
 				<?php if(is_array($row['categories'])):
-						foreach($row['categories'] as $category): 
+						$category_str = '';
+						foreach($row['categories'] as $category){
+						    $category_str .= $this->job_obj->getCategoryNameById($category).', ';
+                        }
+                        $category_str = substr($category_str, 0, -2);
 				?>
-				<span><?php echo $this->job_obj->getCategoryNameById($category);?></span> ; 
-				<?php endforeach; else: ?>
+				<span><?php echo $category_str;?></span>
+				<?php else: ?>
 				<span><?php echo $this->job_obj->getCategoryNameById($row['categories']);?></span>
 				<?php endif; ?>
 			</td>

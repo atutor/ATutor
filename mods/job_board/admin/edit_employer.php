@@ -69,7 +69,7 @@ if ($_POST['submit']){
 	$employer->setApprovalState($approval_state);
 
 	if ($employer->updateProfile($name, $company, $email, $website)){
-		$msg->addFeedback('PROFILE_UPDATED');
+		$msg->addFeedback('JB_PROFILE_UPDATED');
 	} else {
 		$msg->addError('DB_NOT_UPDATED');
 	}

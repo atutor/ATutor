@@ -4,6 +4,7 @@ div.jb_head{
 }
 div.jb_add_posting{
 	float: right;
+	padding-right: 2em;
 }
 div.jb_search{
 	width: 70%;

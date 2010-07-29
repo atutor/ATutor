@@ -48,7 +48,13 @@ if(isset($_POST['submit'])){
 	$jb_closing_date = $year.'-'.$month.'-'.$day.' '.$hour.':'.$min.':00';
 
 	$job->addJob($_POST['title'], $_POST['jb_description'], $_POST['jb_categories'], $_POST['jb_is_public'], $jb_closing_date);
-	$msg->addFeedback('JB_POST_ADDED_SUCCESSFULLY');
+	
+	if ($_config['jb_posting_approval']==1){
+	    //if the post require approval.
+	    $msg->addFeedback('JB_POST_PENDING');
+	} else {
+	    $msg->addFeedback('JB_POST_ADDED_SUCCESSFULLY');
+	}
 	header('Location: home.php');
 	exit;
 }
@@ -73,6 +79,7 @@ if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->display('employer/jb_employer_header.tmpl.php');
 $savant->assign('categories', $all_categories);
 $savant->display('employer/jb_add_new_post.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php'); 

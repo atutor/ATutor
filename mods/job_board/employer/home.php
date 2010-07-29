@@ -51,6 +51,7 @@ if ($_GET['order']==''){
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+$savant->display('employer/jb_employer_header.tmpl.php');
 echo '<div class="pageinator_box">';
 print_paginator($page, sizeof($all_job_posts), $page_string, AT_JB_ROWS_PER_PAGE);
 echo '</div>';
