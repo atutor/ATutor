@@ -1,7 +1,9 @@
-<?php 
-if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
-	load_editor();
+<?php
+$simple = true;
+if ($_POST['complexeditor'] == '1') {
+	$simple = false;
 }
+load_editor($simple, false, "none");
 ?>
 <div class="input-form">
 	<form action="" method="post" name="form">
@@ -52,23 +54,16 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 			?>
 		</div>
 		<div class="row">
-			<?php echo _AT('formatting'); ?><br />
-			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+			<span class="nowrap">
+				<label for="formatting_radios"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('formatting'); ?></label>
+				<span id="formatting_radios">
+					<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> />
+					<label for="text"><?php echo _AT('plain_text'); ?></label>
 
-			<label for="text"><?php echo _AT('plain_text'); ?></label>
-			<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
-
-			<label for="html"><?php echo _AT('html'); ?></label>
-			<?php   //Button for enabling/disabling visual editor
-				if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-					echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-					echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button"/>';
-				} else {
-					echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'"  ';
-					if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
-					echo ' class="button" />';
-				}
-			?>
+					<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1) { echo 'checked="checked"'; } ?> />
+					<label for="html"><?php echo _AT('html'); ?></label>
+			   </span>
+		   </span>
 		</div>
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="jb_description"><?php echo _AT('jb_post_description'); ?></label><br />

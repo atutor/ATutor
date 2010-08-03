@@ -18,6 +18,11 @@ include(AT_JB_INCLUDE.'classes/Job.class.php');
 include(AT_JB_INCLUDE.'classes/Employer.class.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
+$_custom_head .= '
+    <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
+    <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
+    <script type="text/javascript" src="'.$_base_path.'mods/job_board/include/js/edit.js"></script>
+    ';
 
 if (!Employer::authenticate()){
 	$msg->addError('ACCESS_DENIED');

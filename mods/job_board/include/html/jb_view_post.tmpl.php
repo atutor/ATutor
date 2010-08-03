@@ -8,9 +8,14 @@
 	<div>
 		<label><?php echo _AT('categories'); ?></label>
 		<?php if(is_array($this->job_post['categories'])):
-				foreach($this->job_post['categories'] as $category): ?>
-		<span><?php echo $this->job_obj->getCategoryNameById($category);?></span>
-		<?php endforeach; else: ?>
+				        $category_str = '';
+						foreach($this->job_post['categories'] as $category){
+						    $category_str .= $this->job_obj->getCategoryNameById($category).', ';
+                        }
+                        $category_str = substr($category_str, 0, -2);
+				?>
+				<span><?php echo $category_str;?></span>
+		<?php else: ?>
 		<span><?php echo $this->job_obj->getCategoryNameById($this->job_post['categories']);?></span>
 		<?php endif; ?>
 	</div>

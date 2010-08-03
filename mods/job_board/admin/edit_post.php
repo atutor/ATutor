@@ -14,11 +14,16 @@
 
 define(AT_INCLUDE_PATH, '../../../include/');
 include(AT_INCLUDE_PATH.'vitals.inc.php');
+admin_authenticate(AT_ADMIN_PRIV_JOB_BOARD);
+
 include(AT_JB_INCLUDE.'classes/Job.class.php');
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 $_custom_css = $_base_path . AT_JB_BASENAME . 'module.css'; // use a custom stylesheet
-
-admin_authenticate(AT_ADMIN_PRIV_JOB_BOARD);
+$_custom_head .= '
+    <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
+    <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
+    <script type="text/javascript" src="'.$_base_path.'mods/job_board/include/js/edit.js"></script>
+    ';
 
 /* 
  * Add the submenu on this page so that user can go back to the listing.
