@@ -258,6 +258,7 @@ if (isset($_REQUEST['ml']) && $_REQUEST['ml']) {
 
 /* HAVE TO SEND MEMBER_ID THROUGH FORM AS A HIDDEN POST VARIABLE!!! */
 /* PUT IN IF LOOP THAT LETS YOU SEE STATUS RADIO BUTTONS */
+$savant->assign('no_captcha', true);
 $savant->display('registration.tmpl.php');
 
 ?>

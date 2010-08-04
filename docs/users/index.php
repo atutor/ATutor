@@ -94,7 +94,7 @@ function all_news_cmp($a, $b){
 }
 $all_news = array();	//all news 
 
-$module_status_bits = AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_MISSING | AT_MODULE_STATUS_PARTIALLY_UNINSTALLED;
+$module_status_bits = AT_MODULE_STATUS_ENABLED;
 $module_type_bits = AT_MODULE_TYPE_STANDARD + AT_MODULE_TYPE_EXTRA;
 
 $module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits, $sort = TRUE);

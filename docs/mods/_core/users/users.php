@@ -162,8 +162,12 @@ if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 }
 
 $result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
-$num_results = $row['cnt'];
+if ($result){
+	$row = mysql_fetch_assoc($result);
+	$num_results = $row['cnt'];
+} else {
+	$num_results = 0;
+}
 
 $results_per_page = 50;
 $num_pages = max(ceil($num_results / $results_per_page), 1);

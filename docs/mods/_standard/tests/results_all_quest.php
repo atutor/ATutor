@@ -13,7 +13,7 @@
 // $Id: results_all_quest.php 8014 2008-10-03 13:53:03Z cindy $
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'mods/_standard/tests/classes/testQuestions.class.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
 
 authenticate(AT_PRIV_TESTS);
 
