@@ -79,7 +79,7 @@ echo 'theme: "advanced",
       remove_linebreaks: false,
       plugin_insertdate_dateFormat : "%Y-%m-%d",
       plugin_insertdate_timeFormat : "%H:%M:%S",
-      extended_valid_elements : "a[name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
+      extended_valid_elements : "a[class|name|href|target|title|onclick],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[class|align|style]",
       document_base_url: "'.AT_BASE_HREF.$course_base_href.$content_base_href.'"
     };
 
