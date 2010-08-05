@@ -712,9 +712,8 @@ class ContentManager
 		
 		echo '
 function initContentMenu() {
-	tree_collapse_icon = "'.$_base_path.'images/tree/tree_collapse.gif";
-	tree_expand_icon = "'.$_base_path.'images/tree/tree_expand.gif";
-		
+	tree_collapse_icon = "'.AT_BASE_HREF.'images/tree/tree_collapse.gif";
+	tree_expand_icon = "'.AT_BASE_HREF.'images/tree/tree_expand.gif";
 ';
 		
 		$sql = "SELECT content_id
@@ -1103,20 +1102,20 @@ initContentMenu();
 
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-							echo '<a href="javascript:void(0)" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.AT_BASE_HREF.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
+							echo '<img src="'.AT_BASE_HREF.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
 							echo '</a>'."\n";
 						}
 					} else {
 						if ($on) {
-							echo '<a href="javascript:void(0)" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.AT_BASE_HREF.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
+							echo '<img src="'.AT_BASE_HREF.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
 							echo '</a>'."\n";
 						}
 					}
