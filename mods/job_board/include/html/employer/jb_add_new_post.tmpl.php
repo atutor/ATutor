@@ -30,12 +30,13 @@ load_editor($simple, false, "none");
 			<label for="jb_closing_date"><?php echo _AT('jb_closing_date'); ?></label>
 			<?php
 			//load mysql timestamp template into the template.
-			$today_day   = date('d');
-			$today_mon   = date('m');
-			$today_year  = date('Y');
+            $next_day = time() + 60*60*24; 
+			$today_day   = date('d', $next_day);
+			$today_mon   = date('m', $next_day);
+			$today_year  = date('Y', $next_day);
 
-			$today_hour  = date('H');
-			$today_min   = date('i');
+			$today_hour  = date('H', $next_day);
+			$today_min   = date('i', $next_day);
 
 			//load the release_date template.
 			$name = '_jb_closing_date';
