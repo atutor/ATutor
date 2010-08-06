@@ -104,8 +104,15 @@ include(AT_INCLUDE_PATH.'header.inc.php');?>
 </form>
 <div style="clear:both;"></div>
 <div>
-<?php
-print_paginator($page, sizeof($all_job_posts), $search_string.SEP.$page_string, AT_JB_ROWS_PER_PAGE);
+<div class="pageinator_box">
+<?php if(isset($_SESSION['member_id']) && $_SESSION['member_id'] >0): ?>
+<div style="clear:left;">
+	<a href="<?php echo AT_JB_BASENAME.'subscribe.php'; ?>"><?php echo _AT('jb_subscribe'); ?></a>
+</div>
+<?php endif; ?>
+<?php print_paginator($page, sizeof($all_job_posts), $search_string.SEP.$page_string, AT_JB_ROWS_PER_PAGE); ?>
+</div>
+<?php 
 $savant->assign('job_posts', $current_job_posts);
 $savant->assign('bookmark_posts', $bookmark_posts);
 $savant->assign('job_obj', $job);

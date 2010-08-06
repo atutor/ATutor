@@ -3,12 +3,6 @@ if ($search_string!=''){
 	$search_string = SEP.$search_string;
 }
 ?>
-<?php if(isset($_SESSION['member_id']) && $_SESSION['member_id'] >0): ?>
-<div>
-	<a href="<?php echo AT_JB_BASENAME.'subscribe.php'; ?>"><?php echo _AT('jb_subscribe'); ?></a>
-</div>
-<?php endif; ?>
-
 <div>
 	<table class="data static" summary="" rules="rows">
 		<thead>
@@ -35,7 +29,7 @@ if ($search_string!=''){
 				<td><a href="<?php echo AT_JB_BASENAME.'view_post.php?jid='.$row['id'];?>" title="<?php echo $row['title']; ?>"><?php echo $row['title']; ?></a></td>
 				<td><?php 
 						$employer = new Employer($row['employer_id']);
-						echo $employer->getCompany(); 
+						echo htmlentities_utf8($employer->getCompany());
 					?>
 				</td>
 				<td>

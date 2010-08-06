@@ -55,23 +55,23 @@ class Employer{
     }
 
 	function getName(){
-		return htmlentities_utf8($this->name);
+		return $this->name;
 	}
 	
 	function getEmail(){
-		return htmlentities_utf8($this->email);
+		return $this->email;
 	}
 
 	function getCompany(){
-		return htmlentities_utf8($this->company);
+		return $this->company;
 	}
 	
 	function getDescription(){
-	    return htmlentities_utf8($this->description);
+	    return $this->description;
     }
 
 	function getWebsite(){
-		return htmlentities_utf8($this->website);
+		return $this->website;
 	}
 	
 	function getLastLogin(){
@@ -105,16 +105,18 @@ class Employer{
 	 * @param	string		company's name
 	 * @param	string		employer's email
 	 * @param	string		employer's website.
+     * @param   string      employer's description
 	 * @return	null
 	 */
-	 function updateProfile($name, $company, $email, $website){
+	 function updateProfile($name, $company, $email, $website, $description){
 		global $addslashes, $db;
 		$name = $addslashes($name);
 		$company = $addslashes($company);
 		$email = $addslashes($email);
 		$website = $addslashes($website);
+        $description = $addslashes($description);
 		
-		$sql = 'UPDATE '.TABLE_PREFIX."jb_employers SET employer_name='$name', company='$company', email='$email', website='$website' WHERE id=".$this->id;
+		$sql = 'UPDATE '.TABLE_PREFIX."jb_employers SET employer_name='$name', company='$company', email='$email', website='$website', description='$description' WHERE id=".$this->id;
 		$result = mysql_query($sql, $db);
 		if ($result){
 			return true;

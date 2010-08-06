@@ -36,11 +36,15 @@ class Job{
 	 */
 	function addJob($title, $description, $categories, $is_public, $closing_date){
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-		global $addslashes, $db, $msg, $_config;
+		global $addslashes, $db, $msg, $_config, $_base_href;
 		
 		if($_SESSION['jb_employer_id']<1){
 		    $msg->addError();   //authentication error
 		    exit;
+        } else {
+            include(AT_JB_INCLUDE.'Employer.class.php');
+            $employer = new Employer($_SESSION['jb_employer_id']);
+            $employer_id = $employer->getId();
         }
 
 		$title = $addslashes($title);
@@ -48,7 +52,7 @@ class Job{
 		$is_public = (isset($is_public))?1:0;
 		$closing_date = $addslashes($closing_date);
 		$approval_state = ($_config['jb_posting_approval']==1)?AT_JB_POSTING_STATUS_UNCONFIRMED:AT_JB_POSTING_STATUS_CONFIRMED;	
-		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, is_public, closing_date, created_date, revised_date, approval_state) VALUES ($_SESSION[jb_employer_id], '$title', '$description', $is_public, '$closing_date', NOW(), NOW(), $approval_state)";
+		$sql = 'INSERT INTO '.TABLE_PREFIX."jb_postings (employer_id, title, description, is_public, closing_date, created_date, revised_date, approval_state) VALUES ($employer_id, '$title', '$description', $is_public, '$closing_date', NOW(), NOW(), $approval_state)";
 		$result = mysql_query($sql, $db);
 		$posting_id = mysql_insert_id();
 
@@ -57,18 +61,19 @@ class Job{
 			foreach($categories as $id => $category){
 				$category = intval($category);
 				$sql = 'INSERT INTO '.TABLE_PREFIX."jb_posting_categories (posting_id, category_id) VALUES ($posting_id, $category)";
-				mysql_query($sql, $db);
+				mysql_query($sql, $db);                
 
 				//send out notification if the person is subscribed to the category.
 				$sql = 'SELECT m.member_id, m.email FROM '.TABLE_PREFIX.'jb_category_subscribes cs LEFT JOIN '.TABLE_PREFIX."members m ON cs.member_id=m.member_id WHERE category_id=$category";
 				$result = mysql_query($sql, $db);
+                $post_link = $_base_href . AT_JB_BASENAME . 'view_post.php?jid='.$posting_id;
 				if($result){
 					while($row = mysql_fetch_assoc($result)){
 						$mail = new ATutorMailer;
 						$mail->AddAddress($row['email'], get_display_name($row['member_id']));
-						$body = _AT('jb_subscription_msg', $this->getCategoryNameById($category), $title);
-						$body .= "\n----------------------------------------------\n";
-						$body .= _AT('posted_by').": ".get_display_name($row['member_id'])."\n";
+						$body = _AT('jb_subscription_msg', $title, $this->getCategoryNameById($category), $post_link);
+						$body .= "\n\n";
+						$body .= _AT('jb_posted_by').": ".htmlentities_utf8($employer->getCompany())."\n";
 						$mail->FromName = $_config['site_name'];
 						$mail->From     = $_config['contact_email'];
 						$mail->Subject = _AT('jb_subscription_mail_subject');

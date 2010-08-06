@@ -83,6 +83,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_archive','Archive',NOW()
 INSERT INTO `language_text` VALUES ('en', '_module','jb_company_description','Company Description',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_post_description','Description',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_post_description_note','Description should include Job Overview, Responsibilities, Qualifications, Contact Information',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_posted_by','Job posted by:',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_closing_date','Closing Date',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_login','Employer sign-in',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_logout','Employer sign-out',NOW(),'');
@@ -106,7 +107,6 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_website','Website',NOW()
 INSERT INTO `language_text` VALUES ('en', '_module','jb_confirmed','Confirmed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_unconfirmed','Unconfirmed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state','Approval State',NOW(),'');
-
 INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state_confirmed','Approved',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_approval_state_unconfirmed','Disapproved',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_required_posting_approval','New posting requires approval',NOW(),'');
@@ -119,7 +119,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','jb_email_confirmation_subje
 INSERT INTO `language_text` VALUES ('en', '_module','jb_email_confirmation_message','You have registered for a job board account on %1s.  Please finish the registration process by confirming your email address by using the following link: %2s.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_add_to_cart','Bookmark this post',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_remove_from_cart','Remove this bookmark',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','jb_subscription_msg','Hi, a new job post titled %2s has been added to the ATutor Job Board %1s category.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','jb_subscription_msg','Hi, \n\nA new job post titled %2s has been added to the ATutor Job Board %1s category.  The job post can be found at the following link, %3s.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_subscription_mail_subject','New Job Post in ATutor',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_any_categories','Any categories',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','jb_view_job_post','View a job post',NOW(),'');

@@ -13,13 +13,13 @@
     <?php if(!empty($this->employers)): ?>
     <?php foreach($this->employers as $employer): ?>
     <tr>
-        <td><?php echo $employer->getUsername(); ?></td>
-        <td><?php echo $employer->getName(); ?></td>
-        <td><?php echo $employer->getEmail(); ?></td>
-        <td><?php echo $employer->getCompany(); ?></td>
-        <td><?php echo $employer->getDescription(); ?></td>
-        <td><?php echo $employer->getWebsite(); ?></td>
-        <td><?php echo $employer->getLastLogin(); ?></td>
+        <td><?php echo htmlentities_utf8($employer->getUsername()); ?></td>
+        <td><?php echo htmlentities_utf8($employer->getName()); ?></td>
+        <td><?php echo htmlentities_utf8($employer->getEmail()); ?></td>
+        <td><?php echo htmlentities_utf8($employer->getCompany()); ?></td>
+        <td><?php echo htmlentities_utf8($employer->getDescription()); ?></td>
+        <td><?php echo htmlentities_utf8($employer->getWebsite()); ?></td>
+        <td><?php echo htmlentities_utf8($employer->getLastLogin()); ?></td>
         <?php 
 			switch($employer->getApprovalState()){
 				case AT_JB_STATUS_UNCONFIRMED:

@@ -59,6 +59,11 @@ function encrypt_password() {
 			<input type="text" name="jb_employer_website" id="jb_employer_website" value="<?php echo htmlentities_utf8($this->website); ?>"/>
 		</div>
 
+        <div class="row">
+			<label for="jb_employer_description"><?php echo _AT('jb_company_description'); ?></label><br/>
+			<textarea id="jb_employer_description" name="jb_employer_description" ><?php echo htmlentities_utf8($this->description); ?></textarea>
+		</div>
+
 		<div class="row">
     		<input type="hidden" name="jb_employer_password_hidden" value="" />
     		<input class="hidden" name="jb_employer_password_error" />

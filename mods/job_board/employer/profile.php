@@ -35,6 +35,7 @@ if ($_POST['submit']){
 	$email = $_POST['jb_employer_email'];
 	$email2 = $_POST['jb_employer_email2'];
 	$website = $_POST['jb_employer_website'];
+    $description = $_POST['jb_employer_description'];
 
 	//check if email has been changed.  If it's been changed, check the 2 emails.
 	if ($email!=$employer->getEmail()){
@@ -62,7 +63,7 @@ if ($_POST['submit']){
 	    $employer->updatePassword($pass);
 	} 
 
-	if ($employer->updateProfile($name, $company, $email, $website)){
+	if ($employer->updateProfile($name, $company, $email, $website, $description)){
 		$msg->addFeedback('JB_PROFILE_UPDATED');
 	} else {
 		$msg->addFeedback('DB_NOT_UPDATED');
@@ -78,6 +79,7 @@ $savant->assign('name', $employer->getName());
 $savant->assign('company', $employer->getCompany());
 $savant->assign('email', $employer->getEmail());
 $savant->assign('website', $employer->getWebsite());
+$savant->assign('description', $employer->getDescription());
 $savant->display('employer/jb_profile.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

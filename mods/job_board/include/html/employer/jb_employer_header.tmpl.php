@@ -7,3 +7,4 @@
 	<a href="<?php echo AT_JB_BASENAME;?>employer/registration.php"><?php echo _AT('jb_employer_registration');?></a>
 	<?php endif; ?>
 </div>
+<div style="clear:both;"></div>

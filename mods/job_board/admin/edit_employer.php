@@ -37,6 +37,7 @@ if ($_POST['submit']){
 	$email = $_POST['jb_employer_email'];
 	$email2 = $_POST['jb_employer_email2'];
 	$website = $_POST['jb_employer_website'];
+    $description = $_POST['jb_employer_description'];
 	$approval_state = $_POST['jb_employer_approval_state'];
 
 	//check if email has been changed.  If it's been changed, check the 2 emails.
@@ -68,7 +69,7 @@ if ($_POST['submit']){
 	//set approval state
 	$employer->setApprovalState($approval_state);
 
-	if ($employer->updateProfile($name, $company, $email, $website)){
+	if ($employer->updateProfile($name, $company, $email, $website, $description)){
 		$msg->addFeedback('JB_PROFILE_UPDATED');
 	} else {
 		$msg->addError('DB_NOT_UPDATED');
@@ -82,6 +83,7 @@ $savant->assign('name', $employer->getName());
 $savant->assign('company', $employer->getCompany());
 $savant->assign('email', $employer->getEmail());
 $savant->assign('website', $employer->getWebsite());
+$savant->assign('description', $employer->getDescription());
 $savant->assign('approval_state', $employer->getApprovalState());
 $savant->display('admin/jb_edit_employer.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php'); 

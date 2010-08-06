@@ -19,7 +19,7 @@
 			<td><a href="<?php echo AT_JB_BASENAME.'employer/view_post.php?jid='.$row['id'];?>" title="<?php echo $row['title']; ?>"><?php echo $row['title']; ?></a></td>
 			<td><?php 
 						$employer = new Employer($row['employer_id']);
-						echo $employer->getCompany(); 
+						echo htmlentities_utf8($employer->getCompany()); 
 					?>
 			</td>
 			<td>				
