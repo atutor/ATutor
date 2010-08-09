@@ -137,7 +137,6 @@ class ATutorDbFetcher {
 
   public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields, $activityIds) {
 //  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields) {
-	global $db;
     //TODO add support for filterBy, filterOp and filterValue
     $this->checkDb();
     $activities = array();
@@ -209,7 +208,7 @@ class ATutorDbFetcher {
   }
 
 /**
-  * I didn't implement this yet
+  * I haven't implement this yet
   */
   private function getMediaItems($activity_id) {
     $media = array();
@@ -222,13 +221,36 @@ class ATutorDbFetcher {
   }  
 
   /**
+   * Retrieve all the groups of this person.  
+   * reference: http://www.opensocial.org/Technical-Resources/opensocial-spec-v081/restful-protocol.html Section 2.3
+   * Group ID, and Title.
+   * @param     Array   member ids
+   */
+  public function getPersonGroups($ids){
+        $this->checkDb();
+        $ret = array();
+
+        foreach ($ids as $k=>$v){
+            $ids[$k] = intval($v);
+        }
+        $ids = implode(', ', $ids);
+        $sql = "SELECT m.member_id, g.id, g.name FROM ".TABLE_PREFIX."social_groups_members m LEFT JOIN ".TABLE_PREFIX."social_groups g ON m.group_id=g.id WHERE m.member_id IN ($ids)";
+        $result = mysql_query($sql, $this->db);
+        if ($result){
+            while(list($member_id, $group_id, $group_name) = mysql_fetch_row($result)){
+                $ret[$member_id][] = array($group_id, $group_name);
+            }
+        }
+        return $ret;
+  }
+
+  /**
    * @param		Int						Sender's member id
    * @param		appId					application id
    * @param		Opensocial.Message		Message Object, check http://wiki.opensocial.org/index.php?title=Opensocial.Message_%28v0.8%29
    * @return	null
    */
   public function createMessage($member_id, $appId, $message){
-	global $db;
 	$this->checkDb();
 	$app_id = intval($app_id);
 	$member_id = intval($member_id);
@@ -262,11 +284,10 @@ class ATutorDbFetcher {
   }
 
   public function getFriendIds($member_id) {
-	global $db;
     $this->checkDb();
     $ret = array();
-    $person_id = intval($person_id);
-	$sql = "select member_id, friend_id from ".TABLE_PREFIX."social_friends where member_id = $member_id or friend_id = $member_id";
+    $member_id = intval($member_id);
+	$sql = "SELECT member_id, friend_id from ".TABLE_PREFIX."social_friends WHERE member_id = $member_id or friend_id = $member_id";
     $res = mysql_query($sql, $this->db);
     while (list($mid, $fid) = mysql_fetch_row($res)) {
       $id = ($mid == $member_id) ? $fid : $mid;
@@ -297,7 +318,6 @@ class ATutorDbFetcher {
   }
 
   public function deleteAppData($member_id, $key, $app_id) {
-    global $db;
 	$this->checkDb();
     $person_id = intval($member_id);
     $app_id = intval($app_id);
