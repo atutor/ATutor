@@ -1516,7 +1516,7 @@ initContentMenu();
 		}
 		
 		if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT) {
+			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT || $content_row['content_type'] == CONTENT_TYPE_WEBLINK) {
 				$shortcuts[] = array(
 				'title' => _AT('edit_this_page'),   
 				'url' => $_base_href . 'mods/_core/editor/edit_content.php?cid='.$content_row['content_id'],
@@ -1539,7 +1539,7 @@ initContentMenu();
 				'url' => $_base_href.'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'], 
 				'icon' => $_base_href . 'images/page_add_sibling.gif');
 
-			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT) {
+			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT || $content_row['content_type'] == CONTENT_TYPE_WEBLINK) {
 				$shortcuts[] = array(
 					'title' => _AT('delete_this_page'), 
 					'url' => $_base_href . 'mods/_core/editor/delete_content.php?cid='.$content_row['content_id'], 
