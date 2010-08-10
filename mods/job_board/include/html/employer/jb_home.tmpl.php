@@ -45,3 +45,4 @@
 		<?php endif; ?>
 	</tbody>
 </table>
+<br style="clear:both;" />

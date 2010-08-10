@@ -55,3 +55,4 @@ if ($search_string!=''){
 		</tbody>
 	</table>
 </div>
+<br style="clear:both;" />

@@ -74,7 +74,9 @@ if ($_POST['submit']){
 
 include(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printConfirm();
+echo '<div class="pageinator_box">';
 $savant->display('employer/jb_employer_header.tmpl.php');
+echo '</div>';
 $savant->assign('name', $employer->getName());
 $savant->assign('company', $employer->getCompany());
 $savant->assign('email', $employer->getEmail());

@@ -54,7 +54,9 @@ if (isset($_POST['submit_no'])) {
 
 include(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printConfirm();
+echo '<div class="pageinator_box">';
 $savant->display('employer/jb_employer_header.tmpl.php');
+echo '</div>';
 $savant->assign('job_obj', $job);
 $savant->assign('job_post', $job_post);
 $savant->display('jb_view_post.tmpl.php');

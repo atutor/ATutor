@@ -99,3 +99,13 @@ div.admin_categories div.left{
 div.admin_categories div.right{
 	float: left;
 }
+
+/* overriders */
+div.paging {
+	margin:0em auto;
+}
+div.pageinator_box{
+	width: 94%;
+	margin-bottom: 0em;
+	border-width: 1px;
+}

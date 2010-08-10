@@ -84,7 +84,9 @@ if (!isset($_REQUEST['setvisual']) && !isset($_REQUEST['settext'])) {
 }
 
 include(AT_INCLUDE_PATH.'header.inc.php');
+echo '<div class="pageinator_box">';
 $savant->display('employer/jb_employer_header.tmpl.php');
+echo '</div>';
 $savant->assign('categories', $all_categories);
 $savant->display('employer/jb_add_new_post.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php'); 
