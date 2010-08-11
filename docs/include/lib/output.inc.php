@@ -736,7 +736,7 @@ function make_clickable($text) {
 //							"<a href=\"mailto:\\1\">\\1</a>",
 //							$text);
 
-	$text = preg_replace("/([\s])(http[s]?):\/\/(.*)(\s|\$|<br\s\/\>)(.*)/U", 
+	$text = preg_replace("/(.*)(http[s]?):\/\/(.*)(\s|$|<|>|\\\|\(|\))(.*)/U",  
 	                     "\\1<a href=\"\\2://\\3\">\\3</a>\\4\\5", $text);
 	
 	$text = preg_replace('/([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
