@@ -14,19 +14,22 @@
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require('common.inc.php');
 
 global $_config;
 
 if (isset($_POST['agree'])) {
+	if (isset($_POST['inreg'])) {
+		header ('Location: '.AT_BASE_HREF.'registration.php?agreed_disclaimer=1');
+		exit;
+	}
 	if (!isset($_SESSION['login']) || $_SESSION['login'] == '') {
 		header ('Location: '.AT_BASE_HREF.'index.php');
 		exit;
 	}
 	
-	$sql = "INSERT INTO ".TABLE_PREFIX."DS_agreed_logins (login)
-	        VALUES ('".$_SESSION['login']."')";
-	$result = mysql_query($sql, $db);
-
+	save_agreed_login($_SESSION['login']);
+	
 	if ($_SESSION['course_id'] == -1) { // admin login
 		header ('Location: '.AT_BASE_HREF.'admin/index.php');
 		exit;

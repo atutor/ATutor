@@ -61,6 +61,9 @@
 		<div>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <!-- 			<input class="button" type="button" value="<?php echo _AT('i_do_not_agree');?>" onClick="parent.location='<?php echo $this->tac_link; ?>'" /> -->
+			<?php if (isset($_POST['inreg'])) { ?>
+			<?php }?>
+			<input type="hidden" name="inreg" value="1" />
 			<?php if (isset($_GET['p']) && $_GET['p'] != '') {?>
 			<input type="hidden" name="p" value="<?php echo $_GET['p']; ?>" />
 			<?php } else if (isset($_GET['form_course_id'])) {?>
