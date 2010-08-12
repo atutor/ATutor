@@ -1352,14 +1352,17 @@ if (is_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources')) {
 	closedir($handler);
 }
 //takes care of the condition where the whole package doesn't have any contents but question banks
+//also is the case of urls
 if(is_array($all_package_base_path)){
 	$all_package_base_path = implode('/', $all_package_base_path);
 }
-
-if (@rename($import_path.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
-	if (!$msg->containsErrors()) {
-		$msg->addError('IMPORT_FAILED');
-	}
+if(strpos($all_package_base_path, 'http://')===false){
+    if (@rename($import_path.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+        if (!$msg->containsErrors()) {
+            exit;
+            $msg->addError('IMPORT_FAILED');
+        }
+    }
 }
 //check if there are still resources missing
 foreach($items as $idetails){

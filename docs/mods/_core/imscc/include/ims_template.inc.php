@@ -170,7 +170,6 @@ function print_organizations($parent_id,
 
 				$path .= str_repeat('../', $depth);
 			}
-			
 			$content['text'] = format_content($content['text'], $content['formatting'], $glossary, $path);
 
 			/* add HTML header and footers to the files */
@@ -347,7 +346,10 @@ function print_organizations($parent_id,
 					if (!empty($test_zipped_files) && in_array($file_path, $test_zipped_files)){
 						$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
 					} else {
-						if (preg_match('/^http[s]?\:/', $file) == 1){
+                        if (strpos($file, 'mailto:')!==false){
+                            //email exists in <a href=''> links but is not a file.
+                            continue;
+                        } elseif (preg_match('/^http[s]?\:/', $file) == 1){
 							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
 						} else {
 							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
