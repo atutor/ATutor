@@ -274,7 +274,12 @@ function print_organizations($parent_id,
 
 				if (substr($file, 0, 7) != 'http://' && substr($file, 0, 8) != 'https://') {
 					$file_path = realpath(AT_CONTENT_DIR . $course_id . '/' . $content['content_path'] . $file);
-	
+                    /* check if the path contains AT_CONTENT_DIR in it, if not, skip it, it's trying to scan through 
+                     * the file system */
+                     if (strpos($file_path, AT_CONTENT_DIR)!==0){
+                         continue; //skip
+                     }
+                    
 					/* check if this file exists in the content dir, if not don't include it */
 					if (file_exists($file_path) && 	is_file($file_path) && !in_array($file_path, $zipped_files)) {
 						$zipped_files[] = $file_path;
@@ -346,12 +351,12 @@ function print_organizations($parent_id,
 					if (!empty($test_zipped_files) && in_array($file_path, $test_zipped_files)){
 						$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
 					} else {
-                        if (strpos($file, 'mailto:')!==false){
-                            //email exists in <a href=''> links but is not a file.
-                            continue;
-                        } elseif (preg_match('/^http[s]?\:/', $file) == 1){
+                        if (preg_match('/^http[s]?\:/', $file) == 1){
 							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
-						} else {
+						} elseif (file_exists($file_path) && is_file($file_path)) {
+                            //http://www.atutor.ca/atutor/mantis/view.php?id=4313
+                            //relative link that goes beyond get.php shouldn't be added
+                            //relative link that does not exist shouldn't be added.
 							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
 						}
 					}
