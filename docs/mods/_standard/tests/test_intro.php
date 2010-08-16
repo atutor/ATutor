@@ -98,6 +98,8 @@ else if (isset($_POST['submit']))
  * @3300
  */
 $sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$_SESSION['member_id']."'";
+$takes_result = mysql_query($sql, $db);
+$takes = mysql_fetch_assoc($takes_result);
 if ( (($test_row['start_date2'] > time()) || ($test_row['end_date2'] < time())) || 
    ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
