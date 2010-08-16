@@ -31,7 +31,7 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 } else if (isset($_GET['default'], $_GET['theme_dir'])) {
 	set_theme_as_default($theme, $_GET['type']);
 	$_config['pref_defaults'] = unserialize($_config['pref_defaults']);
-	if (is_mobile_device()) {
+	if ($_GET['type']==MOBILE_DEVICE) {
 		$_config['pref_defaults']['PREF_MOBILE_THEME'] = $theme;
 	} else {
 		$_config['pref_defaults']['PREF_THEME'] = $theme;
@@ -108,7 +108,7 @@ print_data_table($result, MOBILE_DEVICE);
 ?>
 
 <?php function print_data_table($result, $type) {
-	if (mysql_num_rows($result) == 0) return;
+	if (@mysql_num_rows($result) == 0) return;
 ?>
 <h3><?php if ($type == DESKTOP_DEVICE) echo _AT('themes_for_desktop'); else echo _AT('themes_for_mobile');?></h3><br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form_<?php echo $type; ?>">
