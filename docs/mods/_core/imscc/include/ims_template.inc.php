@@ -351,12 +351,12 @@ function print_organizations($parent_id,
 					if (!empty($test_zipped_files) && in_array($file_path, $test_zipped_files)){
 						$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
 					} else {
-                        if (preg_match('/^http[s]?\:/', $file) == 1){
+						if (preg_match('/^http[s]?\:/', $file) == 1){
 							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
 						} elseif (file_exists($file_path) && is_file($file_path)) {
-                            //http://www.atutor.ca/atutor/mantis/view.php?id=4313
-                            //relative link that goes beyond get.php shouldn't be added
-                            //relative link that does not exist shouldn't be added.
+							//http://www.atutor.ca/atutor/mantis/view.php?id=4313
+							//relative link that goes beyond get.php shouldn't be added
+							//relative link that does not exist shouldn't be added.
 							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
 						}
 					}
