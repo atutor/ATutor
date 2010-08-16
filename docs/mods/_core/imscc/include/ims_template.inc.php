@@ -274,11 +274,11 @@ function print_organizations($parent_id,
 
 				if (substr($file, 0, 7) != 'http://' && substr($file, 0, 8) != 'https://') {
 					$file_path = realpath(AT_CONTENT_DIR . $course_id . '/' . $content['content_path'] . $file);
-                    /* check if the path contains AT_CONTENT_DIR in it, if not, skip it, it's trying to scan through 
-                     * the file system */
-                     if (strpos($file_path, AT_CONTENT_DIR)!==0){
-                         continue; //skip
-                     }
+					/* check if the path contains AT_CONTENT_DIR in it, if not, skip it, it's trying to scan through 
+					 * the file system */
+					if (strpos($file_path, AT_CONTENT_DIR)!==0){
+						continue; //skip
+					}
                     
 					/* check if this file exists in the content dir, if not don't include it */
 					if (file_exists($file_path) && 	is_file($file_path) && !in_array($file_path, $zipped_files)) {
