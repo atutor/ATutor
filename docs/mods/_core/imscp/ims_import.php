@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: ims_import.php 9081 2010-01-13 20:26:03Z cindy $
+// $Id$
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -1356,10 +1356,9 @@ if (is_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources')) {
 if(is_array($all_package_base_path)){
 	$all_package_base_path = implode('/', $all_package_base_path);
 }
-if(strpos($all_package_base_path, 'http://')===false){
+if(strpos($all_package_base_path, 'http:/')===false){
     if (@rename($import_path.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
         if (!$msg->containsErrors()) {
-            exit;
             $msg->addError('IMPORT_FAILED');
         }
     }

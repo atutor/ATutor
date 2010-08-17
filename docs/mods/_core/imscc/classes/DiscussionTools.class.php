@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: DiscussionTools.class.php 8897 2009-11-10 21:59:08Z hwong $
+// $Id$
 
 /**
  * A class for DiscussionTools

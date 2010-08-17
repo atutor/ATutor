@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: WeblinksExport.class.php 8119 2008-10-29 13:53:06Z hwong $
+// $Id$
 
 /**
  * A very simple class to generates a singular webcontent weblink xml file.

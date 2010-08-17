@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: WeblinksParser.class.php 8782 2009-09-04 17:33:07Z hwong $
+// $Id$
 
 /**
 * WeblinksParser

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php 8766 2009-08-07 01:39:05Z hwong $
+// $Id$
 
 /**
  * Version 1.0 -IMS Common Cartridge Final Namespaces to Schema Locations

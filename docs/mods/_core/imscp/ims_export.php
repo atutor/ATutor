@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: ims_export.php 8935 2009-11-17 17:36:09Z hwong $
+// $Id$
 define('AT_INCLUDE_PATH', '../../../include/');
 
 /* content id of an optional chapter */

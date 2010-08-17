@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: DiscussionToolsImport.class.php 8894 2009-11-09 20:03:12Z hwong $
+// $Id$
 
 include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 /**
