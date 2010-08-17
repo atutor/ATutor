@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: index_admin.php 7208 2008-03-13 16:07:24Z cindy $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require_once (AT_INCLUDE_PATH.'vitals.inc.php');

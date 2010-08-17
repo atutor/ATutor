@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: questions.php 7781 2008-08-08 13:51:11Z cindy $
+// $Id$
 
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../../include/');

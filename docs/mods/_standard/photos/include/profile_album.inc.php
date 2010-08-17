@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id: profile_album.php 9519 2010-03-18 15:38:11Z hwong $
+// $Id$
 /* This file is used by both the photo album and the my start page->profile picture */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include (AT_PA_INCLUDE.'lib.inc.php');

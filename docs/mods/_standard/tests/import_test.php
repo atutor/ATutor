@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: import_test.php 9081 2010-01-13 20:26:03Z cindy $
+// $Id$
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */

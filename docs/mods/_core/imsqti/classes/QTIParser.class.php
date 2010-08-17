@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: QTIParser.class.php 8799 2009-09-22 13:57:25Z hwong $
+// $Id$
 
 //Constances
 define('AT_QTI_REPONSE_GRP',    1);

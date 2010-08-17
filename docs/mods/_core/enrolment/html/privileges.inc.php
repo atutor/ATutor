@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: enroll_edit.php 6662 2006-11-20 15:52:49Z joel $
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $num_cols = 2;

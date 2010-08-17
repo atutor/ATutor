@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: course_properties.inc.php 9074 2010-01-13 19:16:56Z greg $
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: alternatives.inc.php 7208 2008-07-04 16:07:24Z silvia $
+// $Id$
 
 /**
  * This script creates the interface of "edit content" => "adapted content"

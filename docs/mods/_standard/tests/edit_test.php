@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: edit_test.php 8788 2009-09-09 17:52:52Z hwong $
+// $Id$
 
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../../include/');

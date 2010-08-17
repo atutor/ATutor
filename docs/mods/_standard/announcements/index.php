@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 7981 2008-10-01 19:34:17Z cindy $
+// $Id$
 
 $page = 'tools';
 define('AT_INCLUDE_PATH', '../../../include/');

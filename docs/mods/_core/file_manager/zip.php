@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: zip.php 8901 2009-11-11 19:10:19Z cindy $
+// $Id$
 
 $page = 'file_manager';
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: qti.inc.php 8013 2008-10-02 19:51:24Z hwong $
+// $Id$
 
 /* Variables */
 $supported_media_type = array(	'gif', 'jpg', 'bmp', 'png', 'jpeg', 

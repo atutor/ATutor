@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: properties.inc.php 8794 2009-09-16 16:06:54Z cindy $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

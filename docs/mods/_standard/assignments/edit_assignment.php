@@ -11,6 +11,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: edit_assignment.php 7427 2008-04-24 17:16:30Z greg $
+// $Id$
 require('add_assignment.php');
 ?>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: certificate_delete.php 7208 2008-02-20 16:07:24Z cindy $
+// $Id$
 
 $page = 'gradebook';
 

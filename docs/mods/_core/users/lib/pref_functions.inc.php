@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: pref_functions.inc.php 8013 2008-10-02 19:51:24Z hwong $
+// $Id$
 
 //Note that this file is no longer needed. Remove when we are sure we no longer need to refer back to it.
 

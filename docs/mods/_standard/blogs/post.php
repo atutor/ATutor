@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: post.php 8700 2009-07-14 20:13:28Z hwong $
+// $Id$
 define('AT_INCLUDE_PATH', '../../../include/');
 require_once (AT_INCLUDE_PATH.'vitals.inc.php');
 

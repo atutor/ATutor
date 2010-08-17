@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: edit_question_ordering.php 8901 2009-11-11 19:10:19Z cindy $
+// $Id$
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/likert_presets.inc.php');

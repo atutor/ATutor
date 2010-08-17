@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: Module.class.php 9081 2010-01-13 20:26:03Z cindy $
+// $Id$
 
 define('AT_MODULE_STATUS_DISABLED',    1);
 define('AT_MODULE_STATUS_ENABLED',     2);

@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: poll.inc.php 9183 2010-01-26 19:13:11Z cindy $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path, $include_all, $include_one;

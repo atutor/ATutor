@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: QTIImport.class.php 8944 2009-11-18 18:06:15Z cindy $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');

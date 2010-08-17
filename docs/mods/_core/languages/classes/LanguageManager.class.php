@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: LanguageManager.class.php 8919 2009-11-16 18:07:32Z cindy $
+// $Id$
 
 require_once(dirname(__FILE__) . '/Language.class.php');
 

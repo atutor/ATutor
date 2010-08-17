@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: glossary.inc.php 5252 2005-08-09 16:39:26Z heidi $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $contentManager;

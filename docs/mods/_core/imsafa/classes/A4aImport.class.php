@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		*/
 /* as published by the Free Software Foundation.					*/
 /********************************************************************/
-// $Id: A4aImport.class.php 9006 2009-12-07 03:41:22Z hwong $
+// $Id$
 
 require_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
 

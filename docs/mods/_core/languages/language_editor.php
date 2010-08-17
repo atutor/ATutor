@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: language_editor.php 8799 2009-09-22 13:57:25Z hwong $
+// $Id$
 
 /**
  * BEWARE OF THE HACKS USED TO IMPLEMENT THIS FEATURE:

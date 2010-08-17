@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: glossary.inc.php 7208 2008-01-09 16:07:24Z greg $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

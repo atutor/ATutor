@@ -11,7 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: gsearch.php 1 2007-08-31 12:15:41Z harris $
+// $Id$
 ?>
 <script src="http://www.google.com/uds/api?file=uds.js<?php echo "&amp;"; ?>hl=<?php echo $_SESSION['lang']; ?><?php echo "&amp;"; ?>v=1.0<?php echo "&amp;"; ?>key=<?php echo $search_key; ?>" type="text/javascript"></script>
 <script type="text/javascript">

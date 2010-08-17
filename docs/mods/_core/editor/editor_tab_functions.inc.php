@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: editor_tab_functions.inc.php 8903 2009-11-13 19:26:29Z cindy $
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function in_array_cin($strItem, $arItems)

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: new_thread.inc.php 8261 2008-12-04 20:35:44Z hwong $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 7515 2008-05-09 20:04:05Z hwong $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../include/');
 

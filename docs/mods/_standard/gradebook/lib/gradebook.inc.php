@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: gradebook.inc.php 7208 2008-05-28 16:07:24Z cindy $
+// $Id$
 
 // input: member_id
 // return: array of grade scales created by member_id, member_id is set to 0 by default, which is to get preset grade scales

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: PatchParser.class.php 7208 2008-02-08 16:07:24Z greg $
+// $Id$
 
 /**
 * PatchParser

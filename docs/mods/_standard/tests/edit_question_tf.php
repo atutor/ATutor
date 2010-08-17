@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: edit_question_tf.php 7482 2008-05-06 17:44:49Z greg $
+// $Id$
 
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../../include/');

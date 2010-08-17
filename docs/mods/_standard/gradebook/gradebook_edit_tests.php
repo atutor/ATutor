@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: grade_scale_add.php 7208 2008-05-28 16:07:24Z cindy $
+// $Id$
 
 $page = 'gradebook';
 

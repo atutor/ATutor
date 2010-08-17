@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: users.php 5035 2005-06-28 18:02:56Z joel $
+// $Id$
 
 $_user_location = 'admin';
 

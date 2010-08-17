@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: A4aExport.class.php 8804 2009-09-29 21:17:00Z hwong $
+// $Id$
 
 require_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
 //require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile

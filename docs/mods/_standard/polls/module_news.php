@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id: module_news.php 9335 2010-02-11 16:29:01Z hwong $
+// $Id$
 /*
  * Get the latest updates of this module
  * @return list of news, [timestamp]=>

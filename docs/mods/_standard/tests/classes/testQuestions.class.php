@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: testQuestions.class.php 8983 2009-11-30 22:37:20Z hwong $
+// $Id$
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_question_queries.inc.php');
 
 /*

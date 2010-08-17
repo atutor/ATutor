@@ -10,8 +10,8 @@
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id: remove_uploaded_photo.php 9519 2010-03-18 15:38:11Z hwong $
-// $Id: profile.php 8901 2009-11-11 19:10:19Z cindy $
+// $Id$
+// $Id$
 
 $_user_location	= 'users';
 

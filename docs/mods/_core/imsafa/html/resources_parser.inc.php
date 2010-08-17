@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: resources_parser_inc.inc.php 7208 2008-07-04 16:07:24Z silvia $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 //require(AT_INCLUDE_PATH.'lib/output.inc.php');

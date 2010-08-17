@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: filemanager.php 5078 2005-07-06 14:16:53Z joel $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

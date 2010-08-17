@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: request_instructor.php 7208 2008-01-09 16:07:24Z greg $
+// $Id$
 
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../../../../include/');

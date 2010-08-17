@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: edit_question_truefalse.php 8013 2008-10-02 19:51:24Z hwong $
+// $Id$
 
 require('edit_question_tf.php'); 
 ?>

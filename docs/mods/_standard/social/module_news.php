@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id: module_news.php 9335 2010-02-11 16:29:01Z hwong $
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include_once(AT_INCLUDE_PATH.'../mods/_standard/social/lib/friends.inc.php');
 

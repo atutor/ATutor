@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: patch_edit_interface.tmpl.php 7208 2008-03-13 16:07:24Z cindy $
+// $Id$
 
 require ('include/json.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');

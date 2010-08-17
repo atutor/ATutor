@@ -13,7 +13,7 @@
 /* linked from admin/users.php                                  */
 /* deletes a user from the system.                              */
 /****************************************************************/
-// $Id: admin_delete.php 6644 2006-11-01 17:24:25Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');

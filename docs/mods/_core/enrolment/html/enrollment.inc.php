@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enrollment.inc.php 8988 2009-12-01 18:03:08Z greg $
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if (isset($_POST['enroll'])) {

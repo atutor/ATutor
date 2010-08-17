@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: pref_tab_functions.inc.php 8734 2009-07-21 13:46:49Z hwong $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

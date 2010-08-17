@@ -10,8 +10,8 @@
 /* modify it under the terms of the GNU General Public License		   */
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
-// $Id: remove_uploaded_photo.php 9519 2010-03-18 15:38:11Z hwong $
-// $Id: profile_picture.php 6850 2007-03-06 19:35:37Z joel $
+// $Id$
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);

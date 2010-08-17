@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: translator.php 8258 2008-12-02 18:18:19Z cindy $
+// $Id$
 
 if ( !isset($db) || !defined('AT_INCLUDE_PATH') || !isset($_SESSION['language'])	) { echo 'xx'; exit; }
 

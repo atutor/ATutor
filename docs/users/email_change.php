@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: profile.php 6025 2006-03-28 20:13:55Z joel $
+// $Id$
 
 $page = 'profile';
 $_user_location	= 'users';

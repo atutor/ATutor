@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 9037 2009-12-14 20:57:14Z cindy $
+// $Id$
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require_once(AT_INCLUDE_PATH .'classes/subscribe.class.php');

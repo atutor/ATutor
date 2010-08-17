@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: form_editor.php 8138 2008-10-30 19:21:08Z hwong $
+// $Id$
 
 $page = 'form_editor';
 define('AT_INCLUDE_PATH', '../../../include/');
