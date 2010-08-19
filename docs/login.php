@@ -126,9 +126,9 @@ if (isset($this_login, $this_password)) {
 		$_SESSION['member_id']	= intval($row['member_id']);
 		$_SESSION['login']		= $row['login'];
 		if ($row['preferences'] == "")
-			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])));
+			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])), 1);
 		else
-			assign_session_prefs(unserialize(stripslashes($row['preferences'])));
+			assign_session_prefs(unserialize(stripslashes($row['preferences'])), 1);
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];
 		$_SESSION['course_id']  = 0;

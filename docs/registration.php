@@ -320,7 +320,7 @@ if (isset($_POST['cancel'])) {
 			$_SESSION['member_id']	= $m_id;
 			$_SESSION['course_id']  = 0;
 			$_SESSION['login']		= $_POST[login];
-			assign_session_prefs(unserialize(stripslashes($_config[pref_defaults])));
+			assign_session_prefs(unserialize(stripslashes($_config[pref_defaults])), 1);
 			$_SESSION['is_guest']	= 0;
 			$_SESSION['lang']		= $_SESSION[lang];
 			session_write_close();

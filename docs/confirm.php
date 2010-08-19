@@ -150,9 +150,9 @@ if (isset($_REQUEST['auto_login']))
 		$_SESSION['course_id']  = 0;
 		$_SESSION['login']		= $row[login];
 		if ($row['preferences'] == "")
-			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])));
+			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])), 1);
 		else
-			assign_session_prefs(unserialize(stripslashes($row['preferences'])));
+			assign_session_prefs(unserialize(stripslashes($row['preferences'])), 1);
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row[lang];
 		session_write_close();

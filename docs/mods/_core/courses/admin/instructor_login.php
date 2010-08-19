@@ -30,9 +30,9 @@ if (isset($_POST['submit_yes'])) {
 		$_SESSION['member_id']	= intval($row['member_id']);
 		unset($_SESSION['prefs']);
 		if ($row['preferences'] == "")
-			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])));
+			assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])), 1);
 		else
-			assign_session_prefs(unserialize(stripslashes($row['preferences'])));
+			assign_session_prefs(unserialize(stripslashes($row['preferences'])), 1);
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];
 		$_SESSION['is_super_admin'] = $admin_login;

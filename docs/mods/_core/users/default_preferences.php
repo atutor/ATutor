@@ -113,7 +113,7 @@ if (is_array(unserialize($_config['pref_defaults'])))
 	foreach (unserialize($_config['pref_defaults']) as $name => $value)
 		$pref_defaults[$name] = $value;
 		
-assign_session_prefs($pref_defaults);
+assign_session_prefs($pref_defaults, 1);
 
 $sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
 $result = mysql_query($sql, $db);

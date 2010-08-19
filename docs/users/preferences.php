@@ -58,6 +58,17 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
     }
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	header('Location: preferences.php');
+	exit;
+}
+
+// re-set session prefs if the request is from a mobile device 
+// because now $_SESSION['prefs']['PREF_THEME'] is $_SESSION['prefs']['PREF_MOBILE_THEME'] instead of the desktop theme
+if (is_mobile_device()) {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$_SESSION['member_id'];
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	assign_session_prefs(unserialize(stripslashes($row['preferences'])));
 }
 
 unset($_SESSION['first_login']);

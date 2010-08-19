@@ -95,7 +95,7 @@ global $addslashes;
 	/* custom prefs */
 	// atutor settings (tab 0)
 	if (isset($_POST['numbering'])) $temp_prefs['PREF_NUMBERING'] = intval($_POST['numbering']);	
-	if (isset($_POST['theme'])) $temp_prefs['PREF_THEME'] = $temp_prefs['PREF_THEME_ORIG'] = $addslashes($_POST['theme']);
+	if (isset($_POST['theme'])) $temp_prefs['PREF_THEME'] = $addslashes($_POST['theme']);
 	if (isset($_POST['mobile_theme'])) $temp_prefs['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
 	if (isset($_POST['time_zone'])) $temp_prefs['PREF_TIMEZONE'] = $addslashes($_POST['time_zone']);
 	if (isset($_POST['use_jump_direct'])) $temp_prefs['PREF_JUMP_REDIRECT'] = intval($_POST['use_jump_redirect']);
@@ -168,10 +168,6 @@ global $db, $_config_defaults;
         else {
             $temp_prefs = unserialize($_config_defaults['pref_defaults']);
         }
-        // PREF_THEME is replaced by PREF_THEME_ORIG when the page is accessed from a mobile device
-        // and PREF_THEME is put back from PREF_THEME_ORIG in save_prefs(). @see vitals.inc.php
-        $temp_prefs['PREF_THEME_ORIG'] = $temp_prefs['PREF_THEME'];
-
         return $temp_prefs;
 }
 

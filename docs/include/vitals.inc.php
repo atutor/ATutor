@@ -237,11 +237,13 @@ if ($_config['time_zone']) {
 
 	//if user has requested theme change, make the change here
 	if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
-	    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
-	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
+	    if (is_mobile_device()) {
+	    	$_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['mobile_theme']);
+	    } else {
+			$_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
+	    }
 	} else if ($_POST['set_default']) {
-	    $_SESSION['prefs']['PREF_THEME'] = 'default';
-	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
+    	$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
 	}
 	
 	// if the request is from a mobile device, same original session var PREF_THEME into session var PREF_THEME_ORIG
@@ -252,34 +254,26 @@ if ($_config['time_zone']) {
 			$_SESSION['prefs']['PREF_MOBILE_THEME'] = get_system_default_theme();
 		}
 		
-		if ($_SESSION['prefs']['PREF_THEME'] <> $_SESSION['prefs']['PREF_MOBILE_THEME']) {
-			$_SESSION['prefs']['PREF_THEME_ORIG'] = $_SESSION['prefs']['PREF_THEME'];
-			$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
-		}
+		$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
 	}
 	
-	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
-	// When more mobile themes come in, this should be changed.
 	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 		if ($_SESSION['course_id'] == -1) {
 			if ($_SESSION['prefs']['PREF_THEME'] == '' || !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
 				$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
 			}
-			$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 		} else {
 			//check if enabled
 			$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 			if ($row['status'] > 0) {
-				$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 			} else {
 				// get default
 				$default_theme = get_default_theme();
 				if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
 					$default_theme = array('dir_name' => get_system_default_theme());
 				}
-				$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
 				$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 			}
 		}
@@ -290,10 +284,10 @@ if ($_config['time_zone']) {
 		if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name']) || $default_theme == '') {
 			$default_theme = array('dir_name' => get_system_default_theme());
 		}
-		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
 		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 	}
-
+	
+	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 	require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
 
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
@@ -641,12 +635,20 @@ function get_forum_name($fid){
 	return FALSE;
 }
 
-/* takes the array of valid prefs and assigns them to the current session */
-function assign_session_prefs($prefs) {
+// takes the array of valid prefs and assigns them to the current session 
+// @params: prefs - an array of preferences
+// @params: optional. Values are 0 or 1. Default value is 0
+//          when value == 1, assign PREF_MOBILE_THEME to PREF_THEME if the request is from a mobile device
+//                  the value 1 is used when the prefs values are set for display
+//                  if this function is used as a front shot for save_prefs(), this value should use default 0
+function assign_session_prefs($prefs, $switch_mobile_theme = 0) {
 	if (is_array($prefs)) {
 		foreach($prefs as $pref_name => $value) {
 			$_SESSION['prefs'][$pref_name] = $value;
 		}
+	}
+	if (is_mobile_device() && $switch_mobile_theme) {
+		$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
 	}
 }
 
@@ -654,11 +656,6 @@ function save_prefs( ) {
 	global $db, $addslashes;
 
 	if ($_SESSION['valid_user']) {
-		if (is_mobile_device()) {
-			$_SESSION['prefs']['PREF_MOBILE_THEME'] = $_SESSION['prefs']['PREF_THEME'];
-			$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_THEME_ORIG'];
-		}
-		unset($_SESSION['prefs']['PREF_THEME_ORIG']);
 		$data	= $addslashes(serialize($_SESSION['prefs']));
 		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'", creation_date=creation_date, last_login=last_login WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql, $db); 
