@@ -111,7 +111,7 @@ class QTIImport {
 						continue;
 					} 
 
-					if (in_array($file_pathinfo['extension'], $supported_media_type)){
+					if (in_array(strtolower($file_pathinfo['extension']), $supported_media_type)){
 						//copy medias over.
 						$this->copyMedia(array($file_name), $xml->items);
 					}
