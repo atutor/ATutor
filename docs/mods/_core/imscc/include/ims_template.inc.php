@@ -227,7 +227,7 @@ function print_organizations($parent_id,
 					$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
 					foreach($added_files as $xml_file=>$chunk){
 						foreach ($chunk as $xml_filename){
-							$added_files_xml .= str_replace('{FILE}', 'QTI/'.$xml_filename, $ims_template_xml['xml']);
+							$added_files_xml .= str_replace('{FILE}', 'resources/'.$xml_filename, $ims_template_xml['xml']);
 						}
 					}
 					//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
@@ -240,7 +240,7 @@ function print_organizations($parent_id,
 												$ims_template_xml['test']); 
 */
 					foreach($test_files as $filename=>$realfilepath){
-						$zipfile->add_file(@file_get_contents($realfilepath), 'QTI/'.$filename, filemtime($realfilepath));
+						$zipfile->add_file(@file_get_contents($realfilepath), 'resources/'.$filename, filemtime($realfilepath));
 					}
 				}
 			}

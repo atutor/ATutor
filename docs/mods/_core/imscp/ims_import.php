@@ -269,6 +269,54 @@ function rehash($items){
 	return $rehashed_items;
 }
 
+/**
+ * Take out the common path within all $items['new_path'].
+ * This allows import/export repeatedly without duplicating its path
+ * @param   array   contains the breakdown of all resources in the XML
+ */
+function removeCommonPath($items){
+    $common_path; 
+    $quit = false;  //a flag that is set if it's not the first time being run.
+
+    $filearray = array();
+    //get all files listed in the manifest
+    foreach($items as $name=>$fileinfo){
+		if(isset($fileinfo['file']) && is_array($fileinfo['file']) && !empty($fileinfo['file'])){
+			foreach($fileinfo['file'] as $fn){
+				if (!in_array($fn, $filearray)){
+					if (preg_match('/^http[s]?\:/', $fn) == 0){
+						$filearray[] = $fn;
+					}					
+				}
+			}
+		}
+	}
+    
+    foreach($filearray as $index=>$path){
+        //hack
+        //check if this is a XML file; if so, skip through, 
+        //cause XML most likely isn't a content resource.
+        $ext = substr($path, (strrpos($path, '.')+1));
+        if($ext=='xml'){
+            continue;
+        }
+        
+        //if common path is empty, assign the first path to it.
+        if ($common_path=='' && $quit==false){
+            $common_path = $path;
+            $quit = true;   //the next time common_path is empty, quit;
+            continue;
+        }
+        //we use '/' here instead of DIRECTORY_SEPARATOR because php would
+        //actually use '\' and return the whole string. 
+        $common_array = explode('/', $common_path);
+        $path_array = explode('/', $path);
+        $intersect_array = array_intersect($common_array, $path_array);
+        $common_path = implode('/', $intersect_array);       
+    }
+    return $common_path;
+}
+
 
 /** 
  * This function will take the test accessment XML and add these to the database.
@@ -941,6 +989,7 @@ $row	= mysql_fetch_assoc($result);
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack
+$common_path = removeCommonPath($items);
 $items = rehash($items);
 //debug($items);exit;
 foreach ($items as $item_id => $content_info) 
@@ -1172,13 +1221,12 @@ foreach ($items as $item_id => $content_info)
 	if(is_array($all_package_base_path)){
 		$all_package_base_path = implode('/', $all_package_base_path);
 	}
-
-	if ($all_package_base_path != '') {
-		$content_info['new_path'] = $package_base_name . substr($content_info['new_path'], strlen($all_package_base_path));
+	if ($common_path != '') {
+		$content_info['new_path'] = $package_base_name . substr($content_info['new_path'], strlen($common_path));
 	} else {
 		$content_info['new_path'] = $package_base_name . '/' . $content_info['new_path'];
 	}
-
+	
 	//handles weblinks
 	if ($content_info['type']=='imswl_xmlv1p0'){
 		$weblinks_parser = new WeblinksParser();
@@ -1341,33 +1389,45 @@ if ($package_base_path == '.') {
 }
 
 // loop through the files outside the package folder, and copy them to its relative path
+/**
 if (is_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources')) {
 	$handler = opendir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources');
 	while ($file = readdir($handler)){
 		$filename = AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources/'.$file;
+debug($filename);
 		if(is_file($filename)){
 			@rename($filename, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$file);
 		}
 	}
 	closedir($handler);
 }
+**/
+//--- harris edit for path thing
+$file = AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].DIRECTORY_SEPARATOR.$common_path;
+if (is_dir($file)) {
+    rename($file, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name);
+}
+//--- end
 //takes care of the condition where the whole package doesn't have any contents but question banks
 //also is the case of urls
 if(is_array($all_package_base_path)){
 	$all_package_base_path = implode('/', $all_package_base_path);
-}
-if(strpos($all_package_base_path, 'http:/')===false){
-    if (@rename($import_path.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
-        if (!$msg->containsErrors()) {
-            $msg->addError('IMPORT_FAILED');
+	if(strpos($all_package_base_path, 'http:/')===false){
+        if (@rename($import_path.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+            if (!$msg->containsErrors()) {
+                $msg->addError('IMPORT_FAILED');
+            }
         }
     }
 }
+
 //check if there are still resources missing
+/*
 foreach($items as $idetails){
 	$temp_path = pathinfo($idetails['href']);
 	@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$temp_path['dirname'], AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name . '/' . $temp_path['dirname']);
 }
+*/
 clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
 if (file_exists($full_filename)) {
