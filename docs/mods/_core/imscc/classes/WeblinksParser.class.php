@@ -95,7 +95,7 @@ class WeblinksParser {
 		return $this->title;
 	}
 	function getUrl(){
-		return $this->url;
+		return urldecode($this->url);
 	}
 }
 
