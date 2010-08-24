@@ -301,7 +301,7 @@ class ContentManager
 	
 	function editContent($content_id, $title, $text, $keywords,$related, $formatting, 
 	                     $release_date, $head, $use_customized_head, $test_message, 
-	                     $allow_test_export) {
+	                     $allow_test_export, $content_type) {
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 			return FALSE;
 		}
@@ -311,7 +311,8 @@ class ContentManager
 		              SET title='$title', head='$head', use_customized_head=$use_customized_head, 
 		                  text='$text', keywords='$keywords', formatting=$formatting, 
 		                  revision=revision+1, last_modified=NOW(), release_date='$release_date', 
-		                  test_message='$test_message', allow_test_export=$allow_test_export 
+		                  test_message='$test_message', allow_test_export=$allow_test_export, 
+                          content_type=$content_type
 		            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
 

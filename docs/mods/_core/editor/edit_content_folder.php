@@ -57,7 +57,8 @@ if ($_POST['submit'])
 			                                    '', 
 			                                    $content_row['use_customized_head'], 
 			                                    '', 
-			                                    $content_row['allow_test_export']);
+			                                    $content_row['allow_test_export'],
+                                                CONTENT_TYPE_FOLDER);
 		}
 		else
 		{ // add new content

@@ -13,8 +13,16 @@
 /****************************************************************/
 // $Id$
 
-function get_html_resources($text) {
-	$resources = array();
+/**
+ * @param 
+ * @param   int     course id, which should be in $_SESSION, but during export to AContent,
+ *                  SESSION is not available, thus we will have to use parameters
+ */
+function get_html_resources($text, $course_id=0) {
+	$resources = array();    
+    if ($course_id == 0){
+        $course_id = $_SESSION['course_id'];
+    }
 
 	$handler = new XML_HTMLSax_Handler();
 
@@ -38,12 +46,11 @@ function get_html_resources($text) {
 		}
 
 		// make sure this resource exists in this course's content directory:
-		$resource_server_path = realpath(AT_CONTENT_DIR . $_SESSION['course_id']. '/' . $resource);
+		$resource_server_path = realpath(AT_CONTENT_DIR . $course_id. '/' . $resource);
 		if (file_exists($resource_server_path) && is_file($resource_server_path)) {
 			$resources[$resource] = $resource_server_path;
 		}
 	}
-
 	return $resources;
 }
 

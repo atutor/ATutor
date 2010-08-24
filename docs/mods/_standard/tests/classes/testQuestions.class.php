@@ -332,7 +332,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 		$local_dependencies = array();
 
 		$text_blob = implode(' ', $row);
-		$local_dependencies = get_html_resources($text_blob);
+		$local_dependencies = get_html_resources($text_blob, $course_id);
 		$dependencies = array_merge($dependencies, $local_dependencies);
 
 		$xml = $xml . "\n\n" . $local_xml;
