@@ -737,14 +737,15 @@ function make_clickable($text) {
 //							$text);
 
 	// The next 3 preg_replace convert plain text URL to clickable URL.
-	// limited conversion. It doesn't cover the case when the stuff in front of the URL is not a word. For example:
+	// Limited conversion: It doesn't cover the case when the stuff in front of the URL is not a word. For example:
 	// <p>http://google.ca</p>
-	// "http://google.ca"  
+	// "http://google.ca" 
+	 
 	// 1. remove the spaces in [media] tag, otherwise, the next line converts URL inside [media] into <a> tag
 	$text = preg_replace("/(\[media\])([\s]*)(.*)(\[\/media\])/", '$1$3$4', $text);
 	$text = preg_replace("/(\[media\])(.*)([\s]*)(\[\/media\])/U", '$1$2$4', $text);
 	// 2. convert URL
-	$text = preg_replace('/(^|[\n ])([\w]*?)((?<!(\[media\]))http(s)?:\/\/[\w]+[^ \,\"\n\r\t<]*)/is', 
+	$text = preg_replace('/(^|[\n ])([\w]*?[\"]*)((?<!(\[media\]))http(s)?:\/\/[\w]+[^ \,\"\n\r\t\)<]*)/is', 
 	                     '$1$2<a href="$3">$3</a>', $text);
 	
 	// convert email address to clickable URL that pops up "send email" interface with the address filled in
