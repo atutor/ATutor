@@ -105,7 +105,7 @@ if ($id && !isset($_POST['submit'])){
 	if ($row = mysql_fetch_assoc($result)){
 		$title    = htmlentities_utf8($row['title']);
 		$author   = htmlentities_utf8($row['author']);
-		$date     = htmlentities_utf8($row['date'];) 
+		$date     = htmlentities_utf8($row['date']);
 		$comments = htmlentities_utf8($row['comments']);
 	}
 	// change title of page to 'edit handout resource' (default is 'add handout resource')

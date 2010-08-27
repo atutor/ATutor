@@ -108,7 +108,7 @@ if ($id && !isset($_POST['submit'])){
 	if ($row = mysql_fetch_assoc($result)){
 		$title     = htmlentities_utf8($row['title']);
 		$author    = htmlentities_utf8($row['author']);
-		$publisher = htmlentities_utf8($row['publisher'];) 
+		$publisher = htmlentities_utf8($row['publisher']);
 		$date      = htmlentities_utf8($row['date']); 
 		$comments  = htmlentities_utf8($row['comments']);
 	}

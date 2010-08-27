@@ -112,7 +112,7 @@ if ($id && !isset($_POST['submit'])){
 		$author    = htmlentities_utf8($row['author']);
 		$publisher = htmlentities_utf8($row['publisher']); 
 		$date      = htmlentities_utf8($row['date']); 
-		$comments  = htmlentities_utf8$row['comments']);
+		$comments  = htmlentities_utf8($row['comments']);
 		$isbn      = htmlentities_utf8($row['id']);
 	}
 	// change title of page to 'edit file resource' (default is 'add file resource')
