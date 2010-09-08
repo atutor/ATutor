@@ -53,7 +53,6 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 <form name="form1" method="post" action="mods/_core/imscp/ims_import.php?tile=1" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php?tile=1');">
 	<input type="hidden" name="url" value="<?php echo AT_TILE_EXPORT_CC_URL.$_GET['tile_course_id']; ?>" />
 	<input type="hidden" name="allow_a4a_import" value="1" />
-<br />
 <div class="input-form">
 
 	<div class="row">
