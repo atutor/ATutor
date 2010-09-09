@@ -1177,15 +1177,14 @@ fieldset#shortcuts {
 	padding-right: 10pt;
 	padding-bottom: 5pt;
 	padding-left: 10pt;
+width:10em;
+float:right;
 }
 
 legend {
 	padding-right: 10pt;
 	padding-left: 10pt;
-	  border-radius: .3em .3em .3em .3em;
-	-moz-border-radius: .3em .3em .3em .3em;
-	-moz-box-shadow:.1em .1em .1em #999999;
-	 box-shadow: .1em .1em  .1em #999999;
+
 }
 
 fieldset {
@@ -1208,12 +1207,22 @@ a#guide {
 	background-image: url('../default/images/help.png'); 
 	background-repeat: no-repeat; 
 	background-position: 2px 2px;
-	background-color: #eee;
 	padding: 1pt 10pt 1pt 23pt;
-	border: 1pt solid #ccc;
+
 	font-size:0.85em;
 }
-
+div#guide_box{
+background-color:#DEE7EC;
+	border-left:thin solid #cccccc;
+	border-right:thin solid #cccccc;
+	border-bottom:thin solid #cccccc;
+	border-radius: 0em 0em .5em .5em;;
+	-moz-border-radius: 0em 0em .5em .5em;
+height:1.5em;
+	float:right;
+	margin-right:2em;
+	padding-left:.1em;
+}
 div#content-text {
 	padding-right: 5pt;
 	line-height:150%;
@@ -1482,59 +1491,53 @@ ul#topnavlist li a.selected {
 #tooltip h3,#tooltip div{
 	margin:0;
 }
-/* style for home page sublinks view */
+/* style for home page modules "detail view" */
+
 div.home_box {
-	width: 30em;
-	height: 150px;	
+	width: 29em;
+	margin:0;
 	padding-top: 15px;
 	margin-left:1em;
 	float:left;
 }
 
 .outside_box{
-	margin-left:.4em;
-	background:#e0e0e0;
-	width:28em;
+
+	background: #DEE7EC;
+
 	height:9.8em;
+	-moz-border-radius:.3em .3em .3em .3em;
+	border-radius: .3em .3em .3em .3em;
+
 }
+
 
 .inside_box{
 	width:100%;
 	margin:auto;
 	height:52%;
 	margin-bottom:.2em;
-	background:#eeeeee;
+	background:#ffffff;
 }
 .details_or{
 	width:28.8em;
 	height:9.8em;
 	margin:0;
-	background-image:url(../../images/details_r.png);
-	background-position: top right;
-	background-repeat:no-repeat;
+
 }
 .details_ol{
 	height:9.8em;
 	margin:0px;
 	width:.45em;
-	background-image:url(../../images/details_l.png);
-	background-position: top left;
-	background-repeat:no-repeat;
 }
 .details_ir{
 	width:.5em;
 	height:100%;
 	float:right;
-	background-image:url(../../images/details_ir.png);
-	background-position: top right;
-	background-repeat:no-repeat;
 }
 .details_il{
 	height:100%;
 	float:left;
-	background-image:url(../../images/details_il.png);
-	background-position: top left;
-	background-repeat:no-repeat;
 }
 .home-title{
 	font-size:12pt;
