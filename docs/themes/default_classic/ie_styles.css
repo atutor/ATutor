@@ -21,3 +21,16 @@ label {
 table.data tfoot input {
 	min-width:0px;
 }
+
+.details_text{
+	margin-left:1em;
+white-space:normal;
+
+}
+
+#details_view{
+    white-space:normal;
+}
+p{
+    white-space:normal;
+}
