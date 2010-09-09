@@ -201,12 +201,6 @@ global $system_courses, $_custom_css, $_base_path;
 
 <!-- the page title -->
 
-		<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
-	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float:right ; margin-top: 10px; padding-right: 5px; font-size:0.95em;">
-			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
-	</div>
-		<?php endif; ?>
-
 		<?php if ($this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
         <div id="menutoggle">
             <a accesskey="n"><img src="" title="" alt="" /></a>
@@ -228,6 +222,12 @@ global $system_courses, $_custom_css, $_base_path;
 	<?php } ?>
 		&nbsp;
 	</div>
+
+		<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
+	<div id="guide_box">
+			<a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+	</div>
+		<?php endif; ?>
 
 	<!-- the page title -->
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>

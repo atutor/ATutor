@@ -1140,13 +1140,27 @@ fieldset {
 }
 
 a#guide {
-	background-image: url('../default/images/guide.gif'); background-repeat: no-repeat; background-position: 7pt 2pt;
-	background-color: #eee;
-	padding: 1pt 10pt 1pt 23pt;
-	border: 1pt solid #ccc;
+	background-image: url('../default/images/help.png'); 
+background-repeat: no-repeat; 
+background-position: 2px 2px;
+	padding: 3px 10px 5px 30px;
+	text-decoration:none;
 	font-size:0.85em;
+	float:right;
 }
-
+div#guide_box{
+	background-color:#DEECE2;
+	border-left:thin solid #cccccc;
+	border-right:thin solid #cccccc;
+	border-bottom:thin solid #cccccc;
+	border-radius: 0em 0em .5em .5em;;
+	-moz-border-radius: 0em 0em .5em .5em;
+	-moz-box-shadow:.1em .1em .2em #999999;
+    box-shadow: .1em .1em .2em #999999;
+	float:right;
+	margin-right:2em;
+	padding-left:.1em;
+}
 div#content-text {
 	padding-right: 5pt;
 	line-height:150%;
@@ -1422,7 +1436,7 @@ div.home_box {
 
 .outside_box{
 	margin-left:.4em;
-	background:#e0e0e0;
+	background:#DEECE2;
 	width:28em;
 	height:9.8em;
 }
@@ -1801,4 +1815,82 @@ div.social-wrapper{
 	float: left;
 }
 
- 
+ /* Content editor tabs */
+.editor_buttontab {
+	color:#000000;
+	font-size:10pt;
+	border:0;
+	white-space: nowrap;
+	background-color: #ffffff;
+	margin: 0px;
+	font-weight:500;
+	text-align:center;
+	padding:0em 0em 0em;
+
+}
+.editor_tab{
+	float:left;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom:0;
+	margin-bottom:-.5em;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #ffffff;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: 0em .2em .0em .2em ;
+	height:1.4em;
+}
+.editor_tab:hover, .editor_tab input[type=submit]:hover{
+	background-color:#eeeeee;
+}
+
+.editor_tab_selected{
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom:0;
+	padding: .0em .3em .1em .2em ;
+  	background-color: #eeeeee;
+	font-weight:bold;
+	text-align:center;
+	white-space: nowrap;
+	text-decoration:none;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	height:1.4em;
+
+}
+.editor_tab input[type=submit]{
+	height:1.2em;
+}
+ul#content-tool-links {
+	list-style: none outside none;
+}
+ul#content-tool-links li{
+	display: inline;
+	float: left;
+	width: 5em;
+	padding: 0 3em 0 0;
+	text-align: center;
+	font-size: 0.7em;
+	font-weight:bold;
+	color: #1A4A72;
+	line-height:120%;
+}
+ul#content-tool-links img{
+	border: 0 none;
+	display: block;
+	padding-left: 10px;
+}
+.fl-force-right{
+float:right;
+}
+.hidden {
+    display: none;
+}
+.clickable {
+    cursor: pointer;    
+}
