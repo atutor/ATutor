@@ -240,9 +240,7 @@ jQuery(document).ready(function () {
 	
 		<div class="grab">
 			<div><img src="<?php echo $this->img; ?>layers.png" style="float:left;margin:3px;" alt="<?php echo _AT('drag'); ?>" /></div>
-	<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
-				<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
-	<?php endif; ?>
+
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 			<div id="breadcrumbs">
 				<?php foreach ($this->path as $page): ?>
@@ -257,7 +255,22 @@ jQuery(document).ready(function () {
             <a accesskey="n"><img src="" title="" alt="" /></a>
         </div>
 		
-		<a href=""></a>
+
+	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
+   
+      <div id="guide_box">
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+      </div>
+		  <?php endif; ?>
+      <?php if ($this->shortcuts): ?>
+      <div id="shortcuts">
+	      <ul>
+		      <?php foreach ($this->shortcuts as $link): ?>
+			      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+		      <?php endforeach; ?>
+	      </ul>
+      </div>
+      <?php endif; ?>
 		<div class="sequence-links">
 		
 		
