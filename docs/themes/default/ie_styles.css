@@ -94,11 +94,6 @@ ul.folders {
 li.folders .disabled {
 	color: #B8AE9C;
 }
-table.etabbed-table{
-float:left;
-clear:right;
-margin-left:1.5em;
-}
 
 .current_box{
 	width:30%; 
