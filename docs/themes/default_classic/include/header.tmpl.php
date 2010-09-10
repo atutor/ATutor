@@ -46,8 +46,9 @@ global $system_courses, $_custom_css, $_base_path;
 	<?php endif; ?>
 
 	<?php if ($_SESSION['valid_user']): ?>
-		<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" />
-		
+<?php     if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
+		    <a class="pref_wiz_launcher"><img border="0" alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" src="<?php echo $this->base_href; ?>images/wand.png" /></a> |
+		    <?php } ?> 
 		<span style="font-weight:bold;"><?php echo get_display_name($_SESSION['member_id']); ?></span>  | 
 
 		<?php if ($this->course_id > -1): ?>
