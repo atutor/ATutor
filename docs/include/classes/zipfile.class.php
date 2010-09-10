@@ -241,10 +241,24 @@ class zipfile {
 			$this->close();
 		}
 		$file_name = str_replace(array('"', '<', '>', '|', '?', '*', ':', '/', '\\'), '', $file_name);
-
-		header("Content-type: application/octet-stream");
+		
+		header("Content-type: archive/zip");
 		header("Content-disposition: attachment; filename=$file_name.zip");
-		readfile($this->zipfile_dir.$this->filename.'.zip');
+//		readfile($this->zipfile_dir.$this->filename.'.zip');
+
+		// Download large file, for instance, large common cartridge or content package
+		// Instead of use readfile() to read the whole file into memory, push down the download 3K at a time
+		ob_clean();
+		flush();
+		$fp = fopen($this->zipfile_dir.$this->filename.'.zip', "rb");
+		while (!feof($fp))
+		{
+			$buffer = fread($fp, 3840);
+			echo $buffer;
+			$buffer = '';
+			flush();
+		}
+		fclose($fp);
 		exit;
 	}
 
