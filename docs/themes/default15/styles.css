@@ -51,16 +51,19 @@ a:link {
 	font-family: Helevetica, Arial, sans-serif;
 	color: #384F89;
 	text-decoration: underline;
+	white-space:normal;
 }
 a:visited {
 	font-family: Helevetica, Arial, sans-serif;
 	color: #384F89;
 	text-decoration: underline;
+	white-space:normal;
 }
 a:hover {
 	font-family: Helevetica, Arial, sans-serif;
 	color: black;
 	text-decoration: underline;
+	white-space:normal;
 }
 
 /*  Table of content attributes*/
@@ -687,6 +690,7 @@ acronym {
 
 div.news p {
 	margin-left: 10px;
+white-space:normal;
 }
 div.news span.date {
 	color: #ACACAC;
@@ -917,6 +921,10 @@ fieldset {
 
 
 /* side-menu */
+
+#side-menu{
+	width:19em;
+}
 h4.box {
 	margin-top: 10px;
 	font-family: Helevetica, Arial, sans-serif;
@@ -1424,8 +1432,16 @@ div.home_box {
 }
 .details_text{
 	margin-left:1em;
+	white-space:normal;
 }
-
+.details-text{
+	margin-left:1em;
+	white-space:normal;
+}
+.details-text a{
+	margin-left:1em;
+	white-space:normal;
+}
 /* 1pxgs current box on My Start */
 .current_box{
     float:left;
@@ -1439,6 +1455,7 @@ ul.current_list{
       line-height:2em; 
       list-style-type:none;
       margin-left:-3em;
+      white-space:normal;
 }
 .current_list img{
       vertical-align:middle;
@@ -1580,6 +1597,7 @@ div.pageinator_box{
 }
 #feedback{
     width: 90%;
+white-space:normal;
 }
 #defaultfontsize-wrapper{
     width:25%;
@@ -1750,7 +1768,7 @@ div.social-wrapper{
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: 0em .2em .0em .2em ;
-	height:1.4em;
+	height:1.35em;
 }
 .editor_tab:hover, .editor_tab input[type=submit]:hover{
 	background-color:#eeeeee;

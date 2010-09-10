@@ -91,7 +91,6 @@ table.etabbed-table td#right-empty-tab {
 table.etabbed-table td.tab-spacer {
 	background-color: transparent;
 	width: 5px;
-	border-bottom: 1px solid #9DAB9A;
 }
 
 table.etabbed-table td.tab {

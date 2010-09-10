@@ -22,5 +22,10 @@ table.data tfoot input {
 	min-width:0px;
 }
 .outside_box{
-	height:9.6em;
+	height:12em;
+	padding:1em;
+
+}
+.details_or{
+	height:10em;
 }
