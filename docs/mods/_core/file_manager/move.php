@@ -119,9 +119,9 @@ if (isset($_POST['dir_chosen'])) {
 	$hidden_vars['a_type']    = $_REQUEST['a_type'];
 	
 	if (isset($_POST['files'])) {
-		$list_of_files = implode(',', $_POST['files']);
+		$list_of_files = implode(' <br />', $_POST['files']);
 		$hidden_vars['listoffiles'] = $list_of_files;
-		$msg->addConfirm(array('FILE_MOVE', $list_of_files, $_POST['dir_name']), $hidden_vars);
+		$msg->addConfirm(array('FILE_MOVE', "<br />".$list_of_files."<br />", $_POST['dir_name']), $hidden_vars);
 	}
 	if (isset($_POST['dirs'])) {
 		$list_of_dirs = implode(',', $_POST['dirs']);
@@ -172,12 +172,12 @@ else {
 	
 	<div class="row">
 		<ul>
-			<li class="folders"><label><input type="radio" name="dir_name" value=""<?php
+			<li class="folders"><label><input type="radio" name="dir_name" value="<?php echo _AT('home'); ?>"<?php
 				if ($pathext == '') {
 					echo ' checked="checked"';
 					$here = ' ' . _AT('current_location');
 				} 
-				echo '/>Home ' .$here.'</label>';
+				echo '/>'._AT('home').' ' .$here.'</label>';
 			
 				echo display_tree($current_path, '', $pathext);
 			?></li>
