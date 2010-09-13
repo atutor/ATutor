@@ -63,3 +63,7 @@ width:34%;
 .my_course_container{
 width:55%;
 }
+
+#content-tool-links{
+float:right;
+}

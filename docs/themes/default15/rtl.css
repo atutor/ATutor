@@ -16,13 +16,13 @@ div.box {
 	line-height:150%;
 }
 div.menuedit{
-float:left;
+	float:left;
 }
 
 
 .del-content-icon{
 /* float:left; */
-border:0;
+	  border:0;
 }
 
 
@@ -58,4 +58,13 @@ width:34%;
 
 .my_course_container{
 width:55%;
+}
+#menutoggle{
+float:left;
+clear:left;
+}
+
+
+#content-tool-links{
+float:right;
 }

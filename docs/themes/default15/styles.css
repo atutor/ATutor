@@ -1821,3 +1821,10 @@ float:right;
 .clickable {
     cursor: pointer;    
 }
+
+.del-content-icon{
+	  border:0;
+}
+.current-content{
+color:green;
+}
