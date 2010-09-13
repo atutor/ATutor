@@ -139,6 +139,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
 	</div>
 
+    <div class="row">	
+		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?>
+
+		<a name="jumpcodes"></a>
+    </div>
+
 	<div class="row buttons">
 		<input name="submit" type="submit" value="  <?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />

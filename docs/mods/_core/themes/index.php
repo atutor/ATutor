@@ -139,7 +139,7 @@ print_data_table($result, MOBILE_DEVICE);
 </tfoot>
 <?php while($row = mysql_fetch_assoc($result)) : ?>
 	<tbody>
-	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['dir_name']; ?>">
+	<tr onmousedown="document.form_<?php echo $type; ?>['t_<?php echo $row['dir_name']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['dir_name']; ?>">
 		<td valign="top">
 			<input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />

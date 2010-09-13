@@ -93,7 +93,7 @@ if ($_SERVER['PHP_SELF'] == $_base_path."acl.php") {
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		$set_to_public = true;
-		$_GET['course'] = $row['course_id'];
+		$_REQUEST['course'] = $row['course_id'];
 		$_SESSION['member_id'] = 0;
 		$_SESSION['valid_user'] = false;
 		$_SESSION['login'] = 'guest';

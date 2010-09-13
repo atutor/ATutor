@@ -37,7 +37,6 @@ if (isset($_POST['rename_action'])) {
 	$_POST['new_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['new_name']);
 
 	$_POST['oldname'] = trim($_POST['oldname']);
-	$_POST['oldname'] = str_replace(' ', '_', $_POST['oldname']);
 	$_POST['oldname'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['oldname']);
 
 	$path_parts_new = pathinfo($_POST['new_name']);
