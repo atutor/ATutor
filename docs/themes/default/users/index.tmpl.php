@@ -123,7 +123,7 @@
 	if (isset($this->all_news)) {
 	    echo '<ul class="current_list">';
 	      if(isset($this->all_news[$i]['thumb'])){
-		    echo '<li"><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'"/> ' . $this->all_news[$i]['link'] .' <br />';
+		    echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'"/> ' . $this->all_news[$i]['link'] .' <br />';
 		    if($this->all_news[$i]['object']['course_id']){
 		    echo '<small>(<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)|';
 		    }
