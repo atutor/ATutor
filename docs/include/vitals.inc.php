@@ -13,9 +13,9 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
-define('AT_DEVEL_TRANSLATE', 1);
+define('AT_DEVEL_TRANSLATE', 0);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -177,6 +177,9 @@ $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['mai
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
 require(AT_INCLUDE_PATH.'lib/utf8.php');			//UTF-8 multibyte library
+
+//set the timezone, php 5.3+ problem. http://atutor.ca/atutor/mantis/view.php?id=4409
+date_default_timezone_set('UTC');
 
 if ($_config['time_zone']) {
 	//$sql = "SET time_zone='{$_config['time_zone']}'";
