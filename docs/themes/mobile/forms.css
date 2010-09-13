@@ -1,0 +1,152 @@
+
+
+/* login page */
+div.container{
+	width:100%;
+	text-align: center;
+	margin: 0 auto;
+}
+
+div.container p {
+	text-align: left;
+	padding: .5em;
+}
+
+div.column-login{
+}
+div.column-new-user{
+width: 100%;
+
+/* end of login page */
+
+
+/*
+#contentcolumn{
+	width: 90%;
+}
+*/
+
+
+
+fieldset{
+	border: none;
+}
+
+fieldset.group_form{
+	border: none;
+	text-align: center;
+	width:80%;
+	margin:0 auto;
+	border:thin #ffffff solid;
+	padding-bottom: 0em;
+}
+
+/* on registration page, group form fields to the left */
+fieldset.group_form .row{
+text-align: left}
+
+legend.group_form{
+	border:none;
+	 font-size: 150%;
+	background-color: #4D4D4D;
+	color: #F7941E;
+	padding:.5em;
+}
+	
+div.input-form {
+	width: 110%; 
+    margin:0 auto;
+	margin-bottom: 20px;
+	padding: 0 6px;
+    line-height:150%;
+	border: none;
+	background-color: #4D4D4D;
+
+}
+
+div.input-form div.row h3 {
+	margin-left: 0px;
+}
+
+div.input-form div.row {
+	background-color: #4d4d4d;
+	padding:8px;
+}
+
+
+/*<img> and <a> tags: on mouse hover the color of the background will keep the same!*/
+div.input-form div.row img,a:hover{
+    background-color:#F8F8F8;
+}
+
+div.input-form .footer {
+	border-top: 1px solid #F9F6F2;
+}
+
+div.input-form p {
+	margin-left: 0px;
+}
+
+div.input-form input {
+	z-index: 2;
+}
+div.input-form textarea {
+	border: 1px solid #595241;
+	width: 98%;
+	padding: 2px;
+	margin-right: 2px;
+}
+
+div.input-form input[type=text], div.input-form input[type=password] {
+	border: 1px solid #595241;
+	padding: 2px;
+	max-width: 60%;
+	background-color:white;
+}
+
+div.input-form textarea:focus, div.input-form  input[type=password]:focus, div.input-form  input[type=text]:focus{
+	border:1px solid #4D4D4D;
+	
+	padding: 2px;
+}
+
+input[type=checkbox]{
+
+	background-color: #FFDAB9;
+}
+
+div.input-form div.buttons {
+	text-align: center;
+padding: 0; 
+margin: 0;
+}
+div.input-form div.buttons input {
+	background-color: #efefef;
+	font-weight: normal;
+	border:  #AAA  solid 1px;
+}
+.formfield:focus{
+	background-color: #FFDAB9;
+}
+
+#ot:focus{
+	background-color: #FFDAB9;
+}
+
+/*Added by Silvia*/
+div.input-form div.row_alternatives {
+	background-color: #F8F8F8;
+	padding: 5px;
+/*	width: 70%;
+	float: left;
+	width: 100%;
+	float: left;*/
+	/*clear: both;*/
+}
+
+#radio_alt{
+	/*width: auto;*/
+	/*border-bottom: 1px #CCCCCC solid;*/
+
+}
+
