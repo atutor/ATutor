@@ -307,6 +307,8 @@ global $system_courses, $_custom_css, $db;
 			<ul id="subnavlist">
 			<?php $num_pages = count($this->sub_level_pages); 
 
+
+
 ?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 				
