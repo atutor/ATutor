@@ -2432,17 +2432,18 @@ div.social-wrapper{
 .contentbox-b{
     padding-bottom:0.2em;
 }
- 
-
-
-
 .logo{
 float:left;
 clear:right;
 margin-left:2em;
 }
-
 .content-settings{
 	width: 30%;
 	float: left;
+}
+.current-content{
+	color:red;
+}
+.del-content-icon{
+	border:0;
 }

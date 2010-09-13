@@ -134,16 +134,14 @@ ATutor.course = ATutor.course || {};
 	};
 	
 	ATutor.course.toggleFolder = function (cid, expand, collapse, course_id) {
-		var tree_collapse_icon = ATutor.base_href + "images/tree/tree_collapse.gif";
-		var tree_expand_icon = ATutor.base_href + "images/tree/tree_expand.gif";
 		if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
-			jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
+			jQuery("#tree_icon"+cid).attr("src", ATutor.course.expand_icon);
 			jQuery("#tree_icon"+cid).attr("alt", expand);
 			jQuery("#tree_icon"+cid).attr("title", expand);
 			ATutor.setcookie("c"+course_id+"_"+cid, null, 1);
 		}
 		else {
-			jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
+			jQuery("#tree_icon"+cid).attr("src", ATutor.course.collapse_icon);
 			jQuery("#tree_icon"+cid).attr("alt", collapse);
 			jQuery("#tree_icon"+cid).attr("title", collapse);
 			ATutor.setcookie("c"+course_id+"_"+cid, "1", 1);

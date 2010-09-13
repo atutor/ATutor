@@ -37,11 +37,70 @@ class ContentManager
 
 	// private
 	var $content_length;
+	
+	// private
+	var $tree_collapse_icon, $tree_expand_icon, $tree_vertline_icon, $tree_horizontal_icon,
+	    $tree_split_icon, $tree_disabled_icon, $tree_end_icon, $tree_space_icon;
 
 	/* constructor	*/
 	function ContentManager(&$db, $course_id) {
+		global $rtl;
+		
 		$this->db = $db;
 		$this->course_id = intval($course_id);
+		
+		// Look for tree icons for displaying content navigation from theme image folder,
+		// if the icon is not there, look up in atutor root image folder
+		$theme_image_folder = 'themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/';
+		$atutor_image_folder = 'images/';
+		
+		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.$rtl.'tree/tree_collapse.gif')) {
+			$this->tree_collapse_icon = $theme_image_folder.$rtl.'tree/tree_collapse.gif';
+		} else {
+			$this->tree_collapse_icon = $atutor_image_folder.$rtl.'tree/tree_collapse.gif';
+		}
+
+		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_expand.gif')) {
+			$this->tree_expand_icon = $theme_image_folder.$rtl.'tree/tree_expand.gif';
+		} else {
+			$this->tree_expand_icon = $atutor_image_folder.$rtl.'tree/tree_expand.gif';
+		}
+		
+		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_vertline.gif')) {
+			$this->tree_vertline_icon = $theme_image_folder.$rtl.'tree/tree_vertline.gif';
+		} else {
+			$this->tree_vertline_icon = $atutor_image_folder.$rtl.'tree/tree_vertline.gif';
+		}
+		
+		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_horizontal.gif')) {
+			$this->tree_horizontal_icon = $theme_image_folder.$rtl.'tree/tree_horizontal.gif';
+		} else {
+			$this->tree_horizontal_icon = $atutor_image_folder.$rtl.'tree/tree_horizontal.gif';
+		}
+
+		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_split.gif')) {
+			$this->tree_split_icon = $theme_image_folder.$rtl.'tree/tree_split.gif';
+		} else {
+			$this->tree_split_icon = $atutor_image_folder.$rtl.'tree/tree_split.gif';
+		}
+		
+		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_disabled.gif')) {
+			$this->tree_disabled_icon = $theme_image_folder.$rtl.'tree/tree_disabled.gif';
+		} else {
+			$this->tree_disabled_icon = $atutor_image_folder.$rtl.'tree/tree_disabled.gif';
+		}
+	
+		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_end.gif')) {
+			$this->tree_end_icon = $theme_image_folder.$rtl.'tree/tree_end.gif';
+		} else {
+			$this->tree_end_icon = $atutor_image_folder.$rtl.'tree/tree_end.gif';
+		}
+	
+		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_space.gif')) {
+			$this->tree_space_icon = $theme_image_folder.$rtl.'tree/tree_space.gif';
+		} else {
+			$this->tree_space_icon = $atutor_image_folder.$rtl.'tree/tree_space.gif';
+		}
 	}
 
 	function initContent( ) {
@@ -713,8 +772,8 @@ class ContentManager
 		
 		echo '
 function initContentMenu() {
-	tree_collapse_icon = "'.AT_BASE_HREF.'images/tree/tree_collapse.gif";
-	tree_expand_icon = "'.AT_BASE_HREF.'images/tree/tree_expand.gif";
+	tree_collapse_icon = "'.AT_BASE_HREF.$this->tree_collapse_icon.'";
+	tree_expand_icon = "'.AT_BASE_HREF.$this->tree_expand_icon.'";
 ';
 		
 		$sql = "SELECT content_id
@@ -990,7 +1049,7 @@ initContentMenu();
 					
 					// instructors have privilege to delete content
 					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id']) && !is_mobile_device()) {
-						$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+						$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" height="10" /></a>';
 					}
 				} 
 				else 
@@ -1012,7 +1071,7 @@ initContentMenu();
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						  $link .= $content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
+						  $link .= $content['title'].'" height="1" width="1" border="0" /></a><strong class="current-content" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
@@ -1024,7 +1083,7 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
-							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" height="10" /></a>';
 						}
 					}
 					else
@@ -1058,9 +1117,8 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
-							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" height="10" /></a>';
 						}
-
 					}
 					
 					if ($on) {
@@ -1078,20 +1136,20 @@ initContentMenu();
 					/* has children */
 					for ($i=0; $i<$depth; $i++) {
 						if ($children[$i] == 1) {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+							echo '<img src="'.$_base_path.$this->tree_vertline_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						} else {
 							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						}
 					}
 
 					if (($counter == $num_items) && ($depth > 0)) {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.$this->tree_end_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						$children[$depth] = 0;
 					} else if ($counter == $num_items) {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.$this->tree_end_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						$children[$depth] = 0;
 					} else {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.$this->tree_split_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 						$children[$depth] = 1;
 					}
 
@@ -1103,20 +1161,20 @@ initContentMenu();
 
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-							echo '<a href="javascript:void(0)" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.AT_BASE_HREF.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.AT_BASE_HREF.$this->tree_collapse_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
-							echo '<img src="'.AT_BASE_HREF.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
+							echo '<img src="'.AT_BASE_HREF.$this->tree_collapse_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
 							echo '</a>'."\n";
 						}
 					} else {
 						if ($on) {
-							echo '<a href="javascript:void(0)" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.AT_BASE_HREF.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.AT_BASE_HREF.$this->tree_collapse_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
-							echo '<img src="'.AT_BASE_HREF.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
+							echo '<img src="'.AT_BASE_HREF.$this->tree_expand_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
 							echo '</a>'."\n";
 						}
 					}
@@ -1126,23 +1184,23 @@ initContentMenu();
 					if ($counter == $num_items) {
 						for ($i=0; $i<$depth; $i++) {
 							if ($children[$i] == 1) {
-								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+								echo '<img src="'.$_base_path.$this->tree_vertline_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 							} else {
 								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 							}
 						}
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.$this->tree_end_icon.'" alt="" border="0" class="img-size-tree" />'."\n";
 					} else {
 						for ($i=0; $i<$depth; $i++) {
 							if ($children[$i] == 1) {
-								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+								echo '<img src="'.$_base_path.$this->tree_vertline_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 							} else {
-								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+								echo '<img src="'.$_base_path.$this->tree_space_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 							}
 						}
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+						echo '<img src="'.$_base_path.$this->tree_split_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 					}
-					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
+					echo '<img src="'.$_base_path.$this->tree_horizontal_icon.'" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 				}
 
 				
@@ -1256,7 +1314,7 @@ initContentMenu();
 							if ($end && ($i==0)) {
 								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 							} else {
-								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
+								echo '<img src="'.$_base_path.$this->tree_vertline_icon.'" alt="" border="0" width="16" height="16" />';
 							}
 						} else {
 							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
@@ -1264,15 +1322,15 @@ initContentMenu();
 					}
 
 					if (($counter == $num_items) && ($depth > 0)) {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" />';
+						echo '<img src="'.$_base_path.$this->tree_end_icon.'" alt="" border="0" width="16" height="16" />';
 						$children[$depth] = 0;
 					} else {
 						echo $buttons;
 						if (($num_items == $counter) && ($parent_id == 0)) {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" />';
+							echo '<img src="'.$_base_path.$this->tree_end_icon.'" alt="" border="0" width="16" height="16" />';
 							$end = true;
 						} else {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" />';
+							echo '<img src="'.$_base_path.$this->tree_split_icon.'" alt="" border="0" width="16" height="16" />';
 						}
 						$children[$depth] = 1;
 					}
@@ -1284,10 +1342,10 @@ initContentMenu();
 					}
 
 					if ($_SESSION['menu'][$content['content_id']] == 1) {
-						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" />';
+						echo '<img src="'.$_base_path.$this->tree_disabled_icon.'" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" />';
 
 					} else {
-						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" />';
+						echo '<img src="'.$_base_path.$this->tree_disabled_icon.'" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" />';
 					}
 
 				} else {
@@ -1300,7 +1358,7 @@ initContentMenu();
 									if ($end && ($i == 0)) {
 										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 									} else {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
+										echo '<img src="'.$_base_path.$this->tree_vertline_icon.'" alt="" border="0" width="16" height="16" />';
 									}
 								} else {
 									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
@@ -1309,7 +1367,7 @@ initContentMenu();
 						} else {
 							echo $buttons;
 						}
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" />';
+						echo '<img src="'.$_base_path.$this->tree_end_icon.'" alt="" border="0" />';
 					} else {
 						if ($depth) {
 							echo $buttons;
@@ -1318,12 +1376,12 @@ initContentMenu();
 								if ($children[$i] == 1) {
 									if ($end && !$print) {
 										$print = true;
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" />';
+										echo '<img src="'.$_base_path.$this->tree_space_icon.'" alt="" border="0" width="16" height="16" />';
 									} else {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
+										echo '<img src="'.$_base_path.$this->tree_vertline_icon.'" alt="" border="0" width="16" height="16" />';
 									}
 								} else {
-									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" />';
+									echo '<img src="'.$_base_path.$this->tree_space_icon.'" alt="" border="0" width="16" height="16" />';
 								}
 							}
 							$print = false;
@@ -1331,9 +1389,9 @@ initContentMenu();
 							echo $buttons;
 						}
 		
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" />';
+						echo '<img src="'.$_base_path.$this->tree_split_icon.'" alt="" border="0" width="16" height="16" />';
 					}
-					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" />';
+					echo '<img src="'.$_base_path.$this->tree_horizontal_icon.'" alt="" border="0" width="16" height="16" />';
 				}
 
 				echo '<small>';
