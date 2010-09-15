@@ -168,8 +168,6 @@ global $system_courses, $_custom_css,$db;
 		<?php endforeach; ?>
 	</ul>
 </div>
-
-<div style="background-color:#E6E6E6; font-size:0.85em; padding-top: 5px; border-bottom:1px solid black; height:2em;">
 	<!-- the sub navigation -->
 <div class="logoutbar">
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
@@ -184,32 +182,8 @@ global $system_courses, $_custom_css,$db;
 			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
 		<?php endif; ?>
 </div>
-	<?php if ($this->sub_level_pages): ?>
-		<div id="sub-navigation">
-			<?php if (isset($this->back_to_page)): ?>
-				<a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo _AT('back_to').' '.$this->back_to_page['title']; ?></a> | 
-			<?php endif; ?>
 
-			<?php $num_pages = count($this->sub_level_pages); ?>
-			<?php for ($i=0; $i<$num_pages; $i++): ?>
-				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-					<strong><?php echo $this->sub_level_pages[$i]['title']; ?></strong>
-				<?php else: ?>
-					<a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a>
-				<?php endif; ?>
-				<?php if ($i < $num_pages-1): ?>
-					|
-				<?php endif; ?>
-			<?php endfor; ?>
-		</div>
-	<?php else: ?>
-		<div id="sub-navigation">
-			&nbsp;
-		</div>
-	<?php endif; ?>
-</div>
-
-<div style="padding:3px;">
+<div style="padding:3px;">			
 	<!-- the bread crumbs -->
 	<div id="breadcrumbs">
 		<?php foreach ($this->path as $page): ?>
@@ -220,6 +194,16 @@ global $system_courses, $_custom_css,$db;
 		<a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	<?php endif; ?>
 </div>
+
+      <?php if ($this->shortcuts): ?>
+      <div id="shortcuts">
+	      <ul>
+		      <?php foreach ($this->shortcuts as $link): ?>
+			      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+		      <?php endforeach; ?>
+	      </ul>
+      </div>
+      <?php endif; ?>
 
 <div id="contentwrapper">
 
@@ -262,3 +246,25 @@ global $system_courses, $_custom_css,$db;
 
 	<a name="content"></a>
 	<?php global $msg; $msg->printAll(); ?>
+
+
+<?php if ($this->sub_level_pages): ?>
+	<br /><div id="sub-navigation">
+		<?php if (isset($this->back_to_page)): ?>
+			<a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo _AT('back_to').' '.$this->back_to_page['title']; ?></a> | 
+		<?php endif; ?>
+
+		<?php $num_pages = count($this->sub_level_pages); ?>
+		<?php for ($i=0; $i<$num_pages; $i++): ?>
+			<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
+				<strong><?php echo $this->sub_level_pages[$i]['title']; ?></strong>
+			<?php else: ?>
+				<a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a>
+			<?php endif; ?>
+			<?php if ($i < $num_pages-1): ?>
+				|
+			<?php endif; ?>
+		<?php endfor; ?>
+	</div>
+
+<?php endif; ?>

@@ -459,7 +459,9 @@ h1 {
 div#sub-navigation {
 	padding: 3px;
 	color: #555;
-	float:left;
+	width:95%;
+	margin-left:auto;
+	margin-right:auto;
 }
 
 div#sub-navigation strong {
@@ -1096,7 +1098,7 @@ fieldset {
 }
 
 a#guide {
-	background-image: url('../default/images/guide.gif'); background-repeat: no-repeat; background-position: 7px 4px;
+	background-image: url('images/guide.gif'); background-repeat: no-repeat; background-position: 7px 4px;
 	background-color: #eee;
 	padding: 2px 10px 2px 27px;
 	border: 1px solid #ccc;
@@ -2057,4 +2059,58 @@ div.social-wrapper{
 }
 .del-content-icon{
 	  border:0;
+}
+
+ul#content-tool-links {
+	list-style: none outside none;
+}
+ul#content-tool-links li{
+	display: inline;
+	float: left;
+	width: 5em;
+	padding: 0 3em 0 0;
+	text-align: center;
+	font-size: 0.7em;
+	font-weight:bold;
+	color: #1A4A72;
+	line-height:120%;
+}
+ul#content-tool-links img{
+	border: 0 none;
+	display: block;
+	padding-left: 10px;
+}
+.fl-force-right{
+float:right;
+}
+.hidden {
+    display: none;
+}
+.clickable {
+    cursor: pointer;    
+}
+
+.del-content-icon{
+	  border:0;
+}
+.current-content{
+	  color:green;
+}
+div#shortcuts {
+
+	vertical-align: middle;
+float:right;
+margin-right: 1em;
+
+}
+
+#shortcuts ul li {
+	position: relative;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	list-style-type:  none;
+	padding-left: 0px; 
+	display:inline;
+
 }
