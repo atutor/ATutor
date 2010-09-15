@@ -269,6 +269,7 @@ define ('CONTENT_PRE_TEST',  'test');
 
 // the types of mobile devices
 define('IPOD_DEVICE',  'ipod');
+define('IPHONE_DEVICE', 'iphone');
 define('BLACKBERRY_DEVICE',  'blackberry');
 define('ANDROID_DEVICE',  'android');
 define('UNKNOWN_DEVICE',  'unknown');
