@@ -1810,3 +1810,17 @@ fieldset.toc {
 	border: 1pt solid #B8AE9C;
 	width:50%;
 }
+
+.fl-force-right{
+float:right;
+}
+.hidden {
+    display: none;
+}
+.clickable {
+    cursor: pointer;    
+}
+
+.del-content-icon{
+	  border:0;
+}
