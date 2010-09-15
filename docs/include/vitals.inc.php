@@ -1337,6 +1337,7 @@ function get_human_time($seconds) {
 function is_mobile_device() {
 	$http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 	return ((stripos($http_user_agent, IPOD_DEVICE) !== false && stripos($http_user_agent, IPOD_DEVICE) >= 0) ||
+			(stripos($http_user_agent, IPHONE_DEVICE) !== false && stripos($http_user_agent, IPHONE_DEVICE) >= 0) ||
 	        (stripos($http_user_agent, BLACKBERRY_DEVICE) !== false && stripos($http_user_agent, BLACKBERRY_DEVICE) >= 0) ||
 	        (stripos($http_user_agent, ANDROID_DEVICE) !== false && stripos($http_user_agent, ANDROID_DEVICE) >= 0)) 
 	        ? true : false;
@@ -1346,6 +1347,8 @@ function get_mobile_device_type() {
 	$http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 	if (stripos($http_user_agent, IPOD_DEVICE) !== false && stripos($http_user_agent, IPOD_DEVICE) >= 0) {
 		return IPOD_DEVICE;
+	} else if (stripos($http_user_agent, IPHONE_DEVICE) !== false && stripos($http_user_agent, IPHONE_DEVICE) >= 0) {
+		return IPHONE_DEVICE;
 	} else if (stripos($http_user_agent, BLACKBERRY_DEVICE) !== false && stripos($http_user_agent, BLACKBERRY_DEVICE) >= 0) {
 		return BLACKBERRY_DEVICE;
 	} else if (stripos($http_user_agent, ANDROID_DEVICE) !== false && stripos($http_user_agent, ANDROID_DEVICE) >= 0) {
