@@ -34,6 +34,7 @@ h1, h2, h3, h4, h5, h6 {
     font: 100% Verdana, Helvetica, Arial, sans-serif;
     margin: 0;
     padding-top: 0.5em;
+    font-weight:600;
     /*border-bottom: 1px solid #8CACBB;*/
 }
 
@@ -145,32 +146,24 @@ div.home_box {
 	width:28.8em;
 	height:9.8em;
 	margin:0;
-	background-image:url(../../images/details_r.png);
-	background-position: top right;
-	background-repeat:no-repeat;
+
 }
 .details_ol{
 	height:9.8em;
 	margin:0px;
 	width:.45em;
-	background-image:url(../../images/details_l.png);
-	background-position: top left;
-	background-repeat:no-repeat;
+
 }
 .details_ir{
 	width:.5em;
 	height:100%;
 	float:right;
-	background-image:url(../../images/details_ir.png);
-	background-position: top right;
-	background-repeat:no-repeat;
+
 }
 .details_il{
 	height:100%;
 	float:left;
-	background-image:url(../../images/details_il.png);
-	background-position: top left;
-	background-repeat:no-repeat;
+
 }
 .home-title{
 	font-size:12pt;
@@ -1506,6 +1499,7 @@ div.home_box {
 	background: #DEE7EC;
 
 	height:9.8em;
+padding:.4em;
 	-moz-border-radius:.3em .3em .3em .3em;
 	border-radius: .3em .3em .3em .3em;
 
@@ -1514,8 +1508,11 @@ div.home_box {
 
 .inside_box{
 	width:100%;
+	padding:.1em;
 	margin:auto;
 	height:52%;
+	-moz-border-radius:.3em .3em .3em .3em;
+	border-radius: .3em .3em .3em .3em;
 	margin-bottom:.2em;
 	background:#ffffff;
 }
@@ -1529,11 +1526,13 @@ div.home_box {
 	height:9.8em;
 	margin:0px;
 	width:.45em;
+	background:#ffffff;
 }
 .details_ir{
 	width:.5em;
 	height:100%;
 	float:right;
+	background:#ffffff;
 }
 .details_il{
 	height:100%;
@@ -1926,4 +1925,12 @@ div.social-wrapper{
 .content-settings{
 	width: 30%;
 	float: left;
+}
+.del-content-icon{
+	  border:0;
+}
+#logoutbar{
+float:right;
+text-align:right;
+
 }

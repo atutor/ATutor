@@ -65,7 +65,6 @@ global $system_courses, $_custom_css, $_base_path;
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
-	<?php echo $this->rtl_css; ?>
 	<?php if ($system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
@@ -79,6 +78,7 @@ global $system_courses, $_custom_css, $_base_path;
     </script>
     <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
     <?php echo $this->custom_css; ?>
+    <?php echo $this->rtl_css; ?>
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>">
@@ -143,7 +143,7 @@ global $system_courses, $_custom_css, $_base_path;
 	</ul>
 </div>
 <!-- the sub navigation -->
-<div style="float: right; padding-top: 3px; padding-right: 5px; font-size:0.85em; text-transform: lowercase;" id="suv-nav-logout">
+<div id="logoutbar">
 <?php     if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
 		    <a class="pref_wiz_launcher"><img border="0" alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" src="<?php echo $this->base_href; ?>images/wand.png" /></a> |
 		    <?php } ?> 

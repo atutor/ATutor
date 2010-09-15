@@ -64,7 +64,7 @@ global $system_courses, $_custom_css, $_base_path;
 	<![endif]-->
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-layout.css" />
-	<?php echo $this->rtl_css; ?>
+
 	<?php if ($system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
@@ -77,8 +77,10 @@ global $system_courses, $_custom_css, $_base_path;
     jQuery.noConflict();
     //-->
     </script>
+
 	<script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>
 	<?php echo $this->custom_css; ?>
+	<?php echo $this->rtl_css; ?>
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>">
@@ -144,7 +146,7 @@ global $system_courses, $_custom_css, $_base_path;
 </div>
 
 <!-- the sub navigation -->
-<div style="float: right; padding-top: 2px; padding-right: 5px; font-size:0.85em; text-transform: lowercase;" id="suv-nav-logout">
+<div id="logoutbar">
 	<?php if ($_SESSION['valid_user']): ?>		
 <?php     if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
 		    <a class="pref_wiz_launcher"><img border="0" alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" src="<?php echo $this->base_href; ?>images/wand.png" /></a> |
@@ -201,23 +203,17 @@ global $system_courses, $_custom_css, $_base_path;
 
 <div id="contentcolumn">
 <!-- the page title -->
-		  <?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-      <div id="guide_box">
-			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
-      </div>
-      <div>
-	
-		  <?php endif; ?>
-		<?php if ($this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
+
+	<?php if ($this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
         <div id="menutoggle">
             <a accesskey="n"><img src="" title="" alt="" /></a>
         </div>
-		<?php endif; ?>
+	 <?php endif; ?>
 
-	<div style="float:right;padding-top:7px;" class="sequence-links">
+	<div class="sequence-links">
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 		<?php if ($this->sequence_links['resume']): ?>
-				<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+				<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
 		<?php else:
 			if ($this->sequence_links['previous']): ?>
 				<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->img; ?>previous.gif" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
@@ -229,7 +225,13 @@ global $system_courses, $_custom_css, $_base_path;
 	<?php } ?>
 		&nbsp;
 	</div>
-
+		  <?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
+      <div id="guide_box">
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+      </div>
+      <div>
+	
+		  <?php endif; ?>
 <!-- the page title -->
 <h2 class="page-title"><?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?></h2>
 

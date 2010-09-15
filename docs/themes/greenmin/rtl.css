@@ -3,26 +3,27 @@ html, body {
 	direction: rtl;
 }
 
-/* required for mozilla browsers*/
 .img-size-tree {
 	vertical-align: middle;
 	margin-top: 0px;
 	height:1.45em;
 	width:1.45em;
-	text-align: right.;
 	float: right;
 }
+
 div.box {
 	line-height:150%;
 }
+
 div.menuedit{
-	float:left;
+margin-top:-1.5em;
+float:left;
 }
 
 
 .del-content-icon{
 /* float:left; */
-	  border:0;
+border:0;
 }
 
 
@@ -31,7 +32,8 @@ margin-right:.5em;
 
 }
 
-.logoutbar{
+#logoutbar{
+float:left;
 text-align:left;
 
 }
@@ -39,6 +41,7 @@ text-align:left;
 .fl-force-right{
 float:left;
 }
+
 .buttonbox{
 float:left;
 
@@ -58,15 +61,11 @@ width:34%;
 .my_course_container{
 width:55%;
 }
-#menutoggle{
-float:left;
-clear:left;
-}
-
 
 #content-tool-links{
 float:right;
 }
-#side-menu{
-float:right;
+
+#breadcrumbs{
+width:100%;
 }

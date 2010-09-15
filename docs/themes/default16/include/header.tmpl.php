@@ -66,7 +66,7 @@ global $system_courses, $_custom_css,$db;
 	<![endif]-->
     <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-layout.css" />
-<?php echo $this->rtl_css; ?>
+
 <?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
@@ -78,8 +78,10 @@ global $system_courses, $_custom_css,$db;
 	jQuery.noConflict();
 	//-->
 	</script>
+
     <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
     <?php echo $this->custom_css; ?>
+    <?php echo $this->rtl_css; ?>
     <style id="pref_style" type="text/css"></style> 
 
 </head>

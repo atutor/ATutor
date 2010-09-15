@@ -19,7 +19,7 @@ global $system_courses, $_custom_css, $_base_path;
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
 
-	<?php echo $this->rtl_css; ?>
+
 	<style type="text/css"><?php echo $this->banner_style; ?></style>
 	<?php if ($system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
@@ -34,6 +34,7 @@ global $system_courses, $_custom_css, $_base_path;
     </script>
     <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
     <?php echo $this->custom_css; ?>
+    <?php echo $this->rtl_css; ?>
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>">
@@ -172,15 +173,6 @@ global $system_courses, $_custom_css, $_base_path;
 
 <!-- the page title -->
 
-
-		<?php if ($this->course_id > 0): ?>
-	    <div id="menutoggle">
-                <a accesskey="n"><img src="" title="" alt="" /></a>
-            </div>
-		<?php endif; ?>
-
-
-
 	<div  id="sequence-links">
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 		<?php if ($this->sequence_links['resume']): ?>
@@ -216,6 +208,11 @@ global $system_courses, $_custom_css, $_base_path;
       </div>
       <?php endif; ?>
 	<h2 class="page-title"><?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?></h2>
+		<?php if ($this->course_id > 0): ?>
+	    <div id="menutoggle">
+                <a accesskey="n"><img src="" title="" alt="" /></a>
+            </div>
+		<?php endif; ?>
 
 <a name="content"></a>
 <?php global $msg; $msg->printAll(); ?>

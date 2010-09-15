@@ -17,53 +17,70 @@ div.box {
 }
 div.menuedit{
 	float:left;
+	clear:both;
+	margin-top:-1.8em;
 }
 
 
 .del-content-icon{
 /* float:left; */
-	  border:0;
+      border:0;
 }
 
 
 #editable_table a{
-margin-right:.5em;
+      margin-right:.5em;
 
 }
 
 .logoutbar{
-text-align:left;
+      text-align:left;
 
 }
 
 .fl-force-right{
-float:left;
+      float:left;
+      clear:left;
 }
 
 .buttonbox{
-float:left;
+      float:left;
 
 }
 div#breadcrumbs{
 
-float:right;
+      float:left;
+      background:#ffffff;
+      color:black;
+
+}
+div#breadcrumbs a{
+      color:black;
 }
 ul.current_list li{
- width:90%;
+      width:90%;
 }
 
 .current_box{
-width:34%;
+      width:34%;
 }
 
 .my_course_container{
-width:55%;
+      width:55%;
 }
-#menutoggle{
-float:left;
-clear:left;
+div#menutoggle{
+      float:left;
+      clear:left;
+      margin-left:.3em;
 }
 
 #content-tool-links{
-float:right;
+      float:right;
+}
+
+div#member-links{
+      background-color:black;
+}
+#side-menu h4{
+      width:99%;
 }

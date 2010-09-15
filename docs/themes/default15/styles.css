@@ -1826,5 +1826,10 @@ float:right;
 	  border:0;
 }
 .current-content{
-color:green;
+	  color:green;
+}
+
+.box fl-clear{
+float:left;
+display:none;
 }
