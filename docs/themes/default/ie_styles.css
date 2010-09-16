@@ -47,6 +47,11 @@ table.data {
 margin-bottom:.1em;
 }
 
+div#top-links{
+
+float:right;
+}
+
 div#top-links a:active{
 	color:black;
 	background-color:#F6EAD6;
