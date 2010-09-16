@@ -1,6 +1,7 @@
 /* for right to left languages */
 html, body {
 	direction: rtl;
+
 }
 
 .img-size-tree {
@@ -13,6 +14,7 @@ html, body {
 
 div.box {
 	line-height:150%;
+font-style:normal;
 }
 
 div.menuedit{
@@ -36,8 +38,9 @@ float:left;
 
 }
 .logoutbar{
+white-space:nowrap;
 text-align:left;
-
+border-top:1px solid #eeeeee;
 }
 
 .fl-force-right{
@@ -66,4 +69,7 @@ width:55%;
 
 #content-tool-links{
 float:right;
+}
+.details-text{
+font-style:inherit;
 }

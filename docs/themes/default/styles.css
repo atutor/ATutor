@@ -1239,7 +1239,7 @@ div#shortcuts{
 	padding:.2em
 }
 #shortcuts ul {
-	position: relative;
+
 	margin-top: 0pt;
 	margin-bottom: 0pt;
 	margin-left: 0pt;
@@ -1257,7 +1257,6 @@ a#guide {
 	text-decoration:none;
 	font-size:0.85em;
 	float:right;
-
 }
 div#guide_box{
 	border-left:thin solid #cccccc;

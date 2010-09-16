@@ -106,7 +106,7 @@ function print_sublinks($link){
 		if(!is_array($array)){ 
 ?>
 				<div class="details-text">
-				<i><?php echo _AT('none_found'); ?></i>
+				<?php echo _AT('none_found'); ?>
 				</div>
 <?php } else { ?>
 				<div class="details-text">
