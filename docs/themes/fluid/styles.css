@@ -2037,3 +2037,11 @@ float:right;
 .clickable {
     cursor: pointer;    
 }
+.del-content-icon{
+	  border:0;
+}
+#logoutbar{
+float:right;
+text-align:right;
+text-transform: lowercase;
+}

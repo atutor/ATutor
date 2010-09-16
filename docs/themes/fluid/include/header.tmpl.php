@@ -68,7 +68,7 @@ global $system_courses, $_custom_css, $db, $_base_path;
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>infusion/framework/fss/css/fss-layout.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>infusion/components/reorderer/Reorderer.css" />
-	<?php echo $this->rtl_css; ?>
+
 	<?php if ($system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
@@ -82,6 +82,7 @@ global $system_courses, $_custom_css, $db, $_base_path;
     </script>
     <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
     <?php echo $this->custom_css; ?>
+    <?php echo $this->rtl_css; ?>
     <style id="pref_style" type="text/css"></style> 
 </head>
 
@@ -197,7 +198,10 @@ jQuery(document).ready(function () {
 
 <div id="subnav">
 	<!-- the sub navigation -->
-	<div style="float: right; text-transform: lowercase;">
+	<div  id="logoutbar">
+<?php     if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
+		    <a class="pref_wiz_launcher"><img border="0" alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" src="<?php echo $this->base_href; ?>images/wand.png" /></a> |
+		    <?php } ?> 
 		<?php if ($_SESSION['valid_user']): ?>					
 			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | <a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>

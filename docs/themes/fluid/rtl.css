@@ -1,0 +1,65 @@
+/* for right to left languages */
+html, body {
+	direction: rtl;
+}
+
+.img-size-tree {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.45em;
+	width:1.45em;
+	float: right;
+}
+
+div.box {
+	line-height:150%;
+}
+
+div.menuedit{
+float:left;
+margin-top:-1.5em;
+}
+
+
+.del-content-icon{
+/* float:left; */
+border:0;
+}
+
+
+#editable_table a{
+margin-right:.5em;
+
+}
+
+
+#logoutbar{
+text-align:left;
+float:left;
+text-transform: lowercase;
+}
+
+.fl-force-right{
+float:left;
+
+}
+
+.buttonbox{
+float:left;
+
+}
+ul.current_list li{
+ width:90%;
+}
+
+.current_box{
+width:34%;
+}
+
+.my_course_container{
+width:55%;
+}
+
+#content-tool-links{
+float:right;
+}
