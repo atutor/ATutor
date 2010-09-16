@@ -1250,7 +1250,9 @@ div#shortcuts{
 	display: inline;
 }
 a#guide {
-	background-image: url('images/help.png'); background-repeat: no-repeat; background-position: 2px 2px;
+	background-image: url('images/help.png'); 
+	background-repeat: no-repeat; 
+	background-position: 2px 2px;
 	padding: 3px 10px 5px 30px;
 	text-decoration:none;
 	font-size:0.85em;
@@ -1264,10 +1266,11 @@ div#guide_box{
 	border-radius: 0em 0em .5em .5em;;
 	-moz-border-radius: 0em 0em .5em .5em;
 	-moz-box-shadow:.1em .1em .2em #999999;
-    box-shadow: .1em .1em .2em #999999;
+	box-shadow: .1em .1em .2em #999999;
 	float:right;
 	margin-right:2em;
 	padding-left:.1em;
+	width:auto;
 }
 
 div#content-text {
