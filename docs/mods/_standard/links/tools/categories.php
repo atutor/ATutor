@@ -83,7 +83,7 @@ if (!empty($categories)) { ?>
 				$parent_cat_name = get_group_name($row_cat['owner_id']);
 			}
 		} else {
-			$parent_cat_name = '<em>'._AT('none').'</em>';
+			$parent_cat_name = '<strong>'._AT('none').'</strong>';
 		}
 	?>
 		<tr onmousedown="document.form['m<?php echo $id; ?>'].checked = true;rowselect(this);" id="r_<?php echo $id; ?>">

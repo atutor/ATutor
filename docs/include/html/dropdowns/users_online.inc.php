@@ -37,10 +37,10 @@ if ($row = mysql_fetch_assoc($result)) {
 	} while ($row = mysql_fetch_assoc($result));
 	echo '</ul>';
 } else {
-	echo '<em>'._AT('none_found').'</em><br />';
+	echo '<strong>'._AT('none_found').'</strong><br />';
 }
 
-echo '<em>'._AT('guests_not_listed').'</em>';
+echo '<strong>'._AT('guests_not_listed').'</strong>';
 
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();

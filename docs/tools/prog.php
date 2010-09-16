@@ -85,7 +85,7 @@ if (!$_GET['frame']) {  ?>
 	// not sure where these are displayed in the progress popup
 	echo '<small>';
 	if ($size == '') {
-		echo '<em>'._AT('unknown').' </em>  '._AT('kb');
+		echo '<strong>'._AT('unknown').' </strong>  '._AT('kb');
 	} else {
 		echo number_format($size, 2).' '._AT('kb');
 	}

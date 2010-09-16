@@ -126,7 +126,7 @@ if ($anonymous <> 1)
 $result = mysql_query($sql, $db);
 
 if ($anonymous == 1) {
-	$guest_text = '<em>'._AT('anonymous').'</em>';
+	$guest_text = '<strong>'._AT('anonymous').'</strong>';
 } else {
 	$guest_text = '- '._AT('guest').' -';
 }

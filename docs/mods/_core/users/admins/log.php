@@ -54,7 +54,7 @@ if (($row = mysql_fetch_row($result))==0) {
 	for ($i=1; $i<=$num_pages; $i++) {
 		echo '<li>';
 		if ($i == $page) {
-			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.SEP.'login='.$_GET['login'].'"><em>'.$i.'</em></a>';
+			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.SEP.'login='.$_GET['login'].'"><strong>'.$i.'</strong></a>';
 		} else {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.SEP.'login='.$_GET['login'].'#list">'.$i.'</a>';
 		}

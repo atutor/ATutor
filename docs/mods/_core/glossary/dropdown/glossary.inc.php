@@ -62,15 +62,15 @@ if ($result && ($row = mysql_fetch_array($result))) {
 
 		if ($count == 0) {
 			/* there are defn's, but they're not defined in the glossary */
-			echo '<em>'._AT('no_terms_found').'</em>';
+			echo '<strong>'._AT('no_terms_found').'</strong>';
 		}
 	} else {
 		/* there are no glossary terms on this page */
-		echo '<em>'._AT('no_terms_found').'</em>';
+		echo '<strong>'._AT('no_terms_found').'</strong>';
 	}
 } else {
 	/* there are no glossary terms in the system for this course or error */
-	echo '<em>'._AT('na').'</em>';
+	echo '<strong>'._AT('na').'</strong>';
 }
 
 $savant->assign('dropdown_contents', ob_get_contents());

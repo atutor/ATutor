@@ -95,14 +95,14 @@ $result = mysql_query($sql, $db);
 			<?php endwhile; ?>
 		<?php else: ?>
 			<tr>
-				<td class="indent"><em><?php echo _AT('none_found'); ?></em></td>
+				<td class="indent"><strong><?php echo _AT('none_found'); ?></strong></td>
 			</tr>
 		<?php endif; ?>
 
 	<?php } while ($row = mysql_fetch_assoc($result)); ?>
 <?php else: ?>
 	<tr>
-		<td><em><?php echo _AT('none_found'); ?></em></td>
+		<td><strong><?php echo _AT('none_found'); ?></strong></td>
 	</tr>
 <?php endif; ?>
 </tbody>

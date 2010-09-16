@@ -52,7 +52,7 @@ if (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE) {
 	<form name="form1" method="post" action="mods/_core/languages/language_translate.php">
 		<div class="input-form">
 			<div class="row">
-				Import partial language from the <em>live ATutor language database</em> to your local installation for translating.
+				Import partial language from the <strong>live ATutor language database</strong> to your local installation for translating.
 			</div>
 			<div class="row">
 				<?php

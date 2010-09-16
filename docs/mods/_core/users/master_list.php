@@ -258,7 +258,7 @@ $result = mysql_query($sql, $db);
 	<?php for ($i=1; $i<=$num_pages; $i++): ?>
 		<li>
 			<?php if ($i == $page) : ?>
-				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><em><?php echo $i; ?></em></a>
+				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><strong><?php echo $i; ?></strong></a>
 			<?php else: ?>
 				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><?php echo $i; ?></a>
 			<?php endif; ?>

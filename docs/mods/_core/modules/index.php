@@ -245,7 +245,7 @@ $keys = array_keys($module_list);
 			} else if ($module->isPartiallyUninstalled()) {
 				echo _AT('partially_uninstalled');
 			} else {
-				echo '<em>'._AT('disabled').'</em>';
+				echo '<strong>'._AT('disabled').'</strong>';
 			}
 			?></td>
 		<td valign="top" align="center">

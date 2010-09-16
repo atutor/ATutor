@@ -76,7 +76,7 @@ if (isset($_GET['term'])) {
 				$sql	= "SELECT * FROM ".TABLE_PREFIX."language_pages WHERE `term`='$_GET[term]' ORDER BY page LIMIT 11";
 				$result	= mysql_query($sql, $db);
 				if (mysql_num_rows($result) > 10) {
-					echo '<em>'._AT('global_more_than_10_pages').'</em>';
+					echo '<strong>'._AT('global_more_than_10_pages').'</strong>';
 				} else {
 					echo '<ul style="padding: 0px; margin: 0px; list-style: none">';
 					while ($page_row = mysql_fetch_assoc($result)) {

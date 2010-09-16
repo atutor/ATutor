@@ -92,7 +92,7 @@ if ($row = mysql_fetch_assoc($result)){
 	<?php } while($rowReadings = mysql_fetch_assoc($resultReadings)); ?>
 <?php else: ?>
 	<table  class="data" style="width: 95%;"><tr>
-		<td colspan="3"><em><?php echo _AT('none_found'); ?></em></td>
+		<td colspan="3"><strong><?php echo _AT('none_found'); ?></strong></td>
 	</tr></table>
 <?php endif; ?>
 

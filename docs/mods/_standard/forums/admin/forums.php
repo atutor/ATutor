@@ -79,7 +79,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		}
 	} else {
 		echo '<tr>';
-		echo '	<td colspan="4"><em>' . _AT('no_forums') . '</em></td>';
+		echo '	<td colspan="4"><strong>' . _AT('no_forums') . '</strong></td>';
 		echo '</tr>';
 	}
 ?>
@@ -99,7 +99,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<?php endforeach; ?>
 <?php else: ?>
 	<tr>
-		<td colspan="4"><em><?php echo _AT('no_forums'); ?></em></td>
+		<td colspan="4"><strong><?php echo _AT('no_forums'); ?></strong></td>
 	</tr>
 <?php endif; ?>
 </tbody>

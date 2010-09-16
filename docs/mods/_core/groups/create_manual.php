@@ -111,7 +111,7 @@ while ($row = mysql_fetch_assoc($result)) {
 					<option value="<?php echo $type_id; ?>"><?php echo $type_title; ?></option>
 				<?php endforeach; ?>
 				</select>
-				<em><?php echo _AT('or'); ?></em>
+				<strong><?php echo _AT('or'); ?></strong>
 			<?php endif; ?>
 			<label for="new"><?php echo _AT('new_type'); ?></label> <input type="text" name="new_type" value="<?php echo htmlentities_utf8($_POST['new_type']); ?>" id="new" size="30" maxlength="40" />
 		</div>

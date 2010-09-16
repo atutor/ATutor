@@ -38,7 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				$key = in_array_cin($word[$i], $glossary_ids);
 
 				if ($key === false) {
-					echo '<em>'._AT('new').'</em> ';
+					echo '<strong>'._AT('new').'</strong> ';
 					$current_word = $word[$i];
 					$current_defn = $_POST['glossary_defs'][$word[$i]];
 				} else {
@@ -56,7 +56,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<?php if ($strlen(urldecode($current_word)) > 60): ?>
 		<tr>
 			<td>&nbsp;</td>
-			<td><em><?php echo _AT('glossary_term_limit'); ?></em></td>
+			<td><strong><?php echo _AT('glossary_term_limit'); ?></strong></td>
 		</tr>
 		<?php else: ?>
 		<tr>

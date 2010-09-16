@@ -314,7 +314,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	$table_content .= '</tr>';
 	$table_content .= '</tfoot>';
 } else {
-	$table_content .= '<em>'._AT('no_results_available').'</em>';
+	$table_content .= '<strong>'._AT('no_results_available').'</strong>';
 	$no_result_found = true;
 }
 

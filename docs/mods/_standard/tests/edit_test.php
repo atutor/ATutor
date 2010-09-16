@@ -501,7 +501,7 @@ function disable_texts (name) {
 			$result = mysql_query($sql, $db);
 			if (mysql_num_rows($result)) {
 				while ($row = mysql_fetch_assoc($result)) {
-					echo '<em>'.$row['title'].'</em><br />';
+					echo '<strong>'.$row['title'].'</strong><br />';
 
 					$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
 					$g_result = mysql_query($sql, $db);

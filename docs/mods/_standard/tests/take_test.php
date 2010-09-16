@@ -220,7 +220,7 @@ if (!isset($_REQUEST['gid']) && !$in_progress) {
 	<?php endif; ?>
 
 	<?php if ($anonymous): ?>
-		<div class="row"><em><strong><?php echo _AT('test_anonymous'); ?></strong></em></div>
+		<div class="row"><strong><strong><?php echo _AT('test_anonymous'); ?></strong></strong></div>
 	<?php endif; ?>
 
 	<?php

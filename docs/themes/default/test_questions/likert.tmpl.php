@@ -7,6 +7,6 @@
 		</li>
 	<?php endfor; ?>
 	<li style="padding: 4px; display: inline">
-		<input type="radio" name="answers[<?php echo $this->row['question_id']; ?>]" value="-1" id="choice_<?php echo $this->row['question_id']; ?>_x" <?php if ($this->response == -1): ?>checked="checked"<?php endif; ?>/><label for="choice_<?php echo $this->row['question_id']; ?>_x"><em><?php echo _AT('leave_blank'); ?></em></label>
+		<input type="radio" name="answers[<?php echo $this->row['question_id']; ?>]" value="-1" id="choice_<?php echo $this->row['question_id']; ?>_x" <?php if ($this->response == -1): ?>checked="checked"<?php endif; ?>/><label for="choice_<?php echo $this->row['question_id']; ?>_x"><strong><?php echo _AT('leave_blank'); ?></strong></label>
 	</li>
 </ul>

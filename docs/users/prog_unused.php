@@ -83,7 +83,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 	echo '<small>';
 	// not sure where these are displayed in the progress popup
 	if ($size == '') {
-		echo '<em>Unknown</em> '._AT('kb');
+		echo '<strong>Unknown</strong> '._AT('kb');
 	} else {
 		echo $size.' '._AT('kb');
 	}

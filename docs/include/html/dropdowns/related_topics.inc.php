@@ -20,7 +20,7 @@ ob_start();
 $related = $contentManager->getRelatedContent($_SESSION['s_cid']);
 
 if (count($related) == 0) {
-	echo '<em>'._AT('none_found').'</em>';
+	echo '<strong>'._AT('none_found').'</strong>';
 } else {
 	for ($i=0; $i < count($related); $i++) {
 		echo '&#176; <a href="'.$_base_path.'content.php?cid='.$related[$i].'">';

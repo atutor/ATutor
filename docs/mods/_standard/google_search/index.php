@@ -35,9 +35,9 @@ if (!$_config['gsearch'] || $_config['gtype']==GOOGLE_TYPE_SOAP){ ?>
 				echo '<ol>';
 
 				foreach ($result['resultElements'] as $r) {
-					echo '<li><a href="' . $r['URL'] . '">' . ($r['title'] ? $r['title'] : '<em>'._AT('no_title').'</em>' ) . '</a>';
+					echo '<li><a href="' . $r['URL'] . '">' . ($r['title'] ? $r['title'] : '<strong>'._AT('no_title').'</strong>' ) . '</a>';
 					echo '<br />';
-					echo '<small>'.($r['snippet'] ? $r['snippet'] : '<em>'._AT('no_content_avail').'</em>' ) .'<br /><i>'.$r['URL'].'</i></small>';
+					echo '<small>'.($r['snippet'] ? $r['snippet'] : '<strong>'._AT('no_content_avail').'</strong>' ) .'<br /><i>'.$r['URL'].'</i></small>';
 					echo '</li>';
 				}
 
@@ -47,9 +47,9 @@ if (!$_config['gsearch'] || $_config['gtype']==GOOGLE_TYPE_SOAP){ ?>
 
 					if (false !== $result2) {		
 						foreach ($result2['resultElements'] as $r) {
-							echo '<li><a href="' . $r['URL'] . '">' . ($r['title'] ? $r['title'] : '<em>'._AT('no_title').'</em>' ) . '</a>';
+							echo '<li><a href="' . $r['URL'] . '">' . ($r['title'] ? $r['title'] : '<strong>'._AT('no_title').'</strong>' ) . '</a>';
 							echo '<br />';
-							echo '<small>'.($r['snippet'] ? $r['snippet'] : '<em>'._AT('no_content_avail').'</em>' ) .'<br /><i>'.$r['URL'].'</i></small>';
+							echo '<small>'.($r['snippet'] ? $r['snippet'] : '<strong>'._AT('no_content_avail').'</strong>' ) .'<br /><i>'.$r['URL'].'</i></small>';
 							echo '</li>';
 						}
 					} 

@@ -158,7 +158,7 @@ function trans_form($page) {
 				echo '<input type="text" name="context" class="input" value="'.$row['context'].'" size="45" />';
 			} else {
 				if ($row['context'] == '') {
-					echo '<em>None specified.</em>';
+					echo '<strong>None specified.</strong>';
 				} else {
 					echo $row['context'];
 				}
@@ -171,7 +171,7 @@ function trans_form($page) {
 					$result	= mysql_query($sql, $db);
 
 					if (mysql_num_rows($result) > 10) {
-						echo '<em>Global (more than 10 pages)</em>';
+						echo '<strong>Global (more than 10 pages)</strong>';
 					} else {
 						while ($page_row = mysql_fetch_array($result)) {
 							echo $page_row['page'] . '<br />';

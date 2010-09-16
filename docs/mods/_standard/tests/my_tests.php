@@ -57,11 +57,11 @@ while ($row = mysql_fetch_assoc($result)) {
 	}
 	echo '</td><td>';
 	if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-		echo '<em><strong>'._AT('ongoing').'</strong></em>';
+		echo '<strong>'._AT('ongoing').'</strong>';
 	} else if ($row['ue'] < time() ) {
-		echo '<em>'._AT('expired').'</em>';
+		echo '<strong>'._AT('expired').'</strong>';
 	} else if ($row['us'] > time() ) {
-		echo '<em>'._AT('pending').'</em>';
+		echo '<strong>'._AT('pending').'</strong>';
 	}
 	
 	$startend_date_long_format=_AT('startend_date_long_format');
@@ -156,7 +156,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		if ( ($row['result_release']==AT_RELEASE_IMMEDIATE) || (($row['final_score'] != '') && ($row['result_release']==AT_RELEASE_MARKED)) ) {
 			echo '<a href="mods/_standard/tests/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].'">'._AT('view_results').'</a>';
 		} else {
-			echo '<em>'._AT('no_results_yet').'</em>';
+			echo '<strong>'._AT('no_results_yet').'</strong>';
 		}
 		
 		echo '</td>';

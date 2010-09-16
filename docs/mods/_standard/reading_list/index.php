@@ -72,7 +72,7 @@ $result = mysql_query($sql, $db);
 	<?php } while($row = mysql_fetch_assoc($result)); ?>
 <?php else: ?>
 	<tr>
-		<td colspan="3"><em><?php echo _AT('none_found'); ?></em></td>
+		<td colspan="3"><strong><?php echo _AT('none_found'); ?></strong></td>
 	</tr>
 <?php endif; ?>
 </tbody>

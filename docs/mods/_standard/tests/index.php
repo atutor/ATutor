@@ -113,11 +113,11 @@ $cols=6;
 			<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
 			<td><?php
 				if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-					echo '<em>'._AT('ongoing').'</em>';
+					echo '<strong>'._AT('ongoing').'</strong>';
 				} else if ($row['ue'] < time() ) {
-					echo '<em>'._AT('expired').'</em>';
+					echo '<strong>'._AT('expired').'</strong>';
 				} else if ($row['us'] > time() ) {
-					echo '<em>'._AT('pending').'</em>';
+					echo '<strong>'._AT('pending').'</strong>';
 				} ?></td>
 			<td><?php $startend_date_format=_AT('startend_date_format'); 
 

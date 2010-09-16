@@ -215,7 +215,7 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 	for ($i=1; $i<=$num_pages; $i++) {
 		$pages_text .= '<li>';
 		if ($i == $page) {
-			$pages_text .= '<a class="current" href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'search_within='.$_GET['search_within'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results"><em>'.$i.'</em></a>';
+			$pages_text .= '<a class="current" href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'search_within='.$_GET['search_within'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results"><strong>'.$i.'</strong></a>';
 		} else {
 			$pages_text .= '<a href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'search_within='.$_GET['search_within'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
 		}
@@ -301,7 +301,7 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 			if ($highlight_system_courses[$tmp_course_id]['description']) {
 				echo $highlight_system_courses[$tmp_course_id]['description'];
 			} else {
-				echo '<em>'._AT('no_description').'</em>';
+				echo '<strong>'._AT('no_description').'</strong>';
 			}
 
 			echo '<br /><small class="search-info">[<strong>'._AT('Access').':</strong> ';

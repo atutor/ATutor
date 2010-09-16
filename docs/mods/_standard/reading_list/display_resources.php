@@ -101,7 +101,7 @@ $result = mysql_query($sql, $db);
 </tbody>
 <?php else: ?>
 	<tr>
-		<td colspan="2"><em><?php echo _AT('none_found'); ?></em></td>
+		<td colspan="2"><strong><?php echo _AT('none_found'); ?></strong></td>
 	</tr>
 <?php endif; ?>
 </table>

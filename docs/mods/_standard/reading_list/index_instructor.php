@@ -153,7 +153,7 @@ $result = mysql_query($sql, $db);
 </tbody>
 <?php else: ?>
 	<tr>
-		<td colspan="6"><em><?php echo _AT('none_found'); ?></em></td>
+		<td colspan="6"><strong><?php echo _AT('none_found'); ?></strong></td>
 	</tr>
 <?php endif; ?>
 </table>

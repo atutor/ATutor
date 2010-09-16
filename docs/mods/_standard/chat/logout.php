@@ -41,7 +41,7 @@ require('include/html/chat_header.inc.php');
 </tr>
 </table>
 
-<p>The <?php echo $admin['chatName']; ?> will automatically save an account for you so that the next time you login with your <em>Chat ID</em> and <em>Password</em> your <em>Preference Settings</em> will be reloaded.</p>
+<p>The <?php echo $admin['chatName']; ?> will automatically save an account for you so that the next time you login with your <strong>Chat ID</strong> and <strong>Password</strong> your <strong>Preference Settings</strong> will be reloaded.</p>
 
 <p align="center"><b>Thank you for using the <?php echo $admin['chatName']; ?>.<br />
 <a href="http://www.utoronto.ca/atrc/" target="_new" onFocus="this.className='highlight'" onBlur="this.className=''"><img src="chat/atrc.gif" border="0" /></a></p>

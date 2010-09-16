@@ -77,7 +77,7 @@ if ($row1 = mysql_fetch_row($result1)) {
 				<td align="right" valign="top"><?php
 
 					if ($row['last_post'] == '0000-00-00 00:00:00') {
-						echo '<em>'._AT('na').'</em>';
+						echo '<strong>'._AT('na').'</strong>';
 					} else {
 						echo AT_DATE(_AT('server_date_format'), $row['last_post'], AT_DATE_MYSQL_DATETIME);
 					} ?>
@@ -87,7 +87,7 @@ if ($row1 = mysql_fetch_row($result1)) {
 	}
 	echo '</tbody>';
 } else {
-	echo '<tr><td class="row1" colspan="4"><em>'._AT('no_forums').'</em></td></tr>';
+	echo '<tr><td class="row1" colspan="4"><strong>'._AT('no_forums').'</strong></td></tr>';
 }
 echo '</table>';
 

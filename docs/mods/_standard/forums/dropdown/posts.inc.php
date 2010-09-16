@@ -36,10 +36,10 @@ if ($forum_list != 0) {
 			echo '&#176; <a href="' . $_base_path.url_rewrite('mods/_standard/forums/forum/view.php?fid=' . $row['forum_id'] . htmlentities(SEP) . 'pid=' . $row['post_id']) . '" title="' . $row['subject'] . ': ' . htmlspecialchars(get_display_name($row['member_id'])) . '">' . AT_print(validate_length($row['subject'], 20, VALIDATE_LENGTH_FOR_DISPLAY), 'forums_threads.subject') . '</a><br />';
 		}
 	} else {
-		echo '<em>'._AT('none_found').'</em>';
+		echo '<strong>'._AT('none_found').'</strong>';
 	}
 } else {
-	echo '<em>'._AT('none_found').'</em>';
+	echo '<strong>'._AT('none_found').'</strong>';
 }
 
 $savant->assign('dropdown_contents', ob_get_contents());

@@ -8,6 +8,6 @@
 			if (is_numeric($this->response[0]) && $i == $this->response[0]): ?>checked="checked"<?php endif; ?>/><label for="choice_<?php echo $this->row['question_id'].'_'.$i; ?>"><?php echo AT_print($this->row['choice_'.$i], 'tests_questions.choice_'.$i); ?></label>
 	<?php endfor; ?>
 	<li style="padding: 4px">
-		<input type="radio" name="answers[<?php echo $this->row['question_id']; ?>]" value="-1" id="choice_<?php echo $this->row['question_id']; ?>'_x" <?php if (is_numeric($this->response[0]) && -1 == $this->response[0]): ?>checked="checked"<?php endif; ?> /><label for="choice_<?php echo $this->row['question_id']; ?>'_x"><em><?php echo _AT('leave_blank'); ?></em></label>
+		<input type="radio" name="answers[<?php echo $this->row['question_id']; ?>]" value="-1" id="choice_<?php echo $this->row['question_id']; ?>'_x" <?php if (is_numeric($this->response[0]) && -1 == $this->response[0]): ?>checked="checked"<?php endif; ?> /><label for="choice_<?php echo $this->row['question_id']; ?>'_x"><strong><?php echo _AT('leave_blank'); ?></strong></label>
 	</li>
 </ul>

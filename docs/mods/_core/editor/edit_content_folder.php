@@ -225,11 +225,11 @@ while($row = mysql_fetch_assoc($result))
 	$results[$i]['title'] = $row['title'];
 	
 	if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-		$results[$i]['status'] = '<em>'._AT('ongoing').'</em>';
+		$results[$i]['status'] = '<strong>'._AT('ongoing').'</strong>';
 	} else if ($row['ue'] < time() ) {
-		$results[$i]['status'] = '<em>'._AT('expired').'</em>';
+		$results[$i]['status'] = '<strong>'._AT('expired').'</strong>';
 	} else if ($row['us'] > time() ) {
-		$results[$i]['status'] = '<em>'._AT('pending').'</em>';
+		$results[$i]['status'] = '<strong>'._AT('pending').'</strong>';
 	} 
 
 	$startend_date_format=_AT('startend_date_format'); 
