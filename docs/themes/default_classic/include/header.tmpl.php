@@ -4,7 +4,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $system_courses, $_custom_css, $_base_path;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $this->lang_code; ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php echo $this->lang_code; ?>">
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
@@ -38,28 +38,36 @@ global $system_courses, $_custom_css, $_base_path;
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>">
-
-<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
-<!-- the bread crumbs -->
-<div id="breadcrumbs">
-	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;">
-	<?php if ($this->sequence_links['resume']): ?>
-			<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="." title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo $this->sequence_links['resume']['title']; ?></a> - 
-	<?php endif; ?>
-	<?php foreach ($this->path as $page): ?>
-		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> &raquo; 
-	<?php endforeach; ?> <?php echo $this->page_title; ?>
-
-<?php } ?>
-<div id="member-links" style="float: right;">
+<div class="bypass">
 	<!-- hidden direct link to content -->
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" style="border: 0px;" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
-
+</div>
+<div id="member-links">
 	<?php if ($_SESSION['is_super_admin']): ?>
 		<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
 	<?php endif; ?>
-
+	<div class="logout">
 	<?php if ($_SESSION['valid_user']): ?>
+
+	<?php if (isset($this->course_id) && ($this->course_id >= 0)): ?>
+		<!-- start the jump menu -->
+		<?php if (empty($_GET)): ?>
+			<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
+		<?php else: ?>
+			<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
+		<?php endif; ?>
+		<label for="jumpmenu" accesskey="j"></label>
+			<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
+				<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
+				<optgroup label="<?php echo _AT('courses_below'); ?>">
+					<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
+						<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
+					<?php endforeach; ?>
+				</optgroup>
+			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
+		<!-- /end the jump menu -->
+	<?php endif; ?>
+
 <?php     if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
 		    <a class="pref_wiz_launcher"><img border="0" alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" src="<?php echo $this->base_href; ?>images/wand.png" /></a> |
 		    <?php } ?> 
@@ -80,64 +88,50 @@ global $system_courses, $_custom_css, $_base_path;
 		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	<?php endif; ?>
-</div></div>
-<div style="float: right;">
-	<?php if (isset($this->course_id) && ($this->course_id >= 0)): ?>
-		<!-- start the jump menu -->
-		<?php if (empty($_GET)): ?>
-			<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
-		<?php else: ?>
-			<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
-		<?php endif; ?>
-		<label for="jumpmenu" accesskey="j"></label>
-			<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
-				<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
-				<optgroup label="<?php echo _AT('courses_below'); ?>">
-					<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
-						<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
-					<?php endforeach; ?>
-				</optgroup>
-			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
-		<!-- /end the jump menu -->
-	<?php endif; ?>
-</div>
+	</div><!-- end logout div -->
 
+<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
+<!-- the bread crumbs -->
+<div id="breadcrumbs">
+	<?php foreach ($this->path as $page): ?>
+		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> &raquo; 
+	<?php endforeach; ?> <?php echo $this->page_title; ?>
 
-<div>
-  	<div class="header">
-	<div>
-	<?php if ($_SESSION['valid_user']) : 
-		echo '<span style="font-size:small;font-weight:bold;padding-left:5px;">'.stripslashes(SITE_NAME).'</span>'; 
-	endif; ?>
+	<?php } ?>
+  
+   </div><!-- end member-links div -->
+</div><!-- end bredcrumbs div -->
+<div class="header">
+    <?php if ($_SESSION['valid_user']) : 
+	    echo '<span style="font-size:small;font-weight:bold;padding-left:5px;">'.stripslashes(SITE_NAME).'</span>'; 
+    endif; ?>
+    <h1 class="section-title">
 
-	<h1 class="section-title">
-
-		<!-- section title -->
-		<?php echo $this->section_title; ?>
-		<?php if (($this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
-			- <a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
-		<?php endif; ?></h1>
-	</div>
+	    <!-- section title -->
+	    <?php echo $this->section_title; ?>
+	    <?php if (($this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
+		    - <a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+	    <?php endif; ?></h1>
 
 </div>
 
-	<div id="topnavlistcontainer">
-	<!-- the main navigation. in our case, tabs -->
-		<ul id="topnavlist">
-			<?php foreach ($this->top_level_pages as $page): ?>
-				<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-				<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-				<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-				<?php if ($page['url'] == $this->current_top_level_page): ?>
-					<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
-				<?php else: ?>
-					<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
-				<?php endif; ?>
-				<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-			<?php endforeach; ?>
-		</ul>
-	</div>
+<div id="topnavlistcontainer">
+<!-- the main navigation. in our case, tabs -->
+	<ul id="topnavlist">
+		<?php foreach ($this->top_level_pages as $page): ?>
+			<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+			<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+			<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+			<?php if ($page['url'] == $this->current_top_level_page): ?>
+				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
+			<?php else: ?>
+				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
+			<?php endif; ?>
+			<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+		<?php endforeach; ?>
+	</ul>
 </div>
+
 
 <!-- the sub navigation -->
 <div style="text-align: right; padding-top: 5px; padding-right: 5px; float:right"><small><?php echo $this->current_date; ?></small></div>

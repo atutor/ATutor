@@ -48,14 +48,7 @@ div.menuedit{
 
 }
 div#breadcrumbs{
-
       float:left;
-      background:#ffffff;
-      color:black;
-
-}
-div#breadcrumbs a{
-      color:black;
 }
 ul.current_list li{
       width:90%;
@@ -79,7 +72,7 @@ div#menutoggle{
 }
 
 div#member-links{
-      background-color:black;
+      background-color: #788CB3;
 }
 #side-menu h4{
       width:99%;
@@ -87,4 +80,8 @@ div#member-links{
 div#header{
 
 background-position:right top;
+}
+.section-title{
+float:left;
+margin-left:250px;
 }
