@@ -9,63 +9,63 @@ body {
 }
 
 p {
-    margin: 0.5em 0em 1em 0em;
-    text-align: justify;
-    line-height: 150%;
+	margin: 0.5em 0em 1em 0em;
+	text-align: justify;
+	line-height: 150%;
 	font-size: 0.9em;
 }
 
 p a {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
 p a:visited {
 	color: Purple;
-    background-color: transparent;
+	background-color: transparent;
 }
 
 p a:active {
 	color: Red;
-    background-color: transparent;
+	background-color: transparent;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: Black;
-    clear: left;
-clear:right;
-    font: 100% Verdana, Helvetica, Arial, sans-serif;
-    margin: 0;
-    padding-top: 0.5em;
-    /*border-bottom: 1px solid #57945A;*/
+	color: Black;
+	clear: left;
+	clear:right;
+	font: 100% Verdana, Helvetica, Arial, sans-serif;
+	margin: 0;
+	padding-top: 0.5em;
+	/*border-bottom: 1px solid #57945A;*/
 }
 
 h1 {
-    font-size: 160%;
+	font-size: 160%;
 }
 
 h2 {
-    font-size: 150%;
+	font-size: 150%;
 }
 
 h3 {
-    font-size: 130%;
+	font-size: 130%;
 }
 
 h4 {
-    font-size: 120%;
+	font-size: 120%;
 }
 
 h5 {
-    font-size: 100%;
+	font-size: 100%;
 }
 
 textarea {
-    border: 1px solid #57945A;  
-    color: Black;
-    background-color: white;
-    width: 88%;
-    padding: 0.1em;
-}
+	border: 1px solid #57945A;  
+	color: Black;
+	background-color: white;
+	width: 88%;
+	padding: 0.1em;
+    }
 
 /*  Table of content attributes*/
 p.toc{
@@ -216,7 +216,7 @@ hr {
 
 select.dropdown {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
-    background-color: #F1F3F1;
+	background-color: #F1F3F1;
 }                                                               
 
 .highlight, a.highlight {
@@ -438,11 +438,11 @@ a#back-to {
 
 div#breadcrumbs {
     /* The path bar, including breadcrumbs and add to favorites */
-    border-bottom-color: #57945A;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    padding-left: 3px;
-    text-transform: lowercase;
+	border-bottom-color: #57945A;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	padding-left: 3px;
+	text-transform: lowercase;
 	font-size:0.85em;
 	padding-bottom: 1px;
 	padding-top: 1px;
@@ -865,12 +865,12 @@ form {
 	display:inline;
 }
 #jump-button {
-    padding-left: 9px;
+	padding-left: 9px;
 	padding-right: 2px;
 	background: White url('images/linkTransparent.gif') 3px 2px no-repeat;
 	border: 1px solid #57945A;
 	cursor: pointer;
-    text-transform: lowercase;
+	text-transform: lowercase;
 	font-size:0.85em;
 }
 #jumpmenu {
@@ -883,15 +883,15 @@ optgroup {
 
 /* packing */
 div.paging {
-   width: 100%;
-   text-align: center;
-   margin: 0.5em auto;
+	width: 100%;
+	text-align: center;
+	margin: 0.5em auto;
 }
 div.paging ul {
-   list-style: none;
-   display: inline;
-   padding: 0px;
-   border: 1px solid #000;
+	list-style: none;
+	display: inline;
+	padding: 0px;
+	border: 1px solid #000;
 }
 div.paging li { 
 	display: inline; 
@@ -910,55 +910,55 @@ div.paging li a {
 }
 
 div.paging li a:hover, div.paging li a.current {
-   background-color: #efefef;
-   border-left: 1px solid #000;
-   border-right: 1px solid #000;
+	background-color: #efefef;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
 }
 
 /*plone*/
 
 div.top {
     /* Top space */
-    background: transparent;
-    margin: 0;
-    padding: 0;
+	background: transparent;
+	margin: 0;
+	padding: 0;
 	padding-top:9px;
 }
 div.tabs {
     /* Navigational Plone Tabs(tm), implemented by customizing the a tag - they are surprisingly elegant. The power of CSS runs strong in these :) */
-    background: transparent;
-    border-collapse: collapse;
-    border-bottom: 1px solid #57945A;
-    padding: 0.5em 0em 0em 2em;
-    white-space: nowrap;
+	background: transparent;
+	border-collapse: collapse;
+	border-bottom: 1px solid #57945A;
+	padding: 0.5em 0em 0em 2em;
+	white-space: nowrap;
 	font-size:0.85em;
 }
 
 div.tabs a {
     /* The normal, unselected tabs. They are all links */
-    background: transparent;
-    border-color: #57945A;
-    border-width: 1px; 
-    border-style: solid solid none solid;
-    color: #4F7643;
-    height: 1.2em;
-    margin-right: 0.5em;
-    padding: 0em 2em 0em;
-    text-transform: lowercase;
+	background: transparent;
+	border-color: #57945A;
+	border-width: 1px; 
+	border-style: solid solid none solid;
+	color: #4F7643;
+	height: 1.2em;
+	margin-right: 0.5em;
+	padding: 0em 2em 0em;
+	text-transform: lowercase;
 }
 
 div.tabs a.selected {
     /* The selected tab. There's only one of this */
-    background: #DEECE2;
-    border-bottom: #DEECE2 1px solid;
-    color: #4F7643;
-    font-weight: normal;
+	background: #DEECE2;
+	border-bottom: #DEECE2 1px solid;
+	color: #4F7643;
+	font-weight: normal;
 }
 
 div.tabs a:hover, div.tabs a.active {
-    background: #DEECE2;
-    border-bottom: 1px solid #DEECE2;
-    color: #4F7643;
+	background: #DEECE2;
+	border-bottom: 1px solid #DEECE2;
+	color: #4F7643;
 }
 
 
@@ -967,7 +967,7 @@ h4.box {
 	color: black;
 	border: 1px solid #57945A;
 	padding: 2px;
-    text-transform: lowercase;
+      text-transform: lowercase;
 	font-size: 0.85em;
 }
 
@@ -985,15 +985,15 @@ div.box {
 	float:right;
 }
 h5.box { 
-    background: #DEECE2;
-    border: 1px solid #57945A;
-    border-style: solid solid none solid;
-    color: Black;
-    padding: 0em 1em 0em 1em;
-    text-transform: lowercase;
-    display: inline;
+	background: #DEECE2;
+	border: 1px solid #57945A;
+	border-style: solid solid none solid;
+	color: Black;
+	padding: 0em 1em 0em 1em;
+	text-transform: lowercase;
+	display: inline;
 	font-size: 0.85em;
-    height: 1em;
+	height: 1em;
 }
 
 div.box a:link {
@@ -1015,7 +1015,7 @@ div.box a:hover {
 
 div.box .content {
     padding: 1em;
-	font-size: 0.85em;
+    font-size: 0.85em;
 }
 
 div.box a.close {
@@ -1141,8 +1141,8 @@ fieldset {
 
 a#guide {
 	background-image: url('../default/images/help.png'); 
-background-repeat: no-repeat; 
-background-position: 2px 2px;
+	background-repeat: no-repeat; 
+	background-position: 2px 2px;
 	padding: 3px 10px 5px 30px;
 	text-decoration:none;
 	font-size:0.85em;
@@ -1156,7 +1156,7 @@ div#guide_box{
 	border-radius: 0em 0em .5em .5em;;
 	-moz-border-radius: 0em 0em .5em .5em;
 	-moz-box-shadow:.1em .1em .2em #999999;
-    box-shadow: .1em .1em .2em #999999;
+	box-shadow: .1em .1em .2em #999999;
 	float:right;
 	margin-right:2em;
 	padding-left:.1em;
@@ -1199,12 +1199,12 @@ div.column h3 {
 }
 
 div.insidecol {
-   min-height: 170px;
-   height: 170px;
-   padding:5px;
+	min-height: 170px;
+	height: 170px;
+	padding:5px;
 }
 div[class] .insidecol {
-   height: auto;
+	height: auto;
 }
 
 /* index page */
@@ -1303,18 +1303,18 @@ dl#public-profile dd {
 	width: 99%;
 }
 #contentcolumn {
-    padding-left: 5px;
-    overflow: auto;
+	padding-left: 5px;
+	overflow: auto;
 }
 #contentcolumn_shiftright {
 	margin-left: 210px;
 	padding-right: 5px;
 }
 #rightcolumn{
-    float: right;
-    overflow: hidden;
-    margin: -5px 0 0;
-}
+	float: right;
+	overflow: hidden;
+	margin: -5px 0 0;
+}	
 #footer{
 	clear: left;
 	width: 100%;

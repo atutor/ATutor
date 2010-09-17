@@ -1365,10 +1365,14 @@ dl#public-profile dd {
     overflow: auto;
 }
 
+#contentcolumn_shiftright {
+	margin-left: 210px;
+	padding-right: 5px;
+}
 #rightcolumn{
 	float: right;
 	overflow: hidden;
-    margin: -5px 0 0;
+	margin: -5px 0 0;
 }
 
 #footer{
@@ -1417,10 +1421,10 @@ ul#topnavlist {
 }
 
 ul#topnavlist li {
-	white-space: nowrap;
+
 	list-style: none;
 	display: inline-block;
-	height:1.3em;
+	height:auto;
 	margin-top:.1em;
 	clear:both;
 
@@ -1466,120 +1470,119 @@ ul#topnavlist li a.selected {
 #toc .h6		{ padding:0 0 0 60px; }
 
 #side-menu{
-     overflow:hidden; 
-     width:20em;
-     padding-right:.3em;
-     padding-bottom:.3em; 
+	  overflow:hidden; 
+	  width:20em;
+	  padding-right:.3em;
+	  padding-bottom:.3em; 
 }
 
 /* jQuery tooltip styles */
 #tooltip{
-	position:absolute;
-	z-index:3000;
-	border:3px solid #111;
-	background-color:#eeeeee;
-	padding:5px;
+	  position:absolute;
+	  z-index:3000;
+	  border:3px solid #111;
+	  background-color:#eeeeee;
+	  padding:5px;
 
 }
 #tooltip h3,#tooltip div{
-	margin:0;
+	  margin:0;
 }
 /* style for home page modules "detail view" */
 
 div.home_box {
-	width: 29em;
-	margin:0;
-	padding-top: 15px;
-	margin-left:1em;
-	float:left;
+	  width: 29em;
+	  margin:0;
+	  padding-top: 15px;
+	  margin-left:1em;
+	  float:left;
 }
 
 .outside_box{
-
-	background: #DEE7EC;
-
-	height:9.8em;
-padding:.4em;
-	-moz-border-radius:.3em .3em .3em .3em;
-	border-radius: .3em .3em .3em .3em;
-
+	  background: #DEE7EC;
+	  height:9.8em;
+	  padding:.4em;
+	  -moz-border-radius:.3em .3em .3em .3em;
+	  border-radius: .3em .3em .3em .3em;
 }
 
 
 .inside_box{
-	width:100%;
-	padding:.1em;
-	margin:auto;
-	height:52%;
-	-moz-border-radius:.3em .3em .3em .3em;
-	border-radius: .3em .3em .3em .3em;
-	margin-bottom:.2em;
-	background:#ffffff;
+	  width:100%;
+	  padding:.1em;
+	  margin:auto;
+	  height:52%;
+	  -moz-border-radius:.3em .3em .3em .3em;
+	  border-radius: .3em .3em .3em .3em;
+	  margin-bottom:.2em;
+	  background:#ffffff;
 }
 .details_or{
-	width:28.8em;
-	height:9.8em;
-	margin:0;
+	  width:28.8em;
+	  height:9.8em;
+	  margin:0;
 
 }
 .details_ol{
-	height:9.8em;
-	margin:0px;
-	width:.45em;
-	background:#ffffff;
+	  height:9.8em;
+	  margin:0px;
+	  width:.45em;
+	  background:#ffffff;
 }
 .details_ir{
-	width:.5em;
-	height:100%;
-	float:right;
-	background:#ffffff;
+	  width:.5em;
+	  height:100%;
+	  float:right;
+	  background:#ffffff;
 }
 .details_il{
-	height:100%;
-	float:left;
+	  height:100%;
+	  float:left;
 }
 .home-title{
-	font-size:12pt;
+	  font-size:12pt;
 }
 .buttonbox{
-	float:right;
+	  float:right;
 }
 .details_text{
-	margin-left:1em;
+	  margin-left:1em;
 }
 
 /* 1pxgs current box on My Start */
 .current_box{
-    float:left;
-    margin-left:1em;
-    width:30%; 
-    padding:.5em;
-    border: 1px solid #cccccc;
+	  float:left;
+	  clear:right;
+	  margin-left:1em;
+	  width:33%; 
+	  padding:.5em;
+	  border: 1px solid #cccccc;
 }
 
 ul.current_list{
-      line-height:2em; 
-      list-style-type:none;
-      margin-left:-3em;
+	  line-height:2em; 
+	  list-style-type:none;
+	  margin-left:-3em;
 }
 .current_list img{
-      vertical-align:middle;
+	  vertical-align:middle;
 }
 
 div#menutoggle{
-    text-align: right; 
-    padding-bottom: 10px; 
-    padding-right: 10px; 
-    float: right; 
-    margin-top: 10px; 
-    padding-right: 5px; 
-    font-size:0.95em;
+	  text-align: right; 
+	  padding-bottom: 10px; 
+	  padding-right: 10px; 
+	  float: right; 
+	  margin-top: 10px; 
+	  padding-right: 5px; 
+	  font-size:0.95em;
 }
 #my_courses_container{
-	  width:58%; 
+	  width:55%; 
 	  margin-left:1em;
 	  border:none;
 	  float:left;
+	  min-width:30em;
 	  border-radius: .5em .5em .5em .5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 	-moz-box-shadow:.2em .2em .2em #999999;
@@ -1623,8 +1626,8 @@ table.etabbed-table	{
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: 0em .2em 0em .2em;
 	-moz-box-shadow:.1em .1em .1em #999999;
-    box-shadow: .1em .1em .1em #999999;
-	}
+	box-shadow: .1em .1em .1em #999999;
+}
 	
 .prefs_buttontab:hover, .prefs_tab:hover {
   	background-color: #eeeeee;
@@ -1644,7 +1647,7 @@ table.etabbed-table	{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .0em .2em #999999;
+	box-shadow: .2em .0em .2em #999999;
 }
 #top-links-jump{
 	width:50%;
@@ -1684,16 +1687,16 @@ ul#content-tool-links img{
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 .clickable {
-    cursor: pointer;    
+	cursor: pointer;    
 }
 .nowrap {
-    white-space: nowrap;
+	white-space: nowrap;
 }
 .flowplayerholder{
-clear:right;
+	clear:right;
 }
 
 /* Content editor tabs */
@@ -1787,34 +1790,34 @@ div.pageinator_box{
 	-moz-border-radius: .3em .3em 0em 0em;
 }
 #previewText{
-    font-family: monospace;
-    border: 2px solid rgb(0, 0, 0);
-    padding: 2em;
-    width: 80%;
-    color: rgb(255, 255, 255);
-    background-color: rgb(0, 0, 0);
+	font-family: monospace;
+	border: 2px solid rgb(0, 0, 0);
+	padding: 2em;
+	width: 80%;
+	color: rgb(255, 255, 255);
+	background-color: rgb(0, 0, 0);
 }
 #previewArea{
-    padding: 0em;
-    border-bottom-width: 0px;
-    margin-left: auto;
-    margin-right: auto;
-    font-weight: normal;
-    width: 70%;
-    float:left;
-    clear:right;
+	padding: 0em;
+	border-bottom-width: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	font-weight: normal;
+	width: 70%;
+	float:left;
+	clear:right;
 }
 #display-settings-preview{
-    width:70%;
-    float:left;
-    height:20em;   
+	width:70%;
+	float:left;
+	height:20em;   
 }
 #feedback{
-    width: 90%;
+	width: 90%;
 }
 #defaultfontsize-wrapper{
-    width:25%;
-    float:left;
+	width:25%;
+	float:left;
 }
 
 
@@ -1927,10 +1930,10 @@ div.social-wrapper{
 	float: left;
 }
 .del-content-icon{
-	  border:0;
+	border:0;
 }
 #logoutbar{
-float:right;
-text-align:right;
+	float:right;
+	text-align:right;
 
 }
