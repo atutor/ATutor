@@ -447,7 +447,7 @@ div#breadcrumbs a:focus, div#member-links a:focus {
 }
 
 div#member-links {
-	margin-top:3px;
+	margin-top:-2em;
 	padding-right:5px;
 }
 
@@ -699,10 +699,9 @@ img.headicon {
 .header{
 background-image: url('images/pub_default.jpg'); 
 background-repeat: no-repeat; 
-background-position:left;
-height:60px; 
-width:250px; 
-vertical-align:top; 
+background-position:left top;
+height:8em;
+margin-bottom:2em;
 text-align:right;
 }
 /* feedback/errors */
@@ -1154,6 +1153,7 @@ background-color:#788CB3;
 /* MAIN TABS */
 div#topnavlistcontainer {
 	border-bottom: 1px solid #9DAB9A;
+margin-top:-5em;
 }
 ul#topnavlist {
 	padding: 0px;

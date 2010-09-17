@@ -34,3 +34,12 @@ white-space:normal;
 p{
     white-space:normal;
 }
+
+.header{
+background-image: url('images/pub_default.jpg'); 
+background-repeat: no-repeat; 
+background-position:left top;
+height:8em;
+margin-bottom:2em;
+text-align:right;
+}

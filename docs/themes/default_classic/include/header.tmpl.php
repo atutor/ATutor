@@ -38,6 +38,19 @@ global $system_courses, $_custom_css, $_base_path;
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php echo $this->onload; ?>">
+
+<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
+<!-- the bread crumbs -->
+<div id="breadcrumbs">
+	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;">
+	<?php if ($this->sequence_links['resume']): ?>
+			<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="." title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo $this->sequence_links['resume']['title']; ?></a> - 
+	<?php endif; ?>
+	<?php foreach ($this->path as $page): ?>
+		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> &raquo; 
+	<?php endforeach; ?> <?php echo $this->page_title; ?>
+
+<?php } ?>
 <div id="member-links" style="float: right;">
 	<!-- hidden direct link to content -->
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" style="border: 0px;" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
@@ -67,7 +80,7 @@ global $system_courses, $_custom_css, $_base_path;
 		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	<?php endif; ?>
-</div>
+</div></div>
 <div style="float: right;">
 	<?php if (isset($this->course_id) && ($this->course_id >= 0)): ?>
 		<!-- start the jump menu -->
@@ -89,21 +102,10 @@ global $system_courses, $_custom_css, $_base_path;
 	<?php endif; ?>
 </div>
 
-<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
-<!-- the bread crumbs -->
-<div id="breadcrumbs" style="border-bottom:1pt solid #152065;">
-	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;">
-	<?php if ($this->sequence_links['resume']): ?>
-			<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="." title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo $this->sequence_links['resume']['title']; ?></a> - 
-	<?php endif; ?>
-	<?php foreach ($this->path as $page): ?>
-		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> &raquo; 
-	<?php endforeach; ?> <?php echo $this->page_title; ?>
-</div>
-<?php } ?>
 
 <div>
-	<div style="float:right;text-align:right;padding-top:5px;">
+  	<div class="header">
+	<div>
 	<?php if ($_SESSION['valid_user']) : 
 		echo '<span style="font-size:small;font-weight:bold;padding-left:5px;">'.stripslashes(SITE_NAME).'</span>'; 
 	endif; ?>
@@ -117,7 +119,7 @@ global $system_courses, $_custom_css, $_base_path;
 		<?php endif; ?></h1>
 	</div>
 
-	<div class="header">&nbsp;</div>
+</div>
 
 	<div id="topnavlistcontainer">
 	<!-- the main navigation. in our case, tabs -->
