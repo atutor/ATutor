@@ -161,6 +161,7 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 		  // check if the same theme exists in "themes" folder. If exists, it has been installed
 		  if (!$msg->containsErrors())
 		  {
+		  debug($local_theme_folder. $this_theme_folder);
 		  	if (is_dir($local_theme_folder. $this_theme_folder))
 		  		$msg->addError('ALREADY_INSTALLED');
 		  }

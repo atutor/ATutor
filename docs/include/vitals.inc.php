@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -240,15 +240,15 @@ if ($_config['time_zone']) {
 
 	//if user has requested theme change, make the change here
 	if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
-	    if (is_mobile_device()) {
-	    	$_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['mobile_theme']);
-	    } else {
-			$_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
-	    }
+	if (is_mobile_device())
+	    	
+	    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
+	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
 	} else if ($_POST['set_default']) {
-    	$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
+	    $_SESSION['prefs']['PREF_THEME'] = 'default';
+	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
 	}
-	
+debug($_SESSION['prefs']);	
 	// if the request is from a mobile device, same original session var PREF_THEME into session var PREF_THEME_ORIG
 	// and assign PREF_MOBILE_THEME TO PREF_THEME so that elsewhere PREF_THEME is used doesn't not need to be changed.
 	// At save_prefs(), switch back the theme session vars: PREF_THEME => PREF_MOBILE_THEME, PREF_THEME_ORIG => PREF_THEME
@@ -257,9 +257,13 @@ if ($_config['time_zone']) {
 			$_SESSION['prefs']['PREF_MOBILE_THEME'] = get_system_default_theme();
 		}
 		
-		$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
+//		if ($_SESSION['prefs']['PREF_THEME'] <> $_SESSION['prefs']['PREF_MOBILE_THEME']) {
+//			$_SESSION['prefs']['PREF_THEME_ORIG'] = $_SESSION['prefs']['PREF_THEME'];
+//			$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
+//		}
 	}
-	
+	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
+	// When more mobile themes come in, this should be changed.
 	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 		if ($_SESSION['course_id'] == -1) {
 			if ($_SESSION['prefs']['PREF_THEME'] == '' || !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
@@ -641,9 +645,9 @@ function get_forum_name($fid){
 // takes the array of valid prefs and assigns them to the current session 
 // @params: prefs - an array of preferences
 // @params: optional. Values are 0 or 1. Default value is 0
-//          when value == 1, assign PREF_MOBILE_THEME to PREF_THEME if the request is from a mobile device
-//                  the value 1 is used when the prefs values are set for display
-//                  if this function is used as a front shot for save_prefs(), this value should use default 0
+//          when 1, assign PREF_MOBILE_THEME to PREF_THEME if the request is from a mobile device
+//                  this value is to set when the prefs values are set for display
+//                  if this function is used as a front shot for save_prefs(), the value should be 0
 function assign_session_prefs($prefs, $switch_mobile_theme = 0) {
 	if (is_array($prefs)) {
 		foreach($prefs as $pref_name => $value) {
@@ -659,6 +663,11 @@ function save_prefs( ) {
 	global $db, $addslashes;
 
 	if ($_SESSION['valid_user']) {
+//		if (is_mobile_device()) {
+//			$_SESSION['prefs']['PREF_MOBILE_THEME'] = $_SESSION['prefs']['PREF_THEME'];
+//			$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_THEME_ORIG'];
+//		}
+//		unset($_SESSION['prefs']['PREF_THEME_ORIG']);
 		$data	= $addslashes(serialize($_SESSION['prefs']));
 		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'", creation_date=creation_date, last_login=last_login WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql, $db); 

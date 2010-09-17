@@ -117,7 +117,7 @@ global $system_courses, $_custom_css, $_base_path;
 		<?php endif; ?></h1>
 	</div>
 
-	<div style="background-image: url('<?php echo AT_HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position:left;height:60px; width:250px; vertical-align:top; text-align:right;">&nbsp;</div>
+	<div class="header">&nbsp;</div>
 
 	<div id="topnavlistcontainer">
 	<!-- the main navigation. in our case, tabs -->

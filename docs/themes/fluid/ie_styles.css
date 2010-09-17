@@ -52,3 +52,7 @@ div#topnavlistcontainer {
 .outside_box{
 	height:8.8em;
 }
+ul.current_list{
+float:right;
+width:99%;
+}

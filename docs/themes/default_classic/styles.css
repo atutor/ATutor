@@ -696,8 +696,15 @@ img.headicon {
 	vertical-align:top;
 	border:1px solid white;
 }
-
-
+.header{
+background-image: url('images/pub_default.jpg'); 
+background-repeat: no-repeat; 
+background-position:left;
+height:60px; 
+width:250px; 
+vertical-align:top; 
+text-align:right;
+}
 /* feedback/errors */
 div#error {
 	width: 50%;
