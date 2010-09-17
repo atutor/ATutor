@@ -556,7 +556,7 @@ div#toctoggle {
 h1#section-title {
 	float: left;
 	margin-left:1em;
-margin-top:-1.2em;
+margin-top:-.5em;
 	
 }
 
@@ -566,8 +566,7 @@ div#bypass-links{
 
 div#top-links {
 	float:right;
-	clear:right;
-	height:1.7em;
+	clear:both;
 	padding-right: 5px;
 	margin-right:20px;
 	margin-top:0em;
@@ -970,11 +969,8 @@ div.paging li a:hover, div.paging li a.current {
 
 #header{
 	/* background-image: url('images/pencil_top_ds.png'); */
-
 	background-position: 99% 99%;
 	background-repeat: no-repeat;
-	height : 5em;
-	margin-bottom:-.1em;
 }
 
 #header a{
@@ -1492,6 +1488,7 @@ div#topnavlistcontainer {
 	margin-top: .1em;
 	margin-left:1em;
 	border-bottom:1px solid #cccccc;
+clear:left;
 }
 
 ul#topnavlist {
@@ -1504,16 +1501,16 @@ ul#topnavlist {
 }
 
 ul#topnavlist li {
-	white-space: nowrap;
+
 	list-style: none;
 	display: inline-block;
-	height:1.3em;
+	height:auto;
 	margin-top:.1em;
-	clear:both;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	-moz-box-shadow:.1em .0em .1em #999999;
 	box-shadow: .1em .0em .1em #999999;
+clear:both;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -2066,6 +2063,7 @@ ul.current_list{
       height:2em;
       text-align:right;
       padding-right:1em;
+clear:both;
 }
 
 .select {
@@ -2272,8 +2270,7 @@ div.pageinator_box{
 #previewText{
     font-family: monospace;
     border: 2px solid rgb(0, 0, 0);
-    padding: 2em;
-    width: 80%;
+    padding:1em;
     color: rgb(255, 255, 255);
     background-color: rgb(0, 0, 0);
 }
@@ -2283,14 +2280,14 @@ div.pageinator_box{
     margin-left: auto;
     margin-right: auto;
     font-weight: normal;
-    width: 70%;
     float:left;
     clear:right;
+    line-height:1.5;
+
 }
 #display-settings-preview{
-    width:70%;
+    width:60%;
     float:left;
-    height:20em;   
 }
 #feedback{
     width: 90%;
@@ -2448,4 +2445,7 @@ margin-left:2em;
 }
 .del-content-icon{
 	border:0;
+}
+div.bypass{
+height:1px;
 }
