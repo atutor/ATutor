@@ -513,12 +513,12 @@ h1#section-title {
 }
 
 div#top-links {
-	position: relative;
 	padding-right: 5px;
 	line-height: 170%;
 	margin-top: 3px;
-	font-size:0.85em;;
-    text-transform: lowercase;
+	font-size:0.85em;
+	text-transform: lowercase;
+
 }
 
 a#editor-link {
@@ -1347,22 +1347,21 @@ div#topnavlistcontainer {
     border-collapse: collapse;
     border-bottom: 1px solid #57945A;
     padding: 0.5em 0em 0em 2em;
-    white-space: nowrap;
-	font-size:0.85em;
+    font-size:0.85em;
+    clear:left;
 }
 ul#topnavlist {
 	padding: 0px;
 	margin-right: auto;
 	margin-left: auto;
 	margin-bottom: 3px;
-	white-space: nowrap;
 	margin-top: 0px;
 	margin-bottom:0px;
 }
 
 ul#topnavlist li {
 	list-style: none;
-	display: inline;
+	display: inline-block;
 	margin: 0px;
 }
 
@@ -1586,11 +1585,8 @@ table.etabbed-table	{
 }
 
 #top-links-jump{
-	width:48em;
 	float:right;
 	white-space:nowrap;
-	margin-top:-1.5em;
-
 	padding-right:.5em;
 }
 
@@ -1893,4 +1889,7 @@ float:right;
 float:right;
 text-align:right;
 
+}
+div.bypass{
+height:1px;
 }

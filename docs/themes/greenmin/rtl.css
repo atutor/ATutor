@@ -69,3 +69,9 @@ float:right;
 #breadcrumbs{
 width:100%;
 }
+div#top-links {
+	clear:left;
+}
+#section-title{
+float:right;
+}

@@ -566,15 +566,16 @@ div#toctoggle {
 h1#section-title {
 	float: left;
 	margin-left: 5px;
+
 }
 
 div#top-links {
-	position: relative;
 	padding-right: 5px;
 	line-height: 170%;
 	margin-top: 3px;
-	font-size:0.85em;;
+	font-size:0.85em;
     text-transform: lowercase;
+
 }
 
 a#editor-link {
@@ -1407,15 +1408,14 @@ div#topnavlistcontainer {
     border-collapse: collapse;
     border-bottom: 1px solid #8CACBB;
     padding: 0.5em 0em 0em 2em;
-    white-space: nowrap;
-	font-size:0.85em;
+    font-size:0.85em;
+    clear:left;
 }
 ul#topnavlist {
 	padding: 0px;
 	margin-right: auto;
 	margin-left: auto;
 	margin-bottom: 3px;
-	white-space: nowrap;
 	margin-top: 0px;
 	margin-bottom:0px;
 }
@@ -1650,12 +1650,10 @@ table.etabbed-table	{
 	box-shadow: .2em .0em .2em #999999;
 }
 #top-links-jump{
-	width:50%;
 	float:right;
 	white-space:nowrap;
-	margin-top:-1.5em;
-
 	padding-right:.5em;
+
 }
 
 #jumpmenu{
@@ -1935,5 +1933,7 @@ div.social-wrapper{
 #logoutbar{
 	float:right;
 	text-align:right;
-
+}
+div.bypass{
+height:1px;
 }

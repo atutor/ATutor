@@ -63,9 +63,21 @@ width:55%;
 }
 
 #content-tool-links{
-float:right;
+  float:right;
 }
 
 #breadcrumbs{
-width:100%;
+  width:100%;
+}
+h1#section-title{
+  float:right;
+
+}
+
+#topnavlist{
+  clear:both;
+}
+
+#top-links-jump{
+  float:left;
 }
