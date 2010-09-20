@@ -75,3 +75,26 @@ div#top-links {
 #section-title{
 float:right;
 }
+
+
+.admin_container{
+float:left;
+white-space:normal;
+}
+.page-title{
+
+margin-top:1em;
+}
+
+.top-tool{
+width:95%;
+}
+.child-top-tool li{
+white-space:normal;
+overflow:visible;
+}
+
+#contentcolumn {
+white-space:normal;
+	overflow:visible;
+}
