@@ -176,7 +176,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<!--  this should be a button on its own  -->
 		<?php if ($this->current_sub_level_page): ?>
 		<div id="topnavlistcontainer" role="navigation" aria-live="assertive" >
-		<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1">Navigation</a>
+		<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 			<ul id="topnavlist"  class="fl-list-menu">
 				<?php $accesscounter = 0; //initialize ?>
 				<?php foreach ($this->top_level_pages as $page): ?>
