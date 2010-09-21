@@ -112,6 +112,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php if ($this->mobile_device_type == IPOD_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iphone.css" type="text/css"/>
 	<?php endif; ?>
+	<!-- Armin 25.08.2010: Detect BLACKBERRY_DEVICE and use blackberry.css-->
+	<?php if ($this->mobile_device_type == BLACKBERRY_DEVICE): ?>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/blackberry.css" type="text/css"/>
+	<?php endif; ?>
 <?php endif; ?>
 
 	<!--[if IE]>
