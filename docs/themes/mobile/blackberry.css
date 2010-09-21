@@ -161,7 +161,9 @@ div#content-link-container{
 	display: inline;
 
 }
-
+#home-guide a{
+	color:#6699ff;
+}
 /* main body attributes */
 p {
     text-align: left;
@@ -2248,10 +2250,14 @@ margin-left:2em;}
 
 /* Overrides for external stylesheets */
 
-.fl-tabs li a { -moz-background-clip:none;
+.fl-tabs li a {
+	color:#6699ff;
+ -moz-background-clip:none;
 -moz-background-clip: none;
 -moz-background-origin: none;
 border-style:none;}
-
+#top-links .fl-tabs li a{
+	color:#6699ff;
+}
 
 .recent_item {padding-bottom:1em;}
