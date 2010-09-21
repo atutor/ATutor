@@ -199,13 +199,13 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 	<ul class="fl-tabs" id="home-guide">
 
-		<li><a href="<?php echo $this->base_path; ?>users/index.php">Home</a></li>
+		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li>
 		<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
 		<li>
 	    	<div id="guide_box">
 				<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
       		
-			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new">Guide</a> 
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo _AT("guide"); ?></a> 
       		</div>
 		</li>
 		<?php endif; ?>
@@ -218,7 +218,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
 		<div id="content-link-container" role="navigation" aria-live="assertive">
-		<a id="content_link" href="javascript:void(0);">Content Navigation</a>
+		<a id="content_link" href="javascript:void(0);"><?php echo _AT("content_navigation"); ?></a>
 		<div id="content" style=" display: none; position: relative; z-index: 1;">
 		<?php $contentManager->printMainMenu(); ?>
 				<script language="javascript" type="text/javascript">
