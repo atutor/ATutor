@@ -18,7 +18,7 @@ include (AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');	//cl
 //include (AT_INCLUDE_PATH.'lib/filemanager.inc.php');	//clr_dir()
 include (AT_PA_INCLUDE.'lib.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
-
+$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM);
 
 //init
