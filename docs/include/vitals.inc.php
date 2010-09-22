@@ -248,7 +248,7 @@ if ($_config['time_zone']) {
 	    $_SESSION['prefs']['PREF_THEME'] = 'default';
 	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
 	}
-debug($_SESSION['prefs']);	
+	
 	// if the request is from a mobile device, same original session var PREF_THEME into session var PREF_THEME_ORIG
 	// and assign PREF_MOBILE_THEME TO PREF_THEME so that elsewhere PREF_THEME is used doesn't not need to be changed.
 	// At save_prefs(), switch back the theme session vars: PREF_THEME => PREF_MOBILE_THEME, PREF_THEME_ORIG => PREF_THEME
