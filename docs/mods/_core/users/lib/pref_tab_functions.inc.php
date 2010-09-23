@@ -35,33 +35,35 @@ function output_tabs($current_tab, $changes) {
 	$tabs = get_tabs();
 	$num_tabs = count($tabs);
 ?>
-	<table class="etabbed-table" border="0" cellpadding="0" cellspacing="0">
-	<tr>		
-		<?php 
-		for ($i=0; $i < $num_tabs; $i++): 
+<div class="etabbed-list-container">
+	<ul class="etabbed-list" >
+	
+		
+		<?php for ($i=0; $i < $num_tabs; $i++): 
 			if ($current_tab == $i):?>
-				<td class="prefs_tab_selected">
+				<li class="prefs_tab_selected">
 					<?php if ($changes[$i]): ?>
 						<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
 					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="prefs_buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'pointer\';" '.$clickEvent.' />'; ?>
 					<?php endif; ?>
 					<?php echo _AT($tabs[$i][0]); ?>
-				</td>
-				<td class="prefs-tab-spacer">&nbsp;</td>
+				</li>
+			
 			<?php else: ?>
-				<td class="prefs_tab">
+				<li class="prefs_tab" >
 					<?php if ($changes[$i]): ?>
 						<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
 					<?php endif; ?>
 
 					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="prefs_buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'pointer\';" '.$clickEvent.' />'; ?>
-				</td>
-				<td class="prefs-tab-spacer">&nbsp;</td>
+				</li>
+				
 			<?php endif; ?>
 		<?php endfor; ?>
-		<td >&nbsp;</td>
-	</tr>
-	</table>
+		
+	
+	</ul>
+</div>	
 <?php }
 
 // returns given $languges in html <option> tag
