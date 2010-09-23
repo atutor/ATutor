@@ -11,6 +11,7 @@ ul#topnavlist li {
 	padding-bottom:0.3em;
 	margin:0px;
 	margin-bottom:-3px;
+	display:inline;
 }
 
 label {
