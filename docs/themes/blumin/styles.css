@@ -1590,6 +1590,7 @@ div#menutoggle{
 }
 /* berence Editor tabs */
 /* Preferences tabs */
+/*
 table.etabbed-table	{
 	padding-left:5em;
 	font-size:10pt;
@@ -1649,6 +1650,79 @@ table.etabbed-table	{
 	-moz-box-shadow:.2em .2em .2em #999999;
 	box-shadow: .2em .0em .2em #999999;
 }
+*/
+/* Preference Editor tabs */
+.etabbed-list-container {
+
+    font-size:10pt;
+    width:75%;
+margin-left:auto;
+margin-right:auto;
+
+}
+.etabbed-list{
+
+width:100%;
+}
+.prefs-tab-spacer {
+    background-color: transparent;
+    width: 1em;
+}
+.prefs_buttontab {
+    color:#000555;
+    font-size:0pt;
+    white-space: nowrap;
+    background-color: #ffffff;
+    margin-bottom: .5px;
+    border:0;
+    font-weight:500;
+    padding:0em 0em 0em;
+    border-radius:.3em;
+    -moz-border-radius: .3em .3em .3em .3em;
+
+}
+.prefs_tab{
+    border-top: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #FFFFFF;
+    border-radius: .3em .3em 0em 0em;
+    -moz-border-radius: .3em .3em 0em 0em;
+    padding: 0em .5em 0em .5em ;
+    -moz-box-shadow:.1em .1em 0 999999;
+    box-shadow: .1em .1em 0 999999;
+    display: inline;
+    padding-bottom: .9px;
+    margin: .5em;
+}
+    
+.prefs_buttontab:hover, .prefs_tab:hover {
+      background-color: #eeeeee;
+}
+
+.prefs_tab_selected{
+    
+    border-top: 1px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-bottom:0;
+      background-color: #eeeeee;
+    margin: 0px;
+    font-weight:bold;
+    text-align:center;
+    padding: .3em .5em 0em .5em ;
+    white-space: nowrap;
+    text-decoration:none;
+    border-radius:.3em;
+    -moz-border-radius: .3em .3em 0em 0em;
+    -moz-box-shadow:.1em .1em .0 999999;
+    box-shadow: .1em .1em .1em 999999;
+    display: inline;
+}
+
+
 #top-links-jump{
 	float:right;
 	white-space:nowrap;
