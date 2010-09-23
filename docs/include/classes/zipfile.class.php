@@ -247,15 +247,13 @@ class zipfile {
 //		readfile($this->zipfile_dir.$this->filename.'.zip');
 
 		// Download large file, for instance, large common cartridge or content package
-		// Instead of use readfile() to read the whole file into memory, push down the download 3K at a time
-		ob_clean();
-		flush();
-		$fp = fopen($this->zipfile_dir.$this->filename.'.zip', "rb");
+		// Instead of use readfile() to read the whole file into memory, push down the download 1M at a time
+		$chunk_size = 1024 * 1024;
+		$fp = fopen($this->zipfile_dir.$this->filename.'.zip', "r");
 		while (!feof($fp))
 		{
-			$buffer = fread($fp, 3840);
-			echo $buffer;
-			$buffer = '';
+			echo fread($fp, $chunk_size);
+			ob_flush();
 			flush();
 		}
 		fclose($fp);
