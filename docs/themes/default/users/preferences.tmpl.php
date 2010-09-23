@@ -38,7 +38,7 @@ echo '<div id="container"><br />';
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>"  method="post" name="form" enctype="multipart/form-data">
 
-	<div align="center" style="width:90%; margin-left:auto; margin-right:auto;">
+	<div>
 		<?php output_tabs($current_tab, $changes_made); ?>
 	</div>
 
