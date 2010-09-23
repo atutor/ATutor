@@ -25,3 +25,8 @@ table.data tfoot input {
 .outside_box{
 	height:9.6em;
 }
+.buttons input[type=submit]{
+padding:.3em;
+width:auto;
+overflow:visible;
+}

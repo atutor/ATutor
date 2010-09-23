@@ -29,3 +29,8 @@ table.data tfoot input {
 .details_or{
 	height:10em;
 }
+.buttons input[type=submit]{
+padding:.3em;
+width:auto;
+overflow:visible;
+}
