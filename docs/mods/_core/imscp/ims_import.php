@@ -270,7 +270,8 @@ function rehash($items){
 }
 
 /**
- * Take out the common path within all $items['new_path'].
+ * Take out the common path within all $items['new_path']. Make sure we include
+ * AccessForAll files in the array.  
  * This allows import/export repeatedly without duplicating its path
  * @param   array   contains the breakdown of all resources in the XML
  */
@@ -291,7 +292,7 @@ function removeCommonPath($items){
 			}
 		}
 	}
-    
+
     foreach($filearray as $index=>$path){
         //hack
         //check if this is a XML file; if so, skip through, 
@@ -311,6 +312,12 @@ function removeCommonPath($items){
         //actually use '\' and return the whole string. 
         $common_array = explode('/', $common_path);
         $path_array = explode('/', $path);
+        //convert path_array to absolute path
+        //TODO: array_search is slow, build a faster search
+        $pos=array_search('..', $path_array);
+        while($pos=array_search('..', $path_array)){
+            array_splice($path_array, $pos-1, 2);
+        }
         $intersect_array = array_intersect($common_array, $path_array);
         $common_path = implode('/', $intersect_array);       
     }
