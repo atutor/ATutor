@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -236,12 +236,10 @@ if ($_config['time_zone']) {
 
 	// set default template paths:
 	$savant = new Savant2();
-	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
+	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/'.get_system_default_theme().'/');
 
 	//if user has requested theme change, make the change here
 	if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
-	if (is_mobile_device())
-	    	
 	    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
 	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
 	} else if ($_POST['set_default']) {
@@ -252,16 +250,10 @@ if ($_config['time_zone']) {
 	// if the request is from a mobile device, same original session var PREF_THEME into session var PREF_THEME_ORIG
 	// and assign PREF_MOBILE_THEME TO PREF_THEME so that elsewhere PREF_THEME is used doesn't not need to be changed.
 	// At save_prefs(), switch back the theme session vars: PREF_THEME => PREF_MOBILE_THEME, PREF_THEME_ORIG => PREF_THEME
-	if (is_mobile_device()) {
-		if (!is_mobile_theme($_SESSION['prefs']['PREF_MOBILE_THEME'])) {
+	if (is_mobile_device() && !is_mobile_theme($_SESSION['prefs']['PREF_MOBILE_THEME'])) {
 			$_SESSION['prefs']['PREF_MOBILE_THEME'] = get_system_default_theme();
-		}
-		
-//		if ($_SESSION['prefs']['PREF_THEME'] <> $_SESSION['prefs']['PREF_MOBILE_THEME']) {
-//			$_SESSION['prefs']['PREF_THEME_ORIG'] = $_SESSION['prefs']['PREF_THEME'];
-//			$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
-//		}
 	}
+	
 	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
 	// When more mobile themes come in, this should be changed.
 	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {

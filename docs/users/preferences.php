@@ -50,6 +50,9 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	//save most preferences to session and db
 	assign_session_prefs($temp_prefs);
 	save_prefs();
+	if (is_mobile_device()) {
+		$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
+	}
 
 	//update email notification and auto-login settings separately
     save_email_notification($mnot);
@@ -63,7 +66,8 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 }
 
 // re-set session prefs if the request is from a mobile device 
-// because now $_SESSION['prefs']['PREF_THEME'] is $_SESSION['prefs']['PREF_MOBILE_THEME'] instead of the desktop theme
+// because now $_SESSION['prefs']['PREF_THEME'] == $_SESSION['prefs']['PREF_MOBILE_THEME'] instead of the desktop theme
+// The code below re-assign $_SESSION['prefs']['PREF_THEME'] back to what it should be
 if (is_mobile_device()) {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$_SESSION['member_id'];
 	$result = mysql_query($sql, $db);
