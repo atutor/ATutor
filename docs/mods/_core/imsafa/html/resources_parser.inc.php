@@ -140,6 +140,15 @@ foreach ($my_files as $file) {
 		continue;
 	}
 	
+	// The URL of the movie from youtube.com has been converted above in embed_media().
+	// For example:  http://www.youtube.com/watch?v=a0ryB0m0MiM is converted to
+	// http://www.youtube.com/v/a0ryB0m0MiM to make it playable. This creates the problem
+	// that the parsed-out url (http://www.youtube.com/v/a0ryB0m0MiM) does not match with
+	// the URL saved in content table (http://www.youtube.com/watch?v=a0ryB0m0MiM).
+	// The code below is to convert the URL back to original.
+	$file = preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/v\/(.*)/",
+	                     "\\1youtube.com/watch?v=\\2", $file);
+	
 	$resources[$i] = $file;
 	$i++;
 }

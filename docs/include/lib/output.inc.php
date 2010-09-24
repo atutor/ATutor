@@ -1608,8 +1608,9 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 		{
 			$ext = substr($row['secondary_resource'], strrpos($row['secondary_resource'], '.')+1);
 			
-			// alternative is video
-			if (in_array($ext, $video_exts))
+			// alternative is video or a youtube url
+			if (in_array($ext, $video_exts) || 
+			    preg_match("/http:\/\/.*youtube.com\/watch.*/", $row['secondary_resource']))
 				$target = '[media]'.$row['secondary_resource'].'[/media]';
 			// a text primary to be replaced by a visual alternative 
 			else if (in_array($ext, $txt_exts))
