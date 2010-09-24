@@ -247,11 +247,19 @@ if ($_config['time_zone']) {
 	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
 	}
 	
-	// if the request is from a mobile device, same original session var PREF_THEME into session var PREF_THEME_ORIG
-	// and assign PREF_MOBILE_THEME TO PREF_THEME so that elsewhere PREF_THEME is used doesn't not need to be changed.
-	// At save_prefs(), switch back the theme session vars: PREF_THEME => PREF_MOBILE_THEME, PREF_THEME_ORIG => PREF_THEME
-	if (is_mobile_device() && !is_mobile_theme($_SESSION['prefs']['PREF_MOBILE_THEME'])) {
-			$_SESSION['prefs']['PREF_MOBILE_THEME'] = get_system_default_theme();
+	// Reset PREF_THEME when:
+	// 1. If PREF_THEME is not set 
+	// 2. The request is from the mobile device but PREF_THEME is not a mobile theme 
+	if (!isset($_SESSION['prefs']['PREF_THEME']) ||
+	    $_SESSION['prefs']['PREF_THEME'] == "" ||
+	    (is_mobile_device() && !is_mobile_theme($_SESSION['prefs']['PREF_THEME']))) {
+		// get default
+		$default_theme = get_default_theme();
+		
+		if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name']) || $default_theme == '') {
+			$default_theme = array('dir_name' => get_system_default_theme());
+		}
+		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 	}
 	
 	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
@@ -276,14 +284,6 @@ if ($_config['time_zone']) {
 				$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 			}
 		}
-	} else {
-		// get default
-		$default_theme = get_default_theme();
-		
-		if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name']) || $default_theme == '') {
-			$default_theme = array('dir_name' => get_system_default_theme());
-		}
-		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 	}
 	
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
@@ -655,11 +655,6 @@ function save_prefs( ) {
 	global $db, $addslashes;
 
 	if ($_SESSION['valid_user']) {
-//		if (is_mobile_device()) {
-//			$_SESSION['prefs']['PREF_MOBILE_THEME'] = $_SESSION['prefs']['PREF_THEME'];
-//			$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_THEME_ORIG'];
-//		}
-//		unset($_SESSION['prefs']['PREF_THEME_ORIG']);
 		$data	= $addslashes(serialize($_SESSION['prefs']));
 		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'", creation_date=creation_date, last_login=last_login WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql, $db); 

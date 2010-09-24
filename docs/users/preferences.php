@@ -50,9 +50,6 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	//save most preferences to session and db
 	assign_session_prefs($temp_prefs);
 	save_prefs();
-	if (is_mobile_device()) {
-		$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
-	}
 
 	//update email notification and auto-login settings separately
     save_email_notification($mnot);
