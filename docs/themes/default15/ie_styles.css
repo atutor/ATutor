@@ -1,18 +1,29 @@
 /* IE specific styles */
 
+/*
+div#topnavlistcontainer {
+height:1.3em;
+}
+
 ul#topnavlist {
 	zoom:100%;
 	margin:0px;
+
 }
 
 ul#topnavlist li {
 	zoom:100%;
-	padding:0.3em;
+	padding-left:0.3em;
 	padding-bottom:0.3em;
 	margin:0px;
-	margin-bottom:-1px;
-}
 
+}
+ul#topnavlist li a {
+*/
+}
+ul#topnavlist li {
+padding-bottom:-.9em;
+}
 label {
 	zoom:100%;
 	margin:0px;

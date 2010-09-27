@@ -1145,7 +1145,9 @@ ul#topnavlist li {
 
 ul#topnavlist li a {
 	padding: 3px 9px;
-	border: 1px solid #70A1CA;
+	border-top: 1px solid #70A1CA;
+	border-left: 1px solid #70A1CA;
+	border-right: 1px solid #70A1CA;
 	background: #F4F9FE;
 	text-decoration: none;
 	margin-left: 1px;
