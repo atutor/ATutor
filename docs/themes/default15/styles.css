@@ -1577,8 +1577,8 @@ margin-right:auto;
     border-radius: .3em .3em 0em 0em;
     -moz-border-radius: .3em .3em 0em 0em;
     padding: 0em .5em 0em .5em ;
-    -moz-box-shadow:.1em .1em 0 999999;
-    box-shadow: .1em .1em 0 999999;
+    -moz-box-shadow:.1em .1em 0 #999999;
+    box-shadow: .1em .1em 0 #999999;
     display: inline;
     padding-bottom: .9px;
     margin: .5em;
@@ -1603,8 +1603,8 @@ margin-right:auto;
     text-decoration:none;
     border-radius:.3em;
     -moz-border-radius: .3em .3em 0em 0em;
-    -moz-box-shadow:.1em .1em .0 999999;
-    box-shadow: .1em .1em .1em 999999;
+    -moz-box-shadow:.1em .1em .0 #999999;
+    box-shadow: .1em .1em .1em #999999;
     display: inline;
 }
 

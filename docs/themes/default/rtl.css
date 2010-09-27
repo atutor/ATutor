@@ -1,4 +1,5 @@
 /* for right to left languages */
+
 html, body {
 	direction: rtl;
 
@@ -14,84 +15,92 @@ html, body {
 
 div.box {
 	line-height:150%;
-font-style:normal;
+	font-style:normal;
 }
 
 div.menuedit{
-float:left;
+	float:left;
 }
 
 
 .del-content-icon{
-/* float:left; */
-border:0;
+	border:0;
 }
 
 
 #editable_table a{
-margin-right:.5em;
+	margin-right:.5em;
 
 }
 
 #topnavlist{
-float:left;
+	float:left;
 
 }
 .logoutbar{
-white-space:nowrap;
-text-align:left;
-border-top:1px solid #eeeeee;
+	white-space:nowrap;
+	text-align:left;
+	border-top:1px solid #eeeeee;
 }
 
 .fl-force-right{
-float:left;
+	float:left;
 }
 
 .buttonbox{
-float:left;
+	float:left;
 
 }
 div#breadcrumbs{
 
-float:right;
+	float:right;
 }
 ul.current_list li{
- width:90%;
+	width:90%;
 }
 
 .current_box{
-width:34%;
+	width:34%;
 }
 
 .my_course_container{
-width:55%;
+	width:55%;
 }
 
 #content-tool-links{
-float:right;
+	float:right;
 }
 .details-text{
-font-style:inherit;
+	font-style:inherit;
 }
 
 .admin_container{
-float:left;
-white-space:normal;
+	float:left;
+	white-space:normal;
 }
 .page-title{
 
-margin-top:1em;
+	margin-top:1em;
 }
 
 .top-tool{
-width:95%;
+	width:95%;
 }
 .child-top-tool li{
-white-space:normal;
-overflow:visible;
+	white-space:normal;
+	overflow:visible;
 }
 
 #contentcolumn {
 white-space:normal;
-	overflow:visible;
 }
+/*
+.editor_wrapper{
+float:left;
+clear:right;
+}
+#side-menu{
+float:left;
+clear:left;
+}
+*/
