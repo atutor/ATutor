@@ -205,13 +205,15 @@ global $system_courses;
 		<?php if ($this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")): ?>
 			<a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><strong><?php echo $this->page_title; ?></strong></a>
 		<?php endif; ?>
-		<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
 
-		<?php endif; ?>
+
 	</div>
-        <div id="menutoggle">
-            <a accesskey="n"><img src="" title="" alt="" /></a>
-        </div>
+	<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
+	    <div id="menutoggle">
+		<a accesskey="n"><img src="" title="" alt="" /></a>
+	    </div>
+
+
 	<div style="float:right;padding-top:7px;" id="sequence-links">
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 		<?php if ($this->sequence_links['resume']): ?>
@@ -227,7 +229,7 @@ global $system_courses;
 	<?php } ?>
 		&nbsp;
 	</div>
-
+	<?php endif; ?>
 	<h2 class="page-title"><?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?></h2>
 
 <a name="content"></a>
