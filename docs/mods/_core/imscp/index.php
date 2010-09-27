@@ -21,7 +21,14 @@ if (!isset($_main_menu)) {
 	$_main_menu = $contentManager->getContent();
 }
 
+// The length of the content/folder title to display. 
+// This is to fix the issue that, when any one of the content title is too long, 
+// the dropdown box for the export selection stretches out of the "export" fieldset border.
+$len_of_title_to_display = 65;
+
 function print_menu_sections(&$menu, $only_print_content_folder = false, $parent_content_id = 0, $depth = 0, $ordering = '') {
+	global $len_of_title_to_display;
+	
 	$my_children = $menu[$parent_content_id];
 	$cid = $_GET['cid'];
 
@@ -52,7 +59,13 @@ function print_menu_sections(&$menu, $only_print_content_folder = false, $parent
 			$new_ordering = $ordering.'.'.$children['ordering'];
 			echo $ordering . '.'. $children['ordering'];
 		}
-		echo ' '.$children['title'].'</option>';
+		if (strlen($children['title']) > $len_of_title_to_display) {
+			$title = substr($children['title'], 0, $len_of_title_to_display).' ...';
+		} else {
+			$title = $children['title'];
+		}
+		
+		echo ' '.$title.'</option>';
 
 		print_menu_sections($menu, $only_print_content_folder, $children['content_id'], $depth+1, $new_ordering);
 	}
