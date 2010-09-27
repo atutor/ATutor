@@ -400,9 +400,11 @@ $pid = intval($_REQUEST['pid']);
 
 <div class="editor_wrapper">
 
-<div align="center">
+<div>
 	<?php output_tabs($current_tab, $changes_made); ?>
+
 </div>
+<span style="clear:both;"/></span>
 <div class="input-form">
 
 	<?php if ($changes_made): ?>

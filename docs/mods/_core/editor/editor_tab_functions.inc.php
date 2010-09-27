@@ -45,7 +45,7 @@ function output_tabs($current_tab, $changes) {
 	$tabs = get_tabs();
 	$num_tabs = count($tabs);
 ?>
-	<br /><br /><table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="90%">
+	<br /><br /><table class="etabbed-table" border="0" cellpadding="0" cellspacing="0">
 	<tr>		
 		<?php 
 		for ($i=0; $i < $num_tabs; $i++): 
