@@ -94,13 +94,6 @@ ul.current_list li{
 #contentcolumn {
 white-space:normal;
 }
-/*
-.editor_wrapper{
-float:left;
-clear:right;
+table.etabbed-table	{
+	padding-right:5em;
 }
-#side-menu{
-float:left;
-clear:left;
-}
-*/

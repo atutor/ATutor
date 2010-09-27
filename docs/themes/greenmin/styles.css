@@ -1525,14 +1525,12 @@ div#menutoggle{
 }
 /* Preference Editor tabs */
 /* Preferences tabs */
-/*
+
 table.etabbed-table	{
 	padding-left:5em;
 	font-size:10pt;
-	width:90%;
-	margin-left:auto;
-	margin-right:auto;
 }
+/*
 .prefs-tab-spacer {
 	background-color: transparent;
 	width: 5px;

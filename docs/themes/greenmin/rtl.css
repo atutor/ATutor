@@ -98,3 +98,7 @@ overflow:visible;
 white-space:normal;
 
 }
+
+table.etabbed-table	{
+	padding-right:5em;
+}

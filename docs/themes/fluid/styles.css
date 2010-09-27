@@ -417,7 +417,8 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 	text-decoration: none;
 }
 table.etabbed-table	{
-	width: 90%;
+	padding-left:5em;
+	font-size:10pt;
 }
 a#my-start-page {
 	padding: 2px;

@@ -92,5 +92,7 @@ width:34%;
 
 #contentcolumn {
 	white-space:normal;
-	overflow:visible;
+}
+table.etabbed-table	{
+	padding-right:5em;
 }
