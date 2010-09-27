@@ -1976,14 +1976,11 @@ tr.odd {
 /* Content editor wrapper div */
 
 .editor_wrapper{
-	border:0;
-	/*
+	border:1px solid #cccccc;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 	padding: .1em .5em .1em .5em ;
-`	*/
 }
-
 /* Content editor tabs */
 .editor_buttontab {
 	color:#000000;
