@@ -924,7 +924,15 @@ fieldset {
 
 #side-menu{
 	width:19em;
+	margin-left: 1em;
 }
+#menutoggle{
+	float:right;
+	clear:both;
+	text-align:left;
+
+}
+
 h4.box {
 	margin-top: 10px;
 	font-family: Helevetica, Arial, sans-serif;
@@ -1474,7 +1482,7 @@ ul.current_list{
 }
 /* Preference Editor tabs */
 /* Preferences tabs */
-/*
+
 table.etabbed-table	{
 	padding-left:5em;
 	font-size:10pt;
@@ -1482,6 +1490,7 @@ table.etabbed-table	{
 	margin-left:auto;
 	margin-right:auto;
 }
+/*
 .prefs-tab-spacer {
 	background-color: transparent;
 	width: 5px;
@@ -1534,7 +1543,7 @@ table.etabbed-table	{
 	-moz-box-shadow:.2em .2em .2em #999999;
     box-shadow: .2em .0em .2em #999999;
 }
-*/
+
 
 /* Preference Editor tabs */
 .etabbed-list-container {
@@ -1816,6 +1825,14 @@ div.social-wrapper{
 	float: left;
 }
 /* Content editor tabs */
+/* Content editor wrapper div */
+.editor_wrapper{
+	border:1px solid #cccccc;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	padding: .1em .5em .1em .5em ;
+}
+
 .editor_buttontab {
 	color:#000000;
 	font-size:10pt;

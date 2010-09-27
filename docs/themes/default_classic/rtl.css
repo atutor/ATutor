@@ -88,6 +88,7 @@ margin-left:250px;
 
 .admin_container{
 float:left;
+clear:both;
 white-space:normal;
 }
 .page-title{
@@ -107,3 +108,4 @@ overflow:visible;
 white-space:normal;
 	overflow:visible;
 }
+

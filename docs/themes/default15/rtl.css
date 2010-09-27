@@ -56,40 +56,41 @@ width:34%;
 }
 
 .my_course_container{
-width:55%;
+	width:55%;
 }
 #menutoggle{
-float:left;
-clear:left;
+	float:left;
+	clear:both;
+	text-align:right;
 }
 
 
 #content-tool-links{
-float:right;
+	float:right;
 }
 #side-menu{
-float:right;
+	float:right;
+	margin-right:1em;
 }
 
 
 .admin_container{
-float:left;
-white-space:normal;
+	float:left;
+	white-space:normal;
 }
-.page-title{
-
-margin-top:1em;
+.page-title{	
+	margin-top:1em;
 }
 
 .top-tool{
-width:95%;
+	width:95%;
 }
 .child-top-tool li{
-white-space:normal;
-overflow:visible;
+	white-space:normal;
+	overflow:visible;
 }
 
 #contentcolumn {
-white-space:normal;
+	white-space:normal;
 	overflow:visible;
 }

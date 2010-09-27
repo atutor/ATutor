@@ -206,12 +206,12 @@ global $system_courses;
 			<a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><strong><?php echo $this->page_title; ?></strong></a>
 		<?php endif; ?>
 		<?php if ($_SESSION['course_id'] > 0 && $system_courses[$_SESSION['course_id']]['side_menu']): ?>
+
+		<?php endif; ?>
+	</div>
         <div id="menutoggle">
             <a accesskey="n"><img src="" title="" alt="" /></a>
         </div>
-		<?php endif; ?>
-	</div>
-
 	<div style="float:right;padding-top:7px;" id="sequence-links">
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 		<?php if ($this->sequence_links['resume']): ?>

@@ -513,9 +513,11 @@ div#toctoggle {
 
 h1#section-title {
 	margin-left: 5px;
-	clear: none;
+	clear: both;
 	display:inline;
 	background-color: white;
+width:100%;
+border:thin solid black;
 }
 
 div#top-links {
@@ -700,8 +702,7 @@ img.headicon {
 background-image: url('images/pub_default.jpg'); 
 background-repeat: no-repeat; 
 background-position:left top;
-height:8em;
-margin-bottom:2em;
+height:10.5em;
 text-align:right;
 }
 /* feedback/errors */
