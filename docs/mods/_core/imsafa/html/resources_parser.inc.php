@@ -146,12 +146,11 @@ foreach ($my_files as $file) {
 	// that the parsed-out url (http://www.youtube.com/v/a0ryB0m0MiM) does not match with
 	// the URL saved in content table (http://www.youtube.com/watch?v=a0ryB0m0MiM).
 	// The code below is to convert the URL back to original.
-	$file = preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/v\/(.*)/",
-	                     "\\1youtube.com/watch?v=\\2", $file);
+	$file = convert_youtube_playURL_to_watchURL($file);
 	
 	$resources[$i] = $file;
 	$i++;
 }
-		
+
 $organizations_str = ob_get_contents();
 ob_end_clean();
