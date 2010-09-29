@@ -11,6 +11,20 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+
+/*
+ * This script accept these _GET variables:
+ * tid: test id
+ * cid: this test is the pre-requisite of the content id cid.
+ *      It's embedded as hidden value and passed into take_test pages.
+ * in_cid: this test is the post test of the content id cid.
+ *     Also embedded as hidden value and passed into take_test pages.
+ * Only one of cid or in_cid should be presented.
+ * If cid or in_cid is presented, the script flow is,
+ * If the user passes the pre-requisite test, the page is re-directed 
+ * back to the content page of cid. Otherwise, re-take the test.
+ */
+
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
@@ -25,6 +39,31 @@ if (isset($_REQUEST['cid']))
 {
 	$cid = intval($_REQUEST['cid']);
 	$msg->addInfo('PRETEST');
+}
+
+// this test is the post test of content in_cid
+if (isset($_REQUEST['in_cid']))
+{
+	$in_cid = intval($_REQUEST['in_cid']);
+	
+	// Check if the content has pre-requisite tests that the member has not passed.
+	// If there is, 
+	// 1. Instructors: see the message that a pretest is associated with this content and proceed to display the post test
+	// 2. Students: re-direct to pre-test, when pass the pre-test, direct to parent content page. The students must go thru
+	//              the content to get to the post test. 
+	if ($in_cid > 0) {
+		$pretest = $contentManager->getPretest($in_cid);
+
+		if ($pretest > 0) {
+			if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+				$msg->addInfo('PRETEST');
+			}
+			else {
+				header('Location: '.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$pretest.SEP.'cid='.$in_cid, AT_PRETTY_URL_IS_HEADER));
+				exit;
+			}
+		}
+	}
 }
 
 // make sure max attempts not reached, and still on going

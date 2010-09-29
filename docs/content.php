@@ -187,6 +187,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			}
 			else {
 				header('Location: '.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$pre_test_id.SEP.'cid='.$cid, AT_PRETTY_URL_IS_HEADER));
+				exit;
 			}
 		}
 		

@@ -994,6 +994,7 @@ initContentMenu();
 				$link = '';
 				//tests do not have content id
 				$content['content_id'] = isset($content['content_id']) ? $content['content_id'] : '';
+				$content['parent_content_id'] = $parent_id;
 
 				if (!$ignore_state) {
 					$link .= '<a name="menu'.$content['content_id'].'"></a>';
@@ -1012,7 +1013,7 @@ initContentMenu();
 					//if this is a test link.
 					if (isset($content['test_id'])){
 						$title_n_alt =  $content['title'];
-						$in_link = 'mods/_standard/tests/test_intro.php?tid='.$content['test_id'];
+						$in_link = 'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].htmlentities_utf8(SEP).'in_cid='.$content['parent_content_id'];
 						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$title_n_alt.'" alt="'.$title_n_alt.'" />';
 					} else {
 						$in_link = 'content.php?cid='.$content['content_id'];
@@ -1442,29 +1443,29 @@ initContentMenu();
 		}
 	}
 
-	/* returns the first test_id if this page has pre-test(s) to be passed, 
+	/* Returns the first test_id if this page has pre-test(s) to be passed,
+	 * The pre-tests associated with the parent folders has higher priority to be taken.
 	 * or is under a page that has pre-test(s) to be passed, 
 	 * 0 if has no pre-test(s) to be passed
 	 * -1 if one of the pre-test(s) has expired, the content should not be displayed in this case
 	 * Access: public 
 	 */
 	function getPretest($cid) {
-		$this_pre_test_id = $this->getOnePretest($cid);
+		// Prepare all the parent folders to this cid since the pre-tests 
+		// associated with the parent folders has higher priority to be taken.
+		$this_content_path = $this->getContentPath($cid);
 		
-		if ($this->_menu_info[$cid]['content_parent_id'] == 0) {
-			// this $cid has no parent, so we check its release date directly
-			return $this_pre_test_id;
+		foreach ($this_content_path as $this_content) {
+			$this_pre_test_id = $this->getOnePretest($this_content['content_id']);
+			
+			if ($this_pre_test_id > 0 || $this_pre_test_id == -1){
+				return $this_pre_test_id;
+			} else {
+				continue;
+			}
 		}
 		
-		// this is a sub page, need to check ALL its parents
-		$parent_pre_test_id = $this->getOnePretest($this->_menu_info[$cid]['content_parent_id']);
-		
-		if ($this_pre_test_id > 0 || $this_pre_test_id == -1)
-			return $this_pre_test_id;
-		else if ($parent_pre_test_id > 0 || $parent_pre_test_id == -1)
-			return $parent_pre_test_id;
-		else
-			return 0;
+		return 0;
 	}
 
 	/* returns the first test_id if this content has pre-test(s) to be passed, 
