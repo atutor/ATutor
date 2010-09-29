@@ -540,6 +540,10 @@ function insertAtCursor(myField, myValue) {
 // 2. set the according field in opener window to the selected file
 // 3. close file manager itself
 function setAlternative(file, file_preview_link, cid, pid, a_type) {
+	// HTML encode the name of the secondary resource
+	file = ATutor.Encoder.htmlEncode(file);
+
+	// save the selected secondary resource into db
 	jQuery.post("<?php echo AT_BASE_HREF; ?>mods/_core/editor/save_alternative.php", 
 			{"pid":pid, "a_type":a_type, "alternative":file}, 
 			function(data) {});

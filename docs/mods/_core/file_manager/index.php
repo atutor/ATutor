@@ -58,8 +58,8 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
     }
 
     $_custom_head .= '
+        <script src="'.AT_BASE_HREF.'jscripts/ATutorEncoder.js" type="text/javascript"></script>
         <link href="'.$fluid_dir.'components/uploader/css/Uploader.css" rel="stylesheet" type="text/css" />
-        <script src="'.$fluid_dir.'InfusionAll.js" type="text/javascript"></script>
         <script language="JavaScript" type="text/javascript">
 
             var myUpload; // mostly used for testing
