@@ -18,9 +18,9 @@ if ($this->banner): ?><?php echo $this->banner; ?><br /><?php endif;
 // positioning switch of home ONLY FOR INSTRUCTORS. two icons will be used for identification to distinguish the two different views of the home.
 if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && count($this->home_links) > 0){
 	if($this->view_mode==0)
-		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/detail_view.png" title ="'._AT('detail_view').'"  alt ="'._AT('detail_view').'" border="0"/></a><br />';
+		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/detail_view.png" title ="'._AT('detail_view').'"  alt ="'._AT('detail_view').'" border="0" class="img1616"/></a><br />';
 	else
-		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/icon_view.png"  title ="'._AT('icon_view').'" alt ="'._AT('icon_view').'" border="0"/></a><br />';
+		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/icon_view.png"  title ="'._AT('icon_view').'" alt ="'._AT('icon_view').'" border="0" class="img1616"/></a><br />';
 }	
 
 // Icon View, $this->view_mode = 0. course will be made changes to the icons to restore the classic icons.
@@ -92,10 +92,10 @@ function print_sublinks($link){
 		<div class="outside_box">
 <?php if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)) {?>
 			<div class="buttonbox">
-			<a href="#" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>'); return false;"><img src="<?php echo AT_BASE_HREF; ?>images/x.gif" border="0" alt="<?php echo _AT('close'); ?>"/></a>
+			<a href="#" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>'); return false;"><img src="<?php echo AT_BASE_HREF; ?>images/x.gif" border="0" alt="<?php echo _AT('close'); ?>" class="img1616"/></a>
 			</div>
 <?php }?>
-			<img src="<?php echo $link['img']; ?>" alt="" border="0" style="vertical-align:middle;" height="45" width="45"/>
+			<img src="<?php echo $link['img']; ?>" alt="" border="0" style="vertical-align:middle;" class="img-size-home"/>
 			<span class="home-title"><a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a></span>
 			<div class="inside_box">
 
@@ -122,49 +122,8 @@ function print_sublinks($link){
 			</div>
 		</div>
 	</div>
+
 </div>
 
 
-
-
-<!--
-<div class="details_ol">
-	<div class="details_or">
-		<div class="outside_box">
-<?php if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)) {?>
-			<div class="buttonbox">
-			<a href="#" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>'); return false;"><img src="<?php echo AT_BASE_HREF; ?>images/x.gif" border="0" alt="<?php echo _AT('close'); ?>"/></a>
-			</div>
-<?php }?>
-			<img src="<?php echo $link['img']; ?>" alt="" border="0" style="vertical-align:middle;" height="51" width="51"/>
-			<span class="home-title"><a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a></span>
-			<div class="inside_box">
-				<div class="details_il">&nbsp;</div>
-				<div class="details_ir"></div>
-<?php
-	// if $link['sub_file'] is defined, print the text array returned from sub_file, otherwise, print the text defined in $link['text']
-	if($link['sub_file']!=""){
-		//$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);
-		if(!is_array($array)){ 
-?>
-				<div class="details-text">
-				<i><?php echo _AT('none_found'); ?></i>
-				</div>
-<?php } else { ?>
-				<div class="details-text">
-<?php 	foreach($array as $sublink){ ?>
-					<img src="<?php echo $link['icon']; ?>" border="0" alt="" /> 
-<?php		if ($sublink <> '') echo $sublink."<br />"; } ?>
-				</div> 
-<?php 
-		} // end of else						
-	} else { ?>
-				<div class="details_text"><?php echo $link['text']; ?></div>
 <?php } ?>
-			</div>
-		</div>
-	</div>
-</div>
--->
-<?php } ?>
-

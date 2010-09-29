@@ -178,6 +178,7 @@ a.dropdown-title {
     -moz-border-radius: .3em .3em .3em .3em;
     -moz-box-shadow:.1em .1em .2em #999999;
     box-shadow: .1em .1em .2em #999999;
+font-size:100%;
 
 }
 .button:focus {
@@ -607,6 +608,7 @@ div#top-links a:focus{
 	border:thin solid #cccccc;
 	border-radius:.3em .3em .3em .3em;
 	-moz-border-radius:.3em .3em .3em .3em;	
+font-size:100%;
 }
 a#editor-link {
 	background-color: #F7F3ED;
@@ -1571,7 +1573,6 @@ ol#tools>li:hover {
 li.top-tool a {  font-weight: bold; } 
 
 li.child-tool a { 
-	font-size: x-small;
 	font-weight: normal; 
 	text-decoration:underline;
 }
@@ -1589,7 +1590,7 @@ ul.child-top-tool:before {
 li.child-tool {
 	display: inline;
 	margin-right: 5px;
-	font-size: x-small;
+	font-size: 80%;
 }
 
 /* to modify  tool icons on the course home page */
@@ -1854,7 +1855,7 @@ div.home_box {
 	margin:auto;
 	height:52%;
 	margin-bottom:.2em;
-	font-size:10pt;
+	font-size:80%;
 	border-radius:.5em;
 	-moz-border-radius:.5em;
 	padding:.2em;
@@ -1882,7 +1883,7 @@ div.home_box {
 	float:left;
 }
 .home-title{
-	font-size:10pt;
+	font-size:90%;
 	font-weight:bold;
 }
 .buttonbox{
@@ -1890,6 +1891,7 @@ div.home_box {
 }
 .details_text{
 	margin-left:1em;
+
 }
 .draggable_selected {
 	background-color: transparent;
@@ -2517,6 +2519,9 @@ margin-left:2em;
 }
 .del-content-icon{
 	border:0;
+height:.9em;
+width:.9em;
+font-size:100%;
 }
 div.bypass{
 height:1px;
@@ -2524,8 +2529,8 @@ height:1px;
 /* relative image size styles */
 
 img.img1616{
-height:1.3em;
-width:1.3em;
+height:1.5em;
+width:1.5;
 }
 
 img.img1111{
@@ -2537,7 +2542,13 @@ img.img2424{
 
 }
 input[type=image].fl-force-right{
-height:.8em;
-width:.8em;
+height:.9em;
+width:.9em;
+font-size:100%;
+}
 
+img.fl-col{
+height:3.5em;
+width:3.5em;
+font-size:100%;
 }
