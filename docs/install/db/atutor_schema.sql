@@ -420,7 +420,7 @@ CREATE TABLE `groups` (
   `type_id` mediumint(8) unsigned NOT NULL default '0',
   `title` varchar(80) NOT NULL default '',
   `description` TEXT ,
-  `modules` varchar(100) NOT NULL default '',
+  `modules` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`group_id`)
 ) TYPE = MYISAM;
 
