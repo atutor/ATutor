@@ -121,7 +121,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
   		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
   		'}' +
   		'.even {' +
-  		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
+  		'FG_COLOR BG_COLOR FONT_FAMILY' +
   		'}' +
   		'.odd {' +
   		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
@@ -440,6 +440,26 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 	  	'#navlist li a:hover, #navlist li a:active {' +
 	  	'HL_COLOR FG_COLOR' +
 	  	'}' +
+		'input[type=image].fl-force-right {' +
+		'BG_COLOR FG_COLOR' +
+		'}' +
+		/** Armin 23.09.2010 */
+		'ul.recent_item {' +
+		'BG_COLOR FG_COLOR' +
+		'}' +
+		'div.recent_activity_box {' +
+		'BG_COLOR FG_COLOR' +
+		'}' +
+		'div.current_box {' +
+		'BG_COLOR FG_COLOR' +
+		'}' +
+		'fieldset.toc {' +
+		'BG_COLOR FG_COLOR' +
+		'}' +
+		'div.site-name {' +
+		'BG_COLOR FG_COLOR' +
+		'}' +
+		/** Armin 23.09.2010 */ 
     	'-->' +
     	'</style>';
 
