@@ -1,5 +1,39 @@
 /**
  * Refer to http://www.strictly-software.com/htmlencode
+ *
+ * There are a number of useful functions within the object:
+ *
+ * HTML2Numerical: Converts HTML entities to their numerical equivalents.
+ * NumericalToHTML: Converts numerical entities to their HTML equivalents.
+ * numEncode: Numerically encodes unicode characters.
+ * htmlDecode: Decodes HTML encoded text to its original state.
+ * htmlEncode: Encodes HTML to either numerical or HTML entities. This is determined by the EncodeType property.
+ * XSSEncode: Encodes the basic characters used in XSS attacks to malform HTML.
+ * correctEncoding: Corrects any double encoded ampersands.
+ * stripUnicode: Removes all unicode characters.
+ * hasEncoded: Returns true if a string contains html encoded entities within it.
+ *
+ * // example of using the html encode object
+ *
+ * // set the type of encoding to numerical entities e.g & instead of &
+ * Encoder.EncodeType = "numerical";
+ * 
+ * // or to set it to encode to html entities e.g & instead of &
+ * Encoder.EncodeType = "entity";
+ * 
+ * // HTML encode text from an input element
+ * // This will prevent double encoding.
+ * var encoded = Encoder.htmlEncode(document.getElementById('input'));
+ * 
+ * // To encode but to allow double encoding which means any existing entities such as
+ * // &amp; will be converted to &amp;amp;
+ * var dblEncoded = Encoder.htmlEncode(document.getElementById('input'),true);
+ * 
+ * // Decode the now encoded text
+ * var decoded = Encoder.htmlDecode(encoded);
+ * 
+ * // Check whether the text still contains HTML/Numerical entities
+ * var containsEncoded = Encoder.hasEncoded(decoded);
  */
 
 ATutor.Encoder = {
