@@ -19,7 +19,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
     <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 3) ? 'pause.png' : 'text_alternative.png'); ?>" 
       alt="<?php echo (($_GET['alternative'] == 3) ? _AT('stop_apply_text_alternatives') : _AT('apply_text_alternatives')); ?>" 
       title="<?php echo (($_GET['alternative'] == 3) ? _AT('stop_apply_text_alternatives') : _AT('apply_text_alternatives')); ?>" 
-      border="0" />
+      border="0" class="img1616"/>
   </a>
 <?php endif; // END OF has text alternative?>
 <?php if ($this->has_audio_alternative) :?>
@@ -27,7 +27,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
     <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 1) ? 'pause.png' : 'audio_alternative.png'); ?>" 
       alt="<?php echo (($_GET['alternative'] == 1) ? _AT('stop_apply_audio_alternatives') : _AT('apply_audio_alternatives')); ?>" 
       title="<?php echo (($_GET['alternative'] == 1) ? _AT('stop_apply_audio_alternatives') : _AT('apply_audio_alternatives')); ?>" 
-      border="0" />
+      border="0" class="img1616"/>
   </a>
 <?php endif; // END OF has audio alternative?>
 <?php if ($this->has_visual_alternative) :?>
@@ -35,7 +35,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
     <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 4) ? 'pause.png' : 'visual_alternative.png'); ?>" 
       alt="<?php echo (($_GET['alternative'] == 4) ? _AT('stop_apply_visual_alternatives') : _AT('apply_visual_alternatives')); ?>" 
       title="<?php echo (($_GET['alternative'] == 4) ? _AT('stop_apply_visual_alternatives') : _AT('apply_visual_alternatives')); ?>" 
-      border="0" />
+      border="0" class="img1616"/>
   </a>
 <?php endif; // END OF has visual alternative?>
 <?php if ($this->has_sign_lang_alternative) :?>
@@ -43,7 +43,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
     <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 2) ? 'pause.png' : 'sign_lang_alternative.png'); ?>" 
       alt="<?php echo (($_GET['alternative'] == 2) ? _AT('stop_apply_sign_lang_alternatives') : _AT('apply_sign_lang_alternatives')); ?>" 
       title="<?php echo (($_GET['alternative'] == 2) ? _AT('stop_apply_sign_lang_alternatives') : _AT('apply_sign_lang_alternatives')); ?>" 
-      border="0" />
+      border="0" class="img1616"/>
   </a>
 <?php endif; // END OF has sign language alternative?>
 </div>

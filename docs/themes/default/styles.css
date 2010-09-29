@@ -2265,6 +2265,8 @@ width:100%;
 .shortcut_icon{
 	border:0;
 	vertical-align:middle;
+height:1.15em;
+width:1.15em;
 }
 ul#content-tool-links {
 	list-style: none outside none;
@@ -2518,4 +2520,24 @@ margin-left:2em;
 }
 div.bypass{
 height:1px;
+}
+/* relative image size styles */
+
+img.img1616{
+height:1.3em;
+width:1.3em;
+}
+
+img.img1111{
+height:.8em;
+width:.8em;
+}
+img.img2424{
+
+
+}
+input[type=image].fl-force-right{
+height:.8em;
+width:.8em;
+
 }
