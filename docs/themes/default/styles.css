@@ -1535,7 +1535,7 @@ ul#topnavlist li a {
     /* The normal, unselected tabs. They are all links */
 	color: #555;
 	font-weight:bold;
-	height: 1.5em;
+	height: 1.6em;
 	border-top:1px solid #ccc;
 	border-left:1px solid #ccc;
 	border-right:1px solid #ccc;
@@ -1543,8 +1543,7 @@ ul#topnavlist li a {
 	background-color:white;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-
-	padding: .2em 2em .2em;
+	padding: .2em 1.8em .1em 1.8em;
 
 }
 
@@ -1555,7 +1554,7 @@ ul#topnavlist li a.selected {
 	font-weight: normal;
 	border-radius:.3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .2em 2em .2em
+	padding: .2em 1.8em .2em .1.8em;
 }
 
 ol#tools>li:hover {
