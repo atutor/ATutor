@@ -209,6 +209,23 @@ class A4a {
 	}
 
 
+    /**
+     * Delete this primary resource and all its associated secondary resources
+     * @param   int     primary resournce id
+     */
+    function deletePrimaryResource($primary_rid){
+        global $db;
+        // Delete all secondary a4a
+        $sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX."secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id=$primary_rid";
+        $result = mysql_query($sql, $db);
+        
+        // If successful, remove all primary resources
+        if ($result){
+            $sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX."primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE a.primary_resource_id=$primary_rid";
+            mysql_query($sql, $db);
+        }
+    }
+
 	// Delete all materials associated with this content
 	function deleteA4a(){
 		global $db; 

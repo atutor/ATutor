@@ -139,6 +139,21 @@ else
 	echo '  </thead>'."\n";
 	
 	echo '  <tbody>';
+
+    /* http://atutor.ca/atutor/mantis/view.php?id=4553
+     * remove old primary resources that's no longer used. 
+     * @harris 9/30/2010
+     */
+    include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
+    $a4a = new A4a($cid);
+    $db_primary_resources = $a4a->getPrimaryResources();
+    foreach ($db_primary_resources  as $primary_rid=>$db_resource){
+        //if this file from our table is not found in the $resource, then it's not used.
+        if(in_array($db_resource['resource'], $resources)===false){
+            $a4a->deletePrimaryResource($primary_rid);
+        }
+    }
+
 	foreach($resources as $primary_resource)
 	{
 		// check whether the primary resource is in the table
@@ -147,7 +162,7 @@ else
 		           AND language_code = '".$_SESSION['lang']."'
 		           AND resource='".$primary_resource."'";
 		$primary_result = mysql_query($sql, $db);
-		
+
 		// insert primary resource if it's not in db
 		if (mysql_num_rows($primary_result) == 0)
 		{
