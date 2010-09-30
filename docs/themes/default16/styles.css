@@ -2131,6 +2131,7 @@ div.social-wrapper{
 }
 .del-content-icon{
 	  border:0;
+height:.8em;
 }
 
 ul#content-tool-links {
@@ -2184,5 +2185,25 @@ margin-right: 1em;
 	list-style-type:  none;
 	padding-left: 0px; 
 	display:inline;
+}
+/* jQuery tooltip styles */
+#tooltip{
+	position:absolute;
+	z-index:3000;
+	border:3px solid #111;
+	background-color:#eeeeee;
+	padding:5px;
 
+}
+#tooltip h3,#tooltip div{
+	margin:0;
+}
+
+a.tooltip{
+	color:blue;
+	font-size:100%;
+	padding-left:.2em;
+	padding-right:.2em;
+	padding-bottom:.2em;
+	text-decoration:none;
 }

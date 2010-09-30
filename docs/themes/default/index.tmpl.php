@@ -124,6 +124,6 @@ function print_sublinks($link){
 	</div>
 
 </div>
-
+<br style="clear:both;" />
 
 <?php } ?>

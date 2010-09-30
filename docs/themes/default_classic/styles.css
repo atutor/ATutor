@@ -1321,7 +1321,14 @@ fieldset.toc {
 #tooltip h3,#tooltip div{
 	margin:0;
 }
-
+a.tooltip{
+	color:blue;
+	font-size:100%;
+	padding-left:.2em;
+	padding-right:.2em;
+	padding-bottom:.2em;
+	text-decoration:none;
+}
 
 /* style for home page sublinks view */
 div.home_box {
@@ -1895,6 +1902,7 @@ fieldset.toc {
 
 .del-content-icon{
 	  border:0;
+height:.8em;
 }
 div.logout{
 	  white-space:nowrap;

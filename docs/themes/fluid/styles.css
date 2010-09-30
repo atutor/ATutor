@@ -1622,7 +1622,14 @@ div.home_box {
 #tooltip h3,#tooltip div{
 	margin:0;
 }
-
+a.tooltip{
+	color:blue;
+	font-size:100%;
+	padding-left:.2em;
+	padding-right:.2em;
+	padding-bottom:.2em;
+	text-decoration:none;
+}
 /* fluid reorderer */
 .grab{
 	background-color: #F2F7FE;
@@ -2115,6 +2122,7 @@ float:right;
 }
 .del-content-icon{
 	  border:0;
+height:.8em;
 }
 #logoutbar{
 float:right;
