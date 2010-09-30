@@ -104,8 +104,6 @@ input[type=password]{
 input[type=submit]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-	-moz-box-shadow:.2em .2em .3em #999999;
-	box-shadow: .2em .2em .3em #999999;
 	font-size:100%;
 }
 
