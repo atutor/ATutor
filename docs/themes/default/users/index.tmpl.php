@@ -49,7 +49,7 @@
     <td><?php echo '<a href="'.url_rewrite('bounce.php?course=' . $row['course_id']) . '"> '.htmlentities_utf8($row['title']).'</a>' ?>
     <br /><small><?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?></small>
     </td>
-    <td><small><?php echo '<a href="'.AT_BASE_HREF.'inbox/send_message.php?id='.$row['member_id'].'">'. get_display_name($row['member_id']).'<a/>'; ?></td>
+    <td><small><?php echo '<a href="'.AT_BASE_HREF.'inbox/send_message.php?id='.$row['member_id'].'">'. get_display_name($row['member_id']).'<a/>'; ?></small></td>
     <td><small>
     <?php	
 
@@ -81,14 +81,14 @@
 		    <li><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('mods/_standard/tests/test_intro.php?tid='.$test['test_id']); ?>"><span title="<?php echo _AT('tests'); ?>:<?php echo $test['title']; ?>"><?php echo $test['title']; ?></span></a> </li>
 	    <?php endforeach ;?>
     <?php endif; ?>
-    </ul>
+    </ul>    </small>
     <?php if ($row['last_cid']): ?>
 	  <div class="shortcuts" style="float:right;">
-		  <a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="<?php echo $_base_href;  ?>themes/default/images/resume.png" border="" alt="<?php echo _AT('resume'); ?>" title="<?php echo _AT('resume'); ?>" /></a>
+		  <a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="<?php echo $_base_href;  ?>themes/default/images/resume.png" border="" alt="<?php echo _AT('resume'); ?>" title="<?php echo _AT('resume'); ?>" class="img1616"/></a>
 	  </div>
     <?php endif; ?>
 
-    </small>
+
     </td>
     </tr>
 <?php endforeach; ?>
@@ -123,7 +123,7 @@
 	if (isset($this->all_news)) {
 	    echo '<ul class="current_list">';
 	      if(isset($this->all_news[$i]['thumb'])){
-		    echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'"/> ' . $this->all_news[$i]['link'] .' <br />';
+		    echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'" class="img1616"/> ' . $this->all_news[$i]['link'] .' <br />';
 		    if($this->all_news[$i]['object']['course_id']){
 		    echo '<small>(<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)|';
 		    }

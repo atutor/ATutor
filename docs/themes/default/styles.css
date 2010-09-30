@@ -1129,6 +1129,7 @@ div.box h4 {
 
 div.box .even {
 	background-color: #F7F3ED;
+
 }
 
 div.box .odd {
@@ -2155,6 +2156,7 @@ table.etabbed-table	{
 }
 #my_courses_container{
 	  width:58%; 
+	  min-width:38em;
 	  margin-left:1em;
 	  border:none;
 	  float:left;
