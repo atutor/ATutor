@@ -266,16 +266,16 @@ register_argc_argv   = Off</pre></p>
 
 		<p>For windows users, we recommend using <a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, which is a feature-rich SVN extension for Windows that supports many of the options of other SVN clients (file browser and filters not being one of them). Once TortoiseSVN has been successfully installed and you've rebooted your computer, go to a working directory where you wish to <kbd>checkout</kbd> the ATutor source code. Right-click to pop-up the context menu and select the command "Checkout...". </p>
 
-		<p>For repository URL, enter <kbd>http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk</kbd>. If you enter a folder name that does not yet exist, a directory with that name will be created. Press "OK", and the source will be downloaded to your computer.</p>
+		<p>For repository URL, enter <kbd>http://svn.atutor.ca/repos/atutor/trunk/docs</kbd>. If you enter a folder name that does not yet exist, a directory with that name will be created. Press "OK", and the source will be downloaded to your computer.</p>
 
-		<p>For non-Windows users, download an appropriate SVN package from the <a href="http://subversion.tigris.org/project_packages.html" title="Subversion packages">Subversion homepage</a> and follow the installation instructions. These packages use the command-line client. Checking out the most recent ATutor source code can be done with the following command: <kbd>svn checkout http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk</kbd>. Unix users also have available a GUI tool called <a href="http://rapidsvn.tigris.org/">RapidSVN</a></p>
+		<p>For non-Windows users, download an appropriate SVN package from the <a href="http://subversion.tigris.org/project_packages.html" title="Subversion packages">Subversion homepage</a> and follow the installation instructions. These packages use the command-line client. Checking out the most recent ATutor source code can be done with the following command: <kbd>svn checkout http://svn.atutor.ca/repos/atutor/trunk/docs</kbd>. Unix users also have available a GUI tool called <a href="http://rapidsvn.tigris.org/">RapidSVN</a></p>
 		<p>The checkout includes:</p>
 		<ul>
 			<li><kbd>bundle.sh</kbd> - Execute this shell script to generate an installable bundle of the ATutor.</li>
 			<li><kbd>docs/</kbd> - The ATutor source code</li>
 			<li><kbd>mods/</kbd> - Extra module source code</li>
 		</ul>
-		<p>Extra modules can also be checked out into the ATutor <kbd>mods/</kbd> directory, from where they can be easily installed using the ATutor administor's Install Modules tool. See the <a href="modules.html">ATutor Module Documentation</a> for more about creating and modifying modules. From within the <kbd>docs/mods/</kbd> directory of your development version of ATutor, use  <kbd>svn checkout http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk/mods/[module_name]</kbd>.</p>
+		<p>Extra modules can also be checked out into the ATutor <kbd>mods/</kbd> directory, from where they can be easily installed using the ATutor administor's Install Modules tool. See the <a href="modules.html">ATutor Module Documentation</a> for more about creating and modifying modules. From within the <kbd>docs/mods/</kbd> directory of your development version of ATutor, use  <kbd>svn checkout http://svn.atutor.ca/repos/atutor/trunk/mods/[module_name]</kbd>.</p>
 	<h3><a name="svn-installing_atutor"></a>4.2 Installing ATutor From SVN</h3>
 		<p>Before starting the installation process you should create an empty <kbd>`config.inc.php`</kbd> file in the <kbd>`include/`</kbd> directory: use <kbd>touch config.inc.php</kbd> on UNIX. Browse to the location of your checked out files in a web browser and proceed with the ATutor installation instructions. This will set up the database and user accounts for your ATutor system. The resulting ATutor installation will be your development environment.</p>
 
@@ -326,7 +326,8 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="creating-bundles"></a>10. Creating Bundles</h2>
-	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will retrieve the latest version of the language from the database, disables debugging, creates an empty config.inc.php filr, and lastly create a <kbd>.tar.gz</kbd> file. Note, by default this script will generate a bundle from the atutorsvn source code repository. You may change this path near the top of the file to point to a local version of the ATutor source code, if for instance you have your own customizations you'd like to build into an installable bundle. Usage:
+	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will retrieve the latest version of the language from the database, disables debugging, creates an empty config.inc.php filr, and lastly create a <kbd>.tar.gz</kbd> file. Note, by default this script will generate a bundle from the atutor 
+svn source code repository. You may change this path near the top of the file to point to a local version of the ATutor source code, if for instance you have your own customizations you'd like to build into an installable bundle. Usage:
 		
 		<dl>
 			<dt><kbd>./bundle.sh [version_number]</kbd><dt>
