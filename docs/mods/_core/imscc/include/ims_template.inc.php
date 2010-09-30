@@ -259,7 +259,6 @@ function print_organizations($parent_id,
 			$import_files = get_import_files($content['text']);
 
 			if (count($import_files) > 0) $my_files = array_merge($my_files, $import_files);
-
 			foreach ($my_files as $file) {
 				/* filter out full urls */
 				$url_parts = @parse_url($file);
@@ -323,6 +322,18 @@ function print_organizations($parent_id,
 					}
 				}
 
+                /**
+                 * A hack to fix youtube links.  one uses youtube.com?watch=xxx, the other uses youtube.com/v/xxx,
+                 * in which both points to the same file, but needed different links to play.
+                 * in A4a, these youtube links are always stored as "?watch=xxx", however, output.inc.php converted
+                 * these to /v/xxx for rendering purposes.  Convert it back if youtube exists in url.
+                 * http://atutor.ca/atutor/mantis/view.php?id=4548
+                 * @harris 9/30/2010
+                 */
+                if (strpos($file, 'youtube.com')!==false){
+                    //apply the conversion before linking the alternatives. Otherwise it will not be added.
+                    $file = convert_youtube_playURL_to_watchURL($file);
+                }
 				// If this file has a4a alternatives, link it.
 				if (isset($a4a_xml_array[$file]) || isset($a4a_secondary_files[$file])){
 					//if this is an array, meaning that it has more than 1 alternatives, print all
@@ -369,7 +380,6 @@ function print_organizations($parent_id,
 					$test_zipped_files[] = $file;
 				}
 			}
-
 			/******************************
 			 * http://www.atutor.ca/atutor/mantis/view.php?id=4383 
 		     */

@@ -152,7 +152,7 @@ class A4a {
 		global $addslashes, $db; 
 
 		$content_id = intval($content_id);
-		$file_name = $addslashes($file_name);
+		$file_name = $addslashes(htmlentities_utf8($file_name));
 		$lang = $addslashes($lang);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources SET content_id=$content_id, resource='$file_name', language_code='$lang'";
