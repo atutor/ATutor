@@ -17,7 +17,6 @@ ul#topnavlist {
 ul#topnavlist li {
 	zoom:100%;
 	padding:0.3em;
-	padding-bottom:0.3em;
 	margin:0px;
 	margin-bottom:-3px;
 	border-bottom:0;
@@ -62,25 +61,31 @@ div#top-links a:active{
 }
 
 ul#topnavlist {
-	padding-top: 4px;
 	margin-left:5px;
-	height:4em;
+	height:1.5em;
+
 }
 ul#topnavlist li {
 	white-space: nowrap;
 	list-style: none;
-	margin-top:-5px;
 	display: inline;
-	height:2em;
-	clear:both;
+	height:auto;
+}
+ul#topnavlist li a.selected {
+    /* The selected tab. There's only one of these */
+	color: #555;
+	font-weight: normal;
+	border-radius:.3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: .2em 1.8em .2em .1.8em;
 }
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active, ul#subnavlist strong {
-	margin-top:-5px;
+	margin-top:-3px;
 	margin-right:1em;
 }
 ul#subnavlist li {
 	zoom:100%;
-	margin-top:5px;
+	margin-top:3px;
 	max-width:12em;
 	margin-right:2em;
 	display: inline;
@@ -122,15 +127,13 @@ ul.current_list{
 }
 
 #top-links-jump{
-	float:rights;
 
-	margin-top:.2em;
 	background-color:#eeeeee;
 	padding-right:.5em;
 }
 div#top-links {
 	white-space:nowrap;
-width:40%;
+	width:40%;
 	float:right;
 	clear:right;
 	height:1.7em;
@@ -156,4 +159,7 @@ padding-right:2em;
 
 .fl-force-right{
 margin-top: -1.5em;
+}
+#contentcolumn {
+overflow:hidden;
 }
