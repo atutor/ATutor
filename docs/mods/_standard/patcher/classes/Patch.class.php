@@ -49,6 +49,9 @@ class Patch {
 	var $svn_tag_folder = 'http://atutorsvn.atrc.utoronto.ca/repos/atutor/tags/';
 	var $sql_file = 'patch.sql';
 	var $relative_to_atutor_root = '../../../';   // relative path from mods/_standard/patcher to root
+	
+	var $error_title_printed = false;      // a flag only used in constructor when error happens 
+	                                       // it's to indicate if the title of the error has been printed into $this->errors
 
 	/**
 	* Constructor: Initialize object members
@@ -63,9 +66,18 @@ class Patch {
 		// add relative path to move to ATutor root folder
 		for ($i = 0; $i < count($patch_array[files]); $i++)
 		{
+			// prevent the access to the areas that are outside of ATutor
+			$first_char = substr($patch_array[files][$i]['location'], 0, 1);
+			if ($first_char == '.' || $first_char == '/'){
+				if (!$this->error_title_printed) {
+					$this->errors[] = _AT('path_not_allowed');
+					$this->error_title_printed = true;
+				}
+				$this->errors[0] .= '<strong>'. $patch_array[files][$i]['location'] . "</strong><br />";
+			}
 			$patch_array[files][$i]['location'] = $this->relative_to_atutor_root . $patch_array[files][$i]['location'];
 		}
-		
+			
 		$this->patch_array = $patch_array; 
 		$this->patch_summary_array = $patch_summary_array;
 
@@ -93,11 +105,20 @@ class Patch {
 	{
 		global $msg;
 		
-		// Checks on 
-		// 1. if svn server is up. If not, consider all files manipulated by patch as modified
-		// 2. if the local file is customized by user
-		// 3. if script has write priviledge on local file/folder
-		// 4. if dependent patches have been installed
+		// Checks on
+		// 1. if there's error from class constructor 
+		// 2. if svn server is up. If not, consider all files manipulated by patch as modified
+		// 3. if the local file is customized by user
+		// 4. if script has write priviledge on local file/folder
+		// 5. if dependent patches have been installed
+		
+		if (count($this->errors) > 0) {
+			print_errors($this->errors, $notes);
+		
+			unset($this->errors);
+			return false;
+		}
+		
 		if (!$this->pingDomain($this->svn_tag_folder)) 
 		{
 			$msg->addInfo('CANNOT_CONNECT_SVN_SERVER');
@@ -231,12 +252,21 @@ class Patch {
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
 			$real_location = realpath($patch_file['location']);
-			if (!is_writable($patch_file['location']) && !in_array($real_location, $this->need_access_to_folders))
-			{
+			
+			if ($real_location <> '' && !is_writable($patch_file['location']) && !in_array($real_location, $this->need_access_to_folders))
+			{ // folder exists. check if has write permission
 				$this->need_access_to_folders[] = $real_location;
 
 				if (!in_array($real_location, $_SESSION['remove_permission']))
 					$_SESSION['remove_permission'][] = $real_location;
+			} else if ($real_location == '' && $patch_file['action'] != 'delete') {
+				// The folder does not exist. Create it before proceed
+				
+				// find the real path for the folder to be created
+				$full_folder_path = realpath($this->relative_to_atutor_root).
+				                    substr($patch_file['location'], strlen($this->relative_to_atutor_root)-1);
+				// remove ending '/'
+				mkdir($full_folder_path, 0755, true);
 			}
 
 			if ($patch_file['action'] == 'alter' || $patch_file['action'] == 'delete' || $patch_file['action'] == 'overwrite')
@@ -300,9 +330,9 @@ class Patch {
 		
 		if ($this->patch_summary_array["applied_version"] <> VERSION)
 		{
-				$this->errors[] = _AT("version_not_match", $this->patch_summary_array["applied_version"]);
+			$this->errors[] = _AT("version_not_match", $this->patch_summary_array["applied_version"]);
 				
-				$notes = '
+			$notes = '
 			  <form action="'. $_SERVER['PHP_SELF'].'?id='.$_POST['id'].'&who='. $_POST['who'] .'" method="post" name="skip_files_modified">
 			  <div class="row buttons">
 					<input type="submit" name="ignore_version" value="'._AT('yes').'" accesskey="y" />
