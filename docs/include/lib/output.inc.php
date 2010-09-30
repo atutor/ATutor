@@ -661,7 +661,7 @@ function convert_youtube_playURL_to_watchURL($youtube_playURL) {
  *          Otherwise, return the original send-in parameter.
  */
 function convert_youtube_watchURL_to_playURL($youtube_watchURL) {
-	return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/watch\?v=([a-z0-9_-]+)[\&|\;]*.*/",
+	return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/watch\?v=(.*)/",
 	                    "\\1youtube.com/v/\\2", $youtube_watchURL);
 }
 
@@ -1179,6 +1179,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 		$alternative_rows[] = $row;
 		
 		$youtube_playURL = convert_youtube_watchURL_to_playURL($row['resource']);
+		
 		if ($row['resource'] <> $youtube_playURL) {
 			$row['resource'] = $youtube_playURL;
 			$alternative_rows[] = $row;
