@@ -1517,6 +1517,7 @@ ul#topnavlist li {
 	-moz-border-radius: .5em .5em 0em 0em;
 	-moz-box-shadow:.1em .0em .1em #999999;
 	box-shadow: .1em .0em .1em #999999;
+	padding: .2em 1.8em .2em .1.8em;
 
 }
 
@@ -1526,7 +1527,7 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
 	text-decoration:none;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-	padding: .2em 2em .2em;
+	padding: .2em 1.8em .2em .1.8em;
 	border-bottom: 1px solid #E6E6E6;
 
 }
