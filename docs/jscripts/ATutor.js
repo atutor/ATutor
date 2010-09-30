@@ -124,7 +124,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
   		'FG_COLOR BG_COLOR FONT_FAMILY' +
   		'}' +
   		'.odd {' +
-  		'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
+  		'FG_COLOR BG_COLOR FONT_FAMILY' +
   		'}' +
   		'.tab {' +
   		'FG_COLOR BG_COLOR' +
