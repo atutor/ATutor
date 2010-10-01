@@ -98,6 +98,8 @@ function populate_a4a($cid, $content){
     include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
 	
     $resources = get_primary_resources($content);
+    
+    if (count($resources) == 0) return;
 
     $a4a = new A4a($cid);
     $db_primary_resources = $a4a->getPrimaryResources();
