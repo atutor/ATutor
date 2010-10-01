@@ -60,7 +60,7 @@ class A4a {
 		global $db;
 
 		$pri_resources = array(); // cid=>[resource, language code]
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$this->cid;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$this->cid.' ORDER BY primary_resource_id';
 		$result = mysql_query($sql, $db);
 		if (mysql_numrows($result) > 0){
 			while ($row = mysql_fetch_assoc($result)){
@@ -71,6 +71,23 @@ class A4a {
 			}
 		}
 		return $pri_resources;
+	}
+
+
+	// Get primary resources by resource name
+	function getPrimaryResourceByName($primary_resource){
+		global $db;
+
+		$sql = "SELECT * FROM ".TABLE_PREFIX."primary_resources 
+		        WHERE content_id=".$this->cid."
+		          AND language_code = '".$_SESSION['lang']."'
+		          AND resource='".$primary_resource."'";
+		$result = mysql_query($sql, $db);
+		if (mysql_numrows($result) > 0){
+			return mysql_fetch_assoc($result);
+		} else {
+			return false;
+		}
 	}
 
 
@@ -152,7 +169,7 @@ class A4a {
 		global $addslashes, $db; 
 
 		$content_id = intval($content_id);
-		$file_name = $addslashes(htmlentities_utf8($file_name));
+		$file_name = $addslashes(convert_amp($file_name));
 		$lang = $addslashes($lang);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources SET content_id=$content_id, resource='$file_name', language_code='$lang'";

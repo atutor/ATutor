@@ -86,6 +86,39 @@ function isValidURL($url) {
     return false;
 }
 
+/*
+ * Parse the primary resources out of the content and save into db.
+ * Clean up the removed primary resources from db.
+ * @param: $cid: content id
+ * @param: $content
+ * @return: none
+ */
+function populate_a4a($cid, $content){
+	include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/html/resources_parser.inc.php');
+    include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
+	
+    $resources = get_primary_resources($content);
+
+    $a4a = new A4a($cid);
+    $db_primary_resources = $a4a->getPrimaryResources();
+    
+    // clean up the removed resources
+    foreach ($db_primary_resources  as $primary_rid=>$db_resource){
+        //if this file from our table is not found in the $resource, then it's not used.
+        if(in_array($db_resource['resource'], $resources)===false){
+            $a4a->deletePrimaryResource($primary_rid);
+        }
+    }
+
+	// insert the new resources
+    foreach($resources as $primary_resource)
+	{
+		if (!$a4a->getPrimaryResourceByName($primary_resource)){
+			$a4a->setPrimaryResource($cid, $primary_resource, $_SESSION['lang']);
+		}
+	}
+}
+
 // save all changes to the DB
 function save_changes($redir, $current_tab) {
 	global $contentManager, $db, $addslashes, $msg;
@@ -128,6 +161,8 @@ function save_changes($redir, $current_tab) {
 	}
 		
 	if (!$msg->containsErrors()) {
+		$orig_body_text = $_POST['body_text'];  // used to populate a4a tables
+		
 		$_POST['title']			= $addslashes($_POST['title']);
 		$_POST['body_text']		= $addslashes($_POST['body_text']);
 		$_POST['head']  		= $addslashes($_POST['head']);
@@ -162,6 +197,8 @@ function save_changes($redir, $current_tab) {
 			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}
+		// re-populate a4a tables based on the new content
+		populate_a4a($cid, $orig_body_text);
 	} 
 	else return;
 	

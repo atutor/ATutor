@@ -110,9 +110,14 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 
 // Main program
 global $db, $content_row;
-require(AT_INCLUDE_PATH.'../mods/_core/imsafa/html/resources_parser.inc.php');
+populate_a4a($cid, $_POST['body_text']);
 
-if (count($resources)==0)
+include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
+
+$a4a = new A4a($cid);
+$primary_resources = $a4a->getPrimaryResources();
+
+if (count($primary_resources)==0)
 {
 	echo '<p>'. _AT('No_resources'). '</p>';
 }
@@ -140,50 +145,17 @@ else
 	
 	echo '  <tbody>';
 
-    /* http://atutor.ca/atutor/mantis/view.php?id=4553
-     * remove old primary resources that's no longer used. 
-     * @harris 9/30/2010
-     */
-    include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
-    $a4a = new A4a($cid);
-    $db_primary_resources = $a4a->getPrimaryResources();
-    foreach ($db_primary_resources  as $primary_rid=>$db_resource){
-        //if this file from our table is not found in the $resource, then it's not used.
-        if(in_array($db_resource['resource'], $resources)===false){
-            $a4a->deletePrimaryResource($primary_rid);
-        }
-    }
-
-	foreach($resources as $primary_resource)
+	foreach($primary_resources as $primary_resource_id => $primary_resource_row)
 	{
-		// check whether the primary resource is in the table
-		$sql = "SELECT * FROM ".TABLE_PREFIX."primary_resources 
-		         WHERE content_id = ".$cid."
-		           AND language_code = '".$_SESSION['lang']."'
-		           AND resource='".$primary_resource."'";
-		$primary_result = mysql_query($sql, $db);
-
-		// insert primary resource if it's not in db
-		if (mysql_num_rows($primary_result) == 0)
-		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources (content_id, resource, language_code) 
-			        VALUES (".$cid.", '".$primary_resource."', '".$_SESSION['lang']."')";
-			$result	= mysql_query($sql, $db);
-			$primary_resource_id = mysql_insert_id();
-		}
-		else
-		{
-			// get primary resource id
-			$primary_resource_row = mysql_fetch_assoc($primary_result);
-			$primary_resource_id = $primary_resource_row['primary_resource_id'];
-		}
+		$primary_resource = $primary_resource_row['resource'];
+		
 		$sql = "SELECT prt.type_id, rt.type
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
 		                 TABLE_PREFIX."primary_resources_types prt, ".
 		                 TABLE_PREFIX."resource_types rt
 		         WHERE pr.content_id = ".$cid."
 		           AND pr.language_code = '".$_SESSION['lang']."'
-		           AND pr.resource='".$primary_resource."'
+		           AND pr.primary_resource_id='".$primary_resource_id."'
 		           AND pr.primary_resource_id = prt.primary_resource_id
 		           AND prt.type_id = rt.type_id";
 		$primary_type_result = mysql_query($sql, $db);
@@ -201,7 +173,7 @@ else
 		                 TABLE_PREFIX."secondary_resources_types srt
 		         WHERE pr.content_id = ".$cid."
 		           AND pr.language_code = '".$_SESSION['lang']."'
-		           AND pr.resource='".$primary_resource."'
+		           AND pr.primary_resource_id='".$primary_resource_id."'
 		           AND pr.primary_resource_id = sr.primary_resource_id
 		           AND sr.secondary_resource_id = srt.secondary_resource_id";
 		$secondary_result = mysql_query($sql, $db);

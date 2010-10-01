@@ -1120,6 +1120,10 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 function provide_alternatives($cid, $content, $info_only = false, $only_on_secondary_type = 0){
 	global $db;
 	
+	// All a4a resources have "&" converted to "&amp;". To match content with resources, 
+	// need the same conversion on content. 
+	$content = convert_amp($content);
+	
 	$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid", "mp4", "flv");
 	$txt_exts = array("txt", "html", "htm");
 	$image_exts = array("gif", "bmp", "png", "jpg", "jpeg", "png", "tif");
