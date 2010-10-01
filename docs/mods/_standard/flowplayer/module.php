@@ -15,6 +15,6 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 define('AT_ADMIN_PRIV_FLOWPLAYER', $this->getAdminPrivilege());
 
 global $_custom_head;
-$_custom_head .='<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_standard/flowplayer/flowplayer-3.2.5.js"></script>';
+$_custom_head .='<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_standard/flowplayer/flowplayer-3.2.4.min.js"></script>'."\n";
 
 ?>
