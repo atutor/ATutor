@@ -1370,6 +1370,17 @@ function htmlentities_utf8($str, $use_nl2br=true){
 	return $return;
 }
 
+
+/**
+ * Convert all '&' to '&amp;' from the input
+ * @param   string  any string input, mainly URLs.
+ * @return  input with & replaced to '&amp;'
+ */
+function convert_amp($input){
+    $input = str_replace('&amp;', '&', $input); //convert everything to '&' first
+    return str_replace('&', '&amp;', $input);
+}
+
 /**
  * Check if json_encode/json_decode exists, if not, use the json service library.
  * NOTE:  json_encode(), json_decode() are NOT available piror to php 5.2
