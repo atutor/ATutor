@@ -55,11 +55,13 @@ if ($has_flv)
 		 	clip: { autoPlay: false },  		
 	        plugins:  { 
 		        controls: { 
-		            all: false,  
+		            buttons:true, 
 		            play: true,  
 		            scrubber: true 
 		        }         
 		    }
+
+
 		});
 	</script>
 	';
