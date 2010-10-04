@@ -122,7 +122,7 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 	header('Content-Type: '.$ext);
     //a hack for http://atutor.ca/atutor/mantis/view.php?id=4531
     //@harris
-    if ($pathinfo['extension']=='mp3') {
+    if ($pathinfo['extension']=='mp3' || $pathinfo['extension']=='mp4') {
         header('Content-length: '.filesize($real));
     }
 
