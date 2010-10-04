@@ -152,6 +152,7 @@ $mime['xml']   = array('text/xml',   'xml');
 $mime['mpeg']  = array('video/mpeg',   'video');
 $mime['mpg']   = array('video/mpeg',   'video');
 $mime['mpe']   = array('video/mpeg',   'video');
+$mime['mp4']   = array('video/mp4',   'video');
 $mime['qt']    = array('video/quicktime',   'qt');
 $mime['mov']   = array('video/quicktime',   'qt');
 $mime['wmv']   = array('video/x-ms-wmv',   'video');
