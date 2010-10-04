@@ -1262,7 +1262,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 			                           // and processed (or not) in an <img> tag. If found and processed, 
 			                           // SKIP the found/process for <a> tag because the source is a image
 			                           // and <a> is very likely the tag wrapping around <img>
-			                            
+			
 			// append/replace target alternative to [media]source[/media]
 			if (preg_match("/".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/")."/sU", $content))
 			{
@@ -1306,10 +1306,13 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
 				}
 			}
-
+			
+			// skip the <embed> inside <object>, otherwise, the resource is double matched
+			$object_processed = false;
 			// append/replace target alternative to <object ... source ...></object>
 			if (preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/sU", $content))
 			{
+				$object_processed = true;
 				if (!$info_only) {
 					$content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/sU", 
 		                                $pattern_replace_to, $content);
@@ -1322,7 +1325,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 			}
 
 			// append/replace target alternative to <embed ... source ...>
-			if (preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/sU", $content))
+			if (!$object_processed && preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/sU", $content))
 			{
 				if (!$info_only) {
 					$content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/sU", 
