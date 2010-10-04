@@ -10,7 +10,7 @@ preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.flv\[/media\]#i",$_inpu
 $media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"http://##MEDIA1##.flv\"></a>";
 
 // .flv - uses Flowplayer 3.0 from flowplayer.org (playing file from AT_content_dir)
-preg_match_all("#\[media[0-9a-z\|]*\]([\w\./-]+)\.flv\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
+preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.flv\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
 $media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.flv\"></a>";
 
 // .mp4 - uses Flowplayer 3.0 from flowplayer.org (playing file via full URL)
@@ -18,7 +18,7 @@ preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.mp4\[/media\]#i",$_inpu
 $media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"http://##MEDIA1##.mp4\"></a>";
 
 // .mp4 - uses Flowplayer 3.0 from flowplayer.org (playing file from AT_content_dir)
-preg_match_all("#\[media[0-9a-z\|]*\]([\w\./-]+)\.mp4\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
+preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.mp4\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
 $media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mp4\"></a>";
 
 // .mov - uses Flowplayer 3.0 from flowplayer.org (playing file via full URL)
@@ -26,7 +26,7 @@ preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.mov\[/media\]#i",$_inpu
 $media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"http://##MEDIA1##.mov\"></a>";
 
 // .mov - uses Flowplayer 3.0 from flowplayer.org (playing file from AT_content_dir)
-preg_match_all("#\[media[0-9a-z\|]*\]([\w\./-]+)\.mov\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
+preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.mov\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
 $media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mov\"></a>";
 
 // .mp3 - uses Flowplayer 3.0 from flowplayer.org (playing file via full URL)
