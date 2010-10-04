@@ -676,16 +676,11 @@ function embed_media($text) {
 	
 	$media_matches = Array();
 	
-	/*
-		First, we search though the text for all different kinds of media defined by media tags and store the results in $media_matches.
-		
-		Then the different replacements for the different media tags are stored in $media_replace.
-		
-		Lastly, we loop through all $media_matches / $media_replaces. (We choose $media_replace as index because $media_matches is multi-dimensioned.) It is important that for each $media_matches there is a $media_replace with the same index. For each media match we check the width/height, or we use the default value of 425x350. We then replace the height/width/media1/media2 parameter placeholders in $media_replace with the correct ones, before running a str_replace on $text, replacing the given media with its correct replacement.
-		
-	*/
+	// First, we search though the text for all different kinds of media defined by media tags and store the results in $media_matches.
+	// Then the different replacements for the different media tags are stored in $media_replace.
+	// Lastly, we loop through all $media_matches / $media_replaces. (We choose $media_replace as index because $media_matches is multi-dimensioned.) It is important that for each $media_matches there is a $media_replace with the same index. For each media match we check the width/height, or we use the default value of 425x350. We then replace the height/width/media1/media2 parameter placeholders in $media_replace with the correct ones, before running a str_replace on $text, replacing the given media with its correct replacement.
+
 	// youtube videos
-//	preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=([a-z0-9_-]+)[\&|\;]*.*\[/media\]#i",$text,$media_matches[1],PREG_SET_ORDER);
 	preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[1],PREG_SET_ORDER);
 	$media_replace[1] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="http://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="http://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
 	
@@ -869,7 +864,7 @@ function highlight($input, $var) {//$input is the string, $var is the text to be
 function format_content($input, $html = 0, $glossary, $simple = false) {
 	global $_base_path, $_config;
 
-      	if (!$html) {
+	if (!$html) {
 		$input = str_replace('<', '&lt;', $input);
 		$input = str_replace('&lt;?php', '<?php', $input); // for bug #2087
 	} elseif ($html==2) {
@@ -1122,6 +1117,9 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	// need the same conversion on content. 
 	$content = convert_amp($content);
 	
+	// keep &lt; (content saved in plain text format) as it is instead of &amp;lt;
+	$content = str_replace('&amp;lt;', '&lt;', $content);
+	
 	$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid", "mp4", "flv");
 	$txt_exts = array("txt", "html", "htm");
 	$image_exts = array("gif", "bmp", "png", "jpg", "jpeg", "png", "tif");
@@ -1211,8 +1209,10 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 			
 			// alternative is video or a youtube url
 			if (in_array($ext, $video_exts) || 
-			    preg_match("/http:\/\/.*youtube.com\/watch.*/", $row['secondary_resource']))
+			    preg_match("/http:\/\/.*youtube.com\/watch.*/", $row['secondary_resource'])) {
 				$target = '[media]'.$row['secondary_resource'].'[/media]';
+				$target = apply_customized_format(embed_media($target));
+			}
 			// a text primary to be replaced by a visual alternative 
 			else if (in_array($ext, $txt_exts))
 			{

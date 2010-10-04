@@ -110,7 +110,7 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 
 // Main program
 global $db, $content_row;
-populate_a4a($cid, $_POST['body_text']);
+populate_a4a($cid, $_POST['body_text'], $_POST['formatting']);
 
 include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
 

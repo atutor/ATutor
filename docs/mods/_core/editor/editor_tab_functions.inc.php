@@ -93,11 +93,43 @@ function isValidURL($url) {
  * @param: $content
  * @return: none
  */
-function populate_a4a($cid, $content){
-	include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/html/resources_parser.inc.php');
-    include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
+function populate_a4a($cid, $content, $formatting){
+	global $db, $my_files;
 	
-    $resources = get_primary_resources($content);
+    include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
+	include_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
+	include_once(AT_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
+	
+	$body = format_content($content, $formatting,array());
+    
+	$handler = new ContentOutputParser();
+	$parser = new XML_HTMLSax();
+	$parser->set_object($handler);
+	$parser->set_element_handler('openHandler','closeHandler');
+	
+	$my_files 		= array();
+	$parser->parse($body);
+	$my_files = array_unique($my_files);
+	
+	foreach ($my_files as $file) {
+		/* filter out full urls */
+		$url_parts = @parse_url($file);
+		
+		// file should be relative to content
+		if ((substr($file, 0, 1) == '/')) {
+			continue;
+		}
+		
+		// The URL of the movie from youtube.com has been converted above in embed_media().
+		// For example:  http://www.youtube.com/watch?v=a0ryB0m0MiM is converted to
+		// http://www.youtube.com/v/a0ryB0m0MiM to make it playable. This creates the problem
+		// that the parsed-out url (http://www.youtube.com/v/a0ryB0m0MiM) does not match with
+		// the URL saved in content table (http://www.youtube.com/watch?v=a0ryB0m0MiM).
+		// The code below is to convert the URL back to original.
+		$file = convert_youtube_playURL_to_watchURL($file);
+		
+		$resources[] = convert_amp($file);  // converts & to &amp;
+	}
     
     if (count($resources) == 0) return;
 
@@ -200,7 +232,7 @@ function save_changes($redir, $current_tab) {
 			$_REQUEST['cid'] = $cid;
 		}
 		// re-populate a4a tables based on the new content
-		populate_a4a($cid, $orig_body_text);
+		populate_a4a($cid, $orig_body_text, $_POST['formatting']);
 	} 
 	else return;
 	
