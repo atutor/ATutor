@@ -174,7 +174,7 @@ if ($_config['check_version']) {
 
 				// get disk usage if we're on *nix
 				if (DIRECTORY_SEPARATOR == '/') {
-					$du = shell_exec('du -sk '.escapeshellcmd(AT_CONTENT_DIR));
+					$du = @shell_exec('du -sk '.escapeshellcmd(AT_CONTENT_DIR));
 					if ($du) {
 						$_config['du_size'] = (int) $du;
 						$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('du_size', '{$_config['du_size']}')";
@@ -238,7 +238,7 @@ if ($_config['check_version']) {
 				<dd><?php echo $mysql_version; ?></dd>
 
 				<dt><?php echo _AT('os'); ?>:</dt>
-				<dd><?php echo php_uname('s') . ' ' . php_uname('r'); ?></dd>
+				<dd><?php echo @php_uname('s') . ' ' . @php_uname('r'); ?></dd>
 			</dl>
 		</div>
 	</div>
