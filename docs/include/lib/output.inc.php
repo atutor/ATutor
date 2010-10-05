@@ -1210,7 +1210,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 			// alternative is video or a youtube url
 			if (in_array($ext, $video_exts) || 
 			    preg_match("/http:\/\/.*youtube.com\/watch.*/", $row['secondary_resource'])) {
-				$target = '[media]'.$row['secondary_resource'].'[/media]';
+			    $target = '[media]'.$row['secondary_resource'].'[/media]';
 				$target = apply_customized_format(embed_media($target));
 			}
 			// a text primary to be replaced by a visual alternative 
@@ -1292,23 +1292,10 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 				}
 			}
 			
-			// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
-			// skip this "if" when the source object has been processed in aboved <img> tag
-			if (!$img_processed && preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
-			{
-				if (!$info_only) {
-					$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU", 
-		                                $pattern_replace_to, $content);
-				} else {
-					if ($row['secondary_type'] == 1) $has_audio_alternative = true;
-					if ($row['secondary_type'] == 2) $has_sign_lang_alternative = true;
-					if ($row['secondary_type'] == 3) $has_text_alternative = true;
-					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
-				}
-			}
-			
-			// skip the <embed> inside <object>, otherwise, the resource is double matched
+			// skip the <embed> inside <object> & skip <a> inside <object>, 
+			// otherwise, the resource is double matched
 			$object_processed = false;
+			
 			// append/replace target alternative to <object ... source ...></object>
 			if (preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/sU", $content))
 			{
@@ -1323,7 +1310,22 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
 				}
 			}
-
+			
+			// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
+			// skip this "if" when the source object has been processed in aboved <img> tag
+			if (!$object_processed && !$img_processed && preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
+			{
+				if (!$info_only) {
+					$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU", 
+		                                $pattern_replace_to, $content);
+				} else {
+					if ($row['secondary_type'] == 1) $has_audio_alternative = true;
+					if ($row['secondary_type'] == 2) $has_sign_lang_alternative = true;
+					if ($row['secondary_type'] == 3) $has_text_alternative = true;
+					if ($row['secondary_type'] == 4) $has_visual_alternative = true;
+				}
+			}
+			
 			// append/replace target alternative to <embed ... source ...>
 			if (!$object_processed && preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/sU", $content))
 			{
