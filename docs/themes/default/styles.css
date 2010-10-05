@@ -2149,10 +2149,8 @@ table.etabbed-table	{
 #course_title_container{
 	float:left;
 	clear:both;
-	white-space:pre-line;
-	position:relative; 
 	left:1em;
-	margin-top:.5em;
+
 }
 #my_courses_container{
 	  width:58%; 
