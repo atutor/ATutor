@@ -1148,7 +1148,15 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	}
 	
 	// get all relations between primary resources and their alternatives
-	$sql = "SELECT c.content_path, pr.resource, prt.type_id primary_type, sr.secondary_resource, srt.type_id secondary_type
+	$sql = "SELECT DISTINCT c.content_path, pr.resource, ";
+	
+	// ignore primary resource type if the request is on particular secondary type.
+	// otherwise, if the primary resource is defined with multiple primary types, 
+	// the primary resource would be replaced/appended multiple times.
+	if ($only_on_secondary_type == 0) {
+		$sql .= "prt.type_id primary_type, ";
+	}
+	$sql .= "sr.secondary_resource, srt.type_id secondary_type
 	          FROM ".TABLE_PREFIX."primary_resources pr, ".
 	                 TABLE_PREFIX."primary_resources_types prt,".
 	                 TABLE_PREFIX."secondary_resources sr,".
