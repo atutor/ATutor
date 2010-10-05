@@ -534,9 +534,14 @@ function print_resources_forum() {
 
 
 $ims_template_xml['header'] = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
-<!--This is an ATutor 1.0 Common Cartridge document-->
+<!--This is an ATutor IMS Common Cartridge 1.0 document-->
 <!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
-<manifest identifier="MANIFEST-2415ad93fc44817acbe40edfd1ffb1ee" xmlns="http://www.imsglobal.org/xsd/imscc/imscp_v1p1" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:lomimscc="http://ltsc.ieee.org/xsd/imscc/LOM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xsi:schemaLocation="http://www.imsglobal.org/xsd/imscc/imscp_v1p1 imscp_v1p2_localised.xsd http://ltsc.ieee.org/xsd/imscc/LOM domainProfile_1/lomLoose_localised.xsd">
+<manifest identifier="MANIFEST-'.md5($cid).'" 
+xmlns="http://www.imsglobal.org/xsd/imscc/imscp_v1p1" 
+xmlns:imsmd="http://ltsc.ieee.org/xsd/imscc/LOM" 
+xmlns:lomimscc="http://ltsc.ieee.org/xsd/imscc/LOM" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.imsglobal.org/xsd/imscc/imscp_v1p1 http://www.imsglobal.org/profile/cc/ccv1p0/derived_schema/imscp_v1p2_localised.xsd http://ltsc.ieee.org/xsd/imscc/LOM http://www.imsglobal.org/profile/cc/ccv1p0/derived_schema/domainProfile_1/lomLoose_localised.xsd" version="IMS Common Cartridge 1.0.0">
 	<metadata>
 		<schema>IMS Common Cartridge</schema>
 	    <schemaversion>1.0.0</schemaversion>
