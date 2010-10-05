@@ -1315,7 +1315,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 			
 			// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
 			// skip this "if" when the source object has been processed in aboved <img> tag
-			if (!$processed && !$img_processed && preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
+			if (!$processed && preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
 			{
 				$processed = true;
 				if (!$info_only) {
