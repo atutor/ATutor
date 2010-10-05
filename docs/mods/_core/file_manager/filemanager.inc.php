@@ -422,4 +422,33 @@ function get_readme($dir)
 	closedir($dh);
 	return '';
 }
+
+
+/**
+ * This function is mainly used to download big zip files that are created by ATutor.
+ * For example, download common cartridge, content package, backup.
+ * Note that the file is only in binary, as fopen($filename, "rb"). 
+ * Don't use it to read open text/html files
+ * 
+ * When downloading large files exceeding 1M, instead of use readfile() to read
+ * the whole file into memory once at a time, push down 1M at a time. This way can
+ * download whatever size of the file regardless of php memory limit.
+ */  
+function readfile_in_chunks($filename) {
+	$filesize = intval(sprintf("%u", filesize($filename)));
+	$chunk_size = 1024 * 1024;
+	
+	if ($filesize > $chunk_size) {
+		$fp = fopen($filename, "rb");
+		while (!feof($fp))
+		{
+			echo fread($fp, $chunk_size);
+			ob_flush();
+			flush();
+		}
+		fclose($fp);
+	} else {
+		readfile($filename);
+	}
+}
 ?>

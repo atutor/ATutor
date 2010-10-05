@@ -244,27 +244,8 @@ class zipfile {
 		
 		header("Content-type: archive/zip");
 		header("Content-disposition: attachment; filename=$file_name.zip");
-//		readfile($this->zipfile_dir.$this->filename.'.zip');
-
-		// When downloading large files exceeding 1M, instead of use readfile() to read 
-		// the whole file into memory once at a time, push down 1M at a time. This way can
-		// download whatever size of the file regardless of php memory limit.
-		$filename = $this->zipfile_dir.$this->filename.'.zip';
-		$filesize = intval(sprintf("%u", filesize($filename)));
-		$chunk_size = 1024 * 1024;
 		
-		if ($filesize > $chunk_size) {
-			$fp = fopen($filename, "rb");
-			while (!feof($fp))
-			{
-				echo fread($fp, $chunk_size);
-				ob_flush();
-				flush();
-			}
-			fclose($fp);
-		} else {
-			readfile($filename);
-		}
+		readfile_in_chunks($this->zipfile_dir.$this->filename.'.zip');
 		exit;
 	}
 

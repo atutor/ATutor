@@ -12,6 +12,7 @@
 // $Id$
 
 require_once(AT_INCLUDE_PATH.'classes/zipfile.class.php');
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');	//readfile_in_chunks folder
 
 define('NUMBER',	1);
 define('TEXT',		2);
@@ -260,7 +261,7 @@ class Backup {
 		header('x-Sendfile: ' . AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
 		header('x-Sendfile: ', TRUE); // if we get here then it didn't work
 
-		readfile(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
+		readfile_in_chunks(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
 		exit;
 	}
 
